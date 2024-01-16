@@ -124,7 +124,7 @@ uint8_t font_init(void)
 {
   TRACE_AND_INDENT();
 
-  font_ui             = font_load("PressStart");
+  font_ui             = font_load("font");
   font_ui->tile_index = 1;
 
   return true;

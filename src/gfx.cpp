@@ -155,7 +155,7 @@ static void gfx_init_font_ui(void)
   };
 
   const std::vector< std::string > arr(tiles);
-  tile_load_arr_sprites("data/fonts/PressStart.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, arr, GL_NEAREST);
+  tile_load_arr_sprites("data/fonts/font.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, arr, GL_NEAREST);
 }
 
 static void gfx_init_ui(void) {}

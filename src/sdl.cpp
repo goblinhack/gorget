@@ -247,8 +247,8 @@ uint8_t sdl_init(void)
   }
 
   LOG("SDL: Create window");
-  sdl.window = SDL_CreateWindow("yelindor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width,
-                                video_height, video_is_unused_flags);
+  sdl.window = SDL_CreateWindow("yelindor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
+                                video_is_unused_flags);
   if (! sdl.window) {
     ERR("SDL_CreateWindow couldn't set windowed display %ux%u: %s", video_width, video_height, SDL_GetError());
     game->config.reset();
@@ -771,8 +771,8 @@ void config_game_gfx_update(void)
   }
 
   game->config.aspect_ratio    = (double) game->config.window_pix_width / (double) game->config.window_pix_height;
-  game->config.game_pix_height = 240;
-  game->config.game_pix_width  = (int) (((double) game->config.game_pix_height) * game->config.aspect_ratio);
+  game->config.game_pix_height = game->config.window_pix_height;
+  game->config.game_pix_width  = game->config.window_pix_width;
 
   if (! game->config.game_pix_width) {
     ERR("game->config.game_pix_width is zero");
@@ -849,8 +849,8 @@ void config_game_gfx_update(void)
   //
   // Account for rounding errors, so the tiles look smoother.
   //
-  game->config.ascii_gl_width  = UI_TILE_WIDTH;
-  game->config.ascii_gl_height = UI_TILE_HEIGHT;
+  game->config.ascii_gl_width  = game->config.config_pix_width / TERM_WIDTH;
+  game->config.ascii_gl_height = game->config.config_pix_height / TERM_HEIGHT;
 
   //
   // If we overflow the screen, try to cut a few rows and columns off
