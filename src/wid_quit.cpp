@@ -145,7 +145,7 @@ void Game::quit_select(void)
     auto p = wid_quit_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "No");
 
-    point tl = make_point(width / 2 + 1, y_at);
+    point tl = make_point(width / 2, y_at);
     point br = make_point(width - 2, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_quit_no);

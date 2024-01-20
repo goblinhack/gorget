@@ -18,8 +18,7 @@ bool tp_load_wall(void)
   }
 
   tp->z_depth_set(MAP_DEPTH_WALL);
-  tp->is_wall  = true;
-  tp->is_tiled = true;
+  tp->is_wall = true;
 
   for (auto x = 0; x < 6; x++) {
     for (auto y = 0; y < 6; y++) {

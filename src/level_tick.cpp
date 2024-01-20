@@ -18,8 +18,9 @@ void Level::tick(void)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        Tpp  tp;
-        auto t = thing_get(x, y, slot, &tp);
+        Tpp   tp;
+        point p(x, y);
+        auto  t = thing_get(p, slot, &tp);
         if (! t) {
           continue;
         }
@@ -30,7 +31,6 @@ void Level::tick(void)
 
         t->tick = tick;
         thing_update_pos(t);
-        thing_update_speed(t);
       }
     }
   }

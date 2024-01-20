@@ -16,6 +16,7 @@ LevelDatap level_data_constructor(void)
 
   for (;;) {
 
+#if 0
     /*
      * Phase 1: create a framework for the level solution e.g.
      *
@@ -143,6 +144,7 @@ LevelDatap level_data_constructor(void)
       CON("COULD NOT SOLVE PH4");
       continue;
     }
+#endif
 
     //
     // Allocate the level as a flat C structure to allow history rewind
@@ -153,7 +155,9 @@ LevelDatap level_data_constructor(void)
       return nullptr;
     }
 
+#if 0
     *level = ph4.data;
+#endif
 
     return level;
   }

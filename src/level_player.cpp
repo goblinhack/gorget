@@ -8,7 +8,7 @@
 #include "my_thing.hpp"
 #include "my_thing_template.hpp"
 
-void Level::place_create_and_place()
+void Level::player_create_and_place()
 {
   TRACE_NO_INDENT();
 
@@ -19,7 +19,8 @@ void Level::place_create_and_place()
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
-        auto tp = tp_get(x, y, slot);
+        point p(x, y);
+        auto  tp = tp_get(p, slot);
         if (! tp) {
           continue;
         }
@@ -29,7 +30,7 @@ void Level::place_create_and_place()
         }
 
         auto player_tp = tp_random_player();
-        auto t         = thing_new(player_tp, x, y);
+        auto t         = thing_new(player_tp, p);
         thing_push(t);
         data->player = t->id;
         return;
@@ -51,8 +52,8 @@ void Level::player_map_center()
     return;
   }
 
-  data->pixel_map_at_x = t->pix_x / PIX_SCALE;
-  data->pixel_map_at_y = t->pix_y / PIX_SCALE;
+  data->pixel_map_at_x = t->pix_x;
+  data->pixel_map_at_y = t->pix_y;
   data->pixel_map_at_x -= game->config.game_pix_width / 2;
   data->pixel_map_at_y -= game->config.game_pix_height / 2;
 }
@@ -77,23 +78,23 @@ void Level::player_move(int8_t dx, int8_t dy)
 void Level::player_move_left()
 {
   TRACE_NO_INDENT();
-  player_move(-2, 0);
+  player_move(-1, 0);
 }
 
 void Level::player_move_right()
 {
   TRACE_NO_INDENT();
-  player_move(2, 0);
+  player_move(1, 0);
 }
 
 void Level::player_move_up()
 {
   TRACE_NO_INDENT();
-  player_move(0, -2);
+  player_move(0, -1);
 }
 
 void Level::player_move_down()
 {
   TRACE_NO_INDENT();
-  player_move(0, 2);
+  player_move(0, 1);
 }

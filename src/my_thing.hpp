@@ -13,8 +13,8 @@ struct Thing {
   ThingId  id;
   uint16_t tp_id;
   uint16_t tick;
-  int16_t  pix_x; /* Scaled up by PIX_SCALE */
-  int16_t  pix_y; /* Scaled up by PIX_SCALE */
+  int16_t  pix_x;
+  int16_t  pix_y;
   int8_t   dx;
   int8_t   dy;
   uint8_t  dir_up    : 1;

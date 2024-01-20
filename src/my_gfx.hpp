@@ -28,7 +28,6 @@ extern void gfx_init_16x16();
 extern void gfx_init_rocks();
 extern void gfx_init_walls();
 extern void gfx_init_24x24();
-extern void gfx_init_background();
 extern void gfx_init(void);
 extern void gfx_fini(void);
 

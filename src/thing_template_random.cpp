@@ -33,26 +33,11 @@ void tp_random_init(void)
     if (tp->is_wall) {
       tp_wall.push_back(tp);
     }
-    if (tp->is_spike) {
-      tp_spike.push_back(tp);
-    }
-    if (tp->is_ladder) {
-      tp_ladder.push_back(tp);
-    }
-    if (tp->is_rock_gold) {
-      tp_rock_gold.push_back(tp);
-    }
-    if (tp->is_crystal) {
-      tp_crystal.push_back(tp);
-    }
     if (tp->is_monst1) {
       tp_monst1.push_back(tp);
     }
     if (tp->is_player) {
       tp_player.push_back(tp);
-    }
-    if (tp->is_block) {
-      tp_block.push_back(tp);
     }
     if (tp->is_key) {
       tp_key.push_back(tp);

@@ -22,7 +22,6 @@ bool tp_load_player(void)
   tp->is_blit_on_ground       = true;
   tp->is_blit_square_outlined = true;
   tp->is_animated_can_hflip   = true;
-  tp->is_friction_applied     = true;
 
   auto delay = 100;
 

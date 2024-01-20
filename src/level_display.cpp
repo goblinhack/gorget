@@ -91,8 +91,9 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         point tl;
         point br;
 
-        Tpp  tp;
-        auto t = thing_get(x, y, slot, &tp);
+        Tpp   tp;
+        point p(x, y);
+        auto  t = thing_get(p, slot, &tp);
         if (! tp) {
           continue;
         }
@@ -116,8 +117,8 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         auto pix_width  = tile->pix_width / game->config.game_pix_zoom;
 
         if (t) {
-          tl.x = t->pix_x / PIX_SCALE;
-          tl.y = t->pix_y / PIX_SCALE;
+          tl.x = t->pix_x;
+          tl.y = t->pix_y;
         } else {
           tl.x = x * TILE_WIDTH;
           tl.y = y * TILE_WIDTH;
@@ -267,14 +268,6 @@ void Level::display(void)
     blit_fbo_bind(fbo);
     glClear(GL_COLOR_BUFFER_BIT);
     blit_init();
-
-    {
-      Tilep bg1 = tile_find("background1");
-      point tl  = point(-data->pixel_map_at_x, -data->pixel_map_at_y);
-      point br
-          = tl + point(bg1->pix_width / game->config.game_pix_zoom, bg1->pix_height / game->config.game_pix_zoom);
-      tile_blit(bg1, tl, br);
-    }
 
     const bool no_shadow   = false;
     const bool shadow_only = true;

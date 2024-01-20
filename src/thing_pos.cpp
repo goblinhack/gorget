@@ -17,10 +17,11 @@ void thing_push(LevelData *data, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  uint8_t x = (t->pix_x / PIX_SCALE) / TILE_WIDTH;
-  uint8_t y = (t->pix_y / PIX_SCALE) / TILE_HEIGHT;
+  int16_t x = t->pix_x / TILE_WIDTH;
+  int16_t y = t->pix_y / TILE_HEIGHT;
+  point   p(x, y);
 
-  if (is_oob(data, x, y)) {
+  if (is_oob(data, p)) {
     return;
   }
 
@@ -57,10 +58,11 @@ void thing_pop(LevelData *data, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  uint8_t x = (t->pix_x / PIX_SCALE) / TILE_WIDTH;
-  uint8_t y = (t->pix_y / PIX_SCALE) / TILE_HEIGHT;
+  uint8_t x = t->pix_x / TILE_WIDTH;
+  uint8_t y = t->pix_y / TILE_HEIGHT;
+  point   p(x, y);
 
-  if (is_oob(data, x, y)) {
+  if (is_oob(data, p)) {
     return;
   }
 
@@ -90,10 +92,10 @@ void thing_update_pos(LevelData *data, Thingp t)
   int16_t new_pix_x = cur_pix_x + t->dx;
   int16_t new_pix_y = cur_pix_y + t->dy;
 
-  int16_t cur_tile_x = (cur_pix_x / PIX_SCALE) / TILE_WIDTH;
-  int16_t cur_tile_y = (cur_pix_y / PIX_SCALE) / TILE_HEIGHT;
-  int16_t new_tile_x = (new_pix_x / PIX_SCALE) / TILE_WIDTH;
-  int16_t new_tile_y = (new_pix_y / PIX_SCALE) / TILE_HEIGHT;
+  int16_t cur_tile_x = cur_pix_x / TILE_WIDTH;
+  int16_t cur_tile_y = cur_pix_y / TILE_HEIGHT;
+  int16_t new_tile_x = new_pix_x / TILE_WIDTH;
+  int16_t new_tile_y = new_pix_y / TILE_HEIGHT;
 
   if ((cur_tile_x == new_tile_x) && (cur_tile_y == new_tile_y)) {
     t->pix_x = new_pix_x;

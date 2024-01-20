@@ -31,34 +31,27 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
       auto c  = get(ph3.data, x, y);
       Tpp  tp = nullptr;
       switch (c) {
-        case PH2_CHAR_CONNECTOR : break;
-        case PH2_CHAR_DOWN : break;
-        case PH2_CHAR_EMPTY : break;
-        case PH2_CHAR_ENTRANCE : tp = tp_random_entrance(); break;
-        case PH2_CHAR_EXIT : tp = tp_random_exit(); break;
-        case PH2_CHAR_KEY : tp = tp_random_key(); break;
-        case PH2_CHAR_LADDER : tp = tp_random_ladder(); break;
-        case PH2_CHAR_ROCK_GOLD : tp = tp_random_rock_gold(); break;
-        case PH2_CHAR_BLOCK : tp = tp_random_block(); break;
-        case PH2_CHAR_CRYSTAL : tp = tp_random_crystal(); break;
-        case PH2_CHAR_TREASURE : tp = tp_random_crystal(); break;
-        case PH2_CHAR_MONST1 :
+        case CHARMAP_DOWN : break;
+        case CHARMAP_EMPTY : break;
+        case CHARMAP_ENTRANCE : tp = tp_random_entrance(); break;
+        case CHARMAP_EXIT : tp = tp_random_exit(); break;
+        case CHARMAP_KEY : tp = tp_random_key(); break;
+        case CHARMAP_TREASURE : tp = tp_random_crystal(); break;
+        case CHARMAP_MONST1 :
           {
             auto tp = tp_random_monst1();
-            auto t  = thing_new(&data, tp, x, y);
+            auto t  = thing_new(&data, tp, point(x, y));
             thing_push(&data, t);
           }
           break;
-        case PH2_CHAR_LEFT : break;
-        case PH2_CHAR_LOCK : break;
-        case PH2_CHAR_OBSTACLE_AIR : break;
-        case PH2_CHAR_OBSTACLE_GROUND : break;
-        case PH2_CHAR_RIGHT : break;
-        case PH2_CHAR_ROCK : tp = tp_random_rock(); break;
-        case PH2_CHAR_SECRET_DOOR : break;
-        case PH2_CHAR_SPIKE_33_PERCENT : tp = tp_random_spike(); break;
-        case PH2_CHAR_UP : break;
-        case PH2_CHAR_WALL_100_PERCENT :
+        case CHARMAP_LEFT : break;
+        case CHARMAP_LOCK : break;
+        case CHARMAP_OBSTACLE_WILDCARD : break;
+        case CHARMAP_RIGHT : break;
+        case CHARMAP_ROCK : tp = tp_random_rock(); break;
+        case CHARMAP_SECRET_DOOR : break;
+        case CHARMAP_UP : break;
+        case CHARMAP_WALL_100_PERCENT :
           tp = tp_random_wall();
 
           //
@@ -71,8 +64,8 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
             }
           }
           break;
-        case PH2_CHAR_WALL_50_PERCENT : tp = tp_random_wall(); break;
-        case PH2_CHAR_WILDCARD : break;
+        case CHARMAP_WALL_50_PERCENT : tp = tp_random_wall(); break;
+        case CHARMAP_WILDCARD : break;
       }
 
       if (tp) {

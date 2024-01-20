@@ -11,6 +11,7 @@
 
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"
+#include "my_point.hpp"
 #include "my_thing.hpp"
 #include "my_thing_id.hpp"
 
@@ -82,17 +83,18 @@ typedef struct LevelData_ {
 LevelDatap level_data_constructor(void);
 void       level_data_destructor(LevelDatap);
 
-bool is_oob(LevelData *, int8_t x, int8_t y);
+bool is_oob(LevelData *, point p);
 
 Thingp thing_find_optional(LevelData *, ThingId);
 Thingp thing_find(LevelData *, ThingId);
-Thingp thing_new(LevelData *, Tpp, uint8_t, uint8_t);
-Thingp thing_get(LevelData *, int8_t x, int8_t y, uint8_t slot, Tpp * = nullptr);
+Thingp thing_new(LevelData *, Tpp, point);
+Thingp thing_get(LevelData *, point p, uint8_t slot, Tpp * = nullptr);
 
 void thing_free(LevelData *, Thingp);
 void thing_push(LevelData *, Thingp);
 void thing_pop(LevelData *, Thingp);
 
-Tpp tp_get(LevelData *, int8_t x, int8_t y, uint8_t slot);
+Tpp  tp_get(LevelData *, point p, uint8_t slot);
+void tp_set(LevelData *, point p, Tpp);
 
 #endif // _MY_LEVEL_DATA_H_

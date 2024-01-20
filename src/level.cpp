@@ -16,7 +16,7 @@ Level::Level()
   data = level_data_constructor();
 
   assign_tiles();
-  place_create_and_place();
+  player_create_and_place();
   player_map_center();
 }
 

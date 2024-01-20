@@ -16,6 +16,7 @@
 using LevelPh2Rooms = std::vector< LevelPh2Roomp >;
 
 typedef enum {
+  ROOM_TYPE_MAP,
   ROOM_TYPE_NORMAL,
   ROOM_TYPE_ENTRANCE,
   ROOM_TYPE_EXIT,

@@ -114,25 +114,19 @@ void level_ph3_obstacle_add(ObstacleType type, const char *data)
       auto c      = data[ offset ];
 
       switch (c) {
-        case PH2_CHAR_ROCK : break;
-        case PH2_CHAR_WILDCARD : DIE("obstacle should not have a wildcard"); break;
-        case PH2_CHAR_WALL_100_PERCENT : break;
-        case PH2_CHAR_WALL_50_PERCENT : break;
-        case PH2_CHAR_SPIKE_33_PERCENT : break;
-        case PH2_CHAR_OBSTACLE_GROUND : break;
-        case PH2_CHAR_OBSTACLE_AIR : break;
-        case PH2_CHAR_LADDER : break;
-        case PH2_CHAR_ROCK_GOLD : break;
-        case PH2_CHAR_BLOCK : break;
-        case PH2_CHAR_CRYSTAL : break;
-        case PH2_CHAR_TREASURE : break;
-        case PH2_CHAR_MONST1 : break;
-        case PH2_CHAR_ENTRANCE : DIE("obstacle should not have an entrance"); break;
-        case PH2_CHAR_EXIT : DIE("obstacle should not have an exit"); break;
-        case PH2_CHAR_LOCK : break;
-        case PH2_CHAR_KEY : break;
-        case PH2_CHAR_SECRET_DOOR : DIE("obstacle should not have a secret door"); break;
-        case PH2_CHAR_EMPTY : break;
+        case CHARMAP_ROCK : break;
+        case CHARMAP_WILDCARD : DIE("obstacle should not have a wildcard"); break;
+        case CHARMAP_WALL_100_PERCENT : break;
+        case CHARMAP_WALL_50_PERCENT : break;
+        case CHARMAP_OBSTACLE_WILDCARD : break;
+        case CHARMAP_TREASURE : break;
+        case CHARMAP_MONST1 : break;
+        case CHARMAP_ENTRANCE : DIE("obstacle should not have an entrance"); break;
+        case CHARMAP_EXIT : DIE("obstacle should not have an exit"); break;
+        case CHARMAP_LOCK : break;
+        case CHARMAP_KEY : break;
+        case CHARMAP_SECRET_DOOR : DIE("obstacle should not have a secret door"); break;
+        case CHARMAP_EMPTY : break;
         default : DIE("unexpected obstacle char '%c'", c);
       }
 

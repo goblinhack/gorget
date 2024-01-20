@@ -36,22 +36,14 @@ public:
   bool is_blit_outlined {};
   bool is_blit_square_outlined {};
   bool is_block {};
-  bool is_crystal {};
   bool is_entrance {};
   bool is_exit {};
-  bool is_friction_applied {};
   bool is_key {};
-  bool is_ladder {};
   bool is_monst1 {};
   bool is_player {};
   bool is_rock {};
-  bool is_rock_gold {};
-  bool is_spike {};
-  bool is_tiled {};
   bool is_wall {};
   // end sort marker1 }
-
-  int8_t max_speed {THING_MAX_SPEED};
 
   // begin sort marker2 {
   int chance_d1000_appearing {};

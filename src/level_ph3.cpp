@@ -47,7 +47,7 @@ bool LevelPh3::expand(const LevelPh2 &ph2)
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
-      set(data, x, y, (char) PH2_CHAR_ROCK);
+      set(data, x, y, (char) CHARMAP_ROCK);
     }
   }
 
@@ -103,9 +103,8 @@ void LevelPh3::add_obstacle_at(const LevelPh2 &ph2, point at, LevelPh3Obstaclesp
       if (! is_oob(rx, ry)) {
         switch (get(data, rx, ry)) {
           default : break;
-          case PH2_CHAR_WILDCARD :
-          case PH2_CHAR_OBSTACLE_AIR :
-          case PH2_CHAR_OBSTACLE_GROUND : set(data, rx, ry, c); break;
+          case CHARMAP_WILDCARD :
+          case CHARMAP_OBSTACLE_WILDCARD : set(data, rx, ry, c); break;
         }
       }
 
@@ -116,9 +115,8 @@ void LevelPh3::add_obstacle_at(const LevelPh2 &ph2, point at, LevelPh3Obstaclesp
       if (! is_oob(rx, ry)) {
         switch (get(data, rx, ry)) {
           default : break;
-          case PH2_CHAR_WILDCARD :
-          case PH2_CHAR_OBSTACLE_AIR :
-          case PH2_CHAR_OBSTACLE_GROUND : set(data, rx, ry, c); break;
+          case CHARMAP_WILDCARD :
+          case CHARMAP_OBSTACLE_WILDCARD : set(data, rx, ry, c); break;
         }
       }
     }
@@ -136,125 +134,9 @@ void LevelPh3::add_obstacles(const LevelPh2 &ph2)
     for (auto x = 0; x < w; x++) {
       point at(x, y);
       switch (get(data, x, y)) {
-        case PH2_CHAR_OBSTACLE_AIR :
-          add_obstacle_at(ph2, at, one_of(LevelPh3Obstacles::all_obsts_of_type[ OBSTACLE_TYPE_AIR ]));
+        case CHARMAP_OBSTACLE_WILDCARD :
+          add_obstacle_at(ph2, at, one_of(LevelPh3Obstacles::all_obsts_of_type[ OBSTACLE_TYPE_NORMAL ]));
           break;
-        case PH2_CHAR_OBSTACLE_GROUND :
-          add_obstacle_at(ph2, at, one_of(LevelPh3Obstacles::all_obsts_of_type[ OBSTACLE_TYPE_GROUND ]));
-          break;
-      }
-    }
-  }
-}
-
-void LevelPh3::fix_obstacles(const LevelPh2 &ph2)
-{
-  TRACE_NO_INDENT();
-
-  const auto w = LEVEL_PH3_WIDTH;
-  const auto h = LEVEL_PH3_HEIGHT;
-
-  for (auto y = 0; y < h; y++) {
-    for (auto x = 0; x < w; x++) {
-      point at(x, y);
-      switch (get(data, x, y)) {
-        case PH2_CHAR_SPIKE_33_PERCENT : break;
-        case PH2_CHAR_WALL_100_PERCENT : break;
-        case PH2_CHAR_WALL_50_PERCENT :
-          if (d100() > 50) {
-            set(data, x, y, (char) PH2_CHAR_EMPTY);
-          } else {
-            set(data, x, y, (char) PH2_CHAR_WALL_100_PERCENT);
-
-            //
-            // Possible push block
-            //
-            if (y < h - 1) {
-              if (get(data, x, y + 1) == PH2_CHAR_WALL_100_PERCENT) {
-                //
-                // Push block sitting on stone
-                //
-                if (d100() > 50) {
-                  set(data, x, y, (char) PH2_CHAR_BLOCK);
-                }
-              } else if ((x > 0) && (x < w - 1)) {
-                //
-                // Drop block?
-                //
-                if ((get(data, x + 1, y) == PH2_CHAR_WALL_100_PERCENT)
-                    && (get(data, x - 1, y) == PH2_CHAR_WALL_100_PERCENT)) {
-                  if (d100() > 50) {
-                    set(data, x, y, (char) PH2_CHAR_BLOCK);
-                  }
-                }
-              }
-            }
-          }
-      }
-    }
-  }
-}
-
-void LevelPh3::fix_floating_objs(const LevelPh2 &ph2)
-{
-  TRACE_NO_INDENT();
-
-  const auto w = LEVEL_PH3_WIDTH;
-  const auto h = LEVEL_PH3_HEIGHT;
-
-  for (auto y = 0; y < h - 1; y++) {
-    for (auto x = 0; x < w; x++) {
-      point at(x, y);
-      switch (get(data, x, y)) {
-        case PH2_CHAR_SPIKE_33_PERCENT :
-        case PH2_CHAR_MONST1 :
-        case PH2_CHAR_CRYSTAL :
-        case PH2_CHAR_TREASURE :
-          switch (get(data, x, y + 1)) {
-            case PH2_CHAR_EMPTY : set(data, x, y + 1, (char) PH2_CHAR_WALL_100_PERCENT); break;
-            case PH2_CHAR_WALL_100_PERCENT : break;
-            case PH2_CHAR_WALL_50_PERCENT : break;
-            case PH2_CHAR_ROCK : break;
-            default : set(data, x, y, (char) PH2_CHAR_EMPTY); break;
-          }
-      }
-    }
-  }
-
-  for (auto y = 0; y < h - 1; y++) {
-    for (auto x = 1; x < w - 1; x++) {
-      point at(x, y);
-      switch (get(data, x, y)) {
-        case PH2_CHAR_BLOCK :
-          //
-          // Push blocks are ok if there is some rock either side.
-          //
-          bool ok = false;
-
-          switch (get(data, x - 1, y)) {
-            case PH2_CHAR_WALL_100_PERCENT :
-            case PH2_CHAR_WALL_50_PERCENT :
-            case PH2_CHAR_ROCK :
-            case PH2_CHAR_BLOCK : ok = true; break;
-          }
-          switch (get(data, x + 1, y)) {
-            case PH2_CHAR_WALL_100_PERCENT :
-            case PH2_CHAR_WALL_50_PERCENT :
-            case PH2_CHAR_ROCK :
-            case PH2_CHAR_BLOCK : ok = true; break;
-          }
-
-          if (ok) {
-            continue;
-          }
-
-          switch (get(data, x, y + 1)) {
-            case PH2_CHAR_EMPTY : set(data, x, y + 1, (char) PH2_CHAR_WALL_100_PERCENT); break;
-            case PH2_CHAR_WALL_100_PERCENT : break;
-            case PH2_CHAR_WALL_50_PERCENT : break;
-            case PH2_CHAR_ROCK : break;
-            default : set(data, x, y, (char) PH2_CHAR_EMPTY); break;
-          }
       }
     }
   }
@@ -270,14 +152,6 @@ LevelPh3::LevelPh3(const LevelPh2 &ph2)
 
   LOG("Phase3: Replace obstacle blocks:");
   add_obstacles(ph2);
-  dump();
-
-  LOG("Phase3: Replace random chance tiles:");
-  fix_obstacles(ph2);
-  dump();
-
-  LOG("Phase3: Ensure spikes have something under them:");
-  fix_floating_objs(ph2);
   dump();
 
   ok = true;

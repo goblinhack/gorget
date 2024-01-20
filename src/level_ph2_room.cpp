@@ -133,50 +133,44 @@ void level_ph2_room_set_add(RoomType specified_type, const char *data)
           auto c = data[ offset ];
 
           switch (c) {
-            case PH2_CHAR_ROCK : break;
-            case PH2_CHAR_WILDCARD : break;
-            case PH2_CHAR_WALL_100_PERCENT : break;
-            case PH2_CHAR_WALL_50_PERCENT : break;
-            case PH2_CHAR_SPIKE_33_PERCENT : break;
-            case PH2_CHAR_OBSTACLE_GROUND : break;
-            case PH2_CHAR_OBSTACLE_AIR : break;
-            case PH2_CHAR_LADDER : break;
-            case PH2_CHAR_ROCK_GOLD : break;
-            case PH2_CHAR_BLOCK : break;
-            case PH2_CHAR_CRYSTAL : break;
-            case PH2_CHAR_TREASURE : break;
-            case PH2_CHAR_MONST1 : break;
-            case PH2_CHAR_ENTRANCE :
+            case CHARMAP_ROCK : break;
+            case CHARMAP_WILDCARD : break;
+            case CHARMAP_WALL_100_PERCENT : break;
+            case CHARMAP_WALL_50_PERCENT : break;
+            case CHARMAP_OBSTACLE_WILDCARD : break;
+            case CHARMAP_TREASURE : break;
+            case CHARMAP_MONST1 : break;
+            case CHARMAP_ENTRANCE :
               if (r->type != ROOM_TYPE_NORMAL) {
                 DIE("room type already set when trying to set entrance");
               }
               r->type = ROOM_TYPE_ENTRANCE;
               break;
-            case PH2_CHAR_EXIT :
+            case CHARMAP_EXIT :
               if (r->type != ROOM_TYPE_NORMAL) {
                 DIE("room type already set when trying to set as exit");
               }
               r->type = ROOM_TYPE_EXIT;
               break;
-            case PH2_CHAR_LOCK :
+            case CHARMAP_LOCK :
               if ((r->type != ROOM_TYPE_NORMAL) && (r->type != ROOM_TYPE_LOCK)) {
                 DIE("room type already set when trying to set as lock");
               }
               r->type = ROOM_TYPE_LOCK;
               break;
-            case PH2_CHAR_KEY :
+            case CHARMAP_KEY :
               if ((r->type != ROOM_TYPE_NORMAL) && (r->type != ROOM_TYPE_KEY)) {
                 DIE("room type already set when trying to set as key");
               }
               r->type = ROOM_TYPE_KEY;
               break;
-            case PH2_CHAR_SECRET_DOOR :
+            case CHARMAP_SECRET_DOOR :
               if ((r->type != ROOM_TYPE_NORMAL) && (r->type != ROOM_TYPE_SECRET)) {
                 DIE("room type already set when trying to set as secret");
               }
               r->type = ROOM_TYPE_SECRET;
               break;
-            case PH2_CHAR_EMPTY : break;
+            case CHARMAP_EMPTY : break;
             default : DIE("unexpected room char '%c'", c);
           }
 
@@ -184,24 +178,24 @@ void level_ph2_room_set_add(RoomType specified_type, const char *data)
 
           if (rx == 0) {
             auto c = data[ offset - 1 ];
-            if ((c == PH2_CHAR_CONNECTOR) || (c == PH2_CHAR_LEFT)) {
+            if (c == CHARMAP_LEFT) {
               r->exits_left |= 1U << (LEVEL_PH2_ROOM_HEIGHT - ry - 1);
             }
           } else if (rx == LEVEL_PH2_ROOM_WIDTH - 1) {
             auto c = data[ offset + 1 ];
-            if ((c == PH2_CHAR_CONNECTOR) || (c == PH2_CHAR_RIGHT)) {
+            if (c == CHARMAP_RIGHT) {
               r->exits_right |= 1U << (LEVEL_PH2_ROOM_HEIGHT - ry - 1);
             }
           }
 
           if (ry == 0) {
             auto c = data[ offset - row_len ];
-            if ((c == PH2_CHAR_CONNECTOR) || (c == PH2_CHAR_UP)) {
+            if (c == CHARMAP_UP) {
               r->exits_up |= 1U << (LEVEL_PH2_ROOM_WIDTH - rx - 1);
             }
           } else if (ry == LEVEL_PH2_ROOM_HEIGHT - 1) {
             auto c = data[ offset + row_len ];
-            if ((c == PH2_CHAR_CONNECTOR) || (c == PH2_CHAR_DOWN)) {
+            if (c == CHARMAP_DOWN) {
               r->exits_down |= 1U << (LEVEL_PH2_ROOM_WIDTH - rx - 1);
             }
           }

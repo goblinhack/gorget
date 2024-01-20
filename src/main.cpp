@@ -435,6 +435,7 @@ static void usage(void)
   CON(" --debug2                    -- Most debugs. Most useful.");
   CON(" --debug3                    -- All debugs. Slow.");
   CON(" --no-debug                  -- Disable debugs.");
+  CON(" --test-start                -- Skip main menu.");
   CON(" ");
   CON("Written by goblinhack@gmail.com");
 }

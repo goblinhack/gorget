@@ -28,8 +28,8 @@
  *     2---E2----2----2
  *    ^ >  <    <    <
  */
-#define LEVEL_PH1_WIDTH      4 // Levels are split into grids. Each grid can have a room.
-#define LEVEL_PH1_HEIGHT     4 // Levels are split into grids. Each grid can have a room.
+#define LEVEL_PH1_WIDTH      5 // Levels are split into grids. Each grid can have a room.
+#define LEVEL_PH1_HEIGHT     5 // Levels are split into grids. Each grid can have a room.
 #define LEVEL_PH1_LOCK_DEPTH 2 // Max difficulty level
 
 /*
@@ -73,8 +73,8 @@
  */
 #define LEVEL_PH2_WIDTH       LEVEL_PH1_WIDTH
 #define LEVEL_PH2_HEIGHT      LEVEL_PH1_HEIGHT
-#define LEVEL_PH2_ROOM_WIDTH  10 // Max room dimensions
-#define LEVEL_PH2_ROOM_HEIGHT 8  // Max room dimensions
+#define LEVEL_PH2_ROOM_WIDTH  11 // Max room dimensions
+#define LEVEL_PH2_ROOM_HEIGHT 11 // Max room dimensions
 
 /*
  * Phase 3: join the rooms together and expand any wildcards
@@ -118,13 +118,13 @@
 #define LEVEL_PH3_WIDTH           ((LEVEL_PH2_WIDTH * LEVEL_PH2_ROOM_WIDTH) + (LEVEL_PH3_MAP_BORDER * 2))
 #define LEVEL_PH3_HEIGHT          ((LEVEL_PH2_HEIGHT * LEVEL_PH2_ROOM_HEIGHT) + (LEVEL_PH3_MAP_BORDER * 2))
 #define LEVEL_PH3_OBSTACLE_WIDTH  5 // Max obstacle dimensions
-#define LEVEL_PH3_OBSTACLE_HEIGHT 3 // Max obstacle dimensions
+#define LEVEL_PH3_OBSTACLE_HEIGHT 5 // Max obstacle dimensions
 
 /*
  * Phase 4: replace all chars with objects
  */
-#define LEVEL_PH4_WIDTH  LEVEL_PH3_WIDTH
-#define LEVEL_PH4_HEIGHT LEVEL_PH3_HEIGHT
+#define LEVEL_PH4_WIDTH  64
+#define LEVEL_PH4_HEIGHT 64
 
 #define MAP_WIDTH  LEVEL_PH4_WIDTH
 #define MAP_HEIGHT LEVEL_PH4_HEIGHT
@@ -134,12 +134,5 @@
 #define GAME_MOST_ZOOMED_OUT  1
 #define GAME_DEFAULT_UI_ZOOM  1
 #define GAME_DEFAULT_PIX_ZOOM GAME_MOST_ZOOMED_OUT
-
-/*
- * Accounts for fractions of a pixel
- */
-#define PIX_SCALE 8
-
-#define THING_MAX_SPEED 15
 
 #endif

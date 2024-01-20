@@ -19,31 +19,7 @@ bool templates_init(void)
     return false;
   }
 
-  if (! tp_load_spike()) {
-    return false;
-  }
-
-  if (! tp_load_ladder()) {
-    return false;
-  }
-
-  if (! tp_load_rock_gold()) {
-    return false;
-  }
-
-  if (! tp_load_crystal()) {
-    return false;
-  }
-
-  if (! tp_load_snake()) {
-    return false;
-  }
-
   if (! tp_load_player()) {
-    return false;
-  }
-
-  if (! tp_load_block()) {
     return false;
   }
 

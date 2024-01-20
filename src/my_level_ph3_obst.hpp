@@ -15,8 +15,7 @@
 using LevelPh3Obstacless = std::vector< LevelPh3Obstaclesp >;
 
 typedef enum {
-  OBSTACLE_TYPE_AIR,
-  OBSTACLE_TYPE_GROUND,
+  OBSTACLE_TYPE_NORMAL,
   OBSTACLE_TYPE_MAX,
 } ObstacleType;
 

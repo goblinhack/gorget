@@ -26,8 +26,9 @@ void Level::anim(void)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        Tpp  tp;
-        auto t = thing_get(x, y, slot, &tp);
+        Tpp   tp;
+        point p(x, y);
+        thing_get(p, slot, &tp);
         if (! tp) {
           continue;
         }
@@ -62,13 +63,7 @@ void Level::anim(void)
           obj->anim_index = 0;
         }
 
-        tile = tp->tiles[ obj->anim_index ];
-        if (0) {
-          if (t) {
-            CON("t %d idx %d %s delay %d obj %p %d,%d,%d", t->id, obj->anim_index, tile->name.c_str(), tile->delay_ms,
-                obj, x, y, slot);
-          }
-        }
+        tile      = tp->tiles[ obj->anim_index ];
         obj->tile = tile->global_index;
 
         obj->anim_ms_remaining += tile->delay_ms;

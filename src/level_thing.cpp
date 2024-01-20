@@ -13,33 +13,11 @@
 #include "my_thing_id.hpp"
 #include "my_thing_template.hpp"
 
-Tpp tp_get(LevelData *data, int8_t x, int8_t y, uint8_t slot)
+Thingp thing_get(LevelData *data, point p, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
-  Id id = data->obj[ x ][ y ][ slot ].id;
-  if (! id) {
-    return nullptr;
-  }
-
-  if (id >= THING_ID_BASE) {
-    return nullptr;
-  }
-
-  return tp_find(id);
-}
-
-Tpp Level::tp_get(int8_t x, int8_t y, uint8_t slot)
-{
-  TRACE_NO_INDENT();
-  return ::tp_get(data, x, y, slot);
-}
-
-Thingp thing_get(LevelData *data, int8_t x, int8_t y, uint8_t slot, Tpp *out)
-{
-  TRACE_NO_INDENT();
-
-  Id id = data->obj[ x ][ y ][ slot ].id;
+  Id id = data->obj[ p.x ][ p.y ][ slot ].id;
 
   if (out) {
     *out = nullptr;
@@ -69,10 +47,10 @@ Thingp thing_get(LevelData *data, int8_t x, int8_t y, uint8_t slot, Tpp *out)
   return nullptr;
 }
 
-Thingp Level::thing_get(int8_t x, int8_t y, uint8_t slot, Tpp *out)
+Thingp Level::thing_get(point p, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();
-  return ::thing_get(data, x, y, slot, out);
+  return ::thing_get(data, p, slot, out);
 }
 
 Thingp thing_find_optional(LevelData *data, ThingId id)
@@ -128,12 +106,12 @@ Thingp Level::thing_find(ThingId id)
   return ::thing_find_optional(data, id);
 }
 
-Thingp thing_new(LevelData *data, Tpp tp, uint8_t at_x, uint8_t at_y)
+Thingp thing_new(LevelData *data, Tpp tp, point p)
 {
   TRACE_NO_INDENT();
 
-  uint16_t x = 0;
-  uint16_t y = 0;
+  int16_t x = 0;
+  int16_t y = 0;
 
   for (x = 0; x < (1 << THING_ID_X_BITS); x++) {
     for (y = 0; y < (1 << THING_ID_Y_BITS); y++) {
@@ -154,8 +132,8 @@ Thingp thing_new(LevelData *data, Tpp tp, uint8_t at_x, uint8_t at_y)
       ThingId thing_id;
       thing_id = (entropy << (THING_ID_X_BITS + THING_ID_Y_BITS)) | (x << THING_ID_Y_BITS) | y;
       t->id    = thing_id;
-      t->pix_x = (int) at_x * PIX_SCALE * TILE_WIDTH;
-      t->pix_y = (int) at_y * PIX_SCALE * TILE_HEIGHT;
+      t->pix_x = (int) p.x * TILE_WIDTH;
+      t->pix_y = (int) p.y * TILE_HEIGHT;
 
       if (tp) {
         t->tp_id = tp->id;
@@ -168,10 +146,10 @@ Thingp thing_new(LevelData *data, Tpp tp, uint8_t at_x, uint8_t at_y)
   DIE("out of things");
 }
 
-Thingp Level::thing_new(Tpp tp, int8_t x, int8_t y)
+Thingp Level::thing_new(Tpp tp, point p)
 {
   TRACE_NO_INDENT();
-  return ::thing_new(data, tp, x, y);
+  return ::thing_new(data, tp, p);
 }
 
 void thing_free(LevelData *data, Thingp t)
