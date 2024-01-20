@@ -59,6 +59,7 @@ public:
   void player_move(int8_t, int8_t);
   void set_display_bounds(void);
   void world_create_and_place(void);
+  void map_set(LevelDatap, const char *);
   void tick(void);
 
   bool is_wall(point p);
