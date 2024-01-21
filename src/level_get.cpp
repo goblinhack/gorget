@@ -3,9 +3,9 @@
 //
 
 #include "my_level.hpp"
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 
-bool Level::is_wall(point p)
+bool Level::is_same_type(point p, Tpp tp)
 {
   TRACE_NO_INDENT();
   if (is_oob(p)) {
@@ -16,20 +16,15 @@ bool Level::is_wall(point p)
     return false;
   }
 
-  static const auto wall = tp_find("wall");
-  if (! wall) {
-    return false;
-  }
-
-  auto id = data->obj[ p.x ][ p.y ][ wall->z_depth ].id;
+  auto id = data->obj[ p.x ][ p.y ][ tp->z_depth ].id;
   if (! id) {
     return false;
   }
 
-  return id == wall->id;
+  return id == tp->id;
 }
 
-bool Level::is_rock(point p)
+bool Level::is_world_mountains(point p)
 {
   TRACE_NO_INDENT();
   if (is_oob(p)) {
@@ -40,15 +35,15 @@ bool Level::is_rock(point p)
     return false;
   }
 
-  static const auto rock = tp_find("rock");
-  if (! rock) {
+  static const auto mountains = tp_find("mountains");
+  if (! mountains) {
     return false;
   }
 
-  auto id = data->obj[ p.x ][ p.y ][ rock->z_depth ].id;
+  auto id = data->obj[ p.x ][ p.y ][ mountains->z_depth ].id;
   if (! id) {
     return false;
   }
 
-  return id == rock->id;
+  return id == mountains->id;
 }

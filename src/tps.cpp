@@ -4,18 +4,14 @@
 
 #include "my_level_data.hpp"
 #include "my_main.hpp"
-#include "my_thing_template.hpp"
-#include "my_thing_templates.hpp"
+#include "my_tp.hpp"
+#include "my_tps.hpp"
 
 bool templates_init(void)
 {
   TRACE_NO_INDENT();
 
-  if (! tp_load_rock()) {
-    return false;
-  }
-
-  if (! tp_load_wall()) {
+  if (! tp_load_world_mountains()) {
     return false;
   }
 
@@ -27,11 +23,11 @@ bool templates_init(void)
     return false;
   }
 
-  if (! tp_load_entrance()) {
+  if (! tp_load_dungeon_entrance()) {
     return false;
   }
 
-  if (! tp_load_exit()) {
+  if (! tp_load_dungeon_exit()) {
     return false;
   }
 

@@ -11,7 +11,7 @@
 #include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_id.hpp"
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 
 Thingp thing_get(LevelData *data, point p, uint8_t slot, Tpp *out)
 {

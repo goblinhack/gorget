@@ -121,8 +121,8 @@ void level_ph3_obstacle_add(ObstacleType type, const char *data)
         case CHARMAP_OBSTACLE_WILDCARD : break;
         case CHARMAP_TREASURE : break;
         case CHARMAP_MONST1 : break;
-        case CHARMAP_ENTRANCE : DIE("obstacle should not have an entrance"); break;
-        case CHARMAP_EXIT : DIE("obstacle should not have an exit"); break;
+        case CHARMAP_DUNGEON_ENTRANCE : DIE("obstacle should not have an entrance"); break;
+        case CHARMAP_DUNGEON_EXIT : DIE("obstacle should not have an exit"); break;
         case CHARMAP_LOCK : break;
         case CHARMAP_KEY : break;
         case CHARMAP_SECRET_DOOR : DIE("obstacle should not have a secret door"); break;

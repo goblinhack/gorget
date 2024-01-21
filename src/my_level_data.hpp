@@ -24,6 +24,13 @@ enum {
   MAP_DEPTH_PLAYER,
 };
 
+enum {
+  MAP_DEPTH_SEA,
+  MAP_DEPTH_MOUNTAINS,
+  MAP_DEPTH_SAND,
+  MAP_DEPTH_GRASS,
+};
+
 //
 // Simple things like walls that do not change much
 //

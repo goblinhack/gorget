@@ -26,7 +26,7 @@ void Game::init(void)
 
     level_ph2_norm_init();
     level_ph2_entrances();
-    level_ph2_exit_init();
+    level_ph2_dungeon_exit_init();
     level_ph2_secr_init();
     level_ph2_lock_init();
     level_ph2_key_init();

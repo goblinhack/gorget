@@ -26,7 +26,7 @@ public:
 
 void level_ph2_norm_init(void);
 void level_ph2_entrances(void);
-void level_ph2_exit_init(void);
+void level_ph2_dungeon_exit_init(void);
 void level_ph2_secr_init(void);
 void level_ph2_lock_init(void);
 void level_ph2_key_init(void);

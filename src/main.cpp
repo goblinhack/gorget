@@ -25,7 +25,7 @@
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 #include "my_wid_console.hpp"
 
 static char **ARGV;
@@ -59,8 +59,8 @@ void quit(void)
     game->fini();
   }
 
-  LOG("FIN: sdl_exit");
-  sdl_exit();
+  LOG("FIN: sdl_dungeon_exit");
+  sdl_dungeon_exit();
 
   LOG("FIN: wid_console_fini");
   wid_console_fini();

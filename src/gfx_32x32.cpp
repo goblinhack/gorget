@@ -9,8 +9,23 @@ void gfx_init_32x32(void)
 {
   std::initializer_list< std::string > tiles = {
       // clang-format off
-      "entrance", "",       "",       "",       "",       "",       "",       "",
-      "exit.0",   "exit.1", "exit.2", "exit.3", "exit.4", "exit.5", "exit.6", "exit.7",
+      "dungeon_entrance",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      // ##############################################################################
+      "dungeon_exit.0",
+      "dungeon_exit.1",
+      "dungeon_exit.2",
+      "dungeon_exit.3",
+      "dungeon_exit.4",
+      "dungeon_exit.5",
+      "dungeon_exit.6",
+      "dungeon_exit.7",
       // clang-format on
   };
   const std::vector< std::string > arr(tiles);

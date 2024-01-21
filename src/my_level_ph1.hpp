@@ -41,17 +41,17 @@ public:
   bool is_key {false};
   bool is_lock {false};
   bool is_entrance {false};
-  bool is_exit {false};
+  bool is_dungeon_exit {false};
   bool on_critical_path {false};
   bool has_door {false};
   bool has_door_up {false};
   bool has_door_down {false};
   bool has_door_left {false};
   bool has_door_right {false};
-  bool has_secret_exit_up {false};
-  bool has_secret_exit_down {false};
-  bool has_secret_exit_left {false};
-  bool has_secret_exit_right {false};
+  bool has_secret_dungeon_exit_up {false};
+  bool has_secret_dungeon_exit_down {false};
+  bool has_secret_dungeon_exit_left {false};
+  bool has_secret_dungeon_exit_right {false};
   bool dir_up {false};
   bool dir_down {false};
   bool dir_left {false};
@@ -66,47 +66,47 @@ public:
   {
     has_door           = v;
     has_door_up        = v;
-    has_secret_exit_up = false;
+    has_secret_dungeon_exit_up = false;
   }
   void set_has_door_down(bool v)
   {
     has_door             = v;
     has_door_down        = v;
-    has_secret_exit_down = false;
+    has_secret_dungeon_exit_down = false;
   }
   void set_has_door_right(bool v)
   {
     has_door              = v;
     has_door_right        = v;
-    has_secret_exit_right = false;
+    has_secret_dungeon_exit_right = false;
   }
   void set_has_door_left(bool v)
   {
     has_door             = v;
     has_door_left        = v;
-    has_secret_exit_left = false;
+    has_secret_dungeon_exit_left = false;
   }
-  void set_has_secret_exit_up(bool v)
+  void set_has_secret_dungeon_exit_up(bool v)
   {
-    has_secret_exit_up = v;
+    has_secret_dungeon_exit_up = v;
     has_door           = false;
     has_door_up        = false;
   }
-  void set_has_secret_exit_down(bool v)
+  void set_has_secret_dungeon_exit_down(bool v)
   {
-    has_secret_exit_down = v;
+    has_secret_dungeon_exit_down = v;
     has_door             = false;
     has_door_down        = false;
   }
-  void set_has_secret_exit_right(bool v)
+  void set_has_secret_dungeon_exit_right(bool v)
   {
-    has_secret_exit_right = v;
+    has_secret_dungeon_exit_right = v;
     has_door              = false;
     has_door_right        = false;
   }
-  void set_has_secret_exit_left(bool v)
+  void set_has_secret_dungeon_exit_left(bool v)
   {
-    has_secret_exit_left = v;
+    has_secret_dungeon_exit_left = v;
     has_door             = false;
     has_door_left        = false;
   }
@@ -135,12 +135,12 @@ public:
 
   LevelPh1(int grid_width, int grid_height) : grid_width(grid_width), grid_height(grid_height) {}
 
-  bool create_path_to_exit(int pass);
+  bool create_path_to_dungeon_exit(int pass);
   bool is_oob(const int x, const int y) const;
   bool node_is_a_room(Level1Node *n);
   bool node_is_free(Level1Node *n);
   bool place_entrance(void);
-  bool place_exit(void);
+  bool place_dungeon_exit(void);
   bool place_key(int depth, int pass);
   bool place_lock(int depth, int pass);
   bool remove_dead_end_paths(void);

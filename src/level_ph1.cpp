@@ -243,7 +243,7 @@ redo:
     goto redo;
   }
 
-  if (! place_exit()) {
+  if (! place_dungeon_exit()) {
     debug("redo, failed to place exit");
     goto redo;
   }
@@ -251,14 +251,14 @@ redo:
   //
   // First time we consider secret exits
   //
-  create_path_to_exit(1);
+  create_path_to_dungeon_exit(1);
   debug("created path to exit");
 
   //
   // Second time we ignore them to ensure they are not considered
   // as on the main path
   //
-  if (! create_path_to_exit(2)) {
+  if (! create_path_to_dungeon_exit(2)) {
     debug("redo, too short a path to exit");
     goto redo;
   }
@@ -360,19 +360,19 @@ void LevelPh1::dump(void)
         set(out, ox + 1, oy, '-');
         set(out, ox + 2, oy, '-');
       }
-      if (node->has_secret_exit_down) {
+      if (node->has_secret_dungeon_exit_down) {
         set(out, ox, oy + 1, '?');
         set(out, ox, oy + 2, '?');
       }
-      if (node->has_secret_exit_up) {
+      if (node->has_secret_dungeon_exit_up) {
         set(out, ox, oy - 1, '?');
         set(out, ox, oy - 2, '?');
       }
-      if (node->has_secret_exit_left) {
+      if (node->has_secret_dungeon_exit_left) {
         set(out, ox - 1, oy, '?');
         set(out, ox - 2, oy, '?');
       }
-      if (node->has_secret_exit_right) {
+      if (node->has_secret_dungeon_exit_right) {
         set(out, ox + 1, oy, '?');
         set(out, ox + 2, oy, '?');
       }
@@ -394,7 +394,7 @@ void LevelPh1::dump(void)
         set(out, ox - 1, oy, 'S');
         t++;
       }
-      if (node->is_exit) {
+      if (node->is_dungeon_exit) {
         set(out, ox - 1, oy, 'E');
         t++;
       }
@@ -412,7 +412,7 @@ void LevelPh1::dump(void)
       }
 
       if (t > 1) {
-        ERR("Too many node types S %d E %d D %d k %d", node->is_entrance, node->is_exit, node->is_lock, node->is_key);
+        ERR("Too many node types S %d E %d D %d k %d", node->is_entrance, node->is_dungeon_exit, node->is_lock, node->is_key);
       }
 
       if (node->depth == depth_obstacle) {
@@ -462,22 +462,22 @@ void LevelPh1::dump(void)
           ERR("Level1Node %d,%d has exit up off end of map", x, y);
         }
       }
-      if (node->has_secret_exit_down) {
+      if (node->has_secret_dungeon_exit_down) {
         if (y == grid_height - 1) {
           ERR("Level1Node %d,%d has secret exit down off end of map", x, y);
         }
       }
-      if (node->has_secret_exit_right) {
+      if (node->has_secret_dungeon_exit_right) {
         if (x == grid_width - 1) {
           ERR("Level1Node %d,%d has secret exit right off end of map", x, y);
         }
       }
-      if (node->has_secret_exit_left) {
+      if (node->has_secret_dungeon_exit_left) {
         if (x == 0) {
           ERR("Level1Node %d,%d has secret exit left off end of map", x, y);
         }
       }
-      if (node->has_secret_exit_up) {
+      if (node->has_secret_dungeon_exit_up) {
         if (y == 0) {
           ERR("Level1Node %d,%d has secret exit up off end of map", x, y);
         }
@@ -542,25 +542,25 @@ void LevelPh1::dump(void)
           ERR("Level1Node %d,%d has exit up but that node is an obstacle", x, y);
         }
       }
-      if (node->has_secret_exit_down) {
+      if (node->has_secret_dungeon_exit_down) {
         auto o = get_node_ptr(x, y + 1);
         if (o->depth == depth_obstacle) {
           ERR("Level1Node %d,%d has secret exit down but that node is an obstacle", x, y);
         }
       }
-      if (node->has_secret_exit_right) {
+      if (node->has_secret_dungeon_exit_right) {
         auto o = get_node_ptr(x + 1, y);
         if (o->depth == depth_obstacle) {
           ERR("Level1Node %d,%d has secret exit right but that node is an obstacle", x, y);
         }
       }
-      if (node->has_secret_exit_left) {
+      if (node->has_secret_dungeon_exit_left) {
         auto o = get_node_ptr(x - 1, y);
         if (o->depth == depth_obstacle) {
           ERR("Level1Node %d,%d has secret exit left but that node is an obstacle", x, y);
         }
       }
-      if (node->has_secret_exit_up) {
+      if (node->has_secret_dungeon_exit_up) {
         auto o = get_node_ptr(x, y - 1);
         if (o->depth == depth_obstacle) {
           ERR("Level1Node %d,%d has secret exit up but that node is an obstacle", x, y);
@@ -573,22 +573,22 @@ void LevelPh1::dump(void)
     for (auto x = 0; x < grid_width; x++) {
       auto node = get_node_ptr(x, y);
       if (node->has_door_down) {
-        if (node->has_secret_exit_down) {
+        if (node->has_secret_dungeon_exit_down) {
           ERR("Level1Node %d,%d has both normal and secret exits down", x, y);
         }
       }
       if (node->has_door_right) {
-        if (node->has_secret_exit_right) {
+        if (node->has_secret_dungeon_exit_right) {
           ERR("Level1Node %d,%d has both normal and secret exits right", x, y);
         }
       }
       if (node->has_door_left) {
-        if (node->has_secret_exit_left) {
+        if (node->has_secret_dungeon_exit_left) {
           ERR("Level1Node %d,%d has both normal and secret exits left", x, y);
         }
       }
       if (node->has_door_up) {
-        if (node->has_secret_exit_up) {
+        if (node->has_secret_dungeon_exit_up) {
           ERR("Level1Node %d,%d has both normal and secret exits up", x, y);
         }
       }
@@ -713,7 +713,7 @@ void LevelPh1::init_nodes(void)
       n->is_key           = false;
       n->is_lock          = false;
       n->is_entrance      = false;
-      n->is_exit          = false;
+      n->is_dungeon_exit          = false;
       n->on_critical_path = false;
       n->dir_up           = false;
       n->dir_down         = false;
@@ -723,10 +723,10 @@ void LevelPh1::init_nodes(void)
       n->set_has_door_down(false);
       n->set_has_door_left(false);
       n->set_has_door_right(false);
-      n->set_has_secret_exit_up(false);
-      n->set_has_secret_exit_down(false);
-      n->set_has_secret_exit_left(false);
-      n->set_has_secret_exit_right(false);
+      n->set_has_secret_dungeon_exit_up(false);
+      n->set_has_secret_dungeon_exit_down(false);
+      n->set_has_secret_dungeon_exit_left(false);
+      n->set_has_secret_dungeon_exit_right(false);
     }
   }
 
@@ -802,23 +802,23 @@ int LevelPh1::snake_walk(int depth, int max_placed, int pass)
           s.push_back(point(x, y));
 
           if (dx == 1) {
-            o->set_has_secret_exit_right(true);
-            n->set_has_secret_exit_left(true);
+            o->set_has_secret_dungeon_exit_right(true);
+            n->set_has_secret_dungeon_exit_left(true);
           }
 
           if (dx == -1) {
-            o->set_has_secret_exit_left(true);
-            n->set_has_secret_exit_right(true);
+            o->set_has_secret_dungeon_exit_left(true);
+            n->set_has_secret_dungeon_exit_right(true);
           }
 
           if (dy == 1) {
-            o->set_has_secret_exit_down(true);
-            n->set_has_secret_exit_up(true);
+            o->set_has_secret_dungeon_exit_down(true);
+            n->set_has_secret_dungeon_exit_up(true);
           }
 
           if (dy == -1) {
-            o->set_has_secret_exit_up(true);
-            n->set_has_secret_exit_down(true);
+            o->set_has_secret_dungeon_exit_up(true);
+            n->set_has_secret_dungeon_exit_down(true);
           }
           break;
         }
@@ -889,23 +889,23 @@ int LevelPh1::snake_walk(int depth, int max_placed, int pass)
           s.push_back(point(x, y));
 
           if (dx == 1) {
-            o->set_has_secret_exit_right(true);
-            n->set_has_secret_exit_left(true);
+            o->set_has_secret_dungeon_exit_right(true);
+            n->set_has_secret_dungeon_exit_left(true);
           }
 
           if (dx == -1) {
-            o->set_has_secret_exit_left(true);
-            n->set_has_secret_exit_right(true);
+            o->set_has_secret_dungeon_exit_left(true);
+            n->set_has_secret_dungeon_exit_right(true);
           }
 
           if (dy == 1) {
-            o->set_has_secret_exit_down(true);
-            n->set_has_secret_exit_up(true);
+            o->set_has_secret_dungeon_exit_down(true);
+            n->set_has_secret_dungeon_exit_up(true);
           }
 
           if (dy == -1) {
-            o->set_has_secret_exit_up(true);
-            n->set_has_secret_exit_down(true);
+            o->set_has_secret_dungeon_exit_up(true);
+            n->set_has_secret_dungeon_exit_down(true);
           }
           break;
         }
@@ -1283,23 +1283,23 @@ void LevelPh1::join_depth_secret(int depth, int pass)
     }
 
     if (dx == 1) {
-      o->set_has_secret_exit_right(true);
-      n->set_has_secret_exit_left(true);
+      o->set_has_secret_dungeon_exit_right(true);
+      n->set_has_secret_dungeon_exit_left(true);
     }
 
     if (dx == -1) {
-      o->set_has_secret_exit_left(true);
-      n->set_has_secret_exit_right(true);
+      o->set_has_secret_dungeon_exit_left(true);
+      n->set_has_secret_dungeon_exit_right(true);
     }
 
     if (dy == 1) {
-      o->set_has_secret_exit_down(true);
-      n->set_has_secret_exit_up(true);
+      o->set_has_secret_dungeon_exit_down(true);
+      n->set_has_secret_dungeon_exit_up(true);
     }
 
     if (dy == -1) {
-      o->set_has_secret_exit_up(true);
-      n->set_has_secret_exit_down(true);
+      o->set_has_secret_dungeon_exit_up(true);
+      n->set_has_secret_dungeon_exit_down(true);
     }
   }
 }
@@ -1317,7 +1317,7 @@ bool LevelPh1::place_lock(int depth, int pass)
       if (o->depth != depth) {
         continue;
       }
-      if (o->is_exit) {
+      if (o->is_dungeon_exit) {
         continue;
       }
       if (o->is_entrance) {
@@ -1381,30 +1381,30 @@ void LevelPh1::hide_other_locks(int depth, int pass)
       auto n = get_node_ptr(x + 1, y);
       if (n && (n->pass == pass) && (n->depth == depth - 1) && o->has_door_right) {
         o->set_has_door_right(false);
-        o->set_has_secret_exit_right(true);
+        o->set_has_secret_dungeon_exit_right(true);
         n->set_has_door_left(false);
-        n->set_has_secret_exit_left(true);
+        n->set_has_secret_dungeon_exit_left(true);
       }
       n = get_node_ptr(x - 1, y);
       if (n && (n->pass == pass) && (n->depth == depth - 1) && o->has_door_left) {
         o->set_has_door_left(false);
-        o->set_has_secret_exit_left(true);
+        o->set_has_secret_dungeon_exit_left(true);
         n->set_has_door_right(false);
-        n->set_has_secret_exit_right(true);
+        n->set_has_secret_dungeon_exit_right(true);
       }
       n = get_node_ptr(x, y - 1);
       if (n && (n->pass == pass) && (n->depth == depth - 1) && o->has_door_up) {
         o->set_has_door_up(false);
-        o->set_has_secret_exit_up(true);
+        o->set_has_secret_dungeon_exit_up(true);
         n->set_has_door_down(false);
-        n->set_has_secret_exit_down(true);
+        n->set_has_secret_dungeon_exit_down(true);
       }
       n = get_node_ptr(x, y + 1);
       if (n && (n->pass == pass) && (n->depth == depth - 1) && o->has_door_down) {
         o->set_has_door_down(false);
-        o->set_has_secret_exit_down(true);
+        o->set_has_secret_dungeon_exit_down(true);
         n->set_has_door_up(false);
-        n->set_has_secret_exit_up(true);
+        n->set_has_secret_dungeon_exit_up(true);
       }
     }
   }
@@ -1429,7 +1429,7 @@ bool LevelPh1::place_key(int depth, int pass)
       if (o->is_entrance) {
         continue;
       }
-      if (o->is_exit) {
+      if (o->is_dungeon_exit) {
         continue;
       }
       if (! o->on_critical_path) {
@@ -1477,7 +1477,7 @@ bool LevelPh1::place_entrance(void)
     if (o->is_entrance) {
       continue;
     }
-    if (o->is_exit) {
+    if (o->is_dungeon_exit) {
       continue;
     }
 
@@ -1497,7 +1497,7 @@ bool LevelPh1::place_entrance(void)
   return true;
 }
 
-bool LevelPh1::place_exit(void)
+bool LevelPh1::place_dungeon_exit(void)
 {
   std::vector< point > s;
 
@@ -1517,7 +1517,7 @@ bool LevelPh1::place_exit(void)
     if (o->is_entrance) {
       continue;
     }
-    if (o->is_exit) {
+    if (o->is_dungeon_exit) {
       continue;
     }
     if (o->depth == max_depth) {
@@ -1533,7 +1533,7 @@ bool LevelPh1::place_exit(void)
   auto i     = pcg_random_range(0, s.size());
   auto p     = s[ i ];
   auto n     = get_node_ptr(p.x, p.y);
-  n->is_exit = true;
+  n->is_dungeon_exit = true;
 
   return true;
 }
@@ -1570,28 +1570,28 @@ void LevelPh1::remove_stubs(void)
           node->set_has_door_left(false);
         }
       }
-      if (node->has_secret_exit_down) {
+      if (node->has_secret_dungeon_exit_down) {
         auto o = get_node_ptr(x, y + 1);
-        if (! o->has_secret_exit_up) {
-          node->set_has_secret_exit_down(false);
+        if (! o->has_secret_dungeon_exit_up) {
+          node->set_has_secret_dungeon_exit_down(false);
         }
       }
-      if (node->has_secret_exit_up) {
+      if (node->has_secret_dungeon_exit_up) {
         auto o = get_node_ptr(x, y - 1);
-        if (! o->has_secret_exit_down) {
-          node->set_has_secret_exit_up(false);
+        if (! o->has_secret_dungeon_exit_down) {
+          node->set_has_secret_dungeon_exit_up(false);
         }
       }
-      if (node->has_secret_exit_right) {
+      if (node->has_secret_dungeon_exit_right) {
         auto o = get_node_ptr(x + 1, y);
-        if (! o->has_secret_exit_left) {
-          node->set_has_secret_exit_right(false);
+        if (! o->has_secret_dungeon_exit_left) {
+          node->set_has_secret_dungeon_exit_right(false);
         }
       }
-      if (node->has_secret_exit_left) {
+      if (node->has_secret_dungeon_exit_left) {
         auto o = get_node_ptr(x - 1, y);
-        if (! o->has_secret_exit_right) {
-          node->set_has_secret_exit_left(false);
+        if (! o->has_secret_dungeon_exit_right) {
+          node->set_has_secret_dungeon_exit_left(false);
         }
       }
     }
@@ -1623,7 +1623,7 @@ void LevelPh1::dmap_print_walls(Dmap *d)
   printf("\n");
 }
 
-bool LevelPh1::create_path_to_exit(int pass)
+bool LevelPh1::create_path_to_dungeon_exit(int pass)
 {
   //
   // Choose start and end of the dmap
@@ -1640,7 +1640,7 @@ bool LevelPh1::create_path_to_exit(int pass)
       if (n->is_entrance) {
         start = point(x, y);
       }
-      if (n->is_exit) {
+      if (n->is_dungeon_exit) {
         end = point(x, y);
       }
     }
@@ -1671,16 +1671,16 @@ bool LevelPh1::create_path_to_exit(int pass)
         auto X = (x * 2) + 1;
         auto Y = (y * 2) + 1;
         if (n && node_is_a_room(n)) {
-          if (n->has_door_up || n->has_secret_exit_up) {
+          if (n->has_door_up || n->has_secret_dungeon_exit_up) {
             set(d.val, X, Y - 1, DMAP_IS_PASSABLE);
           }
-          if (n->has_door_down || n->has_secret_exit_down) {
+          if (n->has_door_down || n->has_secret_dungeon_exit_down) {
             set(d.val, X, Y + 1, DMAP_IS_PASSABLE);
           }
-          if (n->has_door_right || n->has_secret_exit_right) {
+          if (n->has_door_right || n->has_secret_dungeon_exit_right) {
             set(d.val, X + 1, Y, DMAP_IS_PASSABLE);
           }
-          if (n->has_door_left || n->has_secret_exit_left) {
+          if (n->has_door_left || n->has_secret_dungeon_exit_left) {
             set(d.val, X - 1, Y, DMAP_IS_PASSABLE);
           }
           set(d.val, X, Y, DMAP_IS_PASSABLE);
@@ -1928,7 +1928,7 @@ void LevelPh1::make_paths_off_critical_path_reachable(void)
       if (n->is_entrance) {
         start = point(x, y);
       }
-      if (n->is_exit) {
+      if (n->is_dungeon_exit) {
         end = point(x, y);
       }
     }
@@ -2163,7 +2163,7 @@ bool LevelPh1::remove_dead_end_paths(void)
         continue;
       }
 
-      if (node->is_exit) {
+      if (node->is_dungeon_exit) {
         continue;
       }
 
@@ -2196,10 +2196,10 @@ bool LevelPh1::remove_dead_end_paths(void)
         node->dir_down  = false;
         node->dir_left  = false;
         node->dir_right = false;
-        node->set_has_secret_exit_up(false);
-        node->set_has_secret_exit_down(false);
-        node->set_has_secret_exit_left(false);
-        node->set_has_secret_exit_right(false);
+        node->set_has_secret_dungeon_exit_up(false);
+        node->set_has_secret_dungeon_exit_down(false);
+        node->set_has_secret_dungeon_exit_left(false);
+        node->set_has_secret_dungeon_exit_right(false);
       }
 
       if (node->has_door_up) {
@@ -2212,10 +2212,10 @@ bool LevelPh1::remove_dead_end_paths(void)
         node->dir_down  = false;
         node->dir_left  = false;
         node->dir_right = false;
-        node->set_has_secret_exit_up(false);
-        node->set_has_secret_exit_down(false);
-        node->set_has_secret_exit_left(false);
-        node->set_has_secret_exit_right(false);
+        node->set_has_secret_dungeon_exit_up(false);
+        node->set_has_secret_dungeon_exit_down(false);
+        node->set_has_secret_dungeon_exit_left(false);
+        node->set_has_secret_dungeon_exit_right(false);
       }
 
       if (node->has_door_left) {
@@ -2228,10 +2228,10 @@ bool LevelPh1::remove_dead_end_paths(void)
         node->dir_down  = false;
         node->dir_left  = false;
         node->dir_right = false;
-        node->set_has_secret_exit_up(false);
-        node->set_has_secret_exit_down(false);
-        node->set_has_secret_exit_left(false);
-        node->set_has_secret_exit_right(false);
+        node->set_has_secret_dungeon_exit_up(false);
+        node->set_has_secret_dungeon_exit_down(false);
+        node->set_has_secret_dungeon_exit_left(false);
+        node->set_has_secret_dungeon_exit_right(false);
       }
 
       if (node->has_door_right) {
@@ -2244,10 +2244,10 @@ bool LevelPh1::remove_dead_end_paths(void)
         node->dir_down  = false;
         node->dir_left  = false;
         node->dir_right = false;
-        node->set_has_secret_exit_up(false);
-        node->set_has_secret_exit_down(false);
-        node->set_has_secret_exit_left(false);
-        node->set_has_secret_exit_right(false);
+        node->set_has_secret_dungeon_exit_up(false);
+        node->set_has_secret_dungeon_exit_down(false);
+        node->set_has_secret_dungeon_exit_left(false);
+        node->set_has_secret_dungeon_exit_right(false);
       }
     }
   }

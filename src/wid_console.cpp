@@ -52,7 +52,7 @@ uint8_t wid_console_init(void)
       command_add(config_gfx_vsync_enable, "set vsync [01]", "enable vertical sync enable");
     }
     command_add(config_errored, "clear errored", "used to clear a previous error");
-    command_add(sdl_user_exit, "quit", "exit game");
+    command_add(sdl_user_dungeon_exit, "quit", "exit game");
     wid_console_commands_inited = true;
   }
 

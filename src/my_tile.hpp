@@ -10,6 +10,7 @@
 #include "my_gl.hpp"
 #include "my_sys.hpp"
 
+#define TILE_VARIANTS   6
 #define TILE_HEIGHT     16
 #define TILE_WIDTH      16
 #define TILE_HEIGHT_MAX 64

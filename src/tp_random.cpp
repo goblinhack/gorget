@@ -5,33 +5,24 @@
 #include "my_dice.hpp"
 #include "my_game.hpp"
 #include "my_random.hpp"
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 #include "my_vector_bounds_check.hpp"
 
 // begin sort marker1 {
-static Tpidmap tp_block;
-static Tpidmap tp_crystal;
-static Tpidmap tp_entrance;
-static Tpidmap tp_exit;
+static Tpidmap tp_dungeon_entrance;
+static Tpidmap tp_dungeon_exit;
 static Tpidmap tp_key;
-static Tpidmap tp_ladder;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
-static Tpidmap tp_rock;
-static Tpidmap tp_rock_gold;
-static Tpidmap tp_spike;
-static Tpidmap tp_wall;
+static Tpidmap tp_world_mountains;
 // end sort marker1 }
 
-void tp_random_init(void)
+void tp_random_dungeon_init(void)
 {
   TRACE_NO_INDENT();
   for (auto &tp : tp_id_map) {
-    if (tp->is_rock) {
-      tp_rock.push_back(tp);
-    }
-    if (tp->is_wall) {
-      tp_wall.push_back(tp);
+    if (tp->is_world_mountains) {
+      tp_world_mountains.push_back(tp);
     }
     if (tp->is_monst1) {
       tp_monst1.push_back(tp);
@@ -42,11 +33,11 @@ void tp_random_init(void)
     if (tp->is_key) {
       tp_key.push_back(tp);
     }
-    if (tp->is_entrance) {
-      tp_entrance.push_back(tp);
+    if (tp->is_dungeon_entrance) {
+      tp_dungeon_entrance.push_back(tp);
     }
-    if (tp->is_exit) {
-      tp_exit.push_back(tp);
+    if (tp->is_dungeon_exit) {
+      tp_dungeon_exit.push_back(tp);
     }
   }
 }
@@ -144,66 +135,6 @@ static Tpp tp_get_with_no_rarity_filter(Tpidmap &m)
   return tp;
 }
 
-Tpp tp_random_rock(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_rock.size())) {
-    DIE("No rocks found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_rock);
-}
-
-Tpp tp_random_wall(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_wall.size())) {
-    DIE("No walls found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_wall);
-}
-
-Tpp tp_random_spike(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_spike.size())) {
-    DIE("No spikes found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_spike);
-}
-
-Tpp tp_random_ladder(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_ladder.size())) {
-    DIE("No ladders found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_ladder);
-}
-
-Tpp tp_random_rock_gold(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_rock_gold.size())) {
-    DIE("No rock_golds found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_rock_gold);
-}
-
-Tpp tp_random_crystal(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_crystal.size())) {
-    DIE("No crystals found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_crystal);
-}
-
 Tpp tp_random_monst1(void)
 {
   TRACE_NO_INDENT();
@@ -224,14 +155,14 @@ Tpp tp_random_player(void)
   return tp_get_with_no_rarity_filter(tp_player);
 }
 
-Tpp tp_random_block(void)
+Tpp tp_random_world_mountains(void)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! tp_block.size())) {
-    DIE("No blocks found");
+  if (unlikely(! tp_world_mountains.size())) {
+    DIE("No world mountains found");
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_block);
+  return tp_get_with_no_rarity_filter(tp_world_mountains);
 }
 
 Tpp tp_random_key(void)
@@ -244,22 +175,22 @@ Tpp tp_random_key(void)
   return tp_get_with_no_rarity_filter(tp_key);
 }
 
-Tpp tp_random_entrance(void)
+Tpp tp_random_dungeon_entrance(void)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! tp_entrance.size())) {
+  if (unlikely(! tp_dungeon_entrance.size())) {
     DIE("No entrances found");
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_entrance);
+  return tp_get_with_no_rarity_filter(tp_dungeon_entrance);
 }
 
-Tpp tp_random_exit(void)
+Tpp tp_random_dungeon_exit(void)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! tp_exit.size())) {
+  if (unlikely(! tp_dungeon_exit.size())) {
     DIE("No exits found");
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_exit);
+  return tp_get_with_no_rarity_filter(tp_dungeon_exit);
 }

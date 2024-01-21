@@ -46,24 +46,25 @@ public:
 
   void anim(void);
   void assign_tiles(void);
-  void display_tile(Tpp, Tilep, point tl, point br, point offset, bool shadow);
-  void display_tile(Tpp, uint16_t, point tl, point br, point offset, bool shadow);
   void display(void);
-  void display_z_layer(int z, bool shadow, bool deco);
+  void display_world_tile(Tpp, Tilep, point tl, point br, point offset);
+  void display_world_tile(Tpp, uint16_t, point tl, point br, point offset);
+  void display_world(void);
+  void display_world_z_layer(int z, bool deco);
+  void map_set(LevelDatap, const char *);
   void player_create_and_place(void);
   void player_map_center(void);
   void player_move_down(void);
+  void player_move(int8_t, int8_t);
   void player_move_left(void);
   void player_move_right(void);
   void player_move_up(void);
-  void player_move(int8_t, int8_t);
   void set_display_bounds(void);
-  void world_create_and_place(void);
-  void map_set(LevelDatap, const char *);
   void tick(void);
+  void world_create_and_place(void);
 
-  bool is_wall(point p);
-  bool is_rock(point p);
+  bool is_same_type(point p, Tpp);
+  bool is_world_mountains(point p);
 
   Thingp thing_find_optional(ThingId id);
   Thingp thing_find(ThingId id);

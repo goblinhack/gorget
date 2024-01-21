@@ -2,7 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 
 // begin sort marker1 {
 void Tp::name_set(const std::string &v) { name = v; }

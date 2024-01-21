@@ -4,7 +4,7 @@
 
 #include "my_level_ph2.hpp"
 
-void level_ph2_exit_init(void)
+void level_ph2_dungeon_exit_init(void)
 {
   return;
   TRACE_NO_INDENT();

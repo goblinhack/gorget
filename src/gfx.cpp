@@ -181,8 +181,7 @@ void gfx_init(void)
   gfx_init14();
   gfx_init15();
   gfx_init_16x16();
-  gfx_init_rocks();
-  gfx_init_walls();
+  gfx_init_world();
   gfx_init_24x24();
   gfx_init_32x32();
 }

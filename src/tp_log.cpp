@@ -7,7 +7,7 @@
 #include "my_log.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 #include "my_wid_console.hpp"
 
 void Tp::log_(const char *fmt, va_list args)

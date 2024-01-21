@@ -2,7 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 
 //
 // Templates can be assigned dynamic IDs - however the levels are more reproducable it
@@ -12,24 +12,11 @@
 std::initializer_list< std::string > tps = {
     // clang-format off
     "", // ID 0 means unused
-    "entrance",
-    "exit",
+    "dungeon_entrance",
+    "dungeon_exit",
     "key",
-    "rock",
-    "spike",
-    "ladder",
-    "rock_gold",
-    "crystal0",
-    "snake",
+    "world_mountains",
     "player",
-    "crystal1",
-    "crystal2",
-    "crystal3",
-    "crystal4",
-    "crystal5",
-    "crystal6",
-    "block",
-    "wall",
     // clang-format on
 };
 
@@ -60,7 +47,7 @@ void tp_get_id(const std::string &tp_name, int *id_out)
   //
   if (tp_preferred_id.find(tp_name) == tp_preferred_id.end()) {
     tp_preferred_id[ tp_name ] = *id_out = ++id;
-    DIE("Thing template not found [%s] Please edit thing_template_ids.cpp and add it.", tp_name.c_str());
+    DIE("Thing template not found [%s] Please edit tp_ids.cpp and add it.", tp_name.c_str());
     return;
   }
 

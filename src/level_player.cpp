@@ -6,7 +6,7 @@
 #include "my_level.hpp"
 #include "my_level_data.hpp"
 #include "my_thing.hpp"
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 
 void Level::player_create_and_place()
 {
@@ -25,7 +25,7 @@ void Level::player_create_and_place()
           continue;
         }
 
-        if (! tp->is_entrance) {
+        if (! tp->is_dungeon_entrance) {
           continue;
         }
 

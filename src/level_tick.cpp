@@ -6,7 +6,7 @@
 #include "my_level.hpp"
 #include "my_level_data.hpp"
 #include "my_main.hpp"
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 
 void Level::tick(void)
 {

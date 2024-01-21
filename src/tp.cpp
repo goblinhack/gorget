@@ -6,8 +6,8 @@
 
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
-#include "my_thing_template.hpp"
-#include "my_thing_templates.hpp"
+#include "my_tp.hpp"
+#include "my_tps.hpp"
 #include "my_vector_bounds_check.hpp"
 
 Tpnamemap tp_name_map;
@@ -54,7 +54,7 @@ uint8_t tp_init(void)
   tp_init_done = true;
 
   templates_init();
-  tp_random_init();
+  tp_random_dungeon_init();
   tp_fixup();
 
   return true;
@@ -88,7 +88,7 @@ Tpp tp_load(std::string const &name)
 
   auto result = tp_name_map.insert(std::make_pair(name, tp));
   if (! result.second) {
-    ERR("Thing insert name [%s] failed", name.c_str());
+    DIE("Thing insert name [%s] failed", name.c_str());
   }
 
   tp_id_map.push_back(tp);

@@ -140,13 +140,13 @@ void level_ph2_room_set_add(RoomType specified_type, const char *data)
             case CHARMAP_OBSTACLE_WILDCARD : break;
             case CHARMAP_TREASURE : break;
             case CHARMAP_MONST1 : break;
-            case CHARMAP_ENTRANCE :
+            case CHARMAP_DUNGEON_ENTRANCE :
               if (r->type != ROOM_TYPE_NORMAL) {
                 DIE("room type already set when trying to set entrance");
               }
               r->type = ROOM_TYPE_ENTRANCE;
               break;
-            case CHARMAP_EXIT :
+            case CHARMAP_DUNGEON_EXIT :
               if (r->type != ROOM_TYPE_NORMAL) {
                 DIE("room type already set when trying to set as exit");
               }

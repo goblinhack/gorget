@@ -15,7 +15,7 @@
 #include "my_point.hpp"
 #include "my_random.hpp"
 #include "my_template.hpp"
-#include "my_thing_template.hpp"
+#include "my_tp.hpp"
 
 void LevelPH4::add_object_ids(const LevelPh3 &ph3)
 {
@@ -33,10 +33,10 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
       switch (c) {
         case CHARMAP_DOWN : break;
         case CHARMAP_EMPTY : break;
-        case CHARMAP_ENTRANCE : tp = tp_random_entrance(); break;
-        case CHARMAP_EXIT : tp = tp_random_exit(); break;
+        case CHARMAP_DUNGEON_ENTRANCE : tp = tp_random_dungeon_entrance(); break;
+        case CHARMAP_DUNGEON_EXIT : tp = tp_random_dungeon_exit(); break;
         case CHARMAP_KEY : tp = tp_random_key(); break;
-        case CHARMAP_TREASURE : tp = tp_random_crystal(); break;
+        case CHARMAP_TREASURE : break;
         case CHARMAP_MONST1 :
           {
             auto tp = tp_random_monst1();
@@ -48,23 +48,29 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
         case CHARMAP_LOCK : break;
         case CHARMAP_OBSTACLE_WILDCARD : break;
         case CHARMAP_RIGHT : break;
-        case CHARMAP_ROCK : tp = tp_random_rock(); break;
+        case CHARMAP_ROCK : break;
         case CHARMAP_SECRET_DOOR : break;
         case CHARMAP_UP : break;
         case CHARMAP_WALL_100_PERCENT :
-          tp = tp_random_wall();
+#if 0
+          tp = tp_random_dungeon_wall();
 
           //
           // If surrounded by rock
           //
           if (d100() < 10) {
-            auto tp = tp_random_rock_gold();
+            auto tp = tp_random_dungeon_rock_gold();
             if (tp) {
               data.obj[ x ][ y ][ tp->z_depth ].id = tp->id;
             }
           }
+#endif
           break;
-        case CHARMAP_WALL_50_PERCENT : tp = tp_random_wall(); break;
+        case CHARMAP_WALL_50_PERCENT :
+#if 0
+          tp = tp_random_dungeon_wall();
+#endif
+          break;
         case CHARMAP_WILDCARD : break;
       }
 

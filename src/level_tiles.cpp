@@ -12,8 +12,8 @@
 #include "my_point.hpp"
 #include "my_random.hpp"
 #include "my_template.hpp"
-#include "my_thing_template.hpp"
 #include "my_tile.hpp"
+#include "my_tp.hpp"
 
 void Level::assign_tiles(void)
 {
@@ -32,88 +32,49 @@ void Level::assign_tiles(void)
           continue;
         }
 
-        if (tp->is_wall) {
-          auto tile = tile_find("wall." + std::to_string(x % 6) + "." + std::to_string(y % 6));
+        if (tp->is_blit_tiled) {
+          auto tile_variants = tp->tiles.size();
+          auto tile_which    = pcg_random_range_inclusive(0, tile_variants - 1);
+          auto tile_name     = tp->name + "." + std::to_string(tile_which);
+          auto tile          = tile_find_mand(tile_name);
           if (tile) {
             set_tile(p, slot, tile);
           }
 
-          if (! is_wall(point(x, y - 1))) {
+          if (! is_same_type(point(x, y - 1), tp)) {
             data->obj[ x ][ y ][ slot ].dir_up = 1;
           }
 
-          if (! is_wall(point(x, y + 1))) {
+          if (! is_same_type(point(x, y + 1), tp)) {
             data->obj[ x ][ y ][ slot ].dir_down = 1;
           }
 
-          if (! is_wall(point(x - 1, y))) {
+          if (! is_same_type(point(x - 1, y), tp)) {
             data->obj[ x ][ y ][ slot ].dir_left = 1;
           }
 
-          if (! is_wall(point(x + 1, y))) {
+          if (! is_same_type(point(x + 1, y), tp)) {
             data->obj[ x ][ y ][ slot ].dir_right = 1;
           }
 
-          if (! is_wall(point(x - 1, y - 1)) && ! is_wall(point(x - 1, y)) && ! is_wall(point(x, y - 1))) {
+          if (! is_same_type(point(x - 1, y - 1), tp) && ! is_same_type(point(x - 1, y), tp)
+              && ! is_same_type(point(x, y - 1), tp)) {
             data->obj[ x ][ y ][ slot ].dir_tl = 1;
           }
 
-          if (! is_wall(point(x + 1, y - 1)) && ! is_wall(point(x + 1, y)) && ! is_wall(point(x, y - 1))) {
+          if (! is_same_type(point(x + 1, y - 1), tp) && ! is_same_type(point(x + 1, y), tp)
+              && ! is_same_type(point(x, y - 1), tp)) {
             data->obj[ x ][ y ][ slot ].dir_tr = 1;
           }
 
-          if (! is_wall(point(x - 1, y + 1)) && ! is_wall(point(x - 1, y)) && ! is_wall(point(x, y + 1))) {
+          if (! is_same_type(point(x - 1, y + 1), tp) && ! is_same_type(point(x - 1, y), tp)
+              && ! is_same_type(point(x, y + 1), tp)) {
             data->obj[ x ][ y ][ slot ].dir_bl = 1;
           }
 
-          if (! is_wall(point(x + 1, y + 1)) && ! is_wall(point(x + 1, y)) && ! is_wall(point(x, y + 1))) {
+          if (! is_same_type(point(x + 1, y + 1), tp) && ! is_same_type(point(x + 1, y), tp)
+              && ! is_same_type(point(x, y + 1), tp)) {
             data->obj[ x ][ y ][ slot ].dir_br = 1;
-          }
-
-        } else if (tp->is_rock) {
-          auto tile = tile_find("rock." + std::to_string(x % 6) + "." + std::to_string(y % 6));
-          if (tile) {
-            set_tile(p, slot, tile);
-          }
-
-          if (y > 0) {
-            if (! is_rock(point(x, y - 1))) {
-              data->obj[ x ][ y ][ slot ].dir_up = 1;
-            }
-          }
-
-          if (y < MAP_HEIGHT - 1) {
-            if (! is_rock(point(x, y + 1))) {
-              data->obj[ x ][ y ][ slot ].dir_down = 1;
-            }
-          }
-
-          if (x > 0) {
-            if (! is_rock(point(x - 1, y))) {
-              data->obj[ x ][ y ][ slot ].dir_left = 1;
-            }
-          }
-
-          if (x < MAP_WIDTH - 1) {
-            if (! is_rock(point(x + 1, y))) {
-              data->obj[ x ][ y ][ slot ].dir_right = 1;
-            }
-          }
-
-          if ((x == 0) && (y == 0)) {
-            data->obj[ x ][ y ][ slot ].dir_br = 1;
-          }
-
-          if ((x == MAP_WIDTH - 1) && (y == 0)) {
-            data->obj[ x ][ y ][ slot ].dir_bl = 1;
-          }
-
-          if ((x == 0) && (y == MAP_HEIGHT - 1)) {
-            data->obj[ x ][ y ][ slot ].dir_tr = 1;
-          }
-
-          if ((x == MAP_WIDTH - 1) && (y == MAP_HEIGHT - 1)) {
-            data->obj[ x ][ y ][ slot ].dir_tl = 1;
           }
 
         } else {

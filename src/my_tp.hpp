@@ -35,14 +35,13 @@ public:
   bool is_blit_on_ground {};
   bool is_blit_outlined {};
   bool is_blit_square_outlined {};
-  bool is_block {};
-  bool is_entrance {};
-  bool is_exit {};
+  bool is_blit_tiled {};
+  bool is_dungeon_entrance {};
+  bool is_dungeon_exit {};
   bool is_key {};
   bool is_monst1 {};
   bool is_player {};
-  bool is_rock {};
-  bool is_wall {};
+  bool is_world_mountains {};
   // end sort marker1 }
 
   // begin sort marker2 {
@@ -87,24 +86,18 @@ Tpp tp_find(const std::string &name);
 Tpp tp_find(TpId id);
 Tpp tp_load(const std::string &name);
 Tpp tp_get_with_rarity_filter(Tpidmap &m);
-Tpp tp_random_rock(void);
-Tpp tp_random_wall(void);
-Tpp tp_random_spike(void);
-Tpp tp_random_ladder(void);
-Tpp tp_random_rock_gold(void);
-Tpp tp_random_crystal(void);
+Tpp tp_random_world_mountains(void);
 Tpp tp_random_monst1(void);
 Tpp tp_random_player(void);
-Tpp tp_random_block(void);
 Tpp tp_random_key(void);
-Tpp tp_random_entrance(void);
-Tpp tp_random_exit(void);
+Tpp tp_random_dungeon_entrance(void);
+Tpp tp_random_dungeon_exit(void);
 
 Tilep tp_first_tile(class Tp *);
 
 uint8_t tp_init(void);
 
-void tp_random_init(void);
+void tp_random_dungeon_init(void);
 void tp_fini(void);
 void tp_fixup(void);
 void tp_get_id(const std::string &tp_name, int *id);

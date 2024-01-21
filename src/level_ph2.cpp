@@ -24,7 +24,7 @@ static LevelPh2Roomp get_fitted_room_type(const Level1Node *node, const LevelPh2
   if (node->is_entrance) {
     required_room_type = ROOM_TYPE_ENTRANCE;
   }
-  if (node->is_exit) {
+  if (node->is_dungeon_exit) {
     required_room_type = ROOM_TYPE_EXIT;
   }
   if (node->is_key) {
@@ -46,10 +46,10 @@ static LevelPh2Roomp get_fitted_room_type(const Level1Node *node, const LevelPh2
       return nullptr;
     }
 
-    int wanted = (((node->has_door_left || node->has_secret_exit_left) ? 1 : 0) << 3)
-               | (((node->has_door_right || node->has_secret_exit_right) ? 1 : 0) << 2)
-               | (((node->has_door_up || node->has_secret_exit_up) ? 1 : 0) << 1)
-               | ((node->has_door_down || node->has_secret_exit_down) ? 1 : 0);
+    int wanted = (((node->has_door_left || node->has_secret_dungeon_exit_left) ? 1 : 0) << 3)
+               | (((node->has_door_right || node->has_secret_dungeon_exit_right) ? 1 : 0) << 2)
+               | (((node->has_door_up || node->has_secret_dungeon_exit_up) ? 1 : 0) << 1)
+               | ((node->has_door_down || node->has_secret_dungeon_exit_down) ? 1 : 0);
 
     int candidate = ((r->exits_left) ? 1 : 0) << 3 | ((r->exits_right) ? 1 : 0) << 2 | ((r->exits_up) ? 1 : 0) << 1
                   | ((r->exits_down) ? 1 : 0);
@@ -137,7 +137,7 @@ bool LevelPh2::solve(const LevelPh1 &ph1, point at)
   auto node = ph1.get_node_ptr_const(x, y);
 
   if (node->on_critical_path) {
-    if (node->dir_up && ! node->dir_down && node->dir_left && node->dir_right && ! node->is_exit) {
+    if (node->dir_up && ! node->dir_down && node->dir_left && node->dir_right && ! node->is_dungeon_exit) {
       return false;
     }
   }
