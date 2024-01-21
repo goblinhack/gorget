@@ -412,7 +412,8 @@ void LevelPh1::dump(void)
       }
 
       if (t > 1) {
-        ERR("Too many node types S %d E %d D %d k %d", node->is_entrance, node->is_dungeon_exit, node->is_lock, node->is_key);
+        ERR("Too many node types S %d E %d D %d k %d", node->is_entrance, node->is_dungeon_exit, node->is_lock,
+            node->is_key);
       }
 
       if (node->depth == depth_obstacle) {
@@ -713,7 +714,7 @@ void LevelPh1::init_nodes(void)
       n->is_key           = false;
       n->is_lock          = false;
       n->is_entrance      = false;
-      n->is_dungeon_exit          = false;
+      n->is_dungeon_exit  = false;
       n->on_critical_path = false;
       n->dir_up           = false;
       n->dir_down         = false;
@@ -1530,9 +1531,9 @@ bool LevelPh1::place_dungeon_exit(void)
     return false;
   }
 
-  auto i     = pcg_random_range(0, s.size());
-  auto p     = s[ i ];
-  auto n     = get_node_ptr(p.x, p.y);
+  auto i             = pcg_random_range(0, s.size());
+  auto p             = s[ i ];
+  auto n             = get_node_ptr(p.x, p.y);
   n->is_dungeon_exit = true;
 
   return true;

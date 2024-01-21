@@ -15,6 +15,7 @@ static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
 static Tpidmap tp_world_mountains;
+static Tpidmap tp_world_forest;
 // end sort marker1 }
 
 void tp_random_dungeon_init(void)
@@ -24,18 +25,27 @@ void tp_random_dungeon_init(void)
     if (tp->is_world_mountains) {
       tp_world_mountains.push_back(tp);
     }
+
+    if (tp->is_world_forest) {
+      tp_world_forest.push_back(tp);
+    }
+
     if (tp->is_monst1) {
       tp_monst1.push_back(tp);
     }
+
     if (tp->is_player) {
       tp_player.push_back(tp);
     }
+
     if (tp->is_key) {
       tp_key.push_back(tp);
     }
+
     if (tp->is_dungeon_entrance) {
       tp_dungeon_entrance.push_back(tp);
     }
+
     if (tp->is_dungeon_exit) {
       tp_dungeon_exit.push_back(tp);
     }
@@ -163,6 +173,16 @@ Tpp tp_random_world_mountains(void)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_world_mountains);
+}
+
+Tpp tp_random_world_forest(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_world_forest.size())) {
+    DIE("No world forest found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_world_forest);
 }
 
 Tpp tp_random_key(void)

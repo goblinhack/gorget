@@ -26,7 +26,8 @@ enum {
   CHARMAP_WALL_50_PERCENT   = '2',
   CHARMAP_WILDCARD          = '*',
   CHARMAP_WORLD_MOUNTAINS   = '^',
-  // end sort marker2 }
+  CHARMAP_WORLD_FOREST      = 'o',
+  // end sort marker1 }
 };
 
 #endif

@@ -10,8 +10,8 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_tex.hpp"
-#include "my_tp.hpp"
 #include "my_tile.hpp"
+#include "my_tp.hpp"
 
 void Level::set_display_bounds(void)
 {

@@ -15,6 +15,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_world_forest()) {
+    return false;
+  }
+
   if (! tp_load_player()) {
     return false;
   }
