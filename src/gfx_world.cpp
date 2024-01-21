@@ -52,6 +52,27 @@ void gfx_init_world(void)
       "world_forest.bl.4",   "world_forest.bot.4", "world_forest.br.4",
       "world_forest.bl.5",   "world_forest.bot.5", "world_forest.br.5",
       // ###############################################################################
+      "world_sea.tl.0",   "world_sea.top.0", "world_sea.tr.0",
+      "world_sea.tl.1",   "world_sea.top.1", "world_sea.tr.1",
+      "world_sea.tl.2",   "world_sea.top.2", "world_sea.tr.2",
+      "world_sea.tl.3",   "world_sea.top.3", "world_sea.tr.3",
+      "world_sea.tl.4",   "world_sea.top.4", "world_sea.tr.4",
+      "world_sea.tl.5",   "world_sea.top.5", "world_sea.tr.5",
+      // ###############################################################################
+      "world_sea.left.0", "world_sea.0",     "world_sea.right.0",
+      "world_sea.left.1", "world_sea.1",     "world_sea.right.1",
+      "world_sea.left.2", "world_sea.2",     "world_sea.right.2",
+      "world_sea.left.3", "world_sea.3",     "world_sea.right.3",
+      "world_sea.left.4", "world_sea.4",     "world_sea.right.4",
+      "world_sea.left.5", "world_sea.5",     "world_sea.right.5",
+      // ###############################################################################
+      "world_sea.bl.0",   "world_sea.bot.0", "world_sea.br.0",
+      "world_sea.bl.1",   "world_sea.bot.1", "world_sea.br.1",
+      "world_sea.bl.2",   "world_sea.bot.2", "world_sea.br.2",
+      "world_sea.bl.3",   "world_sea.bot.3", "world_sea.br.3",
+      "world_sea.bl.4",   "world_sea.bot.4", "world_sea.br.4",
+      "world_sea.bl.5",   "world_sea.bot.5", "world_sea.br.5",
+      // ###############################################################################
       // clang-format on
   };
   const std::vector< std::string > arr(tiles);

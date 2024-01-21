@@ -193,9 +193,11 @@ void Level::display_world(void)
     const bool deco    = true;
     const bool no_deco = false;
     display_world_z_layer(MAP_DEPTH_MOUNTAINS, no_deco);
-    display_world_z_layer(MAP_DEPTH_FOREST, deco);
     display_world_z_layer(MAP_DEPTH_MOUNTAINS, deco);
+    display_world_z_layer(MAP_DEPTH_FOREST, deco);
     display_world_z_layer(MAP_DEPTH_FOREST, no_deco);
+    display_world_z_layer(MAP_DEPTH_SEA, no_deco);
+    display_world_z_layer(MAP_DEPTH_SEA, deco);
   }
 
   glcolor(WHITE);

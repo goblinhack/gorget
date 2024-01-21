@@ -39,48 +39,53 @@ void Level::assign_tiles(void)
           auto tile          = tile_find_mand(tile_name);
           if (tile) {
             set_tile(p, slot, tile);
-          }
 
-          if (! is_same_type(point(x, y - 1), tp)) {
-            data->obj[ x ][ y ][ slot ].dir_up = 1;
-          }
+            if (! is_same_type(point(x, y - 1), tp)) {
+              data->obj[ x ][ y ][ slot ].dir_up = 1;
+            }
 
-          if (! is_same_type(point(x, y + 1), tp)) {
-            data->obj[ x ][ y ][ slot ].dir_down = 1;
-          }
+            if (! is_same_type(point(x, y + 1), tp)) {
+              data->obj[ x ][ y ][ slot ].dir_down = 1;
+            }
 
-          if (! is_same_type(point(x - 1, y), tp)) {
-            data->obj[ x ][ y ][ slot ].dir_left = 1;
-          }
+            if (! is_same_type(point(x - 1, y), tp)) {
+              data->obj[ x ][ y ][ slot ].dir_left = 1;
+            }
 
-          if (! is_same_type(point(x + 1, y), tp)) {
-            data->obj[ x ][ y ][ slot ].dir_right = 1;
-          }
+            if (! is_same_type(point(x + 1, y), tp)) {
+              data->obj[ x ][ y ][ slot ].dir_right = 1;
+            }
 
-          if (! is_same_type(point(x - 1, y - 1), tp) && ! is_same_type(point(x - 1, y), tp)
-              && ! is_same_type(point(x, y - 1), tp)) {
-            data->obj[ x ][ y ][ slot ].dir_tl = 1;
-          }
+            if (! is_same_type(point(x - 1, y - 1), tp) && ! is_same_type(point(x - 1, y), tp)
+                && ! is_same_type(point(x, y - 1), tp)) {
+              data->obj[ x ][ y ][ slot ].dir_tl = 1;
+            }
 
-          if (! is_same_type(point(x + 1, y - 1), tp) && ! is_same_type(point(x + 1, y), tp)
-              && ! is_same_type(point(x, y - 1), tp)) {
-            data->obj[ x ][ y ][ slot ].dir_tr = 1;
-          }
+            if (! is_same_type(point(x + 1, y - 1), tp) && ! is_same_type(point(x + 1, y), tp)
+                && ! is_same_type(point(x, y - 1), tp)) {
+              data->obj[ x ][ y ][ slot ].dir_tr = 1;
+            }
 
-          if (! is_same_type(point(x - 1, y + 1), tp) && ! is_same_type(point(x - 1, y), tp)
-              && ! is_same_type(point(x, y + 1), tp)) {
-            data->obj[ x ][ y ][ slot ].dir_bl = 1;
-          }
+            if (! is_same_type(point(x - 1, y + 1), tp) && ! is_same_type(point(x - 1, y), tp)
+                && ! is_same_type(point(x, y + 1), tp)) {
+              data->obj[ x ][ y ][ slot ].dir_bl = 1;
+            }
 
-          if (! is_same_type(point(x + 1, y + 1), tp) && ! is_same_type(point(x + 1, y), tp)
-              && ! is_same_type(point(x, y + 1), tp)) {
-            data->obj[ x ][ y ][ slot ].dir_br = 1;
+            if (! is_same_type(point(x + 1, y + 1), tp) && ! is_same_type(point(x + 1, y), tp)
+                && ! is_same_type(point(x, y + 1), tp)) {
+              data->obj[ x ][ y ][ slot ].dir_br = 1;
+            }
+
+            data->obj[ x ][ y ][ slot ].anim_index        = pcg_random_range_inclusive(0, tp->tiles.size() - 1);
+            data->obj[ x ][ y ][ slot ].anim_ms_remaining = pcg_random_range_inclusive(0, tile->delay_ms);
           }
 
         } else {
           auto tile = one_of(tp->tiles);
           if (tile) {
             set_tile(p, slot, tile);
+            auto i                                 = pcg_random_range_inclusive(0, tp->tiles.size() - 1);
+            data->obj[ x ][ y ][ slot ].anim_index = i;
           }
         }
       }

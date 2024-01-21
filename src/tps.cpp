@@ -11,6 +11,10 @@ bool templates_init(void)
 {
   TRACE_NO_INDENT();
 
+  if (! tp_load_world_sea()) {
+    return false;
+  }
+
   if (! tp_load_world_mountains()) {
     return false;
   }

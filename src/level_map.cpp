@@ -26,6 +26,7 @@ void Level::map_set(LevelDatap data, const char *in)
       Tpp  tp     = nullptr;
 
       switch (c) {
+        case CHARMAP_WORLD_SEA : tp = tp_random_world_sea(); break;
         case CHARMAP_WORLD_MOUNTAINS : tp = tp_random_world_mountains(); break;
         case CHARMAP_WORLD_FOREST : tp = tp_random_world_forest(); break;
         case CHARMAP_WILDCARD : break;

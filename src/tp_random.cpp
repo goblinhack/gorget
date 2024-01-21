@@ -14,6 +14,7 @@ static Tpidmap tp_dungeon_exit;
 static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
+static Tpidmap tp_world_sea;
 static Tpidmap tp_world_mountains;
 static Tpidmap tp_world_forest;
 // end sort marker1 }
@@ -22,6 +23,10 @@ void tp_random_dungeon_init(void)
 {
   TRACE_NO_INDENT();
   for (auto &tp : tp_id_map) {
+    if (tp->is_world_sea) {
+      tp_world_sea.push_back(tp);
+    }
+
     if (tp->is_world_mountains) {
       tp_world_mountains.push_back(tp);
     }
@@ -163,6 +168,16 @@ Tpp tp_random_player(void)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_player);
+}
+
+Tpp tp_random_world_sea(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_world_sea.size())) {
+    DIE("No world sea found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_world_sea);
 }
 
 Tpp tp_random_world_mountains(void)
