@@ -3,8 +3,8 @@
 //
 
 #include "my_level_data.hpp"
-#include "my_main.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_tp.hpp"
 #include "my_tps.hpp"
 
 bool templates_init(void)

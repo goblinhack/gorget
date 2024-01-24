@@ -7,7 +7,7 @@
 #include "my_array_bounds_check.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
-#include "my_ui.hpp"
+// REMOVED #include "my_ui.hpp"
 #include "my_wid_error.hpp"
 #include "my_wid_popup.hpp"
 

@@ -6,7 +6,7 @@
 #include "my_alloc.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
-#include "my_ui.hpp"
+// REMOVED #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
 
 WidPopup *wid_save;

@@ -5,7 +5,7 @@
 #include <inttypes.h>
 
 #include "my_ptrcheck.hpp"
-#include "my_string.hpp"
+// REMOVED #include "my_string.hpp"
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_vector_bounds_check.hpp"
