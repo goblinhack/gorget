@@ -268,16 +268,6 @@ LDLIBS="$LDLIBS -lSDL2_mixer"
 /bin/rm -f data/yelindor-hiscore.txt data/yelindor-config.txt
 
 #
-# Make the makefile
-#
-(
-cd src || exit
-rm -f Makefile
-sed '/DO NOT DELETE/,$d' Makefile.base > Makefile.tmp
-mv Makefile.tmp Makefile
-)
-
-#
 # Common config file
 #
 CONFIG_H=src/cfg.hpp
@@ -393,6 +383,8 @@ if [[ $OPT_PROF != "" ]]; then
     LDFLAGS+=" -pg"
 fi
 
+rm -f Makefile
+
 if [[ $OPT_DEV1 != "" ]]; then
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -g" > .Makefile
 else
@@ -457,9 +449,9 @@ EXE=$EXE
 DSYM=$DSYM
 LDLIBS=$LDLIBS
 CFLAGS=\$(COMPILER_FLAGS) \$(COMPILER_WARNINGS)
-%%
 
-grep -v AUTOGEN Makefile | grep -v "^    $" >> .Makefile
+include Makefile.base
+%%
 
 if [ -s .Makefile ]
 then
