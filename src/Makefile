@@ -34,24 +34,9 @@ $(TARGET_GAME): $(OBJECTS)
 	cp -f $(BUILD_DIR)/$(NAME)* ..
 
 tidy:
-	# clang-tidy --list-checks -checks='*' | grep "modernize"
-	@for src in $(SOURCES) ; do \
+	for src in $(SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
-		clang-tidy -fix -checks="-*,\
-ang-tidy --list-checks -checks='*' | grep "modernize"  	modernize-use-auto,\
-			bugprone-sizeof-expression, \
-			cppcoreguidelines-no-malloc,\
-			modernize-loop-convert,\
-			modernize-use-default-member-init,\
-			modernize-use-equals-default,\
-			modernize-use-equals-delete,\
-  		modernize-use-nullptr,\
-			readability-else-after-return,\
-			readability-redundant-member-init,\
-			readability-simplify-boolean-expr,\
-			misc-redundant-expression" \
-			-header-filter=".*" \
-			"$(SRC_DIR)/$$src" -- $(CFLAGS); \
+		clang-tidy -fix -checks="-*,bugprone-sizeof-expression,cppcoreguidelines-no-malloc,misc-redundant-expression,modernize-loop-convert,modernize-use-auto,modernize-use-nullptr,modernize-use-default-member-init,modernize-use-equals-default,modernize-use-equals-delete,modernize-use-nullptr,readability-else-after-return,readability-else-after-return,readability-redundant-member-init,readability-redundant-member-init,readability-simplify-boolean-expr" -header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done
 	@echo "Done"
 
