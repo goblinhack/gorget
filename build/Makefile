@@ -14,6 +14,7 @@ all: pre
 	$(foreach var,$(DIRS), (cd $(var); $(MAKE) $@) ;)
 
 format:
+	$(foreach var,$(DIRS), (cd $(var); cp $(TOP)/.clang-format .) ;)
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/tidy_source.sh do) ;)
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/format.sh do) ;)
 

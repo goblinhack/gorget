@@ -12,6 +12,11 @@ OUT=$(mktemp) || exit 1
 
 for IN in *.hpp *.cpp
 do
+    if [ ! -f $IN ];
+    then
+      continue
+    fi
+
     echo Tidying $IN...
     for WHICH in 1 2 3 4 5 6 7 8 9
     do
