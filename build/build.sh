@@ -383,12 +383,12 @@ if [[ $OPT_PROF != "" ]]; then
     LDFLAGS+=" -pg"
 fi
 
-rm -f Makefile
+MAKEFILE=../build/Makefile.template
 
 if [[ $OPT_DEV1 != "" ]]; then
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -g" > .Makefile
+    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -g" > $MAKEFILE
 else
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3" > .Makefile
+    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3" > $MAKEFILE
 fi
 
 if [[ $OPT_DEV2 != "" ]]; then
@@ -398,7 +398,7 @@ else
     GCC_STACK_CHECK=
 fi
 
-cat >>.Makefile <<%%
+cat >>$MAKEFILE <<%%
 CLANG_COMPILER_WARNINGS=-Wall -std=c++2a
 GCC_COMPILER_WARNINGS=-x c++ -Wall -std=c++2a $GCC_STACK_CHECK
 LDFLAGS=$LDFLAGS
@@ -409,8 +409,8 @@ GOT_CC=
 g++ --version > /dev/null
 if [ $? -eq 0 ]
 then
-    echo "COMPILER_WARNINGS=\$(GCC_COMPILER_WARNINGS)" >> .Makefile
-    echo "CC=g++" >> .Makefile
+    echo "COMPILER_WARNINGS=\$(GCC_COMPILER_WARNINGS)" >> $MAKEFILE
+    echo "CC=g++" >> $MAKEFILE
     GOT_CC=1
 fi
 
@@ -420,8 +420,8 @@ fi
 if [[ $OPT_GCC = "" ]]; then
   clang++ --version > /dev/null
   if [ $? -eq 0 ]; then
-      echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> .Makefile
-      echo "CC=clang++" >> .Makefile
+      echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> $MAKEFILE
+      echo "CC=clang++" >> $MAKEFILE
       GOT_CC=1
   fi
 fi
@@ -433,7 +433,7 @@ fi
 
 case "$MY_OS_NAME" in
     *MING*|*MSYS*)
-        echo "CC=/${MINGW_TYPE}/bin/clang++.exe" >> .Makefile
+        echo "CC=/${MINGW_TYPE}/bin/clang++.exe" >> $MAKEFILE
         #
         # To resolve WinMain, add these at the end again
         #
@@ -444,27 +444,12 @@ esac
 #
 # Create the makefile
 #
-cat >>.Makefile <<%%
+cat >>$MAKEFILE <<%%
 EXE=$EXE
 DSYM=$DSYM
 LDLIBS=$LDLIBS
 CFLAGS=\$(COMPILER_FLAGS) \$(COMPILER_WARNINGS)
-
-include Makefile.base
 %%
-
-if [ -s .Makefile ]
-then
-    mv .Makefile Makefile
-    if [ ! -f Makefile ]
-    then
-        log_err "No makefile?!"
-        exit 1
-    fi
-else
-    log_err "Makefile create fail?!"
-    exit 1
-fi
 
 #
 # Cleanup pre-build

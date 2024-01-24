@@ -1,3 +1,4 @@
+include ../build/Makefile.template
 
 NAME=yelindor
 BUILD_DIR=.o
