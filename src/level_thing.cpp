@@ -7,10 +7,10 @@
 #include <string.h>
 
 #include "my_level.hpp"
-#include "my_level_data.hpp"
-#include "my_main.hpp"
-#include "my_thing.hpp"
-#include "my_thing_id.hpp"
+// REMOVED #include "my_level_data.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_thing.hpp"
+// REMOVED #include "my_thing_id.hpp"
 #include "my_tp.hpp"
 
 Thingp thing_get(LevelData *data, point p, uint8_t slot, Tpp *out)

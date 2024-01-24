@@ -4,8 +4,8 @@
 
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_level_data.hpp"
-#include "my_main.hpp"
+// REMOVED #include "my_level_data.hpp"
+// REMOVED #include "my_main.hpp"
 #include "my_tp.hpp"
 
 void Level::anim(void)

@@ -2,11 +2,11 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_game.hpp"
+// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_level_data.hpp"
-#include "my_thing.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_level_data.hpp"
+// REMOVED #include "my_thing.hpp"
+// REMOVED #include "my_tp.hpp"
 
 void Level::world_create_and_place()
 {

@@ -2,16 +2,16 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_color_defs.hpp"
+// REMOVED #include "my_color_defs.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp"
+// REMOVED #include "my_gl.hpp"
 #include "my_level.hpp"
-#include "my_level_data.hpp"
-#include "my_main.hpp"
-#include "my_ptrcheck.hpp"
-#include "my_tex.hpp"
+// REMOVED #include "my_level_data.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_ptrcheck.hpp"
+// REMOVED #include "my_tex.hpp"
 #include "my_tile.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_tp.hpp"
 
 void Level::set_display_bounds(void)
 {

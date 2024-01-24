@@ -2,15 +2,15 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include <array>
+// REMOVED #include <array>
 
 #include "my_array_bounds_check.hpp"
-#include "my_charmap.hpp"
-#include "my_level_ph1.hpp"
+// REMOVED #include "my_charmap.hpp"
+// REMOVED #include "my_level_ph1.hpp"
 #include "my_level_ph2.hpp"
-#include "my_level_ph2_room.hpp"
-#include "my_main.hpp"
-#include "my_point.hpp"
+// REMOVED #include "my_level_ph2_room.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_point.hpp"
 #include "my_template.hpp"
 
 static LevelPh2Roomp get_fitted_room_type(const Level1Node *node, const LevelPh2Roomp room_left,

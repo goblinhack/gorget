@@ -4,8 +4,8 @@
 
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_level_data.hpp"
-#include "my_thing.hpp"
+// REMOVED #include "my_level_data.hpp"
+// REMOVED #include "my_thing.hpp"
 #include "my_tp.hpp"
 
 void Level::player_create_and_place()

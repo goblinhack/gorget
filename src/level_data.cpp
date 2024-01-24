@@ -2,12 +2,12 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_level.hpp"
+// REMOVED #include "my_level.hpp"
 #include "my_level_data.hpp"
-#include "my_level_ph1.hpp"
-#include "my_level_ph2.hpp"
-#include "my_level_ph3.hpp"
-#include "my_level_ph4.hpp"
+// REMOVED #include "my_level_ph1.hpp"
+// REMOVED #include "my_level_ph2.hpp"
+// REMOVED #include "my_level_ph3.hpp"
+// REMOVED #include "my_level_ph4.hpp"
 #include "my_ptrcheck.hpp"
 
 LevelDatap level_data_constructor(void)

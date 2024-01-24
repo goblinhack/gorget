@@ -2,17 +2,17 @@
 //
 // Copyright Neil McGill, goblinhack@gmail.com
 //
-#include <array>
-#include <string.h>
+// REMOVED #include <array>
+// REMOVED #include <string.h>
 
-#include "my_array_bounds_check.hpp"
+// REMOVED #include "my_array_bounds_check.hpp"
 #include "my_level.hpp"
-#include "my_level_data.hpp"
-#include "my_main.hpp"
-#include "my_point.hpp"
-#include "my_random.hpp"
+// REMOVED #include "my_level_data.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_point.hpp"
+// REMOVED #include "my_random.hpp"
 #include "my_template.hpp"
-#include "my_tile.hpp"
+// REMOVED #include "my_tile.hpp"
 #include "my_tp.hpp"
 
 void Level::assign_tiles(void)

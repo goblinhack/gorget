@@ -2,18 +2,18 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include <array>
-#include <string.h>
+// REMOVED #include <array>
+// REMOVED #include <string.h>
 
 #include "my_array_bounds_check.hpp"
 #include "my_charmap.hpp"
-#include "my_dice.hpp"
-#include "my_level_ph1.hpp"
-#include "my_level_ph2.hpp"
+// REMOVED #include "my_dice.hpp"
+// REMOVED #include "my_level_ph1.hpp"
+// REMOVED #include "my_level_ph2.hpp"
 #include "my_level_ph3.hpp"
-#include "my_main.hpp"
-#include "my_point.hpp"
-#include "my_random.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_point.hpp"
+// REMOVED #include "my_random.hpp"
 #include "my_template.hpp"
 
 void LevelPh3::dump(void)

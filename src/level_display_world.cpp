@@ -4,13 +4,13 @@
 
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp"
+// REMOVED #include "my_gl.hpp"
 #include "my_level.hpp"
-#include "my_level_data.hpp"
-#include "my_main.hpp"
-#include "my_ptrcheck.hpp"
+// REMOVED #include "my_level_data.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_ptrcheck.hpp"
 #include "my_tex.hpp"
-#include "my_tile.hpp"
+// REMOVED #include "my_tile.hpp"
 #include "my_tp.hpp"
 
 void Level::display_world_tile(Tpp tp, Tilep tile, point tl, point br, point offset)

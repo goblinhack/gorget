@@ -36,7 +36,7 @@ Tpp tp_find(TpId id)
 {
   TRACE_NO_INDENT();
 
-  if (id - 1 >= (int) tp_id_map.size()) {
+  if ((int) id - 1 >= (int) tp_id_map.size()) {
     DIE("tp_find: thing template %" PRIX16 " bad id", id);
   }
 

@@ -11,7 +11,7 @@
 #include "my_array_bounds_check.hpp"
 #include "my_dmap.hpp"
 #include "my_level_ph1.hpp"
-#include "my_main.hpp"
+// REMOVED #include "my_main.hpp"
 
 static bool debug_enabled = false;
 
