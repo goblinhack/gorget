@@ -1,7 +1,7 @@
 include ../build/Makefile.template
 
 NAME=yelindor
-BUILD_DIR=.o
+BUILD_DIR=../.o
 
 TARGET_GAME=$(NAME)$(EXE)
 SRC_DIR=.
@@ -30,7 +30,8 @@ $(BUILD_DIR)/%.o: %.S
 	$(CC) $(DEP_FLAGS) -c -o $@ $<
 
 $(TARGET_GAME): $(OBJECTS)
-	cd $(BUILD_DIR); $(CC) $(LDFLAGS) $(notdir $(OBJECTS)) $(LDLIBS) -o $(TARGET_GAME); cp -f $(NAME)* ../..
+	cd $(BUILD_DIR); $(CC) $(LDFLAGS) *.o */*.o $(LDLIBS) -o $(TARGET_GAME)
+	cp -f $(BUILD_DIR)/$(NAME)* ..
 
 tidy:
 	# clang-tidy --list-checks -checks='*' | grep "modernize"

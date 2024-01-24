@@ -1,5 +1,4 @@
 #!/bin/bash
-cd src
 for i in *.cpp *.hpp
 do
   case $i in

@@ -14,9 +14,9 @@ static Tpidmap tp_dungeon_exit;
 static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
-static Tpidmap tp_world_sea;
-static Tpidmap tp_world_mountains;
 static Tpidmap tp_world_forest;
+static Tpidmap tp_world_mountains;
+static Tpidmap tp_world_sea;
 // end sort marker1 }
 
 void tp_random_dungeon_init(void)

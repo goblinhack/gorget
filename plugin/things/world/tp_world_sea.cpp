@@ -12,9 +12,11 @@ bool tp_load_world_sea(void)
   TRACE_NO_INDENT();
 
   auto tp = tp_load("world_sea");
+  // begin sort marker1 {
   tp->z_depth_set(MAP_DEPTH_SEA);
   tp->is_world_sea  = true;
   tp->is_blit_tiled = true;
+  // end sort marker1 }
 
   auto delay = 2000;
   for (auto x = 0; x < TILE_VARIANTS; x++) {

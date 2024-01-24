@@ -41,9 +41,9 @@ public:
   bool is_key {};
   bool is_monst1 {};
   bool is_player {};
-  bool is_world_sea {};
-  bool is_world_mountains {};
   bool is_world_forest {};
+  bool is_world_mountains {};
+  bool is_world_sea {};
   // end sort marker1 }
 
   // begin sort marker2 {

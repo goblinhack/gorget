@@ -12,11 +12,13 @@ bool tp_load_player(void)
   TRACE_NO_INDENT();
 
   auto tp = tp_load("player");
+  // begin sort marker1 {
   tp->z_depth_set(MAP_DEPTH_OBJ3);
   tp->is_player               = true;
   tp->is_blit_on_ground       = true;
   tp->is_blit_square_outlined = true;
   tp->is_animated_can_hflip   = true;
+  // end sort marker1 }
 
 #if 0
   auto delay = 100;

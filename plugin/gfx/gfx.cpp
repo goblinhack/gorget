@@ -163,17 +163,11 @@ static void gfx_init_ui(void) {}
 void gfx_init(void)
 {
   gfx_init_font_ui();
-  gfx_init_ui();
+
+  // begin sort marker1 {
+  // end sort marker1 }
   gfx_init0();
   gfx_init1();
-  gfx_init2();
-  gfx_init3();
-  gfx_init4();
-  gfx_init5();
-  gfx_init6();
-  gfx_init7();
-  gfx_init8();
-  gfx_init9();
   gfx_init10();
   gfx_init11();
   gfx_init12();
@@ -181,9 +175,20 @@ void gfx_init(void)
   gfx_init14();
   gfx_init15();
   gfx_init_16x16();
-  gfx_init_world();
+  gfx_init2();
   gfx_init_24x24();
+  gfx_init3();
   gfx_init_32x32();
+  gfx_init4();
+  gfx_init5();
+  gfx_init6();
+  gfx_init7();
+  gfx_init8();
+  gfx_init9();
+  gfx_init_ui();
+  gfx_init_world();
+  // end sort marker1 }
+  // end sort marker1 }
 }
 
 void gfx_fini(void) {}

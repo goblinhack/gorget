@@ -12,9 +12,11 @@ bool tp_load_dungeon_exit(void)
   TRACE_NO_INDENT();
 
   auto tp = tp_load("dungeon_exit");
+  // begin sort marker1 {
   tp->z_depth_set(MAP_DEPTH_OBJ1);
   tp->is_dungeon_exit   = true;
   tp->is_blit_on_ground = true;
+  // end sort marker1 }
 
   for (auto frame = 0; frame < 8; frame++) {
     const auto delay = 100; /* ms */
