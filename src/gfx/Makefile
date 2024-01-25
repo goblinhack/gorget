@@ -20,7 +20,7 @@ $(BUILD_DIR): ; mkdir -p $(BUILD_DIR)
 $(OBJECTS): | $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: %.cpp
-	$(CC) $(CFLAGS) $(DEP_FLAGS) -I ../../src -c -o $@ $<
+	$(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: %.S
 	$(CC) $(DEP_FLAGS) -c -o $@ $<
