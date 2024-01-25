@@ -289,7 +289,7 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -L/${MINGW_TYPE}/glib/"
         LDLIBS=$(echo $LDLIBS | sed -e 's/-lmingw32 //g')
         LDLIBS+=" -funwind-tables"
-        LDLIBS+=" -Wl,-Bstatic -lstdc++ -Wl,-Bdynamic"
+        LDLIBS+=" -lstdc++"
         LDLIBS+=" -lopengl32"
         LDLIBS+=" -lpthread"
         LDLIBS+=" /${MINGW_TYPE}/lib/libSDL2_mixer.a"
