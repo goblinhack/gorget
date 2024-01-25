@@ -16,15 +16,14 @@
 #include <execinfo.h> // do not remove
 #endif
 #include <cxxabi.h>
+#ifdef HAVE_LIBUNWIND
+#include <libunwind.h> // do not remove
+#endif
 #include <memory>
 
 #include "my_backtrace.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
-
-#ifdef HAVE_LIBUNWIND
-#include <libunwind.h> // do not remove
-#endif
 
 void Backtrace::init(void)
 {
