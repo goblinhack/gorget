@@ -289,9 +289,7 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -L/${MINGW_TYPE}/glib/"
         LDLIBS=$(echo $LDLIBS | sed -e 's/-lmingw32 //g')
         LDLIBS+=" -funwind-tables"
-        LDLIBS+=" -static-libstdc++"
-        LDLIBS+=" -static-libgcc"
-        LDLIBS+=" -Wl,-Bstatic -Wl,-Bdynamic"
+        LDLIBS+=" -Wl,-Bstatic -lstdc++ -Wl,-Bdynamic"
         LDLIBS+=" -lopengl32"
         LDLIBS+=" -lpthread"
         LDLIBS+=" /${MINGW_TYPE}/lib/libSDL2_mixer.a"
@@ -437,7 +435,7 @@ case "$MY_OS_NAME" in
         #
         # To resolve WinMain, add these at the end again
         #
-        LDLIBS="$LDLIBS -lmingw32 -lSDL2main -lSDL2 -mwindows /${MINGW_TYPE}/lib/libSDL2main.a -L/${MINGW_TYPE}/lib -lSDL2main -lSDL2"
+        LDLIBS="$LDLIBS -lmingw32 -mwindows /${MINGW_TYPE}/lib/libSDL2main.a -L/${MINGW_TYPE}/lib -lSDL2main -lSDL2"
     ;;
 esac
 

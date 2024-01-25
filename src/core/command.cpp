@@ -78,7 +78,6 @@
 
 class command_t
 {
-
 public:
   command_t(void)
   {
