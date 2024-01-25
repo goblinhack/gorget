@@ -272,7 +272,7 @@ LDLIBS="$LDLIBS -lSDL2_mixer"
 #
 CONFIG_H=src/cfg.hpp
 echo "#include \"my_cfg.hpp\"" > $CONFIG_H
-C_FLAGS+=" -include cfg.hpp"
+C_FLAGS+=" -Iinc -I../inc/ -include cfg.hpp"
 
 #
 # for backtraces, but it doesn't help much

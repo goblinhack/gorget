@@ -3,8 +3,10 @@ pre:
 	@build/ramdisk.py
 
 TOP=$(shell pwd)
-DIRS=plugin/gfx \
-		 plugin/things \
+DIRS=src/gfx \
+		 src/core \
+		 src/wid \
+		 src/things \
 		 src
 
 all: pre
