@@ -291,7 +291,7 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -funwind-tables"
         LDLIBS+=" -static-libstdc++"
         LDLIBS+=" -static-libgcc"
-        LDLIBS+=" -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic"
+        LDLIBS+=" -Wl,-Bstatic -Wl,-Bdynamic"
         LDLIBS+=" -lopengl32"
         LDLIBS+=" -lpthread"
         LDLIBS+=" /${MINGW_TYPE}/lib/libSDL2_mixer.a"
