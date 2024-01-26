@@ -198,6 +198,8 @@ void Level::display_world(void)
     display_world_z_layer(MAP_DEPTH_FOREST, no_deco);
     display_world_z_layer(MAP_DEPTH_SEA, no_deco);
     display_world_z_layer(MAP_DEPTH_SEA, deco);
+    display_world_z_layer(MAP_DEPTH_DEEP_SEA, no_deco);
+    display_world_z_layer(MAP_DEPTH_DEEP_SEA, deco);
   }
 
   glcolor(WHITE);

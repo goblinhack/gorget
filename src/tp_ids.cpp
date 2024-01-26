@@ -16,6 +16,7 @@ std::initializer_list< std::string > tps = {
     "dungeon_exit",
     "key",
     "world_sea",
+    "world_deep_sea",
     "world_mountains",
     "world_forest",
     "player",

@@ -475,6 +475,9 @@ void blit_fbo(int fbo)
   blit_flush();
 }
 
+//
+// Blit the entire game FBO to whatever we're bound to
+//
 void blit_fbo_game_pix(int fbo)
 {
   blit_init();

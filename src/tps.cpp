@@ -15,6 +15,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_world_deep_sea()) {
+    return false;
+  }
+
   if (! tp_load_world_mountains()) {
     return false;
   }

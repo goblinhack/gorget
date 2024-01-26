@@ -170,36 +170,6 @@ Tpp tp_random_player(void)
   return tp_get_with_no_rarity_filter(tp_player);
 }
 
-Tpp tp_random_world_sea(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_world_sea.size())) {
-    DIE("No world sea found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_world_sea);
-}
-
-Tpp tp_random_world_mountains(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_world_mountains.size())) {
-    DIE("No world mountains found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_world_mountains);
-}
-
-Tpp tp_random_world_forest(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_world_forest.size())) {
-    DIE("No world forest found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_world_forest);
-}
-
 Tpp tp_random_key(void)
 {
   TRACE_NO_INDENT();

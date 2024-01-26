@@ -44,6 +44,7 @@ public:
   bool is_world_forest {};
   bool is_world_mountains {};
   bool is_world_sea {};
+  bool is_world_deep_sea {};
   // end sort marker1 }
 
   // begin sort marker2 {
@@ -88,9 +89,6 @@ Tpp tp_find(const std::string &name);
 Tpp tp_find(TpId id);
 Tpp tp_load(const std::string &name);
 Tpp tp_get_with_rarity_filter(Tpidmap &m);
-Tpp tp_random_world_sea(void);
-Tpp tp_random_world_mountains(void);
-Tpp tp_random_world_forest(void);
 Tpp tp_random_monst1(void);
 Tpp tp_random_player(void);
 Tpp tp_random_key(void);

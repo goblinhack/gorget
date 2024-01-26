@@ -28,6 +28,7 @@ enum {
   CHARMAP_WORLD_FOREST      = 'o',
   CHARMAP_WORLD_MOUNTAINS   = '^',
   CHARMAP_WORLD_SEA         = '~',
+  CHARMAP_WORLD_DEEP_SEA    = '_',
   // end sort marker1 }
 };
 
