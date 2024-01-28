@@ -2,10 +2,10 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_level_data.hpp"
-#include "my_main.hpp"
-#include "my_tp.hpp"
-#include "my_tps.hpp"
+#include "../../my_level_data.hpp"
+#include "../../my_main.hpp"
+#include "../../my_tp.hpp"
+#include "../../my_tps.hpp"
 
 bool tp_load_world_deep_sea(void)
 {

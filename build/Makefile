@@ -3,11 +3,7 @@ pre:
 	@build/ramdisk.py
 
 TOP=$(shell pwd)
-DIRS=src/gfx \
-		 src/core \
-		 src/wid \
-		 src/things \
-		 src
+DIRS=src
 
 all: pre
 	@if [ ! -f src/Makefile ]; then \

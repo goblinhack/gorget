@@ -13,12 +13,21 @@ SRC_DIR=.
 
 all: $(TARGET_GAME)
 
-SOURCES := $(wildcard *.cpp) $(wildcard *.S)
+SOURCES := $(wildcard *.cpp) $(wildcard */*.cpp) $(wildcard */*/*.cpp) $(wildcard *.S)
 OBJECTS :=\
 	$(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(basename $(SOURCES))))
 
 DEP_FILES := $(OBJECTS:.o=.d)
 DEP_FLAGS = -MMD -MP
+
+$(BUILD_DIR)/things/world: ; mkdir -p $(BUILD_DIR)/things/world
+$(OBJECTS): | $(BUILD_DIR)/things/world
+
+$(BUILD_DIR)/things/player: ; mkdir -p $(BUILD_DIR)/things/player
+$(OBJECTS): | $(BUILD_DIR)/things/player
+
+$(BUILD_DIR)/things/dungeon: ; mkdir -p $(BUILD_DIR)/things/dungeon
+$(OBJECTS): | $(BUILD_DIR)/things/dungeon
 
 $(BUILD_DIR): ; mkdir -p $(BUILD_DIR)
 $(OBJECTS): | $(BUILD_DIR)
@@ -30,7 +39,7 @@ $(BUILD_DIR)/%.o: %.S
 	$(CC) $(DEP_FLAGS) -c -o $@ $<
 
 $(TARGET_GAME): $(OBJECTS)
-	cd $(BUILD_DIR); $(CC) $(LDFLAGS) *.o */*.o $(LDLIBS) -o $(TARGET_GAME)
+	cd $(BUILD_DIR); $(CC) $(LDFLAGS) *.o */*/*.o $(LDLIBS) -o $(TARGET_GAME)
 	cp -f $(BUILD_DIR)/$(NAME)* ..
 
 tidy:

@@ -270,9 +270,9 @@ LDLIBS="$LDLIBS -lSDL2_mixer"
 #
 # Common config file
 #
-CONFIG_H=src/inc/cfg.hpp
+CONFIG_H=src/cfg.hpp
 echo "#include \"my_cfg.hpp\"" > $CONFIG_H
-C_FLAGS+=" -Iinc -I../inc/ -include cfg.hpp"
+C_FLAGS+=" -include cfg.hpp"
 
 #
 # for backtraces, but it doesn't help much
