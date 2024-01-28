@@ -130,7 +130,7 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
 
     if (name != "") {
       if (tile_find(name)) {
-        ERR("Tile name [%s] already used", name.c_str());
+        DIE("Tile name [%s] already used", name.c_str());
       }
 
       auto t      = new Tile(); // std::make_shared< class Tile >();
@@ -278,7 +278,7 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
 
     if (name != "") {
       if (tile_find(name)) {
-        ERR("Tile name [%s] already used", name.c_str());
+        DIE("Tile name [%s] already used", name.c_str());
       }
 
       auto t      = new Tile(); // std::make_shared< class Tile >();
@@ -427,7 +427,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
 
     if (name != "") {
       if (tile_find(name)) {
-        ERR("Tile name [%s] already used", name.c_str());
+        DIE("Tile name [%s] already used", name.c_str());
       }
 
       IF_DEBUG3 { LOG("Add tile name [%s]", name.c_str()); }
@@ -582,7 +582,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
   for (auto &name : arr) {
     if (name != "") {
       if (tile_find(name)) {
-        ERR("Tile name [%s] already used", name.c_str());
+        DIE("Tile name [%s] already used", name.c_str());
       }
 
       auto t      = new Tile(); // std::make_shared< class Tile >();

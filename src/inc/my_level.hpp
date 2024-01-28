@@ -50,7 +50,7 @@ public:
   void display_world_tile(Tpp, Tilep, point tl, point br, point offset);
   void display_world_tile(Tpp, uint16_t, point tl, point br, point offset);
   void display_world(void);
-  void display_world_z_layer(int z, bool deco);
+  void display_world_z_layer(int x, int y, int slot, int z, bool deco);
   void map_set(LevelDatap, const char *);
   void player_create_and_place(void);
   void player_map_center(void);

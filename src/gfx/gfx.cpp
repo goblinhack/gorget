@@ -165,7 +165,6 @@ void gfx_init(void)
   gfx_init_font_ui();
 
   // begin sort marker1 {
-  // end sort marker1 }
   gfx_init0();
   gfx_init1();
   gfx_init10();
@@ -179,6 +178,7 @@ void gfx_init(void)
   gfx_init_24x24();
   gfx_init3();
   gfx_init_32x32();
+  gfx_init_48x48();
   gfx_init4();
   gfx_init5();
   gfx_init6();
@@ -187,7 +187,6 @@ void gfx_init(void)
   gfx_init9();
   gfx_init_ui();
   gfx_init_world();
-  // end sort marker1 }
   // end sort marker1 }
 }
 
