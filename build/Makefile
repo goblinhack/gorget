@@ -6,26 +6,24 @@ TOP=$(shell pwd)
 DIRS=src
 
 all: pre
-	@if [ ! -f src/Makefile ]; then \
-	    (./RUNME;) \
-	fi
-	$(foreach var,$(DIRS), (cd $(var); $(MAKE) $@) ;)
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
 
 format:
 	$(foreach var,$(DIRS), (cd $(var); cp $(TOP)/.clang-format .) ;)
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/tidy_source.sh do) ;)
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/format.sh do) ;)
 
-clean:
-	$(foreach var,$(DIRS), (cd $(var); $(MAKE) $@) ;)
-	/bin/rm -rf data/sounds
-	/bin/rm -rf data/gfx
-	/bin/rm -rf build.log
-	/bin/rm -rf appdata
+clean_files:
+	/bin/rm -rf data/sounds/
+	/bin/rm -rf data/gfx/
+	/bin/rm -f build.log
 
-clobber: clean
-	$(foreach var,$(DIRS), (cd $(var); $(MAKE) $@) ;)
+clean: clean_files
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
 
-.PHONY: all clean clobber format pre
+clobber: clean_files
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
+
+.PHONY: all clean_files clean clobber format pre
 
 .DEFAULT_GOAL := all
