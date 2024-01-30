@@ -15,8 +15,9 @@ format:
 
 clean:
 	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
-	/bin/rm -rf data/sounds
-	/bin/rm -rf data/gfx
+	/bin/rm -rf data/sounds/
+	/bin/rm -rf data/gfx/
+	/bin/rm -f build.log
 
 clobber:
 	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
