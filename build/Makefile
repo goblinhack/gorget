@@ -6,10 +6,7 @@ TOP=$(shell pwd)
 DIRS=src
 
 all: pre
-	@if [ ! -f src/Makefile ]; then \
-	    (./RUNME;) \
-	fi
-	$(foreach var,$(DIRS), (cd $(var); $(MAKE) $@) ;)
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
 
 format:
 	$(foreach var,$(DIRS), (cd $(var); cp $(TOP)/.clang-format .) ;)
@@ -17,14 +14,12 @@ format:
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/format.sh do) ;)
 
 clean:
-	$(foreach var,$(DIRS), (cd $(var); $(MAKE) $@) ;)
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
 	/bin/rm -rf data/sounds
 	/bin/rm -rf data/gfx
-	/bin/rm -rf build.log
-	/bin/rm -rf appdata
 
-clobber: clean
-	$(foreach var,$(DIRS), (cd $(var); $(MAKE) $@) ;)
+clobber:
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
 
 .PHONY: all clean clobber format pre
 
