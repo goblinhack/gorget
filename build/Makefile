@@ -13,15 +13,17 @@ format:
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/tidy_source.sh do) ;)
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/format.sh do) ;)
 
-clean:
-	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
+clean_files:
 	/bin/rm -rf data/sounds/
 	/bin/rm -rf data/gfx/
 	/bin/rm -f build.log
 
-clobber:
+clean: clean_files
 	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
 
-.PHONY: all clean clobber format pre
+clobber: clean_files
+	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
+
+.PHONY: all clean_files clean clobber format pre
 
 .DEFAULT_GOAL := all
