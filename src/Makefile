@@ -3,7 +3,7 @@ include ../build/Makefile.template
 NAME=yelindor
 BUILD_DIR=../.o
 
-TARGET_GAME=$(NAME)$(EXE)
+TARGET_GAME=../$(NAME)$(EXE)
 SRC_DIR=.
 
 #
@@ -13,34 +13,37 @@ SRC_DIR=.
 
 all: $(TARGET_GAME)
 
-SOURCES := $(wildcard *.cpp) $(wildcard */*.cpp) $(wildcard */*/*.cpp) $(wildcard *.S)
-OBJECTS :=\
-	$(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(basename $(SOURCES))))
+# function to make object names from source files
+# (changes suffix to .o, encodes directory names so subdirectories in build dir aren't necessary)
+obj_name = $(addsuffix .o,$(subst /,__,$(subst ../,,$(basename $1))))
 
-DEP_FILES := $(OBJECTS:.o=.d)
+# recursively search all src/ subdirectories for cpp source files
+CPP_SOURCES := $(subst ./,,$(shell find $(SRC_DIR) -name \*.cpp))
+ASM_SOURCES := $(wildcard *.S)
+SOURCES := $(CPP_SOURCES) $(ASM_SOURCES)
+
+OBJECTS := $(call obj_name,$(SOURCES))
+OBJ_FILES := $(addprefix $(BUILD_DIR)/,$(OBJECTS))
+
+DEP_FILES := $(OBJ_FILES:.o=.d)
 DEP_FLAGS = -MMD -MP
 
-$(BUILD_DIR)/things/world: ; mkdir -p $(BUILD_DIR)/things/world
-$(OBJECTS): | $(BUILD_DIR)/things/world
-
-$(BUILD_DIR)/things/player: ; mkdir -p $(BUILD_DIR)/things/player
-$(OBJECTS): | $(BUILD_DIR)/things/player
-
-$(BUILD_DIR)/things/dungeon: ; mkdir -p $(BUILD_DIR)/things/dungeon
-$(OBJECTS): | $(BUILD_DIR)/things/dungeon
-
 $(BUILD_DIR): ; mkdir -p $(BUILD_DIR)
-$(OBJECTS): | $(BUILD_DIR)
+$(OBJ_FILES): | $(BUILD_DIR)
 
-$(BUILD_DIR)/%.o: %.cpp
-	$(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $@ $<
+# custom compile command for each source file needed because object file
+# base names don't match source files that were in src/ subdirectories
+$(foreach x,$(CPP_SOURCES),\
+$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ; $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
 
-$(BUILD_DIR)/%.o: %.S
-	$(CC) $(DEP_FLAGS) -c -o $@ $<
+$(foreach x,$(ASM_SOURCES),\
+$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ; $(CC) $(DEP_FLAGS) -c -o $$@ $$<))
 
-$(TARGET_GAME): $(OBJECTS)
-	cd $(BUILD_DIR); $(CC) $(LDFLAGS) *.o */*/*.o $(LDLIBS) -o $(TARGET_GAME)
-	cp -f $(BUILD_DIR)/$(NAME)* ..
+
+# use file list instead of wildcard for link command so we don't accidentally
+# link with old object files for removed source files
+$(TARGET_GAME): $(OBJ_FILES)
+	cd $(BUILD_DIR); $(CC) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $(TARGET_GAME)
 
 tidy:
 	for src in $(SOURCES) ; do \
@@ -52,9 +55,10 @@ tidy:
 .PHONY: style check-style tidy
 
 clean:
-	rm -f ../$(TARGET_GAME) ../stdout.txt ../stderr.txt
-	rm -f $(TARGET_GAME) stdout.txt stderr.txt
-	rm -rf $(BUILD_DIR)
+	rm -f $(TARGET_GAME) ../stdout.txt ../stderr.txt
+	@# safer delete of build dir instead of just 'rm -rf $(BUILD_DIR)'
+	rm -f $(BUILD_DIR)/*.[od]
+	@([ -d "$(BUILD_DIR)" ] && rmdir $(BUILD_DIR)) || true
 
 clobber: clean
 	rm -f ramdisk_data.cpp $(wildcard ramdisk_data*.S)
