@@ -16,6 +16,7 @@ format:
 clean_files:
 	/bin/rm -rf data/sounds/
 	/bin/rm -rf data/gfx/
+	/bin/rm -rf appdata/
 	/bin/rm -f build.log
 
 clean: clean_files
