@@ -45,18 +45,6 @@ std::string g_opt_seed_name;
 int TILES_VISIBLE_ACROSS;
 int TILES_VISIBLE_DOWN;
 
-//
-// Map size
-//
-int MAP_HEIGHT;
-int MAP_WIDTH;
-
-//
-// Map room cells
-//
-int LEVEL_PH2_HEIGHT;
-int LEVEL_PH2_WIDTH;
-
 int g_last_logged_callframes_depth;
 
 void reset_globals(void)

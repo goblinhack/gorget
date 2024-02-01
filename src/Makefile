@@ -1,4 +1,5 @@
 include ../build/Makefile.template
+# CFLAGS+=-O0
 
 NAME=yelindor
 BUILD_DIR=../.o
@@ -33,12 +34,20 @@ $(OBJ_FILES): | $(BUILD_DIR)
 
 # custom compile command for each source file needed because object file
 # base names don't match source files that were in src/ subdirectories
-$(foreach x,$(CPP_SOURCES),\
-$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ; $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
+
+PRECOMPILED_H := precompiled.hpp
+PRECOMPILED_H_OBJ := $(PRECOMPILED_H).gch
+
+%.hpp.gch: $(PRECOMPILED_H)
+		$(CC) $(CFLAGS) -c -o $@ $<
 
 $(foreach x,$(ASM_SOURCES),\
-$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ; $(CC) $(DEP_FLAGS) -c -o $$@ $$<))
+$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
+  $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
 
+$(foreach x,$(CPP_SOURCES),\
+$(eval $(BUILD_DIR)/$(call obj_name,$x): $x | $(PRECOMPILED_H_OBJ) ;\
+  $(CC) -include $(PRECOMPILED_H) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
 
 # use file list instead of wildcard for link command so we don't accidentally
 # link with old object files for removed source files
