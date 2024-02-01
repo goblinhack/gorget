@@ -27,7 +27,6 @@
 #include <string>
 #include <strings.h>
 #include <sys/param.h>
-#include <sys/prctl.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <time.h>
