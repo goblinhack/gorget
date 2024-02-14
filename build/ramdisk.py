@@ -17,9 +17,9 @@ number_of_ramdisk_files = 10
 root = pathlib.Path(".")
 
 if sys.platform == 'win32':
-    target="yelindor.exe"
+    target="gorget.exe"
 else:
-    target="yelindor"
+    target="gorget"
 
 #
 # If the make target exists, see if any graphics are newer than the

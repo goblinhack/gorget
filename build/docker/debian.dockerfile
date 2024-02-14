@@ -49,8 +49,8 @@ RUN mkdir -p $HOME/.ssh/                                                      &&
     ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts                       && \
     eval `ssh-agent -s`                                                       && \
     printf "${SSH_KEY_PASSPHRASE}\n" | ssh-add $HOME/.ssh/id_rsa              && \
-    git clone git@github.com:goblinhack/yelindor.git                           && \
+    git clone git@github.com:goblinhack/gorget.git                           && \
     rm -rf $HOME/.ssh/
 
-RUN cd yelindor && sh ./RUNME && ./yelindor
+RUN cd gorget && sh ./RUNME && ./gorget
 RUN bash

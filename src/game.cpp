@@ -12,7 +12,7 @@ Game::Game(std::string appdata)
 
   this->appdata = appdata;
 
-  saved_dir = appdata + DIR_SEP + "yelindor" + DIR_SEP;
+  saved_dir = appdata + DIR_SEP + "gorget" + DIR_SEP;
   save_slot = 1;
 
   save_meta = "seed " + seed_name + ", ";

@@ -175,7 +175,7 @@ void restart(void)
   // Windows has spaces in the path name and that ends up being incorrectly
   // split by execve on the 2nd boot. So, just avoid the issue.
   //
-  executable = (char *) "yelindor.exe";
+  executable = (char *) "gorget.exe";
 #endif
 
   CON("FIN: Restarting the program... Wish me luck.");
@@ -448,7 +448,7 @@ static void usage(void)
   }
   whinged = true;
 
-  CON("Yelindor, options:");
+  CON("Gorget, options:");
   CON(" ");
   CON("Commonly used options:");
   CON(" --seed <name/number>        -- Set the random seed.");
@@ -567,7 +567,7 @@ static std::string create_appdata_dir(void)
   mkdir(appdata, 0700);
 #endif
 
-  char *dir = dynprintf("%s%s%s", appdata, DIR_SEP, "yelindor");
+  char *dir = dynprintf("%s%s%s", appdata, DIR_SEP, "gorget");
 #ifdef _WIN32
   mkdir(dir);
 #else
@@ -575,11 +575,11 @@ static std::string create_appdata_dir(void)
 #endif
   myfree(dir);
 
-  char *out             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "yelindor", DIR_SEP, "stdout.txt");
+  char *out             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
   g_log_stdout_filename = std::string(out);
   g_log_stdout          = fopen(out, "w+");
 
-  char *err             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "yelindor", DIR_SEP, "stderr.txt");
+  char *err             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
   g_log_stderr_filename = std::string(err);
   g_log_stderr          = fopen(err, "w+");
 

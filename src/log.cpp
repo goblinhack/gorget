@@ -461,7 +461,7 @@ static void sdl_msgerr_(const char *fmt, va_list args)
 
 #if SDL_MAJOR_VERSION >= 2
   CON("INF: Show SDL message box");
-  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "yelindor", buf, nullptr);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, nullptr);
   CON("INF: Finished SDL message box");
 #endif
 }

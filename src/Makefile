@@ -1,7 +1,7 @@
 include ../build/Makefile.template
 # CFLAGS+=-O0
 
-NAME=yelindor
+NAME=gorget
 BUILD_DIR=../.o
 
 TARGET_GAME=../$(NAME)$(EXE)

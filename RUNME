@@ -22,25 +22,21 @@
 
 cat <<%%
 ${RED}
-                               ,,                                                ,...
-\`7MM"""Mq.                   \`7MM                                  .g8""8q.    .d' ""
-  MM   \`MM.                    MM                                .dP'    \`YM.  dM\`
-  MM   ,M9  .gP"Ya   ,6"Yb.    MM  \`7MMpMMMb.pMMMb.  ,pP"Ybd     dM'      \`MM mMMmm
-  MMmmdM9  ,M'   Yb 8)   MM    MM    MM    MM    MM  8I   \`"     MM        MM  MM
-  MM  YM.  8M""""""  ,pm9MM    MM    MM    MM    MM  \`YMMMa.     MM.      ,MP  MM
-  MM   \`Mb.YM.    , 8M   MM    MM    MM    MM    MM  L.   I8     \`Mb.    ,dP'  MM
-.JMML. .JMM.\`Mbmmd' \`Moo9^Yo..JMML..JMML  JMML  JMML.M9mmmP'       \`"bmmd"'  .JMML.
 
-
-
-                   ,,    ,,                    ,,
-\`YMM'   \`MM'     \`7MM    db                  \`7MM
-  VMA   ,V         MM                          MM
-   VMA ,V .gP"Ya   MM  \`7MM  \`7MMpMMMb.   ,M""bMM  ,pW"Wq.\`7Mb,od8
-    VMMP ,M'   Yb  MM    MM    MM    MM ,AP    MM 6W'   \`Wb MM' "'
-     MM  8M""""""  MM    MM    MM    MM 8MI    MM 8M     M8 MM
-     MM  YM.    ,  MM    MM    MM    MM \`Mb    MM YA.   ,A9 MM
-   .JMML. \`Mbmmd'.JMML..JMML..JMML  JMML.\`Wbmd"MML.\`Ybmd9'.JMML.
+ @@@@@@@@   @@@@@@   @@@@@@@    @@@@@@@@  @@@@@@@@  @@@@@@@
+@@@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@  @@@@@@@
+!@@        @@!  @@@  @@!  @@@  !@@        @@!         @@!
+!@!        !@!  @!@  !@!  @!@  !@!        !@!         !@!
+!@! @!@!@  @!@  !@!  @!@!!@!   !@! @!@!@  @!!!:!      @!!
+!!! !!@!!  !@!  !!!  !!@!@!    !!! !!@!!  !!!!!:      !!!
+:!!   !!:  !!:  !!!  !!: :!!   :!!   !!:  !!:         !!:
+:!:   !::  :!:  !:!  :!:  !:!  :!:   !::  :!:         :!:
+ ::: ::::  ::::: ::  ::   :::   ::: ::::   :: ::::     ::
+ :: :: :    : :  :    :   : :   :: :: :   : :: ::      :
+  :              :    .         :: :      :  :  :
+  .              :               : .      .     .
+                 :               .
+                 .
 
 ${RESET}
 %%
@@ -198,7 +194,7 @@ if [ $? -ne 0 ]; then
     tech_support >> $LOG
     log_err "Build failed."
     log_err "Could you send $LOG to $MAINTAINER?"
-    log_err "Or file an issue at https://github.com/goblinhack/yelindor"
+    log_err "Or file an issue at https://github.com/goblinhack/gorget"
     exit 1
 else
     #

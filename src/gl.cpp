@@ -1215,7 +1215,7 @@ void gl_ext_init(void)
   }
 
   LOG("OpenGl: - CreateWindowEx");
-  hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, g_szClassName, "yelindor startup", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
+  hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, g_szClassName, "gorget startup", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
                         CW_USEDEFAULT, 240, 120, nullptr, nullptr, hInstance, nullptr);
 
   if (hwnd == nullptr) {

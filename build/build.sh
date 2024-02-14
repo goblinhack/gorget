@@ -19,7 +19,7 @@
 
 . ./build/common.sh
 
-TARGET=yelindor
+TARGET=gorget
 
 # The default MINGW32 and MINGW64 environments build binaries using the older
 #  MSVCRT library that should be present on all Windows systems.
@@ -265,7 +265,7 @@ fi
 LDLIBS="$SDL_LIBS"
 LDLIBS="$LDLIBS -lSDL2_mixer"
 
-/bin/rm -f data/yelindor-hiscore.txt data/yelindor-config.txt
+/bin/rm -f data/gorget-hiscore.txt data/gorget-config.txt
 
 #
 # Common config file

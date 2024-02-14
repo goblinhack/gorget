@@ -247,7 +247,7 @@ uint8_t sdl_init(void)
   }
 
   LOG("SDL: Create window");
-  sdl.window = SDL_CreateWindow("yelindor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
+  sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
                                 video_is_unused_flags);
   if (! sdl.window) {
     ERR("SDL_CreateWindow couldn't set windowed display %ux%u: %s", video_width, video_height, SDL_GetError());
@@ -297,7 +297,7 @@ uint8_t sdl_init(void)
   SDL_GL_SwapWindow(sdl.window);
 
   LOG("SDL: Call SDL_SetWindowTitle");
-  SDL_SetWindowTitle(sdl.window, "yelindor");
+  SDL_SetWindowTitle(sdl.window, "gorget");
 
   LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
   LOG("SDL: OpenGL Renderer : %s", glGetString(GL_RENDERER));

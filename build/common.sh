@@ -71,23 +71,23 @@ log() {
 }
 
 log_info() {
-    echo "yelindor: ${GREEN}$*${RESET}"
+    echo "gorget: ${GREEN}$*${RESET}"
 }
 
 log_echo() {
-    echo "yelindor: $*"
+    echo "gorget: $*"
 }
 
 log_err() {
-    echo "yelindor: ${RED}ERROR: $*${RESET}"
+    echo "gorget: ${RED}ERROR: $*${RESET}"
 }
 
 log_warn() {
-    echo "yelindor: ${CYAN}WARN: $*${RESET}"
+    echo "gorget: ${CYAN}WARN: $*${RESET}"
 }
 
 log_die() {
-    echo "yelindor: ${RED}FATAL ERROR: $*${RESET}"
+    echo "gorget: ${RED}FATAL ERROR: $*${RESET}"
     echo "Mail goblinhack@gmail.com for help"
     exit 1
 }

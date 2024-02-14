@@ -3,7 +3,7 @@
 cd ..
 cd build/docker
 DOCKER_FILE=debian.dockerfile
-DOCKER_IMAGE=yelindor.debian
+DOCKER_IMAGE=gorget.debian
 
 which docker &>/dev/null
 if [[ $? -ne 0 ]]; then
