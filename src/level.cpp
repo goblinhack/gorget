@@ -11,7 +11,7 @@ Level::Level()
 
   data = level_data_constructor();
 
-  world_create_and_place();
+  dungeon_create_and_place();
   assign_tiles();
   player_create_and_place();
   player_map_center();

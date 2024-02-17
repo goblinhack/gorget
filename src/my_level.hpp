@@ -47,10 +47,10 @@ public:
   void anim(void);
   void assign_tiles(void);
   void display(void);
-  void display_world_tile(Tpp, Tilep, point tl, point br, point offset);
-  void display_world_tile(Tpp, uint16_t, point tl, point br, point offset);
-  void display_world(void);
-  void display_world_z_layer(int x, int y, int slot, int z, bool deco);
+  void display_dungeon_tile(Tpp, Tilep, point tl, point br, point offset);
+  void display_dungeon_tile(Tpp, uint16_t, point tl, point br, point offset);
+  void display_dungeon(void);
+  void display_dungeon_z_layer(int x, int y, int slot, int z, bool deco);
   void map_set(LevelDatap, const char *);
   void player_create_and_place(void);
   void player_map_center(void);
@@ -61,10 +61,9 @@ public:
   void player_move_up(void);
   void set_display_bounds(void);
   void tick(void);
-  void world_create_and_place(void);
+  void dungeon_create_and_place(void);
 
   bool is_same_type(point p, Tpp);
-  bool is_world_mountains(point p);
 
   Thingp thing_find_optional(ThingId id);
   Thingp thing_find(ThingId id);

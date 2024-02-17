@@ -33,7 +33,7 @@ void gl_init_2d_mode(void)
   }
 
   //
-  // Enable Texture Worldping
+  // Enable Textures
   //
   LOG("GFX: OpenGL enable textures");
   glEnable(GL_TEXTURE_2D);

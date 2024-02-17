@@ -14,27 +14,13 @@ static Tpidmap tp_dungeon_exit;
 static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
-static Tpidmap tp_world_forest;
-static Tpidmap tp_world_mountains;
-static Tpidmap tp_world_sea;
+static Tpidmap tp_dungeon_wall;
 // end sort marker1 }
 
 void tp_random_dungeon_init(void)
 {
   TRACE_NO_INDENT();
   for (auto &tp : tp_id_map) {
-    if (tp->is_world_sea) {
-      tp_world_sea.push_back(tp);
-    }
-
-    if (tp->is_world_mountains) {
-      tp_world_mountains.push_back(tp);
-    }
-
-    if (tp->is_world_forest) {
-      tp_world_forest.push_back(tp);
-    }
-
     if (tp->is_monst1) {
       tp_monst1.push_back(tp);
     }
@@ -45,6 +31,10 @@ void tp_random_dungeon_init(void)
 
     if (tp->is_key) {
       tp_key.push_back(tp);
+    }
+
+    if (tp->is_dungeon_wall) {
+      tp_dungeon_wall.push_back(tp);
     }
 
     if (tp->is_dungeon_entrance) {

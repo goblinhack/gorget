@@ -4,16 +4,11 @@
 
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_level_data.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_ptrcheck.hpp"
 #include "my_tex.hpp"
-// REMOVED #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-void Level::display_world_tile(Tpp tp, Tilep tile, point tl, point br, point offset)
+void Level::display_dungeon_tile(Tpp tp, Tilep tile, point tl, point br, point offset)
 {
   tl += offset;
   br += offset;
@@ -27,49 +22,49 @@ void Level::display_world_tile(Tpp tp, Tilep tile, point tl, point br, point off
   }
 }
 
-void Level::display_world_tile(Tpp tp, uint16_t tile_index, point tl, point br, point offset)
+void Level::display_dungeon_tile(Tpp tp, uint16_t tile_index, point tl, point br, point offset)
 {
   auto tile = tile_index_to_tile(tile_index);
   if (! tile) {
     return;
   }
 
-  display_world_tile(tp, tile, tl, br, offset);
+  display_dungeon_tile(tp, tile, tl, br, offset);
 }
 
 #define BLIT_UP_TILE                                                                                                 \
   tile = tile_index_to_tile(tile_index - offset);                                                                    \
-  display_world_tile(tp, tile, tl, br, point(0, -dh));
+  display_dungeon_tile(tp, tile, tl, br, point(0, -dh));
 
 #define BLIT_DOWN_TILE                                                                                               \
   tile = tile_index_to_tile(tile_index + offset);                                                                    \
-  display_world_tile(tp, tile, tl, br, point(0, dh));
+  display_dungeon_tile(tp, tile, tl, br, point(0, dh));
 
 #define BLIT_LEFT_TILE                                                                                               \
   tile = tile_index_to_tile(tile_index - 1);                                                                         \
-  display_world_tile(tp, tile, tl, br, point(-dw, 0));
+  display_dungeon_tile(tp, tile, tl, br, point(-dw, 0));
 
 #define BLIT_RIGHT_TILE                                                                                              \
   tile = tile_index_to_tile(tile_index + 1);                                                                         \
-  display_world_tile(tp, tile, tl, br, point(dw, 0));
+  display_dungeon_tile(tp, tile, tl, br, point(dw, 0));
 
 #define BLIT_TL_TILE                                                                                                 \
   tile = tile_index_to_tile(tile_index - offset - 1);                                                                \
-  display_world_tile(tp, tile, tl, br, point(-dw, -dh));
+  display_dungeon_tile(tp, tile, tl, br, point(-dw, -dh));
 
 #define BLIT_TR_TILE                                                                                                 \
   tile = tile_index_to_tile(tile_index - offset + 1);                                                                \
-  display_world_tile(tp, tile, tl, br, point(dw, -dh));
+  display_dungeon_tile(tp, tile, tl, br, point(dw, -dh));
 
 #define BLIT_BL_TILE                                                                                                 \
   tile = tile_index_to_tile(tile_index + offset - 1);                                                                \
-  display_world_tile(tp, tile, tl, br, point(-dw, dh));
+  display_dungeon_tile(tp, tile, tl, br, point(-dw, dh));
 
 #define BLIT_BR_TILE                                                                                                 \
   tile = tile_index_to_tile(tile_index + offset + 1);                                                                \
-  display_world_tile(tp, tile, tl, br, point(dw, dh));
+  display_dungeon_tile(tp, tile, tl, br, point(dw, dh));
 
-void Level::display_world_z_layer(int x, int y, int slot, int z, bool deco)
+void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
 {
   int dw = TILE_WIDTH / game->config.game_pix_zoom;
   int dh = TILE_HEIGHT / game->config.game_pix_zoom;
@@ -166,11 +161,11 @@ void Level::display_world_z_layer(int x, int y, int slot, int z, bool deco)
       BLIT_BR_TILE
     }
   } else {
-    display_world_tile(tp, tile_index, tl, br, point(0, 0));
+    display_dungeon_tile(tp, tile_index, tl, br, point(0, 0));
   }
 }
 
-void Level::display_world(void)
+void Level::display_dungeon(void)
 {
   TRACE_NO_INDENT();
 
@@ -184,28 +179,13 @@ void Level::display_world(void)
     glClear(GL_COLOR_BUFFER_BIT);
     blit_init();
 
-    const bool deco    = true;
+    // const bool deco    = true;
     const bool no_deco = false;
 
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          display_world_z_layer(x, y, slot, MAP_DEPTH_SEA, no_deco);
-          display_world_z_layer(x, y, slot, MAP_DEPTH_SEA, deco);
-          display_world_z_layer(x, y, slot, MAP_DEPTH_DEEP_SEA, no_deco);
-          display_world_z_layer(x, y, slot, MAP_DEPTH_DEEP_SEA, deco);
-          display_world_z_layer(x, y, slot, MAP_DEPTH_MOUNTAINS, no_deco);
-          // display_world_z_layer(x, y, slot, MAP_DEPTH_MOUNTAINS, deco);
-        }
-      }
-      for (auto x = minx; x < maxx; x++) {
-        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          // display_world_z_layer(x, y, slot, MAP_DEPTH_SEA, no_deco);
-          // display_world_z_layer(x, y, slot, MAP_DEPTH_SEA, deco);
-          // display_world_z_layer(x, y, slot, MAP_DEPTH_DEEP_SEA, no_deco);
-          // display_world_z_layer(x, y, slot, MAP_DEPTH_DEEP_SEA, deco);
-          display_world_z_layer(x, y, slot, MAP_DEPTH_FOREST, no_deco);
-          // display_world_z_layer(x, y, slot, MAP_DEPTH_FOREST, deco);
+          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_WALL, no_deco);
         }
       }
     }

@@ -87,5 +87,5 @@ void Level::display(void)
   TRACE_NO_INDENT();
 
   set_display_bounds();
-  display_world();
+  display_dungeon();
 }

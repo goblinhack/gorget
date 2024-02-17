@@ -9,8 +9,8 @@ void gfx_init_48x48(void)
 {
   std::initializer_list< std::string > tiles = {
       // clang-format off
-      "world_mountains.0",
-      "world_forest.0",
+      "",
+      "",
       "",
       "",
       "",

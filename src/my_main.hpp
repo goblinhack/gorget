@@ -18,7 +18,6 @@ extern char *EXEC_DIR;
 extern char *EXEC_FULL_PATH_AND_NAME;
 extern char *GFX_PATH;
 extern char *TTF_PATH;
-extern char *WORLD_PATH;
 
 extern bool g_die_occurred;             // Fatal error has occurred
 extern bool g_do_screenshot;            // Grab a screen shot next fram

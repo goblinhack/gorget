@@ -11,7 +11,6 @@ char *EXEC_DIR;
 char *EXEC_FULL_PATH_AND_NAME;
 char *GFX_PATH;
 char *TTF_PATH;
-char *WORLD_PATH;
 
 FILE       *g_log_stdout;
 FILE       *g_log_stderr;
