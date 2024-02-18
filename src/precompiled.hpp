@@ -35,6 +35,7 @@
 #include "my_audio.hpp"
 #include "my_command.hpp"
 #include "my_dir.hpp"
+#include "my_enum.hpp"
 #include "my_file.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"

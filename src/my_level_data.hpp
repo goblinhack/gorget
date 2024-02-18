@@ -16,6 +16,7 @@
 #include "my_thing_id.hpp"
 
 enum {
+  MAP_DEPTH_FLOOR,
   MAP_DEPTH_WALL,
   MAP_DEPTH_OBJ1,
   MAP_DEPTH_OBJ2,

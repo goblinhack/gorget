@@ -16,6 +16,7 @@ std::initializer_list< std::string > tps = {
     "dungeon_exit",
     "key",
     "dungeon_wall",
+    "dungeon_floor",
     "player",
     // clang-format on
 };

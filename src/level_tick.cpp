@@ -2,11 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_level_data.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_tp.hpp"
 
 void Level::tick(void)
 {

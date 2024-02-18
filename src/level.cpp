@@ -3,7 +3,6 @@
 //
 
 #include "my_level.hpp"
-// REMOVED #include "my_ptrcheck.hpp"
 
 Level::Level()
 {

@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#ifndef _MY__ENUM_HPP__
-#define _MY__ENUM_HPP__
+#ifndef _MY_ENUM_HPP__
+#define _MY_ENUM_HPP__
 
 typedef std::map< std::string, uint32_t > enum_map;
 

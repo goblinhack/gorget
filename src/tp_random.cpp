@@ -3,7 +3,6 @@
 //
 
 #include "my_dice.hpp"
-// REMOVED #include "my_game.hpp"
 #include "my_random.hpp"
 #include "my_tp.hpp"
 #include "my_vector_bounds_check.hpp"
@@ -15,6 +14,7 @@ static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
 static Tpidmap tp_dungeon_wall;
+static Tpidmap tp_dungeon_floor;
 // end sort marker1 }
 
 void tp_random_dungeon_init(void)
@@ -35,6 +35,10 @@ void tp_random_dungeon_init(void)
 
     if (tp->is_dungeon_wall) {
       tp_dungeon_wall.push_back(tp);
+    }
+
+    if (tp->is_dungeon_floor) {
+      tp_dungeon_floor.push_back(tp);
     }
 
     if (tp->is_dungeon_entrance) {

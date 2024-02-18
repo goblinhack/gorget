@@ -42,6 +42,7 @@ public:
   bool is_monst1 {};
   bool is_player {};
   bool is_dungeon_wall {};
+  bool is_dungeon_floor {};
   // end sort marker1 }
 
   // begin sort marker2 {

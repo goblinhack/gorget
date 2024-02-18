@@ -33,7 +33,7 @@ void Level::map_set(LevelDatap data, const char *in)
         case CHARMAP_LOCK : break;
         case CHARMAP_KEY : break;
         case CHARMAP_SECRET_DOOR : break;
-        case CHARMAP_EMPTY : break;
+        case CHARMAP_EMPTY : tp = tp_find("dungeon_floor"); break;
         default : DIE("unexpected map char '%c'", c);
       }
 

@@ -2,15 +2,9 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-// REMOVED #include <iostream>
-// REMOVED #include <sstream>
 #include <string.h>
 
 #include "my_level.hpp"
-// REMOVED #include "my_level_data.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_thing.hpp"
-// REMOVED #include "my_thing_id.hpp"
 #include "my_tp.hpp"
 
 void thing_push(LevelData *data, Thingp t)

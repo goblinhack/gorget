@@ -2,7 +2,6 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-// REMOVED #include "my_level.hpp"
 #include "my_level_data.hpp"
 #include "my_ptrcheck.hpp"
 
