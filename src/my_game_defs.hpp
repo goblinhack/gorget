@@ -6,8 +6,8 @@
 #ifndef _MY_GAME_DEFS_HPP_
 #define _MY_GAME_DEFS_HPP_
 
-#define MAP_WIDTH  64
-#define MAP_HEIGHT 64
+#define MAP_WIDTH  32
+#define MAP_HEIGHT 32
 #define MAP_SLOTS  16
 
 #define GAME_MOST_ZOOMED_IN   5
