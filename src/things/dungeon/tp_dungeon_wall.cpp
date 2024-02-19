@@ -14,9 +14,9 @@ bool tp_load_dungeon_wall(void)
   auto tp = tp_load("dungeon_wall");
   // begin sort marker1 {
   tp->z_depth_set(MAP_DEPTH_WALL);
-  tp->is_dungeon_wall   = true;
-  tp->is_blit_on_ground = true;
-  tp->is_blit_tiled     = true;
+  tp->is_dungeon_wall  = true;
+  tp->is_blit_tiled    = true;
+  tp->is_blit_centered = true;
   // end sort marker1 }
 
   tp->tiles.push_back(tile_find_mand("dungeon_wall.IS_JOIN_TL2"));

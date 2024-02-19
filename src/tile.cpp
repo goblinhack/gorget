@@ -244,7 +244,7 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
 
     if (y * height > tex_get_height(tex)) {
       if (name != "") {
-        ERR("Overflow reading tile arr[%s]", name.c_str());
+        DIE("Overflow reading tile arr[%s]", name.c_str());
       } else {
         ERR("Overflow reading tile arr at x %d y %d", x, y);
       }
@@ -284,7 +284,7 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
       auto t      = new Tile(); // std::make_shared< class Tile >();
       auto result = all_tiles.insert(std::make_pair(name, t));
       if (! result.second) {
-        ERR("Tile insert name [%s] failed", name.c_str());
+        DIE("Tile insert name [%s] failed", name.c_str());
       }
 
       //
@@ -392,9 +392,9 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
 
     if (y * height > tex_get_height(tex)) {
       if (name != "") {
-        ERR("Overflow reading tile arr[%s]", name.c_str());
+        DIE("Overflow reading tile arr[%s]", name.c_str());
       } else {
-        ERR("Overflow reading tile arr at x %d y %d", x, y);
+        DIE("Overflow reading tile arr at x %d y %d", x, y);
       }
     }
   }
@@ -435,7 +435,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
       auto t      = new Tile(); // std::make_shared< class Tile >();
       auto result = all_tiles.insert(std::make_pair(name, t));
       if (! result.second) {
-        ERR("Tile insert name [%s] failed", name.c_str());
+        DIE("Tile insert name [%s] failed", name.c_str());
       }
 
       //
@@ -549,9 +549,9 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
 
     if (y * height > tex_get_height(tex)) {
       if (name != "") {
-        ERR("Overflow reading tile arr[%s]", name.c_str());
+        DIE("Overflow reading tile arr[%s]", name.c_str());
       } else {
-        ERR("Overflow reading tile arr at x %d y %d", x, y);
+        DIE("Overflow reading tile arr at x %d y %d", x, y);
       }
     }
   }
@@ -588,7 +588,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
       auto t      = new Tile(); // std::make_shared< class Tile >();
       auto result = all_tiles.insert(std::make_pair(name, t));
       if (! result.second) {
-        ERR("Tile insert name [%s] failed", name.c_str());
+        DIE("Tile insert name [%s] failed", name.c_str());
       }
 
       //
@@ -699,9 +699,9 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
 
     if (y * height > tex_get_height(tex)) {
       if (name != "") {
-        ERR("Overflow reading tile arr[%s]", name.c_str());
+        DIE("Overflow reading tile arr[%s]", name.c_str());
       } else {
-        ERR("Overflow reading tile arr at x %d y %d", x, y);
+        DIE("Overflow reading tile arr at x %d y %d", x, y);
       }
     }
   }

@@ -177,6 +177,7 @@ void gfx_init(void)
   gfx_init3();
   gfx_init_32x32();
   gfx_init_48x48();
+  gfx_init_64x64();
   gfx_init4();
   gfx_init5();
   gfx_init6();

@@ -16,6 +16,7 @@ bool tp_load_dungeon_floor(void)
   tp->z_depth_set(MAP_DEPTH_FLOOR);
   tp->is_dungeon_floor  = true;
   tp->is_blit_on_ground = true;
+  tp->is_blit_centered  = true;
   // end sort marker1 }
 
   tp->tiles.push_back(tile_find_mand("dungeon_floor.1"));
