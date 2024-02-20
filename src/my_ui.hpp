@@ -12,8 +12,8 @@
 #define UI_CONSOLE_WIDTH            (TERM_WIDTH - 3)
 #define UI_CURSOR_COLOR             GRAY
 #define UI_CURSOR_OTHER_COLOR       WHITE
-#define UI_FONT_HEIGHT              230
-#define UI_FONT_WIDTH               152
+#define UI_FONT_HEIGHT              8
+#define UI_FONT_WIDTH               8
 #define UI_LOGGING_EMPTY_LINE       "`" // Complete hack, char I use to force space
 #define UI_MOUSE_DOUBLE_CLICK       500 // Double click time
 #define UI_MOUSE_WHEEL_SCALE        1.2 // How much the wheel mouse moves.
