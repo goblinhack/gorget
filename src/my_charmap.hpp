@@ -11,6 +11,7 @@ enum {
   CHARMAP_DOWN             = 'v',
   CHARMAP_DUNGEON_ENTRANCE = 'S',
   CHARMAP_DUNGEON_EXIT     = 'E',
+  CHARMAP_DUNGEON_WALL     = 'x',
   CHARMAP_EMPTY            = '.',
   CHARMAP_KEY              = 'k',
   CHARMAP_LEFT             = '<',
@@ -21,7 +22,6 @@ enum {
   CHARMAP_SECRET_DOOR      = 's',
   CHARMAP_TREASURE         = '$',
   CHARMAP_UP               = '^',
-  CHARMAP_DUNGEON_WALL     = 'x',
   CHARMAP_WILDCARD         = '*',
   // end sort marker1 }
 };

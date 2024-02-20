@@ -10,11 +10,11 @@
 // begin sort marker1 {
 static Tpidmap tp_dungeon_entrance;
 static Tpidmap tp_dungeon_exit;
+static Tpidmap tp_dungeon_floor;
+static Tpidmap tp_dungeon_wall;
 static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
-static Tpidmap tp_dungeon_wall;
-static Tpidmap tp_dungeon_floor;
 // end sort marker1 }
 
 void tp_random_dungeon_init(void)
