@@ -1,5 +1,11 @@
 include ../build/Makefile.template
-# CFLAGS+=-O0
+
+#
+# For incremental builds, this is a lot faster
+#
+ifeq ($(origin USE_PRECOMPILED),undefined)
+CFLAGS+=-O0
+endif
 
 NAME=gorget
 BUILD_DIR=../.o
@@ -41,13 +47,27 @@ PRECOMPILED_H_OBJ := $(PRECOMPILED_H).gch
 %.hpp.gch: $(PRECOMPILED_H)
 		$(CC) $(CFLAGS) -c -o $@ $<
 
-$(foreach x,$(ASM_SOURCES),\
+#
+# Precompiled headers are good for the initial build, but after that it
+# is faster to use dependancies
+#
+ifeq ($(origin USE_PRECOMPILED),undefined)
+
+$(foreach x,$(CPP_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
   $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
+
+else
 
 $(foreach x,$(CPP_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x | $(PRECOMPILED_H_OBJ) ;\
   $(CC) -include $(PRECOMPILED_H) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
+
+endif
+
+$(foreach x,$(ASM_SOURCES),\
+$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
+  $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
 
 # use file list instead of wildcard for link command so we don't accidentally
 # link with old object files for removed source files

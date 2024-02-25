@@ -12,6 +12,7 @@ static Tpidmap tp_dungeon_entrance;
 static Tpidmap tp_dungeon_exit;
 static Tpidmap tp_dungeon_floor;
 static Tpidmap tp_dungeon_wall;
+static Tpidmap tp_dungeon_door;
 static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
@@ -35,6 +36,10 @@ void tp_random_dungeon_init(void)
 
     if (tp->is_dungeon_wall) {
       tp_dungeon_wall.push_back(tp);
+    }
+
+    if (tp->is_dungeon_door) {
+      tp_dungeon_door.push_back(tp);
     }
 
     if (tp->is_dungeon_floor) {

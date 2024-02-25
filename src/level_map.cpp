@@ -25,7 +25,17 @@ void Level::map_set(LevelDatap data, const char *in)
 
       switch (c) {
         case CHARMAP_WILDCARD : break;
-        case CHARMAP_DUNGEON_WALL : tp = tp_find("dungeon_wall"); break;
+        case CHARMAP_DUNGEON_WALL :
+          tp = tp_find("dungeon_floor");
+          ::tp_set(data, point(x, y), tp);
+          tp = tp_find("dungeon_wall");
+          break;
+        case CHARMAP_DUNGEON_DOOR :
+          tp = tp_find("dungeon_floor");
+          ::tp_set(data, point(x, y), tp);
+          tp = tp_find("dungeon_door");
+          break;
+          break;
         case CHARMAP_TREASURE : break;
         case CHARMAP_MONST1 : break;
         case CHARMAP_DUNGEON_ENTRANCE : break;

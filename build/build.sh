@@ -485,7 +485,7 @@ fi
 cd ..
 
 echo make -f build/Makefile $CORES "$@" all
-make -f build/Makefile $CORES "$@" all
+USE_PRECOMPILED=yep make -f build/Makefile $CORES "$@" all
 
 if [ $? -eq 0 ]
 then

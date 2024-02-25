@@ -2,7 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "../../my_level_data.hpp"
+#include "../../my_depth.hpp"
 #include "../../my_main.hpp"
 #include "../../my_tp.hpp"
 #include "../../my_tps.hpp"

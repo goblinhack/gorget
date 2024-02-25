@@ -2,8 +2,6 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#define __MAIN__
-
 #include <ctime>      // do not remove
 #include <libgen.h>   // dirname
 #include <signal.h>   // dirname
@@ -14,12 +12,14 @@
 #include <unistd.h>   // do not remove
 
 #include "my_audio.hpp"
+#include "my_callstack.hpp"
 #include "my_command.hpp"
 #include "my_dir.hpp"
 #include "my_file.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
 #include "my_gfx.hpp"
+#include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_ramdisk.hpp"
 #include "my_random.hpp"
@@ -28,31 +28,7 @@
 #include "my_tp.hpp"
 #include "my_wid_console.hpp"
 
-#include "my_callstack.hpp"
-
-#ifdef USE_THREADS
-#ifdef __MAIN__
-thread_local struct callframe callframes[ MAXCALLFRAME ];
-thread_local unsigned char    g_callframes_depth;
-#else
-extern thread_local struct callframe callframes[ MAXCALLFRAME ];
-extern thread_local unsigned char    g_callframes_depth;
-extern thread_local unsigned char    g_callframes_indent;
-#endif
-#else
-#ifdef __MAIN__
-struct callframe callframes[ MAXCALLFRAME ];
-unsigned char    g_callframes_depth;
-unsigned char    g_callframes_indent;
-#else
-extern struct callframe callframes[ MAXCALLFRAME ];
-extern unsigned char    g_callframes_depth;
-extern unsigned char    g_callframes_indent;
-#endif
-#endif
-
-static char **ARGV;
-
+static char      **ARGV;
 static std::string original_program_name;
 static bool        seed_manually_set {};
 

@@ -21,6 +21,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_dungeon_door()) {
+    return false;
+  }
+
   if (! tp_load_dungeon_floor()) {
     return false;
   }

@@ -31,6 +31,7 @@ struct callframe {
 // the callstack vector
 //
 #define MAXCALLFRAME 255
+
 #ifdef USE_THREADS
 #ifdef __MAIN__
 thread_local struct callframe callframes[ MAXCALLFRAME ];

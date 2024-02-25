@@ -9,20 +9,12 @@
 #include <array>
 #include <inttypes.h>
 
+#include "my_depth.hpp"
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"
 #include "my_point.hpp"
 #include "my_thing.hpp"
 #include "my_thing_id.hpp"
-
-enum {
-  MAP_DEPTH_FLOOR,
-  MAP_DEPTH_WALL,
-  MAP_DEPTH_OBJ1,
-  MAP_DEPTH_OBJ2,
-  MAP_DEPTH_OBJ3,
-  MAP_DEPTH_PLAYER,
-};
 
 //
 // Simple things like walls that do not change much

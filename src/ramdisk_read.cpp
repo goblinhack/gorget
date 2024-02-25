@@ -3,6 +3,7 @@
 //
 
 #include "my_main.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 #include <string.h>
 
