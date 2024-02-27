@@ -171,6 +171,15 @@ void Level::assign_tiles(void)
             DIE("no block type found for %s", tile_name.c_str());
           }
 
+          //
+          // Switch the door direction if next to walls
+          //
+          if (tp->is_dungeon_door) {
+            if (tp_get(point(x, y - 1), MAP_DEPTH_WALL) && tp_get(point(x, y + 1), MAP_DEPTH_WALL)) {
+              block_type = IS_JOIN_TOP;
+            }
+          }
+
           auto which = tile_name + "." + is_join_enum_val2str((is_join_enum) block_type);
           auto tile  = tile_find_mand(which);
           set_tile(p, slot, tile);

@@ -187,6 +187,12 @@ void Level::display_dungeon(void)
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_FLOOR, no_deco);
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_WALL, no_deco);
+        }
+      }
+    }
+    for (auto y = miny; y < maxy; y++) {
+      for (auto x = maxx - 1; x >= minx; x--) {
+        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_DOOR, no_deco);
         }
       }
