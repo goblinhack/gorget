@@ -17,6 +17,13 @@ void sdl_display(void)
 
     glBlendFunc(GL_ONE, GL_ZERO);
     blit_fbo_window_pix(FBO_MAP);
+    if (0) {
+      auto x_offset = (game->config.ui_pix_width - game->config.ui_pix_height) / 2;
+      blit_init();
+      blit(fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, x_offset, 0, game->config.ui_pix_height + x_offset,
+           game->config.ui_pix_height);
+      blit_flush();
+    }
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     blit_fbo_window_pix(FBO_WID);
