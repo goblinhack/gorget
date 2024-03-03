@@ -102,7 +102,7 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
   br.y = tl.y + pix_height;
 
   if (deco) {
-    display_dungeon_tile(tp, tile_index - 94, tl, br, point(0, 0));
+    display_dungeon_tile(tp, tile_index + 47, tl, br, point(0, 0));
   } else {
     display_dungeon_tile(tp, tile_index, tl, br, point(0, 0));
   }

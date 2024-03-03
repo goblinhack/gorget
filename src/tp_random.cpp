@@ -8,11 +8,11 @@
 #include "my_vector_bounds_check.hpp"
 
 // begin sort marker1 {
+static Tpidmap tp_dungeon_door;
 static Tpidmap tp_dungeon_entrance;
 static Tpidmap tp_dungeon_exit;
 static Tpidmap tp_dungeon_floor;
 static Tpidmap tp_dungeon_wall;
-static Tpidmap tp_dungeon_door;
 static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
@@ -167,6 +167,16 @@ Tpp tp_random_player(void)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_player);
+}
+
+Tpp tp_random_dungeon_wall(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_dungeon_wall.size())) {
+    DIE("No dungeon_wall found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_dungeon_wall);
 }
 
 Tpp tp_random_key(void)

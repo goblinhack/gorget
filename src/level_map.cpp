@@ -17,6 +17,10 @@ void Level::map_set(LevelDatap data, const char *in)
     DIE("bad map size, expected %d, got %d", (int) strlen(in), (int) expected_len);
   }
 
+  auto tp_wall  = tp_random_dungeon_wall();
+  auto tp_door  = tp_find("dungeon_door");
+  auto tp_floor = tp_find("dungeon_floor");
+
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
       auto offset = (row_len * y) + x;
@@ -26,14 +30,14 @@ void Level::map_set(LevelDatap data, const char *in)
       switch (c) {
         case CHARMAP_WILDCARD : break;
         case CHARMAP_DUNGEON_WALL :
-          tp = tp_find("dungeon_floor");
+          tp = tp_floor;
           ::tp_set(data, point(x, y), tp);
-          tp = tp_find("dungeon_wall");
+          tp = tp_wall;
           break;
         case CHARMAP_DUNGEON_DOOR :
-          tp = tp_find("dungeon_floor");
+          tp = tp_floor;
           ::tp_set(data, point(x, y), tp);
-          tp = tp_find("dungeon_door");
+          tp = tp_door;
           break;
         case CHARMAP_TREASURE : break;
         case CHARMAP_MONST1 : break;

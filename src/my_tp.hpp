@@ -84,15 +84,18 @@ public:
 
 Tpp string2tp(const char **s);
 Tpp string2tp(const std::string &s, int *len);
+
 Tpp tp_find(const std::string &name);
 Tpp tp_find(TpId id);
 Tpp tp_load(const std::string &name);
 Tpp tp_get_with_rarity_filter(Tpidmap &m);
-Tpp tp_random_monst1(void);
-Tpp tp_random_player(void);
-Tpp tp_random_key(void);
+
 Tpp tp_random_dungeon_entrance(void);
 Tpp tp_random_dungeon_exit(void);
+Tpp tp_random_dungeon_wall(void);
+Tpp tp_random_key(void);
+Tpp tp_random_monst1(void);
+Tpp tp_random_player(void);
 
 Tilep tp_first_tile(class Tp *);
 
