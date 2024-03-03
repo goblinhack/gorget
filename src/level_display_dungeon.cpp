@@ -32,38 +32,6 @@ void Level::display_dungeon_tile(Tpp tp, uint16_t tile_index, point tl, point br
   display_dungeon_tile(tp, tile, tl, br, offset);
 }
 
-#define BLIT_UP_TILE                                                                                                 \
-  tile = tile_index_to_tile(tile_index - offset);                                                                    \
-  display_dungeon_tile(tp, tile, tl, br, point(0, -dh));
-
-#define BLIT_DOWN_TILE                                                                                               \
-  tile = tile_index_to_tile(tile_index + offset);                                                                    \
-  display_dungeon_tile(tp, tile, tl, br, point(0, dh));
-
-#define BLIT_LEFT_TILE                                                                                               \
-  tile = tile_index_to_tile(tile_index - 1);                                                                         \
-  display_dungeon_tile(tp, tile, tl, br, point(-dw, 0));
-
-#define BLIT_RIGHT_TILE                                                                                              \
-  tile = tile_index_to_tile(tile_index + 1);                                                                         \
-  display_dungeon_tile(tp, tile, tl, br, point(dw, 0));
-
-#define BLIT_TL_TILE                                                                                                 \
-  tile = tile_index_to_tile(tile_index - offset - 1);                                                                \
-  display_dungeon_tile(tp, tile, tl, br, point(-dw, -dh));
-
-#define BLIT_TR_TILE                                                                                                 \
-  tile = tile_index_to_tile(tile_index - offset + 1);                                                                \
-  display_dungeon_tile(tp, tile, tl, br, point(dw, -dh));
-
-#define BLIT_BL_TILE                                                                                                 \
-  tile = tile_index_to_tile(tile_index + offset - 1);                                                                \
-  display_dungeon_tile(tp, tile, tl, br, point(-dw, dh));
-
-#define BLIT_BR_TILE                                                                                                 \
-  tile = tile_index_to_tile(tile_index + offset + 1);                                                                \
-  display_dungeon_tile(tp, tile, tl, br, point(dw, dh));
-
 void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
 {
   int dw = TILE_WIDTH / game->config.game_pix_zoom;
@@ -134,32 +102,7 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
   br.y = tl.y + pix_height;
 
   if (deco) {
-    auto offset = tex_get_width(tile_get_tex(tile)) / TILE_WIDTH;
-
-    if (obj->dir_up) {
-      BLIT_UP_TILE
-    }
-    if (obj->dir_down) {
-      BLIT_DOWN_TILE
-    }
-    if (obj->dir_left) {
-      BLIT_LEFT_TILE
-    }
-    if (obj->dir_right) {
-      BLIT_RIGHT_TILE
-    }
-    if (obj->dir_tl) {
-      BLIT_TL_TILE
-    }
-    if (obj->dir_bl) {
-      BLIT_BL_TILE
-    }
-    if (obj->dir_tr) {
-      BLIT_TR_TILE
-    }
-    if (obj->dir_br) {
-      BLIT_BR_TILE
-    }
+    display_dungeon_tile(tp, tile_index - 94, tl, br, point(0, 0));
   } else {
     display_dungeon_tile(tp, tile_index, tl, br, point(0, 0));
   }
@@ -179,7 +122,7 @@ void Level::display_dungeon(void)
     glClear(GL_COLOR_BUFFER_BIT);
     blit_init();
 
-    // const bool deco    = true;
+    const bool deco    = true;
     const bool no_deco = false;
 
     for (auto y = miny; y < maxy; y++) {
@@ -194,6 +137,15 @@ void Level::display_dungeon(void)
       for (auto x = maxx - 1; x >= minx; x--) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_DOOR, no_deco);
+        }
+      }
+    }
+
+    for (auto y = miny; y < maxy; y++) {
+      for (auto x = maxx - 1; x >= minx; x--) {
+        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_WALL, deco);
+          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_DOOR, deco);
         }
       }
     }
