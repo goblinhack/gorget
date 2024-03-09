@@ -56,6 +56,11 @@ typedef struct LevelData_ {
   //////////////////////////////////////////////////////////////
 
   //
+  // Level number
+  //
+  uint8_t num;
+
+  //
   // Map scroll offset
   //
   int16_t pixel_map_at_x;

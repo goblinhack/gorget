@@ -5,6 +5,7 @@
 #include "my_backtrace.hpp"
 #include "my_game.hpp"
 #include "my_wid_popups.hpp"
+#include "my_wid_rightbar.hpp"
 
 std::string gama_state_to_string(int state)
 {
@@ -57,6 +58,7 @@ void Game::change_state(uint8_t new_state, const std::string &why)
       wid_load_destroy();
       wid_save_destroy();
       wid_quit_destroy();
+      wid_rightbar_fini();
       break;
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :

@@ -16,7 +16,7 @@
 #define UI_FONT_WIDTH               8
 #define UI_LOGGING_EMPTY_LINE       "`" // Complete hack, char I use to force space
 #define UI_MOUSE_DOUBLE_CLICK       500 // Double click time
-#define UI_MOUSE_WHEEL_SCALE        1.2 // How much the wheel mouse moves.
+#define UI_MOUSE_WHEEL_SCALE        2.0 // How much the wheel mouse moves.
 #define UI_MOUSE_WHEEL_SCALE_MAX    10
 #define UI_POPUP_TEXT_COLOR         UI_TEXT_COLOR
 #define UI_SCROLL_JOY_SCALE         1.0
@@ -31,6 +31,7 @@
 #define UI_WID_POPUP_WIDTH_NORMAL   18
 #define UI_WID_POPUP_WIDTH_WIDE     24
 #define UI_WID_SAVE_SLOTS           10 // How many save game slots
+#define UI_RIGHTBAR_WIDTH           18
 
 //
 // Do faster processing of events, like reading the keyboard and updating widgets.
