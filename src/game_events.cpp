@@ -69,18 +69,6 @@ uint8_t game_input(const SDL_Keysym *key)
     return false;
   }
 
-  if (sdlk_eq(*key, game->config.key_zoom_out)) {
-    CON("INF: Zoom out.");
-    config_game_pix_zoom_out();
-    return true;
-  }
-
-  if (sdlk_eq(*key, game->config.key_zoom_in)) {
-    CON("INF: Zoom in.");
-    config_game_pix_zoom_in();
-    return true;
-  }
-
   if (sdlk_eq(*key, game->config.key_unused1)) {
     // TODO
     return false; // To avoid click noise

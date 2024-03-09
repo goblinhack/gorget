@@ -597,56 +597,6 @@ uint8_t config_debug_set(class Tokens *tokens, void *context)
 //
 // User has entered a command, run it
 //
-void config_game_pix_zoom_in(void)
-{
-  TRACE_NO_INDENT();
-  game->config.game_pix_zoom++;
-  if (game->config.game_pix_zoom > GAME_MOST_ZOOMED_IN) {
-    game->config.game_pix_zoom = GAME_MOST_ZOOMED_IN;
-  }
-  LOG("Game zoom set to %d.", game->config.game_pix_zoom);
-  sdl_config_update_all();
-}
-
-void config_game_pix_zoom_out(void)
-{
-  TRACE_NO_INDENT();
-  game->config.game_pix_zoom--;
-  if (game->config.game_pix_zoom < GAME_MOST_ZOOMED_OUT) {
-    game->config.game_pix_zoom = GAME_MOST_ZOOMED_OUT;
-  }
-  LOG("Game zoom set to %d.", game->config.game_pix_zoom);
-  sdl_config_update_all();
-}
-
-//
-// User has entered a command, run it
-//
-uint8_t config_game_pix_zoom_set(class Tokens *tokens, void *context)
-{
-  TRACE_NO_INDENT();
-
-  char *s = tokens->args[ 3 ];
-
-  if (! s || (*s == '\0')) {
-    game->config.game_pix_zoom = GAME_DEFAULT_PIX_ZOOM;
-    CON("GFX: gfx zoom enabled (default).");
-  } else {
-    int val                    = strtol(s, nullptr, 10);
-    game->config.game_pix_zoom = val;
-    if (game->config.game_pix_zoom < GAME_MOST_ZOOMED_OUT) {
-      game->config.game_pix_zoom = GAME_MOST_ZOOMED_OUT;
-    }
-    LOG("GFX: zoom set to %d", val);
-  }
-
-  sdl_config_update_all();
-  return true;
-}
-
-//
-// User has entered a command, run it
-//
 uint8_t config_gfx_vsync_enable(class Tokens *tokens, void *context)
 {
   TRACE_NO_INDENT();
@@ -748,23 +698,6 @@ void config_game_gfx_update(void)
   LOG("SDL: Update");
   TRACE_AND_INDENT();
 
-  if (! game->config.game_pix_zoom) {
-    game->config.game_pix_zoom = GAME_DEFAULT_PIX_ZOOM;
-    ERR("Game->config.game_pix_zoom is zero");
-  }
-
-  game->config.game_pix_scale_width = game->config.game_pix_zoom;
-  if (! game->config.game_pix_scale_width) {
-    ERR("Game->config.game_pix_scale_width is zero");
-    return;
-  }
-
-  game->config.game_pix_scale_height = game->config.game_pix_zoom;
-  if (! game->config.game_pix_scale_height) {
-    ERR("Game->config.game_pix_scale_height is zero");
-    return;
-  }
-
   game->config.aspect_ratio = (double) game->config.window_pix_width / (double) game->config.window_pix_height;
 
   //
@@ -833,7 +766,7 @@ void config_game_gfx_update(void)
   LOG("SDL: - window pixel size    : %dx%d", game->config.window_pix_width, game->config.window_pix_height);
   LOG("SDL: UI:");
   LOG("SDL: - UI pixel size        : %dx%d", game->config.ui_pix_width, game->config.ui_pix_height);
-  LOG("SDL: Game graphics zoom     : %d", game->config.game_pix_zoom);
+  LOG("SDL: Game:");
   LOG("SDL: - game pixel size      : %dx%d", game->config.game_pix_width, game->config.game_pix_height);
   LOG("SDL: - map pixel size       : %dx%d", game->config.map_pix_width, game->config.map_pix_height);
 

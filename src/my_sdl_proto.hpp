@@ -26,15 +26,12 @@ std::vector< uint8_t > sdl_fbo_save(int fbo);
 uint8_t config_errored(class Tokens *, void *context);
 uint8_t config_fps_counter_set(class Tokens *, void *context);
 uint8_t config_debug_set(class Tokens *, void *context);
-uint8_t config_game_pix_zoom_set(class Tokens *, void *context);
 uint8_t config_gfx_vsync_enable(class Tokens *, void *context);
 uint8_t sdl_init(void);
 
 class Tokens;
 uint8_t sdl_user_dungeon_exit(class Tokens *tokens, void *context);
 
-void config_game_pix_zoom_in(void);
-void config_game_pix_zoom_out(void);
 void config_game_gfx_update(void);
 void config_gfx_vsync_update(void);
 void sdl_config_update_all(void);

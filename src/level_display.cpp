@@ -10,8 +10,8 @@ void Level::set_display_bounds(void)
 {
   TRACE_NO_INDENT();
 
-  auto dw = TILE_WIDTH / game->config.game_pix_zoom;
-  auto dh = TILE_HEIGHT / game->config.game_pix_zoom;
+  auto dw = TILE_WIDTH;
+  auto dh = TILE_HEIGHT;
 
   //
   // The number of tiles additionally to draw to avoid clipping
@@ -73,13 +73,6 @@ void Level::set_display_bounds(void)
   miny = tmp_miny;
   maxx = tmp_maxx;
   maxy = tmp_maxy;
-
-  if (game->config.game_pix_zoom != 1) {
-    minx = 0;
-    miny = 0;
-    maxx = MAP_WIDTH;
-    maxy = MAP_HEIGHT;
-  }
 }
 
 void Level::display(void)

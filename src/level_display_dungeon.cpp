@@ -34,8 +34,8 @@ void Level::display_dungeon_tile(Tpp tp, uint16_t tile_index, point tl, point br
 
 void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
 {
-  int dw = TILE_WIDTH / game->config.game_pix_zoom;
-  int dh = TILE_HEIGHT / game->config.game_pix_zoom;
+  int dw = TILE_WIDTH;
+  int dh = TILE_HEIGHT;
 
   glcolor(WHITE);
 
@@ -64,8 +64,8 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
     return;
   }
 
-  auto pix_height = tile->pix_height / game->config.game_pix_zoom;
-  auto pix_width  = tile->pix_width / game->config.game_pix_zoom;
+  auto pix_height = tile->pix_height;
+  auto pix_width  = tile->pix_width;
 
   if (t) {
     tl.x = t->pix_x;
@@ -77,9 +77,6 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
 
   tl.x -= data->pixel_map_at_x;
   tl.y -= data->pixel_map_at_y;
-
-  tl.x /= game->config.game_pix_zoom;
-  tl.y /= game->config.game_pix_zoom;
 
   if (tp->is_blit_on_ground) {
     //

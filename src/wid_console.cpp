@@ -47,7 +47,6 @@ uint8_t wid_console_init(void)
   if (! wid_console_commands_inited) {
     command_add(config_debug_set, "set debug [0123]", "set debug level");
     command_add(config_fps_counter_set, "set fps [01]", "enable frames per sec counter");
-    command_add(config_game_pix_zoom_set, "set gfx zoom [0123456789]", "map zoom");
     if (! game->config.gfx_vsync_locked) {
       command_add(config_gfx_vsync_enable, "set vsync [01]", "enable vertical sync enable");
     }

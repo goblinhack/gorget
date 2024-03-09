@@ -186,14 +186,6 @@ static void wid_cfg_check_for_conflicts(SDL_Keysym code)
     CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused20%%fg=reset$");
     game->config.key_unused20 = {};
   }
-  if (sdlk_eq(game->config.key_zoom_in, code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key zoom in.%%fg=reset$");
-    game->config.key_zoom_in = {};
-  }
-  if (sdlk_eq(game->config.key_zoom_out, code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key zoom out.%%fg=reset$");
-    game->config.key_zoom_out = {};
-  }
 }
 
 void wid_cfg_keyboard_destroy(void)
@@ -654,26 +646,6 @@ static void wid_cfg_key_load_set(SDL_Keysym code)
   game->wid_cfg_keyboard_select();
 }
 
-static void wid_cfg_key_zoom_in_set(SDL_Keysym code)
-{
-  TRACE_AND_INDENT();
-  config_changed           = true;
-  game->config.key_zoom_in = {};
-  wid_cfg_check_for_conflicts(code);
-  game->config.key_zoom_in = code;
-  game->wid_cfg_keyboard_select();
-}
-
-static void wid_cfg_key_zoom_out_set(SDL_Keysym code)
-{
-  TRACE_AND_INDENT();
-  config_changed            = true;
-  game->config.key_zoom_out = {};
-  wid_cfg_check_for_conflicts(code);
-  game->config.key_zoom_out = code;
-  game->wid_cfg_keyboard_select();
-}
-
 static void wid_cfg_key_help_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
@@ -1131,24 +1103,6 @@ static uint8_t wid_cfg_key_load(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("load game");
   sdl.on_sdl_key_grab = wid_cfg_key_load_set;
-  config_changed      = true;
-  return true;
-}
-
-static uint8_t wid_cfg_key_zoom_in(Widp w, int x, int y, uint32_t button)
-{
-  TRACE_AND_INDENT();
-  grab_key("zoom in");
-  sdl.on_sdl_key_grab = wid_cfg_key_zoom_in_set;
-  config_changed      = true;
-  return true;
-}
-
-static uint8_t wid_cfg_key_zoom_out(Widp w, int x, int y, uint32_t button)
-{
-  TRACE_AND_INDENT();
-  grab_key("zoom out");
-  sdl.on_sdl_key_grab = wid_cfg_key_zoom_out_set;
   config_changed      = true;
   return true;
 }
@@ -1946,73 +1900,6 @@ void Game::wid_cfg_keyboard_select(void)
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game->config.key_action9));
     wid_set_on_mouse_up(w, wid_cfg_key_action9);
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  y_at++;
-  ///////////////////////////////////////////////////////////////////////
-
-  ///////////////////////////////////////////////////////////////////////
-  // zoom_in
-  ///////////////////////////////////////////////////////////////////////
-  y_at++;
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "zoom_in");
-
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
-    wid_set_shape_none(w);
-    wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
-    wid_set_text(w, "Zoom in");
-  }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "value");
-
-    point tl = make_point(width / 2 + rhs_button_left, y_at);
-    point br = make_point(width / 2 + rhs_button_right, y_at);
-    wid_set_mode(w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, ::to_string(game->config.key_zoom_in));
-    wid_set_on_mouse_up(w, wid_cfg_key_zoom_in);
-  }
-  ///////////////////////////////////////////////////////////////////////
-  // zoom_out
-  ///////////////////////////////////////////////////////////////////////
-  y_at++;
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "zoom_out");
-
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
-    wid_set_shape_none(w);
-    wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
-    wid_set_text(w, "Zoom out");
-  }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "value");
-
-    point tl = make_point(width / 2 + rhs_button_left, y_at);
-    point br = make_point(width / 2 + rhs_button_right, y_at);
-    wid_set_mode(w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, ::to_string(game->config.key_zoom_out));
-    wid_set_on_mouse_up(w, wid_cfg_key_zoom_out);
   }
 
   ///////////////////////////////////////////////////////////////////////

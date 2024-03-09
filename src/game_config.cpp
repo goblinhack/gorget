@@ -22,7 +22,6 @@ void Config::reset(void)
   map_pix_width          = {};
   game_pix_scale_height  = {};
   game_pix_scale_width   = {};
-  game_pix_zoom          = GAME_DEFAULT_PIX_ZOOM;
   gfx_allow_highdpi      = false;
   gfx_borderless         = true;
   gfx_fullscreen_desktop = true;
@@ -65,8 +64,6 @@ void Config::reset(void)
   key_screenshot.sym = SDLK_F10;
   key_console.sym    = SDLK_TAB;
   key_console.mod    = KMOD_SHIFT;
-  key_zoom_in.sym    = SDLK_z;
-  key_zoom_out.sym   = SDLK_x;
   music_volume       = {MIX_MAX_VOLUME / 3};
   sdl_delay          = 1;
   sound_volume       = {MIX_MAX_VOLUME / 2};

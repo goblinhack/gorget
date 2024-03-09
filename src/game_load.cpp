@@ -66,7 +66,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.map_pix_width);
   in >> bits(my.t.game_pix_scale_height);
   in >> bits(my.t.game_pix_scale_width);
-  in >> bits(my.t.game_pix_zoom);
   in >> bits(my.t.gfx_allow_highdpi);
   in >> bits(my.t.gfx_borderless);
   in >> bits(my.t.gfx_fullscreen);
@@ -117,8 +116,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_quit);
   in >> bits(my.t.key_save);
   in >> bits(my.t.key_screenshot);
-  in >> bits(my.t.key_zoom_in);
-  in >> bits(my.t.key_zoom_out);
   in >> bits(my.t.music_volume);
   in >> bits(my.t.sdl_delay);
   in >> bits(my.t.sound_volume);
@@ -141,7 +138,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: game_pix_scale_height  = %d", my.t.game_pix_scale_height);
   LOG("Read config: game_pix_scale_width   = %d", my.t.game_pix_scale_width);
   LOG("Read config: game_pix_width         = %d", my.t.game_pix_width);
-  LOG("Read config: game_pix_zoom          = %d", my.t.game_pix_zoom);
   LOG("Read config: gfx_allow_highdpi      = %d", my.t.gfx_allow_highdpi);
   LOG("Read config: gfx_borderless         = %d", my.t.gfx_borderless);
   LOG("Read config: gfx_fullscreen_desktop = %d", my.t.gfx_fullscreen_desktop);
@@ -225,10 +221,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   }
   if (my.t.game_pix_scale_width < 0) {
     game_load_error += "game_pix_scale_width is invalid";
-    return in;
-  }
-  if (! my.t.game_pix_zoom) {
-    game_load_error += "game_pix_zoom is invalid";
     return in;
   }
   if (my.t.ui_pix_height < 0) {

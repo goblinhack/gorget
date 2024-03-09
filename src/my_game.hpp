@@ -27,7 +27,6 @@ public:
   //
   int16_t game_pix_scale_height = {};
   int16_t game_pix_scale_width  = {};
-  int16_t game_pix_zoom         = GAME_DEFAULT_PIX_ZOOM;
   float   aspect_ratio          = {};
 
   uint32_t ui_gfx_term_height = {};
@@ -118,8 +117,6 @@ public:
   SDL_Keysym key_unused7    = {};
   SDL_Keysym key_unused8    = {};
   SDL_Keysym key_unused9    = {};
-  SDL_Keysym key_zoom_in    = {};
-  SDL_Keysym key_zoom_out   = {};
   // end sort marker1 }
 
   //
