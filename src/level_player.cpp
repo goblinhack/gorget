@@ -52,8 +52,8 @@ void Level::player_map_center()
 
   data->pixel_map_at_x = t->pix_x;
   data->pixel_map_at_y = t->pix_y;
-  data->pixel_map_at_x -= game->config.game_pix_width / 2;
-  data->pixel_map_at_y -= game->config.game_pix_height / 2;
+  data->pixel_map_at_x -= game->config.map_pix_width / 2;
+  data->pixel_map_at_y -= game->config.map_pix_height / 2;
 }
 
 void Level::player_move(int8_t dx, int8_t dy)

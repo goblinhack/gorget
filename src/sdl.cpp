@@ -753,11 +753,6 @@ void config_game_gfx_update(void)
     ERR("Game->config.game_pix_zoom is zero");
   }
 
-  if (! game->config.ui_pix_zoom) {
-    game->config.ui_pix_zoom = GAME_DEFAULT_UI_ZOOM;
-    ERR("Game->config.ui_pix_zoom is zero");
-  }
-
   game->config.game_pix_scale_width = game->config.game_pix_zoom;
   if (! game->config.game_pix_scale_width) {
     ERR("Game->config.game_pix_scale_width is zero");
@@ -770,10 +765,14 @@ void config_game_gfx_update(void)
     return;
   }
 
-  game->config.aspect_ratio    = (double) game->config.window_pix_width / (double) game->config.window_pix_height;
+  game->config.aspect_ratio = (double) game->config.window_pix_width / (double) game->config.window_pix_height;
+
+  //
+  // Pixel perfect size
+  //
   game->config.game_pix_height = game->config.window_pix_height;
   game->config.game_pix_width  = game->config.window_pix_width;
-  game->config.game_pix_height = 16 * 16;
+  game->config.game_pix_height = TILE_WIDTH * TILE_HEIGHT;
   game->config.game_pix_width  = (int) (((double) game->config.game_pix_height) * game->config.aspect_ratio);
 
   if (! game->config.game_pix_width) {
@@ -785,6 +784,15 @@ void config_game_gfx_update(void)
     return;
   }
 
+  //
+  // The map within the game fbo
+  //
+  game->config.map_pix_width  = MAP_WIDTH * TILE_WIDTH;
+  game->config.map_pix_height = MAP_HEIGHT * TILE_HEIGHT;
+
+  //
+  // Use the same resolution as the game
+  //
   game->config.ui_pix_width  = game->config.window_pix_width;
   game->config.ui_pix_height = game->config.window_pix_height;
   game->config.ui_pix_width  = game->config.game_pix_width;
@@ -823,10 +831,11 @@ void config_game_gfx_update(void)
   LOG("SDL: Window:");
   LOG("SDL: - config pixel size    : %dx%d", game->config.config_pix_width, game->config.config_pix_height);
   LOG("SDL: - window pixel size    : %dx%d", game->config.window_pix_width, game->config.window_pix_height);
+  LOG("SDL: UI:");
+  LOG("SDL: - UI pixel size        : %dx%d", game->config.ui_pix_width, game->config.ui_pix_height);
   LOG("SDL: Game graphics zoom     : %d", game->config.game_pix_zoom);
   LOG("SDL: - game pixel size      : %dx%d", game->config.game_pix_width, game->config.game_pix_height);
-  LOG("SDL: UI zoom                : %d", game->config.ui_pix_zoom);
-  LOG("SDL: - UI pixel size        : %dx%d", game->config.ui_pix_width, game->config.ui_pix_height);
+  LOG("SDL: - map pixel size       : %dx%d", game->config.map_pix_width, game->config.map_pix_height);
 
   TERM_WIDTH  = game->config.ui_gfx_term_width;
   TERM_HEIGHT = game->config.ui_gfx_term_height;

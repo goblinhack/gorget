@@ -439,19 +439,11 @@ void fbo_get_size(int fbo, int &w, int &h)
 
   switch (fbo) {
     case FBO_MAP :
-    case FBO_MAP_HIDDEN :
-    case FBO_MAP_VISIBLE :
-    case FBO_PLAYER_VISIBLE_LIGHTING :
-    case FBO_SCREEN_FADE_IN_AND_OUT :
-    case FBO_SMALL_POINT_LIGHTS :
       w = game->config.game_pix_width;
       h = game->config.game_pix_height;
       break;
-    case FBO_MASK1 :
-    case FBO_MASK2 :
-    case FBO_MASK3 :
-    case FBO_MASK4 :
-      w = game->config.game_pix_width;
+    case FBO_MAP_VISIBLE :
+      w = game->config.game_pix_height;
       h = game->config.game_pix_height;
       break;
     case FBO_WID :

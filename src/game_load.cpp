@@ -61,9 +61,11 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.debug_mode);
   in >> bits(my.t.fps_counter);
   in >> bits(my.t.game_pix_height);
+  in >> bits(my.t.game_pix_width);
+  in >> bits(my.t.map_pix_height);
+  in >> bits(my.t.map_pix_width);
   in >> bits(my.t.game_pix_scale_height);
   in >> bits(my.t.game_pix_scale_width);
-  in >> bits(my.t.game_pix_width);
   in >> bits(my.t.game_pix_zoom);
   in >> bits(my.t.gfx_allow_highdpi);
   in >> bits(my.t.gfx_borderless);
@@ -122,7 +124,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.sound_volume);
   in >> bits(my.t.ui_pix_height);
   in >> bits(my.t.ui_pix_width);
-  in >> bits(my.t.ui_pix_zoom);
   in >> bits(my.t.ui_gfx_term_height);
   in >> bits(my.t.ui_gfx_term_width);
   in >> bits(my.t.aspect_ratio);
@@ -131,6 +132,7 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
 
   LOG("Read config: ascii_gl_height        = %d", my.t.ascii_gl_height);
   LOG("Read config: ascii_gl_width         = %d", my.t.ascii_gl_width);
+  LOG("Read config: aspect_ratio           = %f", my.t.aspect_ratio);
   LOG("Read config: config_pix_height      = %d", my.t.config_pix_height);
   LOG("Read config: config_pix_width       = %d", my.t.config_pix_width);
   LOG("Read config: debug_mode             = %d", my.t.debug_mode);
@@ -145,6 +147,8 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: gfx_fullscreen_desktop = %d", my.t.gfx_fullscreen_desktop);
   LOG("Read config: gfx_fullscreen         = %d", my.t.gfx_fullscreen);
   LOG("Read config: gfx_vsync_enable       = %d", my.t.gfx_vsync_enable);
+  LOG("Read config: map_pix_height         = %d", my.t.map_pix_height);
+  LOG("Read config: map_pix_width          = %d", my.t.map_pix_width);
   LOG("Read config: mouse_wheel_lr_negated = %d", my.t.mouse_wheel_lr_negated);
   LOG("Read config: mouse_wheel_ud_negated = %d", my.t.mouse_wheel_ud_negated);
   LOG("Read config: music_volume           = %d", my.t.music_volume);
@@ -152,8 +156,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: sound_volume           = %d", my.t.sound_volume);
   LOG("Read config: ui_pix_height          = %d", my.t.ui_pix_height);
   LOG("Read config: ui_pix_width           = %d", my.t.ui_pix_width);
-  LOG("Read config: ui_pix_zoom            = %d", my.t.ui_pix_zoom);
-  LOG("Read config: aspect_ratio           = %f", my.t.aspect_ratio);
   LOG("Read config: window_pix_height      = %d", my.t.window_pix_height);
   LOG("Read config: window_pix_width       = %d", my.t.window_pix_width);
   // seed name handled below
@@ -185,7 +187,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     game_load_error += "end of config marker not found";
     return in;
   }
-
   if (my.t.ascii_gl_height < 0) {
     game_load_error += "ascii_gl_height is invalid";
     return in;
@@ -206,16 +207,24 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     game_load_error += "game_pix_height is invalid";
     return in;
   }
+  if (my.t.game_pix_width < 0) {
+    game_load_error += "game_pix_width is invalid";
+    return in;
+  }
+  if (my.t.map_pix_height < 0) {
+    game_load_error += "map_pix_height is invalid";
+    return in;
+  }
+  if (my.t.map_pix_width < 0) {
+    game_load_error += "map_pix_width is invalid";
+    return in;
+  }
   if (my.t.game_pix_scale_height < 0) {
     game_load_error += "game_pix_scale_height is invalid";
     return in;
   }
   if (my.t.game_pix_scale_width < 0) {
     game_load_error += "game_pix_scale_width is invalid";
-    return in;
-  }
-  if (my.t.game_pix_width < 0) {
-    game_load_error += "game_pix_width is invalid";
     return in;
   }
   if (! my.t.game_pix_zoom) {
@@ -228,10 +237,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   }
   if (my.t.ui_pix_width < 0) {
     game_load_error += "ui_pix_width is invalid";
-    return in;
-  }
-  if (my.t.ui_pix_zoom < 0) {
-    game_load_error += "ui_pix_zoom is invalid";
     return in;
   }
   if (my.t.aspect_ratio < 0) {

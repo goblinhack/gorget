@@ -9,10 +9,10 @@
 enum {
   // begin sort marker1 {
   CHARMAP_DOWN             = 'v',
+  CHARMAP_DUNGEON_DOOR     = '=',
   CHARMAP_DUNGEON_ENTRANCE = 'S',
   CHARMAP_DUNGEON_EXIT     = 'E',
   CHARMAP_DUNGEON_WALL     = 'x',
-  CHARMAP_DUNGEON_DOOR     = '=',
   CHARMAP_EMPTY            = '.',
   CHARMAP_KEY              = 'k',
   CHARMAP_LEFT             = '<',

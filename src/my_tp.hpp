@@ -36,11 +36,11 @@ public:
   bool is_blit_outlined {};
   bool is_blit_square_outlined {};
   bool is_blit_tiled {};
+  bool is_dungeon_door {};
   bool is_dungeon_entrance {};
   bool is_dungeon_exit {};
   bool is_dungeon_floor {};
   bool is_dungeon_wall {};
-  bool is_dungeon_door {};
   bool is_key {};
   bool is_monst1 {};
   bool is_player {};

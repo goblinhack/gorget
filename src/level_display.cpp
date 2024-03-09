@@ -10,9 +10,13 @@ void Level::set_display_bounds(void)
 {
   TRACE_NO_INDENT();
 
-  auto dw     = TILE_WIDTH / game->config.game_pix_zoom;
-  auto dh     = TILE_HEIGHT / game->config.game_pix_zoom;
-  auto border = 2;
+  auto dw = TILE_WIDTH / game->config.game_pix_zoom;
+  auto dh = TILE_HEIGHT / game->config.game_pix_zoom;
+
+  //
+  // The number of tiles additionally to draw to avoid clipping
+  //
+  auto clipping_border = 2;
 
   //
   // Set the scroll bounds
@@ -24,7 +28,10 @@ void Level::set_display_bounds(void)
     data->pixel_map_at_y = 0;
   }
 
-  auto max_pix_x = (MAP_WIDTH * dw) - game->config.game_pix_width;
+  //
+  // Square map
+  //
+  auto max_pix_x = (MAP_WIDTH * dw) - game->config.game_pix_height;
   auto max_pix_y = (MAP_HEIGHT * dh) - game->config.game_pix_height;
 
   if (data->pixel_map_at_x > max_pix_x) {
@@ -39,8 +46,8 @@ void Level::set_display_bounds(void)
   //
   int tmp_minx = data->pixel_map_at_x / dw;
   int tmp_miny = data->pixel_map_at_y / dh;
-  tmp_minx -= border;
-  tmp_minx -= border;
+  tmp_minx -= clipping_border;
+  tmp_minx -= clipping_border;
 
   if (tmp_minx < 0) {
     tmp_minx = 0;
@@ -49,11 +56,11 @@ void Level::set_display_bounds(void)
     tmp_miny = 0;
   }
 
-  int tmp_maxx = (data->pixel_map_at_x + game->config.game_pix_width) / dw;
-  int tmp_maxy = (data->pixel_map_at_y + game->config.game_pix_height) / dh;
+  int tmp_maxx = (data->pixel_map_at_x + game->config.map_pix_width) / dw;
+  int tmp_maxy = (data->pixel_map_at_y + game->config.map_pix_height) / dh;
 
-  tmp_maxx += border;
-  tmp_maxy += border;
+  tmp_maxx += clipping_border;
+  tmp_maxy += clipping_border;
 
   if (tmp_maxx >= MAP_WIDTH) {
     tmp_maxx = MAP_WIDTH;

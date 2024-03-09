@@ -28,7 +28,6 @@ public:
   int16_t game_pix_scale_height = {};
   int16_t game_pix_scale_width  = {};
   int16_t game_pix_zoom         = GAME_DEFAULT_PIX_ZOOM;
-  int16_t ui_pix_zoom           = GAME_DEFAULT_UI_ZOOM;
   float   aspect_ratio          = {};
 
   uint32_t ui_gfx_term_height = {};
@@ -48,10 +47,24 @@ public:
 
   int16_t config_pix_height = {};
   int16_t config_pix_width  = {};
-  int16_t game_pix_height   = {};
-  int16_t game_pix_width    = {};
-  int16_t ui_pix_height     = {};
-  int16_t ui_pix_width      = {};
+  //
+  // The pixel perfect screen
+  //
+  int16_t game_pix_height = {};
+  int16_t game_pix_width  = {};
+  //
+  // This is the size of the game map within the game FBO
+  //
+  int16_t map_pix_height = {};
+  int16_t map_pix_width  = {};
+  //
+  // The user interface that can be higher res than the game
+  //
+  int16_t ui_pix_height = {};
+  int16_t ui_pix_width  = {};
+  //
+  // The actual display res
+  //
   int16_t window_pix_height = {};
   int16_t window_pix_width  = {};
 

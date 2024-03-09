@@ -17,9 +17,11 @@ void Config::reset(void)
   debug_mode             = false;
   fps_counter            = false;
   game_pix_height        = {};
+  game_pix_width         = {};
+  map_pix_height         = {};
+  map_pix_width          = {};
   game_pix_scale_height  = {};
   game_pix_scale_width   = {};
-  game_pix_width         = {};
   game_pix_zoom          = GAME_DEFAULT_PIX_ZOOM;
   gfx_allow_highdpi      = false;
   gfx_borderless         = true;
@@ -33,7 +35,6 @@ void Config::reset(void)
   ui_gfx_term_width      = {TERM_GFX_WIDTH_DEF};
   ui_pix_height          = {};
   ui_pix_width           = {};
-  ui_pix_zoom            = GAME_DEFAULT_UI_ZOOM;
   version                = "" MYVER "";
   aspect_ratio           = {};
   window_pix_height      = {};

@@ -157,11 +157,6 @@ void Level::display_dungeon(void)
   {
     blit_fbo_bind(FBO_MAP);
     glClear(GL_COLOR_BUFFER_BIT);
-
-    glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ZERO);
-    blit_fbo_game_pix(FBO_MAP_HIDDEN);
-    glBlendFunc(GL_ONE, GL_ONE);
-
     blit_fbo_game_pix(FBO_MAP_VISIBLE);
   }
 
