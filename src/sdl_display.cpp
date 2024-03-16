@@ -25,6 +25,7 @@ void sdl_display(void)
         = (float) game->config.game_pix_width - (UI_RIGHTBAR_WIDTH * UI_FONT_WIDTH) - game->config.game_pix_height;
     x_offset /= (float) game->config.game_pix_width;
     x_offset *= (float) game->config.window_pix_width;
+    x_offset = floor(x_offset);
 
     blit_init();
     blit(fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, x_offset, 0, game->config.window_pix_height + x_offset,

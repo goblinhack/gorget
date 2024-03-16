@@ -706,7 +706,11 @@ void config_game_gfx_update(void)
   game->config.game_pix_height = game->config.window_pix_height;
   game->config.game_pix_width  = game->config.window_pix_width;
   game->config.game_pix_height = TILE_WIDTH * TILE_HEIGHT;
-  game->config.game_pix_width  = (int) (((double) game->config.game_pix_height) * game->config.aspect_ratio);
+  float game_pix_width         = (int) (((double) game->config.game_pix_height) * game->config.aspect_ratio);
+  game_pix_width /= TILE_WIDTH;
+  game_pix_width = ceil(game_pix_width);
+  game_pix_width *= TILE_WIDTH;
+  game->config.game_pix_width = game_pix_width;
 
   if (! game->config.game_pix_width) {
     ERR("game->config.game_pix_width is zero");
@@ -718,16 +722,8 @@ void config_game_gfx_update(void)
   }
 
   //
-  // The map within the game fbo
-  //
-  game->config.map_pix_width  = MAP_WIDTH * TILE_WIDTH;
-  game->config.map_pix_height = MAP_HEIGHT * TILE_HEIGHT;
-
-  //
   // Use the same resolution as the game
   //
-  game->config.ui_pix_width  = game->config.window_pix_width;
-  game->config.ui_pix_height = game->config.window_pix_height;
   game->config.ui_pix_width  = game->config.game_pix_width;
   game->config.ui_pix_height = game->config.game_pix_height;
 
@@ -740,6 +736,12 @@ void config_game_gfx_update(void)
     ERR("TILE_HEIGHT zero");
     return;
   }
+
+  //
+  // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
+  //
+  game->config.map_pix_width  = game->config.game_pix_height;
+  game->config.map_pix_height = game->config.game_pix_height;
 
   float tiles_across = game->config.game_pix_width / TILE_WIDTH;
   float tiles_down   = game->config.game_pix_height / TILE_HEIGHT;
@@ -762,13 +764,11 @@ void config_game_gfx_update(void)
   }
 
   LOG("SDL: Window:");
-  LOG("SDL: - config pixel size    : %dx%d", game->config.config_pix_width, game->config.config_pix_height);
-  LOG("SDL: - window pixel size    : %dx%d", game->config.window_pix_width, game->config.window_pix_height);
-  LOG("SDL: UI:");
-  LOG("SDL: - UI pixel size        : %dx%d", game->config.ui_pix_width, game->config.ui_pix_height);
-  LOG("SDL: Game:");
-  LOG("SDL: - game pixel size      : %dx%d", game->config.game_pix_width, game->config.game_pix_height);
-  LOG("SDL: - map pixel size       : %dx%d", game->config.map_pix_width, game->config.map_pix_height);
+  LOG("SDL: - config pixel size         : %dx%d", game->config.config_pix_width, game->config.config_pix_height);
+  LOG("SDL: - window pixel size         : %dx%d", game->config.window_pix_width, game->config.window_pix_height);
+  LOG("SDL: - UI pixel size             : %dx%d", game->config.ui_pix_width, game->config.ui_pix_height);
+  LOG("SDL: - visible screen pixel size : %dx%d", game->config.game_pix_width, game->config.game_pix_height);
+  LOG("SDL: - visible map pixel size    : %dx%d", game->config.map_pix_width, game->config.map_pix_height);
 
   TERM_WIDTH  = game->config.ui_gfx_term_width;
   TERM_HEIGHT = game->config.ui_gfx_term_height;

@@ -238,12 +238,10 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 //
 // Frame buffer objects
 //
-#define FBO_MAP                0
-#define FBO_MAP_VISIBLE        1
-#define FBO_WID                3
-#define FBO_FINAL              17
-#define FBO_SMALL_POINT_LIGHTS 19
-#define MAX_FBO                20
+#define FBO_MAP   0
+#define FBO_WID   1
+#define FBO_FINAL 2
+#define MAX_FBO   3
 
 extern uint32_t NUMBER_BYTES_PER_VERTICE_2D;
 
@@ -279,7 +277,6 @@ void blit_fbo_push(int fbo);
 void blit_fbo_pop(void);
 void blit_fbo_bind(int fbo);
 void blit_fbo_bind_locked(int fbo);
-void blit_fbo_game_pix(int fbo);
 void blit_fbo_ui_pix(int fbo);
 void blit_fbo_window_pix(int fbo);
 void blit_fbo_unbind(void);

@@ -439,12 +439,8 @@ void fbo_get_size(int fbo, int &w, int &h)
 
   switch (fbo) {
     case FBO_MAP :
-      w = game->config.game_pix_width;
-      h = game->config.game_pix_height;
-      break;
-    case FBO_MAP_VISIBLE :
-      w = game->config.game_pix_height;
-      h = game->config.game_pix_height;
+      w = game->config.map_pix_width;
+      h = game->config.map_pix_height;
       break;
     case FBO_WID :
       w = game->config.ui_pix_width;
@@ -464,16 +460,6 @@ void blit_fbo(int fbo)
   fbo_get_size(fbo, tex_width, tex_height);
   blit_init();
   blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height);
-  blit_flush();
-}
-
-//
-// Blit the entire game FBO to whatever we're bound to
-//
-void blit_fbo_game_pix(int fbo)
-{
-  blit_init();
-  blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game->config.game_pix_width, game->config.game_pix_height);
   blit_flush();
 }
 
