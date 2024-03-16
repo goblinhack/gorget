@@ -4,6 +4,7 @@
 
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_wid_rightbar.hpp"
 
 void Game::create_level(void)
 {
@@ -28,4 +29,6 @@ void Game::create_level(void)
     LOG("Level create");
     level = new Level();
   }
+
+  wid_rightbar_init();
 }

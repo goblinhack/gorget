@@ -34,8 +34,8 @@ bool wid_rightbar_ascii_create(void)
     wid_rightbar = wid_new_square_window("wid rightbar");
     wid_set_ignore_scroll_events(wid_rightbar, true);
     wid_set_pos(wid_rightbar, tl, br);
-    wid_set_style(wid_rightbar, UI_WID_STYLE_SOLID_NONE);
-    wid_set_shape_none(wid_rightbar);
+    wid_set_style(wid_rightbar, UI_WID_STYLE_NORMAL);
+    // wid_set_shape_none(wid_rightbar);
     wid_lower(wid_rightbar);
   }
 

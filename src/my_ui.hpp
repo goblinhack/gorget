@@ -31,7 +31,7 @@
 #define UI_WID_POPUP_WIDTH_NORMAL   18
 #define UI_WID_POPUP_WIDTH_WIDE     24
 #define UI_WID_SAVE_SLOTS           10 // How many save game slots
-#define UI_RIGHTBAR_WIDTH           18
+#define UI_RIGHTBAR_WIDTH           13
 
 //
 // Do faster processing of events, like reading the keyboard and updating widgets.

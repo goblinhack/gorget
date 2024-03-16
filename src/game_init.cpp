@@ -3,7 +3,6 @@
 //
 
 #include "my_game.hpp"
-// REMOVED #include "my_level.hpp"
 
 void Game::init(void)
 {
@@ -11,4 +10,5 @@ void Game::init(void)
   TRACE_AND_INDENT();
 
   set_seed();
+  start();
 }
