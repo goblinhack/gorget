@@ -53,3 +53,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_wid_console.hpp"
+
+#include "third-party/slre.hpp"
+#include "third-party/stb_image.hpp"
+#include "third-party/stb_image_write.hpp"

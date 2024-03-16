@@ -2,12 +2,11 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "minilzo.hpp"
 #include "my_alloc.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
-// REMOVED #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
+#include "third-party/minilzo.hpp"
 
 WidPopup *wid_save;
 void      wid_save_destroy(void);

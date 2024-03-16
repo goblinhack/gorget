@@ -8,7 +8,7 @@
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
-#include "stb_image.hpp"
+#include "third-party/stb_image.hpp"
 
 class Tex
 {

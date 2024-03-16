@@ -7,7 +7,7 @@
 #define _MY_TOKEN_HPP_
 
 #include "my_string.hpp"
-#include "slre.hpp"
+#include "third-party/slre.hpp"
 
 class Tokens
 {

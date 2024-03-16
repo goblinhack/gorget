@@ -5,7 +5,7 @@
 #include "my_gl.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
-#include "stb_image_write.hpp"
+#include "third-party/stb_image_write.hpp"
 
 void sdl_screenshot(void)
 {

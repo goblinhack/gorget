@@ -2,11 +2,11 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "minilzo.hpp"
 #include "my_alloc.hpp"
 #include "my_array_bounds_check.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
+#include "third-party/minilzo.hpp"
 // REMOVED #include "my_ui.hpp"
 #include "my_wid_error.hpp"
 #include "my_wid_popup.hpp"
