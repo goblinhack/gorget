@@ -158,6 +158,16 @@ static void gfx_init_font_ui(void)
   tile_load_arr_sprites("data/fonts/font.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, arr, GL_NEAREST);
 }
 
+static void gfx_init_rightbar(void)
+{
+  std::initializer_list< std::string > tiles = {
+      "ui_rightbar",
+  };
+
+  const std::vector< std::string > arr(tiles);
+  tile_load_arr_sprites("data/gfx/ui/ui_rightbar.tga", "rightbar", 104, 256, arr, GL_NEAREST);
+}
+
 static void gfx_init_ui(void) {}
 
 void gfx_init(void)
@@ -183,6 +193,7 @@ void gfx_init(void)
   gfx_init5();
   gfx_init6();
   gfx_init_64x64();
+  gfx_init_rightbar();
   gfx_init7();
   gfx_init8();
   gfx_init9();
