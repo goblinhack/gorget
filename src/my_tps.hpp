@@ -3,10 +3,17 @@
 //
 
 bool templates_init(void);
-bool tp_load_player(void);
-bool tp_load_key(void);
-bool tp_load_dungeon_entrance(void);
-bool tp_load_dungeon_wall(void);
-bool tp_load_dungeon_door(void);
-bool tp_load_dungeon_floor(void);
-bool tp_load_dungeon_exit(void);
+
+/* begin shell marker1 */
+/* shell for i in $(find . -name "*.cpp" | xargs grep -h "^bool tp_load" | awk '{print $2}' | cut -d'(' -f1 ) */
+/* shell do */
+/* shell echo "bool $i();" */
+/* shell done */
+bool tp_load_player();
+bool tp_load_dungeon_door();
+bool tp_load_dungeon_floor();
+bool tp_load_dungeon_entrance();
+bool tp_load_key();
+bool tp_load_dungeon_exit();
+bool tp_load_dungeon_wall();
+/* end shell marker1 */
