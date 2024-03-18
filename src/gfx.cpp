@@ -185,18 +185,18 @@ void gfx_init(void)
   gfx_init15();
   gfx_init_16x16();
   gfx_init2();
-  gfx_init3();
   gfx_init_24x24();
+  gfx_init3();
   gfx_init_32x32();
   gfx_init4();
   gfx_init_48x48();
   gfx_init5();
   gfx_init6();
   gfx_init_64x64();
-  gfx_init_rightbar();
   gfx_init7();
   gfx_init8();
   gfx_init9();
+  gfx_init_rightbar();
   gfx_init_ui();
   // end sort marker1 }
 }

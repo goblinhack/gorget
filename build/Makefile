@@ -10,6 +10,7 @@ all: pre
 
 format:
 	$(foreach var,$(DIRS), (cd $(var); cp $(TOP)/.clang-format .) ;)
+	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/shell_source.sh do) ;)
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/tidy_source.sh do) ;)
 	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/format.sh do) ;)
 
