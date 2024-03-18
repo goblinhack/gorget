@@ -17,9 +17,15 @@ std::initializer_list< std::string > tps = {
     /* begin shell marker1 */
     /* shell for i in $(find . -name "*.cpp" | xargs grep -h "tp_load(\"" | awk '{print $4}' | cut -d\" -f2) */
     /* shell do */
-    /* shell echo "    \"$i\"" */
+    /* shell echo "    \"$i\"", */
     /* shell done */
-    // clang-format on
+    "player",
+    "dungeon_door",
+    "dungeon_floor",
+    "dungeon_entrance",
+    "key",
+    "dungeon_exit",
+  /* end shell marker1 */
 };
 
 static std::map< std::string, int > tp_preferred_id;

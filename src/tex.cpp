@@ -2,13 +2,13 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "3rdparty/stb_image.hpp"
 #include "my_file.hpp"
 #include "my_gl.hpp"
 #include "my_pixel.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
-#include "3rdparty/stb_image.hpp"
 
 class Tex
 {
