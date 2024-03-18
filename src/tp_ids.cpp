@@ -12,14 +12,13 @@
 std::initializer_list< std::string > tps = {
     // clang-format off
     "", // ID 0 means unused
-    "dungeon_entrance",
-    "dungeon_exit",
-    "key",
     "dungeon_wall1",
     "dungeon_wall2",
-    "dungeon_door",
-    "dungeon_floor",
-    "player",
+    /* begin shell marker1 */
+    /* shell for i in $(find . -name "*.cpp" | xargs grep -h "tp_load(\"" | awk '{print $4}' | cut -d\" -f2) */
+    /* shell do */
+    /* shell echo "    \"$i\"" */
+    /* shell done */
     // clang-format on
 };
 
