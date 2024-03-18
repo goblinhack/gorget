@@ -6,7 +6,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
 #include "my_wid_popup.hpp"
-#include "third-party/minilzo.hpp"
+#include "3rdparty/minilzo.hpp"
 
 WidPopup *wid_save;
 void      wid_save_destroy(void);
