@@ -9,12 +9,10 @@ bool templates_init(void);
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
-bool tp_load_cursor();
 bool tp_load_player();
-bool tp_load_dungeon_door();
-bool tp_load_dungeon_floor();
-bool tp_load_dungeon_entrance();
+bool tp_load_exit();
+bool tp_load_door();
 bool tp_load_key();
-bool tp_load_dungeon_exit();
-bool tp_load_dungeon_wall();
+bool tp_load_wall();
+bool tp_load_floor();
 /* end shell marker1 */

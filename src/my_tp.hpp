@@ -37,14 +37,14 @@ public:
   bool is_blit_square_outlined {};
   bool is_blit_tiled {};
   bool is_cursor {};
-  bool is_dungeon_door {};
+  bool is_door {};
   bool is_dungeon_entrance {};
-  bool is_dungeon_exit {};
-  bool is_dungeon_floor {};
-  bool is_dungeon_wall {};
+  bool is_exit {};
+  bool is_floor {};
   bool is_key {};
   bool is_monst1 {};
   bool is_player {};
+  bool is_wall {};
   // end sort marker1 }
 
   // begin sort marker2 {
@@ -92,8 +92,8 @@ Tpp tp_load(const std::string &name);
 Tpp tp_get_with_rarity_filter(Tpidmap &m);
 
 Tpp tp_random_dungeon_entrance(void);
-Tpp tp_random_dungeon_exit(void);
-Tpp tp_random_dungeon_wall(void);
+Tpp tp_random_exit(void);
+Tpp tp_random_wall(void);
 Tpp tp_random_key(void);
 Tpp tp_random_monst1(void);
 Tpp tp_random_player(void);

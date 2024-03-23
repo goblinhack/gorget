@@ -522,7 +522,7 @@ void sdl_tick(void)
   }
 }
 
-void sdl_dungeon_exit(void)
+void sdl_exit(void)
 {
   if (! g_main_loop_running) {
     return;
@@ -665,10 +665,10 @@ void sdl_config_update_all(void)
 //
 // User has entered a command, run it
 //
-uint8_t sdl_user_dungeon_exit(class Tokens *tokens, void *context)
+uint8_t sdl_user_exit(class Tokens *tokens, void *context)
 {
   TRACE_NO_INDENT();
-  sdl_dungeon_exit();
+  sdl_exit();
 
   return true;
 }

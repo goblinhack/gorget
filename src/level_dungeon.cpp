@@ -9,9 +9,9 @@ void Level::dungeon_create_and_place()
   TRACE_NO_INDENT();
   map_set(data,
           "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-          "x...x...........x..............x"
+          "x1.2x...........x..............x"
           "x...x=xx=x......x..xxxx==xxxx..x"
-          "x...x..x..x.....x..xxxx...xxx..x"
+          "x3.4x..x..x.....x..xxxx...xxx..x"
           "x===x..xx..x....x..xxx.....=...x"
           "x...=.xx....x...x...=......=...x"
           "x...=..x.....x..x..xxx.....=...x"
@@ -38,6 +38,6 @@ void Level::dungeon_create_and_place()
           "x.......x..........x...........x"
           "x.......x.........xxxxxxxxxxxxxx"
           "x.......x......................x"
-          "x.......x......................x"
+          "x.......x.....................Ex"
           "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 }

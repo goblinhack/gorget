@@ -52,7 +52,6 @@ public:
   void display_dungeon(void);
   void display_dungeon_z_layer(int x, int y, int slot, int z, bool deco);
   void map_set(LevelDatap, const char *);
-  void player_create_and_place(void);
   void player_map_center(void);
   void player_move_down(void);
   void player_move(int8_t, int8_t);

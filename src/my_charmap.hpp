@@ -8,22 +8,17 @@
 
 enum {
   // begin sort marker1 {
-  CHARMAP_DOWN             = 'v',
-  CHARMAP_DUNGEON_DOOR     = '=',
-  CHARMAP_DUNGEON_ENTRANCE = 'S',
-  CHARMAP_DUNGEON_EXIT     = 'E',
-  CHARMAP_DUNGEON_WALL     = 'x',
-  CHARMAP_EMPTY            = '.',
-  CHARMAP_KEY              = 'k',
-  CHARMAP_LEFT             = '<',
-  CHARMAP_LOCK             = 'D',
-  CHARMAP_MONST1           = 'm',
-  CHARMAP_RIGHT            = '>',
-  CHARMAP_ROCK             = 'R',
-  CHARMAP_SECRET_DOOR      = 's',
-  CHARMAP_TREASURE         = '$',
-  CHARMAP_UP               = '^',
-  CHARMAP_WILDCARD         = '*',
+  CHARMAP_DOOR     = '=',
+  CHARMAP_EMPTY    = '.',
+  CHARMAP_EXIT     = 'E',
+  CHARMAP_KEY      = 'k',
+  CHARMAP_MONST1   = 'm',
+  CHARMAP_PLAYER1  = '1',
+  CHARMAP_PLAYER2  = '2',
+  CHARMAP_PLAYER3  = '3',
+  CHARMAP_PLAYER4  = '4',
+  CHARMAP_TREASURE = '$',
+  CHARMAP_WALL     = 'x',
   // end sort marker1 }
 };
 

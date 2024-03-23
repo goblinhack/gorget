@@ -8,14 +8,14 @@
 #include "my_vector_bounds_check.hpp"
 
 // begin sort marker1 {
-static Tpidmap tp_dungeon_door;
+static Tpidmap tp_door;
 static Tpidmap tp_dungeon_entrance;
-static Tpidmap tp_dungeon_exit;
-static Tpidmap tp_dungeon_floor;
-static Tpidmap tp_dungeon_wall;
+static Tpidmap tp_exit;
+static Tpidmap tp_floor;
 static Tpidmap tp_key;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
+static Tpidmap tp_wall;
 // end sort marker1 }
 
 void tp_random_dungeon_init(void)
@@ -34,24 +34,24 @@ void tp_random_dungeon_init(void)
       tp_key.push_back(tp);
     }
 
-    if (tp->is_dungeon_wall) {
-      tp_dungeon_wall.push_back(tp);
+    if (tp->is_wall) {
+      tp_wall.push_back(tp);
     }
 
-    if (tp->is_dungeon_door) {
-      tp_dungeon_door.push_back(tp);
+    if (tp->is_door) {
+      tp_door.push_back(tp);
     }
 
-    if (tp->is_dungeon_floor) {
-      tp_dungeon_floor.push_back(tp);
+    if (tp->is_floor) {
+      tp_floor.push_back(tp);
     }
 
     if (tp->is_dungeon_entrance) {
       tp_dungeon_entrance.push_back(tp);
     }
 
-    if (tp->is_dungeon_exit) {
-      tp_dungeon_exit.push_back(tp);
+    if (tp->is_exit) {
+      tp_exit.push_back(tp);
     }
   }
 }
@@ -169,14 +169,14 @@ Tpp tp_random_player(void)
   return tp_get_with_no_rarity_filter(tp_player);
 }
 
-Tpp tp_random_dungeon_wall(void)
+Tpp tp_random_wall(void)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! tp_dungeon_wall.size())) {
-    DIE("No dungeon_wall found");
+  if (unlikely(! tp_wall.size())) {
+    DIE("No wall found");
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_dungeon_wall);
+  return tp_get_with_no_rarity_filter(tp_wall);
 }
 
 Tpp tp_random_key(void)
@@ -199,12 +199,12 @@ Tpp tp_random_dungeon_entrance(void)
   return tp_get_with_no_rarity_filter(tp_dungeon_entrance);
 }
 
-Tpp tp_random_dungeon_exit(void)
+Tpp tp_random_exit(void)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! tp_dungeon_exit.size())) {
+  if (unlikely(! tp_exit.size())) {
     DIE("No exits found");
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_dungeon_exit);
+  return tp_get_with_no_rarity_filter(tp_exit);
 }

@@ -6,37 +6,6 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-void Level::player_create_and_place()
-{
-  TRACE_NO_INDENT();
-
-  if (data->player) {
-    return;
-  }
-
-  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    for (auto y = 0; y < MAP_HEIGHT; y++) {
-      for (auto x = 0; x < MAP_WIDTH; x++) {
-        point p(x, y);
-        auto  tp = tp_get(p, slot);
-        if (! tp) {
-          continue;
-        }
-
-        if (! tp->is_dungeon_entrance) {
-          continue;
-        }
-
-        auto player_tp = tp_random_player();
-        auto t         = thing_new(player_tp, p);
-        thing_push(t);
-        data->player = t->id;
-        return;
-      }
-    }
-  }
-}
-
 void Level::player_map_center()
 {
   TRACE_NO_INDENT();

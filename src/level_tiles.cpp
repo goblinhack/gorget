@@ -174,7 +174,7 @@ void Level::assign_tiles(void)
           //
           // Switch the door direction if next to walls
           //
-          if (tp->is_dungeon_door) {
+          if (tp->is_door) {
             if (tp_get(point(x, y - 1), MAP_DEPTH_WALL) && tp_get(point(x, y + 1), MAP_DEPTH_WALL)) {
               block_type = IS_JOIN_TOP;
             }

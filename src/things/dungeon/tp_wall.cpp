@@ -7,16 +7,16 @@
 #include "../../my_tp.hpp"
 #include "../../my_tps.hpp"
 
-bool tp_load_dungeon_wall(void)
+bool tp_load_wall(void)
 {
   TRACE_NO_INDENT();
 
   for (auto variant = 1; variant <= 2; variant++) {
-    auto name = "dungeon_wall" + std::to_string(variant);
+    auto name = "wall" + std::to_string(variant);
     auto tp   = tp_load(name);
     // begin sort marker1 {
     tp->z_depth_set(MAP_DEPTH_WALL);
-    tp->is_dungeon_wall  = true;
+    tp->is_wall  = true;
     tp->is_blit_tiled    = true;
     tp->is_blit_centered = true;
     // end sort marker1 }

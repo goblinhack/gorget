@@ -30,7 +30,7 @@ uint8_t config_gfx_vsync_enable(class Tokens *, void *context);
 uint8_t sdl_init(void);
 
 class Tokens;
-uint8_t sdl_user_dungeon_exit(class Tokens *tokens, void *context);
+uint8_t sdl_user_exit(class Tokens *tokens, void *context);
 
 void config_game_gfx_update(void);
 void config_gfx_vsync_update(void);
@@ -38,7 +38,7 @@ void sdl_config_update_all(void);
 void sdl_display(void);
 void sdl_display_reset(void);
 void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event);
-void sdl_dungeon_exit(void);
+void sdl_exit(void);
 void sdl_fbo_dump(int fbo, const std::string &name);
 void sdl_fbo_load(int fbo, const std::vector< uint8_t > &pixels);
 void sdl_fini(void);

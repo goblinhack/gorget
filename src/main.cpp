@@ -58,8 +58,8 @@ void quit(void)
     game->fini();
   }
 
-  LOG("FIN: sdl_dungeon_exit");
-  sdl_dungeon_exit();
+  LOG("FIN: sdl_exit");
+  sdl_exit();
 
   LOG("FIN: wid_console_fini");
   wid_console_fini();

@@ -14,28 +14,22 @@ bool templates_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
-  if (! tp_load_cursor()) {
-    return false;
-  }
   if (! tp_load_player()) {
     return false;
   }
-  if (! tp_load_dungeon_door()) {
+  if (! tp_load_exit()) {
     return false;
   }
-  if (! tp_load_dungeon_floor()) {
-    return false;
-  }
-  if (! tp_load_dungeon_entrance()) {
+  if (! tp_load_door()) {
     return false;
   }
   if (! tp_load_key()) {
     return false;
   }
-  if (! tp_load_dungeon_exit()) {
+  if (! tp_load_wall()) {
     return false;
   }
-  if (! tp_load_dungeon_wall()) {
+  if (! tp_load_floor()) {
     return false;
   }
   /* end shell marker1 */

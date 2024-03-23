@@ -10,10 +10,10 @@ void gfx_init_16x16(void)
   std::initializer_list< std::string > tiles = {
       // clang-format off
       // ##############################################################################
-      "dungeon_floor.1",
-      "dungeon_floor.2",
-      "dungeon_floor.3",
-      "dungeon_floor.4",
+      "floor.1",
+      "floor.2",
+      "floor.3",
+      "floor.4",
       "",
       "",
       "",
