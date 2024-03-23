@@ -14,6 +14,9 @@ bool templates_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
+  if (! tp_load_cursor()) {
+    return false;
+  }
   if (! tp_load_player()) {
     return false;
   }

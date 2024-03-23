@@ -19,6 +19,7 @@ std::initializer_list< std::string > tps = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
+    "cursor",
     "player",
     "dungeon_door",
     "dungeon_floor",

@@ -127,9 +127,16 @@ void Level::display_dungeon(void)
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_FLOOR, no_deco);
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_WALL, no_deco);
+          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_OBJ1, no_deco);
+          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_OBJ2, no_deco);
+          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_CURSOR, no_deco);
         }
       }
     }
+
+    //
+    // Doors only
+    //
     for (auto y = miny; y < maxy; y++) {
       for (auto x = maxx - 1; x >= minx; x--) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
@@ -138,6 +145,9 @@ void Level::display_dungeon(void)
       }
     }
 
+    //
+    // Shadows
+    //
     for (auto y = miny; y < maxy; y++) {
       for (auto x = maxx - 1; x >= minx; x--) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {

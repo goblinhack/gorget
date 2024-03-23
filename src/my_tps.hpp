@@ -9,6 +9,7 @@ bool templates_init(void);
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
+bool tp_load_cursor();
 bool tp_load_player();
 bool tp_load_dungeon_door();
 bool tp_load_dungeon_floor();
