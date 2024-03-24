@@ -4,6 +4,7 @@
 
 #include "my_array_bounds_check.hpp"
 #include "my_game.hpp"
+#include "my_level.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
@@ -457,6 +458,11 @@ static void sdl_key_repeat_events_(void)
     return;
   }
 
+  if (! game->level) {
+    return;
+  }
+  auto level = game->level;
+
   const uint8_t *state = SDL_GetKeyboardState(nullptr);
 
   bool up    = state[ sdlk_to_scancode(game->config.key_move_up) ];
@@ -520,30 +526,39 @@ static void sdl_key_repeat_events_(void)
     up    = true;
   }
 
-  bool        movement               = up || down || left || right;
-  static ts_t last_movement_keypress = 0;
-  static int  repeat_count;
+  bool movement = up || down || left || right;
 
-  if (! movement) {
-    repeat_count = 0;
-  } else {
-    if (repeat_count > 0) {
-      //
-      // Fast repeat
-      //
-      if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_HUNDREDTHS_NEXT, last_movement_keypress)) {
-        last_movement_keypress = time_ms();
-        LOG("TODO FAST REPEAT");
+  bool request_player_move_down {};
+  bool request_player_move_left {};
+  bool request_player_move_right {};
+  bool request_player_move_up {};
+
+  request_player_move_up    = up;
+  request_player_move_down  = down;
+  request_player_move_left  = left;
+  request_player_move_right = right;
+
+  if (movement) {
+    if (request_player_move_up) {
+      if (request_player_move_left) {
+        level->player_move(-1, -1);
+      } else if (request_player_move_right) {
+        level->player_move(1, -1);
+      } else {
+        level->player_move(0, -1);
       }
-    } else {
-      //
-      // First press
-      //
-      if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_HUNDREDTHS_FIRST, last_movement_keypress)) {
-        repeat_count++;
-        last_movement_keypress = time_ms();
-        LOG("TODO FAST REPEAT FIRST PRESS");
+    } else if (request_player_move_down) {
+      if (request_player_move_left) {
+        level->player_move(-1, 1);
+      } else if (request_player_move_right) {
+        level->player_move(1, 1);
+      } else {
+        level->player_move(0, 1);
       }
+    } else if (request_player_move_left) {
+      level->player_move(-1, 0);
+    } else if (request_player_move_right) {
+      level->player_move(1, 0);
     }
   }
 }

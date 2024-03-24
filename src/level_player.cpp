@@ -30,10 +30,8 @@ void Level::player_create_and_place()
         auto t = thing_new(tp, p);
         thing_push(t);
 
-        CON("got a player index %d %d", tp->player_index, data->player_index);
         if (tp->player_index == data->player_index) {
           data->player = t->id;
-          CON("SET player id %d", t->id);
         }
 
         tp_unset(p, tp);
@@ -76,28 +74,4 @@ void Level::player_move(int8_t dx, int8_t dy)
 
   t->dx = dx;
   t->dy = dy;
-}
-
-void Level::player_move_left()
-{
-  TRACE_NO_INDENT();
-  player_move(-1, 0);
-}
-
-void Level::player_move_right()
-{
-  TRACE_NO_INDENT();
-  player_move(1, 0);
-}
-
-void Level::player_move_up()
-{
-  TRACE_NO_INDENT();
-  player_move(0, -1);
-}
-
-void Level::player_move_down()
-{
-  TRACE_NO_INDENT();
-  player_move(0, 1);
 }

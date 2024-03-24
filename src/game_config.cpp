@@ -63,7 +63,7 @@ void Config::reset(void)
   key_console.sym    = SDLK_TAB;
   key_console.mod    = KMOD_SHIFT;
   music_volume       = {MIX_MAX_VOLUME / 3};
-  sdl_delay          = 1;
+  sdl_delay          = 0;
   sound_volume       = {MIX_MAX_VOLUME / 2};
 
   // key_unused1.sym  = SDLK_TAB;

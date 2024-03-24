@@ -47,32 +47,28 @@ public:
 
   void anim(void);
   void assign_tiles(void);
-  void display(void);
   void display_dungeon_tile(Tpp, Tilep, point tl, point br, point offset);
   void display_dungeon_tile(Tpp, uint16_t, point tl, point br, point offset);
   void display_dungeon(void);
   void display_dungeon_z_layer(int x, int y, int slot, int z, bool deco);
-  void map_set(LevelDatap, const char *);
-  void player_map_center(void);
-  void player_create_and_place(void);
-  void player_move_down(void);
-  void player_move(int8_t, int8_t);
-  void player_move_left(void);
-  void player_move_right(void);
-  void player_move_up(void);
-  void set_display_bounds(void);
-  void tick(void);
+  void display(void);
   void dungeon_create_and_place(void);
+  void map_set(LevelDatap, const char *);
+  void player_create_and_place(void);
+  void player_map_center(void);
+  void player_move(int8_t, int8_t);
+  void set_display_bounds(void);
+  void thing_free(Thingp);
+  void thing_pop(Thingp);
+  void thing_push(Thingp);
+  void thing_update_pos(Thingp);
+  void tick(void);
 
   bool is_same_type(point p, Tpp);
 
   Thingp thing_find_optional(ThingId id);
   Thingp thing_find(ThingId id);
   Thingp thing_new(Tpp, point p);
-  void   thing_free(Thingp);
-  void   thing_update_pos(Thingp);
-  void   thing_push(Thingp);
-  void   thing_pop(Thingp);
 };
 
 #endif // _MY_LEVEL_H_
