@@ -14,12 +14,15 @@ std::initializer_list< std::string > tps = {
     "", // ID 0 means unused
     "wall1",
     "wall2",
+    "player1",
+    "player2",
+    "player3",
+    "player4",
     /* begin shell marker1 */
     /* shell for i in $(find . -name "*.cpp" | xargs grep -h "tp_load(\"" | awk '{print $4}' | cut -d\" -f2) */
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
-    "player",
     "exit",
     "door",
     "key",

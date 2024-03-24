@@ -11,24 +11,25 @@ bool tp_load_player(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp = tp_load("player");
-  // begin sort marker1 {
-  tp->z_depth_set(MAP_DEPTH_PLAYER);
-  tp->is_player               = true;
-  tp->is_blit_on_ground       = true;
-  tp->is_blit_square_outlined = true;
-  tp->is_animated_can_hflip   = true;
-  // end sort marker1 }
+  for (auto player = 1; player <= 4; player++) {
+    auto name = "player" + std::to_string(player);
+    auto tp   = tp_load(name);
 
-#if 0
-  auto delay = 100;
+    // begin sort marker1 {
+    tp->z_depth_set(MAP_DEPTH_PLAYER);
+    tp->is_player         = true;
+    tp->is_player_index   = player;
+    tp->is_blit_on_ground = true;
+    // end sort marker1 }
 
-  for (auto frame = 0; frame < 6; frame++) {
-    auto tile      = tile_find_mand("player.run." + std::to_string(frame));
-    tile->delay_ms = delay;
-    tp->tiles.push_back(tile);
+    auto delay = 100;
+
+    for (auto frame = 0; frame < 1; frame++) {
+      auto tile      = tile_find_mand(name + ".idle." + std::to_string(frame));
+      tile->delay_ms = delay;
+      tp->tiles.push_back(tile);
+    }
   }
-#endif
 
   return true;
 }

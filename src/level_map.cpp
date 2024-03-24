@@ -17,10 +17,14 @@ void Level::map_set(LevelDatap data, const char *in)
     DIE("bad map size, expected %d, got %d", (int) strlen(in), (int) expected_len);
   }
 
-  auto tp_wall  = tp_random_wall();
-  auto tp_door  = tp_find("door");
-  auto tp_floor = tp_find("floor");
-  auto tp_exit  = tp_find("exit");
+  auto tp_wall    = tp_random_wall();
+  auto tp_door    = tp_find("door");
+  auto tp_floor   = tp_find("floor");
+  auto tp_exit    = tp_find("exit");
+  auto tp_player1 = tp_find("player1");
+  auto tp_player2 = tp_find("player2");
+  auto tp_player3 = tp_find("player3");
+  auto tp_player4 = tp_find("player4");
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
@@ -28,43 +32,47 @@ void Level::map_set(LevelDatap data, const char *in)
       auto c      = in[ offset ];
       Tpp  tp     = nullptr;
 
+      bool need_floor = false;
+
       switch (c) {
         case CHARMAP_WALL :
-          tp = tp_floor;
-          ::tp_set(data, point(x, y), tp);
-          tp = tp_wall;
+          need_floor = true;
+          tp         = tp_wall;
           break;
         case CHARMAP_DOOR :
-          tp = tp_floor;
-          ::tp_set(data, point(x, y), tp);
-          tp = tp_door;
+          need_floor = true;
+          tp         = tp_door;
           break;
         case CHARMAP_TREASURE : break;
         case CHARMAP_MONST1 : break;
         case CHARMAP_PLAYER1 :
-          tp = tp_floor;
-          ::tp_set(data, point(x, y), tp);
+          need_floor = true;
+          tp         = tp_player1;
           break;
         case CHARMAP_PLAYER2 :
-          tp = tp_floor;
-          ::tp_set(data, point(x, y), tp);
+          need_floor = true;
+          tp         = tp_player2;
           break;
         case CHARMAP_PLAYER3 :
-          tp = tp_floor;
-          ::tp_set(data, point(x, y), tp);
+          need_floor = true;
+          tp         = tp_player3;
           break;
         case CHARMAP_PLAYER4 :
-          tp = tp_floor;
-          ::tp_set(data, point(x, y), tp);
+          need_floor = true;
+          tp         = tp_player4;
           break;
         case CHARMAP_EXIT :
-          tp = tp_floor;
-          ::tp_set(data, point(x, y), tp);
-          tp = tp_exit;
+          need_floor = true;
+          tp         = tp_exit;
           break;
-        case CHARMAP_KEY : break;
-        case CHARMAP_EMPTY : tp = tp_find("floor"); break;
+        case CHARMAP_KEY : need_floor = true; break;
+        case CHARMAP_EMPTY : need_floor = true; break;
         default : DIE("unexpected map char '%c'", c);
+      }
+
+      if (need_floor) {
+        auto tp = tp_floor;
+        ::tp_set(data, point(x, y), tp);
       }
 
       if (! tp) {

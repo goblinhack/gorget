@@ -27,23 +27,26 @@ void gfx_init_16x16(void)
       "",
       "",
       // ##############################################################################
-      "cursor.0",
-      "cursor.1",
-      "cursor.2",
-      "cursor.3",
-      "cursor.4",
-      "cursor.5",
-      "cursor.6",
-      "cursor.7",
-      "cursor.8",
-      "cursor.9",
-      "cursor.10",
-      "cursor.11",
+      "player1.idle.0",
+      "player2.idle.0",
+      "player3.idle.0",
+      "player4.idle.0",
       "",
       "",
       "",
       "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      // ##############################################################################
   };
   const std::vector< std::string > arr(tiles);
+  // If you need outlines
+  // tile_load_arr_sprites("data/gfx/tiles_16x16.tga", "tiles_16x16", 16, 16, arr);
   tile_load_arr("data/gfx/tiles_16x16.tga", "tiles_16x16", 16, 16, arr);
 }

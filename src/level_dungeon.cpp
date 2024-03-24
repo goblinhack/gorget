@@ -12,7 +12,7 @@ void Level::dungeon_create_and_place()
           "x1.2x...........x..............x"
           "x...x=xx=x......x..xxxx==xxxx..x"
           "x3.4x..x..x.....x..xxxx...xxx..x"
-          "x===x..xx..x....x..xxx.....=...x"
+          "x...x..xx..x....x..xxx.....=...x"
           "x...=.xx....x...x...=......=...x"
           "x...=..x.....x..x..xxx.....=...x"
           "xxx.=.xxx.....x.x..xxxx...xxx..x"

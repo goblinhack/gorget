@@ -14,9 +14,9 @@ void Level::display_dungeon_tile(Tpp tp, Tilep tile, point tl, point br, point o
   br += offset;
 
   if (tp->is_blit_outlined) {
-    tile_blit_outline(tile, tl, br, WHITE, BLACK, true);
-  } else if (tp->is_blit_square_outlined) {
     tile_blit_outline(tile, tl, br, WHITE, BLACK, false);
+  } else if (tp->is_blit_square_outlined) {
+    tile_blit_outline(tile, tl, br, WHITE, BLACK, true);
   } else {
     tile_blit(tile, tl, br);
   }
@@ -140,7 +140,7 @@ void Level::display_dungeon(void)
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_DOOR, no_deco);
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_OBJ1, no_deco);
           display_dungeon_z_layer(x, y, slot, MAP_DEPTH_OBJ2, no_deco);
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_CURSOR, no_deco);
+          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_PLAYER, no_deco);
         }
       }
     }
