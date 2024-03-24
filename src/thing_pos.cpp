@@ -85,6 +85,7 @@ void thing_update_pos(LevelData *data, Thingp t)
   int16_t cur_pix_y = t->pix_y;
   int16_t new_pix_x = cur_pix_x + t->dx;
   int16_t new_pix_y = cur_pix_y + t->dy;
+  t->dx = t->dy = 0;
 
   int16_t cur_tile_x = cur_pix_x / TILE_WIDTH;
   int16_t cur_tile_y = cur_pix_y / TILE_HEIGHT;

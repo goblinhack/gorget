@@ -50,9 +50,7 @@ void Config::reset(void)
   key_action8.sym    = SDLK_8;
   key_action9.sym    = SDLK_9;
   key_attack.sym     = SDLK_SPACE;
-  key_drop.sym       = SDLK_BACKSPACE;
   key_help.sym       = SDLK_h;
-  key_jump.sym       = SDLK_j;
   key_load.sym       = SDLK_F11;
   key_move_down.sym  = SDLK_s;
   key_move_left.sym  = SDLK_a;

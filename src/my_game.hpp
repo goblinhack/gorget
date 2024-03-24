@@ -86,9 +86,7 @@ public:
   SDL_Keysym key_action9    = {};
   SDL_Keysym key_attack     = {};
   SDL_Keysym key_console    = {};
-  SDL_Keysym key_drop       = {};
   SDL_Keysym key_help       = {};
-  SDL_Keysym key_jump       = {};
   SDL_Keysym key_load       = {};
   SDL_Keysym key_move_down  = {};
   SDL_Keysym key_move_left  = {};

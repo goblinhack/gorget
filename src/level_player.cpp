@@ -6,6 +6,42 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
+void Level::player_create_and_place()
+{
+  TRACE_NO_INDENT();
+
+  if (data->player) {
+    return;
+  }
+
+  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+    for (auto y = 0; y < MAP_HEIGHT; y++) {
+      for (auto x = 0; x < MAP_WIDTH; x++) {
+        point p(x, y);
+        auto  tp = tp_get(p, slot);
+        if (! tp) {
+          continue;
+        }
+
+        if (! tp->is_player) {
+          continue;
+        }
+
+        auto t = thing_new(tp, p);
+        thing_push(t);
+
+        CON("got a player index %d %d", tp->player_index, data->player_index);
+        if (tp->player_index == data->player_index) {
+          data->player = t->id;
+          CON("SET player id %d", t->id);
+        }
+
+        tp_unset(p, tp);
+      }
+    }
+  }
+}
+
 void Level::player_map_center()
 {
   TRACE_NO_INDENT();
@@ -38,8 +74,8 @@ void Level::player_move(int8_t dx, int8_t dy)
     return;
   }
 
-  t->dx += dx;
-  t->dy += dy;
+  t->dx = dx;
+  t->dy = dy;
 }
 
 void Level::player_move_left()

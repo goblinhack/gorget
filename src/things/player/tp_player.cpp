@@ -18,7 +18,7 @@ bool tp_load_player(void)
     // begin sort marker1 {
     tp->z_depth_set(MAP_DEPTH_PLAYER);
     tp->is_player         = true;
-    tp->is_player_index   = player;
+    tp->player_index   = player - 1;
     tp->is_blit_on_ground = true;
     // end sort marker1 }
 

@@ -58,17 +58,9 @@ static void wid_cfg_check_for_conflicts(SDL_Keysym code)
     CON("%%fg=orange$Conflicting keyboard mapping, disabling key action9%%fg=reset$");
     game->config.key_action9 = {};
   }
-  if (sdlk_eq(game->config.key_drop, code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key drop.%%fg=reset$");
-    game->config.key_drop = {};
-  }
   if (sdlk_eq(game->config.key_help, code)) {
     CON("%%fg=orange$Conflicting keyboard mapping, disabling key help.%%fg=reset$");
     game->config.key_help = {};
-  }
-  if (sdlk_eq(game->config.key_jump, code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key jump.%%fg=reset$");
-    game->config.key_jump = {};
   }
   if (sdlk_eq(game->config.key_load, code)) {
     CON("%%fg=orange$Conflicting keyboard mapping, disabling key load.%%fg=reset$");
@@ -304,26 +296,6 @@ static void wid_cfg_key_attack_set(SDL_Keysym code)
   game->config.key_attack = {};
   wid_cfg_check_for_conflicts(code);
   game->config.key_attack = code;
-  game->wid_cfg_keyboard_select();
-}
-
-static void wid_cfg_key_jump_set(SDL_Keysym code)
-{
-  TRACE_AND_INDENT();
-  config_changed        = true;
-  game->config.key_jump = {};
-  wid_cfg_check_for_conflicts(code);
-  game->config.key_jump = code;
-  game->wid_cfg_keyboard_select();
-}
-
-static void wid_cfg_key_drop_set(SDL_Keysym code)
-{
-  TRACE_AND_INDENT();
-  config_changed        = true;
-  game->config.key_drop = {};
-  wid_cfg_check_for_conflicts(code);
-  game->config.key_drop = code;
   game->wid_cfg_keyboard_select();
 }
 
@@ -797,24 +769,6 @@ static uint8_t wid_cfg_key_attack(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("attack");
   sdl.on_sdl_key_grab = wid_cfg_key_attack_set;
-  config_changed      = true;
-  return true;
-}
-
-static uint8_t wid_cfg_key_jump(Widp w, int x, int y, uint32_t button)
-{
-  TRACE_AND_INDENT();
-  grab_key("jump");
-  sdl.on_sdl_key_grab = wid_cfg_key_jump_set;
-  config_changed      = true;
-  return true;
-}
-
-static uint8_t wid_cfg_key_drop(Widp w, int x, int y, uint32_t button)
-{
-  TRACE_AND_INDENT();
-  grab_key("item drop");
-  sdl.on_sdl_key_grab = wid_cfg_key_drop_set;
   config_changed      = true;
   return true;
 }
@@ -1528,68 +1482,6 @@ void Game::wid_cfg_keyboard_select(void)
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game->config.key_attack));
     wid_set_on_mouse_up(w, wid_cfg_key_attack);
-  }
-  ///////////////////////////////////////////////////////////////////////
-  // jump
-  ///////////////////////////////////////////////////////////////////////
-  y_at++;
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "jump");
-
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
-    wid_set_shape_none(w);
-    wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
-    wid_set_text(w, "Jump");
-  }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "value");
-
-    point tl = make_point(width / 2 + rhs_button_left, y_at);
-    point br = make_point(width / 2 + rhs_button_right, y_at);
-    wid_set_mode(w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, ::to_string(game->config.key_jump));
-    wid_set_on_mouse_up(w, wid_cfg_key_jump);
-  }
-  ///////////////////////////////////////////////////////////////////////
-  // drop
-  ///////////////////////////////////////////////////////////////////////
-  y_at++;
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Drop");
-
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
-    wid_set_shape_none(w);
-    wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
-    wid_set_text(w, "Drop");
-  }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "value");
-
-    point tl = make_point(width / 2 + rhs_button_left, y_at);
-    point br = make_point(width / 2 + rhs_button_right, y_at);
-    wid_set_mode(w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, ::to_string(game->config.key_drop));
-    wid_set_on_mouse_up(w, wid_cfg_key_drop);
   }
   ///////////////////////////////////////////////////////////////////////
   // action0

@@ -70,7 +70,15 @@ typedef struct LevelData_ {
 
   Thing things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];
 
+  //
+  // The current player.
+  //
   ThingId player;
+
+  //
+  // Which player are we controlling.
+  //
+  uint8_t player_index;
 
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
@@ -93,5 +101,6 @@ void thing_pop(LevelData *, Thingp);
 
 Tpp  tp_get(LevelData *, point p, uint8_t slot);
 void tp_set(LevelData *, point p, Tpp);
+void tp_unset(LevelData *, point p, Tpp);
 
 #endif // _MY_LEVEL_DATA_H_

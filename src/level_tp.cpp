@@ -22,6 +22,21 @@ void Level::tp_set(point p, Tpp tp)
   return ::tp_set(data, p, tp);
 }
 
+void tp_unset(LevelData *data, point p, Tpp tp)
+{
+  TRACE_NO_INDENT();
+
+  auto o = &data->obj[ p.x ][ p.y ][ tp->z_depth ];
+  memset(o, 0, sizeof(*o));
+  o->id = 0;
+}
+
+void Level::tp_unset(point p, Tpp tp)
+{
+  TRACE_NO_INDENT();
+  return ::tp_unset(data, p, tp);
+}
+
 Tpp tp_get(LevelData *data, point p, uint8_t slot)
 {
   TRACE_NO_INDENT();

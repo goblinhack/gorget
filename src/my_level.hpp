@@ -42,6 +42,7 @@ public:
 
   Tpp    tp_get(point p, uint8_t slot);
   void   tp_set(point p, Tpp);
+  void   tp_unset(point p, Tpp);
   Thingp thing_get(point p, uint8_t slot, Tpp * = nullptr);
 
   void anim(void);
@@ -53,6 +54,7 @@ public:
   void display_dungeon_z_layer(int x, int y, int slot, int z, bool deco);
   void map_set(LevelDatap, const char *);
   void player_map_center(void);
+  void player_create_and_place(void);
   void player_move_down(void);
   void player_move(int8_t, int8_t);
   void player_move_left(void);

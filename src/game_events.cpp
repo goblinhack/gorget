@@ -178,26 +178,11 @@ uint8_t game_input(const SDL_Keysym *key)
     return false; // To avoid click noise
   }
 
-  //
-  // jump
-  //
-  if (sdlk_eq(*key, game->config.key_jump)) {
-    CON("TODO JUMP");
-    // game->player_tick(left, right, up, down, attack, wait, jump);
-    return false; // To avoid click noise
-  }
-
   if (sdlk_eq(*key, game->config.key_quit)) {
     CON("INF: Pressed quit key");
     TRACE_AND_INDENT();
     game->change_state(Game::STATE_NORMAL, "key press");
     game->quit_select();
-    return true;
-  }
-
-  if (sdlk_eq(*key, game->config.key_drop)) {
-    CON("INF: Pressed drop key");
-    TRACE_AND_INDENT();
     return true;
   }
 

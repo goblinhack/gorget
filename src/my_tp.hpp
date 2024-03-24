@@ -44,9 +44,10 @@ public:
   bool is_key {};
   bool is_monst1 {};
   bool is_player {};
-  bool is_player_index {};
   bool is_wall {};
   // end sort marker1 }
+
+  uint8_t player_index {};
 
   // begin sort marker2 {
   int chance_d1000_appearing {};
