@@ -19,11 +19,6 @@ ts_t time_now;
 //
 ts_t time_game;
 
-//
-// And this is how we fast forward time
-//
-ts_t time_game_delta;
-
 static char buf_[ MAXSHORTSTR ];
 
 ts_t time_ms_cached(void) { return time_now; }
@@ -35,14 +30,14 @@ ts_t time_ms(void)
   //
   // Update the game time too
   //
-  time_game = time_now + time_game_delta;
+  time_game = time_now;
 
   return time_now;
 }
 
 ts_t time_game_ms(void)
 {
-  time_game = time_ms() + time_game_delta;
+  time_game = time_ms();
   return time_game;
 }
 ts_t time_game_ms_cached(void) { return time_game; }

@@ -27,7 +27,7 @@ void Level::player_create_and_place()
           continue;
         }
 
-        auto t = thing_new(tp, p);
+        auto t = thing_init(tp, p);
         thing_push(t);
 
         if (tp->player_index == data->player_index) {
@@ -40,15 +40,21 @@ void Level::player_create_and_place()
   }
 }
 
+Thingp Level::player()
+{
+  TRACE_NO_INDENT();
+  if (! data->player) {
+    return NULL;
+  }
+
+  return thing_find(data->player);
+}
+
 void Level::player_map_center()
 {
   TRACE_NO_INDENT();
 
-  if (! data->player) {
-    return;
-  }
-
-  auto t = thing_find(data->player);
+  auto t = player();
   if (! t) {
     return;
   }
@@ -63,15 +69,18 @@ void Level::player_move(int8_t dx, int8_t dy)
 {
   TRACE_NO_INDENT();
 
-  if (! data->player) {
+  //
+  // If a move is in progress, do nothing
+  //
+  if (data->tick_start_requested || data->tick_in_progress) {
     return;
   }
 
-  auto t = thing_find(data->player);
+  auto t = player();
   if (! t) {
     return;
   }
 
-  t->dx = dx;
-  t->dy = dy;
+  thing_update_map_pos(t, t->x + dx, t->y + dy);
+  data->tick_start_requested = true;
 }

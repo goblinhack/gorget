@@ -39,6 +39,5 @@ std::string &string_timestamp(void);
 
 extern ts_t time_now;
 extern ts_t time_game;
-extern ts_t time_game_delta;
 
 #endif

@@ -61,6 +61,27 @@ typedef struct LevelData_ {
   uint8_t num;
 
   //
+  // Tick increases one per player move
+  //
+  uint32_t tick;
+
+  //
+  // When the tick began in ms
+  //
+  uint32_t tick_start;
+
+  //
+  // We have to interpolate movement and this indicates that is in progress
+  //
+  uint8_t tick_in_progress : 1;
+
+  //
+  // Player has moved.
+  //
+  uint8_t tick_start_requested : 1;
+  uint8_t tick_end_requested   : 1;
+
+  //
   // Map scroll offset
   //
   int16_t pixel_map_at_x;
@@ -90,16 +111,19 @@ void       level_data_destructor(LevelDatap);
 
 bool is_oob(LevelData *, point p);
 
-Thingp thing_find_optional(LevelData *, ThingId);
 Thingp thing_find(LevelData *, ThingId);
-Thingp thing_new(LevelData *, Tpp, point);
+Thingp thing_find_optional(LevelData *, ThingId);
 Thingp thing_get(LevelData *, point p, uint8_t slot, Tpp * = nullptr);
+Thingp thing_new(LevelData *, Tpp, point);
+Thingp thing_init(LevelData *, Tpp, point);
+
+Tpp thing_tp(LevelData *, Thingp);
+Tpp tp_get(LevelData *, point p, uint8_t slot);
 
 void thing_free(LevelData *, Thingp);
-void thing_push(LevelData *, Thingp);
 void thing_pop(LevelData *, Thingp);
-
-Tpp  tp_get(LevelData *, point p, uint8_t slot);
+void thing_push(LevelData *, Thingp);
+void thing_update(LevelData *, Thingp);
 void tp_set(LevelData *, point p, Tpp);
 void tp_unset(LevelData *, point p, Tpp);
 

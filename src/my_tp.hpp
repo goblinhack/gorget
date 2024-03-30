@@ -50,6 +50,7 @@ public:
   uint8_t player_index {};
 
   // begin sort marker2 {
+  int speed {100};
   int chance_d1000_appearing {};
   int rarity {};
   // end sort marker2 }
