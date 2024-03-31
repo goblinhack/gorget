@@ -465,6 +465,11 @@ static void sdl_key_repeat_events_(void)
 
   const uint8_t *state = SDL_GetKeyboardState(nullptr);
 
+  static bool last_up;
+  static bool last_down;
+  static bool last_left;
+  static bool last_right;
+
   bool up    = state[ sdlk_to_scancode(game->config.key_move_up) ];
   bool down  = state[ sdlk_to_scancode(game->config.key_move_down) ];
   bool left  = state[ sdlk_to_scancode(game->config.key_move_left) ];
@@ -526,7 +531,147 @@ static void sdl_key_repeat_events_(void)
     up    = true;
   }
 
-  level->thing_player_move_request(up, down, left, right);
+  bool up_pressed    = false;
+  bool down_pressed  = false;
+  bool left_pressed  = false;
+  bool right_pressed = false;
+
+  if (up && (up != last_up)) {
+    up_pressed = true;
+    CON("KEY PRESSED");
+  }
+  if (down && (down != last_down)) {
+    down_pressed = true;
+    CON("KEY PRESSED");
+  }
+  if (left && (left != last_left)) {
+    left_pressed = true;
+    CON("KEY PRESSED");
+  }
+  if (right && (right != last_right)) {
+    right_pressed = true;
+    CON("KEY PRESSED");
+  }
+
+  bool up_released    = false;
+  bool down_released  = false;
+  bool left_released  = false;
+  bool right_released = false;
+
+  if (! up && (up != last_up)) {
+    up_released = true;
+    CON("KEY RELEASED");
+  }
+  if (! down && (down != last_down)) {
+    down_released = true;
+    CON("KEY RELEASED");
+  }
+  if (! left && (left != last_left)) {
+    left_released = true;
+    CON("KEY RELEASED");
+  }
+  if (! right && (right != last_right)) {
+    right_released = true;
+    CON("KEY RELEASED");
+  }
+
+  static bool key_change_waiting_to_be_processed = false;
+  static ts_t last_movement_keypress             = 0;
+  static int  repeat_count;
+
+  if (! last_movement_keypress) {
+    last_movement_keypress = time_ms();
+  }
+
+  if (up || down || left || right || level->data->request_player_move_up || level->data->request_player_move_down
+      || level->data->request_player_move_left || level->data->request_player_move_right) {
+
+    //
+    // Too soon, but allow moves to accumulate so we can do diagonal moves.
+    //
+    level->thing_player_move_accum(up, down, left, right);
+
+    CON("%d %d %d %d accum %d %d %d %d", up, down, left, right, level->data->request_player_move_up,
+        level->data->request_player_move_down, level->data->request_player_move_left,
+        level->data->request_player_move_right);
+
+    if (repeat_count > 0) {
+      //
+      // Repeat press.
+      //
+      if (up || down || left || right) {
+        //
+        // If a key is pressed whilst auto repeating, then we must add that key to the
+        // set to be processed and avoid clearing it until the next event so it gets a
+        // chance to be processed.
+        //
+        if (up_pressed || down_pressed || left_pressed || right_pressed) {
+          CON("accum");
+          level->thing_player_move_accum(up, down, left, right);
+          key_change_waiting_to_be_processed = true;
+        }
+
+        //
+        // If a key is released, immediately change the held key set. Unless a key press
+        // is waiting to be processed.
+        //
+        if (up_released || down_released || left_released || right_released) {
+          if (! key_change_waiting_to_be_processed) {
+            CON("reset");
+            level->thing_player_move_reset();
+            level->thing_player_move_accum(up, down, left, right);
+          }
+        }
+
+        //
+        // Fast repeat
+        //
+        if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_HUNDREDTHS_NEXT, last_movement_keypress)) {
+          CON("REPEAT PRESS");
+          if (level->thing_player_move_request(up, down, left, right)) {
+            repeat_count++;
+            last_movement_keypress             = time_ms();
+            key_change_waiting_to_be_processed = false;
+          }
+        }
+      } else {
+        //
+        // If repeating and all keys are released then stop the repeat immediately.
+        //
+        level->thing_player_move_reset();
+      }
+    } else {
+      //
+      // First press
+      //
+      if (up || down || left || right) {
+        if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_HUNDREDTHS_FIRST, last_movement_keypress)) {
+          CON("FIRST PRESS");
+          if (level->thing_player_move_request(up, down, left, right)) {
+            repeat_count++;
+            last_movement_keypress = time_ms();
+
+            level->thing_player_move_reset();
+            level->thing_player_move_accum(up, down, left, right);
+          }
+        }
+      } else {
+        CON("END KEY PRESS");
+        repeat_count = 0;
+        level->thing_player_move_reset();
+      }
+    }
+  } else {
+    CON("NO EVENT");
+    repeat_count = 0;
+    level->thing_player_move_reset();
+    key_change_waiting_to_be_processed = false;
+  }
+
+  last_up    = up;
+  last_down  = down;
+  last_right = right;
+  last_left  = left;
 }
 
 void sdl_key_repeat_events(void) { sdl_key_repeat_events_(); }

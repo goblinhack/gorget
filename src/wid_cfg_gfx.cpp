@@ -522,74 +522,40 @@ void Game::wid_cfg_gfx_select(void)
     }
   }
 
-  if (! game->config.gfx_vsync_locked) {
-    /////////////////////////////////////////////////////////////////////////
-    // vsync
-    /////////////////////////////////////////////////////////////////////////
-    y_at++;
-    {
-      TRACE_AND_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_square_button(p, "Vertical sync");
+  /////////////////////////////////////////////////////////////////////////
+  // vsync
+  /////////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_AND_INDENT();
+    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(p, "Vertical sync");
 
-      point tl = make_point(1, y_at);
-      point br = make_point(width / 2, y_at);
-      wid_set_shape_none(w);
-      wid_set_pos(w, tl, br);
-      wid_set_text_lhs(w, true);
-      wid_set_text(w, "Vertical sync");
-    }
-    {
-      TRACE_AND_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_square_button(p, "Vertical sync value");
+    point tl = make_point(1, y_at);
+    point br = make_point(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Vertical sync");
+  }
+  {
+    TRACE_AND_INDENT();
+    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(p, "Vertical sync value");
 
-      point tl = make_point(29, y_at);
-      point br = make_point(37, y_at);
-      wid_set_mode(w, WID_MODE_OVER);
-      wid_set_style(w, box_highlight_style);
-      wid_set_mode(w, WID_MODE_NORMAL);
-      wid_set_style(w, box_style);
-      wid_set_pos(w, tl, br);
-      wid_set_on_mouse_up(w, wid_cfg_gfx_vsync_enable_toggle);
+    point tl = make_point(29, y_at);
+    point br = make_point(37, y_at);
+    wid_set_mode(w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_on_mouse_up(w, wid_cfg_gfx_vsync_enable_toggle);
 
-      if (game->config.gfx_vsync_enable) {
-        wid_set_text(w, "True");
-      } else {
-        wid_set_text(w, "False");
-      }
-    }
-  } else {
-    /////////////////////////////////////////////////////////////////////////
-    // vsync cannot be changed
-    /////////////////////////////////////////////////////////////////////////
-    y_at++;
-    {
-      TRACE_AND_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_square_button(p, "Vertical sync");
-
-      point tl = make_point(1, y_at);
-      point br = make_point(width / 2, y_at);
-      wid_set_shape_none(w);
-      wid_set_pos(w, tl, br);
-      wid_set_text_lhs(w, true);
-      wid_set_text(w, "Vertical sync");
-    }
-    {
-      TRACE_AND_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_square_button(p, "Vertical sync value");
-
-      point tl = make_point(29, y_at);
-      point br = make_point(37, y_at);
-      wid_set_mode(w, WID_MODE_OVER);
-      wid_set_style(w, box_highlight_style);
-      wid_set_mode(w, WID_MODE_NORMAL);
-      wid_set_style(w, box_style);
-      wid_set_pos(w, tl, br);
-
+    if (game->config.gfx_vsync_enable) {
       wid_set_text(w, "True");
+    } else {
+      wid_set_text(w, "False");
     }
   }
 

@@ -27,7 +27,6 @@ void Config::reset(void)
   gfx_fullscreen_desktop = true;
   gfx_fullscreen         = false;
   gfx_vsync_enable       = true;
-  gfx_vsync_locked       = false;
   mouse_wheel_lr_negated = false;
   mouse_wheel_ud_negated = false;
   ui_gfx_term_height     = {TERM_GFX_HEIGHT_DEF};

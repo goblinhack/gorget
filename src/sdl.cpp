@@ -202,9 +202,7 @@ uint8_t sdl_init(void)
     video_height = game->config.config_pix_height;
   }
 
-  if (! game->config.gfx_vsync_locked) {
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  }
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
   //
   // Don't use this. It seemed to mess up graphics on FireGL.
@@ -323,10 +321,6 @@ uint8_t sdl_init(void)
   LOG("SDL: Hw Accel    : %d", value);
 
   LOG("SDL: Vsync       : %d", SDL_GL_GetSwapInterval());
-
-  if (game->config.gfx_vsync_locked) {
-    LOG("SDL: Vsync       : locked");
-  }
 
   return true;
 }
@@ -600,9 +594,6 @@ uint8_t config_debug_set(class Tokens *tokens, void *context)
 uint8_t config_gfx_vsync_enable(class Tokens *tokens, void *context)
 {
   TRACE_NO_INDENT();
-  if (game->config.gfx_vsync_locked) {
-    return true;
-  }
 
   char *s = tokens->args[ 2 ];
 
@@ -627,9 +618,6 @@ uint8_t config_gfx_vsync_enable(class Tokens *tokens, void *context)
 void config_gfx_vsync_update(void)
 {
   TRACE_NO_INDENT();
-  if (game->config.gfx_vsync_locked) {
-    return;
-  }
 
   if (game->config.gfx_vsync_enable) {
     SDL_GL_SetSwapInterval(1);

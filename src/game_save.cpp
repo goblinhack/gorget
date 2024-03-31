@@ -136,7 +136,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
   out << bits(my.t.seed);
   out << bits(my.t.seed_manually_set);
   out << bits(my.t.seed_name);
-  out << bits(my.t.frame_count);
   out << bits(my.t.fps_value);
 
   return out;

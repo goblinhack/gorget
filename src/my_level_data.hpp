@@ -61,20 +61,25 @@ typedef struct LevelData_ {
   uint8_t num;
 
   //
+  // Increments once per event loop.
+  //
+  uint32_t frame;
+
+  //
   // Tick increases one per player move.
   //
   uint32_t tick;
+
+  //
+  // When the tick began in ms
+  //
+  uint32_t frame_begin;
 
   //
   // Ranges from 0 to 1 when a tick is in progress.
   //
   float time_step;
   float last_time_step;
-
-  //
-  // When the tick began in ms
-  //
-  uint32_t tick_begin_ms;
 
   //
   // We have to interpolate movement and this indicates that is in progress.

@@ -3,7 +3,6 @@
 //
 
 #include "my_level.hpp"
-#include "my_time.hpp"
 
 void Level::tick(void)
 {
@@ -30,7 +29,6 @@ void Level::tick(void)
   // Move things
   //
   if (data->tick_in_progress) {
-    CON("TICK time_step %f", data->time_step);
     tick_body(data->time_step - data->last_time_step);
   }
 
@@ -38,31 +36,23 @@ void Level::tick(void)
   // End of tick?
   //
   if (data->_tick_end_requested) {
-    CON("TICK end");
     tick_end_requested();
   }
 }
 
 void Level::tick_time_step(void)
 {
-  //
-  // How long each tick takes
-  //
-  static float tick_duration_ms = 1000;
-
-  CON("TICK in progress");
-
-  if (! data->tick_begin_ms) {
+  if (! data->frame_begin) {
     //
     // First tick
     //
-    data->tick_begin_ms = time_ms();
-    data->time_step     = 0.0;
+    data->frame_begin = data->frame;
+    data->time_step   = 0.0;
   } else {
     //
     // Continue the tick
     //
-    data->time_step = ((float) (time_ms() - data->tick_begin_ms)) / (float) tick_duration_ms;
+    data->time_step = ((float) (data->frame - data->frame_begin)) / (float) TICK_DURATION_MS;
     if (data->time_step >= 1.0) {
       //
       // Tick has surpassed its time
@@ -82,7 +72,6 @@ void Level::tick_body(float dt)
 
   FOR_ALL_THINGS(t)
   {
-    CON("TICK dt %f", dt);
     //                   Tick 1              Tick 2
     //            =================== ===================
     //            0.00 0.25 0.50 1.00 0.00 0.25 0.50 1.00
@@ -108,11 +97,9 @@ void Level::tick_body(float dt)
 
 void Level::tick_begin(void)
 {
-  CON("TICK begin");
-
   data->tick++;
   data->_tick_begin_requested = false;
-  data->tick_begin_ms         = time_ms();
+  data->frame_begin           = data->frame;
   data->time_step             = 0.0;
   data->tick_in_progress      = true;
 }

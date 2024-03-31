@@ -55,11 +55,7 @@ void sdl_display(void)
   //
   // Flip
   //
-  if (likely(game->config.gfx_vsync_locked)) {
-    SDL_GL_SwapWindow(sdl.window);
-  } else {
-    glFlush();
-  }
+  SDL_GL_SwapWindow(sdl.window);
 }
 
 void sdl_display_reset(void)

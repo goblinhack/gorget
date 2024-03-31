@@ -699,13 +699,6 @@ int main(int argc, char *argv[])
     }
   }
 
-  //
-  // For some reason this is needed on windows to force the console
-  // to appear.
-  //
-  auto save_gfx_vsync_locked    = game->config.gfx_vsync_locked;
-  game->config.gfx_vsync_locked = 1;
-
   {
     TRACE_NO_INDENT();
     sdl_config_update_all();
@@ -891,9 +884,6 @@ int main(int argc, char *argv[])
   }
 
   wid_hide(wid_console_window);
-
-  game->config.gfx_vsync_locked = save_gfx_vsync_locked;
-  config_gfx_vsync_update();
 
   g_opt_no_slow_log_flush = false;
 

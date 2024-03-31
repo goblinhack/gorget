@@ -4,6 +4,7 @@
 
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_level.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
@@ -44,19 +45,15 @@ void sdl_loop(void)
 
   g_main_loop_running = true;
 
-  game->config.gfx_vsync_locked = SDL_GL_GetSwapInterval();
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+  GL_ERROR_CHECK();
 
-  if (! game->config.gfx_vsync_locked) {
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    GL_ERROR_CHECK();
-
-    if (game->config.gfx_vsync_enable) {
-      SDL_GL_SetSwapInterval(1);
-    } else {
-      SDL_GL_SetSwapInterval(0);
-    }
-    GL_ERROR_CHECK();
+  if (game->config.gfx_vsync_enable) {
+    SDL_GL_SetSwapInterval(1);
+  } else {
+    SDL_GL_SetSwapInterval(0);
   }
+  GL_ERROR_CHECK();
 
   SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
   GL_ERROR_CHECK();
@@ -76,7 +73,6 @@ void sdl_loop(void)
     // DBG("SDL: tick");
 
     frames++;
-    game->frame_count++;
 
     //
     // Reset joystick handling before we poll and update.
@@ -245,6 +241,22 @@ void sdl_loop(void)
         ts_begin        = ts_now;
         frames          = 0;
       }
+    }
+
+    //
+    // Fixed frame counter, 100 per second
+    //
+    if (game && game->level && game->level->data) {
+      static uint32_t ts_begin;
+      static uint32_t ts_now;
+
+      if (unlikely(! ts_begin)) {
+        ts_begin = time_ms();
+      }
+
+      ts_now = time_ms();
+      game->level->data->frame += ts_now - ts_begin;
+      ts_begin = ts_now;
     }
   }
 

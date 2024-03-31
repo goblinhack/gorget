@@ -33,6 +33,7 @@ public:
   bool set_id(point p, uint8_t z, Id);
   bool set_tile(point p, uint8_t z, Tilep);
   bool tick_is_in_progress(void);
+  bool thing_player_move_request(bool up, bool down, bool left, bool right);
 
   Id get_id_no_check(point p, uint8_t z);
   Id get_id(point p, uint8_t z);
@@ -66,7 +67,8 @@ public:
   void thing_player_create_and_place(void);
   void thing_player_map_center(void);
   void thing_player_move(int8_t, int8_t);
-  void thing_player_move_request(bool up, bool down, bool left, bool right);
+  void thing_player_move_accum(bool up, bool down, bool left, bool right);
+  void thing_player_move_reset(void);
   void thing_pop(Thingp);
   void thing_push(Thingp);
   void thing_update_map_pos(Thingp, int8_t new_x, int8_t new_y);

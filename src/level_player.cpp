@@ -92,20 +92,22 @@ void Level::thing_player_move(int8_t dx, int8_t dy)
   data->request_player_move_right = false;
 }
 
-void Level::thing_player_move_request(bool up, bool down, bool left, bool right)
+//
+// All keys have been released, forget any accumulation of events
+//
+void Level::thing_player_move_reset(void)
 {
-  //
-  // If a move is in progress, do nothing
-  //
-  if (tick_is_in_progress()) {
-    //
-    // But if the player presses the keys again towards the end of the tick, allow that.
-    //
-    if (data->time_step < 0.5) {
-      return;
-    }
-  }
+  data->request_player_move_up    = false;
+  data->request_player_move_down  = false;
+  data->request_player_move_left  = false;
+  data->request_player_move_right = false;
+}
 
+//
+// Too soon, but allow moves to accumulate so we can do diagonal moves.
+//
+void Level::thing_player_move_accum(bool up, bool down, bool left, bool right)
+{
   if (up) {
     data->request_player_move_up = up;
   }
@@ -121,7 +123,27 @@ void Level::thing_player_move_request(bool up, bool down, bool left, bool right)
   if (right) {
     data->request_player_move_right = right;
   }
+}
 
+//
+// Attempt to move
+//
+bool Level::thing_player_move_request(bool up, bool down, bool left, bool right)
+{
+  thing_player_move_accum(up, down, left, right);
+
+  //
+  // If a move is in progress, do nothing
+  //
+  if (tick_is_in_progress()) {
+    //
+    // But if the player presses the keys again towards the end of the tick, allow that.
+    //
+    CON("TICK IN PROGRESS");
+    return false;
+  }
+
+  CON("HANDLE EVENT");
   if (data->request_player_move_up) {
     if (data->request_player_move_left) {
       thing_player_move(-1, -1);
@@ -144,6 +166,5 @@ void Level::thing_player_move_request(bool up, bool down, bool left, bool right)
     thing_player_move(1, 0);
   }
 
-  CON("%d %d %d %d", data->request_player_move_up, data->request_player_move_down, data->request_player_move_left,
-      data->request_player_move_right);
+  return true;
 }

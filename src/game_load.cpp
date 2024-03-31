@@ -276,7 +276,6 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   in >> bits(my.t.seed);
   in >> bits(my.t.seed_manually_set);
   in >> bits(my.t.seed_name);
-  in >> bits(my.t.frame_count);
   in >> bits(my.t.fps_value);
 
   return in;

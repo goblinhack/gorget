@@ -39,7 +39,6 @@ public:
   bool gfx_fullscreen         = {};
   bool gfx_fullscreen_desktop = {};
   bool gfx_vsync_enable       = {};
-  bool gfx_vsync_locked       = {};
 
   bool mouse_wheel_lr_negated = {};
   bool mouse_wheel_ud_negated = {};
@@ -188,11 +187,6 @@ public:
   // Seed has been manually set, so stick with it
   //
   bool seed_manually_set {};
-
-  //
-  // FPS settings.
-  //
-  uint32_t frame_count {0};
 
   //
   // Current fram-erate
