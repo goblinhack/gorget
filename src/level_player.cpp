@@ -6,7 +6,7 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-void Level::player_create_and_place()
+void Level::thing_player_create_and_place()
 {
   TRACE_NO_INDENT();
 
@@ -28,6 +28,7 @@ void Level::player_create_and_place()
         }
 
         auto t = thing_init(tp, p);
+
         thing_push(t);
 
         if (tp->player_index == data->player_index) {
@@ -40,7 +41,7 @@ void Level::player_create_and_place()
   }
 }
 
-Thingp Level::player()
+Thingp Level::thing_player()
 {
   TRACE_NO_INDENT();
   if (! data->player) {
@@ -50,11 +51,11 @@ Thingp Level::player()
   return thing_find(data->player);
 }
 
-void Level::player_map_center()
+void Level::thing_player_map_center()
 {
   TRACE_NO_INDENT();
 
-  auto t = player();
+  auto t = thing_player();
   if (! t) {
     return;
   }
@@ -65,22 +66,84 @@ void Level::player_map_center()
   data->pixel_map_at_y -= game->config.map_pix_height / 2;
 }
 
-void Level::player_move(int8_t dx, int8_t dy)
+void Level::thing_player_move(int8_t dx, int8_t dy)
 {
   TRACE_NO_INDENT();
 
   //
-  // If a move is in progress, do nothing
+  // Wait until the end of the tick
   //
-  if (data->tick_start_requested || data->tick_in_progress) {
+  if (tick_is_in_progress()) {
     return;
   }
 
-  auto t = player();
+  auto t = thing_player();
   if (! t) {
     return;
   }
 
   thing_update_map_pos(t, t->x + dx, t->y + dy);
-  data->tick_start_requested = true;
+
+  tick_begin_requested("player moved");
+
+  data->request_player_move_up    = false;
+  data->request_player_move_down  = false;
+  data->request_player_move_left  = false;
+  data->request_player_move_right = false;
+}
+
+void Level::thing_player_move_request(bool up, bool down, bool left, bool right)
+{
+  //
+  // If a move is in progress, do nothing
+  //
+  if (tick_is_in_progress()) {
+    //
+    // But if the player presses the keys again towards the end of the tick, allow that.
+    //
+    if (data->time_step < 0.5) {
+      return;
+    }
+  }
+
+  if (up) {
+    data->request_player_move_up = up;
+  }
+
+  if (down) {
+    data->request_player_move_down = down;
+  }
+
+  if (left) {
+    data->request_player_move_left = left;
+  }
+
+  if (right) {
+    data->request_player_move_right = right;
+  }
+
+  if (data->request_player_move_up) {
+    if (data->request_player_move_left) {
+      thing_player_move(-1, -1);
+    } else if (data->request_player_move_right) {
+      thing_player_move(1, -1);
+    } else {
+      thing_player_move(0, -1);
+    }
+  } else if (data->request_player_move_down) {
+    if (data->request_player_move_left) {
+      thing_player_move(-1, 1);
+    } else if (data->request_player_move_right) {
+      thing_player_move(1, 1);
+    } else {
+      thing_player_move(0, 1);
+    }
+  } else if (data->request_player_move_left) {
+    thing_player_move(-1, 0);
+  } else if (data->request_player_move_right) {
+    thing_player_move(1, 0);
+  }
+
+  CON("%d %d %d %d", data->request_player_move_up, data->request_player_move_down, data->request_player_move_left,
+      data->request_player_move_right);
 }

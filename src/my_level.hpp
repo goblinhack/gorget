@@ -32,11 +32,12 @@ public:
   bool is_same_type(point p, Tpp);
   bool set_id(point p, uint8_t z, Id);
   bool set_tile(point p, uint8_t z, Tilep);
+  bool tick_is_in_progress(void);
 
   Id get_id_no_check(point p, uint8_t z);
   Id get_id(point p, uint8_t z);
 
-  Thingp player(void);
+  Thingp thing_player(void);
   Thingp thing_find_optional(ThingId id);
   Thingp thing_find(ThingId id);
   Thingp thing_get(point p, uint8_t slot, Tpp * = nullptr);
@@ -58,18 +59,24 @@ public:
   void display(void);
   void dungeon_create_and_place(void);
   void map_set(LevelDatap, const char *);
-  void player_create_and_place(void);
-  void player_map_center(void);
-  void player_move(int8_t, int8_t);
   void set_display_bounds(void);
   void set_id_no_check(point p, uint8_t z, Id);
   void set_tile_no_check(point p, uint8_t z, Tilep);
   void thing_free(Thingp);
+  void thing_player_create_and_place(void);
+  void thing_player_map_center(void);
+  void thing_player_move(int8_t, int8_t);
+  void thing_player_move_request(bool up, bool down, bool left, bool right);
   void thing_pop(Thingp);
   void thing_push(Thingp);
   void thing_update_map_pos(Thingp, int8_t new_x, int8_t new_y);
   void thing_update_pixel_pos(Thingp, float dt);
   void thing_update(Thingp);
+  void tick_body(float dt);
+  void tick_begin_requested(const std::string &why);
+  void tick_begin(void);
+  void tick_time_step(void);
+  void tick_end_requested(void);
   void tick(void);
   void tp_set(point p, Tpp);
   void tp_unset(point p, Tpp);

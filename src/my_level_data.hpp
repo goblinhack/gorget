@@ -56,40 +56,57 @@ typedef struct LevelData_ {
   //////////////////////////////////////////////////////////////
 
   //
-  // Level number
+  // Level number.
   //
   uint8_t num;
 
   //
-  // Tick increases one per player move
+  // Tick increases one per player move.
   //
   uint32_t tick;
 
   //
-  // When the tick began in ms
+  // Ranges from 0 to 1 when a tick is in progress.
   //
-  uint32_t tick_start;
+  float time_step;
+  float last_time_step;
 
   //
-  // We have to interpolate movement and this indicates that is in progress
+  // When the tick began in ms
+  //
+  uint32_t tick_begin_ms;
+
+  //
+  // We have to interpolate movement and this indicates that is in progress.
   //
   uint8_t tick_in_progress : 1;
 
   //
   // Player has moved.
   //
-  uint8_t tick_start_requested : 1;
-  uint8_t tick_end_requested   : 1;
+  bool _tick_begin_requested : 1;
+  bool _tick_end_requested   : 1;
 
   //
-  // Map scroll offset
+  // Player move request.
+  //
+  bool request_player_move_down  : 1;
+  bool request_player_move_left  : 1;
+  bool request_player_move_right : 1;
+  bool request_player_move_up    : 1;
+
+  //
+  // Map scroll offset.
   //
   int16_t pixel_map_at_x;
   int16_t pixel_map_at_y;
 
   ThingOrTp obj[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
 
-  Thing things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];
+  //
+  // All thing structure memory.
+  //
+  Thing all_things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];
 
   //
   // The current player.
@@ -105,6 +122,19 @@ typedef struct LevelData_ {
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
 } LevelData;
+
+//
+// Works on a copy of the level data, so things can move cells and we never
+// walk anything twice.
+//
+#define FOR_ALL_THINGS(_t_)                                                                                          \
+  static LevelData _data_copy_;                                                                                      \
+  _data_copy_ = *data;                                                                                               \
+  Thingp t;                                                                                                          \
+  for (auto _x_ = 0; _x_ < 1 << THING_ID_X_BITS; _x_++)                                                              \
+    for (auto _y_ = 0; _y_ < 1 << THING_ID_Y_BITS; _y_++)                                                            \
+      if (_data_copy_.all_things[ _x_ ][ _y_ ].id)                                                                   \
+        if ((_t_ = ::thing_find_optional(data, _data_copy_.all_things[ _x_ ][ _y_ ].id)))
 
 LevelDatap level_data_constructor(void);
 void       level_data_destructor(LevelDatap);

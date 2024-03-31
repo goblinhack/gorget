@@ -53,6 +53,10 @@ Thingp thing_find_optional(LevelData *data, ThingId id)
 {
   TRACE_NO_INDENT();
 
+  if (! id) {
+    return nullptr;
+  }
+
   auto thing_id = id;
   auto x        = THING_ID_GET_X(thing_id);
   auto y        = THING_ID_GET_Y(thing_id);
@@ -60,7 +64,7 @@ Thingp thing_find_optional(LevelData *data, ThingId id)
   ASSERT_EX(x, <, (1 << THING_ID_X_BITS));
   ASSERT_EX(y, <, (1 << THING_ID_Y_BITS));
 
-  auto t = &data->things[ x ][ y ];
+  auto t = &data->all_things[ x ][ y ];
   if (t->id == thing_id) {
     return t;
   }
@@ -84,7 +88,7 @@ Thingp thing_find(LevelData *data, ThingId id)
   ASSERT_EX(x, <, (1 << THING_ID_X_BITS));
   ASSERT_EX(y, <, (1 << THING_ID_Y_BITS));
 
-  auto t = &data->things[ x ][ y ];
+  auto t = &data->all_things[ x ][ y ];
   if (! t) {
     DIE("Thing not found for id, %" PRIX32 "", id);
   }
@@ -111,7 +115,7 @@ Thingp thing_new(LevelData *data, Tpp tp, point p)
 
   for (x = 0; x < (1 << THING_ID_X_BITS); x++) {
     for (y = 0; y < (1 << THING_ID_Y_BITS); y++) {
-      auto t = &data->things[ x ][ y ];
+      auto t = &data->all_things[ x ][ y ];
       if (t->id) {
         continue;
       }

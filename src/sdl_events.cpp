@@ -458,10 +458,10 @@ static void sdl_key_repeat_events_(void)
     return;
   }
 
-  if (! game->level) {
+  auto level = game->level;
+  if (! level) {
     return;
   }
-  auto level = game->level;
 
   const uint8_t *state = SDL_GetKeyboardState(nullptr);
 
@@ -526,41 +526,7 @@ static void sdl_key_repeat_events_(void)
     up    = true;
   }
 
-  bool movement = up || down || left || right;
-
-  bool request_player_move_down {};
-  bool request_player_move_left {};
-  bool request_player_move_right {};
-  bool request_player_move_up {};
-
-  request_player_move_up    = up;
-  request_player_move_down  = down;
-  request_player_move_left  = left;
-  request_player_move_right = right;
-
-  if (movement) {
-    if (request_player_move_up) {
-      if (request_player_move_left) {
-        level->player_move(-1, -1);
-      } else if (request_player_move_right) {
-        level->player_move(1, -1);
-      } else {
-        level->player_move(0, -1);
-      }
-    } else if (request_player_move_down) {
-      if (request_player_move_left) {
-        level->player_move(-1, 1);
-      } else if (request_player_move_right) {
-        level->player_move(1, 1);
-      } else {
-        level->player_move(0, 1);
-      }
-    } else if (request_player_move_left) {
-      level->player_move(-1, 0);
-    } else if (request_player_move_right) {
-      level->player_move(1, 0);
-    }
-  }
+  level->thing_player_move_request(up, down, left, right);
 }
 
 void sdl_key_repeat_events(void) { sdl_key_repeat_events_(); }

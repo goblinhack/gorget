@@ -14,7 +14,15 @@ Thingp thing_init(LevelData *data, Tpp tp, point p)
     return nullptr;
   }
 
+  t->x     = p.x;
+  t->y     = p.y;
+  t->old_x = t->x;
+  t->old_y = t->y;
+  t->pix_x = t->x * TILE_WIDTH;
+  t->pix_y = t->y * TILE_HEIGHT;
+
   thing_update(data, t);
+
   return t;
 }
 

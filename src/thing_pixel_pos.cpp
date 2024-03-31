@@ -11,8 +11,11 @@ void thing_update_pixel_pos(LevelData *data, Thingp t, float dt)
     return;
   }
 
-  t->pix_x = t->old_x + (int) (((float) (t->x - t->old_x)) * dt);
-  t->pix_y = t->old_y + (int) (((float) (t->y - t->old_y)) * dt);
+  float pix_x = (float) t->old_x + (((float) (t->x - t->old_x)) * dt);
+  float pix_y = (float) t->old_y + (((float) (t->y - t->old_y)) * dt);
+
+  t->pix_x = pix_x * TILE_WIDTH;
+  t->pix_y = pix_y * TILE_HEIGHT;
 }
 
 void Level::thing_update_pixel_pos(Thingp t, float dt)
