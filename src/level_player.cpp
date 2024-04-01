@@ -82,7 +82,7 @@ void Level::thing_player_move(int8_t dx, int8_t dy)
     return;
   }
 
-  thing_update_map_pos(t, t->x + dx, t->y + dy);
+  thing_move(t, t->x + dx, t->y + dy);
 
   tick_begin_requested("player moved");
 

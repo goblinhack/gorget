@@ -14,12 +14,12 @@ struct Thing {
   uint16_t tp_id;
   uint16_t tick;
   //
-  // Map co-ords
+  // Map co-ords.
   //
   int8_t x;
   int8_t y;
   //
-  // Old map co-ords
+  // Old map co-ords used for interpolation when moving.
   //
   int8_t old_x;
   int8_t old_y;

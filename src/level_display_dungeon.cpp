@@ -37,8 +37,6 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
   int dw = TILE_WIDTH;
   int dh = TILE_HEIGHT;
 
-  glcolor(WHITE);
-
   point tl;
   point br;
 
@@ -158,6 +156,5 @@ void Level::display_dungeon(void)
     }
   }
 
-  glcolor(WHITE);
   blit_flush();
 }

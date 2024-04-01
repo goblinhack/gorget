@@ -5,12 +5,13 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-void thing_update_map_pos(LevelData *data, Thingp t, int8_t new_x, int8_t new_y)
+void thing_move(LevelData *data, Thingp t, int8_t new_x, int8_t new_y)
 {
   if ((new_x == t->x) && (new_y == t->y)) {
     return;
   }
 
+  ::thing_pop(data, t);
   t->pix_x = t->x * TILE_WIDTH;
   t->pix_y = t->y * TILE_HEIGHT;
 
@@ -19,10 +20,11 @@ void thing_update_map_pos(LevelData *data, Thingp t, int8_t new_x, int8_t new_y)
 
   t->x = new_x;
   t->y = new_y;
+  ::thing_push(data, t);
 }
 
-void Level::thing_update_map_pos(Thingp t, int8_t new_x, int8_t new_y)
+void Level::thing_move(Thingp t, int8_t new_x, int8_t new_y)
 {
   TRACE_NO_INDENT();
-  return ::thing_update_map_pos(data, t, new_x, new_y);
+  return ::thing_move(data, t, new_x, new_y);
 }

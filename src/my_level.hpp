@@ -71,8 +71,8 @@ public:
   void thing_player_move_reset(void);
   void thing_pop(Thingp);
   void thing_push(Thingp);
-  void thing_update_map_pos(Thingp, int8_t new_x, int8_t new_y);
-  void thing_update_pixel_pos(Thingp, float dt);
+  void thing_move(Thingp, int8_t new_x, int8_t new_y);
+  void thing_interpolate(Thingp, float dt);
   void thing_update(Thingp);
   void tick_body(float dt);
   void tick_begin_requested(const std::string &why);

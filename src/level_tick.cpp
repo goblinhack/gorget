@@ -86,7 +86,7 @@ void Level::tick_body(float dt)
       t->thing_dt = 1.0;
     }
 
-    thing_update_pixel_pos(t, t->thing_dt);
+    thing_interpolate(t, t->thing_dt);
 
     if (t->thing_dt >= 1.0) {
       // thing tick
