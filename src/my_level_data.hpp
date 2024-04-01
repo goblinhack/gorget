@@ -95,10 +95,10 @@ typedef struct LevelData_ {
   //
   // Player move request.
   //
-  bool request_player_move_down  : 1;
-  bool request_player_move_left  : 1;
-  bool request_player_move_right : 1;
-  bool request_player_move_up    : 1;
+  bool requested_move_left  : 1;
+  bool requested_move_keft  : 1;
+  bool requested_move_right : 1;
+  bool requested_move_up    : 1;
 
   //
   // Map scroll offset.

@@ -465,15 +465,15 @@ static void sdl_key_repeat_events_(void)
 
   const uint8_t *state = SDL_GetKeyboardState(nullptr);
 
-  static bool last_up;
-  static bool last_down;
-  static bool last_left;
-  static bool last_right;
+  static bool up_held_prev;
+  static bool down_held_prev;
+  static bool left_held_prev;
+  static bool right_held_prev;
 
-  bool up    = state[ sdlk_to_scancode(game->config.key_move_up) ];
-  bool down  = state[ sdlk_to_scancode(game->config.key_move_down) ];
-  bool left  = state[ sdlk_to_scancode(game->config.key_move_left) ];
-  bool right = state[ sdlk_to_scancode(game->config.key_move_right) ];
+  bool up_held    = state[ sdlk_to_scancode(game->config.key_move_up) ];
+  bool down_held  = state[ sdlk_to_scancode(game->config.key_move_down) ];
+  bool left_held  = state[ sdlk_to_scancode(game->config.key_move_left) ];
+  bool right_held = state[ sdlk_to_scancode(game->config.key_move_right) ];
 
   //
   // Keypad stuff is hardcoded.
@@ -482,196 +482,107 @@ static void sdl_key_repeat_events_(void)
     // 7 8 9
     // 4   6
     // 1 2 3
-    left = true;
-    down = true;
+    left_held = true;
+    down_held = true;
   }
   if (state[ SDL_SCANCODE_KP_2 ]) {
     // 7 8 9
     // 4   6
     // 1 2 3
-    down = true;
+    down_held = true;
   }
   if (state[ SDL_SCANCODE_KP_3 ]) {
     // 7 8 9
     // 4   6
     // 1 2 3
-    right = true;
-    down  = true;
+    right_held = true;
+    down_held  = true;
   }
   if (state[ SDL_SCANCODE_KP_4 ]) {
     // 7 8 9
     // 4   6
     // 1 2 3
-    left = true;
+    left_held = true;
   }
   if (state[ SDL_SCANCODE_KP_6 ]) {
     // 7 8 9
     // 4   6
     // 1 2 3
-    right = true;
+    right_held = true;
   }
   if (state[ SDL_SCANCODE_KP_7 ]) {
     // 7 8 9
     // 4   6
     // 1 2 3
-    left = true;
-    up   = true;
+    left_held = true;
+    up_held   = true;
   }
   if (state[ SDL_SCANCODE_KP_8 ]) {
     // 7 8 9
     // 4   6
     // 1 2 3
-    up = true;
+    up_held = true;
   }
   if (state[ SDL_SCANCODE_KP_9 ]) {
     // 7 8 9
     // 4   6
     // 1 2 3
-    right = true;
-    up    = true;
+    right_held = true;
+    up_held    = true;
   }
 
-  bool up_pressed    = false;
-  bool down_pressed  = false;
-  bool left_pressed  = false;
-  bool right_pressed = false;
+  static int up_pressed    = 0;
+  static int down_pressed  = 0;
+  static int left_pressed  = 0;
+  static int right_pressed = 0;
 
-  if (up && (up != last_up)) {
-    up_pressed = true;
-    CON("KEY PRESSED");
+  if (up_held && (up_held != up_held_prev)) {
+    up_pressed++;
   }
-  if (down && (down != last_down)) {
-    down_pressed = true;
-    CON("KEY PRESSED");
+  if (down_held && (down_held != down_held_prev)) {
+    down_pressed++;
   }
-  if (left && (left != last_left)) {
-    left_pressed = true;
-    CON("KEY PRESSED");
+  if (left_held && (left_held != left_held_prev)) {
+    left_pressed++;
   }
-  if (right && (right != last_right)) {
-    right_pressed = true;
-    CON("KEY PRESSED");
+  if (right_held && (right_held != right_held_prev)) {
+    right_pressed++;
   }
 
-  bool up_released    = false;
-  bool down_released  = false;
-  bool left_released  = false;
-  bool right_released = false;
+  up_held_prev    = up_held;
+  down_held_prev  = down_held;
+  right_held_prev = right_held;
+  left_held_prev  = left_held;
 
-  if (! up && (up != last_up)) {
-    up_released = true;
-    CON("KEY RELEASED");
-  }
-  if (! down && (down != last_down)) {
-    down_released = true;
-    CON("KEY RELEASED");
-  }
-  if (! left && (left != last_left)) {
-    left_released = true;
-    CON("KEY RELEASED");
-  }
-  if (! right && (right != last_right)) {
-    right_released = true;
-    CON("KEY RELEASED");
-  }
+  bool up    = up_pressed || up_held;
+  bool down  = down_pressed || down_held;
+  bool left  = left_pressed || left_held;
+  bool right = right_pressed || right_held;
 
-  static bool key_change_waiting_to_be_processed = false;
-  static ts_t last_movement_keypress             = 0;
-  static int  repeat_count;
+  static ts_t last_movement_keypress = 0;
 
   if (! last_movement_keypress) {
     last_movement_keypress = time_ms();
   }
 
-  if (up || down || left || right || level->data->request_player_move_up || level->data->request_player_move_down
-      || level->data->request_player_move_left || level->data->request_player_move_right) {
+  if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_PLAYER, last_movement_keypress)) {
+    if (level->thing_player_move_request(up, down, left, right)) {
+      last_movement_keypress = time_ms();
 
-    //
-    // Too soon, but allow moves to accumulate so we can do diagonal moves.
-    //
-    level->thing_player_move_accum(up, down, left, right);
-
-    CON("%d %d %d %d accum %d %d %d %d", up, down, left, right, level->data->request_player_move_up,
-        level->data->request_player_move_down, level->data->request_player_move_left,
-        level->data->request_player_move_right);
-
-    if (repeat_count > 0) {
-      //
-      // Repeat press.
-      //
-      if (up || down || left || right) {
-        //
-        // If a key is pressed whilst auto repeating, then we must add that key to the
-        // set to be processed and avoid clearing it until the next event so it gets a
-        // chance to be processed.
-        //
-        if (up_pressed || down_pressed || left_pressed || right_pressed) {
-          CON("accum");
-          level->thing_player_move_accum(up, down, left, right);
-          key_change_waiting_to_be_processed = true;
-        }
-
-        //
-        // If a key is released, immediately change the held key set. Unless a key press
-        // is waiting to be processed.
-        //
-        if (up_released || down_released || left_released || right_released) {
-          if (! key_change_waiting_to_be_processed) {
-            CON("reset");
-            level->thing_player_move_reset();
-            level->thing_player_move_accum(up, down, left, right);
-          }
-        }
-
-        //
-        // Fast repeat
-        //
-        if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_HUNDREDTHS_NEXT, last_movement_keypress)) {
-          CON("REPEAT PRESS");
-          if (level->thing_player_move_request(up, down, left, right)) {
-            repeat_count++;
-            last_movement_keypress             = time_ms();
-            key_change_waiting_to_be_processed = false;
-          }
-        }
-      } else {
-        //
-        // If repeating and all keys are released then stop the repeat immediately.
-        //
-        level->thing_player_move_reset();
+      if (up_pressed > 0) {
+        up_pressed--;
       }
-    } else {
-      //
-      // First press
-      //
-      if (up || down || left || right) {
-        if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_HUNDREDTHS_FIRST, last_movement_keypress)) {
-          CON("FIRST PRESS");
-          if (level->thing_player_move_request(up, down, left, right)) {
-            repeat_count++;
-            last_movement_keypress = time_ms();
-
-            level->thing_player_move_reset();
-            level->thing_player_move_accum(up, down, left, right);
-          }
-        }
-      } else {
-        CON("END KEY PRESS");
-        repeat_count = 0;
-        level->thing_player_move_reset();
+      if (down_pressed > 0) {
+        down_pressed--;
+      }
+      if (left_pressed > 0) {
+        left_pressed--;
+      }
+      if (right_pressed > 0) {
+        right_pressed--;
       }
     }
-  } else {
-    CON("NO EVENT");
-    repeat_count = 0;
-    level->thing_player_move_reset();
-    key_change_waiting_to_be_processed = false;
   }
-
-  last_up    = up;
-  last_down  = down;
-  last_right = right;
-  last_left  = left;
 }
 
 void sdl_key_repeat_events(void) { sdl_key_repeat_events_(); }

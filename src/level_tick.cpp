@@ -110,10 +110,10 @@ void Level::tick_begin_requested(const std::string &why)
 
   data->_tick_begin_requested = true;
 
-  data->request_player_move_up    = false;
-  data->request_player_move_down  = false;
-  data->request_player_move_left  = false;
-  data->request_player_move_right = false;
+  data->requested_move_up    = false;
+  data->requested_move_left  = false;
+  data->requested_move_keft  = false;
+  data->requested_move_right = false;
 }
 
 void Level::tick_end_requested(void)
