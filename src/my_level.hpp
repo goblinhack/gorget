@@ -34,6 +34,7 @@ public:
   bool set_tile(point p, uint8_t z, Tilep);
   bool tick_is_in_progress(void);
   bool thing_player_move_request(bool up, bool down, bool left, bool right);
+  bool thing_can_move(Thingp, point new_loc);
 
   Id get_id_no_check(point p, uint8_t z);
   Id get_id(point p, uint8_t z);
@@ -66,12 +67,12 @@ public:
   void thing_free(Thingp);
   void thing_player_create_and_place(void);
   void thing_player_map_center(void);
-  void thing_player_move(int8_t, int8_t);
+  void thing_player_move_delta(point);
   void thing_player_move_accum(bool up, bool down, bool left, bool right);
   void thing_player_move_reset(void);
   void thing_pop(Thingp);
   void thing_push(Thingp);
-  void thing_move(Thingp, int8_t new_x, int8_t new_y);
+  void thing_move(Thingp, point new_loc);
   void thing_interpolate(Thingp, float dt);
   void thing_update(Thingp);
   void tick_body(float dt);

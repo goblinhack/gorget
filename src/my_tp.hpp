@@ -21,6 +21,8 @@ enum {
   THING_RARITY_UNIQUE,
 };
 
+enum { MONST_CLASS_A, MONST_CLASS_MAX };
+
 class Tp
 {
 public:
@@ -42,9 +44,12 @@ public:
   bool is_exit {};
   bool is_floor {};
   bool is_key {};
-  bool is_monst1 {};
+  bool is_monst {};
+  bool is_monst_class[ MONST_CLASS_MAX ] {};
   bool is_player {};
   bool is_wall {};
+  bool is_obs_player {};
+  bool is_obs_monst {};
   // end sort marker1 }
 
   uint8_t player_index {};
@@ -98,7 +103,7 @@ Tpp tp_random_dungeon_entrance(void);
 Tpp tp_random_exit(void);
 Tpp tp_random_wall(void);
 Tpp tp_random_key(void);
-Tpp tp_random_monst1(void);
+Tpp tp_random_monst(int c);
 Tpp tp_random_player(void);
 
 Tilep tp_first_tile(class Tp *);

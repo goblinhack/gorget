@@ -70,7 +70,7 @@ void Level::tick_body(float dt)
   auto    p            = thing_player();
   int16_t player_speed = p ? p->speed : 100;
 
-  FOR_ALL_THINGS(t)
+  FOR_ALL_THINGS(data, t)
   {
     //                   Tick 1              Tick 2
     //            =================== ===================

@@ -13,7 +13,7 @@ static Tpidmap tp_dungeon_entrance;
 static Tpidmap tp_exit;
 static Tpidmap tp_floor;
 static Tpidmap tp_key;
-static Tpidmap tp_monst1;
+static Tpidmap tp_monst_class[ MONST_CLASS_MAX ];
 static Tpidmap tp_player;
 static Tpidmap tp_wall;
 // end sort marker1 }
@@ -21,9 +21,16 @@ static Tpidmap tp_wall;
 void tp_random_dungeon_init(void)
 {
   TRACE_NO_INDENT();
+
   for (auto &tp : tp_id_map) {
-    if (tp->is_monst1) {
-      tp_monst1.push_back(tp);
+
+    //
+    // Monsters
+    //
+    for (auto c = 0; c < MONST_CLASS_MAX; c++) {
+      if (tp->is_monst_class[ c ]) {
+        tp_monst_class[ c ].push_back(tp);
+      }
     }
 
     if (tp->is_player) {
@@ -149,14 +156,20 @@ static Tpp tp_get_with_no_rarity_filter(Tpidmap &m)
   return tp;
 }
 
-Tpp tp_random_monst1(void)
+Tpp tp_random_monst(int c)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! tp_monst1.size())) {
-    DIE("No monst1 found");
+
+  if (c >= MONST_CLASS_MAX) {
+    DIE("monst bad class %d", c);
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_monst1);
+
+  if (unlikely(! tp_monst_class[ c ].size())) {
+    DIE("No monst class %d found", c);
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_monst_class[ c ]);
 }
 
 Tpp tp_random_player(void)

@@ -16,7 +16,9 @@ bool tp_load_wall(void)
     auto tp   = tp_load(name);
     // begin sort marker1 {
     tp->z_depth_set(MAP_DEPTH_WALL);
-    tp->is_wall  = true;
+    tp->is_wall          = true;
+    tp->is_obs_player    = true;
+    tp->is_obs_monst     = true;
     tp->is_blit_tiled    = true;
     tp->is_blit_centered = true;
     // end sort marker1 }

@@ -66,7 +66,7 @@ void Level::thing_player_map_center()
   data->pixel_map_at_y -= game->config.map_pix_height / 2;
 }
 
-void Level::thing_player_move(int8_t dx, int8_t dy)
+void Level::thing_player_move_delta(point delta)
 {
   TRACE_NO_INDENT();
 
@@ -82,9 +82,14 @@ void Level::thing_player_move(int8_t dx, int8_t dy)
     return;
   }
 
-  thing_move(t, t->x + dx, t->y + dy);
+  point new_loc(t->x, t->y);
+  new_loc += delta;
 
-  tick_begin_requested("player moved");
+  if (thing_can_move(t, new_loc)) {
+    thing_move(t, new_loc);
+
+    tick_begin_requested("player moved");
+  }
 
   thing_player_move_reset();
 }
@@ -141,24 +146,24 @@ bool Level::thing_player_move_request(bool up, bool down, bool left, bool right)
 
   if (data->requested_move_up) {
     if (data->requested_move_keft) {
-      thing_player_move(-1, -1);
+      thing_player_move_delta(point(-1, -1));
     } else if (data->requested_move_right) {
-      thing_player_move(1, -1);
+      thing_player_move_delta(point(1, -1));
     } else {
-      thing_player_move(0, -1);
+      thing_player_move_delta(point(0, -1));
     }
   } else if (data->requested_move_left) {
     if (data->requested_move_keft) {
-      thing_player_move(-1, 1);
+      thing_player_move_delta(point(-1, 1));
     } else if (data->requested_move_right) {
-      thing_player_move(1, 1);
+      thing_player_move_delta(point(1, 1));
     } else {
-      thing_player_move(0, 1);
+      thing_player_move_delta(point(0, 1));
     }
   } else if (data->requested_move_keft) {
-    thing_player_move(-1, 0);
+    thing_player_move_delta(point(-1, 0));
   } else if (data->requested_move_right) {
-    thing_player_move(1, 0);
+    thing_player_move_delta(point(1, 0));
   }
 
   return true;

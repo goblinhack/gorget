@@ -132,18 +132,30 @@ typedef struct LevelData_ {
 // Works on a copy of the level data, so things can move cells and we never
 // walk anything twice.
 //
-#define FOR_ALL_THINGS(_t_)                                                                                          \
+#define FOR_ALL_THINGS(_data_, _t_)                                                                                  \
   static LevelData _data_copy_;                                                                                      \
-  _data_copy_ = *data;                                                                                               \
+  _data_copy_ = *_data_;                                                                                             \
   Thingp t;                                                                                                          \
   for (auto _x_ = 0; _x_ < 1 << THING_ID_X_BITS; _x_++)                                                              \
     for (auto _y_ = 0; _y_ < 1 << THING_ID_Y_BITS; _y_++)                                                            \
       if (_data_copy_.all_things[ _x_ ][ _y_ ].id)                                                                   \
-        if ((_t_ = ::thing_find_optional(data, _data_copy_.all_things[ _x_ ][ _y_ ].id)))
+        if ((_t_ = ::thing_find_optional(_data_, _data_copy_.all_things[ _x_ ][ _y_ ].id)))
+
+#define FOR_ALL_TPS_AT(_data_, _t_, _tp_, _p_)                                                                       \
+  Tpp _tp_;                                                                                                          \
+  for (auto _slot_ = 0; ::thing_get(_data_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)                       \
+    if (_tp_)
+
+#define FOR_ALL_THINGS_AT(_data_, _t_, _tp_, _p_)                                                                    \
+  Thingp _t_;                                                                                                        \
+  Tpp    _tp_;                                                                                                       \
+  for (auto _slot_ = 0; _t_ = ::thing_get(_data_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)                 \
+    if (_tp_)
 
 LevelDatap level_data_constructor(void);
 void       level_data_destructor(LevelDatap);
 
+bool thing_can_move(LevelData *, Thingp, point new_loc);
 bool is_oob(LevelData *, point p);
 
 Thingp thing_find(LevelData *, ThingId);
@@ -155,6 +167,7 @@ Thingp thing_init(LevelData *, Tpp, point);
 Tpp thing_tp(LevelData *, Thingp);
 Tpp tp_get(LevelData *, point p, uint8_t slot);
 
+void thing_move(LevelData *, Thingp, point new_loc);
 void thing_free(LevelData *, Thingp);
 void thing_pop(LevelData *, Thingp);
 void thing_push(LevelData *, Thingp);
