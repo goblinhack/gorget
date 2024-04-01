@@ -50,9 +50,9 @@ public:
   uint8_t player_index {};
 
   // begin sort marker2 {
-  int speed {100};
   int chance_d1000_appearing {};
   int rarity {};
+  int speed {100};
   // end sort marker2 }
 
   Tp(void);
