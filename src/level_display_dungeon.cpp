@@ -107,7 +107,8 @@ void Level::display_dungeon(void)
 {
   TRACE_NO_INDENT();
 
-  set_display_bounds();
+  scroll_to_player();
+
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glcolor(WHITE);
 

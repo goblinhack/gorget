@@ -13,7 +13,7 @@ Level::Level()
   dungeon_create_and_place();
   assign_tiles();
   thing_player_create_and_place();
-  thing_player_map_center();
+  scroll_warp_to_player();
 }
 
 Level::~Level()

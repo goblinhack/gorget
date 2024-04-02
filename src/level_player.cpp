@@ -44,26 +44,12 @@ void Level::thing_player_create_and_place()
 Thingp Level::thing_player()
 {
   TRACE_NO_INDENT();
+
   if (! data->player) {
     return NULL;
   }
 
   return thing_find(data->player);
-}
-
-void Level::thing_player_map_center()
-{
-  TRACE_NO_INDENT();
-
-  auto t = thing_player();
-  if (! t) {
-    return;
-  }
-
-  data->pixel_map_at_x = t->pix_x;
-  data->pixel_map_at_y = t->pix_y;
-  data->pixel_map_at_x -= game->config.map_pix_width / 2;
-  data->pixel_map_at_y -= game->config.map_pix_height / 2;
 }
 
 void Level::thing_player_move_delta(point delta)
@@ -85,7 +71,7 @@ void Level::thing_player_move_delta(point delta)
   point new_loc(t->x, t->y);
   new_loc += delta;
 
-  if (thing_can_move(t, new_loc)) {
+  if (1 || thing_can_move(t, new_loc)) {
     thing_move(t, new_loc);
 
     tick_begin_requested("player moved");

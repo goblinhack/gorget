@@ -102,6 +102,7 @@ void Level::tick_begin(void)
   data->frame_begin           = data->frame;
   data->time_step             = 0.0;
   data->tick_in_progress      = true;
+  data->requested_auto_scroll  = true;
 }
 
 void Level::tick_begin_requested(const std::string &why)

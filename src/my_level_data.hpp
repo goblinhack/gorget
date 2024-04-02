@@ -101,6 +101,11 @@ typedef struct LevelData_ {
   bool requested_move_up    : 1;
 
   //
+  // If the player has moved, we need to scroll the map
+  //
+  bool requested_auto_scroll : 1;
+
+  //
   // Map scroll offset.
   //
   int16_t pixel_map_at_x;

@@ -41,8 +41,7 @@ uint8_t game_mouse_motion(int x, int y, int relx, int rely, int wheelx, int whee
 
   auto level = game->level;
   if (level) {
-    level->data->pixel_map_at_x += wheelx;
-    level->data->pixel_map_at_y -= wheely;
+    level->scroll_delta(wheelx, wheely);
   }
 
   return true;
