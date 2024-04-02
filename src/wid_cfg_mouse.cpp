@@ -92,9 +92,12 @@ static uint8_t wid_cfg_mouse_key_up(Widp w, const struct SDL_Keysym *key)
             TRACE_AND_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
-              case 'c' : wid_cfg_mouse_cancel(nullptr, 0, 0, 0); return true;
-              case 's' : wid_cfg_mouse_save(nullptr, 0, 0, 0); return true;
+              case 'c' :
+              case 'C' : wid_cfg_mouse_cancel(nullptr, 0, 0, 0); return true;
+              case 's' :
+              case 'S' : wid_cfg_mouse_save(nullptr, 0, 0, 0); return true;
               case 'b' :
+              case 'B' :
               case SDLK_ESCAPE : wid_cfg_mouse_cancel(nullptr, 0, 0, 0); return true;
             }
           }

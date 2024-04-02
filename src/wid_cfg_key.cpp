@@ -194,8 +194,7 @@ void wid_cfg_keyboard_destroy(void)
 
   delete wid_cfg_keyboard_window;
   wid_cfg_keyboard_window = nullptr;
-
-  game->change_state(Game::STATE_NORMAL, "config close");
+  game->state_reset("wid keyboard destroy");
 }
 
 static uint8_t wid_cfg_keyboard_cancel(Widp w, int x, int y, uint32_t button)
@@ -208,13 +207,15 @@ static uint8_t wid_cfg_keyboard_cancel(Widp w, int x, int y, uint32_t button)
     sdl_config_update_all();
   }
   wid_cfg_keyboard_destroy();
-  if (game->started) {
+
+  if (game->level) {
     //
     // Back to the game
     //
   } else {
     game->wid_cfg_top_menu();
   }
+
   sdl_config_update_all();
   return true;
 }
@@ -225,13 +226,15 @@ static uint8_t wid_cfg_keyboard_save(Widp w, int x, int y, uint32_t button)
   CON("INF: Save config");
   game->save_config();
   wid_cfg_keyboard_destroy();
-  if (game->started) {
+
+  if (game->level) {
     //
     // Back to the game
     //
   } else {
     game->wid_cfg_top_menu();
   }
+
   return true;
 }
 
@@ -239,13 +242,15 @@ static uint8_t wid_cfg_keyboard_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_cfg_keyboard_destroy();
-  if (game->started) {
+
+  if (game->level) {
     //
     // Back to the game
     //
   } else {
     game->wid_cfg_top_menu();
   }
+
   return true;
 }
 
@@ -1116,6 +1121,7 @@ static uint8_t wid_cfg_keyboard_key_up(Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'b' :
+              case 'B' :
               case SDLK_ESCAPE : wid_cfg_keyboard_cancel(nullptr, 0, 0, 0); return true;
             }
           }
@@ -2576,5 +2582,5 @@ void Game::wid_cfg_keyboard_select(void)
     wid_move_to_y_off(w, last_vert_scroll_offset);
   }
 
-  game->change_state(Game::STATE_KEYBOARD_MENU, "configure keys");
+  game->state_change(Game::STATE_KEYBOARD_MENU, "configure keys");
 }

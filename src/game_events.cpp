@@ -178,33 +178,32 @@ uint8_t game_input(const SDL_Keysym *key)
   }
 
   if (sdlk_eq(*key, game->config.key_quit)) {
-    CON("INF: Pressed quit key");
+    LOG("INF: Pressed quit key");
     TRACE_AND_INDENT();
-    game->change_state(Game::STATE_NORMAL, "key press");
-    game->quit_select();
+    if (g_opt_test_skip_main_menu) {
+      DIE_CLEAN("Quick quit");
+    }
+    game->wid_quit_select();
     return true;
   }
 
   if (sdlk_eq(*key, game->config.key_help)) {
-    CON("INF: Pressed help key");
+    LOG("INF: Pressed help key");
     TRACE_AND_INDENT();
-    game->change_state(Game::STATE_NORMAL, "key press");
     game->wid_cfg_keyboard_select();
     return true;
   }
   if (sdlk_eq(*key, game->config.key_load)) {
-    CON("INF: Pressed load key");
+    LOG("INF: Pressed load key");
     TRACE_AND_INDENT();
-    game->change_state(Game::STATE_NORMAL, "key press");
-    CON("INF: Loading game");
+    LOG("INF: Loading game");
     game->wid_load_select();
     return true;
   }
   if (sdlk_eq(*key, game->config.key_save)) {
-    CON("INF: Pressed save key");
+    LOG("INF: Pressed save key");
     TRACE_AND_INDENT();
-    game->change_state(Game::STATE_NORMAL, "key press");
-    CON("INF: Saving the game");
+    LOG("INF: Saving the game");
     game->wid_save_select();
     return true;
   }

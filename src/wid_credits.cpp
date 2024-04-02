@@ -36,6 +36,7 @@ static uint8_t wid_credits_key_up(Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'b' :
+              case 'B' :
               case SDLK_ESCAPE :
                 {
                   TRACE_AND_INDENT();

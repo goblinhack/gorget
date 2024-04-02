@@ -10,7 +10,8 @@
 std::string gama_state_to_string(int state)
 {
   switch (state) {
-    case Game::STATE_NORMAL : return "NORMAL";
+    case Game::STATE_MAIN_MENU : return "MAIN_MENU";
+    case Game::STATE_PLAYING : return "PLAYING";
     case Game::STATE_LOAD_MENU : return "LOAD_MENU";
     case Game::STATE_SAVE_MENU : return "SAVE_MENU";
     case Game::STATE_QUIT_MENU : return "QUIT_MENU";
@@ -19,7 +20,19 @@ std::string gama_state_to_string(int state)
   }
 }
 
-void Game::change_state(uint8_t new_state, const std::string &why)
+//
+// Reset to the default state, either playing the game, or starting up.
+//
+void Game::state_reset(const std::string &why)
+{
+  if (level) {
+    state_change(STATE_PLAYING, why);
+  } else {
+    state_change(STATE_MAIN_MENU, why);
+  }
+}
+
+void Game::state_change(uint8_t new_state, const std::string &why)
 {
   TRACE_NO_INDENT();
 
@@ -37,28 +50,25 @@ void Game::change_state(uint8_t new_state, const std::string &why)
   //
   // Why oh why change state
   //
-  IF_DEBUG2
-  {
-    CON("Game state change: %s -> %s, reason %s", gama_state_to_string(old_state).c_str(),
-        gama_state_to_string(new_state).c_str(), why.c_str());
-    backtrace_dump();
-  }
-  else
-  {
-    DBG("Game state change: %s -> %s, reason %s", gama_state_to_string(old_state).c_str(),
-        gama_state_to_string(new_state).c_str(), why.c_str());
-  }
+  CON("INF: Game state change: %s -> %s, reason %s", gama_state_to_string(old_state).c_str(),
+      gama_state_to_string(new_state).c_str(), why.c_str());
   TRACE_AND_INDENT();
 
   //
   // Actions for the new state
   //
   switch (new_state) {
-    case STATE_NORMAL :
+    case STATE_MAIN_MENU :
       wid_load_destroy();
       wid_save_destroy();
       wid_quit_destroy();
       wid_rightbar_fini();
+      break;
+    case STATE_PLAYING :
+      wid_main_menu_destroy();
+      wid_load_destroy();
+      wid_save_destroy();
+      wid_quit_destroy();
       break;
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :

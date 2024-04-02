@@ -329,7 +329,7 @@ void wid_save_destroy(void)
   if (wid_save) {
     delete wid_save;
     wid_save = nullptr;
-    game->change_state(Game::STATE_NORMAL, "save destroy");
+    game->state_reset("wid save destroy");
   }
 }
 
@@ -369,6 +369,7 @@ static uint8_t wid_save_key_up(Widp w, const struct SDL_Keysym *key)
                   return true;
                 }
               case 'b' :
+              case 'B' :
               case SDLK_ESCAPE :
                 {
                   TRACE_AND_INDENT();
@@ -496,5 +497,5 @@ void Game::wid_save_select(void)
   game_load_headers_only = false;
   wid_update(wid_save->wid_text_area->wid_text_area);
 
-  game->change_state(Game::STATE_SAVE_MENU, "save select");
+  game->state_change(Game::STATE_SAVE_MENU, "save select");
 }

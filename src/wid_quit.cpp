@@ -12,26 +12,30 @@ WidPopup *wid_quit_window;
 void wid_quit_destroy(void)
 {
   TRACE_NO_INDENT();
+
   if (wid_quit_window) {
     delete wid_quit_window;
     wid_quit_window = nullptr;
-    game->change_state(Game::STATE_NORMAL, "quit close");
+    game->state_reset("wid quit destroy");
   }
 }
 
 static uint8_t wid_quit_yes(Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
+  LOG("INF: Quit, yes");
 
-  if (game->started) {
-    LOG("INF: Restart game");
+  if (game->level) {
+    LOG("INF: Continue game");
 
-    wid_quit_destroy();
     game->fini();
+    wid_quit_destroy();
     game->wid_main_menu_select();
   } else {
+    LOG("INF: Exit game");
+
     wid_quit_destroy();
-    DIE_CLEAN("INF: Quit");
+    DIE_CLEAN("Quit");
   }
   return true;
 }
@@ -39,8 +43,11 @@ static uint8_t wid_quit_yes(Widp w, int x, int y, uint32_t button)
 static uint8_t wid_quit_no(Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
+  LOG("INF: Quit, no");
+
   wid_quit_destroy();
-  if (! game->started) {
+
+  if (! game->level) {
     game->wid_main_menu_select();
   }
   return true;
@@ -64,9 +71,12 @@ static uint8_t wid_quit_key_up(Widp w, const struct SDL_Keysym *key)
             TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
-              case 'y' : wid_quit_yes(nullptr, 0, 0, 0); return true;
-              case 'n' : wid_quit_no(nullptr, 0, 0, 0); return true;
+              case 'y' :
+              case 'Y' : wid_quit_yes(nullptr, 0, 0, 0); return true;
+              case 'n' :
+              case 'N' : wid_quit_no(nullptr, 0, 0, 0); return true;
               case 'b' :
+              case 'B' :
               case SDLK_ESCAPE : wid_quit_no(nullptr, 0, 0, 0); return true;
             }
           }
@@ -87,10 +97,10 @@ static uint8_t wid_quit_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-void Game::quit_select(void)
+void Game::wid_quit_select(void)
 {
   TRACE_NO_INDENT();
-  LOG("Quit select");
+  LOG("INF: Quit select");
 
   if (wid_quit_window) {
     wid_quit_destroy();
@@ -98,9 +108,11 @@ void Game::quit_select(void)
 
   auto m = TERM_WIDTH / 2;
   auto n = TERM_HEIGHT / 2;
-  if (game->started) {
+
+  if (game->level) {
     n = TERM_HEIGHT / 3;
   }
+
   point tl    = make_point(m - UI_WID_POPUP_WIDTH_NORMAL / 2, n - 3);
   point br    = make_point(m + UI_WID_POPUP_WIDTH_NORMAL / 2, n + 3);
   auto  width = br.x - tl.x;
@@ -155,5 +167,5 @@ void Game::quit_select(void)
 
   wid_update(wid_quit_window->wid_text_area->wid_text_area);
 
-  game->change_state(Game::STATE_QUIT_MENU, "quit select");
+  game->state_change(Game::STATE_QUIT_MENU, "quit select");
 }

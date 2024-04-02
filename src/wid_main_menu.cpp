@@ -44,7 +44,7 @@ static uint8_t game_menu_new_game(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   wid_main_menu_hide();
   wid_main_menu_destroy();
-  LOG("main menu TODO %s", __FUNCTION__);
+  game->new_game();
   return false;
 }
 
@@ -59,7 +59,7 @@ static uint8_t wid_main_menu_credits_game(Widp w, int x, int y, uint32_t button)
 static uint8_t wid_main_menu_quit_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  game->quit_select();
+  game->wid_quit_select();
   wid_main_menu_destroy();
   return false;
 }
@@ -91,12 +91,18 @@ static uint8_t wid_main_menu_key_up(Widp w, const struct SDL_Keysym *key)
             switch (c) {
               case SDLK_RETURN :
               case ' ' :
-              case 'n' : game_menu_new_game(nullptr, 0, 0, 0); return true;
-              case 'l' : wid_main_menu_load_game(nullptr, 0, 0, 0); return true;
-              case 'o' : wid_main_menu_config(nullptr, 0, 0, 0); return true;
-              case 'c' : wid_main_menu_credits_game(nullptr, 0, 0, 0); return true;
-              case 'h' : wid_main_menu_hiscores(nullptr, 0, 0, 0); return true;
-              case 'q' : wid_main_menu_quit_game(nullptr, 0, 0, 0); return true;
+              case 'n' :
+              case 'N' : game_menu_new_game(nullptr, 0, 0, 0); return true;
+              case 'l' :
+              case 'L' : wid_main_menu_load_game(nullptr, 0, 0, 0); return true;
+              case 'o' :
+              case 'O' : wid_main_menu_config(nullptr, 0, 0, 0); return true;
+              case 'c' :
+              case 'C' : wid_main_menu_credits_game(nullptr, 0, 0, 0); return true;
+              case 'h' :
+              case 'H' : wid_main_menu_hiscores(nullptr, 0, 0, 0); return true;
+              case 'q' :
+              case 'Q' : wid_main_menu_quit_game(nullptr, 0, 0, 0); return true;
             }
           }
       }
@@ -290,10 +296,6 @@ static void wid_main_menu_tick(Widp w)
     game_display_title_fg4();
   }
 
-  if (game->started) {
-    wid_main_menu_destroy();
-  }
-
   if (wid_main_menu_window) {
     ascii_putf(1, 1, GREEN, BLACK, "V" MYVER);
 
@@ -437,5 +439,7 @@ void Game::wid_main_menu_select(void)
 void Game::new_game(void)
 {
   TRACE_NO_INDENT();
-  LOG("TODO new_game");
+
+  game->create_level();
+  game->state_reset("new game");
 }

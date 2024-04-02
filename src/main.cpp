@@ -189,7 +189,7 @@ static void find_executable(void)
   char       *tmp;
 
   exec_name = mybasename(ARGV[ 0 ], __FUNCTION__);
-  CON("INI: Will use EXEC_NAME as '%s'", exec_name.c_str());
+  LOG("INI: Will use EXEC_NAME as '%s'", exec_name.c_str());
 
   //
   // Get the current directory, ending in a single /
@@ -333,7 +333,7 @@ static void find_exec_dir(void)
   }
   EXEC_DIR = tmp5;
 
-  CON("INI: Will use EXEC_DIR as '%s'", EXEC_DIR);
+  LOG("INI: Will use EXEC_DIR as '%s'", EXEC_DIR);
 }
 
 //
@@ -410,8 +410,8 @@ static void find_file_locations(void)
   find_ttf_dir();
   find_gfx_dir();
 
-  DBG("Gfx path    : \"%s\"", GFX_PATH);
-  DBG("Font path   : \"%s\"", TTF_PATH);
+  LOG("Gfx path    : \"%s\"", GFX_PATH);
+  LOG("Font path   : \"%s\"", TTF_PATH);
 }
 
 static void usage(void)
@@ -559,8 +559,8 @@ static std::string create_appdata_dir(void)
   g_log_stderr_filename = std::string(err);
   g_log_stderr          = fopen(err, "w+");
 
-  CON("INI: Will use STDOUT as '%s'", out);
-  CON("INI: Will use STDERR as '%s'", err);
+  LOG("INI: Will use STDOUT as '%s'", out);
+  LOG("INI: Will use STDERR as '%s'", err);
 
   myfree(out);
   myfree(err);
@@ -634,7 +634,7 @@ int main(int argc, char *argv[])
   // Need this to get the UTF on the console
   //
 #ifndef _WIN32
-  CON("INI: Set locale for console");
+  LOG("INI: Set locale for console");
   std::locale loc("");
   std::ios_base::sync_with_stdio(false);
   std::wcout.imbue(loc);
@@ -643,7 +643,7 @@ int main(int argc, char *argv[])
 #ifdef ENABLE_CRASH_HANDLER
   //
   // Crash handlers
-  CON("INI: Install crash handlers");
+  LOG("INI: Install crash handlers");
   signal(SIGSEGV, segv_handler);
   signal(SIGABRT, segv_handler);
   signal(SIGFPE, segv_handler);
@@ -774,7 +774,7 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     original_program_name = std::string(argv[ 0 ]);
-    CON("INI: Original program name: %s", original_program_name.c_str());
+    LOG("INI: Original program name: %s", original_program_name.c_str());
     flush_the_console();
   }
 
@@ -854,15 +854,13 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load commands");
+    LOG("INI: Load commands");
     if (! command_init()) {
       ERR("Command init");
     }
     LOG("INI: Loaded");
     flush_the_console();
   }
-
-  game->create_level();
 
   {
     TRACE_NO_INDENT();
@@ -873,10 +871,8 @@ int main(int argc, char *argv[])
     //
     TRACE_NO_INDENT();
     if (g_opt_test_skip_main_menu) {
-      CON("INI: New game");
       game->new_game();
     } else {
-      CON("INI: Game menu");
       game->wid_main_menu_select();
     }
 

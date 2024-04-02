@@ -36,6 +36,9 @@ static uint8_t wid_hiscore_key_up(Widp w, const struct SDL_Keysym *key)
             TRACE_AND_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
+              case '\n' :
+              case 'b' :
+              case 'B' :
               case SDLK_ESCAPE :
                 {
                   TRACE_AND_INDENT();

@@ -519,7 +519,7 @@ void wid_load_destroy(void)
   if (wid_load) {
     delete wid_load;
     wid_load = nullptr;
-    game->change_state(Game::STATE_NORMAL, "load destroy");
+    game->state_reset("wid load destroy");
   }
 }
 
@@ -561,6 +561,7 @@ static uint8_t wid_load_key_up(Widp w, const struct SDL_Keysym *key)
                   return true;
                 }
               case 'b' :
+              case 'B' :
               case SDLK_ESCAPE :
                 {
                   TRACE_AND_INDENT();
@@ -709,7 +710,7 @@ void Game::wid_load_select(void)
   wid_progress_bar_destroy();
 #endif
 
-  game->change_state(Game::STATE_LOAD_MENU, "load select");
+  game->state_change(Game::STATE_LOAD_MENU, "load select");
 
   //
   // Not sure why we need this; but the level ends up blank post loading.

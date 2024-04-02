@@ -6,6 +6,9 @@
 #include "my_level.hpp"
 #include "my_tile.hpp"
 
+//
+// Soft scroll to the player/
+//
 void Level::scroll_to_player(void)
 {
   TRACE_NO_INDENT();
@@ -15,37 +18,50 @@ void Level::scroll_to_player(void)
     return;
   }
 
+  //
+  // If the player is scrolling the map via the mouse, do not auto scroll.
+  //
   if (! data->requested_auto_scroll) {
     return;
   }
 
+  //
+  // Get the size of the on screen map.
+  //
   int w, h;
   fbo_get_size(FBO_MAP, w, h);
 
+  //
+  // Where are we as a percentage on that map.
+  //
   float x = (player->pix_x - data->pixel_map_at_x) / (float) w;
   float y = (player->pix_y - data->pixel_map_at_y) / (float) h;
 
-  {
-    const float scroll_border = 0.4;
-    const float scroll_speed  = 5;
+  const auto scroll_border = MAP_SCROLL_BORDER;
+  const auto scroll_speed  = MAP_SCROLL_SPEED;
 
-    if (x > 1.0 - scroll_border) {
-      data->pixel_map_at_x += (x - scroll_border) * scroll_speed;
-    }
-    if (x < scroll_border) {
-      data->pixel_map_at_x -= (scroll_border - x) * scroll_speed;
-    }
-    if (y > 1.0 - scroll_border) {
-      data->pixel_map_at_y += (y - scroll_border) * scroll_speed;
-    }
-    if (y < scroll_border) {
-      data->pixel_map_at_y -= (scroll_border - y) * scroll_speed;
-    }
+  //
+  // If too close to the edges, scroll.
+  //
+  if (x > 1.0 - scroll_border) {
+    data->pixel_map_at_x += (x - scroll_border) * scroll_speed;
+  }
+  if (x < scroll_border) {
+    data->pixel_map_at_x -= (scroll_border - x) * scroll_speed;
+  }
+  if (y > 1.0 - scroll_border) {
+    data->pixel_map_at_y += (y - scroll_border) * scroll_speed;
+  }
+  if (y < scroll_border) {
+    data->pixel_map_at_y -= (scroll_border - y) * scroll_speed;
   }
 
   bounds_set();
 }
 
+//
+// Scroll the map e.g. via mouse
+//
 void Level::scroll_delta(int x, int y)
 {
   TRACE_NO_INDENT();
@@ -63,6 +79,9 @@ void Level::scroll_delta(int x, int y)
   bounds_set();
 }
 
+//
+// Jump to the player immediately.
+//
 void Level::scroll_warp_to_player()
 {
   TRACE_NO_INDENT();

@@ -200,11 +200,6 @@ public:
   /////////////////////////////////////////////////////////////////////////
 
   //
-  // Game is afoot
-  //
-  bool started {};
-
-  //
   // Game is ending and levels are being destroyed.
   //
   bool is_being_destroyed {};
@@ -213,13 +208,14 @@ public:
   // Temporary. Global states
   //
   enum {
-    STATE_NORMAL,
+    STATE_MAIN_MENU,
+    STATE_PLAYING,
     STATE_KEYBOARD_MENU, // Setting keys
     STATE_LOAD_MENU,     // Loading a game
     STATE_SAVE_MENU,     // Saving a game
     STATE_QUIT_MENU,     // Pondering quitting
   };
-  uint8_t state {STATE_NORMAL};
+  uint8_t state {STATE_MAIN_MENU};
 
   //
   // Temporary. Dampens mouse clicks
@@ -242,7 +238,8 @@ public:
   bool save(std::string save_file);
 
   // begin sort marker2 {
-  void change_state(uint8_t state, const std::string &);
+  void state_change(uint8_t state, const std::string &);
+  void state_reset(const std::string &);
   void create_level(void);
   void display(void);
   void fini(void);
@@ -251,7 +248,7 @@ public:
   void load(uint8_t slot);
   void load(void);
   void new_game(void);
-  void quit_select(void);
+  void wid_quit_select(void);
   void save_config(void);
   void save_snapshot_check();
   void save_snapshot(void);

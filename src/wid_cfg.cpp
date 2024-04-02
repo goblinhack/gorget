@@ -73,11 +73,16 @@ static uint8_t wid_cfg_top_key_up(Widp w, const struct SDL_Keysym *key)
             TRACE_AND_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
-              case 'g' : wid_cfg_top_gfx(nullptr, 0, 0, 0); return true;
-              case 'm' : wid_cfg_top_mouse(nullptr, 0, 0, 0); return true;
-              case 's' : wid_cfg_top_sound(nullptr, 0, 0, 0); return true;
-              case 'k' : wid_cfg_top_keyboard(nullptr, 0, 0, 0); return true;
+              case 'g' :
+              case 'G' : wid_cfg_top_gfx(nullptr, 0, 0, 0); return true;
+              case 'm' :
+              case 'M' : wid_cfg_top_mouse(nullptr, 0, 0, 0); return true;
+              case 's' :
+              case 'S' : wid_cfg_top_sound(nullptr, 0, 0, 0); return true;
+              case 'k' :
+              case 'K' : wid_cfg_top_keyboard(nullptr, 0, 0, 0); return true;
               case 'b' :
+              case 'B' :
               case SDLK_ESCAPE : wid_cfg_top_back(nullptr, 0, 0, 0); return true;
             }
           }
