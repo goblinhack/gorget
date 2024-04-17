@@ -398,8 +398,8 @@ else
 fi
 
 cat >>$MAKEFILE <<%%
-CLANG_COMPILER_WARNINGS=-Wall -std=c++2a
-GCC_COMPILER_WARNINGS=-x c++ -Wall -std=c++2a $GCC_STACK_CHECK
+CLANG_COMPILER_WARNINGS=-Wall -std=c++2a -Wno-vla-cxx-extension
+GCC_COMPILER_WARNINGS=-Wall -std=c++2a $GCC_STACK_CHECK
 LDFLAGS=$LDFLAGS
 %%
 
