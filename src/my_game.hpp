@@ -238,8 +238,6 @@ public:
   bool save(std::string save_file);
 
   // begin sort marker2 {
-  void state_change(uint8_t state, const std::string &);
-  void state_reset(const std::string &);
   void create_level(void);
   void display(void);
   void fini(void);
@@ -248,7 +246,6 @@ public:
   void load(uint8_t slot);
   void load(void);
   void new_game(void);
-  void wid_quit_select(void);
   void save_config(void);
   void save_snapshot_check();
   void save_snapshot(void);
@@ -257,6 +254,8 @@ public:
   void set_currently_saving_snapshot(void);
   void set_seed(void);
   void start(void);
+  void state_change(uint8_t state, const std::string &);
+  void state_reset(const std::string &);
   void unset_currently_saving_snapshot(void);
   void unset_request_reset_state_change(void);
   void unset_request_to_save_snapshot(void);
@@ -271,6 +270,7 @@ public:
   void wid_hiscores_show(void);
   void wid_load_select(void);
   void wid_main_menu_select(void);
+  void wid_quit_select(void);
   void wid_save_select(void);
   // end sort marker2 }
 };

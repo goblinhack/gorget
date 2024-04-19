@@ -10,9 +10,9 @@ bool templates_init(void);
 /* shell echo "bool $i();" */
 /* shell done */
 bool tp_load_player();
+bool tp_load_key();
 bool tp_load_exit();
 bool tp_load_door();
-bool tp_load_key();
 bool tp_load_wall();
 bool tp_load_floor();
 /* end shell marker1 */

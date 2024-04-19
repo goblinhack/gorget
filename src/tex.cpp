@@ -151,7 +151,7 @@ static SDL_Surface *load_image(std::string filename)
 
   memcpy(surf->pixels, image_data, comp * x * y);
 
-  if (comp == 2) {
+  if ((comp == 2) || (comp == 3)) {
     SDL_Surface *old_surf = surf;
     DBG2("- SDL_ConvertSurfaceFormat");
     surf = SDL_ConvertSurfaceFormat(old_surf, SDL_PIXELFORMAT_RGBA8888, 0);
@@ -245,7 +245,7 @@ static void load_images(SDL_Surface **surf1_out, SDL_Surface **surf2_out, std::s
   memcpy(surf1->pixels, image_data, comp * x * y);
   memcpy(surf2->pixels, image_data, comp * x * y);
 
-  if (comp == 2) {
+  if ((comp == 2) || (comp == 3)) {
     SDL_Surface *old_surf = surf1;
     DBG2("- SDL_ConvertSurfaceFormat");
     surf1 = SDL_ConvertSurfaceFormat(old_surf, SDL_PIXELFORMAT_RGBA8888, 0);
@@ -259,7 +259,7 @@ static void load_images(SDL_Surface **surf1_out, SDL_Surface **surf2_out, std::s
     SDL_SaveBMP(surf1, filename.c_str());
   }
 
-  if (comp == 2) {
+  if ((comp == 2) || (comp == 3)) {
     SDL_Surface *old_surf = surf2;
     DBG2("- SDL_ConvertSurfaceFormat");
     surf2 = SDL_ConvertSurfaceFormat(old_surf, SDL_PIXELFORMAT_RGBA8888, 0);

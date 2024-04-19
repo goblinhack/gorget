@@ -54,7 +54,7 @@ public:
   T       *get() const { return sptr.get(); }
   T       &operator*() { return *sptr; }
   const T &operator*() const { return *sptr; }
-           operator bool() const { return bool sptr; }
+  operator bool() const { return bool sptr; }
 
   void reset()
   {

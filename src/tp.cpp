@@ -63,12 +63,16 @@ uint8_t tp_init(void)
 void tp_fini(void)
 {
   TRACE_NO_INDENT();
-  if (tp_init_done) {
-    tp_init_done = false;
+  if (! tp_init_done) {
+    return;
   }
+  tp_init_done = false;
+
   for (auto &tp : tp_name_map) {
     delete tp.second;
   }
+
+  tp_id_map = {};
 }
 
 Tpp tp_load(std::string const &name)

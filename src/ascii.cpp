@@ -17,9 +17,9 @@ int16_t TERM_HEIGHT;
 int16_t ascii_mouse_x;
 int16_t ascii_mouse_y;
 
-std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > cells;
+std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > *cells;
 
-void ascii_init(void) {}
+void ascii_init(void) { ascii_clear_display(); }
 
 //
 // For drawing the mouse cursor.
@@ -129,7 +129,7 @@ int ascii_ok_for_scissors(int x, int y)
 
 bool ascii_is_empty(int x, int y)
 {
-  AsciiCell *cell = &getref_no_check(cells, x, y);
+  AsciiCell *cell = &(*cells)[ x ][ y ];
 
   for (auto depth = 0; depth < TILE_LAYER_MAX; depth++) {
     if (cell->tile[ depth ]) {
@@ -148,7 +148,7 @@ void ascii_set(int depth, int x, int y, color col)
     return;
   }
 
-  AsciiCell *cell = &getref_no_check(cells, x, y);
+  AsciiCell *cell = &(*cells)[ x ][ y ];
 
   cell->color_tl[ depth ] = col;
   cell->color_tr[ depth ] = col;
@@ -166,7 +166,7 @@ void ascii_set_context(int x, int y, void *context)
     return;
   }
 
-  AsciiCell *cell = &getref_no_check(cells, x, y);
+  AsciiCell *cell = &(*cells)[ x ][ y ];
 
   cell->context = context;
 }
@@ -177,7 +177,7 @@ void *ascii_get_stat_context(int x, int y)
     return nullptr;
   }
 
-  AsciiCell *cell = &getref_no_check(cells, x, y);
+  AsciiCell *cell = &(*cells)[ x ][ y ];
 
   return (cell->context);
 }
@@ -188,7 +188,7 @@ void ascii_set(int depth, int x, int y, const Texp tex, float tx, float ty, floa
     return;
   }
 
-  AsciiCell *cell = &getref_no_check(cells, x, y);
+  AsciiCell *cell = &(*cells)[ x ][ y ];
 
   cell->ch[ depth ]  = 0;
   cell->tex[ depth ] = tex;
@@ -204,7 +204,7 @@ void ascii_set(int depth, int x, int y, const Tilep tile)
     return;
   }
 
-  AsciiCell *cell = &getref_no_check(cells, x, y);
+  AsciiCell *cell = &(*cells)[ x ][ y ];
 
   cell->ch[ depth ]   = 0;
   cell->tile[ depth ] = tile;
@@ -220,7 +220,7 @@ void ascii_set(int depth, int x, int y, const Tilep tile, char ch)
     return;
   }
 
-  AsciiCell *cell = &getref_no_check(cells, x, y);
+  AsciiCell *cell = &(*cells)[ x ][ y ];
 
   cell->ch[ depth ]   = ch;
   cell->tile[ depth ] = tile;
@@ -236,7 +236,7 @@ void ascii_set(int depth, int x, int y, const Tilep tile, float tx, float ty, fl
     return;
   }
 
-  AsciiCell *cell = &getref_no_check(cells, x, y);
+  AsciiCell *cell = &(*cells)[ x ][ y ];
 
   cell->ch[ depth ]   = 0;
   cell->tile[ depth ] = tile;
@@ -369,7 +369,8 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
       }
     }
 
-    AsciiCell *cell = &getref_no_check(cells, x++, y);
+    AsciiCell *cell = &(*cells)[ x ][ y ];
+    x++;
 
     auto depth = TILE_LAYER_FG_0;
 
@@ -737,7 +738,7 @@ static void ascii_blit(void)
     tile_x = 0;
     for (x = 0; x < TERM_WIDTH; x++) {
 
-      const AsciiCell *cell = &getref_no_check(cells, x, y);
+      const AsciiCell *cell = &(*cells)[ x ][ y ];
 
       point tile_tl;
       point tile_br;
@@ -797,7 +798,7 @@ static void ascii_blit(void)
     tile_x = 0;
     for (x = 0; x < TERM_WIDTH; x++) {
 
-      const AsciiCell *cell = &getref_no_check(cells, x, y);
+      const AsciiCell *cell = &(*cells)[ x ][ y ];
 
       point tile_tl;
       point tile_br;
@@ -846,7 +847,7 @@ static void ascii_blit(void)
   for (y = 0; y < TERM_HEIGHT; y++) {
     tile_x = 0;
     for (x = 0; x < TERM_WIDTH; x++) {
-      const AsciiCell *cell = &getref_no_check(cells, x, y);
+      const AsciiCell *cell = &(*cells)[ x ][ y ];
 
       point tile_tl;
       point tile_br;
@@ -904,5 +905,19 @@ void ascii_display(void)
 void ascii_clear_display(void)
 {
   TRACE_NO_INDENT();
-  cells = {};
+
+  if (! cells) {
+    cells = new std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX >;
+  }
+
+  /*
+  delete cells;
+  cells = new std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX >;
+   */
+
+  for (auto y = 0; y < TERM_HEIGHT; y++) {
+    for (auto x = 0; x < TERM_WIDTH; x++) {
+      (*cells)[ x ][ y ] = {};
+    }
+  }
 }

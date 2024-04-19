@@ -172,6 +172,6 @@ extern int16_t ascii_mouse_y;
 
 extern struct ascii_ ascii;
 
-extern std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > cells;
+extern std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > *cells;
 
 #endif

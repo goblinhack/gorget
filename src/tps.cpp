@@ -17,13 +17,13 @@ bool templates_init(void)
   if (! tp_load_player()) {
     return false;
   }
+  if (! tp_load_key()) {
+    return false;
+  }
   if (! tp_load_exit()) {
     return false;
   }
   if (! tp_load_door()) {
-    return false;
-  }
-  if (! tp_load_key()) {
     return false;
   }
   if (! tp_load_wall()) {

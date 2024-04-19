@@ -61,6 +61,9 @@ void quit(void)
   LOG("FIN: sdl_exit");
   sdl_exit();
 
+  LOG("FIN: tp_fini");
+  tp_fini();
+
   LOG("FIN: wid_console_fini");
   wid_console_fini();
 

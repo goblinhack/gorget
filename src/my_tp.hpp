@@ -46,10 +46,10 @@ public:
   bool is_key {};
   bool is_monst {};
   bool is_monst_class[ MONST_CLASS_MAX ] {};
+  bool is_obs_monst {};
+  bool is_obs_player {};
   bool is_player {};
   bool is_wall {};
-  bool is_obs_player {};
-  bool is_obs_monst {};
   // end sort marker1 }
 
   uint8_t player_index {};
