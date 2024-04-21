@@ -6,9 +6,12 @@
 #include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
+
 #include <string.h>  // do not remove
 #include <strings.h> // do not remove
 #include <sys/stat.h>
+#include <time.h>
+#include <unistd.h> // do not remove
 
 static unsigned char *file_io_read_if_exists(const char *filename, int *out_len);
 static unsigned char *file_io_read(const char *filename, int *len);

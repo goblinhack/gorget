@@ -19,7 +19,7 @@ static void wid_cfg_gfx_destroy(void)
   config_changed     = false;
 }
 
-static uint8_t wid_cfg_gfx_cancel(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Reload config");
@@ -33,7 +33,7 @@ static uint8_t wid_cfg_gfx_cancel(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_gfx_save(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_save(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Save config");
@@ -51,7 +51,7 @@ static uint8_t wid_cfg_gfx_save(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_gfx_back(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_cfg_gfx_destroy();
@@ -59,7 +59,7 @@ static uint8_t wid_cfg_gfx_back(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_gfx_vsync_enable_toggle(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_vsync_enable_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -70,7 +70,7 @@ static uint8_t wid_cfg_gfx_vsync_enable_toggle(Widp w, int x, int y, uint32_t bu
   return true;
 }
 
-static uint8_t wid_cfg_gfx_fullscreen_toggle(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_fullscreen_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -84,7 +84,7 @@ static uint8_t wid_cfg_gfx_fullscreen_toggle(Widp w, int x, int y, uint32_t butt
   return true;
 }
 
-static uint8_t wid_cfg_gfx_fullscreen_desktop_toggle(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_fullscreen_desktop_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -98,7 +98,7 @@ static uint8_t wid_cfg_gfx_fullscreen_desktop_toggle(Widp w, int x, int y, uint3
   return true;
 }
 
-static uint8_t wid_cfg_gfx_allow_highdpi_toggle(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_allow_highdpi_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -109,7 +109,7 @@ static uint8_t wid_cfg_gfx_allow_highdpi_toggle(Widp w, int x, int y, uint32_t b
   return true;
 }
 
-static uint8_t wid_cfg_gfx_borderless_toggle(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_borderless_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -120,7 +120,7 @@ static uint8_t wid_cfg_gfx_borderless_toggle(Widp w, int x, int y, uint32_t butt
   return true;
 }
 
-static uint8_t wid_cfg_other_fps_counter_toggle(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_other_fps_counter_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -130,7 +130,7 @@ static uint8_t wid_cfg_other_fps_counter_toggle(Widp w, int x, int y, uint32_t b
   return true;
 }
 
-static uint8_t wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -164,7 +164,7 @@ static uint8_t wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static uint8_t wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -198,7 +198,7 @@ static uint8_t wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static uint8_t wid_cfg_gfx_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_gfx_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -231,7 +231,7 @@ static uint8_t wid_cfg_gfx_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static uint8_t wid_cfg_gfx_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_gfx_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 

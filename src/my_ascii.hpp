@@ -50,26 +50,6 @@ using ascii_mouse_over_callback = int (*)(int, int);
 
 typedef std::array< Tilep, TILE_LAYER_MAX > TileLayers;
 
-struct ascii_ {
-  //
-  // In ascii mode, where on the ASCII we are
-  //
-  point mouse_at;
-  //
-  // UI triggers for ASCII co-ords.
-  //
-  std::array< std::array< int, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > sdl_mod {};
-  std::array< std::array< int, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > sdl_key {};
-  std::array< std::array< int, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > mouse_button {};
-
-  //
-  // Callbacks for ASCII co-ords.
-  //
-  std::array< std::array< ascii_key_down_callback, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX >   key_down {};
-  std::array< std::array< ascii_mouse_down_callback, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > mouse_down {};
-  std::array< std::array< ascii_mouse_over_callback, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > mouse_over {};
-};
-
 extern int16_t TERM_WIDTH;
 extern int16_t TERM_HEIGHT;
 
@@ -169,9 +149,5 @@ extern float tile_pix_h;
 
 extern int16_t ascii_mouse_x;
 extern int16_t ascii_mouse_y;
-
-extern struct ascii_ ascii;
-
-extern std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > *cells;
 
 #endif

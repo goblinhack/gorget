@@ -18,7 +18,7 @@ static void wid_hiscore_destroy(void)
   game->wid_main_menu_select();
 }
 
-static uint8_t wid_hiscore_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_hiscore_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -56,7 +56,7 @@ static uint8_t wid_hiscore_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static uint8_t wid_hiscore_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_hiscore_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -67,7 +67,7 @@ static uint8_t wid_hiscore_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static uint8_t wid_hiscore_mouse_up(Widp w, int x, int y, uint32_t button)
+static bool wid_hiscore_mouse_up(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_hiscore_destroy();

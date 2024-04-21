@@ -8,7 +8,7 @@
 
 #include "my_fwd.hpp"
 #include <SDL.h>
-#include <memory>
+#include <string>
 
 int tex_get_gl_binding(Texp);
 

@@ -197,7 +197,7 @@ void wid_cfg_keyboard_destroy(void)
   game->state_reset("wid keyboard destroy");
 }
 
-static uint8_t wid_cfg_keyboard_cancel(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_keyboard_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Reload config");
@@ -220,7 +220,7 @@ static uint8_t wid_cfg_keyboard_cancel(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_keyboard_save(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_keyboard_save(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Save config");
@@ -238,7 +238,7 @@ static uint8_t wid_cfg_keyboard_save(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_keyboard_back(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_keyboard_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_cfg_keyboard_destroy();
@@ -671,7 +671,7 @@ static void grab_key(const std::string which)
   config_changed  = true;
 }
 
-static uint8_t wid_cfg_keyboard_profile_arrow_keys(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_keyboard_profile_arrow_keys(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   SDL_Keysym k {};
@@ -702,7 +702,7 @@ static uint8_t wid_cfg_keyboard_profile_arrow_keys(Widp w, int x, int y, uint32_
   return true;
 }
 
-static uint8_t wid_cfg_keyboard_profile_wasd(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_keyboard_profile_wasd(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   SDL_Keysym k {};
@@ -733,7 +733,7 @@ static uint8_t wid_cfg_keyboard_profile_wasd(Widp w, int x, int y, uint32_t butt
   return true;
 }
 
-static uint8_t wid_cfg_key_move_left(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_move_left(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("move left");
@@ -742,7 +742,7 @@ static uint8_t wid_cfg_key_move_left(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_move_right(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_move_right(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("move right");
@@ -751,7 +751,7 @@ static uint8_t wid_cfg_key_move_right(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_move_up(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_move_up(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("move up");
@@ -760,7 +760,7 @@ static uint8_t wid_cfg_key_move_up(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_move_down(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_move_down(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("move down");
@@ -769,7 +769,7 @@ static uint8_t wid_cfg_key_move_down(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_attack(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_attack(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("attack");
@@ -778,7 +778,7 @@ static uint8_t wid_cfg_key_attack(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused1(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused1(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused1");
@@ -787,7 +787,7 @@ static uint8_t wid_cfg_key_unused1(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused2(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused2(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused2");
@@ -796,7 +796,7 @@ static uint8_t wid_cfg_key_unused2(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused3(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused3(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused3");
@@ -805,7 +805,7 @@ static uint8_t wid_cfg_key_unused3(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused4(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused4(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused4");
@@ -814,7 +814,7 @@ static uint8_t wid_cfg_key_unused4(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused5(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused5(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused5");
@@ -823,7 +823,7 @@ static uint8_t wid_cfg_key_unused5(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused6(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused6(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused6");
@@ -832,7 +832,7 @@ static uint8_t wid_cfg_key_unused6(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused7(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused7(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused7");
@@ -841,7 +841,7 @@ static uint8_t wid_cfg_key_unused7(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused8(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused8(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused8");
@@ -850,7 +850,7 @@ static uint8_t wid_cfg_key_unused8(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused9(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused9(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused9");
@@ -859,7 +859,7 @@ static uint8_t wid_cfg_key_unused9(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused10(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused10(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused10");
@@ -868,7 +868,7 @@ static uint8_t wid_cfg_key_unused10(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused11(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused11(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused11");
@@ -877,7 +877,7 @@ static uint8_t wid_cfg_key_unused11(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused12(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused12(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused12");
@@ -886,7 +886,7 @@ static uint8_t wid_cfg_key_unused12(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused13(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused13(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused13");
@@ -895,7 +895,7 @@ static uint8_t wid_cfg_key_unused13(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused14(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused14(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused14");
@@ -904,7 +904,7 @@ static uint8_t wid_cfg_key_unused14(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused15(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused15(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused15");
@@ -913,7 +913,7 @@ static uint8_t wid_cfg_key_unused15(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused16(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused16(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused16");
@@ -922,7 +922,7 @@ static uint8_t wid_cfg_key_unused16(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused17(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused17(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused17");
@@ -931,7 +931,7 @@ static uint8_t wid_cfg_key_unused17(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused18(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused18(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused18");
@@ -940,7 +940,7 @@ static uint8_t wid_cfg_key_unused18(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused19(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused19(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused19");
@@ -949,7 +949,7 @@ static uint8_t wid_cfg_key_unused19(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_unused20(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_unused20(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused20");
@@ -958,7 +958,7 @@ static uint8_t wid_cfg_key_unused20(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action0(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action0(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 0");
@@ -967,7 +967,7 @@ static uint8_t wid_cfg_key_action0(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action1(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action1(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 1");
@@ -976,7 +976,7 @@ static uint8_t wid_cfg_key_action1(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action2(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action2(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 2");
@@ -985,7 +985,7 @@ static uint8_t wid_cfg_key_action2(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action3(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action3(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 3");
@@ -994,7 +994,7 @@ static uint8_t wid_cfg_key_action3(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action4(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action4(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 4");
@@ -1003,7 +1003,7 @@ static uint8_t wid_cfg_key_action4(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action5(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action5(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 5");
@@ -1012,7 +1012,7 @@ static uint8_t wid_cfg_key_action5(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action6(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action6(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 6");
@@ -1021,7 +1021,7 @@ static uint8_t wid_cfg_key_action6(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action7(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action7(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 7");
@@ -1030,7 +1030,7 @@ static uint8_t wid_cfg_key_action7(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action8(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action8(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 8");
@@ -1039,7 +1039,7 @@ static uint8_t wid_cfg_key_action8(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_action9(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_action9(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("action 9");
@@ -1048,7 +1048,7 @@ static uint8_t wid_cfg_key_action9(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_save(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_save(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("save game");
@@ -1057,7 +1057,7 @@ static uint8_t wid_cfg_key_save(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_load(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_load(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("load game");
@@ -1066,7 +1066,7 @@ static uint8_t wid_cfg_key_load(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_help(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_help(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("help");
@@ -1075,7 +1075,7 @@ static uint8_t wid_cfg_key_help(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_console(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_console(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("toggle console");
@@ -1084,7 +1084,7 @@ static uint8_t wid_cfg_key_console(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_quit(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_quit(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("quit");
@@ -1093,7 +1093,7 @@ static uint8_t wid_cfg_key_quit(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_key_screenshot(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_screenshot(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("screenshot grab");
@@ -1102,7 +1102,7 @@ static uint8_t wid_cfg_key_screenshot(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_keyboard_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_keyboard_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -1131,7 +1131,7 @@ static uint8_t wid_cfg_keyboard_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static uint8_t wid_cfg_keyboard_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_keyboard_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 

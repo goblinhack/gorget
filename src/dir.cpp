@@ -17,7 +17,7 @@
 /*
  * Does the requested dir exist?
  */
-uint8_t dir_exists(const char *indir)
+bool dir_exists(const char *indir)
 {
   TRACE_AND_INDENT();
   struct stat buf;

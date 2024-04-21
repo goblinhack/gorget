@@ -8,9 +8,9 @@
 
 #include "my_main.hpp"
 #include "my_tile.hpp"
-// REMOVED #include <memory>
+#include <memory>
 
-typedef std::shared_ptr< class WidTiles > wid_tilesp;
+typedef class WidTiles *wid_tilesp;
 
 class WidTiles
 {
@@ -27,8 +27,11 @@ public:
   std::array< std::array< Tilep, 32 >, 32 > tile {};
 };
 
-uint8_t    wid_tiles_init(void);
-void       wid_tiles_fini(void);
+bool wid_tiles_init(void);
+
+void wid_tiles_fini(void);
+
 wid_tilesp wid_tiles_load(std::string name, double scale);
 wid_tilesp wid_tiles_find(std::string name);
+
 #endif

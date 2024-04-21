@@ -523,7 +523,7 @@ void wid_load_destroy(void)
   }
 }
 
-static uint8_t wid_load_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_load_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -577,7 +577,7 @@ static uint8_t wid_load_key_up(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static uint8_t wid_load_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_load_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -588,7 +588,7 @@ static uint8_t wid_load_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static uint8_t wid_load_mouse_up(Widp w, int x, int y, uint32_t button)
+static bool wid_load_mouse_up(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   auto slot = wid_get_int_context(w);
@@ -597,14 +597,14 @@ static uint8_t wid_load_mouse_up(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_load_saved_snapshot(Widp w, int x, int y, uint32_t button)
+static bool wid_load_saved_snapshot(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   game->load_snapshot();
   wid_load_destroy();
   return true;
 }
-static uint8_t wid_load_cancel(Widp w, int x, int y, uint32_t button)
+static bool wid_load_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_load_destroy();

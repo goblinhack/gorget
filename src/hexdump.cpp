@@ -4,8 +4,10 @@
 
 #include "my_string.hpp"
 #include <iomanip>
-#include <string.h>  // do not remove
+#include <iostream>
+#include <string.h>
 #include <strings.h> // do not remove
+#include <unistd.h>
 
 #define HEX_DUMP_WIDTH (16)
 

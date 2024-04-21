@@ -24,14 +24,14 @@ void wid_main_menu_hide(void)
   wid_hide(wid_main_menu_window->wid_popup_container);
 }
 
-static uint8_t wid_main_menu_load_game(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_load_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   game->wid_load_select();
   return false;
 }
 
-static uint8_t wid_main_menu_config(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_config(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   game->wid_cfg_top_menu();
@@ -39,7 +39,7 @@ static uint8_t wid_main_menu_config(Widp w, int x, int y, uint32_t button)
   return false;
 }
 
-static uint8_t game_menu_new_game(Widp w, int x, int y, uint32_t button)
+static bool game_menu_new_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_main_menu_hide();
@@ -48,7 +48,7 @@ static uint8_t game_menu_new_game(Widp w, int x, int y, uint32_t button)
   return false;
 }
 
-static uint8_t wid_main_menu_credits_game(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_credits_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   game->wid_credits_select();
@@ -56,7 +56,7 @@ static uint8_t wid_main_menu_credits_game(Widp w, int x, int y, uint32_t button)
   return false;
 }
 
-static uint8_t wid_main_menu_quit_game(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_quit_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   game->wid_quit_select();
@@ -64,14 +64,14 @@ static uint8_t wid_main_menu_quit_game(Widp w, int x, int y, uint32_t button)
   return false;
 }
 
-static uint8_t wid_main_menu_hiscores(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_hiscores(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   game->wid_hiscores_show();
   return false;
 }
 
-static uint8_t wid_main_menu_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_main_menu_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -111,7 +111,7 @@ static uint8_t wid_main_menu_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static uint8_t wid_main_menu_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_main_menu_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 

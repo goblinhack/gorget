@@ -16,21 +16,21 @@ void wid_notice_destroy(void)
   wid_notice_window = nullptr;
 }
 
-static uint8_t wid_notice_ok(Widp w, int x, int y, uint32_t button)
+static bool wid_notice_ok(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_notice_destroy();
   return false;
 }
 
-static uint8_t wid_notice_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_notice_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
   wid_notice_ok(nullptr, 0, 0, 0);
   return true;
 }
 
-static uint8_t wid_notice_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_notice_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 

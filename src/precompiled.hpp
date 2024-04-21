@@ -11,11 +11,9 @@
 #include <iomanip>
 #include <iostream>
 #include <limits.h>
-#include <list>
 #include <locale.h>
 #include <map>
 #include <math.h>
-#include <memory>
 #include <signal.h>
 #include <sstream>
 #include <stdarg.h>

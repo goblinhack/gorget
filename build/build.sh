@@ -385,7 +385,7 @@ fi
 MAKEFILE=../build/Makefile.template
 
 if [[ $OPT_DEV1 != "" ]]; then
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -g" > $MAKEFILE
+    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O0 -g" > $MAKEFILE
 else
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 -g" > $MAKEFILE
 fi

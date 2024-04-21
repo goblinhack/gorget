@@ -197,14 +197,12 @@ void WidTextBox::log(std::string s, wid_text_format format, std::string color)
 
   auto d = split(s, chars_per_line);
 
-  if (d) {
-    for (const auto &c : *d) {
-      //
-      // Handles %%fg=...$ with no text due to a split
-      //
-      if (length_without_format(c)) {
-        log_(c, format, color);
-      }
+  for (const auto &c : d) {
+    //
+    // Handles %%fg=...$ with no text due to a split
+    //
+    if (length_without_format(c)) {
+      log_(c, format, color);
     }
   }
 }

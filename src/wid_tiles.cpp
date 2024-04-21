@@ -6,10 +6,10 @@
 #include "my_tex.hpp"
 #include "my_wid_tiles.hpp"
 
-static int                                                        wid_tiles_init_done;
-static std::map< std::string, std::shared_ptr< class WidTiles > > wid_tiles_all;
+static int                                       wid_tiles_init_done;
+static std::map< std::string, class WidTiles * > wid_tiles_all;
 
-uint8_t wid_tiles_init(void)
+bool wid_tiles_init(void)
 {
   TRACE_AND_INDENT();
   wid_tiles_init_done = true;
@@ -48,7 +48,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
     return nullptr;
   }
 
-  t = std::make_shared< class WidTiles >();
+  t = new class WidTiles();
 
   auto result = wid_tiles_all.insert(std::make_pair(name, t));
 

@@ -40,7 +40,7 @@ void wid_console_fini(void)
   wid_destroy(&wid_console_window);
 }
 
-uint8_t wid_console_init(void)
+bool wid_console_init(void)
 {
   TRACE_AND_INDENT();
 
@@ -130,17 +130,15 @@ void wid_console_log(std::string s)
 
   auto d = split(s, chars_per_line);
 
-  if (d) {
-    for (const auto &c : *d) {
-      wid_console_log_(c);
-    }
+  for (const auto &c : d) {
+    wid_console_log_(c);
   }
 }
 
 //
 // Key down etc...
 //
-uint8_t wid_console_receive_input(Widp w, const SDL_Keysym *key)
+bool wid_console_receive_input(Widp w, const SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
   wid_console_reset_scroll();

@@ -20,7 +20,7 @@ void wid_quit_destroy(void)
   }
 }
 
-static uint8_t wid_quit_yes(Widp w, int x, int y, uint32_t button)
+static bool wid_quit_yes(Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   LOG("INF: Quit, yes");
@@ -40,7 +40,7 @@ static uint8_t wid_quit_yes(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_quit_no(Widp w, int x, int y, uint32_t button)
+static bool wid_quit_no(Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   LOG("INF: Quit, no");
@@ -53,7 +53,7 @@ static uint8_t wid_quit_no(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_quit_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_quit_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -86,7 +86,7 @@ static uint8_t wid_quit_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static uint8_t wid_quit_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_quit_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 

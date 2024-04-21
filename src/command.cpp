@@ -95,9 +95,9 @@ public:
   command_fn_t callback;
 };
 
-typedef std::shared_ptr< class command_t > commandp;
-typedef std::map< std::string, commandp >  commands;
-static commands                            commands_map;
+typedef class command_t                  *commandp;
+typedef std::map< std::string, commandp > commands;
+static commands                           commands_map;
 
 static uint8_t command_inited;
 
@@ -120,9 +120,9 @@ uint8_t command_init(void)
 void command_add(command_fn_t callback, std::string input, std::string readable)
 {
   TRACE_NO_INDENT();
-  auto command = std::make_shared< class command_t >();
 
-  auto result = commands_map.insert(std::make_pair(input, command));
+  auto command = new class command_t();
+  auto result  = commands_map.insert(std::make_pair(input, command));
 
   if (! result.second) {
     ERR("Command insert name [%s] failed", input.c_str());

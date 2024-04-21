@@ -16,7 +16,7 @@ static void wid_warning_destroy(void)
   wid_warning_window = nullptr;
 }
 
-static uint8_t wid_warning_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_warning_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -51,7 +51,7 @@ static uint8_t wid_warning_key_up(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static uint8_t wid_warning_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_warning_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -62,14 +62,14 @@ static uint8_t wid_warning_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static uint8_t wid_warning_yes(Widp w, int x, int y, uint32_t button)
+static bool wid_warning_yes(Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_warning_destroy();
   return true;
 }
 
-static uint8_t wid_warning_no(Widp w, int x, int y, uint32_t button)
+static bool wid_warning_no(Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_warning_destroy();

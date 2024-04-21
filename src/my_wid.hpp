@@ -6,9 +6,6 @@
 #ifndef _MY_WID_HPP_
 #define _MY_WID_HPP_
 
-#include <list>
-// REMOVED #include <map>
-
 #include "my_ascii.hpp"
 #include "my_time.hpp"
 #include "my_wid_tiles.hpp"
@@ -44,11 +41,6 @@ int wid_get_width(Widp);
 
 int wid_get_style(Widp);
 
-std::list< Widp > wid_find_all_at(const point p);
-std::list< Widp > wid_find_all_containing(const std::string &name);
-std::list< Widp > wid_find_all_containing(Widp w, const std::string &name);
-std::list< Widp > wid_find_all(Widp w, const std::string &name);
-
 std::string to_string(Widp);
 std::string wid_get_name(Widp);
 std::string wid_name(Widp);
@@ -79,13 +71,13 @@ Widp wid_new_square_window(std::string name);
 Widp wid_new_vert_scroll_bar(Widp parent, std::string name, Widp scrollbar_owner);
 Widp wid_new_window(std::string name);
 
-typedef uint8_t (*on_joy_button_t)(Widp, int x, int y);
-typedef uint8_t (*on_key_down_t)(Widp, const struct SDL_Keysym *);
-typedef uint8_t (*on_key_up_t)(Widp, const struct SDL_Keysym *);
-typedef uint8_t (*on_mouse_down_t)(Widp, int x, int y, uint32_t button);
-typedef uint8_t (*on_mouse_held_t)(Widp, int x, int y, uint32_t button);
-typedef uint8_t (*on_mouse_motion_t)(Widp, int x, int y, int relx, int rely, int wx, int wy);
-typedef uint8_t (*on_mouse_up_t)(Widp, int x, int y, uint32_t button);
+typedef bool (*on_joy_button_t)(Widp, int x, int y);
+typedef bool (*on_key_down_t)(Widp, const struct SDL_Keysym *);
+typedef bool (*on_key_up_t)(Widp, const struct SDL_Keysym *);
+typedef bool (*on_mouse_down_t)(Widp, int x, int y, uint32_t button);
+typedef bool (*on_mouse_held_t)(Widp, int x, int y, uint32_t button);
+typedef bool (*on_mouse_motion_t)(Widp, int x, int y, int relx, int rely, int wx, int wy);
+typedef bool (*on_mouse_up_t)(Widp, int x, int y, uint32_t button);
 
 typedef void (*on_destroy_begin_t)(Widp);
 typedef void (*on_destroy_t)(Widp);
@@ -97,10 +89,6 @@ typedef void (*on_tick_t)(Widp);
 typedef void (*on_display_t)(Widp, point tl, point br);
 typedef void (*on_tick_post_display_t)(Widp);
 
-uint32_t wid_get_cursor(Widp);
-uint32_t wid_get_gllist(Widp);
-uint32_t wid_get_mode_gllist(Widp);
-
 int wid_get_br_x(Widp w);
 int wid_get_br_y(Widp w);
 int wid_get_tl_x(Widp w);
@@ -110,36 +98,41 @@ int         wid_count(Widp w, int depth);
 int         wid_get_int_context(Widp);
 std::string wid_get_string_context(Widp);
 
-uint8_t wid_get_do_not_lower(Widp);
-uint8_t wid_get_do_not_raise(Widp);
-uint8_t wid_get_focusable(Widp);
-uint8_t wid_get_mode_top(Widp);
-uint8_t wid_get_moveable_bounded(Widp);
-uint8_t wid_get_moveable_horiz(Widp);
-uint8_t wid_get_moveable_no_user_scroll(Widp);
-uint8_t wid_get_moveable_vert(Widp);
-uint8_t wid_get_moveable(Widp);
-uint8_t wid_get_received_input(Widp);
-uint8_t wid_get_show_cursor(Widp);
-uint8_t wid_get_text_bot(Widp);
-uint8_t wid_get_text_centerx(Widp);
-uint8_t wid_get_text_centery(Widp);
-uint8_t wid_get_text_lhs(Widp);
-uint8_t wid_get_text_pos(Widp, int *x, int *y);
-uint8_t wid_get_text_rhs(Widp);
-uint8_t wid_get_text_top(Widp);
-uint8_t wid_ignore_being_destroyed(Widp);
-uint8_t wid_ignore_events(Widp);
-uint8_t wid_ignore_for_focus(Widp);
-uint8_t wid_ignore_scroll_events(Widp);
-uint8_t wid_init(void);
-uint8_t wid_is_always_hidden(Widp w);
-uint8_t wid_is_hidden(Widp w);
-uint8_t wid_receive_input(Widp, const SDL_Keysym *key);
-
 void *wid_get_void_context(Widp);
 
-void wid_always_hidden(Widp, uint8_t value);
+bool wid_get_do_not_lower(Widp);
+bool wid_get_do_not_raise(Widp);
+bool wid_get_focusable(Widp);
+bool wid_get_mode_top(Widp);
+bool wid_get_moveable_bounded(Widp);
+bool wid_get_moveable_horiz(Widp);
+bool wid_get_moveable_no_user_scroll(Widp);
+bool wid_get_moveable_vert(Widp);
+bool wid_get_moveable(Widp);
+bool wid_get_received_input(Widp);
+bool wid_get_show_cursor(Widp);
+bool wid_get_text_bot(Widp);
+bool wid_get_text_centerx(Widp);
+bool wid_get_text_centery(Widp);
+bool wid_get_text_lhs(Widp);
+bool wid_get_text_pos(Widp, int *x, int *y);
+bool wid_get_text_rhs(Widp);
+bool wid_get_text_top(Widp);
+bool wid_ignore_being_destroyed(Widp);
+bool wid_ignore_events_only(Widp w);
+bool wid_ignore_events(Widp);
+bool wid_ignore_for_focus(Widp);
+bool wid_ignore_scroll_events(Widp);
+bool wid_ignore_scroll_events(Widp w);
+bool wid_init(void);
+bool wid_is_always_hidden(Widp w);
+bool wid_is_hidden(Widp w);
+bool wid_is_moving(Widp w);
+bool wid_receive_input(Widp, const SDL_Keysym *key);
+bool wid_scroll_trough_mouse_down(Widp w, int x, int y, uint32_t button);
+bool wid_scroll_trough_mouse_motion(Widp w, int x, int y, int relx, int rely, int wheelx, int wheely);
+bool wid_some_recent_event_occurred(void);
+
 void wid_destroy_in(Widp w, uint32_t ms);
 void wid_destroy_nodelay(Widp *);
 void wid_destroy_ptr_in(Widp *w, uint32_t ms);
@@ -147,6 +140,8 @@ void wid_destroy(Widp *);
 void wid_display_all(bool ok_to_handle_requests = true);
 void wid_dump(Widp w, int depth);
 void wid_fake_joy_button(int x, int y);
+void wid_find_first_focus(void);
+void wid_find_top_focus(void);
 void wid_fini(void);
 void wid_focus_lock(Widp);
 void wid_gc_all_force(void);
@@ -164,8 +159,13 @@ void wid_key_down(const struct SDL_Keysym *, int x, int y);
 void wid_key_up(const struct SDL_Keysym *, int x, int y);
 void wid_lower(Widp);
 void wid_mouse_down(uint32_t button, int x, int y);
+void wid_mouse_over_end(void);
+void wid_mouse_focus_begin(Widp);
+void wid_mouse_focus_end(void);
 void wid_mouse_held(uint32_t button, int x, int y);
 void wid_mouse_hide(int);
+void wid_mouse_motion_begin(Widp, int x, int y);
+void wid_mouse_motion_end(void);
 void wid_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely);
 void wid_mouse_move(Widp w);
 void wid_mouse_up(uint32_t button, int x, int y);
@@ -244,13 +244,17 @@ void wid_set_text_rhs(Widp, uint8_t val);
 void wid_set_text_top(Widp, uint8_t val);
 void wid_set_text(Widp, int);
 void wid_set_text(Widp, std::string);
-void wid_set_text(Widp, std::string);
 void wid_set_tile(int depth, Widp w, Tilep tile);
 void wid_set_tilename(int depth, Widp, std::string name);
 void wid_set_top(Widp, uint8_t val);
 void wid_set_void_context(Widp w, void *);
 void wid_this_visible(Widp);
 void wid_toggle_hidden(Widp);
+void wid_tree_attach(Widp);
+void wid_tree_attach(Widp w);
+void wid_tree_detach(Widp);
+void wid_tree_detach(Widp w);
+void wid_tree_remove(Widp);
 void wid_unset_focus();
 void wid_unset_focus_lock(void);
 void wid_update_mouse(void);
@@ -539,10 +543,8 @@ public:
   on_tick_post_display_t on_tick_post_display {};
 };
 
-uint8_t wid_is_moving(Widp w);
-
-bool wid_some_recent_event_occurred(void);
-
+extern bool      wid_exiting;
+extern bool      wid_init_done;
 extern bool      wid_mouse_two_clicks;
 extern const int wid_destroy_delay_ms;
 extern int       wid_mouse_visible;
@@ -555,5 +557,8 @@ extern ts_t wid_last_over_event;
 
 extern Widp wid_focus;
 extern Widp wid_over;
+extern Widp wid_focus_locked;
+
+extern wid_key_map_location wid_top_level;
 
 #endif

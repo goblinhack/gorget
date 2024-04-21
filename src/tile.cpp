@@ -2,11 +2,9 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-// REMOVED #include "my_array_bounds_check.hpp"
-// REMOVED #include "my_pixel.hpp"
+#include "my_cpp_template.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
-#include "my_template.hpp"
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 

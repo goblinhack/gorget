@@ -3,18 +3,13 @@
 //
 
 #pragma once
-#ifndef _MY_STRING_UTILL_HPP_
-#define _MY_STRING_UTILL_HPP_
+#ifndef _MY_STRING_UTIL_HPP_
+#define _MY_STRING_UTIL_HPP_
 
 #include "my_main.hpp"
 
-#include <iostream>
-// REMOVED #include <map>
-#include <memory>
-// REMOVED #include <vector>
-
-using shared_vector_string = std::shared_ptr< std::vector< std::string > >;
-using shared_vector_string = std::shared_ptr< std::vector< std::string > >;
+using vector_string = std::vector< std::string >;
+using vector_string = std::vector< std::string >;
 
 extern size_t strlcpy_(char *dst, const char *src, size_t size);
 extern size_t strlcat_(char *dst, const char *src, size_t size);
@@ -38,9 +33,9 @@ int length_without_format(const std::string &);
 int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...);
 int strisregexp(const char *in);
 
-shared_vector_string split(const char *in, int max_line_len);
-shared_vector_string split(const std::string &, int max_line_len);
-shared_vector_string split(const std::string &, int max_line_len);
+vector_string split(const char *in, int max_line_len);
+vector_string split(const std::string &, int max_line_len);
+vector_string split(const std::string &, int max_line_len);
 
 std::string  capitalise(std::string in);
 std::string &ltrim(std::string &s);

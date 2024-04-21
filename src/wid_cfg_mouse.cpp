@@ -19,7 +19,7 @@ static void wid_cfg_mouse_destroy(void)
   config_changed       = false;
 }
 
-static uint8_t wid_cfg_mouse_cancel(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_mouse_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Reload config");
@@ -33,7 +33,7 @@ static uint8_t wid_cfg_mouse_cancel(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_mouse_save(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_mouse_save(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Save config");
@@ -46,7 +46,7 @@ static uint8_t wid_cfg_mouse_save(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_mouse_back(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_mouse_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_cfg_mouse_destroy();
@@ -54,7 +54,7 @@ static uint8_t wid_cfg_mouse_back(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_mouse_wheel_lr_negated(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_mouse_wheel_lr_negated(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -64,7 +64,7 @@ static uint8_t wid_cfg_mouse_wheel_lr_negated(Widp w, int x, int y, uint32_t but
   return true;
 }
 
-static uint8_t wid_cfg_mouse_wheel_ud_negated(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_mouse_wheel_ud_negated(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -74,7 +74,7 @@ static uint8_t wid_cfg_mouse_wheel_ud_negated(Widp w, int x, int y, uint32_t but
   return true;
 }
 
-static uint8_t wid_cfg_mouse_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_mouse_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -107,7 +107,7 @@ static uint8_t wid_cfg_mouse_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static uint8_t wid_cfg_mouse_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_mouse_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 

@@ -457,7 +457,7 @@ char *strcasestr_(const char *s, const char *find)
 /*
  * Split a string "like\nthis" into "like" and "this".
  */
-shared_vector_string split(const char *text, int max_line_len)
+vector_string split(const char *text, int max_line_len)
 {
   TRACE_NO_INDENT();
   uint8_t           found_format_string;
@@ -467,11 +467,11 @@ shared_vector_string split(const char *text, int max_line_len)
   char              c;
   const char *const text_start = text;
 
-  if (! text) {
-    return nullptr;
-  }
+  auto result = std::vector< std::string >();
 
-  auto result = std::make_shared< std::vector< std::string > >();
+  if (! text) {
+    return result;
+  }
 
   for (; /*ever*/;) {
     line_len   = 0;
@@ -576,7 +576,7 @@ shared_vector_string split(const char *text, int max_line_len)
     char tmp[ line_len + 1 ];
     strlcpy_(tmp, line_start, line_len + 1);
 
-    result->push_back(tmp);
+    result.push_back(tmp);
 
     text = line_end;
     if (! *text) {
@@ -593,7 +593,7 @@ shared_vector_string split(const char *text, int max_line_len)
   return result;
 }
 
-shared_vector_string split(const std::string &text, int max_line_len)
+vector_string split(const std::string &text, int max_line_len)
 {
   TRACE_NO_INDENT();
   uint8_t found_format_string;
@@ -608,13 +608,13 @@ shared_vector_string split(const std::string &text, int max_line_len)
     DIE("bad max line len");
   }
 
-  if (! text.length()) {
-    return nullptr;
-  }
-
   // printf("SPLIT1 [%s] max_line_len %d\n", text.c_str(), max_line_len);
 
-  auto result = std::make_shared< std::vector< std::string > >();
+  auto result = std::vector< std::string >();
+
+  if (! text.length()) {
+    return result;
+  }
 
   for (; /*ever*/;) {
     line_len   = 0;
@@ -731,7 +731,7 @@ shared_vector_string split(const std::string &text, int max_line_len)
     auto tmp = std::string(line_start, line_start + line_len);
 
     // printf("OUT [%s] max_line_len %d\n", tmp.c_str(), line_len);
-    result->push_back(tmp);
+    result.push_back(tmp);
 
     text_iter = line_end;
     if (! *text_iter) {

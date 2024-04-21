@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#ifndef _MY_TEMPLATE_HPP_
-#define _MY_TEMPLATE_HPP_
+#ifndef _MY_CPP_TEMPLATE_HPP_
+#define _MY_CPP_TEMPLATE_HPP_
 
 #include "my_random.hpp"
 #include <algorithm> // for std::transform()
@@ -50,7 +50,7 @@ template < class T, template < typename ELEM, typename ALLOC = std::allocator< E
 
   size_t sz = eo - so;
   if (! sz) {
-    DIE("no size given");
+    return *so;
   }
 
   return *(so + (pcg_rand() % sz));

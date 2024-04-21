@@ -21,7 +21,7 @@ static void wid_error_destroy(void)
   CON("It all went dark briefly. What happened?");
 }
 
-static uint8_t wid_error_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_error_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -56,7 +56,7 @@ static uint8_t wid_error_key_up(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static uint8_t wid_error_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_error_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 

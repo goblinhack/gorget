@@ -20,7 +20,7 @@ static void wid_cfg_sound_destroy(void)
   config_changed       = false;
 }
 
-static uint8_t wid_cfg_sound_cancel(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_sound_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Reload config");
@@ -34,7 +34,7 @@ static uint8_t wid_cfg_sound_cancel(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_sound_save(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_sound_save(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Save config");
@@ -44,7 +44,7 @@ static uint8_t wid_cfg_sound_save(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_sound_back(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_sound_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_cfg_sound_destroy();
@@ -52,7 +52,7 @@ static uint8_t wid_cfg_sound_back(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_sound_effects_volume_incr(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_sound_effects_volume_incr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -65,7 +65,7 @@ static uint8_t wid_cfg_sound_effects_volume_incr(Widp w, int x, int y, uint32_t 
   return true;
 }
 
-static uint8_t wid_cfg_sound_effects_volume_decr(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_sound_effects_volume_decr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -79,7 +79,7 @@ static uint8_t wid_cfg_sound_effects_volume_decr(Widp w, int x, int y, uint32_t 
   return true;
 }
 
-static uint8_t wid_cfg_sound_music_volume_incr(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_sound_music_volume_incr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -93,7 +93,7 @@ static uint8_t wid_cfg_sound_music_volume_incr(Widp w, int x, int y, uint32_t bu
   return true;
 }
 
-static uint8_t wid_cfg_sound_music_volume_decr(Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_sound_music_volume_decr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   config_changed = true;
@@ -108,7 +108,7 @@ static uint8_t wid_cfg_sound_music_volume_decr(Widp w, int x, int y, uint32_t bu
   return true;
 }
 
-static uint8_t wid_cfg_sound_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_sound_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -141,7 +141,7 @@ static uint8_t wid_cfg_sound_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static uint8_t wid_cfg_sound_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_sound_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
