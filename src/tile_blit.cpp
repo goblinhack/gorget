@@ -3,7 +3,6 @@
 //
 
 #include "my_color_defs.hpp"
-// REMOVED #include "my_game.hpp"
 #include "my_random.hpp"
 #include "my_tile.hpp"
 

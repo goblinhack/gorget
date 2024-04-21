@@ -3,11 +3,11 @@
 //
 
 #include "my_array_bounds_check.hpp"
-#include "my_backtrace.hpp"
 #include "my_color_defs.hpp"
 #include "my_command.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
@@ -402,15 +402,6 @@ void *wid_get_void_context(Widp w)
 
 void wid_set_prev(Widp w, Widp prev)
 {
-
-  IF_DEBUG3
-  {
-    verify(MTYPE_WID, w);
-    if (prev) {
-      verify(MTYPE_WID, prev);
-    }
-  }
-
   if (unlikely(! w)) {
     DIE("No wid");
   }
@@ -495,14 +486,11 @@ Widp wid_get_top_parent(Widp w)
     return w;
   }
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-
   if (! w->parent) {
     return w;
   }
 
   while (w->parent) {
-    IF_DEBUG3 { verify(MTYPE_WID, w); }
     w = w->parent;
   }
 
@@ -906,20 +894,12 @@ void wid_set_name(Widp w, std::string name)
 #endif
 }
 
-void wid_set_debug(Widp w, uint8_t val)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-
-  w->debug = val;
-}
+void wid_set_debug(Widp w, uint8_t val) { w->debug = val; }
 
 void wid_set_text_max_len(Widp w, size_t max_len) { w->max_len = max_len; }
 
 void wid_set_text(Widp w, std::string text)
 {
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
 
   if (text == "") {
     w->text = "";
@@ -943,108 +923,37 @@ void wid_set_text(Widp w, std::string text)
   }
 }
 
-void wid_set_text(Widp w, int v)
-{
+void wid_set_text(Widp w, int v) { wid_set_text(w, std::to_string(v)); }
 
-  verify(MTYPE_WID, w);
-  wid_set_text(w, std::to_string(v));
-}
+bool wid_get_received_input(Widp w) { return (w->received_input); }
 
-bool wid_get_received_input(Widp w)
-{
+void wid_set_received_input(Widp w, uint8_t val) { w->received_input = val; }
 
-  verify(MTYPE_WID, w);
-  return (w->received_input);
-}
+void wid_set_cursor(Widp w, uint32_t val) { w->cursor = val; }
 
-void wid_set_received_input(Widp w, uint8_t val)
-{
+int wid_get_width(Widp w) { return (wid_get_br_x(w) - wid_get_tl_x(w)) + 1; }
 
-  verify(MTYPE_WID, w);
-  w->received_input = val;
-}
+int wid_get_height(Widp w) { return (wid_get_br_y(w) - wid_get_tl_y(w)) + 1; }
 
-void wid_set_cursor(Widp w, uint32_t val)
-{
+bool wid_get_focusable(Widp w) { return (w->focus_order); }
 
-  verify(MTYPE_WID, w);
-  w->cursor = val;
-}
+void wid_set_focusable(Widp w, uint8_t val) { w->focus_order = val; }
 
-int wid_get_width(Widp w)
-{
+bool wid_get_show_cursor(Widp w) { return (w->show_cursor); }
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (wid_get_br_x(w) - wid_get_tl_x(w)) + 1;
-}
+void wid_set_show_cursor(Widp w, uint8_t val) { w->show_cursor = val; }
 
-int wid_get_height(Widp w)
-{
+bool wid_get_do_not_raise(Widp w) { return (w->do_not_raise); }
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (wid_get_br_y(w) - wid_get_tl_y(w)) + 1;
-}
+void wid_set_do_not_raise(Widp w, uint8_t val) { w->do_not_raise = val; }
 
-bool wid_get_focusable(Widp w)
-{
+bool wid_get_do_not_lower(Widp w) { return (w->do_not_lower); }
 
-  verify(MTYPE_WID, w);
-  return (w->focus_order);
-}
-
-void wid_set_focusable(Widp w, uint8_t val)
-{
-
-  verify(MTYPE_WID, w);
-  w->focus_order = val;
-}
-
-bool wid_get_show_cursor(Widp w)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (w->show_cursor);
-}
-
-void wid_set_show_cursor(Widp w, uint8_t val)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  w->show_cursor = val;
-}
-
-bool wid_get_do_not_raise(Widp w)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (w->do_not_raise);
-}
-
-void wid_set_do_not_raise(Widp w, uint8_t val)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  w->do_not_raise = val;
-}
-
-bool wid_get_do_not_lower(Widp w)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (w->do_not_lower);
-}
-
-void wid_set_do_not_lower(Widp w, uint8_t val)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  w->do_not_lower = val;
-}
+void wid_set_do_not_lower(Widp w, uint8_t val) { w->do_not_lower = val; }
 
 bool wid_get_moveable(Widp w)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   if (w->moveable_set) {
     return (w->moveable);
   }
@@ -1055,7 +964,6 @@ bool wid_get_moveable(Widp w)
 void wid_set_moveable(Widp w, uint8_t val)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   w->moveable     = val;
   w->moveable_set = true;
 
@@ -1066,7 +974,6 @@ void wid_set_moveable(Widp w, uint8_t val)
 bool wid_get_moveable_horiz(Widp w)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   if (w->moveable_horiz_set) {
     return (w->moveable_horiz);
   }
@@ -1077,7 +984,6 @@ bool wid_get_moveable_horiz(Widp w)
 void wid_set_moveable_horiz(Widp w, uint8_t val)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   w->moveable_horiz     = val;
   w->moveable_horiz_set = true;
 }
@@ -1085,7 +991,6 @@ void wid_set_moveable_horiz(Widp w, uint8_t val)
 bool wid_get_moveable_vert(Widp w)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   if (w->moveable_vert_set) {
     return (w->moveable_vert);
   }
@@ -1096,7 +1001,6 @@ bool wid_get_moveable_vert(Widp w)
 void wid_set_moveable_vert(Widp w, uint8_t val)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   w->moveable_vert     = val;
   w->moveable_vert_set = true;
 }
@@ -1104,7 +1008,6 @@ void wid_set_moveable_vert(Widp w, uint8_t val)
 bool wid_get_moveable_bounded(Widp w)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   if (w->moveable_bounded_set) {
     return (w->moveable_bounded);
   }
@@ -1115,7 +1018,6 @@ bool wid_get_moveable_bounded(Widp w)
 void wid_set_moveable_bounded(Widp w, uint8_t val)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   w->moveable_bounded     = val;
   w->moveable_bounded_set = true;
 }
@@ -1123,7 +1025,6 @@ void wid_set_moveable_bounded(Widp w, uint8_t val)
 bool wid_get_moveable_no_user_scroll(Widp w)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   if (w->moveable_no_user_scroll_set) {
     return (w->moveable_no_user_scroll);
   }
@@ -1134,73 +1035,27 @@ bool wid_get_moveable_no_user_scroll(Widp w)
 void wid_set_moveable_no_user_scroll(Widp w, uint8_t val)
 {
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   w->moveable_no_user_scroll     = val;
   w->moveable_no_user_scroll_set = true;
 }
 
-bool wid_get_text_lhs(Widp w)
-{
+bool wid_get_text_lhs(Widp w) { return (w->text_lhs); }
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (w->text_lhs);
-}
+void wid_set_text_lhs(Widp w, uint8_t val) { w->text_lhs = val; }
 
-void wid_set_text_lhs(Widp w, uint8_t val)
-{
+bool wid_get_text_rhs(Widp w) { return (w->text_rhs); }
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  w->text_lhs = val;
-}
+void wid_set_text_rhs(Widp w, uint8_t val) { w->text_rhs = true; }
 
-bool wid_get_text_rhs(Widp w)
-{
+bool wid_get_text_centerx(Widp w) { return (w->text_centerx); }
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (w->text_rhs);
-}
+void wid_set_text_centerx(Widp w, uint8_t val) { w->text_centerx = val; }
 
-void wid_set_text_rhs(Widp w, uint8_t val)
-{
+bool wid_get_text_top(Widp w) { return (w->text_top); }
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  w->text_rhs = true;
-}
+void wid_set_text_top(Widp w, uint8_t val) { w->text_top = val; }
 
-bool wid_get_text_centerx(Widp w)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (w->text_centerx);
-}
-
-void wid_set_text_centerx(Widp w, uint8_t val)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  w->text_centerx = val;
-}
-
-bool wid_get_text_top(Widp w)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (w->text_top);
-}
-
-void wid_set_text_top(Widp w, uint8_t val)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  w->text_top = val;
-}
-
-bool wid_get_text_bot(Widp w)
-{
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  return (w->text_bot);
-}
+bool wid_get_text_bot(Widp w) { return (w->text_bot); }
 
 void wid_set_text_bot(Widp w, uint8_t val) { w->text_bot = val; }
 
@@ -1413,18 +1268,13 @@ void wid_set_on_tick_post_display(Widp w, on_tick_post_display_t fn)
 //
 // Remove this wid from any trees it is in.
 //
-void wid_tree_detach(Widp w)
-{
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-  wid_tree_remove(w);
-}
+void wid_tree_detach(Widp w) { wid_tree_remove(w); }
 
 //
 // Add back to all trees.
 //
 void wid_tree_attach(Widp w)
 {
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
   wid_key_map_location *root;
 
   if (w->in_tree_root) {
@@ -1434,7 +1284,6 @@ void wid_tree_attach(Widp w)
   if (! w->parent) {
     root = &wid_top_level;
   } else {
-    IF_DEBUG3 { verify(MTYPE_WID, w->parent); }
     root = &w->parent->children_display_sorted;
   }
 
@@ -1466,7 +1315,6 @@ static void wid_tree_insert(Widp w)
   if (! w->parent) {
     root = &wid_top_level;
   } else {
-    verify(MTYPE_WID, w->parent);
     root = &w->parent->children_display_sorted;
   }
 
@@ -1602,8 +1450,6 @@ static void wid_tree6_tick_post_display_wids_insert(Widp w)
 void wid_tree_remove(Widp w)
 {
   wid_key_map_location *root;
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
 
   root = w->in_tree_root;
   if (! root) {
@@ -1830,7 +1676,6 @@ static void wid_destroy_immediate_internal(Widp w)
 
 static void wid_destroy_immediate(Widp w)
 {
-  verify(MTYPE_WID, w);
   WID_DBG(w, "destroy immediate");
 
   //
@@ -1839,7 +1684,6 @@ static void wid_destroy_immediate(Widp w)
   if (! w->parent) {
     wid_find_top_focus();
   } else {
-    verify(MTYPE_WID, w->parent);
   }
 
   wid_tree_detach(w);
@@ -2327,7 +2171,6 @@ Widp wid_new_horiz_scroll_bar(Widp parent, std::string name, Widp scrollbar_owne
 
 static void wid_raise_internal(Widp w)
 {
-  verify(MTYPE_WID, w);
   if (w->do_not_raise) {
     return;
   }
@@ -2392,7 +2235,6 @@ void wid_raise(Widp w_in)
 
 static void wid_lower_internal(Widp w)
 {
-  verify(MTYPE_WID, w);
 
   if (w->do_not_lower) {
     return;
@@ -3450,7 +3292,6 @@ Widp wid_find_at(int x, int y)
     return nullptr;
   }
 
-  verify(MTYPE_WID, w);
   if (wid_ignore_being_destroyed(w)) {
     return nullptr;
   }
@@ -3878,7 +3719,6 @@ static Widp wid_joy_button_handler(int x, int y)
 //
 void wid_fake_joy_button(int x, int y)
 {
-
   if (get(sdl.joy_buttons, SDL_JOY_BUTTON_A)) {
     wid_mouse_down(SDL_BUTTON_LEFT, x, y);
     return;
@@ -4495,8 +4335,6 @@ static void wid_display(Widp w, uint8_t disable_scissor, uint8_t *updated_scisso
   Widp p {};
 #endif
 
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
-
 #if 0
   if (!w->parent) {
     wid_dump(w, 0);
@@ -4946,11 +4784,8 @@ void wid_display_all(bool ok_to_handle_requests)
   auto wid_top_level_copy = wid_top_level;
   for (auto iter = wid_top_level_copy.begin(); iter != wid_top_level_copy.end(); ++iter) {
     auto w = iter->second;
-    verify(MTYPE_WID, w);
 
-    if (w->parent) {
-      verify(MTYPE_WID, w->parent);
-    }
+    if (w->parent) {}
 
     if (wid_is_hidden(w)) {
       continue;
@@ -4960,7 +4795,6 @@ void wid_display_all(bool ok_to_handle_requests)
 auto last = wid_total_count;
 #endif
     wid_display(w, false /* disable_scissors */, 0 /* updated_scissors */, true);
-    verify(MTYPE_WID, w);
 #if 0
 printf("%s %d\n", wid_name(w).c_str(), wid_total_count - last);
 #endif
@@ -5029,8 +4863,6 @@ bool wid_is_hidden(Widp w)
   if (unlikely(! w)) {
     return false;
   }
-
-  IF_DEBUG3 { verify(MTYPE_WID, w); }
 
   if (w->hidden) {
     return true;

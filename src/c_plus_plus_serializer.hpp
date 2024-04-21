@@ -3,7 +3,6 @@
 #ifndef C_PLUS_PLUS_SERIALIZER
 #define C_PLUS_PLUS_SERIALIZER
 #include <fstream>
-// REMOVED #include <iostream>
 #include <sstream>
 #include <vector>
 

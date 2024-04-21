@@ -1,5 +1,3 @@
-#include <SDL.h>
-#include <SDL_mixer.h>
 #include <array>
 #include <cstdint>
 #include <cstring>
@@ -33,6 +31,7 @@
 #include "my_audio.hpp"
 #include "my_callstack.hpp"
 #include "my_command.hpp"
+#include "my_cpp_template.hpp"
 #include "my_dir.hpp"
 #include "my_enum.hpp"
 #include "my_file.hpp"
@@ -47,7 +46,6 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_thing.hpp"
-#include "my_thing_id.hpp"
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_wid_console.hpp"

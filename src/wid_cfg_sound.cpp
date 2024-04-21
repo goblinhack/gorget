@@ -2,12 +2,13 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include <SDL_mixer.h>
+
 #include "my_game.hpp"
 #include "my_music.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
-#include <SDL_mixer.h>
 
 static WidPopup *wid_cfg_sound_window;
 static bool      config_changed;

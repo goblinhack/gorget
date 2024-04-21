@@ -7,7 +7,6 @@
 #define _MY_GAME_HPP_
 
 #include <SDL.h>
-#include <vector>
 
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"

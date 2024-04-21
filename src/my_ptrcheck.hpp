@@ -3,6 +3,8 @@
 #ifndef _MY__PTRCHECK_HPP__
 #define _MY__PTRCHECK_HPP__
 
+#include "my_source_loc.hpp"
+
 //
 // __FUNCTION__ is not a preprocessor directive so we can't convert it into a
 // string

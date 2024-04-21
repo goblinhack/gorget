@@ -2,17 +2,10 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_array_bounds_check.hpp"
-#include "my_backtrace.hpp"
-#include "my_color_defs.hpp"
-#include "my_command.hpp"
-#include "my_font.hpp"
 #include "my_game.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_sprintf.hpp"
-#include "my_ui.hpp"
 #include "my_wid_console.hpp"
 
 int  wid_mouse_visible = 1;
@@ -114,7 +107,6 @@ void wid_mouse_over_end(void)
 
 static bool wid_mouse_over_begin(Widp w, uint32_t x, uint32_t y, int relx, int rely, int wheelx, int wheely)
 {
-
   if (! wid_mouse_visible) {
     return false;
   }
@@ -134,8 +126,7 @@ static bool wid_mouse_over_begin(Widp w, uint32_t x, uint32_t y, int relx, int r
   }
 
   if (! w->on_mouse_over_begin && ! w->on_mouse_down) {
-    if (get(w->cfg, WID_MODE_OVER).color_set[ WID_COLOR_BG ]
-        || get(w->cfg, WID_MODE_OVER).color_set[ WID_COLOR_TEXT_FG ]) {
+    if (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_BG ] || w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_TEXT_FG ]) {
       //
       // Changes appearance on mouse over, so choose this wid even
       // if it has no over callback.
@@ -145,7 +136,7 @@ static bool wid_mouse_over_begin(Widp w, uint32_t x, uint32_t y, int relx, int r
       // Can ignore. It doesn't really do anything when the mouse
       // is over.
       //
-      if (! wid_over && get(wid_on_screen_at, x, y)) {
+      if (! wid_over && wid_on_screen_at[ x ][ y ]) {
         //
         // But if we have nothing else, use this
         //
@@ -193,7 +184,6 @@ void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn) { w->on_mouse_ove
 
 bool wid_scroll_trough_mouse_down(Widp w, int x, int y, uint32_t button)
 {
-
   int dx;
   int dy;
 
@@ -496,7 +486,6 @@ static Widp wid_mouse_held_handler_at(Widp w, int x, int y, uint8_t strict)
 
 static Widp wid_mouse_up_handler_at(Widp w, int x, int y, uint8_t strict)
 {
-
   if (unlikely(! w)) {
     return nullptr;
   }
@@ -570,7 +559,6 @@ static Widp wid_mouse_up_handler_at(Widp w, int x, int y, uint8_t strict)
 
 static Widp wid_mouse_down_handler(int x, int y)
 {
-
   Widp w {};
 
   w = wid_mouse_down_handler_at(wid_focus, x, y, true /* strict */);
@@ -618,7 +606,6 @@ static Widp wid_mouse_down_handler(int x, int y)
 
 static Widp wid_mouse_held_handler(int x, int y)
 {
-
   Widp w {};
 
   w = wid_mouse_held_handler_at(wid_focus, x, y, true /* strict */);
@@ -670,13 +657,11 @@ static Widp wid_mouse_up_handler(int x, int y)
 
   w = wid_mouse_up_handler_at(wid_focus, x, y, true /* strict */);
   if (w) {
-    verify(MTYPE_WID, w);
     return w;
   }
 
   w = wid_mouse_up_handler_at(wid_over, x, y, true /* strict */);
   if (w) {
-    verify(MTYPE_WID, w);
     return w;
   }
 
@@ -692,7 +677,6 @@ static Widp wid_mouse_up_handler(int x, int y)
       continue;
     }
 
-    verify(MTYPE_WID, w);
     return w;
   }
 
@@ -708,7 +692,6 @@ static Widp wid_mouse_up_handler(int x, int y)
       continue;
     }
 
-    verify(MTYPE_WID, w);
     return w;
   }
 
@@ -719,9 +702,8 @@ static Widp wid_mouse_motion_handler(int x, int y, int relx, int rely, int wheel
 {
   Widp w {};
 
-  w = get(wid_on_screen_at, x, y);
+  w = wid_on_screen_at[ x ][ y ];
   if (w) {
-    verify(MTYPE_WID, w);
     if (w->hidden) {
       return nullptr;
     }
@@ -830,7 +812,6 @@ void wid_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely)
       //
       if (w->on_mouse_motion) {
         if ((w->on_mouse_motion)(w, x, y, relx, rely, wheelx, wheely)) {
-          verify(MTYPE_WID, w);
           got_one = true;
           break;
         }
@@ -935,7 +916,6 @@ void wid_mouse_down(uint32_t button, int x, int y)
   // Raise on mouse.
   //
   if ((w->on_mouse_down && (w->on_mouse_down)(w, x, y, button)) || wid_get_moveable(w)) {
-    verify(MTYPE_WID, w);
     sound_play("click");
 
     wid_set_focus(w);
@@ -992,7 +972,6 @@ void wid_mouse_held(uint32_t button, int x, int y)
   // Raise on mouse.
   //
   if ((w->on_mouse_held && (w->on_mouse_held)(w, x, y, button)) || wid_get_moveable(w)) {
-    verify(MTYPE_WID, w);
 
     wid_set_focus(w);
     wid_set_mode(w, WID_MODE_ACTIVE);
@@ -1034,10 +1013,8 @@ void wid_mouse_up(uint32_t button, int x, int y)
   if (unlikely(! w)) {
     return;
   }
-  verify(MTYPE_WID, w);
 
   if ((w->on_mouse_up && (w->on_mouse_up)(w, x, y, button)) || wid_get_moveable(w)) {
-    verify(MTYPE_WID, w);
     sound_play("click");
 
     wid_set_mode(w, WID_MODE_ACTIVE);
@@ -1050,7 +1027,6 @@ void wid_mouse_up(uint32_t button, int x, int y)
 
 void wid_mouse_hide(int value)
 {
-
   int visible = ! value;
 
   if (visible != wid_mouse_visible) {
@@ -1066,7 +1042,6 @@ void wid_mouse_hide(int value)
 
 void wid_mouse_warp(Widp w)
 {
-
   int tlx, tly, brx, bry;
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
@@ -1079,7 +1054,6 @@ void wid_mouse_warp(Widp w)
 
 void wid_mouse_move(Widp w)
 {
-
   int tlx, tly, brx, bry;
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);

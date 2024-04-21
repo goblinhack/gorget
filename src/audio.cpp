@@ -2,8 +2,9 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_main.hpp"
 #include <SDL_mixer.h>
+
+#include "my_main.hpp"
 
 uint8_t audio_init_done;
 

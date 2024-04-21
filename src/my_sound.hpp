@@ -9,10 +9,6 @@
 #ifndef _MY_SOUND_HPP_
 #define _MY_SOUND_HPP_
 
-#include "my_ptrcheck.hpp"
-
-#include <SDL_mixer.h>
-
 class sound;
 using soundp = class sound *;
 
@@ -24,26 +20,6 @@ bool sound_find(const std::string &alias);
 bool sound_play(const std::string &alias);
 bool sound_play_channel(int chan, const std::string &alias);
 void sound_halt(void);
-
-class sound
-{
-public:
-  sound(std::string alias) : alias(alias) {}
-
-  ~sound(void)
-  {
-    Mix_FreeChunk(chunk);
-    myfree(data);
-  }
-
-  std::string    alias;
-  Mix_Chunk     *chunk = {};
-  unsigned char *data  = {};
-  int            len   = {};
-  float          volume {};
-};
-
-extern std::map< std::string, class sound * > all_sound;
 
 enum {
   CHANNEL_MISC,

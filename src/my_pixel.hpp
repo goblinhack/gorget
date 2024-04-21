@@ -9,7 +9,6 @@
 #include <SDL.h>
 
 #include "my_color.hpp"
-// REMOVED #include "my_sys.hpp"
 
 #define pixel_ANYw(s, y)             ((y) * (s->pitch / s->format->BytesPerPixel))
 #define pixel_32bpp(s, x, y)         ((uint32_t *) s->pixels + (x) + pixel_ANYw(s, y))

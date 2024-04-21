@@ -2,11 +2,12 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include <SDL_mixer.h>
+
 #include "my_file.hpp"
 #include "my_game.hpp"
 #include "my_music.hpp"
 #include "my_ptrcheck.hpp"
-#include <SDL_mixer.h>
 
 class music
 {

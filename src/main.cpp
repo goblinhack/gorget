@@ -22,6 +22,7 @@
 #include "my_gfx.hpp"
 #include "my_main.hpp"
 #include "my_music.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"

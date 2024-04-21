@@ -54,4 +54,4 @@ public:
   const char *place_str(int score);
 };
 
-#endif // _MY_THING_HPP_
+#endif // _MY_HISCORE_HPP_

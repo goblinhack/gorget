@@ -2,9 +2,30 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include <SDL_mixer.h>
+
 #include "my_file.hpp"
 #include "my_game.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_sound.hpp"
+
+class sound
+{
+public:
+  sound(std::string alias) : alias(alias) {}
+
+  ~sound(void)
+  {
+    Mix_FreeChunk(chunk);
+    myfree(data);
+  }
+
+  std::string    alias;
+  Mix_Chunk     *chunk = {};
+  unsigned char *data  = {};
+  int            len   = {};
+  float          volume {};
+};
 
 std::map< std::string, class sound * > all_sound;
 
