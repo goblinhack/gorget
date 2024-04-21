@@ -17,8 +17,7 @@ void Level::thing_player_create_and_place()
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
-        point p(x, y);
-        auto  tp = tp_get(p, slot);
+        auto tp = tp_get(x, y, slot);
         if (! tp) {
           continue;
         }
@@ -27,7 +26,7 @@ void Level::thing_player_create_and_place()
           continue;
         }
 
-        auto t = thing_init(tp, p);
+        auto t = thing_init(tp, x, y);
 
         thing_push(t);
 
@@ -35,7 +34,7 @@ void Level::thing_player_create_and_place()
           data->player = t->id;
         }
 
-        tp_unset(p, tp);
+        tp_unset(x, y, tp);
       }
     }
   }
@@ -52,7 +51,7 @@ Thingp Level::thing_player()
   return thing_find(data->player);
 }
 
-void Level::thing_player_move_delta(point delta)
+void Level::thing_player_move_delta(int dx, int dy)
 {
   TRACE_NO_INDENT();
 
@@ -68,11 +67,8 @@ void Level::thing_player_move_delta(point delta)
     return;
   }
 
-  point new_loc(t->x, t->y);
-  new_loc += delta;
-
-  if (1 || thing_can_move(t, new_loc)) {
-    thing_move(t, new_loc);
+  if (1 || thing_can_move(t, t->x + dx, t->y + dy)) {
+    thing_move(t, t->x + dx, t->y + dy);
 
     tick_begin_requested("player moved");
   }
@@ -132,24 +128,24 @@ bool Level::thing_player_move_request(bool up, bool down, bool left, bool right)
 
   if (data->requested_move_up) {
     if (data->requested_move_keft) {
-      thing_player_move_delta(point(-1, -1));
+      thing_player_move_delta(-1, -1);
     } else if (data->requested_move_right) {
-      thing_player_move_delta(point(1, -1));
+      thing_player_move_delta(1, -1);
     } else {
-      thing_player_move_delta(point(0, -1));
+      thing_player_move_delta(0, -1);
     }
   } else if (data->requested_move_left) {
     if (data->requested_move_keft) {
-      thing_player_move_delta(point(-1, 1));
+      thing_player_move_delta(-1, 1);
     } else if (data->requested_move_right) {
-      thing_player_move_delta(point(1, 1));
+      thing_player_move_delta(1, 1);
     } else {
-      thing_player_move_delta(point(0, 1));
+      thing_player_move_delta(0, 1);
     }
   } else if (data->requested_move_keft) {
-    thing_player_move_delta(point(-1, 0));
+    thing_player_move_delta(-1, 0);
   } else if (data->requested_move_right) {
-    thing_player_move_delta(point(1, 0));
+    thing_player_move_delta(1, 0);
   }
 
   return true;

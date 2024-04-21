@@ -5,17 +5,17 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-Thingp thing_init(LevelData *data, Tpp tp, point p)
+Thingp thing_init(LevelData *data, Tpp tp, int x, int y)
 {
   TRACE_NO_INDENT();
 
-  auto t = thing_new(data, tp, p);
+  auto t = thing_new(data, tp, x, y);
   if (! t) {
     return nullptr;
   }
 
-  t->x     = p.x;
-  t->y     = p.y;
+  t->x     = x;
+  t->y     = y;
   t->old_x = t->x;
   t->old_y = t->y;
   t->pix_x = t->x * TILE_WIDTH;
@@ -26,8 +26,8 @@ Thingp thing_init(LevelData *data, Tpp tp, point p)
   return t;
 }
 
-Thingp Level::thing_init(Tpp tp, point p)
+Thingp Level::thing_init(Tpp tp, int x, int y)
 {
   TRACE_NO_INDENT();
-  return ::thing_init(data, tp, p);
+  return ::thing_init(data, tp, x, y);
 }

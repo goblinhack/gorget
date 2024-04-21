@@ -1,3 +1,7 @@
+//
+// Copyright Neil McGill, goblinhack@gmail.com
+//
+//
 #pragma once
 #ifndef _MY_SOURCE_LOC_HPP_
 #define _MY_SOURCE_LOC_HPP_

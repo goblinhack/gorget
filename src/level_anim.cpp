@@ -24,9 +24,8 @@ void Level::anim(void)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        Tpp   tp;
-        point p(x, y);
-        thing_get(p, slot, &tp);
+        Tpp tp;
+        thing_get(x, y, slot, &tp);
         if (! tp) {
           continue;
         }

@@ -13,9 +13,8 @@ void thing_push(LevelData *data, Thingp t)
 
   int16_t x = t->pix_x / TILE_WIDTH;
   int16_t y = t->pix_y / TILE_HEIGHT;
-  point   p(x, y);
 
-  if (is_oob(data, p)) {
+  if (is_oob(data, x, y)) {
     return;
   }
 

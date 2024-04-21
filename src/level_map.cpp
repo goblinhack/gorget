@@ -72,14 +72,14 @@ void Level::map_set(LevelDatap data, const char *in)
 
       if (need_floor) {
         auto tp = tp_floor;
-        ::tp_set(data, point(x, y), tp);
+        ::tp_set(data, x, y, tp);
       }
 
       if (! tp) {
         continue;
       }
 
-      ::tp_set(data, point(x, y), tp);
+      ::tp_set(data, x, y, tp);
     }
   }
 }

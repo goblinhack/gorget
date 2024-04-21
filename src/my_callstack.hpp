@@ -6,7 +6,6 @@
 #define _MY_CALLSTACK_HPP_
 
 #include "my_main.hpp"
-#include <string>
 
 #define CAT(A, B)  A##B
 #define CAT2(A, B) CAT(A, B)
@@ -52,8 +51,7 @@ extern unsigned char    g_callframes_indent;
 #endif
 #endif
 
-extern void        callstack_dump(void);
-extern std::string callstack_string(void);
+extern void callstack_dump(void);
 
 struct tracer_t {
   inline tracer_t(const char *func, const unsigned short line)

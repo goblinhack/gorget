@@ -9,11 +9,11 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-Thingp thing_get(LevelData *data, point p, uint8_t slot, Tpp *out)
+Thingp thing_get(LevelData *data, int x, int y, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
-  Id id = data->obj[ p.x ][ p.y ][ slot ].id;
+  Id id = data->obj[ x ][ y ][ slot ].id;
 
   if (out) {
     *out = nullptr;
@@ -43,10 +43,10 @@ Thingp thing_get(LevelData *data, point p, uint8_t slot, Tpp *out)
   return nullptr;
 }
 
-Thingp Level::thing_get(point p, uint8_t slot, Tpp *out)
+Thingp Level::thing_get(int x, int y, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();
-  return ::thing_get(data, p, slot, out);
+  return ::thing_get(data, x, y, slot, out);
 }
 
 Thingp thing_find_optional(LevelData *data, ThingId id)
@@ -106,7 +106,7 @@ Thingp Level::thing_find(ThingId id)
   return ::thing_find_optional(data, id);
 }
 
-Thingp thing_new(LevelData *data, Tpp tp, point p)
+Thingp thing_new(LevelData *data, Tpp tp, int tx, int ty)
 {
   TRACE_NO_INDENT();
 
@@ -132,8 +132,8 @@ Thingp thing_new(LevelData *data, Tpp tp, point p)
       ThingId thing_id;
       thing_id = (entropy << (THING_ID_X_BITS + THING_ID_Y_BITS)) | (x << THING_ID_Y_BITS) | y;
       t->id    = thing_id;
-      t->pix_x = (int) p.x * TILE_WIDTH;
-      t->pix_y = (int) p.y * TILE_HEIGHT;
+      t->pix_x = (int) tx * TILE_WIDTH;
+      t->pix_y = (int) ty * TILE_HEIGHT;
 
       if (tp) {
         t->tp_id = tp->id;
@@ -146,10 +146,10 @@ Thingp thing_new(LevelData *data, Tpp tp, point p)
   DIE("out of things");
 }
 
-Thingp Level::thing_new(Tpp tp, point p)
+Thingp Level::thing_new(Tpp tp, int x, int y)
 {
   TRACE_NO_INDENT();
-  return ::thing_new(data, tp, p);
+  return ::thing_new(data, tp, x, y);
 }
 
 void thing_free(LevelData *data, Thingp t)

@@ -6,7 +6,6 @@
 #ifndef _MY_CONFIG_HPP_
 #define _MY_CONFIG_HPP_
 
-
 #define ENABLE_ASSERT             // Abort on errors
 #define ENABLE_CRASH_HANDLER      // Intercept SEGV and other faults
 #define ENABLE_DEBUG_TRACE        // (SLOW) Function tracing

@@ -40,9 +40,8 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
   point tl;
   point br;
 
-  Tpp   tp;
-  point p(x, y);
-  auto  t = thing_get(p, slot, &tp);
+  Tpp  tp;
+  auto t = thing_get(x, y, slot, &tp);
   if (! tp) {
     return;
   }

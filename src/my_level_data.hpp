@@ -6,13 +6,11 @@
 #ifndef _MY_LEVEL_DATA_H_
 #define _MY_LEVEL_DATA_H_
 
-#include <array>
 #include <inttypes.h>
 
 #include "my_depth.hpp"
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"
-#include "my_point.hpp"
 #include "my_thing.hpp"
 #include "my_thing_id.hpp"
 
@@ -146,38 +144,38 @@ typedef struct LevelData_ {
       if (_data_copy_.all_things[ _x_ ][ _y_ ].id)                                                                   \
         if ((_t_ = ::thing_find_optional(_data_, _data_copy_.all_things[ _x_ ][ _y_ ].id)))
 
-#define FOR_ALL_TPS_AT(_data_, _t_, _tp_, _p_)                                                                       \
+#define FOR_ALL_TPS_AT(_data_, _t_, _tp_, _x_, _y_)                                                                  \
   Tpp _tp_;                                                                                                          \
-  for (auto _slot_ = 0; ::thing_get(_data_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)                       \
+  for (auto _slot_ = 0; ::thing_get(_data_, _x_, _y_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)                  \
     if (_tp_)
 
-#define FOR_ALL_THINGS_AT(_data_, _t_, _tp_, _p_)                                                                    \
+#define FOR_ALL_THINGS_AT(_data_, _t_, _tp_, _x_, _y_)                                                               \
   Thingp _t_;                                                                                                        \
   Tpp    _tp_;                                                                                                       \
-  for (auto _slot_ = 0; _t_ = ::thing_get(_data_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)                 \
+  for (auto _slot_ = 0; _t_ = ::thing_get(_data_, _x_, _y_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)            \
     if (_tp_)
 
 LevelDatap level_data_constructor(void);
 void       level_data_destructor(LevelDatap);
 
-bool thing_can_move(LevelData *, Thingp, point new_loc);
-bool is_oob(LevelData *, point p);
+bool thing_can_move(LevelData *, Thingp, int x, int y);
+bool is_oob(LevelData *, int x, int y);
 
 Thingp thing_find(LevelData *, ThingId);
 Thingp thing_find_optional(LevelData *, ThingId);
-Thingp thing_get(LevelData *, point p, uint8_t slot, Tpp * = nullptr);
-Thingp thing_new(LevelData *, Tpp, point);
-Thingp thing_init(LevelData *, Tpp, point);
+Thingp thing_get(LevelData *, int x, int y, uint8_t slot, Tpp * = nullptr);
+Thingp thing_new(LevelData *, Tpp, int x, int y);
+Thingp thing_init(LevelData *, Tpp, int x, int y);
 
 Tpp thing_tp(LevelData *, Thingp);
-Tpp tp_get(LevelData *, point p, uint8_t slot);
+Tpp tp_get(LevelData *, int x, int y, uint8_t slot);
 
-void thing_move(LevelData *, Thingp, point new_loc);
+void thing_move(LevelData *, Thingp, int x, int y);
 void thing_free(LevelData *, Thingp);
 void thing_pop(LevelData *, Thingp);
 void thing_push(LevelData *, Thingp);
 void thing_update(LevelData *, Thingp);
-void tp_set(LevelData *, point p, Tpp);
-void tp_unset(LevelData *, point p, Tpp);
+void tp_set(LevelData *, int x, int y, Tpp);
+void tp_unset(LevelData *, int x, int y, Tpp);
 
 #endif // _MY_LEVEL_DATA_H_

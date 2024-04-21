@@ -5,10 +5,10 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-bool Level::is_same_type(point p, Tpp tp)
+bool Level::is_same_type(int x, int y, Tpp tp)
 {
   TRACE_NO_INDENT();
-  if (is_oob(p)) {
+  if (is_oob(x, y)) {
     return false;
   }
 
@@ -16,7 +16,7 @@ bool Level::is_same_type(point p, Tpp tp)
     return false;
   }
 
-  auto id = data->obj[ p.x ][ p.y ][ tp->z_depth ].id;
+  auto id = data->obj[ x ][ y ][ tp->z_depth ].id;
   if (! id) {
     return false;
   }

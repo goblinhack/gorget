@@ -13,9 +13,8 @@ void thing_pop(LevelData *data, Thingp t)
 
   uint8_t x = t->pix_x / TILE_WIDTH;
   uint8_t y = t->pix_y / TILE_HEIGHT;
-  point   p(x, y);
 
-  if (is_oob(data, p)) {
+  if (is_oob(data, x, y)) {
     return;
   }
 
