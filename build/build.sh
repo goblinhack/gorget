@@ -397,6 +397,15 @@ else
     GCC_STACK_CHECK=
 fi
 
+#
+# LLD is faster
+#
+which -s lld
+if [ $? -eq 0 ]
+then
+  LDFLAGS+=" -fuse-ld=lld"
+fi
+
 cat >>$MAKEFILE <<%%
 CLANG_COMPILER_WARNINGS=-Wall -std=c++2a -Wno-vla-cxx-extension
 GCC_COMPILER_WARNINGS=-Wall -std=c++2a $GCC_STACK_CHECK

@@ -6,8 +6,6 @@
 #ifndef _MY_FWD_HPP_
 #define _MY_FWD_HPP_
 
-#include <vector>
-
 class Charmap;
 class Font;
 class Level;
@@ -36,7 +34,6 @@ using Lightp             = class Light *;
 using Texp               = class Tex *;
 using Tilemapp           = class Tilemap *;
 using Tilep              = class Tile *;
-using Tilevec            = std::vector< class Tile            *>;
 using Id                 = unsigned int;
 using TpId               = Id;
 using ThingId            = Id;

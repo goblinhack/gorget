@@ -6,9 +6,14 @@
 #ifndef _MY_TILE_HPP_
 #define _MY_TILE_HPP_
 
+#include <vector>
+
 #include "my_fwd.hpp"
 #include "my_gl.hpp"
 #include "my_sys.hpp"
+
+class Tile;
+using Tilevec = std::vector< class Tile * >;
 
 #define TILE_VARIANTS   6
 #define TILE_HEIGHT     16

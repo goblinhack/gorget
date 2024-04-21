@@ -7,6 +7,7 @@
 #define _MY_HISCORE_HPP_
 
 #include <string>
+#include <vector>
 
 class HiScore
 {
