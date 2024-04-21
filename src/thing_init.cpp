@@ -3,7 +3,7 @@
 //
 
 #include "my_level.hpp"
-#include "my_tp.hpp"
+#include "my_tile.hpp"
 
 Thingp thing_init(LevelData *data, Tpp tp, int x, int y)
 {
