@@ -2,6 +2,9 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_minimal.hpp"
+
+#include "my_callstack.hpp"
 #include "my_level.hpp"
 
 void Level::tick(void)

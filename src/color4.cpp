@@ -2,11 +2,12 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_main.hpp"
 
-#include <string.h>  // do not remove
-#include <strings.h> // do not remove, strcasecmp
+#include <string.h>
+#include <strings.h>
 
 color INK;
 color LIGHTSTEELBLUE;

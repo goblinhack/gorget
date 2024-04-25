@@ -126,7 +126,6 @@ PointerAlignment: Right
 ReflowComments:  true
 SortIncludes:    true
 SortJavaStaticImport: Before
-BreakBeforeBinaryOperators: All
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: true
 SpaceAfterLogicalNot: true

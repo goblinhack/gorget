@@ -2,7 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_array_bounds_check.hpp"
+#include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_ptrcheck.hpp"
@@ -317,18 +317,18 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
 
         if (sdl.joy_axes[ 2 ] > sdl.joy_deadzone) {
           DBG("SDL: left fire");
-          sdl.left_fire = true;
-          set(sdl.joy_buttons, SDL_JOY_BUTTON_LEFT_FIRE, (uint8_t) 1);
+          sdl.left_fire                               = true;
+          sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = (uint8_t) 1;
         } else {
-          set(sdl.joy_buttons, SDL_JOY_BUTTON_LEFT_FIRE, (uint8_t) 0);
+          sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = (uint8_t) 0;
         }
 
         if (sdl.joy_axes[ 5 ] > sdl.joy_deadzone) {
           DBG("SDL: right fire");
-          sdl.right_fire = true;
-          set(sdl.joy_buttons, SDL_JOY_BUTTON_RIGHT_FIRE, (uint8_t) 1);
+          sdl.right_fire                               = true;
+          sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = (uint8_t) 1;
         } else {
-          set(sdl.joy_buttons, SDL_JOY_BUTTON_RIGHT_FIRE, (uint8_t) 0);
+          sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = (uint8_t) 0;
         }
 
         if (sdl.right_fire || sdl.left_fire) {
@@ -412,7 +412,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
       {
         sdl.event_count++;
         DBG("SDL: Joystick %d: Button %d pressed", event->jbutton.which, event->jbutton.button);
-        set(sdl.joy_buttons, event->jbutton.button, (uint8_t) 1);
+        sdl.joy_buttons[ event->jbutton.button ] = (uint8_t) 1;
         sdl_get_mouse();
         wid_joy_button(sdl.mouse_x, sdl.mouse_y);
         break;
@@ -421,7 +421,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
       {
         sdl.event_count++;
         DBG("SDL: Joystick %d: Button %d released", event->jbutton.which, event->jbutton.button);
-        set(sdl.joy_buttons, event->jbutton.button, (uint8_t) 0);
+        sdl.joy_buttons[ event->jbutton.button ] = (uint8_t) 0;
         break;
       }
     case SDL_CLIPBOARDUPDATE :

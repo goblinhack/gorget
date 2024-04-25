@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_ptrcheck.hpp"
@@ -138,8 +139,8 @@ static const char key_char[ WID_KEYBOARD_DOWN ][ WID_KEYBOARD_ACROSS ] = {
 
 int wid_keyboard_visible;
 
-static void    wid_keyboard_destroy(Widp w);
-static void    wid_keyboard_set_focus(wid_keyboard_ctx *ctx, int focusx, int focusy);
+static void wid_keyboard_destroy(Widp w);
+static void wid_keyboard_set_focus(wid_keyboard_ctx *ctx, int focusx, int focusy);
 static bool wid_keyboard_text_input_key_event(Widp w, const SDL_Keysym *key);
 
 static void wid_keyboard_update_buttons(Widp w)

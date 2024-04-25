@@ -6,10 +6,10 @@
 #ifndef _MY_MAIN_HPP_
 #define _MY_MAIN_HPP_
 
-#include "my_sys.hpp"
+#include "my_minimal.hpp"
 
 #include <map>
-#include <string> // do not remove
+#include <string> 
 #include <vector> // linux
 
 extern char *DATA_PATH;
@@ -128,6 +128,74 @@ void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void CON(const char *fmt, ...);
 void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
-#include "my_callstack.hpp"
+#define DEBUG1 (unlikely(g_opt_debug1))
+#define DEBUG2 (unlikely(g_opt_debug2))
+#define DEBUG3 (unlikely(g_opt_debug3))
+
+#define NODEBUG1 (likely(! g_opt_debug1))
+#define NODEBUG2 (likely(! g_opt_debug2))
+#define NODEBUG3 (likely(! g_opt_debug3))
+
+#define IF_DEBUG                                                                                                     \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG1)
+#define IF_DEBUG1                                                                                                    \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG1)
+#define IF_DEBUG2                                                                                                    \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG2)
+#define IF_DEBUG3                                                                                                    \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG3)
+
+#define IF_NODEBUG                                                                                                   \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (NODEBUG1)
+#define IF_NODEBUG1                                                                                                  \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (NODEBUG1)
+#define IF_NODEBUG2                                                                                                  \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (NODEBUG2)
+#define IF_NODEBUG2                                                                                                  \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (NODEBUG2)
+#define IF_NODEBUG3                                                                                                  \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (NODEBUG3)
+
+#define ERR                                                                                                          \
+  TRACE_NO_INDENT();                                                                                                 \
+  myerr
+
+#define dbg                                                                                                          \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG1)                                                                                                        \
+  log
+#define dbg2                                                                                                         \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG2)                                                                                                        \
+  log
+#define dbg3                                                                                                         \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG3)                                                                                                        \
+  log
+
+#define DBG                                                                                                          \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG1)                                                                                                        \
+  LOG
+#define DBG2                                                                                                         \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG2)                                                                                                        \
+  LOG
+#define DBG3                                                                                                         \
+  TRACE_NO_INDENT();                                                                                                 \
+  if (DEBUG3)                                                                                                        \
+  LOG
+
+#define MY_STDERR (g_log_stderr ? g_log_stderr : stderr)
+#define MY_STDOUT (g_log_stdout ? g_log_stdout : stdout)
 
 #endif

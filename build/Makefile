@@ -4,15 +4,16 @@ pre:
 
 TOP=$(shell pwd)
 DIRS=src
+FORMAT_DIRS=$(DIRS) src/things src/things/player src/things/dungeon
 
 all: pre
 	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )
 
 format:
-	$(foreach var,$(DIRS), (cd $(var); cp $(TOP)/.clang-format .) ;)
-	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/shell_source.sh do) ;)
-	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/tidy_source.sh do) ;)
-	$(foreach var,$(DIRS), (cd $(var); sh $(TOP)/build/format.sh do) ;)
+	$(foreach var,$(FORMAT_DIRS), (cd $(var); cp $(TOP)/.clang-format .) ;)
+	$(foreach var,$(FORMAT_DIRS), (cd $(var); sh $(TOP)/build/shell_source.sh do) ;)
+	$(foreach var,$(FORMAT_DIRS), (cd $(var); sh $(TOP)/build/tidy_source.sh do) ;)
+	$(foreach var,$(FORMAT_DIRS), (cd $(var); sh $(TOP)/build/format.sh do) ;)
 
 clean_files:
 	/bin/rm -rf data/sounds/

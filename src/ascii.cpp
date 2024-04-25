@@ -2,8 +2,8 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_array_bounds_check.hpp"
 #include "my_ascii.hpp"
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
@@ -272,8 +272,6 @@ void ascii_set(int depth, int x, int y, const char ch) { ascii_set(depth, x, y, 
 
 void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
 {
-  TRACE_NO_INDENT();
-
   Tilep tile;
   int   bg_set    = false;
   auto  text_iter = text.begin();
@@ -437,7 +435,6 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
 
 int ascii_strlen(std::string const &text)
 {
-  TRACE_NO_INDENT();
   auto text_iter = text.begin();
   int  x         = 0;
 
@@ -504,7 +501,6 @@ int ascii_strlen(std::string const &text)
 
 std::string ascii_strip(std::string const &text)
 {
-  TRACE_NO_INDENT();
   auto        text_iter = text.begin();
   std::string out;
 
@@ -547,7 +543,6 @@ std::string ascii_strip(std::string const &text)
 
 static void ascii_putf_(int x, int y, color fg, color bg, std::string const fmt, va_list args)
 {
-  TRACE_NO_INDENT();
   char buf[ MAXLONGSTR ];
 
   auto wrote = vsnprintf(buf, MAXLONGSTR, fmt.c_str(), args);
@@ -566,7 +561,6 @@ static void ascii_putf_(int x, int y, color fg, color bg, std::string const fmt,
 
 static void ascii_putf_(int x, int y, color fg, color bg, const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
   char buf[ MAXLONGSTR ];
 
   auto wrote = vsnprintf(buf, MAXLONGSTR, fmt, args);
@@ -585,7 +579,6 @@ static void ascii_putf_(int x, int y, color fg, color bg, const char *fmt, va_li
 
 void ascii_putf(int x, int y, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
   va_list args;
 
   va_start(args, fmt);
@@ -595,7 +588,6 @@ void ascii_putf(int x, int y, const char *fmt, ...)
 
 void ascii_putf(int x, int y, color fg, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
   va_list args;
 
   va_start(args, fmt);
@@ -605,7 +597,6 @@ void ascii_putf(int x, int y, color fg, const char *fmt, ...)
 
 void ascii_putf(int x, int y, color fg, color bg, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
   va_list args;
 
   va_start(args, fmt);
@@ -615,7 +606,6 @@ void ascii_putf(int x, int y, color fg, color bg, const char *fmt, ...)
 
 void ascii_putf(int x, int y, const std::string fmt, ...)
 {
-  TRACE_NO_INDENT();
   va_list args;
 
   va_start(args, fmt);
@@ -625,7 +615,6 @@ void ascii_putf(int x, int y, const std::string fmt, ...)
 
 void ascii_putf(int x, int y, color fg, const std::string fmt, ...)
 {
-  TRACE_NO_INDENT();
   va_list args;
 
   va_start(args, fmt);
@@ -635,7 +624,6 @@ void ascii_putf(int x, int y, color fg, const std::string fmt, ...)
 
 void ascii_putf(int x, int y, color fg, color bg, const std::string fmt, ...)
 {
-  TRACE_NO_INDENT();
   va_list args;
 
   va_start(args, fmt);
@@ -646,7 +634,6 @@ void ascii_putf(int x, int y, color fg, color bg, const std::string fmt, ...)
 #ifdef ENABLE_UI_ASCII_MOUSE
 static void ascii_display_mouse(point mouse_tile_tl, point mouse_tile_br, point mouse_at)
 {
-  TRACE_NO_INDENT();
   glcolor(WHITE);
 
   blit_init();
@@ -662,7 +649,6 @@ static void ascii_display_mouse(point mouse_tile_tl, point mouse_tile_br, point 
 
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, Tilep tile, color col)
 {
-  TRACE_NO_INDENT();
   int x;
   int y;
 
@@ -676,13 +662,11 @@ void ascii_put_bg_square(int tlx, int tly, int brx, int bry, Tilep tile, color c
 
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, const char *tilename, color col)
 {
-  TRACE_NO_INDENT();
   ascii_put_bg_square(tlx, tly, brx, bry, tile_find(tilename), col);
 }
 
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, char what, color col)
 {
-  TRACE_NO_INDENT();
   ascii_put_bg_square(tlx, tly, brx, bry, font_ui->font_get_tile(what), col);
 }
 
@@ -720,13 +704,11 @@ void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, Tilep tile, colo
 
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, char what, color col)
 {
-  TRACE_NO_INDENT();
   ascii_draw_line(depth, x0, y0, x1, y1, font_ui->font_get_tile(what), col);
 }
 
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, const char *tilename, color col)
 {
-  TRACE_NO_INDENT();
   ascii_draw_line(depth, x0, y0, x1, y1, tile_find(tilename), col);
 }
 
@@ -735,8 +717,6 @@ void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, const char *tile
 //
 static void ascii_blit(void)
 {
-  TRACE_NO_INDENT();
-
   int   x;
   int   y;
   float tile_x;
@@ -907,7 +887,6 @@ static void ascii_blit(void)
 //
 void ascii_display(void)
 {
-  TRACE_NO_INDENT();
   mouse_found = false;
 
   gl_enter_2d_mode(game->config.ui_pix_width, game->config.ui_pix_height);
@@ -924,8 +903,6 @@ void ascii_display(void)
 
 void ascii_clear_display(void)
 {
-  TRACE_NO_INDENT();
-
   if (! cells) {
     cells = new std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX >;
   }
@@ -945,8 +922,6 @@ void ascii_clear_display(void)
 static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1, int x2, int y2, color col_bg,
                             color col_fg, void *context)
 {
-  TRACE_NO_INDENT();
-
   int x;
   int y;
 
@@ -970,7 +945,7 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
       for (auto x = 0; x < MAX_UI_SIZE; x++) {
         for (auto y = 0; y < MAX_UI_SIZE; y++) {
           std::string name = "ui." + std::to_string(styles) + "," + std::to_string(x) + "," + std::to_string(y);
-          set(tiles, ui_type, styles, x, y, tile_find_mand(name));
+          tiles[ ui_type ][ styles ][ x ][ y ] = tile_find_mand(name);
         }
       }
     }
@@ -1112,8 +1087,6 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
 static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int width, int height, color col_bg,
                            color col_text, const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
-
   if (! *fmt) {
     ascii_put_box__(style, tiles, x, y, x + width - 1, y + height - 1, col_bg, col_text, nullptr /* context */);
   } else {
@@ -1138,8 +1111,6 @@ static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int 
 
 void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fmt, ...)
 {
-  TRACE_NO_INDENT();
-
   va_list args;
 
   if (! b.width || ! b.height) {
@@ -1182,16 +1153,16 @@ void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fm
         continue;
       }
 
-      set(ascii.sdl_mod, x, y, b.sdl_mod);
-      set(ascii.sdl_key, x, y, b.sdl_key);
-      set(ascii.mouse_button, x, y, b.mouse_button);
+      ascii.sdl_mod[ x ][ y ]      = b.sdl_mod;
+      ascii.sdl_key[ x ][ y ]      = b.sdl_key;
+      ascii.mouse_button[ x ][ y ] = b.mouse_button;
 
       //
       // Callbacks for ascii co-ords.
       //
-      set(ascii.key_down, x, y, b.key_down);
-      set(ascii.mouse_down, x, y, b.mouse_down);
-      set(ascii.mouse_over, x, y, b.mouse_over);
+      ascii.key_down[ x ][ y ]   = b.key_down;
+      ascii.mouse_down[ x ][ y ] = b.mouse_down;
+      ascii.mouse_over[ x ][ y ] = b.mouse_over;
     }
   }
 }

@@ -2,8 +2,10 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+
 #include <string.h>
 
 void *myzalloc_(int size, const char *what, const char *file, const char *func, int line)

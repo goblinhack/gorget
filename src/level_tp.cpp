@@ -2,18 +2,19 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include <string.h>
-
+#include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_tp.hpp"
+
+#include <string.h>
 
 void tp_set(LevelData *data, int x, int y, Tpp tp)
 {
   TRACE_NO_INDENT();
 
-  auto o = &data->obj[ x ][ y ][ tp->z_depth ];
+  auto o = &data->obj[ x ][ y ][ tp_z_depth_get(tp) ];
   memset(o, 0, sizeof(*o));
-  o->id = tp->id;
+  o->id = tp_id_get(tp);
 }
 
 void Level::tp_set(int x, int y, Tpp tp)
@@ -26,9 +27,9 @@ void tp_unset(LevelData *data, int x, int y, Tpp tp)
 {
   TRACE_NO_INDENT();
 
-  auto o = &data->obj[ x ][ y ][ tp->z_depth ];
+  auto o = &data->obj[ x ][ y ][ tp_z_depth_get(tp) ];
   memset(o, 0, sizeof(*o));
-  o->id = tp->id;
+  o->id = tp_id_get(tp);
 }
 
 void Level::tp_unset(int x, int y, Tpp tp)

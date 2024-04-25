@@ -2,7 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_array_bounds_check.hpp"
+#include "my_callstack.hpp"
 #include "my_tex.hpp"
 #include "my_wid_tiles.hpp"
 
@@ -87,7 +87,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
       if (unlikely(! tile)) {
         DIE("Did not find wid %s tile %s", name.c_str(), tmp);
       }
-      set(t->tile, i, j, tile);
+      t->tile[ i ][ j ] = tile;
       c++;
     }
   }
@@ -101,7 +101,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
       DIE("Did not find wid %s tile %s", name.c_str(), tmp);
     }
 
-    set(t->tile, i, j, tile);
+    t->tile[ i ][ j ] = tile;
     c++;
   }
 
@@ -115,7 +115,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
       DIE("Did not find wid %s tile %s", name.c_str(), tmp);
     }
 
-    set(t->tile, i, j, tile);
+    t->tile[ i ][ j ] = tile;
     c++;
   }
 
@@ -128,7 +128,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
       DIE("Did not find wid %s tile %s", name.c_str(), tmp);
     }
 
-    set(t->tile, i, j, tile);
+    t->tile[ i ][ j ] = tile;
     c++;
   }
 
@@ -141,7 +141,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
       DIE("Did not find wid %s tile %s", name.c_str(), tmp);
     }
 
-    set(t->tile, i, j, tile);
+    t->tile[ i ][ j ] = tile;
     c++;
   }
 
@@ -153,7 +153,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
     DIE("Did not find wid %s tile %s", name.c_str(), tmp);
   }
 
-  set(t->tile, i, j, tile);
+  t->tile[ i ][ j ] = tile;
 
   i = 0;
   j = t->down - 1;
@@ -163,7 +163,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
     DIE("Did not find wid %s tile %s", name.c_str(), tmp);
   }
 
-  set(t->tile, i, j, tile);
+  t->tile[ i ][ j ] = tile;
 
   i = t->across - 1;
   j = 0;
@@ -173,7 +173,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
     DIE("Did not find wid %s tile %s", name.c_str(), tmp);
   }
 
-  set(t->tile, i, j, tile);
+  t->tile[ i ][ j ] = tile;
 
   i = t->across - 1;
   j = t->down - 1;
@@ -183,7 +183,7 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
     DIE("Did not find wid %s tile %s", name.c_str(), tmp);
   }
 
-  set(t->tile, i, j, tile);
+  t->tile[ i ][ j ] = tile;
 
   return t;
 }

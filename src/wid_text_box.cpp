@@ -3,10 +3,10 @@
 //
 
 #include "my_backtrace.hpp"
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"
-#include "my_vector_bounds_check.hpp"
 #include "my_wid_text_box.hpp"
 
 WidTextBox::~WidTextBox()
@@ -136,7 +136,7 @@ void WidTextBox::log_(std::string str, wid_text_format format, std::string color
 
   if (! wid_vert_scroll) {
     if (line_count < height) {
-      text_wid = get(children, height - line_count - 1);
+      text_wid = children[height - line_count - 1];
       wid_set_text(text_wid, str);
       line_count++;
       wid_update(wid_text_box_container);
@@ -147,7 +147,7 @@ void WidTextBox::log_(std::string str, wid_text_format format, std::string color
     }
   } else {
     if (line_count < scroll_height) {
-      text_wid = get(children, scroll_height - line_count - 1);
+      text_wid = children[scroll_height - line_count - 1];
       wid_set_text(text_wid, str);
     } else {
       wid_scroll_text(wid_text_last);

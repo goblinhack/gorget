@@ -6,7 +6,7 @@
 #ifndef _MY_TEX_HPP_
 #define _MY_TEX_HPP_
 
-#include "my_fwd.hpp"
+#include "my_minimal.hpp"
 #include <SDL.h>
 #include <string>
 

@@ -6,7 +6,6 @@
 
 void Level::dungeon_create_and_place()
 {
-  TRACE_NO_INDENT();
   map_set(data,
           "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
           "x1.2x...........x..............x"

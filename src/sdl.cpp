@@ -2,7 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_array_bounds_check.hpp"
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_command.hpp"
 #include "my_game.hpp"
@@ -413,36 +413,36 @@ void sdl_tick(void)
     DBG2("SDL: right stick, right");
     sdl.joy1_right = true;
 
-    incr(sdl.joy_buttons, SDL_JOY_BUTTON_RIGHT);
+    sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]++;
     wid_joy_button(sdl.mouse_x, sdl.mouse_y);
-    decr(sdl.joy_buttons, SDL_JOY_BUTTON_RIGHT);
+    sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]--;
   }
 
   if (sdl.joy_axes[ 3 ] < -sdl.joy_deadzone) {
     DBG2("SDL: right stick, left");
     sdl.joy1_left = true;
 
-    incr(sdl.joy_buttons, SDL_JOY_BUTTON_LEFT);
+    sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]++;
     wid_joy_button(sdl.mouse_x, sdl.mouse_y);
-    decr(sdl.joy_buttons, SDL_JOY_BUTTON_LEFT);
+    sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]--;
   }
 
   if (sdl.joy_axes[ 4 ] > sdl.joy_deadzone) {
     DBG2("SDL: right stick, down");
     sdl.joy1_down = true;
 
-    incr(sdl.joy_buttons, SDL_JOY_BUTTON_DOWN);
+    sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]++;
     wid_joy_button(sdl.mouse_x, sdl.mouse_y);
-    decr(sdl.joy_buttons, SDL_JOY_BUTTON_DOWN);
+    sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]--;
   }
 
   if (sdl.joy_axes[ 4 ] < -sdl.joy_deadzone) {
     DBG2("SDL: right stick, up");
     sdl.joy1_up = true;
 
-    incr(sdl.joy_buttons, SDL_JOY_BUTTON_UP);
+    sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]++;
     wid_joy_button(sdl.mouse_x, sdl.mouse_y);
-    decr(sdl.joy_buttons, SDL_JOY_BUTTON_UP);
+    sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]--;
   }
 
   //

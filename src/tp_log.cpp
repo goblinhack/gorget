@@ -3,17 +3,18 @@
 //
 
 #include "my_backtrace.hpp"
+#include "my_callstack.hpp"
 #include "my_console.hpp"
 #include "my_log.hpp"
+#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tp.hpp"
 #include "my_wid_console.hpp"
 
-void Tp::log_(const char *fmt, va_list args)
+void log_(Tpp tp, const char *fmt, va_list args)
 {
-  verify(MTYPE_TP, this);
-  auto t = this;
+  verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
@@ -21,7 +22,7 @@ void Tp::log_(const char *fmt, va_list args)
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
 
-  snprintf(buf + len, MAXLONGSTR - len, "%100s: %*s", t->to_short_string().c_str(), g_callframes_indent, "");
+  snprintf(buf + len, MAXLONGSTR - len, "%100s: %*s", to_short_string(tp), g_callframes_indent, "");
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -29,41 +30,38 @@ void Tp::log_(const char *fmt, va_list args)
   putf(MY_STDOUT, buf);
 }
 
-void Tp::log(const char *fmt, ...)
+void log(Tpp tp, const char *fmt, ...)
 {
-  verify(MTYPE_TP, this);
+  verify(MTYPE_TP, tp);
 
-  auto    t = this;
   va_list args;
   va_start(args, fmt);
-  t->log_(fmt, args);
+  log_(tp, fmt, args);
   va_end(args);
 }
 
-void Tp::dbg_(const char *fmt, ...)
+void dbg_(Tpp tp, const char *fmt, ...)
 {
   IF_NODEBUG { return; }
 
-  verify(MTYPE_TP, this);
+  verify(MTYPE_TP, tp);
 
-  auto    t = this;
   va_list args;
   va_start(args, fmt);
-  t->log_(fmt, args);
+  log_(tp, fmt, args);
   va_end(args);
 }
 
-void Tp::die_(const char *fmt, va_list args)
+void die_(Tpp tp, const char *fmt, va_list args)
 {
-  verify(MTYPE_TP, this);
-  auto t = this;
+  verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", t->to_short_string().c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_short_string(tp));
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -71,30 +69,28 @@ void Tp::die_(const char *fmt, va_list args)
   DIE("%s", buf);
 }
 
-void Tp::die(const char *fmt, ...)
+void die(Tpp tp, const char *fmt, ...)
 {
   g_errored = true;
 
-  verify(MTYPE_TP, this);
-  auto    t = this;
+  verify(MTYPE_TP, tp);
   va_list args;
 
   va_start(args, fmt);
-  t->die_(fmt, args);
+  die_(tp, fmt, args);
   va_end(args);
 }
 
-void Tp::con_(const char *fmt, va_list args)
+void con_(Tpp tp, const char *fmt, va_list args)
 {
-  verify(MTYPE_TP, this);
-  auto t = this;
+  verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", t->to_short_string().c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_short_string(tp));
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -107,18 +103,17 @@ void Tp::con_(const char *fmt, va_list args)
   FLUSH_THE_CONSOLE();
 }
 
-void Tp::con(const char *fmt, ...)
+void con(Tpp tp, const char *fmt, ...)
 {
-  verify(MTYPE_TP, this);
-  auto    t = this;
+  verify(MTYPE_TP, tp);
   va_list args;
 
   va_start(args, fmt);
-  t->con_(fmt, args);
+  con_(tp, fmt, args);
   va_end(args);
 }
 
-void Tp::err_(const char *fmt, va_list args)
+void err_(Tpp tp, const char *fmt, va_list args)
 {
   static bool nested_error;
   if (nested_error) {
@@ -126,8 +121,7 @@ void Tp::err_(const char *fmt, va_list args)
   }
   nested_error = true;
 
-  verify(MTYPE_TP, this);
-  auto t = this;
+  verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
@@ -137,7 +131,7 @@ void Tp::err_(const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "ERROR: Thing %s: ", t->to_short_string().c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "ERROR: Thing %s: ", to_short_string(tp));
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -155,7 +149,7 @@ void Tp::err_(const char *fmt, va_list args)
   nested_error = false;
 }
 
-void Tp::err(const char *fmt, ...)
+void err(Tpp tp, const char *fmt, ...)
 {
   static bool nested_error;
   if (nested_error) {
@@ -170,13 +164,13 @@ void Tp::err(const char *fmt, ...)
     //
     va_list args;
     va_start(args, fmt);
-    log_(fmt, args);
+    log_(tp, fmt, args);
     va_end(args);
   } else {
     g_errored = true;
     va_list args;
     va_start(args, fmt);
-    err_(fmt, args);
+    err_(tp, fmt, args);
     va_end(args);
   }
 

@@ -2,7 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_array_bounds_check.hpp"
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_command.hpp"
 #include "my_font.hpp"
@@ -1084,7 +1084,7 @@ void wid_set_text_pos(Widp w, uint8_t val, int x, int y)
   w->text_pos_set = val;
 }
 
-void wid_set_tile(int depth, Widp w, Tilep tile) { set(w->tiles, depth, tile); }
+void wid_set_tile(int depth, Widp w, Tilep tile) { w->tiles[ depth ] = tile; }
 
 void wid_set_tilename(int depth, Widp w, std::string name)
 {
@@ -1098,7 +1098,7 @@ void wid_set_tilename(int depth, Widp w, std::string name)
     DIE("Widget does not exist to set tile %s", name.c_str());
   }
 
-  set(w->tiles, depth, tile);
+  w->tiles[ depth ] = tile;
 }
 
 #if 0
@@ -1132,7 +1132,7 @@ color wid_get_color(Widp w, wid_color which)
 {
 
   uint32_t mode = (__typeof__(mode)) wid_get_mode(w); // for c++, no enum walk
-  wid_cfg *cfg  = &getref(w->cfg, mode);
+  wid_cfg *cfg  = &w->cfg[ mode ];
 
   if (cfg->color_set[ which ]) {
     return (cfg->colors[ which ]);
@@ -1140,14 +1140,14 @@ color wid_get_color(Widp w, wid_color which)
 
   if ((wid_focus == w) && (wid_over == w)) {
     mode = WID_MODE_OVER;
-    cfg  = &getref(w->cfg, mode);
+    cfg  = &w->cfg[ mode ];
     if (cfg->color_set[ which ]) {
       return (cfg->colors[ which ]);
     }
   }
 
   mode = WID_MODE_NORMAL;
-  cfg  = &getref(w->cfg, mode);
+  cfg  = &w->cfg[ mode ];
   if (cfg->color_set[ which ]) {
     return (cfg->colors[ which ]);
   }
@@ -1159,7 +1159,7 @@ int wid_get_style(Widp w)
 {
 
   uint32_t mode = (__typeof__(mode)) wid_get_mode(w); // for c++, no enum walk
-  wid_cfg *cfg  = &getref(w->cfg, mode);
+  wid_cfg *cfg  = &w->cfg[ mode ];
 
   if (cfg->style_set) {
     return (cfg->style);
@@ -1167,14 +1167,14 @@ int wid_get_style(Widp w)
 
   if ((wid_focus == w) && (wid_over == w)) {
     mode = WID_MODE_OVER;
-    cfg  = &getref(w->cfg, mode);
+    cfg  = &w->cfg[ mode ];
     if (cfg->style_set) {
       return (cfg->style);
     }
   }
 
   mode = WID_MODE_NORMAL;
-  cfg  = &getref(w->cfg, mode);
+  cfg  = &w->cfg[ mode ];
   if (cfg->style_set) {
     return (cfg->style);
   }
@@ -1710,8 +1710,8 @@ static void wid_destroy_immediate(Widp w)
 
   for (auto x = 0; x < TERM_WIDTH; x++) {
     for (auto y = 0; y < TERM_HEIGHT; y++) {
-      if (get(wid_on_screen_at, x, y) == w) {
-        set(wid_on_screen_at, x, y, static_cast< Widp >(0));
+      if (wid_on_screen_at[ x ][ y ] == w) {
+        wid_on_screen_at[ x ][ y ] = static_cast< Widp >(0);
       }
     }
   }
@@ -3019,7 +3019,7 @@ bool wid_receive_input(Widp w, const SDL_Keysym *key)
             g_history_walk--;
           }
 
-          wid_set_text(w, get(history, g_history_walk));
+          wid_set_text(w, history[ g_history_walk ]);
           w->cursor = (uint32_t) wid_get_text(w).length();
           break;
 
@@ -3029,7 +3029,7 @@ bool wid_receive_input(Widp w, const SDL_Keysym *key)
             g_history_walk = 0;
           }
 
-          wid_set_text(w, get(history, g_history_walk));
+          wid_set_text(w, history[ g_history_walk ]);
           w->cursor = (uint32_t) wid_get_text(w).length();
           break;
 
@@ -3093,7 +3093,7 @@ bool wid_receive_input(Widp w, const SDL_Keysym *key)
               w->cursor = updatedtext.length();
             }
 
-            set(history, g_history_at, updatedtext);
+            history[ g_history_at ] = updatedtext;
 
             g_history_at++;
             if (g_history_at >= HISTORY_MAX) {
@@ -3130,8 +3130,8 @@ bool wid_receive_input(Widp w, const SDL_Keysym *key)
               g_history_walk--;
             }
 
-            wid_set_text(w, get(history, g_history_walk));
-            if (get(history, g_history_walk) == "") {
+            wid_set_text(w, history[ g_history_walk ]);
+            if (history[ g_history_walk ] == "") {
               continue;
             }
 
@@ -3150,8 +3150,8 @@ bool wid_receive_input(Widp w, const SDL_Keysym *key)
               g_history_walk = 0;
             }
 
-            wid_set_text(w, get(history, g_history_walk));
-            if (get(history, g_history_walk) == "") {
+            wid_set_text(w, history[ g_history_walk ]);
+            if (history[ g_history_walk ] == "") {
               continue;
             }
 
@@ -3287,7 +3287,7 @@ static bool wid_receive_unhandled_input(const SDL_Keysym *key)
 
 Widp wid_find_at(int x, int y)
 {
-  auto w = get(wid_on_screen_at, x, y);
+  auto w = wid_on_screen_at[ x ][ y ];
   if (unlikely(! w)) {
     return nullptr;
   }
@@ -3719,59 +3719,59 @@ static Widp wid_joy_button_handler(int x, int y)
 //
 void wid_fake_joy_button(int x, int y)
 {
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_A)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ]) {
     wid_mouse_down(SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_B)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ]) {
     wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_X)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ]) {
     wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_Y)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ]) {
     wid_mouse_down(2, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_TOP_LEFT)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ]) {
     wid_mouse_down(SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_TOP_RIGHT)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ]) {
     wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_LEFT_STICK_DOWN)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ]) {
     wid_mouse_down(SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_RIGHT_STICK_DOWN)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ]) {
     wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_START)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ]) {
     wid_mouse_down(SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_XBOX)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ]) {
     wid_mouse_down(SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_BACK)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ]) {
     wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_UP)) {}
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_DOWN)) {}
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_LEFT)) {}
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_RIGHT)) {}
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_LEFT_FIRE)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ]) {
     wid_mouse_down(SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (get(sdl.joy_buttons, SDL_JOY_BUTTON_RIGHT_FIRE)) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ]) {
     wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
     return;
   }
@@ -3779,11 +3779,11 @@ void wid_fake_joy_button(int x, int y)
 
 void wid_joy_button(int x, int y)
 {
-
   pixel_to_ascii(&x, &y);
   if (! ascii_ok(x, y)) {
     return;
   }
+
   ascii_mouse_x = x;
   ascii_mouse_y = y;
 
@@ -3795,10 +3795,10 @@ void wid_joy_button(int x, int y)
   int                                        b;
 
   for (b = 0; b < SDL_MAX_BUTTONS; b++) {
-    if (get(sdl.joy_buttons, b)) {
-      if (time_have_x_tenths_passed_since(2, get(ts, b))) {
+    if (sdl.joy_buttons[ b ]) {
+      if (time_have_x_tenths_passed_since(2, ts[ b ])) {
         changed = true;
-        set(ts, b, time_ms_cached());
+        ts[ b ] = time_ms_cached();
       }
     }
   }
@@ -4529,19 +4529,19 @@ static void wid_display(Widp w, uint8_t disable_scissor, uint8_t *updated_scisso
     w_box_args.over = true;
 
     if (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_TEXT_FG ]) {
-      w_box_args.col_text = get(w->cfg, WID_MODE_OVER).colors[ WID_COLOR_TEXT_FG ];
+      w_box_args.col_text = w->cfg[ WID_MODE_OVER ].colors[ WID_COLOR_TEXT_FG ];
     } else {
-      w_box_args.col_text = get(w->cfg, WID_MODE_NORMAL).colors[ WID_COLOR_TEXT_FG ];
+      w_box_args.col_text = w->cfg[ WID_MODE_NORMAL ].colors[ WID_COLOR_TEXT_FG ];
     }
 
     if (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_BG ]) {
-      w_box_args.col_bg = get(w->cfg, WID_MODE_OVER).colors[ WID_COLOR_BG ];
+      w_box_args.col_bg = w->cfg[ WID_MODE_OVER ].colors[ WID_COLOR_BG ];
     } else {
-      w_box_args.col_bg = get(w->cfg, WID_MODE_NORMAL).colors[ WID_COLOR_BG ];
+      w_box_args.col_bg = w->cfg[ WID_MODE_NORMAL ].colors[ WID_COLOR_BG ];
     }
   } else {
-    w_box_args.col_text = get(w->cfg, WID_MODE_NORMAL).colors[ WID_COLOR_TEXT_FG ];
-    w_box_args.col_bg   = get(w->cfg, WID_MODE_NORMAL).colors[ WID_COLOR_BG ];
+    w_box_args.col_text = w->cfg[ WID_MODE_NORMAL ].colors[ WID_COLOR_TEXT_FG ];
+    w_box_args.col_bg   = w->cfg[ WID_MODE_NORMAL ].colors[ WID_COLOR_BG ];
   }
 
   if (w->square) {
@@ -4566,7 +4566,7 @@ static void wid_display(Widp w, uint8_t disable_scissor, uint8_t *updated_scisso
         }
 
         if (ascii_ok_for_scissors(x, y)) {
-          set(wid_on_screen_at, x, y, w);
+          wid_on_screen_at[ x ][ y ] = w;
         }
       }
     }
@@ -4811,7 +4811,7 @@ printf("========================================= %d\n", wid_total_count);
 #if 0
   for (auto y = 0; y < TERM_HEIGHT; y++) {
     for (auto x = 0; x < TERM_WIDTH; x++) {
-      if (get_no_check(wid_on_screen_at, x, y)) {
+      if (wid_on_screen_at[x][y)] {
         putchar('W');
       } else {
         putchar(' ');

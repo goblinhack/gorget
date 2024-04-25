@@ -4,6 +4,7 @@
 
 #include "3rdparty/minilzo.hpp"
 #include "my_alloc.hpp"
+#include "my_callstack.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
 #include "my_wid_popup.hpp"

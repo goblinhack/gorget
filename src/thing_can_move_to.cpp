@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
@@ -19,11 +20,11 @@ bool thing_can_move(LevelData *data, Thingp t, int new_loc_x, int new_loc_y)
 
   FOR_ALL_TPS_AT(data, it, it_tp, new_loc_x, new_loc_y)
   {
-    if (my_tp->is_player && it_tp->is_obs_player) {
+    if (tp_is_player_get(my_tp) && tp_is_obs_player_get(it_tp)) {
       return false;
     }
 
-    if (my_tp->is_monst && it_tp->is_obs_monst) {
+    if (tp_is_monst_get(my_tp) && tp_is_obs_monst_get(it_tp)) {
       return false;
     }
   }

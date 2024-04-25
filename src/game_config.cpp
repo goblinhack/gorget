@@ -5,6 +5,7 @@
 #include <SDL_mixer.h>
 
 #include "my_ascii.hpp"
+#include "my_callstack.hpp"
 #include "my_game.hpp"
 
 void Config::fini(void) { TRACE_AND_INDENT(); }

@@ -4,6 +4,7 @@
 
 #include <SDL_mixer.h>
 
+#include "my_callstack.hpp"
 #include "my_file.hpp"
 #include "my_game.hpp"
 #include "my_music.hpp"
@@ -36,6 +37,7 @@ bool music_init_done;
 bool music_init(void)
 {
   TRACE_AND_INDENT();
+
   //
   // MP3 is a pain to use, use OGG instead
   // int flags = MIX_INIT_OGG|MIX_INIT_MP3;

@@ -6,12 +6,20 @@
 #ifndef _MY_THING_TEMPLATE_H_
 #define _MY_THING_TEMPLATE_H_
 
-#include "my_main.hpp"
-#include "my_tile.hpp"
-#include <map>
+#include "my_minimal.hpp"
 
-using Tpidmap   = std::vector< class Tp   *>;
-using Tpnamemap = std::map< std::string, class Tp * >;
+#include <stdarg.h>
+
+class Tp;
+
+enum {
+  MAP_DEPTH_FLOOR,
+  MAP_DEPTH_WALL,
+  MAP_DEPTH_DOOR,
+  MAP_DEPTH_OBJ1,
+  MAP_DEPTH_OBJ2,
+  MAP_DEPTH_PLAYER,
+};
 
 enum {
   THING_RARITY_COMMON,
@@ -23,99 +31,118 @@ enum {
 
 enum { MONST_CLASS_A, MONST_CLASS_MAX };
 
-class Tp
-{
-public:
-  uint8_t z_depth {};
+bool tp_init(void);
 
-  TpId    id {};
-  Tilevec tiles;
+const char *tp_name(Tpp);
+const char *text_a_or_an(Tpp);
+const char *text_long_capitalised(Tpp);
+const char *text_short_capitalised(Tpp);
+const char *to_short_string(Tpp);
+const char *to_string(Tpp);
 
-  // begin sort marker1 {
-  bool is_animated_can_hflip {};
-  bool is_blit_centered {};
-  bool is_blit_on_ground {};
-  bool is_blit_outlined {};
-  bool is_blit_square_outlined {};
-  bool is_blit_tiled {};
-  bool is_cursor {};
-  bool is_door {};
-  bool is_dungeon_entrance {};
-  bool is_exit {};
-  bool is_floor {};
-  bool is_key {};
-  bool is_monst {};
-  bool is_monst_class[ MONST_CLASS_MAX ] {};
-  bool is_obs_monst {};
-  bool is_obs_player {};
-  bool is_player {};
-  bool is_wall {};
-  // end sort marker1 }
+int   tp_tiles_size(Tpp tp);
+Tilep tp_first_tile(class Tp *);
+Tilep tp_tiles_get(Tpp tp, int index);
+void  tp_tiles_push_back(Tpp tp, Tilep val);
+void  tp_tiles_push_back(Tpp tp, Tilep val);
 
-  uint8_t player_index {};
-
-  // begin sort marker2 {
-  int chance_d1000_appearing {};
-  int rarity {};
-  int speed {100};
-  // end sort marker2 }
-
-  Tp(void);
-  ~Tp(void);
-
-  void chance_d1000_appearing_set(int v);
-  void name_set(const std::string &v);
-  void rarity_set(int v);
-  void text_real_name_set(const std::string &v);
-  void text_short_name_set(const std::string &v);
-  void z_depth_set(int v);
-
-  std::string name;
-  std::string text_real_name;
-  std::string text_short_name;
-
-  void dbg_(const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-  void err(const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-  void err_(const char *fmt, va_list args); // compile error without
-  void log(const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-  void log_(const char *fmt, va_list args); // compile error without
-  void die(const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-  void die_(const char *fmt, va_list args); // compile error without
-  void con(const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-  void con_(const char *fmt, va_list args); // compile error without
-
-  std::string text_short_capitalised(void) const;
-  std::string text_long_capitalised(void) const;
-  std::string text_a_or_an(void) const;
-  std::string to_string(void);
-  std::string to_short_string(void);
-};
+TpId tp_id_get(Tpp tp);
+Tpp  tp_find(TpId id);
 
 Tpp string2tp(const char **s);
-Tpp string2tp(const std::string &s, int *len);
-
-Tpp tp_find(const std::string &name);
-Tpp tp_find(TpId id);
-Tpp tp_load(const std::string &name);
-Tpp tp_get_with_rarity_filter(Tpidmap &m);
-
+Tpp string2tp(const char **s, int *len);
+Tpp tp_find(const char *);
+Tpp tp_load(const char *);
 Tpp tp_random_dungeon_entrance(void);
 Tpp tp_random_exit(void);
-Tpp tp_random_wall(void);
 Tpp tp_random_key(void);
 Tpp tp_random_monst(int c);
 Tpp tp_random_player(void);
+Tpp tp_random_wall(void);
 
-Tilep tp_first_tile(class Tp *);
-
-uint8_t tp_init(void);
-
-void tp_random_dungeon_init(void);
+void con(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void con_(Tpp, const char *fmt, va_list args); // compile error without
+void dbg_(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void die(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void die_(Tpp, const char *fmt, va_list args); // compile error without
+void err(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void err_(Tpp, const char *fmt, va_list args); // compile error without
+void log(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void log_(Tpp, const char *fmt, va_list args); // compile error without
 void tp_fini(void);
 void tp_fixup(void);
-void tp_get_id(const std::string &tp_name, int *id);
+void tp_get_id(const char *, int *id);
+void tp_random_dungeon_init(void);
 
-extern Tpidmap   tp_id_map;
-extern Tpnamemap tp_name_map;
+Tilep tp_tiles_get(Tpp tp, int index);
+void  tp_tiles_push_back(Tpp tp, Tilep val);
+int   tp_tiles_size(Tpp tp);
+
+const char *tp_name(Tpp tp);
+const char *to_string(Tpp tp);
+const char *to_short_string(Tpp tp);
+
+bool tp_is_animated_can_hflip_get(Tpp tp);
+void tp_is_animated_can_hflip_set(Tpp tp, bool val);
+
+bool tp_is_blit_centered_get(Tpp tp);
+void tp_is_blit_centered_set(Tpp tp, bool val);
+
+bool tp_is_blit_on_ground_get(Tpp tp);
+void tp_is_blit_on_ground_set(Tpp tp, bool val);
+
+bool tp_is_blit_outlined_get(Tpp tp);
+void tp_is_blit_outlined_set(Tpp tp, bool val);
+
+bool tp_is_blit_square_outlined_get(Tpp tp);
+void tp_is_blit_square_outlined_set(Tpp tp, bool val);
+
+bool tp_is_blit_tiled_get(Tpp tp);
+void tp_is_blit_tiled_set(Tpp tp, bool val);
+
+bool tp_is_cursor_get(Tpp tp);
+void tp_is_cursor_set(Tpp tp, bool val);
+
+bool tp_is_door_get(Tpp tp);
+void tp_is_door_set(Tpp tp, bool val);
+
+bool tp_is_dungeon_entrance_get(Tpp tp);
+void tp_is_dungeon_entrance_set(Tpp tp, bool val);
+
+bool tp_is_exit_get(Tpp tp);
+void tp_is_exit_set(Tpp tp, bool val);
+
+bool tp_is_floor_get(Tpp tp);
+void tp_is_floor_set(Tpp tp, bool val);
+
+bool tp_is_key_get(Tpp tp);
+void tp_is_key_set(Tpp tp, bool val);
+
+bool tp_is_monst_get(Tpp tp);
+void tp_is_monst_set(Tpp tp, bool val);
+
+bool tp_is_monst_class_get(Tpp tp, int val);
+void tp_is_monst_class_set(Tpp tp, bool val);
+
+bool tp_is_obs_monst_get(Tpp tp);
+void tp_is_obs_monst_set(Tpp tp, bool val);
+
+bool tp_is_obs_player_get(Tpp tp);
+void tp_is_obs_player_set(Tpp tp, bool val);
+
+bool tp_is_player_get(Tpp tp);
+void tp_is_player_set(Tpp tp, bool val);
+
+bool tp_is_wall_get(Tpp tp);
+void tp_is_wall_set(Tpp tp, bool val);
+
+uint8_t tp_player_index_get(Tpp tp);
+void    tp_player_index_set(Tpp tp, uint8_t val);
+
+void    tp_z_depth_set(Tpp tp, uint8_t val);
+uint8_t tp_z_depth_get(Tpp tp);
+
+void tp_speed_set(Tpp tp, int val);
+int  tp_speed_get(Tpp tp);
 
 #endif // THING_TEMPLATE_H_

@@ -8,9 +8,8 @@
 
 #include <vector>
 
-#include "my_fwd.hpp"
 #include "my_gl.hpp"
-#include "my_sys.hpp"
+#include "my_minimal.hpp"
 
 class Tile;
 using Tilevec = std::vector< class Tile * >;

@@ -2,16 +2,17 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include <algorithm> // do not remove
-#include <iostream>  // do not remove
-#include <libgen.h>  // do not remove
-#include <sstream>   // do not remove
-#include <string>    // do not remove
-
+#include "my_callstack.hpp"
 #include "my_color.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
+
+#include <algorithm> 
+#include <iostream>  
+#include <libgen.h>  
+#include <sstream>   
+#include <string>    
 
 /*
  * Replace chars in replace_set with replace_with.

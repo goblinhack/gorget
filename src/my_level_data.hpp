@@ -8,8 +8,6 @@
 
 #include <inttypes.h>
 
-#include "my_depth.hpp"
-#include "my_fwd.hpp"
 #include "my_game_defs.hpp"
 #include "my_thing.hpp"
 #include "my_thing_id.hpp"

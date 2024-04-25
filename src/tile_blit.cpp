@@ -2,7 +2,9 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
+#include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_tile.hpp"
 

@@ -6,7 +6,7 @@
 #ifndef _MY_THING_ID_HPP_
 #define _MY_THING_ID_HPP_
 
-#include "my_sys.hpp"
+#include "my_minimal.hpp"
 
 #define THING_ID_ENTROPY_BITS 6
 #define THING_ID_X_BITS       5

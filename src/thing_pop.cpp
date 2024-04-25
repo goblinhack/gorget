@@ -2,10 +2,12 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include <string.h>
-
+#include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
+
+#include <string.h>
 
 void thing_pop(LevelData *data, Thingp t)
 {

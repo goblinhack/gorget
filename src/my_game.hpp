@@ -8,7 +8,6 @@
 
 #include <SDL.h>
 
-#include "my_fwd.hpp"
 #include "my_game_defs.hpp"
 #include "my_hiscore.hpp"
 #include "my_main.hpp"

@@ -2,8 +2,11 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_array_bounds_check.hpp"
+#include "my_callstack.hpp"
 #include "my_font.hpp"
+#include "my_main.hpp"
+
+#include <map>
 
 Fontp font_ui;
 
@@ -84,7 +87,7 @@ Tilep Font::font_get_tile(int u)
     return (font_get_tile('?'));
   }
 
-  auto index = get(this->u_to_c, u);
+  auto index = this->u_to_c[ u ];
 
   if ((index < 0) || (index >= FONT_CHAR_MAX)) {
     if (u == '?') {
@@ -97,7 +100,7 @@ Tilep Font::font_get_tile(int u)
     return (font_get_tile('?'));
   }
 
-  auto tile = get(this->cache, index);
+  auto tile = this->cache[ index ];
   if (tile) {
     return tile;
   }
@@ -115,7 +118,7 @@ Tilep Font::font_get_tile(int u)
     return (font_get_tile('?'));
   }
 
-  set(this->cache, index, tile);
+  this->cache[ index ] = tile;
 
   return tile;
 }

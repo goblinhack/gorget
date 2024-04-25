@@ -2,16 +2,17 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_file.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
 
-#include <string.h>  // do not remove
-#include <strings.h> // do not remove
+#include <string.h>
+#include <strings.h>
 #include <sys/stat.h>
 #include <time.h>
-#include <unistd.h> // do not remove
+#include <unistd.h>
 
 static unsigned char *file_io_read_if_exists(const char *filename, int *out_len);
 static unsigned char *file_io_read(const char *filename, int *len);
@@ -19,6 +20,7 @@ static unsigned char *file_io_read(const char *filename, int *len);
 unsigned char *file_load(const char *filename, int *outlen)
 {
   TRACE_AND_INDENT();
+
   unsigned char *out;
   char          *alt_filename;
 

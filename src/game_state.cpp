@@ -3,6 +3,7 @@
 //
 
 #include "my_backtrace.hpp"
+#include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_wid_popups.hpp"
 #include "my_wid_rightbar.hpp"

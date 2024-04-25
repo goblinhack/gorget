@@ -2,8 +2,10 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
 
 void Level::anim(void)
@@ -56,11 +58,11 @@ void Level::anim(void)
         }
 
         obj->anim_index++;
-        if (obj->anim_index >= tp->tiles.size()) {
+        if (obj->anim_index >= tp_tiles_size(tp)) {
           obj->anim_index = 0;
         }
 
-        tile      = tp->tiles[ obj->anim_index ];
+        tile      = tp_tiles_get(tp, obj->anim_index);
         obj->tile = tile->global_index;
 
         obj->anim_ms_remaining += tile->delay_ms;

@@ -4,7 +4,7 @@
 
 #include "3rdparty/minilzo.hpp"
 #include "my_alloc.hpp"
-#include "my_array_bounds_check.hpp"
+#include "my_callstack.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
 #include "my_wid_error.hpp"
@@ -452,7 +452,7 @@ void Game::load(uint8_t slot)
     return;
   }
 
-  if (! get(slot_valid, slot)) {
+  if (! slot_valid[ slot ]) {
     CON("No game at that slot.");
     return;
   }
@@ -551,7 +551,7 @@ static bool wid_load_key_up(Widp w, const struct SDL_Keysym *key)
               case '9' :
                 {
                   int slot = c - '0';
-                  if (! get(slot_valid, slot)) {
+                  if (! slot_valid[ slot ]) {
                     CON("No game at that slot.");
                   } else {
                     game->load(slot);
@@ -681,7 +681,7 @@ void Game::wid_load_select(void)
         }
         wid_set_style(w, UI_WID_STYLE_HORIZ_DARK);
       }
-      set(slot_valid, slot, false);
+      slot_valid[ slot ] = false;
     } else {
       if (slot == UI_WID_SAVE_SLOTS - 1) {
         s += "snapshot: " + tmp.save_meta;
@@ -694,7 +694,7 @@ void Game::wid_load_select(void)
         wid_set_on_mouse_up(w, wid_load_mouse_up);
       }
       wid_set_style(w, UI_WID_STYLE_GREEN);
-      set(slot_valid, slot, true);
+      slot_valid[ slot ] = true;
     }
     wid_set_int_context(w, slot);
 

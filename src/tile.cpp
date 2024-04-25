@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_cpp_template.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
@@ -201,7 +202,7 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
               printf("X");
 #endif
               if ((x1 < TILE_WIDTH_MAX) && (y1 < TILE_HEIGHT_MAX)) {
-                set(t->pix, x1, y1, (uint8_t) 1);
+                t->pix[x1][y1] = (uint8_t) 1;
               }
             } else if (p.a > 0) {
 #ifdef ENABLE_DEBUG_TILE
@@ -349,7 +350,7 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
               printf("X");
 #endif
               if ((x1 < TILE_WIDTH_MAX) && (y1 < TILE_HEIGHT_MAX)) {
-                set(t->pix, x1, y1, (uint8_t) 1);
+                t->pix[x1][y1] = (uint8_t) 1;
               }
             } else if (p.a > 0) {
 #ifdef ENABLE_DEBUG_TILE
@@ -506,7 +507,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
               printf("X");
 #endif
               if ((x1 < TILE_WIDTH_MAX) && (y1 < TILE_HEIGHT_MAX)) {
-                set(t->pix, x1, y1, (uint8_t) 1);
+                t->pix[x1][y1] = (uint8_t) 1;
               }
             } else if (p.a > 0) {
 #ifdef ENABLE_DEBUG_TILE
@@ -656,7 +657,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
               printf("X");
 #endif
               if ((x1 < TILE_WIDTH_MAX) && (y1 < TILE_HEIGHT_MAX)) {
-                set(t->pix, x1, y1, (uint8_t) 1);
+                t->pix[x1][y1] = (uint8_t) 1;
               }
             } else if (p.a > 0) {
 #ifdef ENABLE_DEBUG_TILE

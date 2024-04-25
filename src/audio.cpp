@@ -4,6 +4,7 @@
 
 #include <SDL_mixer.h>
 
+#include "my_callstack.hpp"
 #include "my_main.hpp"
 
 uint8_t audio_init_done;

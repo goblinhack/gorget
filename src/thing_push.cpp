@@ -4,7 +4,10 @@
 
 #include <string.h>
 
+#include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
 
 void thing_push(LevelData *data, Thingp t)

@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
@@ -10,7 +11,6 @@
 #include "my_string.hpp"
 #include "my_thing.hpp"
 #include "my_ui.hpp"
-#include "my_vector_bounds_check.hpp"
 #include "my_wid_rightbar.hpp"
 
 bool wid_rightbar_ascii_create(void)

@@ -6,7 +6,7 @@
 #ifndef _MY_THING_HPP_
 #define _MY_THING_HPP_
 
-#include "my_sys.hpp"
+#include "my_minimal.hpp"
 #include "my_thing_id.hpp"
 
 struct Thing {

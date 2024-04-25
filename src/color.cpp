@@ -2,13 +2,14 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_gl.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"
 
-#include <string.h>  // do not remove
-#include <strings.h> // do not remove, strcasecmp
+#include <string.h>
+#include <strings.h>
 
 using colors = std::map< std::string, color >;
 

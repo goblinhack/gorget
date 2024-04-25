@@ -6,18 +6,18 @@
 #include <string.h>
 #ifdef _WIN32
 // clang-format off
-#include <stdio.h>   // do not remove
-#include <windows.h> // do not remove
-#include <shlwapi.h> // do not remove
-#include <winbase.h> // do not remove
-#include <dbghelp.h> // do not remove
+#include <stdio.h>   
+#include <windows.h> 
+#include <shlwapi.h> 
+#include <winbase.h> 
+#include <dbghelp.h> 
 // clang-format on
 #else
-#include <execinfo.h> // do not remove
+#include <execinfo.h> 
 #endif
 #include <cxxabi.h>
 #ifdef HAVE_LIBUNWIND
-#include <libunwind.h> // do not remove
+#include <libunwind.h> 
 #endif
 #include <memory>
 

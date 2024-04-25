@@ -2,10 +2,12 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_tex.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
 
 void Level::display_dungeon_tile(Tpp tp, Tilep tile, point tl, point br, point offset)
@@ -13,9 +15,9 @@ void Level::display_dungeon_tile(Tpp tp, Tilep tile, point tl, point br, point o
   tl += offset;
   br += offset;
 
-  if (tp->is_blit_outlined) {
+  if (tp_is_blit_outlined_get(tp)) {
     tile_blit_outline(tile, tl, br, WHITE, BLACK, false);
-  } else if (tp->is_blit_square_outlined) {
+  } else if (tp_is_blit_square_outlined_get(tp)) {
     tile_blit_outline(tile, tl, br, WHITE, BLACK, true);
   } else {
     tile_blit(tile, tl, br);
@@ -46,7 +48,7 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
     return;
   }
 
-  if (tp->z_depth != z) {
+  if (tp_z_depth_get(tp) != z) {
     return;
   }
 
@@ -75,7 +77,7 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
   tl.x -= data->pixel_map_at_x;
   tl.y -= data->pixel_map_at_y;
 
-  if (tp->is_blit_on_ground) {
+  if (tp_is_blit_on_ground_get(tp)) {
     //
     // On the ground
     //
@@ -84,7 +86,7 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
     // Center x
     //
     tl.x -= (pix_width - dw) / 2;
-  } else if (tp->is_blit_centered) {
+  } else if (tp_is_blit_centered_get(tp)) {
     //
     // Centered
     //

@@ -2,9 +2,11 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_command.hpp"
-#include <array>    // do not remove
-#include <string.h> // do not remove
+
+#include <array>    
+#include <string.h> 
 
 /*
  * Simple console expanding code, takes a command input and expands it as

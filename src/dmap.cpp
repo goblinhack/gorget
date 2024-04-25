@@ -2,12 +2,10 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_array_bounds_check.hpp"
+#include "my_callstack.hpp"
 #include "my_dmap.hpp"
 #include "my_main.hpp"
-#include "my_sdl_event.hpp"
 #include "my_sprintf.hpp"
-#include "my_vector_bounds_check.hpp"
 
 void dmap_print(const Dmap *D, point at, point tl, point br)
 {
@@ -51,7 +49,7 @@ void dmap_print(const Dmap *D, point at, point tl, point br)
   all_walls = true;
   for (x = minx; (x <= maxx) && all_walls; x++) {
     for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       minx = x;
@@ -61,7 +59,7 @@ void dmap_print(const Dmap *D, point at, point tl, point br)
   all_walls = true;
   for (x = maxx; (x > minx) && all_walls; x--) {
     for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       maxx = x;
@@ -71,7 +69,7 @@ void dmap_print(const Dmap *D, point at, point tl, point br)
   all_walls = true;
   for (y = miny; (y <= maxy) && all_walls; y++) {
     for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       miny = y;
@@ -81,7 +79,7 @@ void dmap_print(const Dmap *D, point at, point tl, point br)
   all_walls = true;
   for (y = maxy; (y > miny) && all_walls; y--) {
     for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       maxy = y;
@@ -93,7 +91,7 @@ void dmap_print(const Dmap *D, point at, point tl, point br)
   for (y = miny; y <= maxy; y++) {
     std::string debug;
     for (x = minx; x <= maxx; x++) {
-      uint8_t e = get_no_check(D->val, x, y);
+      uint8_t e = D->val[ x ][ y ];
       if (point(x, y) == at) {
         debug += ("  @");
         continue;
@@ -127,7 +125,7 @@ void dmap_print(const Dmap *D)
   for (y = 0; y < MAP_HEIGHT; y++) {
     std::string debug;
     for (x = 0; x < MAP_WIDTH; x++) {
-      uint8_t e = get_no_check(D->val, x, y);
+      uint8_t e = D->val[ x ][ y ];
       if (e == DMAP_IS_WALL) {
         debug += ("##");
         continue;
@@ -149,7 +147,6 @@ void dmap_print(const Dmap *D)
 
 void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
 {
-  auto                                                              before = SDL_GetTicks();
   uint8_t                                                           x;
   uint8_t                                                           y;
   uint8_t                                                           a;
@@ -212,12 +209,12 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
   // Need a wall around the dmap or the search will sort of trickle off the map
   //
   for (y = miny; y <= maxy; y++) {
-    set_no_check(D->val, minx, y, DMAP_IS_WALL);
-    set_no_check(D->val, maxx, y, DMAP_IS_WALL);
+    D->val[ minx ][ y ] = DMAP_IS_WALL;
+    D->val[ maxx ][ y ] = DMAP_IS_WALL;
   }
   for (x = minx; x <= maxx; x++) {
-    set_no_check(D->val, x, miny, DMAP_IS_WALL);
-    set_no_check(D->val, x, maxy, DMAP_IS_WALL);
+    D->val[ x ][ miny ] = DMAP_IS_WALL;
+    D->val[ x ][ maxy ] = DMAP_IS_WALL;
   }
 
   bool all_walls;
@@ -228,7 +225,7 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
   all_walls = true;
   for (x = minx; (x <= maxx) && all_walls; x++) {
     for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       minx = x;
@@ -238,7 +235,7 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
   all_walls = true;
   for (x = maxx; (x > minx) && all_walls; x--) {
     for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       maxx = x;
@@ -248,7 +245,7 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
   all_walls = true;
   for (y = miny; (y <= maxy) && all_walls; y++) {
     for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       miny = y;
@@ -258,7 +255,7 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
   all_walls = true;
   for (y = maxy; (y > miny) && all_walls; y--) {
     for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       maxy = y;
@@ -267,17 +264,17 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
 
   for (y = miny + 1; y <= maxy - 1; y++) {
     for (x = minx + 1; x <= maxx - 1; x++) {
-      set_no_check(orig, x, y, get_no_check(D->val, x, y));
+      orig[ x ][ y ] = D->val[ x ][ y ];
 
-      e = &getref(D->val, x, y);
+      e = &D->val[ x ][ y ];
       if (*e != DMAP_IS_WALL) {
-        set_no_check(valid, x, y, (uint8_t) 1);
-        set_no_check(orig_valid, x, y, (uint8_t) 1);
+        valid[ x ][ y ]      = (uint8_t) 1;
+        orig_valid[ x ][ y ] = (uint8_t) 1;
         continue;
       }
 
-      set_no_check(valid, x, y, (uint8_t) 0);
-      set_no_check(orig_valid, x, y, (uint8_t) 0);
+      valid[ x ][ y ]      = (uint8_t) 0;
+      orig_valid[ x ][ y ] = (uint8_t) 0;
     }
   }
 
@@ -286,48 +283,48 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
 
     for (y = miny + 1; y <= maxy - 1; y++) {
       for (x = minx + 1; x <= maxx - 1; x++) {
-        if (! get_no_check(orig_valid, x, y)) {
+        if (! orig_valid[ x ][ y ]) {
           continue;
         }
 
-        if (! get_no_check(valid, x, y)) {
+        if (! valid[ x ][ y ]) {
           continue;
         }
 
-        e = &getref(D->val, x, y);
+        e = &D->val[ x ][ y ];
 
         //
         // Avoid diagonal moves.
         //
-        if (((get_no_check(D->val, x - 1, y) == DMAP_IS_WALL) || (get_no_check(D->val, x, y - 1) == DMAP_IS_WALL))) {
+        if ((D->val[ x - 1 ][ y ] == DMAP_IS_WALL) || (D->val[ x ][ y - 1 ] == DMAP_IS_WALL)) {
           a = DMAP_IS_WALL;
         } else {
-          a = get_no_check(D->val, x - 1, y - 1);
+          a = D->val[ x - 1 ][ y - 1 ];
         }
 
-        b = get_no_check(D->val, x, y - 1);
+        b = D->val[ x ][ y - 1 ];
 
-        if (((get_no_check(D->val, x + 1, y) == DMAP_IS_WALL) || (get_no_check(D->val, x, y - 1) == DMAP_IS_WALL))) {
+        if ((D->val[ x + 1 ][ y ] == DMAP_IS_WALL) || (D->val[ x ][ y - 1 ] == DMAP_IS_WALL)) {
           c = DMAP_IS_WALL;
         } else {
-          c = get_no_check(D->val, x + 1, y - 1);
+          c = D->val[ x + 1 ][ y - 1 ];
         }
 
-        d = get_no_check(D->val, x - 1, y);
-        f = get_no_check(D->val, x + 1, y);
+        d = D->val[ x - 1 ][ y ];
+        f = D->val[ x + 1 ][ y ];
 
-        if (((get_no_check(D->val, x - 1, y) == DMAP_IS_WALL) || (get_no_check(D->val, x, y + 1) == DMAP_IS_WALL))) {
+        if ((D->val[ x - 1 ][ y ] == DMAP_IS_WALL) || (D->val[ x ][ y + 1 ] == DMAP_IS_WALL)) {
           g = DMAP_IS_WALL;
         } else {
-          g = get_no_check(D->val, x - 1, y + 1);
+          g = D->val[ x - 1 ][ y + 1 ];
         }
 
-        h = get_no_check(D->val, x, y + 1);
+        h = D->val[ x ][ y + 1 ];
 
-        if (((get_no_check(D->val, x + 1, y) == DMAP_IS_WALL) || (get_no_check(D->val, x, y + 1) == DMAP_IS_WALL))) {
+        if ((D->val[ x + 1 ][ y ] == DMAP_IS_WALL) || (D->val[ x ][ y + 1 ] == DMAP_IS_WALL)) {
           i = DMAP_IS_WALL;
         } else {
-          i = get_no_check(D->val, x + 1, y + 1);
+          i = D->val[ x + 1 ][ y + 1 ];
         }
 
         if (a < b) {
@@ -368,30 +365,16 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
   //
   for (y = miny + 1; y <= maxy - 1; y++) {
     for (x = minx + 1; x <= maxx - 1; x++) {
-      uint8_t o = get_no_check(orig, x, y);
+      uint8_t o = orig[ x ][ y ];
       if (o != DMAP_IS_WALL) {
         if (o > DMAP_IS_PASSABLE) {
           o         = o - DMAP_IS_PASSABLE;
-          uint8_t n = get_no_check(D->val, x, y);
+          uint8_t n = D->val[ x ][ y ];
           if (o + n < DMAP_IS_PASSABLE) {
-            incr(D->val, x, y, o);
+            D->val[ x ][ y ] += o;
           }
         }
       }
-    }
-  }
-
-  //
-  // Sanity check the dmap does not take too much time
-  //
-  if (unlikely(g_opt_debug1)) {
-    auto after = SDL_GetTicks();
-    if (after - before > 70) {
-      ERR("DMAP is taking too long, %d ms", after - before);
-      dmap_print(D);
-    }
-    if (after - before > 0) {
-      LOG("DMAP took %u ms: tl %d,%d br %d %d", after - before, tl.x, tl.y, br.x, br.y);
     }
   }
 }
@@ -419,7 +402,6 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
 //
 void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border)
 {
-  auto                                                              before = SDL_GetTicks();
   uint8_t                                                           x;
   uint8_t                                                           y;
   uint8_t                                                           a;
@@ -482,12 +464,12 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
   // Need a wall around the dmap or the search will sort of trickle off the map
   //
   for (y = miny; y <= maxy; y++) {
-    set_no_check(D->val, minx, y, DMAP_IS_WALL);
-    set_no_check(D->val, maxx, y, DMAP_IS_WALL);
+    D->val[ minx ][ y ] = DMAP_IS_WALL;
+    D->val[ maxx ][ y ] = DMAP_IS_WALL;
   }
   for (x = minx; x <= maxx; x++) {
-    set_no_check(D->val, x, miny, DMAP_IS_WALL);
-    set_no_check(D->val, x, maxy, DMAP_IS_WALL);
+    D->val[ x ][ miny ] = DMAP_IS_WALL;
+    D->val[ x ][ maxy ] = DMAP_IS_WALL;
   }
 
   bool all_walls;
@@ -498,7 +480,7 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
   all_walls = true;
   for (x = minx; (x <= maxx) && all_walls; x++) {
     for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       minx = x;
@@ -508,7 +490,7 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
   all_walls = true;
   for (x = maxx; (x > minx) && all_walls; x--) {
     for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       maxx = x;
@@ -518,7 +500,7 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
   all_walls = true;
   for (y = miny; (y <= maxy) && all_walls; y++) {
     for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       miny = y;
@@ -528,7 +510,7 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
   all_walls = true;
   for (y = maxy; (y > miny) && all_walls; y--) {
     for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       maxy = y;
@@ -537,17 +519,17 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
 
   for (y = miny + 1; y <= maxy - 1; y++) {
     for (x = minx + 1; x <= maxx - 1; x++) {
-      set_no_check(orig, x, y, get_no_check(D->val, x, y));
+      orig[ x ][ y ] = D->val[ x ][ y ];
 
-      e = &getref(D->val, x, y);
+      e = &D->val[ x ][ y ];
       if (*e != DMAP_IS_WALL) {
-        set_no_check(valid, x, y, (uint8_t) 1);
-        set_no_check(orig_valid, x, y, (uint8_t) 1);
+        valid[ x ][ y ]      = (uint8_t) 1;
+        orig_valid[ x ][ y ] = (uint8_t) 1;
         continue;
       }
 
-      set_no_check(valid, x, y, (uint8_t) 0);
-      set_no_check(orig_valid, x, y, (uint8_t) 0);
+      valid[ x ][ y ]      = (uint8_t) 0;
+      orig_valid[ x ][ y ] = (uint8_t) 0;
     }
   }
 
@@ -556,24 +538,24 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
 
     for (y = miny + 1; y <= maxy - 1; y++) {
       for (x = minx + 1; x <= maxx - 1; x++) {
-        if (! get_no_check(orig_valid, x, y)) {
+        if (! orig_valid[ x ][ y ]) {
           continue;
         }
 
-        if (! get_no_check(valid, x, y)) {
+        if (! valid[ x ][ y ]) {
           continue;
         }
 
-        e = &getref(D->val, x, y);
+        e = &D->val[ x ][ y ];
 
-        a = get_no_check(D->val, x - 1, y - 1);
-        b = get_no_check(D->val, x, y - 1);
-        c = get_no_check(D->val, x + 1, y - 1);
-        d = get_no_check(D->val, x - 1, y);
-        f = get_no_check(D->val, x + 1, y);
-        g = get_no_check(D->val, x - 1, y + 1);
-        h = get_no_check(D->val, x, y + 1);
-        i = get_no_check(D->val, x + 1, y + 1);
+        a = D->val[ x - 1 ][ y - 1 ];
+        b = D->val[ x ][ y - 1 ];
+        c = D->val[ x + 1 ][ y - 1 ];
+        d = D->val[ x - 1 ][ y ];
+        f = D->val[ x + 1 ][ y ];
+        g = D->val[ x - 1 ][ y + 1 ];
+        h = D->val[ x ][ y + 1 ];
+        i = D->val[ x + 1 ][ y + 1 ];
 
         if (a < b) {
           lowest = a;
@@ -613,30 +595,16 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
   //
   for (y = miny + 1; y <= maxy - 1; y++) {
     for (x = minx + 1; x <= maxx - 1; x++) {
-      uint8_t o = get_no_check(orig, x, y);
+      uint8_t o = orig[ x ][ y ];
       if (o != DMAP_IS_WALL) {
         if (o > DMAP_IS_PASSABLE) {
           o         = o - DMAP_IS_PASSABLE;
-          uint8_t n = get_no_check(D->val, x, y);
+          uint8_t n = D->val[ x ][ y ];
           if (o + n < DMAP_IS_PASSABLE) {
-            incr(D->val, x, y, o);
+            D->val[ x ][ y ] += o;
           }
         }
       }
-    }
-  }
-
-  //
-  // Sanity check the dmap does not take too much time
-  //
-  if (unlikely(g_opt_debug1)) {
-    auto after = SDL_GetTicks();
-    if (after - before > 70) {
-      ERR("DMAP is taking too long, %d ms", after - before);
-      dmap_print(D);
-    }
-    if (after - before > 0) {
-      LOG("DMAP took %u ms: tl %d,%d br %d %d", after - before, tl.x, tl.y, br.x, br.y);
     }
   }
 }
@@ -664,7 +632,6 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
 //
 void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool place_border)
 {
-  auto                                                              before = SDL_GetTicks();
   uint8_t                                                           x;
   uint8_t                                                           y;
   uint8_t                                                           a;
@@ -727,12 +694,12 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
   // Need a wall around the dmap or the search will sort of trickle off the map
   //
   for (y = miny; y <= maxy; y++) {
-    set_no_check(D->val, minx, y, DMAP_IS_WALL);
-    set_no_check(D->val, maxx, y, DMAP_IS_WALL);
+    D->val[ minx ][ y ] = DMAP_IS_WALL;
+    D->val[ maxx ][ y ] = DMAP_IS_WALL;
   }
   for (x = minx; x <= maxx; x++) {
-    set_no_check(D->val, x, miny, DMAP_IS_WALL);
-    set_no_check(D->val, x, maxy, DMAP_IS_WALL);
+    D->val[ x ][ miny ] = DMAP_IS_WALL;
+    D->val[ x ][ maxy ] = DMAP_IS_WALL;
   }
 
   bool all_walls;
@@ -743,7 +710,7 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
   all_walls = true;
   for (x = minx; (x <= maxx) && all_walls; x++) {
     for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       minx = x;
@@ -753,7 +720,7 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
   all_walls = true;
   for (x = maxx; (x > minx) && all_walls; x--) {
     for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       maxx = x;
@@ -763,7 +730,7 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
   all_walls = true;
   for (y = miny; (y <= maxy) && all_walls; y++) {
     for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       miny = y;
@@ -773,7 +740,7 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
   all_walls = true;
   for (y = maxy; (y > miny) && all_walls; y--) {
     for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = get_no_check(D->val, x, y) == DMAP_IS_WALL;
+      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
     }
     if (all_walls) {
       maxy = y;
@@ -782,17 +749,17 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
 
   for (y = miny + 1; y <= maxy - 1; y++) {
     for (x = minx + 1; x <= maxx - 1; x++) {
-      set_no_check(orig, x, y, get_no_check(D->val, x, y));
+      orig[ x ][ y ] = D->val[ x ][ y ];
 
-      e = &getref(D->val, x, y);
+      e = &D->val[ x ][ y ];
       if (*e != DMAP_IS_WALL) {
-        set_no_check(valid, x, y, (uint8_t) 1);
-        set_no_check(orig_valid, x, y, (uint8_t) 1);
+        valid[ x ][ y ]      = (uint8_t) 1;
+        orig_valid[ x ][ y ] = (uint8_t) 1;
         continue;
       }
 
-      set_no_check(valid, x, y, (uint8_t) 0);
-      set_no_check(orig_valid, x, y, (uint8_t) 0);
+      valid[ x ][ y ]      = (uint8_t) 0;
+      orig_valid[ x ][ y ] = (uint8_t) 0;
     }
   }
 
@@ -801,24 +768,24 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
 
     for (y = miny + 1; y <= maxy - 1; y++) {
       for (x = minx + 1; x <= maxx - 1; x++) {
-        if (! get_no_check(orig_valid, x, y)) {
+        if (! orig_valid[ x ][ y ]) {
           continue;
         }
 
-        if (! get_no_check(valid, x, y)) {
+        if (! valid[ x ][ y ]) {
           continue;
         }
 
-        e = &getref(D->val, x, y);
+        e = &D->val[ x ][ y ];
 
-        a = get_no_check(D->val, x - 1, y - 1);
-        b = get_no_check(D->val, x, y - 1);
-        c = get_no_check(D->val, x + 1, y - 1);
-        d = get_no_check(D->val, x - 1, y);
-        f = get_no_check(D->val, x + 1, y);
-        g = get_no_check(D->val, x - 1, y + 1);
-        h = get_no_check(D->val, x, y + 1);
-        i = get_no_check(D->val, x + 1, y + 1);
+        a = D->val[ x - 1 ][ y - 1 ];
+        b = D->val[ x ][ y - 1 ];
+        c = D->val[ x + 1 ][ y - 1 ];
+        d = D->val[ x - 1 ][ y ];
+        f = D->val[ x + 1 ][ y ];
+        g = D->val[ x - 1 ][ y + 1 ];
+        h = D->val[ x ][ y + 1 ];
+        i = D->val[ x + 1 ][ y + 1 ];
 
         if (a >= DMAP_IS_PASSABLE) {
           a = 0;
@@ -883,30 +850,16 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
   //
   for (y = miny + 1; y <= maxy - 1; y++) {
     for (x = minx + 1; x <= maxx - 1; x++) {
-      uint8_t o = get_no_check(orig, x, y);
+      uint8_t o = orig[ x ][ y ];
       if (o != DMAP_IS_WALL) {
         if (o > DMAP_IS_PASSABLE) {
           o         = o - DMAP_IS_PASSABLE;
-          uint8_t n = get_no_check(D->val, x, y);
+          uint8_t n = D->val[ x ][ y ];
           if (o + n < DMAP_IS_PASSABLE) {
-            incr(D->val, x, y, o);
+            D->val[ x ][ y ] += o;
           }
         }
       }
-    }
-  }
-
-  //
-  // Sanity check the dmap does not take too much time
-  //
-  if (unlikely(g_opt_debug1)) {
-    auto after = SDL_GetTicks();
-    if (after - before > 70) {
-      ERR("DMAP is taking too long, %d ms", after - before);
-      dmap_print(D);
-    }
-    if (after - before > 0) {
-      LOG("DMAP took %u ms: tl %d,%d br %d %d", after - before, tl.x, tl.y, br.x, br.y);
     }
   }
 }
@@ -917,7 +870,7 @@ static bool is_obs_wall_or_door_at(const Dmap *D, int x, int y)
     return true;
   }
 
-  if (get_no_check(D->val, x, y) == DMAP_IS_WALL) {
+  if (D->val[ x ][ y ] == DMAP_IS_WALL) {
     return true;
   }
 
@@ -987,11 +940,11 @@ static std::vector< point > dmap_solve_(const Dmap *D, const point start, const 
       return out;
     }
 
-    uint8_t lowest = get_no_check(D->val, x, y);
+    uint8_t lowest = D->val[ x ][ y ];
     bool    got    = false;
     point   best;
 
-    if (get_no_check(D->val, x, y) == DMAP_IS_WALL) {
+    if (D->val[ x ][ y ] == DMAP_IS_WALL) {
       return out;
     }
 
@@ -1000,15 +953,15 @@ static std::vector< point > dmap_solve_(const Dmap *D, const point start, const 
       auto tx = t.x;
       auto ty = t.y;
 
-      if (get_no_check(walked, tx, ty)) {
+      if (walked[ tx ][ ty ]) {
         continue;
       }
 
-      if (get_no_check(D->val, tx, ty) == DMAP_IS_WALL) {
+      if (D->val[ tx ][ ty ] == DMAP_IS_WALL) {
         continue;
       }
 
-      if (get_no_check(D->val, tx, ty) == DMAP_IS_PASSABLE) {
+      if (D->val[ tx ][ ty ] == DMAP_IS_PASSABLE) {
         continue;
       }
 
@@ -1019,32 +972,28 @@ static std::vector< point > dmap_solve_(const Dmap *D, const point start, const 
       if (! allow_diagonals) {
         if (d.x < 0) {
           if (d.y < 0) {
-            if ((get_no_check(D->val, at.x - 1, at.y) == DMAP_IS_WALL)
-                || (get_no_check(D->val, at.x, at.y - 1) == DMAP_IS_WALL)) {
+            if ((D->val[ at.x - 1 ][ at.y ] == DMAP_IS_WALL) || (D->val[ at.x ][ at.y - 1 ] == DMAP_IS_WALL)) {
               continue;
             }
           } else if (d.y > 0) {
-            if ((get_no_check(D->val, at.x - 1, at.y) == DMAP_IS_WALL)
-                || (get_no_check(D->val, at.x, at.y + 1) == DMAP_IS_WALL)) {
+            if ((D->val[ at.x - 1 ][ at.y ] == DMAP_IS_WALL) || (D->val[ at.x ][ at.y + 1 ] == DMAP_IS_WALL)) {
               continue;
             }
           }
         } else if (d.x > 0) {
           if (d.y < 0) {
-            if ((get_no_check(D->val, at.x + 1, at.y) == DMAP_IS_WALL)
-                || (get_no_check(D->val, at.x, at.y - 1) == DMAP_IS_WALL)) {
+            if ((D->val[ at.x + 1 ][ at.y ] == DMAP_IS_WALL) || (D->val[ at.x ][ at.y - 1 ] == DMAP_IS_WALL)) {
               continue;
             }
           } else if (d.y > 0) {
-            if ((get_no_check(D->val, at.x + 1, at.y) == DMAP_IS_WALL)
-                || (get_no_check(D->val, at.x, at.y + 1) == DMAP_IS_WALL)) {
+            if ((D->val[ at.x + 1 ][ at.y ] == DMAP_IS_WALL) || (D->val[ at.x ][ at.y + 1 ] == DMAP_IS_WALL)) {
               continue;
             }
           }
         }
       }
 
-      int c = get_no_check(D->val, tx, ty);
+      int c = D->val[ tx ][ ty ];
       if (c <= lowest) {
         got    = true;
         best   = t;
@@ -1057,8 +1006,8 @@ static std::vector< point > dmap_solve_(const Dmap *D, const point start, const 
     }
 
     out.push_back(best);
-    at = best;
-    set_no_check(walked, best.x, best.y, true);
+    at                         = best;
+    walked[ best.x ][ best.y ] = true;
   }
   return out;
 }
@@ -1134,14 +1083,14 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
   path_size = p.size();
 
   for (int i = 0; i < (int) path_size; i++) {
-    auto hop0 = get_no_check(p, i);
+    auto hop0 = p[ i ];
 
     if (i == (int) path_size - 1) {
       out.push_back(hop0);
       break;
     }
 
-    auto hop1 = get_no_check(p, i + 1);
+    auto hop1 = p[ i + 1 ];
 
     // s.
     // .e

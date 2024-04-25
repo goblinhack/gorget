@@ -2,12 +2,15 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
+#include "my_level.hpp"
+#include "my_main.hpp"
+#include "my_tile.hpp"
+#include "my_tp.hpp"
+
 #include <iostream>
 #include <sstream>
 #include <string.h>
-
-#include "my_level.hpp"
-#include "my_tp.hpp"
 
 Thingp thing_get(LevelData *data, int x, int y, uint8_t slot, Tpp *out)
 {
@@ -136,7 +139,7 @@ Thingp thing_new(LevelData *data, Tpp tp, int tx, int ty)
       t->pix_y = (int) ty * TILE_HEIGHT;
 
       if (tp) {
-        t->tp_id = tp->id;
+        t->tp_id = tp_id_get(tp);
       }
 
       return t;

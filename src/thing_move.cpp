@@ -2,7 +2,9 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
 
 void thing_move(LevelData *data, Thingp t, int new_x, int new_y)

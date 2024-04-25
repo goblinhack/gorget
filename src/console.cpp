@@ -2,9 +2,11 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_console.hpp"
 #include "my_main.hpp"
+
 #include <string.h>
 
 static inline void term_puts_fg(unsigned char a)

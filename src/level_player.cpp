@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_tp.hpp"
@@ -22,7 +23,7 @@ void Level::thing_player_create_and_place()
           continue;
         }
 
-        if (! tp->is_player) {
+        if (! tp_is_player_get(tp)) {
           continue;
         }
 
@@ -30,7 +31,7 @@ void Level::thing_player_create_and_place()
 
         thing_push(t);
 
-        if (tp->player_index == data->player_index) {
+        if (tp_player_index_get(tp) == data->player_index) {
           data->player = t->id;
         }
 

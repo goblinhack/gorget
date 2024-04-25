@@ -6,9 +6,8 @@
 #ifndef _MY_LEVEL_H_
 #define _MY_LEVEL_H_
 
-#include <inttypes.h>
+#include "my_minimal.hpp"
 
-#include "my_fwd.hpp"
 #include "my_level_data.hpp"
 #include "my_point.hpp"
 
