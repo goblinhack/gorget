@@ -9,7 +9,7 @@
 #include "my_minimal.hpp"
 
 #include <map>
-#include <string> 
+#include <string>
 #include <vector> // linux
 
 extern char *DATA_PATH;

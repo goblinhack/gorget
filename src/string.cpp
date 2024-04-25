@@ -8,11 +8,11 @@
 #include "my_string.hpp"
 #include "my_tex.hpp"
 
-#include <algorithm> 
-#include <iostream>  
-#include <libgen.h>  
-#include <sstream>   
-#include <string>    
+#include <algorithm>
+#include <iostream>
+#include <libgen.h>
+#include <sstream>
+#include <string>
 
 /*
  * Replace chars in replace_set with replace_with.

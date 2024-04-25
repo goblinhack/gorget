@@ -5,8 +5,8 @@
 #include "my_callstack.hpp"
 #include "my_command.hpp"
 
-#include <array>    
-#include <string.h> 
+#include <array>
+#include <string.h>
 
 /*
  * Simple console expanding code, takes a command input and expands it as

@@ -3,13 +3,13 @@
 //
 
 #include <iostream>
-#include <locale.h>  
-#include <stdint.h>  
-#include <stdio.h>   
-#include <string.h>  
-#include <strings.h> 
-#include <time.h>    
-#include <unistd.h>  
+#include <locale.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <strings.h>
+#include <time.h>
+#include <unistd.h>
 
 #include "my_backtrace.hpp"
 #include "my_callstack.hpp"

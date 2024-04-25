@@ -7,9 +7,9 @@
 #include "my_game.hpp"
 #include "my_string.hpp"
 
-#include <string.h>  
-#include <strings.h> 
-#include <time.h>    
+#include <string.h>
+#include <strings.h>
+#include <time.h>
 
 void callstack_dump(void)
 {

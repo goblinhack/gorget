@@ -10,14 +10,14 @@
 #include <windows.h> 
 #include <shlwapi.h> 
 #include <winbase.h> 
-#include <dbghelp.h> 
+#include <dbghelp.h>
 // clang-format on
 #else
-#include <execinfo.h> 
+#include <execinfo.h>
 #endif
 #include <cxxabi.h>
 #ifdef HAVE_LIBUNWIND
-#include <libunwind.h> 
+#include <libunwind.h>
 #endif
 #include <memory>
 

@@ -7,7 +7,7 @@
 #define _MY_FONT_HPP_
 
 #include "my_tile.hpp"
-#include <array> 
+#include <array>
 
 extern Fontp font_ui;
 

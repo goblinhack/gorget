@@ -7,8 +7,8 @@
 #include "my_string.hpp"
 #include "my_time.hpp"
 
-#include <cstring>  
-#include <stdarg.h> 
+#include <cstring>
+#include <stdarg.h>
 
 static void file_log_(const char *fmt, va_list args)
 {

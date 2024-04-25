@@ -69,13 +69,13 @@ public:
   bool is_wall {};
   // end sort marker1 }
 
-  uint8_t player_index {};
-
   // begin sort marker2 {
   int chance_d1000_appearing {};
   int rarity {};
   int speed {100};
   // end sort marker2 }
+
+  uint8_t player_index {};
 
   Tp(void);
   ~Tp(void);
@@ -94,7 +94,7 @@ public:
 using Tpidmap = std::vector< class Tp * >;
 Tpidmap tp_id_map;
 
-// begin sort marker1 {
+// begin sort marker3 {
 static Tpidmap tp_door;
 static Tpidmap tp_dungeon_entrance;
 static Tpidmap tp_exit;
@@ -103,7 +103,7 @@ static Tpidmap tp_key;
 static Tpidmap tp_monst_class[ MONST_CLASS_MAX ];
 static Tpidmap tp_player;
 static Tpidmap tp_wall;
-// end sort marker1 }
+// end sort marker3 }
 
 static std::map< std::string, class Tp * > tp_name_map;
 
