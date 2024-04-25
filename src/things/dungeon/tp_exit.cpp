@@ -21,7 +21,7 @@ bool tp_load_exit(void)
   for (auto frame = 0; frame < 1; frame++) {
     const auto delay = 100; /* ms */
     auto       tile  = tile_find_mand("exit." + std::to_string(frame));
-    tile->delay_ms   = delay;
+    tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, tile);
   }
 

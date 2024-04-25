@@ -43,7 +43,7 @@ void Level::anim(void)
           continue;
         }
 
-        if (! tile->delay_ms) {
+        if (! tile_delay_ms(tile)) {
           continue;
         }
 
@@ -63,11 +63,11 @@ void Level::anim(void)
         }
 
         tile      = tp_tiles_get(tp, obj->anim_index);
-        obj->tile = tile->global_index;
+        obj->tile = tile_global_index(tile);
 
-        obj->anim_ms_remaining += tile->delay_ms;
+        obj->anim_ms_remaining += tile_delay_ms(tile);
         if (obj->anim_ms_remaining < 0) {
-          obj->anim_ms_remaining = tile->delay_ms;
+          obj->anim_ms_remaining = tile_delay_ms(tile);
         }
       }
     }

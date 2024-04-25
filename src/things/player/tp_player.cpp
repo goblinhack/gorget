@@ -23,8 +23,8 @@ bool tp_load_player(void)
     auto delay = 100;
 
     for (auto frame = 0; frame < 1; frame++) {
-      auto tile      = tile_find_mand(name + ".idle." + std::to_string(frame));
-      tile->delay_ms = delay;
+      auto tile = tile_find_mand(name + ".idle." + std::to_string(frame));
+      tile_delay_ms_set(tile, delay);
       tp_tiles_push_back(tp, tile);
     }
   }

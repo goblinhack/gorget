@@ -20,119 +20,13 @@ using Tilevec = std::vector< class Tile * >;
 #define TILE_HEIGHT_MAX 64
 #define TILE_WIDTH_MAX  64 // Largest tile for collisions
 
-class Tile
-{
-public:
-  Tile(void);
-  ~Tile(void);
-  Tile(const class Tile *tile);
+class Tex *tile_tex(Tilep);
 
-  std::string name;
+int tile_height(Tilep);
+int tile_width(Tilep);
+int tile_n(Tilevec *tmap, Tile *p);
 
-  //
-  // Grabbed by a template
-  //
-  uint8_t  in_use {};
-  uint16_t global_index;
-
-  //
-  // Index within the overall texture, left to right, top to bottom.
-  //
-  uint16_t index {};
-
-  uint16_t pix_width {};
-  uint16_t pix_height {};
-
-  float pct_width {};
-  float pct_height {};
-
-  //
-  // Texture co-ordinates within the image.
-  //
-  float x1 {};
-  float y1 {};
-  float x2 {};
-  float y2 {};
-
-  //
-  // As above but not clipped 0.5 pixels. Actually we do not clip anymore,
-  // it didn't help. Best to choose a resolution that works.
-  //
-  float ox1 {};
-  float oy1 {};
-  float ox2 {};
-  float oy2 {};
-
-  //
-  // Percentage points that indicate the start of the pixels within the tile
-  // texture for use in collisions.
-  //
-  float px1 {};
-  float py1 {};
-  float px2 {};
-  float py2 {};
-
-  class Tex *tex {};
-  class Tex *tex_monochrome {};
-  class Tex *tex_mask {};
-
-  std::array< std::array< uint8_t, TILE_HEIGHT_MAX >, TILE_WIDTH_MAX > pix {};
-
-  //
-  // Delay in ms between frames.
-  //
-  uint32_t delay_ms {};
-
-  uint8_t frame {};
-  uint8_t dir {};
-
-  bool internal_has_dir_anim   : 1 {};
-  bool is_alive_on_end_of_anim : 1 {};
-  bool is_dead                 : 1 {};
-  bool is_dead_on_end_of_anim  : 1 {};
-  bool is_end_of_anim          : 1 {};
-  bool is_moving               : 1 {};
-  bool is_open                 : 1 {};
-  bool is_outline              : 1 {};
-  bool is_resurrecting         : 1 {};
-  bool is_sleeping             : 1 {};
-  bool is_yyy5                 : 1 {};
-  bool is_yyy6                 : 1 {};
-  bool is_yyy7                 : 1 {};
-  bool is_yyy8                 : 1 {};
-  bool is_yyy9                 : 1 {};
-
-private:
-  int _gl_binding {};
-  int _gl_binding_monochrome {};
-  int _gl_binding_mask {};
-
-public:
-  int  gl_binding(void) const;
-  int  gl_binding_monochrome(void) const;
-  int  gl_binding_mask(void) const;
-  void set_gl_binding(int v);
-  void set_gl_binding_monochrome(int v);
-  void set_gl_binding_mask(int v);
-};
-
-static inline Tilep tile_index_to_tile(uint16_t i)
-{
-  extern std::vector< class Tile * > all_tiles_array;
-  if (unlikely(! i)) {
-    return nullptr;
-  }
-  return all_tiles_array[ i - 1 ];
-}
-
-class Tex *tile_get_tex(Tilep);
-
-int tile_get_height(Tilep);
-int tile_get_width(Tilep);
-int tile_get_n(Tilevec *tmap, Tile *p);
-
-std::string tile_get_name(Tilep);
-std::string tile_name(Tilep);
+std::string tile_name_get(Tilep);
 
 Tilep string2tile(const char **s);
 Tilep string2tile(std::string &s, int *len);
@@ -145,11 +39,16 @@ Tilep tile_next(Tilevec *root, Tilep in);
 Tilep tile_n(Tilevec *root, int n);
 Tilep tile_random(Tilevec *root);
 Tilep tile_find(std::string name);
-Tilep tile_get_frame(Tilevec *tmap, uint32_t frame);
+Tilep tile_frame(Tilevec *tmap, uint32_t frame);
 
 uint32_t tile_delay_ms(Tilep);
+void     tile_delay_ms_set(Tilep, uint32_t);
+
+uint32_t tile_global_index(Tilep);
+void     tile_global_index_set(Tilep, uint32_t);
+
 uint32_t tile_frame(Tilep);
-uint32_t tile_get_index(Tilep);
+uint32_t tile_index(Tilep);
 uint32_t tile_move(Tilep);
 
 uint8_t gfx_outline_index_offset(Tilep);
@@ -172,11 +71,6 @@ uint8_t tile_is_moving(Tilep);
 uint8_t tile_is_open(Tilep);
 uint8_t tile_is_resurrecting(Tilep);
 uint8_t tile_is_sleeping(Tilep);
-uint8_t tile_is_yyy5(Tilep);
-uint8_t tile_is_yyy6(Tilep);
-uint8_t tile_is_yyy7(Tilep);
-uint8_t tile_is_yyy8(Tilep);
-uint8_t tile_is_yyy9(Tilep);
 
 void tile_blit(const Tilep &tile, const point tl, const point br);
 void tile_blit_mask(const Tilep &tile, const point tl, const point br);
@@ -227,7 +121,7 @@ void tile_blit_shadow_section(const class Tp *&tp, uint16_t index, const point t
                               const point tl, const point br);
 void tile_fini(void);
 void tile_free(Tilep);
-void tile_get_coords(Tilep, float *x1, float *y1, float *x2, float *y2);
+void tile_coords(Tilep, float *x1, float *y1, float *x2, float *y2);
 void tile_load(std::string file, uint32_t width, uint32_t height, uint32_t nargs, ...);
 void tile_load_arr(std::string file, std::string tex_name, uint32_t width, uint32_t height,
                    const std::vector< std::string > &arr);

@@ -64,10 +64,10 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
     DIE("Did not find wid %s tile %s", name.c_str(), tmp);
   }
 
-  Texp tex = tile_get_tex(tile);
+  Texp tex = tile_tex(tile);
 
-  double tile_w = tile_get_width(tile);
-  double tile_h = tile_get_height(tile);
+  double tile_w = tile_width(tile);
+  double tile_h = tile_height(tile);
   double tex_w  = tex_get_width(tex);
   double tex_h  = tex_get_height(tex);
 

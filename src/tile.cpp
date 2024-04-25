@@ -3,7 +3,11 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color.hpp"
+#include "my_color_defs.hpp"
 #include "my_cpp_template.hpp"
+#include "my_gl.hpp"
+#include "my_minimal.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
@@ -13,6 +17,97 @@ std::map< std::string, class Tile * > all_tiles;
 std::vector< class Tile * >           all_tiles_array;
 
 static uint8_t tile_init_done;
+
+class Tile
+{
+public:
+  Tile(void);
+  ~Tile(void);
+  Tile(const class Tile *tile);
+
+  std::string name;
+
+  //
+  // Grabbed by a template
+  //
+  uint8_t  in_use {};
+  uint16_t global_index;
+
+  //
+  // Index within the overall texture, left to right, top to bottom.
+  //
+  uint16_t index {};
+
+  uint16_t pix_width {};
+  uint16_t pix_height {};
+
+  float pct_width {};
+  float pct_height {};
+
+  //
+  // Texture co-ordinates within the image.
+  //
+  float x1 {};
+  float y1 {};
+  float x2 {};
+  float y2 {};
+
+  //
+  // As above but not clipped 0.5 pixels. Actually we do not clip anymore,
+  // it didn't help. Best to choose a resolution that works.
+  //
+  float ox1 {};
+  float oy1 {};
+  float ox2 {};
+  float oy2 {};
+
+  //
+  // Percentage points that indicate the start of the pixels within the tile
+  // texture for use in collisions.
+  //
+  float px1 {};
+  float py1 {};
+  float px2 {};
+  float py2 {};
+
+  class Tex *tex {};
+  class Tex *tex_monochrome {};
+  class Tex *tex_mask {};
+
+  std::array< std::array< uint8_t, TILE_HEIGHT_MAX >, TILE_WIDTH_MAX > pix {};
+
+  //
+  // Delay in ms between frames.
+  //
+  uint32_t delay_ms {};
+
+  uint8_t frame {};
+  uint8_t dir {};
+
+  bool internal_has_dir_anim   : 1 {};
+  bool is_alive_on_end_of_anim : 1 {};
+  bool is_dead                 : 1 {};
+  bool is_dead_on_end_of_anim  : 1 {};
+  bool is_end_of_anim          : 1 {};
+  bool is_moving               : 1 {};
+  bool is_open                 : 1 {};
+  bool is_outline              : 1 {};
+  bool is_resurrecting         : 1 {};
+  bool is_sleeping             : 1 {};
+
+private:
+  int _gl_binding {};
+  int _gl_binding_monochrome {};
+  int _gl_binding_mask {};
+
+public:
+  int  gl_binding(void) const;
+  int  gl_binding_monochrome(void) const;
+  int  gl_binding_mask(void) const;
+  void set_gl_binding(int v);
+  void set_gl_binding_monochrome(int v);
+  void set_gl_binding_mask(int v);
+};
 
 Tile::Tile(void) { newptr(MTYPE_TILE, this, "Tile"); }
 
@@ -79,11 +174,6 @@ Tile::Tile(const class Tile *tile)
   delay_ms                = tile->delay_ms;
   dir                     = tile->dir;
   is_moving               = tile->is_moving;
-  is_yyy5                 = tile->is_yyy5;
-  is_yyy6                 = tile->is_yyy6;
-  is_yyy7                 = tile->is_yyy7;
-  is_yyy8                 = tile->is_yyy8;
-  is_yyy9                 = tile->is_yyy9;
   is_sleeping             = tile->is_sleeping;
   is_open                 = tile->is_open;
   is_dead                 = tile->is_dead;
@@ -721,7 +811,7 @@ Tilep tile_find(std::string name)
     return nullptr;
   }
 
-  return (result->second);
+  return result->second;
 }
 
 Tilep tile_find_mand(std::string name)
@@ -738,20 +828,20 @@ Tilep tile_find_mand(std::string name)
     return nullptr;
   }
 
-  return (result->second);
+  return result->second;
 }
 
-std::string tile_get_name(Tilep tile) { return (tile->name); }
+std::string tile_name_get(Tilep tile) { return tile->name; }
 
-int tile_get_width(Tilep tile) { return (tile->pix_width); }
+int tile_width(Tilep tile) { return tile->pix_width; }
 
-int tile_get_height(Tilep tile) { return (tile->pix_height); }
+int tile_height(Tilep tile) { return tile->pix_height; }
 
-Texp tile_get_tex(Tilep tile) { return (tile->tex); }
+Texp tile_tex(Tilep tile) { return tile->tex; }
 
-uint32_t tile_get_index(Tilep tile) { return (tile->index); }
+uint32_t tile_index(Tilep tile) { return tile->index; }
 
-void tile_get_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
+void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
 {
   *x1 = tile->x1;
   *y1 = tile->x1;
@@ -788,7 +878,7 @@ Tilep string2tile(const char **s)
     return nullptr;
   }
 
-  return (result->second);
+  return result->second;
 }
 
 Tilep string2tile(std::string &s, int *len)
@@ -821,5 +911,499 @@ Tilep string2tile(std::string &s, int *len)
     ERR("Unknown tile [%s]", name.c_str());
   }
 
-  return (result->second);
+  return result->second;
+}
+
+Tilep tile_index_to_tile(uint16_t i)
+{
+  extern std::vector< class Tile * > all_tiles_array;
+  if (unlikely(! i)) {
+    return nullptr;
+  }
+  return all_tiles_array[ i - 1 ];
+}
+//
+// Blits a whole tile.
+//
+void tile_blit_at(const Tilep &tile, point tl, point br)
+{
+  blit(tile->gl_binding(), tile->x1, tile->y2, tile->x2, tile->y1, tl.x, tl.y, br.x, br.y);
+}
+
+//
+// Blits a whole tile. Y co-ords are inverted.
+//
+void tile_blit_colored_fat(Tilep tile, point tl, point br, color color_tl, color color_tr, color color_bl,
+                           color color_br)
+{
+  float x1 = tile->x1;
+  float x2 = tile->x2;
+  float y1 = tile->y1;
+  float y2 = tile->y2;
+
+#if 0
+  if (unlikely(tp != nullptr)) {
+    auto left_off  = (float) tp->blit_left_off();
+    auto right_off = (float) tp->blit_right_off();
+    auto top_off   = (float) tp->blit_top_off();
+    auto bot_off   = (float) tp->blit_bot_off();
+
+    float pct_w = tile->pct_width;
+    float pct_h = tile->pct_height;
+    float pix_w = br.x - tl.x;
+    float pix_h = br.y - tl.y;
+
+    tl.x -= left_off * pix_w;
+    br.x += right_off * pix_w;
+    tl.y -= top_off * pix_h;
+    br.y += bot_off * pix_h;
+
+    x1 -= left_off * pct_w;
+    x2 += right_off * pct_w;
+    y1 -= top_off * pct_h;
+    y2 += bot_off * pct_h;
+  }
+#endif
+
+  blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
+}
+
+void tile_blit_colored(Tilep tile, point tl, point br, color color_tl, color color_tr, color color_bl, color color_br)
+{
+  float x1 = tile->x1;
+  float x2 = tile->x2;
+  float y1 = tile->y1;
+  float y2 = tile->y2;
+
+  blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
+}
+
+std::string tile_name(Tilep t)
+{
+  TRACE_AND_INDENT();
+  return t->name;
+}
+
+uint32_t tile_delay_ms(Tilep t) { return t->delay_ms; }
+void     tile_delay_ms_set(Tilep t, uint32_t val) { t->delay_ms = val; }
+
+uint32_t tile_global_index(Tilep t) { return t->global_index; }
+void     tile_global_index_set(Tilep t, uint32_t val) { t->global_index = val; }
+
+uint8_t tile_is_moving(Tilep t) { return t->is_moving; }
+
+uint8_t tile_is_sleeping(Tilep t) { return t->is_sleeping; }
+
+uint8_t tile_is_open(Tilep t) { return t->is_open; }
+
+uint8_t tile_is_dead(Tilep t) { return t->is_dead; }
+
+uint8_t tile_is_end_of_anim(Tilep t) { return t->is_end_of_anim; }
+
+uint8_t tile_is_dead_on_end_of_anim(Tilep t) { return t->is_dead_on_end_of_anim; }
+
+uint8_t tile_is_alive_on_end_of_anim(Tilep t) { return t->is_alive_on_end_of_anim; }
+
+uint8_t tile_is_resurrecting(Tilep t) { return t->is_resurrecting; }
+
+Tilep tile_first(Tilevec *tmap)
+{
+  if (unlikely(! tmap)) {
+    return nullptr;
+  }
+  std::vector< Tilep > *tiles = &((*tmap));
+  if (unlikely(! tiles)) {
+    return nullptr;
+  }
+  if (unlikely(tiles->empty())) {
+    return nullptr;
+  }
+  Tilep tile = (*tiles)[ 0 ];
+  return tile_index_to_tile(tile->global_index);
+}
+
+Tilep tile_random(Tilevec *tmap)
+{
+  if (unlikely(! tmap)) {
+    return nullptr;
+  }
+  std::vector< Tilep > *tiles = &((*tmap));
+  if (unlikely(! tiles)) {
+    return nullptr;
+  }
+  if (unlikely(tiles->empty())) {
+    return nullptr;
+  }
+
+  int tries = 999999;
+  while (tries--) {
+    auto index = pcg_rand() % tiles->size();
+    auto tile  = (*tiles)[ index ];
+
+    //
+    // Don't really want dead tiles when choosing a random start tile.
+    //
+    if (tile->is_dead) {
+      continue;
+    }
+    if (unlikely(! tile)) {
+      ERR("no tile at index #%d, max %d", (int) index, (int) tiles->size());
+      return nullptr;
+    }
+    return tile_index_to_tile(tile->global_index);
+  }
+
+  DIE("failed to choose a random tile");
+}
+
+Tilep tile_n(Tilevec *tmap, int n)
+{
+  if (unlikely(! tmap)) {
+    return nullptr;
+  }
+  std::vector< Tilep > *tiles = &((*tmap));
+  if (unlikely(! tiles)) {
+    return nullptr;
+  }
+  if (unlikely(tiles->empty())) {
+    return nullptr;
+  }
+  auto index = n % tiles->size();
+  auto tile  = (*tiles)[ index ];
+  if (unlikely(! tile)) {
+    ERR("no tile at index #%d, max %d", (int) index, (int) tiles->size());
+    return nullptr;
+  }
+  return tile_index_to_tile(tile->global_index);
+}
+
+Tilep tile_frame(Tilevec *tmap, uint32_t frame)
+{
+  for (const auto t : *tmap) {
+    if (t->frame == frame) {
+      return t;
+    }
+  }
+  return nullptr;
+}
+
+Tilep tile_next(Tilevec *tmap, Tilep in)
+{
+  if (unlikely(! tmap)) {
+    return nullptr;
+  }
+  std::vector< Tilep > *tiles = &((*tmap));
+  if (unlikely(tiles->empty())) {
+    return nullptr;
+  }
+  auto cursor = in->index;
+  cursor++;
+  if (cursor >= tiles->size()) {
+    cursor = 0;
+  }
+  auto tile = ((*tiles)[ cursor ]);
+  return tile_index_to_tile(tile->global_index);
+}
+
+int Tile::gl_binding(void) const { return _gl_binding; }
+
+void Tile::set_gl_binding(int v) { _gl_binding = v; }
+
+int Tile::gl_binding_monochrome(void) const { return _gl_binding_monochrome; }
+
+void Tile::set_gl_binding_monochrome(int v) { _gl_binding_monochrome = v; }
+
+int Tile::gl_binding_mask(void) const { return _gl_binding_mask; }
+
+void Tile::set_gl_binding_mask(int v) { _gl_binding_mask = v; }
+
+//
+// Blits a whole tile. Y co-ords are inverted.
+//
+void tile_blit_outline(const Tilep &tile, const point tl, const point br, const color &c, bool square)
+{
+  float x1, x2, y1, y2;
+
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  x1 = tile->x1;
+  x2 = tile->x2;
+  y1 = tile->y1;
+  y2 = tile->y2;
+
+  color outline = {10, 10, 10, 255};
+  glcolor(outline);
+
+  const float dx = 1;
+  const float dy = 1;
+
+  auto binding = tile->gl_binding_mask();
+
+  if (square) {
+    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
+    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
+    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
+    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+  }
+  blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
+  blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
+  blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
+  blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
+
+  glcolor(c);
+  binding = tile->gl_binding();
+  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+}
+
+void tile_blit_outline(const Tilep &tile, const point tl, const point br, const color &c, const color &outline,
+                       bool square)
+{
+  float x1, x2, y1, y2;
+
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  x1 = tile->x1;
+  x2 = tile->x2;
+  y1 = tile->y1;
+  y2 = tile->y2;
+
+  glcolor(outline);
+
+  const float dx = 1;
+  const float dy = 1;
+
+  auto binding = tile->gl_binding_mask();
+
+  if (square) {
+    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
+    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
+    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
+    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+  }
+  blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
+  blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
+  blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
+  blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
+
+  glcolor(c);
+  binding = tile->gl_binding();
+  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+}
+
+void tile_blit_outline(uint16_t index, const point tl, const point br, const color &c, bool square)
+{
+  tile_blit_outline(tile_index_to_tile(index), tl, br, c, square);
+}
+
+void tile_blit(const Tilep &tile, const point tl, const point br, const color &c)
+{
+  float x1, x2, y1, y2;
+
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  x1 = tile->x1;
+  x2 = tile->x2;
+  y1 = tile->y1;
+  y2 = tile->y2;
+
+  auto binding = tile->gl_binding();
+  glcolor(c);
+  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+}
+
+//
+// Blits a whole tile. Y co-ords are inverted.
+//
+static void tile_blit_outline_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
+                                      const point br, float scale)
+{
+  float x1, x2, y1, y2;
+
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  float tw = tile->x2 - tile->x1;
+  float th = tile->y2 - tile->y1;
+
+  x1 = tile->x1 + tile_tl.x * tw;
+  x2 = tile->x1 + tile_br.x * tw;
+  y1 = tile->y1 + tile_tl.y * th;
+  y2 = tile->y1 + tile_br.y * th;
+
+  glcolor(BLACK);
+
+  if (scale < 0.2) {
+    scale = 0.2;
+  }
+  const float dx = 1;
+  const float dy = 1;
+
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
+
+  glcolor(WHITE);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+}
+
+void tile_blit(const Tilep &tile, const point tl, const point br)
+{
+  float x1, x2, y1, y2;
+
+  //
+  // Only some walls have deco tiles, so the pointer is left null for
+  // those that do not.
+  //
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  x1 = tile->x1;
+  x2 = tile->x2;
+  y1 = tile->y1;
+  y2 = tile->y2;
+
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+}
+
+void tile_blit_mask(const Tilep &tile, const point tl, const point br)
+{
+  float x1, x2, y1, y2;
+
+  //
+  // Only some walls have deco tiles, so the pointer is left null for
+  // those that do not.
+  //
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  x1 = tile->x1;
+  x2 = tile->x2;
+  y1 = tile->y1;
+  y2 = tile->y2;
+
+  blit(tile->gl_binding_mask(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+}
+
+void tile_blit(const Tilep &tile, const point tl, const point tr, const point bl, const point br)
+{
+  float x1, x2, y1, y2;
+
+  //
+  // Only some walls have deco tiles, so the pointer is left null for
+  // those that do not.
+  //
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  x1 = tile->x1;
+  x2 = tile->x2;
+  y1 = tile->y1;
+  y2 = tile->y2;
+
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl, tr, bl, br);
+}
+
+void tile_blit(uint16_t index, const point tl, const point br) { tile_blit(tile_index_to_tile(index), tl, br); }
+
+void tile_blit_section(const Tilep &tile, const point tile_tl, const point tile_br, const point tl, const point br)
+{
+  float x1, x2, y1, y2;
+
+  //
+  // Only some walls have deco tiles, so the pointer is left null for
+  // those that do not.
+  //
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  float tw = tile->x2 - tile->x1;
+  float th = tile->y2 - tile->y1;
+
+  x1 = tile->x1 + tile_tl.x * tw;
+  x2 = tile->x1 + tile_br.x * tw;
+  y1 = tile->y1 + tile_tl.y * th;
+  y2 = tile->y1 + tile_br.y * th;
+
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+}
+
+void tile_blit_section(uint16_t index, const point tile_tl, const point tile_br, const point tl, const point br)
+{
+  tile_blit_section(tile_index_to_tile(index), tile_tl, tile_br, tl, br);
+}
+
+void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
+                               const point br, color color_tl, color color_tr, color color_bl, color color_br)
+{
+  float x1, x2, y1, y2;
+
+  //
+  // Only some walls have deco tiles, so the pointer is left null for
+  // those that do not.
+  //
+  if (unlikely(! tile)) {
+    return;
+  }
+
+  float tw = tile->x2 - tile->x1;
+  float th = tile->y2 - tile->y1;
+
+  x1 = tile->x1 + tile_tl.x * tw;
+  x2 = tile->x1 + tile_br.x * tw;
+  y1 = tile->y1 + tile_tl.y * th;
+  y2 = tile->y1 + tile_br.y * th;
+
+  blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
+}
+
+void tile_blit_section_colored(uint16_t index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
+                               const point br, color color_tl, color color_tr, color color_bl, color color_br)
+{
+  tile_blit_section_colored(tile_index_to_tile(index), tile_tl, tile_br, tl, br, color_tl, color_tr, color_bl,
+                            color_br);
+}
+
+void tile_blit_outline_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br,
+                                       const point tl, const point br, color color_tl, color color_tr, color color_bl,
+                                       color color_br)
+{
+  tile_blit_outline_section(tile, tile_tl, tile_br, tl, br, 0.75);
+}
+
+void tile_blit_outline_section_colored(uint16_t index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
+                                       const point br, color color_tl, color color_tr, color color_bl, color color_br)
+{
+  tile_blit_outline_section_colored(tile_index_to_tile(index), tile_tl, tile_br, tl, br, color_tl, color_tr, color_bl,
+                                    color_br);
+}
+
+void tile_blit_outline_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br,
+                                       const point tl, const point br, color color_tl, color color_tr, color color_bl,
+                                       color color_br, float scale)
+{
+  tile_blit_outline_section(tile, tile_tl, tile_br, tl, br, scale);
+}
+
+void tile_blit_outline_section_colored(uint16_t index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
+                                       const point br, color color_tl, color color_tr, color color_bl, color color_br,
+                                       float scale)
+{
+  tile_blit_outline_section_colored(tile_index_to_tile(index), tile_tl, tile_br, tl, br, color_bl, color_br, color_tl,
+                                    color_tr, scale);
 }

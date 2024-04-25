@@ -66,7 +66,7 @@ bool Level::set_tile(int x, int y, uint8_t slot, Tilep tile)
     return false;
   }
   if (tile) {
-    data->obj[ x ][ y ][ slot ].tile = tile->global_index;
+    data->obj[ x ][ y ][ slot ].tile = tile_global_index(tile);
   } else {
     data->obj[ x ][ y ][ slot ].tile = 0;
   }
@@ -75,7 +75,7 @@ bool Level::set_tile(int x, int y, uint8_t slot, Tilep tile)
 
 void Level::set_tile_no_check(int x, int y, uint8_t slot, Tilep tile)
 {
-  data->obj[ x ][ y ][ slot ].tile = tile->global_index;
+  data->obj[ x ][ y ][ slot ].tile = tile_global_index(tile);
 }
 
 Tilep Level::get_tile(int x, int y, uint8_t slot)

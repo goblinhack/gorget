@@ -35,7 +35,7 @@ void thing_push(LevelData *data, Thingp t)
       auto tp   = tp_find(t->tp_id);
       auto tile = tp_first_tile(tp);
       if (tile) {
-        o->tile = tile->global_index;
+        o->tile = tile_global_index(tile);
       }
       return;
     }

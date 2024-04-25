@@ -63,8 +63,8 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
     return;
   }
 
-  auto pix_height = tile->pix_height;
-  auto pix_width  = tile->pix_width;
+  auto pix_height = tile_height(tile);
+  auto pix_width  = tile_width(tile);
 
   if (t) {
     tl.x = t->pix_x;

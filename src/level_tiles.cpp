@@ -187,7 +187,7 @@ void Level::assign_tiles(void)
           set_tile(x, y, slot, tile);
 
           data->obj[ x ][ y ][ slot ].anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
-          data->obj[ x ][ y ][ slot ].anim_ms_remaining = pcg_random_range_inclusive(0, tile->delay_ms);
+          data->obj[ x ][ y ][ slot ].anim_ms_remaining = pcg_random_range_inclusive(0, tile_delay_ms(tile));
         } else {
           auto index = pcg_rand() % tp_tiles_size(tp);
           auto tile  = tp_tiles_get(tp, index);
