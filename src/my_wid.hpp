@@ -11,6 +11,8 @@
 #include "my_time.hpp"
 #include "my_wid_tiles.hpp"
 
+#include <map>
+
 void WID_LOG(Widp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void WID_DBG(Widp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 

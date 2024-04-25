@@ -14,6 +14,7 @@
 #include "my_tile.hpp"
 
 #include <array>
+#include <map>
 
 std::map< std::string, class Tile * > all_tiles;
 std::vector< class Tile * >           all_tiles_array;

@@ -10,6 +10,8 @@
 #include "my_music.hpp"
 #include "my_ptrcheck.hpp"
 
+#include <map>
+
 class music
 {
 public:

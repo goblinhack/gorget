@@ -6,6 +6,8 @@
 #include "my_tex.hpp"
 #include "my_wid_tiles.hpp"
 
+#include <map>
+
 static int                                       wid_tiles_init_done;
 static std::map< std::string, class WidTiles * > wid_tiles_all;
 

@@ -3,6 +3,7 @@
 //
 
 #include <SDL_mixer.h>
+#include <map>
 
 #include "my_callstack.hpp"
 #include "my_file.hpp"

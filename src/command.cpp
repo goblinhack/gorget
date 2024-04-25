@@ -6,6 +6,7 @@
 #include "my_command.hpp"
 
 #include <array>
+#include <map>
 #include <string.h>
 
 /*

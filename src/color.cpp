@@ -8,6 +8,7 @@
 #include "my_string.hpp"
 #include "my_ui.hpp"
 
+#include <map>
 #include <string.h>
 #include <strings.h>
 

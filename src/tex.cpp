@@ -11,6 +11,8 @@
 #include "my_string.hpp"
 #include "my_tex.hpp"
 
+#include <map>
+
 class Tex
 {
 public:

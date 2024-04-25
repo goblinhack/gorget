@@ -8,7 +8,8 @@
 
 #include "my_main.hpp"
 
-using vector_string = std::vector< std::string >;
+#include <vector>
+
 using vector_string = std::vector< std::string >;
 
 extern size_t strlcpy_(char *dst, const char *src, size_t size);

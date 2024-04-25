@@ -13,6 +13,7 @@
 
 #include <inttypes.h>
 #include <map>
+#include <vector>
 
 //
 // Templates can be assigned dynamic IDs - however the levels are more reproducable it

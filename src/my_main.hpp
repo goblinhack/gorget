@@ -8,9 +8,7 @@
 
 #include "my_minimal.hpp"
 
-#include <map>
 #include <string>
-#include <vector> // linux
 
 extern char *DATA_PATH;
 extern char *EXEC_DIR;
@@ -33,9 +31,6 @@ extern bool g_quitting;                 // Exiting the game
 extern bool g_opt_debug1;
 extern bool g_opt_debug2;
 extern bool g_opt_debug3;
-
-extern std::map< std::string, class Tile * > all_tiles;
-extern std::vector< class Tile * >           all_tiles_array;
 
 extern std::string g_opt_seed_name;
 extern std::string g_opt_player_name;

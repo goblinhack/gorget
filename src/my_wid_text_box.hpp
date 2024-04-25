@@ -8,6 +8,9 @@
 
 #include "my_wid.hpp"
 
+#include <map>
+#include <vector>
+
 typedef enum {
   TEXT_FORMAT_NONE,
   TEXT_FORMAT_LHS,
