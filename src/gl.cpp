@@ -7,16 +7,19 @@
 #include "my_gl.hpp"
 #include "my_ptrcheck.hpp"
 
-float      glapi_last_tex_right;
-float      glapi_last_tex_bottom;
-GLushort   glapi_last_right;
-GLushort   glapi_last_bottom;
-static int in_2d_mode;
+#include <array>
 
-std::array< GLuint, MAX_FBO > render_buf_id = {};
-std::array< GLuint, MAX_FBO > fbo_id        = {};
-std::array< GLuint, MAX_FBO > fbo_tex_id    = {};
-std::array< isize, MAX_FBO >  fbo_size      = {};
+static bool in_2d_mode;
+
+float    glapi_last_tex_right;
+float    glapi_last_tex_bottom;
+GLushort glapi_last_right;
+GLushort glapi_last_bottom;
+
+GLuint fbo_id[ MAX_FBO ];
+GLuint fbo_tex_id[ MAX_FBO ];
+GLuint render_buf_id[ MAX_FBO ];
+isize  fbo_size[ MAX_FBO ];
 
 void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
                      const void *userParam)

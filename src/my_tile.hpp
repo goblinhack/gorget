@@ -6,40 +6,30 @@
 #ifndef _MY_TILE_HPP_
 #define _MY_TILE_HPP_
 
-#include <vector>
-
-#include "my_gl.hpp"
+#include "my_color.hpp"
 #include "my_minimal.hpp"
+#include "my_point.hpp"
 
 class Tile;
-using Tilevec = std::vector< class Tile * >;
 
-#define TILE_VARIANTS   6
 #define TILE_HEIGHT     16
 #define TILE_WIDTH      16
-#define TILE_HEIGHT_MAX 64
-#define TILE_WIDTH_MAX  64 // Largest tile for collisions
+#define TILE_HEIGHT_MAX 32
+#define TILE_WIDTH_MAX  32 // Largest tile for collisions
 
 class Tex *tile_tex(Tilep);
 
 int tile_height(Tilep);
 int tile_width(Tilep);
-int tile_n(Tilevec *tmap, Tile *p);
 
 std::string tile_name_get(Tilep);
 
 Tilep string2tile(const char **s);
 Tilep string2tile(std::string &s, int *len);
-Tilep string2tile(std::string &s, int *len);
 Tilep tile_find_mand(std::string name);
-Tilep tile_first(Tilevec *root);
 Tilep tile_from_surface(struct SDL_Surface *surface, std::string optional_file, std::string name);
 Tilep tile_index_to_tile(uint16_t i);
-Tilep tile_next(Tilevec *root, Tilep in);
-Tilep tile_n(Tilevec *root, int n);
-Tilep tile_random(Tilevec *root);
 Tilep tile_find(std::string name);
-Tilep tile_frame(Tilevec *tmap, uint32_t frame);
 
 uint32_t tile_delay_ms(Tilep);
 void     tile_delay_ms_set(Tilep, uint32_t);
@@ -123,14 +113,10 @@ void tile_fini(void);
 void tile_free(Tilep);
 void tile_coords(Tilep, float *x1, float *y1, float *x2, float *y2);
 void tile_load(std::string file, uint32_t width, uint32_t height, uint32_t nargs, ...);
-void tile_load_arr(std::string file, std::string tex_name, uint32_t width, uint32_t height,
-                   const std::vector< std::string > &arr);
 void tile_load_arr(std::string file, std::string tex_name, uint32_t width, uint32_t height, uint32_t nargs,
                    const char *arr[]);
-void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, uint32_t height,
-                           const std::vector< std::string > &arr, int gl_mode = GL_NEAREST);
 void tile_load_arr_sprites(std::string file, std::string tex_name, uint32_t width, uint32_t height, uint32_t nargs,
-                           const char *arr[], int gl_mode = GL_NEAREST);
+                           const char *arr[], int gl_mode);
 void tile_blit_frozen(const Tilep &tile, const point tl, const point br);
 void tile_blit_burnt(const Tilep &tile, const point tl, const point br);
 void tile_blit_outline_only(const Tilep &tile, const point tl, const point br, color c);

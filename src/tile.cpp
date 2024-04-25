@@ -13,8 +13,12 @@
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 
+#include <array>
+
 std::map< std::string, class Tile * > all_tiles;
 std::vector< class Tile * >           all_tiles_array;
+
+using Tilevec = std::vector< class Tile * >;
 
 static uint8_t tile_init_done;
 
@@ -113,7 +117,6 @@ Tile::Tile(void) { newptr(MTYPE_TILE, this, "Tile"); }
 
 Tile::~Tile(void) { oldptr(MTYPE_TILE, this); }
 
-uint8_t tile_init(void);
 uint8_t tile_init(void)
 {
   TRACE_AND_INDENT();
@@ -941,30 +944,6 @@ void tile_blit_colored_fat(Tilep tile, point tl, point br, color color_tl, color
   float y1 = tile->y1;
   float y2 = tile->y2;
 
-#if 0
-  if (unlikely(tp != nullptr)) {
-    auto left_off  = (float) tp->blit_left_off();
-    auto right_off = (float) tp->blit_right_off();
-    auto top_off   = (float) tp->blit_top_off();
-    auto bot_off   = (float) tp->blit_bot_off();
-
-    float pct_w = tile->pct_width;
-    float pct_h = tile->pct_height;
-    float pix_w = br.x - tl.x;
-    float pix_h = br.y - tl.y;
-
-    tl.x -= left_off * pix_w;
-    br.x += right_off * pix_w;
-    tl.y -= top_off * pix_h;
-    br.y += bot_off * pix_h;
-
-    x1 -= left_off * pct_w;
-    x2 += right_off * pct_w;
-    y1 -= top_off * pct_h;
-    y2 += bot_off * pct_h;
-  }
-#endif
-
   blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
 
@@ -1006,22 +985,6 @@ uint8_t tile_is_alive_on_end_of_anim(Tilep t) { return t->is_alive_on_end_of_ani
 
 uint8_t tile_is_resurrecting(Tilep t) { return t->is_resurrecting; }
 
-Tilep tile_first(Tilevec *tmap)
-{
-  if (unlikely(! tmap)) {
-    return nullptr;
-  }
-  std::vector< Tilep > *tiles = &((*tmap));
-  if (unlikely(! tiles)) {
-    return nullptr;
-  }
-  if (unlikely(tiles->empty())) {
-    return nullptr;
-  }
-  Tilep tile = (*tiles)[ 0 ];
-  return tile_index_to_tile(tile->global_index);
-}
-
 Tilep tile_random(Tilevec *tmap)
 {
   if (unlikely(! tmap)) {
@@ -1054,27 +1017,6 @@ Tilep tile_random(Tilevec *tmap)
   }
 
   DIE("failed to choose a random tile");
-}
-
-Tilep tile_n(Tilevec *tmap, int n)
-{
-  if (unlikely(! tmap)) {
-    return nullptr;
-  }
-  std::vector< Tilep > *tiles = &((*tmap));
-  if (unlikely(! tiles)) {
-    return nullptr;
-  }
-  if (unlikely(tiles->empty())) {
-    return nullptr;
-  }
-  auto index = n % tiles->size();
-  auto tile  = (*tiles)[ index ];
-  if (unlikely(! tile)) {
-    ERR("no tile at index #%d, max %d", (int) index, (int) tiles->size());
-    return nullptr;
-  }
-  return tile_index_to_tile(tile->global_index);
 }
 
 Tilep tile_frame(Tilevec *tmap, uint32_t frame)

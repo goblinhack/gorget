@@ -7,6 +7,7 @@
 #include "my_command.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
+#include "my_gl.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
@@ -1100,30 +1101,6 @@ void wid_set_tilename(int depth, Widp w, std::string name)
 
   w->tiles[ depth ] = tile;
 }
-
-#if 0
-void wid_set_tile(int depth, Widp w, Thingp t)
-{
-  auto tpp   = t->tp();
-  auto tiles = &tpp->tiles;
-
-  auto tile = tile_first(tiles);
-  if (tile) {
-    if (g_opt_ascii) {
-      auto tile = tile_index_to_tile(t->tile_curr);
-      if (tile) {
-        wid_set_style(w, UI_WID_STYLE_NORMAL);
-        std::string text;
-        text += tile->ascii_fg_char;
-        wid_set_text(w, text);
-        wid_set_color(w, WID_COLOR_TEXT_FG, tile->ascii_fg_col_value);
-      }
-    } else {
-      set(w->tiles, depth, tile);
-    }
-  }
-}
-#endif
 
 //
 // Look at all the wid modes and return the most relevent setting

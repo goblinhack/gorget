@@ -3,12 +3,13 @@
 //
 
 #include "my_gfx.hpp"
+#include "my_gl.hpp"
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
 static void gfx_init_font_ui(void)
 {
-  std::initializer_list< std::string > tiles = {
+  const char *tiles[] = {
       //////////////////////////////////////////////////////////////////
       // sp     !       "       #       $       %       &       '
       //////////////////////////////////////////////////////////////////
@@ -154,18 +155,17 @@ static void gfx_init_font_ui(void)
       "nothing",
   };
 
-  const std::vector< std::string > arr(tiles);
-  tile_load_arr_sprites("data/fonts/font.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, arr, GL_NEAREST);
+  tile_load_arr_sprites("data/fonts/font.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles,
+                        GL_NEAREST);
 }
 
 static void gfx_init_rightbar(void)
 {
-  std::initializer_list< std::string > tiles = {
+  const char *tiles[] = {
       "ui_rightbar",
   };
 
-  const std::vector< std::string > arr(tiles);
-  tile_load_arr_sprites("data/gfx/ui/ui_rightbar.tga", "rightbar", 104, 256, arr, GL_NEAREST);
+  tile_load_arr_sprites("data/gfx/ui/ui_rightbar.tga", "rightbar", 104, 256, ARRAY_SIZE(tiles), tiles, GL_NEAREST);
 }
 
 static void gfx_init_ui(void) {}
@@ -189,10 +189,8 @@ void gfx_init(void)
   gfx_init3();
   gfx_init_32x32();
   gfx_init4();
-  gfx_init_48x48();
   gfx_init5();
   gfx_init6();
-  gfx_init_64x64();
   gfx_init7();
   gfx_init8();
   gfx_init9();

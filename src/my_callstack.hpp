@@ -6,7 +6,6 @@
 #define _MY_CALLSTACK_HPP_
 
 #include "my_minimal.hpp"
-
 #include "my_source_loc.hpp"
 
 #define CAT(A, B)  A##B

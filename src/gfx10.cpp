@@ -7,7 +7,7 @@
 void gfx_init10(void)
 {
   {
-    std::initializer_list< std::string > tiles = {
+    const char *tiles[] = {
         "ui.10,0,0",   "ui.10,1,0",   "ui.10,2,0",   "ui.10,3,0",   "ui.10,4,0",   "ui.10,5,0",   "ui.10,6,0",
         "ui.10,7,0",   "ui.10,8,0",   "ui.10,9,0",   "ui.10,10,0",  "ui.10,11,0",  "ui.10,12,0",  "ui.10,13,0",
         "ui.10,14,0",  "ui.10,15,0",  "ui.10,0,1",   "ui.10,1,1",   "ui.10,2,1",   "ui.10,3,1",   "ui.10,4,1",
@@ -46,7 +46,6 @@ void gfx_init10(void)
         "ui.10,5,15",  "ui.10,6,15",  "ui.10,7,15",  "ui.10,8,15",  "ui.10,9,15",  "ui.10,10,15", "ui.10,11,15",
         "ui.10,12,15", "ui.10,13,15", "ui.10,14,15", "ui.10,15,15",
     };
-    const std::vector< std::string > arr(tiles);
-    tile_load_arr("data/gfx/ui/ui_horiz1.tga", "ui_box10", 8, 8, arr);
+    tile_load_arr("data/gfx/ui/ui_horiz1.tga", "ui_box10", 8, 8, ARRAY_SIZE(tiles), tiles);
   }
 }

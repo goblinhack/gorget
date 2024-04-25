@@ -2,6 +2,8 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include <vector>
+
 #include "my_point.hpp"
 
 std::vector< point > line(const point s, const point e, size_t max_elems)

@@ -7,6 +7,7 @@
 #define _MY_WID_HPP_
 
 #include "my_ascii.hpp"
+#include "my_size.hpp"
 #include "my_time.hpp"
 #include "my_wid_tiles.hpp"
 
@@ -451,7 +452,6 @@ public:
   TileLayers tiles = {};
 
   fsize texuv {};
-
   fsize tex_tl {};
   fsize tex_br {};
 

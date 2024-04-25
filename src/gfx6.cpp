@@ -8,7 +8,7 @@
 void gfx_init6(void)
 {
   {
-    std::initializer_list< std::string > tiles = {
+    const char *tiles[] = {
         "ui.6,0,0",  "ui.6,1,0",  "ui.6,2,0",   "ui.6,3,0",   "ui.6,4,0",   "ui.6,5,0",   "ui.6,6,0",   "ui.6,7,0",
         "ui.6,8,0",  "ui.6,9,0",  "ui.6,10,0",  "ui.6,11,0",  "ui.6,12,0",  "ui.6,13,0",  "ui.6,14,0",  "ui.6,15,0",
         "ui.6,0,1",  "ui.6,1,1",  "ui.6,2,1",   "ui.6,3,1",   "ui.6,4,1",   "ui.6,5,1",   "ui.6,6,1",   "ui.6,7,1",
@@ -42,7 +42,6 @@ void gfx_init6(void)
         "ui.6,0,15", "ui.6,1,15", "ui.6,2,15",  "ui.6,3,15",  "ui.6,4,15",  "ui.6,5,15",  "ui.6,6,15",  "ui.6,7,15",
         "ui.6,8,15", "ui.6,9,15", "ui.6,10,15", "ui.6,11,15", "ui.6,12,15", "ui.6,13,15", "ui.6,14,15", "ui.6,15,15",
     };
-    const std::vector< std::string > arr(tiles);
-    tile_load_arr("data/gfx/ui/ui_box6.tga", "ui_box6", UI_TILE_WIDTH, UI_TILE_HEIGHT, arr);
+    tile_load_arr("data/gfx/ui/ui_box6.tga", "ui_box6", UI_TILE_WIDTH, UI_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
   }
 }

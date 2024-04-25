@@ -7,7 +7,6 @@
 #define _MY_POINT_HPP_
 
 #include <string>
-#include <vector>
 
 template < class T > class my_apoint
 {
@@ -31,8 +30,6 @@ public:
 using point  = my_apoint< short >;
 using fpoint = my_apoint< float >;
 
-template < typename T > std::ostream &operator<<(std::ostream &out, const my_apoint< T > &my);
-
 template < typename T > bool           operator==(my_apoint< T > const &, my_apoint< T > const &);
 template < typename T > my_apoint< T > operator+(my_apoint< T > const &, my_apoint< T > const &);
 template < typename T > my_apoint< T > operator-(my_apoint< T > const &, my_apoint< T > const &);
@@ -53,7 +50,5 @@ fpoint unit(const fpoint &p);
 float distance(const fpoint &a, const fpoint &b);
 float distance(const point a, const point b);
 float angle_radians(const fpoint &p);
-
-std::vector< point > line(const point s, const point e, size_t max_elems = 0);
 
 #endif // _MY_POINT_HPP_

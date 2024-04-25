@@ -44,7 +44,6 @@ int   tp_tiles_size(Tpp tp);
 Tilep tp_first_tile(class Tp *);
 Tilep tp_tiles_get(Tpp tp, int index);
 void  tp_tiles_push_back(Tpp tp, Tilep val);
-void  tp_tiles_push_back(Tpp tp, Tilep val);
 
 TpId tp_id_get(Tpp tp);
 Tpp  tp_find(TpId id);
@@ -73,10 +72,6 @@ void tp_fini(void);
 void tp_fixup(void);
 void tp_get_id(const char *, int *id);
 void tp_random_dungeon_init(void);
-
-Tilep tp_tiles_get(Tpp tp, int index);
-void  tp_tiles_push_back(Tpp tp, Tilep val);
-int   tp_tiles_size(Tpp tp);
 
 const char *tp_name(Tpp tp);
 const char *to_string(Tpp tp);

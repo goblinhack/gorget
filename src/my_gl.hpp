@@ -5,10 +5,10 @@
 #pragma once
 #ifndef _MY_GLAPI_HPP_
 #define _MY_GLAPI_HPP_
+
 #define GL_GLEXT_PROTOTYPES
 
 #include "my_game_defs.hpp"
-#include <array>
 
 /* Defined before OpenGL and GLUT includes to avoid deprecation messages */
 #define GL_SILENCE_DEPRECATION
@@ -257,10 +257,10 @@ extern float  glapi_last_tex_right;
 
 extern int buf_tex;
 
-extern std::array< GLuint, MAX_FBO > fbo_id;
-extern std::array< GLuint, MAX_FBO > fbo_tex_id;
-extern std::array< GLuint, MAX_FBO > render_buf_id;
-extern std::array< isize, MAX_FBO >  fbo_size;
+extern GLuint fbo_id[ MAX_FBO ];
+extern GLuint fbo_tex_id[ MAX_FBO ];
+extern GLuint render_buf_id[ MAX_FBO ];
+extern isize  fbo_size[ MAX_FBO ];
 
 void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,

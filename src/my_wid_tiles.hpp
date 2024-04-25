@@ -8,6 +8,8 @@
 
 #include "my_main.hpp"
 #include "my_tile.hpp"
+
+#include <array>
 #include <memory>
 
 typedef class WidTiles *wid_tilesp;

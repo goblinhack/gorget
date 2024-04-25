@@ -20,6 +20,7 @@
 #include "my_font.hpp"
 #include "my_game.hpp"
 #include "my_gfx.hpp"
+#include "my_gl.hpp"
 #include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_ptrcheck.hpp"

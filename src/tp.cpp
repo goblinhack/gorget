@@ -46,7 +46,8 @@ public:
   uint8_t z_depth {};
 
   TpId    id {};
-  Tilevec tiles;
+
+  std::vector<class Tile *> tiles;
 
   // begin sort marker1 {
   bool is_animated_can_hflip {};
@@ -254,7 +255,7 @@ Tilep tp_first_tile(Tpp tp)
   //
   // Get the first anim tile.
   //
-  return tile_first(tiles);
+  return tp->tiles[0];
 }
 
 void tp_random_dungeon_init(void)

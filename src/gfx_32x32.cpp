@@ -8,7 +8,7 @@
 void gfx_init_32x32(void)
 {
   {
-    std::initializer_list< std::string > tiles = {
+    const char *tiles[] = {
         /* clang-format off */
         // ##############################################################################
         "exit.0",
@@ -22,12 +22,11 @@ void gfx_init_32x32(void)
         // ##############################################################################
         /* clang-format on */
     };
-    const std::vector< std::string > arr(tiles);
-    tile_load_arr("data/gfx/tiles_32x32.tga", "tiles_32x32", 32, 32, arr);
+    tile_load_arr("data/gfx/tiles_32x32.tga", "tiles_32x32", 32, 32, ARRAY_SIZE(tiles), tiles);
   }
 
   {
-    std::initializer_list< std::string > tiles = {
+    const char *tiles[] = {
         /* clang-format off */
         // ##############################################################################
         "door.IS_JOIN_TL2",
@@ -136,12 +135,11 @@ void gfx_init_32x32(void)
         // ##############################################################################
         /* clang-format on */
     };
-    const std::vector< std::string > arr(tiles);
-    tile_load_arr("data/gfx/tiles_32x32_door.tga", "tiles_32x32_door", 32, 32, arr);
+    tile_load_arr("data/gfx/tiles_32x32_door.tga", "tiles_32x32_door", 32, 32, ARRAY_SIZE(tiles), tiles);
   }
 
   {
-    std::initializer_list< std::string > tiles = {
+    const char *tiles[] = {
         /* clang-format off */
         // ##############################################################################
         "wall1.IS_JOIN_TL2",
@@ -249,12 +247,11 @@ void gfx_init_32x32(void)
         "wall1.IS_JOIN_BR.shadow",
         /* clang-format on */
     };
-    const std::vector< std::string > arr(tiles);
-    tile_load_arr("data/gfx/tiles_32x32_walls1.tga", "tiles_32x32_walls1", 32, 32, arr);
+    tile_load_arr("data/gfx/tiles_32x32_walls1.tga", "tiles_32x32_walls1", 32, 32, ARRAY_SIZE(tiles), tiles);
   }
 
   {
-    std::initializer_list< std::string > tiles = {
+    const char *tiles[] = {
         /* clang-format off */
         // ##############################################################################
         "wall2.IS_JOIN_TL2",
@@ -362,7 +359,6 @@ void gfx_init_32x32(void)
         "wall2.IS_JOIN_BR.shadow",
         /* clang-format on */
     };
-    const std::vector< std::string > arr(tiles);
-    tile_load_arr("data/gfx/tiles_32x32_walls2.tga", "tiles_32x32_walls2", 32, 32, arr);
+    tile_load_arr("data/gfx/tiles_32x32_walls2.tga", "tiles_32x32_walls2", 32, 32, ARRAY_SIZE(tiles), tiles);
   }
 }

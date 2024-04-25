@@ -7,7 +7,7 @@
 
 void gfx_init_16x16(void)
 {
-  std::initializer_list< std::string > tiles = {
+  const char *tiles[] = {
       // clang-format off
       // ##############################################################################
       "floor.1",
@@ -45,8 +45,8 @@ void gfx_init_16x16(void)
       "",
       // ##############################################################################
   };
-  const std::vector< std::string > arr(tiles);
   // If you need outlines
   // tile_load_arr_sprites("data/gfx/tiles_16x16.tga", "tiles_16x16", 16, 16, arr);
-  tile_load_arr("data/gfx/tiles_16x16.tga", "tiles_16x16", 16, 16, arr);
+  tile_load_arr("data/gfx/tiles_16x16.tga", "tiles_16x16", 16, 16, 
+     ARRAY_SIZE(tiles), tiles);
 }
