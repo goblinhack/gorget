@@ -9,6 +9,7 @@
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_string.hpp"
+#include "my_time.hpp"
 #include "my_ui.hpp"
 
 struct ascii_ {

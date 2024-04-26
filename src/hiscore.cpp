@@ -3,7 +3,9 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_main.hpp"
 #include "my_serialize.hpp"
+#include "my_time.hpp"
 
 HiScores::HiScores(void)
 {

@@ -10,8 +10,7 @@
 
 #include "my_game_defs.hpp"
 #include "my_hiscore.hpp"
-#include "my_main.hpp"
-#include "my_time.hpp"
+#include "my_minimal.hpp"
 
 using Config = class Config_
 {
@@ -218,8 +217,8 @@ public:
   //
   // Temporary. Dampens mouse clicks
   //
-  ts_t last_mouse_down {};
-  ts_t last_pause {};
+  uint32_t last_mouse_down {};
+  uint32_t last_pause {};
 
   /////////////////////////////////////////////////////////////////////////
   // not worth saving

@@ -6,6 +6,7 @@
 #include "my_charmap.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_tp.hpp"
 
 void Level::map_set(LevelDatap data, const char *in)
