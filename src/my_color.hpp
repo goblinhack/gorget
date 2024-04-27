@@ -6,6 +6,10 @@
 #ifndef _MY_COLOR_HPP_
 #define _MY_COLOR_HPP_
 
+#include "my_minimal.hpp"
+
+#include <string>
+
 class color
 {
 public:
