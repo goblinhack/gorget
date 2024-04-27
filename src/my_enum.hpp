@@ -7,7 +7,7 @@
 #define _MY_ENUM_HPP__
 
 #include <map>
-#include <stdint.h>
+// REMOVED #include <stdint.h>
 #include <string>
 
 typedef std::map< std::string, uint32_t > enum_map;

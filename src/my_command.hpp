@@ -6,7 +6,7 @@
 #ifndef _MY_COMMAND_HPP_
 #define _MY_COMMAND_HPP_
 
-#include <stdint.h>
+// REMOVED #include <stdint.h>
 
 typedef uint8_t (*command_fn_t)(class Tokens *, void *context);
 

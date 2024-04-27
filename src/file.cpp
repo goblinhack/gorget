@@ -4,10 +4,14 @@
 
 #include "my_callstack.hpp"
 #include "my_file.hpp"
+#include "my_log.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
+#include "my_time.hpp"
 
+#include <cstring>
+#include <stdarg.h>
 #include <string.h>
 #include <strings.h>
 #include <sys/stat.h>
@@ -405,4 +409,39 @@ uint8_t file_exists_and_is_newer_than(const char *filename1, const char *filenam
   delta = difftime(buf1.st_mtime, buf2.st_mtime);
 
   return (delta > 0);
+}
+
+static void file_log_(const char *fmt, va_list args)
+{
+  char buf[ MAXLONGSTR ];
+  int  len = 0;
+
+  buf[ 0 ] = '\0';
+  get_timestamp(buf, MAXLONGSTR);
+  len = (int) strlen(buf);
+  snprintf(buf + len, MAXLONGSTR - len, "FILE: ");
+  len = (int) strlen(buf);
+  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
+
+  putf(MY_STDOUT, buf);
+}
+
+void FILE_LOG(const char *fmt, ...)
+{
+  va_list args;
+
+  va_start(args, fmt);
+  file_log_(fmt, args);
+  va_end(args);
+}
+
+void FILE_DBG(const char *fmt, ...)
+{
+  va_list args;
+
+  IF_NODEBUG2 { return; }
+
+  va_start(args, fmt);
+  file_log_(fmt, args);
+  va_end(args);
 }
