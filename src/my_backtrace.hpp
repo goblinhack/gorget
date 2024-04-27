@@ -3,11 +3,11 @@
 //
 
 #pragma once
-#ifndef _MY_TRACEBACK_HPP_
-#define _MY_TRACEBACK_HPP_
+#ifndef _MY_BACKTRACE_HPP_
+#define _MY_BACKTRACE_HPP_
 
 #include <array>
-#include <string> // no not remove
+#include <string>
 
 class Backtrace
 {

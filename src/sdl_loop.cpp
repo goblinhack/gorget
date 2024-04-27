@@ -230,7 +230,7 @@ void sdl_loop(void)
     //
     // Update FPS counter. Used for damping AI even if not shown.
     //
-    if (unlikely(game_fps_counter_get(game))) {
+    if (unlikely(1 || game_fps_counter_get(game))) {
       static uint32_t ts_begin;
       static uint32_t ts_now;
 
@@ -239,8 +239,11 @@ void sdl_loop(void)
       }
 
       if (unlikely(frames >= 100)) {
-        ts_now = time_ms();
-        game_fps_value_set(game, (int) ((float) (frames * ONESEC) / (float) (ts_now - ts_begin)));
+        ts_now     = time_ms();
+        auto  diff = ts_now - ts_begin;
+        float fps  = (float) (frames * ONESEC) / (float) diff;
+        CON("FPS %f ", fps);
+        game_fps_value_set(game, (int) fps);
         ts_begin = ts_now;
         frames   = 0;
       }
