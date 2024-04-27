@@ -6,11 +6,11 @@
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
-#include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 WidPopup *wid_cfg_top_window;
 
-static void wid_cfg_top_destroy(void)
+static void wid_cfg_top_destroy(class Game *game)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_top_window;
@@ -20,47 +20,48 @@ static void wid_cfg_top_destroy(void)
 static bool wid_cfg_top_gfx(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_cfg_top_destroy();
-  game->wid_cfg_gfx_select();
+  wid_cfg_top_destroy(game);
+  wid_cfg_gfx_select(game);
   return true;
 }
 
 static bool wid_cfg_top_mouse(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_cfg_top_destroy();
-  game->wid_cfg_mouse_select();
+  wid_cfg_top_destroy(game);
+  wid_cfg_mouse_select(game);
   return true;
 }
 
 static bool wid_cfg_top_keyboard(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_cfg_top_destroy();
-  game->wid_cfg_keyboard_select();
+  wid_cfg_top_destroy(game);
+  wid_cfg_keyboard_select(game);
   return true;
 }
 
 static bool wid_cfg_top_sound(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_cfg_top_destroy();
-  game->wid_cfg_sound_select();
+  wid_cfg_top_destroy(game);
+  wid_cfg_sound_select(game);
   return true;
 }
 
 static bool wid_cfg_top_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_cfg_top_destroy();
-  game->wid_main_menu_select();
+  wid_cfg_top_destroy(game);
+  wid_main_menu_select(game);
   return true;
 }
 
 static bool wid_cfg_top_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
-  if (sdlk_eq(*key, game->config.key_console)) {
+
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -97,20 +98,20 @@ static bool wid_cfg_top_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
   return true;
 }
 
-void Game::wid_cfg_top_menu(void)
+void wid_cfg_top_menu(class Game *game)
 {
   TRACE_AND_INDENT();
   CON("INF: Config menu");
 
   if (wid_cfg_top_window) {
-    wid_cfg_top_destroy();
+    wid_cfg_top_destroy(game);
   }
 
   auto box_height          = 2;

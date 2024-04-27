@@ -71,10 +71,10 @@ void music_fini(void)
   }
 }
 
-bool music_load(uint32_t rate, const std::string &file, const std::string &name_alias)
+bool music_load(uint32_t rate, const char *file, const char *name_alias)
 {
   TRACE_AND_INDENT();
-  if (name_alias == "") {
+  if (name_alias && *name_alias) {
     auto m = music_find(name_alias);
     if (m) {
       return true;
@@ -84,9 +84,9 @@ bool music_load(uint32_t rate, const std::string &file, const std::string &name_
   auto *m = new music(name_alias);
 
   m->rate = rate;
-  m->data = file_load(file.c_str(), &m->len);
+  m->data = file_load(file, &m->len);
   if (! m->data) {
-    DIE("Cannot load music [%s]", file.c_str());
+    DIE("Cannot load music [%s]", file);
     return false;
   }
 
@@ -94,25 +94,25 @@ bool music_load(uint32_t rate, const std::string &file, const std::string &name_
 
   rw = SDL_RWFromMem(m->data, m->len);
   if (! rw) {
-    ERR("SDL_RWFromMem fail [%s]: %s %s", file.c_str(), Mix_GetError(), SDL_GetError());
+    ERR("SDL_RWFromMem fail [%s]: %s %s", file, Mix_GetError(), SDL_GetError());
     SDL_ClearError();
     return false;
   }
 
   m->m = Mix_LoadMUS_RW(rw, false);
   if (! m->m) {
-    ERR("Mix_LoadMUS_RW fail [%s]: %s %s", file.c_str(), Mix_GetError(), SDL_GetError());
+    ERR("Mix_LoadMUS_RW fail [%s]: %s %s", file, Mix_GetError(), SDL_GetError());
     SDL_ClearError();
     return false;
   }
 
   auto result = all_music.insert(std::make_pair(name_alias, m));
   if (! result.second) {
-    ERR("Cannot insert music name [%s] failed", name_alias.c_str());
+    ERR("Cannot insert music name [%s] failed", name_alias);
     return false;
   }
 
-  // DBG("Load %s", file.c_str());
+  // DBG("Load %s", file);
 
   return true;
 }
@@ -120,21 +120,21 @@ bool music_load(uint32_t rate, const std::string &file, const std::string &name_
 /*
  * Find an existing pice of music.
  */
-bool music_find(const std::string &name_alias)
+bool music_find(const char *name_alias)
 {
   TRACE_AND_INDENT();
   auto result = all_music.find(name_alias);
   return result != all_music.end();
 }
 
-void music_update_volume(void)
+void music_update_volume(class Game *game)
 {
   TRACE_AND_INDENT();
-  Mix_VolumeMusic(game->config.music_volume);
+  Mix_VolumeMusic(game_music_volume_get(game));
   SDL_ClearError();
 }
 
-bool music_play(const std::string &name)
+bool music_play(const char *name)
 {
   TRACE_AND_INDENT();
 
@@ -143,17 +143,17 @@ bool music_play(const std::string &name)
   }
   music_current = name;
 
-  music_update_volume();
+  music_update_volume(game);
 
   auto music = all_music.find(name);
   if (music == all_music.end()) {
-    DIE("Cannot find music %s: %s", name.c_str(), Mix_GetError());
+    DIE("Cannot find music %s: %s", name, Mix_GetError());
     SDL_ClearError();
     return false;
   }
 
   if (Mix_FadeInMusicPos(music->second->m, -1, 2000, 0) == -1) {
-    ERR("Cannot play music %s: %s", name.c_str(), Mix_GetError());
+    ERR("Cannot play music %s: %s", name, Mix_GetError());
     SDL_ClearError();
     return false;
   }

@@ -131,8 +131,10 @@ void common_error_handler(std::string &tech_support)
   TRACE_AND_INDENT();
 
   tech_support += "\n";
-  if (game && ! game->seed_name.empty()) {
-    tech_support += "Seed name: " + game->seed_name + "\n";
+
+  auto seed_name = game_seed_name_get(game);
+  if (game && seed_name && *seed_name) {
+    tech_support += "Seed name: " + std::string(seed_name) + "\n";
   }
   tech_support += "Could you please email goblinhack@gmail.com and attach the following files and trace info?\n";
   tech_support += g_log_stdout_filename;

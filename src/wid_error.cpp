@@ -7,7 +7,7 @@
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
-#include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 static WidPopup *wid_error_window;
 
@@ -17,8 +17,8 @@ static void wid_error_destroy(void)
   delete wid_error_window;
   wid_error_window = nullptr;
 
-  game->fini();
-  game->wid_main_menu_select();
+  game_fini(game);
+  wid_main_menu_select(game);
   CON("It all went dark briefly. What happened?");
 }
 
@@ -26,7 +26,7 @@ static bool wid_error_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -61,7 +61,7 @@ static bool wid_error_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 

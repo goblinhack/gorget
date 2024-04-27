@@ -4,10 +4,11 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_hiscore.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"
-#include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 static WidPopup *wid_hiscore_window;
 
@@ -16,14 +17,14 @@ static void wid_hiscore_destroy(void)
   TRACE_AND_INDENT();
   delete wid_hiscore_window;
   wid_hiscore_window = nullptr;
-  game->wid_main_menu_select();
+  wid_main_menu_select(game);
 }
 
 static bool wid_hiscore_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -61,7 +62,7 @@ static bool wid_hiscore_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -75,9 +76,10 @@ static bool wid_hiscore_mouse_up(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-void Game::wid_hiscores_show(void)
+void wid_hiscores_show(class Game *game)
 {
   TRACE_AND_INDENT();
+
   if (wid_hiscore_window) {
     wid_hiscore_destroy();
   }
@@ -95,15 +97,16 @@ void Game::wid_hiscores_show(void)
     wid_set_on_key_down(w, wid_hiscore_key_down);
   }
 
-  auto h     = game->config.hiscores.hiscores.begin();
-  bool first = true;
-  auto index = 0;
+  auto hiscores = game_hiscores_get(game);
+  auto h        = hiscores->hiscores.begin();
+  bool first    = true;
+  auto index    = 0;
 
   const char *colors[ HiScore::max_displayed ] = {
       "green", "yellow", "yellow", "yellow", "gold", "gold", "gold", "white", "white", "white",
   };
 
-  while (h != game->config.hiscores.hiscores.end()) {
+  while (h != hiscores->hiscores.end()) {
 
     if (index >= (int) ARRAY_SIZE(colors)) {
       break;

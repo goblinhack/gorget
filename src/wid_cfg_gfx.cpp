@@ -7,12 +7,13 @@
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 static WidPopup *wid_cfg_gfx_window;
 static bool      local_g_need_restart = false;
 static bool      config_changed;
 
-static void wid_cfg_gfx_destroy(void)
+static void wid_cfg_gfx_destroy(class Game *game)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_gfx_window;
@@ -26,11 +27,11 @@ static bool wid_cfg_gfx_cancel(Widp w, int x, int y, uint32_t button)
   CON("INF: Reload config");
   if (config_changed) {
     config_changed = false;
-    game->load_config();
+    game_load_config(game);
     sdl_config_update_all();
   }
-  wid_cfg_gfx_destroy();
-  game->wid_cfg_top_menu();
+  wid_cfg_gfx_destroy(game);
+  wid_cfg_top_menu(game);
   return true;
 }
 
@@ -38,15 +39,15 @@ static bool wid_cfg_gfx_save(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Save config");
-  game->save_config();
+  game_save_config(game);
 
-  wid_cfg_gfx_destroy();
+  wid_cfg_gfx_destroy(game);
 
   if (local_g_need_restart) {
     g_need_restart = true;
-    wid_main_menu_destroy();
+    wid_main_menu_destroy(game);
   } else {
-    game->wid_cfg_top_menu();
+    wid_cfg_top_menu(game);
   }
 
   return true;
@@ -55,8 +56,8 @@ static bool wid_cfg_gfx_save(Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_gfx_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_cfg_gfx_destroy();
-  game->wid_cfg_top_menu();
+  wid_cfg_gfx_destroy(game);
+  wid_cfg_top_menu(game);
   return true;
 }
 
@@ -65,9 +66,9 @@ static bool wid_cfg_gfx_vsync_enable_toggle(Widp w, int x, int y, uint32_t butto
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Toggle vsync");
-  game->config.gfx_vsync_enable = ! game->config.gfx_vsync_enable;
+  game_gfx_vsync_enable_set(game, ! game_gfx_vsync_enable_get(game));
   config_gfx_vsync_update();
-  game->wid_cfg_gfx_select();
+  wid_cfg_gfx_select(game);
   return true;
 }
 
@@ -76,11 +77,13 @@ static bool wid_cfg_gfx_fullscreen_toggle(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Toggle gfx fullscreen");
-  game->config.gfx_fullscreen = ! game->config.gfx_fullscreen;
-  if (game->config.gfx_fullscreen) {
-    game->config.gfx_fullscreen_desktop = false;
+  game_gfx_fullscreen_set(game, ! game_gfx_fullscreen_get(game));
+
+  if (game_gfx_fullscreen_get(game)) {
+    game_gfx_fullscreen_desktop_set(game, false);
   }
-  game->wid_cfg_gfx_select();
+
+  wid_cfg_gfx_select(game);
   local_g_need_restart = true;
   return true;
 }
@@ -90,11 +93,12 @@ static bool wid_cfg_gfx_fullscreen_desktop_toggle(Widp w, int x, int y, uint32_t
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Toggle gfx fullscreen desktop");
-  game->config.gfx_fullscreen_desktop = ! game->config.gfx_fullscreen_desktop;
-  if (game->config.gfx_fullscreen_desktop) {
-    game->config.gfx_fullscreen = false;
+  game_gfx_fullscreen_desktop_set(game, ! game_gfx_fullscreen_desktop_get(game));
+
+  if (game_gfx_fullscreen_desktop_get(game)) {
+    game_gfx_fullscreen_set(game, false);
   }
-  game->wid_cfg_gfx_select();
+  wid_cfg_gfx_select(game);
   local_g_need_restart = true;
   return true;
 }
@@ -104,8 +108,8 @@ static bool wid_cfg_gfx_allow_highdpi_toggle(Widp w, int x, int y, uint32_t butt
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Toggle gfx allow highdpi");
-  game->config.gfx_allow_highdpi = ! game->config.gfx_allow_highdpi;
-  game->wid_cfg_gfx_select();
+  game_gfx_allow_highdpi_set(game, ! game_gfx_allow_highdpi_get(game));
+  wid_cfg_gfx_select(game);
   local_g_need_restart = true;
   return true;
 }
@@ -115,8 +119,8 @@ static bool wid_cfg_gfx_borderless_toggle(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Toggle gfx borderless");
-  game->config.gfx_borderless = ! game->config.gfx_borderless;
-  game->wid_cfg_gfx_select();
+  game_gfx_borderless_set(game, ! game_gfx_borderless_get(game));
+  wid_cfg_gfx_select(game);
   local_g_need_restart = true;
   return true;
 }
@@ -126,8 +130,8 @@ static bool wid_cfg_other_fps_counter_toggle(Widp w, int x, int y, uint32_t butt
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Toggle fps counter");
-  game->config.fps_counter = ! game->config.fps_counter;
-  game->wid_cfg_gfx_select();
+  game_fps_counter_set(game, ! game_fps_counter_get(game));
+  wid_cfg_gfx_select(game);
   return true;
 }
 
@@ -136,8 +140,8 @@ static bool wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Increment resolution");
-  auto res    = std::to_string(game->config.window_pix_width) + "x" + std::to_string(game->config.window_pix_height);
-  auto n      = SDL_GetNumDisplayModes(0);
+  auto res = std::to_string(game_window_pix_width_get(game)) + "x" + std::to_string(game_window_pix_height_get(game));
+  auto n   = SDL_GetNumDisplayModes(0);
   int  chosen = 0;
   for (int i = 0; i < n; ++i) {
     SDL_DisplayMode mode;
@@ -154,14 +158,14 @@ static bool wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button)
       SDL_GetDisplayMode(0, i, &mode);
       auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
       CON(" - chosen: %s", cand.c_str());
-      game->config.window_pix_width  = mode.w;
-      game->config.window_pix_height = mode.h;
-      local_g_need_restart           = true;
+      game_window_pix_width_set(game, mode.w);
+      game_window_pix_height_set(game, mode.h);
+      local_g_need_restart = true;
     }
   }
   wid_cfg_gfx_save(nullptr, 0, 0, 0);
   sdl_config_update_all();
-  game->wid_cfg_gfx_select();
+  wid_cfg_gfx_select(game);
   return true;
 }
 
@@ -170,8 +174,8 @@ static bool wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Decrement resolution");
-  auto res    = std::to_string(game->config.window_pix_width) + "x" + std::to_string(game->config.window_pix_height);
-  auto n      = SDL_GetNumDisplayModes(0);
+  auto res = std::to_string(game_window_pix_width_get(game)) + "x" + std::to_string(game_window_pix_height_get(game));
+  auto n   = SDL_GetNumDisplayModes(0);
   int  chosen = 0;
   for (int i = 0; i < n; ++i) {
     SDL_DisplayMode mode;
@@ -188,14 +192,14 @@ static bool wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button)
       SDL_GetDisplayMode(0, i, &mode);
       auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
       CON(" - chosen: %s", cand.c_str());
-      game->config.window_pix_width  = mode.w;
-      game->config.window_pix_height = mode.h;
-      local_g_need_restart           = true;
+      game_window_pix_width_set(game, mode.w);
+      game_window_pix_height_set(game, mode.h);
+      local_g_need_restart = true;
     }
   }
   wid_cfg_gfx_save(nullptr, 0, 0, 0);
   sdl_config_update_all();
-  game->wid_cfg_gfx_select();
+  wid_cfg_gfx_select(game);
   return true;
 }
 
@@ -203,7 +207,7 @@ static bool wid_cfg_gfx_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -236,18 +240,18 @@ static bool wid_cfg_gfx_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
   return true;
 }
 
-void Game::wid_cfg_gfx_select(void)
+void wid_cfg_gfx_select(class Game *game)
 {
   TRACE_AND_INDENT();
   if (wid_cfg_gfx_window) {
-    wid_cfg_gfx_destroy();
+    wid_cfg_gfx_destroy(game);
   }
 
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
@@ -344,7 +348,8 @@ void Game::wid_cfg_gfx_select(void)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
-    auto res = std::to_string(game->config.window_pix_width) + "x" + std::to_string(game->config.window_pix_height);
+    auto res
+        = std::to_string(game_window_pix_width_get(game)) + "x" + std::to_string(game_window_pix_height_get(game));
     wid_set_text(w, res);
   }
   {
@@ -408,7 +413,7 @@ void Game::wid_cfg_gfx_select(void)
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(w, wid_cfg_gfx_fullscreen_toggle);
 
-    if (game->config.gfx_fullscreen) {
+    if (game_gfx_fullscreen_get(game)) {
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");
@@ -445,7 +450,7 @@ void Game::wid_cfg_gfx_select(void)
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(w, wid_cfg_gfx_fullscreen_desktop_toggle);
 
-    if (game->config.gfx_fullscreen_desktop) {
+    if (game_gfx_fullscreen_desktop_get(game)) {
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");
@@ -482,7 +487,7 @@ void Game::wid_cfg_gfx_select(void)
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(w, wid_cfg_gfx_allow_highdpi_toggle);
 
-    if (game->config.gfx_allow_highdpi) {
+    if (game_gfx_allow_highdpi_get(game)) {
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");
@@ -519,7 +524,7 @@ void Game::wid_cfg_gfx_select(void)
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(w, wid_cfg_gfx_borderless_toggle);
 
-    if (game->config.gfx_borderless) {
+    if (game_gfx_borderless_get(game)) {
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");
@@ -556,7 +561,7 @@ void Game::wid_cfg_gfx_select(void)
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(w, wid_cfg_gfx_vsync_enable_toggle);
 
-    if (game->config.gfx_vsync_enable) {
+    if (game_gfx_vsync_enable_get(game)) {
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");
@@ -593,7 +598,7 @@ void Game::wid_cfg_gfx_select(void)
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(w, wid_cfg_other_fps_counter_toggle);
 
-    if (game->config.fps_counter) {
+    if (game_fps_counter_get(game)) {
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");

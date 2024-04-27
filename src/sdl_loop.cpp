@@ -50,7 +50,7 @@ void sdl_loop(void)
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   GL_ERROR_CHECK();
 
-  if (game->config.gfx_vsync_enable) {
+  if (game_gfx_vsync_enable_get(game)) {
     SDL_GL_SetSwapInterval(1);
   } else {
     SDL_GL_SetSwapInterval(0);
@@ -208,14 +208,14 @@ void sdl_loop(void)
     }
 
     gl_leave_2d_mode();
-    gl_enter_2d_mode(game->config.game_pix_width, game->config.game_pix_height);
+    gl_enter_2d_mode(game_pix_width_get(game), game_pix_height_get(game));
 
     glcolor(WHITE);
-    game->display();
+    game_display(game);
     blit_fbo_unbind();
 
     gl_leave_2d_mode();
-    gl_enter_2d_mode(game->config.window_pix_width, game->config.window_pix_height);
+    gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 
     sdl_display();
 
@@ -229,7 +229,7 @@ void sdl_loop(void)
     //
     // Update FPS counter. Used for damping AI even if not shown.
     //
-    if (unlikely(game->config.fps_counter)) {
+    if (unlikely(game_fps_counter_get(game))) {
       static uint32_t ts_begin;
       static uint32_t ts_now;
 
@@ -238,17 +238,18 @@ void sdl_loop(void)
       }
 
       if (unlikely(frames >= 100)) {
-        ts_now          = time_ms();
-        game->fps_value = (int) ((float) (frames * ONESEC) / (float) (ts_now - ts_begin));
-        ts_begin        = ts_now;
-        frames          = 0;
+        ts_now = time_ms();
+        game_fps_value_set(game, (int) ((float) (frames * ONESEC) / (float) (ts_now - ts_begin)));
+        ts_begin = ts_now;
+        frames   = 0;
       }
     }
 
     //
     // Fixed frame counter, 100 per second
     //
-    if (game && game->level && game->level->data) {
+    auto level = game_level_get(game);
+    if (game && level) {
       static uint32_t ts_begin;
       static uint32_t ts_now;
 
@@ -257,7 +258,7 @@ void sdl_loop(void)
       }
 
       ts_now = time_ms();
-      game->level->data->frame += ts_now - ts_begin;
+      level->data->frame += ts_now - ts_begin;
       ts_begin = ts_now;
     }
   }

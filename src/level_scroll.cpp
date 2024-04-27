@@ -68,8 +68,7 @@ void Level::scroll_delta(int x, int y)
 {
   TRACE_NO_INDENT();
 
-  auto level = game->level;
-
+  auto level = game_level_get(game);
   if (! level) {
     return;
   }
@@ -95,8 +94,8 @@ void Level::scroll_warp_to_player()
 
   data->pixel_map_at_x = t->pix_x;
   data->pixel_map_at_y = t->pix_y;
-  data->pixel_map_at_x -= game->config.map_pix_width / 2;
-  data->pixel_map_at_y -= game->config.map_pix_height / 2;
+  data->pixel_map_at_x -= game_map_pix_width_get(game) / 2;
+  data->pixel_map_at_y -= game_map_pix_height_get(game) / 2;
 
   bounds_set();
 }

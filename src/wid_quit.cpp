@@ -6,18 +6,18 @@
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
-#include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 WidPopup *wid_quit_window;
 
-void wid_quit_destroy(void)
+void wid_quit_destroy(class Game *game)
 {
   TRACE_NO_INDENT();
 
   if (wid_quit_window) {
     delete wid_quit_window;
     wid_quit_window = nullptr;
-    game->state_reset("wid quit destroy");
+    game_state_reset(game, "wid quit destroy");
   }
 }
 
@@ -26,16 +26,16 @@ static bool wid_quit_yes(Widp w, int x, int y, uint32_t button)
   TRACE_NO_INDENT();
   LOG("INF: Quit, yes");
 
-  if (game->level) {
+  if (game_level_get(game)) {
     LOG("INF: Continue game");
 
-    game->fini();
-    wid_quit_destroy();
-    game->wid_main_menu_select();
+    game_fini(game);
+    wid_quit_destroy(game);
+    wid_main_menu_select(game);
   } else {
     LOG("INF: Exit game");
 
-    wid_quit_destroy();
+    wid_quit_destroy(game);
     DIE_CLEAN("Quit");
   }
   return true;
@@ -46,10 +46,10 @@ static bool wid_quit_no(Widp w, int x, int y, uint32_t button)
   TRACE_NO_INDENT();
   LOG("INF: Quit, no");
 
-  wid_quit_destroy();
+  wid_quit_destroy(game);
 
-  if (! game->level) {
-    game->wid_main_menu_select();
+  if (! game_level_get(game)) {
+    wid_main_menu_select(game);
   }
   return true;
 }
@@ -58,7 +58,7 @@ static bool wid_quit_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -91,26 +91,26 @@ static bool wid_quit_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
   return true;
 }
 
-void Game::wid_quit_select(void)
+void wid_quit_select(class Game *game)
 {
   TRACE_NO_INDENT();
   LOG("INF: Quit select");
 
   if (wid_quit_window) {
-    wid_quit_destroy();
+    wid_quit_destroy(game);
   }
 
   auto m = TERM_WIDTH / 2;
   auto n = TERM_HEIGHT / 2;
 
-  if (game->level) {
+  if (game_level_get(game)) {
     n = TERM_HEIGHT / 3;
   }
 
@@ -168,5 +168,5 @@ void Game::wid_quit_select(void)
 
   wid_update(wid_quit_window->wid_text_area->wid_text_area);
 
-  game->state_change(Game::STATE_QUIT_MENU, "quit select");
+  game_state_change(game, STATE_QUIT_MENU, "quit select");
 }

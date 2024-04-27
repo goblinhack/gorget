@@ -10,18 +10,19 @@
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
-#include "my_wid_popups.hpp"
+#include "my_wids.hpp"
 
 WidPopup *wid_main_menu_window;
 
-void wid_main_menu_destroy(void)
+void wid_main_menu_destroy(class Game *game)
 {
   TRACE_AND_INDENT();
+
   delete wid_main_menu_window;
   wid_main_menu_window = nullptr;
 }
 
-void wid_main_menu_hide(void)
+void wid_main_menu_hide(class Game *game)
 {
   TRACE_AND_INDENT();
   wid_hide(wid_main_menu_window->wid_popup_container);
@@ -30,47 +31,47 @@ void wid_main_menu_hide(void)
 static bool wid_main_menu_load_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  game->wid_load_select();
+  wid_load_select(game);
   return false;
 }
 
 static bool wid_main_menu_config(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  game->wid_cfg_top_menu();
-  wid_main_menu_hide();
+  wid_cfg_top_menu(game);
+  wid_main_menu_hide(game);
   return false;
 }
 
 static bool game_menu_new_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_main_menu_hide();
-  wid_main_menu_destroy();
-  game->new_game();
+  wid_main_menu_hide(game);
+  wid_main_menu_destroy(game);
+  wid_new_game(game);
   return false;
 }
 
 static bool wid_main_menu_credits_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  game->wid_credits_select();
-  wid_main_menu_destroy();
+  wid_credits_select(game);
+  wid_main_menu_destroy(game);
   return false;
 }
 
 static bool wid_main_menu_quit_game(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  game->wid_quit_select();
-  wid_main_menu_destroy();
+  wid_quit_select(game);
+  wid_main_menu_destroy(game);
   return false;
 }
 
 static bool wid_main_menu_hiscores(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  game->wid_hiscores_show();
+  wid_hiscores_show(game);
   return false;
 }
 
@@ -78,7 +79,7 @@ static bool wid_main_menu_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -118,7 +119,7 @@ static bool wid_main_menu_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -136,7 +137,7 @@ static void game_display_title_bg(void)
 
   std::string t = "title_bg";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game->config.ui_pix_width, game->config.ui_pix_height));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
   blit_flush();
 }
 
@@ -149,7 +150,7 @@ static void game_display_title_fg1(void)
 
   std::string t = "title_fg1_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game->config.ui_pix_width, game->config.ui_pix_height));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
   blit_flush();
 }
 
@@ -180,7 +181,7 @@ static void game_display_title_fg2(void)
 
   std::string t = "title_fg2_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game->config.ui_pix_width, game->config.ui_pix_height));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
   blit_flush();
 }
 
@@ -259,7 +260,7 @@ static void game_display_title_fg3(void)
 
   std::string t = "title_fg3_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game->config.ui_pix_width, game->config.ui_pix_height));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
   blit_flush();
 }
 
@@ -283,7 +284,7 @@ static void game_display_title_fg4(void)
 
   std::string t = "title_fg4_" + std::to_string(frame);
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game->config.ui_pix_width, game->config.ui_pix_height));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
   blit_flush();
 }
 
@@ -309,13 +310,13 @@ static void wid_main_menu_tick(Widp w)
   }
 }
 
-void Game::wid_main_menu_select(void)
+void wid_main_menu_select(class Game *game)
 {
   TRACE_AND_INDENT();
   LOG("Main menu");
 
   if (wid_main_menu_window) {
-    wid_main_menu_destroy();
+    wid_main_menu_destroy(game);
   }
 
   auto box_height          = 3;
@@ -439,10 +440,12 @@ void Game::wid_main_menu_select(void)
   wid_update(wid_main_menu_window->wid_text_area->wid_text_area);
 }
 
-void Game::new_game(void)
+void wid_new_game(class Game *game)
 {
   TRACE_NO_INDENT();
 
-  game->create_level();
-  game->state_reset("new game");
+  game_create_level(game);
+  game_state_reset(game, "new game");
+
+  wid_rightbar_init(game);
 }

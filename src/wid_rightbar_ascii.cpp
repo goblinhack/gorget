@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
@@ -11,14 +12,14 @@
 #include "my_string.hpp"
 #include "my_thing.hpp"
 #include "my_ui.hpp"
-#include "my_wid_rightbar.hpp"
+#include "my_wids.hpp"
 
-bool wid_rightbar_ascii_create(void)
+bool wid_rightbar_ascii_create(class Game *game)
 {
   TRACE_AND_INDENT();
   DBG2("Remake rightbar");
 
-  auto level = game->level;
+  auto level = game_level_get(game);
   if (! level) {
     return false;
   }
@@ -60,7 +61,7 @@ bool wid_rightbar_ascii_create(void)
     point tl = make_point(0, y_at);
     point br = make_point(width - 1, y_at);
 
-    auto s = dynprintf("Seed: %%fg=gray$%s", game->seed_name.c_str());
+    auto s = dynprintf("Seed: %%fg=gray$%s", game_seed_name_get(game));
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_shape_none(w);

@@ -294,7 +294,7 @@ void wid_update_mouse(void)
 
   SDL_GetMouseState(&x, &y);
 
-  wid_mouse_motion(x, y, 0, 0, 0, 0);
+  wid_mouse_motion(game, x, y, 0, 0, 0, 0);
 }
 
 Widp wid_find_under_mouse(void)
@@ -713,7 +713,7 @@ static Widp wid_mouse_motion_handler(int x, int y, int relx, int rely, int wheel
   return nullptr;
 }
 
-void wid_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely)
+void wid_mouse_motion(class Game *game, int x, int y, int relx, int rely, int wheelx, int wheely)
 {
   int got_one = false;
 
@@ -891,12 +891,12 @@ void wid_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely)
 
   if (! got_one) {
     if (relx || rely || wheelx || wheely) {
-      game_mouse_motion(x, y, relx, rely, wheelx, wheely);
+      game_mouse_motion(game, x, y, relx, rely, wheelx, wheely);
     }
   }
 }
 
-void wid_mouse_down(uint32_t button, int x, int y)
+void wid_mouse_down(class Game *game, uint32_t button, int x, int y)
 {
   Widp w {};
 
@@ -931,7 +931,7 @@ void wid_mouse_down(uint32_t button, int x, int y)
     }
 
     if (game) {
-      game->last_mouse_down = time_ms_cached();
+      game_last_mouse_down_set(game, time_ms_cached());
     }
 
     return;
@@ -944,10 +944,10 @@ void wid_mouse_down(uint32_t button, int x, int y)
     return;
   }
 
-  if (game_mouse_down(x, y, button)) {
+  if (game_mouse_down(game, x, y, button)) {
     sound_play("click");
     if (game) {
-      game->last_mouse_down = time_ms_cached();
+      game_last_mouse_down_set(game, time_ms_cached());
     }
   }
 }
@@ -996,7 +996,7 @@ void wid_mouse_held(uint32_t button, int x, int y)
   }
 }
 
-void wid_mouse_up(uint32_t button, int x, int y)
+void wid_mouse_up(class Game *game, uint32_t button, int x, int y)
 {
   Widp w {};
 
@@ -1022,7 +1022,7 @@ void wid_mouse_up(uint32_t button, int x, int y)
     return;
   }
 
-  game_mouse_up(x, y, button);
+  game_mouse_up(game, x, y, button);
 }
 
 void wid_mouse_hide(int value)

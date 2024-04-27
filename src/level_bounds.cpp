@@ -32,8 +32,8 @@ void Level::bounds_set(void)
   //
   // Square map
   //
-  auto max_pix_x = (MAP_WIDTH * dw) - game->config.game_pix_height;
-  auto max_pix_y = (MAP_HEIGHT * dh) - game->config.game_pix_height;
+  auto max_pix_x = (MAP_WIDTH * dw) - game_pix_height_get(game);
+  auto max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(game);
 
   if (data->pixel_map_at_x > max_pix_x) {
     data->pixel_map_at_x = max_pix_x;
@@ -57,8 +57,8 @@ void Level::bounds_set(void)
     tmp_miny = 0;
   }
 
-  int tmp_maxx = (data->pixel_map_at_x + game->config.map_pix_width) / dw;
-  int tmp_maxy = (data->pixel_map_at_y + game->config.map_pix_height) / dh;
+  int tmp_maxx = (data->pixel_map_at_x + game_map_pix_width_get(game)) / dw;
+  int tmp_maxy = (data->pixel_map_at_y + game_map_pix_height_get(game)) / dh;
 
   tmp_maxx += clipping_border;
   tmp_maxy += clipping_border;

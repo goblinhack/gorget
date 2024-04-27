@@ -15,6 +15,7 @@
 #include "my_sprintf.hpp"
 #include "my_ui.hpp"
 #include "my_wid_console.hpp"
+#include "my_wids.hpp"
 
 #undef ENABLE_DEBUG_GFX_GL_BLEND
 #undef ENABLE_DEBUG_UI
@@ -2955,7 +2956,6 @@ void wid_scroll_with_input(Widp w, std::string str)
 
 bool wid_receive_input(Widp w, const SDL_Keysym *key)
 {
-
   std::string beforecursor;
   std::string aftercursor;
   std::string tmp;
@@ -2965,7 +2965,7 @@ bool wid_receive_input(Widp w, const SDL_Keysym *key)
   uint32_t    origlen;
   uint32_t    cnt;
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -3192,13 +3192,13 @@ static bool wid_receive_unhandled_input(const SDL_Keysym *key)
 
   Widp w {};
 
-  if (game_input(key)) {
+  if (game_input(game, key)) {
     return true;
   }
 
   w = wid_get_top_parent(wid_console_input_line);
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     wid_toggle_hidden(wid_console_window);
     wid_raise(wid_console_window);
 
@@ -3215,7 +3215,7 @@ static bool wid_receive_unhandled_input(const SDL_Keysym *key)
     return true;
   }
 
-  if (sdlk_eq(*key, game->config.key_screenshot)) {
+  if (sdlk_eq(*key, game_key_screenshot_get(game))) {
     sdl_screenshot();
     CON("Screenshot taken.");
     CON("INF: Screenshot taken");
@@ -3223,7 +3223,7 @@ static bool wid_receive_unhandled_input(const SDL_Keysym *key)
   }
 
   switch ((int) key->sym) {
-    case '?' : game->wid_cfg_keyboard_select(); break;
+    case '?' : wid_cfg_keyboard_select(game); break;
 
     case SDLK_ESCAPE :
       if (w->visible) {
@@ -3694,50 +3694,50 @@ static Widp wid_joy_button_handler(int x, int y)
 //
 // If no handler for this button, fake a mouse event.
 //
-void wid_fake_joy_button(int x, int y)
+void wid_fake_joy_button(class Game *game, int x, int y)
 {
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ]) {
-    wid_mouse_down(SDL_BUTTON_LEFT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_LEFT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ]) {
-    wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_RIGHT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ]) {
-    wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_RIGHT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ]) {
-    wid_mouse_down(2, x, y);
+    wid_mouse_down(game, 2, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ]) {
-    wid_mouse_down(SDL_BUTTON_LEFT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_LEFT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ]) {
-    wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_RIGHT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ]) {
-    wid_mouse_down(SDL_BUTTON_LEFT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_LEFT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ]) {
-    wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_RIGHT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ]) {
-    wid_mouse_down(SDL_BUTTON_LEFT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_LEFT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ]) {
-    wid_mouse_down(SDL_BUTTON_LEFT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_LEFT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ]) {
-    wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_RIGHT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]) {}
@@ -3745,16 +3745,16 @@ void wid_fake_joy_button(int x, int y)
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]) {}
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]) {}
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ]) {
-    wid_mouse_down(SDL_BUTTON_LEFT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_LEFT, x, y);
     return;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ]) {
-    wid_mouse_down(SDL_BUTTON_RIGHT, x, y);
+    wid_mouse_down(game, SDL_BUTTON_RIGHT, x, y);
     return;
   }
 }
 
-void wid_joy_button(int x, int y)
+void wid_joy_button(class Game *game, int x, int y)
 {
   pixel_to_ascii(&x, &y);
   if (! ascii_ok(x, y)) {
@@ -3788,7 +3788,7 @@ void wid_joy_button(int x, int y)
 
   w = wid_joy_button_handler(x, y);
   if (unlikely(! w)) {
-    wid_fake_joy_button(x, y);
+    wid_fake_joy_button(game, x, y);
     return;
   }
 
@@ -3807,7 +3807,7 @@ void wid_joy_button(int x, int y)
       }
 
       if (unlikely(! w)) {
-        wid_fake_joy_button(x, y);
+        wid_fake_joy_button(game, x, y);
         return;
       }
     }
@@ -3826,7 +3826,7 @@ void wid_joy_button(int x, int y)
 
     return;
   } else {
-    wid_fake_joy_button(x, y);
+    wid_fake_joy_button(game, x, y);
   }
 
   if (wid_get_moveable(w)) {
@@ -4744,7 +4744,7 @@ void wid_display_all(bool ok_to_handle_requests)
   }
 
   gl_leave_2d_mode();
-  gl_enter_2d_mode(game->config.ui_pix_width, game->config.ui_pix_height);
+  gl_enter_2d_mode(game_ui_pix_width_get(game), game_ui_pix_height_get(game));
   blit_fbo_bind_locked(FBO_WID);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -4814,9 +4814,8 @@ printf("========================================= %d\n", wid_total_count);
   //
   // FPS counter.
   //
-  if (game->config.fps_counter) {
-
-    ascii_putf(TERM_WIDTH - 7, TERM_HEIGHT - 1, GREEN, BLACK, "%u FPS", game->fps_value);
+  if (game_fps_counter_get(game)) {
+    ascii_putf(TERM_WIDTH - 7, TERM_HEIGHT - 1, GREEN, BLACK, "%u FPS", game_fps_value_get(game));
   }
 
   ascii_display();
@@ -4831,7 +4830,7 @@ printf("========================================= %d\n", wid_total_count);
   wid_update_mouse();
 
   gl_leave_2d_mode();
-  gl_enter_2d_mode(game->config.window_pix_width, game->config.window_pix_height);
+  gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 }
 
 bool wid_is_hidden(Widp w)

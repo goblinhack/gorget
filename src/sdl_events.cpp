@@ -178,7 +178,7 @@ static void __attribute__((noinline)) sdl_event_mousemotion(SDL_Keysym *key, SDL
   wid_mouse_visible = 1;
   sdl.mouse_tick++;
   if (! processed_mouse_motion_event) {
-    wid_mouse_motion(mx, my, event->motion.xrel, event->motion.yrel, 0, 0);
+    wid_mouse_motion(game, mx, my, event->motion.xrel, event->motion.yrel, 0, 0);
     processed_mouse_motion_event = true;
   }
 }
@@ -198,7 +198,7 @@ static void __attribute__((noinline)) sdl_event_mousedown(SDL_Keysym *key, SDL_E
   wid_mouse_visible    = 1;
   wid_mouse_two_clicks = (now - sdl.mouse_down_when < UI_MOUSE_DOUBLE_CLICK);
 
-  wid_mouse_down(event->button.button, sdl.mouse_x, sdl.mouse_y);
+  wid_mouse_down(game, event->button.button, sdl.mouse_x, sdl.mouse_y);
   sdl.mouse_down_when = now;
 }
 
@@ -213,7 +213,7 @@ static void __attribute__((noinline)) sdl_event_mouseup(SDL_Keysym *key, SDL_Eve
   DBG("SDL: Mouse UP: button %d released at %d,%d state %d", event->button.button, event->button.x, event->button.y,
       sdl.mouse_down);
 
-  wid_mouse_up(event->button.button, sdl.mouse_x, sdl.mouse_y);
+  wid_mouse_up(game, event->button.button, sdl.mouse_x, sdl.mouse_y);
 }
 
 void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
@@ -279,11 +279,11 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
         //
         // Handle "natural" scrolling direction.
         //
-        if (! game->config.mouse_wheel_lr_negated) {
+        if (! game_mouse_wheel_lr_negated_get(game)) {
           sdl.wheel_x = -sdl.wheel_x;
         }
 
-        if (game->config.mouse_wheel_ud_negated) {
+        if (game_mouse_wheel_ud_negated_get(game)) {
           sdl.wheel_y = -sdl.wheel_y;
         }
 
@@ -293,7 +293,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
         wid_mouse_visible = 1;
         sdl.mouse_tick++;
         if (! processed_mouse_motion_event) {
-          wid_mouse_motion(sdl.mouse_x, sdl.mouse_y, 0, 0, -sdl.wheel_x, sdl.wheel_y);
+          wid_mouse_motion(game, sdl.mouse_x, sdl.mouse_y, 0, 0, -sdl.wheel_x, sdl.wheel_y);
           processed_mouse_motion_event = true;
         }
         break;
@@ -333,7 +333,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
 
         if (sdl.right_fire || sdl.left_fire) {
           sdl_get_mouse();
-          wid_joy_button(sdl.mouse_x, sdl.mouse_y);
+          wid_joy_button(game, sdl.mouse_x, sdl.mouse_y);
         }
 
         break;
@@ -414,7 +414,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
         DBG("SDL: Joystick %d: Button %d pressed", event->jbutton.which, event->jbutton.button);
         sdl.joy_buttons[ event->jbutton.button ] = (uint8_t) 1;
         sdl_get_mouse();
-        wid_joy_button(sdl.mouse_x, sdl.mouse_y);
+        wid_joy_button(game, sdl.mouse_x, sdl.mouse_y);
         break;
       }
     case SDL_JOYBUTTONUP :
@@ -458,7 +458,7 @@ static void sdl_key_repeat_events_(void)
     return;
   }
 
-  auto level = game->level;
+  auto level = game_level_get(game);
   if (! level) {
     return;
   }
@@ -470,10 +470,10 @@ static void sdl_key_repeat_events_(void)
   static bool left_held_prev;
   static bool right_held_prev;
 
-  bool up_held    = state[ sdlk_to_scancode(game->config.key_move_up) ];
-  bool down_held  = state[ sdlk_to_scancode(game->config.key_move_down) ];
-  bool left_held  = state[ sdlk_to_scancode(game->config.key_move_left) ];
-  bool right_held = state[ sdlk_to_scancode(game->config.key_move_right) ];
+  bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(game)) ];
+  bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(game)) ];
+  bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(game)) ];
+  bool right_held = state[ sdlk_to_scancode(game_key_move_right_get(game)) ];
 
   //
   // Keypad stuff is hardcoded.

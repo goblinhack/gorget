@@ -180,9 +180,9 @@ uint8_t sdl_init(void)
   //
   // If we have a saved setting, use that.
   //
-  if (game->config.window_pix_width && game->config.window_pix_height) {
-    video_width  = game->config.config_pix_width;
-    video_height = game->config.config_pix_height;
+  if (game_window_pix_width_get(game) && game_window_pix_height_get(game)) {
+    video_width  = game_config_pix_width_get(game);
+    video_height = game_config_pix_height_get(game);
   } else {
     //
     // Else guess.
@@ -196,11 +196,11 @@ uint8_t sdl_init(void)
       return false;
     }
 
-    game->config.config_pix_width  = mode.w;
-    game->config.config_pix_height = mode.h;
+    game_config_pix_width_set(game, mode.w);
+    game_config_pix_height_set(game, mode.h);
 
-    video_width  = game->config.config_pix_width;
-    video_height = game->config.config_pix_height;
+    video_width  = game_config_pix_width_get(game);
+    video_height = game_config_pix_height_get(game);
   }
 
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -215,22 +215,22 @@ uint8_t sdl_init(void)
   LOG("SDL: Set SDL_WINDOW_OPENGL");
   video_is_unused_flags = SDL_WINDOW_OPENGL;
 
-  if (game->config.gfx_borderless) {
+  if (game_gfx_borderless_get(game)) {
     LOG("SDL: Set SDL_WINDOW_BORDERLESS");
     video_is_unused_flags |= SDL_WINDOW_BORDERLESS;
   }
 
-  if (game->config.gfx_fullscreen) {
+  if (game_gfx_fullscreen_get(game)) {
     LOG("SDL: Set SDL_WINDOW_FULLSCREEN");
     video_is_unused_flags |= SDL_WINDOW_FULLSCREEN;
   }
 
-  if (game->config.gfx_fullscreen_desktop) {
+  if (game_gfx_fullscreen_desktop_get(game)) {
     LOG("SDL: Set SDL_WINDOW_FULLSCREEN_DESKTOP");
     video_is_unused_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
   }
 
-  if (game->config.gfx_allow_highdpi) {
+  if (game_gfx_allow_highdpi_get(game)) {
     //
     // For a lo pixel game this makes no sense as the frame
     // buffers are really large and slows things down.
@@ -250,23 +250,23 @@ uint8_t sdl_init(void)
                                 video_is_unused_flags);
   if (! sdl.window) {
     ERR("SDL_CreateWindow couldn't set windowed display %ux%u: %s", video_width, video_height, SDL_GetError());
-    game->config.reset();
-    game->save_config();
+    game_config_reset(game);
+    game_save_config(game);
     return false;
   }
 
   int w, h;
   if (video_is_unused_flags & SDL_WINDOW_ALLOW_HIGHDPI) {
     SDL_GL_GetDrawableSize(sdl.window, &w, &h);
-    game->config.window_pix_width  = w;
-    game->config.window_pix_height = h;
+    game_window_pix_width_set(game, w);
+    game_window_pix_height_set(game, h);
   } else {
     SDL_GetWindowSize(sdl.window, &w, &h);
-    game->config.window_pix_width  = w;
-    game->config.window_pix_height = h;
+    game_window_pix_width_set(game, w);
+    game_window_pix_height_set(game, h);
   }
 
-  LOG("SDL: Call SDL_GL_CreateContext(%dx%d)", game->config.window_pix_width, game->config.window_pix_height);
+  LOG("SDL: Call SDL_GL_CreateContext(%dx%d)", game_window_pix_width_get(game), game_window_pix_height_get(game));
   sdl.context = SDL_GL_CreateContext(sdl.window);
   if (! sdl.context) {
     SDL_ClearError();
@@ -274,7 +274,8 @@ uint8_t sdl_init(void)
     return false;
   }
 
-  LOG("SDL: Call SDL_GL_CreateContext(%dx%d) done", game->config.window_pix_width, game->config.window_pix_height);
+  LOG("SDL: Call SDL_GL_CreateContext(%dx%d) done", game_window_pix_width_get(game),
+      game_window_pix_height_get(game));
   if (SDL_GL_MakeCurrent(sdl.window, sdl.context) < 0) {
     SDL_ClearError();
     ERR("SDL_GL_MakeCurrent failed %s", SDL_GetError());
@@ -360,8 +361,8 @@ void sdl_mouse_center(void)
 
   int x, y;
 
-  x = game->config.window_pix_width / 2;
-  y = game->config.window_pix_height / 2;
+  x = game_window_pix_width_get(game) / 2;
+  y = game_window_pix_height_get(game) / 2;
 
   sdl_mouse_warp(x, y);
 }
@@ -374,13 +375,13 @@ void sdl_mouse_warp(int x, int y)
 
   if (x <= 0) {
     x = border;
-  } else if (x >= game->config.window_pix_width - border) {
-    x = game->config.window_pix_width - border;
+  } else if (x >= game_window_pix_width_get(game) - border) {
+    x = game_window_pix_width_get(game) - border;
   }
   if (y <= 0) {
     y = border;
-  } else if (y >= game->config.window_pix_height - border) {
-    y = game->config.window_pix_height - border;
+  } else if (y >= game_window_pix_height_get(game) - border) {
+    y = game_window_pix_height_get(game) - border;
   }
 
   SDL_WarpMouseInWindow(sdl.window, x, y);
@@ -415,7 +416,7 @@ void sdl_tick(void)
     sdl.joy1_right = true;
 
     sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]++;
-    wid_joy_button(sdl.mouse_x, sdl.mouse_y);
+    wid_joy_button(game, sdl.mouse_x, sdl.mouse_y);
     sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]--;
   }
 
@@ -424,7 +425,7 @@ void sdl_tick(void)
     sdl.joy1_left = true;
 
     sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]++;
-    wid_joy_button(sdl.mouse_x, sdl.mouse_y);
+    wid_joy_button(game, sdl.mouse_x, sdl.mouse_y);
     sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]--;
   }
 
@@ -433,7 +434,7 @@ void sdl_tick(void)
     sdl.joy1_down = true;
 
     sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]++;
-    wid_joy_button(sdl.mouse_x, sdl.mouse_y);
+    wid_joy_button(game, sdl.mouse_x, sdl.mouse_y);
     sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]--;
   }
 
@@ -442,7 +443,7 @@ void sdl_tick(void)
     sdl.joy1_up = true;
 
     sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]++;
-    wid_joy_button(sdl.mouse_x, sdl.mouse_y);
+    wid_joy_button(game, sdl.mouse_x, sdl.mouse_y);
     sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]--;
   }
 
@@ -503,12 +504,12 @@ void sdl_tick(void)
       y = 0;
     }
 
-    if (x > game->config.window_pix_width - 1) {
-      x = game->config.window_pix_width - 1;
+    if (x > game_window_pix_width_get(game) - 1) {
+      x = game_window_pix_width_get(game) - 1;
     }
 
-    if (y > game->config.window_pix_height - 1) {
-      y = game->config.window_pix_height - 1;
+    if (y > game_window_pix_height_get(game) - 1) {
+      y = game_window_pix_height_get(game) - 1;
     }
 
     if (wid_mouse_visible) {
@@ -543,11 +544,11 @@ uint8_t config_fps_counter_set(class Tokens *tokens, void *context)
   char *s = tokens->args[ 2 ];
 
   if (! s || (*s == '\0')) {
-    game->config.fps_counter = true;
+    game_fps_counter_set(game, true);
     CON("FPS counter enabled (default).");
   } else {
-    game->config.fps_counter = strtol(s, nullptr, 10) ? 1 : 0;
-    if (game->config.fps_counter) {
+    game_fps_counter_set(game, strtol(s, nullptr, 10) ? true : false);
+    if (game_fps_counter_get(game)) {
       CON("FPS counter enabled.");
     } else {
       CON("FPS counter disabled.");
@@ -599,12 +600,12 @@ uint8_t config_gfx_vsync_enable(class Tokens *tokens, void *context)
   char *s = tokens->args[ 2 ];
 
   if (! s || (*s == '\0')) {
-    game->config.gfx_vsync_enable = true;
+    game_gfx_vsync_enable_set(game, true);
   } else {
-    game->config.gfx_vsync_enable = strtol(s, nullptr, 10) ? 1 : 0;
+    game_gfx_vsync_enable_set(game, strtol(s, nullptr, 10) ? 1 : 0);
   }
 
-  if (game->config.gfx_vsync_enable) {
+  if (game_gfx_vsync_enable_get(game)) {
     CON("SDL: Vsync enabled.");
     SDL_GL_SetSwapInterval(1);
   } else {
@@ -620,7 +621,7 @@ void config_gfx_vsync_update(void)
 {
   TRACE_NO_INDENT();
 
-  if (game->config.gfx_vsync_enable) {
+  if (game_gfx_vsync_enable_get(game)) {
     SDL_GL_SetSwapInterval(1);
   } else {
     SDL_GL_SetSwapInterval(0);
@@ -677,7 +678,7 @@ void sdl_flush_display(bool force)
   gl_enter_2d_mode();
   wid_display_all(false);
   gl_leave_2d_mode();
-  gl_enter_2d_mode(game->config.window_pix_width, game->config.window_pix_height);
+  gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 
   sdl_display();
 }
@@ -687,25 +688,25 @@ void config_game_gfx_update(void)
   LOG("SDL: Update");
   TRACE_AND_INDENT();
 
-  game->config.aspect_ratio = (double) game->config.window_pix_width / (double) game->config.window_pix_height;
+  game_aspect_ratio_set(game, (double) game_window_pix_width_get(game) / (double) game_window_pix_height_get(game));
 
   //
   // Pixel perfect size
   //
-  game->config.game_pix_height = game->config.window_pix_height;
-  game->config.game_pix_width  = game->config.window_pix_width;
-  game->config.game_pix_height = TILE_WIDTH * TILE_HEIGHT;
-  float game_pix_width         = (int) (((double) game->config.game_pix_height) * game->config.aspect_ratio);
+  game_pix_height_set(game, game_window_pix_height_get(game));
+  game_pix_width_set(game, game_window_pix_width_get(game));
+  game_pix_height_set(game, TILE_WIDTH * TILE_HEIGHT);
+  float game_pix_width = (int) (((double) game_pix_height_get(game)) * game_aspect_ratio_get(game));
   game_pix_width /= TILE_WIDTH;
   game_pix_width = ceil(game_pix_width);
   game_pix_width *= TILE_WIDTH;
-  game->config.game_pix_width = game_pix_width;
+  game_pix_width_set(game, game_pix_width);
 
-  if (! game->config.game_pix_width) {
+  if (! game_pix_width_get(game)) {
     ERR("game->config.game_pix_width is zero");
     return;
   }
-  if (! game->config.game_pix_height) {
+  if (! game_pix_height_get(game)) {
     ERR("game->config.game_pix_height is zero");
     return;
   }
@@ -713,8 +714,8 @@ void config_game_gfx_update(void)
   //
   // Use the same resolution as the game
   //
-  game->config.ui_pix_width  = game->config.game_pix_width;
-  game->config.ui_pix_height = game->config.game_pix_height;
+  game_ui_pix_width_set(game, game_pix_width_get(game));
+  game_ui_pix_height_set(game, game_pix_height_get(game));
 
   if (! TILE_WIDTH) {
     ERR("TILE_WIDTH zero");
@@ -729,11 +730,11 @@ void config_game_gfx_update(void)
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //
-  game->config.map_pix_width  = game->config.game_pix_height;
-  game->config.map_pix_height = game->config.game_pix_height;
+  game_map_pix_width_set(game, game_pix_height_get(game));
+  game_map_pix_height_set(game, game_pix_height_get(game));
 
-  float tiles_across = game->config.game_pix_width / TILE_WIDTH;
-  float tiles_down   = game->config.game_pix_height / TILE_HEIGHT;
+  float tiles_across = game_pix_width_get(game) / TILE_WIDTH;
+  float tiles_down   = game_pix_height_get(game) / TILE_HEIGHT;
 
   TILES_VISIBLE_ACROSS = (int) tiles_across;
   TILES_VISIBLE_DOWN   = (int) tiles_down;
@@ -753,14 +754,14 @@ void config_game_gfx_update(void)
   }
 
   LOG("SDL: Window:");
-  LOG("SDL: - config pixel size         : %dx%d", game->config.config_pix_width, game->config.config_pix_height);
-  LOG("SDL: - window pixel size         : %dx%d", game->config.window_pix_width, game->config.window_pix_height);
-  LOG("SDL: - UI pixel size             : %dx%d", game->config.ui_pix_width, game->config.ui_pix_height);
-  LOG("SDL: - visible screen pixel size : %dx%d", game->config.game_pix_width, game->config.game_pix_height);
-  LOG("SDL: - visible map pixel size    : %dx%d", game->config.map_pix_width, game->config.map_pix_height);
+  LOG("SDL: - config pixel size         : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
+  LOG("SDL: - window pixel size         : %dx%d", game_window_pix_width_get(game), game_window_pix_height_get(game));
+  LOG("SDL: - UI pixel size             : %dx%d", game_ui_pix_width_get(game), game_ui_pix_height_get(game));
+  LOG("SDL: - visible screen pixel size : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
+  LOG("SDL: - visible map pixel size    : %dx%d", game_map_pix_width_get(game), game_map_pix_height_get(game));
 
-  TERM_WIDTH  = game->config.ui_gfx_term_width;
-  TERM_HEIGHT = game->config.ui_gfx_term_height;
+  TERM_WIDTH  = game_ui_gfx_term_width_get(game);
+  TERM_HEIGHT = game_ui_gfx_term_height_get(game);
 
   if (! TERM_WIDTH) {
     ERR("TERM_WIDTH is zero");
@@ -784,25 +785,25 @@ void config_game_gfx_update(void)
   //
   // Account for rounding errors, so the tiles look smoother.
   //
-  game->config.ascii_gl_width  = UI_FONT_WIDTH;
-  game->config.ascii_gl_height = UI_FONT_HEIGHT;
+  game_ascii_gl_width_set(game, UI_FONT_WIDTH);
+  game_ascii_gl_height_set(game, UI_FONT_HEIGHT);
 
   //
   // If we overflow the screen, try to cut a few rows and columns off
   //
-  while (game->config.ascii_gl_width * TERM_WIDTH > game->config.ui_pix_width) {
+  while (game_ascii_gl_width_get(game) * TERM_WIDTH > game_ui_pix_width_get(game)) {
     TERM_WIDTH--;
     LOG("SDL: - exceeded pixel width, try width: %d", TERM_WIDTH);
   }
-  while (game->config.ascii_gl_height * TERM_HEIGHT > game->config.ui_pix_height) {
+  while (game_ascii_gl_height_get(game) * TERM_HEIGHT > game_ui_pix_height_get(game)) {
     TERM_HEIGHT--;
     LOG("SDL: - exceeded pixel height, try height: %d", TERM_HEIGHT);
   }
 
   LOG("SDL: Terminal");
-  LOG("SDL: - ascii gl size        : %ux%u", game->config.ascii_gl_width, game->config.ascii_gl_height);
+  LOG("SDL: - ascii gl size        : %ux%u", game_ascii_gl_width_get(game), game_ascii_gl_height_get(game));
   LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
-  LOG("SDL: - aspect ratio         : %f", game->config.aspect_ratio);
+  LOG("SDL: - aspect ratio         : %f", game_aspect_ratio_get(game));
   LOG("SDL: Map");
   LOG("SDL: - size                 : %dx%d", MAP_WIDTH, MAP_HEIGHT);
 }

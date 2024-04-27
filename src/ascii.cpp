@@ -115,8 +115,8 @@ void pixel_to_ascii(int *x, int *y)
   float mx = *x;
   float my = *y;
 
-  mx /= (((float) game->config.window_pix_width) / ((float) TERM_WIDTH));
-  my /= (((float) game->config.window_pix_height) / ((float) TERM_HEIGHT));
+  mx /= (((float) game_window_pix_width_get(game)) / ((float) TERM_WIDTH));
+  my /= (((float) game_window_pix_height_get(game)) / ((float) TERM_HEIGHT));
 
   if (mx >= TERM_WIDTH - 1) {
     mx = TERM_WIDTH - 1;
@@ -731,8 +731,8 @@ static void ascii_blit(void)
   float mx = sdl.mouse_x;
   float my = sdl.mouse_y;
 #endif
-  const auto dw = game->config.ascii_gl_width;
-  const auto dh = game->config.ascii_gl_height;
+  const auto dw = game_ascii_gl_width_get(game);
+  const auto dh = game_ascii_gl_height_get(game);
 
   tile_y = 0;
   for (y = 0; y < TERM_HEIGHT; y++) {
@@ -891,7 +891,7 @@ void ascii_display(void)
 {
   mouse_found = false;
 
-  gl_enter_2d_mode(game->config.ui_pix_width, game->config.ui_pix_height);
+  gl_enter_2d_mode(game_ui_pix_width_get(game), game_ui_pix_height_get(game));
   blit_init();
   ascii_blit();
   blit_flush();

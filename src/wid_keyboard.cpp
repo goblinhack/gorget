@@ -719,7 +719,7 @@ static void wid_keyboard_bg_tick(Widp w)
 
   std::string t = "grid";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game->config.ui_pix_width, game->config.ui_pix_height));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
   blit_flush();
 }
 

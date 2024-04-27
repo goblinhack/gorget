@@ -11,7 +11,6 @@
 #include "my_wid_popup.hpp"
 
 WidPopup *wid_load;
-void      wid_load_destroy(void);
 
 static std::string                    game_load_error;
 bool                                  game_load_headers_only;
@@ -63,8 +62,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.game_pix_width);
   in >> bits(my.t.map_pix_height);
   in >> bits(my.t.map_pix_width);
-  in >> bits(my.t.game_pix_scale_height);
-  in >> bits(my.t.game_pix_scale_width);
   in >> bits(my.t.gfx_allow_highdpi);
   in >> bits(my.t.gfx_borderless);
   in >> bits(my.t.gfx_fullscreen);
@@ -72,38 +69,9 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.gfx_vsync_enable);
   in >> bits(my.t.mouse_wheel_lr_negated);
   in >> bits(my.t.mouse_wheel_ud_negated);
-  in >> bits(my.t.key_action0);
-  in >> bits(my.t.key_action1);
-  in >> bits(my.t.key_action2);
-  in >> bits(my.t.key_action3);
-  in >> bits(my.t.key_action4);
-  in >> bits(my.t.key_action5);
-  in >> bits(my.t.key_action6);
-  in >> bits(my.t.key_action7);
-  in >> bits(my.t.key_action8);
-  in >> bits(my.t.key_action9);
   in >> bits(my.t.key_attack);
   in >> bits(my.t.key_console);
   in >> bits(my.t.key_unused1);
-  in >> bits(my.t.key_unused2);
-  in >> bits(my.t.key_unused3);
-  in >> bits(my.t.key_unused4);
-  in >> bits(my.t.key_unused5);
-  in >> bits(my.t.key_unused6);
-  in >> bits(my.t.key_unused7);
-  in >> bits(my.t.key_unused8);
-  in >> bits(my.t.key_unused9);
-  in >> bits(my.t.key_unused10);
-  in >> bits(my.t.key_unused11);
-  in >> bits(my.t.key_unused12);
-  in >> bits(my.t.key_unused13);
-  in >> bits(my.t.key_unused14);
-  in >> bits(my.t.key_unused15);
-  in >> bits(my.t.key_unused16);
-  in >> bits(my.t.key_unused17);
-  in >> bits(my.t.key_unused18);
-  in >> bits(my.t.key_unused19);
-  in >> bits(my.t.key_unused20);
   in >> bits(my.t.key_help);
   in >> bits(my.t.key_load);
   in >> bits(my.t.key_move_down);
@@ -132,8 +100,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: debug_mode             = %d", my.t.debug_mode);
   LOG("Read config: fps_counter            = %d", my.t.fps_counter);
   LOG("Read config: game_pix_height        = %d", my.t.game_pix_height);
-  LOG("Read config: game_pix_scale_height  = %d", my.t.game_pix_scale_height);
-  LOG("Read config: game_pix_scale_width   = %d", my.t.game_pix_scale_width);
   LOG("Read config: game_pix_width         = %d", my.t.game_pix_width);
   LOG("Read config: gfx_allow_highdpi      = %d", my.t.gfx_allow_highdpi);
   LOG("Read config: gfx_borderless         = %d", my.t.gfx_borderless);
@@ -210,14 +176,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   }
   if (my.t.map_pix_width < 0) {
     game_load_error += "map_pix_width is invalid";
-    return in;
-  }
-  if (my.t.game_pix_scale_height < 0) {
-    game_load_error += "game_pix_scale_height is invalid";
-    return in;
-  }
-  if (my.t.game_pix_scale_width < 0) {
-    game_load_error += "game_pix_scale_width is invalid";
     return in;
   }
   if (my.t.ui_pix_height < 0) {
@@ -512,7 +470,7 @@ void Game::load_snapshot(void)
   CON("Loaded the game from %s.", save_file.c_str());
 }
 
-void wid_load_destroy(void)
+void wid_load_destroy(class Game *game)
 {
   TRACE_AND_INDENT();
   if (wid_load) {
@@ -555,7 +513,7 @@ static bool wid_load_key_up(Widp w, const struct SDL_Keysym *key)
                     CON("No game at that slot.");
                   } else {
                     game->load(slot);
-                    wid_load_destroy();
+                    wid_load_destroy(game);
                   }
                   return true;
                 }
@@ -565,7 +523,7 @@ static bool wid_load_key_up(Widp w, const struct SDL_Keysym *key)
                 {
                   TRACE_AND_INDENT();
                   CON("INF: Load game cancelled");
-                  wid_load_destroy();
+                  wid_load_destroy(game);
                   return true;
                 }
             }
@@ -592,7 +550,7 @@ static bool wid_load_mouse_up(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   auto slot = wid_get_int_context(w);
   game->load(slot);
-  wid_load_destroy();
+  wid_load_destroy(game);
   return true;
 }
 
@@ -600,17 +558,18 @@ static bool wid_load_saved_snapshot(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   game->load_snapshot();
-  wid_load_destroy();
-  return true;
-}
-static bool wid_load_cancel(Widp w, int x, int y, uint32_t button)
-{
-  TRACE_AND_INDENT();
-  wid_load_destroy();
+  wid_load_destroy(game);
   return true;
 }
 
-void Game::wid_load_select(void)
+static bool wid_load_cancel(Widp w, int x, int y, uint32_t button)
+{
+  TRACE_AND_INDENT();
+  wid_load_destroy(game);
+  return true;
+}
+
+void Game::load_select(void)
 {
   TRACE_AND_INDENT();
   CON("INF: Loading a saved game, destroy old");
@@ -653,10 +612,6 @@ void Game::wid_load_select(void)
   for (auto slot = 0; slot < UI_WID_SAVE_SLOTS; slot++) {
     Game tmp;
     auto tmp_file = saved_dir + "saved-slot-" + std::to_string(slot);
-
-#if 0
-    wid_progress_bar("Scanning...", ((float) slot) / ((float) UI_WID_SAVE_SLOTS));
-#endif
 
     if (slot == UI_WID_SAVE_SLOTS - 1) {
       tmp_file = saved_dir + "saved-snapshot";
@@ -705,15 +660,49 @@ void Game::wid_load_select(void)
   game_load_headers_only = false;
   wid_update(wid_load->wid_text_area->wid_text_area);
 
-#if 0
-  wid_progress_bar_destroy();
-#endif
-
-  game->state_change(Game::STATE_LOAD_MENU, "load select");
+  game->state_change(STATE_LOAD_MENU, "load select");
 
   //
   // Not sure why we need this; but the level ends up blank post loading.
   // It's probably a good idea anyway, in case we were in a difference gfx mode.
   //
   sdl_display_reset();
+}
+
+void wid_load_select(class Game *game) { game->load_select(); }
+
+void game_load_last_config(const char *appdata)
+{
+  TRACE_NO_INDENT();
+
+  CON("INI: Load config");
+
+  game              = new Game(std::string(appdata));
+  auto config_error = game->load_config();
+
+  //
+  // If the seed is set on the command line, make it stick
+  //
+  if (game->seed_manually_set) {
+    game->seed_manually_set = true;
+  }
+
+  std::string version = "" MYVER "";
+
+  if (game->config.version != version) {
+    SDL_MSG_BOX("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
+                game->config.version.c_str(), version.c_str());
+    delete game;
+    game = new Game(std::string(appdata));
+    reset_globals();
+    game_save_config(game);
+    g_errored = false;
+  } else if (! config_error.empty()) {
+    SDL_MSG_BOX("Config error: %s. Will need to reset config.", config_error.c_str());
+    delete game;
+    reset_globals();
+    game = new Game(std::string(appdata));
+    game_save_config(game);
+    g_errored = false;
+  }
 }

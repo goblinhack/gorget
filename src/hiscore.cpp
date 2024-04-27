@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_serialize.hpp"
 #include "my_time.hpp"
@@ -38,7 +39,7 @@ void HiScores::add_new_hiscore(int score, int level_num, const std::string &name
 
       hiscores.resize(HiScore::max);
 
-      game->save_config();
+      game_save_config(game);
       return;
     }
 

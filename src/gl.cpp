@@ -57,7 +57,7 @@ void gl_init_2d_mode(void)
   // Setup our viewport
   //
   LOG("GFX: OpenGL enable viewport");
-  glViewport(0, 0, game->config.window_pix_width, game->config.window_pix_height);
+  glViewport(0, 0, game_window_pix_width_get(game), game_window_pix_height_get(game));
   GL_ERROR_CHECK();
 
   //
@@ -100,15 +100,15 @@ void gl_enter_2d_mode(void)
   //
   // 2D projection
   //
-  if (! game->config.game_pix_width || ! game->config.game_pix_height) {
-    LOG("Cannot call glOrtho(%d,%d)", game->config.game_pix_width, game->config.game_pix_height);
+  if (! game_pix_width_get(game) || ! game_pix_height_get(game)) {
+    LOG("Cannot call glOrtho(%d,%d)", game_pix_width_get(game), game_pix_height_get(game));
     return;
   }
 
-  glOrtho(0,                            // left
-          game->config.game_pix_width,  // right
-          game->config.game_pix_height, // bottom
-          0,                            // top
+  glOrtho(0,                         // left
+          game_pix_width_get(game),  // right
+          game_pix_height_get(game), // bottom
+          0,                         // top
           -1200.0, 1200.0);
   GL_ERROR_CHECK();
 
@@ -439,21 +439,21 @@ void gl_init_fbo(void)
 
 void fbo_get_size(int fbo, int &w, int &h)
 {
-  w = game->config.game_pix_width;
-  h = game->config.game_pix_height;
+  w = game_pix_width_get(game);
+  h = game_pix_height_get(game);
 
   switch (fbo) {
     case FBO_MAP :
-      w = game->config.map_pix_width;
-      h = game->config.map_pix_height;
+      w = game_map_pix_width_get(game);
+      h = game_map_pix_height_get(game);
       break;
     case FBO_WID :
-      w = game->config.ui_pix_width;
-      h = game->config.ui_pix_height;
+      w = game_ui_pix_width_get(game);
+      h = game_ui_pix_height_get(game);
       break;
     case FBO_FINAL :
-      w = game->config.window_pix_width;
-      h = game->config.window_pix_height;
+      w = game_window_pix_width_get(game);
+      h = game_window_pix_height_get(game);
       break;
   }
 }
@@ -471,14 +471,15 @@ void blit_fbo(int fbo)
 void blit_fbo_ui_pix(int fbo)
 {
   blit_init();
-  blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game->config.ui_pix_width, game->config.ui_pix_height);
+  blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_ui_pix_width_get(game), game_ui_pix_height_get(game));
   blit_flush();
 }
 
 void blit_fbo_window_pix(int fbo)
 {
   blit_init();
-  blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game->config.window_pix_width, game->config.window_pix_height);
+  blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_window_pix_width_get(game),
+       game_window_pix_height_get(game));
   blit_flush();
 }
 

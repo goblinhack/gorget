@@ -9,17 +9,16 @@
 #include "my_thing.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
-#include "my_wid_popups.hpp"
-#include "my_wid_rightbar.hpp"
+#include "my_wids.hpp"
 
-static bool wid_rightbar_create(void);
+static bool wid_rightbar_create(class Game *);
 
 Widp wid_rightbar {};
 Widp wid_map_mini {};
 
 static WidPopup *wid_rightbar_popup;
 
-void wid_rightbar_fini(void)
+void wid_rightbar_fini(class Game *game)
 {
   TRACE_AND_INDENT();
   wid_destroy(&wid_rightbar);
@@ -29,22 +28,22 @@ void wid_rightbar_fini(void)
   wid_rightbar_popup = nullptr;
 }
 
-bool wid_rightbar_init(void)
+bool wid_rightbar_init(class Game *game)
 {
   TRACE_AND_INDENT();
-  return wid_rightbar_create();
+  return wid_rightbar_create(game);
 }
 
-bool wid_rightbar_create(void)
+bool wid_rightbar_create(class Game *game)
 {
-  wid_rightbar_fini();
+  wid_rightbar_fini(game);
 
-  auto level = game->level;
+  auto level = game_level_get(game);
   if (! level) {
     return false;
   }
 
-  return wid_rightbar_ascii_create();
+  return wid_rightbar_ascii_create(game);
 }
 
 bool is_mouse_over_rightbar(void)

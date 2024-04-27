@@ -9,12 +9,12 @@
 #include "my_music.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
-#include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 static WidPopup *wid_cfg_sound_window;
 static bool      config_changed;
 
-static void wid_cfg_sound_destroy(void)
+static void wid_cfg_sound_destroy(class Game *game)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_sound_window;
@@ -28,11 +28,11 @@ static bool wid_cfg_sound_cancel(Widp w, int x, int y, uint32_t button)
   CON("INF: Reload config");
   if (config_changed) {
     config_changed = false;
-    game->load_config();
+    game_load_config(game);
     sdl_config_update_all();
   }
-  wid_cfg_sound_destroy();
-  game->wid_cfg_top_menu();
+  wid_cfg_sound_destroy(game);
+  wid_cfg_top_menu(game);
   return true;
 }
 
@@ -40,17 +40,17 @@ static bool wid_cfg_sound_save(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Save config");
-  game->save_config();
-  wid_cfg_sound_destroy();
-  game->wid_cfg_top_menu();
+  game_save_config(game);
+  wid_cfg_sound_destroy(game);
+  wid_cfg_top_menu(game);
   return true;
 }
 
 static bool wid_cfg_sound_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_cfg_sound_destroy();
-  game->wid_cfg_top_menu();
+  wid_cfg_sound_destroy(game);
+  wid_cfg_top_menu(game);
   return true;
 }
 
@@ -59,11 +59,12 @@ static bool wid_cfg_sound_effects_volume_incr(Widp w, int x, int y, uint32_t but
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Increment sound volume");
-  game->config.sound_volume++;
-  if (game->config.sound_volume > MIX_MAX_VOLUME) {
-    game->config.sound_volume = MIX_MAX_VOLUME;
+  auto vol = game_sound_volume_get(game);
+  game_sound_volume_set(game, vol + 1);
+  if (game_sound_volume_get(game) > MIX_MAX_VOLUME) {
+    game_sound_volume_set(game, MIX_MAX_VOLUME);
   }
-  game->wid_cfg_sound_select();
+  wid_cfg_sound_select(game);
   return true;
 }
 
@@ -72,12 +73,12 @@ static bool wid_cfg_sound_effects_volume_decr(Widp w, int x, int y, uint32_t but
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Decrement sound volume");
-  if (game->config.sound_volume > 0) {
-    game->config.sound_volume--;
-  } else {
-    game->config.sound_volume = 0;
+  auto vol = game_sound_volume_get(game);
+  game_sound_volume_set(game, vol - 1);
+  if (game_sound_volume_get(game) < 0) {
+    game_sound_volume_set(game, 0);
   }
-  game->wid_cfg_sound_select();
+  wid_cfg_sound_select(game);
   return true;
 }
 
@@ -86,12 +87,13 @@ static bool wid_cfg_sound_music_volume_incr(Widp w, int x, int y, uint32_t butto
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Increment music volume");
-  game->config.music_volume++;
-  if (game->config.music_volume > MIX_MAX_VOLUME) {
-    game->config.music_volume = MIX_MAX_VOLUME;
+  auto vol = game_music_volume_get(game);
+  game_music_volume_set(game, vol + 1);
+  if (game_music_volume_get(game) > MIX_MAX_VOLUME) {
+    game_music_volume_set(game, MIX_MAX_VOLUME);
   }
-  game->wid_cfg_sound_select();
-  music_update_volume();
+  wid_cfg_sound_select(game);
+  music_update_volume(game);
   return true;
 }
 
@@ -100,13 +102,13 @@ static bool wid_cfg_sound_music_volume_decr(Widp w, int x, int y, uint32_t butto
   TRACE_AND_INDENT();
   config_changed = true;
   CON("INF: Decrement music volume");
-  if (game->config.music_volume > 0) {
-    game->config.music_volume--;
-  } else {
-    game->config.music_volume = 0;
+  auto vol = game_music_volume_get(game);
+  game_music_volume_set(game, vol - 1);
+  if (game_music_volume_get(game) < 0) {
+    game_music_volume_set(game, 0);
   }
-  game->wid_cfg_sound_select();
-  music_update_volume();
+  wid_cfg_sound_select(game);
+  music_update_volume(game);
   return true;
 }
 
@@ -114,7 +116,7 @@ static bool wid_cfg_sound_key_up(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
@@ -147,18 +149,18 @@ static bool wid_cfg_sound_key_down(Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game->config.key_console)) {
+  if (sdlk_eq(*key, game_key_console_get(game))) {
     return false;
   }
 
   return true;
 }
 
-void Game::wid_cfg_sound_select(void)
+void wid_cfg_sound_select(class Game *game)
 {
   TRACE_AND_INDENT();
   if (wid_cfg_sound_window) {
-    wid_cfg_sound_destroy();
+    wid_cfg_sound_destroy(game);
   }
 
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
@@ -254,7 +256,7 @@ void Game::wid_cfg_sound_select(void)
     wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, std::to_string(game->config.sound_volume));
+    wid_set_text(w, std::to_string(game_sound_volume_get(game)));
   }
   {
     TRACE_AND_INDENT();
@@ -314,7 +316,7 @@ void Game::wid_cfg_sound_select(void)
     wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, std::to_string(game->config.music_volume));
+    wid_set_text(w, std::to_string(game_music_volume_get(game)));
   }
   {
     TRACE_AND_INDENT();

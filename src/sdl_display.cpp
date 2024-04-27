@@ -23,14 +23,14 @@ void sdl_display(void)
 
   if (blit_centered_map) {
     float x_offset
-        = (float) game->config.game_pix_width - (UI_RIGHTBAR_WIDTH * UI_FONT_WIDTH) - game->config.game_pix_height;
-    x_offset /= (float) game->config.game_pix_width;
-    x_offset *= (float) game->config.window_pix_width;
+        = (float) game_pix_width_get(game) - (UI_RIGHTBAR_WIDTH * UI_FONT_WIDTH) - game_pix_height_get(game);
+    x_offset /= (float) game_pix_width_get(game);
+    x_offset *= (float) game_window_pix_width_get(game);
     x_offset = floor(x_offset);
 
     blit_init();
-    blit(fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, x_offset, 0, game->config.window_pix_height + x_offset,
-         game->config.window_pix_height);
+    blit(fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, x_offset, 0, game_window_pix_height_get(game) + x_offset,
+         game_window_pix_height_get(game));
     blit_flush();
   } else {
     blit_fbo_window_pix(FBO_MAP);
@@ -51,7 +51,7 @@ void sdl_display(void)
     sdl_screenshot_do();
   }
 
-  SDL_Delay(game->config.sdl_delay);
+  SDL_Delay(game_sdl_delay_get(game));
 
   //
   // Flip

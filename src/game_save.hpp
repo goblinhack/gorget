@@ -10,7 +10,6 @@
 #include "my_wid_popup.hpp"
 
 WidPopup *wid_save;
-void      wid_save_destroy(void);
 
 extern bool     game_load_headers_only;
 bool            game_save_config_only;
@@ -51,8 +50,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.game_pix_width);
   out << bits(my.t.map_pix_height);
   out << bits(my.t.map_pix_width);
-  out << bits(my.t.game_pix_scale_height);
-  out << bits(my.t.game_pix_scale_width);
   out << bits(my.t.gfx_allow_highdpi);
   out << bits(my.t.gfx_borderless);
   out << bits(my.t.gfx_fullscreen);
@@ -60,38 +57,9 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.gfx_vsync_enable);
   out << bits(my.t.mouse_wheel_lr_negated);
   out << bits(my.t.mouse_wheel_ud_negated);
-  out << bits(my.t.key_action0);
-  out << bits(my.t.key_action1);
-  out << bits(my.t.key_action2);
-  out << bits(my.t.key_action3);
-  out << bits(my.t.key_action4);
-  out << bits(my.t.key_action5);
-  out << bits(my.t.key_action6);
-  out << bits(my.t.key_action7);
-  out << bits(my.t.key_action8);
-  out << bits(my.t.key_action9);
   out << bits(my.t.key_attack);
   out << bits(my.t.key_console);
   out << bits(my.t.key_unused1);
-  out << bits(my.t.key_unused2);
-  out << bits(my.t.key_unused3);
-  out << bits(my.t.key_unused4);
-  out << bits(my.t.key_unused5);
-  out << bits(my.t.key_unused6);
-  out << bits(my.t.key_unused7);
-  out << bits(my.t.key_unused8);
-  out << bits(my.t.key_unused9);
-  out << bits(my.t.key_unused10);
-  out << bits(my.t.key_unused11);
-  out << bits(my.t.key_unused12);
-  out << bits(my.t.key_unused13);
-  out << bits(my.t.key_unused14);
-  out << bits(my.t.key_unused15);
-  out << bits(my.t.key_unused16);
-  out << bits(my.t.key_unused17);
-  out << bits(my.t.key_unused18);
-  out << bits(my.t.key_unused19);
-  out << bits(my.t.key_unused20);
   out << bits(my.t.key_help);
   out << bits(my.t.key_load);
   out << bits(my.t.key_move_down);
@@ -324,7 +292,7 @@ void Game::save_config(void)
   out << bits(c);
 }
 
-void wid_save_destroy(void)
+void wid_save_destroy(class Game *game)
 {
   TRACE_AND_INDENT();
   if (wid_save) {
@@ -366,7 +334,7 @@ static bool wid_save_key_up(Widp w, const struct SDL_Keysym *key)
                   TRACE_AND_INDENT();
                   int slot = c - '0';
                   game->save(slot);
-                  wid_save_destroy();
+                  wid_save_destroy(game);
                   return true;
                 }
               case 'b' :
@@ -375,7 +343,7 @@ static bool wid_save_key_up(Widp w, const struct SDL_Keysym *key)
                 {
                   TRACE_AND_INDENT();
                   CON("INF: Save game cancelled");
-                  wid_save_destroy();
+                  wid_save_destroy(game);
                   return true;
                 }
             }
@@ -402,18 +370,18 @@ static bool wid_save_mouse_up(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   auto slot = wid_get_int_context(w);
   game->save(slot);
-  wid_save_destroy();
+  wid_save_destroy(game);
   return true;
 }
 
 static bool wid_save_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_save_destroy();
+  wid_save_destroy(game);
   return true;
 }
 
-void Game::wid_save_select(void)
+void Game::save_select(void)
 {
   TRACE_AND_INDENT();
 
@@ -498,5 +466,7 @@ void Game::wid_save_select(void)
   game_load_headers_only = false;
   wid_update(wid_save->wid_text_area->wid_text_area);
 
-  game->state_change(Game::STATE_SAVE_MENU, "save select");
+  state_change(STATE_SAVE_MENU, "save select");
 }
+
+void wid_save_select(class Game *game) { game->save_select(); }

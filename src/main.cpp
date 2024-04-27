@@ -30,6 +30,7 @@
 #include "my_sound.hpp"
 #include "my_tp.hpp"
 #include "my_wid_console.hpp"
+#include "my_wids.hpp"
 
 static char      **ARGV;
 static std::string original_program_name;
@@ -58,7 +59,7 @@ void quit(void)
 #endif
 
   if (game) {
-    game->fini();
+    game_fini(game);
   }
 
   LOG("FIN: sdl_exit");
@@ -663,40 +664,8 @@ int main(int argc, char *argv[])
   //
   // Create and load the last saved game
   //
-  {
-    TRACE_NO_INDENT();
-    CON("INI: Load config");
-    game              = new Game(std::string(appdata));
-    auto config_error = game->load_config();
-
-    //
-    // If the seed is set on the command line, make it stick
-    //
-    if (seed_manually_set) {
-      game->seed_manually_set = true;
-    }
-
-    std::string version = "" MYVER "";
-
-    if (game->config.version != version) {
-      SDL_MSG_BOX("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
-                  game->config.version.c_str(), version.c_str());
-      delete game;
-      game = new Game(std::string(appdata));
-      reset_globals();
-      game->save_config();
-      g_errored = false;
-    } else if (! config_error.empty()) {
-      SDL_MSG_BOX("Config error: %s. Will need to reset config.", config_error.c_str());
-      delete game;
-      reset_globals();
-      game = new Game(std::string(appdata));
-      game->save_config();
-      g_errored = false;
-    }
-  }
-
-  game->init();
+  game_load_last_config(appdata.c_str());
+  game_init(game);
 
   {
     TRACE_NO_INDENT();
@@ -877,9 +846,9 @@ int main(int argc, char *argv[])
     //
     TRACE_NO_INDENT();
     if (g_opt_test_skip_main_menu) {
-      game->new_game();
+      wid_new_game(game);
     } else {
-      game->wid_main_menu_select();
+      wid_main_menu_select(game);
     }
 
     flush_the_console();
