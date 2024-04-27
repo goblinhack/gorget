@@ -8,6 +8,10 @@
 #include "my_string.hpp"
 #include "my_wid.hpp"
 
+#include <map>
+#include <stdarg.h>
+#include <string.h>
+
 static void wid_log_(Widp w, const char *fmt, va_list args)
 {
   char buf[ MAXLONGSTR ];

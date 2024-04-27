@@ -12,6 +12,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "my_ascii.hpp"
 #include "my_audio.hpp"
 #include "my_callstack.hpp"
 #include "my_command.hpp"
@@ -30,6 +31,7 @@
 #include "my_sound.hpp"
 #include "my_tp.hpp"
 #include "my_wid_console.hpp"
+#include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
 static char      **ARGV;

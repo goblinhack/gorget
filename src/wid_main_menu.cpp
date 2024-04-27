@@ -2,13 +2,16 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
+#include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_tile.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 

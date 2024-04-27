@@ -9,6 +9,9 @@
 #include "my_string.hpp"
 #include "my_wid_console.hpp"
 
+#include <stdarg.h>
+#include <string.h>
+
 static void log_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();

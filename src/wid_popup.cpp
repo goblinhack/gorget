@@ -3,6 +3,8 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_enums.hpp"
+#include "my_tile.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
 
@@ -101,7 +103,7 @@ void WidPopup::compress(void)
   if (utilized < inner_h) {
     if (wid_text_area->wid_vert_scroll) {
       wid_hide(wid_text_area->wid_vert_scroll);
-      wid_hide(wid_text_area->wid_vert_scroll->parent);
+      wid_hide(wid_get_parent(wid_text_area->wid_vert_scroll));
     }
   }
 }

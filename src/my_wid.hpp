@@ -6,12 +6,10 @@
 #ifndef _MY_WID_HPP_
 #define _MY_WID_HPP_
 
-#include "my_ascii.hpp"
-#include "my_size.hpp"
+#include "my_color.hpp"
+#include "my_minimal.hpp"
+#include "my_point.hpp"
 #include "my_time.hpp"
-#include "my_wid_tiles.hpp"
-
-#include <map>
 
 void WID_LOG(Widp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void WID_DBG(Widp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
@@ -116,6 +114,7 @@ bool wid_get_received_input(Widp);
 bool wid_get_show_cursor(Widp);
 bool wid_get_text_bot(Widp);
 bool wid_get_text_centerx(Widp);
+bool wid_is_visible(Widp);
 bool wid_get_text_centery(Widp);
 bool wid_get_text_lhs(Widp);
 bool wid_get_text_pos(Widp, int *x, int *y);
@@ -187,6 +186,7 @@ void wid_raise(Widp);
 void wid_resize(Widp w, int width, int height);
 void wid_scroll_text(Widp);
 void wid_scroll_with_input(Widp, std::string str);
+void wid_set_ignore_for_mouse_down(Widp, uint8_t);
 void wid_set_active(Widp);
 void wid_set_color(Widp, wid_color col, color val);
 void wid_set_cursor(Widp, uint32_t val);
@@ -230,12 +230,10 @@ void wid_set_shape_square(Widp);
 void wid_set_show_cursor(Widp, uint8_t val);
 void wid_set_string_context(Widp w, std::string);
 void wid_set_style(Widp w, int style);
-void wid_set_tex_br(Widp, fsize val);
 void wid_set_text_bot(Widp, uint8_t val);
 void wid_set_text_centerx(Widp, uint8_t val);
 void wid_set_text_centery(Widp, uint8_t val);
 void wid_set_text_lhs(Widp, uint8_t val);
-void wid_set_tex_tl(Widp, fsize val);
 void wid_set_text_max_len(Widp, size_t);
 void wid_set_text_pos(Widp, uint8_t val, int x, int y);
 void wid_set_text_rhs(Widp, uint8_t val);
@@ -267,292 +265,11 @@ void wid_mouse_up(class Game *, uint32_t button, int x, int y);
 
 wid_mode wid_get_mode(Widp);
 
-typedef struct {
-  //
-  // Colors
-  //
-  std::array< color, WID_COLOR_MAX >   colors;
-  std::array< uint8_t, WID_COLOR_MAX > color_set;
-  int                                  style;
-  uint8_t                              style_set;
-} wid_cfg;
-
-class tree_wid_key
-{
-public:
-  tree_wid_key(void) = default;
-
-  tree_wid_key(int priority, point tl, point br, uint64_t key) : priority(priority), tl(tl), br(br), key(key) {}
-
-  ~tree_wid_key(void) = default;
-
-  int priority {};
-
-  //
-  // The real position on the screen initially.
-  //
-  point tl {};
-  point br {};
-
-  //
-  // Unique wid ID.
-  //
-  uint64_t key {};
-};
-
-struct tree_wid_key_cmp {
-  bool operator()(const tree_wid_key &lhs, const tree_wid_key &rhs) const
-  {
-    if (lhs.priority < rhs.priority) {
-      return true;
-    }
-    if (lhs.priority > rhs.priority) {
-      return false;
-    }
-
-    if (lhs.br.y < rhs.br.y) {
-      return true;
-    }
-    if (lhs.br.y > rhs.br.y) {
-      return false;
-    }
-
-    if (lhs.key < rhs.key) {
-      return true;
-    }
-    if (lhs.key > rhs.key) {
-      return false;
-    }
-
-    return false;
-  }
-};
-
-class WidKeyType
-{
-public:
-  WidKeyType(void) = default;
-
-  WidKeyType(uint64_t val) : val(val) {}
-
-  bool operator<(const WidKeyType &rhs) const { return (val < rhs.val); }
-
-  uint64_t val {};
-};
-
-typedef std::map< tree_wid_key, Widp, tree_wid_key_cmp > wid_key_map_location;
-typedef std::map< WidKeyType, Widp >                     wid_key_map_int;
-
-WidKeyType wid_unsorted_get_key(Widp w);
-
-class Wid
-{
-public:
-  Wid(void);
-  ~Wid(void);
-
-  WidKeyType tree_global_key {};
-
-  //
-  // Sorted for display order.
-  //
-  tree_wid_key key {};
-  WidKeyType   tree2_key {};
-  WidKeyType   tree4_key {};
-  WidKeyType   tree5_key {};
-  WidKeyType   tree6_key {};
-
-  wid_key_map_location *in_tree_root {};
-  wid_key_map_int      *in_tree2_unsorted_root {};
-  wid_key_map_int      *in_tree4_wids_being_destroyed {};
-  wid_key_map_int      *in_tree5_tick_wids {};
-  wid_key_map_int      *in_tree6_tick_wids_post_display {};
-  wid_key_map_int      *in_tree_global_unsorted_root {};
-
-  //
-  // Sorted for display onto the screen.
-  //
-  wid_key_map_location children_display_sorted {};
-
-  //
-  // No particular sort order.
-  //
-  wid_key_map_int tree2_children_unsorted {};
-
-  //
-  // A tree for things being destroyed.
-  //
-  wid_key_map_int tree4_wids_being_destroyed {};
-
-  //
-  // A tree for tick things
-  //
-  wid_key_map_int tree5_tick_wids {};
-  wid_key_map_int tree6_tick_post_displaying_wids {};
-
-  //
-  // Tiles widget
-  //
-  wid_tilesp wid_tiles {};
-
-  uint8_t hidden {};
-  uint8_t debug {};
-  uint8_t tex_tl_set {};
-  uint8_t tex_br_set {};
-  uint8_t always_hidden {};
-  uint8_t visible {};
-  uint8_t received_input {};
-  uint8_t moveable {};
-  uint8_t moveable_set {};
-  uint8_t moveable_horiz {};
-  uint8_t moveable_horiz_set {};
-  uint8_t moveable_vert {};
-  uint8_t moveable_vert_set {};
-  uint8_t moveable_bounded {};
-  uint8_t moveable_bounded_set {};
-  uint8_t moveable_no_user_scroll {};
-  uint8_t moveable_no_user_scroll_set {};
-  uint8_t ignore_events {};
-  uint8_t ignore_scroll_events {};
-  uint8_t ignore_for_mouse_down {};
-  uint8_t first_update {};
-  uint8_t show_cursor {};
-  uint8_t text_pos_set {};
-  uint8_t text_lhs {};
-  uint8_t text_rhs {};
-  uint8_t text_centerx {};
-  uint8_t text_top {};
-  uint8_t text_bot {};
-  uint8_t text_centery {};
-  uint8_t being_destroyed {};
-  uint8_t do_not_raise {};
-  uint8_t do_not_lower {};
-  uint8_t disable_scissors {};
-  uint8_t square {};
-  uint8_t is_scrollbar_vert_trough {};
-  uint8_t is_scrollbar_vert {};
-  uint8_t is_scrollbar_horiz_trough {};
-  uint8_t is_scrollbar_horiz {};
-
-  //
-  // Optionally set to the previous wid in a list
-  //
-  Widp prev {};
-  Widp next {};
-  Widp scrollbar_horiz {};
-  Widp scrollbar_vert {};
-  Widp scrollbar_owner {};
-
-  //
-  // The real position after scrollbar adjustments.
-  //
-  point abs_tl {};
-  point abs_br {};
-
-  //
-  // Lots of layers of tiles for widgets.
-  //
-  TileLayers tiles = {};
-
-  fsize texuv {};
-  fsize tex_tl {};
-  fsize tex_br {};
-
-  //
-  // WID_MODE_NORMAL ...
-  //
-  wid_mode mode {};
-
-  //
-  // Offset of child widgets in the parent window.
-  //
-  point offset {};
-
-  //
-  // Config layers:
-  //
-  std::array< wid_cfg, WID_MODE_LAST > cfg {};
-
-  //
-  // Client context
-  //
-  std::string string_context;
-  int         int_context {-1};
-  void       *void_context {};
-
-  //
-  // Text placement.
-  //
-  point text_pos {};
-
-  ts_t destroy_when {};
-  ts_t ts_created {};
-  ts_t ts_last_mode_change {};
-
-  //
-  // Text input
-  //
-  uint16_t cursor {};
-
-  //
-  // Order of this wid amongst other focusable widgets.
-  //
-  uint8_t focus_order {};
-
-  //
-  // Who had it last ? Used when raising this wid again.
-  //
-  uint8_t focus_last {};
-
-  //
-  // The wids children
-  //
-  Widp parent {};
-
-  //
-  // Widget internal name.
-  //
-  std::string name {};
-
-  //
-  // For debugging.
-  //
-  std::string to_string {};
-
-  //
-  // Text that appears on the wid.
-  //
-  std::string text {};
-  size_t      max_len {};
-
-  //
-  // Action handlers
-  //
-  on_key_down_t          on_key_down {};
-  on_key_up_t            on_key_up {};
-  on_joy_button_t        on_joy_button {};
-  on_mouse_down_t        on_mouse_down {};
-  on_mouse_down_t        on_mouse_held {};
-  on_mouse_up_t          on_mouse_up {};
-  on_mouse_motion_t      on_mouse_motion {};
-  on_mouse_focus_begin_t on_mouse_focus_begin {};
-  on_mouse_focus_end_t   on_mouse_focus_end {};
-  on_mouse_over_begin_t  on_mouse_over_begin {};
-  on_mouse_over_end_t    on_mouse_over_end {};
-  on_destroy_t           on_destroy {};
-  on_destroy_begin_t     on_destroy_begin {};
-  on_tick_t              on_tick {};
-  on_display_t           on_display {};
-  on_tick_post_display_t on_tick_post_display {};
-};
-
 extern bool      wid_exiting;
 extern bool      wid_init_done;
 extern bool      wid_mouse_two_clicks;
 extern const int wid_destroy_delay_ms;
 extern int       wid_mouse_visible;
-
-extern std::array< std::array< Widp, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > wid_on_screen_at;
 
 extern ts_t wid_ignore_events_briefly_ts;
 extern ts_t wid_last_mouse_motion;
@@ -561,7 +278,5 @@ extern ts_t wid_last_over_event;
 extern Widp wid_focus;
 extern Widp wid_over;
 extern Widp wid_focus_locked;
-
-extern wid_key_map_location wid_top_level;
 
 #endif

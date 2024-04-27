@@ -3,7 +3,9 @@
 //
 
 #include <algorithm>
+#include <map>
 
+#include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_command.hpp"
@@ -241,7 +243,7 @@ static void wid_console_wid_create(void)
   wid_hide(wid_get_parent(wid_console_horiz_scroll));
   wid_hide(wid_console_window);
 
-  wid_console_window->ignore_for_mouse_down = true;
+  wid_set_ignore_scroll_events(wid_console_window, true);
 
   wid_update(wid_console_window);
 }

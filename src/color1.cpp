@@ -4,13 +4,10 @@
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
-#include "my_fcolor.hpp"
 #include "my_main.hpp"
 
 #include <string.h>
 #include <strings.h>
-
-fcolor FCOLOR_NONE;
 
 // begin sort marker1 {
 color AQUAMARINE;

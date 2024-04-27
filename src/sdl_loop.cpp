@@ -7,6 +7,7 @@
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
@@ -89,7 +90,7 @@ void sdl_loop(void)
         CON("%%fg=red$An error occurred. Check the logs above.%%fg=reset$");
         CON("To dismiss this console, press TAB.");
         CON("To continue playing at your own risk, try 'clear errored'");
-        if (wid_console_window && ! (wid_console_window->visible)) {
+        if (wid_console_window && ! wid_is_visible(wid_console_window)) {
           wid_visible(wid_console_window);
           wid_raise(wid_console_window);
         }

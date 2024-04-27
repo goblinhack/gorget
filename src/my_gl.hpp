@@ -52,7 +52,6 @@
 
 #include "my_color.hpp"
 #include "my_point.hpp"
-#include "my_size.hpp"
 
 //
 // Push elements onto the array buffer.
@@ -260,7 +259,6 @@ extern int buf_tex;
 extern GLuint fbo_id[ MAX_FBO ];
 extern GLuint fbo_tex_id[ MAX_FBO ];
 extern GLuint render_buf_id[ MAX_FBO ];
-extern isize  fbo_size[ MAX_FBO ];
 
 void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,

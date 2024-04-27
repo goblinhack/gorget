@@ -10,6 +10,8 @@
 #include "my_wid_error.hpp"
 #include "my_wid_popup.hpp"
 
+#include <array>
+
 WidPopup *wid_load;
 
 static std::string                    game_load_error;

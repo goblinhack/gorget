@@ -12,6 +12,8 @@
 #include "my_tp.hpp"
 #include "my_wid_console.hpp"
 
+#include <string.h>
+
 void log_(Tpp tp, const char *fmt, va_list args)
 {
   verify(MTYPE_TP, tp);

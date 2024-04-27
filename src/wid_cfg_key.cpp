@@ -2,9 +2,11 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
@@ -76,7 +78,7 @@ void wid_cfg_keyboard_destroy(class Game *game)
   }
 
   auto w                  = wid_cfg_keyboard_window->wid_text_area->wid_vert_scroll;
-  last_vert_scroll_offset = wid_get_tl_y(w) - wid_get_tl_y(w->parent);
+  last_vert_scroll_offset = wid_get_tl_y(w) - wid_get_tl_y(wid_get_parent(w));
 
   delete wid_cfg_keyboard_window;
   wid_cfg_keyboard_window = nullptr;

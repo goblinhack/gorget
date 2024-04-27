@@ -6,9 +6,6 @@
 #ifndef _MY_COLOR_HPP_
 #define _MY_COLOR_HPP_
 
-#include <cstdint>
-#include <string>
-
 class color
 {
 public:
