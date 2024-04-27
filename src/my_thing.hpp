@@ -8,6 +8,8 @@
 
 #include "my_minimal.hpp"
 
+using Thingp = struct Thing *;
+
 #define THING_ID_ENTROPY_BITS 6
 #define THING_ID_X_BITS       5
 #define THING_ID_Y_BITS       5
@@ -62,6 +64,35 @@ struct Thing {
   uint8_t dir_right : 1;
 };
 
-using Thingp = struct Thing *;
+void     thing_id_set(Thingp t, ThingId id);
+ThingId  thing_id_get(Thingp t);
+void     thing_tp_id_set(Thingp t, uint16_t tp_id);
+uint16_t thing_tp_id_get(Thingp t);
+void     thing_tick_set(Thingp t, uint16_t tick);
+uint16_t thing_tick_get(Thingp t);
+void     thing_x_set(Thingp t, int8_t x);
+int8_t   thing_x_get(Thingp t);
+void     thing_y_set(Thingp t, int8_t y);
+int8_t   thing_y_get(Thingp t);
+void     thing_old_x_set(Thingp t, int8_t old_x);
+int8_t   thing_old_x_get(Thingp t);
+void     thing_old_y_set(Thingp t, int8_t old_y);
+int8_t   thing_old_y_get(Thingp t);
+void     thing_speed_set(Thingp t, int16_t speed);
+int16_t  thing_speed_get(Thingp t);
+void     thing_thing_dt_set(Thingp t, float thing_dt);
+float    thing_thing_dt_get(Thingp t);
+void     thing_pix_x_set(Thingp t, int16_t pix_x);
+int16_t  thing_pix_x_get(Thingp t);
+void     thing_pix_y_set(Thingp t, int16_t pix_y);
+int16_t  thing_pix_y_get(Thingp t);
+void     thing_dir_up_set(Thingp t, uint8_t dir_up);
+uint8_t  thing_dir_up_get(Thingp t);
+void     thing_dir_down_set(Thingp t, uint8_t dir_down);
+uint8_t  thing_dir_down_get(Thingp t);
+void     thing_dir_left_set(Thingp t, uint8_t dir_left);
+uint8_t  thing_dir_left_get(Thingp t);
+void     thing_dir_right_set(Thingp t, uint8_t dir_right);
+uint8_t  thing_dir_right_get(Thingp t);
 
 #endif
