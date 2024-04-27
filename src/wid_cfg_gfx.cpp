@@ -7,8 +7,6 @@
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_ui.hpp"
-#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_cfg_gfx_window;

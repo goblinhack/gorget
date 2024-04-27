@@ -2,19 +2,13 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "c_plus_plus_serializer.hpp"
 #include "my_ascii.hpp"
-#include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_game_defs.hpp"
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_minimal.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
-#include "my_sound.hpp"
-#include "my_time.hpp"
 #include "my_wids.hpp"
 
 #include <SDL_mixer.h>

@@ -8,7 +8,6 @@
 #include "my_string.hpp"
 #include "my_wid.hpp"
 
-#include <map>
 #include <stdarg.h>
 #include <string.h>
 

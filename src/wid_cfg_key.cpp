@@ -9,7 +9,6 @@
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_ui.hpp"
 #include "my_wid_notice.hpp"
 #include "my_wids.hpp"
 

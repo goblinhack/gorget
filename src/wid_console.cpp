@@ -9,9 +9,7 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_command.hpp"
-#include "my_game.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_ui.hpp"
 #include "my_wid_console.hpp"
 
 static int  wid_console_inited;

@@ -7,7 +7,6 @@
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_ui.hpp"
 #include "my_wids.hpp"
 
 WidPopup *wid_cfg_top_window;

@@ -10,7 +10,6 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
-#include "my_ui.hpp"
 #include "my_wid.hpp"
 #include "my_wid_keyboard.hpp"
 

@@ -6,10 +6,6 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_sdl_event.hpp"
-#include "my_string.hpp"
-#include "my_thing.hpp"
-#include "my_ui.hpp"
-#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 
 static bool wid_rightbar_create(class Game *);

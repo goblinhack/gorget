@@ -7,11 +7,8 @@
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_level_data.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
-#include "my_thing.hpp"
-#include "my_ui.hpp"
 #include "my_wids.hpp"
 
 bool wid_rightbar_ascii_create(class Game *game)

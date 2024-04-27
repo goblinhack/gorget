@@ -8,7 +8,6 @@
 #include "my_hiscore.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
-#include "my_ui.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_hiscore_window;
