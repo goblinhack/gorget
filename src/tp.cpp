@@ -24,7 +24,6 @@ std::initializer_list< std::string > tps = {
     // clang-format off
     "", // ID 0 means unused
     "wall1",
-    "wall2",
     "player1",
     "player2",
     "player3",

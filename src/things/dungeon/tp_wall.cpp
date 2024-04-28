@@ -9,7 +9,7 @@
 
 bool tp_load_wall(void)
 {
-  for (auto variant = 1; variant <= 2; variant++) {
+  for (auto variant = 1; variant <= 1; variant++) {
     auto name = "wall" + std::to_string(variant);
     auto tp   = tp_load(name.c_str());
     // begin sort marker1 {
