@@ -70,14 +70,14 @@
 ENUM_DEF_H(IS_JOIN_ENUM, is_join_enum)
 ENUM_DEF_C(IS_JOIN_ENUM, is_join_enum)
 
-void Level::assign_tiles(void)
+void level_assign_tiles(Levelp l)
 {
   TRACE_NO_INDENT();
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
-        auto tp = tp_get(x, y, slot);
+        auto tp = level_tp_get(l, x, y, slot);
         if (! tp) {
           continue;
         }
@@ -89,15 +89,15 @@ void Level::assign_tiles(void)
         if (tp_is_blit_tiled_get(tp)) {
           auto tile_name = tp_name(tp);
 
-          uint16_t A = is_same_type(x - 1, y - 1, tp) ? 1 : 0;
-          uint16_t B = is_same_type(x, y - 1, tp) ? 1 : 0;
-          uint16_t C = is_same_type(x + 1, y - 1, tp) ? 1 : 0;
-          uint16_t D = is_same_type(x - 1, y, tp) ? 1 : 0;
-          uint16_t E = is_same_type(x, y, tp) ? 1 : 0;
-          uint16_t F = is_same_type(x + 1, y, tp) ? 1 : 0;
-          uint16_t G = is_same_type(x - 1, y + 1, tp) ? 1 : 0;
-          uint16_t H = is_same_type(x, y + 1, tp) ? 1 : 0;
-          uint16_t I = is_same_type(x + 1, y + 1, tp) ? 1 : 0;
+          uint16_t A = level_is_same_type(l, x - 1, y - 1, tp) ? 1 : 0;
+          uint16_t B = level_is_same_type(l, x, y - 1, tp) ? 1 : 0;
+          uint16_t C = level_is_same_type(l, x + 1, y - 1, tp) ? 1 : 0;
+          uint16_t D = level_is_same_type(l, x - 1, y, tp) ? 1 : 0;
+          uint16_t E = level_is_same_type(l, x, y, tp) ? 1 : 0;
+          uint16_t F = level_is_same_type(l, x + 1, y, tp) ? 1 : 0;
+          uint16_t G = level_is_same_type(l, x - 1, y + 1, tp) ? 1 : 0;
+          uint16_t H = level_is_same_type(l, x, y + 1, tp) ? 1 : 0;
+          uint16_t I = level_is_same_type(l, x + 1, y + 1, tp) ? 1 : 0;
 
           const uint16_t omask
               = (I << 8) | (H << 7) | (G << 6) | (F << 5) | (E << 4) | (D << 3) | (C << 2) | (B << 1) | (A << 0);
@@ -177,24 +177,24 @@ void Level::assign_tiles(void)
           // Switch the door direction if next to walls
           //
           if (tp_is_door_get(tp)) {
-            if (tp_get(x, y - 1, MAP_DEPTH_WALL) && tp_get(x, y + 1, MAP_DEPTH_WALL)) {
+            if (level_tp_get(l, x, y - 1, MAP_DEPTH_WALL) && level_tp_get(l, x, y + 1, MAP_DEPTH_WALL)) {
               block_type = IS_JOIN_TOP;
             }
           }
 
           auto which = std::string(tile_name) + "." + is_join_enum_val2str((is_join_enum) block_type);
           auto tile  = tile_find_mand(which.c_str());
-          set_tile(x, y, slot, tile);
+          level_set_tile(l, x, y, slot, tile);
 
-          data->obj[ x ][ y ][ slot ].anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
-          data->obj[ x ][ y ][ slot ].anim_ms_remaining = pcg_random_range_inclusive(0, tile_delay_ms(tile));
+          l->obj[ x ][ y ][ slot ].anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
+          l->obj[ x ][ y ][ slot ].anim_ms_remaining = pcg_random_range_inclusive(0, tile_delay_ms(tile));
         } else {
           auto index = pcg_rand() % tp_tiles_size(tp);
           auto tile  = tp_tiles_get(tp, index);
           if (tile) {
-            set_tile(x, y, slot, tile);
-            auto i                                 = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
-            data->obj[ x ][ y ][ slot ].anim_index = i;
+            level_set_tile(l, x, y, slot, tile);
+            auto i                              = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
+            l->obj[ x ][ y ][ slot ].anim_index = i;
           }
         }
       }

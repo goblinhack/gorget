@@ -11,11 +11,11 @@
 //
 // Soft scroll to the player/
 //
-void Level::scroll_to_player(void)
+void level_scroll_to_player(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player();
+  auto player = level_thing_player(l);
   if (! player) {
     return;
   }
@@ -23,7 +23,7 @@ void Level::scroll_to_player(void)
   //
   // If the player is scrolling the map via the mouse, do not auto scroll.
   //
-  if (! data->requested_auto_scroll) {
+  if (! l->requested_auto_scroll) {
     return;
   }
 
@@ -36,8 +36,8 @@ void Level::scroll_to_player(void)
   //
   // Where are we as a percentage on that map.
   //
-  float x = (player->pix_x - data->pixel_map_at_x) / (float) w;
-  float y = (player->pix_y - data->pixel_map_at_y) / (float) h;
+  float x = (player->pix_x - l->pixel_map_at_x) / (float) w;
+  float y = (player->pix_y - l->pixel_map_at_y) / (float) h;
 
   const auto scroll_border = MAP_SCROLL_BORDER;
   const auto scroll_speed  = MAP_SCROLL_SPEED;
@@ -46,56 +46,51 @@ void Level::scroll_to_player(void)
   // If too close to the edges, scroll.
   //
   if (x > 1.0 - scroll_border) {
-    data->pixel_map_at_x += (x - scroll_border) * scroll_speed;
+    l->pixel_map_at_x += (x - scroll_border) * scroll_speed;
   }
   if (x < scroll_border) {
-    data->pixel_map_at_x -= (scroll_border - x) * scroll_speed;
+    l->pixel_map_at_x -= (scroll_border - x) * scroll_speed;
   }
   if (y > 1.0 - scroll_border) {
-    data->pixel_map_at_y += (y - scroll_border) * scroll_speed;
+    l->pixel_map_at_y += (y - scroll_border) * scroll_speed;
   }
   if (y < scroll_border) {
-    data->pixel_map_at_y -= (scroll_border - y) * scroll_speed;
+    l->pixel_map_at_y -= (scroll_border - y) * scroll_speed;
   }
 
-  bounds_set();
+  level_bounds_set(l);
 }
 
 //
 // Scroll the map e.g. via mouse
 //
-void Level::scroll_delta(int x, int y)
+void level_scroll_delta(Levelp l, int x, int y)
 {
   TRACE_NO_INDENT();
 
-  auto level = game_level_get(game);
-  if (! level) {
-    return;
-  }
+  l->pixel_map_at_x += x;
+  l->pixel_map_at_y -= y;
+  l->requested_auto_scroll = false;
 
-  data->pixel_map_at_x += x;
-  data->pixel_map_at_y -= y;
-  data->requested_auto_scroll = false;
-
-  bounds_set();
+  level_bounds_set(l);
 }
 
 //
 // Jump to the player immediately.
 //
-void Level::scroll_warp_to_player()
+void level_scroll_warp_to_player(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto t = thing_player();
+  auto t = level_thing_player(l);
   if (! t) {
     return;
   }
 
-  data->pixel_map_at_x = t->pix_x;
-  data->pixel_map_at_y = t->pix_y;
-  data->pixel_map_at_x -= game_map_pix_width_get(game) / 2;
-  data->pixel_map_at_y -= game_map_pix_height_get(game) / 2;
+  l->pixel_map_at_x = t->pix_x;
+  l->pixel_map_at_y = t->pix_y;
+  l->pixel_map_at_x -= game_map_pix_width_get(game) / 2;
+  l->pixel_map_at_y -= game_map_pix_height_get(game) / 2;
 
-  bounds_set();
+  level_bounds_set(l);
 }

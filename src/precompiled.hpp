@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 #include <array>
+#include <cinttypes>
 #include <cstdint>
 #include <map>
 #include <string>

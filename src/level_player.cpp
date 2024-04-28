@@ -7,18 +7,18 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-void Level::thing_player_create_and_place()
+void level_thing_player_create_and_place(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (data->player) {
+  if (l->player) {
     return;
   }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
-        auto tp = tp_get(x, y, slot);
+        auto tp = level_tp_get(l, x, y, slot);
         if (! tp) {
           continue;
         }
@@ -27,126 +27,126 @@ void Level::thing_player_create_and_place()
           continue;
         }
 
-        auto t = thing_init(tp, x, y);
+        auto t = level_thing_init(l, tp, x, y);
 
-        thing_push(t);
+        level_thing_push(l, t);
 
-        if (tp_player_index_get(tp) == data->player_index) {
-          data->player = t->id;
+        if (tp_player_index_get(tp) == l->player_index) {
+          l->player = t->id;
         }
 
-        tp_unset(x, y, tp);
+        level_tp_unset(l, x, y, tp);
       }
     }
   }
 }
 
-Thingp Level::thing_player()
+Thingp level_thing_player(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (! data->player) {
+  if (! l->player) {
     return NULL;
   }
 
-  return thing_find(data->player);
+  return level_thing_find(l, l->player);
 }
 
-void Level::thing_player_move_delta(int dx, int dy)
+void level_thing_player_move_delta(Levelp l, int dx, int dy)
 {
   TRACE_NO_INDENT();
 
   //
   // Wait until the end of the tick
   //
-  if (tick_is_in_progress()) {
+  if (level_tick_is_in_progress(l)) {
     return;
   }
 
-  auto t = thing_player();
+  auto t = level_thing_player(l);
   if (! t) {
     return;
   }
 
-  if (1 || thing_can_move(t, t->x + dx, t->y + dy)) {
-    thing_move(t, t->x + dx, t->y + dy);
+  if (level_thing_can_move(l, t, t->x + dx, t->y + dy)) {
+    level_thing_move(l, t, t->x + dx, t->y + dy);
 
-    tick_begin_requested("player moved");
+    level_tick_begin_requested(l, "player moved");
   }
 
-  thing_player_move_reset();
+  level_thing_player_move_reset(l);
 }
 
 //
 // All keys have been released, forget any accumulation of events
 //
-void Level::thing_player_move_reset(void)
+void level_thing_player_move_reset(Levelp l)
 {
-  data->requested_move_up    = false;
-  data->requested_move_left  = false;
-  data->requested_move_keft  = false;
-  data->requested_move_right = false;
+  l->requested_move_up    = false;
+  l->requested_move_left  = false;
+  l->requested_move_keft  = false;
+  l->requested_move_right = false;
 }
 
 //
 // Allow moves to accumulate so we can do diagonal moves.
 //
-void Level::thing_player_move_accum(bool up, bool down, bool left, bool right)
+void level_thing_player_move_accum(Levelp l, bool up, bool down, bool left, bool right)
 {
   if (up) {
-    data->requested_move_up = up;
+    l->requested_move_up = up;
   }
 
   if (down) {
-    data->requested_move_left = down;
+    l->requested_move_left = down;
   }
 
   if (left) {
-    data->requested_move_keft = left;
+    l->requested_move_keft = left;
   }
 
   if (right) {
-    data->requested_move_right = right;
+    l->requested_move_right = right;
   }
 }
 
 //
 // Attempt to move
 //
-bool Level::thing_player_move_request(bool up, bool down, bool left, bool right)
+bool level_thing_player_move_request(Levelp l, bool up, bool down, bool left, bool right)
 {
-  thing_player_move_accum(up, down, left, right);
+  level_thing_player_move_accum(l, up, down, left, right);
 
   //
   // If a move is in progress, do nothing
   //
-  if (tick_is_in_progress()) {
+  if (level_tick_is_in_progress(l)) {
     //
     // But if the player presses the keys again towards the end of the tick, allow that.
     //
     return false;
   }
 
-  if (data->requested_move_up) {
-    if (data->requested_move_keft) {
-      thing_player_move_delta(-1, -1);
-    } else if (data->requested_move_right) {
-      thing_player_move_delta(1, -1);
+  if (l->requested_move_up) {
+    if (l->requested_move_keft) {
+      level_thing_player_move_delta(l, -1, -1);
+    } else if (l->requested_move_right) {
+      level_thing_player_move_delta(l, 1, -1);
     } else {
-      thing_player_move_delta(0, -1);
+      level_thing_player_move_delta(l, 0, -1);
     }
-  } else if (data->requested_move_left) {
-    if (data->requested_move_keft) {
-      thing_player_move_delta(-1, 1);
-    } else if (data->requested_move_right) {
-      thing_player_move_delta(1, 1);
+  } else if (l->requested_move_left) {
+    if (l->requested_move_keft) {
+      level_thing_player_move_delta(l, -1, 1);
+    } else if (l->requested_move_right) {
+      level_thing_player_move_delta(l, 1, 1);
     } else {
-      thing_player_move_delta(0, 1);
+      level_thing_player_move_delta(l, 0, 1);
     }
-  } else if (data->requested_move_keft) {
-    thing_player_move_delta(-1, 0);
-  } else if (data->requested_move_right) {
-    thing_player_move_delta(1, 0);
+  } else if (l->requested_move_keft) {
+    level_thing_player_move_delta(l, -1, 0);
+  } else if (l->requested_move_right) {
+    level_thing_player_move_delta(l, 1, 0);
   }
 
   return true;

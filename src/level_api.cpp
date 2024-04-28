@@ -5,7 +5,7 @@
 #include "my_level.hpp"
 #include "my_tile.hpp"
 
-bool is_oob(LevelData *data, int x, int y)
+bool is_oob(Level *l, int x, int y)
 {
   if (x < 0) {
     return true;
@@ -22,7 +22,7 @@ bool is_oob(LevelData *data, int x, int y)
   return false;
 }
 
-bool Level::is_oob(int x, int y)
+bool level_is_oob(Levelp l, int x, int y)
 {
   if (x < 0) {
     return true;
@@ -39,54 +39,54 @@ bool Level::is_oob(int x, int y)
   return false;
 }
 
-bool Level::set_id(int x, int y, uint8_t slot, Id id)
+bool level_set_id(Levelp l, int x, int y, uint8_t slot, Id id)
 {
-  if (is_oob(x, y)) {
+  if (level_is_oob(l, x, y)) {
     return false;
   }
-  data->obj[ x ][ y ][ slot ].id = id;
+  l->obj[ x ][ y ][ slot ].id = id;
   return true;
 }
 
-void Level::set_id_no_check(int x, int y, uint8_t slot, Id id) { data->obj[ x ][ y ][ slot ].id = id; }
+void level_set_id_no_check(Levelp l, int x, int y, uint8_t slot, Id id) { l->obj[ x ][ y ][ slot ].id = id; }
 
-Id Level::get_id(int x, int y, uint8_t slot)
+Id level_get_id(Levelp l, int x, int y, uint8_t slot)
 {
-  if (is_oob(x, y)) {
+  if (level_is_oob(l, x, y)) {
     return 0;
   }
-  return data->obj[ x ][ y ][ slot ].id;
+  return l->obj[ x ][ y ][ slot ].id;
 }
 
-Id Level::get_id_no_check(int x, int y, uint8_t slot) { return data->obj[ x ][ y ][ slot ].id; }
+Id level_get_id_no_check(Levelp l, int x, int y, uint8_t slot) { return l->obj[ x ][ y ][ slot ].id; }
 
-bool Level::set_tile(int x, int y, uint8_t slot, Tilep tile)
+bool level_set_tile(Levelp l, int x, int y, uint8_t slot, Tilep tile)
 {
-  if (is_oob(x, y)) {
+  if (level_is_oob(l, x, y)) {
     return false;
   }
   if (tile) {
-    data->obj[ x ][ y ][ slot ].tile = tile_global_index(tile);
+    l->obj[ x ][ y ][ slot ].tile = tile_global_index(tile);
   } else {
-    data->obj[ x ][ y ][ slot ].tile = 0;
+    l->obj[ x ][ y ][ slot ].tile = 0;
   }
   return true;
 }
 
-void Level::set_tile_no_check(int x, int y, uint8_t slot, Tilep tile)
+void level_set_tile_no_check(Levelp l, int x, int y, uint8_t slot, Tilep tile)
 {
-  data->obj[ x ][ y ][ slot ].tile = tile_global_index(tile);
+  l->obj[ x ][ y ][ slot ].tile = tile_global_index(tile);
 }
 
-Tilep Level::get_tile(int x, int y, uint8_t slot)
+Tilep level_get_tile(Levelp l, int x, int y, uint8_t slot)
 {
-  if (is_oob(x, y)) {
+  if (level_is_oob(l, x, y)) {
     return nullptr;
   }
-  return tile_index_to_tile(data->obj[ x ][ y ][ slot ].tile);
+  return tile_index_to_tile(l->obj[ x ][ y ][ slot ].tile);
 }
 
-Tilep Level::get_tile_no_check(int x, int y, uint8_t slot)
+Tilep level_get_tile_no_check(Levelp l, int x, int y, uint8_t slot)
 {
-  return tile_index_to_tile(data->obj[ x ][ y ][ slot ].tile);
+  return tile_index_to_tile(l->obj[ x ][ y ][ slot ].tile);
 }

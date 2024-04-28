@@ -6,12 +6,9 @@
 #ifndef _MY_GAME_HPP_
 #define _MY_GAME_HPP_
 
-#include <SDL.h>
+#include "my_minimal.hpp"
 
-class Game;
-class Level;
-class HiScore;
-class HiScores;
+#include <SDL.h>
 
 enum {
   STATE_MAIN_MENU,
@@ -125,8 +122,8 @@ void     game_sdl_delay_set(class Game *, uint32_t);
 uint32_t game_sound_volume_get(class Game *);
 void     game_sound_volume_set(class Game *, uint32_t);
 
-class Level *game_level_get(class Game *);
-void         game_level_set(class Game *, class Level *);
+Levelp game_level_get(class Game *);
+void   game_level_set(class Game *, Levelp);
 
 const char *game_seed_name_get(class Game *);
 void        game_seed_name_set(class Game *, const char *);
@@ -174,6 +171,7 @@ uint8_t game_mouse_up(class Game *, int x, int y, uint32_t button);
 
 void game_config_reset(class Game *);
 void game_create_level(class Game *);
+void game_destroy_level(class Game *);
 void game_display(class Game *);
 void game_fini(class Game *);
 void game_init(class Game *);
@@ -182,7 +180,6 @@ void game_load(class Game *, uint8_t slot);
 void game_load_config(class Game *game);
 void game_load_last_config(const char *appdata);
 void game_load_snapshot(class Game *);
-void game_new_game(class Game *);
 void game_save(class Game *);
 void game_save(class Game *, uint8_t slot);
 void game_save_config(class Game *);
@@ -190,7 +187,6 @@ void game_save_snapshot_check(class Game *);
 void game_save_snapshot(class Game *);
 void game_set_currently_saving_snapshot(class Game *);
 void game_set_seed(class Game *);
-void game_start(class Game *);
 void game_state_change(class Game *, uint8_t state, const char *);
 void game_state_reset(class Game *, const char *);
 void game_unset_currently_saving_snapshot(class Game *);

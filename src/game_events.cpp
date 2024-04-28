@@ -41,9 +41,9 @@ uint8_t game_mouse_motion(class Game *game, int x, int y, int relx, int rely, in
     return false;
   }
 
-  auto level = game_level_get(game);
-  if (level) {
-    level->scroll_delta(wheelx, wheely);
+  auto l = game_level_get(game);
+  if (l) {
+    level_scroll_delta(l, wheelx, wheely);
   }
 
   return true;
@@ -59,9 +59,9 @@ uint8_t game_input(class Game *game, const SDL_Keysym *key)
     return false;
   }
 
-  auto level = game_level_get(game);
-  if (! level) {
-    DBG("INF: Pressed a key; no level");
+  auto l = game_level_get(game);
+  if (! l) {
+    DBG("INF: Pressed a key; no l");
     return false;
   }
 

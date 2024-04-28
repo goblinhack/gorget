@@ -162,7 +162,9 @@ typedef unsigned long int uint64_t;
 
 class Charmap;
 class Font;
-class Level;
+class Game;
+class HiScore;
+class HiScores;
 class LevelPh2Room;
 class LevelPh3Obstacles;
 class LevelPh4Block;
@@ -173,24 +175,25 @@ class Tp;
 class Wid;
 class WidPopup;
 
-struct LevelData_;
+struct Level_;
+struct Thing_;
 struct Dmap_;
 struct SDL_Surface;
 
 using Dmapp              = struct Dmap_ *;
 using Fontp              = class Font *;
-using LevelDatap         = struct LevelData_ *;
-using Levelp             = class Level *;
+using Id                 = unsigned int;
 using LevelPh2Roomp      = class LevelPh2Room *;
 using LevelPh3Obstaclesp = class LevelPh3Obstacles *;
 using LevelPh4Blockp     = class LevelPh4Block *;
+using Levelp             = struct Level_ *;
 using Lightp             = class Light *;
 using Texp               = class Tex *;
+using ThingId            = Id;
+using Thingp             = struct Thing_ *;
 using Tilemapp           = class Tilemap *;
 using Tilep              = class Tile *;
-using Id                 = unsigned int;
 using TpId               = Id;
-using ThingId            = Id;
 using Tpp                = class Tp *;
 using Widp               = class Wid *;
 

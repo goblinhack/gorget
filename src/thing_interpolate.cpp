@@ -7,7 +7,7 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-void thing_interpolate(LevelData *data, Thingp t, float dt)
+void level_thing_interpolate(Level *l, Thingp t, float dt)
 {
   if ((t->old_x == t->x) && (t->old_y == t->y)) {
     return;
@@ -18,10 +18,4 @@ void thing_interpolate(LevelData *data, Thingp t, float dt)
 
   t->pix_x = pix_x * TILE_WIDTH;
   t->pix_y = pix_y * TILE_HEIGHT;
-}
-
-void Level::thing_interpolate(Thingp t, float dt)
-{
-  TRACE_NO_INDENT();
-  return ::thing_interpolate(data, t, dt);
 }

@@ -9,7 +9,7 @@
 #include "my_time.hpp"
 #include "my_tp.hpp"
 
-void Level::anim(void)
+void level_anim(Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -25,15 +25,15 @@ void Level::anim(void)
   last_ts        = ts;
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    for (auto y = miny; y < maxy; y++) {
-      for (auto x = minx; x < maxx; x++) {
+    for (auto y = l->miny; y < l->maxy; y++) {
+      for (auto x = l->minx; x < l->maxx; x++) {
         Tpp tp;
-        thing_get(x, y, slot, &tp);
+        level_thing_get(l, x, y, slot, &tp);
         if (! tp) {
           continue;
         }
 
-        auto obj        = &data->obj[ x ][ y ][ slot ];
+        auto obj        = &l->obj[ x ][ y ][ slot ];
         auto tile_index = obj->tile;
         if (! tile_index) {
           continue;

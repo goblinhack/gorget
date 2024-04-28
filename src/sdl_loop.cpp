@@ -262,7 +262,7 @@ void sdl_loop(void)
       }
 
       ts_now = time_ms();
-      level->data->frame += ts_now - ts_begin;
+      level->frame += ts_now - ts_begin;
       ts_begin = ts_now;
     }
   }

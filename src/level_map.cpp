@@ -5,11 +5,12 @@
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
 #include "my_game.hpp"
+#include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_tp.hpp"
 
-void Level::map_set(LevelDatap data, const char *in)
+void level_map_set(Levelp l, const char *in)
 {
   TRACE_NO_INDENT();
   const auto row_len      = MAP_WIDTH;
@@ -74,14 +75,14 @@ void Level::map_set(LevelDatap data, const char *in)
 
       if (need_floor) {
         auto tp = tp_floor;
-        ::tp_set(data, x, y, tp);
+        level_tp_set(l, x, y, tp);
       }
 
       if (! tp) {
         continue;
       }
 
-      ::tp_set(data, x, y, tp);
+      level_tp_set(l, x, y, tp);
     }
   }
 }

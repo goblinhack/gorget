@@ -101,7 +101,7 @@ public:
   //
   // Current level
   //
-  class Level *level {};
+  Levelp level {};
 
   //
   // Used to check for changes in the size of this struct.
@@ -190,6 +190,7 @@ public:
   Game(void) = default;
 
   void create_level(void);
+  void destroy_level(void);
   void display(void);
   void fini(void);
   void init(void);
@@ -198,7 +199,6 @@ public:
   void load_snapshot(void);
   void load(uint8_t slot);
   void load(void);
-  void new_game(void);
   void save_config(void);
   void save_snapshot_check();
   void save_snapshot(void);
@@ -206,7 +206,6 @@ public:
   void save(void);
   void set_currently_saving_snapshot(void);
   void set_seed(void);
-  void start(void);
   void state_change(uint8_t state, const std::string &);
   void state_reset(const std::string &);
   bool load(std::string save_file, class Game &target);
@@ -287,31 +286,21 @@ Game::Game(std::string appdata)
   save_file = saved_dir + "saved-slot-" + std::to_string(save_slot);
 }
 
-void Game::start(void) { TRACE_NO_INDENT(); }
-
 void Game::init(void)
 {
   LOG("Game init");
   TRACE_AND_INDENT();
 
   set_seed();
-  start();
 }
-
 void game_init(class Game *game) { game->init(); }
 
 void Game::fini(void)
 {
   LOG("Game fini");
   TRACE_AND_INDENT();
-
-  if (level) {
-    auto l = level;
-    level  = nullptr;
-    delete l;
-  }
+  destroy_level();
 }
-
 void game_fini(class Game *game) { game->fini(); }
 
 void game_save_config(class Game *game) { game->save_config(); }
@@ -336,36 +325,37 @@ void Game::create_level(void)
   TRACE_AND_INDENT();
 
   set_seed();
-
-  if (level) {
-    TRACE_NO_INDENT();
-
-    auto l = level;
-    if (l) {
-      LOG("Remove old level");
-      delete l;
-      level = nullptr;
-    }
-  }
+  destroy_level();
 
   {
     TRACE_NO_INDENT();
     LOG("Level create");
-    level = new Level();
+    level = level_constructor();
   }
 }
-
 void game_create_level(class Game *game) { game->create_level(); }
+
+void Game::destroy_level(void)
+{
+  LOG("Game destroy level");
+  TRACE_AND_INDENT();
+
+  if (level) {
+    auto l = level;
+    level_destructor(l);
+    level = nullptr;
+  }
+}
+void game_destroy_level(class Game *game) { game->destroy_level(); }
 
 void Game::display(void)
 {
   if (level) {
-    level->tick();
-    level->anim();
-    level->display();
+    level_tick(level);
+    level_anim(level);
+    level_display(level);
   }
 }
-
 void game_display(class Game *game) { game->display(); }
 
 std::string gama_state_to_string(int state)
@@ -392,7 +382,6 @@ void Game::state_reset(const std::string &why)
     state_change(STATE_MAIN_MENU, why);
   }
 }
-
 void game_state_reset(class Game *game, const char *why) { game->state_reset(why); }
 
 void Game::state_change(uint8_t new_state, const std::string &why)
@@ -444,7 +433,6 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   state = new_state;
 }
-
 void game_state_change(class Game *game, uint8_t new_state, const char *why)
 {
   game->state_change(new_state, std::string(why));
@@ -547,8 +535,8 @@ void     game_sdl_delay_set(class Game *, uint32_t val) { game->config.sdl_delay
 uint32_t game_sound_volume_get(class Game *) { return game->config.sound_volume; }
 void     game_sound_volume_set(class Game *, uint32_t val) { game->config.sound_volume = val; }
 
-class Level *game_level_get(class Game *game) { return game->level; }
-void         game_level_set(class Game *game, class Level *val) { game->level = val; }
+Levelp game_level_get(class Game *game) { return game->level; }
+void   game_level_set(class Game *game, Levelp val) { game->level = val; }
 
 const char *game_seed_name_get(class Game *game) { return game->seed_name.c_str(); }
 void        game_seed_name_set(class Game *game, const char *val) { game->seed_name = std::string(val); }

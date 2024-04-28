@@ -11,8 +11,13 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-void Level::display_dungeon_tile(Tpp tp, Tilep tile, point tl, point br, point offset)
+void level_display_dungeon_tile(Levelp l, Tpp tp, uint16_t tile_index, point tl, point br, point offset)
 {
+  auto tile = tile_index_to_tile(tile_index);
+  if (! tile) {
+    return;
+  }
+
   tl += offset;
   br += offset;
 
@@ -25,17 +30,7 @@ void Level::display_dungeon_tile(Tpp tp, Tilep tile, point tl, point br, point o
   }
 }
 
-void Level::display_dungeon_tile(Tpp tp, uint16_t tile_index, point tl, point br, point offset)
-{
-  auto tile = tile_index_to_tile(tile_index);
-  if (! tile) {
-    return;
-  }
-
-  display_dungeon_tile(tp, tile, tl, br, offset);
-}
-
-void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
+void level_display_dungeon_z_layer(Levelp l, int x, int y, int slot, int z, bool deco)
 {
   int dw = TILE_WIDTH;
   int dh = TILE_HEIGHT;
@@ -44,7 +39,7 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
   point br;
 
   Tpp  tp;
-  auto t = thing_get(x, y, slot, &tp);
+  auto t = level_thing_get(l, x, y, slot, &tp);
   if (! tp) {
     return;
   }
@@ -53,7 +48,7 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
     return;
   }
 
-  auto obj        = &data->obj[ x ][ y ][ slot ];
+  auto obj        = &l->obj[ x ][ y ][ slot ];
   auto tile_index = obj->tile;
   if (! tile_index) {
     return;
@@ -75,8 +70,8 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
     tl.y = y * TILE_WIDTH;
   }
 
-  tl.x -= data->pixel_map_at_x;
-  tl.y -= data->pixel_map_at_y;
+  tl.x -= l->pixel_map_at_x;
+  tl.y -= l->pixel_map_at_y;
 
   if (tp_is_blit_on_ground_get(tp)) {
     //
@@ -99,17 +94,17 @@ void Level::display_dungeon_z_layer(int x, int y, int slot, int z, bool deco)
   br.y = tl.y + pix_height;
 
   if (deco) {
-    display_dungeon_tile(tp, tile_index + 47, tl, br, point(0, 0));
+    level_display_dungeon_tile(l, tp, tile_index + 47, tl, br, point(0, 0));
   } else {
-    display_dungeon_tile(tp, tile_index, tl, br, point(0, 0));
+    level_display_dungeon_tile(l, tp, tile_index, tl, br, point(0, 0));
   }
 }
 
-void Level::display_dungeon(void)
+void level_display_dungeon(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  scroll_to_player();
+  level_scroll_to_player(l);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glcolor(WHITE);
@@ -123,11 +118,11 @@ void Level::display_dungeon(void)
     const bool deco    = true;
     const bool no_deco = false;
 
-    for (auto y = miny; y < maxy; y++) {
-      for (auto x = maxx - 1; x >= minx; x--) {
+    for (auto y = l->miny; y < l->maxy; y++) {
+      for (auto x = l->maxx - 1; x >= l->minx; x--) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_FLOOR, no_deco);
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_WALL, no_deco);
+          level_display_dungeon_z_layer(l, x, y, slot, MAP_DEPTH_FLOOR, no_deco);
+          level_display_dungeon_z_layer(l, x, y, slot, MAP_DEPTH_WALL, no_deco);
         }
       }
     }
@@ -135,13 +130,13 @@ void Level::display_dungeon(void)
     //
     // Doors only
     //
-    for (auto y = miny; y < maxy; y++) {
-      for (auto x = maxx - 1; x >= minx; x--) {
+    for (auto y = l->miny; y < l->maxy; y++) {
+      for (auto x = l->maxx - 1; x >= l->minx; x--) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_DOOR, no_deco);
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_OBJ1, no_deco);
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_OBJ2, no_deco);
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_PLAYER, no_deco);
+          level_display_dungeon_z_layer(l, x, y, slot, MAP_DEPTH_DOOR, no_deco);
+          level_display_dungeon_z_layer(l, x, y, slot, MAP_DEPTH_OBJ1, no_deco);
+          level_display_dungeon_z_layer(l, x, y, slot, MAP_DEPTH_OBJ2, no_deco);
+          level_display_dungeon_z_layer(l, x, y, slot, MAP_DEPTH_PLAYER, no_deco);
         }
       }
     }
@@ -149,11 +144,11 @@ void Level::display_dungeon(void)
     //
     // Shadows
     //
-    for (auto y = miny; y < maxy; y++) {
-      for (auto x = maxx - 1; x >= minx; x--) {
+    for (auto y = l->miny; y < l->maxy; y++) {
+      for (auto x = l->maxx - 1; x >= l->minx; x--) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_WALL, deco);
-          display_dungeon_z_layer(x, y, slot, MAP_DEPTH_DOOR, deco);
+          level_display_dungeon_z_layer(l, x, y, slot, MAP_DEPTH_WALL, deco);
+          level_display_dungeon_z_layer(l, x, y, slot, MAP_DEPTH_DOOR, deco);
         }
       }
     }

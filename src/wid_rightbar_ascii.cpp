@@ -43,7 +43,7 @@ bool wid_rightbar_ascii_create(class Game *game)
     auto  w  = wid_new_square_button(wid_rightbar, "level no");
     point tl = make_point(0, y_at);
     point br = make_point(width - 1, y_at);
-    auto  s  = dynprintf("Level %u", level->data->num);
+    auto  s  = dynprintf("Level %u", level->num);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_NORMAL);

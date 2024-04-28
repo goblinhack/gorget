@@ -7,9 +7,9 @@
 #include "my_level.hpp"
 #include "my_tile.hpp"
 
-void Level::display(void)
+void level_display(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  display_dungeon();
+  level_display_dungeon(l);
 }

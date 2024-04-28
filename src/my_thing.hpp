@@ -8,8 +8,6 @@
 
 #include "my_minimal.hpp"
 
-using Thingp = struct Thing *;
-
 #define THING_ID_ENTROPY_BITS 6
 #define THING_ID_X_BITS       5
 #define THING_ID_Y_BITS       5
@@ -31,7 +29,7 @@ using Thingp = struct Thing *;
 #define THING_ID_GET_X(id)       ((id & THING_ID_X_MASK) >> (THING_ID_Y_BITS))
 #define THING_ID_GET_Y(id)       ((id & THING_ID_Y_MASK))
 
-struct Thing {
+typedef struct Thing_ {
   ThingId  id;
   uint16_t tp_id;
   uint16_t tick;
@@ -62,7 +60,7 @@ struct Thing {
   uint8_t dir_down  : 1;
   uint8_t dir_left  : 1;
   uint8_t dir_right : 1;
-};
+} Thing;
 
 void     thing_id_set(Thingp t, ThingId id);
 ThingId  thing_id_get(Thingp t);

@@ -7,7 +7,7 @@
 #include "my_level.hpp"
 #include "my_tile.hpp"
 
-void Level::bounds_set(void)
+void level_bounds_set(Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -22,11 +22,11 @@ void Level::bounds_set(void)
   //
   // Set the scroll bounds
   //
-  if (data->pixel_map_at_x < 0) {
-    data->pixel_map_at_x = 0;
+  if (l->pixel_map_at_x < 0) {
+    l->pixel_map_at_x = 0;
   }
-  if (data->pixel_map_at_y < 0) {
-    data->pixel_map_at_y = 0;
+  if (l->pixel_map_at_y < 0) {
+    l->pixel_map_at_y = 0;
   }
 
   //
@@ -35,18 +35,18 @@ void Level::bounds_set(void)
   auto max_pix_x = (MAP_WIDTH * dw) - game_pix_height_get(game);
   auto max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(game);
 
-  if (data->pixel_map_at_x > max_pix_x) {
-    data->pixel_map_at_x = max_pix_x;
+  if (l->pixel_map_at_x > max_pix_x) {
+    l->pixel_map_at_x = max_pix_x;
   }
-  if (data->pixel_map_at_y > max_pix_y) {
-    data->pixel_map_at_y = max_pix_y;
+  if (l->pixel_map_at_y > max_pix_y) {
+    l->pixel_map_at_y = max_pix_y;
   }
 
   //
   // Set the tile bounds
   //
-  int tmp_minx = data->pixel_map_at_x / dw;
-  int tmp_miny = data->pixel_map_at_y / dh;
+  int tmp_minx = l->pixel_map_at_x / dw;
+  int tmp_miny = l->pixel_map_at_y / dh;
   tmp_minx -= clipping_border;
   tmp_minx -= clipping_border;
 
@@ -57,8 +57,8 @@ void Level::bounds_set(void)
     tmp_miny = 0;
   }
 
-  int tmp_maxx = (data->pixel_map_at_x + game_map_pix_width_get(game)) / dw;
-  int tmp_maxy = (data->pixel_map_at_y + game_map_pix_height_get(game)) / dh;
+  int tmp_maxx = (l->pixel_map_at_x + game_map_pix_width_get(game)) / dw;
+  int tmp_maxy = (l->pixel_map_at_y + game_map_pix_height_get(game)) / dh;
 
   tmp_maxx += clipping_border;
   tmp_maxy += clipping_border;
@@ -70,8 +70,8 @@ void Level::bounds_set(void)
     tmp_maxy = MAP_HEIGHT;
   }
 
-  minx = tmp_minx;
-  miny = tmp_miny;
-  maxx = tmp_maxx;
-  maxy = tmp_maxy;
+  l->minx = tmp_minx;
+  l->miny = tmp_miny;
+  l->maxx = tmp_maxx;
+  l->maxy = tmp_maxy;
 }

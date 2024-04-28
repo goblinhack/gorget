@@ -7,9 +7,9 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-void thing_move(LevelData *data, Thingp t, int new_x, int new_y)
+void level_thing_move(Levelp l, Thingp t, int new_x, int new_y)
 {
-  if (::is_oob(data, new_x, new_y)) {
+  if (level_is_oob(l, new_x, new_y)) {
     return;
   }
 
@@ -17,7 +17,7 @@ void thing_move(LevelData *data, Thingp t, int new_x, int new_y)
     return;
   }
 
-  ::thing_pop(data, t);
+  level_thing_pop(l, t);
 
   t->pix_x = t->x * TILE_WIDTH;
   t->pix_y = t->y * TILE_HEIGHT;
@@ -28,11 +28,5 @@ void thing_move(LevelData *data, Thingp t, int new_x, int new_y)
   t->x = new_x;
   t->y = new_y;
 
-  ::thing_push(data, t);
-}
-
-void Level::thing_move(Thingp t, int new_x, int new_y)
-{
-  TRACE_NO_INDENT();
-  return ::thing_move(data, t, new_x, new_y);
+  level_thing_push(l, t);
 }

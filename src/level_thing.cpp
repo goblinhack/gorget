@@ -5,18 +5,20 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_minimal.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
+#include <cinttypes>
 #include <iostream>
 #include <sstream>
 #include <string.h>
 
-Thingp thing_get(LevelData *data, int x, int y, uint8_t slot, Tpp *out)
+Thingp level_thing_get(Levelp l, int x, int y, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
-  Id id = data->obj[ x ][ y ][ slot ].id;
+  Id id = l->obj[ x ][ y ][ slot ].id;
 
   if (out) {
     *out = nullptr;
@@ -27,7 +29,7 @@ Thingp thing_get(LevelData *data, int x, int y, uint8_t slot, Tpp *out)
   }
 
   if (id >= THING_ID_BASE) {
-    auto t = thing_find(data, id);
+    auto t = level_thing_find(l, id);
     if (! t) {
       return nullptr;
     }
@@ -46,13 +48,7 @@ Thingp thing_get(LevelData *data, int x, int y, uint8_t slot, Tpp *out)
   return nullptr;
 }
 
-Thingp Level::thing_get(int x, int y, uint8_t slot, Tpp *out)
-{
-  TRACE_NO_INDENT();
-  return ::thing_get(data, x, y, slot, out);
-}
-
-Thingp thing_find_optional(LevelData *data, ThingId id)
+Thingp level_thing_find_optional(Level *l, ThingId id)
 {
   TRACE_NO_INDENT();
 
@@ -67,20 +63,14 @@ Thingp thing_find_optional(LevelData *data, ThingId id)
   ASSERT_EX(x, <, (1 << THING_ID_X_BITS));
   ASSERT_EX(y, <, (1 << THING_ID_Y_BITS));
 
-  auto t = &data->all_things[ x ][ y ];
+  auto t = &l->all_things[ x ][ y ];
   if (t->id == thing_id) {
     return t;
   }
   return nullptr;
 }
 
-Thingp Level::thing_find_optional(ThingId id)
-{
-  TRACE_NO_INDENT();
-  return ::thing_find_optional(data, id);
-}
-
-Thingp thing_find(LevelData *data, ThingId id)
+Thingp level_thing_find(Levelp l, ThingId id)
 {
   TRACE_NO_INDENT();
 
@@ -91,7 +81,7 @@ Thingp thing_find(LevelData *data, ThingId id)
   ASSERT_EX(x, <, (1 << THING_ID_X_BITS));
   ASSERT_EX(y, <, (1 << THING_ID_Y_BITS));
 
-  auto t = &data->all_things[ x ][ y ];
+  auto t = &l->all_things[ x ][ y ];
   if (! t) {
     DIE("Thing not found for id, %" PRIX32 "", id);
   }
@@ -103,13 +93,7 @@ Thingp thing_find(LevelData *data, ThingId id)
   return t;
 }
 
-Thingp Level::thing_find(ThingId id)
-{
-  TRACE_NO_INDENT();
-  return ::thing_find_optional(data, id);
-}
-
-Thingp thing_new(LevelData *data, Tpp tp, int tx, int ty)
+Thingp level_thing_new(Levelp l, Tpp tp, int tx, int ty)
 {
   TRACE_NO_INDENT();
 
@@ -118,7 +102,7 @@ Thingp thing_new(LevelData *data, Tpp tp, int tx, int ty)
 
   for (x = 0; x < (1 << THING_ID_X_BITS); x++) {
     for (y = 0; y < (1 << THING_ID_Y_BITS); y++) {
-      auto t = &data->all_things[ x ][ y ];
+      auto t = &l->all_things[ x ][ y ];
       if (t->id) {
         continue;
       }
@@ -149,22 +133,14 @@ Thingp thing_new(LevelData *data, Tpp tp, int tx, int ty)
   DIE("out of things");
 }
 
-Thingp Level::thing_new(Tpp tp, int x, int y)
-{
-  TRACE_NO_INDENT();
-  return ::thing_new(data, tp, x, y);
-}
-
-void thing_free(LevelData *data, Thingp t)
+void level_thing_free(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto o = ::thing_find(data, t->id);
+  auto o = level_thing_find(l, t->id);
   if (t != o) {
     DIE("Thing mismatch found for id, %" PRIX32 "", t->id);
   }
 
   memset(t, 0, sizeof(*t));
 }
-
-void Level::thing_free(Thingp t) { ::thing_free(data, t); }
