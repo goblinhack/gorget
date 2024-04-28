@@ -159,7 +159,7 @@ void   level_anim(Levelp);
 void   level_assign_tiles(Levelp);
 void   level_bounds_set(Levelp);
 void   level_destructor(Levelp l);
-void   level_display_dungeon(Levelp);
+void   level_display(Levelp);
 void   level_display(Levelp);
 void   level_dungeon_create_and_place(Levelp);
 void   level_map_set(Levelp, const char *);
