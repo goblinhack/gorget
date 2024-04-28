@@ -11,7 +11,7 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-void level_display_dungeon_tile(Levelp l, Tpp tp, uint16_t tile_index, point tl, point br, point offset)
+static void level_display_dungeon_tile(Levelp l, Tpp tp, uint16_t tile_index, point tl, point br, point offset)
 {
   auto tile = tile_index_to_tile(tile_index);
   if (! tile) {
@@ -30,7 +30,7 @@ void level_display_dungeon_tile(Levelp l, Tpp tp, uint16_t tile_index, point tl,
   }
 }
 
-void level_display_dungeon_z_layer(Levelp l, int x, int y, int slot, int z, bool deco)
+static void level_display_dungeon_z_layer(Levelp l, int x, int y, int slot, int z, bool deco)
 {
   int dw = TILE_WIDTH;
   int dh = TILE_HEIGHT;

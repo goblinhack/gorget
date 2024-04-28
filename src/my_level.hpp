@@ -8,7 +8,6 @@
 
 #include "my_game_defs.hpp"
 #include "my_minimal.hpp"
-#include "my_point.hpp"
 #include "my_thing.hpp"
 
 //
@@ -140,7 +139,7 @@ bool   level_is_oob(Levelp, int x, int y);
 bool   level_is_same_type(Levelp, int x, int y, Tpp);
 bool   level_set_id(Levelp, int x, int y, uint8_t z, Id);
 bool   level_set_tile(Levelp, int x, int y, uint8_t z, Tilep);
-bool   level_thing_can_move(Levelp, Thingp, int, int);
+bool   level_thing_can_move_to(Levelp, Thingp, int, int);
 bool   level_thing_player_move_request(Levelp, bool up, bool down, bool left, bool right);
 bool   level_tick_is_in_progress(Levelp);
 Id     level_get_id(Levelp, int x, int y, uint8_t z);
@@ -161,9 +160,6 @@ void   level_assign_tiles(Levelp);
 void   level_bounds_set(Levelp);
 void   level_destructor(Levelp l);
 void   level_display_dungeon(Levelp);
-void   level_display_dungeon_tile(Levelp, Tpp, Tilep, point tl, point br, point offset);
-void   level_display_dungeon_tile(Levelp, Tpp, uint16_t, point tl, point br, point offset);
-void   level_display_dungeon_z_layer(Levelp, int x, int y, int slot, int z, bool deco);
 void   level_display(Levelp);
 void   level_dungeon_create_and_place(Levelp);
 void   level_map_set(Levelp, const char *);
@@ -184,7 +180,7 @@ void   level_thing_pop(Levelp, Thingp);
 void   level_thing_push(Levelp, Thingp);
 void   level_thing_update(Levelp, Thingp);
 void   level_tick_begin(Levelp);
-void   level_tick_begin_requested(Levelp, const std::string &why);
+void   level_tick_begin_requested(Levelp, const char *);
 void   level_tick_body(Levelp, float dt);
 void   level_tick_end_requested(Levelp);
 void   level_tick(Levelp);

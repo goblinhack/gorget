@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_tile.hpp"
+#include "my_tp.hpp"
 
 Thingp level_thing_init(Levelp l, Tpp tp, int x, int y)
 {
@@ -25,6 +26,21 @@ Thingp level_thing_init(Levelp l, Tpp tp, int x, int y)
   level_thing_update(l, t);
 
   return t;
+}
+
+void level_thing_update(Level *l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto tp = level_thing_tp(l, t);
+
+  t->speed = tp_speed_get(tp);
+}
+
+Tpp level_thing_tp(Level *l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return tp_find(t->tp_id);
 }
 
 void     thing_id_set(Thingp t, ThingId id) { t->id = id; }

@@ -108,7 +108,7 @@ void level_tick_begin(Levelp l)
   l->requested_auto_scroll = true;
 }
 
-void level_tick_begin_requested(Levelp l, const std::string &why)
+void level_tick_begin_requested(Levelp l, const char *why)
 {
   TRACE_NO_INDENT();
 
