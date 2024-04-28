@@ -8,6 +8,7 @@
 #include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
 
 void level_map_set(Levelp l, const char *in)

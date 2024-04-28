@@ -73,4 +73,3 @@ void     thing_dir_left_set(Thingp t, uint8_t dir_left) { t->dir_left = dir_left
 uint8_t  thing_dir_left_get(Thingp t) { return t->dir_left; }
 void     thing_dir_right_set(Thingp t, uint8_t dir_right) { t->dir_right = dir_right; }
 uint8_t  thing_dir_right_get(Thingp t) { return t->dir_right; }
-

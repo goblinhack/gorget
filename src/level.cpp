@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_tile.hpp"
 
 #if 0
 void level_map_constructor(Levelp l)
