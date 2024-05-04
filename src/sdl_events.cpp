@@ -435,7 +435,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
 #ifdef ENABLE_UI_ASCII_MOUSE
         SDL_ShowCursor(1);
 #endif
-        DIE("Quit requested");
+        DIE_CLEAN("Quit requested");
         break;
       }
     case SDL_USEREVENT :

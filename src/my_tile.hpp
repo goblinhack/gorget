@@ -12,10 +12,10 @@
 
 class Tile;
 
-#define TILE_HEIGHT     16
-#define TILE_WIDTH      16
-#define TILE_HEIGHT_MAX 32
-#define TILE_WIDTH_MAX  32 // Largest tile for collisions
+#define TILE_HEIGHT     12
+#define TILE_WIDTH      12
+#define TILE_HEIGHT_MAX 24
+#define TILE_WIDTH_MAX  24 // Largest tile for collisions
 
 class Tex *tile_tex(Tilep);
 

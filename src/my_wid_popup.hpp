@@ -6,6 +6,10 @@
 #ifndef _MY_UI_WID_POPUP_HPP_
 #define _MY_UI_WID_POPUP_HPP_
 
+#include <map>
+#include <string>
+#include <vector>
+
 #include "my_wid_text_box.hpp"
 
 class WidPopup
