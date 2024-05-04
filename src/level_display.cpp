@@ -94,7 +94,7 @@ static void level_display_z_layer(Levelp l, int x, int y, int slot, int z, bool 
   br.y = tl.y + pix_height;
 
   if (deco) {
-    level_display_tile(l, tp, tile_index, tl, br, point(0, 0));
+    level_display_tile(l, tp, tile_index + 47, tl, br, point(0, 0));
   } else {
     level_display_tile(l, tp, tile_index, tl, br, point(0, 0));
   }
@@ -144,13 +144,11 @@ void level_display(Levelp l)
     //
     // Shadows
     //
-    if (0) {
-      for (auto y = l->miny; y < l->maxy; y++) {
-        for (auto x = l->maxx - 1; x >= l->minx; x--) {
-          for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-            level_display_z_layer(l, x, y, slot, MAP_DEPTH_WALL, deco);
-            level_display_z_layer(l, x, y, slot, MAP_DEPTH_DOOR, deco);
-          }
+    for (auto y = l->miny; y < l->maxy; y++) {
+      for (auto x = l->maxx - 1; x >= l->minx; x--) {
+        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+          level_display_z_layer(l, x, y, slot, MAP_DEPTH_WALL, deco);
+          level_display_z_layer(l, x, y, slot, MAP_DEPTH_DOOR, deco);
         }
       }
     }
