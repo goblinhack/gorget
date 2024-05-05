@@ -14,6 +14,15 @@
 #include <sstream>
 #include <string.h>
 
+Tpp tp(Thingp t)
+{
+  if (t->tp_id) {
+    return tp_find(t->tp_id);
+  }
+
+  return nullptr;
+}
+
 Thingp level_thing_get(Levelp l, int x, int y, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();

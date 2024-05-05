@@ -80,6 +80,9 @@ const char *to_short_string(Tpp tp);
 bool tp_is_animated_can_hflip_get(Tpp tp);
 void tp_is_animated_can_hflip_set(Tpp tp, bool val);
 
+bool tp_is_animated_no_dir_get(Tpp tp);
+void tp_is_animated_no_dir_set(Tpp tp, bool val);
+
 bool tp_is_blit_centered_get(Tpp tp);
 void tp_is_blit_centered_set(Tpp tp, bool val);
 

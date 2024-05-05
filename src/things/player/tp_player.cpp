@@ -18,6 +18,7 @@ bool tp_load_player(void)
     tp_is_player_set(tp, true);
     tp_player_index_set(tp, player - 1);
     tp_z_depth_set(tp, MAP_DEPTH_PLAYER);
+    tp_is_animated_can_hflip_set(tp, true);
     // end sort marker1 }
 
     auto delay = 100;

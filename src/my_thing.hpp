@@ -29,6 +29,18 @@
 #define THING_ID_GET_X(id)       ((id & THING_ID_X_MASK) >> (THING_ID_Y_BITS))
 #define THING_ID_GET_Y(id)       ((id & THING_ID_Y_MASK))
 
+enum {
+  THING_DIR_NONE,
+  THING_DIR_DOWN,
+  THING_DIR_UP,
+  THING_DIR_LEFT,
+  THING_DIR_RIGHT,
+  THING_DIR_TL,
+  THING_DIR_BL,
+  THING_DIR_TR,
+  THING_DIR_BR,
+};
+
 typedef struct Thing_ {
   ThingId  id;
   uint16_t tp_id;
@@ -56,41 +68,51 @@ typedef struct Thing_ {
   //
   int16_t pix_x;
   int16_t pix_y;
-  uint8_t dir_up    : 1;
-  uint8_t dir_down  : 1;
-  uint8_t dir_left  : 1;
-  uint8_t dir_right : 1;
+  //
+  // Direction
+  //
+  uint8_t dir;
 } Thing;
 
-void     thing_id_set(Thingp t, ThingId id);
-ThingId  thing_id_get(Thingp t);
-void     thing_tp_id_set(Thingp t, uint16_t tp_id);
-uint16_t thing_tp_id_get(Thingp t);
-void     thing_tick_set(Thingp t, uint16_t tick);
-uint16_t thing_tick_get(Thingp t);
-void     thing_x_set(Thingp t, int8_t x);
-int8_t   thing_x_get(Thingp t);
-void     thing_y_set(Thingp t, int8_t y);
-int8_t   thing_y_get(Thingp t);
-void     thing_old_x_set(Thingp t, int8_t old_x);
-int8_t   thing_old_x_get(Thingp t);
-void     thing_old_y_set(Thingp t, int8_t old_y);
-int8_t   thing_old_y_get(Thingp t);
-void     thing_speed_set(Thingp t, int16_t speed);
-int16_t  thing_speed_get(Thingp t);
-void     thing_thing_dt_set(Thingp t, float thing_dt);
+Tpp      tp(Thingp t);
+bool     thing_is_dir_down(Thingp t);
+bool     thing_is_dir_tr(Thingp t);
+bool     thing_is_dir_tl(Thingp t);
+bool     thing_is_dir_br(Thingp t);
+bool     thing_is_dir_bl(Thingp t);
+bool     thing_is_dir_left(Thingp t);
+bool     thing_is_dir_right(Thingp t);
+bool     thing_is_dir_up(Thingp t);
 float    thing_thing_dt_get(Thingp t);
-void     thing_pix_x_set(Thingp t, int16_t pix_x);
 int16_t  thing_pix_x_get(Thingp t);
-void     thing_pix_y_set(Thingp t, int16_t pix_y);
 int16_t  thing_pix_y_get(Thingp t);
-void     thing_dir_up_set(Thingp t, uint8_t dir_up);
-uint8_t  thing_dir_up_get(Thingp t);
-void     thing_dir_down_set(Thingp t, uint8_t dir_down);
-uint8_t  thing_dir_down_get(Thingp t);
-void     thing_dir_left_set(Thingp t, uint8_t dir_left);
-uint8_t  thing_dir_left_get(Thingp t);
-void     thing_dir_right_set(Thingp t, uint8_t dir_right);
-uint8_t  thing_dir_right_get(Thingp t);
+int16_t  thing_speed_get(Thingp t);
+int8_t   thing_old_x_get(Thingp t);
+int8_t   thing_old_y_get(Thingp t);
+int8_t   thing_x_get(Thingp t);
+int8_t   thing_y_get(Thingp t);
+ThingId  thing_id_get(Thingp t);
+uint16_t thing_tick_get(Thingp t);
+uint16_t thing_tp_id_get(Thingp t);
+void     thing_dir_tr_set(Thingp t, uint8_t);
+void     thing_dir_tl_set(Thingp t, uint8_t);
+void     thing_dir_br_set(Thingp t, uint8_t);
+void     thing_dir_bl_set(Thingp t, uint8_t);
+void     thing_dir_down_set(Thingp t, uint8_t);
+void     thing_dir_left_set(Thingp t, uint8_t);
+void     thing_dir_right_set(Thingp t, uint8_t);
+void     thing_dir_up_set(Thingp t, uint8_t);
+void     thing_id_set(Thingp t, ThingId id);
+void     thing_old_x_set(Thingp t, int8_t old_x);
+void     thing_old_y_set(Thingp t, int8_t old_y);
+void     thing_pix_x_set(Thingp t, int16_t pix_x);
+void     thing_pix_y_set(Thingp t, int16_t pix_y);
+void     thing_speed_set(Thingp t, int16_t speed);
+void     thing_thing_dt_set(Thingp t, float thing_dt);
+void     thing_tick_set(Thingp t, uint16_t tick);
+void     thing_tp_id_set(Thingp t, uint16_t tp_id);
+void     thing_x_set(Thingp t, int8_t x);
+void     thing_y_set(Thingp t, int8_t y);
+void     thing_set_dir_from_delta(Thingp, int dx, int dy);
 
 #endif

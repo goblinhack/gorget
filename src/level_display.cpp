@@ -93,11 +93,20 @@ static void level_display_z_layer(Levelp l, int x, int y, int slot, int z, bool 
   br.x = tl.x + pix_width;
   br.y = tl.y + pix_height;
 
-  if (deco) {
-    level_display_tile(l, tp, tile_index + 47, tl, br, point(0, 0));
-  } else {
-    level_display_tile(l, tp, tile_index, tl, br, point(0, 0));
+  //
+  // Flippable?
+  //
+  if (tp_is_animated_can_hflip_get(tp)) {
+    if (thing_is_dir_left(t) || thing_is_dir_tl(t) || thing_is_dir_bl(t)) {
+      std::swap(tl.x, br.x);
+    }
   }
+
+  if (deco) {
+    tile_index += 47;
+  }
+
+  level_display_tile(l, tp, tile_index, tl, br, point(0, 0));
 }
 
 void level_display(Levelp l)

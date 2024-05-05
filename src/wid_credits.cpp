@@ -96,6 +96,7 @@ void wid_credits_select(class Game *game)
   wid_credits_window->log("goblinhack@gmail.com");
   wid_credits_window->log(UI_LOGGING_EMPTY_LINE);
   wid_credits_window->log("%%fg=white$Graphics");
+  wid_credits_window->log("Urizen 1 bit tileset");
   wid_credits_window->log("goblinhack@gmail.com");
   wid_credits_window->log(UI_LOGGING_EMPTY_LINE);
   wid_credits_window->log("%%fg=white$Music");

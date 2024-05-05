@@ -51,6 +51,7 @@ public:
 
   // begin sort marker1 {
   bool is_animated_can_hflip {};
+  bool is_animated_no_dir {};
   bool is_blit_centered {};
   bool is_blit_on_ground {};
   bool is_blit_outlined {};
@@ -413,6 +414,9 @@ const char *to_short_string(Tpp tp) { return tp->text_short_name.c_str(); }
 
 bool tp_is_animated_can_hflip_get(Tpp tp) { return tp->is_animated_can_hflip; }
 void tp_is_animated_can_hflip_set(Tpp tp, bool val) { tp->is_animated_can_hflip = val; }
+
+bool tp_is_animated_no_dir_get(Tpp tp) { return tp->is_animated_no_dir; }
+void tp_is_animated_no_dir_set(Tpp tp, bool val) { tp->is_animated_no_dir = val; }
 
 bool tp_is_blit_centered_get(Tpp tp) { return tp->is_blit_centered; }
 void tp_is_blit_centered_set(Tpp tp, bool val) { tp->is_blit_centered = val; }

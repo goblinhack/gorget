@@ -11,6 +11,179 @@
 
 #include <string.h>
 
+void thing_dir_set_none(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_NONE) {
+    t->dir = THING_DIR_NONE;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_none(Thingp t) { return (t->dir == THING_DIR_NONE); }
+
+void thing_dir_set_down(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_DOWN) {
+    t->dir = THING_DIR_DOWN;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_down(Thingp t) { return (t->dir == THING_DIR_DOWN); }
+
+void thing_dir_set_up(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_UP) {
+    t->dir = THING_DIR_UP;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_up(Thingp t) { return (t->dir == THING_DIR_UP); }
+
+void thing_dir_set_left(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_LEFT) {
+    t->dir = THING_DIR_LEFT;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_left(Thingp t) { return (t->dir == THING_DIR_LEFT); }
+
+void thing_dir_set_right(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_RIGHT) {
+    t->dir = THING_DIR_RIGHT;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_right(Thingp t) { return (t->dir == THING_DIR_RIGHT); }
+
+void thing_dir_set_tl(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_TL) {
+    t->dir = THING_DIR_TL;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_tl(Thingp t) { return (t->dir == THING_DIR_TL); }
+
+void thing_dir_set_bl(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_BL) {
+    t->dir = THING_DIR_BL;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_bl(Thingp t) { return (t->dir == THING_DIR_BL); }
+
+void thing_dir_set_tr(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_TR) {
+    t->dir = THING_DIR_TR;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_tr(Thingp t) { return (t->dir == THING_DIR_TR); }
+
+void thing_dir_set_br(Thingp t)
+{
+  if (tp_is_animated_no_dir_get(tp(t))) {
+    return;
+  }
+
+  if (t->dir != THING_DIR_BR) {
+    t->dir = THING_DIR_BR;
+    // move_carried_items();
+  }
+}
+
+bool thing_is_dir_br(Thingp t) { return (t->dir == THING_DIR_BR); }
+
+void thing_set_dir_from_delta(Thingp t, int dx, int dy)
+{
+  if (dx < 0) {
+    if (dy > 0) {
+      thing_dir_set_bl(t);
+    } else if (dy < 0) {
+      thing_dir_set_tl(t);
+    } else {
+      thing_dir_set_left(t);
+    }
+    return;
+  }
+
+  if (dx > 0) {
+    if (dy > 0) {
+      thing_dir_set_br(t);
+    } else if (dy < 0) {
+      thing_dir_set_tr(t);
+    } else {
+      thing_dir_set_right(t);
+    }
+    return;
+  }
+
+  if (dy > 0) {
+    if (dx > 0) {
+      thing_dir_set_br(t);
+    } else if (dx < 0) {
+      thing_dir_set_bl(t);
+    } else {
+      thing_dir_set_down(t);
+    }
+    return;
+  }
+
+  if (dy < 0) {
+    if (dx > 0) {
+      thing_dir_set_tr(t);
+    } else if (dx < 0) {
+      thing_dir_set_tl(t);
+    } else {
+      thing_dir_set_up(t);
+    }
+    return;
+  }
+}
+
 void level_thing_move(Levelp l, Thingp t, int new_x, int new_y)
 {
   if (level_is_oob(l, new_x, new_y)) {
@@ -44,6 +217,10 @@ bool level_thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y)
   if ((new_loc_x == t->x) && (new_loc_y == t->y)) {
     return true;
   }
+
+  auto dx = new_loc_x - t->x;
+  auto dy = new_loc_y - t->y;
+  thing_set_dir_from_delta(t, dx, dy);
 
   auto my_tp = level_thing_tp(l, t);
 
