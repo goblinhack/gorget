@@ -168,8 +168,10 @@ uint8_t sdl_init(void)
     return false;
   }
 
-  int x = 0;
-  if (x) {
+  //
+  // Unused for now
+  //
+  if (0) {
     sdl_init_joystick();
     sdl_init_rumble();
   }
@@ -181,7 +183,7 @@ uint8_t sdl_init(void)
   //
   // If we have a saved setting, use that.
   //
-  if (game_window_pix_width_get(game) && game_window_pix_height_get(game)) {
+  if (game_config_pix_width_get(game) && game_config_pix_height_get(game)) {
     video_width  = game_config_pix_width_get(game);
     video_height = game_config_pix_height_get(game);
   } else {
@@ -205,10 +207,6 @@ uint8_t sdl_init(void)
   }
 
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-  //
-  // Don't use this. It seemed to mess up graphics on FireGL.
-  //
   SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
   uint32_t video_is_unused_flags;
@@ -242,7 +240,7 @@ uint8_t sdl_init(void)
       video_is_unused_flags |= SDL_WINDOW_ALLOW_HIGHDPI;
       LOG("SDL: Set SDL_WINDOW_ALLOW_HIGHDPI");
     } else {
-      ERR("SDL: Cannot enable high DPI");
+      ERR("SDL: Cannot enable high DPI: %s", SDL_GetError());
     }
   }
 
@@ -303,7 +301,7 @@ uint8_t sdl_init(void)
   LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
   LOG("SDL: OpenGL Renderer : %s", glGetString(GL_RENDERER));
   LOG("SDL: OpenGL Version  : %s", glGetString(GL_VERSION));
-  DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS));
+  LOG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS));
 
   SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &value);
   LOG("SDL: Red size    : %d", value);

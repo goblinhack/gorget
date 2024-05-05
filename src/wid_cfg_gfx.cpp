@@ -6,6 +6,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_main.hpp"
+#include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_wids.hpp"
 
@@ -83,8 +84,21 @@ static bool wid_cfg_gfx_fullscreen_toggle(Widp w, int x, int y, uint32_t button)
     game_gfx_fullscreen_desktop_set(game, false);
   }
 
-  wid_cfg_gfx_select(game);
+  if (game_gfx_fullscreen_get(game)) {
+    SDL_SetWindowFullscreen(sdl.window, SDL_WINDOW_FULLSCREEN);
+  } else if (game_gfx_fullscreen_desktop_get(game)) {
+    SDL_SetWindowFullscreen(sdl.window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+  } else {
+    SDL_SetWindowFullscreen(sdl.window, 0);
+  }
+
+  //
+  // These kind of changes seem to need a restart
+  //
   local_g_need_restart = true;
+  wid_cfg_gfx_save(nullptr, 0, 0, 0);
+  wid_cfg_gfx_select(game);
+
   return true;
 }
 
@@ -98,8 +112,23 @@ static bool wid_cfg_gfx_fullscreen_desktop_toggle(Widp w, int x, int y, uint32_t
   if (game_gfx_fullscreen_desktop_get(game)) {
     game_gfx_fullscreen_set(game, false);
   }
-  wid_cfg_gfx_select(game);
+
+  if (game_gfx_fullscreen_get(game)) {
+    SDL_SetWindowFullscreen(sdl.window, SDL_WINDOW_FULLSCREEN);
+  } else if (game_gfx_fullscreen_desktop_get(game)) {
+    SDL_SetWindowFullscreen(sdl.window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    local_g_need_restart = true;
+  } else {
+    SDL_SetWindowFullscreen(sdl.window, 0);
+  }
+
+  //
+  // These kind of changes seem to need a restart
+  //
   local_g_need_restart = true;
+  wid_cfg_gfx_save(nullptr, 0, 0, 0);
+  wid_cfg_gfx_select(game);
+
   return true;
 }
 
@@ -120,8 +149,8 @@ static bool wid_cfg_gfx_borderless_toggle(Widp w, int x, int y, uint32_t button)
   config_changed = true;
   CON("INF: Toggle gfx borderless");
   game_gfx_borderless_set(game, ! game_gfx_borderless_get(game));
+  SDL_SetWindowBordered(sdl.window, game_gfx_borderless_get(game) ? SDL_TRUE : SDL_FALSE);
   wid_cfg_gfx_select(game);
-  local_g_need_restart = true;
   return true;
 }
 
@@ -147,7 +176,7 @@ static bool wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button)
     SDL_DisplayMode mode;
     SDL_GetDisplayMode(0, i, &mode);
     auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
-    CON(" - candidate: %s", cand.c_str());
+    LOG(" - candidate: %s", cand.c_str());
     if (res == cand) {
       chosen = i - 1;
     }
@@ -157,10 +186,12 @@ static bool wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button)
     if (i == chosen) {
       SDL_GetDisplayMode(0, i, &mode);
       auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
-      CON(" - chosen: %s", cand.c_str());
+      LOG(" - chosen: %s", cand.c_str());
       game_window_pix_width_set(game, mode.w);
       game_window_pix_height_set(game, mode.h);
-      local_g_need_restart = true;
+      game_config_pix_width_set(game, mode.w);
+      game_config_pix_height_set(game, mode.h);
+      SDL_SetWindowSize(sdl.window, mode.w, mode.h);
     }
   }
   wid_cfg_gfx_save(nullptr, 0, 0, 0);
@@ -181,7 +212,7 @@ static bool wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button)
     SDL_DisplayMode mode;
     SDL_GetDisplayMode(0, i, &mode);
     auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
-    CON(" - candidate: %s", cand.c_str());
+    LOG(" - candidate: %s", cand.c_str());
     if (res == cand) {
       chosen = i + 1;
     }
@@ -191,10 +222,12 @@ static bool wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button)
     if (i == chosen) {
       SDL_GetDisplayMode(0, i, &mode);
       auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
-      CON(" - chosen: %s", cand.c_str());
+      LOG(" - chosen: %s", cand.c_str());
       game_window_pix_width_set(game, mode.w);
       game_window_pix_height_set(game, mode.h);
-      local_g_need_restart = true;
+      game_config_pix_width_set(game, mode.w);
+      game_config_pix_height_set(game, mode.h);
+      SDL_SetWindowSize(sdl.window, mode.w, mode.h);
     }
   }
   wid_cfg_gfx_save(nullptr, 0, 0, 0);
@@ -258,8 +291,8 @@ void wid_cfg_gfx_select(class Game *game)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point tl = make_point(m - 20, TERM_HEIGHT / 2 - 11);
-  point br = make_point(m + 20, TERM_HEIGHT / 2 + 13);
+  point tl = make_point(m - 23, TERM_HEIGHT / 2 - 11);
+  point br = make_point(m + 22, TERM_HEIGHT / 2 + 13);
 
   auto width = br.x - tl.x - 2;
 
@@ -382,6 +415,7 @@ void wid_cfg_gfx_select(class Game *game)
     wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_decr);
     wid_set_text(w, "-");
   }
+  y_at++;
 
   /////////////////////////////////////////////////////////////////////////
   // Fullscreen
@@ -397,7 +431,7 @@ void wid_cfg_gfx_select(class Game *game)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Fullscreen video");
+    wid_set_text(w, "Fullscreen(restart)");
   }
   {
     TRACE_AND_INDENT();
@@ -421,7 +455,7 @@ void wid_cfg_gfx_select(class Game *game)
   }
 
   /////////////////////////////////////////////////////////////////////////
-  // fullscreen desktop
+  // Fullscreen desktop
   /////////////////////////////////////////////////////////////////////////
   y_at++;
   {
@@ -434,7 +468,7 @@ void wid_cfg_gfx_select(class Game *game)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Fullscreen desktop");
+    wid_set_text(w, "Full desktop(restart)");
   }
   {
     TRACE_AND_INDENT();
