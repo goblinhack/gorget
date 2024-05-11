@@ -183,10 +183,12 @@ public:
   //
   // These are the onscreen map pixel co-ords.
   //
-  int onscreen_map_tl_x;
-  int onscreen_map_tl_y;
-  int onscreen_map_br_x;
-  int onscreen_map_br_y;
+  int visible_map_tl_x;
+  int visible_map_tl_y;
+  int visible_map_br_x;
+  int visible_map_br_y;
+  int visible_map_mouse_x;
+  int visible_map_mouse_y;
 
   /////////////////////////////////////////////////////////////////////////
   // not worth saving
@@ -361,6 +363,7 @@ void Game::display(void)
   if (level) {
     level_tick(level);
     level_anim(level);
+    level_cursor_reset(level);
     level_display(level);
   }
 }
@@ -450,20 +453,34 @@ void game_load_config(class Game *game) { game->load_config(); }
 
 class HiScores *game_hiscores_get(class Game *game) { return &game->config.hiscores; }
 
-void game_onscreen_map_get(class Game *game, int *onscreen_map_tl_x, int *onscreen_map_tl_y, int *onscreen_map_br_x,
-                           int *onscreen_map_br_y)
+void game_visible_map_get(class Game *game, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
+                          int *visible_map_br_y)
 {
-  *onscreen_map_tl_x = game->onscreen_map_tl_x, *onscreen_map_tl_y = game->onscreen_map_tl_y,
-  *onscreen_map_br_x = game->onscreen_map_br_x, *onscreen_map_br_y = game->onscreen_map_br_y;
+  *visible_map_tl_x = game->visible_map_tl_x;
+  *visible_map_tl_y = game->visible_map_tl_y;
+  *visible_map_br_x = game->visible_map_br_x;
+  *visible_map_br_y = game->visible_map_br_y;
 }
 
-void game_onscreen_map_set(class Game *game, int onscreen_map_tl_x, int onscreen_map_tl_y, int onscreen_map_br_x,
-                           int onscreen_map_br_y)
+void game_visible_map_set(class Game *game, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
+                          int visible_map_br_y)
 {
-  game->onscreen_map_tl_x = onscreen_map_tl_x;
-  game->onscreen_map_tl_y = onscreen_map_tl_y;
-  game->onscreen_map_br_x = onscreen_map_br_x;
-  game->onscreen_map_br_y = onscreen_map_br_y;
+  game->visible_map_tl_x = visible_map_tl_x;
+  game->visible_map_tl_y = visible_map_tl_y;
+  game->visible_map_br_x = visible_map_br_x;
+  game->visible_map_br_y = visible_map_br_y;
+}
+
+void game_visible_map_mouse_get(class Game *game, int *visible_map_mouse_x, int *visible_map_mouse_y)
+{
+  *visible_map_mouse_x = game->visible_map_mouse_x;
+  *visible_map_mouse_y = game->visible_map_mouse_y;
+}
+
+void game_visible_map_mouse_set(class Game *game, int visible_map_mouse_x, int visible_map_mouse_y)
+{
+  game->visible_map_mouse_x = visible_map_mouse_x;
+  game->visible_map_mouse_y = visible_map_mouse_y;
 }
 
 uint32_t game_last_mouse_down_get(class Game *game) { return game->last_mouse_down; }

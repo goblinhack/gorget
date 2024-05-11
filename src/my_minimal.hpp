@@ -165,12 +165,8 @@ class Font;
 class Game;
 class HiScore;
 class HiScores;
-class LevelPh2Room;
-class LevelPh3Obstacles;
-class LevelPh4Block;
 class Tex;
 class Tile;
-class Tilemap;
 class Tp;
 class Wid;
 class WidPopup;
@@ -179,22 +175,23 @@ struct Level_;
 struct Thing_;
 struct Dmap_;
 struct SDL_Surface;
+struct ThingOrTp_;
 
-using Dmapp              = struct Dmap_ *;
-using Fontp              = class Font *;
-using Id                 = unsigned int;
-using LevelPh2Roomp      = class LevelPh2Room *;
-using LevelPh3Obstaclesp = class LevelPh3Obstacles *;
-using LevelPh4Blockp     = class LevelPh4Block *;
-using Levelp             = struct Level_ *;
-using Lightp             = class Light *;
-using Texp               = class Tex *;
-using ThingId            = Id;
-using Thingp             = struct Thing_ *;
-using Tilemapp           = class Tilemap *;
-using Tilep              = class Tile *;
-using TpId               = Id;
-using Tpp                = class Tp *;
-using Widp               = class Wid *;
+using Dmapp   = struct Dmap_ *;
+using Fontp   = class Font *;
+using Id      = unsigned int;
+using Levelp  = struct Level_ *;
+using Lightp  = class Light *;
+using Texp    = class Tex *;
+using ThingId = Id;
+using Thingp  = struct Thing_ *;
+using Tilep   = class Tile *;
+using TpId    = Id;
+using Tpp     = class Tp *;
+using Widp    = class Wid *;
+
+#define NULL_TP    ((Tpp) nullptr)
+#define NULL_THING ((Thingp) nullptr)
+#define NULL_OBJ   ((struct ThingOrTp_ *) nullptr)
 
 #endif

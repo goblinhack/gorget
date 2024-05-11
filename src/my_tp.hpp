@@ -297,19 +297,19 @@ void tp_is_blit_square_outlined_set(Tpp tp, bool val);
 bool tp_is_blit_tiled_get(Tpp tp);
 void tp_is_blit_tiled_set(Tpp tp, bool val);
 
-bool tp_is_cursor_get(Tpp tp);
+bool tp_is_cursor(Tpp tp);
 void tp_is_cursor_set(Tpp tp, bool val);
 
-bool tp_is_door_get(Tpp tp);
+bool tp_is_door(Tpp tp);
 void tp_is_door_set(Tpp tp, bool val);
 
 bool tp_is_dungeon_entrance_get(Tpp tp);
 void tp_is_dungeon_entrance_set(Tpp tp, bool val);
 
-bool tp_is_exit_get(Tpp tp);
+bool tp_is_exit(Tpp tp);
 void tp_is_exit_set(Tpp tp, bool val);
 
-bool tp_is_floor_get(Tpp tp);
+bool tp_is_floor(Tpp tp);
 void tp_is_floor_set(Tpp tp, bool val);
 
 bool tp_is_unused1_get(Tpp tp);
@@ -912,10 +912,10 @@ void tp_is_cursor_at_set(Tpp tp, bool val);
 bool tp_is_cursor_path_get(Tpp tp);
 void tp_is_cursor_path_set(Tpp tp, bool val);
 
-bool tp_is_key_get(Tpp tp);
+bool tp_is_key(Tpp tp);
 void tp_is_key_set(Tpp tp, bool val);
 
-bool tp_is_monst_get(Tpp tp);
+bool tp_is_monst(Tpp tp);
 void tp_is_monst_set(Tpp tp, bool val);
 
 bool tp_is_monst_class_get(Tpp tp, int val);
@@ -927,10 +927,10 @@ void tp_is_obs_monst_set(Tpp tp, bool val);
 bool tp_is_obs_player_get(Tpp tp);
 void tp_is_obs_player_set(Tpp tp, bool val);
 
-bool tp_is_player_get(Tpp tp);
+bool tp_is_player(Tpp tp);
 void tp_is_player_set(Tpp tp, bool val);
 
-bool tp_is_wall_get(Tpp tp);
+bool tp_is_wall(Tpp tp);
 void tp_is_wall_set(Tpp tp, bool val);
 
 uint8_t tp_player_index_get(Tpp tp);

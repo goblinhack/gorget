@@ -20,9 +20,7 @@
 std::map< std::string, class Tile * > all_tiles;
 std::vector< class Tile * >           all_tiles_array;
 
-using Tilevec = std::vector< class Tile * >;
-
-static uint8_t tile_init_done;
+static bool tile_init_done;
 
 class Tile
 {
@@ -36,16 +34,16 @@ public:
   //
   // Grabbed by a template
   //
-  uint8_t  in_use {};
-  uint16_t global_index;
+  uint8_t in_use {};
+  int     global_index;
 
   //
   // Index within the overall texture, left to right, top to bottom.
   //
-  uint16_t index {};
+  int index {};
 
-  uint16_t pix_width {};
-  uint16_t pix_height {};
+  int pix_width {};
+  int pix_height {};
 
   float pct_width {};
   float pct_height {};
@@ -119,9 +117,10 @@ Tile::Tile(void) { newptr(MTYPE_TILE, this, "Tile"); }
 
 Tile::~Tile(void) { oldptr(MTYPE_TILE, this); }
 
-uint8_t tile_init(void)
+bool tile_init(void)
 {
   TRACE_AND_INDENT();
+
   tile_init_done = true;
 
   return true;
@@ -130,6 +129,7 @@ uint8_t tile_init(void)
 void tile_fini(void)
 {
   TRACE_AND_INDENT();
+
   if (tile_init_done) {
     tile_init_done = false;
   }
@@ -919,12 +919,14 @@ Tilep string2tile(std::string &s, int *len)
   return result->second;
 }
 
-Tilep tile_index_to_tile(uint16_t i)
+Tilep tile_index_to_tile(int i)
 {
   extern std::vector< class Tile * > all_tiles_array;
+
   if (unlikely(! i)) {
     return nullptr;
   }
+
   return all_tiles_array[ i - 1 ];
 }
 //
@@ -971,83 +973,21 @@ void     tile_delay_ms_set(Tilep t, uint32_t val) { t->delay_ms = val; }
 uint32_t tile_global_index(Tilep t) { return t->global_index; }
 void     tile_global_index_set(Tilep t, uint32_t val) { t->global_index = val; }
 
-uint8_t tile_is_moving(Tilep t) { return t->is_moving; }
+bool tile_is_moving(Tilep t) { return t->is_moving ? true : false; }
 
-uint8_t tile_is_sleeping(Tilep t) { return t->is_sleeping; }
+bool tile_is_sleeping(Tilep t) { return t->is_sleeping ? true : false; }
 
-uint8_t tile_is_open(Tilep t) { return t->is_open; }
+bool tile_is_open(Tilep t) { return t->is_open ? true : false; }
 
-uint8_t tile_is_dead(Tilep t) { return t->is_dead; }
+bool tile_is_dead(Tilep t) { return t->is_dead ? true : false; }
 
-uint8_t tile_is_end_of_anim(Tilep t) { return t->is_end_of_anim; }
+bool tile_is_end_of_anim(Tilep t) { return t->is_end_of_anim ? true : false; }
 
-uint8_t tile_is_dead_on_end_of_anim(Tilep t) { return t->is_dead_on_end_of_anim; }
+bool tile_is_dead_on_end_of_anim(Tilep t) { return t->is_dead_on_end_of_anim ? true : false; }
 
-uint8_t tile_is_alive_on_end_of_anim(Tilep t) { return t->is_alive_on_end_of_anim; }
+bool tile_is_alive_on_end_of_anim(Tilep t) { return t->is_alive_on_end_of_anim ? true : false; }
 
-uint8_t tile_is_resurrecting(Tilep t) { return t->is_resurrecting; }
-
-Tilep tile_random(Tilevec *tmap)
-{
-  if (unlikely(! tmap)) {
-    return nullptr;
-  }
-  std::vector< Tilep > *tiles = &((*tmap));
-  if (unlikely(! tiles)) {
-    return nullptr;
-  }
-  if (unlikely(tiles->empty())) {
-    return nullptr;
-  }
-
-  int tries = 999999;
-  while (tries--) {
-    auto index = pcg_rand() % tiles->size();
-    auto tile  = (*tiles)[ index ];
-
-    //
-    // Don't really want dead tiles when choosing a random start tile.
-    //
-    if (tile->is_dead) {
-      continue;
-    }
-    if (unlikely(! tile)) {
-      ERR("no tile at index #%d, max %d", (int) index, (int) tiles->size());
-      return nullptr;
-    }
-    return tile_index_to_tile(tile->global_index);
-  }
-
-  DIE("failed to choose a random tile");
-}
-
-Tilep tile_frame(Tilevec *tmap, uint32_t frame)
-{
-  for (const auto t : *tmap) {
-    if (t->frame == frame) {
-      return t;
-    }
-  }
-  return nullptr;
-}
-
-Tilep tile_next(Tilevec *tmap, Tilep in)
-{
-  if (unlikely(! tmap)) {
-    return nullptr;
-  }
-  std::vector< Tilep > *tiles = &((*tmap));
-  if (unlikely(tiles->empty())) {
-    return nullptr;
-  }
-  auto cursor = in->index;
-  cursor++;
-  if (cursor >= tiles->size()) {
-    cursor = 0;
-  }
-  auto tile = ((*tiles)[ cursor ]);
-  return tile_index_to_tile(tile->global_index);
-}
+bool tile_is_resurrecting(Tilep t) { return t->is_resurrecting ? true : false; }
 
 int Tile::gl_binding(void) const { return _gl_binding; }
 
@@ -1138,7 +1078,7 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_outline(uint16_t index, const point tl, const point br, const color &c, bool square)
+void tile_blit_outline(int index, const point tl, const point br, const color &c, bool square)
 {
   tile_blit_outline(tile_index_to_tile(index), tl, br, c, square);
 }
@@ -1262,7 +1202,7 @@ void tile_blit(const Tilep &tile, const point tl, const point tr, const point bl
   blit(tile->gl_binding(), x1, y2, x2, y1, tl, tr, bl, br);
 }
 
-void tile_blit(uint16_t index, const point tl, const point br) { tile_blit(tile_index_to_tile(index), tl, br); }
+void tile_blit(int index, const point tl, const point br) { tile_blit(tile_index_to_tile(index), tl, br); }
 
 void tile_blit_section(const Tilep &tile, const point tile_tl, const point tile_br, const point tl, const point br)
 {
@@ -1287,7 +1227,7 @@ void tile_blit_section(const Tilep &tile, const point tile_tl, const point tile_
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_section(uint16_t index, const point tile_tl, const point tile_br, const point tl, const point br)
+void tile_blit_section(int index, const point tile_tl, const point tile_br, const point tl, const point br)
 {
   tile_blit_section(tile_index_to_tile(index), tile_tl, tile_br, tl, br);
 }
@@ -1316,7 +1256,7 @@ void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const f
   blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
 
-void tile_blit_section_colored(uint16_t index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
+void tile_blit_section_colored(int index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
                                const point br, color color_tl, color color_tr, color color_bl, color color_br)
 {
   tile_blit_section_colored(tile_index_to_tile(index), tile_tl, tile_br, tl, br, color_tl, color_tr, color_bl,
@@ -1330,7 +1270,7 @@ void tile_blit_outline_section_colored(const Tilep &tile, const fpoint &tile_tl,
   tile_blit_outline_section(tile, tile_tl, tile_br, tl, br, 0.75);
 }
 
-void tile_blit_outline_section_colored(uint16_t index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
+void tile_blit_outline_section_colored(int index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
                                        const point br, color color_tl, color color_tr, color color_bl, color color_br)
 {
   tile_blit_outline_section_colored(tile_index_to_tile(index), tile_tl, tile_br, tl, br, color_tl, color_tr, color_bl,
@@ -1344,7 +1284,7 @@ void tile_blit_outline_section_colored(const Tilep &tile, const fpoint &tile_tl,
   tile_blit_outline_section(tile, tile_tl, tile_br, tl, br, scale);
 }
 
-void tile_blit_outline_section_colored(uint16_t index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
+void tile_blit_outline_section_colored(int index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
                                        const point br, color color_tl, color color_tr, color color_bl, color color_br,
                                        float scale)
 {

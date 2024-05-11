@@ -30,16 +30,16 @@ void sdl_display(void)
     x_offset *= (float) game_window_pix_width_get(game);
     x_offset = floor(x_offset);
 
-    int onscreen_map_tl_x = x_offset;
-    int onscreen_map_tl_y = 0;
-    int onscreen_map_br_x = game_window_pix_height_get(game) + x_offset;
-    int onscreen_map_br_y = game_window_pix_height_get(game);
+    int visible_map_tl_x = x_offset;
+    int visible_map_tl_y = 0;
+    int visible_map_br_x = game_window_pix_height_get(game) + x_offset;
+    int visible_map_br_y = game_window_pix_height_get(game);
 
-    game_onscreen_map_set(game, onscreen_map_tl_x, onscreen_map_tl_y, onscreen_map_br_x, onscreen_map_br_y);
+    game_visible_map_set(game, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
     blit_init();
-    blit(fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, onscreen_map_tl_x, onscreen_map_tl_y, onscreen_map_br_x,
-         onscreen_map_br_y);
+    blit(fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+         visible_map_br_y);
 
     blit_flush();
   } else {

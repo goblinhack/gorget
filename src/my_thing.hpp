@@ -15,6 +15,8 @@
 //
 // IDs below this are for templates
 //
+// Entropy is always > 0 for Thing IDs to distinguish them
+//
 #define THING_ID_BASE (1U << (THING_ID_X_BITS + THING_ID_Y_BITS))
 
 //

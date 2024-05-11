@@ -176,7 +176,7 @@ void level_assign_tiles(Levelp l)
           //
           // Switch the door direction if next to walls
           //
-          if (tp_is_door_get(tp)) {
+          if (tp_is_door(tp)) {
             if (level_tp_get(l, x, y - 1, MAP_DEPTH_WALL) && level_tp_get(l, x, y + 1, MAP_DEPTH_WALL)) {
               block_type = IS_JOIN_TOP;
             }

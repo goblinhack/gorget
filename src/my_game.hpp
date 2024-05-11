@@ -23,11 +23,13 @@ extern class Game *game;
 
 class HiScores *game_hiscores_get(class Game *);
 
-void game_onscreen_map_get(class Game *, int *onscreen_map_tl_x, int *onscreen_map_tl_y, int *onscreen_map_br_x,
-                           int *onscreen_map_br_y);
+void game_visible_map_get(class Game *, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
+                          int *visible_map_br_y);
+void game_visible_map_set(class Game *, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
+                          int visible_map_br_y);
 
-void game_onscreen_map_set(class Game *, int onscreen_map_tl_x, int onscreen_map_tl_y, int onscreen_map_br_x,
-                           int onscreen_map_br_y);
+void game_visible_map_mouse_get(class Game *game, int *visible_map_mouse_x, int *visible_map_mouse_y);
+void game_visible_map_mouse_set(class Game *game, int visible_map_mouse_x, int visible_map_mouse_y);
 
 uint32_t game_last_mouse_down_get(class Game *);
 void     game_last_mouse_down_set(class Game *, uint32_t);

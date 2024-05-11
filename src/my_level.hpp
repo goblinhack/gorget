@@ -191,6 +191,7 @@ void   level_thing_pop(Levelp, Thingp);
 void   level_thing_push(Levelp, Thingp);
 void   level_thing_update(Levelp, Thingp);
 void   level_tick_begin(Levelp);
+void   level_cursor_reset(Levelp);
 void   level_tick_begin_requested(Levelp, const char *);
 void   level_tick_body(Levelp, float dt);
 void   level_tick_end_requested(Levelp);

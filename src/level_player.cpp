@@ -23,7 +23,7 @@ void level_thing_player_create_and_place(Levelp l)
           continue;
         }
 
-        if (! tp_is_player_get(tp)) {
+        if (! tp_is_player(tp)) {
           continue;
         }
 
