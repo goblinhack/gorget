@@ -28,7 +28,7 @@ void level_anim(Levelp l)
     for (auto y = l->miny; y < l->maxy; y++) {
       for (auto x = l->minx; x < l->maxx; x++) {
         Tpp tp;
-        level_thing_get(l, x, y, slot, &tp);
+        level_thing_or_tp_get(l, x, y, slot, &tp);
         if (! tp) {
           continue;
         }

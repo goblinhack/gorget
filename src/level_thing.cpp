@@ -23,7 +23,7 @@ Tpp tp(Thingp t)
   return nullptr;
 }
 
-Thingp level_thing_get(Levelp l, int x, int y, uint8_t slot, Tpp *out)
+Thingp level_thing_or_tp_get(Levelp l, int x, int y, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
@@ -34,6 +34,39 @@ Thingp level_thing_get(Levelp l, int x, int y, uint8_t slot, Tpp *out)
   }
 
   if (! id) {
+    if (out) {
+      switch (l->cursor_at[ x ][ y ]) {
+        case CURSOR_NONE :
+          //
+          // Normal case. No cursor or anything else here.
+          //
+          return nullptr;
+        case CURSOR_PATH :
+          {
+            //
+            // Cursors do not use up slots on the map, to avoid them interacting with anything
+            //
+            static Tpp tp;
+            if (! tp) {
+              tp = tp_find("cursor_at");
+            }
+            *out = tp;
+            return nullptr;
+          }
+        case CURSOR_AT :
+          {
+            //
+            // Cursors do not use up slots on the map, to avoid them interacting with anything
+            //
+            static Tpp tp;
+            if (! tp) {
+              tp = tp_find("cursor_at");
+            }
+            *out = tp;
+            return nullptr;
+          }
+      }
+    }
     return nullptr;
   }
 

@@ -158,7 +158,7 @@ Id     level_get_id_no_check(Levelp, int x, int y, uint8_t z);
 Levelp level_constructor(void);
 Thingp level_thing_find(Levelp, ThingId id);
 Thingp level_thing_find_optional(Levelp, ThingId id);
-Thingp level_thing_get(Levelp, int x, int y, uint8_t slot, Tpp * = nullptr);
+Thingp level_thing_or_tp_get(Levelp, int x, int y, uint8_t slot, Tpp * = nullptr);
 Thingp level_thing_init(Levelp, Tpp, int x, int y);
 Thingp level_thing_new(Levelp, Tpp, int x, int y);
 Thingp level_thing_player(Levelp);
@@ -214,13 +214,13 @@ void   level_tp_unset(Levelp, int x, int y, Tpp);
 
 #define FOR_ALL_TPS_AT(_l_, _t_, _tp_, _x_, _y_)                                                                     \
   Tpp _tp_;                                                                                                          \
-  for (auto _slot_ = 0; level_thing_get(_l_, _x_, _y_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)                 \
+  for (auto _slot_ = 0; level_thing_or_tp_get(_l_, _x_, _y_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)           \
     if (_tp_)
 
 #define FOR_ALL_THINGS_AT(_l_, _t_, _tp_, _x_, _y_)                                                                  \
   Thingp _t_;                                                                                                        \
   Tpp    _tp_;                                                                                                       \
-  for (auto _slot_ = 0; _t_ = level_thing_get(_l_, _x_, _y_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)           \
+  for (auto _slot_ = 0; _t_ = level_thing_or_tp_get(_l_, _x_, _y_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)     \
     if (_tp_)
 
 #endif // _MY_LEVEL_H_

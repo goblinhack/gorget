@@ -39,7 +39,7 @@ static void level_display_z_layer(Levelp l, int x, int y, int slot, int z, bool 
   point br;
 
   Tpp  tp;
-  auto t = level_thing_get(l, x, y, slot, &tp);
+  auto t = level_thing_or_tp_get(l, x, y, slot, &tp);
   if (! tp) {
     return;
   }

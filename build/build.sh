@@ -372,11 +372,6 @@ log_info "VERSION (game)             : $MYVER"
 
 cd src || exit
 
-# Example timings at -j12
-# -O0 138 header cleanup... 91
-# -O1                       106
-# -O3 155 header cleanup... 109
-
 if [[ $OPT_PROF != "" ]]; then
     C_FLAGS+=" -pg"
     LDFLAGS+=" -pg"
@@ -384,10 +379,10 @@ fi
 
 MAKEFILE=../build/Makefile.template
 
-if [[ $OPT_DEV1 != "" ]]; then
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O0 -g" > $MAKEFILE
-else
+if [[ $OPT_REL != "" ]]; then
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 -g" > $MAKEFILE
+else
+    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O0 -g" > $MAKEFILE
 fi
 
 if [[ $OPT_DEV2 != "" ]]; then
