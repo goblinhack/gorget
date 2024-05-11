@@ -121,7 +121,7 @@ typedef struct Level_ {
   //
   // What the player is currently highlighting.
   //
-  uint8_t cursor_at[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t cursor[ MAP_WIDTH ][ MAP_HEIGHT ];
 
   //
   // The current player.
@@ -146,6 +146,7 @@ typedef struct Level_ {
   //////////////////////////////////////////////////////////////
 } Level;
 
+// begin sort marker1 {
 bool   level_is_oob(Levelp, int x, int y);
 bool   level_is_same_type(Levelp, int x, int y, Tpp);
 bool   level_set_id(Levelp, int x, int y, uint8_t z, Id);
@@ -165,11 +166,10 @@ Thingp level_thing_player(Levelp);
 Tilep  level_get_tile(Levelp, int x, int y, uint8_t z);
 Tilep  level_get_tile_no_check(Levelp, int x, int y, uint8_t z);
 Tpp    level_thing_tp(Levelp, Thingp);
-Tpp    level_tp_get(Levelp, int x, int y, uint8_t slot);
 void   level_anim(Levelp);
 void   level_assign_tiles(Levelp);
 void   level_bounds_set(Levelp);
-void   level_destructor(Levelp l);
+void   level_destructor(Levelp);
 void   level_display(Levelp);
 void   level_display(Levelp);
 void   level_dungeon_create_and_place(Levelp);
@@ -196,8 +196,15 @@ void   level_tick_body(Levelp, float dt);
 void   level_tick_end_requested(Levelp);
 void   level_tick(Levelp);
 void   level_tick_time_step(Levelp);
-void   level_tp_set(Levelp, int x, int y, Tpp);
-void   level_tp_unset(Levelp, int x, int y, Tpp);
+// end sort marker1 }
+
+Tpp  level_tp_get(Levelp, int x, int y, uint8_t slot);
+void level_tp_set(Levelp, int x, int y, Tpp);
+void level_tp_unset(Levelp, int x, int y, Tpp);
+
+int  level_cursor_get(Levelp, int x, int y);
+void level_cursor_set(Levelp, int x, int y, int);
+void level_cursor_unset(Levelp, int x, int y, int);
 
 //
 // Works on a copy of the level data, so things can move cells and we never

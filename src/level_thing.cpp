@@ -35,7 +35,7 @@ Thingp level_thing_or_tp_get(Levelp l, int x, int y, uint8_t slot, Tpp *out)
 
   if (! id) {
     if (out) {
-      switch (l->cursor_at[ x ][ y ]) {
+      switch (l->cursor[ x ][ y ]) {
         case CURSOR_NONE :
           //
           // Normal case. No cursor or anything else here.

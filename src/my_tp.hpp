@@ -257,8 +257,6 @@ Tpp tp_random_unused195(void);
 Tpp tp_random_unused196(void);
 Tpp tp_random_unused197(void);
 Tpp tp_random_unused198(void);
-Tpp tp_random_is_cursor_at(void);
-Tpp tp_random_is_cursor_path(void);
 
 void con(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void con_(Tpp, const char *fmt, va_list args); // compile error without

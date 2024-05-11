@@ -3556,26 +3556,6 @@ Tpp tp_random_unused198(void)
   return tp_get_with_no_rarity_filter(tp_unused198);
 }
 
-Tpp tp_random_is_cursor_at(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_is_cursor_at.size())) {
-    DIE("No is_cursor_at found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_is_cursor_at);
-}
-
-Tpp tp_random_is_cursor_path(void)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! tp_is_cursor_path.size())) {
-    DIE("No is_cursor_path found");
-    return nullptr;
-  }
-  return tp_get_with_no_rarity_filter(tp_is_cursor_path);
-}
-
 Tpp tp_random_key(void)
 {
   TRACE_NO_INDENT();

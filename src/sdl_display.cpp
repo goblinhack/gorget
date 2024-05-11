@@ -21,8 +21,8 @@ void sdl_display(void)
   // Blit the game map in the middle of the screen as a square
   //
   glBlendFunc(GL_ONE, GL_ZERO);
-  const bool blit_centered_map = true;
 
+  const bool blit_centered_map = true;
   if (blit_centered_map) {
     float x_offset
         = (float) game_pix_width_get(game) - (UI_RIGHTBAR_WIDTH * UI_FONT_WIDTH) - game_pix_height_get(game);
@@ -30,9 +30,17 @@ void sdl_display(void)
     x_offset *= (float) game_window_pix_width_get(game);
     x_offset = floor(x_offset);
 
+    int onscreen_map_tl_x = x_offset;
+    int onscreen_map_tl_y = 0;
+    int onscreen_map_br_x = game_window_pix_height_get(game) + x_offset;
+    int onscreen_map_br_y = game_window_pix_height_get(game);
+
+    game_onscreen_map_set(game, onscreen_map_tl_x, onscreen_map_tl_y, onscreen_map_br_x, onscreen_map_br_y);
+
     blit_init();
-    blit(fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, x_offset, 0, game_window_pix_height_get(game) + x_offset,
-         game_window_pix_height_get(game));
+    blit(fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, onscreen_map_tl_x, onscreen_map_tl_y, onscreen_map_br_x,
+         onscreen_map_br_y);
+
     blit_flush();
   } else {
     blit_fbo_window_pix(FBO_MAP);

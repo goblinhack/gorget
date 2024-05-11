@@ -180,6 +180,14 @@ public:
   uint32_t last_mouse_down {};
   uint32_t last_pause {};
 
+  //
+  // These are the onscreen map pixel co-ords.
+  //
+  int onscreen_map_tl_x;
+  int onscreen_map_tl_y;
+  int onscreen_map_br_x;
+  int onscreen_map_br_y;
+
   /////////////////////////////////////////////////////////////////////////
   // not worth saving
   // ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
@@ -441,6 +449,22 @@ void game_state_change(class Game *game, uint8_t new_state, const char *why)
 void game_load_config(class Game *game) { game->load_config(); }
 
 class HiScores *game_hiscores_get(class Game *game) { return &game->config.hiscores; }
+
+void game_onscreen_map_get(class Game *game, int *onscreen_map_tl_x, int *onscreen_map_tl_y, int *onscreen_map_br_x,
+                           int *onscreen_map_br_y)
+{
+  *onscreen_map_tl_x = game->onscreen_map_tl_x, *onscreen_map_tl_y = game->onscreen_map_tl_y,
+  *onscreen_map_br_x = game->onscreen_map_br_x, *onscreen_map_br_y = game->onscreen_map_br_y;
+}
+
+void game_onscreen_map_set(class Game *game, int onscreen_map_tl_x, int onscreen_map_tl_y, int onscreen_map_br_x,
+                           int onscreen_map_br_y)
+{
+  game->onscreen_map_tl_x = onscreen_map_tl_x;
+  game->onscreen_map_tl_y = onscreen_map_tl_y;
+  game->onscreen_map_br_x = onscreen_map_br_x;
+  game->onscreen_map_br_y = onscreen_map_br_y;
+}
 
 uint32_t game_last_mouse_down_get(class Game *game) { return game->last_mouse_down; }
 void     game_last_mouse_down_set(class Game *game, uint32_t val) { game->last_mouse_down = val; }
