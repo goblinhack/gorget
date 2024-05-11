@@ -17,6 +17,12 @@ bool templates_init(void)
   if (! tp_load_player()) {
     return false;
   }
+  if (! tp_load_cursor_path()) {
+    return false;
+  }
+  if (! tp_load_cursor_at()) {
+    return false;
+  }
   if (! tp_load_key()) {
     return false;
   }

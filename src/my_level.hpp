@@ -10,6 +10,12 @@
 #include "my_minimal.hpp"
 #include "my_thing.hpp"
 
+enum {
+  CURSOR_NONE,
+  CURSOR_PATH,
+  CURSOR_AT,
+};
+
 //
 // Simple things like walls that do not change much
 //
@@ -111,6 +117,11 @@ typedef struct Level_ {
   // All thing structure memory.
   //
   Thing all_things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];
+
+  //
+  // What the player is currently highlighting.
+  //
+  uint8_t cursor_at[ MAP_WIDTH ][ MAP_HEIGHT ];
 
   //
   // The current player.
