@@ -13,7 +13,7 @@
 
 void thing_dir_set_none(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -27,7 +27,7 @@ bool thing_is_dir_none(Thingp t) { return (t->dir == THING_DIR_NONE); }
 
 void thing_dir_set_down(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -41,7 +41,7 @@ bool thing_is_dir_down(Thingp t) { return (t->dir == THING_DIR_DOWN); }
 
 void thing_dir_set_up(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -55,7 +55,7 @@ bool thing_is_dir_up(Thingp t) { return (t->dir == THING_DIR_UP); }
 
 void thing_dir_set_left(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -69,7 +69,7 @@ bool thing_is_dir_left(Thingp t) { return (t->dir == THING_DIR_LEFT); }
 
 void thing_dir_set_right(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -83,7 +83,7 @@ bool thing_is_dir_right(Thingp t) { return (t->dir == THING_DIR_RIGHT); }
 
 void thing_dir_set_tl(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -97,7 +97,7 @@ bool thing_is_dir_tl(Thingp t) { return (t->dir == THING_DIR_TL); }
 
 void thing_dir_set_bl(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -111,7 +111,7 @@ bool thing_is_dir_bl(Thingp t) { return (t->dir == THING_DIR_BL); }
 
 void thing_dir_set_tr(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -125,7 +125,7 @@ bool thing_is_dir_tr(Thingp t) { return (t->dir == THING_DIR_TR); }
 
 void thing_dir_set_br(Thingp t)
 {
-  if (tp_is_animated_no_dir_get(tp(t))) {
+  if (tp_is_animated_no_dir(tp(t))) {
     return;
   }
 
@@ -226,11 +226,11 @@ bool level_thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y)
 
   FOR_ALL_TPS_AT(l, it, it_tp, new_loc_x, new_loc_y)
   {
-    if (tp_is_player(my_tp) && tp_is_obs_player_get(it_tp)) {
+    if (tp_is_player(my_tp) && tp_is_obs_player(it_tp)) {
       return false;
     }
 
-    if (tp_is_monst(my_tp) && tp_is_obs_monst_get(it_tp)) {
+    if (tp_is_monst(my_tp) && tp_is_obs_monst(it_tp)) {
       return false;
     }
   }

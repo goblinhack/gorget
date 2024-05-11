@@ -25,9 +25,9 @@ static void level_display_tile_index(Levelp l, Tpp tp, uint16_t tile_index, poin
   tl += offset;
   br += offset;
 
-  if (tp_is_blit_outlined_get(tp)) {
+  if (tp_is_blit_outlined(tp)) {
     tile_blit_outline(tile, tl, br, WHITE, BLACK, false);
-  } else if (tp_is_blit_square_outlined_get(tp)) {
+  } else if (tp_is_blit_square_outlined(tp)) {
     tile_blit_outline(tile, tl, br, WHITE, BLACK, true);
   } else {
     tile_blit(tile, tl, br);
@@ -74,7 +74,7 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, ThingOrT
   tl.x -= l->pixel_map_at_x;
   tl.y -= l->pixel_map_at_y;
 
-  if (tp_is_blit_on_ground_get(tp)) {
+  if (tp_is_blit_on_ground(tp)) {
     //
     // On the ground
     //
@@ -83,7 +83,7 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, ThingOrT
     // Center x
     //
     tl.x -= (pix_width - dw) / 2;
-  } else if (tp_is_blit_centered_get(tp)) {
+  } else if (tp_is_blit_centered(tp)) {
     //
     // Centered
     //
@@ -110,7 +110,7 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, ThingOrT
   //
   // Flippable?
   //
-  if (tp_is_animated_can_hflip_get(tp)) {
+  if (tp_is_animated_can_hflip(tp)) {
     if (thing_is_dir_left(t) || thing_is_dir_tl(t) || thing_is_dir_bl(t)) {
       std::swap(tl.x, br.x);
     }

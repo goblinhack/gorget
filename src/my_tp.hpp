@@ -276,25 +276,25 @@ const char *tp_name(Tpp tp);
 const char *to_string(Tpp tp);
 const char *to_short_string(Tpp tp);
 
-bool tp_is_animated_can_hflip_get(Tpp tp);
+bool tp_is_animated_can_hflip(Tpp tp);
 void tp_is_animated_can_hflip_set(Tpp tp, bool val);
 
-bool tp_is_animated_no_dir_get(Tpp tp);
+bool tp_is_animated_no_dir(Tpp tp);
 void tp_is_animated_no_dir_set(Tpp tp, bool val);
 
-bool tp_is_blit_centered_get(Tpp tp);
+bool tp_is_blit_centered(Tpp tp);
 void tp_is_blit_centered_set(Tpp tp, bool val);
 
-bool tp_is_blit_on_ground_get(Tpp tp);
+bool tp_is_blit_on_ground(Tpp tp);
 void tp_is_blit_on_ground_set(Tpp tp, bool val);
 
-bool tp_is_blit_outlined_get(Tpp tp);
+bool tp_is_blit_outlined(Tpp tp);
 void tp_is_blit_outlined_set(Tpp tp, bool val);
 
-bool tp_is_blit_square_outlined_get(Tpp tp);
+bool tp_is_blit_square_outlined(Tpp tp);
 void tp_is_blit_square_outlined_set(Tpp tp, bool val);
 
-bool tp_is_blit_tiled_get(Tpp tp);
+bool tp_is_blit_tiled(Tpp tp);
 void tp_is_blit_tiled_set(Tpp tp, bool val);
 
 bool tp_is_cursor(Tpp tp);
@@ -303,7 +303,7 @@ void tp_is_cursor_set(Tpp tp, bool val);
 bool tp_is_door(Tpp tp);
 void tp_is_door_set(Tpp tp, bool val);
 
-bool tp_is_dungeon_entrance_get(Tpp tp);
+bool tp_is_dungeon_entrance(Tpp tp);
 void tp_is_dungeon_entrance_set(Tpp tp, bool val);
 
 bool tp_is_exit(Tpp tp);
@@ -312,604 +312,604 @@ void tp_is_exit_set(Tpp tp, bool val);
 bool tp_is_floor(Tpp tp);
 void tp_is_floor_set(Tpp tp, bool val);
 
-bool tp_is_unused1_get(Tpp tp);
+bool tp_is_unused1(Tpp tp);
 void tp_is_unused1_set(Tpp tp, bool val);
 
-bool tp_is_unused2_get(Tpp tp);
+bool tp_is_unused2(Tpp tp);
 void tp_is_unused2_set(Tpp tp, bool val);
 
-bool tp_is_unused3_get(Tpp tp);
+bool tp_is_unused3(Tpp tp);
 void tp_is_unused3_set(Tpp tp, bool val);
 
-bool tp_is_unused4_get(Tpp tp);
+bool tp_is_unused4(Tpp tp);
 void tp_is_unused4_set(Tpp tp, bool val);
 
-bool tp_is_unused5_get(Tpp tp);
+bool tp_is_unused5(Tpp tp);
 void tp_is_unused5_set(Tpp tp, bool val);
 
-bool tp_is_unused6_get(Tpp tp);
+bool tp_is_unused6(Tpp tp);
 void tp_is_unused6_set(Tpp tp, bool val);
 
-bool tp_is_unused7_get(Tpp tp);
+bool tp_is_unused7(Tpp tp);
 void tp_is_unused7_set(Tpp tp, bool val);
 
-bool tp_is_unused8_get(Tpp tp);
+bool tp_is_unused8(Tpp tp);
 void tp_is_unused8_set(Tpp tp, bool val);
 
-bool tp_is_unused9_get(Tpp tp);
+bool tp_is_unused9(Tpp tp);
 void tp_is_unused9_set(Tpp tp, bool val);
 
-bool tp_is_unused10_get(Tpp tp);
+bool tp_is_unused10(Tpp tp);
 void tp_is_unused10_set(Tpp tp, bool val);
 
-bool tp_is_unused11_get(Tpp tp);
+bool tp_is_unused11(Tpp tp);
 void tp_is_unused11_set(Tpp tp, bool val);
 
-bool tp_is_unused12_get(Tpp tp);
+bool tp_is_unused12(Tpp tp);
 void tp_is_unused12_set(Tpp tp, bool val);
 
-bool tp_is_unused13_get(Tpp tp);
+bool tp_is_unused13(Tpp tp);
 void tp_is_unused13_set(Tpp tp, bool val);
 
-bool tp_is_unused14_get(Tpp tp);
+bool tp_is_unused14(Tpp tp);
 void tp_is_unused14_set(Tpp tp, bool val);
 
-bool tp_is_unused15_get(Tpp tp);
+bool tp_is_unused15(Tpp tp);
 void tp_is_unused15_set(Tpp tp, bool val);
 
-bool tp_is_unused16_get(Tpp tp);
+bool tp_is_unused16(Tpp tp);
 void tp_is_unused16_set(Tpp tp, bool val);
 
-bool tp_is_unused17_get(Tpp tp);
+bool tp_is_unused17(Tpp tp);
 void tp_is_unused17_set(Tpp tp, bool val);
 
-bool tp_is_unused18_get(Tpp tp);
+bool tp_is_unused18(Tpp tp);
 void tp_is_unused18_set(Tpp tp, bool val);
 
-bool tp_is_unused19_get(Tpp tp);
+bool tp_is_unused19(Tpp tp);
 void tp_is_unused19_set(Tpp tp, bool val);
 
-bool tp_is_unused20_get(Tpp tp);
+bool tp_is_unused20(Tpp tp);
 void tp_is_unused20_set(Tpp tp, bool val);
 
-bool tp_is_unused21_get(Tpp tp);
+bool tp_is_unused21(Tpp tp);
 void tp_is_unused21_set(Tpp tp, bool val);
 
-bool tp_is_unused22_get(Tpp tp);
+bool tp_is_unused22(Tpp tp);
 void tp_is_unused22_set(Tpp tp, bool val);
 
-bool tp_is_unused23_get(Tpp tp);
+bool tp_is_unused23(Tpp tp);
 void tp_is_unused23_set(Tpp tp, bool val);
 
-bool tp_is_unused24_get(Tpp tp);
+bool tp_is_unused24(Tpp tp);
 void tp_is_unused24_set(Tpp tp, bool val);
 
-bool tp_is_unused25_get(Tpp tp);
+bool tp_is_unused25(Tpp tp);
 void tp_is_unused25_set(Tpp tp, bool val);
 
-bool tp_is_unused26_get(Tpp tp);
+bool tp_is_unused26(Tpp tp);
 void tp_is_unused26_set(Tpp tp, bool val);
 
-bool tp_is_unused27_get(Tpp tp);
+bool tp_is_unused27(Tpp tp);
 void tp_is_unused27_set(Tpp tp, bool val);
 
-bool tp_is_unused28_get(Tpp tp);
+bool tp_is_unused28(Tpp tp);
 void tp_is_unused28_set(Tpp tp, bool val);
 
-bool tp_is_unused29_get(Tpp tp);
+bool tp_is_unused29(Tpp tp);
 void tp_is_unused29_set(Tpp tp, bool val);
 
-bool tp_is_unused30_get(Tpp tp);
+bool tp_is_unused30(Tpp tp);
 void tp_is_unused30_set(Tpp tp, bool val);
 
-bool tp_is_unused31_get(Tpp tp);
+bool tp_is_unused31(Tpp tp);
 void tp_is_unused31_set(Tpp tp, bool val);
 
-bool tp_is_unused32_get(Tpp tp);
+bool tp_is_unused32(Tpp tp);
 void tp_is_unused32_set(Tpp tp, bool val);
 
-bool tp_is_unused33_get(Tpp tp);
+bool tp_is_unused33(Tpp tp);
 void tp_is_unused33_set(Tpp tp, bool val);
 
-bool tp_is_unused34_get(Tpp tp);
+bool tp_is_unused34(Tpp tp);
 void tp_is_unused34_set(Tpp tp, bool val);
 
-bool tp_is_unused35_get(Tpp tp);
+bool tp_is_unused35(Tpp tp);
 void tp_is_unused35_set(Tpp tp, bool val);
 
-bool tp_is_unused36_get(Tpp tp);
+bool tp_is_unused36(Tpp tp);
 void tp_is_unused36_set(Tpp tp, bool val);
 
-bool tp_is_unused37_get(Tpp tp);
+bool tp_is_unused37(Tpp tp);
 void tp_is_unused37_set(Tpp tp, bool val);
 
-bool tp_is_unused38_get(Tpp tp);
+bool tp_is_unused38(Tpp tp);
 void tp_is_unused38_set(Tpp tp, bool val);
 
-bool tp_is_unused39_get(Tpp tp);
+bool tp_is_unused39(Tpp tp);
 void tp_is_unused39_set(Tpp tp, bool val);
 
-bool tp_is_unused40_get(Tpp tp);
+bool tp_is_unused40(Tpp tp);
 void tp_is_unused40_set(Tpp tp, bool val);
 
-bool tp_is_unused41_get(Tpp tp);
+bool tp_is_unused41(Tpp tp);
 void tp_is_unused41_set(Tpp tp, bool val);
 
-bool tp_is_unused42_get(Tpp tp);
+bool tp_is_unused42(Tpp tp);
 void tp_is_unused42_set(Tpp tp, bool val);
 
-bool tp_is_unused43_get(Tpp tp);
+bool tp_is_unused43(Tpp tp);
 void tp_is_unused43_set(Tpp tp, bool val);
 
-bool tp_is_unused44_get(Tpp tp);
+bool tp_is_unused44(Tpp tp);
 void tp_is_unused44_set(Tpp tp, bool val);
 
-bool tp_is_unused45_get(Tpp tp);
+bool tp_is_unused45(Tpp tp);
 void tp_is_unused45_set(Tpp tp, bool val);
 
-bool tp_is_unused46_get(Tpp tp);
+bool tp_is_unused46(Tpp tp);
 void tp_is_unused46_set(Tpp tp, bool val);
 
-bool tp_is_unused47_get(Tpp tp);
+bool tp_is_unused47(Tpp tp);
 void tp_is_unused47_set(Tpp tp, bool val);
 
-bool tp_is_unused48_get(Tpp tp);
+bool tp_is_unused48(Tpp tp);
 void tp_is_unused48_set(Tpp tp, bool val);
 
-bool tp_is_unused49_get(Tpp tp);
+bool tp_is_unused49(Tpp tp);
 void tp_is_unused49_set(Tpp tp, bool val);
 
-bool tp_is_unused50_get(Tpp tp);
+bool tp_is_unused50(Tpp tp);
 void tp_is_unused50_set(Tpp tp, bool val);
 
-bool tp_is_unused51_get(Tpp tp);
+bool tp_is_unused51(Tpp tp);
 void tp_is_unused51_set(Tpp tp, bool val);
 
-bool tp_is_unused52_get(Tpp tp);
+bool tp_is_unused52(Tpp tp);
 void tp_is_unused52_set(Tpp tp, bool val);
 
-bool tp_is_unused53_get(Tpp tp);
+bool tp_is_unused53(Tpp tp);
 void tp_is_unused53_set(Tpp tp, bool val);
 
-bool tp_is_unused54_get(Tpp tp);
+bool tp_is_unused54(Tpp tp);
 void tp_is_unused54_set(Tpp tp, bool val);
 
-bool tp_is_unused55_get(Tpp tp);
+bool tp_is_unused55(Tpp tp);
 void tp_is_unused55_set(Tpp tp, bool val);
 
-bool tp_is_unused56_get(Tpp tp);
+bool tp_is_unused56(Tpp tp);
 void tp_is_unused56_set(Tpp tp, bool val);
 
-bool tp_is_unused57_get(Tpp tp);
+bool tp_is_unused57(Tpp tp);
 void tp_is_unused57_set(Tpp tp, bool val);
 
-bool tp_is_unused58_get(Tpp tp);
+bool tp_is_unused58(Tpp tp);
 void tp_is_unused58_set(Tpp tp, bool val);
 
-bool tp_is_unused59_get(Tpp tp);
+bool tp_is_unused59(Tpp tp);
 void tp_is_unused59_set(Tpp tp, bool val);
 
-bool tp_is_unused60_get(Tpp tp);
+bool tp_is_unused60(Tpp tp);
 void tp_is_unused60_set(Tpp tp, bool val);
 
-bool tp_is_unused61_get(Tpp tp);
+bool tp_is_unused61(Tpp tp);
 void tp_is_unused61_set(Tpp tp, bool val);
 
-bool tp_is_unused62_get(Tpp tp);
+bool tp_is_unused62(Tpp tp);
 void tp_is_unused62_set(Tpp tp, bool val);
 
-bool tp_is_unused63_get(Tpp tp);
+bool tp_is_unused63(Tpp tp);
 void tp_is_unused63_set(Tpp tp, bool val);
 
-bool tp_is_unused64_get(Tpp tp);
+bool tp_is_unused64(Tpp tp);
 void tp_is_unused64_set(Tpp tp, bool val);
 
-bool tp_is_unused65_get(Tpp tp);
+bool tp_is_unused65(Tpp tp);
 void tp_is_unused65_set(Tpp tp, bool val);
 
-bool tp_is_unused66_get(Tpp tp);
+bool tp_is_unused66(Tpp tp);
 void tp_is_unused66_set(Tpp tp, bool val);
 
-bool tp_is_unused67_get(Tpp tp);
+bool tp_is_unused67(Tpp tp);
 void tp_is_unused67_set(Tpp tp, bool val);
 
-bool tp_is_unused68_get(Tpp tp);
+bool tp_is_unused68(Tpp tp);
 void tp_is_unused68_set(Tpp tp, bool val);
 
-bool tp_is_unused69_get(Tpp tp);
+bool tp_is_unused69(Tpp tp);
 void tp_is_unused69_set(Tpp tp, bool val);
 
-bool tp_is_unused70_get(Tpp tp);
+bool tp_is_unused70(Tpp tp);
 void tp_is_unused70_set(Tpp tp, bool val);
 
-bool tp_is_unused71_get(Tpp tp);
+bool tp_is_unused71(Tpp tp);
 void tp_is_unused71_set(Tpp tp, bool val);
 
-bool tp_is_unused72_get(Tpp tp);
+bool tp_is_unused72(Tpp tp);
 void tp_is_unused72_set(Tpp tp, bool val);
 
-bool tp_is_unused73_get(Tpp tp);
+bool tp_is_unused73(Tpp tp);
 void tp_is_unused73_set(Tpp tp, bool val);
 
-bool tp_is_unused74_get(Tpp tp);
+bool tp_is_unused74(Tpp tp);
 void tp_is_unused74_set(Tpp tp, bool val);
 
-bool tp_is_unused75_get(Tpp tp);
+bool tp_is_unused75(Tpp tp);
 void tp_is_unused75_set(Tpp tp, bool val);
 
-bool tp_is_unused76_get(Tpp tp);
+bool tp_is_unused76(Tpp tp);
 void tp_is_unused76_set(Tpp tp, bool val);
 
-bool tp_is_unused77_get(Tpp tp);
+bool tp_is_unused77(Tpp tp);
 void tp_is_unused77_set(Tpp tp, bool val);
 
-bool tp_is_unused78_get(Tpp tp);
+bool tp_is_unused78(Tpp tp);
 void tp_is_unused78_set(Tpp tp, bool val);
 
-bool tp_is_unused79_get(Tpp tp);
+bool tp_is_unused79(Tpp tp);
 void tp_is_unused79_set(Tpp tp, bool val);
 
-bool tp_is_unused80_get(Tpp tp);
+bool tp_is_unused80(Tpp tp);
 void tp_is_unused80_set(Tpp tp, bool val);
 
-bool tp_is_unused81_get(Tpp tp);
+bool tp_is_unused81(Tpp tp);
 void tp_is_unused81_set(Tpp tp, bool val);
 
-bool tp_is_unused82_get(Tpp tp);
+bool tp_is_unused82(Tpp tp);
 void tp_is_unused82_set(Tpp tp, bool val);
 
-bool tp_is_unused83_get(Tpp tp);
+bool tp_is_unused83(Tpp tp);
 void tp_is_unused83_set(Tpp tp, bool val);
 
-bool tp_is_unused84_get(Tpp tp);
+bool tp_is_unused84(Tpp tp);
 void tp_is_unused84_set(Tpp tp, bool val);
 
-bool tp_is_unused85_get(Tpp tp);
+bool tp_is_unused85(Tpp tp);
 void tp_is_unused85_set(Tpp tp, bool val);
 
-bool tp_is_unused86_get(Tpp tp);
+bool tp_is_unused86(Tpp tp);
 void tp_is_unused86_set(Tpp tp, bool val);
 
-bool tp_is_unused87_get(Tpp tp);
+bool tp_is_unused87(Tpp tp);
 void tp_is_unused87_set(Tpp tp, bool val);
 
-bool tp_is_unused88_get(Tpp tp);
+bool tp_is_unused88(Tpp tp);
 void tp_is_unused88_set(Tpp tp, bool val);
 
-bool tp_is_unused89_get(Tpp tp);
+bool tp_is_unused89(Tpp tp);
 void tp_is_unused89_set(Tpp tp, bool val);
 
-bool tp_is_unused90_get(Tpp tp);
+bool tp_is_unused90(Tpp tp);
 void tp_is_unused90_set(Tpp tp, bool val);
 
-bool tp_is_unused91_get(Tpp tp);
+bool tp_is_unused91(Tpp tp);
 void tp_is_unused91_set(Tpp tp, bool val);
 
-bool tp_is_unused92_get(Tpp tp);
+bool tp_is_unused92(Tpp tp);
 void tp_is_unused92_set(Tpp tp, bool val);
 
-bool tp_is_unused93_get(Tpp tp);
+bool tp_is_unused93(Tpp tp);
 void tp_is_unused93_set(Tpp tp, bool val);
 
-bool tp_is_unused94_get(Tpp tp);
+bool tp_is_unused94(Tpp tp);
 void tp_is_unused94_set(Tpp tp, bool val);
 
-bool tp_is_unused95_get(Tpp tp);
+bool tp_is_unused95(Tpp tp);
 void tp_is_unused95_set(Tpp tp, bool val);
 
-bool tp_is_unused96_get(Tpp tp);
+bool tp_is_unused96(Tpp tp);
 void tp_is_unused96_set(Tpp tp, bool val);
 
-bool tp_is_unused97_get(Tpp tp);
+bool tp_is_unused97(Tpp tp);
 void tp_is_unused97_set(Tpp tp, bool val);
 
-bool tp_is_unused98_get(Tpp tp);
+bool tp_is_unused98(Tpp tp);
 void tp_is_unused98_set(Tpp tp, bool val);
 
-bool tp_is_unused99_get(Tpp tp);
+bool tp_is_unused99(Tpp tp);
 void tp_is_unused99_set(Tpp tp, bool val);
 
-bool tp_is_unused100_get(Tpp tp);
+bool tp_is_unused100(Tpp tp);
 void tp_is_unused100_set(Tpp tp, bool val);
 
-bool tp_is_unused101_get(Tpp tp);
+bool tp_is_unused101(Tpp tp);
 void tp_is_unused101_set(Tpp tp, bool val);
 
-bool tp_is_unused102_get(Tpp tp);
+bool tp_is_unused102(Tpp tp);
 void tp_is_unused102_set(Tpp tp, bool val);
 
-bool tp_is_unused103_get(Tpp tp);
+bool tp_is_unused103(Tpp tp);
 void tp_is_unused103_set(Tpp tp, bool val);
 
-bool tp_is_unused104_get(Tpp tp);
+bool tp_is_unused104(Tpp tp);
 void tp_is_unused104_set(Tpp tp, bool val);
 
-bool tp_is_unused105_get(Tpp tp);
+bool tp_is_unused105(Tpp tp);
 void tp_is_unused105_set(Tpp tp, bool val);
 
-bool tp_is_unused106_get(Tpp tp);
+bool tp_is_unused106(Tpp tp);
 void tp_is_unused106_set(Tpp tp, bool val);
 
-bool tp_is_unused107_get(Tpp tp);
+bool tp_is_unused107(Tpp tp);
 void tp_is_unused107_set(Tpp tp, bool val);
 
-bool tp_is_unused108_get(Tpp tp);
+bool tp_is_unused108(Tpp tp);
 void tp_is_unused108_set(Tpp tp, bool val);
 
-bool tp_is_unused109_get(Tpp tp);
+bool tp_is_unused109(Tpp tp);
 void tp_is_unused109_set(Tpp tp, bool val);
 
-bool tp_is_unused110_get(Tpp tp);
+bool tp_is_unused110(Tpp tp);
 void tp_is_unused110_set(Tpp tp, bool val);
 
-bool tp_is_unused111_get(Tpp tp);
+bool tp_is_unused111(Tpp tp);
 void tp_is_unused111_set(Tpp tp, bool val);
 
-bool tp_is_unused112_get(Tpp tp);
+bool tp_is_unused112(Tpp tp);
 void tp_is_unused112_set(Tpp tp, bool val);
 
-bool tp_is_unused113_get(Tpp tp);
+bool tp_is_unused113(Tpp tp);
 void tp_is_unused113_set(Tpp tp, bool val);
 
-bool tp_is_unused114_get(Tpp tp);
+bool tp_is_unused114(Tpp tp);
 void tp_is_unused114_set(Tpp tp, bool val);
 
-bool tp_is_unused115_get(Tpp tp);
+bool tp_is_unused115(Tpp tp);
 void tp_is_unused115_set(Tpp tp, bool val);
 
-bool tp_is_unused116_get(Tpp tp);
+bool tp_is_unused116(Tpp tp);
 void tp_is_unused116_set(Tpp tp, bool val);
 
-bool tp_is_unused117_get(Tpp tp);
+bool tp_is_unused117(Tpp tp);
 void tp_is_unused117_set(Tpp tp, bool val);
 
-bool tp_is_unused118_get(Tpp tp);
+bool tp_is_unused118(Tpp tp);
 void tp_is_unused118_set(Tpp tp, bool val);
 
-bool tp_is_unused119_get(Tpp tp);
+bool tp_is_unused119(Tpp tp);
 void tp_is_unused119_set(Tpp tp, bool val);
 
-bool tp_is_unused120_get(Tpp tp);
+bool tp_is_unused120(Tpp tp);
 void tp_is_unused120_set(Tpp tp, bool val);
 
-bool tp_is_unused121_get(Tpp tp);
+bool tp_is_unused121(Tpp tp);
 void tp_is_unused121_set(Tpp tp, bool val);
 
-bool tp_is_unused122_get(Tpp tp);
+bool tp_is_unused122(Tpp tp);
 void tp_is_unused122_set(Tpp tp, bool val);
 
-bool tp_is_unused123_get(Tpp tp);
+bool tp_is_unused123(Tpp tp);
 void tp_is_unused123_set(Tpp tp, bool val);
 
-bool tp_is_unused124_get(Tpp tp);
+bool tp_is_unused124(Tpp tp);
 void tp_is_unused124_set(Tpp tp, bool val);
 
-bool tp_is_unused125_get(Tpp tp);
+bool tp_is_unused125(Tpp tp);
 void tp_is_unused125_set(Tpp tp, bool val);
 
-bool tp_is_unused126_get(Tpp tp);
+bool tp_is_unused126(Tpp tp);
 void tp_is_unused126_set(Tpp tp, bool val);
 
-bool tp_is_unused127_get(Tpp tp);
+bool tp_is_unused127(Tpp tp);
 void tp_is_unused127_set(Tpp tp, bool val);
 
-bool tp_is_unused128_get(Tpp tp);
+bool tp_is_unused128(Tpp tp);
 void tp_is_unused128_set(Tpp tp, bool val);
 
-bool tp_is_unused129_get(Tpp tp);
+bool tp_is_unused129(Tpp tp);
 void tp_is_unused129_set(Tpp tp, bool val);
 
-bool tp_is_unused130_get(Tpp tp);
+bool tp_is_unused130(Tpp tp);
 void tp_is_unused130_set(Tpp tp, bool val);
 
-bool tp_is_unused131_get(Tpp tp);
+bool tp_is_unused131(Tpp tp);
 void tp_is_unused131_set(Tpp tp, bool val);
 
-bool tp_is_unused132_get(Tpp tp);
+bool tp_is_unused132(Tpp tp);
 void tp_is_unused132_set(Tpp tp, bool val);
 
-bool tp_is_unused133_get(Tpp tp);
+bool tp_is_unused133(Tpp tp);
 void tp_is_unused133_set(Tpp tp, bool val);
 
-bool tp_is_unused134_get(Tpp tp);
+bool tp_is_unused134(Tpp tp);
 void tp_is_unused134_set(Tpp tp, bool val);
 
-bool tp_is_unused135_get(Tpp tp);
+bool tp_is_unused135(Tpp tp);
 void tp_is_unused135_set(Tpp tp, bool val);
 
-bool tp_is_unused136_get(Tpp tp);
+bool tp_is_unused136(Tpp tp);
 void tp_is_unused136_set(Tpp tp, bool val);
 
-bool tp_is_unused137_get(Tpp tp);
+bool tp_is_unused137(Tpp tp);
 void tp_is_unused137_set(Tpp tp, bool val);
 
-bool tp_is_unused138_get(Tpp tp);
+bool tp_is_unused138(Tpp tp);
 void tp_is_unused138_set(Tpp tp, bool val);
 
-bool tp_is_unused139_get(Tpp tp);
+bool tp_is_unused139(Tpp tp);
 void tp_is_unused139_set(Tpp tp, bool val);
 
-bool tp_is_unused140_get(Tpp tp);
+bool tp_is_unused140(Tpp tp);
 void tp_is_unused140_set(Tpp tp, bool val);
 
-bool tp_is_unused141_get(Tpp tp);
+bool tp_is_unused141(Tpp tp);
 void tp_is_unused141_set(Tpp tp, bool val);
 
-bool tp_is_unused142_get(Tpp tp);
+bool tp_is_unused142(Tpp tp);
 void tp_is_unused142_set(Tpp tp, bool val);
 
-bool tp_is_unused143_get(Tpp tp);
+bool tp_is_unused143(Tpp tp);
 void tp_is_unused143_set(Tpp tp, bool val);
 
-bool tp_is_unused144_get(Tpp tp);
+bool tp_is_unused144(Tpp tp);
 void tp_is_unused144_set(Tpp tp, bool val);
 
-bool tp_is_unused145_get(Tpp tp);
+bool tp_is_unused145(Tpp tp);
 void tp_is_unused145_set(Tpp tp, bool val);
 
-bool tp_is_unused146_get(Tpp tp);
+bool tp_is_unused146(Tpp tp);
 void tp_is_unused146_set(Tpp tp, bool val);
 
-bool tp_is_unused147_get(Tpp tp);
+bool tp_is_unused147(Tpp tp);
 void tp_is_unused147_set(Tpp tp, bool val);
 
-bool tp_is_unused148_get(Tpp tp);
+bool tp_is_unused148(Tpp tp);
 void tp_is_unused148_set(Tpp tp, bool val);
 
-bool tp_is_unused149_get(Tpp tp);
+bool tp_is_unused149(Tpp tp);
 void tp_is_unused149_set(Tpp tp, bool val);
 
-bool tp_is_unused150_get(Tpp tp);
+bool tp_is_unused150(Tpp tp);
 void tp_is_unused150_set(Tpp tp, bool val);
 
-bool tp_is_unused151_get(Tpp tp);
+bool tp_is_unused151(Tpp tp);
 void tp_is_unused151_set(Tpp tp, bool val);
 
-bool tp_is_unused152_get(Tpp tp);
+bool tp_is_unused152(Tpp tp);
 void tp_is_unused152_set(Tpp tp, bool val);
 
-bool tp_is_unused153_get(Tpp tp);
+bool tp_is_unused153(Tpp tp);
 void tp_is_unused153_set(Tpp tp, bool val);
 
-bool tp_is_unused154_get(Tpp tp);
+bool tp_is_unused154(Tpp tp);
 void tp_is_unused154_set(Tpp tp, bool val);
 
-bool tp_is_unused155_get(Tpp tp);
+bool tp_is_unused155(Tpp tp);
 void tp_is_unused155_set(Tpp tp, bool val);
 
-bool tp_is_unused156_get(Tpp tp);
+bool tp_is_unused156(Tpp tp);
 void tp_is_unused156_set(Tpp tp, bool val);
 
-bool tp_is_unused157_get(Tpp tp);
+bool tp_is_unused157(Tpp tp);
 void tp_is_unused157_set(Tpp tp, bool val);
 
-bool tp_is_unused158_get(Tpp tp);
+bool tp_is_unused158(Tpp tp);
 void tp_is_unused158_set(Tpp tp, bool val);
 
-bool tp_is_unused159_get(Tpp tp);
+bool tp_is_unused159(Tpp tp);
 void tp_is_unused159_set(Tpp tp, bool val);
 
-bool tp_is_unused160_get(Tpp tp);
+bool tp_is_unused160(Tpp tp);
 void tp_is_unused160_set(Tpp tp, bool val);
 
-bool tp_is_unused161_get(Tpp tp);
+bool tp_is_unused161(Tpp tp);
 void tp_is_unused161_set(Tpp tp, bool val);
 
-bool tp_is_unused162_get(Tpp tp);
+bool tp_is_unused162(Tpp tp);
 void tp_is_unused162_set(Tpp tp, bool val);
 
-bool tp_is_unused163_get(Tpp tp);
+bool tp_is_unused163(Tpp tp);
 void tp_is_unused163_set(Tpp tp, bool val);
 
-bool tp_is_unused164_get(Tpp tp);
+bool tp_is_unused164(Tpp tp);
 void tp_is_unused164_set(Tpp tp, bool val);
 
-bool tp_is_unused165_get(Tpp tp);
+bool tp_is_unused165(Tpp tp);
 void tp_is_unused165_set(Tpp tp, bool val);
 
-bool tp_is_unused166_get(Tpp tp);
+bool tp_is_unused166(Tpp tp);
 void tp_is_unused166_set(Tpp tp, bool val);
 
-bool tp_is_unused167_get(Tpp tp);
+bool tp_is_unused167(Tpp tp);
 void tp_is_unused167_set(Tpp tp, bool val);
 
-bool tp_is_unused168_get(Tpp tp);
+bool tp_is_unused168(Tpp tp);
 void tp_is_unused168_set(Tpp tp, bool val);
 
-bool tp_is_unused169_get(Tpp tp);
+bool tp_is_unused169(Tpp tp);
 void tp_is_unused169_set(Tpp tp, bool val);
 
-bool tp_is_unused170_get(Tpp tp);
+bool tp_is_unused170(Tpp tp);
 void tp_is_unused170_set(Tpp tp, bool val);
 
-bool tp_is_unused171_get(Tpp tp);
+bool tp_is_unused171(Tpp tp);
 void tp_is_unused171_set(Tpp tp, bool val);
 
-bool tp_is_unused172_get(Tpp tp);
+bool tp_is_unused172(Tpp tp);
 void tp_is_unused172_set(Tpp tp, bool val);
 
-bool tp_is_unused173_get(Tpp tp);
+bool tp_is_unused173(Tpp tp);
 void tp_is_unused173_set(Tpp tp, bool val);
 
-bool tp_is_unused174_get(Tpp tp);
+bool tp_is_unused174(Tpp tp);
 void tp_is_unused174_set(Tpp tp, bool val);
 
-bool tp_is_unused175_get(Tpp tp);
+bool tp_is_unused175(Tpp tp);
 void tp_is_unused175_set(Tpp tp, bool val);
 
-bool tp_is_unused176_get(Tpp tp);
+bool tp_is_unused176(Tpp tp);
 void tp_is_unused176_set(Tpp tp, bool val);
 
-bool tp_is_unused177_get(Tpp tp);
+bool tp_is_unused177(Tpp tp);
 void tp_is_unused177_set(Tpp tp, bool val);
 
-bool tp_is_unused178_get(Tpp tp);
+bool tp_is_unused178(Tpp tp);
 void tp_is_unused178_set(Tpp tp, bool val);
 
-bool tp_is_unused179_get(Tpp tp);
+bool tp_is_unused179(Tpp tp);
 void tp_is_unused179_set(Tpp tp, bool val);
 
-bool tp_is_unused180_get(Tpp tp);
+bool tp_is_unused180(Tpp tp);
 void tp_is_unused180_set(Tpp tp, bool val);
 
-bool tp_is_unused181_get(Tpp tp);
+bool tp_is_unused181(Tpp tp);
 void tp_is_unused181_set(Tpp tp, bool val);
 
-bool tp_is_unused182_get(Tpp tp);
+bool tp_is_unused182(Tpp tp);
 void tp_is_unused182_set(Tpp tp, bool val);
 
-bool tp_is_unused183_get(Tpp tp);
+bool tp_is_unused183(Tpp tp);
 void tp_is_unused183_set(Tpp tp, bool val);
 
-bool tp_is_unused184_get(Tpp tp);
+bool tp_is_unused184(Tpp tp);
 void tp_is_unused184_set(Tpp tp, bool val);
 
-bool tp_is_unused185_get(Tpp tp);
+bool tp_is_unused185(Tpp tp);
 void tp_is_unused185_set(Tpp tp, bool val);
 
-bool tp_is_unused186_get(Tpp tp);
+bool tp_is_unused186(Tpp tp);
 void tp_is_unused186_set(Tpp tp, bool val);
 
-bool tp_is_unused187_get(Tpp tp);
+bool tp_is_unused187(Tpp tp);
 void tp_is_unused187_set(Tpp tp, bool val);
 
-bool tp_is_unused188_get(Tpp tp);
+bool tp_is_unused188(Tpp tp);
 void tp_is_unused188_set(Tpp tp, bool val);
 
-bool tp_is_unused189_get(Tpp tp);
+bool tp_is_unused189(Tpp tp);
 void tp_is_unused189_set(Tpp tp, bool val);
 
-bool tp_is_unused190_get(Tpp tp);
+bool tp_is_unused190(Tpp tp);
 void tp_is_unused190_set(Tpp tp, bool val);
 
-bool tp_is_unused191_get(Tpp tp);
+bool tp_is_unused191(Tpp tp);
 void tp_is_unused191_set(Tpp tp, bool val);
 
-bool tp_is_unused192_get(Tpp tp);
+bool tp_is_unused192(Tpp tp);
 void tp_is_unused192_set(Tpp tp, bool val);
 
-bool tp_is_unused193_get(Tpp tp);
+bool tp_is_unused193(Tpp tp);
 void tp_is_unused193_set(Tpp tp, bool val);
 
-bool tp_is_unused194_get(Tpp tp);
+bool tp_is_unused194(Tpp tp);
 void tp_is_unused194_set(Tpp tp, bool val);
 
-bool tp_is_unused195_get(Tpp tp);
+bool tp_is_unused195(Tpp tp);
 void tp_is_unused195_set(Tpp tp, bool val);
 
-bool tp_is_unused196_get(Tpp tp);
+bool tp_is_unused196(Tpp tp);
 void tp_is_unused196_set(Tpp tp, bool val);
 
-bool tp_is_unused197_get(Tpp tp);
+bool tp_is_unused197(Tpp tp);
 void tp_is_unused197_set(Tpp tp, bool val);
 
-bool tp_is_unused198_get(Tpp tp);
+bool tp_is_unused198(Tpp tp);
 void tp_is_unused198_set(Tpp tp, bool val);
 
-bool tp_is_cursor_at_get(Tpp tp);
+bool tp_is_cursor_at(Tpp tp);
 void tp_is_cursor_at_set(Tpp tp, bool val);
 
-bool tp_is_cursor_path_get(Tpp tp);
+bool tp_is_cursor_path(Tpp tp);
 void tp_is_cursor_path_set(Tpp tp, bool val);
 
 bool tp_is_key(Tpp tp);
@@ -918,13 +918,13 @@ void tp_is_key_set(Tpp tp, bool val);
 bool tp_is_monst(Tpp tp);
 void tp_is_monst_set(Tpp tp, bool val);
 
-bool tp_is_monst_class_get(Tpp tp, int val);
+bool tp_is_monst_class(Tpp tp, int val);
 void tp_is_monst_class_set(Tpp tp, bool val);
 
-bool tp_is_obs_monst_get(Tpp tp);
+bool tp_is_obs_monst(Tpp tp);
 void tp_is_obs_monst_set(Tpp tp, bool val);
 
-bool tp_is_obs_player_get(Tpp tp);
+bool tp_is_obs_player(Tpp tp);
 void tp_is_obs_player_set(Tpp tp, bool val);
 
 bool tp_is_player(Tpp tp);

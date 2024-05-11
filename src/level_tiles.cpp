@@ -86,7 +86,7 @@ void level_assign_tiles(Levelp l)
           continue;
         }
 
-        if (tp_is_blit_tiled_get(tp)) {
+        if (tp_is_blit_tiled(tp)) {
           auto tile_name = tp_name(tp);
 
           uint16_t A = level_is_same_type(l, x - 1, y - 1, tp) ? 1 : 0;
