@@ -299,12 +299,12 @@ using Tpidmap = std::vector< class Tp * >;
 Tpidmap tp_id_map;
 
 // begin sort marker3 {
+static Tpidmap tp_cursor_at;
+static Tpidmap tp_cursor_path;
 static Tpidmap tp_door;
 static Tpidmap tp_dungeon_entrance;
 static Tpidmap tp_exit;
 static Tpidmap tp_floor;
-static Tpidmap tp_cursor_at;
-static Tpidmap tp_cursor_path;
 static Tpidmap tp_key;
 static Tpidmap tp_monst_class[ MONST_CLASS_MAX ];
 static Tpidmap tp_player;

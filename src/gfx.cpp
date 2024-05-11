@@ -863,6 +863,8 @@ void gfx_init(void)
   // begin sort marker1 {
   gfx_init_12x12();
   gfx_init_24x24();
+  gfx_init_rightbar();
+  gfx_init_ui();
   gfx_ui_init_0();
   gfx_ui_init_1();
   gfx_ui_init_10();
@@ -879,8 +881,6 @@ void gfx_init(void)
   gfx_ui_init_7();
   gfx_ui_init_8();
   gfx_ui_init_9();
-  gfx_init_rightbar();
-  gfx_init_ui();
   // end sort marker1 }
 }
 
