@@ -31,6 +31,12 @@ void game_visible_map_set(class Game *, int visible_map_tl_x, int visible_map_tl
 void game_visible_map_mouse_get(class Game *game, int *visible_map_mouse_x, int *visible_map_mouse_y);
 void game_visible_map_mouse_set(class Game *game, int visible_map_mouse_x, int visible_map_mouse_y);
 
+uint32_t game_tiles_visible_across_get(class Game *);
+void     game_tiles_visible_across_set(class Game *, uint32_t val);
+
+uint32_t game_tiles_visible_down_get(class Game *);
+void     game_tiles_visible_down_set(class Game *, uint32_t val);
+
 uint32_t game_last_mouse_down_get(class Game *);
 void     game_last_mouse_down_set(class Game *, uint32_t);
 
@@ -79,47 +85,47 @@ void game_mouse_wheel_lr_negated_set(class Game *, bool);
 bool game_mouse_wheel_ud_negated_get(class Game *);
 void game_mouse_wheel_ud_negated_set(class Game *, bool);
 
-int16_t game_config_pix_height_get(class Game *);
-void    game_config_pix_height_set(class Game *, int16_t);
+uint32_t game_config_pix_height_get(class Game *);
+void     game_config_pix_height_set(class Game *, uint32_t);
 
-int16_t game_config_pix_width_get(class Game *);
-void    game_config_pix_width_set(class Game *, int16_t);
+uint32_t game_config_pix_width_get(class Game *);
+void     game_config_pix_width_set(class Game *, uint32_t);
 
-int16_t game_pix_height_get(class Game *);
-void    game_pix_height_set(class Game *, int16_t);
+uint32_t game_pix_height_get(class Game *);
+void     game_pix_height_set(class Game *, uint32_t);
 
-int16_t game_pix_width_get(class Game *);
-void    game_pix_width_set(class Game *, int16_t);
+uint32_t game_pix_width_get(class Game *);
+void     game_pix_width_set(class Game *, uint32_t);
 
-int16_t game_map_pix_height_get(class Game *);
-void    game_map_pix_height_set(class Game *, int16_t);
+uint32_t game_map_pix_height_get(class Game *);
+void     game_map_pix_height_set(class Game *, uint32_t);
 
-int16_t game_map_pix_width_get(class Game *);
-void    game_map_pix_width_set(class Game *, int16_t);
+uint32_t game_map_pix_width_get(class Game *);
+void     game_map_pix_width_set(class Game *, uint32_t);
 
-int16_t game_pix_height_get(class Game *);
-void    game_pix_height_set(class Game *, int16_t);
+uint32_t game_pix_height_get(class Game *);
+void     game_pix_height_set(class Game *, uint32_t);
 
-int16_t game_pix_width_get(class Game *);
-void    game_pix_width_set(class Game *, int16_t);
+uint32_t game_pix_width_get(class Game *);
+void     game_pix_width_set(class Game *, uint32_t);
 
-int16_t game_ui_pix_height_get(class Game *);
-void    game_ui_pix_height_set(class Game *, int16_t);
+uint32_t game_ui_pix_height_get(class Game *);
+void     game_ui_pix_height_set(class Game *, uint32_t);
 
-int16_t game_ui_pix_width_get(class Game *);
-void    game_ui_pix_width_set(class Game *, int16_t);
+uint32_t game_ui_pix_width_get(class Game *);
+void     game_ui_pix_width_set(class Game *, uint32_t);
 
-int16_t game_window_pix_height_get(class Game *);
-void    game_window_pix_height_set(class Game *, int16_t);
+uint32_t game_window_pix_height_get(class Game *);
+void     game_window_pix_height_set(class Game *, uint32_t);
 
-int16_t game_window_pix_width_get(class Game *);
-void    game_window_pix_width_set(class Game *, int16_t);
+uint32_t game_window_pix_width_get(class Game *);
+void     game_window_pix_width_set(class Game *, uint32_t);
 
-uint16_t game_ascii_gl_height_get(class Game *);
-void     game_ascii_gl_height_set(class Game *, uint16_t);
+uint32_t game_ascii_gl_height_get(class Game *);
+void     game_ascii_gl_height_set(class Game *, uint32_t);
 
-uint16_t game_ascii_gl_width_get(class Game *);
-void     game_ascii_gl_width_set(class Game *, uint16_t);
+uint32_t game_ascii_gl_width_get(class Game *);
+void     game_ascii_gl_width_set(class Game *, uint32_t);
 
 uint32_t game_music_volume_get(class Game *);
 void     game_music_volume_set(class Game *, uint32_t);

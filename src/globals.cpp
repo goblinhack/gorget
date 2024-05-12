@@ -38,14 +38,6 @@ bool g_opt_debug3; // As above but show the entire level
 
 std::string g_opt_seed_name;
 
-//
-// The number of tiles on screen.
-//
-int TILES_VISIBLE_ACROSS;
-int TILES_VISIBLE_DOWN;
-
-int g_last_logged_callframes_depth;
-
 void reset_globals(void)
 {
   g_opt_debug1               = false;

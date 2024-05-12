@@ -39,31 +39,37 @@ public:
   bool mouse_wheel_lr_negated = {};
   bool mouse_wheel_ud_negated = {};
 
-  int16_t config_pix_height = {};
-  int16_t config_pix_width  = {};
+  uint32_t config_pix_height = {};
+  uint32_t config_pix_width  = {};
   //
   // The pixel perfect screen
   //
-  int16_t game_pix_height = {};
-  int16_t game_pix_width  = {};
+  uint32_t game_pix_height = {};
+  uint32_t game_pix_width  = {};
   //
   // This is the size of the game map within the game FBO
   //
-  int16_t map_pix_height = {};
-  int16_t map_pix_width  = {};
+  uint32_t map_pix_height = {};
+  uint32_t map_pix_width  = {};
   //
   // The user interface that can be higher res than the game
   //
-  int16_t ui_pix_height = {};
-  int16_t ui_pix_width  = {};
+  uint32_t ui_pix_height = {};
+  uint32_t ui_pix_width  = {};
   //
   // The actual display res
   //
-  int16_t window_pix_height = {};
-  int16_t window_pix_width  = {};
+  uint32_t window_pix_height = {};
+  uint32_t window_pix_width  = {};
 
-  uint16_t ascii_gl_height = {};
-  uint16_t ascii_gl_width  = {};
+  //
+  // The number of tiles on screen.
+  //
+  uint32_t tiles_visible_across;
+  uint32_t tiles_visible_down;
+
+  uint32_t ascii_gl_height = {};
+  uint32_t ascii_gl_width  = {};
   uint32_t music_volume    = {};
   uint32_t sdl_delay       = {};
   uint32_t sound_volume    = {};
@@ -255,6 +261,8 @@ void Config::reset(void)
   aspect_ratio           = {};
   window_pix_height      = {};
   window_pix_width       = {};
+  tiles_visible_across   = {};
+  tiles_visible_down     = {};
 
   key_attack.sym     = SDLK_SPACE;
   key_help.sym       = SDLK_h;
@@ -483,6 +491,12 @@ void game_visible_map_mouse_set(class Game *game, int visible_map_mouse_x, int v
   game->visible_map_mouse_y = visible_map_mouse_y;
 }
 
+uint32_t game_tiles_visible_across_get(class Game *) { return game->config.tiles_visible_across; }
+void     game_tiles_visible_across_set(class Game *, uint32_t val) { game->config.tiles_visible_across = val; }
+
+uint32_t game_tiles_visible_down_get(class Game *) { return game->config.tiles_visible_down; }
+void     game_tiles_visible_down_set(class Game *, uint32_t val) { game->config.tiles_visible_down = val; }
+
 uint32_t game_last_mouse_down_get(class Game *game) { return game->last_mouse_down; }
 void     game_last_mouse_down_set(class Game *game, uint32_t val) { game->last_mouse_down = val; }
 
@@ -531,41 +545,41 @@ void game_mouse_wheel_lr_negated_set(class Game *, bool val) { game->config.mous
 bool game_mouse_wheel_ud_negated_get(class Game *) { return game->config.mouse_wheel_ud_negated; }
 void game_mouse_wheel_ud_negated_set(class Game *, bool val) { game->config.mouse_wheel_ud_negated = val; }
 
-int16_t game_config_pix_height_get(class Game *) { return game->config.config_pix_height; }
-void    game_config_pix_height_set(class Game *, int16_t val) { game->config.config_pix_height = val; }
+uint32_t game_config_pix_height_get(class Game *) { return game->config.config_pix_height; }
+void     game_config_pix_height_set(class Game *, uint32_t val) { game->config.config_pix_height = val; }
 
-int16_t game_config_pix_width_get(class Game *) { return game->config.config_pix_width; }
-void    game_config_pix_width_set(class Game *, int16_t val) { game->config.config_pix_width = val; }
+uint32_t game_config_pix_width_get(class Game *) { return game->config.config_pix_width; }
+void     game_config_pix_width_set(class Game *, uint32_t val) { game->config.config_pix_width = val; }
 
-int16_t game_pix_height_get(class Game *) { return game->config.game_pix_height; }
-void    game_pix_height_set(class Game *, int16_t val) { game->config.game_pix_height = val; }
+uint32_t game_pix_height_get(class Game *) { return game->config.game_pix_height; }
+void     game_pix_height_set(class Game *, uint32_t val) { game->config.game_pix_height = val; }
 
-int16_t game_pix_width_get(class Game *) { return game->config.game_pix_width; }
-void    game_pix_width_set(class Game *, int16_t val) { game->config.game_pix_width = val; }
+uint32_t game_pix_width_get(class Game *) { return game->config.game_pix_width; }
+void     game_pix_width_set(class Game *, uint32_t val) { game->config.game_pix_width = val; }
 
-int16_t game_map_pix_height_get(class Game *) { return game->config.map_pix_height; }
-void    game_map_pix_height_set(class Game *, int16_t val) { game->config.map_pix_height = val; }
+uint32_t game_map_pix_height_get(class Game *) { return game->config.map_pix_height; }
+void     game_map_pix_height_set(class Game *, uint32_t val) { game->config.map_pix_height = val; }
 
-int16_t game_map_pix_width_get(class Game *) { return game->config.map_pix_width; }
-void    game_map_pix_width_set(class Game *, int16_t val) { game->config.map_pix_width = val; }
+uint32_t game_map_pix_width_get(class Game *) { return game->config.map_pix_width; }
+void     game_map_pix_width_set(class Game *, uint32_t val) { game->config.map_pix_width = val; }
 
-int16_t game_ui_pix_height_get(class Game *) { return game->config.ui_pix_height; }
-void    game_ui_pix_height_set(class Game *, int16_t val) { game->config.ui_pix_height = val; }
+uint32_t game_ui_pix_height_get(class Game *) { return game->config.ui_pix_height; }
+void     game_ui_pix_height_set(class Game *, uint32_t val) { game->config.ui_pix_height = val; }
 
-int16_t game_ui_pix_width_get(class Game *) { return game->config.ui_pix_width; }
-void    game_ui_pix_width_set(class Game *, int16_t val) { game->config.ui_pix_width = val; }
+uint32_t game_ui_pix_width_get(class Game *) { return game->config.ui_pix_width; }
+void     game_ui_pix_width_set(class Game *, uint32_t val) { game->config.ui_pix_width = val; }
 
-int16_t game_window_pix_height_get(class Game *) { return game->config.window_pix_height; }
-void    game_window_pix_height_set(class Game *, int16_t val) { game->config.window_pix_height = val; }
+uint32_t game_window_pix_height_get(class Game *) { return game->config.window_pix_height; }
+void     game_window_pix_height_set(class Game *, uint32_t val) { game->config.window_pix_height = val; }
 
-int16_t game_window_pix_width_get(class Game *) { return game->config.window_pix_width; }
-void    game_window_pix_width_set(class Game *, int16_t val) { game->config.window_pix_width = val; }
+uint32_t game_window_pix_width_get(class Game *) { return game->config.window_pix_width; }
+void     game_window_pix_width_set(class Game *, uint32_t val) { game->config.window_pix_width = val; }
 
-uint16_t game_ascii_gl_height_get(class Game *) { return game->config.ascii_gl_height; }
-void     game_ascii_gl_height_set(class Game *, uint16_t val) { game->config.ascii_gl_height = val; }
+uint32_t game_ascii_gl_height_get(class Game *) { return game->config.ascii_gl_height; }
+void     game_ascii_gl_height_set(class Game *, uint32_t val) { game->config.ascii_gl_height = val; }
 
-uint16_t game_ascii_gl_width_get(class Game *) { return game->config.ascii_gl_width; }
-void     game_ascii_gl_width_set(class Game *, uint16_t val) { game->config.ascii_gl_width = val; }
+uint32_t game_ascii_gl_width_get(class Game *) { return game->config.ascii_gl_width; }
+void     game_ascii_gl_width_set(class Game *, uint32_t val) { game->config.ascii_gl_width = val; }
 
 uint32_t game_music_volume_get(class Game *) { return game->config.music_volume; }
 void     game_music_volume_set(class Game *, uint32_t val) { game->config.music_volume = val; }

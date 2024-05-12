@@ -106,10 +106,16 @@ typedef struct Level_ {
   bool requested_auto_scroll : 1;
 
   //
+  // TODO
+  // Set when something modifies the map and we need to update caches.
+  //
+  bool is_map_changed : 1;
+
+  //
   // Map scroll offset.
   //
-  int16_t pixel_map_at_x;
-  int16_t pixel_map_at_y;
+  int pixel_map_at_x;
+  int pixel_map_at_y;
 
   ThingOrTp obj[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
 
@@ -122,6 +128,18 @@ typedef struct Level_ {
   // What the player is currently highlighting.
   //
   uint8_t cursor[ MAP_WIDTH ][ MAP_HEIGHT ];
+  int     cusor_at_x;
+  int     cusor_at_y;
+
+  //
+  // Is there something at this location that blocks the cursor?
+  //
+  uint8_t is_cursor_path_blocker[ MAP_WIDTH ][ MAP_HEIGHT ];
+
+  //
+  // Is there some lava etc.. at this point?
+  //
+  uint8_t is_cursor_path_hazard[ MAP_WIDTH ][ MAP_HEIGHT ];
 
   //
   // The current player.
@@ -136,10 +154,10 @@ typedef struct Level_ {
   //
   // Level display bounds
   //
-  int16_t minx = {};
-  int16_t miny = {};
-  int16_t maxx = {};
-  int16_t maxy = {};
+  int minx = {};
+  int miny = {};
+  int maxx = {};
+  int maxy = {};
 
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay

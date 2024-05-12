@@ -56,24 +56,20 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
 
   in >> bits(my.t.ascii_gl_height);
   in >> bits(my.t.ascii_gl_width);
+  in >> bits(my.t.aspect_ratio);
   in >> bits(my.t.config_pix_height);
   in >> bits(my.t.config_pix_width);
   in >> bits(my.t.debug_mode);
   in >> bits(my.t.fps_counter);
   in >> bits(my.t.game_pix_height);
   in >> bits(my.t.game_pix_width);
-  in >> bits(my.t.map_pix_height);
-  in >> bits(my.t.map_pix_width);
   in >> bits(my.t.gfx_allow_highdpi);
   in >> bits(my.t.gfx_borderless);
   in >> bits(my.t.gfx_fullscreen);
   in >> bits(my.t.gfx_fullscreen_desktop);
   in >> bits(my.t.gfx_vsync_enable);
-  in >> bits(my.t.mouse_wheel_lr_negated);
-  in >> bits(my.t.mouse_wheel_ud_negated);
   in >> bits(my.t.key_attack);
   in >> bits(my.t.key_console);
-  in >> bits(my.t.key_unused1);
   in >> bits(my.t.key_help);
   in >> bits(my.t.key_load);
   in >> bits(my.t.key_move_down);
@@ -83,14 +79,20 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_quit);
   in >> bits(my.t.key_save);
   in >> bits(my.t.key_screenshot);
+  in >> bits(my.t.key_unused1);
+  in >> bits(my.t.map_pix_height);
+  in >> bits(my.t.map_pix_width);
+  in >> bits(my.t.mouse_wheel_lr_negated);
+  in >> bits(my.t.mouse_wheel_ud_negated);
   in >> bits(my.t.music_volume);
   in >> bits(my.t.sdl_delay);
   in >> bits(my.t.sound_volume);
-  in >> bits(my.t.ui_pix_height);
-  in >> bits(my.t.ui_pix_width);
+  in >> bits(my.t.tiles_visible_across);
+  in >> bits(my.t.tiles_visible_down);
   in >> bits(my.t.ui_gfx_term_height);
   in >> bits(my.t.ui_gfx_term_width);
-  in >> bits(my.t.aspect_ratio);
+  in >> bits(my.t.ui_pix_height);
+  in >> bits(my.t.ui_pix_width);
   in >> bits(my.t.window_pix_height);
   in >> bits(my.t.window_pix_width);
 
@@ -115,6 +117,8 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: music_volume           = %d", my.t.music_volume);
   LOG("Read config: sdl_delay              = %d", my.t.sdl_delay);
   LOG("Read config: sound_volume           = %d", my.t.sound_volume);
+  LOG("Read config: tiles_visible_across   = %d", my.t.tiles_visible_across);
+  LOG("Read config: tiles_visible_down     = %d", my.t.tiles_visible_down);
   LOG("Read config: ui_pix_height          = %d", my.t.ui_pix_height);
   LOG("Read config: ui_pix_width           = %d", my.t.ui_pix_width);
   LOG("Read config: window_pix_height      = %d", my.t.window_pix_height);

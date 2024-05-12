@@ -1,4 +1,4 @@
-///
+//
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
@@ -695,7 +695,11 @@ void config_game_gfx_update(void)
   game_pix_height_set(game, game_window_pix_height_get(game));
   game_pix_width_set(game, game_window_pix_width_get(game));
 
-  game_pix_height_set(game, TILE_WIDTH * 20);
+  if (1) {
+    game_pix_height_set(game, TILE_WIDTH * 20);
+  } else {
+    game_pix_height_set(game, TILE_WIDTH * MAP_HEIGHT);
+  }
   float game_pix_width = (int) (((double) game_pix_height_get(game)) * game_aspect_ratio_get(game));
   game_pix_width /= TILE_WIDTH;
   game_pix_width = ceil(game_pix_width);
@@ -736,22 +740,8 @@ void config_game_gfx_update(void)
   float tiles_across = game_pix_width_get(game) / TILE_WIDTH;
   float tiles_down   = game_pix_height_get(game) / TILE_HEIGHT;
 
-  TILES_VISIBLE_ACROSS = (int) tiles_across;
-  TILES_VISIBLE_DOWN   = (int) tiles_down;
-
-  if (! TILES_VISIBLE_ACROSS) {
-    {
-      ERR("TILES_VISIBLE_ACROSS is zero");
-      return;
-    }
-  }
-
-  if (! TILES_VISIBLE_DOWN) {
-    {
-      ERR("TILES_VISIBLE_DOWN is zero");
-      return;
-    }
-  }
+  game_tiles_visible_across_set(game, tiles_across);
+  game_tiles_visible_down_set(game, tiles_down);
 
   LOG("SDL: Window:");
   LOG("SDL: - config pixel size         : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
