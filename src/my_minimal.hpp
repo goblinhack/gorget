@@ -175,23 +175,20 @@ struct Level_;
 struct Thing_;
 struct Dmap_;
 struct SDL_Surface;
-struct ThingOrTp_;
 
 using Dmapp   = struct Dmap_ *;
 using Fontp   = class Font *;
-using Id      = unsigned int;
 using Levelp  = struct Level_ *;
 using Lightp  = class Light *;
 using Texp    = class Tex *;
-using ThingId = Id;
+using ThingId = unsigned int;
 using Thingp  = struct Thing_ *;
 using Tilep   = class Tile *;
-using TpId    = Id;
+using TpId    = unsigned int;
 using Tpp     = class Tp *;
 using Widp    = class Wid *;
 
 #define NULL_TP    ((Tpp) nullptr)
 #define NULL_THING ((Thingp) nullptr)
-#define NULL_OBJ   ((struct ThingOrTp_ *) nullptr)
 
 #endif

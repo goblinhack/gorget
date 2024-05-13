@@ -12,6 +12,8 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
+#include <map>
+
 /* clang-format off */
 #define IS_JOIN_ENUM(list_macro)                  \
     list_macro(IS_JOIN_BLOCK,  "IS_JOIN_BLOCK"),  \
@@ -77,8 +79,9 @@ void level_assign_tiles(Levelp l)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
-        auto tp = level_tp_get(l, x, y, slot);
-        if (! tp) {
+        Tpp  tp;
+        auto t = level_thing_and_tp_get(l, x, y, slot, &tp);
+        if (! t) {
           continue;
         }
 
@@ -86,7 +89,7 @@ void level_assign_tiles(Levelp l)
           continue;
         }
 
-        if (tp_is_blit_tiled(tp)) {
+        if (tp_is_tiled(tp)) {
           auto tile_name = tp_name(tp);
 
           uint16_t A = level_is_same_type(l, x - 1, y - 1, tp) ? 1 : 0;
@@ -176,25 +179,18 @@ void level_assign_tiles(Levelp l)
           //
           // Switch the door direction if next to walls
           //
-          if (tp_is_door(tp)) {
-            if (level_tp_get(l, x, y - 1, MAP_DEPTH_WALL) && level_tp_get(l, x, y + 1, MAP_DEPTH_WALL)) {
+          if (tp_flag(tp, is_door)) {
+            if (level_flag(l, is_wall, x, y - 1) && level_flag(l, is_wall, x, y + 1)) {
               block_type = IS_JOIN_TOP;
             }
           }
 
           auto which = std::string(tile_name) + "." + is_join_enum_val2str((is_join_enum) block_type);
           auto tile  = tile_find_mand(which.c_str());
-          level_set_tile(l, x, y, slot, tile);
-
-          l->obj[ x ][ y ][ slot ].anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
-          l->obj[ x ][ y ][ slot ].anim_ms_remaining = pcg_random_range_inclusive(0, tile_delay_ms(tile));
-        } else {
-          auto index = pcg_rand() % tp_tiles_size(tp);
-          auto tile  = tp_tiles_get(tp, index);
           if (tile) {
-            level_set_tile(l, x, y, slot, tile);
-            auto i                              = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
-            l->obj[ x ][ y ][ slot ].anim_index = i;
+            t->tile_index        = tile_index(tile);
+            t->anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
+            t->anim_ms_remaining = pcg_random_range_inclusive(0, tile_delay_ms(tile));
           }
         }
       }

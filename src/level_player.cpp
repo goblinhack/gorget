@@ -7,46 +7,16 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-void level_thing_player_create_and_place(Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  if (l->player) {
-    return;
-  }
-
-  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    for (auto y = 0; y < MAP_HEIGHT; y++) {
-      for (auto x = 0; x < MAP_WIDTH; x++) {
-        auto tp = level_tp_get(l, x, y, slot);
-        if (! tp) {
-          continue;
-        }
-
-        if (! tp_is_player(tp)) {
-          continue;
-        }
-
-        auto t = level_thing_init(l, tp, x, y);
-
-        level_thing_push(l, t);
-
-        if (tp_player_index_get(tp) == l->player_index) {
-          l->player = t->id;
-        }
-
-        level_tp_unset(l, x, y, tp);
-      }
-    }
-  }
-}
-
 Thingp level_thing_player(Levelp l)
 {
   TRACE_NO_INDENT();
 
+  if (! l) {
+    return nullptr;
+  }
+
   if (! l->player) {
-    return NULL;
+    return nullptr;
   }
 
   return level_thing_find(l, l->player);

@@ -224,8 +224,10 @@ bool level_thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y)
 
   auto my_tp = level_thing_tp(l, t);
 
-  FOR_ALL_TPS_AT(l, it, it_tp, new_loc_x, new_loc_y)
+  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, new_loc_x, new_loc_y)
   {
+    auto it_tp = level_thing_tp(l, it);
+
     if (tp_is_player(my_tp) && tp_is_obs_player(it_tp)) {
       return false;
     }
@@ -262,21 +264,36 @@ void level_thing_push(Levelp l, Thingp t)
     return;
   }
 
+  //
+  // Already at this location?
+  //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o = &l->obj[ x ][ y ][ slot ];
-    if (o->id == t->id) {
+    auto o_id = l->thing_id[ x ][ y ][ slot ];
+    if (o_id == t->id) {
       return;
     }
   }
 
+  //
+  // Detach from the old location
+  //
+  level_thing_pop(l, t);
+
+  //
+  // Need to push to the new location.
+  //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o = &l->obj[ x ][ y ][ slot ];
-    if (! o->id) {
-      o->id     = t->id;
+    auto o_id = l->thing_id[ x ][ y ][ slot ];
+    if (! o_id) {
+      l->thing_id[ x ][ y ][ slot ] = t->id;
+
+      //
+      // Set an initial tile so we can see the thing
+      //
       auto tp   = tp_find(t->tp_id);
       auto tile = tp_first_tile(tp);
       if (tile) {
-        o->tile = tile_global_index(tile);
+        t->tile_index = tile_global_index(tile);
       }
       return;
     }
@@ -297,9 +314,9 @@ void level_thing_pop(Levelp l, Thingp t)
   }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o = &l->obj[ x ][ y ][ slot ];
-    if (o->id == t->id) {
-      memset(o, 0, sizeof(*o));
+    auto o_id = l->thing_id[ x ][ y ][ slot ];
+    if (o_id == t->id) {
+      l->thing_id[ x ][ y ][ slot ] = 0;
       return;
     }
   }

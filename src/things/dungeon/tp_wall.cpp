@@ -14,10 +14,10 @@ bool tp_load_wall(void)
     auto tp   = tp_load(name.c_str());
     // begin sort marker1 {
     tp_is_blit_centered_set(tp, true);
-    tp_is_blit_tiled_set(tp, true);
+    tp_is_tiled_set(tp, true);
     tp_is_obs_monst_set(tp, true);
     tp_is_obs_player_set(tp, true);
-    tp_is_wall_set(tp, true);
+    tp_flag_set(tp, is_wall, true);
     tp_z_depth_set(tp, MAP_DEPTH_WALL);
     // end sort marker1 }
 

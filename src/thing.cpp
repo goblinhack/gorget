@@ -3,10 +3,18 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_enums.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
+#include "my_minimal.hpp"
+#include "my_random.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
+#include <map>
+#include <string>
+
+ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 float    thing_thing_dt_get(Thingp t) { return t->thing_dt; }
 int16_t  thing_pix_x_get(Thingp t) { return t->pix_x; }
 int16_t  thing_pix_y_get(Thingp t) { return t->pix_y; }
@@ -45,6 +53,24 @@ Thingp level_thing_init(Levelp l, Tpp tp, int x, int y)
   t->old_y = t->y;
   t->pix_x = t->x * TILE_WIDTH;
   t->pix_y = t->y * TILE_HEIGHT;
+
+  //
+  // Assign an initial tile
+  //
+  auto index = pcg_rand() % tp_tiles_size(tp);
+  auto tile  = tp_tiles_get(tp, index);
+  if (tile) {
+    t->tile_index = tile_index(tile);
+    auto i        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
+    t->anim_index = i;
+  }
+
+  //
+  // Assign the player
+  //
+  if (tp_player_index_get(tp) == l->player_index) {
+    l->player = t->id;
+  }
 
   level_thing_update(l, t);
 

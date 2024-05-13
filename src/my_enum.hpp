@@ -6,12 +6,6 @@
 #ifndef _MY_ENUM_HPP__
 #define _MY_ENUM_HPP__
 
-#include <map>
-// REMOVED #include <stdint.h>
-#include <string>
-
-typedef std::map< std::string, uint32_t > enum_map;
-
 /*
  * Enum list macros .h definitions
  */
@@ -50,7 +44,7 @@ typedef std::map< std::string, uint32_t > enum_map;
     return (arr[ val ]);                                                                                             \
   }                                                                                                                  \
                                                                                                                      \
-  static enum_map enum_name##_tree;                                                                                  \
+  static std::map< std::string, uint32_t > enum_name##_tree;                                                         \
                                                                                                                      \
   /*                                                                                                                 \
    * String to enum.                                                                                                 \

@@ -6,30 +6,28 @@
 #ifndef _MY_THING_HPP_
 #define _MY_THING_HPP_
 
+#include "my_enums.hpp"
 #include "my_minimal.hpp"
 
 #define THING_ID_ENTROPY_BITS 6
-#define THING_ID_X_BITS       5
-#define THING_ID_Y_BITS       5
+#define THING_ID_BITS         16
 
 //
 // IDs below this are for templates
 //
 // Entropy is always > 0 for Thing IDs to distinguish them
 //
-#define THING_ID_BASE (1U << (THING_ID_X_BITS + THING_ID_Y_BITS))
+#define THING_ID_BASE (1U << (THING_ID_BITS))
 
 //
 // A thing ID is composed like:
 // [ Entropy bits] [ X bits ] [ Y bits]
 //
-#define THING_ID_ENTROPY_MASK (((1U << THING_ID_ENTROPY_BITS) - 1) << (THING_ID_X_BITS + THING_ID_Y_BITS))
-#define THING_ID_X_MASK       (((1U << THING_ID_X_BITS) - 1) << THING_ID_Y_BITS)
-#define THING_ID_Y_MASK       ((1U << THING_ID_Y_BITS) - 1)
+#define THING_ID_ENTROPY_MASK (((1U << THING_ID_ENTROPY_BITS) - 1) << THING_ID_BITS)
+#define THING_ID_MASK         ((1U << THING_ID_BITS) - 1)
 
-#define THING_ID_GET_ENTROPY(id) ((id & THING_ID_ENTROPY_MASK) >> (THING_ID_X_BITS + THING_ID_Y_BITS))
-#define THING_ID_GET_X(id)       ((id & THING_ID_X_MASK) >> (THING_ID_Y_BITS))
-#define THING_ID_GET_Y(id)       ((id & THING_ID_Y_MASK))
+#define THING_ID_GET_ENTROPY(id) ((id & THING_ID_ENTROPY_MASK) >> THING_ID_BITS)
+#define THING_ID_GET(id)         (id & THING_ID_MASK)
 
 enum {
   THING_DIR_NONE,
@@ -44,9 +42,10 @@ enum {
 };
 
 typedef struct Thing_ {
-  ThingId  id;
-  uint16_t tp_id;
-  uint16_t tick;
+  //
+  // Unique ID
+  //
+  ThingId id;
   //
   // Map co-ords.
   //
@@ -58,22 +57,46 @@ typedef struct Thing_ {
   int8_t old_x;
   int8_t old_y;
   //
+  // Direction
+  //
+  uint8_t dir;
+  //
+  // The current tiles[] index for this object
+  //
+  uint8_t anim_index;
+  //
+  // Current tile.
+  //
+  uint16_t tile_index;
+  //
+  // Count down until the next animation frame should start
+  //
+  int16_t anim_ms_remaining;
+  //
   // Move speed, with 100 being normal. Updated at start of tick.
   //
   int16_t speed;
   //
-  // Increases per tick and when it reaches 1, allows the thing to move
+  // Template ID
   //
-  float thing_dt;
+  uint16_t tp_id;
+  //
+  // Current game tick this thing has completed
+  //
+  uint16_t tick;
   //
   // Interpolated co-ords in pixels
   //
   int16_t pix_x;
   int16_t pix_y;
   //
-  // Direction
+  // Increases per tick and when it reaches 1, allows the thing to move
   //
-  uint8_t dir;
+  float thing_dt;
+  //
+  // Keeps track of counters in the level this thing has modified.
+  //
+  uint8_t count[ THING_FLAG_MAX ];
 } Thing;
 
 Tpp      tp(Thingp t);

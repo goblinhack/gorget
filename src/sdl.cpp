@@ -301,7 +301,8 @@ uint8_t sdl_init(void)
   LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
   LOG("SDL: OpenGL Renderer : %s", glGetString(GL_RENDERER));
   LOG("SDL: OpenGL Version  : %s", glGetString(GL_VERSION));
-  LOG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS));
+
+  IF_DEBUG { DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS)); }
 
   SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &value);
   LOG("SDL: Red size    : %d", value);

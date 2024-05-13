@@ -27,14 +27,13 @@ void level_anim(Levelp l)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = l->miny; y < l->maxy; y++) {
       for (auto x = l->minx; x < l->maxx; x++) {
-        Tpp tp;
-        level_thing_or_tp_get(l, x, y, slot, &tp);
-        if (! tp) {
+        Tpp    tp;
+        Thingp t = level_thing_and_tp_get(l, x, y, slot, &tp);
+        if (! t) {
           continue;
         }
 
-        auto obj        = &l->obj[ x ][ y ][ slot ];
-        auto tile_index = obj->tile;
+        auto tile_index = t->tile_index;
         if (! tile_index) {
           continue;
         }
@@ -51,24 +50,24 @@ void level_anim(Levelp l)
         //
         // Decrement the remaining time
         //
-        if (obj->anim_ms_remaining > 0) {
-          obj->anim_ms_remaining -= time_step;
-          if (obj->anim_ms_remaining > 0) {
+        if (t->anim_ms_remaining > 0) {
+          t->anim_ms_remaining -= time_step;
+          if (t->anim_ms_remaining > 0) {
             continue;
           }
         }
 
-        obj->anim_index++;
-        if (obj->anim_index >= tp_tiles_size(tp)) {
-          obj->anim_index = 0;
+        t->anim_index++;
+        if (t->anim_index >= tp_tiles_size(tp)) {
+          t->anim_index = 0;
         }
 
-        tile      = tp_tiles_get(tp, obj->anim_index);
-        obj->tile = tile_global_index(tile);
+        tile          = tp_tiles_get(tp, t->anim_index);
+        t->tile_index = tile_global_index(tile);
 
-        obj->anim_ms_remaining += tile_delay_ms(tile);
-        if (obj->anim_ms_remaining < 0) {
-          obj->anim_ms_remaining = tile_delay_ms(tile);
+        t->anim_ms_remaining += tile_delay_ms(tile);
+        if (t->anim_ms_remaining < 0) {
+          t->anim_ms_remaining = tile_delay_ms(tile);
         }
       }
     }

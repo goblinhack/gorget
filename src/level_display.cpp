@@ -34,7 +34,7 @@ static void level_display_tile_index(Levelp l, Tpp tp, uint16_t tile_index, poin
   }
 }
 
-static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, ThingOrTp *obj, bool deco)
+static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool deco)
 {
   int dw = TILE_WIDTH;
   int dh = TILE_HEIGHT;
@@ -44,8 +44,8 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, ThingOrT
 
   int tile_index;
 
-  if (obj) {
-    tile_index = obj->tile;
+  if (t) {
+    tile_index = t->tile_index;
   } else {
     Tilep tile = tp_tiles_get(tp, 0);
     tile_index = tile_global_index(tile);
@@ -140,7 +140,7 @@ static void level_display_cursor(Levelp l, int x, int y)
         //
         static Tpp tp_once;
         if (! tp_once) {
-          tp_once = tp_find("cursor_at");
+          tp_once = tp_find_mand("cursor_at");
         }
         tp = tp_once;
         break;
@@ -152,7 +152,7 @@ static void level_display_cursor(Levelp l, int x, int y)
         //
         static Tpp tp_once;
         if (! tp_once) {
-          tp_once = tp_find("cursor_at");
+          tp_once = tp_find_mand("cursor_at");
         }
         tp = tp_once;
         break;
@@ -160,14 +160,14 @@ static void level_display_cursor(Levelp l, int x, int y)
   }
 
   if (tp) {
-    level_display_obj(l, x, y, tp, NULL_THING, NULL_OBJ, false);
+    level_display_obj(l, x, y, tp, NULL_THING, false);
   }
 }
 
 static void level_display_slot(Levelp l, int x, int y, int slot, int z, bool deco)
 {
   Tpp  tp;
-  auto t = level_thing_or_tp_get(l, x, y, slot, &tp);
+  auto t = level_thing_and_tp_get(l, x, y, slot, &tp);
   if (! tp) {
     return;
   }
@@ -176,13 +176,7 @@ static void level_display_slot(Levelp l, int x, int y, int slot, int z, bool dec
     return;
   }
 
-  ThingOrTp *obj        = &l->obj[ x ][ y ][ slot ];
-  auto       tile_index = obj->tile;
-  if (! tile_index) {
-    return;
-  }
-
-  level_display_obj(l, x, y, tp, t, obj, deco);
+  level_display_obj(l, x, y, tp, t, deco);
 }
 
 void level_display(Levelp l)
