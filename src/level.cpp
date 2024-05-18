@@ -24,8 +24,9 @@ Levelp level_constructor(void)
     return nullptr;
   }
 
-  level_dungeon_create_and_place(l);
-  level_assign_tiles(l);
+  int z = 0;
+  level_dungeon_create_and_place(l, z);
+  level_assign_tiles(l, z);
   level_scroll_warp_to_player(l);
 
   return l;
@@ -184,26 +185,26 @@ void level_destructor(Levelp l)
   myfree(l);
 }
 
-bool level_set_thing_id(Levelp l, int x, int y, uint8_t slot, ThingId id)
+bool level_set_thing_id(Levelp l, int x, int y, int z, int slot, ThingId id)
 {
   if (level_is_oob(l, x, y)) {
     return false;
   }
-  l->thing_id[ x ][ y ][ slot ] = id;
+  l->thing_id[ x ][ y ][ z ][ slot ] = id;
   return true;
 }
 
-ThingId level_get_thing_id(Levelp l, int x, int y, uint8_t slot)
+ThingId level_get_thing_id(Levelp l, int x, int y, int z, int slot)
 {
   if (level_is_oob(l, x, y)) {
     return 0;
   }
-  return l->thing_id[ x ][ y ][ slot ];
+  return l->thing_id[ x ][ y ][ z ][ slot ];
 }
 
-bool level_flag(Levelp l, ThingFlag f, int x, int y)
+bool level_flag(Levelp l, ThingFlag f, int x, int y, int z)
 {
-  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, x, y)
+  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, x, y, z)
   {
     auto it_tp = level_thing_tp(l, it);
     if (tp_flag(it_tp, f)) {
@@ -233,7 +234,7 @@ bool level_is_oob(Level *l, int x, int y)
   return false;
 }
 
-void level_map_set(Levelp l, const char *in)
+void level_map_set(Levelp l, int z, const char *in)
 {
   TRACE_NO_INDENT();
   const auto row_len      = MAP_WIDTH;
@@ -298,7 +299,7 @@ void level_map_set(Levelp l, const char *in)
 
       if (need_floor) {
         auto tp = tp_floor;
-        auto t  = level_thing_init(l, tp, x, y);
+        auto t  = level_thing_init(l, tp, x, y, z);
         if (t) {
           level_thing_push(l, t);
         }
@@ -308,7 +309,7 @@ void level_map_set(Levelp l, const char *in)
         continue;
       }
 
-      auto t = level_thing_init(l, tp, x, y);
+      auto t = level_thing_init(l, tp, x, y, z);
       if (t) {
         level_thing_push(l, t);
       }
@@ -316,7 +317,7 @@ void level_map_set(Levelp l, const char *in)
   }
 }
 
-bool level_is_same_type(Levelp l, int x, int y, Tpp tp)
+bool level_is_same_type(Levelp l, int x, int y, int z, Tpp tp)
 {
   TRACE_NO_INDENT();
 
@@ -328,7 +329,7 @@ bool level_is_same_type(Levelp l, int x, int y, Tpp tp)
     return false;
   }
 
-  auto id = l->thing_id[ x ][ y ][ tp_z_depth_get(tp) ];
+  auto id = l->thing_id[ x ][ y ][ z ][ tp_z_depth_get(tp) ];
   if (! id) {
     return false;
   }

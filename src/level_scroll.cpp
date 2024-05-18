@@ -89,6 +89,7 @@ void level_scroll_warp_to_player(Levelp l)
 
   l->pixel_map_at_x = t->pix_x;
   l->pixel_map_at_y = t->pix_y;
+
   l->pixel_map_at_x -= game_map_pix_width_get(game) / 2;
   l->pixel_map_at_y -= game_map_pix_height_get(game) / 2;
 

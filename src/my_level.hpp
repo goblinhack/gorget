@@ -80,7 +80,7 @@ typedef struct Level_ {
   //
   // What things are where? Each Id points to a thing structure.
   //
-  ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
+  ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ][ MAP_SLOTS ];
 
   //
   // All thing structure memory.
@@ -125,29 +125,29 @@ typedef struct Level_ {
 
 // begin sort marker1 {
 bool    level_is_oob(Levelp, int x, int y);
-bool    level_is_same_type(Levelp, int x, int y, Tpp);
-bool    level_set_thing_id(Levelp, int x, int y, uint8_t z, ThingId);
-bool    level_thing_can_move_to(Levelp, Thingp, int, int);
+bool    level_is_same_type(Levelp, int x, int y, int z, Tpp);
+bool    level_set_thing_id(Levelp, int x, int y, int z, int slot, ThingId);
+bool    level_thing_can_move_to(Levelp, Thingp, int new_loc_x, int new_loc_y, int new_loc_z);
 bool    level_thing_player_move_request(Levelp, bool up, bool down, bool left, bool right);
 bool    level_tick_is_in_progress(Levelp);
-ThingId level_get_thing_id(Levelp, int x, int y, uint8_t z);
+ThingId level_get_thing_id(Levelp, int x, int y, int z, int slot);
 Levelp  level_constructor(void);
 Thingp  level_thing_find(Levelp, ThingId id);
 Thingp  level_thing_find_optional(Levelp, ThingId id);
-Thingp  level_thing_init(Levelp, Tpp, int x, int y);
-Thingp  level_thing_new(Levelp, Tpp, int x, int y);
-Thingp  level_thing_and_tp_get(Levelp, int x, int y, uint8_t slot, Tpp  * = nullptr);
-Thingp  level_thing_get(Levelp, int x, int y, uint8_t slot);
+Thingp  level_thing_init(Levelp, Tpp, int x, int y, int z);
+Thingp  level_thing_new(Levelp, Tpp, int x, int y, int z);
+Thingp  level_thing_and_tp_get(Levelp, int x, int y, int z, int slot, Tpp  * = nullptr);
+Thingp  level_thing_get(Levelp, int x, int y, int z, int slot);
 Thingp  level_thing_player(Levelp);
 Tpp     level_thing_tp(Levelp, Thingp);
 void    level_anim(Levelp);
-void    level_assign_tiles(Levelp);
+void    level_assign_tiles(Levelp, int z);
 void    level_bounds_set(Levelp);
 void    level_cursor_reset(Levelp);
 void    level_destructor(Levelp);
 void    level_display(Levelp);
-void    level_dungeon_create_and_place(Levelp);
-void    level_map_set(Levelp, const char *);
+void    level_dungeon_create_and_place(Levelp, int z);
+void    level_map_set(Levelp, int z, const char *);
 void    level_scroll_delta(Levelp, int, int);
 void    level_scroll_to_player(Levelp);
 void    level_scroll_warp_to_player(Levelp);
@@ -169,7 +169,7 @@ void    level_tick(Levelp);
 void    level_tick_time_step(Levelp);
 // end sort marker1 }
 
-bool level_flag(Levelp, ThingFlag, int x, int y);
+bool level_flag(Levelp, ThingFlag, int x, int y, int z);
 
 int  level_cursor_get(Levelp, int x, int y);
 void level_cursor_set(Levelp, int x, int y, int cursor);
@@ -187,15 +187,16 @@ void level_cursor_unset(Levelp, int x, int y, int cursor);
     if (_l_copy_.thing_body[ _id_ ].id)                                                                              \
       if ((_t_ = level_thing_find_optional(_l_, _l_copy_.thing_body[ _id_ ].id)))
 
-#define FOR_ALL_THINGS_AT(_l_, _t_, _x_, _y_)                                                                        \
+#define FOR_ALL_THINGS_AT(_l_, _t_, _x_, _y_, _z_)                                                                   \
   Thingp _t_;                                                                                                        \
-  for (auto _slot_ = 0; _t_ = level_thing_get(_l_, _x_, _y_, _slot_), _slot_ < MAP_SLOTS; _slot_++)                  \
+  for (auto _slot_ = 0; _t_ = level_thing_get(_l_, _x_, _y_, _z_, _slot_), _slot_ < MAP_SLOTS; _slot_++)             \
     if (_t_)
 
-#define FOR_ALL_THINGS_AND_TPS_AT(_l_, _t_, _tp_, _x_, _y_)                                                          \
+#define FOR_ALL_THINGS_AND_TPS_AT(_l_, _t_, _tp_, _x_, _y_, _z_)                                                     \
   Thingp _t_;                                                                                                        \
   Tpp    _tp_;                                                                                                       \
-  for (auto _slot_ = 0; _t_ = level_thing_and_tp_get(_l_, _x_, _y_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)    \
+  for (auto _slot_ = 0; _t_ = level_thing_and_tp_get(_l_, _x_, _y_, _z_, _slot_, &_tp_), _slot_ < MAP_SLOTS;         \
+       _slot_++)                                                                                                     \
     if (_t_)
 
 #endif // _MY_LEVEL_H_

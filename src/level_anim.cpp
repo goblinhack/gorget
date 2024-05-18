@@ -13,6 +13,15 @@ void level_anim(Levelp l)
 {
   TRACE_NO_INDENT();
 
+  //
+  // What level is the player on?
+  //
+  auto player = level_thing_player(l);
+  if (! player) {
+    return;
+  }
+  int z = player->z;
+
   auto            ts = time_ms();
   static uint32_t last_ts;
 
@@ -28,7 +37,7 @@ void level_anim(Levelp l)
     for (auto y = l->miny; y < l->maxy; y++) {
       for (auto x = l->minx; x < l->maxx; x++) {
         Tpp    tp;
-        Thingp t = level_thing_and_tp_get(l, x, y, slot, &tp);
+        Thingp t = level_thing_and_tp_get(l, x, y, z, slot, &tp);
         if (! t) {
           continue;
         }

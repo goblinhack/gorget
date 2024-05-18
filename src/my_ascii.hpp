@@ -50,9 +50,6 @@ using ascii_mouse_over_callback = int (*)(int, int);
 
 typedef std::array< Tilep, TILE_LAYER_MAX > TileLayers;
 
-extern int16_t TERM_WIDTH;
-extern int16_t TERM_HEIGHT;
-
 using button_args = struct {
   int x;
   int y;
@@ -147,7 +144,10 @@ void pixel_to_ascii(int *x, int *y);
 extern float tile_pix_w;
 extern float tile_pix_h;
 
-extern int16_t ascii_mouse_x;
-extern int16_t ascii_mouse_y;
+extern int TERM_WIDTH;
+extern int TERM_HEIGHT;
+
+extern int ascii_mouse_x;
+extern int ascii_mouse_y;
 
 #endif

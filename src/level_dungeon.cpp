@@ -4,9 +4,9 @@
 
 #include "my_level.hpp"
 
-void level_dungeon_create_and_place(Levelp l)
+void level_dungeon_create_and_place(Levelp l, int z)
 {
-  level_map_set(l,
+  level_map_set(l, z,
                 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                 "x1.2x...........x..............x"
                 "x...x=xx=x......x..xxxx==xxxx..x"

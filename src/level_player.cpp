@@ -38,7 +38,7 @@ void level_thing_player_move_delta(Levelp l, int dx, int dy)
     return;
   }
 
-  if (level_thing_can_move_to(l, t, t->x + dx, t->y + dy)) {
+  if (level_thing_can_move_to(l, t, t->x + dx, t->y + dy, t->z)) {
     level_thing_move(l, t, t->x + dx, t->y + dy);
 
     level_tick_begin_requested(l, "player moved");

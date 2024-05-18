@@ -164,15 +164,15 @@ static void level_display_cursor(Levelp l, int x, int y)
   }
 }
 
-static void level_display_slot(Levelp l, int x, int y, int slot, int z, bool deco)
+static void level_display_slot(Levelp l, int x, int y, int z, int slot, int depth, bool deco)
 {
   Tpp  tp;
-  auto t = level_thing_and_tp_get(l, x, y, slot, &tp);
+  auto t = level_thing_and_tp_get(l, x, y, z, slot, &tp);
   if (! tp) {
     return;
   }
 
-  if (tp_z_depth_get(tp) != z) {
+  if (tp_z_depth_get(tp) != depth) {
     return;
   }
 
@@ -183,6 +183,18 @@ void level_display(Levelp l)
 {
   TRACE_NO_INDENT();
 
+  //
+  // What level is the player on?
+  //
+  auto player = level_thing_player(l);
+  if (! player) {
+    return;
+  }
+  auto z = player->z;
+
+  //
+  // Soft scroll to the player/
+  //
   level_scroll_to_player(l);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -204,8 +216,8 @@ void level_display(Levelp l)
   for (auto y = l->miny; y < l->maxy; y++) {
     for (auto x = l->maxx - 1; x >= l->minx; x--) {
       for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        level_display_slot(l, x, y, slot, MAP_DEPTH_FLOOR, no_deco);
-        level_display_slot(l, x, y, slot, MAP_DEPTH_WALL, no_deco);
+        level_display_slot(l, x, y, z, slot, MAP_DEPTH_FLOOR, no_deco);
+        level_display_slot(l, x, y, z, slot, MAP_DEPTH_WALL, no_deco);
       }
     }
   }
@@ -216,10 +228,10 @@ void level_display(Levelp l)
   for (auto y = l->miny; y < l->maxy; y++) {
     for (auto x = l->maxx - 1; x >= l->minx; x--) {
       for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        level_display_slot(l, x, y, slot, MAP_DEPTH_DOOR, no_deco);
-        level_display_slot(l, x, y, slot, MAP_DEPTH_OBJ1, no_deco);
-        level_display_slot(l, x, y, slot, MAP_DEPTH_OBJ2, no_deco);
-        level_display_slot(l, x, y, slot, MAP_DEPTH_PLAYER, no_deco);
+        level_display_slot(l, x, y, z, slot, MAP_DEPTH_DOOR, no_deco);
+        level_display_slot(l, x, y, z, slot, MAP_DEPTH_OBJ1, no_deco);
+        level_display_slot(l, x, y, z, slot, MAP_DEPTH_OBJ2, no_deco);
+        level_display_slot(l, x, y, z, slot, MAP_DEPTH_PLAYER, no_deco);
       }
     }
   }
@@ -230,8 +242,8 @@ void level_display(Levelp l)
   for (auto y = l->miny; y < l->maxy; y++) {
     for (auto x = l->maxx - 1; x >= l->minx; x--) {
       for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        level_display_slot(l, x, y, slot, MAP_DEPTH_WALL, deco);
-        level_display_slot(l, x, y, slot, MAP_DEPTH_DOOR, deco);
+        level_display_slot(l, x, y, z, slot, MAP_DEPTH_WALL, deco);
+        level_display_slot(l, x, y, z, slot, MAP_DEPTH_DOOR, deco);
       }
     }
   }

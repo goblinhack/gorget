@@ -51,11 +51,13 @@ typedef struct Thing_ {
   //
   int8_t x;
   int8_t y;
+  int8_t z;
   //
   // Old map co-ords used for interpolation when moving.
   //
   int8_t old_x;
   int8_t old_y;
+  int8_t old_z;
   //
   // Direction
   //
@@ -109,9 +111,9 @@ bool     thing_is_dir_left(Thingp t);
 bool     thing_is_dir_right(Thingp t);
 bool     thing_is_dir_up(Thingp t);
 float    thing_thing_dt_get(Thingp t);
-int16_t  thing_pix_x_get(Thingp t);
-int16_t  thing_pix_y_get(Thingp t);
-int16_t  thing_speed_get(Thingp t);
+int      thing_pix_x_get(Thingp t);
+int      thing_pix_y_get(Thingp t);
+int      thing_speed_get(Thingp t);
 int8_t   thing_old_x_get(Thingp t);
 int8_t   thing_old_y_get(Thingp t);
 int8_t   thing_x_get(Thingp t);
@@ -130,9 +132,9 @@ void     thing_dir_up_set(Thingp t, uint8_t);
 void     thing_id_set(Thingp t, ThingId id);
 void     thing_old_x_set(Thingp t, int8_t old_x);
 void     thing_old_y_set(Thingp t, int8_t old_y);
-void     thing_pix_x_set(Thingp t, int16_t pix_x);
-void     thing_pix_y_set(Thingp t, int16_t pix_y);
-void     thing_speed_set(Thingp t, int16_t speed);
+void     thing_pix_x_set(Thingp t, int pix_x);
+void     thing_pix_y_set(Thingp t, int pix_y);
+void     thing_speed_set(Thingp t, int speed);
 void     thing_thing_dt_set(Thingp t, float thing_dt);
 void     thing_tick_set(Thingp t, uint16_t tick);
 void     thing_tp_id_set(Thingp t, uint16_t tp_id);

@@ -72,7 +72,7 @@
 ENUM_DEF_H(IS_JOIN_ENUM, is_join_enum)
 ENUM_DEF_C(IS_JOIN_ENUM, is_join_enum)
 
-void level_assign_tiles(Levelp l)
+void level_assign_tiles(Levelp l, int z)
 {
   TRACE_NO_INDENT();
 
@@ -80,7 +80,7 @@ void level_assign_tiles(Levelp l)
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
         Tpp  tp;
-        auto t = level_thing_and_tp_get(l, x, y, slot, &tp);
+        auto t = level_thing_and_tp_get(l, x, y, z, slot, &tp);
         if (! t) {
           continue;
         }
@@ -92,15 +92,15 @@ void level_assign_tiles(Levelp l)
         if (tp_is_tiled(tp)) {
           auto tile_name = tp_name(tp);
 
-          uint16_t A = level_is_same_type(l, x - 1, y - 1, tp) ? 1 : 0;
-          uint16_t B = level_is_same_type(l, x, y - 1, tp) ? 1 : 0;
-          uint16_t C = level_is_same_type(l, x + 1, y - 1, tp) ? 1 : 0;
-          uint16_t D = level_is_same_type(l, x - 1, y, tp) ? 1 : 0;
-          uint16_t E = level_is_same_type(l, x, y, tp) ? 1 : 0;
-          uint16_t F = level_is_same_type(l, x + 1, y, tp) ? 1 : 0;
-          uint16_t G = level_is_same_type(l, x - 1, y + 1, tp) ? 1 : 0;
-          uint16_t H = level_is_same_type(l, x, y + 1, tp) ? 1 : 0;
-          uint16_t I = level_is_same_type(l, x + 1, y + 1, tp) ? 1 : 0;
+          uint16_t A = level_is_same_type(l, x - 1, y - 1, z, tp) ? 1 : 0;
+          uint16_t B = level_is_same_type(l, x, y - 1, z, tp) ? 1 : 0;
+          uint16_t C = level_is_same_type(l, x + 1, y - 1, z, tp) ? 1 : 0;
+          uint16_t D = level_is_same_type(l, x - 1, y, z, tp) ? 1 : 0;
+          uint16_t E = level_is_same_type(l, x, y, z, tp) ? 1 : 0;
+          uint16_t F = level_is_same_type(l, x + 1, y, z, tp) ? 1 : 0;
+          uint16_t G = level_is_same_type(l, x - 1, y + 1, z, tp) ? 1 : 0;
+          uint16_t H = level_is_same_type(l, x, y + 1, z, tp) ? 1 : 0;
+          uint16_t I = level_is_same_type(l, x + 1, y + 1, z, tp) ? 1 : 0;
 
           const uint16_t omask
               = (I << 8) | (H << 7) | (G << 6) | (F << 5) | (E << 4) | (D << 3) | (C << 2) | (B << 1) | (A << 0);
@@ -180,7 +180,7 @@ void level_assign_tiles(Levelp l)
           // Switch the door direction if next to walls
           //
           if (tp_flag(tp, is_door)) {
-            if (level_flag(l, is_wall, x, y - 1) && level_flag(l, is_wall, x, y + 1)) {
+            if (level_flag(l, is_wall, x, y - 1, z) && level_flag(l, is_wall, x, y + 1, z)) {
               block_type = IS_JOIN_TOP;
             }
           }

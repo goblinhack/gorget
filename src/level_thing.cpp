@@ -23,11 +23,11 @@ Tpp tp(Thingp t)
   return nullptr;
 }
 
-Thingp level_thing_get(Levelp l, int x, int y, uint8_t slot)
+Thingp level_thing_get(Levelp l, int x, int y, int z, int slot)
 {
   TRACE_NO_INDENT();
 
-  ThingId id = l->thing_id[ x ][ y ][ slot ];
+  ThingId id = l->thing_id[ x ][ y ][ z ][ slot ];
 
   if (! id) {
     return nullptr;
@@ -41,11 +41,11 @@ Thingp level_thing_get(Levelp l, int x, int y, uint8_t slot)
   return t;
 }
 
-Thingp level_thing_and_tp_get(Levelp l, int x, int y, uint8_t slot, Tpp *out)
+Thingp level_thing_and_tp_get(Levelp l, int x, int y, int z, int slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
-  ThingId id = l->thing_id[ x ][ y ][ slot ];
+  ThingId id = l->thing_id[ x ][ y ][ z ][ slot ];
 
   if (out) {
     *out = nullptr;
@@ -108,7 +108,7 @@ Thingp level_thing_find(Levelp l, ThingId id)
   return t;
 }
 
-Thingp level_thing_new(Levelp l, Tpp tp, int x, int y)
+Thingp level_thing_new(Levelp l, Tpp tp, int x, int y, int z)
 {
   TRACE_NO_INDENT();
 
@@ -130,10 +130,6 @@ Thingp level_thing_new(Levelp l, Tpp tp, int x, int y)
     ThingId thing_id;
     thing_id = (entropy << THING_ID_BITS) | index;
     t->id    = thing_id;
-    t->x     = x;
-    t->y     = y;
-    t->pix_x = (int) x * TILE_WIDTH;
-    t->pix_y = (int) y * TILE_HEIGHT;
     t->tp_id = tp_id_get(tp);
 
     return t;

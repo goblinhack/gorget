@@ -70,8 +70,8 @@ void level_tick_body(Levelp l, float dt)
 {
   TRACE_NO_INDENT();
 
-  auto    p            = level_thing_player(l);
-  int16_t player_speed = p ? p->speed : 100;
+  auto p            = level_thing_player(l);
+  int  player_speed = p ? p->speed : 100;
 
   FOR_ALL_THINGS(l, t)
   {
