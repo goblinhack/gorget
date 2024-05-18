@@ -117,6 +117,7 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool dec
   }
 
   if (deco) {
+    return;
     tile_index += 47;
   }
 

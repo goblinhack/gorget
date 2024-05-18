@@ -329,12 +329,17 @@ bool level_is_same_type(Levelp l, int x, int y, int z, Tpp tp)
     return false;
   }
 
-  auto id = l->thing_id[ x ][ y ][ z ][ tp_z_depth_get(tp) ];
-  if (! id) {
-    return false;
+  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+    Tpp    it_tp;
+    Thingp it = level_thing_and_tp_get(l, x, y, z, slot, &it_tp);
+    if (! it) {
+      continue;
+    }
+    if (it_tp == tp) {
+      return true;
+    }
   }
-
-  return id == tp_id_get(tp);
+  return false;
 }
 
 void level_bounds_set(Levelp l)

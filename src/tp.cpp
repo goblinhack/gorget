@@ -79,7 +79,7 @@ public:
   bool is_able_to_walk_through_walls {};
   // end sort marker1 }
 
-  uint8_t flag[ THING_FLAG_MAX ];
+  uint8_t flag[ THING_FLAG_MAX ] = {};
 
   // begin sort marker2 {
   int chance_d1000_appearing {};
