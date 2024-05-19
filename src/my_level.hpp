@@ -106,8 +106,10 @@ typedef struct Level_ {
   // What the player is currently highlighting.
   //
   uint8_t cursor[ MAP_WIDTH ][ MAP_HEIGHT ];
-  int     cursor_at_x;
-  int     cursor_at_y;
+  int     cursor_x;
+  int     cursor_y;
+  int     old_cursor_x;
+  int     old_cursor_y;
 
   //
   // Map scroll offset.
@@ -118,10 +120,10 @@ typedef struct Level_ {
   //
   // Level display bounds
   //
-  int minx = {};
-  int miny = {};
-  int maxx = {};
-  int maxy = {};
+  int minx;
+  int miny;
+  int maxx;
+  int maxy;
 
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
@@ -149,7 +151,7 @@ Tpp     level_thing_tp(Levelp, Thingp);
 void    level_anim(Levelp);
 void    level_assign_tiles(Levelp, int z);
 void    level_bounds_set(Levelp);
-void    level_cursor_reset(Levelp);
+void    level_mouse_position_get(Levelp);
 void    level_destructor(Levelp);
 void    level_display(Levelp);
 void    level_dungeon_create_and_place(Levelp, int z);
@@ -170,6 +172,7 @@ void    level_thing_update(Levelp, Thingp);
 void    level_tick_begin(Levelp);
 void    level_tick_begin_requested(Levelp, const char *);
 void    level_tick_body(Levelp, float dt);
+void    level_cursor_update(Levelp);
 void    level_tick_end_requested(Levelp);
 void    level_tick(Levelp);
 void    level_tick_time_step(Levelp);
@@ -177,9 +180,7 @@ void    level_tick_time_step(Levelp);
 
 bool level_flag(Levelp, ThingFlag, int x, int y, int z);
 
-int  level_cursor_get(Levelp, int x, int y);
-void level_cursor_set(Levelp, int x, int y, int cursor);
-void level_cursor_unset(Levelp, int x, int y, int cursor);
+void level_cursor_set(Levelp, int x, int y);
 
 //
 // Works on a copy of the level data, so things can move cells and we never

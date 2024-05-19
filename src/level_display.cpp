@@ -103,7 +103,7 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool dec
   if (tp_is_floor(tp)) {
     if ((visible_map_mouse_x >= tl.x) && (visible_map_mouse_x < br.x) && (visible_map_mouse_y >= tl.y)
         && (visible_map_mouse_y < br.y)) {
-      level_cursor_set(l, x, y, CURSOR_AT);
+      level_cursor_set(l, x, y);
     }
   }
 
@@ -141,7 +141,7 @@ static void level_display_cursor(Levelp l, int x, int y)
         //
         static Tpp tp_once;
         if (! tp_once) {
-          tp_once = tp_find_mand("cursor_at");
+          tp_once = tp_find_mand("cursor_path");
         }
         tp = tp_once;
         break;

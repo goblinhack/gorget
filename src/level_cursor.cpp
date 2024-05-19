@@ -13,62 +13,12 @@
 #include <string.h>
 #include <vector>
 
-void level_cursor_set(Level *l, int x, int y, int cursor)
+void level_cursor_set(Level *l, int x, int y)
 {
-  TRACE_NO_INDENT();
+  TRACE_AND_INDENT();
 
-  l->cursor[ x ][ y ] = cursor;
-}
-
-void level_cursor_unset(Level *l, int x, int y, int cursor)
-{
-  TRACE_NO_INDENT();
-
-  l->cursor[ x ][ y ] = CURSOR_NONE;
-}
-
-int level_cursor_get(Level *l, int x, int y)
-{
-  TRACE_NO_INDENT();
-
-  return l->cursor[ x ][ y ];
-}
-
-//
-// Clear all cursors and get the mouse position, so when displaying tiles
-// we can work out where the cursor is now.
-//
-void level_cursor_reset(Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  memset(l->cursor, 0, sizeof(l->cursor));
-
-  //
-  // Get the visible map bounds
-  //
-  int visible_map_tl_x;
-  int visible_map_tl_y;
-  int visible_map_br_x;
-  int visible_map_br_y;
-  int visible_map_mouse_x;
-  int visible_map_mouse_y;
-  game_visible_map_get(game, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
-
-  //
-  // Find out what pixel on the map the mouse is over
-  //
-  visible_map_mouse_x = sdl.mouse_x - visible_map_tl_x;
-  visible_map_mouse_y = sdl.mouse_y;
-  float scale_x       = (float) game_pix_width_get(game) / (float) game_window_pix_width_get(game);
-  float scale_y       = (float) game_pix_height_get(game) / (float) game_window_pix_height_get(game);
-  visible_map_mouse_x = (int) ((float) visible_map_mouse_x * scale_x);
-  visible_map_mouse_y = (int) ((float) visible_map_mouse_y * scale_y);
-
-  //
-  // Now we wait for level_display to find the cursor
-  //
-  game_visible_map_mouse_set(game, visible_map_mouse_x, visible_map_mouse_y);
+  l->cursor_x = x;
+  l->cursor_y = y;
 }
 
 //
@@ -77,7 +27,8 @@ void level_cursor_reset(Levelp l)
 // For the first pass, restrict to tiles we have walked on
 // For the first pass, any tiles will do
 //
-std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp player, point start, point end, int attempt)
+static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp player, point start, point end,
+                                                                int attempt)
 {
   TRACE_AND_INDENT();
 
@@ -140,12 +91,12 @@ std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp player
         }
       }
     }
-  } else if (level_is_cursor_path_hazard(l, l->cursor_at_x, l->cursor_at_y, z)) {
+  } else if (level_is_cursor_path_hazard(l, l->cursor_x, l->cursor_y, z)) {
     bool                               got_one = false;
     std::initializer_list< ThingFlag > init    = {is_lava, is_chasm};
 
     for (auto i : init) {
-      if (level_flag(l, i, l->cursor_at_x, l->cursor_at_y, z)) {
+      if (level_flag(l, i, l->cursor_x, l->cursor_y, z)) {
         got_one = true;
 
         //
@@ -253,11 +204,13 @@ std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp player
 //
 // Returns true on success
 //
-bool level_cursor_path_draw_line(Levelp l, point start, point end)
+static std::vector< point > level_cursor_path_draw_line(Levelp l, point start, point end)
 {
+  static std::vector< point > empty;
+
   auto player = level_thing_player(l);
   if (! player) {
-    return false;
+    return empty;
   }
 
   //
@@ -278,9 +231,34 @@ bool level_cursor_path_draw_line(Levelp l, point start, point end)
     best = attempt2;
   }
 
-  if (! best.size()) {
-    return false;
+  return best;
+}
+
+void level_cursor_update(Levelp l)
+{
+  if ((l->cursor_x == l->old_cursor_x) && (l->cursor_y == l->old_cursor_y)) {
+    return;
   }
 
-  return true;
+  //
+  // Clear the path if there is no player or we're about to remake it.
+  //
+  memset(l->cursor, 0, sizeof(l->cursor));
+
+  auto player = level_thing_player(l);
+  if (! player) {
+    return;
+  }
+
+  //
+  // Draw the path
+  //
+  auto cursor_path = level_cursor_path_draw_line(l, point(player->x, player->y), point(l->cursor_x, l->cursor_y));
+  for (auto p : cursor_path) {
+    l->cursor[ p.x ][ p.y ] = CURSOR_PATH;
+  }
+  l->cursor[ l->cursor_x ][ l->cursor_y ] = CURSOR_AT;
+
+  l->old_cursor_x = l->cursor_x;
+  l->old_cursor_y = l->cursor_y;
 }

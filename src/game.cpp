@@ -371,8 +371,9 @@ void Game::display(void)
   if (level) {
     level_tick(level);
     level_anim(level);
-    level_cursor_reset(level);
+    level_mouse_position_get(level);
     level_display(level);
+    level_cursor_update(level);
   }
 }
 void game_display(class Game *game) { game->display(); }
