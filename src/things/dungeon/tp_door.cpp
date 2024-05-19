@@ -12,11 +12,11 @@ bool tp_load_door(void)
   auto tp = tp_load("door");
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered, true);
-  tp_flag_set(tp, is_tiled, true);
+  tp_flag_set(tp, is_cursor_path_blocker, true);
   tp_flag_set(tp, is_door, true);
   tp_flag_set(tp, is_obs_monst, true);
   tp_flag_set(tp, is_obs_player, true);
-  tp_flag_set(tp, is_cursor_path_blocker, true);
+  tp_flag_set(tp, is_tiled, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_DOOR);
   // end sort marker1 }
 

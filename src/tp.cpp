@@ -82,8 +82,8 @@ using Tpidmap = std::vector< class Tp * >;
 Tpidmap tp_id_map;
 
 // begin sort marker3 {
-static Tpidmap tp_monst_class[ MONST_CLASS_MAX ];
 static Tpidmap tp_flag_map[THING_FLAG_MAX];
+static Tpidmap tp_monst_class[ MONST_CLASS_MAX ];
 // end sort marker3 }
 
 static std::map< std::string, class Tp * > tp_name_map;
