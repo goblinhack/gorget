@@ -176,15 +176,6 @@ void level_assign_tiles(Levelp l, int z)
             DIE("no block type found for %s", tile_name);
           }
 
-          //
-          // Switch the door direction if next to walls
-          //
-          if (tp_is_door(tp)) {
-            if (level_flag(l, is_wall, x, y - 1, z) && level_flag(l, is_wall, x, y + 1, z)) {
-              block_type = IS_JOIN_TOP;
-            }
-          }
-
           auto which = std::string(tile_name) + "." + is_join_enum_val2str((is_join_enum) block_type);
           auto tile  = tile_find_mand(which.c_str());
           if (tile) {
