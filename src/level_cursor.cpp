@@ -71,18 +71,19 @@ void level_cursor_reset(Levelp l)
   game_visible_map_mouse_set(game, visible_map_mouse_x, visible_map_mouse_y);
 }
 
-#if 0
 //
 // Create the cursor path, avoiding things like lava
 //
 // For the first pass, restrict to tiles we have walked on
 // For the first pass, any tiles will do
 //
-std::vector< point > cursor_path_draw_line_attempt(Levelp l, Thingp player, point start, point end, int attempt)
+std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp player, point start, point end, int attempt)
 {
+  TRACE_AND_INDENT();
+
   static std::vector< point > empty;
 
-  TRACE_AND_INDENT();
+  int z = player->z;
 
   Dmap  d {};
   point dmap_start = start;
@@ -124,108 +125,63 @@ std::vector< point > cursor_path_draw_line_attempt(Levelp l, Thingp player, poin
   }
 
   //
-  // If clicking on a wall, don't walk into it.
-  //
-  if (cursor && is_cursor_path_blocker(it, cursor->curr_at.x, cursor->curr_at.y)) {
-    return empty;
-  }
-
-  //
   // If standing on a hazard, then plot a course that allows travel over hazards.
   //
-  if (is_cursor_path_hazard(player->curr_at.x, player->curr_at.y)) {
+  if (level_is_cursor_path_hazard(l, player->x, player->y, z)) {
     //
     // Just map the shortest path outta here
     //
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        if (is_cursor_path_blocker(it, x, y)) {
-          set(d.val, x, y, DMAP_IS_WALL);
+        if (level_is_cursor_path_blocker(l, x, y, z)) {
+          d.val[ x ][ y ] = DMAP_IS_WALL;
         } else {
-          set(d.val, x, y, DMAP_IS_PASSABLE);
+          d.val[ x ][ y ] = DMAP_IS_PASSABLE;
         }
       }
     }
-  } else if (cursor && is_cursor_path_hazard(cursor->curr_at.x, cursor->curr_at.y)) {
-    if (is_lava(cursor->curr_at.x, cursor->curr_at.y)) {
-      //
-      // If the cursor is on a hazard then allow creating a path via hazards.
-      //
-      // However, be careful. If we click on lava, and the shortest path
-      // to that lava is via a chasm, then we do not want to jump into the
-      // chasm.
-      //
-      for (auto y = miny; y < maxy; y++) {
-        for (auto x = minx; x < maxx; x++) {
-          if (is_cursor_path_hazard(x, y)) {
-            if (! is_lava(x, y)) {
-              set(d.val, x, y, DMAP_IS_WALL);
+  } else if (level_is_cursor_path_hazard(l, l->cursor_at_x, l->cursor_at_y, z)) {
+    bool                               got_one = false;
+    std::initializer_list< ThingFlag > init    = {is_lava, is_chasm};
+
+    for (auto i : init) {
+      if (level_flag(l, i, l->cursor_at_x, l->cursor_at_y, z)) {
+        got_one = true;
+
+        //
+        // If the cursor is on a hazard then allow creating a path via hazards.
+        //
+        // However, be careful. If we click on lava, and the shortest path
+        // to that lava is via a chasm, then we do not want to jump into the
+        // chasm.
+        //
+        for (auto y = miny; y < maxy; y++) {
+          for (auto x = minx; x < maxx; x++) {
+
+            if (level_is_cursor_path_hazard(l, x, y, z)) {
+              if (! level_flag(l, i, x, y, z)) {
+                d.val[ x ][ y ] = DMAP_IS_WALL;
+                continue;
+              }
+              d.val[ x ][ y ] = DMAP_IS_PASSABLE;
               continue;
             }
-          }
-          if (is_cursor_path_blocker(it, x, y)) {
-            set(d.val, x, y, DMAP_IS_WALL);
-          } else {
-            set(d.val, x, y, DMAP_IS_PASSABLE);
+            d.val[ x ][ y ] = DMAP_IS_PASSABLE;
           }
         }
       }
-    } else if (is_ooze(cursor->curr_at.x, cursor->curr_at.y)) {
-      //
-      // If the cursor is on a hazard then allow creating a path via hazards.
-      //
-      // However, be careful. If we click on ooze, and the shortest path
-      // to that ooze is via a chasm, then we do not want to jump into the
-      // chasm.
-      //
-      for (auto y = miny; y < maxy; y++) {
-        for (auto x = minx; x < maxx; x++) {
-          if (is_cursor_path_hazard(x, y)) {
-            if (! is_ooze(x, y)) {
-              set(d.val, x, y, DMAP_IS_WALL);
-              continue;
-            }
-          }
-          if (is_cursor_path_blocker(it, x, y)) {
-            set(d.val, x, y, DMAP_IS_WALL);
-          } else {
-            set(d.val, x, y, DMAP_IS_PASSABLE);
-          }
-        }
-      }
-    } else if (is_chasm(cursor->curr_at.x, cursor->curr_at.y)) {
-      //
-      // If the cursor is on a hazard then allow creating a path via hazards.
-      //
-      // However, be careful. If we click on chasm, and the shortest path
-      // to that chasm is through lava, then we do not want to walk through
-      // the lava!
-      //
-      for (auto y = miny; y < maxy; y++) {
-        for (auto x = minx; x < maxx; x++) {
-          if (is_cursor_path_hazard(x, y)) {
-            if (! is_chasm(x, y)) {
-              set(d.val, x, y, DMAP_IS_WALL);
-              continue;
-            }
-          }
-          if (is_cursor_path_blocker(it, x, y)) {
-            set(d.val, x, y, DMAP_IS_WALL);
-          } else {
-            set(d.val, x, y, DMAP_IS_PASSABLE);
-          }
-        }
-      }
-    } else {
+    }
+
+    if (! got_one) {
       //
       // Plough through all hazards? This is probably not good. Let's play safe.
       //
       for (auto y = miny; y < maxy; y++) {
         for (auto x = minx; x < maxx; x++) {
-          if (is_cursor_path_blocker(it, x, y) || is_cursor_path_hazard(x, y)) {
-            set(d.val, x, y, DMAP_IS_WALL);
+          if (level_is_cursor_path_blocker(l, x, y, z) || level_is_cursor_path_hazard(l, x, y, z)) {
+            d.val[ x ][ y ] = DMAP_IS_WALL;
           } else {
-            set(d.val, x, y, DMAP_IS_PASSABLE);
+            d.val[ x ][ y ] = DMAP_IS_PASSABLE;
           }
         }
       }
@@ -236,10 +192,10 @@ std::vector< point > cursor_path_draw_line_attempt(Levelp l, Thingp player, poin
     //
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        if (is_cursor_path_blocker(it, x, y) || is_cursor_path_hazard(x, y)) {
-          set(d.val, x, y, DMAP_IS_WALL);
+        if (level_is_cursor_path_blocker(l, x, y, z) || level_is_cursor_path_hazard(l, x, y, z)) {
+          d.val[ x ][ y ] = DMAP_IS_WALL;
         } else {
-          set(d.val, x, y, DMAP_IS_PASSABLE);
+          d.val[ x ][ y ] = DMAP_IS_PASSABLE;
         }
       }
     }
@@ -251,15 +207,15 @@ std::vector< point > cursor_path_draw_line_attempt(Levelp l, Thingp player, poin
   if (attempt == 1) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        if (! is_walked(x, y)) {
-          set(d.val, x, y, DMAP_IS_WALL);
+        if (! l->is_walked[ x ][ y ][ z ]) {
+          d.val[ x ][ y ] = DMAP_IS_WALL;
         }
 
         //
         // Probably best to not use tiles where there is a monster
         //
-        if (is_monst(x, y)) {
-          set(d.val, x, y, DMAP_IS_WALL);
+        if (level_is_monst(l, x, y, z)) {
+          d.val[ x ][ y ] = DMAP_IS_WALL;
         }
       }
     }
@@ -268,10 +224,8 @@ std::vector< point > cursor_path_draw_line_attempt(Levelp l, Thingp player, poin
   dmap_start = point(minx, miny);
   dmap_end   = point(maxx, maxy);
 
-  set(d.val, end.x, end.y, DMAP_IS_GOAL);
-  set(d.val, start.x, start.y, DMAP_IS_PASSABLE);
-
-  dbg2("Make cursor path %d,%d to @%d,%d", start.x, start.y, end.x, end.y);
+  d.val[ end.x ][ end.y ]     = DMAP_IS_GOAL;
+  d.val[ start.x ][ start.y ] = DMAP_IS_PASSABLE;
 
   // dmap_print(&d, start, dmap_start, dmap_end);
   dmap_process_allow_diagonals(&d, dmap_start, dmap_end, true);
@@ -280,7 +234,6 @@ std::vector< point > cursor_path_draw_line_attempt(Levelp l, Thingp player, poin
   auto p         = dmap_solve(&d, start);
   auto path_size = p.size();
   if (! path_size) {
-    dbg2("No path");
     return empty;
   }
 
@@ -289,19 +242,22 @@ std::vector< point > cursor_path_draw_line_attempt(Levelp l, Thingp player, poin
   // we want.
   //
   if (p[ path_size - 1 ] != end) {
-    dbg2("Could not reach");
     return empty;
   }
-  dbg2("Created attempt %d cursor path len %d", attempt, (int) p.size());
 
   return p;
 }
 
-bool Level::cursor_path_draw_line(Thingp it, point start, point end)
+//
+// Create a cursor path between the two points
+//
+// Returns true on success
+//
+bool level_cursor_path_draw_line(Levelp l, point start, point end)
 {
   auto player = level_thing_player(l);
   if (! player) {
-    return;
+    return false;
   }
 
   //
@@ -309,8 +265,8 @@ bool Level::cursor_path_draw_line(Thingp it, point start, point end)
   //
   // The first path prefers visited tiles.
   //
-  auto attempt1 = cursor_path_draw_line_attempt(it, start, end, 1);
-  auto attempt2 = cursor_path_draw_line_attempt(it, start, end, 2);
+  auto attempt1 = level_cursor_path_draw_line_attempt(l, player, start, end, 1);
+  auto attempt2 = level_cursor_path_draw_line_attempt(l, player, start, end, 2);
 
   std::vector< point > best;
 
@@ -322,31 +278,9 @@ bool Level::cursor_path_draw_line(Thingp it, point start, point end)
     best = attempt2;
   }
 
-  dbg2("Best cursor path len %d", (int) best.size());
-
   if (! best.size()) {
     return false;
   }
 
-  game->cursor_move_path = best;
-  game->cursor_move_end  = end;
-  game->cursor_moved     = true;
-
-  dbg2("Created cursor path len %d", (int) best.size());
-
-  for (auto &c : best) {
-    if (cursor && cursor->is_visible()) {
-      if ((c.x == cursor_at.x) && (c.y == cursor_at.y)) {
-        continue;
-      }
-    }
-
-    //
-    // Create the cursor
-    //
-    cursor_path_thing_new(c);
-  }
-
   return true;
 }
-#endif

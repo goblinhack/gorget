@@ -83,6 +83,11 @@ typedef struct Level_ {
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ][ MAP_SLOTS ];
 
   //
+  // Has the player been on this tile?
+  //
+  bool is_walked[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ];
+
+  //
   // All thing structure memory.
   //
   Thing thing_body[ 1 << THING_ID_BITS ];
@@ -101,8 +106,8 @@ typedef struct Level_ {
   // What the player is currently highlighting.
   //
   uint8_t cursor[ MAP_WIDTH ][ MAP_HEIGHT ];
-  int     cusor_at_x;
-  int     cusor_at_y;
+  int     cursor_at_x;
+  int     cursor_at_y;
 
   //
   // Map scroll offset.
@@ -125,6 +130,7 @@ typedef struct Level_ {
 
 // begin sort marker1 {
 bool    level_is_oob(Levelp, int x, int y);
+bool    level_is_oob(Levelp, int x, int y, int z);
 bool    level_is_same_type(Levelp, int x, int y, int z, Tpp);
 bool    level_set_thing_id(Levelp, int x, int y, int z, int slot, ThingId);
 bool    level_thing_can_move_to(Levelp, Thingp, int new_loc_x, int new_loc_y, int new_loc_z);
@@ -153,10 +159,10 @@ void    level_scroll_to_player(Levelp);
 void    level_scroll_warp_to_player(Levelp);
 void    level_thing_free(Levelp, Thingp);
 void    level_thing_interpolate(Levelp, Thingp, float dt);
-void    level_thing_move(Levelp, Thingp, int, int);
+void    level_thing_move(Levelp, Thingp, int new_x, int new_y, int new_z);
 void    level_thing_player_map_center(Levelp);
 void    level_thing_player_move_accum(Levelp, bool up, bool down, bool left, bool right);
-void    level_thing_player_move_delta(Levelp, int, int);
+void    level_thing_player_move_delta(Levelp, int dx, int dy, int dz);
 void    level_thing_player_move_reset(Levelp);
 void    level_thing_pop(Levelp, Thingp);
 void    level_thing_push(Levelp, Thingp);

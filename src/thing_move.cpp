@@ -184,13 +184,13 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
   }
 }
 
-void level_thing_move(Levelp l, Thingp t, int new_x, int new_y)
+void level_thing_move(Levelp l, Thingp t, int new_x, int new_y, int new_z)
 {
   if (level_is_oob(l, new_x, new_y)) {
     return;
   }
 
-  if ((new_x == t->x) && (new_y == t->y)) {
+  if ((new_x == t->x) && (new_y == t->y) && (new_z == t->z)) {
     return;
   }
 
@@ -201,9 +201,11 @@ void level_thing_move(Levelp l, Thingp t, int new_x, int new_y)
 
   t->old_x = t->x;
   t->old_y = t->y;
+  t->old_z = t->z;
 
   t->x = new_x;
   t->y = new_y;
+  t->z = new_z;
 
   level_thing_push(l, t);
 }
@@ -287,6 +289,13 @@ void level_thing_push(Levelp l, Thingp t)
     auto o_id = l->thing_id[ x ][ y ][ z ][ slot ];
     if (! o_id) {
       l->thing_id[ x ][ y ][ z ][ slot ] = t->id;
+
+      //
+      // Keep track of tiles the player has been on.
+      //
+      if (tp_is_player(tp(t))) {
+        l->is_walked[ x ][ y ][ z ] = true;
+      }
 
       //
       // Set an initial tile so we can see the thing

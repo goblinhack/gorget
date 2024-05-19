@@ -18,7 +18,7 @@ bool tp_load_player(void)
     tp_flag_set(tp, is_blit_on_ground, true);
     tp_flag_set(tp, is_player, true);
     tp_player_index_set(tp, player - 1);
-    tp_z_depth_set(tp, MAP_DEPTH_PLAYER);
+    tp_z_depth_set(tp, MAP_Z_DEPTH_PLAYER);
     // end sort marker1 }
 
     auto delay = 100;

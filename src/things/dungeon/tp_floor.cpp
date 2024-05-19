@@ -14,7 +14,7 @@ bool tp_load_floor(void)
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_blit_on_ground, true);
   tp_flag_set(tp, is_floor, true);
-  tp_z_depth_set(tp, MAP_DEPTH_FLOOR);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, tile_find_mand("floor.1"));

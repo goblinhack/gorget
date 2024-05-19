@@ -234,6 +234,17 @@ bool level_is_oob(Level *l, int x, int y)
   return false;
 }
 
+bool level_is_oob(Level *l, int x, int y, int z)
+{
+  if (z < 0) {
+    return true;
+  }
+  if (z >= MAP_DEPTH) {
+    return true;
+  }
+  return level_is_oob(l, x, y);
+}
+
 void level_map_set(Levelp l, int z, const char *in)
 {
   TRACE_NO_INDENT();

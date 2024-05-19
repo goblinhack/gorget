@@ -25,13 +25,13 @@ enum {
 };
 
 enum {
-  MAP_DEPTH_FLOOR,
-  MAP_DEPTH_WALL,
-  MAP_DEPTH_DOOR,
-  MAP_DEPTH_OBJ1,
-  MAP_DEPTH_OBJ2,
-  MAP_DEPTH_PLAYER,
-  MAP_DEPTH_CURSOR,
+  MAP_Z_DEPTH_FLOOR,
+  MAP_Z_DEPTH_WALL,
+  MAP_Z_DEPTH_DOOR,
+  MAP_Z_DEPTH_OBJ1,
+  MAP_Z_DEPTH_OBJ2,
+  MAP_Z_DEPTH_PLAYER,
+  MAP_Z_DEPTH_CURSOR,
 };
 
 enum {
@@ -70,6 +70,8 @@ enum { MONST_CLASS_A, MONST_CLASS_MAX };
   list_macro(is_player,                       "is_player"),                      \
   list_macro(is_tiled,                        "is_tiled"),                       \
   list_macro(is_wall,                         "is_wall"),                        \
+  list_macro(is_lava,                         "is_lava"),                        \
+  list_macro(is_chasm,                        "is_chasm"),                       \
   list_macro(THING_FLAG_MAX,                  "THING_FLAG_MAX"),
 
 /* clang-format on */
@@ -98,6 +100,62 @@ enum { MONST_CLASS_A, MONST_CLASS_MAX };
 #define tp_is_player(tp)                     tp_flag(tp, is_player)
 #define tp_is_tiled(tp)                      tp_flag(tp, is_tiled)
 #define tp_is_wall(tp)                       tp_flag(tp, is_wall)
+#define tp_is_lava(tp)                       tp_flag(tp, is_lava)
+#define tp_is_chasm(tp)                      tp_flag(tp, is_chasm)
+
+#define thing_is_able_to_walk_through_walls(thing) tp_flag(tp(thing), is_able_to_walk_through_walls)
+#define thing_is_animated_can_hflip(thing)         tp_flag(tp(thing), is_animated_can_hflip)
+#define thing_is_animated_no_dir(thing)            tp_flag(tp(thing), is_animated_no_dir)
+#define thing_is_blit_centered(thing)              tp_flag(tp(thing), is_blit_centered)
+#define thing_is_blit_on_ground(thing)             tp_flag(tp(thing), is_blit_on_ground)
+#define thing_is_blit_outlined(thing)              tp_flag(tp(thing), is_blit_outlined)
+#define thing_is_blit_square_outlined(thing)       tp_flag(tp(thing), is_blit_square_outlined)
+#define thing_is_cursor(thing)                     tp_flag(tp(thing), is_cursor)
+#define thing_is_cursor_hazard(thing)              tp_flag(tp(thing), is_cursor_hazard)
+#define thing_is_cursor_path_blocker(thing)        tp_flag(tp(thing), is_cursor_path_blocker)
+#define thing_is_cursor_path_hazard(thing)         tp_flag(tp(thing), is_cursor_path_hazard)
+#define thing_is_cursor_path(thing)                tp_flag(tp(thing), is_cursor_path)
+#define thing_is_door(thing)                       tp_flag(tp(thing), is_door)
+#define thing_is_dungeon_entrance(thing)           tp_flag(tp(thing), is_dungeon_entrance)
+#define thing_is_exit(thing)                       tp_flag(tp(thing), is_exit)
+#define thing_is_floor(thing)                      tp_flag(tp(thing), is_floor)
+#define thing_is_key(thing)                        tp_flag(tp(thing), is_key)
+#define thing_is_monst(thing)                      tp_flag(tp(thing), is_monst)
+#define thing_is_obs_monst(thing)                  tp_flag(tp(thing), is_obs_monst)
+#define thing_is_obs_player(thing)                 tp_flag(tp(thing), is_obs_player)
+#define thing_is_obs_wall_or_door(thing)           tp_flag(tp(thing), is_obs_wall_or_door)
+#define thing_is_player(thing)                     tp_flag(tp(thing), is_player)
+#define thing_is_tiled(thing)                      tp_flag(tp(thing), is_tiled)
+#define thing_is_wall(thing)                       tp_flag(tp(thing), is_wall)
+#define thing_is_lava(thing)                       tp_flag(tp(thing), is_lava)
+#define thing_is_chasm(thing)                      tp_flag(tp(thing), is_chasm)
+
+#define level_is_able_to_walk_through_walls(level, x, y, z) level_flag(level, is_able_to_walk_through_walls, x, y, z)
+#define level_is_animated_can_hflip(level, x, y, z)         level_flag(level, is_animated_can_hflip, x, y, z)
+#define level_is_animated_no_dir(level, x, y, z)            level_flag(level, is_animated_no_dir, x, y, z)
+#define level_is_blit_centered(level, x, y, z)              level_flag(level, is_blit_centered, x, y, z)
+#define level_is_blit_on_ground(level, x, y, z)             level_flag(level, is_blit_on_ground, x, y, z)
+#define level_is_blit_outlined(level, x, y, z)              level_flag(level, is_blit_outlined, x, y, z)
+#define level_is_blit_square_outlined(level, x, y, z)       level_flag(level, is_blit_square_outlined, x, y, z)
+#define level_is_cursor(level, x, y, z)                     level_flag(level, is_cursor, x, y, z)
+#define level_is_cursor_hazard(level, x, y, z)              level_flag(level, is_cursor_hazard, x, y, z)
+#define level_is_cursor_path_blocker(level, x, y, z)        level_flag(level, is_cursor_path_blocker, x, y, z)
+#define level_is_cursor_path_hazard(level, x, y, z)         level_flag(level, is_cursor_path_hazard, x, y, z)
+#define level_is_cursor_path(level, x, y, z)                level_flag(level, is_cursor_path, x, y, z)
+#define level_is_door(level, x, y, z)                       level_flag(level, is_door, x, y, z)
+#define level_is_dungeon_entrance(level, x, y, z)           level_flag(level, is_dungeon_entrance, x, y, z)
+#define level_is_exit(level, x, y, z)                       level_flag(level, is_exit, x, y, z)
+#define level_is_floor(level, x, y, z)                      level_flag(level, is_floor, x, y, z)
+#define level_is_key(level, x, y, z)                        level_flag(level, is_key, x, y, z)
+#define level_is_monst(level, x, y, z)                      level_flag(level, is_monst, x, y, z)
+#define level_is_obs_monst(level, x, y, z)                  level_flag(level, is_obs_monst, x, y, z)
+#define level_is_obs_player(level, x, y, z)                 level_flag(level, is_obs_player, x, y, z)
+#define level_is_obs_wall_or_door(level, x, y, z)           level_flag(level, is_obs_wall_or_door, x, y, z)
+#define level_is_player(level, x, y, z)                     level_flag(level, is_player, x, y, z)
+#define level_is_tiled(level, x, y, z)                      level_flag(level, is_tiled, x, y, z)
+#define level_is_wall(level, x, y, z)                       level_flag(level, is_wall, x, y, z)
+#define level_is_lava(level, x, y, z)                       level_flag(level, is_lava, x, y, z)
+#define level_is_chasm(level, x, y, z)                      level_flag(level, is_chasm, x, y, z)
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 

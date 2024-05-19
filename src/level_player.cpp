@@ -22,7 +22,7 @@ Thingp level_thing_player(Levelp l)
   return level_thing_find(l, l->player);
 }
 
-void level_thing_player_move_delta(Levelp l, int dx, int dy)
+void level_thing_player_move_delta(Levelp l, int dx, int dy, int dz)
 {
   TRACE_NO_INDENT();
 
@@ -38,8 +38,8 @@ void level_thing_player_move_delta(Levelp l, int dx, int dy)
     return;
   }
 
-  if (level_thing_can_move_to(l, t, t->x + dx, t->y + dy, t->z)) {
-    level_thing_move(l, t, t->x + dx, t->y + dy);
+  if (level_thing_can_move_to(l, t, t->x + dx, t->y + dy, t->z + dz)) {
+    level_thing_move(l, t, t->x + dx, t->y + dy, t->z + dz);
 
     level_tick_begin_requested(l, "player moved");
   }
@@ -99,24 +99,24 @@ bool level_thing_player_move_request(Levelp l, bool up, bool down, bool left, bo
 
   if (l->requested_move_up) {
     if (l->requested_move_keft) {
-      level_thing_player_move_delta(l, -1, -1);
+      level_thing_player_move_delta(l, -1, -1, 0);
     } else if (l->requested_move_right) {
-      level_thing_player_move_delta(l, 1, -1);
+      level_thing_player_move_delta(l, 1, -1, 0);
     } else {
-      level_thing_player_move_delta(l, 0, -1);
+      level_thing_player_move_delta(l, 0, -1, 0);
     }
   } else if (l->requested_move_left) {
     if (l->requested_move_keft) {
-      level_thing_player_move_delta(l, -1, 1);
+      level_thing_player_move_delta(l, -1, 1, 0);
     } else if (l->requested_move_right) {
-      level_thing_player_move_delta(l, 1, 1);
+      level_thing_player_move_delta(l, 1, 1, 0);
     } else {
-      level_thing_player_move_delta(l, 0, 1);
+      level_thing_player_move_delta(l, 0, 1, 0);
     }
   } else if (l->requested_move_keft) {
-    level_thing_player_move_delta(l, -1, 0);
+    level_thing_player_move_delta(l, -1, 0, 0);
   } else if (l->requested_move_right) {
-    level_thing_player_move_delta(l, 1, 0);
+    level_thing_player_move_delta(l, 1, 0, 0);
   }
 
   return true;
