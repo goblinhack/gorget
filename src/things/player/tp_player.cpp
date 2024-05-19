@@ -14,9 +14,9 @@ bool tp_load_player(void)
     auto tp   = tp_load(name.c_str());
 
     // begin sort marker1 {
-    tp_is_animated_can_hflip_set(tp, true);
-    tp_is_blit_on_ground_set(tp, true);
-    tp_is_player_set(tp, true);
+    tp_flag_set(tp, is_animated_can_hflip, true);
+    tp_flag_set(tp, is_blit_on_ground, true);
+    tp_flag_set(tp, is_player, true);
     tp_player_index_set(tp, player - 1);
     tp_z_depth_set(tp, MAP_DEPTH_PLAYER);
     // end sort marker1 }

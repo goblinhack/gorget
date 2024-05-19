@@ -72,8 +72,10 @@ Thingp level_thing_init(Levelp l, Tpp tp, int x, int y, int z)
   //
   // Assign the player
   //
-  if (tp_player_index_get(tp) == l->player_index) {
-    l->player = t->id;
+  if (tp_is_player(tp)) {
+    if (tp_player_index_get(tp) == l->player_index) {
+      l->player = t->id;
+    }
   }
 
   level_thing_update(l, t);

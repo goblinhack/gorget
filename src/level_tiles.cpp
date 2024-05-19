@@ -179,7 +179,7 @@ void level_assign_tiles(Levelp l, int z)
           //
           // Switch the door direction if next to walls
           //
-          if (tp_flag(tp, is_door)) {
+          if (tp_is_door(tp)) {
             if (level_flag(l, is_wall, x, y - 1, z) && level_flag(l, is_wall, x, y + 1, z)) {
               block_type = IS_JOIN_TOP;
             }

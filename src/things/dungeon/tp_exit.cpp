@@ -13,8 +13,8 @@ bool tp_load_exit(void)
 {
   auto tp = tp_load("exit");
   // begin sort marker1 {
-  tp_is_blit_on_ground_set(tp, true);
-  tp_is_exit_set(tp, true);
+  tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_exit, true);
   tp_z_depth_set(tp, MAP_DEPTH_OBJ1);
   // end sort marker1 }
 

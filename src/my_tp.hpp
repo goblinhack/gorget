@@ -63,63 +63,6 @@ void tp_random_dungeon_init(void);
 bool tp_flag(Tpp tp, ThingFlag);
 void tp_flag_set(Tpp tp, ThingFlag, bool val);
 
-bool tp_is_animated_can_hflip(Tpp tp);
-void tp_is_animated_can_hflip_set(Tpp tp, bool val);
-
-bool tp_is_animated_no_dir(Tpp tp);
-void tp_is_animated_no_dir_set(Tpp tp, bool val);
-
-bool tp_is_blit_centered(Tpp tp);
-void tp_is_blit_centered_set(Tpp tp, bool val);
-
-bool tp_is_blit_on_ground(Tpp tp);
-void tp_is_blit_on_ground_set(Tpp tp, bool val);
-
-bool tp_is_blit_outlined(Tpp tp);
-void tp_is_blit_outlined_set(Tpp tp, bool val);
-
-bool tp_is_blit_square_outlined(Tpp tp);
-void tp_is_blit_square_outlined_set(Tpp tp, bool val);
-
-bool tp_is_tiled(Tpp tp);
-void tp_is_tiled_set(Tpp tp, bool val);
-
-bool tp_is_cursor(Tpp tp);
-void tp_is_cursor_set(Tpp tp, bool val);
-
-bool tp_is_dungeon_entrance(Tpp tp);
-void tp_is_dungeon_entrance_set(Tpp tp, bool val);
-
-bool tp_is_exit(Tpp tp);
-void tp_is_exit_set(Tpp tp, bool val);
-
-bool tp_is_floor(Tpp tp);
-void tp_is_floor_set(Tpp tp, bool val);
-
-bool tp_is_cursor_at(Tpp tp);
-void tp_is_cursor_at_set(Tpp tp, bool val);
-
-bool tp_is_cursor_path(Tpp tp);
-void tp_is_cursor_path_set(Tpp tp, bool val);
-
-bool tp_is_key(Tpp tp);
-void tp_is_key_set(Tpp tp, bool val);
-
-bool tp_is_monst(Tpp tp);
-void tp_is_monst_set(Tpp tp, bool val);
-
-bool tp_is_monst_class(Tpp tp, int val);
-void tp_is_monst_class_set(Tpp tp, bool val);
-
-bool tp_is_obs_monst(Tpp tp);
-void tp_is_obs_monst_set(Tpp tp, bool val);
-
-bool tp_is_obs_player(Tpp tp);
-void tp_is_obs_player_set(Tpp tp, bool val);
-
-bool tp_is_player(Tpp tp);
-void tp_is_player_set(Tpp tp, bool val);
-
 uint8_t tp_player_index_get(Tpp tp);
 void    tp_player_index_set(Tpp tp, uint8_t val);
 

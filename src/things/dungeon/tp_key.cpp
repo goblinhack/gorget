@@ -10,8 +10,8 @@ bool tp_load_key(void)
 {
   auto tp = tp_load("key");
   // begin sort marker1 {
-  tp_is_blit_on_ground_set(tp, true);
-  tp_is_key_set(tp, true);
+  tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_key, true);
   tp_z_depth_set(tp, MAP_DEPTH_OBJ2);
   // end sort marker1 }
 

@@ -11,9 +11,9 @@ bool tp_load_floor(void)
 {
   auto tp = tp_load("floor");
   // begin sort marker1 {
-  tp_is_blit_centered_set(tp, true);
-  tp_is_blit_on_ground_set(tp, true);
-  tp_is_floor_set(tp, true);
+  tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_floor, true);
   tp_z_depth_set(tp, MAP_DEPTH_FLOOR);
   // end sort marker1 }
 
