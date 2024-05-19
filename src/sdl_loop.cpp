@@ -228,9 +228,9 @@ void sdl_loop(void)
     }
 
     //
-    // Update FPS counter. Used for damping AI even if not shown.
+    // Update FPS counter.
     //
-    if (unlikely(1 || game_fps_counter_get(game))) {
+    if (unlikely(game_fps_counter_get(game))) {
       static uint32_t ts_begin;
       static uint32_t ts_now;
 
