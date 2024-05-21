@@ -206,7 +206,6 @@ bool level_flag(Levelp l, ThingFlag f, int x, int y, int z)
 {
   FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, x, y, z)
   {
-    auto it_tp = level_thing_tp(l, it);
     if (tp_flag(it_tp, f)) {
       return true;
     }
@@ -309,8 +308,8 @@ void level_map_set(Levelp l, int z, const char *in)
       }
 
       if (need_floor) {
-        auto tp = tp_floor;
-        auto t  = level_thing_init(l, tp, x, y, z);
+        auto tp_add = tp_floor;
+        auto t      = level_thing_init(l, tp_add, x, y, z);
         if (t) {
           level_thing_push(l, t);
         }
@@ -378,8 +377,8 @@ void level_bounds_set(Levelp l)
   //
   // Square map
   //
-  auto max_pix_x = (MAP_WIDTH * dw) - game_pix_height_get(game);
-  auto max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(game);
+  int max_pix_x = (MAP_WIDTH * dw) - game_pix_height_get(game);
+  int max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(game);
 
   if (l->pixel_map_at_x > max_pix_x) {
     l->pixel_map_at_x = max_pix_x;

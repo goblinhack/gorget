@@ -14,7 +14,7 @@
 
 WidPopup *wid_main_menu_window;
 
-void wid_main_menu_destroy(class Game *game)
+void wid_main_menu_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
 
@@ -22,7 +22,7 @@ void wid_main_menu_destroy(class Game *game)
   wid_main_menu_window = nullptr;
 }
 
-void wid_main_menu_hide(class Game *game)
+void wid_main_menu_hide(class Game *g)
 {
   TRACE_AND_INDENT();
   wid_hide(wid_main_menu_window->wid_popup_container);
@@ -310,13 +310,13 @@ static void wid_main_menu_tick(Widp w)
   }
 }
 
-void wid_main_menu_select(class Game *game)
+void wid_main_menu_select(class Game *g)
 {
   TRACE_AND_INDENT();
   LOG("Main menu");
 
   if (wid_main_menu_window) {
-    wid_main_menu_destroy(game);
+    wid_main_menu_destroy(g);
   }
 
   auto box_height          = 3;
@@ -326,11 +326,11 @@ void wid_main_menu_select(class Game *game)
 
   int   menu_height    = 20;
   int   menu_width     = UI_WID_POPUP_WIDTH_NORMAL;
-  point tl             = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point br             = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_main_menu_window = new WidPopup("Main menu", tl, br, nullptr, "nothing", false, false);
+  point outer_tl       = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br       = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_main_menu_window = new WidPopup("Main menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
-  auto button_width = br.x - tl.x - 2;
+  auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
     TRACE_NO_INDENT();
@@ -440,12 +440,12 @@ void wid_main_menu_select(class Game *game)
   wid_update(wid_main_menu_window->wid_text_area->wid_text_area);
 }
 
-void wid_new_game(class Game *game)
+void wid_new_game(class Game *g)
 {
   TRACE_NO_INDENT();
 
-  game_create_level(game);
-  game_state_reset(game, "new game");
+  game_create_level(g);
+  game_state_reset(g, "new game");
 
-  wid_rightbar_init(game);
+  wid_rightbar_init(g);
 }

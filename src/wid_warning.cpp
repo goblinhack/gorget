@@ -106,11 +106,11 @@ void wid_warning(std::string warning)
     auto p = wid_warning_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "No");
 
-    point tl = make_point(width / 2 - 12, y_at + 2);
-    point br = make_point(width / 2 - 2, y_at + 4);
+    point tl1 = make_point(width / 2 - 12, y_at + 2);
+    point br1 = make_point(width / 2 - 2, y_at + 4);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_down(w, wid_warning_no);
-    wid_set_pos(w, tl, br);
+    wid_set_pos(w, tl1, br1);
     wid_set_text(w, "No");
   }
 
@@ -119,11 +119,11 @@ void wid_warning(std::string warning)
     auto p = wid_warning_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Yes");
 
-    point tl = make_point(width / 2 + 0, y_at + 2);
-    point br = make_point(width / 2 + 10, y_at + 4);
+    point tl2 = make_point(width / 2 + 0, y_at + 2);
+    point br2 = make_point(width / 2 + 10, y_at + 4);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_down(w, wid_warning_yes);
-    wid_set_pos(w, tl, br);
+    wid_set_pos(w, tl2, br2);
     wid_set_text(w, "Yes");
   }
   wid_update(wid_warning_window->wid_text_area->wid_text_area);

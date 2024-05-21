@@ -11,7 +11,7 @@
 
 WidPopup *wid_cfg_top_window;
 
-static void wid_cfg_top_destroy(class Game *game)
+static void wid_cfg_top_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_top_window;
@@ -106,13 +106,13 @@ static bool wid_cfg_top_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-void wid_cfg_top_menu(class Game *game)
+void wid_cfg_top_menu(class Game *g)
 {
   TRACE_AND_INDENT();
   CON("INF: Config menu");
 
   if (wid_cfg_top_window) {
-    wid_cfg_top_destroy(game);
+    wid_cfg_top_destroy(g);
   }
 
   auto box_height          = 2;
@@ -122,11 +122,11 @@ void wid_cfg_top_menu(class Game *game)
 
   int   menu_height  = 20;
   int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL;
-  point tl           = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point br           = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_cfg_top_window = new WidPopup("Config menu", tl, br, nullptr, "nothing", false, false);
+  point outer_tl     = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br     = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_cfg_top_window = new WidPopup("Config menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
-  auto button_width = br.x - tl.x - 2;
+  auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
     TRACE_AND_INDENT();

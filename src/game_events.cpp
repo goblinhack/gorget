@@ -12,12 +12,12 @@
 //
 // Return true on the event being consumed
 //
-uint8_t game_mouse_down(class Game *game, int x, int y, uint32_t button)
+uint8_t game_mouse_down(class Game *g, int x, int y, uint32_t button)
 {
   DBG("Game mouse down");
   TRACE_AND_INDENT();
 
-  if (! game) {
+  if (! g) {
     DBG2("Game mouse down; no game or not started");
     return false;
   }
@@ -30,9 +30,9 @@ uint8_t game_mouse_down(class Game *game, int x, int y, uint32_t button)
   return false;
 }
 
-uint8_t game_mouse_up(class Game *game, int x, int y, uint32_t button) { return false; }
+uint8_t game_mouse_up(class Game *g, int x, int y, uint32_t button) { return false; }
 
-uint8_t game_mouse_motion(class Game *game, int x, int y, int relx, int rely, int wheelx, int wheely)
+uint8_t game_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheelx, int wheely)
 {
   DBG2("Game mouse motion");
   TRACE_AND_INDENT();
@@ -41,7 +41,7 @@ uint8_t game_mouse_motion(class Game *game, int x, int y, int relx, int rely, in
     return false;
   }
 
-  auto l = game_level_get(game);
+  auto l = game_level_get(g);
   if (l) {
     level_scroll_delta(l, wheelx, wheely);
   }
@@ -49,28 +49,28 @@ uint8_t game_mouse_motion(class Game *game, int x, int y, int relx, int rely, in
   return true;
 }
 
-uint8_t game_input(class Game *game, const SDL_Keysym *key)
+uint8_t game_input(class Game *g, const SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
   DBG("INF: Pressed a key");
 
-  if (! game) {
+  if (! g) {
     DBG("INF: Pressed a key; no game");
     return false;
   }
 
-  auto l = game_level_get(game);
+  auto l = game_level_get(g);
   if (! l) {
     DBG("INF: Pressed a key; no l");
     return false;
   }
 
-  if (sdlk_eq(*key, game_key_console_get(game))) {
+  if (sdlk_eq(*key, game_key_console_get(g))) {
     DBG("INF: Pressed a key; over console, ignore");
     return false;
   }
 
-  if (sdlk_eq(*key, game_key_unused1_get(game))) {
+  if (sdlk_eq(*key, game_key_unused1_get(g))) {
     // TODO
     return false; // To avoid click noise
   }
@@ -78,40 +78,40 @@ uint8_t game_input(class Game *game, const SDL_Keysym *key)
   //
   // attack
   //
-  if (sdlk_eq(*key, game_key_attack_get(game))) {
+  if (sdlk_eq(*key, game_key_attack_get(g))) {
     CON("TODO ATTACK");
-    // game->player_tick(left, right, up, down, attack, wait, jump);
+    // g->player_tick(left, right, up, down, attack, wait, jump);
     return false; // To avoid click noise
   }
 
-  if (sdlk_eq(*key, game_key_quit_get(game))) {
+  if (sdlk_eq(*key, game_key_quit_get(g))) {
     LOG("INF: Pressed quit key");
     TRACE_AND_INDENT();
     if (g_opt_test_skip_main_menu) {
       DIE_CLEAN("Quick quit");
     }
-    wid_quit_select(game);
+    wid_quit_select(g);
     return true;
   }
 
-  if (sdlk_eq(*key, game_key_help_get(game))) {
+  if (sdlk_eq(*key, game_key_help_get(g))) {
     LOG("INF: Pressed help key");
     TRACE_AND_INDENT();
-    wid_cfg_keyboard_select(game);
+    wid_cfg_keyboard_select(g);
     return true;
   }
-  if (sdlk_eq(*key, game_key_load_get(game))) {
+  if (sdlk_eq(*key, game_key_load_get(g))) {
     LOG("INF: Pressed load key");
     TRACE_AND_INDENT();
-    LOG("INF: Loading game");
-    wid_load_select(game);
+    LOG("INF: Loading g");
+    wid_load_select(g);
     return true;
   }
-  if (sdlk_eq(*key, game_key_save_get(game))) {
+  if (sdlk_eq(*key, game_key_save_get(g))) {
     LOG("INF: Pressed save key");
     TRACE_AND_INDENT();
-    LOG("INF: Saving the game");
-    wid_save_select(game);
+    LOG("INF: Saving the g");
+    wid_save_select(g);
     return true;
   }
 

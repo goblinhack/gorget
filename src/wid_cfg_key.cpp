@@ -67,7 +67,7 @@ static void wid_cfg_check_for_conflicts(SDL_Keysym code)
   }
 }
 
-void wid_cfg_keyboard_destroy(class Game *game)
+void wid_cfg_keyboard_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   config_changed = false;
@@ -81,7 +81,7 @@ void wid_cfg_keyboard_destroy(class Game *game)
 
   delete wid_cfg_keyboard_window;
   wid_cfg_keyboard_window = nullptr;
-  game_state_reset(game, "wid keyboard destroy");
+  game_state_reset(g, "wid keyboard destroy");
 }
 
 static bool wid_cfg_keyboard_cancel(Widp w, int x, int y, uint32_t button)
@@ -274,7 +274,6 @@ static void grab_key(const std::string which)
 static bool wid_cfg_keyboard_profile_arrow_keys(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  SDL_Keysym none = {};
   SDL_Keysym k {};
 
   config_changed = true;
@@ -482,7 +481,7 @@ static bool wid_cfg_keyboard_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-void wid_cfg_keyboard_select(class Game *game)
+void wid_cfg_keyboard_select(class Game *g)
 {
   TRACE_AND_INDENT();
   wid_notice_destroy();
@@ -495,11 +494,12 @@ void wid_cfg_keyboard_select(class Game *game)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point tl    = make_point(m - TERM_WIDTH / 2, 2);
-  point br    = make_point(m + TERM_WIDTH / 2 - 1, TERM_HEIGHT - 2);
-  auto  width = br.x - tl.x;
+  point outer_tl = make_point(m - TERM_WIDTH / 2, 2);
+  point outer_br = make_point(m + TERM_WIDTH / 2 - 1, TERM_HEIGHT - 2);
+  auto  width    = outer_br.x - outer_tl.x;
 
-  wid_cfg_keyboard_window = new WidPopup("Keyboard select", tl, br, nullptr, "", false, true);
+  wid_cfg_keyboard_window = new WidPopup("Keyboard select", outer_tl, outer_br, nullptr, "", false, true);
+
   {
     TRACE_AND_INDENT();
     Widp w = wid_cfg_keyboard_window->wid_popup_container;

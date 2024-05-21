@@ -9,25 +9,23 @@
 #include "my_enums.hpp"
 #include "my_minimal.hpp"
 
-#define THING_ID_ENTROPY_BITS 6
-#define THING_ID_BITS         16
-
-//
-// IDs below this are for templates
 //
 // Entropy is always > 0 for Thing IDs to distinguish them
+// A thing ID is composed as: // [ Entropy bits] [ ID bits ]
 //
-#define THING_ID_BASE (1U << (THING_ID_BITS))
+#define THING_COMMON_ID_ENTROPY_BITS    6
+#define THING_COMMON_ID_BITS            16
+#define THING_COMMON_ID_BASE            (1U << (THING_COMMON_ID_BITS))
+#define THING_COMMON_ID_ENTROPY_MASK    (((1U << THING_COMMON_ID_ENTROPY_BITS) - 1) << THING_COMMON_ID_BITS)
+#define THING_COMMON_ID_MASK            ((1U << THING_COMMON_ID_BITS) - 1)
+#define THING_COMMON_ID_GET_ENTROPY(id) ((id & THING_COMMON_ID_ENTROPY_MASK) >> THING_COMMON_ID_BITS)
+#define THING_COMMON_ID_GET(id)         (id & THING_COMMON_ID_MASK)
 
 //
-// A thing ID is composed like:
-// [ Entropy bits] [ X bits ] [ Y bits]
+// Essentially equates to the max number of monsters
 //
-#define THING_ID_ENTROPY_MASK (((1U << THING_ID_ENTROPY_BITS) - 1) << THING_ID_BITS)
-#define THING_ID_MASK         ((1U << THING_ID_BITS) - 1)
-
-#define THING_ID_GET_ENTROPY(id) ((id & THING_ID_ENTROPY_MASK) >> THING_ID_BITS)
-#define THING_ID_GET(id)         (id & THING_ID_MASK)
+#define THING_AI_MAX        65535 /* sizeof ai_id */
+#define THING_MOVE_PATH_MAX (MAP_WIDTH * MAP_HEIGHT)
 
 enum {
   THING_DIR_NONE,
@@ -41,11 +39,27 @@ enum {
   THING_DIR_BR,
 };
 
+typedef struct ThingAi_ {
+  //
+  // Unique ID
+  //
+  uint8_t in_use : 1;
+  struct {
+    int8_t x;
+    int8_t u;
+  } move_path[ THING_MOVE_PATH_MAX ];
+  int8_t move_path_size;
+} ThingAi;
+
 typedef struct Thing_ {
   //
   // Unique ID
   //
   ThingId id;
+  //
+  // For players and monsters
+  //
+  ThingAiId ai_id;
   //
   // Map co-ords.
   //
@@ -101,7 +115,8 @@ typedef struct Thing_ {
   uint8_t count[ THING_FLAG_MAX ];
 } Thing;
 
-Tpp  tp(Thingp t);
+Tpp tp(Thingp t);
+
 bool thing_is_dir_down(Thingp t);
 bool thing_is_dir_tr(Thingp t);
 bool thing_is_dir_tl(Thingp t);
@@ -110,6 +125,7 @@ bool thing_is_dir_bl(Thingp t);
 bool thing_is_dir_left(Thingp t);
 bool thing_is_dir_right(Thingp t);
 bool thing_is_dir_up(Thingp t);
+
 void thing_dir_tr_set(Thingp t, uint8_t);
 void thing_dir_tl_set(Thingp t, uint8_t);
 void thing_dir_br_set(Thingp t, uint8_t);
@@ -119,5 +135,8 @@ void thing_dir_left_set(Thingp t, uint8_t);
 void thing_dir_right_set(Thingp t, uint8_t);
 void thing_dir_up_set(Thingp t, uint8_t);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
+
+ThingAip level_thing_ai_new(Levelp, Thingp);
+void     level_thing_ai_free(Levelp, Thingp);
 
 #endif

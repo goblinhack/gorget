@@ -597,34 +597,38 @@ static Widp wid_mouse_down_handler(int x, int y)
     return w;
   }
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  {
+    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
+      auto c = iter->second;
 
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
-      continue;
+      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+        continue;
+      }
+
+      c = wid_mouse_down_handler_at(c, x, y, true /* strict */);
+      if (unlikely(! c)) {
+        continue;
+      }
+
+      return c;
     }
-
-    w = wid_mouse_down_handler_at(w, x, y, true /* strict */);
-    if (unlikely(! w)) {
-      continue;
-    }
-
-    return w;
   }
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  {
+    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
+      auto c = iter->second;
 
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
-      continue;
+      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+        continue;
+      }
+
+      c = wid_mouse_down_handler_at(c, x, y, false /* strict */);
+      if (unlikely(! c)) {
+        continue;
+      }
+
+      return c;
     }
-
-    w = wid_mouse_down_handler_at(w, x, y, false /* strict */);
-    if (unlikely(! w)) {
-      continue;
-    }
-
-    return w;
   }
 
   return nullptr;
@@ -646,34 +650,38 @@ static Widp wid_mouse_held_handler(int x, int y)
     return w;
   }
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  {
+    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
+      auto c = iter->second;
 
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
-      continue;
+      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+        continue;
+      }
+
+      c = wid_mouse_held_handler_at(c, x, y, true /* strict */);
+      if (unlikely(! c)) {
+        continue;
+      }
+
+      return c;
     }
-
-    w = wid_mouse_held_handler_at(w, x, y, true /* strict */);
-    if (unlikely(! w)) {
-      continue;
-    }
-
-    return w;
   }
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  {
+    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
+      auto c = iter->second;
 
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
-      continue;
+      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+        continue;
+      }
+
+      c = wid_mouse_held_handler_at(c, x, y, false /* strict */);
+      if (unlikely(! c)) {
+        continue;
+      }
+
+      return c;
     }
-
-    w = wid_mouse_held_handler_at(w, x, y, false /* strict */);
-    if (unlikely(! w)) {
-      continue;
-    }
-
-    return w;
   }
 
   return nullptr;
@@ -695,34 +703,38 @@ static Widp wid_mouse_up_handler(int x, int y)
     return w;
   }
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  {
+    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
+      auto c = iter->second;
 
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
-      continue;
+      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+        continue;
+      }
+
+      c = wid_mouse_up_handler_at(c, x, y, true /* strict */);
+      if (unlikely(! c)) {
+        continue;
+      }
+
+      return c;
     }
-
-    w = wid_mouse_up_handler_at(w, x, y, true /* strict */);
-    if (unlikely(! w)) {
-      continue;
-    }
-
-    return w;
   }
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  {
+    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
+      auto c = iter->second;
 
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
-      continue;
+      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+        continue;
+      }
+
+      c = wid_mouse_up_handler_at(c, x, y, false /* strict */);
+      if (unlikely(! c)) {
+        continue;
+      }
+
+      return c;
     }
-
-    w = wid_mouse_up_handler_at(w, x, y, false /* strict */);
-    if (unlikely(! w)) {
-      continue;
-    }
-
-    return w;
   }
 
   return nullptr;
@@ -745,7 +757,7 @@ static Widp wid_mouse_motion_handler(int x, int y, int relx, int rely, int wheel
   return nullptr;
 }
 
-void wid_mouse_motion(class Game *game, int x, int y, int relx, int rely, int wheelx, int wheely)
+void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_AND_INDENT();
 
@@ -925,12 +937,12 @@ void wid_mouse_motion(class Game *game, int x, int y, int relx, int rely, int wh
 
   if (! got_one) {
     if (relx || rely || wheelx || wheely) {
-      game_mouse_motion(game, x, y, relx, rely, wheelx, wheely);
+      game_mouse_motion(g, x, y, relx, rely, wheelx, wheely);
     }
   }
 }
 
-void wid_mouse_down(class Game *game, uint32_t button, int x, int y)
+void wid_mouse_down(class Game *g, uint32_t button, int x, int y)
 {
   TRACE_AND_INDENT();
 
@@ -966,8 +978,8 @@ void wid_mouse_down(class Game *game, uint32_t button, int x, int y)
       return;
     }
 
-    if (game) {
-      game_last_mouse_down_set(game, time_ms_cached());
+    if (g) {
+      game_last_mouse_down_set(g, time_ms_cached());
     }
 
     return;
@@ -980,10 +992,10 @@ void wid_mouse_down(class Game *game, uint32_t button, int x, int y)
     return;
   }
 
-  if (game_mouse_down(game, x, y, button)) {
+  if (game_mouse_down(g, x, y, button)) {
     sound_play("click");
-    if (game) {
-      game_last_mouse_down_set(game, time_ms_cached());
+    if (g) {
+      game_last_mouse_down_set(g, time_ms_cached());
     }
   }
 }
@@ -1034,7 +1046,7 @@ void wid_mouse_held(uint32_t button, int x, int y)
   }
 }
 
-void wid_mouse_up(class Game *game, uint32_t button, int x, int y)
+void wid_mouse_up(class Game *g, uint32_t button, int x, int y)
 {
   TRACE_AND_INDENT();
 
@@ -1062,7 +1074,7 @@ void wid_mouse_up(class Game *game, uint32_t button, int x, int y)
     return;
   }
 
-  game_mouse_up(game, x, y, button);
+  game_mouse_up(g, x, y, button);
 }
 
 void wid_mouse_hide(int value)

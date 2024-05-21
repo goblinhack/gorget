@@ -228,8 +228,6 @@ bool level_thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y, i
 
   FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, new_loc_x, new_loc_y, new_loc_z)
   {
-    auto it_tp = level_thing_tp(l, it);
-
     if (tp_is_player(my_tp) && tp_is_obs_player(it_tp)) {
       return false;
     }

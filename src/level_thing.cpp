@@ -69,16 +69,14 @@ Thingp level_thing_and_tp_get(Levelp l, int x, int y, int z, int slot, Tpp *out)
 
 Thingp level_thing_find_optional(Level *l, ThingId id)
 {
-  TRACE_NO_INDENT();
-
   if (! id) {
     return nullptr;
   }
 
   auto thing_id = id;
-  auto index    = THING_ID_GET(thing_id);
+  auto index    = THING_COMMON_ID_GET(thing_id);
 
-  ASSERT_EX(index, <, (1 << THING_ID_BITS));
+  ASSERT_EX(index, <, (1 << THING_COMMON_ID_BITS));
 
   auto t = &l->thing_body[ index ];
   if (t->id == thing_id) {
@@ -89,12 +87,10 @@ Thingp level_thing_find_optional(Level *l, ThingId id)
 
 Thingp level_thing_find(Levelp l, ThingId id)
 {
-  TRACE_NO_INDENT();
-
   auto thing_id = id;
-  auto index    = THING_ID_GET(thing_id);
+  auto index    = THING_COMMON_ID_GET(thing_id);
 
-  ASSERT_EX(index, <, (1 << THING_ID_BITS));
+  ASSERT_EX(index, <, (1 << THING_COMMON_ID_BITS));
 
   auto t = &l->thing_body[ index ];
   if (! t) {
@@ -112,7 +108,7 @@ Thingp level_thing_new(Levelp l, Tpp tp, int x, int y, int z)
 {
   TRACE_NO_INDENT();
 
-  for (auto index = 0; index < (1 << THING_ID_BITS); index++) {
+  for (auto index = 0; index < (1 << THING_COMMON_ID_BITS); index++) {
     auto t = &l->thing_body[ index ];
     if (t->id) {
       continue;
@@ -120,7 +116,7 @@ Thingp level_thing_new(Levelp l, Tpp tp, int x, int y, int z)
 
     static uint16_t entropy;
     entropy++;
-    entropy &= (1 << THING_ID_ENTROPY_BITS) - 1;
+    entropy &= (1 << THING_COMMON_ID_ENTROPY_BITS) - 1;
     if (! entropy) {
       entropy++;
     }
@@ -128,7 +124,7 @@ Thingp level_thing_new(Levelp l, Tpp tp, int x, int y, int z)
     memset(t, 0, sizeof(*t));
 
     ThingId thing_id;
-    thing_id = (entropy << THING_ID_BITS) | index;
+    thing_id = (entropy << THING_COMMON_ID_BITS) | index;
     t->id    = thing_id;
     t->tp_id = tp_id_get(tp);
 
@@ -148,4 +144,48 @@ void level_thing_free(Levelp l, Thingp t)
   }
 
   memset(t, 0, sizeof(*t));
+}
+
+ThingAip level_thing_ai_new(Levelp l, Thingp t)
+{
+  TRACE_AND_INDENT();
+
+  static ThingAiId last_index;
+
+  //
+  // Continue from the last successful allocation
+  //
+  for (ThingAiId index = 0; index < THING_AI_MAX; index++) {
+    ThingAiId ai_id = last_index + index;
+    if (ai_id == 0) {
+      continue;
+    }
+
+    if (! l->thing_ai[ ai_id ].in_use) {
+      l->thing_ai[ ai_id ].in_use = true;
+      t->ai_id                    = ai_id;
+      last_index                  = ai_id;
+      return &l->thing_ai[ ai_id ];
+    }
+  }
+
+  ERR("out of Thing AI IDs");
+  return 0;
+}
+
+void level_thing_ai_free(Levelp l, Thingp t)
+{
+  TRACE_AND_INDENT();
+
+  auto ai_id = t->ai_id;
+  if (! ai_id) {
+    return;
+  }
+
+  if (! l->thing_ai[ ai_id ].in_use) {
+    ERR("freeing unused Thing AI ID is not in use, %" PRIX32 "", ai_id);
+  }
+
+  l->thing_ai[ ai_id ].in_use = false;
+  t->ai_id                    = 0;
 }

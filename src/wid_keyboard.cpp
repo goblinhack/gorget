@@ -195,7 +195,7 @@ static void wid_keyboard_update_buttons(Widp w)
   wid_update(w);
 }
 
-static void wid_keyboard_event(Widp w, int focusx, int focusy, const SDL_Keysym *key)
+static void wid_keyboard_event(Widp w, int focusx, int focusy, const SDL_Keysym *key_in)
 {
   TRACE_AND_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
@@ -208,8 +208,8 @@ static void wid_keyboard_event(Widp w, int focusx, int focusy, const SDL_Keysym 
     add = keys[ focusy ][ focusx ];
   }
 
-  if (key) {
-    wid_receive_input(ctx->input, key);
+  if (key_in) {
+    wid_receive_input(ctx->input, key_in);
   } else if (! strcasecmp(add, "OK")) {
     (ctx->selected)(ctx->w, wid_get_text(ctx->input));
   } else if (! strcasecmp(add, "CANCL")) {
@@ -240,13 +240,13 @@ static void wid_keyboard_event(Widp w, int focusx, int focusy, const SDL_Keysym 
     wid_receive_input(ctx->input, &key);
   }
 
-  if (key && (focusx == -1) && (focusy == -1)) {
+  if (key_in && (focusx == -1) && (focusy == -1)) {
     int x, y;
 
     for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
       for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
         char c = key_char[ y ][ x ];
-        if (c == key->sym) {
+        if (c == key_in->sym) {
           focusx = x;
           focusy = y;
           break;

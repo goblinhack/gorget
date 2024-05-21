@@ -74,11 +74,11 @@ void wid_notice(std::string s)
     auto p = wid_notice_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "notice");
 
-    point tl = make_point(0, y_at);
-    point br = make_point(width - 1, y_at + 1);
+    point tl1 = make_point(0, y_at);
+    point br1 = make_point(width - 1, y_at + 1);
     wid_set_shape_none(w);
     wid_set_on_mouse_up(w, wid_notice_ok);
-    wid_set_pos(w, tl, br);
+    wid_set_pos(w, tl1, br1);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_GREEN);
   }
@@ -89,11 +89,11 @@ void wid_notice(std::string s)
     auto p = wid_notice_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "ok");
 
-    point tl = make_point(width / 2 - 4, y_at);
-    point br = make_point(width / 2 + 4, y_at + 2);
+    point tl2 = make_point(width / 2 - 4, y_at);
+    point br2 = make_point(width / 2 + 4, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_notice_ok);
-    wid_set_pos(w, tl, br);
+    wid_set_pos(w, tl2, br2);
     wid_set_text(w, "Ok!");
   }
 

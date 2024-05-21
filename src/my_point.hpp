@@ -14,7 +14,6 @@ public:
   T x {};
   T y {};
 
-  my_apoint(const my_apoint &a) : x(a.x), y(a.y) {}
   my_apoint(T x, T y) : x(x), y(y) {}
   my_apoint(void) : x(0), y(0) {};
 

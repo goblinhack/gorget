@@ -11,12 +11,12 @@
 #include "my_string.hpp"
 #include "my_wids.hpp"
 
-bool wid_rightbar_ascii_create(class Game *game)
+bool wid_rightbar_ascii_create(class Game *g)
 {
   TRACE_AND_INDENT();
   DBG2("Remake rightbar");
 
-  auto level = game_level_get(game);
+  auto level = game_level_get(g);
   if (! level) {
     return false;
   }

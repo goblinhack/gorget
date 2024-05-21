@@ -165,17 +165,16 @@ bool wid_console_receive_input(Widp w, const SDL_Keysym *key)
 static void wid_console_wid_create(void)
 {
   TRACE_AND_INDENT();
-  point tl = make_point(0, 0);
-  point br = make_point(TERM_WIDTH - 1, TERM_HEIGHT - 1);
-  int   w  = br.x - tl.x;
-  int   h  = br.y - tl.y;
 
-  {
-    wid_console_window = wid_new_square_window("wid console");
-    wid_set_pos(wid_console_window, tl, br);
-    wid_set_color(wid_console_window, WID_COLOR_BG, WHITE);
-    wid_set_color(wid_console_window, WID_COLOR_TEXT_FG, WHITE);
-  }
+  point outer_tl = make_point(0, 0);
+  point outer_br = make_point(TERM_WIDTH - 1, TERM_HEIGHT - 1);
+  int   w        = outer_br.x - outer_tl.x;
+  int   h        = outer_br.y - outer_tl.y;
+
+  wid_console_window = wid_new_square_window("wid console");
+  wid_set_pos(wid_console_window, outer_tl, outer_br);
+  wid_set_color(wid_console_window, WID_COLOR_BG, WHITE);
+  wid_set_color(wid_console_window, WID_COLOR_TEXT_FG, WHITE);
 
   {
     point tl = make_point(0, 0);

@@ -15,7 +15,7 @@ Widp wid_map_mini {};
 
 static WidPopup *wid_rightbar_popup;
 
-void wid_rightbar_fini(class Game *game)
+void wid_rightbar_fini(class Game *g)
 {
   TRACE_AND_INDENT();
   wid_destroy(&wid_rightbar);
@@ -25,22 +25,22 @@ void wid_rightbar_fini(class Game *game)
   wid_rightbar_popup = nullptr;
 }
 
-bool wid_rightbar_init(class Game *game)
+bool wid_rightbar_init(class Game *g)
 {
   TRACE_AND_INDENT();
-  return wid_rightbar_create(game);
+  return wid_rightbar_create(g);
 }
 
-bool wid_rightbar_create(class Game *game)
+bool wid_rightbar_create(class Game *g)
 {
-  wid_rightbar_fini(game);
+  wid_rightbar_fini(g);
 
-  auto level = game_level_get(game);
+  auto level = game_level_get(g);
   if (! level) {
     return false;
   }
 
-  return wid_rightbar_ascii_create(game);
+  return wid_rightbar_ascii_create(g);
 }
 
 bool is_mouse_over_rightbar(void)

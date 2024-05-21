@@ -166,15 +166,15 @@ bool Game::save(std::string file_to_save)
     memcpy(tmp_compressed, compressed, compressed_len);
 
     lzo_uint new_len = 0;
-    int      r = lzo1x_decompress((lzo_bytep) tmp_compressed, compressed_len, (lzo_bytep) tmp_uncompressed, &new_len,
-                                  nullptr);
-    if (r == LZO_E_OK && new_len == uncompressed_len) {
+    int check = lzo1x_decompress((lzo_bytep) tmp_compressed, compressed_len, (lzo_bytep) tmp_uncompressed, &new_len,
+                                 nullptr);
+    if (check == LZO_E_OK && new_len == uncompressed_len) {
       if (memcmp(tmp_uncompressed, uncompressed, uncompressed_len)) {
         ERR("LZO compress-decompress failed");
       }
     } else {
       /* this should NEVER happen */
-      ERR("LZO internal error - decompression failed: %d", r);
+      ERR("LZO internal error - decompression failed: %d", check);
       return false;
     }
   }
@@ -240,21 +240,21 @@ void Game::save(uint8_t slot)
     return;
   }
 
-  auto save_file = saved_dir + "saved-slot-" + std::to_string(slot);
+  auto this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
 
   LOG("-");
-  CON("INF: Saving %s", save_file.c_str());
+  CON("INF: Saving %s", this_save_file.c_str());
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
 
-  save(save_file);
+  save(this_save_file);
 
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Saved %s, seed %u", save_file.c_str(), seed);
+  CON("INF: Saved %s, seed %u", this_save_file.c_str(), seed);
   LOG("-");
 
-  CON("Saved the game to %s.", save_file.c_str());
+  CON("Saved the game to %s.", this_save_file.c_str());
 }
 
 void Game::save_snapshot(void)
@@ -263,18 +263,18 @@ void Game::save_snapshot(void)
 
   TRACE_AND_INDENT();
 
-  auto save_file = saved_dir + "saved-snapshot";
+  auto this_save_file = saved_dir + "saved-snapshot";
 
   LOG("-");
-  CON("INF: Saving %s", save_file.c_str());
+  CON("INF: Saving %s", this_save_file.c_str());
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
 
-  save(save_file);
+  save(this_save_file);
 
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Saved %s, seed %u", save_file.c_str(), seed);
+  CON("INF: Saved %s, seed %u", this_save_file.c_str(), seed);
   LOG("-");
 
   CON("%%fg=green$Autosaved.%%fg=reset$");
@@ -294,13 +294,13 @@ void Game::save_config(void)
   out << bits(c);
 }
 
-void wid_save_destroy(class Game *game)
+void wid_save_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   if (wid_save) {
     delete wid_save;
     wid_save = nullptr;
-    game->state_reset("wid save destroy");
+    g->state_reset("wid save destroy");
   }
 }
 
@@ -393,9 +393,9 @@ void Game::save_select(void)
 
   int   menu_height = UI_WID_SAVE_SLOTS + 8;
   int   menu_width  = UI_WID_POPUP_WIDTH_WIDE;
-  point tl          = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point br          = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_save          = new WidPopup("Game load", tl, br, nullptr, "", false, false);
+  point outer_tl    = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br    = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_save          = new WidPopup("Game load", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_save->wid_popup_container, wid_save_key_up);
   wid_set_on_key_down(wid_save->wid_popup_container, wid_save_key_down);
@@ -471,4 +471,4 @@ void Game::save_select(void)
   state_change(STATE_SAVE_MENU, "save select");
 }
 
-void wid_save_select(class Game *game) { game->save_select(); }
+void wid_save_select(class Game *g) { g->save_select(); }

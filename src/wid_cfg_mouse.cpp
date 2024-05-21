@@ -13,7 +13,7 @@ static WidPopup *wid_cfg_mouse_window;
 static bool      local_g_need_restart = false;
 static bool      config_changed;
 
-static void wid_cfg_mouse_destroy(class Game *game)
+static void wid_cfg_mouse_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_mouse_window;
@@ -120,11 +120,11 @@ static bool wid_cfg_mouse_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-void wid_cfg_mouse_select(class Game *game)
+void wid_cfg_mouse_select(class Game *g)
 {
   TRACE_AND_INDENT();
   if (wid_cfg_mouse_window) {
-    wid_cfg_mouse_destroy(game);
+    wid_cfg_mouse_destroy(g);
   }
 
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
@@ -132,11 +132,11 @@ void wid_cfg_mouse_select(class Game *game)
 
   int   menu_height    = 20;
   int   menu_width     = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  point tl             = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point br             = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_cfg_mouse_window = new WidPopup("Mouse", tl, br, nullptr, "", false, false);
+  point outer_tl       = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br       = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_cfg_mouse_window = new WidPopup("Mouse", outer_tl, outer_br, nullptr, "", false, false);
 
-  auto button_width = br.x - tl.x - 2;
+  auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
     TRACE_AND_INDENT();

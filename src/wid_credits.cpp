@@ -74,7 +74,7 @@ static bool wid_credits_mouse_up(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-void wid_credits_select(class Game *game)
+void wid_credits_select(class Game *g)
 {
   TRACE_AND_INDENT();
   CON("INF: Credits");
@@ -85,9 +85,9 @@ void wid_credits_select(class Game *game)
 
   int   menu_height  = 18;
   int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  point tl           = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point br           = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_credits_window = new WidPopup("Credits", tl, br, nullptr, "", false, false);
+  point outer_tl     = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br     = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_credits_window = new WidPopup("Credits", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_credits_window->wid_popup_container, wid_credits_key_up);
   wid_set_on_key_down(wid_credits_window->wid_popup_container, wid_credits_key_down);

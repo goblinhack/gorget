@@ -16,8 +16,6 @@ public:
 
   my_asize(T w, T h) : w(w), h(h) {}
 
-  my_asize(const my_asize &a) : w(a.w), h(a.h) {}
-
   void operator+=(my_asize a)
   {
     w += a.w;

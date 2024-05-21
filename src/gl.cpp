@@ -18,10 +18,10 @@ float    glapi_last_tex_bottom;
 GLushort glapi_last_right;
 GLushort glapi_last_bottom;
 
-GLuint fbo_id[ MAX_FBO ];
-GLuint fbo_tex_id[ MAX_FBO ];
-GLuint render_buf_id[ MAX_FBO ];
-isize  fbo_size[ MAX_FBO ];
+GLuint g_fbo_id[ MAX_FBO ];
+GLuint g_fbo_tex_id[ MAX_FBO ];
+GLuint g_render_buf_id[ MAX_FBO ];
+isize  g_fbo_size[ MAX_FBO ];
 
 void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
                      const void *userParam)
@@ -420,12 +420,12 @@ void gl_init_fbo(void)
     //
     // If no change in size then do not reset the FBO
     //
-    if (fbo_size[ i ] == isize(tex_width, tex_height)) {
+    if (g_fbo_size[ i ] == isize(tex_width, tex_height)) {
       continue;
     }
 
-    gl_init_fbo_(i, &render_buf_id[ i ], &fbo_id[ i ], &fbo_tex_id[ i ], tex_width, tex_height);
-    fbo_size[ i ] = isize(tex_width, tex_height);
+    gl_init_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
+    g_fbo_size[ i ] = isize(tex_width, tex_height);
 
     gl_enter_2d_mode(tex_width, tex_height);
     blit_fbo_bind(i);
@@ -465,21 +465,21 @@ void blit_fbo(int fbo)
   int tex_height;
   fbo_get_size(fbo, tex_width, tex_height);
   blit_init();
-  blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height);
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height);
   blit_flush();
 }
 
 void blit_fbo_ui_pix(int fbo)
 {
   blit_init();
-  blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_ui_pix_width_get(game), game_ui_pix_height_get(game));
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_ui_pix_width_get(game), game_ui_pix_height_get(game));
   blit_flush();
 }
 
 void blit_fbo_window_pix(int fbo)
 {
   blit_init();
-  blit(fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_window_pix_width_get(game),
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_window_pix_width_get(game),
        game_window_pix_height_get(game));
   blit_flush();
 }
@@ -487,9 +487,9 @@ void blit_fbo_window_pix(int fbo)
 static int fbo_locked = -1;
 static int fbo_last   = -1;
 
-void blit_fbo_push(int fbo) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, fbo_id[ fbo ]); }
+void blit_fbo_push(int fbo) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]); }
 
-void blit_fbo_pop(void) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, fbo_id[ fbo_last ]); }
+void blit_fbo_pop(void) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo_last ]); }
 
 void blit_fbo_bind(int fbo)
 {
@@ -497,7 +497,7 @@ void blit_fbo_bind(int fbo)
   if (fbo_locked != -1) {
     DIE("Attempt to bind to another FBO %d when locked", fbo);
   }
-  glBindFramebuffer_EXT(GL_FRAMEBUFFER, fbo_id[ fbo ]);
+  glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]);
 }
 
 void blit_fbo_unbind(void)
@@ -512,7 +512,7 @@ void blit_fbo_bind_locked(int fbo)
 {
   fbo_last   = fbo;
   fbo_locked = fbo;
-  glBindFramebuffer_EXT(GL_FRAMEBUFFER, fbo_id[ fbo ]);
+  glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]);
 }
 
 void blit_fbo_unbind_locked(void)

@@ -423,29 +423,29 @@ void Game::load(uint8_t slot)
 
   game->fini();
 
-  auto save_file = saved_dir + "saved-slot-" + std::to_string(slot);
+  auto this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
 
   if (slot == UI_WID_SAVE_SLOTS - 1) {
-    save_file = saved_dir + "saved-snapshot";
+    this_save_file = saved_dir + "saved-snapshot";
   }
 
   LOG("-");
-  CON("INF: Loading %s", save_file.c_str());
+  CON("INF: Loading %s", this_save_file.c_str());
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
 
   g_loading = true;
-  load(save_file, *this);
+  load(this_save_file, *this);
   g_loading = false;
 
   sdl_config_update_all();
 
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Loaded %s, seed %d", save_file.c_str(), seed);
+  CON("INF: Loaded %s, seed %d", this_save_file.c_str(), seed);
   LOG("-");
 
-  CON("Loaded the game from %s.", save_file.c_str());
+  CON("Loaded the game from %s.", this_save_file.c_str());
 
   sdl_display_reset();
 }
@@ -455,28 +455,28 @@ void Game::load_snapshot(void)
   TRACE_AND_INDENT();
   game->fini();
 
-  auto save_file = saved_dir + "saved-snapshot";
+  auto this_save_file = saved_dir + "saved-snapshot";
 
   LOG("-");
-  CON("INF: Loading %s", save_file.c_str());
+  CON("INF: Loading %s", this_save_file.c_str());
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
 
   g_loading = true;
-  load(save_file, *this);
+  load(this_save_file, *this);
   g_loading = false;
 
   sdl_config_update_all();
 
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Loaded %s, seed %d", save_file.c_str(), seed);
+  CON("INF: Loaded %s, seed %d", this_save_file.c_str(), seed);
   LOG("-");
 
-  CON("Loaded the game from %s.", save_file.c_str());
+  CON("Loaded the game from %s.", this_save_file.c_str());
 }
 
-void wid_load_destroy(class Game *game)
+void wid_load_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   if (wid_load) {
@@ -588,9 +588,9 @@ void Game::load_select(void)
 
   int   menu_height = UI_WID_SAVE_SLOTS + 8;
   int   menu_width  = UI_WID_POPUP_WIDTH_WIDE;
-  point tl          = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point br          = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_load          = new WidPopup("Game load", tl, br, nullptr, "", false, false);
+  point outer_tl    = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br    = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_load          = new WidPopup("Game load", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_load->wid_popup_container, wid_load_key_up);
   wid_set_on_key_down(wid_load->wid_popup_container, wid_load_key_down);
@@ -675,7 +675,7 @@ void Game::load_select(void)
   sdl_display_reset();
 }
 
-void wid_load_select(class Game *game) { game->load_select(); }
+void wid_load_select(class Game *g) { g->load_select(); }
 
 void game_load_last_config(const char *appdata)
 {

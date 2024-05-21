@@ -320,19 +320,19 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
           got_pct = true;
           if ((len > 3) && (std::string(text_iter, text_iter + 3) == "fg=")) {
             text_iter += 3;
-            auto tmp = std::string(text_iter, text.end());
-            int  len = 0;
-            fg       = string2color(tmp, &len);
-            text_iter += len + 1;
+            auto tmp  = std::string(text_iter, text.end());
+            int  slen = 0;
+            fg        = string2color(tmp, &slen);
+            text_iter += slen + 1;
             got_pct = false;
             continue;
           }
           if ((len > 3) && (std::string(text_iter, text_iter + 3) == "bg=")) {
             text_iter += 3;
-            auto tmp = std::string(text_iter, text.end());
-            int  len = 0;
-            bg       = string2color(tmp, &len);
-            text_iter += len + 1;
+            auto tmp  = std::string(text_iter, text.end());
+            int  slen = 0;
+            bg        = string2color(tmp, &slen);
+            text_iter += slen + 1;
 
             bg_set  = true;
             got_pct = false;
@@ -392,39 +392,39 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     AsciiCell *cell = &(*cells)[ x ][ y ];
     x++;
 
-    auto depth = TILE_LAYER_FG_0;
+    auto fg_depth = TILE_LAYER_FG_0;
 
-    cell->tile[ depth ]     = tile;
-    cell->ch[ depth ]       = ch;
-    cell->color_tl[ depth ] = fg;
-    cell->color_tr[ depth ] = fg;
-    cell->color_bl[ depth ] = fg;
-    cell->color_br[ depth ] = fg;
+    cell->tile[ fg_depth ]     = tile;
+    cell->ch[ fg_depth ]       = ch;
+    cell->color_tl[ fg_depth ] = fg;
+    cell->color_tr[ fg_depth ] = fg;
+    cell->color_bl[ fg_depth ] = fg;
+    cell->color_br[ fg_depth ] = fg;
 
     if (bg_set) {
       //
       // If we are displaying a color in the background then use a solid tile.
       //
-      auto depth = TILE_LAYER_BG_0;
+      auto bg_depth = TILE_LAYER_BG_0;
 
       if (bg.r || bg.g || bg.b || bg.a) {
-        static Tilep tile;
-        if (unlikely(! tile)) {
-          tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);
+        static Tilep block_tile;
+        if (unlikely(! block_tile)) {
+          block_tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);
         }
-        cell->tile[ depth ] = tile;
+        cell->tile[ bg_depth ] = block_tile;
       } else {
         //
         // Else clear the background
         //
-        cell->tile[ depth ] = nullptr;
+        cell->tile[ bg_depth ] = nullptr;
       }
 
-      cell->ch[ depth ]       = ch;
-      cell->color_tl[ depth ] = bg;
-      cell->color_tr[ depth ] = bg;
-      cell->color_bl[ depth ] = bg;
-      cell->color_br[ depth ] = bg;
+      cell->ch[ bg_depth ]       = ch;
+      cell->color_tl[ bg_depth ] = bg;
+      cell->color_tr[ bg_depth ] = bg;
+      cell->color_bl[ bg_depth ] = bg;
+      cell->color_br[ bg_depth ] = bg;
     }
 
     if (unlikely(is_cursor)) {
@@ -472,9 +472,9 @@ int ascii_strlen(std::string const &text)
               if (text_iter != text.end()) {
                 auto tmp = std::string(text_iter, text.end());
 
-                int len = 0;
-                (void) string2color(tmp, &len);
-                text_iter += len + 1;
+                int slen = 0;
+                (void) string2color(tmp, &slen);
+                text_iter += slen + 1;
               }
               continue;
             }
@@ -482,9 +482,9 @@ int ascii_strlen(std::string const &text)
               text_iter += 3;
               auto tmp = std::string(text_iter, text.end());
 
-              int len = 0;
-              (void) string2color(tmp, &len);
-              text_iter += len + 1;
+              int slen = 0;
+              (void) string2color(tmp, &slen);
+              text_iter += slen + 1;
 
               continue;
             }
@@ -523,18 +523,18 @@ std::string ascii_strip(std::string const &text)
 
       if (std::string(text_iter, text_iter + 3) == "fg=") {
         text_iter += 3;
-        auto tmp = std::string(text_iter, text.end());
-        int  len = 0;
-        (void) string2color(tmp, &len);
-        text_iter += len + 1;
+        auto tmp  = std::string(text_iter, text.end());
+        int  slen = 0;
+        (void) string2color(tmp, &slen);
+        text_iter += slen + 1;
         continue;
       }
       if (std::string(text_iter, text_iter + 3) == "bg=") {
         text_iter += 3;
-        auto tmp = std::string(text_iter, text.end());
-        int  len = 0;
-        (void) string2color(tmp, &len);
-        text_iter += len + 1;
+        auto tmp  = std::string(text_iter, text.end());
+        int  slen = 0;
+        (void) string2color(tmp, &slen);
+        text_iter += slen + 1;
         continue;
       }
     }
@@ -924,9 +924,6 @@ void ascii_clear_display(void)
 static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1, int x2, int y2, color col_bg,
                             color col_fg, void *context)
 {
-  int x;
-  int y;
-
   static bool      init;
   static const int MAX_UI_SIZE    = 16;
   static const int MAX_UI_BG_SIZE = MAX_UI_SIZE - 2;
@@ -957,8 +954,8 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     float dx = 1.0 / (((float) x2) - ((float) x1) + 1);
     float dy = 1.0 / (((float) y2) - ((float) y1) + 1);
 
-    for (x = x1; x <= x2; x++) {
-      for (y = y1; y <= y2; y++) {
+    for (auto x = x1; x <= x2; x++) {
+      for (auto y = y1; y <= y2; y++) {
         float tx = ((float) (x) -x1) * dx;
         float ty = ((float) (y) -y1) * dy;
 
@@ -988,8 +985,8 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     //
     // Horizontal
     //
-    y = y1;
-    for (x = x1; x <= x2; x++) {
+    auto y = y1;
+    for (auto x = x1; x <= x2; x++) {
       if (style >= 0) {
         ascii_set(TILE_LAYER_BG_0, x, y, tiles[ ui_type ][ style ][ (x % MAX_UI_BG_SIZE) + 1 ][ 0 ]);
       }
@@ -1001,12 +998,13 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     }
     return;
   }
+
   if (unlikely(x1 == x2)) {
     //
     // Vertical
     //
-    x = x1;
-    for (y = y1; y <= y2; y++) {
+    auto x = x1;
+    for (auto y = y1; y <= y2; y++) {
       if (style >= 0) {
         ascii_set(TILE_LAYER_BG_0, x, y, tiles[ ui_type ][ style ][ 0 ][ (y % MAX_UI_BG_SIZE) + 1 ]);
       }
@@ -1018,8 +1016,9 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     }
     return;
   }
-  for (y = y1; y <= y2; y++) {
-    for (x = x1; x <= x2; x++) {
+
+  for (auto y = y1; y <= y2; y++) {
+    for (auto x = x1; x <= x2; x++) {
       if (style >= 0) {
         ascii_set(TILE_LAYER_BG_0, x, y,
                   tiles[ ui_type ][ style ][ (x % MAX_UI_BG_SIZE) + 1 ][ (y % MAX_UI_BG_SIZE) + 1 ]);
@@ -1028,8 +1027,8 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     }
   }
 
-  for (y = y1 + 1; y <= y2; y++) {
-    for (x = x1 + 1; x <= x2; x++) {
+  for (auto y = y1 + 1; y <= y2; y++) {
+    for (auto x = x1 + 1; x <= x2; x++) {
       if (style >= 0) {
         ascii_set(TILE_LAYER_BG_0, x, y,
                   tiles[ ui_type ][ style ][ (x % MAX_UI_BG_SIZE) + 1 ][ (y % MAX_UI_BG_SIZE) + 1 ]);
@@ -1043,8 +1042,8 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     ascii_set(TILE_LAYER_BG_0, x1, y2, col_bg);
   }
 
-  for (y = y1 + 1; y <= y2 - 1; y++) {
-    for (x = x1 + 1; x <= x2 - 1; x++) {
+  for (auto y = y1 + 1; y <= y2 - 1; y++) {
+    for (auto x = x1 + 1; x <= x2 - 1; x++) {
       if (style >= 0) {
         ascii_set(TILE_LAYER_BG_0, x, y,
                   tiles[ ui_type ][ style ][ (x % MAX_UI_BG_SIZE) + 1 ][ (y % MAX_UI_BG_SIZE) + 1 ]);
@@ -1053,8 +1052,8 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     }
   }
 
-  for (x = x1; x <= x2; x++) {
-    for (y = y1; y <= y2; y++) {
+  for (auto x = x1; x <= x2; x++) {
+    for (auto y = y1; y <= y2; y++) {
       ascii_set_context(x, y, context);
       if (style >= 0) {
         ascii_set(TILE_LAYER_BG_0, x, y,
@@ -1064,14 +1063,14 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     }
   }
 
-  for (x = x1 + 1; x <= x2 - 1; x++) {
+  for (auto x = x1 + 1; x <= x2 - 1; x++) {
     if (style >= 0) {
       ascii_set(TILE_LAYER_BG_0, x, y1, tiles[ ui_type ][ style ][ (x % MAX_UI_BG_SIZE) + 1 ][ 0 ]);
       ascii_set(TILE_LAYER_BG_0, x, y2, tiles[ ui_type ][ style ][ (x % MAX_UI_BG_SIZE) + 1 ][ MAX_UI_SIZE - 1 ]);
     }
   }
 
-  for (y = y1 + 1; y <= y2 - 1; y++) {
+  for (auto y = y1 + 1; y <= y2 - 1; y++) {
     if (style >= 0) {
       ascii_set(TILE_LAYER_BG_0, x1, y, tiles[ ui_type ][ style ][ 0 ][ (y % MAX_UI_BG_SIZE) + 1 ]);
       ascii_set(TILE_LAYER_BG_0, x2, y, tiles[ ui_type ][ style ][ MAX_UI_SIZE - 1 ][ (y % MAX_UI_BG_SIZE) + 1 ]);

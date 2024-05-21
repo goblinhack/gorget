@@ -20,44 +20,36 @@ typedef struct Level_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
-
   //
   // Level number.
   //
   uint8_t num;
-
   //
   // Increments once per event loop.
   //
   uint32_t frame;
-
   //
   // Tick increases one per player move.
   //
   uint32_t tick;
-
   //
   // When the tick began in ms
   //
   uint32_t frame_begin;
-
   //
   // Ranges from 0 to 1 when a tick is in progress.
   //
   float time_step;
   float last_time_step;
-
   //
   // We have to interpolate movement and this indicates that is in progress.
   //
   uint8_t tick_in_progress : 1;
-
   //
   // Player has moved.
   //
   bool _tick_begin_requested : 1;
   bool _tick_end_requested   : 1;
-
   //
   // Player move request.
   //
@@ -65,43 +57,39 @@ typedef struct Level_ {
   bool requested_move_keft  : 1;
   bool requested_move_right : 1;
   bool requested_move_up    : 1;
-
   //
   // If the player has moved, we need to scroll the map
   //
   bool requested_auto_scroll : 1;
-
   //
   // TODO
   // Set when something modifies the map and we need to update caches.
   //
   bool is_map_changed : 1;
-
   //
   // What things are where? Each Id points to a thing structure.
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ][ MAP_SLOTS ];
-
-  //
-  // Has the player been on this tile?
-  //
-  bool is_walked[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ];
-
   //
   // All thing structure memory.
   //
-  Thing thing_body[ 1 << THING_ID_BITS ];
-
+  Thing thing_body[ 1 << THING_COMMON_ID_BITS ];
+  //
+  // Space for player and monster AI
+  //
+  ThingAi thing_ai[ THING_AI_MAX ];
   //
   // The current player.
   //
   ThingId player;
-
   //
   // Which player are we controlling.
   //
   uint8_t player_index;
-
+  //
+  // Has the player been on this tile?
+  //
+  bool is_walked[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ];
   //
   // What the player is currently highlighting.
   //
@@ -110,13 +98,11 @@ typedef struct Level_ {
   int     cursor_y;
   int     old_cursor_x;
   int     old_cursor_y;
-
   //
   // Map scroll offset.
   //
   int pixel_map_at_x;
   int pixel_map_at_y;
-
   //
   // Level display bounds
   //
@@ -124,7 +110,6 @@ typedef struct Level_ {
   int miny;
   int maxx;
   int maxy;
-
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
@@ -190,7 +175,7 @@ void level_cursor_set(Levelp, int x, int y);
   static Level _l_copy_;                                                                                             \
   _l_copy_ = *_l_;                                                                                                   \
   Thingp t;                                                                                                          \
-  for (auto _id_ = 0; _id_ < 1 << THING_ID_BITS; _id_++)                                                             \
+  for (auto _id_ = 0; _id_ < 1 << THING_COMMON_ID_BITS; _id_++)                                                      \
     if (_l_copy_.thing_body[ _id_ ].id)                                                                              \
       if ((_t_ = level_thing_find_optional(_l_, _l_copy_.thing_body[ _id_ ].id)))
 

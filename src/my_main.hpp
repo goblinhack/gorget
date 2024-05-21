@@ -71,14 +71,7 @@ void CROAK_CLEAN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #undef ASSERT
 #define ASSERT(x)                                                                                                    \
   if (! (x)) {                                                                                                       \
-    TRACE_AND_INDENT();                                                                                              \
-    std::stringstream ss;                                                                                            \
-    ss << "Assert '" << #x << "' failed at line " << __LINE__ << ", file " << __FILE__ << ", function "              \
-       << __FUNCTION__ << "()";                                                                                      \
-    {                                                                                                                \
-      auto s = ss.str();                                                                                             \
-      DIE("%s", s.c_str());                                                                                          \
-    }                                                                                                                \
+    DIE("Assert '%s' failed at %s:%s():%u", #x, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                         \
   }
 #else
 #define ASSERT(x)
@@ -87,16 +80,11 @@ void CROAK_CLEAN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 // Based on
 // https://stackoverflow.com/questions/2193544/how-to-print-additional-information-when-assert-fails
 #ifdef ENABLE_ASSERT
-#define ASSERT_EX(left, operator, right)                                                                                             \
-  if (! ((left) operator(right))) {                                                                                                  \
-    TRACE_AND_INDENT();                                                                                                              \
-    std::cerr << "ASSERT FAILED: " << #left << " "                                                                                   \
-              << #                                                                                                                   \
-        operator<< " " << #right << " @ " << SRC_FILE_NAME << ":" << SRC_FUNC_NAME << " line"                                        \
-                                                                                      " " << SRC_LINE_NUM << " " << #left << "=" <<( \
-                                                                                          left)                                      \
-              << "; " << #right << "=" << (right) << std::endl;                                                                      \
-    ASSERT(left operator right);                                                                                                     \
+#define ASSERT_EX(left, operator, right)                                                                             \
+  if (! ((left) operator(right))) {                                                                                  \
+    DIE("Assert '%s %s %s' failed at %s:%s():%u", #left, #operator, #right, SRC_FILE_NAME, SRC_FUNC_NAME,            \
+        SRC_LINE_NUM);                                                                                               \
+    ASSERT(left operator right);                                                                                     \
   }
 #else
 #define ASSERT_EX(left, operator, right)
@@ -131,62 +119,38 @@ void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #define NODEBUG2 (likely(! g_opt_debug2))
 #define NODEBUG3 (likely(! g_opt_debug3))
 
-#define IF_DEBUG                                                                                                     \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (DEBUG1)
-#define IF_DEBUG1                                                                                                    \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (DEBUG1)
-#define IF_DEBUG2                                                                                                    \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (DEBUG2)
-#define IF_DEBUG3                                                                                                    \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (DEBUG3)
+#define IF_DEBUG  if (DEBUG1)
+#define IF_DEBUG1 if (DEBUG1)
+#define IF_DEBUG2 if (DEBUG2)
+#define IF_DEBUG3 if (DEBUG3)
 
-#define IF_NODEBUG                                                                                                   \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (NODEBUG1)
-#define IF_NODEBUG1                                                                                                  \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (NODEBUG1)
-#define IF_NODEBUG2                                                                                                  \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (NODEBUG2)
-#define IF_NODEBUG2                                                                                                  \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (NODEBUG2)
-#define IF_NODEBUG3                                                                                                  \
-  TRACE_NO_INDENT();                                                                                                 \
-  if (NODEBUG3)
+#define IF_NODEBUG  if (NODEBUG1)
+#define IF_NODEBUG1 if (NODEBUG1)
+#define IF_NODEBUG2 if (NODEBUG2)
+#define IF_NODEBUG2 if (NODEBUG2)
+#define IF_NODEBUG3 if (NODEBUG3)
 
 #define ERR                                                                                                          \
   TRACE_NO_INDENT();                                                                                                 \
   myerr
 
 #define dbg                                                                                                          \
-  TRACE_NO_INDENT();                                                                                                 \
   if (DEBUG1)                                                                                                        \
   log
 #define dbg2                                                                                                         \
-  TRACE_NO_INDENT();                                                                                                 \
   if (DEBUG2)                                                                                                        \
   log
 #define dbg3                                                                                                         \
-  TRACE_NO_INDENT();                                                                                                 \
   if (DEBUG3)                                                                                                        \
   log
 
 #define DBG                                                                                                          \
-  TRACE_NO_INDENT();                                                                                                 \
   if (DEBUG1)                                                                                                        \
   LOG
 #define DBG2                                                                                                         \
-  TRACE_NO_INDENT();                                                                                                 \
   if (DEBUG2)                                                                                                        \
   LOG
 #define DBG3                                                                                                         \
-  TRACE_NO_INDENT();                                                                                                 \
   if (DEBUG3)                                                                                                        \
   LOG
 

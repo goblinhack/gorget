@@ -145,9 +145,9 @@ unsigned char *file_load(const char *filename, int *outlen)
   }
 
   {
-    std::string alt_filename = mybasename(filename, "strip dir");
+    std::string base_alt_filename = mybasename(filename, "strip dir");
 
-    out = file_io_read_if_exists(alt_filename.c_str(), outlen);
+    out = file_io_read_if_exists(base_alt_filename.c_str(), outlen);
     if (out) {
       return out;
     }
@@ -162,11 +162,6 @@ unsigned char *file_load(const char *filename, int *outlen)
   myfree(popup_str);
    */
   LOG("File not found \"%s\"", filename);
-
-  if (alt_filename) {
-    myfree(alt_filename);
-    alt_filename = nullptr;
-  }
 
   return nullptr;
 }

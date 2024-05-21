@@ -224,15 +224,15 @@ std::string &string_timestamp(void)
 {
   static ts_t        time_last;
   static std::string last_timestamp;
-  auto               time_now = time_ms();
+  auto               the_time_now = time_ms();
 
   if (last_timestamp.length()) {
-    if (time_now - time_last < 1000) {
+    if (the_time_now - time_last < 1000) {
       return last_timestamp;
     }
   }
 
-  time_last          = time_now;
+  time_last          = the_time_now;
   std::time_t result = std::time(nullptr);
   auto        s      = std::string(std::asctime(std::localtime(&result)));
   s.pop_back();

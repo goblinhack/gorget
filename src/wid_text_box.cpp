@@ -51,16 +51,16 @@ WidTextBox::WidTextBox(point tl, point br, Widp parent, bool horiz_scroll, bool 
   }
 
   {
-    point tl = make_point(1, 1);
-    point br = make_point(w - 1, h - 1);
+    point inner_tl = make_point(1, 1);
+    point inner_br = make_point(w - 1, h - 1);
 
     wid_text_area = wid_new_square_button(wid_text_box_container, "wid text inner area");
-    wid_set_pos(wid_text_area, tl, br);
+    wid_set_pos(wid_text_area, inner_tl, inner_br);
     wid_set_shape_none(wid_text_area);
     // wid_set_style(wid_text_area, UI_WID_STYLE_RED);
 
-    w = br.x - tl.x;
-    h = br.y - tl.y;
+    w = inner_br.x - inner_tl.x;
+    h = inner_br.y - inner_tl.y;
   }
 
   {
@@ -80,14 +80,14 @@ WidTextBox::WidTextBox(point tl, point br, Widp parent, bool horiz_scroll, bool 
 
     for (row = 0; row < lines_of_text; row++) {
       row_bottom--;
-      point tl = make_point(0, row_bottom);
-      point br = make_point(w, row_bottom);
+      point text_tl = make_point(0, row_bottom);
+      point text_br = make_point(w, row_bottom);
 
       child = wid_new_container(wid_text_area, "");
       children.push_back(child);
 
       wid_set_shape_none(child);
-      wid_set_pos(child, tl, br);
+      wid_set_pos(child, text_tl, text_br);
       wid_set_text_centerx(child, true);
 
       wid_set_prev(child, prev);

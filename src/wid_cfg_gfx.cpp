@@ -14,7 +14,7 @@ static WidPopup *wid_cfg_gfx_window;
 static bool      local_g_need_restart = false;
 static bool      config_changed;
 
-static void wid_cfg_gfx_destroy(class Game *game)
+static void wid_cfg_gfx_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_gfx_window;
@@ -280,23 +280,23 @@ static bool wid_cfg_gfx_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-void wid_cfg_gfx_select(class Game *game)
+void wid_cfg_gfx_select(class Game *g)
 {
   TRACE_AND_INDENT();
   if (wid_cfg_gfx_window) {
-    wid_cfg_gfx_destroy(game);
+    wid_cfg_gfx_destroy(g);
   }
 
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point tl = make_point(m - 23, TERM_HEIGHT / 2 - 11);
-  point br = make_point(m + 22, TERM_HEIGHT / 2 + 13);
+  point outer_tl = make_point(m - 23, TERM_HEIGHT / 2 - 11);
+  point outer_br = make_point(m + 22, TERM_HEIGHT / 2 + 13);
 
-  auto width = br.x - tl.x - 2;
+  auto width = outer_br.x - outer_tl.x - 2;
 
-  wid_cfg_gfx_window = new WidPopup("Gfx select", tl, br, nullptr, "", false, false);
+  wid_cfg_gfx_window = new WidPopup("Gfx select", outer_tl, outer_br, nullptr, "", false, false);
   {
     TRACE_AND_INDENT();
     Widp w = wid_cfg_gfx_window->wid_popup_container;

@@ -127,10 +127,10 @@ bool music_find(const char *name_alias)
   return result != all_music.end();
 }
 
-void music_update_volume(class Game *game)
+void music_update_volume(class Game *g)
 {
   TRACE_AND_INDENT();
-  Mix_VolumeMusic(game_music_volume_get(game));
+  Mix_VolumeMusic(game_music_volume_get(g));
   SDL_ClearError();
 }
 

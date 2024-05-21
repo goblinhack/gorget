@@ -135,7 +135,7 @@ void tile_fini(void)
   }
 
   for (auto &t : all_tiles) {
-    IF_DEBUG3 { verify(MTYPE_TILE, t.second); }
+    verify(MTYPE_TILE, t.second);
     delete t.second;
   }
 
@@ -198,14 +198,14 @@ Tile::Tile(const class Tile *tile)
   all_tiles_array.push_back(this);
 }
 
-void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t height, uint32_t nargs,
+void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t height, uint32_t nargs,
                    const char *arr[])
 {
   TRACE_AND_INDENT();
   Texp tex;
   Texp tex_monochrome;
   Texp tex_mask;
-  tex_load(&tex, &tex_monochrome, &tex_mask, file, name, GL_NEAREST);
+  tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, GL_NEAREST);
 
   float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
   float fh = 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
@@ -346,14 +346,14 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
   }
 }
 
-void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t height,
+void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t height,
                    const std::vector< std::string > &arr)
 {
   TRACE_AND_INDENT();
   Texp tex;
   Texp tex_monochrome;
   Texp tex_mask;
-  tex_load(&tex, &tex_monochrome, &tex_mask, file, name, GL_NEAREST);
+  tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, GL_NEAREST);
 
   float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
   float fh = 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
@@ -494,7 +494,7 @@ void tile_load_arr(std::string file, std::string name, uint32_t width, uint32_t 
   }
 }
 
-void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, uint32_t height, uint32_t nargs,
+void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, uint32_t height, uint32_t nargs,
                            const char *arr[], int gl_mode)
 {
   TRACE_AND_INDENT();
@@ -502,7 +502,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
   Texp tex_monochrome;
   Texp tex_mask;
 
-  tex_load(&tex, &tex_monochrome, &tex_mask, file, name, gl_mode);
+  tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, gl_mode);
 
   float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
   float fh = 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
@@ -651,7 +651,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
   }
 }
 
-void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, uint32_t height,
+void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, uint32_t height,
                            const std::vector< std::string > &arr, int gl_mode)
 {
   TRACE_AND_INDENT();
@@ -659,7 +659,7 @@ void tile_load_arr_sprites(std::string file, std::string name, uint32_t width, u
   Texp tex_monochrome;
   Texp tex_mask;
 
-  tex_load(&tex, &tex_monochrome, &tex_mask, file, name, gl_mode);
+  tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, gl_mode);
 
   float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
   float fh = 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));

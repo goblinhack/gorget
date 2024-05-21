@@ -11,14 +11,14 @@
 
 WidPopup *wid_quit_window;
 
-void wid_quit_destroy(class Game *game)
+void wid_quit_destroy(class Game *g)
 {
   TRACE_NO_INDENT();
 
   if (wid_quit_window) {
     delete wid_quit_window;
     wid_quit_window = nullptr;
-    game_state_reset(game, "wid quit destroy");
+    game_state_reset(g, "wid quit destroy");
   }
 }
 
@@ -99,27 +99,27 @@ static bool wid_quit_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-void wid_quit_select(class Game *game)
+void wid_quit_select(class Game *g)
 {
   TRACE_NO_INDENT();
   LOG("INF: Quit select");
 
   if (wid_quit_window) {
-    wid_quit_destroy(game);
+    wid_quit_destroy(g);
   }
 
   auto m = TERM_WIDTH / 2;
   auto n = TERM_HEIGHT / 2;
 
-  if (game_level_get(game)) {
+  if (game_level_get(g)) {
     n = TERM_HEIGHT / 3;
   }
 
-  point tl    = make_point(m - UI_WID_POPUP_WIDTH_NORMAL / 2, n - 3);
-  point br    = make_point(m + UI_WID_POPUP_WIDTH_NORMAL / 2, n + 3);
-  auto  width = br.x - tl.x;
+  point outer_tl = make_point(m - UI_WID_POPUP_WIDTH_NORMAL / 2, n - 3);
+  point outer_br = make_point(m + UI_WID_POPUP_WIDTH_NORMAL / 2, n + 3);
+  auto  width    = outer_br.x - outer_tl.x;
 
-  wid_quit_window = new WidPopup("Game quit", tl, br, nullptr, "", false, false);
+  wid_quit_window = new WidPopup("Game quit", outer_tl, outer_br, nullptr, "", false, false);
   {
     TRACE_NO_INDENT();
     Widp w = wid_quit_window->wid_popup_container;

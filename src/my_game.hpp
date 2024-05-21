@@ -31,29 +31,29 @@ void game_visible_map_set(class Game *, int visible_map_tl_x, int visible_map_tl
 void game_visible_map_mouse_get(class Game *game, int *visible_map_mouse_x, int *visible_map_mouse_y);
 void game_visible_map_mouse_set(class Game *game, int visible_map_mouse_x, int visible_map_mouse_y);
 
-uint32_t game_tiles_visible_across_get(class Game *);
-void     game_tiles_visible_across_set(class Game *, uint32_t val);
+int  game_tiles_visible_across_get(class Game *);
+void game_tiles_visible_across_set(class Game *, int val);
 
-uint32_t game_tiles_visible_down_get(class Game *);
-void     game_tiles_visible_down_set(class Game *, uint32_t val);
+int  game_tiles_visible_down_get(class Game *);
+void game_tiles_visible_down_set(class Game *, int val);
 
-uint32_t game_last_mouse_down_get(class Game *);
-void     game_last_mouse_down_set(class Game *, uint32_t);
+int  game_last_mouse_down_get(class Game *);
+void game_last_mouse_down_set(class Game *, int);
 
-uint32_t game_last_pause_get(class Game *);
-void     game_last_pause_set(class Game *, uint32_t);
+int  game_last_pause_get(class Game *);
+void game_last_pause_set(class Game *, int);
 
-uint32_t game_serialized_size_get(class Game *);
-void     game_serialized_size_set(class Game *, uint32_t);
+int  game_serialized_size_get(class Game *);
+void game_serialized_size_set(class Game *, int);
 
 float game_aspect_ratio_get(class Game *);
 void  game_aspect_ratio_set(class Game *, float);
 
-uint32_t game_ui_gfx_term_height_get(class Game *);
-void     game_ui_gfx_term_height_set(class Game *, uint32_t);
+int  game_ui_gfx_term_height_get(class Game *);
+void game_ui_gfx_term_height_set(class Game *, int);
 
-uint32_t game_ui_gfx_term_width_get(class Game *);
-void     game_ui_gfx_term_width_set(class Game *, uint32_t);
+int  game_ui_gfx_term_width_get(class Game *);
+void game_ui_gfx_term_width_set(class Game *, int);
 
 bool game_debug_mode_get(class Game *);
 void game_debug_mode_set(class Game *, bool);
@@ -61,8 +61,8 @@ void game_debug_mode_set(class Game *, bool);
 bool game_fps_counter_get(class Game *);
 void game_fps_counter_set(class Game *, bool);
 
-uint32_t game_fps_value_get(class Game *);
-void     game_fps_value_set(class Game *, uint32_t);
+int  game_fps_value_get(class Game *);
+void game_fps_value_set(class Game *, int);
 
 bool game_gfx_allow_highdpi_get(class Game *);
 void game_gfx_allow_highdpi_set(class Game *, bool);
@@ -85,56 +85,56 @@ void game_mouse_wheel_lr_negated_set(class Game *, bool);
 bool game_mouse_wheel_ud_negated_get(class Game *);
 void game_mouse_wheel_ud_negated_set(class Game *, bool);
 
-uint32_t game_config_pix_height_get(class Game *);
-void     game_config_pix_height_set(class Game *, uint32_t);
+int  game_config_pix_height_get(class Game *);
+void game_config_pix_height_set(class Game *, int);
 
-uint32_t game_config_pix_width_get(class Game *);
-void     game_config_pix_width_set(class Game *, uint32_t);
+int  game_config_pix_width_get(class Game *);
+void game_config_pix_width_set(class Game *, int);
 
-uint32_t game_pix_height_get(class Game *);
-void     game_pix_height_set(class Game *, uint32_t);
+int  game_pix_height_get(class Game *);
+void game_pix_height_set(class Game *, int);
 
-uint32_t game_pix_width_get(class Game *);
-void     game_pix_width_set(class Game *, uint32_t);
+int  game_pix_width_get(class Game *);
+void game_pix_width_set(class Game *, int);
 
-uint32_t game_map_pix_height_get(class Game *);
-void     game_map_pix_height_set(class Game *, uint32_t);
+int  game_map_pix_height_get(class Game *);
+void game_map_pix_height_set(class Game *, int);
 
-uint32_t game_map_pix_width_get(class Game *);
-void     game_map_pix_width_set(class Game *, uint32_t);
+int  game_map_pix_width_get(class Game *);
+void game_map_pix_width_set(class Game *, int);
 
-uint32_t game_pix_height_get(class Game *);
-void     game_pix_height_set(class Game *, uint32_t);
+int  game_pix_height_get(class Game *);
+void game_pix_height_set(class Game *, int);
 
-uint32_t game_pix_width_get(class Game *);
-void     game_pix_width_set(class Game *, uint32_t);
+int  game_pix_width_get(class Game *);
+void game_pix_width_set(class Game *, int);
 
-uint32_t game_ui_pix_height_get(class Game *);
-void     game_ui_pix_height_set(class Game *, uint32_t);
+int  game_ui_pix_height_get(class Game *);
+void game_ui_pix_height_set(class Game *, int);
 
-uint32_t game_ui_pix_width_get(class Game *);
-void     game_ui_pix_width_set(class Game *, uint32_t);
+int  game_ui_pix_width_get(class Game *);
+void game_ui_pix_width_set(class Game *, int);
 
-uint32_t game_window_pix_height_get(class Game *);
-void     game_window_pix_height_set(class Game *, uint32_t);
+int  game_window_pix_height_get(class Game *);
+void game_window_pix_height_set(class Game *, int);
 
-uint32_t game_window_pix_width_get(class Game *);
-void     game_window_pix_width_set(class Game *, uint32_t);
+int  game_window_pix_width_get(class Game *);
+void game_window_pix_width_set(class Game *, int);
 
-uint32_t game_ascii_gl_height_get(class Game *);
-void     game_ascii_gl_height_set(class Game *, uint32_t);
+int  game_ascii_gl_height_get(class Game *);
+void game_ascii_gl_height_set(class Game *, int);
 
-uint32_t game_ascii_gl_width_get(class Game *);
-void     game_ascii_gl_width_set(class Game *, uint32_t);
+int  game_ascii_gl_width_get(class Game *);
+void game_ascii_gl_width_set(class Game *, int);
 
-uint32_t game_music_volume_get(class Game *);
-void     game_music_volume_set(class Game *, uint32_t);
+int  game_music_volume_get(class Game *);
+void game_music_volume_set(class Game *, int);
 
-uint32_t game_sdl_delay_get(class Game *);
-void     game_sdl_delay_set(class Game *, uint32_t);
+int  game_sdl_delay_get(class Game *);
+void game_sdl_delay_set(class Game *, int);
 
-uint32_t game_sound_volume_get(class Game *);
-void     game_sound_volume_set(class Game *, uint32_t);
+int  game_sound_volume_get(class Game *);
+void game_sound_volume_set(class Game *, int);
 
 Levelp game_level_get(class Game *);
 void   game_level_set(class Game *, Levelp);

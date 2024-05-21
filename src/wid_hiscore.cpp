@@ -76,7 +76,7 @@ static bool wid_hiscore_mouse_up(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-void wid_hiscores_show(class Game *game)
+void wid_hiscores_show(class Game *g)
 {
   TRACE_AND_INDENT();
 
@@ -86,9 +86,9 @@ void wid_hiscores_show(class Game *game)
 
   int   menu_height  = 26;
   int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  point tl           = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point br           = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_hiscore_window = new WidPopup("hiscores", tl, br, nullptr, "", false, false);
+  point outer_tl     = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br     = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_hiscore_window = new WidPopup("hiscores", outer_tl, outer_br, nullptr, "", false, false);
 
   {
     TRACE_AND_INDENT();
@@ -97,7 +97,7 @@ void wid_hiscores_show(class Game *game)
     wid_set_on_key_down(w, wid_hiscore_key_down);
   }
 
-  auto hiscores = game_hiscores_get(game);
+  auto hiscores = game_hiscores_get(g);
   auto h        = hiscores->hiscores.begin();
   bool first    = true;
   auto index    = 0;

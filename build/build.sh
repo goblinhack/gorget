@@ -402,8 +402,9 @@ then
 fi
 
 cat >>$MAKEFILE <<%%
-CLANG_COMPILER_WARNINGS=-Wall -std=c++2a -Wno-vla-cxx-extension
-GCC_COMPILER_WARNINGS=-Wall -std=c++2a $GCC_STACK_CHECK
+WARNING_FLAGS=-Wall -Werror -Wextra -Wpedantic -Wformat=2 -Wno-unused-parameter -Wshadow -Wwrite-strings -Wstrict-prototypes -Wold-style-definition -Wredundant-decls -Wnested-externs -Wmissing-include-dirs -Wno-format-nonliteral
+CLANG_COMPILER_WARNINGS=\${WARNING_FLAGS} -std=c++2a -Wno-vla-cxx-extension
+GCC_COMPILER_WARNINGS=\${WARNING_FLAGS} -std=c++2a $GCC_STACK_CHECK
 LDFLAGS=$LDFLAGS
 %%
 

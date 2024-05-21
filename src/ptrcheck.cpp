@@ -303,8 +303,7 @@ static void hash_free(hash_t *hash_table, void *ptr)
 
 static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
 {
-  int       ring_ptr_size;
-  Ptrcheck *pc;
+  int ring_ptr_size;
 
   //
   // Currently active pointer?
@@ -345,7 +344,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
   //
   // Check the ring buffer to see if we've seen this pointer before.
   //
-  pc = &ringbuf_next[ mtype ][ 0 ];
+  auto pc = &ringbuf_next[ mtype ][ 0 ];
   pc--;
 
   if (pc < ringbuf_base[ mtype ]) {

@@ -231,21 +231,21 @@ void sdl_loop(void)
     // Update FPS counter.
     //
     if (unlikely(game_fps_counter_get(game))) {
-      static uint32_t ts_begin;
-      static uint32_t ts_now;
+      static uint32_t fps_ts_begin;
+      static uint32_t fps_ts_now;
 
-      if (unlikely(! ts_begin)) {
-        ts_begin = time_ms();
+      if (unlikely(! fps_ts_begin)) {
+        fps_ts_begin = time_ms();
       }
 
       if (unlikely(frames >= 100)) {
-        ts_now     = time_ms();
-        auto  diff = ts_now - ts_begin;
+        fps_ts_now = time_ms();
+        auto  diff = fps_ts_now - fps_ts_begin;
         float fps  = (float) (frames * ONESEC) / (float) diff;
         CON("FPS %f ", fps);
         game_fps_value_set(game, (int) fps);
-        ts_begin = ts_now;
-        frames   = 0;
+        fps_ts_begin = fps_ts_now;
+        frames       = 0;
       }
     }
 
@@ -254,16 +254,16 @@ void sdl_loop(void)
     //
     auto level = game_level_get(game);
     if (game && level) {
-      static uint32_t ts_begin;
-      static uint32_t ts_now;
+      static uint32_t level_ts_begin;
+      static uint32_t level_ts_now;
 
-      if (unlikely(! ts_begin)) {
-        ts_begin = time_ms();
+      if (unlikely(! level_ts_begin)) {
+        level_ts_begin = time_ms();
       }
 
-      ts_now = time_ms();
-      level->frame += ts_now - ts_begin;
-      ts_begin = ts_now;
+      level_ts_now = time_ms();
+      level->frame += level_ts_now - level_ts_begin;
+      level_ts_begin = level_ts_now;
     }
   }
 

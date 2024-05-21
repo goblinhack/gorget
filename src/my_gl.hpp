@@ -256,9 +256,9 @@ extern float  glapi_last_tex_right;
 
 extern int buf_tex;
 
-extern GLuint fbo_id[ MAX_FBO ];
-extern GLuint fbo_tex_id[ MAX_FBO ];
-extern GLuint render_buf_id[ MAX_FBO ];
+extern GLuint g_fbo_id[ MAX_FBO ];
+extern GLuint g_fbo_tex_id[ MAX_FBO ];
+extern GLuint g_render_buf_id[ MAX_FBO ];
 
 void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
