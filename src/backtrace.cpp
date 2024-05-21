@@ -320,8 +320,8 @@ std::string backtrace_string(void)
     BOOL has_file_info = SymGetLineFromAddr64(process, addr64, &col, &line);
 
     if (has_file_info) {
-      snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "%s(%s:%d)\n", symbol->Name, (int) line.FileName,
-               line.LineNumber);
+      snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "%s(%s:%d)\n", symbol->Name, line.FileName,
+               (int) line.LineNumber);
     } else {
       snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "(%s)\n", symbol->Name);
     }
