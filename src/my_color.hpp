@@ -20,7 +20,7 @@ public:
 
   color(void) = default;
 
-  color(unsigned char r, unsigned char g, unsigned char b, unsigned char a) : r(r), g(g), b(b), a(a) {}
+  color(unsigned char vr, unsigned char vg, unsigned char vb, unsigned char va) : r(vr), g(vg), b(vb), a(va) {}
 
   friend bool operator==(const color &c, const color &in)
   {
@@ -36,9 +36,7 @@ color color_find(const char *s);
 color color_to_mono(color a);
 color gl_color_current(void);
 color string2color(const char **s);
-color string2color(const char **s);
 color string2color(std::string &s);
-color string2color(std::string &s, int *len);
 color string2color(std::string &s, int *len);
 
 const char *string2colorname(const char **s);

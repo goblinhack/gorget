@@ -91,9 +91,8 @@ void CROAK_CLEAN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #endif
 
 void common_error_handler(const std::string &error);
-void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void con(const char *fmt);
-void CON(const char *fmt, ...);
+void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void ctrlc_handler(int sig);
 void die(void);
 void error_handler(const std::string &error);
@@ -107,8 +106,6 @@ void reset_globals(void);
 void restart(void);
 void SDL_MSG_BOX(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void segv_handler(int sig);
-void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void CON(const char *fmt, ...);
 void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
 #define DEBUG1 (unlikely(g_opt_debug1))

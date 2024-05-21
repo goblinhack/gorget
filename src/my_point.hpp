@@ -14,7 +14,7 @@ public:
   T x {};
   T y {};
 
-  my_apoint(T x, T y) : x(x), y(y) {}
+  my_apoint(T vx, T vy) : x(vx), y(vy) {}
   my_apoint(void) : x(0), y(0) {};
 
   void        operator+=(my_apoint< T > const &);

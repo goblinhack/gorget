@@ -294,7 +294,7 @@ std::string backtrace_string(void)
     char  buf[ 1024 ];
     FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buf,
                    sizeof(buf), NULL);
-    snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "GetLastError = %d: %s", error, buf);
+    snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "GetLastError = %d: %s", (int) error, buf);
   }
 
   const int max_symbol_len = 1024;

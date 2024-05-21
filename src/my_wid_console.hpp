@@ -7,7 +7,6 @@
 void wid_console_fini(void);
 bool wid_console_init(void);
 void wid_console_log(std::string s);
-void wid_console_log(std::string s);
 void wid_console_hello(void);
 
 #include "my_wid.hpp"

@@ -29,13 +29,11 @@ char *strcasestr_(const char *s, const char *find);
 char *strprepend(const char *in, const char *prepend);
 
 int length_without_format(const std::string &);
-int length_without_format(const std::string &);
 
 int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...);
 int strisregexp(const char *in);
 
 vector_string split(const char *in, int max_line_len);
-vector_string split(const std::string &, int max_line_len);
 vector_string split(const std::string &, int max_line_len);
 
 std::string  capitalise(std::string in);
@@ -45,12 +43,6 @@ std::string  mybasename(const char *in, const char *who);
 std::string &rtrim(std::string &s);
 std::string  rtrim_ws(const std::string &s);
 std::string  strerror_to_string(const int err);
-std::string &trim(std::string &s);
-std::string  trim_ws(const std::string &s);
-std::string &ltrim(std::string &s);
-std::string  ltrim_ws(const std::string &s);
-std::string &rtrim(std::string &s);
-std::string  rtrim_ws(const std::string &s);
 std::string &trim(std::string &s);
 std::string  trim_ws(const std::string &s);
 

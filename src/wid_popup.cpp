@@ -14,9 +14,9 @@ WidPopup::~WidPopup()
   delete wid_text_area;
 }
 
-WidPopup::WidPopup(const std::string name, point tl, point br, Tilep title_tile, const std::string background,
+WidPopup::WidPopup(const std::string vname, point vtl, point vbr, Tilep vtitle_tile, const std::string vbackground,
                    bool horiz_scroll, bool vert_scoll, int scroll_height)
-    : tl(tl), br(br), title_tile(title_tile), background(background)
+    : tl(vtl), br(vbr), title_tile(vtitle_tile), background(vbackground)
 {
   TRACE_AND_INDENT();
 
@@ -26,7 +26,7 @@ WidPopup::WidPopup(const std::string name, point tl, point br, Tilep title_tile,
   int width  = outer_w;
   int height = outer_h;
 
-  this->name = name;
+  this->name = vname;
 
   point inner_tl = point(0, 0);
   point inner_br = point(width, height);
@@ -46,7 +46,7 @@ WidPopup::WidPopup(const std::string name, point tl, point br, Tilep title_tile,
   }
 
   {
-    wid_popup_container = wid_new_square_window("wid_popup " + name);
+    wid_popup_container = wid_new_square_window("wid_popup " + this->name);
     wid_set_pos(wid_popup_container, tl, br);
     wid_set_style(wid_popup_container, UI_WID_STYLE_SOLID_NONE);
     if (background != "") {
@@ -57,7 +57,7 @@ WidPopup::WidPopup(const std::string name, point tl, point br, Tilep title_tile,
   }
 
   if (title_tile) {
-    auto w       = wid_new_square_button(wid_popup_container, "wid title " + name);
+    auto w       = wid_new_square_button(wid_popup_container, "wid title " + this->name);
     wid_title    = w;
     auto title_x = (outer_w - tile_size) / 2;
     wid_set_pos(w, point(title_x + 0, 1), point(title_x + tile_size - 1, tile_size));

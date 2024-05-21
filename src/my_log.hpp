@@ -9,8 +9,6 @@
 #include <stdio.h>
 
 void putf(FILE *fp, const char *s);
-void topcon_(const char *fmt, va_list args);
-void topcon_(const char *fmt, va_list args);
 
 #define FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS()                                                                        \
   fflush(stdout);                                                                                                    \

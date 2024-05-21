@@ -19,11 +19,8 @@ const char *text_a_or_an(Tpp);
 const char *text_long_capitalised(Tpp);
 const char *text_short_capitalised(Tpp);
 const char *to_short_string(Tpp);
-const char *to_short_string(Tpp tp);
 const char *to_string(Tpp);
-const char *to_string(Tpp tp);
 const char *tp_name(Tpp);
-const char *tp_name(Tpp tp);
 
 int   tp_tiles_size(Tpp tp);
 Tilep tp_first_tile(class Tp *);

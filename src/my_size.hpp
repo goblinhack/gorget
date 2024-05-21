@@ -13,8 +13,7 @@ public:
   T h {};
 
   my_asize(void) : w(0), h(0) {}
-
-  my_asize(T w, T h) : w(w), h(h) {}
+  my_asize(T vw, T vh) : w(vw), h(vh) {}
 
   void operator+=(my_asize a)
   {

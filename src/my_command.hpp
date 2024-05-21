@@ -19,7 +19,5 @@ uint8_t command_handle(const char *input, char *expandedtext, uint8_t show_ambig
                        uint8_t execute_command, void *context);
 uint8_t command_handle(std::string input, std::string *expanded_text, uint8_t show_ambiguous, uint8_t show_complete,
                        uint8_t execute_command, void *context);
-uint8_t command_handle(std::string input, std::string *expanded_text, uint8_t show_ambiguous, uint8_t show_complete,
-                       uint8_t execute_command, void *context);
 void    commands_test(void);
 #endif

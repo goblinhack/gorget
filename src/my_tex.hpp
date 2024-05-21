@@ -16,7 +16,6 @@ SDL_Surface *tex_get_surface(Texp);
 
 Texp string2tex(const char **s);
 Texp string2tex(std::string &s, int *len);
-Texp string2tex(std::string &s, int *len);
 Texp tex_find(std::string name);
 Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, int mode);
 Texp tex_load(std::string file, std::string name, int mode);
