@@ -11,11 +11,10 @@
 
 WidPopup *wid_save;
 
-extern bool     game_load_headers_only;
-bool            game_save_config_only;
-int             GAME_SAVE_MARKER_EOL    = 123456;
-int             GAME_SAVE_MARKER_CONFIG = 987654;
-extern uint32_t csum(char *mem, uint32_t len);
+extern bool game_load_headers_only;
+bool        game_save_config_only;
+int         GAME_SAVE_MARKER_EOL    = 123456;
+int         GAME_SAVE_MARKER_CONFIG = 987654;
 
 #define WRITE_MAGIC(m)                                                                                               \
   {                                                                                                                  \
@@ -229,7 +228,7 @@ void Game::save(void)
   LOG("-");
 }
 
-void Game::save(uint8_t slot)
+void Game::save(int slot)
 {
   TRACE_AND_INDENT();
   if (slot < 0) {

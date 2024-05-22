@@ -405,7 +405,7 @@ void Game::load(void)
   LOG("-");
 }
 
-void Game::load(uint8_t slot)
+void Game::load(int slot)
 {
   TRACE_AND_INDENT();
   if (slot < 0) {

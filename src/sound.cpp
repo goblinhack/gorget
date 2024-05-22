@@ -15,7 +15,7 @@
 class sound
 {
 public:
-  sound(std::string alias) : alias(alias) {}
+  sound(std::string valias) : alias(valias) {}
 
   ~sound(void)
   {

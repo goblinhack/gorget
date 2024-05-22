@@ -213,12 +213,12 @@ public:
   void load_select(void);
   void save_select(void);
   void load_snapshot(void);
-  void load(uint8_t slot);
+  void load(int slot);
   void load(void);
   void save_config(void);
   void save_snapshot_check();
   void save_snapshot(void);
-  void save(uint8_t slot);
+  void save(int slot);
   void save(void);
   void set_currently_saving_snapshot(void);
   void set_seed(void);
@@ -287,13 +287,13 @@ void Config::reset(void)
 
 void game_config_reset(class Game *g) { g->config.reset(); }
 
-Game::Game(std::string appdata)
+Game::Game(std::string vappdata)
 {
   TRACE_AND_INDENT();
 
   config.reset();
 
-  this->appdata = appdata;
+  this->appdata = vappdata;
 
   saved_dir = appdata + DIR_SEP + "gorget" + DIR_SEP;
   save_slot = 1;

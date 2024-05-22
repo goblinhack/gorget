@@ -573,11 +573,11 @@ vector_string split(const char *text, int max_line_len)
       break;
     }
 
-    line_len = (int) (line_end - line_start);
-    char tmp[ line_len + 1 ];
+    line_len  = (int) (line_end - line_start);
+    char *tmp = new char[ line_len + 1 ];
     strlcpy_(tmp, line_start, line_len + 1);
-
     result.push_back(tmp);
+    delete[] tmp;
 
     text = line_end;
     if (! *text) {

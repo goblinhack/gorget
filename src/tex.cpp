@@ -16,7 +16,7 @@
 class Tex
 {
 public:
-  Tex(std::string name) : name(name)
+  Tex(std::string vname) : name(vname)
   {
     surface            = nullptr;
     gl_surface_binding = 0;

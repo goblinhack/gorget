@@ -39,7 +39,9 @@ class tree_wid_key
 public:
   tree_wid_key(void) = default;
 
-  tree_wid_key(int priority, point tl, point br, uint64_t key) : priority(priority), tl(tl), br(br), key(key) {}
+  tree_wid_key(int vpriority, point vtl, point vbr, uint64_t vkey) : priority(vpriority), tl(vtl), br(vbr), key(vkey)
+  {
+  }
 
   ~tree_wid_key(void) = default;
 
@@ -90,7 +92,7 @@ class WidKeyType
 public:
   WidKeyType(void) = default;
 
-  WidKeyType(uint64_t val) : val(val) {}
+  WidKeyType(uint64_t v_val) : val(v_val) {}
 
   bool operator<(const WidKeyType &rhs) const { return (val < rhs.val); }
 
@@ -3617,23 +3619,17 @@ bool wid_receive_input(Widp w, const SDL_Keysym *key)
 
             switch (c) {
               case SDLK_ESCAPE :
-                if (w != wid_console_input_line) {
-                  break;
-                }
-
               case '?' :
-                if (w != wid_console_input_line) {
-                  break;
-                }
+                if (w == wid_console_input_line) {
+                  command_handle(wid_get_text(w), &updatedtext, true /* show ambiguous */, false /* show complete */,
+                                 false /* execute command */, 0 /* context */);
 
-                command_handle(wid_get_text(w), &updatedtext, true /* show ambiguous */, false /* show complete */,
-                               false /* execute command */, 0 /* context */);
-
-                if (! updatedtext.empty()) {
-                  wid_set_text(w, updatedtext);
-                  w->cursor = updatedtext.length();
+                  if (! updatedtext.empty()) {
+                    wid_set_text(w, updatedtext);
+                    w->cursor = updatedtext.length();
+                  }
+                  return true;
                 }
-                return true;
             }
 
             if (c != '\0') {

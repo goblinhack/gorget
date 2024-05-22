@@ -21,8 +21,9 @@ WidTextBox::~WidTextBox()
   wid_destroy(&wid_text_area);
 }
 
-WidTextBox::WidTextBox(point tl, point br, Widp parent, bool horiz_scroll, bool vert_scoll, int scroll_height_in)
-    : scroll_height(scroll_height_in), tl(tl), br(br), wid_parent(parent)
+WidTextBox::WidTextBox(point vtl, point vbr, Widp vparent, bool vhoriz_scroll, bool vvert_scoll,
+                       int vscroll_height_in)
+    : scroll_height(vscroll_height_in), tl(vtl), br(vbr), wid_parent(vparent)
 {
   TRACE_AND_INDENT();
   int w = br.x - tl.x;
@@ -30,7 +31,7 @@ WidTextBox::WidTextBox(point tl, point br, Widp parent, bool horiz_scroll, bool 
   width = w;
 
   if (scroll_height == -1) {
-    if (vert_scoll) {
+    if (vvert_scoll) {
       scroll_height = h * 2;
     } else {
       scroll_height = h;
@@ -40,8 +41,8 @@ WidTextBox::WidTextBox(point tl, point br, Widp parent, bool horiz_scroll, bool 
   line_count = 0;
 
   {
-    if (parent) {
-      wid_text_box_container = wid_new_square_button(parent, "wid text box");
+    if (vparent) {
+      wid_text_box_container = wid_new_square_button(vparent, "wid text box");
       wid_set_shape_none(wid_text_box_container);
     } else {
       wid_text_box_container = wid_new_square_window("wid text box");
@@ -70,7 +71,7 @@ WidTextBox::WidTextBox(point tl, point br, Widp parent, bool horiz_scroll, bool 
     Widp prev {};
 
     int lines_of_text;
-    if (vert_scoll) {
+    if (vvert_scoll) {
       lines_of_text = scroll_height;
     } else {
       lines_of_text = wid_get_height(wid_text_area);
@@ -104,22 +105,22 @@ WidTextBox::WidTextBox(point tl, point br, Widp parent, bool horiz_scroll, bool 
     wid_raise(wid_text_last);
   }
 
-  if (vert_scoll) {
+  if (vvert_scoll) {
     wid_vert_scroll = wid_new_vert_scroll_bar(wid_text_box_container, "text box vert scroll", wid_text_area);
   }
 
-  if (horiz_scroll) {
+  if (vhoriz_scroll) {
     wid_horiz_scroll = wid_new_horiz_scroll_bar(wid_text_box_container, "text box horiz scroll", wid_text_area);
   }
 
   wid_update(wid_text_box_container);
 
-  if (horiz_scroll) {
+  if (vhoriz_scroll) {
     wid_hide(wid_get_parent(wid_horiz_scroll));
     wid_hide(wid_horiz_scroll);
   }
 
-  if (vert_scoll) {
+  if (vvert_scoll) {
     wid_visible(wid_get_parent(wid_vert_scroll));
     wid_visible(wid_vert_scroll);
   }

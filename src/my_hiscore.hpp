@@ -13,12 +13,12 @@ class HiScore
 {
 public:
   HiScore(void) = default;
-  HiScore(std::string name, std::string when, int score, int level_reached)
+  HiScore(std::string vname, std::string vwhen, int vscore, int vlevel_reached)
   {
-    this->name          = name;
-    this->when          = when;
-    this->score         = score;
-    this->level_reached = level_reached;
+    this->name          = vname;
+    this->when          = vwhen;
+    this->score         = vscore;
+    this->level_reached = vlevel_reached;
   }
 
   ~HiScore(void) = default;

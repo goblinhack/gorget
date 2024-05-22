@@ -15,7 +15,7 @@
 class music
 {
 public:
-  music(std::string name_alias) : name_alias(name_alias) {}
+  music(std::string vname_alias) : name_alias(vname_alias) {}
 
   ~music(void)
   {
