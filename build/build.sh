@@ -453,6 +453,10 @@ EXE=$EXE
 DSYM=$DSYM
 LDLIBS=$LDLIBS
 CFLAGS=\$(COMPILER_FLAGS) \$(COMPILER_WARNINGS)
+
+ifeq (\$(CC),g++)
+    CFLAGS += -Wlogical-op
+endif
 %%
 
 #
