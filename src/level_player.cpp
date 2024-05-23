@@ -7,7 +7,7 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-Thingp level_thing_player(Levelp l)
+Thingp thing_player(Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -19,10 +19,10 @@ Thingp level_thing_player(Levelp l)
     return nullptr;
   }
 
-  return level_thing_find(l, l->player);
+  return thing_find(l, l->player);
 }
 
-void level_thing_player_move_delta(Levelp l, int dx, int dy, int dz)
+void thing_player_move_delta(Levelp l, int dx, int dy, int dz)
 {
   TRACE_NO_INDENT();
 
@@ -33,24 +33,24 @@ void level_thing_player_move_delta(Levelp l, int dx, int dy, int dz)
     return;
   }
 
-  auto t = level_thing_player(l);
+  auto t = thing_player(l);
   if (! t) {
     return;
   }
 
-  if (level_thing_can_move_to(l, t, t->x + dx, t->y + dy, t->z + dz)) {
-    level_thing_move(l, t, t->x + dx, t->y + dy, t->z + dz);
+  if (thing_can_move_to(l, t, t->x + dx, t->y + dy, t->z + dz)) {
+    thing_move(l, t, t->x + dx, t->y + dy, t->z + dz);
 
     level_tick_begin_requested(l, "player moved");
   }
 
-  level_thing_player_move_reset(l);
+  thing_player_move_reset(l);
 }
 
 //
 // All keys have been released, forget any accumulation of events
 //
-void level_thing_player_move_reset(Levelp l)
+void thing_player_move_reset(Levelp l)
 {
   l->requested_move_up    = false;
   l->requested_move_left  = false;
@@ -61,7 +61,7 @@ void level_thing_player_move_reset(Levelp l)
 //
 // Allow moves to accumulate so we can do diagonal moves.
 //
-void level_thing_player_move_accum(Levelp l, bool up, bool down, bool left, bool right)
+void thing_player_move_accum(Levelp l, bool up, bool down, bool left, bool right)
 {
   if (up) {
     l->requested_move_up = up;
@@ -83,9 +83,9 @@ void level_thing_player_move_accum(Levelp l, bool up, bool down, bool left, bool
 //
 // Attempt to move
 //
-bool level_thing_player_move_request(Levelp l, bool up, bool down, bool left, bool right)
+bool thing_player_move_request(Levelp l, bool up, bool down, bool left, bool right)
 {
-  level_thing_player_move_accum(l, up, down, left, right);
+  thing_player_move_accum(l, up, down, left, right);
 
   //
   // If a move is in progress, do nothing
@@ -99,24 +99,24 @@ bool level_thing_player_move_request(Levelp l, bool up, bool down, bool left, bo
 
   if (l->requested_move_up) {
     if (l->requested_move_keft) {
-      level_thing_player_move_delta(l, -1, -1, 0);
+      thing_player_move_delta(l, -1, -1, 0);
     } else if (l->requested_move_right) {
-      level_thing_player_move_delta(l, 1, -1, 0);
+      thing_player_move_delta(l, 1, -1, 0);
     } else {
-      level_thing_player_move_delta(l, 0, -1, 0);
+      thing_player_move_delta(l, 0, -1, 0);
     }
   } else if (l->requested_move_left) {
     if (l->requested_move_keft) {
-      level_thing_player_move_delta(l, -1, 1, 0);
+      thing_player_move_delta(l, -1, 1, 0);
     } else if (l->requested_move_right) {
-      level_thing_player_move_delta(l, 1, 1, 0);
+      thing_player_move_delta(l, 1, 1, 0);
     } else {
-      level_thing_player_move_delta(l, 0, 1, 0);
+      thing_player_move_delta(l, 0, 1, 0);
     }
   } else if (l->requested_move_keft) {
-    level_thing_player_move_delta(l, -1, 0, 0);
+    thing_player_move_delta(l, -1, 0, 0);
   } else if (l->requested_move_right) {
-    level_thing_player_move_delta(l, 1, 0, 0);
+    thing_player_move_delta(l, 1, 0, 0);
   }
 
   return true;

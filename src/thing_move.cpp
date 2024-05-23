@@ -13,7 +13,7 @@
 
 void thing_dir_set_none(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -27,7 +27,7 @@ bool thing_is_dir_none(Thingp t) { return (t->dir == THING_DIR_NONE); }
 
 void thing_dir_set_down(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -41,7 +41,7 @@ bool thing_is_dir_down(Thingp t) { return (t->dir == THING_DIR_DOWN); }
 
 void thing_dir_set_up(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -55,7 +55,7 @@ bool thing_is_dir_up(Thingp t) { return (t->dir == THING_DIR_UP); }
 
 void thing_dir_set_left(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -69,7 +69,7 @@ bool thing_is_dir_left(Thingp t) { return (t->dir == THING_DIR_LEFT); }
 
 void thing_dir_set_right(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -83,7 +83,7 @@ bool thing_is_dir_right(Thingp t) { return (t->dir == THING_DIR_RIGHT); }
 
 void thing_dir_set_tl(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -97,7 +97,7 @@ bool thing_is_dir_tl(Thingp t) { return (t->dir == THING_DIR_TL); }
 
 void thing_dir_set_bl(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -111,7 +111,7 @@ bool thing_is_dir_bl(Thingp t) { return (t->dir == THING_DIR_BL); }
 
 void thing_dir_set_tr(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -125,7 +125,7 @@ bool thing_is_dir_tr(Thingp t) { return (t->dir == THING_DIR_TR); }
 
 void thing_dir_set_br(Thingp t)
 {
-  if (tp_is_animated_no_dir(tp(t))) {
+  if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
 
@@ -184,7 +184,7 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
   }
 }
 
-void level_thing_move(Levelp l, Thingp t, int new_x, int new_y, int new_z)
+void thing_move(Levelp l, Thingp t, int new_x, int new_y, int new_z)
 {
   if (level_is_oob(l, new_x, new_y)) {
     return;
@@ -194,7 +194,7 @@ void level_thing_move(Levelp l, Thingp t, int new_x, int new_y, int new_z)
     return;
   }
 
-  level_thing_pop(l, t);
+  thing_pop(l, t);
 
   t->pix_x = t->x * TILE_WIDTH;
   t->pix_y = t->y * TILE_HEIGHT;
@@ -207,10 +207,10 @@ void level_thing_move(Levelp l, Thingp t, int new_x, int new_y, int new_z)
   t->y = new_y;
   t->z = new_z;
 
-  level_thing_push(l, t);
+  thing_push(l, t);
 }
 
-bool level_thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y, int new_loc_z)
+bool thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y, int new_loc_z)
 {
   if (level_is_oob(l, new_loc_x, new_loc_y)) {
     return false;
@@ -224,7 +224,7 @@ bool level_thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y, i
   auto dy = new_loc_y - t->y;
   thing_set_dir_from_delta(t, dx, dy);
 
-  auto my_tp = level_thing_tp(l, t);
+  auto my_tp = thing_tp(l, t);
 
   FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, new_loc_x, new_loc_y, new_loc_z)
   {
@@ -240,7 +240,7 @@ bool level_thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y, i
   return true;
 }
 
-void level_thing_interpolate(Level *l, Thingp t, float dt)
+void thing_interpolate(Level *l, Thingp t, float dt)
 {
   if ((t->old_x == t->x) && (t->old_y == t->y)) {
     return;
@@ -253,7 +253,7 @@ void level_thing_interpolate(Level *l, Thingp t, float dt)
   t->pix_y = pix_y * TILE_HEIGHT;
 }
 
-void level_thing_push(Levelp l, Thingp t)
+void thing_push(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -278,7 +278,7 @@ void level_thing_push(Levelp l, Thingp t)
   //
   // Detach from the old location
   //
-  level_thing_pop(l, t);
+  thing_pop(l, t);
 
   //
   // Need to push to the new location.
@@ -291,7 +291,7 @@ void level_thing_push(Levelp l, Thingp t)
       //
       // Keep track of tiles the player has been on.
       //
-      if (tp_is_player(tp(t))) {
+      if (tp_is_player(thing_tp(t))) {
         l->is_walked[ x ][ y ][ z ] = true;
       }
 
@@ -310,7 +310,7 @@ void level_thing_push(Levelp l, Thingp t)
   ERR("out of thing slots");
 }
 
-void level_thing_pop(Levelp l, Thingp t)
+void thing_pop(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 

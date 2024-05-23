@@ -14,16 +14,7 @@
 #include <sstream>
 #include <string.h>
 
-Tpp tp(Thingp t)
-{
-  if (t->tp_id) {
-    return tp_find(t->tp_id);
-  }
-
-  return nullptr;
-}
-
-Thingp level_thing_get(Levelp l, int x, int y, int z, int slot)
+Thingp thing_get(Levelp l, int x, int y, int z, int slot)
 {
   TRACE_NO_INDENT();
 
@@ -33,7 +24,7 @@ Thingp level_thing_get(Levelp l, int x, int y, int z, int slot)
     return nullptr;
   }
 
-  auto t = level_thing_find(l, id);
+  auto t = thing_find(l, id);
   if (! t) {
     return nullptr;
   }
@@ -41,7 +32,7 @@ Thingp level_thing_get(Levelp l, int x, int y, int z, int slot)
   return t;
 }
 
-Thingp level_thing_and_tp_get(Levelp l, int x, int y, int z, int slot, Tpp *out)
+Thingp thing_and_tp_get(Levelp l, int x, int y, int z, int slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
@@ -55,7 +46,7 @@ Thingp level_thing_and_tp_get(Levelp l, int x, int y, int z, int slot, Tpp *out)
     return nullptr;
   }
 
-  auto t = level_thing_find(l, id);
+  auto t = thing_find(l, id);
   if (! t) {
     return nullptr;
   }
@@ -67,8 +58,10 @@ Thingp level_thing_and_tp_get(Levelp l, int x, int y, int z, int slot, Tpp *out)
   return t;
 }
 
-Thingp level_thing_find_optional(Level *l, ThingId id)
+Thingp thing_find_optional(Level *l, ThingId id)
 {
+  TRACE_NO_INDENT();
+
   if (! id) {
     return nullptr;
   }
@@ -85,8 +78,10 @@ Thingp level_thing_find_optional(Level *l, ThingId id)
   return nullptr;
 }
 
-Thingp level_thing_find(Levelp l, ThingId id)
+Thingp thing_find(Levelp l, ThingId id)
 {
+  TRACE_NO_INDENT();
+
   auto thing_id = id;
   auto index    = THING_COMMON_ID_GET(thing_id);
 
@@ -104,7 +99,7 @@ Thingp level_thing_find(Levelp l, ThingId id)
   return t;
 }
 
-Thingp level_thing_new(Levelp l, Tpp tp, int x, int y, int z)
+Thingp thing_new(Levelp l, Tpp tp, int x, int y, int z)
 {
   TRACE_NO_INDENT();
 
@@ -128,27 +123,33 @@ Thingp level_thing_new(Levelp l, Tpp tp, int x, int y, int z)
     t->id    = thing_id;
     t->tp_id = tp_id_get(tp);
 
+    if (thing_is_monst(t) || thing_is_player(t)) {
+      thing_ai_new(l, t);
+    }
+
     return t;
   }
 
   DIE("out of things");
 }
 
-void level_thing_free(Levelp l, Thingp t)
+void thing_free(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto o = level_thing_find(l, t->id);
+  auto o = thing_find(l, t->id);
   if (t != o) {
     DIE("Thing mismatch found for id, %" PRIX32 "", t->id);
   }
 
+  thing_ai_free(l, t);
+
   memset(t, 0, sizeof(*t));
 }
 
-ThingAip level_thing_ai_new(Levelp l, Thingp t)
+ThingAip thing_ai_new(Levelp l, Thingp t)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   static ThingAiId last_index;
 
@@ -173,9 +174,9 @@ ThingAip level_thing_ai_new(Levelp l, Thingp t)
   return 0;
 }
 
-void level_thing_ai_free(Levelp l, Thingp t)
+void thing_ai_free(Levelp l, Thingp t)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   auto ai_id = t->ai_id;
   if (! ai_id) {

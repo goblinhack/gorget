@@ -309,9 +309,9 @@ void level_map_set(Levelp l, int z, const char *in)
 
       if (need_floor) {
         auto tp_add = tp_floor;
-        auto t      = level_thing_init(l, tp_add, x, y, z);
+        auto t      = thing_init(l, tp_add, x, y, z);
         if (t) {
-          level_thing_push(l, t);
+          thing_push(l, t);
         }
       }
 
@@ -319,9 +319,9 @@ void level_map_set(Levelp l, int z, const char *in)
         continue;
       }
 
-      auto t = level_thing_init(l, tp, x, y, z);
+      auto t = thing_init(l, tp, x, y, z);
       if (t) {
-        level_thing_push(l, t);
+        thing_push(l, t);
       }
     }
   }
@@ -341,7 +341,7 @@ bool level_is_same_type(Levelp l, int x, int y, int z, Tpp tp)
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     Tpp    it_tp;
-    Thingp it = level_thing_and_tp_get(l, x, y, z, slot, &it_tp);
+    Thingp it = thing_and_tp_get(l, x, y, z, slot, &it_tp);
     if (! it) {
       continue;
     }

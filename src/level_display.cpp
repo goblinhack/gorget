@@ -168,7 +168,7 @@ static void level_display_cursor(Levelp l, int x, int y)
 static void level_display_slot(Levelp l, int x, int y, int z, int slot, int depth, bool deco)
 {
   Tpp  tp;
-  auto t = level_thing_and_tp_get(l, x, y, z, slot, &tp);
+  auto t = thing_and_tp_get(l, x, y, z, slot, &tp);
   if (! tp) {
     return;
   }
@@ -187,7 +187,7 @@ void level_display(Levelp l)
   //
   // What level is the player on?
   //
-  auto player = level_thing_player(l);
+  auto player = thing_player(l);
   if (! player) {
     return;
   }

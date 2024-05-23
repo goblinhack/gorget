@@ -70,7 +70,7 @@ void level_tick_body(Levelp l, float dt)
 {
   TRACE_NO_INDENT();
 
-  auto p            = level_thing_player(l);
+  auto p            = thing_player(l);
   int  player_speed = p ? p->speed : 100;
 
   FOR_ALL_THINGS(l, t)
@@ -89,7 +89,7 @@ void level_tick_body(Levelp l, float dt)
       t->thing_dt = 1.0;
     }
 
-    level_thing_interpolate(l, t, t->thing_dt);
+    thing_interpolate(l, t, t->thing_dt);
 
     if (t->thing_dt >= 1.0) {
       // thing tick

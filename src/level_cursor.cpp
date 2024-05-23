@@ -208,7 +208,7 @@ static std::vector< point > level_cursor_path_draw_line(Levelp l, point start, p
 {
   static std::vector< point > empty;
 
-  auto player = level_thing_player(l);
+  auto player = thing_player(l);
   if (! player) {
     return empty;
   }
@@ -245,7 +245,7 @@ void level_cursor_update(Levelp l)
   //
   memset(l->cursor, 0, sizeof(l->cursor));
 
-  auto player = level_thing_player(l);
+  auto player = thing_player(l);
   if (! player) {
     return;
   }

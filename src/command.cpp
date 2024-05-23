@@ -109,6 +109,10 @@ void command_fini(void)
   TRACE_NO_INDENT();
   if (command_inited) {
     command_inited = false;
+    for (auto iter : commands_map) {
+      auto command = iter.second;
+      delete command;
+    }
   }
 }
 

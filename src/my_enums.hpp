@@ -42,6 +42,18 @@ enum {
   THING_RARITY_UNIQUE,
 };
 
+enum {
+  THING_DIR_NONE,
+  THING_DIR_DOWN,
+  THING_DIR_UP,
+  THING_DIR_LEFT,
+  THING_DIR_RIGHT,
+  THING_DIR_TL,
+  THING_DIR_BL,
+  THING_DIR_TR,
+  THING_DIR_BR,
+};
+
 enum { MONST_CLASS_A, MONST_CLASS_MAX };
 
 /* clang-format off */
@@ -103,32 +115,32 @@ enum { MONST_CLASS_A, MONST_CLASS_MAX };
 #define tp_is_lava(tp)                       tp_flag(tp, is_lava)
 #define tp_is_chasm(tp)                      tp_flag(tp, is_chasm)
 
-#define thing_is_able_to_walk_through_walls(thing) tp_flag(tp(thing), is_able_to_walk_through_walls)
-#define thing_is_animated_can_hflip(thing)         tp_flag(tp(thing), is_animated_can_hflip)
-#define thing_is_animated_no_dir(thing)            tp_flag(tp(thing), is_animated_no_dir)
-#define thing_is_blit_centered(thing)              tp_flag(tp(thing), is_blit_centered)
-#define thing_is_blit_on_ground(thing)             tp_flag(tp(thing), is_blit_on_ground)
-#define thing_is_blit_outlined(thing)              tp_flag(tp(thing), is_blit_outlined)
-#define thing_is_blit_square_outlined(thing)       tp_flag(tp(thing), is_blit_square_outlined)
-#define thing_is_cursor(thing)                     tp_flag(tp(thing), is_cursor)
-#define thing_is_cursor_hazard(thing)              tp_flag(tp(thing), is_cursor_hazard)
-#define thing_is_cursor_path_blocker(thing)        tp_flag(tp(thing), is_cursor_path_blocker)
-#define thing_is_cursor_path_hazard(thing)         tp_flag(tp(thing), is_cursor_path_hazard)
-#define thing_is_cursor_path(thing)                tp_flag(tp(thing), is_cursor_path)
-#define thing_is_door(thing)                       tp_flag(tp(thing), is_door)
-#define thing_is_dungeon_entrance(thing)           tp_flag(tp(thing), is_dungeon_entrance)
-#define thing_is_exit(thing)                       tp_flag(tp(thing), is_exit)
-#define thing_is_floor(thing)                      tp_flag(tp(thing), is_floor)
-#define thing_is_key(thing)                        tp_flag(tp(thing), is_key)
-#define thing_is_monst(thing)                      tp_flag(tp(thing), is_monst)
-#define thing_is_obs_monst(thing)                  tp_flag(tp(thing), is_obs_monst)
-#define thing_is_obs_player(thing)                 tp_flag(tp(thing), is_obs_player)
-#define thing_is_obs_wall_or_door(thing)           tp_flag(tp(thing), is_obs_wall_or_door)
-#define thing_is_player(thing)                     tp_flag(tp(thing), is_player)
-#define thing_is_tiled(thing)                      tp_flag(tp(thing), is_tiled)
-#define thing_is_wall(thing)                       tp_flag(tp(thing), is_wall)
-#define thing_is_lava(thing)                       tp_flag(tp(thing), is_lava)
-#define thing_is_chasm(thing)                      tp_flag(tp(thing), is_chasm)
+#define thing_is_able_to_walk_through_walls(thing) tp_flag(thing_tp(thing), is_able_to_walk_through_walls)
+#define thing_is_animated_can_hflip(thing)         tp_flag(thing_tp(thing), is_animated_can_hflip)
+#define thing_is_animated_no_dir(thing)            tp_flag(thing_tp(thing), is_animated_no_dir)
+#define thing_is_blit_centered(thing)              tp_flag(thing_tp(thing), is_blit_centered)
+#define thing_is_blit_on_ground(thing)             tp_flag(thing_tp(thing), is_blit_on_ground)
+#define thing_is_blit_outlined(thing)              tp_flag(thing_tp(thing), is_blit_outlined)
+#define thing_is_blit_square_outlined(thing)       tp_flag(thing_tp(thing), is_blit_square_outlined)
+#define thing_is_cursor(thing)                     tp_flag(thing_tp(thing), is_cursor)
+#define thing_is_cursor_hazard(thing)              tp_flag(thing_tp(thing), is_cursor_hazard)
+#define thing_is_cursor_path_blocker(thing)        tp_flag(thing_tp(thing), is_cursor_path_blocker)
+#define thing_is_cursor_path_hazard(thing)         tp_flag(thing_tp(thing), is_cursor_path_hazard)
+#define thing_is_cursor_path(thing)                tp_flag(thing_tp(thing), is_cursor_path)
+#define thing_is_door(thing)                       tp_flag(thing_tp(thing), is_door)
+#define thing_is_dungeon_entrance(thing)           tp_flag(thing_tp(thing), is_dungeon_entrance)
+#define thing_is_exit(thing)                       tp_flag(thing_tp(thing), is_exit)
+#define thing_is_floor(thing)                      tp_flag(thing_tp(thing), is_floor)
+#define thing_is_key(thing)                        tp_flag(thing_tp(thing), is_key)
+#define thing_is_monst(thing)                      tp_flag(thing_tp(thing), is_monst)
+#define thing_is_obs_monst(thing)                  tp_flag(thing_tp(thing), is_obs_monst)
+#define thing_is_obs_player(thing)                 tp_flag(thing_tp(thing), is_obs_player)
+#define thing_is_obs_wall_or_door(thing)           tp_flag(thing_tp(thing), is_obs_wall_or_door)
+#define thing_is_player(thing)                     tp_flag(thing_tp(thing), is_player)
+#define thing_is_tiled(thing)                      tp_flag(thing_tp(thing), is_tiled)
+#define thing_is_wall(thing)                       tp_flag(thing_tp(thing), is_wall)
+#define thing_is_lava(thing)                       tp_flag(thing_tp(thing), is_lava)
+#define thing_is_chasm(thing)                      tp_flag(thing_tp(thing), is_chasm)
 
 #define level_is_able_to_walk_through_walls(level, x, y, z) level_flag(level, is_able_to_walk_through_walls, x, y, z)
 #define level_is_animated_can_hflip(level, x, y, z)         level_flag(level, is_animated_can_hflip, x, y, z)

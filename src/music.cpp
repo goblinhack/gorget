@@ -103,15 +103,20 @@ bool music_load(uint32_t rate, const char *file, const char *name_alias)
   if (! m->m) {
     ERR("Mix_LoadMUS_RW fail [%s]: %s %s", file, Mix_GetError(), SDL_GetError());
     SDL_ClearError();
+    SDL_RWclose(rw);
+    delete m;
     return false;
   }
 
   auto result = all_music.insert(std::make_pair(name_alias, m));
   if (! result.second) {
-    ERR("Cannot insert music name [%s] failed", name_alias);
+    ERR("Cannot insert music name [%s]", name_alias);
+    SDL_RWclose(rw);
+    delete m;
     return false;
   }
 
+  SDL_RWclose(rw);
   // DBG("Load %s", file);
 
   return true;

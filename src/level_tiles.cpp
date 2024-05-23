@@ -80,7 +80,7 @@ void level_assign_tiles(Levelp l, int z)
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
         Tpp  tp;
-        auto t = level_thing_and_tp_get(l, x, y, z, slot, &tp);
+        auto t = thing_and_tp_get(l, x, y, z, slot, &tp);
         if (! t) {
           continue;
         }

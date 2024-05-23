@@ -16,11 +16,20 @@
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 
-Thingp level_thing_init(Levelp l, Tpp tp, int x, int y, int z)
+Tpp thing_tp(Thingp t)
+{
+  if (t->tp_id) {
+    return tp_find(t->tp_id);
+  }
+
+  return nullptr;
+}
+
+Thingp thing_init(Levelp l, Tpp tp, int x, int y, int z)
 {
   TRACE_NO_INDENT();
 
-  auto t = level_thing_new(l, tp, x, y, z);
+  auto t = thing_new(l, tp, x, y, z);
   if (! t) {
     return nullptr;
   }
@@ -56,21 +65,21 @@ Thingp level_thing_init(Levelp l, Tpp tp, int x, int y, int z)
     }
   }
 
-  level_thing_update(l, t);
+  thing_update(l, t);
 
   return t;
 }
 
-void level_thing_update(Level *l, Thingp t)
+void thing_update(Level *l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto tp = level_thing_tp(l, t);
+  auto tp = thing_tp(l, t);
 
   t->speed = tp_speed_get(tp);
 }
 
-Tpp level_thing_tp(Level *l, Thingp t)
+Tpp thing_tp(Level *l, Thingp t)
 {
   TRACE_NO_INDENT();
   return tp_find(t->tp_id);

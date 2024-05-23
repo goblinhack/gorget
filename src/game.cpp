@@ -422,7 +422,7 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   // Why oh why change state
   //
-  CON("INF: Game state change: %s -> %s, reason %s", gama_state_to_string(old_state).c_str(),
+  LOG("INF: Game state change: %s -> %s, reason %s", gama_state_to_string(old_state).c_str(),
       gama_state_to_string(new_state).c_str(), why.c_str());
   TRACE_AND_INDENT();
 

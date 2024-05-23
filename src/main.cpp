@@ -703,7 +703,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load early gfx tiles, text, UI etc...");
+    LOG("INI: Load early gfx tiles, text, UI etc...");
     gfx_init();
     LOG("INI: Loaded");
   }
@@ -718,7 +718,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load fonts");
+    LOG("INI: Load fonts");
     if (! font_init()) {
       ERR("Font init");
     }
@@ -727,7 +727,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load widgets");
+    LOG("INI: Load widgets");
     if (! wid_init()) {
       ERR("Wid init");
     }
@@ -736,7 +736,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load console");
+    LOG("INI: Load console");
     if (! wid_console_init()) {
       ERR("Wid_console init");
     }
@@ -757,7 +757,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load tiles");
+    LOG("INI: Load tiles");
     if (! wid_tiles_init()) {
       ERR("Wid tiles init");
     }
@@ -774,7 +774,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load textures");
+    LOG("INI: Load textures");
     if (! tex_init()) {
       ERR("Tex init");
     }
@@ -784,7 +784,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load audio");
+    LOG("INI: Load audio");
     if (! audio_init()) {
       ERR("Audio init");
     }
@@ -794,7 +794,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load music");
+    LOG("INI: Load music");
     if (! music_init()) {
       ERR("Music init");
     }
@@ -804,7 +804,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Load sound");
+    LOG("INI: Load sound");
     if (! sound_init()) {
       ERR("Sound init");
     }

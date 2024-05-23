@@ -27,18 +27,6 @@
 #define THING_AI_MAX        65535 /* sizeof ai_id */
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * MAP_HEIGHT)
 
-enum {
-  THING_DIR_NONE,
-  THING_DIR_DOWN,
-  THING_DIR_UP,
-  THING_DIR_LEFT,
-  THING_DIR_RIGHT,
-  THING_DIR_TL,
-  THING_DIR_BL,
-  THING_DIR_TR,
-  THING_DIR_BR,
-};
-
 typedef struct ThingAi_ {
   //
   // Unique ID
@@ -115,7 +103,7 @@ typedef struct Thing_ {
   uint8_t count[ THING_FLAG_MAX ];
 } Thing;
 
-Tpp tp(Thingp t);
+Tpp thing_tp(Thingp t);
 
 bool thing_is_dir_down(Thingp t);
 bool thing_is_dir_tr(Thingp t);
@@ -136,7 +124,7 @@ void thing_dir_right_set(Thingp t, uint8_t);
 void thing_dir_up_set(Thingp t, uint8_t);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
 
-ThingAip level_thing_ai_new(Levelp, Thingp);
-void     level_thing_ai_free(Levelp, Thingp);
+ThingAip thing_ai_new(Levelp, Thingp);
+void     thing_ai_free(Levelp, Thingp);
 
 #endif

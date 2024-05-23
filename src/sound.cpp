@@ -106,17 +106,20 @@ bool sound_load(float volume, const std::string &file, const std::string &alias)
   if (! s->chunk) {
     ERR("Mix_LoadWAV_RW fail [%s]: %s %s", file.c_str(), Mix_GetError(), SDL_GetError());
     SDL_ClearError();
+    SDL_RWclose(rw);
     delete s;
     return false;
   }
 
   auto result = all_sound.insert(std::make_pair(alias, s));
   if (! result.second) {
-    ERR("Cannot insert sound name [%s] failed", alias.c_str());
+    ERR("Cannot insert sound name [%s]", alias.c_str());
+    SDL_RWclose(rw);
     delete s;
     return false;
   }
 
+  SDL_RWclose(rw);
   // DBG("Load %s", file.c_str());
 
   return true;

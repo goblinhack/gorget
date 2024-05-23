@@ -15,7 +15,7 @@ void level_scroll_to_player(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto player = level_thing_player(l);
+  auto player = thing_player(l);
   if (! player) {
     return;
   }
@@ -82,7 +82,7 @@ void level_scroll_warp_to_player(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto t = level_thing_player(l);
+  auto t = thing_player(l);
   if (! t) {
     return;
   }

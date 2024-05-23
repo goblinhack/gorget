@@ -567,7 +567,7 @@ static void sdl_key_repeat_events_(void)
   }
 
   if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_PLAYER, last_movement_keypress)) {
-    if (level_thing_player_move_request(l, up, down, left, right)) {
+    if (thing_player_move_request(l, up, down, left, right)) {
       last_movement_keypress = time_ms();
 
       if (up_pressed > 0) {
