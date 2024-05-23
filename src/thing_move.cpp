@@ -224,7 +224,7 @@ bool thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y, int new
   auto dy = new_loc_y - t->y;
   thing_set_dir_from_delta(t, dx, dy);
 
-  auto my_tp = thing_tp(l, t);
+  auto my_tp = thing_tp(t);
 
   FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, new_loc_x, new_loc_y, new_loc_z)
   {

@@ -348,7 +348,7 @@ void Game::create_level(void)
   {
     TRACE_NO_INDENT();
     LOG("Level create");
-    level = level_constructor();
+    level = level_new();
   }
 }
 void game_create_level(class Game *g) { g->create_level(); }
@@ -360,7 +360,7 @@ void Game::destroy_level(void)
 
   if (level) {
     auto l = level;
-    level_destructor(l);
+    level_fini(l);
     level = nullptr;
   }
 }

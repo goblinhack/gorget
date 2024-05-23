@@ -12,7 +12,7 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-Levelp level_constructor(void)
+Levelp level_new(void)
 {
   TRACE_NO_INDENT();
 
@@ -178,10 +178,11 @@ void level_map_constructor(Levelp l)
 }
 #endif
 
-void level_destructor(Levelp l)
+void level_fini(Levelp l)
 {
   TRACE_NO_INDENT();
 
+  FOR_ALL_THINGS(l, t) { thing_fini(l, t); }
   myfree(l);
 }
 
