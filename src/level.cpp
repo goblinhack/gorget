@@ -189,26 +189,26 @@ void level_fini(Levelp l)
   myfree(l);
 }
 
-bool level_set_thing_id(Levelp l, int x, int y, int z, int slot, ThingId id)
+bool level_set_thing_id(Levelp l, point3d p, int slot, ThingId id)
 {
-  if (level_is_oob(l, x, y)) {
+  if (level_is_oob(l, p)) {
     return false;
   }
-  l->thing_id[ x ][ y ][ z ][ slot ] = id;
+  l->thing_id[ p.x ][ p.y ][ p.z ][ slot ] = id;
   return true;
 }
 
-ThingId level_get_thing_id(Levelp l, int x, int y, int z, int slot)
+ThingId level_get_thing_id(Levelp l, point3d p, int slot)
 {
-  if (level_is_oob(l, x, y)) {
+  if (level_is_oob(l, p)) {
     return 0;
   }
-  return l->thing_id[ x ][ y ][ z ][ slot ];
+  return l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
 }
 
-bool level_flag(Levelp l, ThingFlag f, int x, int y, int z)
+bool level_flag(Levelp l, ThingFlag f, point3d p)
 {
-  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, x, y, z)
+  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, p)
   {
     if (tp_flag(it_tp, f)) {
       return true;
@@ -217,35 +217,47 @@ bool level_flag(Levelp l, ThingFlag f, int x, int y, int z)
   return false;
 }
 
-bool level_is_oob(Level *l, int x, int y)
+bool level_is_oob(Level *l, point p)
 {
   if (! l) {
     return true;
   }
-  if (x < 0) {
+  if (p.x < 0) {
     return true;
   }
-  if (y < 0) {
+  if (p.y < 0) {
     return true;
   }
-  if (x >= MAP_WIDTH) {
+  if (p.x >= MAP_WIDTH) {
     return true;
   }
-  if (y >= MAP_HEIGHT) {
+  if (p.y >= MAP_HEIGHT) {
     return true;
   }
   return false;
 }
 
-bool level_is_oob(Level *l, int x, int y, int z)
+bool level_is_oob(Level *l, point3d p)
 {
-  if (z < 0) {
+  if (p.z < 0) {
     return true;
   }
-  if (z >= MAP_DEPTH) {
+  if (p.z >= MAP_DEPTH) {
     return true;
   }
-  return level_is_oob(l, x, y);
+  if (p.x < 0) {
+    return true;
+  }
+  if (p.y < 0) {
+    return true;
+  }
+  if (p.x >= MAP_WIDTH) {
+    return true;
+  }
+  if (p.y >= MAP_HEIGHT) {
+    return true;
+  }
+  return false;
 }
 
 void level_map_set(Levelp l, int z, const char *in)
@@ -331,7 +343,7 @@ void level_map_set(Levelp l, int z, const char *in)
   }
 }
 
-bool level_is_same_type(Levelp l, int x, int y, int z, Tpp tp)
+bool level_is_same_type(Levelp l, point3d p, Tpp tp)
 {
   TRACE_NO_INDENT();
 
@@ -339,13 +351,13 @@ bool level_is_same_type(Levelp l, int x, int y, int z, Tpp tp)
     return false;
   }
 
-  if (level_is_oob(l, x, y)) {
+  if (level_is_oob(l, p)) {
     return false;
   }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     Tpp    it_tp;
-    Thingp it = thing_and_tp_get(l, x, y, z, slot, &it_tp);
+    Thingp it = thing_and_tp_get(l, p, slot, &it_tp);
     if (! it) {
       continue;
     }
@@ -371,11 +383,11 @@ void level_bounds_set(Levelp l)
   //
   // Set the scroll bounds
   //
-  if (l->pixel_map_at_x < 0) {
-    l->pixel_map_at_x = 0;
+  if (l->pixel_map_at.x < 0) {
+    l->pixel_map_at.x = 0;
   }
-  if (l->pixel_map_at_y < 0) {
-    l->pixel_map_at_y = 0;
+  if (l->pixel_map_at.y < 0) {
+    l->pixel_map_at.y = 0;
   }
 
   //
@@ -384,18 +396,18 @@ void level_bounds_set(Levelp l)
   int max_pix_x = (MAP_WIDTH * dw) - game_pix_height_get(game);
   int max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(game);
 
-  if (l->pixel_map_at_x > max_pix_x) {
-    l->pixel_map_at_x = max_pix_x;
+  if (l->pixel_map_at.x > max_pix_x) {
+    l->pixel_map_at.x = max_pix_x;
   }
-  if (l->pixel_map_at_y > max_pix_y) {
-    l->pixel_map_at_y = max_pix_y;
+  if (l->pixel_map_at.y > max_pix_y) {
+    l->pixel_map_at.y = max_pix_y;
   }
 
   //
   // Set the tile bounds
   //
-  int tmp_minx = l->pixel_map_at_x / dw;
-  int tmp_miny = l->pixel_map_at_y / dh;
+  int tmp_minx = l->pixel_map_at.x / dw;
+  int tmp_miny = l->pixel_map_at.y / dh;
   tmp_minx -= clipping_border;
   tmp_minx -= clipping_border;
 
@@ -406,8 +418,8 @@ void level_bounds_set(Levelp l)
     tmp_miny = 0;
   }
 
-  int tmp_maxx = (l->pixel_map_at_x + game_map_pix_width_get(game)) / dw;
-  int tmp_maxy = (l->pixel_map_at_y + game_map_pix_height_get(game)) / dh;
+  int tmp_maxx = (l->pixel_map_at.x + game_map_pix_width_get(game)) / dw;
+  int tmp_maxy = (l->pixel_map_at.y + game_map_pix_height_get(game)) / dh;
 
   tmp_maxx += clipping_border;
   tmp_maxy += clipping_border;

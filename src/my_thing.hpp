@@ -62,7 +62,7 @@ typedef struct Thing_ {
   //
   // Old map co-ords used for interpolation when moving.
   //
-  point3d old;
+  point3d old_at;
   //
   // Direction
   //
@@ -107,10 +107,10 @@ typedef struct Thing_ {
 
 Tpp thing_tp(Thingp t);
 
-Thingp thing_and_tp_get(Levelp, int x, int y, int z, int slot, Tpp * = nullptr);
+Thingp thing_and_tp_get(Levelp, point3d, int slot, Tpp * = nullptr);
 Thingp thing_find(Levelp, ThingId id);
 Thingp thing_find_optional(Levelp, ThingId id);
-Thingp thing_get(Levelp, int x, int y, int z, int slot);
+Thingp thing_get(Levelp, point3d, int slot);
 Thingp thing_init(Levelp, Tpp, point3d);
 Thingp thing_player(Levelp);
 

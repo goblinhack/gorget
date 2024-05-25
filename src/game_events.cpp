@@ -43,7 +43,7 @@ uint8_t game_mouse_motion(class Game *g, int x, int y, int relx, int rely, int w
 
   auto l = game_level_get(g);
   if (l) {
-    level_scroll_delta(l, wheelx, wheely);
+    level_scroll_delta(l, point(wheelx, -wheely));
   }
 
   return true;

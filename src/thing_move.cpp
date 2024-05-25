@@ -186,7 +186,7 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 
 void thing_move(Levelp l, Thingp t, point3d to)
 {
-  if (level_is_oob(l, to.x, to.y)) {
+  if (level_is_oob(l, to)) {
     return;
   }
 
@@ -199,15 +199,15 @@ void thing_move(Levelp l, Thingp t, point3d to)
   t->pix_at.x = t->at.x * TILE_WIDTH;
   t->pix_at.y = t->at.y * TILE_HEIGHT;
 
-  t->old = t->at;
-  t->at  = to;
+  t->old_at = t->at;
+  t->at     = to;
 
   thing_push(l, t);
 }
 
 bool thing_can_move_to(Levelp l, Thingp t, point3d to)
 {
-  if (level_is_oob(l, to.x, to.y)) {
+  if (level_is_oob(l, to)) {
     return false;
   }
 
@@ -221,7 +221,7 @@ bool thing_can_move_to(Levelp l, Thingp t, point3d to)
 
   auto my_tp = thing_tp(t);
 
-  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, to.x, to.y, to.z)
+  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, to)
   {
     if (tp_is_player(my_tp) && tp_is_obs_player(it_tp)) {
       return false;
@@ -237,12 +237,12 @@ bool thing_can_move_to(Levelp l, Thingp t, point3d to)
 
 void thing_interpolate(Level *l, Thingp t, float dt)
 {
-  if (t->old == t->at) {
+  if (t->old_at == t->at) {
     return;
   }
 
-  float pix_x = (float) t->old.x + (((float) (t->at.x - t->old.x)) * dt);
-  float pix_y = (float) t->old.y + (((float) (t->at.y - t->old.y)) * dt);
+  float pix_x = (float) t->old_at.x + (((float) (t->at.x - t->old_at.x)) * dt);
+  float pix_y = (float) t->old_at.y + (((float) (t->at.y - t->old_at.y)) * dt);
 
   t->pix_at.x = pix_x * TILE_WIDTH;
   t->pix_at.y = pix_y * TILE_HEIGHT;
@@ -252,11 +252,9 @@ void thing_push(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  int x = t->pix_at.x / TILE_WIDTH;
-  int y = t->pix_at.y / TILE_HEIGHT;
-  int z = t->at.z;
+  point3d p(t->pix_at.x / TILE_WIDTH, t->pix_at.y / TILE_HEIGHT, t->at.z);
 
-  if (level_is_oob(l, x, y)) {
+  if (level_is_oob(l, p)) {
     return;
   }
 
@@ -264,7 +262,7 @@ void thing_push(Levelp l, Thingp t)
   // Already at this location?
   //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ x ][ y ][ z ][ slot ];
+    auto o_id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
     if (o_id == t->id) {
       return;
     }
@@ -279,15 +277,15 @@ void thing_push(Levelp l, Thingp t)
   // Need to push to the new location.
   //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ x ][ y ][ z ][ slot ];
+    auto o_id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
     if (! o_id) {
-      l->thing_id[ x ][ y ][ z ][ slot ] = t->id;
+      l->thing_id[ p.x ][ p.y ][ p.z ][ slot ] = t->id;
 
       //
       // Keep track of tiles the player has been on.
       //
       if (tp_is_player(thing_tp(t))) {
-        l->is_walked[ x ][ y ][ z ] = true;
+        l->is_walked[ p.x ][ p.y ][ p.z ] = true;
       }
 
       //
@@ -309,18 +307,16 @@ void thing_pop(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  uint8_t x = t->pix_at.x / TILE_WIDTH;
-  uint8_t y = t->pix_at.y / TILE_HEIGHT;
-  uint8_t z = t->at.z;
+  point3d p(t->pix_at.x / TILE_WIDTH, t->pix_at.y / TILE_HEIGHT, t->at.z);
 
-  if (level_is_oob(l, x, y)) {
+  if (level_is_oob(l, p)) {
     return;
   }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ x ][ y ][ z ][ slot ];
+    auto o_id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
     if (o_id == t->id) {
-      l->thing_id[ x ][ y ][ z ][ slot ] = 0;
+      l->thing_id[ p.x ][ p.y ][ p.z ][ slot ] = 0;
       return;
     }
   }

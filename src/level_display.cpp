@@ -34,7 +34,7 @@ static void level_display_tile_index(Levelp l, Tpp tp, uint16_t tile_index, poin
   }
 }
 
-static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool deco)
+static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t, bool deco)
 {
   int dw = TILE_WIDTH;
   int dh = TILE_HEIGHT;
@@ -72,12 +72,11 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool dec
     //
     // Cursor
     //
-    tl.x = x * TILE_WIDTH;
-    tl.y = y * TILE_WIDTH;
+    tl.x = p.x * TILE_WIDTH;
+    tl.y = p.y * TILE_WIDTH;
   }
 
-  tl.x -= l->pixel_map_at_x;
-  tl.y -= l->pixel_map_at_y;
+  tl -= l->pixel_map_at;
 
   if (tp_is_blit_on_ground(tp)) {
     //
@@ -108,7 +107,7 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool dec
   if (tp_is_floor(tp)) {
     if ((visible_map_mouse_x >= tl.x) && (visible_map_mouse_x < br.x) && (visible_map_mouse_y >= tl.y)
         && (visible_map_mouse_y < br.y)) {
-      level_cursor_set(l, point(x, y));
+      level_cursor_set(l, p);
     }
   }
 
@@ -129,11 +128,11 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool dec
   level_display_tile_index(l, tp, tile_index, tl, br, point(0, 0));
 }
 
-static void level_display_cursor(Levelp l, int x, int y)
+static void level_display_cursor(Levelp l, point p)
 {
   Tpp tp = nullptr;
 
-  switch (l->cursor[ x ][ y ]) {
+  switch (l->cursor[ p.x ][ p.y ]) {
     case CURSOR_NONE :
       //
       // Normal case. No cursor or anything else here.
@@ -166,14 +165,14 @@ static void level_display_cursor(Levelp l, int x, int y)
   }
 
   if (tp) {
-    level_display_obj(l, x, y, tp, NULL_THING, false);
+    level_display_obj(l, p, tp, NULL_THING, false);
   }
 }
 
-static void level_display_slot(Levelp l, int x, int y, int z, int slot, int depth, bool deco)
+static void level_display_slot(Levelp l, point3d p, int slot, int depth, bool deco)
 {
   Tpp  tp;
-  auto t = thing_and_tp_get(l, x, y, z, slot, &tp);
+  auto t = thing_and_tp_get(l, p, slot, &tp);
   if (! tp) {
     return;
   }
@@ -182,7 +181,7 @@ static void level_display_slot(Levelp l, int x, int y, int z, int slot, int dept
     return;
   }
 
-  level_display_obj(l, x, y, tp, t, deco);
+  level_display_obj(l, make_point(p), tp, t, deco);
 }
 
 void level_display(Levelp l)
@@ -222,8 +221,9 @@ void level_display(Levelp l)
   for (auto y = l->miny; y < l->maxy; y++) {
     for (auto x = l->maxx - 1; x >= l->minx; x--) {
       for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        level_display_slot(l, x, y, z, slot, MAP_Z_DEPTH_FLOOR, no_deco);
-        level_display_slot(l, x, y, z, slot, MAP_Z_DEPTH_WALL, no_deco);
+        point3d p(x, y, z);
+        level_display_slot(l, p, slot, MAP_Z_DEPTH_FLOOR, no_deco);
+        level_display_slot(l, p, slot, MAP_Z_DEPTH_WALL, no_deco);
       }
     }
   }
@@ -234,10 +234,11 @@ void level_display(Levelp l)
   for (auto y = l->miny; y < l->maxy; y++) {
     for (auto x = l->maxx - 1; x >= l->minx; x--) {
       for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        level_display_slot(l, x, y, z, slot, MAP_Z_DEPTH_DOOR, no_deco);
-        level_display_slot(l, x, y, z, slot, MAP_Z_DEPTH_OBJ1, no_deco);
-        level_display_slot(l, x, y, z, slot, MAP_Z_DEPTH_OBJ2, no_deco);
-        level_display_slot(l, x, y, z, slot, MAP_Z_DEPTH_PLAYER, no_deco);
+        point3d p(x, y, z);
+        level_display_slot(l, p, slot, MAP_Z_DEPTH_DOOR, no_deco);
+        level_display_slot(l, p, slot, MAP_Z_DEPTH_OBJ1, no_deco);
+        level_display_slot(l, p, slot, MAP_Z_DEPTH_OBJ2, no_deco);
+        level_display_slot(l, p, slot, MAP_Z_DEPTH_PLAYER, no_deco);
       }
     }
   }
@@ -248,8 +249,9 @@ void level_display(Levelp l)
   for (auto y = l->miny; y < l->maxy; y++) {
     for (auto x = l->maxx - 1; x >= l->minx; x--) {
       for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        level_display_slot(l, x, y, z, slot, MAP_Z_DEPTH_WALL, deco);
-        level_display_slot(l, x, y, z, slot, MAP_Z_DEPTH_DOOR, deco);
+        point3d p(x, y, z);
+        level_display_slot(l, p, slot, MAP_Z_DEPTH_WALL, deco);
+        level_display_slot(l, p, slot, MAP_Z_DEPTH_DOOR, deco);
       }
     }
   }
@@ -259,7 +261,8 @@ void level_display(Levelp l)
   //
   for (auto y = l->miny; y < l->maxy; y++) {
     for (auto x = l->maxx - 1; x >= l->minx; x--) {
-      level_display_cursor(l, x, y);
+      point p(x, y);
+      level_display_cursor(l, p);
     }
   }
 

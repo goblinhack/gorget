@@ -73,13 +73,6 @@ template < typename T > void my_apoint< T >::operator/=(T b)
 template void my_apoint< short >::operator/=(short);
 template void my_apoint< float >::operator/=(float);
 
-template < typename T > std::string my_apoint< T >::to_string(void) const
-{
-  return "(" + std::to_string(x) + "," + std::to_string(y) + ")";
-}
-template std::string my_apoint< short >::to_string(void) const;
-template std::string my_apoint< float >::to_string(void) const;
-
 template < typename T > float my_apoint< T >::length(void) const { return (sqrt(x * x + y * y)); }
 template float                my_apoint< short >::length(void) const;
 template float                my_apoint< float >::length(void) const;

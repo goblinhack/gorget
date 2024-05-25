@@ -44,8 +44,8 @@ Thingp thing_init(Levelp l, Tpp tp, point3d at)
     return nullptr;
   }
 
-  t->at  = at;
-  t->old = at;
+  t->at     = at;
+  t->old_at = at;
 
   t->pix_at.x = t->at.x * TILE_WIDTH;
   t->pix_at.y = t->at.y * TILE_HEIGHT;
@@ -195,11 +195,11 @@ void thing_update(Level *l, Thingp t)
   t->speed = tp_speed_get(tp);
 }
 
-Thingp thing_get(Levelp l, int x, int y, int z, int slot)
+Thingp thing_get(Levelp l, point3d p, int slot)
 {
   TRACE_NO_INDENT();
 
-  ThingId id = l->thing_id[ x ][ y ][ z ][ slot ];
+  ThingId id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
 
   if (! id) {
     return nullptr;
@@ -213,11 +213,11 @@ Thingp thing_get(Levelp l, int x, int y, int z, int slot)
   return t;
 }
 
-Thingp thing_and_tp_get(Levelp l, int x, int y, int z, int slot, Tpp *out)
+Thingp thing_and_tp_get(Levelp l, point3d p, int slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
-  ThingId id = l->thing_id[ x ][ y ][ z ][ slot ];
+  ThingId id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
 
   if (out) {
     *out = nullptr;

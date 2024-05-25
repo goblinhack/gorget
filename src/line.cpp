@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include <math.h>
 #include <vector>
 
 #include "my_point.hpp"

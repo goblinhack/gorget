@@ -6,8 +6,6 @@
 #ifndef _MY_POINT_HPP_
 #define _MY_POINT_HPP_
 
-#include <string>
-
 template < typename T > struct my_apoint {
 public:
   T x {};
@@ -16,13 +14,12 @@ public:
   my_apoint(T vx, T vy) : x(vx), y(vy) {}
   my_apoint(void) : x(0), y(0) {};
 
-  void        operator+=(my_apoint< T > const &);
-  void        operator-=(my_apoint< T > const &);
-  void        operator*=(T);
-  void        operator/=(T);
-  std::string to_string(void) const;
-  float       length(void) const;
-  void        unit(void);
+  void  operator+=(my_apoint< T > const &);
+  void  operator-=(my_apoint< T > const &);
+  void  operator*=(T);
+  void  operator/=(T);
+  float length(void) const;
+  void  unit(void);
 };
 
 using point  = my_apoint< short >;

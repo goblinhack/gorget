@@ -36,8 +36,9 @@ void level_anim(Levelp l)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = l->miny; y < l->maxy; y++) {
       for (auto x = l->minx; x < l->maxx; x++) {
-        Tpp    tp;
-        Thingp t = thing_and_tp_get(l, x, y, z, slot, &tp);
+        Tpp     tp;
+        point3d p(x, y, z);
+        Thingp  t = thing_and_tp_get(l, p, slot, &tp);
         if (! t) {
           continue;
         }

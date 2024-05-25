@@ -6,8 +6,6 @@
 #ifndef _MY_POINT3D_HPP_
 #define _MY_POINT3D_HPP_
 
-#include <string>
-
 template < typename T > struct my_apoint3d {
 public:
   T x {};
@@ -17,14 +15,11 @@ public:
   my_apoint3d(void) : x(0), y(0), z(0) {}
   my_apoint3d(T vx, T vy, T vz) : x(vx), y(vy), z(vz) {}
 
-  void        operator+=(my_apoint3d< T > const &);
-  void        operator-=(my_apoint3d< T > const &);
-  void        operator*=(T);
-  void        operator/=(T);
-  std::string to_string(void) const;
+  void operator+=(my_apoint3d< T > const &);
+  void operator-=(my_apoint3d< T > const &);
+  void operator*=(T);
+  void operator/=(T);
 };
-
-template < typename T > std::ostream &operator<<(std::ostream &out, const my_apoint3d< T > &my);
 
 template < typename T > bool             operator==(my_apoint3d< T > const &, my_apoint3d< T > const &);
 template < typename T > my_apoint3d< T > operator+(my_apoint3d< T > const &, my_apoint3d< T > const &);
