@@ -40,9 +40,7 @@ void thing_player_move_delta(Levelp l, int dx, int dy, int dz)
 
   point3d to(t->at.x + dx, t->at.y + dy, t->at.z + dz);
   if (thing_can_move_to(l, t, to)) {
-    thing_move(l, t, to);
-
-    level_tick_begin_requested(l, "player moved");
+    thing_move_to(l, t, to);
   }
 
   thing_player_move_reset(l);

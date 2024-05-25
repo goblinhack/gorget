@@ -17,14 +17,26 @@ uint8_t game_mouse_down(class Game *g, int x, int y, uint32_t button)
   DBG("Game mouse down");
   TRACE_AND_INDENT();
 
-  if (! g) {
-    DBG2("Game mouse down; no game or not started");
+  if (wid_some_recent_event_occurred()) {
     return false;
   }
 
-  if (wid_some_recent_event_occurred()) {
-    DBG2("Game mouse down; some recent wid event occurred");
+  if (! g) {
     return false;
+  }
+
+  auto l = game_level_get(g);
+  if (! l) {
+    return false;
+  }
+
+  auto player = thing_player(l);
+  if (! player) {
+    return false;
+  }
+
+  if (thing_move_to_next(l, player)) {
+    return true;
   }
 
   return false;

@@ -184,7 +184,7 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
   }
 }
 
-void thing_move(Levelp l, Thingp t, point3d to)
+void thing_move_to(Levelp l, Thingp t, point3d to)
 {
   if (level_is_oob(l, to)) {
     return;
@@ -203,6 +203,10 @@ void thing_move(Levelp l, Thingp t, point3d to)
   t->at     = to;
 
   thing_push(l, t);
+
+  if (thing_is_player(t)) {
+    level_tick_begin_requested(l, "player moved");
+  }
 }
 
 bool thing_can_move_to(Levelp l, Thingp t, point3d to)
@@ -320,4 +324,55 @@ void thing_pop(Levelp l, Thingp t)
       return;
     }
   }
+}
+
+//
+// Return true if there is a move to pop.
+//
+static bool thing_move_path_pop(Levelp l, Thingp t, point *out)
+{
+  TRACE_NO_INDENT();
+
+  point3d p(t->pix_at.x / TILE_WIDTH, t->pix_at.y / TILE_HEIGHT, t->at.z);
+
+  auto aip = thing_ai(l, t);
+  if (! aip) {
+    return false;
+  }
+
+  if (! aip->move_path.size) {
+    return false;
+  }
+
+  *out = aip->move_path.points[ 0 ];
+
+  for (int index = 0; index < aip->move_path.size - 1; index++) {
+    aip->move_path.points[ index ] = aip->move_path.points[ index + 1 ];
+  }
+  aip->move_path.size--;
+
+  return true;
+}
+
+//
+// Move to the next path on the popped path if it exits.
+//
+bool thing_move_to_next(Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  int z = t->at.z;
+
+  point move_next;
+  if (! thing_move_path_pop(l, t, &move_next)) {
+    return false;
+  }
+
+  point3d move_to(move_next.x, move_next.y, z);
+  if (! thing_can_move_to(l, t, move_to)) {
+    return false;
+  }
+
+  thing_move_to(l, t, move_to);
+  return true;
 }
