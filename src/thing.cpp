@@ -47,8 +47,8 @@ Thingp thing_init(Levelp l, Tpp tp, point3d at)
   t->at  = at;
   t->old = at;
 
-  t->pix_x = t->at.x * TILE_WIDTH;
-  t->pix_y = t->at.y * TILE_HEIGHT;
+  t->pix_at.x = t->at.x * TILE_WIDTH;
+  t->pix_at.y = t->at.y * TILE_HEIGHT;
 
   //
   // Assign an initial tile

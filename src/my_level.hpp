@@ -97,10 +97,8 @@ typedef struct Level_ {
   // What the player is currently highlighting.
   //
   uint8_t cursor[ MAP_WIDTH ][ MAP_HEIGHT ];
-  int     cursor_x;
-  int     cursor_y;
-  int     old_cursor_x;
-  int     old_cursor_y;
+  point   cursor_at;
+  point   old_cursor_at;
   //
   // Map scroll offset.
   //
@@ -148,7 +146,7 @@ void    level_tick_time_step(Levelp);
 
 bool level_flag(Levelp, ThingFlag, int x, int y, int z);
 
-void level_cursor_set(Levelp, int x, int y);
+void level_cursor_set(Levelp, point);
 
 //
 // Works on a copy of the level data, so things can move cells and we never

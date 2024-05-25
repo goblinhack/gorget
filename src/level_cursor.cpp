@@ -13,12 +13,11 @@
 #include <string.h>
 #include <vector>
 
-void level_cursor_set(Level *l, int x, int y)
+void level_cursor_set(Level *l, point p)
 {
   TRACE_AND_INDENT();
 
-  l->cursor_x = x;
-  l->cursor_y = y;
+  l->cursor_at = p;
 }
 
 //
@@ -91,12 +90,12 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
         }
       }
     }
-  } else if (level_is_cursor_path_hazard(l, l->cursor_x, l->cursor_y, z)) {
+  } else if (level_is_cursor_path_hazard(l, l->cursor_at.x, l->cursor_at.y, z)) {
     bool                               got_one = false;
     std::initializer_list< ThingFlag > init    = {is_lava, is_chasm};
 
     for (auto i : init) {
-      if (level_flag(l, i, l->cursor_x, l->cursor_y, z)) {
+      if (level_flag(l, i, l->cursor_at.x, l->cursor_at.y, z)) {
         got_one = true;
 
         //
@@ -256,7 +255,7 @@ static void level_cursor_player_move_path_update(Levelp l, Thingp t, std::vector
 
 void level_cursor_update(Levelp l)
 {
-  if ((l->cursor_x == l->old_cursor_x) && (l->cursor_y == l->old_cursor_y)) {
+  if (l->cursor_at == l->old_cursor_at) {
     return;
   }
 
@@ -273,15 +272,13 @@ void level_cursor_update(Levelp l)
   //
   // Draw the path
   //
-  auto cursor_path
-      = level_cursor_path_draw_line(l, point(player->at.x, player->at.y), point(l->cursor_x, l->cursor_y));
+  auto cursor_path = level_cursor_path_draw_line(l, make_point(player->at), l->cursor_at);
   for (auto p : cursor_path) {
     l->cursor[ p.x ][ p.y ] = CURSOR_PATH;
   }
-  l->cursor[ l->cursor_x ][ l->cursor_y ] = CURSOR_AT;
+  l->cursor[ l->cursor_at.x ][ l->cursor_at.y ] = CURSOR_AT;
 
-  l->old_cursor_x = l->cursor_x;
-  l->old_cursor_y = l->cursor_y;
+  l->old_cursor_at = l->cursor_at;
 
   level_cursor_player_move_path_update(l, player, cursor_path);
 }

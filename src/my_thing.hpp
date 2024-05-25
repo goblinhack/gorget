@@ -94,8 +94,7 @@ typedef struct Thing_ {
   //
   // Interpolated co-ords in pixels
   //
-  int16_t pix_x;
-  int16_t pix_y;
+  point pix_at;
   //
   // Increases per tick and when it reaches 1, allows the thing to move
   //

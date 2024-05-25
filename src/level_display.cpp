@@ -64,9 +64,14 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool dec
   auto pix_width  = tile_width(tile);
 
   if (t) {
-    tl.x = t->pix_x;
-    tl.y = t->pix_y;
+    //
+    // All things
+    //
+    tl = t->pix_at;
   } else {
+    //
+    // Cursor
+    //
     tl.x = x * TILE_WIDTH;
     tl.y = y * TILE_WIDTH;
   }
@@ -103,7 +108,7 @@ static void level_display_obj(Levelp l, int x, int y, Tpp tp, Thingp t, bool dec
   if (tp_is_floor(tp)) {
     if ((visible_map_mouse_x >= tl.x) && (visible_map_mouse_x < br.x) && (visible_map_mouse_y >= tl.y)
         && (visible_map_mouse_y < br.y)) {
-      level_cursor_set(l, x, y);
+      level_cursor_set(l, point(x, y));
     }
   }
 

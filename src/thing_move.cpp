@@ -196,8 +196,8 @@ void thing_move(Levelp l, Thingp t, point3d to)
 
   thing_pop(l, t);
 
-  t->pix_x = t->at.x * TILE_WIDTH;
-  t->pix_y = t->at.y * TILE_HEIGHT;
+  t->pix_at.x = t->at.x * TILE_WIDTH;
+  t->pix_at.y = t->at.y * TILE_HEIGHT;
 
   t->old = t->at;
   t->at  = to;
@@ -244,16 +244,16 @@ void thing_interpolate(Level *l, Thingp t, float dt)
   float pix_x = (float) t->old.x + (((float) (t->at.x - t->old.x)) * dt);
   float pix_y = (float) t->old.y + (((float) (t->at.y - t->old.y)) * dt);
 
-  t->pix_x = pix_x * TILE_WIDTH;
-  t->pix_y = pix_y * TILE_HEIGHT;
+  t->pix_at.x = pix_x * TILE_WIDTH;
+  t->pix_at.y = pix_y * TILE_HEIGHT;
 }
 
 void thing_push(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  int x = t->pix_x / TILE_WIDTH;
-  int y = t->pix_y / TILE_HEIGHT;
+  int x = t->pix_at.x / TILE_WIDTH;
+  int y = t->pix_at.y / TILE_HEIGHT;
   int z = t->at.z;
 
   if (level_is_oob(l, x, y)) {
@@ -309,8 +309,8 @@ void thing_pop(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  uint8_t x = t->pix_x / TILE_WIDTH;
-  uint8_t y = t->pix_y / TILE_HEIGHT;
+  uint8_t x = t->pix_at.x / TILE_WIDTH;
+  uint8_t y = t->pix_at.y / TILE_HEIGHT;
   uint8_t z = t->at.z;
 
   if (level_is_oob(l, x, y)) {

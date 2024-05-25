@@ -271,9 +271,9 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
 
         point off(pixel_size.w * x, pixel_size.h * y);
 
-        point MAX = make_point(pixel_size.w * x, pixel_size.h * y);
+        point MAX(pixel_size.w * x, pixel_size.h * y);
 
-        point MIN = make_point((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
+        point MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
 
         int x1, y1;
 
@@ -419,9 +419,9 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
 
         point off(pixel_size.w * x, pixel_size.h * y);
 
-        point MAX = make_point(pixel_size.w * x, pixel_size.h * y);
+        point MAX(pixel_size.w * x, pixel_size.h * y);
 
-        point MIN = make_point((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
+        point MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
 
         int x1, y1;
 
@@ -576,9 +576,9 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
 
         point off(pixel_size.w * x, pixel_size.h * y);
 
-        point MAX = make_point(pixel_size.w * x, pixel_size.h * y);
+        point MAX(pixel_size.w * x, pixel_size.h * y);
 
-        point MIN = make_point((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
+        point MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
 
         int x1, y1;
 
@@ -726,9 +726,9 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
 
         point off(pixel_size.w * x, pixel_size.h * y);
 
-        point MAX = make_point(pixel_size.w * x, pixel_size.h * y);
+        point MAX(pixel_size.w * x, pixel_size.h * y);
 
-        point MIN = make_point((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
+        point MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
 
         int x1, y1;
 
