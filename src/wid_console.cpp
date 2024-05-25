@@ -168,8 +168,8 @@ static void wid_console_wid_create(void)
 
   point outer_tl(0, 0);
   point outer_br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
-  int   w        = outer_br.x - outer_tl.x;
-  int   h        = outer_br.y - outer_tl.y;
+  int   w = outer_br.x - outer_tl.x;
+  int   h = outer_br.y - outer_tl.y;
 
   wid_console_window = wid_new_square_window("wid console");
   wid_set_pos(wid_console_window, outer_tl, outer_br);

@@ -496,7 +496,7 @@ void wid_cfg_keyboard_select(class Game *g)
 
   point outer_tl(m - TERM_WIDTH / 2, 2);
   point outer_br(m + TERM_WIDTH / 2 - 1, TERM_HEIGHT - 2);
-  auto  width    = outer_br.x - outer_tl.x;
+  auto  width = outer_br.x - outer_tl.x;
 
   wid_cfg_keyboard_window = new WidPopup("Keyboard select", outer_tl, outer_br, nullptr, "", false, true);
 

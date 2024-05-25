@@ -40,10 +40,10 @@ bool wid_rightbar_ascii_create(class Game *g)
   y_at = 4;
   {
     TRACE_AND_INDENT();
-    auto  w  = wid_new_square_button(wid_rightbar, "level no");
+    auto  w = wid_new_square_button(wid_rightbar, "level no");
     point tl(0, y_at);
     point br(width - 1, y_at);
-    auto  s  = dynprintf("Level %u", level->num);
+    auto  s = dynprintf("Level %u", level->num);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -54,7 +54,7 @@ bool wid_rightbar_ascii_create(class Game *g)
   if (0) {
     y_at++;
     TRACE_AND_INDENT();
-    auto  w  = wid_new_plain(wid_rightbar, "Seed");
+    auto  w = wid_new_plain(wid_rightbar, "Seed");
     point tl(0, y_at);
     point br(width - 1, y_at);
 
@@ -68,10 +68,10 @@ bool wid_rightbar_ascii_create(class Game *g)
   y_at = 8;
   {
     TRACE_AND_INDENT();
-    auto  w  = wid_new_square_button(wid_rightbar, "player1");
+    auto  w = wid_new_square_button(wid_rightbar, "player1");
     point tl(0, y_at);
     point br(width - 1, y_at);
-    auto  s  = dynprintf("%04u %04u", 0, 100);
+    auto  s = dynprintf("%04u %04u", 0, 100);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -83,10 +83,10 @@ bool wid_rightbar_ascii_create(class Game *g)
   y_at = 13;
   {
     TRACE_AND_INDENT();
-    auto  w  = wid_new_square_button(wid_rightbar, "player2");
+    auto  w = wid_new_square_button(wid_rightbar, "player2");
     point tl(0, y_at);
     point br(width - 1, y_at);
-    auto  s  = dynprintf("%4u %4u", 0, 100);
+    auto  s = dynprintf("%4u %4u", 0, 100);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -98,10 +98,10 @@ bool wid_rightbar_ascii_create(class Game *g)
   y_at = 18;
   {
     TRACE_AND_INDENT();
-    auto  w  = wid_new_square_button(wid_rightbar, "player2");
+    auto  w = wid_new_square_button(wid_rightbar, "player2");
     point tl(0, y_at);
     point br(width - 1, y_at);
-    auto  s  = dynprintf("%4u %4u", 0, 100);
+    auto  s = dynprintf("%4u %4u", 0, 100);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -113,10 +113,10 @@ bool wid_rightbar_ascii_create(class Game *g)
   y_at = 23;
   {
     TRACE_AND_INDENT();
-    auto  w  = wid_new_square_button(wid_rightbar, "player2");
+    auto  w = wid_new_square_button(wid_rightbar, "player2");
     point tl(0, y_at);
     point br(width - 1, y_at);
-    auto  s  = dynprintf("%4u %4u", 0, 100);
+    auto  s = dynprintf("%4u %4u", 0, 100);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_NORMAL);

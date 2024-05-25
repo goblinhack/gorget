@@ -85,8 +85,8 @@ void wid_warning(std::string warning)
     wid_warning_destroy();
   }
 
-  auto  m     = TERM_WIDTH / 2;
-  auto  n     = TERM_HEIGHT / 2;
+  auto  m = TERM_WIDTH / 2;
+  auto  n = TERM_HEIGHT / 2;
   point tl(m - UI_WID_POPUP_WIDTH_WIDE / 2, n - 5);
   point br(m + UI_WID_POPUP_WIDTH_WIDE / 2, n + 5);
   auto  width = br.x - tl.x;

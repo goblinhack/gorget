@@ -120,8 +120,8 @@ void wid_cfg_top_menu(class Game *g)
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  int   menu_height  = 20;
-  int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL;
+  int   menu_height = 20;
+  int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_cfg_top_window = new WidPopup("Config menu", outer_tl, outer_br, nullptr, "nothing", false, false);

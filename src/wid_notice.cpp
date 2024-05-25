@@ -49,8 +49,8 @@ void wid_notice(std::string s)
     wid_notice_destroy();
   }
 
-  auto  m  = TERM_WIDTH / 2;
-  auto  n  = TERM_HEIGHT / 2;
+  auto  m = TERM_WIDTH / 2;
+  auto  n = TERM_HEIGHT / 2;
   point tl(0, 0);
   point br(s.size() + 3, 8);
   point offset(m, n);

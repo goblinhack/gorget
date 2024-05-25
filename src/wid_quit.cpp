@@ -117,7 +117,7 @@ void wid_quit_select(class Game *g)
 
   point outer_tl(m - UI_WID_POPUP_WIDTH_NORMAL / 2, n - 3);
   point outer_br(m + UI_WID_POPUP_WIDTH_NORMAL / 2, n + 3);
-  auto  width    = outer_br.x - outer_tl.x;
+  auto  width = outer_br.x - outer_tl.x;
 
   wid_quit_window = new WidPopup("Game quit", outer_tl, outer_br, nullptr, "", false, false);
   {

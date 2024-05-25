@@ -83,8 +83,8 @@ void wid_credits_select(class Game *g)
     wid_credits_destroy();
   }
 
-  int   menu_height  = 18;
-  int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL * 2;
+  int   menu_height = 18;
+  int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_credits_window = new WidPopup("Credits", outer_tl, outer_br, nullptr, "", false, false);

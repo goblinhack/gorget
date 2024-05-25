@@ -394,7 +394,7 @@ void Game::save_select(void)
   int   menu_width  = UI_WID_POPUP_WIDTH_WIDE;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_save          = new WidPopup("Game load", outer_tl, outer_br, nullptr, "", false, false);
+  wid_save = new WidPopup("Game load", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_save->wid_popup_container, wid_save_key_up);
   wid_set_on_key_down(wid_save->wid_popup_container, wid_save_key_down);
@@ -428,8 +428,8 @@ void Game::save_select(void)
       tmp_file = saved_dir + "saved-snapshot";
     }
 
-    auto  p  = wid_save->wid_text_area->wid_text_area;
-    auto  w  = wid_new_square_button(p, "save slot");
+    auto  p = wid_save->wid_text_area->wid_text_area;
+    auto  w = wid_new_square_button(p, "save slot");
     point tl(0, y_at);
     point br(menu_width - 2, y_at);
 

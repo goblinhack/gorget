@@ -130,8 +130,8 @@ void wid_cfg_mouse_select(class Game *g)
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
 
-  int   menu_height    = 20;
-  int   menu_width     = UI_WID_POPUP_WIDTH_NORMAL * 2;
+  int   menu_height = 20;
+  int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_cfg_mouse_window = new WidPopup("Mouse", outer_tl, outer_br, nullptr, "", false, false);
