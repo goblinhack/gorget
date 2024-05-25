@@ -6,10 +6,9 @@
 #ifndef _MY_POINT3D_HPP_
 #define _MY_POINT3D_HPP_
 
-#include "my_point.hpp"
+#include <string>
 
-template < class T > class my_apoint3d
-{
+template < typename T > struct my_apoint3d {
 public:
   T x {};
   T y {};
@@ -17,7 +16,6 @@ public:
 
   my_apoint3d(void) : x(0), y(0), z(0) {}
   my_apoint3d(T vx, T vy, T vz) : x(vx), y(vy), z(vz) {}
-  my_apoint3d(const my_apoint3d &a) : x(a.x), y(a.y), z(a.z) {}
 
   void        operator+=(my_apoint3d< T > const &);
   void        operator-=(my_apoint3d< T > const &);

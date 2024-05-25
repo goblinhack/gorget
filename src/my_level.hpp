@@ -19,6 +19,9 @@ enum {
 typedef struct Level_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
+  //
+  // Why C types only ? For large data structures it is visibly
+  // faster to malloc and memset versus default construction.
   //////////////////////////////////////////////////////////////
   //
   // Level number.

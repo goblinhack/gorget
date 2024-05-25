@@ -8,6 +8,8 @@
 
 #include "my_enums.hpp"
 #include "my_minimal.hpp"
+#include "my_point.hpp"   // does not seem to make the compile speed much worse
+#include "my_point3d.hpp" // does not seem to make the compile speed much worse
 
 //
 // Entropy is always > 0 for Thing IDs to distinguish them
@@ -33,15 +35,18 @@ typedef struct ThingAi_ {
   //
   uint8_t in_use : 1;
   struct {
-    struct {
-      int8_t x;
-      int8_t y;
-    } points[ THING_MOVE_PATH_MAX ];
+    point   points[ THING_MOVE_PATH_MAX ];
     int16_t size;
   } move_path;
 } ThingAi;
 
 typedef struct Thing_ {
+  //////////////////////////////////////////////////////////////
+  // No c++ types can be used here, to allow easy level replay
+  //
+  // Why C types only ? For large data structures it is visibly
+  // faster to malloc and memset versus default construction.
+  //////////////////////////////////////////////////////////////
   //
   // Unique ID
   //
@@ -53,15 +58,11 @@ typedef struct Thing_ {
   //
   // Map co-ords.
   //
-  int8_t x;
-  int8_t y;
-  int8_t z;
+  point3d at;
   //
   // Old map co-ords used for interpolation when moving.
   //
-  int8_t old_x;
-  int8_t old_y;
-  int8_t old_z;
+  point3d old;
   //
   // Direction
   //
@@ -111,7 +112,7 @@ Thingp thing_and_tp_get(Levelp, int x, int y, int z, int slot, Tpp * = nullptr);
 Thingp thing_find(Levelp, ThingId id);
 Thingp thing_find_optional(Levelp, ThingId id);
 Thingp thing_get(Levelp, int x, int y, int z, int slot);
-Thingp thing_init(Levelp, Tpp, int x, int y, int z);
+Thingp thing_init(Levelp, Tpp, point3d);
 Thingp thing_player(Levelp);
 
 ThingAip thing_ai(Levelp, Thingp);
@@ -126,7 +127,7 @@ void thing_dir_tr_set(Thingp, uint8_t);
 void thing_dir_up_set(Thingp, uint8_t);
 void thing_fini(Levelp, Thingp);
 void thing_interpolate(Levelp, Thingp, float dt);
-void thing_move(Levelp, Thingp, int new_x, int new_y, int new_z);
+void thing_move(Levelp, Thingp, point3d to);
 void thing_player_map_center(Levelp);
 void thing_player_move_accum(Levelp, bool up, bool down, bool left, bool right);
 void thing_player_move_delta(Levelp, int dx, int dy, int dz);
@@ -136,7 +137,7 @@ void thing_push(Levelp, Thingp);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
 void thing_update(Levelp, Thingp);
 
-bool thing_can_move_to(Levelp, Thingp, int new_loc_x, int new_loc_y, int new_loc_z);
+bool thing_can_move_to(Levelp, Thingp, point3d to);
 bool thing_player_move_request(Levelp, bool up, bool down, bool left, bool right);
 bool thing_is_dir_down(Thingp t);
 bool thing_is_dir_tr(Thingp t);

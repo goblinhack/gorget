@@ -20,7 +20,7 @@
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 
-static Thingp thing_alloc(Levelp l, Tpp tp, int x, int y, int z);
+static Thingp thing_alloc(Levelp l, Tpp tp, point3d);
 static void   thing_free(Levelp l, Thingp t);
 
 static ThingAip thing_ai_alloc(Levelp l, Thingp t);
@@ -35,25 +35,20 @@ Tpp thing_tp(Thingp t)
   return nullptr;
 }
 
-Thingp thing_init(Levelp l, Tpp tp, int x, int y, int z)
+Thingp thing_init(Levelp l, Tpp tp, point3d at)
 {
   TRACE_NO_INDENT();
 
-  auto t = thing_alloc(l, tp, x, y, z);
+  auto t = thing_alloc(l, tp, at);
   if (! t) {
     return nullptr;
   }
 
-  t->x = x;
-  t->y = y;
-  t->z = z;
+  t->at  = at;
+  t->old = at;
 
-  t->old_x = x;
-  t->old_y = y;
-  t->old_z = z;
-
-  t->pix_x = t->x * TILE_WIDTH;
-  t->pix_y = t->y * TILE_HEIGHT;
+  t->pix_x = t->at.x * TILE_WIDTH;
+  t->pix_y = t->at.y * TILE_HEIGHT;
 
   //
   // Assign an initial tile
@@ -87,7 +82,7 @@ void thing_fini(Levelp l, Thingp t)
   thing_free(l, t);
 }
 
-static Thingp thing_alloc(Levelp l, Tpp tp, int x, int y, int z)
+static Thingp thing_alloc(Levelp l, Tpp tp, point3d)
 {
   TRACE_NO_INDENT();
 
@@ -104,7 +99,7 @@ static Thingp thing_alloc(Levelp l, Tpp tp, int x, int y, int z)
       entropy++;
     }
 
-    memset(t, 0, SIZEOF(*t));
+    memset((void *) t, 0, SIZEOF(*t));
 
     ThingId thing_id;
     thing_id = (entropy << THING_COMMON_ID_BITS) | index;
@@ -132,7 +127,7 @@ static void thing_free(Levelp l, Thingp t)
 
   thing_ai_free(l, t);
 
-  memset(t, 0, SIZEOF(*t));
+  memset((void *) t, 0, SIZEOF(*t));
 }
 
 static ThingAip thing_ai_alloc(Levelp l, Thingp t)

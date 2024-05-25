@@ -34,7 +34,7 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
 
   static std::vector< point > empty;
 
-  int z = player->z;
+  int z = player->at.z;
 
   Dmap  d {};
   point dmap_start = start;
@@ -78,7 +78,7 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
   //
   // If standing on a hazard, then plot a course that allows travel over hazards.
   //
-  if (level_is_cursor_path_hazard(l, player->x, player->y, z)) {
+  if (level_is_cursor_path_hazard(l, player->at.x, player->at.y, z)) {
     //
     // Just map the shortest path outta here
     //
@@ -273,7 +273,8 @@ void level_cursor_update(Levelp l)
   //
   // Draw the path
   //
-  auto cursor_path = level_cursor_path_draw_line(l, point(player->x, player->y), point(l->cursor_x, l->cursor_y));
+  auto cursor_path
+      = level_cursor_path_draw_line(l, point(player->at.x, player->at.y), point(l->cursor_x, l->cursor_y));
   for (auto p : cursor_path) {
     l->cursor[ p.x ][ p.y ] = CURSOR_PATH;
   }

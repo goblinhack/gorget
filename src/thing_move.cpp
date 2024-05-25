@@ -184,49 +184,44 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
   }
 }
 
-void thing_move(Levelp l, Thingp t, int new_x, int new_y, int new_z)
+void thing_move(Levelp l, Thingp t, point3d to)
 {
-  if (level_is_oob(l, new_x, new_y)) {
+  if (level_is_oob(l, to.x, to.y)) {
     return;
   }
 
-  if ((new_x == t->x) && (new_y == t->y) && (new_z == t->z)) {
+  if (to == t->at) {
     return;
   }
 
   thing_pop(l, t);
 
-  t->pix_x = t->x * TILE_WIDTH;
-  t->pix_y = t->y * TILE_HEIGHT;
+  t->pix_x = t->at.x * TILE_WIDTH;
+  t->pix_y = t->at.y * TILE_HEIGHT;
 
-  t->old_x = t->x;
-  t->old_y = t->y;
-  t->old_z = t->z;
-
-  t->x = new_x;
-  t->y = new_y;
-  t->z = new_z;
+  t->old = t->at;
+  t->at  = to;
 
   thing_push(l, t);
 }
 
-bool thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y, int new_loc_z)
+bool thing_can_move_to(Levelp l, Thingp t, point3d to)
 {
-  if (level_is_oob(l, new_loc_x, new_loc_y)) {
+  if (level_is_oob(l, to.x, to.y)) {
     return false;
   }
 
-  if ((new_loc_x == t->x) && (new_loc_y == t->y)) {
+  if (to == t->at) {
     return true;
   }
 
-  auto dx = new_loc_x - t->x;
-  auto dy = new_loc_y - t->y;
+  auto dx = to.x - t->at.x;
+  auto dy = to.y - t->at.y;
   thing_set_dir_from_delta(t, dx, dy);
 
   auto my_tp = thing_tp(t);
 
-  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, new_loc_x, new_loc_y, new_loc_z)
+  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, to.x, to.y, to.z)
   {
     if (tp_is_player(my_tp) && tp_is_obs_player(it_tp)) {
       return false;
@@ -242,12 +237,12 @@ bool thing_can_move_to(Levelp l, Thingp t, int new_loc_x, int new_loc_y, int new
 
 void thing_interpolate(Level *l, Thingp t, float dt)
 {
-  if ((t->old_x == t->x) && (t->old_y == t->y)) {
+  if (t->old == t->at) {
     return;
   }
 
-  float pix_x = (float) t->old_x + (((float) (t->x - t->old_x)) * dt);
-  float pix_y = (float) t->old_y + (((float) (t->y - t->old_y)) * dt);
+  float pix_x = (float) t->old.x + (((float) (t->at.x - t->old.x)) * dt);
+  float pix_y = (float) t->old.y + (((float) (t->at.y - t->old.y)) * dt);
 
   t->pix_x = pix_x * TILE_WIDTH;
   t->pix_y = pix_y * TILE_HEIGHT;
@@ -259,7 +254,7 @@ void thing_push(Levelp l, Thingp t)
 
   int x = t->pix_x / TILE_WIDTH;
   int y = t->pix_y / TILE_HEIGHT;
-  int z = t->z;
+  int z = t->at.z;
 
   if (level_is_oob(l, x, y)) {
     return;
@@ -316,7 +311,7 @@ void thing_pop(Levelp l, Thingp t)
 
   uint8_t x = t->pix_x / TILE_WIDTH;
   uint8_t y = t->pix_y / TILE_HEIGHT;
-  uint8_t z = t->z;
+  uint8_t z = t->at.z;
 
   if (level_is_oob(l, x, y)) {
     return;

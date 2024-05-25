@@ -19,6 +19,9 @@ Levelp level_new(void)
   //
   // Allocate the level as a flat C structure to allow history rewind
   //
+  // NOTE: if we use "new" here, the initialization is visibly slower.
+  // DO NOT USE C++ classes or types
+  //
   Levelp l = (Levelp) myzalloc(SIZEOF(*l), "l");
   if (! l) {
     return nullptr;
@@ -310,7 +313,7 @@ void level_map_set(Levelp l, int z, const char *in)
 
       if (need_floor) {
         auto tp_add = tp_floor;
-        auto t      = thing_init(l, tp_add, x, y, z);
+        auto t      = thing_init(l, tp_add, point3d(x, y, z));
         if (t) {
           thing_push(l, t);
         }
@@ -320,7 +323,7 @@ void level_map_set(Levelp l, int z, const char *in)
         continue;
       }
 
-      auto t = thing_init(l, tp, x, y, z);
+      auto t = thing_init(l, tp, point3d(x, y, z));
       if (t) {
         thing_push(l, t);
       }

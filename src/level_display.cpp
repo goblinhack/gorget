@@ -191,7 +191,7 @@ void level_display(Levelp l)
   if (! player) {
     return;
   }
-  auto z = player->z;
+  auto z = player->at.z;
 
   //
   // Soft scroll to the player/

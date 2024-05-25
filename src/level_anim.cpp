@@ -20,7 +20,7 @@ void level_anim(Levelp l)
   if (! player) {
     return;
   }
-  int z = player->z;
+  int z = player->at.z;
 
   auto            ts = time_ms();
   static uint32_t last_ts;
