@@ -78,8 +78,8 @@ void wid_error(std::string error)
     wid_error_destroy();
   }
 
-  point tl = make_point(5, 5);
-  point br = make_point(TERM_WIDTH - 5, TERM_HEIGHT - 5);
+  point tl(5, 5);
+  point br(TERM_WIDTH - 5, TERM_HEIGHT - 5);
 
   wid_error_window = new WidPopup("Game error", tl, br, nullptr, "");
   wid_set_on_key_up(wid_error_window->wid_popup_container, wid_error_key_up);

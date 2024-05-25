@@ -269,7 +269,7 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
       if ((pixel_size.w <= TILE_WIDTH_MAX) && (pixel_size.h <= TILE_HEIGHT_MAX)) {
         SDL_Surface *s = tex_get_surface(tex);
 
-        point off = make_point(pixel_size.w * x, pixel_size.h * y);
+        point off(pixel_size.w * x, pixel_size.h * y);
 
         point MAX = make_point(pixel_size.w * x, pixel_size.h * y);
 
@@ -280,7 +280,7 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
         for (y1 = pixel_size.h - 1; y1 >= 0; y1--) {
           for (x1 = 0; x1 < pixel_size.w; x1++) {
 
-            point at = make_point((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
+            point at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
             getPixel(s, at.x, at.y, p);
@@ -417,7 +417,7 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
       if ((pixel_size.w <= TILE_WIDTH_MAX) && (pixel_size.h <= TILE_HEIGHT_MAX)) {
         SDL_Surface *s = tex_get_surface(tex);
 
-        point off = make_point(pixel_size.w * x, pixel_size.h * y);
+        point off(pixel_size.w * x, pixel_size.h * y);
 
         point MAX = make_point(pixel_size.w * x, pixel_size.h * y);
 
@@ -428,7 +428,7 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
         for (y1 = pixel_size.h - 1; y1 >= 0; y1--) {
           for (x1 = 0; x1 < pixel_size.w; x1++) {
 
-            point at = make_point((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
+            point at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
             getPixel(s, at.x, at.y, p);
@@ -574,7 +574,7 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
       if ((pixel_size.w <= TILE_WIDTH_MAX) && (pixel_size.h <= TILE_HEIGHT_MAX)) {
         SDL_Surface *s = tex_get_surface(tex);
 
-        point off = make_point(pixel_size.w * x, pixel_size.h * y);
+        point off(pixel_size.w * x, pixel_size.h * y);
 
         point MAX = make_point(pixel_size.w * x, pixel_size.h * y);
 
@@ -585,7 +585,7 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
         for (y1 = pixel_size.h - 1; y1 >= 0; y1--) {
           for (x1 = 0; x1 < pixel_size.w; x1++) {
 
-            point at = make_point((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
+            point at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
             getPixel(s, at.x, at.y, p);
@@ -724,7 +724,7 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
       if ((pixel_size.w <= TILE_WIDTH_MAX) && (pixel_size.h <= TILE_HEIGHT_MAX)) {
         SDL_Surface *s = tex_get_surface(tex);
 
-        point off = make_point(pixel_size.w * x, pixel_size.h * y);
+        point off(pixel_size.w * x, pixel_size.h * y);
 
         point MAX = make_point(pixel_size.w * x, pixel_size.h * y);
 
@@ -735,7 +735,7 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
         for (y1 = pixel_size.h - 1; y1 >= 0; y1--) {
           for (x1 = 0; x1 < pixel_size.w; x1++) {
 
-            point at = make_point((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
+            point at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
             getPixel(s, at.x, at.y, p);

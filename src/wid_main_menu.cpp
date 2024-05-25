@@ -326,8 +326,8 @@ void wid_main_menu_select(class Game *g)
 
   int   menu_height    = 20;
   int   menu_width     = UI_WID_POPUP_WIDTH_NORMAL;
-  point outer_tl       = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point outer_br       = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_main_menu_window = new WidPopup("Main menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -346,8 +346,8 @@ void wid_main_menu_select(class Game *g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "New Game");
 
-    point tl = make_point(0, y_at);
-    point br = make_point(button_width, y_at + box_height - 1);
+    point tl(0, y_at);
+    point br(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -362,8 +362,8 @@ void wid_main_menu_select(class Game *g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Load Game");
 
-    point tl = make_point(0, y_at);
-    point br = make_point(button_width, y_at + box_height - 1);
+    point tl(0, y_at);
+    point br(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -378,8 +378,8 @@ void wid_main_menu_select(class Game *g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Options");
 
-    point tl = make_point(0, y_at);
-    point br = make_point(button_width, y_at + box_height - 1);
+    point tl(0, y_at);
+    point br(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -394,8 +394,8 @@ void wid_main_menu_select(class Game *g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Credits");
 
-    point tl = make_point(0, y_at);
-    point br = make_point(button_width, y_at + box_height - 1);
+    point tl(0, y_at);
+    point br(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -410,8 +410,8 @@ void wid_main_menu_select(class Game *g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Hiscores");
 
-    point tl = make_point(0, y_at);
-    point br = make_point(button_width, y_at + box_height - 1);
+    point tl(0, y_at);
+    point br(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -426,8 +426,8 @@ void wid_main_menu_select(class Game *g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Quit Game");
 
-    point tl = make_point(0, y_at);
-    point br = make_point(button_width, y_at + box_height - 1);
+    point tl(0, y_at);
+    point br(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);

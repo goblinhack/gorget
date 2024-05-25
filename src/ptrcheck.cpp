@@ -197,11 +197,11 @@ static hash_t *hash_init(int hash_size)
 {
   hash_t *hash_table;
 
-  hash_table = (__typeof__(hash_table)) local_zalloc(sizeof(hash_t));
+  hash_table = (__typeof__(hash_table)) local_zalloc(SIZEOF(hash_t));
 
   hash_table->hash_size = hash_size;
 
-  hash_table->elements = (__typeof__(hash_table->elements)) local_zalloc(hash_size * sizeof(hash_elem_t *));
+  hash_table->elements = (__typeof__(hash_table->elements)) local_zalloc(hash_size * SIZEOF(hash_elem_t *));
 
   return hash_table;
 }
@@ -234,7 +234,7 @@ static void hash_add(hash_t *hash_table, Ptrcheck *pc)
     return;
   }
 
-  elem       = (__typeof__(elem)) local_zalloc(sizeof(*elem));
+  elem       = (__typeof__(elem)) local_zalloc(SIZEOF(*elem));
   elem->pc   = pc;
   elem->next = *slot;
   *slot      = elem;
@@ -474,7 +474,7 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
 
       l->bt = new Backtrace();
       l->bt->init();
-      timestamp(l->ts, sizeof(l->ts));
+      timestamp(l->ts, SIZEOF(l->ts));
 
 #ifdef ENABLE_DEBUG_PTRCHECK
       std::cerr << string_sprintf("PTRCHECK: %p verified at \"%s\" (%u bytes) at %s:%s line %u at %s\n", ptr,
@@ -518,7 +518,7 @@ void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, con
 
 #ifdef ENABLE_DEBUG_PTRCHECK
   char tmp[ MY_TIMESTAMP_SIZE ];
-  auto ts = timestamp(tmp, sizeof(tmp));
+  auto ts = timestamp(tmp, SIZEOF(tmp));
   fprintf(stderr, "%s: PTRCHECK: Alloc %p \"%s\" (%u bytes) at %s:%s line %u\n", ts, ptr, what, size, file, func,
           line);
 #endif
@@ -575,7 +575,7 @@ void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, con
   a->file = file;
   a->line = line;
 
-  timestamp(a->ts, sizeof(a->ts));
+  timestamp(a->ts, SIZEOF(a->ts));
   a->bt = new Backtrace();
   a->bt->init();
 
@@ -597,7 +597,7 @@ int ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int 
 
 #ifdef ENABLE_DEBUG_PTRCHECK
   char tmp[ MY_TIMESTAMP_SIZE ];
-  auto ts = timestamp(tmp, sizeof(tmp));
+  auto ts = timestamp(tmp, SIZEOF(tmp));
   fprintf(stderr, "%s: PTRCHECK: Free %p at %s:%s line %u ringbuf_current_size %u\n", ts, ptr, file, func, line,
           ringbuf_current_size[ mtype ]);
 #endif
@@ -626,7 +626,7 @@ int ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int 
   f->bt = new Backtrace();
   f->bt->init();
 
-  timestamp(f->ts, sizeof(f->ts));
+  timestamp(f->ts, SIZEOF(f->ts));
 
   //
   // Add the free info to the ring buffer.

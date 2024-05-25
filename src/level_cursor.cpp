@@ -234,6 +234,26 @@ static std::vector< point > level_cursor_path_draw_line(Levelp l, point start, p
   return best;
 }
 
+static void level_cursor_player_move_path_update(Levelp l, Thingp t, std::vector< point > &move_path)
+{
+  auto aip = thing_ai(l, t);
+  if (! aip) {
+    return;
+  }
+
+  int index           = 0;
+  aip->move_path.size = 0;
+
+  for (auto p : move_path) {
+    aip->move_path.points[ index ].x = p.x;
+    aip->move_path.points[ index ].y = p.y;
+    aip->move_path.size              = ++index;
+    if (index >= ARRAY_SIZE(aip->move_path.points)) {
+      break;
+    }
+  }
+}
+
 void level_cursor_update(Levelp l)
 {
   if ((l->cursor_x == l->old_cursor_x) && (l->cursor_y == l->old_cursor_y)) {
@@ -243,7 +263,7 @@ void level_cursor_update(Levelp l)
   //
   // Clear the path if there is no player or we're about to remake it.
   //
-  memset(l->cursor, 0, sizeof(l->cursor));
+  memset(l->cursor, 0, SIZEOF(l->cursor));
 
   auto player = thing_player(l);
   if (! player) {
@@ -261,4 +281,6 @@ void level_cursor_update(Levelp l)
 
   l->old_cursor_x = l->cursor_x;
   l->old_cursor_y = l->cursor_y;
+
+  level_cursor_player_move_path_update(l, player, cursor_path);
 }

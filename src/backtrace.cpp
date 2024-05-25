@@ -286,15 +286,15 @@ std::string backtrace_string(void)
 
   {
     int error = errno;
-    snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "errno = %d: %s\n", error, strerror(error));
+    snprintf(tmp + strlen(tmp), SIZEOF(tmp) - strlen(tmp), "errno = %d: %s\n", error, strerror(error));
   }
 
   {
     DWORD error = GetLastError();
     char  buf[ 1024 ];
     FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buf,
-                   sizeof(buf), NULL);
-    snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "GetLastError = %d: %s", (int) error, buf);
+                   SIZEOF(buf), NULL);
+    snprintf(tmp + strlen(tmp), SIZEOF(tmp) - strlen(tmp), "GetLastError = %d: %s", (int) error, buf);
   }
 
   const int max_symbol_len = 1024;
@@ -306,24 +306,24 @@ std::string backtrace_string(void)
   WORD  num_frames = CaptureStackBackTrace(0, 128, stack, NULL);
 
   for (WORD i = 0; i < num_frames; i++) {
-    char         symbol_mem[ sizeof(SYMBOL_INFO) + max_symbol_len * sizeof(TCHAR) ];
+    char         symbol_mem[ SIZEOF(SYMBOL_INFO) + max_symbol_len * SIZEOF(TCHAR) ];
     SYMBOL_INFO *symbol  = (SYMBOL_INFO *) symbol_mem;
     symbol->MaxNameLen   = max_symbol_len;
-    symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+    symbol->SizeOfStruct = SIZEOF(SYMBOL_INFO);
 
     DWORD64 addr64 = DWORD64(stack[ i ]);
     SymFromAddr(process, addr64, NULL, symbol);
 
     IMAGEHLP_LINE64 line;
     DWORD           col;
-    line.SizeOfStruct  = sizeof(line);
+    line.SizeOfStruct  = SIZEOF(line);
     BOOL has_file_info = SymGetLineFromAddr64(process, addr64, &col, &line);
 
     if (has_file_info) {
-      snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "%s(%s:%d)\n", symbol->Name, line.FileName,
+      snprintf(tmp + strlen(tmp), SIZEOF(tmp) - strlen(tmp), "%s(%s:%d)\n", symbol->Name, line.FileName,
                (int) line.LineNumber);
     } else {
-      snprintf(tmp + strlen(tmp), sizeof(tmp) - strlen(tmp), "(%s)\n", symbol->Name);
+      snprintf(tmp + strlen(tmp), SIZEOF(tmp) - strlen(tmp), "(%s)\n", symbol->Name);
     }
   }
 

@@ -33,10 +33,12 @@ typedef struct ThingAi_ {
   //
   uint8_t in_use : 1;
   struct {
-    int8_t x;
-    int8_t u;
-  } move_path[ THING_MOVE_PATH_MAX ];
-  int8_t move_path_size;
+    struct {
+      int8_t x;
+      int8_t y;
+    } points[ THING_MOVE_PATH_MAX ];
+    int16_t size;
+  } move_path;
 } ThingAi;
 
 typedef struct Thing_ {
@@ -112,14 +114,16 @@ Thingp thing_get(Levelp, int x, int y, int z, int slot);
 Thingp thing_init(Levelp, Tpp, int x, int y, int z);
 Thingp thing_player(Levelp);
 
-void thing_dir_bl_set(Thingp t, uint8_t);
-void thing_dir_br_set(Thingp t, uint8_t);
-void thing_dir_down_set(Thingp t, uint8_t);
-void thing_dir_left_set(Thingp t, uint8_t);
-void thing_dir_right_set(Thingp t, uint8_t);
-void thing_dir_tl_set(Thingp t, uint8_t);
-void thing_dir_tr_set(Thingp t, uint8_t);
-void thing_dir_up_set(Thingp t, uint8_t);
+ThingAip thing_ai(Levelp, Thingp);
+
+void thing_dir_bl_set(Thingp, uint8_t);
+void thing_dir_br_set(Thingp, uint8_t);
+void thing_dir_down_set(Thingp, uint8_t);
+void thing_dir_left_set(Thingp, uint8_t);
+void thing_dir_right_set(Thingp, uint8_t);
+void thing_dir_tl_set(Thingp, uint8_t);
+void thing_dir_tr_set(Thingp, uint8_t);
+void thing_dir_up_set(Thingp, uint8_t);
 void thing_fini(Levelp, Thingp);
 void thing_interpolate(Levelp, Thingp, float dt);
 void thing_move(Levelp, Thingp, int new_x, int new_y, int new_z);

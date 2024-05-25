@@ -166,8 +166,8 @@ static void wid_console_wid_create(void)
 {
   TRACE_AND_INDENT();
 
-  point outer_tl = make_point(0, 0);
-  point outer_br = make_point(TERM_WIDTH - 1, TERM_HEIGHT - 1);
+  point outer_tl(0, 0);
+  point outer_br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
   int   w        = outer_br.x - outer_tl.x;
   int   h        = outer_br.y - outer_tl.y;
 
@@ -177,8 +177,8 @@ static void wid_console_wid_create(void)
   wid_set_color(wid_console_window, WID_COLOR_TEXT_FG, WHITE);
 
   {
-    point tl = make_point(0, 0);
-    point br = make_point(w - 1, h);
+    point tl(0, 0);
+    point br(w - 1, h);
 
     wid_console_container = wid_new_container(wid_console_window, "wid console inner area");
     wid_set_pos(wid_console_container, tl, br);
@@ -195,8 +195,8 @@ static void wid_console_wid_create(void)
     for (row = 0; row < UI_CONSOLE_HEIGHT; row++) {
       row_bottom--;
 
-      point tl = make_point(0, row_bottom);
-      point br = make_point(UI_CONSOLE_WIDTH, row_bottom);
+      point tl(0, row_bottom);
+      point br(UI_CONSOLE_WIDTH, row_bottom);
 
       child = wid_new_container(wid_console_container, "console line");
 

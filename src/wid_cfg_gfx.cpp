@@ -291,8 +291,8 @@ void wid_cfg_gfx_select(class Game *g)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point outer_tl = make_point(m - 23, TERM_HEIGHT / 2 - 11);
-  point outer_br = make_point(m + 22, TERM_HEIGHT / 2 + 13);
+  point outer_tl(m - 23, TERM_HEIGHT / 2 - 11);
+  point outer_br(m + 22, TERM_HEIGHT / 2 + 13);
 
   auto width = outer_br.x - outer_tl.x - 2;
 
@@ -310,8 +310,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "configuration");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width, y_at + 2);
+    point tl(1, y_at);
+    point br(width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Configuration");
@@ -323,8 +323,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Back");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(6, y_at + 2);
+    point tl(1, y_at);
+    point br(6, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_cfg_gfx_back);
     wid_set_pos(w, tl, br);
@@ -335,8 +335,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Save");
 
-    point tl = make_point(width - 15, y_at);
-    point br = make_point(width - 10, y_at + 2);
+    point tl(width - 15, y_at);
+    point br(width - 10, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_cfg_gfx_save);
     wid_set_pos(w, tl, br);
@@ -347,8 +347,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Cancel");
 
-    point tl = make_point(width - 8, y_at);
-    point br = make_point(width - 1, y_at + 2);
+    point tl(width - 8, y_at);
+    point br(width - 1, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(w, wid_cfg_gfx_cancel);
     wid_set_pos(w, tl, br);
@@ -364,8 +364,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Resolution");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -376,8 +376,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Resolution value");
 
-    point tl = make_point(width / 2, y_at);
-    point br = make_point(width / 2 + 12, y_at);
+    point tl(width / 2, y_at);
+    point br(width / 2 + 12, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
@@ -390,8 +390,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Resolution value +");
 
-    point tl = make_point(width / 2 + 13, y_at);
-    point br = make_point(width / 2 + 15, y_at);
+    point tl(width / 2 + 13, y_at);
+    point br(width / 2 + 15, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -405,8 +405,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Resolution value -");
 
-    point tl = make_point(width / 2 + 16, y_at);
-    point br = make_point(width / 2 + 18, y_at);
+    point tl(width / 2 + 16, y_at);
+    point br(width / 2 + 18, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -426,8 +426,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Fullscreen");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -438,8 +438,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Fullscreen value");
 
-    point tl = make_point(29, y_at);
-    point br = make_point(37, y_at);
+    point tl(29, y_at);
+    point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -463,8 +463,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Fullscreen desktop");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -475,8 +475,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Fullscreen value");
 
-    point tl = make_point(29, y_at);
-    point br = make_point(37, y_at);
+    point tl(29, y_at);
+    point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -500,8 +500,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "High DPI res");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -512,8 +512,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "High DPI value");
 
-    point tl = make_point(29, y_at);
-    point br = make_point(37, y_at);
+    point tl(29, y_at);
+    point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -537,8 +537,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Borderless");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -549,8 +549,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Borderless");
 
-    point tl = make_point(29, y_at);
-    point br = make_point(37, y_at);
+    point tl(29, y_at);
+    point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -574,8 +574,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Vertical sync");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -586,8 +586,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Vertical sync value");
 
-    point tl = make_point(29, y_at);
-    point br = make_point(37, y_at);
+    point tl(29, y_at);
+    point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -611,8 +611,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "FPS counter");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -623,8 +623,8 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "FPS counter value");
 
-    point tl = make_point(29, y_at);
-    point br = make_point(37, y_at);
+    point tl(29, y_at);
+    point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);

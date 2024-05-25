@@ -132,8 +132,8 @@ void wid_cfg_mouse_select(class Game *g)
 
   int   menu_height    = 20;
   int   menu_width     = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  point outer_tl       = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point outer_br       = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_cfg_mouse_window = new WidPopup("Mouse", outer_tl, outer_br, nullptr, "", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -151,8 +151,8 @@ void wid_cfg_mouse_select(class Game *g)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "configuration");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(button_width, y_at + 2);
+    point tl(1, y_at);
+    point br(button_width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Configuration");
@@ -164,8 +164,8 @@ void wid_cfg_mouse_select(class Game *g)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Back");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(6, y_at + 2);
+    point tl(1, y_at);
+    point br(6, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_cfg_mouse_back);
     wid_set_pos(w, tl, br);
@@ -176,8 +176,8 @@ void wid_cfg_mouse_select(class Game *g)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Save");
 
-    point tl = make_point(button_width - 15, y_at);
-    point br = make_point(button_width - 10, y_at + 2);
+    point tl(button_width - 15, y_at);
+    point br(button_width - 10, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_cfg_mouse_save);
     wid_set_pos(w, tl, br);
@@ -188,8 +188,8 @@ void wid_cfg_mouse_select(class Game *g)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Cancel");
 
-    point tl = make_point(button_width - 8, y_at);
-    point br = make_point(button_width - 1, y_at + 2);
+    point tl(button_width - 8, y_at);
+    point br(button_width - 1, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(w, wid_cfg_mouse_cancel);
     wid_set_pos(w, tl, br);
@@ -207,8 +207,8 @@ void wid_cfg_mouse_select(class Game *g)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Mouse scroll lr invert lr");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(button_width, y_at);
+    point tl(1, y_at);
+    point br(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -219,8 +219,8 @@ void wid_cfg_mouse_select(class Game *g)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Mouse scroll lr invert");
 
-    point tl = make_point(28, y_at);
-    point br = make_point(34, y_at);
+    point tl(28, y_at);
+    point br(34, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -244,8 +244,8 @@ void wid_cfg_mouse_select(class Game *g)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Mouse scroll ud invert");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(button_width, y_at);
+    point tl(1, y_at);
+    point br(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -256,8 +256,8 @@ void wid_cfg_mouse_select(class Game *g)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Mouse scroll ud invert value");
 
-    point tl = make_point(28, y_at);
-    point br = make_point(34, y_at);
+    point tl(28, y_at);
+    point br(34, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);

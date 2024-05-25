@@ -85,8 +85,8 @@ void wid_credits_select(class Game *g)
 
   int   menu_height  = 18;
   int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  point outer_tl     = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point outer_br     = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_credits_window = new WidPopup("Credits", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_credits_window->wid_popup_container, wid_credits_key_up);
@@ -111,8 +111,8 @@ void wid_credits_select(class Game *g)
     auto p = wid_credits_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "credits");
 
-    point tl = make_point(menu_width / 2 - 4, menu_height - 4);
-    point br = make_point(menu_width / 2 + 3, menu_height - 2);
+    point tl(menu_width / 2 - 4, menu_height - 4);
+    point br(menu_width / 2 + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_credits_mouse_up);

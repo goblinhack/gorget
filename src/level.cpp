@@ -19,7 +19,7 @@ Levelp level_new(void)
   //
   // Allocate the level as a flat C structure to allow history rewind
   //
-  Levelp l = (Levelp) myzalloc(sizeof(*l), "l");
+  Levelp l = (Levelp) myzalloc(SIZEOF(*l), "l");
   if (! l) {
     return nullptr;
   }

@@ -104,7 +104,7 @@ static Thingp thing_alloc(Levelp l, Tpp tp, int x, int y, int z)
       entropy++;
     }
 
-    memset(t, 0, sizeof(*t));
+    memset(t, 0, SIZEOF(*t));
 
     ThingId thing_id;
     thing_id = (entropy << THING_COMMON_ID_BITS) | index;
@@ -132,7 +132,7 @@ static void thing_free(Levelp l, Thingp t)
 
   thing_ai_free(l, t);
 
-  memset(t, 0, sizeof(*t));
+  memset(t, 0, SIZEOF(*t));
 }
 
 static ThingAip thing_ai_alloc(Levelp l, Thingp t)
@@ -177,6 +177,18 @@ static void thing_ai_free(Levelp l, Thingp t)
 
   l->thing_ai[ ai_id ].in_use = false;
   t->ai_id                    = 0;
+}
+
+ThingAip thing_ai(Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto ai_id = t->ai_id;
+  if (! ai_id) {
+    return nullptr;
+  }
+
+  return &l->thing_ai[ ai_id ];
 }
 
 void thing_update(Level *l, Thingp t)

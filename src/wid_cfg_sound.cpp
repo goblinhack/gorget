@@ -168,8 +168,8 @@ void wid_cfg_sound_select(class Game *g)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point outer_tl = make_point(m - 16, TERM_HEIGHT / 2 - 5);
-  point outer_br = make_point(m + 16, TERM_HEIGHT / 2 + 6);
+  point outer_tl(m - 16, TERM_HEIGHT / 2 - 5);
+  point outer_br(m + 16, TERM_HEIGHT / 2 + 6);
 
   auto width = outer_br.x - outer_tl.x - 2;
 
@@ -188,8 +188,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "configuration");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width, y_at + 2);
+    point tl(1, y_at);
+    point br(width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Configuration");
@@ -201,8 +201,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Back");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(6, y_at + 2);
+    point tl(1, y_at);
+    point br(6, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_cfg_sound_back);
     wid_set_pos(w, tl, br);
@@ -213,8 +213,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Save");
 
-    point tl = make_point(width - 15, y_at);
-    point br = make_point(width - 10, y_at + 2);
+    point tl(width - 15, y_at);
+    point br(width - 10, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_cfg_sound_save);
     wid_set_pos(w, tl, br);
@@ -225,8 +225,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Cancel");
 
-    point tl = make_point(width - 8, y_at);
-    point br = make_point(width - 1, y_at + 2);
+    point tl(width - 8, y_at);
+    point br(width - 1, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(w, wid_cfg_sound_cancel);
     wid_set_pos(w, tl, br);
@@ -239,8 +239,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Effects volume");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -251,8 +251,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Effects volume value");
 
-    point tl = make_point(width / 2, y_at);
-    point br = make_point(width / 2 + 8, y_at);
+    point tl(width / 2, y_at);
+    point br(width / 2 + 8, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -265,8 +265,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Effects value +");
 
-    point tl = make_point(width / 2 + 9, y_at);
-    point br = make_point(width / 2 + 11, y_at);
+    point tl(width / 2 + 9, y_at);
+    point br(width / 2 + 11, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -281,8 +281,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Effects value -");
 
-    point tl = make_point(width / 2 + 12, y_at);
-    point br = make_point(width / 2 + 14, y_at);
+    point tl(width / 2 + 12, y_at);
+    point br(width / 2 + 14, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -299,8 +299,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Music volume");
 
-    point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point tl(1, y_at);
+    point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -311,8 +311,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Music volume value");
 
-    point tl = make_point(width / 2, y_at);
-    point br = make_point(width / 2 + 8, y_at);
+    point tl(width / 2, y_at);
+    point br(width / 2 + 8, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -325,8 +325,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Music value +");
 
-    point tl = make_point(width / 2 + 9, y_at);
-    point br = make_point(width / 2 + 11, y_at);
+    point tl(width / 2 + 9, y_at);
+    point br(width / 2 + 11, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -341,8 +341,8 @@ void wid_cfg_sound_select(class Game *g)
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Music value -");
 
-    point tl = make_point(width / 2 + 12, y_at);
-    point br = make_point(width / 2 + 14, y_at);
+    point tl(width / 2 + 12, y_at);
+    point br(width / 2 + 14, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);

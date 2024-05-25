@@ -734,7 +734,7 @@ Widp wid_keyboard(const std::string &text, const std::string &title, wid_keyboar
    * Create a context to hold button info so we can update it when the focus
    * changes
    */
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) myzalloc(sizeof(*ctx), "wid keyboard");
+  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) myzalloc(SIZEOF(*ctx), "wid keyboard");
   ctx->focusx           = -1;
   ctx->focusy           = -1;
   ctx->cancelled        = cancelled;
@@ -757,8 +757,8 @@ Widp wid_keyboard(const std::string &text, const std::string &title, wid_keyboar
   int bot_half   = height - top_half;
 
   {
-    point tl = make_point(TERM_WIDTH / 2 - left_half, TERM_HEIGHT / 2 - top_half);
-    point br = make_point(TERM_WIDTH / 2 + right_half, TERM_HEIGHT / 2 + bot_half);
+    point tl(TERM_WIDTH / 2 - left_half, TERM_HEIGHT / 2 - top_half);
+    point br(TERM_WIDTH / 2 + right_half, TERM_HEIGHT / 2 + bot_half);
 
     wid_set_pos(window, tl, br);
     wid_set_style(window, UI_WID_STYLE_NORMAL);

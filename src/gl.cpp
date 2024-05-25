@@ -531,9 +531,9 @@ void blit_fbo_unbind_locked(void)
 //
 #define NUMBER_COMPONENTS_PER_COLOR 4
 
-uint32_t NUMBER_BYTES_PER_VERTICE_2D = sizeof(GLfloat) * NUMBER_DIMENSIONS_PER_COORD_2D
-                                     + sizeof(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D
-                                     + sizeof(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
+uint32_t NUMBER_BYTES_PER_VERTICE_2D = SIZEOF(GLfloat) * NUMBER_DIMENSIONS_PER_COORD_2D
+                                     + SIZEOF(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D
+                                     + SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
 //
 // Two arrays, xy and uv.
 //
@@ -611,15 +611,15 @@ void blit_flush(void)
   glVertexPointer(NUMBER_DIMENSIONS_PER_COORD_2D, // (x,y)
                   GL_SHORT, NUMBER_BYTES_PER_VERTICE_2D,
                   ((char *) gl_array_buf)
-                      + sizeof(GLfloat) * // skip (u,v)
+                      + SIZEOF(GLfloat) * // skip (u,v)
                             NUMBER_DIMENSIONS_PER_COORD_2D);
 
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, NUMBER_BYTES_PER_VERTICE_2D,
                  ((char *) gl_array_buf)
-                     + sizeof(GLushort) * // skip (x,y)
+                     + SIZEOF(GLushort) * // skip (x,y)
                            NUMBER_DIMENSIONS_PER_COORD_2D
-                     + sizeof(GLfloat) * // skip (u,v)
+                     + SIZEOF(GLfloat) * // skip (u,v)
                            NUMBER_DIMENSIONS_PER_COORD_2D);
 
   GL_ERROR_CHECK();
@@ -655,7 +655,7 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
   static long nvertices;
 
   static const GLsizei stride
-      = sizeof(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D + sizeof(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
+      = SIZEOF(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D + SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
 
   nvertices = ((char *) e - (char *) b) / stride;
 
@@ -665,7 +665,7 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, stride,
                  ((char *) b)
-                     + sizeof(GLushort) * // skip (x,y)
+                     + SIZEOF(GLushort) * // skip (x,y)
                            NUMBER_DIMENSIONS_PER_COORD_2D);
 
   GL_ERROR_CHECK();
@@ -684,7 +684,7 @@ void blit_flush_triangle_fan(float *b, float *e)
 
   static long nvertices;
 
-  static const GLsizei stride = sizeof(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D;
+  static const GLsizei stride = SIZEOF(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D;
 
   nvertices = ((char *) e - (char *) b) / stride;
 
@@ -1078,7 +1078,7 @@ static void setupPixelFormat(HDC hDC)
 {
   TRACE_AND_INDENT();
   PIXELFORMATDESCRIPTOR pfd = {
-      sizeof(PIXELFORMATDESCRIPTOR),                              // size
+      SIZEOF(PIXELFORMATDESCRIPTOR),                              // size
       1,                                                          // version
       PFD_SUPPORT_OPENGL | PFD_DRAW_TO_WINDOW | PFD_DOUBLEBUFFER, // support double-buffering
       PFD_TYPE_RGBA,                                              // color type
@@ -1127,7 +1127,7 @@ static void setupPalette(HDC hDC)
   LOGPALETTE           *pPal;
   int                   paletteSize;
 
-  DescribePixelFormat(hDC, pixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
+  DescribePixelFormat(hDC, pixelFormat, SIZEOF(PIXELFORMATDESCRIPTOR), &pfd);
 
   if (pfd.dwFlags & PFD_NEED_PALETTE) {
     paletteSize = 1 << pfd.cColorBits;
@@ -1135,7 +1135,7 @@ static void setupPalette(HDC hDC)
     return;
   }
 
-  pPal                = (LOGPALETTE *) malloc(sizeof(LOGPALETTE) + paletteSize * sizeof(PALETTEENTRY));
+  pPal                = (LOGPALETTE *) malloc(SIZEOF(LOGPALETTE) + paletteSize * SIZEOF(PALETTEENTRY));
   pPal->palVersion    = 0x300;
   pPal->palNumEntries = paletteSize;
 
@@ -1180,7 +1180,7 @@ void gl_ext_init(void)
   LOG("OpenGl: - GetModuleHandle");
   HINSTANCE hInstance = GetModuleHandle(0);
 
-  wc.cbSize        = sizeof(WNDCLASSEX);
+  wc.cbSize        = SIZEOF(WNDCLASSEX);
   wc.style         = 0;
   wc.lpfnWndProc   = WndProc;
   wc.cbClsExtra    = 0;

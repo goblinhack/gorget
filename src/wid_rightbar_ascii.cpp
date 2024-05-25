@@ -26,8 +26,8 @@ bool wid_rightbar_ascii_create(class Game *g)
 
   {
     TRACE_AND_INDENT();
-    point tl = make_point(TERM_WIDTH - width, 0);
-    point br = make_point(TERM_WIDTH - 1, TERM_HEIGHT - 1);
+    point tl(TERM_WIDTH - width, 0);
+    point br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
 
     wid_rightbar = wid_new_square_window("wid rightbar");
     wid_set_ignore_scroll_events(wid_rightbar, true);
@@ -41,8 +41,8 @@ bool wid_rightbar_ascii_create(class Game *g)
   {
     TRACE_AND_INDENT();
     auto  w  = wid_new_square_button(wid_rightbar, "level no");
-    point tl = make_point(0, y_at);
-    point br = make_point(width - 1, y_at);
+    point tl(0, y_at);
+    point br(width - 1, y_at);
     auto  s  = dynprintf("Level %u", level->num);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
@@ -55,8 +55,8 @@ bool wid_rightbar_ascii_create(class Game *g)
     y_at++;
     TRACE_AND_INDENT();
     auto  w  = wid_new_plain(wid_rightbar, "Seed");
-    point tl = make_point(0, y_at);
-    point br = make_point(width - 1, y_at);
+    point tl(0, y_at);
+    point br(width - 1, y_at);
 
     auto s = dynprintf("Seed: %%fg=gray$%s", game_seed_name_get(game));
     wid_set_pos(w, tl, br);
@@ -69,8 +69,8 @@ bool wid_rightbar_ascii_create(class Game *g)
   {
     TRACE_AND_INDENT();
     auto  w  = wid_new_square_button(wid_rightbar, "player1");
-    point tl = make_point(0, y_at);
-    point br = make_point(width - 1, y_at);
+    point tl(0, y_at);
+    point br(width - 1, y_at);
     auto  s  = dynprintf("%04u %04u", 0, 100);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
@@ -84,8 +84,8 @@ bool wid_rightbar_ascii_create(class Game *g)
   {
     TRACE_AND_INDENT();
     auto  w  = wid_new_square_button(wid_rightbar, "player2");
-    point tl = make_point(0, y_at);
-    point br = make_point(width - 1, y_at);
+    point tl(0, y_at);
+    point br(width - 1, y_at);
     auto  s  = dynprintf("%4u %4u", 0, 100);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
@@ -99,8 +99,8 @@ bool wid_rightbar_ascii_create(class Game *g)
   {
     TRACE_AND_INDENT();
     auto  w  = wid_new_square_button(wid_rightbar, "player2");
-    point tl = make_point(0, y_at);
-    point br = make_point(width - 1, y_at);
+    point tl(0, y_at);
+    point br(width - 1, y_at);
     auto  s  = dynprintf("%4u %4u", 0, 100);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
@@ -114,8 +114,8 @@ bool wid_rightbar_ascii_create(class Game *g)
   {
     TRACE_AND_INDENT();
     auto  w  = wid_new_square_button(wid_rightbar, "player2");
-    point tl = make_point(0, y_at);
-    point br = make_point(width - 1, y_at);
+    point tl(0, y_at);
+    point br(width - 1, y_at);
     auto  s  = dynprintf("%4u %4u", 0, 100);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);

@@ -86,8 +86,8 @@ void wid_hiscores_show(class Game *g)
 
   int   menu_height  = 26;
   int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  point outer_tl     = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point outer_br     = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_hiscore_window = new WidPopup("hiscores", outer_tl, outer_br, nullptr, "", false, false);
 
   {
@@ -124,7 +124,7 @@ void wid_hiscores_show(class Game *g)
       auto name  = "Name";
       auto when  = "When";
 
-      snprintf(tmp, sizeof(tmp) - 1, "%%%%fg=%s$%7s  %-*s %-*s %-5s", color, "Score", name_field_len,
+      snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%7s  %-*s %-*s %-5s", color, "Score", name_field_len,
                capitalise(name).c_str(), when_field_len, when, "Lvl");
 
       wid_hiscore_window->log(tmp);
@@ -141,7 +141,7 @@ void wid_hiscores_show(class Game *g)
     }
 
     auto color = colors[ index++ ];
-    snprintf(tmp, sizeof(tmp) - 1, "%%%%fg=%s$%07u  %-*s %-*s %-5u", color, h->score, name_field_len, name.c_str(),
+    snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u  %-*s %-*s %-5u", color, h->score, name_field_len, name.c_str(),
              when_field_len, when.c_str(), h->level_reached);
 
     wid_hiscore_window->log(UI_LOGGING_EMPTY_LINE);
@@ -154,8 +154,8 @@ void wid_hiscores_show(class Game *g)
     auto p = wid_hiscore_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "hiscore");
 
-    point tl = make_point(menu_width / 2 - 4, menu_height - 4);
-    point br = make_point(menu_width / 2 + 3, menu_height - 2);
+    point tl(menu_width / 2 - 4, menu_height - 4);
+    point br(menu_width / 2 + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_hiscore_mouse_up);

@@ -8,8 +8,7 @@
 
 #include <string>
 
-template < class T > class my_apoint
-{
+template < typename T > struct my_apoint {
 public:
   T x {};
   T y {};

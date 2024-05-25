@@ -106,7 +106,7 @@ Tilep Font::font_get_tile(int u)
   }
 
   char tile_name[ 10 ];
-  snprintf(tile_name, sizeof(tile_name), "%d.%d", tile_index, index);
+  snprintf(tile_name, SIZEOF(tile_name), "%d.%d", tile_index, index);
 
   tile = tile_find(tile_name);
   if (unlikely(! tile)) {
