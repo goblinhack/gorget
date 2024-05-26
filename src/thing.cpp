@@ -282,9 +282,22 @@ Thingp thing_find(Levelp l, ThingId id)
 }
 
 //
-// Called at the start of each tick
+// Called at the beginning of each tick
 //
 void thing_tick_begin(Levelp l, Thingp t) { TRACE_NO_INDENT(); }
+
+//
+// Called when the level is idle
+//
+void thing_tick_idle(Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // If asked to follow the mouse path, start walking
+  //
+  thing_move_to_next(l, t);
+}
 
 //
 // Called at the end of each tick
@@ -293,7 +306,16 @@ void thing_tick_end(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (t->is_following_a_path) {
-    thing_move_to_next(l, t);
+  //
+  // Mark the tick as completed
+  //
+  if (t->tick == l->tick) {
+    return;
   }
+  t->tick = l->tick;
+
+  //
+  // If following the mouse path, keep going
+  //
+  thing_move_to_next(l, t);
 }

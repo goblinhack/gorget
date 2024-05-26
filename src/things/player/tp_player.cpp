@@ -20,6 +20,8 @@ bool tp_load_player(void)
     tp_flag_set(tp, is_tickable, true);
     tp_player_index_set(tp, player - 1);
     tp_z_depth_set(tp, MAP_Z_DEPTH_PLAYER);
+    tp_speed_set(tp, 100);
+
     // end sort marker1 }
 
     auto delay = 100;

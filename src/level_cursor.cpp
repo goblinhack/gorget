@@ -13,6 +13,8 @@
 #include <string.h>
 #include <vector>
 
+static std::vector< point > cursor_path;
+
 void level_cursor_set(Level *l, point p)
 {
   TRACE_AND_INDENT();
@@ -240,13 +242,73 @@ static std::vector< point > level_cursor_path_draw_line(Levelp l, point start, p
   return best;
 }
 
-static void level_cursor_player_move_path_update(Levelp l, Thingp t, std::vector< point > &move_path)
+//
+// Stop following the current path
+//
+void level_cursor_path_reset(Levelp l)
 {
-  auto aip = thing_ai(l, t);
-  if (! aip) {
+  auto t = thing_player(l);
+  if (! t) {
+    //
+    // If no player, clear the cursor
+    //
+    memset(l->cursor, 0, SIZEOF(l->cursor));
     return;
   }
 
+  auto aip = thing_ai(l, t);
+  if (! aip) {
+    //
+    // If no player, clear the cursor
+    //
+    memset(l->cursor, 0, SIZEOF(l->cursor));
+    return;
+  }
+
+  l->request_follow_path = false;
+  l->is_following_a_path = false;
+  aip->move_path.size    = 0;
+}
+
+//
+// Copy the mouse path to the thing
+//
+static void level_cursor_path_apply(Levelp l, std::vector< point > &move_path)
+{
+  auto t = thing_player(l);
+  if (! t) {
+    //
+    // If no player, clear the cursor
+    //
+    memset(l->cursor, 0, SIZEOF(l->cursor));
+    return;
+  }
+
+  auto aip = thing_ai(l, t);
+  if (! aip) {
+    //
+    // If no player, clear the cursor
+    //
+    memset(l->cursor, 0, SIZEOF(l->cursor));
+    return;
+  }
+
+  if (l->request_follow_path) {
+    //
+    // Player wants to start following or replace the current path.
+    //
+    l->request_follow_path = false;
+    l->is_following_a_path = true;
+  } else if (l->is_following_a_path) {
+    //
+    // Already following a path, stick to it until completion.
+    //
+    return;
+  }
+
+  //
+  // Copy the latest mouse path to the player
+  //
   int index           = 0;
   aip->move_path.size = 0;
 
@@ -260,7 +322,10 @@ static void level_cursor_player_move_path_update(Levelp l, Thingp t, std::vector
   }
 }
 
-void level_cursor_update(Levelp l)
+//
+// Recreate the mouse path
+//
+static void level_cursor_path_create(Levelp l)
 {
   auto player = thing_player(l);
   if (! player) {
@@ -286,16 +351,28 @@ void level_cursor_update(Levelp l)
   //
   // Draw the path
   //
-  auto cursor_path = level_cursor_path_draw_line(l, make_point(player->at), l->cursor_at);
+  cursor_path = level_cursor_path_draw_line(l, make_point(player->at), l->cursor_at);
   for (auto p : cursor_path) {
     l->cursor[ p.x ][ p.y ] = CURSOR_PATH;
   }
   l->cursor[ l->cursor_at.x ][ l->cursor_at.y ] = CURSOR_AT;
 
   l->old_cursor_at = l->cursor_at;
+}
+
+//
+// Recreate and possibly apply the mouse path to the player
+//
+void level_cursor_update(Levelp l)
+{
+  //
+  // Recreate the mouse path
+  //
+  level_cursor_path_create(l);
 
   //
   // Update the player with the path.
   //
-  level_cursor_player_move_path_update(l, player, cursor_path);
+  level_cursor_path_apply(l, cursor_path);
 }
+

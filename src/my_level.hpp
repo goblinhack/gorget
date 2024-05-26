@@ -54,6 +54,10 @@ typedef struct Level_ {
   bool tick_begin_requested : 1;
   bool tick_end_requested   : 1;
   //
+  // If the player has moved, we need to scroll the map
+  //
+  bool requested_auto_scroll : 1;
+  //
   // Player move request.
   //
   bool requested_move_left  : 1;
@@ -61,9 +65,13 @@ typedef struct Level_ {
   bool requested_move_right : 1;
   bool requested_move_up    : 1;
   //
-  // If the player has moved, we need to scroll the map
+  // The user has pressed the mouse and wants to follow the mouse path.
   //
-  bool requested_auto_scroll : 1;
+  bool request_follow_path : 1;
+  //
+  // set when the player starts following the mouse path.
+  //
+  bool is_following_a_path : 1;
   //
   // TODO
   // Set when something modifies the map and we need to update caches.
@@ -137,14 +145,11 @@ void level_fini(Levelp);
 void level_map_set(Levelp, int z, const char *);
 void level_mouse_position_get(Levelp);
 void level_scroll_delta(Levelp, point);
+void level_cursor_path_reset(Levelp);
 void level_scroll_to_player(Levelp);
 void level_scroll_warp_to_player(Levelp);
-void level_tick_begin(Levelp);
 void level_tick_begin_requested(Levelp, const char *);
-void level_tick_body(Levelp, float dt);
-void level_tick_end(Levelp);
 void level_tick(Levelp);
-void level_tick_time_step(Levelp);
 
 //
 // Walk all things on all Z depths

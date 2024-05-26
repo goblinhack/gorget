@@ -25,17 +25,12 @@ uint8_t game_mouse_down(class Game *g, int x, int y, uint32_t button)
     return false;
   }
 
+  //
+  // Follow the mouse path?
+  //
   auto l = game_level_get(g);
-  if (! l) {
-    return false;
-  }
-
-  auto player = thing_player(l);
-  if (! player) {
-    return false;
-  }
-
-  if (thing_move_to_next(l, player)) {
+  if (l) {
+    l->request_follow_path = true;
     return true;
   }
 

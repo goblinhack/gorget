@@ -9,6 +9,12 @@
 #include "my_main.hpp"
 #include "my_tp.hpp"
 
+static void level_tick_begin(Levelp);
+static void level_tick_body(Levelp, float dt);
+static void level_tick_end(Levelp);
+static void level_tick_idle(Levelp);
+static void level_tick_time_step(Levelp);
+
 void level_tick(Levelp l)
 {
   TRACE_NO_INDENT();
@@ -28,6 +34,7 @@ void level_tick(Levelp l)
     //
     // Idle state
     //
+    level_tick_idle(l);
   }
 
   //
@@ -45,7 +52,7 @@ void level_tick(Levelp l)
   }
 }
 
-void level_tick_time_step(Levelp l)
+static void level_tick_time_step(Levelp l)
 {
   if (! l->frame_begin) {
     //
@@ -68,7 +75,7 @@ void level_tick_time_step(Levelp l)
   }
 }
 
-void level_tick_body(Levelp l, float dt)
+static void level_tick_body(Levelp l, float dt)
 {
   TRACE_NO_INDENT();
 
@@ -98,7 +105,8 @@ void level_tick_body(Levelp l, float dt)
     thing_interpolate(l, t, t->thing_dt);
 
     //
-    // If the thing tick has completed
+    // If the thing tick has completed, finish its move.
+    //
     if (t->thing_dt >= 1.0) {
       t->thing_dt = 0.0;
       thing_move_finish(l, t);
@@ -106,7 +114,7 @@ void level_tick_body(Levelp l, float dt)
   }
 }
 
-void level_tick_begin(Levelp l)
+static void level_tick_begin(Levelp l)
 {
   l->tick++;
   l->tick_begin_requested  = false;
@@ -128,6 +136,21 @@ void level_tick_begin(Levelp l)
   }
 }
 
+static void level_tick_idle(Levelp l)
+{
+  auto p = thing_player(l);
+  if (! p) {
+    return;
+  }
+
+  FOR_ALL_THINGS_Z_DEPTH(l, t, p->at.z)
+  {
+    if (thing_is_tickable(t)) {
+      thing_tick_idle(l, t);
+    }
+  }
+}
+
 void level_tick_begin_requested(Levelp l, const char *why)
 {
   TRACE_NO_INDENT();
@@ -140,7 +163,7 @@ void level_tick_begin_requested(Levelp l, const char *why)
   l->requested_move_right = false;
 }
 
-void level_tick_end(Levelp l)
+static void level_tick_end(Levelp l)
 {
   TRACE_NO_INDENT();
 

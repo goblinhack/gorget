@@ -26,15 +26,20 @@ void thing_player_move_delta(Levelp l, int dx, int dy, int dz)
 {
   TRACE_NO_INDENT();
 
+  auto t = thing_player(l);
+  if (! t) {
+    return;
+  }
+
+  //
+  // Override any mouse request with the key move.
+  //
+  level_cursor_path_reset(l);
+
   //
   // Wait until the end of the tick
   //
   if (level_tick_is_in_progress(l)) {
-    return;
-  }
-
-  auto t = thing_player(l);
-  if (! t) {
     return;
   }
 

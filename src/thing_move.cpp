@@ -12,7 +12,7 @@
 #include <string.h>
 
 //
-// Get thing direciont
+// Get thing direction
 //
 bool thing_is_dir_br(Thingp t) { return (t->dir == THING_DIR_BR); }
 bool thing_is_dir_tr(Thingp t) { return (t->dir == THING_DIR_TR); }
@@ -212,14 +212,14 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 //
 // Handles manual and mouse follow moves
 //
-static void thing_move_to_common(Levelp l, Thingp t, point3d to)
+bool thing_move_to(Levelp l, Thingp t, point3d to)
 {
   if (level_is_oob(l, to)) {
-    return;
+    return false;
   }
 
   if (to == t->at) {
-    return;
+    return false;
   }
 
   thing_pop(l, t);
@@ -236,28 +236,8 @@ static void thing_move_to_common(Levelp l, Thingp t, point3d to)
   if (thing_is_player(t)) {
     level_tick_begin_requested(l, "player moved");
   }
-}
 
-//
-// Manual move. Start moving to this location.
-//
-void thing_move_to(Levelp l, Thingp t, point3d to)
-{
-  TRACE_NO_INDENT();
-
-  t->is_following_a_path = false;
-  thing_move_to_common(l, t, to);
-}
-
-//
-// Mouse follow move. Move to the next path on the popped path if it exits.
-//
-void thing_follow_to(Levelp l, Thingp t, point3d to)
-{
-  TRACE_NO_INDENT();
-
-  t->is_following_a_path = true;
-  thing_move_to_common(l, t, to);
+  return true;
 }
 
 //
@@ -370,6 +350,12 @@ void thing_push(Levelp l, Thingp t)
       if (tile) {
         t->tile_index = tile_global_index(tile);
       }
+
+      //
+      // Save where we were pushed so we can pop the same location
+      //
+      t->is_on_map      = true;
+      t->last_pushed_at = p;
       return;
     }
   }
@@ -384,7 +370,13 @@ void thing_pop(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  point3d p(t->pix_at.x / TILE_WIDTH, t->pix_at.y / TILE_HEIGHT, t->at.z);
+  //
+  // Pop from where we were pushed
+  //
+  if (! t->is_on_map) {
+    return;
+  }
+  point3d p = t->last_pushed_at;
 
   if (level_is_oob(l, p)) {
     return;
@@ -394,9 +386,12 @@ void thing_pop(Levelp l, Thingp t)
     auto o_id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
     if (o_id == t->id) {
       l->thing_id[ p.x ][ p.y ][ p.z ][ slot ] = 0;
+      t->is_on_map                             = false;
       return;
     }
   }
+
+  ERR("could not pop thing that is on the map");
 }
 
 //
@@ -405,8 +400,6 @@ void thing_pop(Levelp l, Thingp t)
 static bool thing_move_path_pop(Levelp l, Thingp t, point *out)
 {
   TRACE_NO_INDENT();
-
-  point3d p(t->pix_at.x / TILE_WIDTH, t->pix_at.y / TILE_HEIGHT, t->at.z);
 
   auto aip = thing_ai(l, t);
   if (! aip) {
@@ -434,20 +427,22 @@ bool thing_move_to_next(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  int z = t->at.z;
-
-  t->is_following_a_path = false;
+  if (! l->is_following_a_path) {
+    return false;
+  }
 
   point move_next;
   if (! thing_move_path_pop(l, t, &move_next)) {
+    l->is_following_a_path = false;
     return false;
   }
 
-  point3d move_to(move_next.x, move_next.y, z);
+  point3d move_to(move_next.x, move_next.y, t->at.z);
   if (! thing_can_move_to(l, t, move_to)) {
+    l->is_following_a_path = false;
     return false;
   }
 
-  thing_follow_to(l, t, move_to);
+  thing_move_to(l, t, move_to);
   return true;
 }

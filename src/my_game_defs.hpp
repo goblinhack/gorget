@@ -12,6 +12,6 @@
 #define MAP_SLOTS         16
 #define MAP_SCROLL_BORDER 0.4
 #define MAP_SCROLL_SPEED  5
-#define TICK_DURATION_MS  80
+#define TICK_DURATION_MS  100
 
 #endif

@@ -185,8 +185,6 @@ enum { MONST_CLASS_A, MONST_CLASS_MAX };
       list_macro(is_tickable, "is_tickable"),                         /* ............................ */             \
       list_macro(THING_FLAG_MAX, "THING_FLAG_MAX"),
 
-/* clang-format on */
-
 #define tp_is_walk_through_walls(tp)   tp_flag(tp, is_walk_through_walls)
 #define tp_is_animated_can_hflip(tp)   tp_flag(tp, is_animated_can_hflip)
 #define tp_is_animated_no_dir(tp)      tp_flag(tp, is_animated_no_dir)
