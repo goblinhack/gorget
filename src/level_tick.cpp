@@ -6,6 +6,8 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
+#include "my_tp.hpp"
 
 void level_tick(Levelp l)
 {
@@ -17,7 +19,7 @@ void level_tick(Levelp l)
     // A tick is running
     //
     level_tick_time_step(l);
-  } else if (l->_tick_begin_requested) {
+  } else if (l->tick_begin_requested) {
     //
     // Start the tick
     //
@@ -38,8 +40,8 @@ void level_tick(Levelp l)
   //
   // End of tick?
   //
-  if (l->_tick_end_requested) {
-    level_tick_end_requested(l);
+  if (l->tick_end_requested) {
+    level_tick_end(l);
   }
 }
 
@@ -60,8 +62,8 @@ void level_tick_time_step(Levelp l)
       //
       // Tick has surpassed its time
       //
-      l->time_step           = 1.0;
-      l->_tick_end_requested = true;
+      l->time_step          = 1.0;
+      l->tick_end_requested = true;
     }
   }
 }
@@ -70,10 +72,14 @@ void level_tick_body(Levelp l, float dt)
 {
   TRACE_NO_INDENT();
 
-  auto p            = thing_player(l);
-  int  player_speed = p ? p->speed : 100;
+  auto p = thing_player(l);
+  if (! p) {
+    return;
+  }
 
-  FOR_ALL_THINGS(l, t)
+  int player_speed = p->speed;
+
+  FOR_ALL_THINGS_Z_DEPTH(l, t, p->at.z)
   {
     //                   Tick 1              Tick 2
     //            =================== ===================
@@ -91,9 +97,11 @@ void level_tick_body(Levelp l, float dt)
 
     thing_interpolate(l, t, t->thing_dt);
 
+    //
+    // If the thing tick has completed
     if (t->thing_dt >= 1.0) {
-      // thing tick
       t->thing_dt = 0.0;
+      thing_move_finish(l, t);
     }
   }
 }
@@ -101,18 +109,30 @@ void level_tick_body(Levelp l, float dt)
 void level_tick_begin(Levelp l)
 {
   l->tick++;
-  l->_tick_begin_requested = false;
+  l->tick_begin_requested  = false;
   l->frame_begin           = l->frame;
   l->time_step             = 0.0;
   l->tick_in_progress      = true;
   l->requested_auto_scroll = true;
+
+  auto p = thing_player(l);
+  if (! p) {
+    return;
+  }
+
+  FOR_ALL_THINGS_Z_DEPTH(l, t, p->at.z)
+  {
+    if (thing_is_tickable(t)) {
+      thing_tick_begin(l, t);
+    }
+  }
 }
 
 void level_tick_begin_requested(Levelp l, const char *why)
 {
   TRACE_NO_INDENT();
 
-  l->_tick_begin_requested = true;
+  l->tick_begin_requested = true;
 
   l->requested_move_up    = false;
   l->requested_move_left  = false;
@@ -120,13 +140,25 @@ void level_tick_begin_requested(Levelp l, const char *why)
   l->requested_move_right = false;
 }
 
-void level_tick_end_requested(Levelp l)
+void level_tick_end(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  l->tick_in_progress    = false;
-  l->_tick_end_requested = false;
-  l->time_step           = 0;
+  l->tick_in_progress   = false;
+  l->tick_end_requested = false;
+  l->time_step          = 0;
+
+  auto p = thing_player(l);
+  if (! p) {
+    return;
+  }
+
+  FOR_ALL_THINGS_Z_DEPTH(l, t, p->at.z)
+  {
+    if (thing_is_tickable(t)) {
+      thing_tick_end(l, t);
+    }
+  }
 }
 
 bool level_tick_is_in_progress(Levelp l)

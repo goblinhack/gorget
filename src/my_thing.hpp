@@ -60,9 +60,14 @@ typedef struct Thing_ {
   //
   point3d at;
   //
-  // Old map co-ords used for interpolation when moving.
+  // Previous map co-ords. Does not change when the move finishes.
   //
   point3d old_at;
+  //
+  // Previous map co-ords used for interpolation when moving. Changes when
+  // the move finishes.
+  //
+  point3d moving_from;
   //
   // Direction
   //
@@ -103,6 +108,10 @@ typedef struct Thing_ {
   // Keeps track of counters in the level this thing has modified.
   //
   uint8_t count[ THING_FLAG_MAX ];
+  //
+  // set when the player starts following the cursor path.
+  //
+  uint8_t is_following_a_path : 1;
 } Thing;
 
 Tpp thing_tp(Thingp t);
@@ -127,10 +136,14 @@ void thing_dir_up_set(Thingp, uint8_t);
 void thing_fini(Levelp, Thingp);
 void thing_interpolate(Levelp, Thingp, float dt);
 void thing_move_to(Levelp, Thingp, point3d to);
+void thing_follow_to(Levelp, Thingp, point3d to);
 void thing_player_map_center(Levelp);
 void thing_player_move_accum(Levelp, bool up, bool down, bool left, bool right);
 void thing_player_move_delta(Levelp, int dx, int dy, int dz);
 void thing_player_move_reset(Levelp);
+void thing_move_finish(Levelp, Thingp);
+void thing_tick_begin(Levelp, Thingp);
+void thing_tick_end(Levelp, Thingp);
 void thing_pop(Levelp, Thingp);
 void thing_push(Levelp, Thingp);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);

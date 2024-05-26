@@ -8,9 +8,9 @@ void level_dungeon_create_and_place(Levelp l, int z)
 {
   level_map_set(l, z,
                 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                "x1.2x...........x..............x"
+                "x1..x...........x..............x"
                 "x...x=xx=x......x..xxxx==xxxx..x"
-                "x3.4x..x..x.....x..xxxx...xxx..x"
+                "x...x..x..x.....x..xxxx...xxx..x"
                 "x...x..xx..x....x..xxx.....=...x"
                 "x...=.xx....x...x...=......=...x"
                 "x...=..x.....x..x..xxx.....=...x"

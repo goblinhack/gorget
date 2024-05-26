@@ -11,6 +11,22 @@
 
 #include <string.h>
 
+//
+// Get thing direciont
+//
+bool thing_is_dir_br(Thingp t) { return (t->dir == THING_DIR_BR); }
+bool thing_is_dir_tr(Thingp t) { return (t->dir == THING_DIR_TR); }
+bool thing_is_dir_bl(Thingp t) { return (t->dir == THING_DIR_BL); }
+bool thing_is_dir_tl(Thingp t) { return (t->dir == THING_DIR_TL); }
+bool thing_is_dir_right(Thingp t) { return (t->dir == THING_DIR_RIGHT); }
+bool thing_is_dir_none(Thingp t) { return (t->dir == THING_DIR_NONE); }
+bool thing_is_dir_down(Thingp t) { return (t->dir == THING_DIR_DOWN); }
+bool thing_is_dir_up(Thingp t) { return (t->dir == THING_DIR_UP); }
+bool thing_is_dir_left(Thingp t) { return (t->dir == THING_DIR_LEFT); }
+
+//
+// Set thing direction
+//
 void thing_dir_set_none(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -23,8 +39,9 @@ void thing_dir_set_none(Thingp t)
   }
 }
 
-bool thing_is_dir_none(Thingp t) { return (t->dir == THING_DIR_NONE); }
-
+//
+// Set thing direction
+//
 void thing_dir_set_down(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -37,8 +54,9 @@ void thing_dir_set_down(Thingp t)
   }
 }
 
-bool thing_is_dir_down(Thingp t) { return (t->dir == THING_DIR_DOWN); }
-
+//
+// Set thing direction
+//
 void thing_dir_set_up(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -51,8 +69,9 @@ void thing_dir_set_up(Thingp t)
   }
 }
 
-bool thing_is_dir_up(Thingp t) { return (t->dir == THING_DIR_UP); }
-
+//
+// Set thing direction
+//
 void thing_dir_set_left(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -65,8 +84,9 @@ void thing_dir_set_left(Thingp t)
   }
 }
 
-bool thing_is_dir_left(Thingp t) { return (t->dir == THING_DIR_LEFT); }
-
+//
+// Set thing direction
+//
 void thing_dir_set_right(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -79,8 +99,9 @@ void thing_dir_set_right(Thingp t)
   }
 }
 
-bool thing_is_dir_right(Thingp t) { return (t->dir == THING_DIR_RIGHT); }
-
+//
+// Set thing direction
+//
 void thing_dir_set_tl(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -93,8 +114,9 @@ void thing_dir_set_tl(Thingp t)
   }
 }
 
-bool thing_is_dir_tl(Thingp t) { return (t->dir == THING_DIR_TL); }
-
+//
+// Set thing direction
+//
 void thing_dir_set_bl(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -107,8 +129,9 @@ void thing_dir_set_bl(Thingp t)
   }
 }
 
-bool thing_is_dir_bl(Thingp t) { return (t->dir == THING_DIR_BL); }
-
+//
+// Set thing direction
+//
 void thing_dir_set_tr(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -121,8 +144,9 @@ void thing_dir_set_tr(Thingp t)
   }
 }
 
-bool thing_is_dir_tr(Thingp t) { return (t->dir == THING_DIR_TR); }
-
+//
+// Set thing direction
+//
 void thing_dir_set_br(Thingp t)
 {
   if (tp_is_animated_no_dir(thing_tp(t))) {
@@ -135,8 +159,9 @@ void thing_dir_set_br(Thingp t)
   }
 }
 
-bool thing_is_dir_br(Thingp t) { return (t->dir == THING_DIR_BR); }
-
+//
+// Set tile direction from delta
+//
 void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 {
   if (dx < 0) {
@@ -184,7 +209,10 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
   }
 }
 
-void thing_move_to(Levelp l, Thingp t, point3d to)
+//
+// Handles manual and mouse follow moves
+//
+static void thing_move_to_common(Levelp l, Thingp t, point3d to)
 {
   if (level_is_oob(l, to)) {
     return;
@@ -199,8 +227,9 @@ void thing_move_to(Levelp l, Thingp t, point3d to)
   t->pix_at.x = t->at.x * TILE_WIDTH;
   t->pix_at.y = t->at.y * TILE_HEIGHT;
 
-  t->old_at = t->at;
-  t->at     = to;
+  t->old_at      = t->at;
+  t->moving_from = t->at;
+  t->at          = to;
 
   thing_push(l, t);
 
@@ -209,6 +238,41 @@ void thing_move_to(Levelp l, Thingp t, point3d to)
   }
 }
 
+//
+// Manual move. Start moving to this location.
+//
+void thing_move_to(Levelp l, Thingp t, point3d to)
+{
+  TRACE_NO_INDENT();
+
+  t->is_following_a_path = false;
+  thing_move_to_common(l, t, to);
+}
+
+//
+// Mouse follow move. Move to the next path on the popped path if it exits.
+//
+void thing_follow_to(Levelp l, Thingp t, point3d to)
+{
+  TRACE_NO_INDENT();
+
+  t->is_following_a_path = true;
+  thing_move_to_common(l, t, to);
+}
+
+//
+// Move is completed. Need to stop interpolating.
+//
+void thing_move_finish(Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  t->moving_from = t->at;
+}
+
+//
+// Returns true if the thing can move to this location
+//
 bool thing_can_move_to(Levelp l, Thingp t, point3d to)
 {
   if (level_is_oob(l, to)) {
@@ -239,19 +303,25 @@ bool thing_can_move_to(Levelp l, Thingp t, point3d to)
   return true;
 }
 
+//
+// For things moving between tiles, calculate the pixel they are at based on the timestep
+//
 void thing_interpolate(Level *l, Thingp t, float dt)
 {
-  if (t->old_at == t->at) {
+  if (t->moving_from == t->at) {
     return;
   }
 
-  float pix_x = (float) t->old_at.x + (((float) (t->at.x - t->old_at.x)) * dt);
-  float pix_y = (float) t->old_at.y + (((float) (t->at.y - t->old_at.y)) * dt);
+  float pix_x = (float) t->moving_from.x + (((float) (t->at.x - t->moving_from.x)) * dt);
+  float pix_y = (float) t->moving_from.y + (((float) (t->at.y - t->moving_from.y)) * dt);
 
   t->pix_at.x = pix_x * TILE_WIDTH;
   t->pix_at.y = pix_y * TILE_HEIGHT;
 }
 
+//
+// Push the thing onto the level
+//
 void thing_push(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -307,6 +377,9 @@ void thing_push(Levelp l, Thingp t)
   ERR("out of thing slots");
 }
 
+//
+// Pop the thing off the level
+//
 void thing_pop(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -363,6 +436,8 @@ bool thing_move_to_next(Levelp l, Thingp t)
 
   int z = t->at.z;
 
+  t->is_following_a_path = false;
+
   point move_next;
   if (! thing_move_path_pop(l, t, &move_next)) {
     return false;
@@ -373,6 +448,6 @@ bool thing_move_to_next(Levelp l, Thingp t)
     return false;
   }
 
-  thing_move_to(l, t, move_to);
+  thing_follow_to(l, t, move_to);
   return true;
 }

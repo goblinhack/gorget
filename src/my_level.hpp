@@ -51,8 +51,8 @@ typedef struct Level_ {
   //
   // Player has moved.
   //
-  bool _tick_begin_requested : 1;
-  bool _tick_end_requested   : 1;
+  bool tick_begin_requested : 1;
+  bool tick_end_requested   : 1;
   //
   // Player move request.
   //
@@ -142,22 +142,34 @@ void level_scroll_warp_to_player(Levelp);
 void level_tick_begin(Levelp);
 void level_tick_begin_requested(Levelp, const char *);
 void level_tick_body(Levelp, float dt);
-void level_tick_end_requested(Levelp);
+void level_tick_end(Levelp);
 void level_tick(Levelp);
 void level_tick_time_step(Levelp);
 
 //
-// Works on a copy of the level data, so things can move cells and we never
-// walk anything twice.
+// Walk all things on all Z depths
 //
-#define FOR_ALL_THINGS(_l_, _t_)                                                                                     \
-  static Level _l_copy_;                                                                                             \
-  _l_copy_ = *_l_;                                                                                                   \
+#define FOR_ALL_THINGS_ALL_DEPTHS(_l_, _t_)                                                                          \
   Thingp t;                                                                                                          \
   for (auto _id_ = 0; _id_ < 1 << THING_COMMON_ID_BITS; _id_++)                                                      \
-    if (_l_copy_.thing_body[ _id_ ].id)                                                                              \
-      if ((_t_ = thing_find_optional(_l_, _l_copy_.thing_body[ _id_ ].id)))
+    if (_l_->thing_body[ _id_ ].id)                                                                                  \
+      if ((_t_ = thing_find_optional(_l_, _l_->thing_body[ _id_ ].id)))
 
+//
+// For all things at this Z depth
+//
+#define FOR_ALL_THINGS_Z_DEPTH(_l_, _t_, _z_)                                                                        \
+  Thingp _t_;                                                                                                        \
+  Tpp    _tp_;                                                                                                       \
+  for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                        \
+    for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                       \
+      for (auto _slot_ = 0; _t_ = thing_and_tp_get(_l_, point3d(_x_, _y_, _z_), _slot_, &_tp_), _slot_ < MAP_SLOTS;  \
+           _slot_++)                                                                                                 \
+        if (_t_)
+
+//
+// For all things at a specific location
+//
 #define FOR_ALL_THINGS_AT(_l_, _t_, _p_)                                                                             \
   Thingp _t_;                                                                                                        \
   for (auto _slot_ = 0; _t_ = thing_get(_l_, _p_, _slot_), _slot_ < MAP_SLOTS; _slot_++)                             \

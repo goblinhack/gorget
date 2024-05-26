@@ -185,7 +185,7 @@ void level_fini(Levelp l)
 {
   TRACE_NO_INDENT();
 
-  FOR_ALL_THINGS(l, t) { thing_fini(l, t); }
+  FOR_ALL_THINGS_ALL_DEPTHS(l, t) { thing_fini(l, t); }
   myfree(l);
 }
 

@@ -44,8 +44,9 @@ Thingp thing_init(Levelp l, Tpp tp, point3d at)
     return nullptr;
   }
 
-  t->at     = at;
-  t->old_at = at;
+  t->at          = at;
+  t->old_at      = at;
+  t->moving_from = at;
 
   t->pix_at.x = t->at.x * TILE_WIDTH;
   t->pix_at.y = t->at.y * TILE_HEIGHT;
@@ -278,4 +279,21 @@ Thingp thing_find(Levelp l, ThingId id)
   }
 
   return t;
+}
+
+//
+// Called at the start of each tick
+//
+void thing_tick_begin(Levelp l, Thingp t) { TRACE_NO_INDENT(); }
+
+//
+// Called at the end of each tick
+//
+void thing_tick_end(Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (t->is_following_a_path) {
+    thing_move_to_next(l, t);
+  }
 }
