@@ -7,6 +7,8 @@
 #include "my_callstack.hpp"
 #include "my_console.hpp"
 #include "my_log.hpp"
+#include "my_sdl_event.hpp"
+#include "my_sdl_proto.hpp"
 #include "my_string.hpp"
 #include "my_wid_console.hpp"
 
@@ -466,7 +468,10 @@ static void sdl_msgerr_(const char *fmt, va_list args)
 
 #if SDL_MAJOR_VERSION >= 2
   CON("INF: Show SDL message box");
-  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, nullptr);
+  //
+  // The window is needed else the box appears behind the main window.
+  //
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, sdl.window);
   CON("INF: Finished SDL message box");
 #endif
 }

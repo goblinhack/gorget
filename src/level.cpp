@@ -22,7 +22,14 @@ Levelp level_new(void)
   // NOTE: if we use "new" here, the initialization is visibly slower.
   // DO NOT USE C++ classes or types
   //
-  Levelp l = (Levelp) myzalloc(SIZEOF(*l), "l");
+  Levelp l;
+  LOG("Level memory:  %u Mb", SIZEOF(Level) / (1024 * 1024));
+  LOG("Thing AI:      %u Mb", SIZEOF(l->thing_ai) / (1024 * 1024));
+  LOG("Thing structs: %u Mb", SIZEOF(l->thing_body) / (1024 * 1024));
+  LOG("Thing IDs:     %u Mb", SIZEOF(l->thing_id) / (1024 * 1024));
+  LOG("Thing size:    %u b", SIZEOF(Thing));
+
+  l = (Levelp) myzalloc(SIZEOF(*l), "l");
   if (! l) {
     return nullptr;
   }

@@ -696,11 +696,7 @@ void config_game_gfx_update(void)
   game_pix_height_set(game, game_window_pix_height_get(game));
   game_pix_width_set(game, game_window_pix_width_get(game));
 
-  if (1) {
-    game_pix_height_set(game, TILE_WIDTH * 20);
-  } else {
-    game_pix_height_set(game, TILE_WIDTH * MAP_HEIGHT);
-  }
+  game_pix_height_set(game, TILE_WIDTH * MAP_HEIGHT / 4);
   float game_pix_width = (int) (((double) game_pix_height_get(game)) * game_aspect_ratio_get(game));
   game_pix_width /= TILE_WIDTH;
   game_pix_width = ceil(game_pix_width);
@@ -719,8 +715,8 @@ void config_game_gfx_update(void)
   //
   // Use the same resolution as the game
   //
-  game_ui_pix_width_set(game, game_pix_width_get(game));
-  game_ui_pix_height_set(game, game_pix_height_get(game));
+  game_ui_pix_width_set(game, game_pix_width_get(game) * 2);
+  game_ui_pix_height_set(game, game_pix_height_get(game) * 2);
 
   if (! TILE_WIDTH) {
     ERR("TILE_WIDTH zero");

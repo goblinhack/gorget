@@ -27,7 +27,7 @@
 // Essentially equates to the max number of monsters
 //
 #define THING_AI_MAX        65535 /* sizeof ai_id */
-#define THING_MOVE_PATH_MAX (MAP_WIDTH * MAP_HEIGHT)
+#define THING_MOVE_PATH_MAX MAP_WIDTH
 
 typedef struct ThingAi_ {
   //

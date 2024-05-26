@@ -845,15 +845,6 @@ static void gfx_ui_init_15(void)
   }
 }
 
-static void gfx_init_rightbar(void)
-{
-  const char *tiles[] = {
-      "ui_rightbar",
-  };
-
-  tile_load_arr_sprites("data/gfx/ui/ui_rightbar.tga", "rightbar", 104, 256, ARRAY_SIZE(tiles), tiles, GL_NEAREST);
-}
-
 static void gfx_init_ui(void) {}
 
 void gfx_init(void)
@@ -863,7 +854,6 @@ void gfx_init(void)
   // begin sort marker1 {
   gfx_init_12x12();
   gfx_init_24x24();
-  gfx_init_rightbar();
   gfx_init_ui();
   gfx_ui_init_0();
   gfx_ui_init_1();
