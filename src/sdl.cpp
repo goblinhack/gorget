@@ -715,8 +715,8 @@ void config_game_gfx_update(void)
   //
   // Use the same resolution as the game
   //
-  game_ui_pix_width_set(game, game_pix_width_get(game) * 2);
-  game_ui_pix_height_set(game, game_pix_height_get(game) * 2);
+  game_ui_pix_height_set(game, game_window_pix_height_get(game));
+  game_ui_pix_width_set(game, game_window_pix_width_get(game));
 
   if (! TILE_WIDTH) {
     ERR("TILE_WIDTH zero");
@@ -772,19 +772,25 @@ void config_game_gfx_update(void)
   //
   // Account for rounding errors, so the tiles look smoother.
   //
-  game_ascii_gl_width_set(game, UI_FONT_WIDTH);
-  game_ascii_gl_height_set(game, UI_FONT_HEIGHT);
+  float font_width  = game_window_pix_width_get(game) / TERM_WIDTH;
+  float font_height = font_width * ((float) UI_FONT_HEIGHT / (float) UI_FONT_WIDTH);
+
+  game_ascii_gl_width_set(game, font_width);
+  game_ascii_gl_height_set(game, font_height);
+  CON("%f x %f", font_width, font_height);
 
   //
   // If we overflow the screen, try to cut a few rows and columns off
   //
   while (game_ascii_gl_width_get(game) * TERM_WIDTH > game_ui_pix_width_get(game)) {
     TERM_WIDTH--;
-    LOG("SDL: - exceeded pixel width, try width: %d", TERM_WIDTH);
+    LOG("SDL: - font width %u exceeded terminal pixel width %u, try term width: %d", game_ascii_gl_width_get(game),
+        game_ui_pix_width_get(game), TERM_WIDTH);
   }
   while (game_ascii_gl_height_get(game) * TERM_HEIGHT > game_ui_pix_height_get(game)) {
     TERM_HEIGHT--;
-    LOG("SDL: - exceeded pixel height, try height: %d", TERM_HEIGHT);
+    LOG("SDL: - font height %u exceeded terminal pixel height %u, try term height: %d",
+        game_ascii_gl_height_get(game), game_ui_pix_height_get(game), TERM_HEIGHT);
   }
 
   LOG("SDL: Terminal");

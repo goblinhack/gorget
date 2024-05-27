@@ -11,11 +11,11 @@
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-#define TERM_GFX_WIDTH_DEF  120
-#define TERM_GFX_HEIGHT_DEF 80
+#define TERM_GFX_WIDTH_DEF  132
+#define TERM_GFX_HEIGHT_DEF 46
 
-#define TERM_WIDTH_MAX  (TERM_GFX_WIDTH_DEF * 2)
-#define TERM_HEIGHT_MAX (TERM_GFX_HEIGHT_DEF * 2)
+#define TERM_WIDTH_MAX  TERM_GFX_WIDTH_DEF
+#define TERM_HEIGHT_MAX TERM_GFX_HEIGHT_DEF
 
 class AsciiCell
 {
