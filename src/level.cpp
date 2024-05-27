@@ -397,10 +397,7 @@ void level_bounds_set(Levelp l)
     l->pixel_map_at.y = 0;
   }
 
-  //
-  // Square map
-  //
-  int max_pix_x = (MAP_WIDTH * dw) - game_pix_height_get(game);
+  int max_pix_x = (MAP_WIDTH * dw) - game_pix_width_get(game);
   int max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(game);
 
   if (l->pixel_map_at.x > max_pix_x) {

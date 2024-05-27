@@ -35,7 +35,7 @@ void level_mouse_position_get(Levelp l)
   // Find out what pixel on the map the mouse is over
   //
   visible_map_mouse_x = sdl.mouse_x - visible_map_tl_x;
-  visible_map_mouse_y = sdl.mouse_y;
+  visible_map_mouse_y = sdl.mouse_y - visible_map_tl_y;
   float scale_x       = (float) game_pix_width_get(game) / (float) game_window_pix_width_get(game);
   float scale_y       = (float) game_pix_height_get(game) / (float) game_window_pix_height_get(game);
   visible_map_mouse_x = (int) ((float) visible_map_mouse_x * scale_x);

@@ -22,28 +22,20 @@ void sdl_display(void)
   //
   glBlendFunc(GL_ONE, GL_ZERO);
 
-  const bool blit_centered_map = true;
-  if (blit_centered_map) {
-    float x_offset
-        = (float) game_pix_width_get(game) - (UI_RIGHTBAR_WIDTH * UI_FONT_WIDTH) - game_pix_height_get(game);
-    x_offset /= (float) game_pix_width_get(game);
-    x_offset *= (float) game_window_pix_width_get(game);
-    x_offset = floor(x_offset);
+  {
+    auto w = game_ascii_gl_width_get(game);
+    auto h = game_ascii_gl_height_get(game);
 
-    int visible_map_tl_x = x_offset;
-    int visible_map_tl_y = 0;
-    int visible_map_br_x = game_window_pix_height_get(game) + x_offset;
-    int visible_map_br_y = game_window_pix_height_get(game);
-
-    game_visible_map_set(game, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+    int visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
+    int visible_map_tl_y = h * UI_TOPCON_HEIGHT;
+    int visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
+    int visible_map_br_y = (TERM_HEIGHT - 2) * h;
 
     blit_init();
     blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
          visible_map_br_y);
 
     blit_flush();
-  } else {
-    blit_fbo_window_pix(FBO_MAP);
   }
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

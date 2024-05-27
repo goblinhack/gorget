@@ -688,64 +688,16 @@ void config_game_gfx_update(void)
   LOG("SDL: Update");
   TRACE_AND_INDENT();
 
+  //
+  // Display ratio
+  //
   game_aspect_ratio_set(game, (double) game_window_pix_width_get(game) / (double) game_window_pix_height_get(game));
 
   //
-  // Pixel perfect size
-  //
-  game_pix_height_set(game, game_window_pix_height_get(game));
-  game_pix_width_set(game, game_window_pix_width_get(game));
-
-  game_pix_height_set(game, TILE_WIDTH * MAP_HEIGHT / 4);
-  float game_pix_width = (int) (((double) game_pix_height_get(game)) * game_aspect_ratio_get(game));
-  game_pix_width /= TILE_WIDTH;
-  game_pix_width = ceil(game_pix_width);
-  game_pix_width *= TILE_WIDTH;
-  game_pix_width_set(game, game_pix_width);
-
-  if (! game_pix_width_get(game)) {
-    ERR("game->config.game_pix_width is zero");
-    return;
-  }
-  if (! game_pix_height_get(game)) {
-    ERR("game->config.game_pix_height is zero");
-    return;
-  }
-
-  //
-  // Use the same resolution as the game
+  // Use the same resolution as the game for large smooth fonts
   //
   game_ui_pix_height_set(game, game_window_pix_height_get(game));
   game_ui_pix_width_set(game, game_window_pix_width_get(game));
-
-  if (! TILE_WIDTH) {
-    ERR("TILE_WIDTH zero");
-    return;
-  }
-
-  if (! TILE_HEIGHT) {
-    ERR("TILE_HEIGHT zero");
-    return;
-  }
-
-  //
-  // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
-  //
-  game_map_pix_width_set(game, game_pix_height_get(game));
-  game_map_pix_height_set(game, game_pix_height_get(game));
-
-  float tiles_across = game_pix_width_get(game) / TILE_WIDTH;
-  float tiles_down   = game_pix_height_get(game) / TILE_HEIGHT;
-
-  game_tiles_visible_across_set(game, tiles_across);
-  game_tiles_visible_down_set(game, tiles_down);
-
-  LOG("SDL: Window:");
-  LOG("SDL: - config pixel size         : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
-  LOG("SDL: - window pixel size         : %dx%d", game_window_pix_width_get(game), game_window_pix_height_get(game));
-  LOG("SDL: - UI pixel size             : %dx%d", game_ui_pix_width_get(game), game_ui_pix_height_get(game));
-  LOG("SDL: - visible screen pixel size : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
-  LOG("SDL: - visible map pixel size    : %dx%d", game_map_pix_width_get(game), game_map_pix_height_get(game));
 
   TERM_WIDTH  = game_ui_gfx_term_width_get(game);
   TERM_HEIGHT = game_ui_gfx_term_height_get(game);
@@ -777,7 +729,6 @@ void config_game_gfx_update(void)
 
   game_ascii_gl_width_set(game, font_width);
   game_ascii_gl_height_set(game, font_height);
-  CON("%f x %f", font_width, font_height);
 
   //
   // If we overflow the screen, try to cut a few rows and columns off
@@ -793,6 +744,69 @@ void config_game_gfx_update(void)
         game_ascii_gl_height_get(game), game_ui_pix_height_get(game), TERM_HEIGHT);
   }
 
+  //
+  // Work out the size of the game map
+  //
+  if (! TILE_WIDTH) {
+    ERR("TILE_WIDTH zero");
+    return;
+  }
+
+  if (! TILE_HEIGHT) {
+    ERR("TILE_HEIGHT zero");
+    return;
+  }
+
+  //
+  // What size in terminal cells does the map take up?
+  //
+  double term_cells_w = TERM_WIDTH - (UI_LEFTBAR_WIDTH + UI_RIGHTBAR_WIDTH);
+  double term_cells_h = TERM_HEIGHT - UI_TOPCON_HEIGHT - 2;
+  double ratio        = (term_cells_w / ((double) UI_FONT_HEIGHT / (double) UI_FONT_WIDTH)) / term_cells_h;
+  //
+  // Now convert that to pixels
+  //
+  double visible_game_map_w = (double) TILE_WIDTH * MAP_TILES_ACROSS;
+  double visible_game_map_h = (double) TILE_HEIGHT * (MAP_TILES_ACROSS / ratio);
+  //
+  // Compensate for any additional pixels the rounding of the terminal cells loses
+  //
+  double pixel_rounding_w_fixup
+      = (game_ascii_gl_width_get(game) * TERM_WIDTH) / (double) game_window_pix_width_get(game);
+  double pixel_rounding_h_fixup
+      = (game_ascii_gl_height_get(game) * TERM_HEIGHT) / (double) game_window_pix_height_get(game);
+  visible_game_map_w *= pixel_rounding_w_fixup;
+  visible_game_map_h *= pixel_rounding_h_fixup;
+
+  game_pix_width_set(game, visible_game_map_w);
+  game_pix_height_set(game, visible_game_map_h);
+
+  if (! game_pix_width_get(game)) {
+    ERR("game->config.game_pix_width is zero");
+    return;
+  }
+  if (! game_pix_height_get(game)) {
+    ERR("game->config.game_pix_height is zero");
+    return;
+  }
+
+  //
+  // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
+  //
+  game_map_pix_width_set(game, game_pix_width_get(game));
+  game_map_pix_height_set(game, game_pix_height_get(game));
+
+  float tiles_across = game_pix_width_get(game) / TILE_WIDTH;
+  float tiles_down   = game_pix_height_get(game) / TILE_HEIGHT;
+
+  game_tiles_visible_across_set(game, tiles_across);
+  game_tiles_visible_down_set(game, tiles_down);
+
+  LOG("SDL: Window:");
+  LOG("SDL: - window pixel size         : %dx%d", game_window_pix_width_get(game), game_window_pix_height_get(game));
+  LOG("SDL: - UI pixel size             : %dx%d", game_ui_pix_width_get(game), game_ui_pix_height_get(game));
+  LOG("SDL: - visible screen pixel size : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
+  LOG("SDL: - visible map pixel size    : %dx%d", game_map_pix_width_get(game), game_map_pix_height_get(game));
   LOG("SDL: Terminal");
   LOG("SDL: - ascii gl size        : %ux%u", game_ascii_gl_width_get(game), game_ascii_gl_height_get(game));
   LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
