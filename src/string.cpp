@@ -458,7 +458,7 @@ char *strcasestr_(const char *s, const char *find)
 /*
  * Split a string "like\nthis" into "like" and "this".
  */
-vector_string split(const char *text, int max_line_len)
+std::vector< std::string > split(const char *text, int max_line_len)
 {
   TRACE_NO_INDENT();
   uint8_t           found_format_string;
@@ -594,7 +594,7 @@ vector_string split(const char *text, int max_line_len)
   return result;
 }
 
-vector_string split(const std::string &text, int max_line_len)
+std::vector< std::string > split(const std::string &text, int max_line_len)
 {
   TRACE_NO_INDENT();
   uint8_t found_format_string;

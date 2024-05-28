@@ -446,6 +446,5 @@ void wid_new_game(class Game *g)
 
   game_create_level(g);
   game_state_reset(g, "new game");
-
-  wid_rightbar_init(g);
+  game_entered_level(g);
 }

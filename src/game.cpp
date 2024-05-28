@@ -9,6 +9,7 @@
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
+#include "my_wid_topcon.hpp"
 #include "my_wids.hpp"
 
 #include <SDL_mixer.h>
@@ -206,6 +207,7 @@ public:
   Game(void) = default;
 
   void create_level(void);
+  void entered_level(void);
   void destroy_level(void);
   void display(void);
   void fini(void);
@@ -345,13 +347,39 @@ void Game::create_level(void)
   set_seed();
   destroy_level();
 
-  {
-    TRACE_NO_INDENT();
-    LOG("Level create");
-    level = level_new();
-  }
+  LOG("Level create");
+  level = level_new();
 }
 void game_create_level(class Game *g) { g->create_level(); }
+
+void Game::entered_level(void)
+{
+  LOG("Game entered level");
+  TRACE_AND_INDENT();
+
+  TOPCON("Welcome to the dungeons of dread, home of the black dragon, %%fg=red$Gorget%%fg=reset$.");
+  TOPCON("Complete all %%fg=yellow$16%%fg=reset$ levels and collect the Darkenstone to win.");
+
+  CON("%%fg=red$          @@@@@@@@   @@@@@@   @@@@@@@    @@@@@@@@  @@@@@@@@  @@@@@@@%%fg=reset$");
+  CON("%%fg=red$         @@@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@  @@@@@@@%%fg=reset$");
+  CON("%%fg=red$         !@@        @@!  @@@  @@!  @@@  !@@        @@!         @@!%%fg=reset$");
+  CON("%%fg=red$         !@!        !@!  @!@  !@!  @!@  !@!        !@!         !@!%%fg=reset$");
+  CON("%%fg=red$         !@! @!@!@  @!@  !@!  @!@!!@!   !@! @!@!@  @!!!:!      @!!%%fg=reset$");
+  CON("%%fg=red$         !!! !!@!!  !@!  !!!  !!@!@!    !!! !!@!!  !!!!!:      !!!%%fg=reset$");
+  CON("%%fg=red$         :!!   !!:  !!:  !!!  !!: :!!   :!!   !!:  !!:         !!:%%fg=reset$");
+  CON("%%fg=red$         :!:   !::  :!:  !:!  :!:  !:!  :!:   !::  :!:         :!:%%fg=reset$");
+  CON("%%fg=red$          ::: ::::  ::::: ::  ::   :::   ::: ::::   :: ::::     ::%%fg=reset$");
+  CON("%%fg=red$          :: :: :    : :  :    :   : :   :: :: :   : :: ::      :%%fg=reset$");
+  CON("%%fg=red$           :              :    .         :: :      :  :  :%%fg=reset$");
+  CON("%%fg=red$           .              :               : .      .     .%%fg=reset$");
+  CON("%%fg=red$                          :               .%%fg=reset$");
+  CON("%%fg=red$                          .%%fg=reset$");
+  CON("%%fg=green$Version: " MYVER "%%fg=reset$");
+  CON("Press %%fg=yellow$<tab>%%fg=reset$ to complete commands.");
+  CON("Press %%fg=yellow$?%%fg=reset$ to show command options.");
+  wid_topcon_flush();
+}
+void game_entered_level(class Game *g) { g->entered_level(); }
 
 void Game::destroy_level(void)
 {
@@ -408,6 +436,8 @@ void Game::state_change(uint8_t new_state, const std::string &why)
 {
   TRACE_NO_INDENT();
 
+  fprintf(stderr, "ZZZ NEIL %s %s %d state %d\n", __FILE__, __FUNCTION__, __LINE__, game->state);
+  fprintf(stderr, "ZZZ NEIL %s %s %d new_state %d\n", __FILE__, __FUNCTION__, __LINE__, new_state);
   if (game->state == new_state) {
     return;
   }
@@ -422,7 +452,7 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   // Why oh why change state
   //
-  LOG("INF: Game state change: %s -> %s, reason %s", gama_state_to_string(old_state).c_str(),
+  CON("INF: Game state change: %s -> %s, reason: %s", gama_state_to_string(old_state).c_str(),
       gama_state_to_string(new_state).c_str(), why.c_str());
   TRACE_AND_INDENT();
 
@@ -435,12 +465,15 @@ void Game::state_change(uint8_t new_state, const std::string &why)
       wid_save_destroy(game);
       wid_quit_destroy(game);
       wid_rightbar_fini(game);
+      wid_topcon_fini();
       break;
     case STATE_PLAYING :
       wid_main_menu_destroy(game);
       wid_load_destroy(game);
       wid_save_destroy(game);
       wid_quit_destroy(game);
+      wid_rightbar_init(game);
+      wid_topcon_init();
       break;
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :

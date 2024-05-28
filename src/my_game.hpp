@@ -179,6 +179,7 @@ uint8_t game_mouse_up(class Game *, int x, int y, uint32_t button);
 
 void game_config_reset(class Game *);
 void game_create_level(class Game *);
+void game_entered_level(class Game *);
 void game_destroy_level(class Game *);
 void game_display(class Game *);
 void game_fini(class Game *);

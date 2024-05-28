@@ -11,6 +11,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
 #include "my_wid_console.hpp"
+#include "my_wid_topcon.hpp"
 
 #include <stdarg.h>
 #include <string.h>
@@ -502,4 +503,39 @@ void putf(FILE *fp, const char *s)
 
   fputs(s, fp);
   putc('\n', fp);
+}
+
+void topcon_(const char *fmt, va_list args)
+{
+  TRACE_NO_INDENT();
+
+  char buf[ MAXLONGSTR ];
+  char ts[ MAXLONGSTR / 2 ];
+  int  len = 0;
+
+  buf[ 0 ] = '\0';
+  get_timestamp(ts, MAXLONGSTR);
+  snprintf(buf, sizeof(buf) - 1, "%s", ts);
+  len = (int) strlen(buf);
+  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
+
+  putf(MY_STDOUT, buf);
+
+  term_log(buf);
+  putchar('\n');
+
+  wid_topcon_log(buf + len);
+  wid_console_log(buf + len);
+  FLUSH_THE_CONSOLE();
+}
+
+void TOPCON(const char *fmt, ...)
+{
+  TRACE_NO_INDENT();
+
+  va_list args;
+
+  va_start(args, fmt);
+  topcon_(fmt, args);
+  va_end(args);
 }

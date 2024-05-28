@@ -95,6 +95,8 @@ void con(const char *fmt);
 void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void ctrlc_handler(int sig);
 void die(void);
+void TOPCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void topcon(const wchar_t *fmt);
 void error_handler(const std::string &error);
 void flush_the_console(void);
 void GAME_UI_MSG_BOX(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);

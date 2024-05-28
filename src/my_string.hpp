@@ -10,8 +10,6 @@
 
 #include <vector>
 
-using vector_string = std::vector< std::string >;
-
 extern size_t strlcpy_(char *dst, const char *src, size_t size);
 extern size_t strlcat_(char *dst, const char *src, size_t size);
 
@@ -33,8 +31,8 @@ int length_without_format(const std::string &);
 int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...);
 int strisregexp(const char *in);
 
-vector_string split(const char *in, int max_line_len);
-vector_string split(const std::string &, int max_line_len);
+std::vector< std::string > split(const char *in, int max_line_len);
+std::vector< std::string > split(const std::string &, int max_line_len);
 
 std::string  capitalise(std::string in);
 std::string &ltrim(std::string &s);
