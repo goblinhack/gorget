@@ -18,7 +18,6 @@ static void wid_error_destroy(void)
   delete wid_error_window;
   wid_error_window = nullptr;
 
-  game_fini(game);
   wid_main_menu_select(game);
   CON("It all went dark briefly. What happened?");
 }

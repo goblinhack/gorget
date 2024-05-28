@@ -663,7 +663,7 @@ uint8_t sdl_user_exit(class Tokens *tokens, void *context)
   return true;
 }
 
-void sdl_flush_display(bool force)
+void sdl_flush_display(class Game *g, bool force)
 {
   TRACE_NO_INDENT();
 
@@ -680,7 +680,7 @@ void sdl_flush_display(bool force)
   gl_leave_2d_mode();
   gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 
-  sdl_display();
+  sdl_display(g);
 }
 
 void config_game_gfx_update(void)

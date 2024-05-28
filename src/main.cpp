@@ -60,9 +60,7 @@ void quit(void)
   signal(SIGFPE, nullptr); // uninstall our handler
 #endif
 
-  if (game) {
-    game_fini(game);
-  }
+  game_fini(game);
 
   LOG("FIN: sdl_exit");
   sdl_exit();
@@ -143,7 +141,7 @@ void quit(void)
   LOG("FIN: Cleanup done");
 }
 
-void restart(void)
+void restart(class Game *g)
 {
   TRACE_AND_INDENT();
   char *args[] = {nullptr, nullptr};
@@ -165,7 +163,7 @@ void restart(void)
 
   CON("FIN: Restarting the program... Wish me luck.");
   CON("FIN: Run \"%s\"", executable);
-  sdl_flush_display(true);
+  sdl_flush_display(g, true);
   sleep(5);
 
   args[ 0 ] = executable;
@@ -584,7 +582,7 @@ void flush_the_console(void)
   //
 #ifdef _WIN32
   wid_visible(wid_console_window);
-  sdl_flush_display(true);
+  sdl_flush_display(game, true);
 #endif
 }
 
@@ -684,7 +682,7 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_need_restart) {
-      restart();
+      restart(game);
     }
   }
 
@@ -868,7 +866,7 @@ int main(int argc, char *argv[])
   if (g_need_restart) {
     g_need_restart = false;
 #ifdef _WIN32
-    restart();
+    restart(game);
 #else
     CON("FIN: Restart");
     execv(argv[ 0 ], argv);

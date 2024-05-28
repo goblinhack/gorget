@@ -105,7 +105,7 @@ void myerr(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void py_myerr(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void quit(void);
 void reset_globals(void);
-void restart(void);
+void restart(class Game *);
 void SDL_MSG_BOX(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void segv_handler(int sig);
 void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);

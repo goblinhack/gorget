@@ -30,7 +30,7 @@ static bool wid_quit_yes(Widp w, int x, int y, uint32_t button)
   if (game_level_get(game)) {
     LOG("INF: Continue game");
 
-    game_fini(game);
+    game_destroy_level(game);
     wid_quit_destroy(game);
     wid_main_menu_select(game);
   } else {

@@ -218,7 +218,7 @@ void sdl_loop(void)
     gl_leave_2d_mode();
     gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 
-    sdl_display();
+    sdl_display(game);
 
     //
     // Config change?

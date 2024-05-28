@@ -321,7 +321,16 @@ void Game::fini(void)
   TRACE_AND_INDENT();
   destroy_level();
 }
-void game_fini(class Game *g) { g->fini(); }
+void game_fini(class Game *g)
+{
+  if (! g) {
+    return;
+  }
+
+  g->fini();
+  delete g;
+  game = NULL;
+}
 
 void game_save_config(class Game *g) { g->save_config(); }
 

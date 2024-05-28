@@ -11,7 +11,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_wid_console.hpp"
 
-void sdl_display(void)
+void sdl_display(class Game *g)
 {
   blit_fbo_bind(FBO_FINAL);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -22,20 +22,23 @@ void sdl_display(void)
   //
   glBlendFunc(GL_ONE, GL_ZERO);
 
-  {
-    auto w = game_ascii_gl_width_get(game);
-    auto h = game_ascii_gl_height_get(game);
+  if (g) {
+    auto level = game_level_get(g);
+    if (level) {
+      auto w = game_ascii_gl_width_get(game);
+      auto h = game_ascii_gl_height_get(game);
 
-    int visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
-    int visible_map_tl_y = h * UI_TOPCON_HEIGHT;
-    int visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
-    int visible_map_br_y = (TERM_HEIGHT - 2) * h;
+      int visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
+      int visible_map_tl_y = h * UI_TOPCON_HEIGHT;
+      int visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
+      int visible_map_br_y = (TERM_HEIGHT - 2) * h;
 
-    blit_init();
-    blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-         visible_map_br_y);
+      blit_init();
+      blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+           visible_map_br_y);
 
-    blit_flush();
+      blit_flush();
+    }
   }
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -72,7 +75,7 @@ void sdl_display_reset(void)
 
   wid_console_init();
   wid_hide(wid_console_window);
-  sdl_flush_display();
+  sdl_flush_display(game);
 
   wid_console_deserialize(old_console);
 
@@ -84,5 +87,5 @@ void sdl_display_reset(void)
   wid_display_all();
 
   CON("SDL: Video reset");
-  sdl_flush_display();
+  sdl_flush_display(game);
 }
