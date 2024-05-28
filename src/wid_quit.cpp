@@ -9,7 +9,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_wids.hpp"
 
-WidPopup *wid_quit_window;
+static WidPopup *wid_quit_window;
 
 void wid_quit_destroy(class Game *g)
 {

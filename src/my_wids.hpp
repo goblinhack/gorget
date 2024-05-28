@@ -27,19 +27,7 @@ extern void wid_save_select(class Game *);
 extern void wid_new_game(class Game *);
 extern void wid_rightbar_fini(class Game *);
 extern bool wid_rightbar_init(class Game *);
-extern bool wid_rightbar_ascii_create(class Game *);
-
-extern WidPopup *wid_load;
-extern WidPopup *wid_save;
-extern WidPopup *wid_quit_window;
-
-//
-// Global widgets.
-//
-extern Widp wid_rightbar_window;
-extern Widp wid_map_mini;
-extern Widp wid_rightbar;
-
-extern bool is_mouse_over_rightbar(void);
+extern void wid_leftbar_fini(class Game *);
+extern bool wid_leftbar_init(class Game *);
 
 #endif

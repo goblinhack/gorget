@@ -187,7 +187,7 @@ static void wid_topcon_wid_create(void)
 
   TRACE_NO_INDENT();
   {
-    point tl = make_point(0, 0);
+    point tl = make_point(UI_LEFTBAR_WIDTH, 0);
     point br = make_point(UI_TOPCON_VIS_WIDTH - 1, h - 1);
 
     wid_topcon_window = wid_new_square_window("wid topcon");

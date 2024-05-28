@@ -436,8 +436,6 @@ void Game::state_change(uint8_t new_state, const std::string &why)
 {
   TRACE_NO_INDENT();
 
-  fprintf(stderr, "ZZZ NEIL %s %s %d state %d\n", __FILE__, __FUNCTION__, __LINE__, game->state);
-  fprintf(stderr, "ZZZ NEIL %s %s %d new_state %d\n", __FILE__, __FUNCTION__, __LINE__, new_state);
   if (game->state == new_state) {
     return;
   }
@@ -452,7 +450,7 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   // Why oh why change state
   //
-  CON("INF: Game state change: %s -> %s, reason: %s", gama_state_to_string(old_state).c_str(),
+  LOG("INF: Game state change: %s -> %s, reason: %s", gama_state_to_string(old_state).c_str(),
       gama_state_to_string(new_state).c_str(), why.c_str());
   TRACE_AND_INDENT();
 
@@ -465,6 +463,7 @@ void Game::state_change(uint8_t new_state, const std::string &why)
       wid_save_destroy(game);
       wid_quit_destroy(game);
       wid_rightbar_fini(game);
+      wid_leftbar_fini(game);
       wid_topcon_fini();
       break;
     case STATE_PLAYING :
@@ -473,6 +472,7 @@ void Game::state_change(uint8_t new_state, const std::string &why)
       wid_save_destroy(game);
       wid_quit_destroy(game);
       wid_rightbar_init(game);
+      wid_leftbar_init(game);
       wid_topcon_init();
       break;
     case STATE_KEYBOARD_MENU :

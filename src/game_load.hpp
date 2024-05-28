@@ -12,7 +12,7 @@
 
 #include <array>
 
-WidPopup *wid_load;
+static WidPopup *wid_load;
 
 static std::string                    game_load_error;
 bool                                  game_load_headers_only;

@@ -9,7 +9,7 @@
 #include "my_serialize.hpp"
 #include "my_wid_popup.hpp"
 
-WidPopup *wid_save;
+static WidPopup *wid_save;
 
 extern bool game_load_headers_only;
 bool        game_save_config_only;
