@@ -202,10 +202,8 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
                    const char *arr[])
 {
   TRACE_AND_INDENT();
-  Texp tex;
-  Texp tex_monochrome;
-  Texp tex_mask;
-  tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, GL_NEAREST);
+
+  Texp tex = tex_load(file, alias, GL_NEAREST);
 
   float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
   float fh = 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
@@ -353,6 +351,7 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
   Texp tex;
   Texp tex_monochrome;
   Texp tex_mask;
+
   tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, GL_NEAREST);
 
   float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));

@@ -155,8 +155,7 @@ static void gfx_init_font_ui(void)
       "nothing",
   };
 
-  tile_load_arr_sprites("data/fonts/font.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles,
-                        GL_NEAREST);
+  tile_load_arr("data/fonts/font.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 static void gfx_ui_init_0(void)
