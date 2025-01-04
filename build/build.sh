@@ -223,12 +223,12 @@ if [ "$SDL2_CONFIG" != "" ]; then
 fi
 
 log_info "SDL2 config                : $SDL2_CONFIG"
-log_info "SDL2 version               : "$($SDL2_CONFIG --version)
-log_info "SDL2 libs                  : "$($SDL2_CONFIG --libs)
-log_info "SDL2 static libs           : "$($SDL2_CONFIG --static-libs)
-log_info "SDL2 cflags                : "$($SDL2_CONFIG --cflags)
-log_info "SDL2 prefix                : "$($SDL2_CONFIG --prefix)
-log_info "SDL2 exec-prefix           : "$($SDL2_CONFIG --exec-prefix)
+log_info "SDL2 version               : "$($SDL2_CONFIG --version) 2>/dev/null
+log_info "SDL2 libs                  : "$($SDL2_CONFIG --libs) 2>/dev/null
+log_info "SDL2 static libs           : "$($SDL2_CONFIG --static-libs) 2>/dev/null
+log_info "SDL2 cflags                : "$($SDL2_CONFIG --cflags) 2>/dev/null
+log_info "SDL2 prefix                : "$($SDL2_CONFIG --prefix) 2>/dev/null
+log_info "SDL2 exec-prefix           : "$($SDL2_CONFIG --exec-prefix) 2>/dev/null
 log_info "SDL2 include path          : $SDL2_INC_PATH"
 log_info "SDL2 mixer.h               : $SDL2_MIXER"
 #log_info "SDL2 found                 : $SDL2_SCORE"
