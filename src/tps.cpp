@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_tps.hpp"
+/* clang-format off */
 
 bool templates_init(void)
 {
@@ -42,3 +43,4 @@ bool templates_init(void)
 
   return true;
 }
+/* clang-format on */

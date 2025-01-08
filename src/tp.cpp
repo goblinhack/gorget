@@ -21,6 +21,7 @@
 // they have fixed numbers. This list helps to achieve that. It is optional for a template
 // to be in this list
 //
+/* clang-format off */
 std::initializer_list< std::string > tps = {
     // clang-format off
     "", // ID 0 means unused
@@ -42,15 +43,16 @@ std::initializer_list< std::string > tps = {
     "floor",
   /* end shell marker1 */
 };
+/* clang-format on */
 
 class Tp
 {
 public:
   uint8_t z_depth {};
 
-  TpId    id {};
+  TpId id {};
 
-  std::vector<class Tile *> tiles;
+  std::vector< class Tile * > tiles;
 
   bool is_monst_class[ MONST_CLASS_MAX ] {};
 
@@ -82,7 +84,7 @@ using Tpidmap = std::vector< class Tp * >;
 Tpidmap tp_id_map;
 
 // begin sort marker3 {
-static Tpidmap tp_flag_map[THING_FLAG_MAX];
+static Tpidmap tp_flag_map[ THING_FLAG_MAX ];
 static Tpidmap tp_monst_class[ MONST_CLASS_MAX ];
 // end sort marker3 }
 
@@ -219,8 +221,8 @@ Tpp tp_load(const char *name_in)
     DIE("tp_load: thing template name [%s] already loaded", name_in);
   }
 
-  auto tp = new Tp();
-  tp->name = name;
+  auto tp             = new Tp();
+  tp->name            = name;
   tp->text_short_name = name;
 
   auto result = tp_name_map.insert(std::make_pair(name, tp));
@@ -250,7 +252,7 @@ Tilep tp_first_tile(Tpp tp)
   //
   // Get the first anim tile.
   //
-  return tp->tiles[0];
+  return tp->tiles[ 0 ];
 }
 
 void tp_random_dungeon_init(void)
@@ -269,8 +271,8 @@ void tp_random_dungeon_init(void)
     }
 
     for (auto f = 0; f < THING_FLAG_MAX; f++) {
-      if (tp->flag[f]) {
-        tp_flag_map[f].push_back(tp);
+      if (tp->flag[ f ]) {
+        tp_flag_map[ f ].push_back(tp);
       }
     }
   }
@@ -329,11 +331,11 @@ Tpp tp_random_monst(int c)
 Tpp tp_random(ThingFlag f)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! tp_flag_map[f].size())) {
+  if (unlikely(! tp_flag_map[ f ].size())) {
     DIE("No wall found");
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_flag_map[f]);
+  return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
 Tilep tp_tiles_get(Tpp tp, int index) { return tp->tiles[ index ]; }
@@ -344,13 +346,9 @@ const char *tp_name(Tpp tp) { return tp->name.c_str(); }
 const char *to_string(Tpp tp) { return tp->text_short_name.c_str(); }
 const char *to_short_string(Tpp tp) { return tp->text_short_name.c_str(); }
 
-bool tp_flag(Tpp tp, ThingFlag f) {
-  return tp->flag[f];
-}
+bool tp_flag(Tpp tp, ThingFlag f) { return tp->flag[ f ]; }
 
-void tp_flag_set(Tpp tp, ThingFlag f, bool val) {
-  tp->flag[f] = val;
-}
+void tp_flag_set(Tpp tp, ThingFlag f, bool val) { tp->flag[ f ] = val; }
 
 uint8_t tp_player_index_get(Tpp tp) { return tp->player_index; };
 void    tp_player_index_set(Tpp tp, uint8_t val) { tp->player_index = val; };

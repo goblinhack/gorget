@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+/* clang-format off */
 bool templates_init(void);
 
 /* begin shell marker1 */
@@ -18,3 +19,4 @@ bool tp_load_door();
 bool tp_load_wall();
 bool tp_load_floor();
 /* end shell marker1 */
+/* clang-format on */
