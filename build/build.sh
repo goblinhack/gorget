@@ -51,7 +51,7 @@ fi
 unset UNAME
 
 # Prefer gnu over freebsd coreutils
-PATH=/opt/local/libexec/gnubin/head:$PATH
+PATH=/opt/local/libexec/gnubin:$PATH
 
 export PATH
 log_info "Distro                     : $DISTRO"

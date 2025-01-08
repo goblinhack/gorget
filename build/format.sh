@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Prefer gnu over freebsd coreutils
-PATH=/opt/local/libexec/gnubin/head:$PATH
+PATH=/opt/local/libexec/gnubin:$PATH
 export PATH
 
 for i in *.cpp *.hpp

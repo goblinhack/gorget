@@ -6,7 +6,7 @@
 #
 
 # Prefer gnu over freebsd coreutils
-PATH=/opt/local/libexec/gnubin/head:$PATH
+PATH=/opt/local/libexec/gnubin:$PATH
 export PATH
 
 PRE=$(mktemp) || exit 1
@@ -30,10 +30,10 @@ do
         continue
       fi
 
-      sed "1,/begin shell marker${WHICH}/!d" $IN | head -n -1 > $PRE
+      sed "1,/begin shell marker${WHICH}/!d" $IN | head -n -1 - > $PRE
       sed "/begin shell marker${WHICH}/,/end shell marker${WHICH}/!d" $IN | grep "\* shell" | sed -e 's/\/\* shell //g' -e 's/\*\/$//g' > $PAYLOAD
       sed "/begin shell marker${WHICH}/,/end shell marker${WHICH}/!d" $IN | grep "shell" | grep -v "end shell marker${WHICH}" > $SHELL
-      sed "/end shell marker${WHICH}/,\$!d" $IN | tail -n +2 > $POST
+      sed "/end shell marker${WHICH}/,\$!d" $IN | tail -n +2 - > $POST
       cat $PRE > $OUT
       cat $SHELL >> $OUT
       sh $PAYLOAD >> $OUT
