@@ -5,6 +5,10 @@
 # Use "do" as the first arg if the output looks sane.
 #
 
+# Prefer gnu over freebsd coreutils
+PATH=/opt/local/libexec/gnubin/head:$PATH
+export PATH
+
 PRE=$(mktemp) || exit 1
 PAYLOAD=$(mktemp) || exit 1
 POST=$(mktemp) || exit 1

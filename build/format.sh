@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Prefer gnu over freebsd coreutils
+PATH=/opt/local/libexec/gnubin/head:$PATH
+export PATH
+
 for i in *.cpp *.hpp
 do
   case $i in

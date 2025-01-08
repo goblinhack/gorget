@@ -50,6 +50,10 @@ fi
 [ "$DISTRO" == "" ] && export DISTRO=$UNAME
 unset UNAME
 
+# Prefer gnu over freebsd coreutils
+PATH=/opt/local/libexec/gnubin/head:$PATH
+
+export PATH
 log_info "Distro                     : $DISTRO"
 
 help_full()
