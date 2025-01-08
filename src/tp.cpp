@@ -35,12 +35,12 @@ std::initializer_list< std::string > tps = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
-    "cursor_path",
-    "cursor_at",
+    "floor",
     "key",
     "exit",
     "door",
-    "floor",
+    "cursor_path",
+    "cursor_at",
   /* end shell marker1 */
 };
 /* clang-format on */

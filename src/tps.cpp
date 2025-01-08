@@ -4,7 +4,6 @@
 
 #include "my_callstack.hpp"
 #include "my_tps.hpp"
-/* clang-format off */
 
 bool templates_init(void)
 {
@@ -15,13 +14,10 @@ bool templates_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
-  if (! tp_load_player()) {
+  if (! tp_load_floor()) {
     return false;
   }
-  if (! tp_load_cursor_path()) {
-    return false;
-  }
-  if (! tp_load_cursor_at()) {
+  if (! tp_load_wall()) {
     return false;
   }
   if (! tp_load_key()) {
@@ -33,14 +29,16 @@ bool templates_init(void)
   if (! tp_load_door()) {
     return false;
   }
-  if (! tp_load_wall()) {
+  if (! tp_load_cursor_path()) {
     return false;
   }
-  if (! tp_load_floor()) {
+  if (! tp_load_cursor_at()) {
+    return false;
+  }
+  if (! tp_load_player()) {
     return false;
   }
   /* end shell marker1 */
 
   return true;
 }
-/* clang-format on */

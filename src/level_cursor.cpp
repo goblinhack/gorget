@@ -375,4 +375,3 @@ void level_cursor_update(Levelp l)
   //
   level_cursor_path_apply(l, cursor_path);
 }
-
