@@ -195,7 +195,11 @@ static void err_(const char *fmt, va_list args)
       len = (int) strlen(buf);
     }
 
-    snprintf(buf + len, MAXLONGSTR - len, "ERROR: %%%%fg=red$%s%%%%fg=reset$", error_buf);
+    if (snprintf(buf + len, MAXLONGSTR - len, "ERROR: %%%%fg=red$%s%%%%fg=reset$", error_buf) < 0) {
+      ERR("truncation");
+      return;
+    }
+
     putf(MY_STDERR, buf);
     putf(MY_STDOUT, buf);
 
@@ -243,7 +247,11 @@ static void py_err_(const char *fmt, va_list args)
       len = (int) strlen(buf);
     }
 
-    snprintf(buf + len, MAXLONGSTR - len, "ERROR: %%%%fg=red$%s%%%%fg=reset$", error_buf);
+    if (snprintf(buf + len, MAXLONGSTR - len, "ERROR: %%%%fg=red$%s%%%%fg=reset$", error_buf) < 0) {
+      ERR("truncation");
+      return;
+    }
+
     putf(MY_STDERR, buf);
     putf(MY_STDOUT, buf);
 
