@@ -335,19 +335,15 @@ int sdl_get_mouse(void)
     return 0;
   }
 
-  int x, y;
+  int x = 0, y = 0;
   int button = SDL_GetMouseState(&x, &y);
 
   if (! x && ! y) {
     return button;
   }
 
-  /*
-   * I'm not sure we want this - at the least it needs rounding
-   *
-  x *= game->config.window_pix_width / game->config.config_pix_width;
-  y *= game->config.window_pix_height / game->config.config_pix_height;
-  */
+  x *= game_window_pix_width_get(game) / game_ui_pix_width_get(game);
+  y *= game_window_pix_height_get(game) / game_ui_pix_height_get(game);
 
   sdl.mouse_x = x;
   sdl.mouse_y = y;
@@ -694,7 +690,8 @@ void config_game_gfx_update(void)
   game_aspect_ratio_set(game, (double) game_window_pix_width_get(game) / (double) game_window_pix_height_get(game));
 
   //
-  // Use the same resolution as the game for large smooth fonts
+  // Use the same resolution as the game for large smooth fonts.
+  // This is the max size we can have. The real size will be trimmed based on how many characters we can fit.
   //
   game_ui_pix_height_set(game, game_window_pix_height_get(game));
   game_ui_pix_width_set(game, game_window_pix_width_get(game));
@@ -711,12 +708,12 @@ void config_game_gfx_update(void)
     return;
   }
 
-  if (TERM_WIDTH >= TERM_WIDTH_MAX) {
+  if (TERM_WIDTH > TERM_WIDTH_MAX) {
     LOG("SDL: - %d exceeded console max width: %d", TERM_WIDTH, TERM_WIDTH_MAX);
     TERM_WIDTH = TERM_WIDTH_MAX;
   }
 
-  if (TERM_HEIGHT >= TERM_HEIGHT_MAX) {
+  if (TERM_HEIGHT > TERM_HEIGHT_MAX) {
     LOG("SDL: - %d exceeded console max height: %d", TERM_HEIGHT, TERM_HEIGHT_MAX);
     TERM_HEIGHT = TERM_HEIGHT_MAX;
   }
@@ -802,10 +799,13 @@ void config_game_gfx_update(void)
   game_tiles_visible_across_set(game, tiles_across);
   game_tiles_visible_down_set(game, tiles_down);
 
+  game_ui_pix_width_set(game, TERM_WIDTH * game_ascii_gl_width_get(game));
+  game_ui_pix_height_set(game, TERM_HEIGHT * game_ascii_gl_height_get(game));
+
   LOG("SDL: Window:");
   LOG("SDL: - window pixel size         : %dx%d", game_window_pix_width_get(game), game_window_pix_height_get(game));
   LOG("SDL: - UI pixel size             : %dx%d", game_ui_pix_width_get(game), game_ui_pix_height_get(game));
-  LOG("SDL: - visible screen pixel size : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
+  LOG("SDL: - game map pixel size       : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
   LOG("SDL: - visible map pixel size    : %dx%d", game_map_pix_width_get(game), game_map_pix_height_get(game));
   LOG("SDL: Terminal");
   LOG("SDL: - ascii gl size        : %ux%u", game_ascii_gl_width_get(game), game_ascii_gl_height_get(game));
