@@ -342,9 +342,6 @@ int sdl_get_mouse(void)
     return button;
   }
 
-  x *= game_window_pix_width_get(game) / game_ui_pix_width_get(game);
-  y *= game_window_pix_height_get(game) / game_ui_pix_height_get(game);
-
   sdl.mouse_x = x;
   sdl.mouse_y = y;
 
@@ -672,7 +669,7 @@ void sdl_flush_display(class Game *g, bool force)
 
   glEnable(GL_TEXTURE_2D);
   gl_enter_2d_mode();
-  wid_display_all(false);
+  wid_display_all();
   gl_leave_2d_mode();
   gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 
@@ -688,13 +685,6 @@ void config_game_gfx_update(void)
   // Display ratio
   //
   game_aspect_ratio_set(game, (double) game_window_pix_width_get(game) / (double) game_window_pix_height_get(game));
-
-  //
-  // Use the same resolution as the game for large smooth fonts.
-  // This is the max size we can have. The real size will be trimmed based on how many characters we can fit.
-  //
-  game_ui_pix_height_set(game, game_window_pix_height_get(game));
-  game_ui_pix_width_set(game, game_window_pix_width_get(game));
 
   TERM_WIDTH  = game_ui_gfx_term_width_get(game);
   TERM_HEIGHT = game_ui_gfx_term_height_get(game);
@@ -718,11 +708,8 @@ void config_game_gfx_update(void)
     TERM_HEIGHT = TERM_HEIGHT_MAX;
   }
 
-  //
-  // Account for rounding errors, so the tiles look smoother.
-  //
   float font_width  = game_window_pix_width_get(game) / TERM_WIDTH;
-  float font_height = font_width * ((float) UI_FONT_HEIGHT / (float) UI_FONT_WIDTH);
+  float font_height = game_window_pix_height_get(game) / TERM_HEIGHT;
 
   game_ascii_gl_width_set(game, font_width);
   game_ascii_gl_height_set(game, font_height);
@@ -730,15 +717,15 @@ void config_game_gfx_update(void)
   //
   // If we overflow the screen, try to cut a few rows and columns off
   //
-  while (game_ascii_gl_width_get(game) * TERM_WIDTH > game_ui_pix_width_get(game)) {
+  while (game_ascii_gl_width_get(game) * TERM_WIDTH > game_window_pix_width_get(game)) {
     TERM_WIDTH--;
     LOG("SDL: - font width %u exceeded terminal pixel width %u, try term width: %d", game_ascii_gl_width_get(game),
-        game_ui_pix_width_get(game), TERM_WIDTH);
+        game_window_pix_width_get(game), TERM_WIDTH);
   }
-  while (game_ascii_gl_height_get(game) * TERM_HEIGHT > game_ui_pix_height_get(game)) {
+  while (game_ascii_gl_height_get(game) * TERM_HEIGHT > game_window_pix_height_get(game)) {
     TERM_HEIGHT--;
     LOG("SDL: - font height %u exceeded terminal pixel height %u, try term height: %d",
-        game_ascii_gl_height_get(game), game_ui_pix_height_get(game), TERM_HEIGHT);
+        game_ascii_gl_height_get(game), game_window_pix_height_get(game), TERM_HEIGHT);
   }
 
   //
@@ -799,12 +786,8 @@ void config_game_gfx_update(void)
   game_tiles_visible_across_set(game, tiles_across);
   game_tiles_visible_down_set(game, tiles_down);
 
-  game_ui_pix_width_set(game, TERM_WIDTH * game_ascii_gl_width_get(game));
-  game_ui_pix_height_set(game, TERM_HEIGHT * game_ascii_gl_height_get(game));
-
   LOG("SDL: Window:");
   LOG("SDL: - window pixel size         : %dx%d", game_window_pix_width_get(game), game_window_pix_height_get(game));
-  LOG("SDL: - UI pixel size             : %dx%d", game_ui_pix_width_get(game), game_ui_pix_height_get(game));
   LOG("SDL: - game map pixel size       : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
   LOG("SDL: - visible map pixel size    : %dx%d", game_map_pix_width_get(game), game_map_pix_height_get(game));
   LOG("SDL: Terminal");

@@ -53,11 +53,6 @@ public:
   int map_pix_height = {};
   int map_pix_width  = {};
   //
-  // The user interface that can be higher res than the game
-  //
-  int ui_pix_height = {};
-  int ui_pix_width  = {};
-  //
   // The actual display res
   //
   int window_pix_height = {};
@@ -257,8 +252,6 @@ void Config::reset(void)
   mouse_wheel_ud_negated = false;
   ui_gfx_term_height     = {TERM_GFX_HEIGHT_DEF};
   ui_gfx_term_width      = {TERM_GFX_WIDTH_DEF};
-  ui_pix_height          = {};
-  ui_pix_width           = {};
   version                = "" MYVER "";
   aspect_ratio           = {};
   window_pix_height      = {};
@@ -605,12 +598,6 @@ void game_map_pix_height_set(class Game *g, int val) { g->config.map_pix_height 
 
 int  game_map_pix_width_get(class Game *g) { return g->config.map_pix_width; }
 void game_map_pix_width_set(class Game *g, int val) { g->config.map_pix_width = val; }
-
-int  game_ui_pix_height_get(class Game *g) { return g->config.ui_pix_height; }
-void game_ui_pix_height_set(class Game *g, int val) { g->config.ui_pix_height = val; }
-
-int  game_ui_pix_width_get(class Game *g) { return g->config.ui_pix_width; }
-void game_ui_pix_width_set(class Game *g, int val) { g->config.ui_pix_width = val; }
 
 int  game_window_pix_height_get(class Game *g) { return g->config.window_pix_height; }
 void game_window_pix_height_set(class Game *g, int val) { g->config.window_pix_height = val; }

@@ -133,7 +133,7 @@ void wid_destroy_in(Widp w, uint32_t ms);
 void wid_destroy_nodelay(Widp *);
 void wid_destroy_ptr_in(Widp *w, uint32_t ms);
 void wid_destroy(Widp *);
-void wid_display_all(bool ok_to_handle_requests = true);
+void wid_display_all(void);
 void wid_dump(Widp w, int depth);
 void wid_fake_joy_button(class Game *, int x, int y);
 void wid_find_first_focus(void);

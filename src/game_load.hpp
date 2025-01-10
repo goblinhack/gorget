@@ -91,8 +91,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.tiles_visible_down);
   in >> bits(my.t.ui_gfx_term_height);
   in >> bits(my.t.ui_gfx_term_width);
-  in >> bits(my.t.ui_pix_height);
-  in >> bits(my.t.ui_pix_width);
   in >> bits(my.t.window_pix_height);
   in >> bits(my.t.window_pix_width);
 
@@ -119,8 +117,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: sound_volume           = %d", my.t.sound_volume);
   LOG("Read config: tiles_visible_across   = %d", my.t.tiles_visible_across);
   LOG("Read config: tiles_visible_down     = %d", my.t.tiles_visible_down);
-  LOG("Read config: ui_pix_height          = %d", my.t.ui_pix_height);
-  LOG("Read config: ui_pix_width           = %d", my.t.ui_pix_width);
   LOG("Read config: window_pix_height      = %d", my.t.window_pix_height);
   LOG("Read config: window_pix_width       = %d", my.t.window_pix_width);
   // seed name handled below
@@ -182,14 +178,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   }
   if (my.t.map_pix_width < 0) {
     game_load_error += "map_pix_width is invalid";
-    return in;
-  }
-  if (my.t.ui_pix_height < 0) {
-    game_load_error += "ui_pix_height is invalid";
-    return in;
-  }
-  if (my.t.ui_pix_width < 0) {
-    game_load_error += "ui_pix_width is invalid";
     return in;
   }
   if (my.t.aspect_ratio < 0) {

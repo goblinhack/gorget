@@ -76,8 +76,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.tiles_visible_down);
   out << bits(my.t.ui_gfx_term_height);
   out << bits(my.t.ui_gfx_term_width);
-  out << bits(my.t.ui_pix_height);
-  out << bits(my.t.ui_pix_width);
   out << bits(my.t.window_pix_height);
   out << bits(my.t.window_pix_width);
 

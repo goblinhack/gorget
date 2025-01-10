@@ -275,7 +275,6 @@ void blit_fbo_push(int fbo);
 void blit_fbo_pop(void);
 void blit_fbo_bind(int fbo);
 void blit_fbo_bind_locked(int fbo);
-void blit_fbo_ui_pix(int fbo);
 void blit_fbo_window_pix(int fbo);
 void blit_fbo_unbind(void);
 void blit_fbo_unbind_locked(void);

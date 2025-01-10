@@ -5202,21 +5202,6 @@ static void wid_tick_all(void)
   }
 }
 
-//
-// Do stuff for all widgets.
-//
-static void wid_handle_requests(void)
-{
-  TRACE_AND_INDENT();
-
-  //
-  // If the console is visible, don't create any new windows
-  //
-  if (wid_console_window && wid_console_window->visible) {
-    return;
-  }
-}
-
 static void wid_tick_all_post_display(void)
 {
   TRACE_AND_INDENT();
@@ -5245,22 +5230,14 @@ static void wid_tick_all_post_display(void)
 //
 // Display all widgets
 //
-void wid_display_all(bool ok_to_handle_requests)
+void wid_display_all(void)
 {
   TRACE_AND_INDENT();
 
   ascii_clear_display();
 
-  //
-  // A bit faster to avoid this when flushing the display
-  //
-  if (ok_to_handle_requests) {
-
-    wid_handle_requests();
-  }
-
   gl_leave_2d_mode();
-  gl_enter_2d_mode(game_ui_pix_width_get(game), game_ui_pix_height_get(game));
+  gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
   blit_fbo_bind_locked(FBO_WID);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glClear(GL_COLOR_BUFFER_BIT);

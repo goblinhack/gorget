@@ -891,7 +891,7 @@ void ascii_display(void)
 {
   mouse_found = false;
 
-  gl_enter_2d_mode(game_ui_pix_width_get(game), game_ui_pix_height_get(game));
+  gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
   blit_init();
   ascii_blit();
   blit_flush();

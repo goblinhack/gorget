@@ -137,7 +137,8 @@ static void game_display_title_bg(void)
 
   std::string t = "title_bg";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
+            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
   blit_flush();
 }
 
@@ -150,7 +151,8 @@ static void game_display_title_fg1(void)
 
   std::string t = "title_fg1_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
+            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
   blit_flush();
 }
 
@@ -181,7 +183,8 @@ static void game_display_title_fg2(void)
 
   std::string t = "title_fg2_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
+            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
   blit_flush();
 }
 
@@ -260,7 +263,8 @@ static void game_display_title_fg3(void)
 
   std::string t = "title_fg3_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
+            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
   blit_flush();
 }
 
@@ -284,7 +288,8 @@ static void game_display_title_fg4(void)
 
   std::string t = "title_fg4_" + std::to_string(frame);
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0), point(game_ui_pix_width_get(game), game_ui_pix_height_get(game)));
+  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
+            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
   blit_flush();
 }
 

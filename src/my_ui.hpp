@@ -12,16 +12,15 @@
 #define UI_CONSOLE_WIDTH            (TERM_WIDTH - 3)
 #define UI_CURSOR_COLOR             GRAY
 #define UI_CURSOR_OTHER_COLOR       WHITE
-#define UI_FONT_HEIGHT              232
-#define UI_FONT_WIDTH               128
-#define UI_HEALTH_BAR_STEPS         18 // How many graduations on health bar
-#define UI_LEFTBAR_WIDTH            UI_HEALTH_BAR_STEPS
+#define UI_FONT_HEIGHT              8
+#define UI_FONT_WIDTH               8
+#define UI_LEFTBAR_WIDTH            20  // In characters
+#define UI_RIGHTBAR_WIDTH           20  // In characters
 #define UI_LOGGING_EMPTY_LINE       "`" // Complete hack, char I use to force space
 #define UI_MOUSE_DOUBLE_CLICK       500 // Double click time
 #define UI_MOUSE_WHEEL_SCALE        2.0 // How much the wheel mouse moves.
 #define UI_MOUSE_WHEEL_SCALE_MAX    10
 #define UI_POPUP_TEXT_COLOR         UI_TEXT_COLOR
-#define UI_RIGHTBAR_WIDTH           18
 #define UI_SCROLL_JOY_SCALE         1.0
 #define UI_SCROLL_JOY_SCALE_MAX     1.5
 #define UI_TEXT_COLOR               GRAY // Default text color

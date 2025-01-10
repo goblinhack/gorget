@@ -449,8 +449,8 @@ void fbo_get_size(int fbo, int &w, int &h)
       h = game_map_pix_height_get(game);
       break;
     case FBO_WID :
-      w = game_ui_pix_width_get(game);
-      h = game_ui_pix_height_get(game);
+      w = game_window_pix_width_get(game);
+      h = game_window_pix_height_get(game);
       break;
     case FBO_FINAL :
       w = game_window_pix_width_get(game);
@@ -466,13 +466,6 @@ void blit_fbo(int fbo)
   fbo_get_size(fbo, tex_width, tex_height);
   blit_init();
   blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height);
-  blit_flush();
-}
-
-void blit_fbo_ui_pix(int fbo)
-{
-  blit_init();
-  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_ui_pix_width_get(game), game_ui_pix_height_get(game));
   blit_flush();
 }
 

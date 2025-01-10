@@ -103,12 +103,6 @@ void game_map_pix_height_set(class Game *, int);
 int  game_map_pix_width_get(class Game *);
 void game_map_pix_width_set(class Game *, int);
 
-int  game_ui_pix_height_get(class Game *);
-void game_ui_pix_height_set(class Game *, int);
-
-int  game_ui_pix_width_get(class Game *);
-void game_ui_pix_width_set(class Game *, int);
-
 int  game_window_pix_height_get(class Game *);
 void game_window_pix_height_set(class Game *, int);
 
