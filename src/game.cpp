@@ -26,8 +26,8 @@ public:
   //
   float aspect_ratio = {};
 
-  int ui_gfx_term_height = {};
-  int ui_gfx_term_width  = {};
+  int ui_term_height = {};
+  int ui_term_width  = {};
 
   bool debug_mode             = {};
   bool fps_counter            = {};
@@ -64,8 +64,8 @@ public:
   int tiles_visible_across;
   int tiles_visible_down;
 
-  int ascii_gl_height = {};
-  int ascii_gl_width  = {};
+  int ascii_pix_height = {};
+  int ascii_pix_width  = {};
   int music_volume    = {};
   int sdl_delay       = {};
   int sound_volume    = {};
@@ -250,8 +250,8 @@ void Config::reset(void)
   gfx_vsync_enable       = true;
   mouse_wheel_lr_negated = false;
   mouse_wheel_ud_negated = false;
-  ui_gfx_term_height     = {TERM_GFX_HEIGHT_DEF};
-  ui_gfx_term_width      = {TERM_GFX_WIDTH_DEF};
+  ui_term_height     = {TERM_HEIGHT_DEF};
+  ui_term_width      = {TERM_WIDTH_DEF};
   version                = "" MYVER "";
   aspect_ratio           = {};
   window_pix_height      = {};
@@ -545,11 +545,11 @@ void game_serialized_size_set(class Game *g, int val) { g->serialized_size = val
 float game_aspect_ratio_get(class Game *g) { return g->config.aspect_ratio; }
 void  game_aspect_ratio_set(class Game *g, float val) { g->config.aspect_ratio = val; }
 
-int  game_ui_gfx_term_height_get(class Game *g) { return g->config.ui_gfx_term_height; }
-void game_ui_gfx_term_height_set(class Game *g, int val) { g->config.ui_gfx_term_height = val; }
+int  game_ui_term_height_get(class Game *g) { return g->config.ui_term_height; }
+void game_ui_term_height_set(class Game *g, int val) { g->config.ui_term_height = val; }
 
-int  game_ui_gfx_term_width_get(class Game *g) { return g->config.ui_gfx_term_width; }
-void game_ui_gfx_term_width_set(class Game *g, int val) { g->config.ui_gfx_term_width = val; }
+int  game_ui_term_width_get(class Game *g) { return g->config.ui_term_width; }
+void game_ui_term_width_set(class Game *g, int val) { g->config.ui_term_width = val; }
 
 bool game_debug_mode_get(class Game *g) { return g->config.debug_mode; }
 void game_debug_mode_set(class Game *g, bool val) { g->config.debug_mode = val; }
@@ -605,11 +605,11 @@ void game_window_pix_height_set(class Game *g, int val) { g->config.window_pix_h
 int  game_window_pix_width_get(class Game *g) { return g->config.window_pix_width; }
 void game_window_pix_width_set(class Game *g, int val) { g->config.window_pix_width = val; }
 
-int  game_ascii_gl_height_get(class Game *g) { return g->config.ascii_gl_height; }
-void game_ascii_gl_height_set(class Game *g, int val) { g->config.ascii_gl_height = val; }
+int  game_ascii_pix_height_get(class Game *g) { return g->config.ascii_pix_height; }
+void game_ascii_pix_height_set(class Game *g, int val) { g->config.ascii_pix_height = val; }
 
-int  game_ascii_gl_width_get(class Game *g) { return g->config.ascii_gl_width; }
-void game_ascii_gl_width_set(class Game *g, int val) { g->config.ascii_gl_width = val; }
+int  game_ascii_pix_width_get(class Game *g) { return g->config.ascii_pix_width; }
+void game_ascii_pix_width_set(class Game *g, int val) { g->config.ascii_pix_width = val; }
 
 int  game_music_volume_get(class Game *g) { return g->config.music_volume; }
 void game_music_volume_set(class Game *g, int val) { g->config.music_volume = val; }

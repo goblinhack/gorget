@@ -49,11 +49,11 @@ void game_serialized_size_set(class Game *, int);
 float game_aspect_ratio_get(class Game *);
 void  game_aspect_ratio_set(class Game *, float);
 
-int  game_ui_gfx_term_height_get(class Game *);
-void game_ui_gfx_term_height_set(class Game *, int);
+int  game_ui_term_height_get(class Game *);
+void game_ui_term_height_set(class Game *, int);
 
-int  game_ui_gfx_term_width_get(class Game *);
-void game_ui_gfx_term_width_set(class Game *, int);
+int  game_ui_term_width_get(class Game *);
+void game_ui_term_width_set(class Game *, int);
 
 bool game_debug_mode_get(class Game *);
 void game_debug_mode_set(class Game *, bool);
@@ -109,11 +109,11 @@ void game_window_pix_height_set(class Game *, int);
 int  game_window_pix_width_get(class Game *);
 void game_window_pix_width_set(class Game *, int);
 
-int  game_ascii_gl_height_get(class Game *);
-void game_ascii_gl_height_set(class Game *, int);
+int  game_ascii_pix_height_get(class Game *);
+void game_ascii_pix_height_set(class Game *, int);
 
-int  game_ascii_gl_width_get(class Game *);
-void game_ascii_gl_width_set(class Game *, int);
+int  game_ascii_pix_width_get(class Game *);
+void game_ascii_pix_width_set(class Game *, int);
 
 int  game_music_volume_get(class Game *);
 void game_music_volume_set(class Game *, int);

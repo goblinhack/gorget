@@ -3,6 +3,9 @@
 //
 
 #pragma once
+
+#include <stdlib.h>
+
 #ifndef _MY_MATH_UTIL_HPP_
 #define _MY_MATH_UTIL_HPP_
 
@@ -32,4 +35,7 @@ double gaussrand(double mean, double stddev);
 #define RAD_180 3.14159265358979323846f          // pi
 #define RAD_360 (2.0f * 3.14159265358979323846f) // 2pi
 #define RAD_270 (RAD_180 + RAD_90)
+
+uint32_t nextpoweroftwo(uint32_t val);
+
 #endif

@@ -25,8 +25,8 @@ void sdl_display(class Game *g)
   if (g) {
     auto level = game_level_get(g);
     if (level) {
-      auto w = game_ascii_gl_width_get(game);
-      auto h = game_ascii_gl_height_get(game);
+      auto w = game_ascii_pix_width_get(game);
+      auto h = game_ascii_pix_height_get(game);
 
       int visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
       int visible_map_tl_y = h * UI_TOPCON_HEIGHT;

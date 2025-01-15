@@ -54,8 +54,8 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     return in;
   }
 
-  in >> bits(my.t.ascii_gl_height);
-  in >> bits(my.t.ascii_gl_width);
+  in >> bits(my.t.ascii_pix_height);
+  in >> bits(my.t.ascii_pix_width);
   in >> bits(my.t.aspect_ratio);
   in >> bits(my.t.config_pix_height);
   in >> bits(my.t.config_pix_width);
@@ -89,13 +89,13 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.sound_volume);
   in >> bits(my.t.tiles_visible_across);
   in >> bits(my.t.tiles_visible_down);
-  in >> bits(my.t.ui_gfx_term_height);
-  in >> bits(my.t.ui_gfx_term_width);
+  in >> bits(my.t.ui_term_height);
+  in >> bits(my.t.ui_term_width);
   in >> bits(my.t.window_pix_height);
   in >> bits(my.t.window_pix_width);
 
-  LOG("Read config: ascii_gl_height        = %d", my.t.ascii_gl_height);
-  LOG("Read config: ascii_gl_width         = %d", my.t.ascii_gl_width);
+  LOG("Read config: ascii_pix_height        = %d", my.t.ascii_pix_height);
+  LOG("Read config: ascii_pix_width         = %d", my.t.ascii_pix_width);
   LOG("Read config: aspect_ratio           = %f", my.t.aspect_ratio);
   LOG("Read config: config_pix_height      = %d", my.t.config_pix_height);
   LOG("Read config: config_pix_width       = %d", my.t.config_pix_width);
@@ -148,12 +148,12 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     game_load_error += "end of config marker not found";
     return in;
   }
-  if (my.t.ascii_gl_height < 0) {
-    game_load_error += "ascii_gl_height is invalid";
+  if (my.t.ascii_pix_height < 0) {
+    game_load_error += "ascii_pix_height is invalid";
     return in;
   }
-  if (my.t.ascii_gl_width < 0) {
-    game_load_error += "ascii_gl_width is invalid";
+  if (my.t.ascii_pix_width < 0) {
+    game_load_error += "ascii_pix_width is invalid";
     return in;
   }
   if (my.t.config_pix_height < 0) {

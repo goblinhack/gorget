@@ -8,6 +8,7 @@
 #include "my_command.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
+#include "my_math.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
@@ -686,8 +687,8 @@ void config_game_gfx_update(void)
   //
   game_aspect_ratio_set(game, (double) game_window_pix_width_get(game) / (double) game_window_pix_height_get(game));
 
-  TERM_WIDTH  = game_ui_gfx_term_width_get(game);
-  TERM_HEIGHT = game_ui_gfx_term_height_get(game);
+  TERM_WIDTH  = game_ui_term_width_get(game);
+  TERM_HEIGHT = game_ui_term_height_get(game);
 
   if (! TERM_WIDTH) {
     ERR("TERM_WIDTH is zero");
@@ -708,25 +709,75 @@ void config_game_gfx_update(void)
     TERM_HEIGHT = TERM_HEIGHT_MAX;
   }
 
-  float font_width  = game_window_pix_width_get(game) / TERM_WIDTH;
-  float font_height = game_window_pix_height_get(game) / TERM_HEIGHT;
+  int font_width  = game_window_pix_width_get(game) / TERM_WIDTH;
+  int font_height = game_window_pix_height_get(game) / TERM_HEIGHT;
 
-  game_ascii_gl_width_set(game, font_width);
-  game_ascii_gl_height_set(game, font_height);
+  game_ascii_pix_width_set(game, font_width);
+  game_ascii_pix_height_set(game, font_height);
+
+  LOG("SDL: Window:");
+  LOG("SDL: - window pixel size    : %dx%d", game_window_pix_width_get(game), game_window_pix_height_get(game));
+  LOG("SDL: - aspect ratio         : %f", game_aspect_ratio_get(game));
+  LOG("SDL: Initial terminal");
+  LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
+  LOG("SDL: - ascii gl size        : %ux%u", game_ascii_pix_width_get(game), game_ascii_pix_height_get(game));
+
+  //
+  // If the font has an odd number, it will look bad. Try the next power.
+  //
+  font_width  = nextpoweroftwo(font_width);
+  font_height = nextpoweroftwo(font_height);
+  game_ascii_pix_width_set(game, font_width);
+  game_ascii_pix_height_set(game, font_height);
+  LOG("SDL: - ascii gl size (pow2) : %ux%u", game_ascii_pix_width_get(game), game_ascii_pix_height_get(game));
 
   //
   // If we overflow the screen, try to cut a few rows and columns off
   //
-  while (game_ascii_gl_width_get(game) * TERM_WIDTH > game_window_pix_width_get(game)) {
+  while (font_width * TERM_WIDTH > game_window_pix_width_get(game)) {
     TERM_WIDTH--;
-    LOG("SDL: - font width %u exceeded terminal pixel width %u, try term width: %d", game_ascii_gl_width_get(game),
-        game_window_pix_width_get(game), TERM_WIDTH);
+    LOG("SDL: - term overflow, font width %u, try width: %d", font_width, TERM_WIDTH);
   }
-  while (game_ascii_gl_height_get(game) * TERM_HEIGHT > game_window_pix_height_get(game)) {
+
+  while (font_height * TERM_HEIGHT > game_window_pix_height_get(game)) {
     TERM_HEIGHT--;
-    LOG("SDL: - font height %u exceeded terminal pixel height %u, try term height: %d",
-        game_ascii_gl_height_get(game), game_window_pix_height_get(game), TERM_HEIGHT);
+    LOG("SDL: - term overflow, font height %u, try height: %d", font_height, TERM_HEIGHT);
   }
+
+  //
+  // If we've gone too low, try a smaller power.
+  //
+  if ((TERM_WIDTH < TERM_WIDTH_MIN) || (TERM_HEIGHT < TERM_HEIGHT_MIN)) {
+    font_width /= 2;
+    font_height /= 2;
+    game_ascii_pix_width_set(game, font_width);
+    game_ascii_pix_height_set(game, font_height);
+    LOG("SDL: - ascii gl size (prev) : %ux%u", game_ascii_pix_width_get(game), game_ascii_pix_height_get(game));
+  }
+
+  //
+  // Try to grow the terminal.
+  //
+  while (font_width * TERM_WIDTH < game_window_pix_width_get(game) - font_width - 1) {
+    TERM_WIDTH++;
+    LOG("SDL: - term underflow, font width %u, try width: %d", font_width, TERM_WIDTH);
+    if (TERM_WIDTH >= TERM_WIDTH_MAX) {
+      LOG("SDL: - term width max, font width %u, term width: %d", font_width, TERM_WIDTH);
+      break;
+    }
+  }
+
+  while (font_height * TERM_HEIGHT < game_window_pix_height_get(game) - font_height - 1) {
+    TERM_HEIGHT++;
+    LOG("SDL: - term underflow, font height %u, try height: %d", font_height, TERM_HEIGHT);
+    if (TERM_HEIGHT >= TERM_HEIGHT_MAX) {
+      LOG("SDL: - term height max, font height %u term height: %d", font_height, TERM_HEIGHT);
+      break;
+    }
+  }
+
+  game_ascii_pix_width_set(game, font_width);
+  game_ascii_pix_height_set(game, font_height);
 
   //
   // Work out the size of the game map
@@ -756,9 +807,9 @@ void config_game_gfx_update(void)
   // Compensate for any additional pixels the rounding of the terminal cells loses
   //
   double pixel_rounding_w_fixup
-      = (game_ascii_gl_width_get(game) * TERM_WIDTH) / (double) game_window_pix_width_get(game);
+      = (game_ascii_pix_width_get(game) * TERM_WIDTH) / (double) game_window_pix_width_get(game);
   double pixel_rounding_h_fixup
-      = (game_ascii_gl_height_get(game) * TERM_HEIGHT) / (double) game_window_pix_height_get(game);
+      = (game_ascii_pix_height_get(game) * TERM_HEIGHT) / (double) game_window_pix_height_get(game);
   visible_game_map_w *= pixel_rounding_w_fixup;
   visible_game_map_h *= pixel_rounding_h_fixup;
 
@@ -786,14 +837,11 @@ void config_game_gfx_update(void)
   game_tiles_visible_across_set(game, tiles_across);
   game_tiles_visible_down_set(game, tiles_down);
 
-  LOG("SDL: Window:");
-  LOG("SDL: - window pixel size         : %dx%d", game_window_pix_width_get(game), game_window_pix_height_get(game));
-  LOG("SDL: - game map pixel size       : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
-  LOG("SDL: - visible map pixel size    : %dx%d", game_map_pix_width_get(game), game_map_pix_height_get(game));
   LOG("SDL: Terminal");
-  LOG("SDL: - ascii gl size        : %ux%u", game_ascii_gl_width_get(game), game_ascii_gl_height_get(game));
   LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
-  LOG("SDL: - aspect ratio         : %f", game_aspect_ratio_get(game));
+  LOG("SDL: Buffers:");
+  LOG("SDL: - game map pixel sz    : %dx%d", game_pix_width_get(game), game_pix_height_get(game));
+  LOG("SDL: - visible map pixel sz : %dx%d", game_map_pix_width_get(game), game_map_pix_height_get(game));
   LOG("SDL: Map");
   LOG("SDL: - size                 : %dx%d", MAP_WIDTH, MAP_HEIGHT);
 }

@@ -731,8 +731,8 @@ static void ascii_blit(void)
   float mx = sdl.mouse_x;
   float my = sdl.mouse_y;
 #endif
-  const auto dw = game_ascii_gl_width_get(game);
-  const auto dh = game_ascii_gl_height_get(game);
+  const auto dw = game_ascii_pix_width_get(game);
+  const auto dh = game_ascii_pix_height_get(game);
 
   tile_y = 0;
   for (y = 0; y < TERM_HEIGHT; y++) {
