@@ -722,14 +722,20 @@ void config_game_gfx_update(void)
   LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
   LOG("SDL: - ascii gl size        : %ux%u", game_ascii_pix_width_get(game), game_ascii_pix_height_get(game));
 
-  //
-  // If the font has an odd number, it will look bad. Try the next power.
-  //
-  font_width  = nextpoweroftwo(font_width);
-  font_height = nextpoweroftwo(font_height);
+  if (0) {
+    //
+    // If the font has an odd number, it will look bad. Try the next power.
+    //
+    font_width  = nextpoweroftwo(font_width);
+    font_height = nextpoweroftwo(font_height);
+    game_ascii_pix_width_set(game, font_width);
+    game_ascii_pix_height_set(game, font_height);
+    LOG("SDL: - ascii gl size (pow2) : %ux%u", game_ascii_pix_width_get(game), game_ascii_pix_height_get(game));
+  }
+  font_width  = 6;
+  font_height = 8;
   game_ascii_pix_width_set(game, font_width);
   game_ascii_pix_height_set(game, font_height);
-  LOG("SDL: - ascii gl size (pow2) : %ux%u", game_ascii_pix_width_get(game), game_ascii_pix_height_get(game));
 
   //
   // If we overflow the screen, try to cut a few rows and columns off
