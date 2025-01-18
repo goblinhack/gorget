@@ -8,9 +8,8 @@
 
 void gfx_init_12x12(void)
 {
-  {
-    const char *tiles[] = {
-        /* clang-format off */
+  const char *tiles[] = {
+      /* clang-format off */
         // ##############################################################################
         "floor.1",
         "floor.2",
@@ -51,8 +50,7 @@ void gfx_init_12x12(void)
         "",
         "",
         // ##############################################################################
-        /* clang-format on */
-    };
-    tile_load_arr_sprites("data/gfx/tiles_12x12.tga", "tiles_12x12", 12, 12, ARRAY_SIZE(tiles), tiles, GL_LINEAR);
-  }
+      /* clang-format on */
+  };
+  tile_load_arr_sprites("data/gfx/tiles_12x12.tga", "tiles_12x12", 12, 12, ARRAY_SIZE(tiles), tiles, GL_LINEAR);
 }

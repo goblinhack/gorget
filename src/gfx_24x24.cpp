@@ -7,9 +7,8 @@
 
 void gfx_init_24x24(void)
 {
-  {
-    const char *tiles[] = {
-        /* clang-format off */
+  const char *tiles[] = {
+      /* clang-format off */
         // ##############################################################################
         "wall1.IS_JOIN_TL2",
         "wall1.IS_JOIN_T_3",
@@ -219,8 +218,7 @@ void gfx_init_24x24(void)
         "door1.IS_JOIN_BL.shadow",
         "door1.IS_JOIN_BR.shadow",
         // ##############################################################################
-        /* clang-format on */
-    };
-    tile_load_arr("data/gfx/tiles_24x24.tga", "tiles_24x24", 24, 24, ARRAY_SIZE(tiles), tiles);
-  }
+      /* clang-format on */
+  };
+  tile_load_arr("data/gfx/tiles_24x24.tga", "tiles_24x24", 24, 24, ARRAY_SIZE(tiles), tiles);
 }

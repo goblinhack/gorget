@@ -24,7 +24,6 @@ static unsigned char *file_io_read(const char *filename, int *len);
 unsigned char *file_load(const char *filename, int *outlen)
 {
   TRACE_AND_INDENT();
-
   unsigned char *out;
   char          *alt_filename;
 
@@ -406,27 +405,12 @@ uint8_t file_exists_and_is_newer_than(const char *filename1, const char *filenam
   return (delta > 0);
 }
 
-static void file_log_(const char *fmt, va_list args)
-{
-  char buf[ MAXLONGSTR ];
-  int  len = 0;
-
-  buf[ 0 ] = '\0';
-  get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "FILE: ");
-  len = (int) strlen(buf);
-  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
-
-  putf(MY_STDOUT, buf);
-}
-
 void FILE_LOG(const char *fmt, ...)
 {
   va_list args;
 
   va_start(args, fmt);
-  file_log_(fmt, args);
+  log_(fmt, args);
   va_end(args);
 }
 
@@ -437,6 +421,6 @@ void FILE_DBG(const char *fmt, ...)
   IF_NODEBUG2 { return; }
 
   va_start(args, fmt);
-  file_log_(fmt, args);
+  log_(fmt, args);
   va_end(args);
 }

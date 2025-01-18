@@ -119,7 +119,7 @@ Tile::~Tile(void) { oldptr(MTYPE_TILE, this); }
 
 bool tile_init(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   tile_init_done = true;
 
@@ -128,7 +128,7 @@ bool tile_init(void)
 
 void tile_fini(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (tile_init_done) {
     tile_init_done = false;
@@ -201,7 +201,7 @@ Tile::Tile(const class Tile *tile)
 void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t height, uint32_t nargs,
                    const char *arr[])
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   Texp tex = tex_load(file, alias, GL_NEAREST);
 
@@ -347,7 +347,7 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
 void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t height,
                    const std::vector< std::string > &arr)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   Texp tex;
   Texp tex_monochrome;
   Texp tex_mask;
@@ -496,7 +496,7 @@ void tile_load_arr(std::string file, std::string alias, uint32_t width, uint32_t
 void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, uint32_t height, uint32_t nargs,
                            const char *arr[], int gl_mode)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   Texp tex;
   Texp tex_monochrome;
   Texp tex_mask;
@@ -653,7 +653,7 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
 void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, uint32_t height,
                            const std::vector< std::string > &arr, int gl_mode)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   Texp tex;
   Texp tex_monochrome;
   Texp tex_mask;
@@ -805,7 +805,7 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
 //
 Tilep tile_find(std::string name)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (name == "") {
     return nullptr;
   }
@@ -820,7 +820,7 @@ Tilep tile_find(std::string name)
 
 Tilep tile_find_mand(std::string name)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (name == "") {
     ERR("No tile name given");
     return nullptr;
@@ -855,7 +855,7 @@ void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
 
 Tilep string2tile(const char **s)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   static char        name[ MAXSHORTSTR ];
   static const char *eo_name = name + MAXSHORTSTR;
   const char        *c       = *s;
@@ -887,7 +887,7 @@ Tilep string2tile(const char **s)
 
 Tilep string2tile(std::string &s, int *len)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   auto        iter = s.begin();
   std::string name;
 
@@ -962,7 +962,7 @@ void tile_blit_colored(Tilep tile, point tl, point br, color color_tl, color col
 
 std::string tile_name(Tilep t)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   return t->name;
 }
 
