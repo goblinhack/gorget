@@ -66,9 +66,9 @@ public:
 
   int ascii_pix_height = {};
   int ascii_pix_width  = {};
-  int music_volume    = {};
-  int sdl_delay       = {};
-  int sound_volume    = {};
+  int music_volume     = {};
+  int sdl_delay        = {};
+  int sound_volume     = {};
 
   SDL_Keysym key_attack     = {};
   SDL_Keysym key_console    = {};
@@ -250,8 +250,8 @@ void Config::reset(void)
   gfx_vsync_enable       = true;
   mouse_wheel_lr_negated = false;
   mouse_wheel_ud_negated = false;
-  ui_term_height     = {TERM_HEIGHT_DEF};
-  ui_term_width      = {TERM_WIDTH_DEF};
+  ui_term_height         = {TERM_HEIGHT_DEF};
+  ui_term_width          = {TERM_WIDTH_DEF};
   version                = "" MYVER "";
   aspect_ratio           = {};
   window_pix_height      = {};
