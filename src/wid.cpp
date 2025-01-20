@@ -4596,7 +4596,6 @@ void wid_key_down(const struct SDL_Keysym *key, int x, int y)
     DBG("WID: Key over by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
     if ((w->on_key_down)(w, key)) {
       DBG("WID: Key grabbed by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
-      sound_play("click");
       //
       // Do not raise, gets in the way of popups the callback creates.
       //
@@ -4616,7 +4615,6 @@ try_parent:
     if (w->on_key_down) {
       if ((w->on_key_down)(w, key)) {
         DBG("WID: key grabbed by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
-        sound_play("click");
         //
         // Do not raise, gets in the way of popups the callback
         // creates.
