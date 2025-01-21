@@ -13,6 +13,7 @@
 enum {
   STATE_MAIN_MENU,
   STATE_PLAYING,
+  STATE_QUITTING,
   STATE_KEYBOARD_MENU, // Setting keys
   STATE_LOAD_MENU,     // Loading a game
   STATE_SAVE_MENU,     // Saving a game

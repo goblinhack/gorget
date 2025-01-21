@@ -71,6 +71,9 @@ void tex_fini(void)
   for (auto &t : textures_mask) {
     delete t.second;
   }
+  textures.clear();
+  textures_monochrome.clear();
+  textures_mask.clear();
 }
 
 void tex_free(Texp tex)

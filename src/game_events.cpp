@@ -94,7 +94,7 @@ uint8_t game_input(class Game *g, const SDL_Keysym *key)
   if (sdlk_eq(*key, game_key_quit_get(g))) {
     LOG("INF: Pressed quit key");
     TRACE_AND_INDENT();
-    if (g_opt_test_skip_main_menu) {
+    if (g_opt_quick_start) {
       DIE_CLEAN("Quick quit");
     }
     wid_quit_select(g);

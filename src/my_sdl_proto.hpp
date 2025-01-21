@@ -42,6 +42,7 @@ void sdl_exit(void);
 void sdl_fbo_dump(int fbo, const std::string &name);
 void sdl_fbo_load(int fbo, const std::vector< uint8_t > &pixels);
 void sdl_fini(void);
+void sdl_video_fini(void);
 void sdl_flush_display(class Game *, bool force = false);
 void sdl_joy_rumble(float strength, uint32_t ms);
 void sdl_key_repeat_events(void);

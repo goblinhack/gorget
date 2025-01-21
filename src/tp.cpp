@@ -171,7 +171,16 @@ void tp_fini(void)
     delete tp.second;
   }
 
-  tp_id_map = {};
+  tp_id_map.clear();
+  tp_name_map.clear();
+
+  for (auto c = 0; c < MONST_CLASS_MAX; c++) {
+    tp_monst_class[ c ].clear();
+  }
+
+  for (auto f = 0; f < THING_FLAG_MAX; f++) {
+    tp_flag_map[ f ].clear();
+  }
 }
 
 //

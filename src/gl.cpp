@@ -31,12 +31,11 @@ void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLs
 
 void gl_init_2d_mode(void)
 {
+  LOG("SDL: init 2d mode");
   TRACE_AND_INDENT();
   GL_ERROR_CHECK();
 
-  if (in_2d_mode) {
-    gl_leave_2d_mode();
-  }
+  gl_leave_2d_mode();
 
   //
   // Enable Textures
@@ -77,12 +76,24 @@ void gl_init_2d_mode(void)
   LOG("GFX: OpenGL initialized");
 }
 
+void gl_fini_2d_mode(void)
+{
+  LOG("SDL: fini 2d mode");
+  TRACE_AND_INDENT();
+  GL_ERROR_CHECK();
+
+  gl_leave_2d_mode();
+  gl_fini_fbo();
+  GL_ERROR_CHECK();
+}
+
 void gl_enter_2d_mode(void)
 {
+  // LOG("SDL: enter 2d mode");
   TRACE_AND_INDENT();
-  if (in_2d_mode) {
-    gl_leave_2d_mode();
-  }
+  GL_ERROR_CHECK();
+
+  gl_leave_2d_mode();
 
   //
   // Change to the projection matrix and set our viewing volume.
@@ -131,10 +142,11 @@ void gl_enter_2d_mode(void)
 
 void gl_enter_2d_mode(int w, int h)
 {
+  // LOG("SDL: enter 2d mode %ux%u", w, h);
   TRACE_AND_INDENT();
-  if (in_2d_mode) {
-    gl_leave_2d_mode();
-  }
+  GL_ERROR_CHECK();
+
+  gl_leave_2d_mode();
 
   //
   // Change to the projection matrix and set our viewing volume.
@@ -181,62 +193,21 @@ void gl_enter_2d_mode(int w, int h)
 
 void gl_leave_2d_mode(void)
 {
-  TRACE_AND_INDENT();
   if (! in_2d_mode) {
     return;
   }
-  glMatrixMode(GL_MODELVIEW);
-  GL_ERROR_CHECK();
-  glPopMatrix();
-  GL_ERROR_CHECK();
-
-  glMatrixMode(GL_PROJECTION);
-  GL_ERROR_CHECK();
-  glPopMatrix();
-  GL_ERROR_CHECK();
+  // LOG("SDL: leave 2d mode");
   in_2d_mode = false;
-}
-
-void gl_enter_2_5d_mode(void)
-{
   TRACE_AND_INDENT();
-  glEnable(GL_DEPTH_TEST);
-  glClear(GL_COLOR_BUFFER_BIT);
+  glMatrixMode(GL_MODELVIEW);
+  GL_ERROR_CHECK();
+  glPopMatrix();
+  GL_ERROR_CHECK();
 
   glMatrixMode(GL_PROJECTION);
-  glPushMatrix();
-
-  glLoadIdentity();
-
-  double scale = 15;
-  glOrtho(-scale, scale, -scale * 0.7, scale * 0.7, -scale, scale);
-
-  glMatrixMode(GL_MODELVIEW);
-  glPushMatrix();
-
-  glLoadIdentity();
-
-  glRotatef(35.264f, 1.0f, 0.0f, 0.0f);
-  glRotatef(-45.0f, 0.0f, 1.0f, 0.0f);
-
-#ifdef WIREFRAME
-  glPolygonMode(GL_FRONT, GL_LINE); // draw wireframe polygons
-  glPolygonMode(GL_BACK, GL_LINE);  // draw wireframe polygons
-#endif
-
-  glCullFace(GL_BACK); // don't draw back faces
-}
-
-void gl_leave_2_5d_mode(void)
-{
-  TRACE_AND_INDENT();
-  glDisable(GL_DEPTH_TEST);
-
-  glMatrixMode(GL_MODELVIEW);
+  GL_ERROR_CHECK();
   glPopMatrix();
-
-  glMatrixMode(GL_PROJECTION);
-  glPopMatrix();
+  GL_ERROR_CHECK();
 }
 
 static void gl_init_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
@@ -403,6 +374,34 @@ static void gl_init_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint 
   GL_ERROR_CHECK();
 }
 
+static void gl_fini_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
+                         GLuint tex_height)
+{
+  TRACE_AND_INDENT();
+  DBG2("GFX: destroy FBO, size %dx%d", tex_width, tex_height);
+  GL_ERROR_CHECK();
+
+  DBG2("OpenGl: - glGenTextures");
+  if (*fbo_tex_id) {
+    DBG2("OpenGl: - glDeleteTextures");
+    glDeleteTextures(1, fbo_tex_id);
+    GL_ERROR_CHECK();
+    *fbo_tex_id = 0;
+  }
+
+  if (*fbo_id) {
+    DBG2("OpenGl: - glDeleteRenderbuffers");
+    glDeleteRenderbuffers_EXT(1, fbo_id);
+    GL_ERROR_CHECK();
+    *fbo_id = 0;
+  }
+
+  memset(g_fbo_id, 0, sizeof(g_fbo_id));
+  memset(g_fbo_tex_id, 0, sizeof(g_fbo_tex_id));
+  memset(g_render_buf_id, 0, sizeof(g_render_buf_id));
+  memset(g_fbo_size, 0, sizeof(g_fbo_size));
+}
+
 void gl_init_fbo(void)
 {
   int i;
@@ -421,7 +420,14 @@ void gl_init_fbo(void)
     // If no change in size then do not reset the FBO
     //
     if (g_fbo_size[ i ] == isize(tex_width, tex_height)) {
+      LOG("No change in size for FBO %u, %ux%u", i, tex_width, tex_height);
       continue;
+    }
+    if (g_fbo_size[ i ].w) {
+      LOG("Change in size for FBO %u, %ux%u -> %ux%u", i, g_fbo_size[ i ].w, g_fbo_size[ i ].h, tex_width,
+          tex_height);
+    } else {
+      LOG("Init FBO %u, %ux%u", i, tex_width, tex_height);
     }
 
     gl_init_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
@@ -435,6 +441,27 @@ void gl_init_fbo(void)
   }
 
   LOG("GFX: OpenGL created FBOs");
+  GL_ERROR_CHECK();
+}
+
+void gl_fini_fbo(void)
+{
+  int i;
+
+  LOG("GFX: OpenGL destroy FBOs");
+  GL_ERROR_CHECK();
+
+  for (i = 0; i < MAX_FBO; i++) {
+    int tex_width;
+    int tex_height;
+
+    fbo_get_size(i, tex_width, tex_height);
+
+    gl_fini_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
+    g_fbo_size[ i ] = isize(0, 0);
+  }
+
+  LOG("GFX: OpenGL destroyed FBOs");
   GL_ERROR_CHECK();
 }
 
@@ -1244,6 +1271,8 @@ void gl_error(GLenum errCode)
     LOG("GFX: error, GL_STACK_UNDERFLOW");
   } else if (errCode == GL_OUT_OF_MEMORY) {
     LOG("GFX: error, GL_OUT_OF_MEMORY");
+  } else if (errCode == GL_INVALID_FRAMEBUFFER_OPERATION) {
+    LOG("GFX: error, GL_INVALID_FRAMEBUFFER_OPERATION");
   } else {
     LOG("GFX: unknown error, %d", errCode);
   }

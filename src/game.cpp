@@ -301,17 +301,17 @@ Game::Game(std::string vappdata)
 
 void Game::init(void)
 {
-  LOG("Game init");
+  LOG("INF: Game init");
   TRACE_AND_INDENT();
-
   set_seed();
 }
 void game_init(class Game *g) { g->init(); }
 
 void Game::fini(void)
 {
-  LOG("Game fini");
+  LOG("FIN: Game fini");
   TRACE_AND_INDENT();
+  state_change(STATE_QUITTING, "quitting");
   destroy_level();
 }
 void game_fini(class Game *g)
@@ -416,6 +416,7 @@ std::string gama_state_to_string(int state)
     case STATE_LOAD_MENU : return "LOAD_MENU";
     case STATE_SAVE_MENU : return "SAVE_MENU";
     case STATE_QUIT_MENU : return "QUIT_MENU";
+    case STATE_QUITTING : return "QUITTING";
     case STATE_KEYBOARD_MENU : return "KEYBOARD_MENU";
     default : ERR("Unhandled game state"); return "?";
   }
@@ -469,6 +470,15 @@ void Game::state_change(uint8_t new_state, const std::string &why)
       wid_topcon_fini();
       break;
     case STATE_PLAYING :
+      wid_main_menu_destroy(game);
+      wid_load_destroy(game);
+      wid_save_destroy(game);
+      wid_quit_destroy(game);
+      wid_rightbar_init(game);
+      wid_leftbar_init(game);
+      wid_topcon_init();
+      break;
+    case STATE_QUITTING :
       wid_main_menu_destroy(game);
       wid_load_destroy(game);
       wid_save_destroy(game);

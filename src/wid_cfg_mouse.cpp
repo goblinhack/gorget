@@ -10,23 +10,22 @@
 #include "my_wids.hpp"
 
 static WidPopup *wid_cfg_mouse_window;
-static bool      local_g_need_restart = false;
-static bool      config_changed;
+static bool      local_g_config_changed;
 
 static void wid_cfg_mouse_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_mouse_window;
-  wid_cfg_mouse_window = nullptr;
-  config_changed       = false;
+  wid_cfg_mouse_window   = nullptr;
+  local_g_config_changed = false;
 }
 
 static bool wid_cfg_mouse_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Reload config");
-  if (config_changed) {
-    config_changed = false;
+  if (local_g_config_changed) {
+    local_g_config_changed = false;
     game_load_config(game);
     sdl_config_update_all();
   }
@@ -42,9 +41,6 @@ static bool wid_cfg_mouse_save(Widp w, int x, int y, uint32_t button)
   game_save_config(game);
   wid_cfg_mouse_destroy(game);
   wid_cfg_top_menu(game);
-  if (local_g_need_restart) {
-    g_need_restart = true;
-  }
   return true;
 }
 
@@ -59,7 +55,7 @@ static bool wid_cfg_mouse_back(Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_mouse_wheel_lr_negated(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   CON("INF: Toggle wheel mouse lr");
   game_mouse_wheel_lr_negated_set(game, ! game_mouse_wheel_lr_negated_get(game));
   wid_cfg_mouse_select(game);
@@ -69,7 +65,7 @@ static bool wid_cfg_mouse_wheel_lr_negated(Widp w, int x, int y, uint32_t button
 static bool wid_cfg_mouse_wheel_ud_negated(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   CON("INF: Toggle wheel mouse ud");
   game_mouse_wheel_ud_negated_set(game, ! game_mouse_wheel_ud_negated_get(game));
   wid_cfg_mouse_select(game);

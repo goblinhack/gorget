@@ -196,7 +196,7 @@ bool Game::save(std::string file_to_save)
     ERR("Failed to open %s for writing: %s", file_to_save.c_str(), strerror(errno));
     return false;
   }
-  CON("INF: Opened [%s] for writing", file_to_save.c_str());
+  LOG("INF: Opened [%s] for writing", file_to_save.c_str());
 
   fwrite((char *) &uncompressed_len, sizeof(uncompressed_len), 1, ofile);
   fwrite((char *) &cs, sizeof(cs), 1, ofile);
@@ -286,7 +286,7 @@ void Game::save_config(void)
     ERR("Failed to open %s for writing: %s", filename.c_str(), strerror(errno));
     return;
   }
-  CON("INF: Opened [%s] for writing", filename.c_str());
+  LOG("INF: Opened [%s] for writing", filename.c_str());
   const Config &c = game->config;
   out << bits(c);
 }

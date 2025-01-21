@@ -296,10 +296,10 @@ void gl_enter_2d_mode(void);
 void gl_error(GLenum err);
 void gl_ext_init(void);
 void gl_init_2d_mode(void);
+void gl_fini_2d_mode(void);
 void gl_init_fbo(void);
-void gl_leave_2_5d_mode(void);
+void gl_fini_fbo(void);
 void gl_leave_2d_mode(void);
-void gl_ortho_set(int width, int height);
 void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
              GLushort left, GLushort top, GLushort right, GLushort bottom, uint8_t r1, uint8_t g1, uint8_t b1,
              uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,

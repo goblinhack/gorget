@@ -58,9 +58,8 @@ void sound_fini(void)
       delete iter->second;
       iter = all_sound.erase(iter);
     }
-
-    Mix_Quit();
   }
+  all_sound.clear();
 }
 
 bool sound_load(float volume, const char *file_in, const char *alias_in)

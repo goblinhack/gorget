@@ -23,11 +23,12 @@ extern bool g_grab_next_key;            // Waiting for key input
 extern bool g_loading;                  // Currently loading
 extern bool g_main_loop_running;        // SDL main loop is running.
 extern bool g_need_restart;             // Need to restart game
+extern bool g_quitting;                 // Exiting the game
+                                        //
 extern bool g_opt_no_slow_log_flush;    // Do not flush after each console log at start
 extern bool g_opt_override_debug_level; // Temporary, used to disable existing debugs
-extern bool g_opt_test_skip_main_menu;  // Start in the main menu
-extern bool g_quitting;                 // Exiting the game
-
+extern bool g_opt_quick_start;          // Start in the main menu
+extern bool g_opt_restarted;            // Post restart
 extern bool g_opt_debug1;
 extern bool g_opt_debug2;
 extern bool g_opt_debug3;
@@ -102,7 +103,6 @@ void flush_the_console(void);
 void GAME_UI_MSG_BOX(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void myerr(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void py_myerr(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void quit(void);
 void reset_globals(void);
 void restart(class Game *);

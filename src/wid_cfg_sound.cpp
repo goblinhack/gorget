@@ -13,22 +13,22 @@
 #include "my_wids.hpp"
 
 static WidPopup *wid_cfg_sound_window;
-static bool      config_changed;
+static bool      local_g_config_changed;
 
 static void wid_cfg_sound_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_sound_window;
   wid_cfg_sound_window = nullptr;
-  config_changed       = false;
+  local_g_config_changed       = false;
 }
 
 static bool wid_cfg_sound_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Reload config");
-  if (config_changed) {
-    config_changed = false;
+  if (local_g_config_changed) {
+    local_g_config_changed = false;
     game_load_config(game);
     sdl_config_update_all();
   }
@@ -58,7 +58,7 @@ static bool wid_cfg_sound_back(Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_sound_effects_volume_incr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   CON("INF: Increment sound volume");
   auto vol = game_sound_volume_get(game);
   game_sound_volume_set(game, vol + 1);
@@ -72,7 +72,7 @@ static bool wid_cfg_sound_effects_volume_incr(Widp w, int x, int y, uint32_t but
 static bool wid_cfg_sound_effects_volume_decr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   CON("INF: Decrement sound volume");
   auto vol = game_sound_volume_get(game);
   game_sound_volume_set(game, vol - 1);
@@ -86,7 +86,7 @@ static bool wid_cfg_sound_effects_volume_decr(Widp w, int x, int y, uint32_t but
 static bool wid_cfg_sound_music_volume_incr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   CON("INF: Increment music volume");
   auto vol = game_music_volume_get(game);
   game_music_volume_set(game, vol + 1);
@@ -101,7 +101,7 @@ static bool wid_cfg_sound_music_volume_incr(Widp w, int x, int y, uint32_t butto
 static bool wid_cfg_sound_music_volume_decr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   CON("INF: Decrement music volume");
   auto vol = game_music_volume_get(game);
   game_music_volume_set(game, vol - 1);

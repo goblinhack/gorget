@@ -435,6 +435,20 @@ void wid_fini(void)
     auto child = iter->second;
     wid_destroy_immediate(child);
   }
+
+  wid_top_level                   = {};
+  wid_global                      = {};
+  wid_top_level2                  = {};
+  wid_top_level3                  = {};
+  wid_top_level4                  = {};
+  wid_tick_top_level              = {};
+  wid_tick_post_display_top_level = {};
+  wid_ignore_events_briefly_ts    = {};
+  wid_last_over_event             = {};
+  wid_focus_locked                = {};
+  wid_focus                       = {};
+  wid_over                        = {};
+  wid_time                        = {};
 }
 
 void wid_dump(Widp w, int depth)
@@ -2117,7 +2131,6 @@ static void wid_destroy_delay(Widp *wp, int delay)
   // if (wid_over == w) {
   //     wid_mouse_over_end();
   // }
-
   for (auto &iter : w->tree2_children_unsorted) {
     auto child = iter.second;
     wid_destroy(&child);
@@ -5234,7 +5247,6 @@ void wid_display_all(void)
 
   ascii_clear_display();
 
-  gl_leave_2d_mode();
   gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
   blit_fbo_bind_locked(FBO_WID);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -5320,7 +5332,6 @@ printf("========================================= %d\n", wid_total_count);
   //
   wid_update_mouse();
 
-  gl_leave_2d_mode();
   gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 }
 

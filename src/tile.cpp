@@ -139,6 +139,7 @@ void tile_fini(void)
     delete t.second;
   }
 
+  all_tiles.clear();
   all_tiles_array.clear();
 }
 

@@ -13,6 +13,7 @@ void audio_fini(void)
 {
   TRACE_AND_INDENT();
   Mix_CloseAudio();
+  audio_init_done = false;
 }
 
 bool audio_init(void)

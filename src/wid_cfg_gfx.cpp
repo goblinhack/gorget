@@ -4,6 +4,7 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_cpp_template.hpp"
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
@@ -11,29 +12,12 @@
 #include "my_wids.hpp"
 
 static WidPopup *wid_cfg_gfx_window;
-static bool      local_g_need_restart = false;
-static bool      config_changed;
 
 static void wid_cfg_gfx_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_gfx_window;
   wid_cfg_gfx_window = nullptr;
-  config_changed     = false;
-}
-
-static bool wid_cfg_gfx_cancel(Widp w, int x, int y, uint32_t button)
-{
-  TRACE_AND_INDENT();
-  CON("INF: Reload config");
-  if (config_changed) {
-    config_changed = false;
-    game_load_config(game);
-    sdl_config_update_all();
-  }
-  wid_cfg_gfx_destroy(game);
-  wid_cfg_top_menu(game);
-  return true;
 }
 
 static bool wid_cfg_gfx_save(Widp w, int x, int y, uint32_t button)
@@ -44,13 +28,18 @@ static bool wid_cfg_gfx_save(Widp w, int x, int y, uint32_t button)
 
   wid_cfg_gfx_destroy(game);
 
-  if (local_g_need_restart) {
-    g_need_restart = true;
-    wid_main_menu_destroy(game);
-  } else {
-    wid_cfg_top_menu(game);
-  }
+  g_need_restart = true;
+  wid_main_menu_destroy(game);
 
+  return true;
+}
+
+static bool wid_cfg_gfx_cancel(Widp w, int x, int y, uint32_t button)
+{
+  TRACE_AND_INDENT();
+  CON("INF: Reload config");
+  wid_cfg_gfx_destroy(game);
+  wid_cfg_top_menu(game);
   return true;
 }
 
@@ -65,18 +54,17 @@ static bool wid_cfg_gfx_back(Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_gfx_vsync_enable_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
   CON("INF: Toggle vsync");
   game_gfx_vsync_enable_set(game, ! game_gfx_vsync_enable_get(game));
   config_gfx_vsync_update();
-  wid_cfg_gfx_select(game);
+
+  wid_cfg_gfx_save(nullptr, 0, 0, 0);
   return true;
 }
 
 static bool wid_cfg_gfx_fullscreen_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
   CON("INF: Toggle gfx fullscreen");
   game_gfx_fullscreen_set(game, ! game_gfx_fullscreen_get(game));
 
@@ -92,20 +80,13 @@ static bool wid_cfg_gfx_fullscreen_toggle(Widp w, int x, int y, uint32_t button)
     SDL_SetWindowFullscreen(sdl.window, 0);
   }
 
-  //
-  // These kind of changes seem to need a restart
-  //
-  local_g_need_restart = true;
   wid_cfg_gfx_save(nullptr, 0, 0, 0);
-  wid_cfg_gfx_select(game);
-
   return true;
 }
 
 static bool wid_cfg_gfx_fullscreen_desktop_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
   CON("INF: Toggle gfx fullscreen desktop");
   game_gfx_fullscreen_desktop_set(game, ! game_gfx_fullscreen_desktop_get(game));
 
@@ -117,122 +98,130 @@ static bool wid_cfg_gfx_fullscreen_desktop_toggle(Widp w, int x, int y, uint32_t
     SDL_SetWindowFullscreen(sdl.window, SDL_WINDOW_FULLSCREEN);
   } else if (game_gfx_fullscreen_desktop_get(game)) {
     SDL_SetWindowFullscreen(sdl.window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-    local_g_need_restart = true;
   } else {
     SDL_SetWindowFullscreen(sdl.window, 0);
   }
 
-  //
-  // These kind of changes seem to need a restart
-  //
-  local_g_need_restart = true;
   wid_cfg_gfx_save(nullptr, 0, 0, 0);
-  wid_cfg_gfx_select(game);
-
   return true;
 }
 
 static bool wid_cfg_gfx_allow_highdpi_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
   CON("INF: Toggle gfx allow highdpi");
   game_gfx_allow_highdpi_set(game, ! game_gfx_allow_highdpi_get(game));
-  wid_cfg_gfx_select(game);
-  local_g_need_restart = true;
+
+  wid_cfg_gfx_save(nullptr, 0, 0, 0);
   return true;
 }
 
 static bool wid_cfg_gfx_borderless_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
   CON("INF: Toggle gfx borderless");
   game_gfx_borderless_set(game, ! game_gfx_borderless_get(game));
   SDL_SetWindowBordered(sdl.window, game_gfx_borderless_get(game) ? SDL_TRUE : SDL_FALSE);
-  wid_cfg_gfx_select(game);
+
+  wid_cfg_gfx_save(nullptr, 0, 0, 0);
   return true;
 }
 
 static bool wid_cfg_other_fps_counter_toggle(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
   CON("INF: Toggle fps counter");
   game_fps_counter_set(game, ! game_fps_counter_get(game));
-  wid_cfg_gfx_select(game);
+
+  wid_cfg_gfx_save(nullptr, 0, 0, 0);
   return true;
 }
 
 static bool wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
-  CON("INF: Increment resolution");
   auto res = std::to_string(game_window_pix_width_get(game)) + "x" + std::to_string(game_window_pix_height_get(game));
-  auto n   = SDL_GetNumDisplayModes(0);
-  int  chosen = 0;
+  CON("INF: Increment resolution (current %s)", res.c_str());
+  auto                                     n = SDL_GetNumDisplayModes(0);
+  std::string                              chosen;
+  std::vector< std::string >               cands;
+  std::map< std::string, SDL_DisplayMode > modes;
   for (int i = 0; i < n; ++i) {
     SDL_DisplayMode mode;
     SDL_GetDisplayMode(0, i, &mode);
     auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
-    LOG(" - candidate: %s", cand.c_str());
+    push_back_if_unique(cands, cand);
+    modes[ cand ] = mode;
+  }
+  for (int i = 0; i < (int) cands.size(); ++i) {
+    auto cand = cands[ i ];
     if (res == cand) {
-      chosen = i - 1;
+      if (i > 0) {
+        chosen = cands[ i - 1 ];
+        LOG(" - candidate: %s (current)", cand.c_str());
+      } else {
+        LOG(" - candidate: %s (at max)", cand.c_str());
+      }
+    } else {
+      LOG(" - candidate: %s", cand.c_str());
     }
   }
-  for (int i = 0; i < n; ++i) {
-    SDL_DisplayMode mode;
-    if (i == chosen) {
-      SDL_GetDisplayMode(0, i, &mode);
-      auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
-      LOG(" - chosen: %s", cand.c_str());
-      game_window_pix_width_set(game, mode.w);
-      game_window_pix_height_set(game, mode.h);
-      game_config_pix_width_set(game, mode.w);
-      game_config_pix_height_set(game, mode.h);
-      SDL_SetWindowSize(sdl.window, mode.w, mode.h);
-    }
+  if (chosen != "") {
+    SDL_DisplayMode mode = modes[ chosen ];
+    LOG(" - chosen: %s", chosen.c_str());
+    game_window_pix_width_set(game, mode.w);
+    game_window_pix_height_set(game, mode.h);
+    game_config_pix_width_set(game, mode.w);
+    game_config_pix_height_set(game, mode.h);
+    SDL_SetWindowSize(sdl.window, mode.w, mode.h);
+    CON("INF: New resolution %s", chosen.c_str());
   }
+
   wid_cfg_gfx_save(nullptr, 0, 0, 0);
-  sdl_config_update_all();
-  wid_cfg_gfx_select(game);
   return true;
 }
 
 static bool wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
-  CON("INF: Decrement resolution");
   auto res = std::to_string(game_window_pix_width_get(game)) + "x" + std::to_string(game_window_pix_height_get(game));
-  auto n   = SDL_GetNumDisplayModes(0);
-  int  chosen = 0;
+  CON("INF: Decrement resolution (current %s)", res.c_str());
+  auto                                     n = SDL_GetNumDisplayModes(0);
+  std::string                              chosen;
+  std::vector< std::string >               cands;
+  std::map< std::string, SDL_DisplayMode > modes;
   for (int i = 0; i < n; ++i) {
     SDL_DisplayMode mode;
     SDL_GetDisplayMode(0, i, &mode);
     auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
-    LOG(" - candidate: %s", cand.c_str());
+    push_back_if_unique(cands, cand);
+    modes[ cand ] = mode;
+  }
+  for (int i = 0; i < (int) cands.size(); ++i) {
+    auto cand = cands[ i ];
     if (res == cand) {
-      chosen = i + 1;
+      if (i < (int) cands.size() - 1) {
+        chosen = cands[ i + 1 ];
+        LOG(" - candidate: %s (current)", cand.c_str());
+      } else {
+        LOG(" - candidate: %s (at max)", cand.c_str());
+      }
+    } else {
+      LOG(" - candidate: %s", cand.c_str());
     }
   }
-  for (int i = 0; i < n; ++i) {
-    SDL_DisplayMode mode;
-    if (i == chosen) {
-      SDL_GetDisplayMode(0, i, &mode);
-      auto cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
-      LOG(" - chosen: %s", cand.c_str());
-      game_window_pix_width_set(game, mode.w);
-      game_window_pix_height_set(game, mode.h);
-      game_config_pix_width_set(game, mode.w);
-      game_config_pix_height_set(game, mode.h);
-      SDL_SetWindowSize(sdl.window, mode.w, mode.h);
-    }
+  if (chosen != "") {
+    SDL_DisplayMode mode = modes[ chosen ];
+    LOG(" - chosen: %s", chosen.c_str());
+    game_window_pix_width_set(game, mode.w);
+    game_window_pix_height_set(game, mode.h);
+    game_config_pix_width_set(game, mode.w);
+    game_config_pix_height_set(game, mode.h);
+    SDL_SetWindowSize(sdl.window, mode.w, mode.h);
+    CON("INF: New resolution %s", chosen.c_str());
   }
+
   wid_cfg_gfx_save(nullptr, 0, 0, 0);
-  sdl_config_update_all();
-  wid_cfg_gfx_select(game);
   return true;
 }
 
@@ -291,8 +280,8 @@ void wid_cfg_gfx_select(class Game *g)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point outer_tl(m - 23, TERM_HEIGHT / 2 - 11);
-  point outer_br(m + 22, TERM_HEIGHT / 2 + 13);
+  point outer_tl(m - 20, TERM_HEIGHT / 2 - 10);
+  point outer_br(m + 20, TERM_HEIGHT / 2 + 10);
 
   auto width = outer_br.x - outer_tl.x - 2;
 
@@ -330,30 +319,6 @@ void wid_cfg_gfx_select(class Game *g)
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=white$B%%fg=reset$ack");
   }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Save");
-
-    point tl(width - 15, y_at);
-    point br(width - 10, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_GREEN);
-    wid_set_on_mouse_up(w, wid_cfg_gfx_save);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=white$S%%fg=reset$ave");
-  }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Cancel");
-
-    point tl(width - 8, y_at);
-    point br(width - 1, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_RED);
-    wid_set_on_mouse_up(w, wid_cfg_gfx_cancel);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=white$C%%fg=reset$ancel");
-  }
 
   /////////////////////////////////////////////////////////////////////////
   // resolution
@@ -385,35 +350,37 @@ void wid_cfg_gfx_select(class Game *g)
         = std::to_string(game_window_pix_width_get(game)) + "x" + std::to_string(game_window_pix_height_get(game));
     wid_set_text(w, res);
   }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Resolution value +");
+  if (! game_gfx_fullscreen_desktop_get(game)) {
+    {
+      TRACE_AND_INDENT();
+      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto w = wid_new_square_button(p, "Resolution value +");
 
-    point tl(width / 2 + 13, y_at);
-    point br(width / 2 + 15, y_at);
-    wid_set_mode(w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_incr);
-    wid_set_text(w, "+");
-  }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Resolution value -");
+      point tl(width / 2 + 13, y_at);
+      point br(width / 2 + 15, y_at);
+      wid_set_mode(w, WID_MODE_OVER);
+      wid_set_style(w, box_highlight_style);
+      wid_set_mode(w, WID_MODE_NORMAL);
+      wid_set_style(w, box_style);
+      wid_set_pos(w, tl, br);
+      wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_incr);
+      wid_set_text(w, "+");
+    }
+    {
+      TRACE_AND_INDENT();
+      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto w = wid_new_square_button(p, "Resolution value -");
 
-    point tl(width / 2 + 16, y_at);
-    point br(width / 2 + 18, y_at);
-    wid_set_mode(w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_decr);
-    wid_set_text(w, "-");
+      point tl(width / 2 + 16, y_at);
+      point br(width / 2 + 18, y_at);
+      wid_set_mode(w, WID_MODE_OVER);
+      wid_set_style(w, box_highlight_style);
+      wid_set_mode(w, WID_MODE_NORMAL);
+      wid_set_style(w, box_style);
+      wid_set_pos(w, tl, br);
+      wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_decr);
+      wid_set_text(w, "-");
+    }
   }
   y_at++;
 
@@ -431,14 +398,14 @@ void wid_cfg_gfx_select(class Game *g)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Fullscreen(restart)");
+    wid_set_text(w, "Fullscreen");
   }
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Fullscreen value");
 
-    point tl(29, y_at);
+    point tl(23, y_at);
     point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
@@ -468,14 +435,14 @@ void wid_cfg_gfx_select(class Game *g)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Full desktop(restart)");
+    wid_set_text(w, "Full desktop");
   }
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Fullscreen value");
 
-    point tl(29, y_at);
+    point tl(23, y_at);
     point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
@@ -512,7 +479,7 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "High DPI value");
 
-    point tl(29, y_at);
+    point tl(23, y_at);
     point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
@@ -549,7 +516,7 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Borderless");
 
-    point tl(29, y_at);
+    point tl(23, y_at);
     point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
@@ -586,7 +553,7 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Vertical sync value");
 
-    point tl(29, y_at);
+    point tl(23, y_at);
     point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
@@ -623,7 +590,7 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "FPS counter value");
 
-    point tl(29, y_at);
+    point tl(23, y_at);
     point br(37, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);

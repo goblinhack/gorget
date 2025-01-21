@@ -4,12 +4,16 @@
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
+#include "my_font.hpp"
 #include "my_game.hpp"
+#include "my_gfx.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_tex.hpp"
+#include "my_tile.hpp"
 #include "my_ui.hpp"
 #include "my_wid_console.hpp"
 
@@ -208,14 +212,12 @@ void sdl_loop(void)
       }
     }
 
-    gl_leave_2d_mode();
     gl_enter_2d_mode(game_pix_width_get(game), game_pix_height_get(game));
 
     glcolor(WHITE);
     game_display(game);
     blit_fbo_unbind();
 
-    gl_leave_2d_mode();
     gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 
     sdl_display(game);
@@ -224,6 +226,7 @@ void sdl_loop(void)
     // Config change?
     //
     if (unlikely(g_need_restart)) {
+      LOG("INF: Restart needed");
       break;
     }
 

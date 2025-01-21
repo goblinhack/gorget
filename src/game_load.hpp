@@ -94,31 +94,32 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.window_pix_height);
   in >> bits(my.t.window_pix_width);
 
-  LOG("Read config: ascii_pix_height        = %d", my.t.ascii_pix_height);
-  LOG("Read config: ascii_pix_width         = %d", my.t.ascii_pix_width);
-  LOG("Read config: aspect_ratio           = %f", my.t.aspect_ratio);
+  LOG("Read config: window_pix_height      = %d", my.t.window_pix_height);
+  LOG("Read config: window_pix_width       = %d", my.t.window_pix_width);
   LOG("Read config: config_pix_height      = %d", my.t.config_pix_height);
   LOG("Read config: config_pix_width       = %d", my.t.config_pix_width);
-  LOG("Read config: debug_mode             = %d", my.t.debug_mode);
-  LOG("Read config: fps_counter            = %d", my.t.fps_counter);
+  LOG("Read config: aspect_ratio           = %f", my.t.aspect_ratio);
+  LOG("Read config: ascii_pix_height        = %d", my.t.ascii_pix_height);
+  LOG("Read config: ascii_pix_width         = %d", my.t.ascii_pix_width);
   LOG("Read config: game_pix_height        = %d", my.t.game_pix_height);
   LOG("Read config: game_pix_width         = %d", my.t.game_pix_width);
-  LOG("Read config: gfx_allow_highdpi      = %d", my.t.gfx_allow_highdpi);
-  LOG("Read config: gfx_borderless         = %d", my.t.gfx_borderless);
-  LOG("Read config: gfx_fullscreen_desktop = %d", my.t.gfx_fullscreen_desktop);
-  LOG("Read config: gfx_fullscreen         = %d", my.t.gfx_fullscreen);
-  LOG("Read config: gfx_vsync_enable       = %d", my.t.gfx_vsync_enable);
   LOG("Read config: map_pix_height         = %d", my.t.map_pix_height);
   LOG("Read config: map_pix_width          = %d", my.t.map_pix_width);
+  LOG("Read config: tiles_visible_across   = %d", my.t.tiles_visible_across);
+  LOG("Read config: tiles_visible_down     = %d", my.t.tiles_visible_down);
+
+  LOG("Read config: debug_mode             = %d", my.t.debug_mode);
+  LOG("Read config: fps_counter            = %d", my.t.fps_counter);
+  LOG("Read config: gfx_allow_highdpi      = %d", my.t.gfx_allow_highdpi);
+  LOG("Read config: gfx_borderless         = %d", my.t.gfx_borderless);
+  LOG("Read config: gfx_fullscreen         = %d", my.t.gfx_fullscreen);
+  LOG("Read config: gfx_fullscreen_desktop = %d", my.t.gfx_fullscreen_desktop);
+  LOG("Read config: gfx_vsync_enable       = %d", my.t.gfx_vsync_enable);
   LOG("Read config: mouse_wheel_lr_negated = %d", my.t.mouse_wheel_lr_negated);
   LOG("Read config: mouse_wheel_ud_negated = %d", my.t.mouse_wheel_ud_negated);
   LOG("Read config: music_volume           = %d", my.t.music_volume);
   LOG("Read config: sdl_delay              = %d", my.t.sdl_delay);
   LOG("Read config: sound_volume           = %d", my.t.sound_volume);
-  LOG("Read config: tiles_visible_across   = %d", my.t.tiles_visible_across);
-  LOG("Read config: tiles_visible_down     = %d", my.t.tiles_visible_down);
-  LOG("Read config: window_pix_height      = %d", my.t.window_pix_height);
-  LOG("Read config: window_pix_width       = %d", my.t.window_pix_width);
   // seed name handled below
 
   if (! g_opt_override_debug_level) {

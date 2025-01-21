@@ -46,6 +46,7 @@ bool music_init(void)
   //
   int flags   = MIX_INIT_OGG;
   int initted = Mix_Init(flags);
+  LOG("SDL: Mix_Init");
   if ((initted & flags) != flags) {
     ERR("Mix_Init: Failed to init required OGG support");
   }
@@ -68,7 +69,9 @@ void music_fini(void)
     }
 
     Mix_Quit();
+    LOG("SDL: Mix_Quit");
   }
+  all_music.clear();
 }
 
 bool music_load(uint32_t rate, const char *file, const char *name_alias)

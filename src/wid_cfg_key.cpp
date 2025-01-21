@@ -14,7 +14,7 @@
 
 static int  last_vert_scroll_offset = -1;
 WidPopup   *wid_cfg_keyboard_window;
-static bool config_changed;
+static bool local_g_config_changed;
 
 static void wid_cfg_check_for_conflicts(SDL_Keysym code)
 {
@@ -70,7 +70,7 @@ static void wid_cfg_check_for_conflicts(SDL_Keysym code)
 void wid_cfg_keyboard_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
-  config_changed = false;
+  local_g_config_changed = false;
 
   if (! wid_cfg_keyboard_window) {
     return;
@@ -88,8 +88,8 @@ static bool wid_cfg_keyboard_cancel(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   CON("INF: Reload config");
-  if (config_changed) {
-    config_changed = false;
+  if (local_g_config_changed) {
+    local_g_config_changed = false;
     game_load_config(game);
     sdl_config_update_all();
   }
@@ -146,7 +146,7 @@ static SDL_Keysym none = {};
 static void wid_cfg_key_move_left_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_move_left_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_move_left_set(game, code);
@@ -156,7 +156,7 @@ static void wid_cfg_key_move_left_set(SDL_Keysym code)
 static void wid_cfg_key_move_right_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_move_right_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_move_right_set(game, code);
@@ -166,7 +166,7 @@ static void wid_cfg_key_move_right_set(SDL_Keysym code)
 static void wid_cfg_key_move_up_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_move_up_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_move_up_set(game, code);
@@ -176,7 +176,7 @@ static void wid_cfg_key_move_up_set(SDL_Keysym code)
 static void wid_cfg_key_move_down_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_move_down_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_move_down_set(game, code);
@@ -186,7 +186,7 @@ static void wid_cfg_key_move_down_set(SDL_Keysym code)
 static void wid_cfg_key_attack_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_attack_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_attack_set(game, code);
@@ -196,7 +196,7 @@ static void wid_cfg_key_attack_set(SDL_Keysym code)
 static void wid_cfg_key_unused1_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_unused1_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_unused1_set(game, code);
@@ -206,7 +206,7 @@ static void wid_cfg_key_unused1_set(SDL_Keysym code)
 static void wid_cfg_key_save_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_save_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_save_set(game, code);
@@ -216,7 +216,7 @@ static void wid_cfg_key_save_set(SDL_Keysym code)
 static void wid_cfg_key_load_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_load_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_load_set(game, code);
@@ -226,7 +226,7 @@ static void wid_cfg_key_load_set(SDL_Keysym code)
 static void wid_cfg_key_help_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_help_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_help_set(game, code);
@@ -236,7 +236,7 @@ static void wid_cfg_key_help_set(SDL_Keysym code)
 static void wid_cfg_key_console_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_console_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_console_set(game, code);
@@ -246,7 +246,7 @@ static void wid_cfg_key_console_set(SDL_Keysym code)
 static void wid_cfg_key_quit_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_quit_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_quit_set(game, code);
@@ -256,7 +256,7 @@ static void wid_cfg_key_quit_set(SDL_Keysym code)
 static void wid_cfg_key_screenshot_set(SDL_Keysym code)
 {
   TRACE_AND_INDENT();
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_screenshot_set(game, none);
   wid_cfg_check_for_conflicts(code);
   game_key_screenshot_set(game, code);
@@ -268,7 +268,7 @@ static void grab_key(const std::string which)
   TRACE_AND_INDENT();
   wid_notice("Press a key for " + which);
   g_grab_next_key = true;
-  config_changed  = true;
+  local_g_config_changed  = true;
 }
 
 static bool wid_cfg_keyboard_profile_arrow_keys(Widp w, int x, int y, uint32_t button)
@@ -276,7 +276,7 @@ static bool wid_cfg_keyboard_profile_arrow_keys(Widp w, int x, int y, uint32_t b
   TRACE_AND_INDENT();
   SDL_Keysym k {};
 
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_move_up_set(game, none);
   k.sym = SDLK_UP;
   wid_cfg_check_for_conflicts(k);
@@ -307,7 +307,7 @@ static bool wid_cfg_keyboard_profile_wasd(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   SDL_Keysym k = {};
 
-  config_changed = true;
+  local_g_config_changed = true;
   game_key_move_up_set(game, none);
   k.sym = SDLK_w;
   wid_cfg_check_for_conflicts(k);
@@ -338,7 +338,7 @@ static bool wid_cfg_key_move_left(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("move left");
   sdl.on_sdl_key_grab = wid_cfg_key_move_left_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -347,7 +347,7 @@ static bool wid_cfg_key_move_right(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("move right");
   sdl.on_sdl_key_grab = wid_cfg_key_move_right_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -356,7 +356,7 @@ static bool wid_cfg_key_move_up(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("move up");
   sdl.on_sdl_key_grab = wid_cfg_key_move_up_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -365,7 +365,7 @@ static bool wid_cfg_key_move_down(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("move down");
   sdl.on_sdl_key_grab = wid_cfg_key_move_down_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -374,7 +374,7 @@ static bool wid_cfg_key_attack(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("attack");
   sdl.on_sdl_key_grab = wid_cfg_key_attack_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -383,7 +383,7 @@ static bool wid_cfg_key_unused1(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("item unused1");
   sdl.on_sdl_key_grab = wid_cfg_key_unused1_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -392,7 +392,7 @@ static bool wid_cfg_key_save(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("save game");
   sdl.on_sdl_key_grab = wid_cfg_key_save_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -401,7 +401,7 @@ static bool wid_cfg_key_load(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("load game");
   sdl.on_sdl_key_grab = wid_cfg_key_load_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -410,7 +410,7 @@ static bool wid_cfg_key_help(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("help");
   sdl.on_sdl_key_grab = wid_cfg_key_help_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -419,7 +419,7 @@ static bool wid_cfg_key_console(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("toggle console");
   sdl.on_sdl_key_grab = wid_cfg_key_console_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -428,7 +428,7 @@ static bool wid_cfg_key_quit(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   grab_key("quit");
   sdl.on_sdl_key_grab = wid_cfg_key_quit_set;
-  config_changed      = true;
+  local_g_config_changed      = true;
   return true;
 }
 
@@ -436,7 +436,7 @@ static bool wid_cfg_key_screenshot(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("screenshot grab");
-  config_changed      = true;
+  local_g_config_changed      = true;
   sdl.on_sdl_key_grab = wid_cfg_key_screenshot_set;
   return true;
 }

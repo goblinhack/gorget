@@ -14,12 +14,15 @@
 #include "my_ui.hpp"
 #include "my_wid_console.hpp"
 
-SDL sdl;
+SDL     sdl;
+uint8_t sdl_init_display(void);
 
-void sdl_fini(void)
+void sdl_video_fini(void)
 {
-  LOG("SDL: Fini");
+  LOG("SDL: Video fini");
   TRACE_AND_INDENT();
+
+  gl_fini_2d_mode();
 
 #ifdef ENABLE_UI_ASCII_MOUSE
   SDL_ShowCursor(0);
@@ -34,9 +37,19 @@ void sdl_fini(void)
 
   LOG("SDL: Delete GL context");
   SDL_GL_DeleteContext(sdl.context);
+  sdl.context = nullptr;
 
   LOG("SDL: Destroy window");
   SDL_DestroyWindow(sdl.window);
+  sdl.window = nullptr;
+}
+
+void sdl_fini(void)
+{
+  LOG("SDL: Fini");
+  TRACE_AND_INDENT();
+
+  sdl_video_fini();
 
   LOG("SDL: Quit");
   SDL_Quit();
@@ -150,10 +163,6 @@ uint8_t sdl_init(void)
 {
   gl_ext_init();
 
-  int video_width;
-  int video_height;
-  int value;
-
   LOG("SDL: Version: %u.%u", SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
   TRACE_AND_INDENT();
 
@@ -177,6 +186,17 @@ uint8_t sdl_init(void)
     sdl_init_rumble();
   }
 
+  sdl_init_display();
+
+  return true;
+}
+
+uint8_t sdl_init_display(void)
+{
+  int video_width;
+  int video_height;
+  int value;
+
   sdl.init_video = 1;
 
   sdl_list_video_size();
@@ -187,6 +207,7 @@ uint8_t sdl_init(void)
   if (game_config_pix_width_get(game) && game_config_pix_height_get(game)) {
     video_width  = game_config_pix_width_get(game);
     video_height = game_config_pix_height_get(game);
+    LOG("SDL: Used saved resolution %ux%u", video_width, video_height);
   } else {
     //
     // Else guess.
@@ -205,6 +226,7 @@ uint8_t sdl_init(void)
 
     video_width  = game_config_pix_width_get(game);
     video_height = game_config_pix_height_get(game);
+    LOG("SDL: Used current resolution %ux%u", video_width, video_height);
   }
 
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -245,7 +267,7 @@ uint8_t sdl_init(void)
     }
   }
 
-  LOG("SDL: Create window");
+  LOG("SDL: Create window size %ux%u", video_width, video_height);
   sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
                                 video_is_unused_flags);
   if (! sdl.window) {
@@ -258,13 +280,16 @@ uint8_t sdl_init(void)
   int w, h;
   if (video_is_unused_flags & SDL_WINDOW_ALLOW_HIGHDPI) {
     SDL_GL_GetDrawableSize(sdl.window, &w, &h);
-    game_window_pix_width_set(game, w);
-    game_window_pix_height_set(game, h);
+    LOG("SDL: Created dpi window size %ux%u", w, h);
   } else {
     SDL_GetWindowSize(sdl.window, &w, &h);
-    game_window_pix_width_set(game, w);
-    game_window_pix_height_set(game, h);
+    LOG("SDL: Created window size %ux%u", w, h);
   }
+
+  game_config_pix_width_set(game, w);
+  game_config_pix_height_set(game, h);
+  game_window_pix_width_set(game, w);
+  game_window_pix_height_set(game, h);
 
   LOG("SDL: Call SDL_GL_CreateContext(%dx%d)", game_window_pix_width_get(game), game_window_pix_height_get(game));
   sdl.context = SDL_GL_CreateContext(sdl.window);
@@ -671,7 +696,6 @@ void sdl_flush_display(class Game *g, bool force)
   glEnable(GL_TEXTURE_2D);
   gl_enter_2d_mode();
   wid_display_all();
-  gl_leave_2d_mode();
   gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
 
   sdl_display(g);
@@ -681,6 +705,8 @@ void config_game_gfx_update(void)
 {
   LOG("SDL: Update");
   TRACE_AND_INDENT();
+
+  sdl_init_display();
 
   //
   // Display ratio

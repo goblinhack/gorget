@@ -213,58 +213,6 @@ static void err_(const char *fmt, va_list args)
   nested_error = false;
 }
 
-static void py_err_(const char *fmt, va_list args)
-{
-  TRACE_NO_INDENT();
-
-  static bool nested_error;
-  if (nested_error) {
-    return;
-  }
-  nested_error = true;
-
-  callstack_dump();
-  backtrace_dump();
-
-  char error_buf[ MAXLONGSTR ];
-  {
-    int len;
-
-    error_buf[ 0 ] = '\0';
-    len            = (int) strlen(error_buf);
-    vsnprintf(error_buf + len, MAXLONGSTR - len, fmt, args);
-
-    error_handler(error_buf);
-  }
-
-  {
-    char buf[ MAXLONGSTR ];
-    int  len = 0;
-
-    buf[ 0 ] = '\0';
-    {
-      get_timestamp(buf, MAXLONGSTR);
-      len = (int) strlen(buf);
-    }
-
-    if (snprintf(buf + len, MAXLONGSTR - len, "ERROR: %%%%fg=red$%s%%%%fg=reset$", error_buf) < 0) {
-      ERR("truncation");
-      return;
-    }
-
-    putf(MY_STDERR, buf);
-    putf(MY_STDOUT, buf);
-
-    term_log(buf);
-    putchar('\n');
-
-    wid_console_log(buf);
-  }
-
-  FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS();
-  nested_error = false;
-}
-
 static void croak_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
@@ -383,43 +331,6 @@ void myerr(const char *fmt, ...)
   }
 }
 
-void py_myerr(const char *fmt, ...)
-{
-  TRACE_NO_INDENT();
-
-  static bool nested_error;
-  if (nested_error) {
-    return;
-  }
-  bool old_nested_error = nested_error;
-  nested_error          = true;
-
-  if (old_nested_error) {
-    //
-    // Subsequent errors on quitting, avoid error logging
-    //
-    va_list args;
-    va_start(args, fmt);
-    log_(fmt, args);
-    va_end(args);
-  } else {
-    g_errored = true;
-    va_list args;
-    va_start(args, fmt);
-    py_err_(fmt, args);
-    va_end(args);
-  }
-
-  wid_unset_focus();
-  wid_unset_focus_lock();
-
-  nested_error = false;
-
-  if (g_quitting) {
-    DIE("Error while quitting");
-  }
-}
-
 static void msgerr_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
@@ -481,7 +392,7 @@ static void sdl_msgerr_(const char *fmt, va_list args)
   // The window is needed else the box appears behind the main window.
   //
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, sdl.window);
-  CON("INF: Finished SDL message box");
+  CON("INF: Launched SDL message box");
 #endif
 }
 

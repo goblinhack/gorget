@@ -60,52 +60,56 @@ void quit(void)
   signal(SIGFPE, nullptr); // uninstall our handler
 #endif
 
-  game_fini(game);
-
-  LOG("FIN: sdl_exit");
+  LOG("FIN: SDL exit");
   sdl_exit();
 
-  LOG("FIN: tp_fini");
+  LOG("FIN: Tp fini");
   tp_fini();
 
-  LOG("FIN: wid_console_fini");
+  LOG("FIN: Wid console fini");
   wid_console_fini();
 
-  LOG("FIN: command_fini");
+  LOG("FIN: Commands fini");
   command_fini();
 
-  LOG("FIN: wid_fini");
-  wid_fini();
-
-  LOG("FIN: font_fini");
+  LOG("FIN: Font fini");
   font_fini();
 
-  LOG("FIN: tex_fini");
+  LOG("FIN: Tex fini");
   tex_fini();
 
-  LOG("FIN: wid_tiles_fini");
+  LOG("FIN: Wid tiles fini");
   wid_tiles_fini();
 
-  LOG("FIN: tile_fini");
+  LOG("FIN: Tile fini");
   tile_fini();
 
-  LOG("FIN: blit_fini");
+  LOG("FIN: Blit fini");
   blit_fini();
 
-  LOG("FIN: color_fini");
+  LOG("FIN: Color fini");
   color_fini();
 
-  LOG("FIN: audio_fini");
+  LOG("FIN: Audio fini");
   audio_fini();
 
-  LOG("FIN: music_fini");
+  LOG("FIN: Music fini");
   music_fini();
 
-  LOG("FIN: sound_fini");
+  LOG("FIN: Sound fini");
   sound_fini();
 
-  LOG("FIN: sdl_fini");
+  LOG("FIN: SDL fini");
   sdl_fini();
+
+  //
+  // Do this last as sdl_fini depends on it.
+  //
+  LOG("FIN: Game fini");
+  game_fini(game);
+
+  LOG("FIN: Wid fini");
+  wid_fini();
 
   if (EXEC_FULL_PATH_AND_NAME) {
     myfree(EXEC_FULL_PATH_AND_NAME);
@@ -144,12 +148,14 @@ void quit(void)
 void restart(class Game *g)
 {
   TRACE_AND_INDENT();
-  char *args[] = {nullptr, nullptr};
+  char *args[] = {nullptr, (char *) "-restart", nullptr};
   char *executable;
 
-  wid_visible(wid_console_window);
-  wid_raise(wid_console_window);
-  wid_update(wid_console_window);
+  if (g_opt_debug1) {
+    wid_visible(wid_console_window);
+    wid_raise(wid_console_window);
+    wid_update(wid_console_window);
+  }
 
   executable = (char *) original_program_name.c_str();
 
@@ -161,10 +167,10 @@ void restart(class Game *g)
   executable = (char *) "gorget.exe";
 #endif
 
-  CON("FIN: Restarting the program... Wish me luck.");
   CON("FIN: Run \"%s\"", executable);
-  sdl_flush_display(g, true);
-  sleep(5);
+  if (g_opt_debug1) {
+    sdl_flush_display(g, true);
+  }
 
   args[ 0 ] = executable;
   execve(executable, (char *const *) args, nullptr);
@@ -503,7 +509,12 @@ static void parse_args(int argc, char *argv[])
     }
 
     if (! strcasecmp(argv[ i ], "--test-start") || ! strcasecmp(argv[ i ], "-test-start")) {
-      g_opt_test_skip_main_menu = true;
+      g_opt_quick_start = true;
+      continue;
+    }
+
+    if (! strcasecmp(argv[ i ], "--restart") || ! strcasecmp(argv[ i ], "-restart")) {
+      g_opt_restarted = true;
       continue;
     }
 
@@ -558,19 +569,21 @@ static std::string create_appdata_dir(void)
 #endif
   myfree(dir);
 
-  char *out             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
-  g_log_stdout_filename = std::string(out);
-  g_log_stdout          = fopen(out, "w+");
+  if (! g_log_stdout) {
+    char *out             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
+    g_log_stdout_filename = std::string(out);
+    g_log_stdout          = fopen(out, "w+");
+    LOG("INI: Will use STDOUT as '%s'", out);
+    myfree(out);
+  }
 
-  char *err             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
-  g_log_stderr_filename = std::string(err);
-  g_log_stderr          = fopen(err, "w+");
-
-  LOG("INI: Will use STDOUT as '%s'", out);
-  LOG("INI: Will use STDERR as '%s'", err);
-
-  myfree(out);
-  myfree(err);
+  if (! g_log_stderr) {
+    char *err             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
+    g_log_stderr_filename = std::string(err);
+    g_log_stderr          = fopen(err, "w+");
+    LOG("INI: Will use STDERR as '%s'", err);
+    myfree(err);
+  }
 
   return std::string(appdata);
 }
@@ -684,11 +697,6 @@ int main(int argc, char *argv[])
     if (g_need_restart) {
       restart(game);
     }
-  }
-
-  {
-    TRACE_NO_INDENT();
-    gl_init_2d_mode();
   }
 
   //
@@ -844,7 +852,10 @@ int main(int argc, char *argv[])
     // Main menu
     //
     TRACE_NO_INDENT();
-    if (g_opt_test_skip_main_menu) {
+    if (g_opt_restarted) {
+      wid_cfg_gfx_select(game);
+      g_opt_restarted = false;
+    } else if (g_opt_quick_start) {
       wid_new_game(game);
     } else {
       wid_main_menu_select(game);
@@ -864,16 +875,8 @@ int main(int argc, char *argv[])
 
   if (g_need_restart) {
     g_need_restart = false;
-#ifdef _WIN32
     restart(game);
-#else
-    CON("FIN: Restart");
-    execv(argv[ 0 ], argv);
-#endif
   }
-
-  LOG("FIN: Leave 2D mode");
-  gl_leave_2d_mode();
 
   CON("FIN: Quit");
   quit();
