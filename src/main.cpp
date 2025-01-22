@@ -815,6 +815,7 @@ int main(int argc, char *argv[])
       ERR("Sound init");
     }
     sound_load(0.5, "data/sounds/interface/click2.wav", "click");
+    sound_load(0.5, "data/sounds/interface/error.wav", "error");
     LOG("INI: Loaded");
     flush_the_console();
   }

@@ -783,7 +783,7 @@ void config_game_gfx_update(void)
     if (TERM_HEIGHT >= TERM_HEIGHT_MAX) {
       LOG("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) beyond max bounds", TERM_WIDTH, TERM_HEIGHT,
           TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
-      TERM_HEIGHT = TERM_WIDTH_MAX;
+      TERM_HEIGHT = TERM_HEIGHT_MAX;
       continue;
     }
 
@@ -805,7 +805,11 @@ void config_game_gfx_update(void)
   }
 
   if (tries < 0) {
-    LOG("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) best effort", TERM_WIDTH, TERM_HEIGHT,
+    TERM_WIDTH  = TERM_WIDTH_MIN;
+    TERM_HEIGHT = TERM_HEIGHT_MIN;
+    font_width  = game_window_pix_width_get(game) / TERM_WIDTH;
+    font_height = game_window_pix_height_get(game) / TERM_HEIGHT;
+    CON("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) best effort", TERM_WIDTH, TERM_HEIGHT,
         TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
   }
 

@@ -20,10 +20,6 @@
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
-#undef ENABLE_DEBUG_GFX_GL_BLEND
-#undef ENABLE_DEBUG_UI
-#undef ENABLE_DEBUG_UI2
-
 typedef struct {
   //
   // Colors

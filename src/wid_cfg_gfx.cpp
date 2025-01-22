@@ -9,6 +9,7 @@
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_cfg_gfx_window;
@@ -175,9 +176,12 @@ static bool wid_cfg_gfx_resolution_incr(Widp w, int x, int y, uint32_t button)
     game_config_pix_height_set(game, mode.h);
     SDL_SetWindowSize(sdl.window, mode.w, mode.h);
     CON("INF: New resolution %s", chosen.c_str());
+    wid_cfg_gfx_save(nullptr, 0, 0, 0);
+  } else {
+    sound_play("error");
+    CON("INF: At maximum resolution (current %s)", res.c_str());
   }
 
-  wid_cfg_gfx_save(nullptr, 0, 0, 0);
   return true;
 }
 
@@ -219,9 +223,12 @@ static bool wid_cfg_gfx_resolution_decr(Widp w, int x, int y, uint32_t button)
     game_config_pix_height_set(game, mode.h);
     SDL_SetWindowSize(sdl.window, mode.w, mode.h);
     CON("INF: New resolution %s", chosen.c_str());
+    wid_cfg_gfx_save(nullptr, 0, 0, 0);
+  } else {
+    sound_play("error");
+    CON("INF: At minimm resolution (current %s)", res.c_str());
   }
 
-  wid_cfg_gfx_save(nullptr, 0, 0, 0);
   return true;
 }
 

@@ -7,9 +7,14 @@
 #include "my_game.hpp"
 #include "my_string.hpp"
 
+#include <errno.h>
+#include <libproc.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <strings.h>
 #include <time.h>
+#include <unistd.h>
 
 void callstack_dump(void)
 {
@@ -46,8 +51,6 @@ std::string callstack_string(void)
   return std::string(tmp);
 }
 
-#ifdef ENABLE_CRASH_HANDLER
-
 #include <assert.h>
 #ifndef _WIN32
 #include <sys/wait.h>
@@ -58,29 +61,29 @@ std::string callstack_string(void)
 #include <sys/prctl.h>
 #endif
 
-#ifdef __APPLE__
-#endif
-
 #ifndef PATH_MAX
 #define PATH_MAX 512
 #endif
 
-#if defined __linux__
-//
-// Should work on linux only.
-//
+#ifndef __APPLE__
 static void debug_crash_handler(int sig)
 {
   fprintf(stderr, "debug_crash_handler: Error: Signal %d:\n", sig);
 
-  std::string pid(std::to_string(getpid()));
+  std::string pid_str(std::to_string(getpid()));
 
   const size_t max_path = PATH_MAX + 1;
   char         prog_name[ max_path ];
 
 #if defined __APPLE__
-  uint32_t bufsize = max_path;
-  _NSGetExecutablePath(prog_name, &bufsize);
+  auto pid_num = getpid();
+  auto ret     = proc_pidpath(pid_num, prog_name, sizeof(prog_name));
+  if (ret <= 0) {
+    fprintf(stderr, "PID %d: proc_pidpath ();\n", pid_num);
+    fprintf(stderr, "    %s\n", strerror(errno));
+  } else {
+    printf("proc %d: %s\n", pid_num, prog_name);
+  }
 #elif defined WIN32
   HMODULE module = GetModuleHandleA(nullptr);
   GetModuleFileNameA(module, prog_name, max_path);
@@ -95,8 +98,6 @@ static void debug_crash_handler(int sig)
     ERR("debug_crash_handler: Symlink too long");
     return;
   }
-#else
-  return;
 #endif
 
 #if defined __linux__
@@ -112,9 +113,9 @@ static void debug_crash_handler(int sig)
     // Start GDB
     //
 #ifdef __APPLE__
-    execl("/usr/bin/lldb", "lldb", "-p", pid.c_str(), nullptr);
+    execl("/usr/bin/lldb", "lldb", "-p", pid_str.c_str(), nullptr);
 #else
-    execl("/usr/bin/gdb", "gdb", "--batch", "-n", "-ex", "thread apply all bt", prog_name, pid.c_str(), nullptr);
+    execl("/usr/bin/gdb", "gdb", "--batch", "-n", "-ex", "thread apply all bt", prog_name, pid_str.c_str(), nullptr);
 #endif
     assert(false && "Debugger failed to exec");
   } else {
@@ -155,12 +156,15 @@ void common_error_handler(std::string &tech_support)
 
 void segv_handler(int sig)
 {
+  TRACE_AND_INDENT();
+
   std::string tech_support = "Sorry, a crash has occurred!";
 
-#if defined __linux__
+#ifdef __APPLE__
   //
-  // Seems to cause hang issues on mac M1
+  // Can't get it to work.
   //
+#else
   debug_crash_handler(sig);
 #endif
 
@@ -179,8 +183,8 @@ void error_handler(const std::string &error_msg)
 void ctrlc_handler(int sig)
 {
   TRACE_AND_INDENT();
+
   fprintf(MY_STDERR, "Interrupted!!!");
   backtrace_dump();
   DIE_CLEAN("Interrupted");
 }
-#endif
