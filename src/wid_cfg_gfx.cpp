@@ -424,6 +424,39 @@ void wid_cfg_gfx_select(class Game *g)
   y_at++;
 
   /////////////////////////////////////////////////////////////////////////
+  // ascii font
+  /////////////////////////////////////////////////////////////////////////
+  {
+    TRACE_AND_INDENT();
+    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(p, "Font size");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Font size");
+  }
+  {
+    TRACE_AND_INDENT();
+    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(p, "Font size value");
+
+    point tl(width / 2 + 4, y_at);
+    point br(width / 2 + 12, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+
+    auto fw  = game_ascii_pix_width_get(game);
+    auto fh  = game_ascii_pix_height_get(game);
+    auto res = std::to_string(fw) + "x" + std::to_string(fh);
+    wid_set_text(w, res);
+    wid_set_text_lhs(w, true);
+  }
+  y_at++;
+
+  /////////////////////////////////////////////////////////////////////////
   // Fullscreen
   /////////////////////////////////////////////////////////////////////////
   {
