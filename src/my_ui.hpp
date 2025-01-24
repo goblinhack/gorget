@@ -14,8 +14,8 @@
 #define UI_CURSOR_OTHER_COLOR       WHITE
 #define UI_FONT_HEIGHT              8
 #define UI_FONT_WIDTH               6
-#define UI_LEFTBAR_WIDTH            20  // In characters
-#define UI_RIGHTBAR_WIDTH           20  // In characters
+#define UI_LEFTBAR_WIDTH            30  // In characters
+#define UI_RIGHTBAR_WIDTH           30  // In characters
 #define UI_LOGGING_EMPTY_LINE       "`" // Complete hack, char I use to force space
 #define UI_MOUSE_DOUBLE_CLICK       500 // Double click time
 #define UI_MOUSE_WHEEL_SCALE        2.0 // How much the wheel mouse moves.

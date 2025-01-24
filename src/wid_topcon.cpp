@@ -188,7 +188,7 @@ static void wid_topcon_wid_create(void)
   TRACE_NO_INDENT();
   {
     point tl = make_point(UI_LEFTBAR_WIDTH, 0);
-    point br = make_point(UI_TOPCON_VIS_WIDTH - 1, h - 1);
+    point br = make_point(UI_LEFTBAR_WIDTH + UI_TOPCON_VIS_WIDTH - 1, h - 1);
 
     wid_topcon_window = wid_new_square_window("wid topcon");
     wid_set_name(wid_topcon_window, "wid topcon window");
@@ -205,9 +205,6 @@ static void wid_topcon_wid_create(void)
     wid_set_pos(wid_topcon_container, tl, br);
     wid_set_shape_none(wid_topcon_container);
     wid_set_style(wid_topcon_container, UI_WID_STYLE_CONSOLE);
-    color c = GRAY;
-    c.a     = 150;
-    wid_set_color(wid_topcon_container, WID_COLOR_BG, c);
   }
 
   TRACE_NO_INDENT();
