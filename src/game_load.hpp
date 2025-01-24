@@ -567,7 +567,7 @@ static bool wid_load_cancel(Widp w, int x, int y, uint32_t button)
 void Game::load_select(void)
 {
   TRACE_AND_INDENT();
-  CON("INF: Loading a saved game, destroy old");
+  CON("INF: Loading a saved game");
 
   if (wid_load) {
     return;
@@ -656,12 +656,6 @@ void Game::load_select(void)
   wid_update(wid_load->wid_text_area->wid_text_area);
 
   game->state_change(STATE_LOAD_MENU, "load select");
-
-  //
-  // Not sure why we need this; but the level ends up blank post loading.
-  // It's probably a good idea anyway, in case we were in a difference gfx mode.
-  //
-  sdl_display_reset();
 }
 
 void wid_load_select(class Game *g) { g->load_select(); }
