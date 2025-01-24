@@ -507,7 +507,7 @@ void game_load_config(class Game *g) { g->load_config(); }
 
 class HiScores *game_hiscores_get(class Game *g) { return &g->config.hiscores; }
 
-void game_visible_map_get(class Game *g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
+void game_visible_map_pix_get(class Game *g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
                           int *visible_map_br_y)
 {
   *visible_map_tl_x = g->visible_map_tl_x;
@@ -516,7 +516,7 @@ void game_visible_map_get(class Game *g, int *visible_map_tl_x, int *visible_map
   *visible_map_br_y = g->visible_map_br_y;
 }
 
-void game_visible_map_set(class Game *g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
+void game_visible_map_pix_set(class Game *g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
                           int visible_map_br_y)
 {
   g->visible_map_tl_x = visible_map_tl_x;

@@ -25,13 +25,16 @@ void sdl_display(class Game *g)
   if (g) {
     auto level = game_level_get(g);
     if (level) {
-      auto w = game_ascii_pix_width_get(game);
-      auto h = game_ascii_pix_height_get(game);
-
-      int visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
-      int visible_map_tl_y = h * UI_TOPCON_HEIGHT;
-      int visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
-      int visible_map_br_y = (TERM_HEIGHT - 2) * h;
+      //
+      // Get the pixel extents of the map on screen
+      //
+      auto w                = game_ascii_pix_width_get(game);
+      auto h                = game_ascii_pix_height_get(game);
+      int  visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
+      int  visible_map_tl_y = h * UI_TOPCON_HEIGHT;
+      int  visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
+      int  visible_map_br_y = (TERM_HEIGHT - 2) * h;
+      game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
       blit_init();
       blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
