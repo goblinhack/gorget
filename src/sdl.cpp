@@ -186,8 +186,6 @@ uint8_t sdl_init(void)
     sdl_init_rumble();
   }
 
-  sdl_init_display();
-
   return true;
 }
 
@@ -232,24 +230,24 @@ uint8_t sdl_init_display(void)
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-  uint32_t video_is_unused_flags;
+  uint32_t video_flags;
 
   LOG("SDL: Set SDL_WINDOW_OPENGL");
-  video_is_unused_flags = SDL_WINDOW_OPENGL;
+  video_flags = SDL_WINDOW_OPENGL;
 
   if (game_gfx_borderless_get(game)) {
     LOG("SDL: Set SDL_WINDOW_BORDERLESS");
-    video_is_unused_flags |= SDL_WINDOW_BORDERLESS;
+    video_flags |= SDL_WINDOW_BORDERLESS;
   }
 
   if (game_gfx_fullscreen_get(game)) {
     LOG("SDL: Set SDL_WINDOW_FULLSCREEN");
-    video_is_unused_flags |= SDL_WINDOW_FULLSCREEN;
+    video_flags |= SDL_WINDOW_FULLSCREEN;
   }
 
   if (game_gfx_fullscreen_desktop_get(game)) {
     LOG("SDL: Set SDL_WINDOW_FULLSCREEN_DESKTOP");
-    video_is_unused_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+    video_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
   }
 
   if (game_gfx_allow_highdpi_get(game)) {
@@ -260,7 +258,7 @@ uint8_t sdl_init_display(void)
     LOG("SDL: Calling SDL_GetDisplayDPI");
     float dpi;
     if (SDL_GetDisplayDPI(0, nullptr, &dpi, nullptr) == 0) {
-      video_is_unused_flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+      video_flags |= SDL_WINDOW_ALLOW_HIGHDPI;
       LOG("SDL: Set SDL_WINDOW_ALLOW_HIGHDPI");
     } else {
       ERR("SDL: Cannot enable high DPI: %s", SDL_GetError());
@@ -269,7 +267,7 @@ uint8_t sdl_init_display(void)
 
   LOG("SDL: Create window size %ux%u", video_width, video_height);
   sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
-                                video_is_unused_flags);
+                                video_flags);
   if (! sdl.window) {
     ERR("SDL_CreateWindow couldn't set windowed display %ux%u: %s", video_width, video_height, SDL_GetError());
     game_config_reset(game);
@@ -278,7 +276,7 @@ uint8_t sdl_init_display(void)
   }
 
   int w, h;
-  if (video_is_unused_flags & SDL_WINDOW_ALLOW_HIGHDPI) {
+  if (video_flags & SDL_WINDOW_ALLOW_HIGHDPI) {
     SDL_GL_GetDrawableSize(sdl.window, &w, &h);
     LOG("SDL: Created dpi window size %ux%u", w, h);
   } else {
@@ -298,22 +296,22 @@ uint8_t sdl_init_display(void)
     ERR("SDL_GL_CreateContext failed %s", SDL_GetError());
     return false;
   }
+  LOG("SDL: SDL_GL_CreateContext( done");
 
-  LOG("SDL: Call SDL_GL_CreateContext(%dx%d) done", game_window_pix_width_get(game),
-      game_window_pix_height_get(game));
+  LOG("SDL: Call SDL_GL_MakeCurrent()");
   if (SDL_GL_MakeCurrent(sdl.window, sdl.context) < 0) {
     SDL_ClearError();
     ERR("SDL_GL_MakeCurrent failed %s", SDL_GetError());
     return false;
   }
-
-  LOG("SDL: Call SDL_GL_MakeCurrent() done");
+  LOG("SDL: SDL_GL_MakeCurrent() done");
 
   SDL_ClearError();
 
   //
   // Clear the screen, both buffers
   //
+  LOG("SDL: Clear screens");
   glcolor(WHITE);
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -751,11 +749,12 @@ void config_game_gfx_update(void)
   //
   // Adjust the font until it is a reasonable size.
   //
-  int tries = 1000;
+  int tries = 100;
   while (tries-- > 0) {
     if ((TERM_WIDTH >= TERM_WIDTH_MAX) || (TERM_HEIGHT >= TERM_HEIGHT_MAX)) {
-      LOG("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) font is too small", TERM_WIDTH, TERM_HEIGHT,
-          TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
+      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) > max terminal size, try smaller font",
+          TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width,
+          font_height);
       font_width *= 2;
       font_height *= 2;
       TERM_WIDTH  = game_window_pix_width_get(game) / font_width;
@@ -764,8 +763,8 @@ void config_game_gfx_update(void)
     }
 
     if ((TERM_WIDTH < TERM_WIDTH_MIN) || (TERM_HEIGHT < TERM_HEIGHT_MIN)) {
-      LOG("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) font is too large", TERM_WIDTH, TERM_HEIGHT,
-          TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
+      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) < min terminal size, try larger font", TERM_WIDTH,
+          TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       font_width /= 2;
       font_height /= 2;
       TERM_WIDTH  = game_window_pix_width_get(game) / font_width;
@@ -774,28 +773,28 @@ void config_game_gfx_update(void)
     }
 
     if (TERM_WIDTH >= TERM_WIDTH_MAX) {
-      LOG("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) beyond max bounds", TERM_WIDTH, TERM_HEIGHT,
+      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) > max width", TERM_WIDTH, TERM_HEIGHT,
           TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_WIDTH = TERM_WIDTH_MAX;
       continue;
     }
 
     if (TERM_HEIGHT >= TERM_HEIGHT_MAX) {
-      LOG("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) beyond max bounds", TERM_WIDTH, TERM_HEIGHT,
+      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) > max height", TERM_WIDTH, TERM_HEIGHT,
           TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_HEIGHT = TERM_HEIGHT_MAX;
       continue;
     }
 
     if (font_width * TERM_WIDTH < game_window_pix_width_get(game) - font_width - 1) {
-      LOG("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) can grow horiz", TERM_WIDTH, TERM_HEIGHT,
+      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow horiz", TERM_WIDTH, TERM_HEIGHT,
           TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_WIDTH++;
       continue;
     }
 
     if (font_height * TERM_HEIGHT < game_window_pix_height_get(game) - font_height - 1) {
-      LOG("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) can grow vert", TERM_WIDTH, TERM_HEIGHT,
+      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) can grow vert", TERM_WIDTH, TERM_HEIGHT,
           TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_HEIGHT++;
       continue;
@@ -809,7 +808,7 @@ void config_game_gfx_update(void)
     TERM_HEIGHT = TERM_HEIGHT_MIN;
     font_width  = game_window_pix_width_get(game) / TERM_WIDTH;
     font_height = game_window_pix_height_get(game) / TERM_HEIGHT;
-    CON("SDL: Terminal (curr %ux%u min %ux%u max %ux%u font %ux%u) best effort", TERM_WIDTH, TERM_HEIGHT,
+    CON("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) best effort", TERM_WIDTH, TERM_HEIGHT,
         TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
   }
 

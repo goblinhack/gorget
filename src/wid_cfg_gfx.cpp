@@ -348,7 +348,7 @@ void wid_cfg_gfx_select(class Game *g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Resolution value");
 
-    point tl(width / 2, y_at);
+    point tl(width / 2 + 4, y_at);
     point br(width / 2 + 12, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
@@ -356,6 +356,7 @@ void wid_cfg_gfx_select(class Game *g)
     auto res
         = std::to_string(game_window_pix_width_get(game)) + "x" + std::to_string(game_window_pix_height_get(game));
     wid_set_text(w, res);
+    wid_set_text_lhs(w, true);
   }
   if (! game_gfx_fullscreen_desktop_get(game)) {
     {
@@ -392,9 +393,39 @@ void wid_cfg_gfx_select(class Game *g)
   y_at++;
 
   /////////////////////////////////////////////////////////////////////////
+  // terminal
+  /////////////////////////////////////////////////////////////////////////
+  {
+    TRACE_AND_INDENT();
+    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(p, "Terminal");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Terminal");
+  }
+  {
+    TRACE_AND_INDENT();
+    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(p, "Terminal value");
+
+    point tl(width / 2 + 4, y_at);
+    point br(width / 2 + 12, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+
+    auto res = std::to_string(TERM_WIDTH) + "x" + std::to_string(TERM_HEIGHT);
+    wid_set_text(w, res);
+    wid_set_text_lhs(w, true);
+  }
+  y_at++;
+
+  /////////////////////////////////////////////////////////////////////////
   // Fullscreen
   /////////////////////////////////////////////////////////////////////////
-  y_at++;
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;

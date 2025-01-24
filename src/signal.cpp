@@ -8,7 +8,6 @@
 #include "my_string.hpp"
 
 #include <errno.h>
-#include <libproc.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
