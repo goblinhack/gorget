@@ -25,9 +25,9 @@ extern class Game *game;
 class HiScores *game_hiscores_get(class Game *);
 
 void game_visible_map_pix_get(class Game *, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
-                          int *visible_map_br_y);
+                              int *visible_map_br_y);
 void game_visible_map_pix_set(class Game *, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
-                          int visible_map_br_y);
+                              int visible_map_br_y);
 
 void game_visible_map_mouse_get(class Game *game, int *visible_map_mouse_x, int *visible_map_mouse_y);
 void game_visible_map_mouse_set(class Game *game, int visible_map_mouse_x, int visible_map_mouse_y);

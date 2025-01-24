@@ -19,8 +19,8 @@ static void wid_cfg_sound_destroy(class Game *g)
 {
   TRACE_AND_INDENT();
   delete wid_cfg_sound_window;
-  wid_cfg_sound_window = nullptr;
-  local_g_config_changed       = false;
+  wid_cfg_sound_window   = nullptr;
+  local_g_config_changed = false;
 }
 
 static bool wid_cfg_sound_cancel(Widp w, int x, int y, uint32_t button)

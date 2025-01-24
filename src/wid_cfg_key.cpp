@@ -267,8 +267,8 @@ static void grab_key(const std::string which)
 {
   TRACE_AND_INDENT();
   wid_notice("Press a key for " + which);
-  g_grab_next_key = true;
-  local_g_config_changed  = true;
+  g_grab_next_key        = true;
+  local_g_config_changed = true;
 }
 
 static bool wid_cfg_keyboard_profile_arrow_keys(Widp w, int x, int y, uint32_t button)
@@ -337,8 +337,8 @@ static bool wid_cfg_key_move_left(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("move left");
-  sdl.on_sdl_key_grab = wid_cfg_key_move_left_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_move_left_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -346,8 +346,8 @@ static bool wid_cfg_key_move_right(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("move right");
-  sdl.on_sdl_key_grab = wid_cfg_key_move_right_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_move_right_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -355,8 +355,8 @@ static bool wid_cfg_key_move_up(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("move up");
-  sdl.on_sdl_key_grab = wid_cfg_key_move_up_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_move_up_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -364,8 +364,8 @@ static bool wid_cfg_key_move_down(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("move down");
-  sdl.on_sdl_key_grab = wid_cfg_key_move_down_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_move_down_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -373,8 +373,8 @@ static bool wid_cfg_key_attack(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("attack");
-  sdl.on_sdl_key_grab = wid_cfg_key_attack_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_attack_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -382,8 +382,8 @@ static bool wid_cfg_key_unused1(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("item unused1");
-  sdl.on_sdl_key_grab = wid_cfg_key_unused1_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused1_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -391,8 +391,8 @@ static bool wid_cfg_key_save(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("save game");
-  sdl.on_sdl_key_grab = wid_cfg_key_save_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_save_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -400,8 +400,8 @@ static bool wid_cfg_key_load(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("load game");
-  sdl.on_sdl_key_grab = wid_cfg_key_load_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_load_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -409,8 +409,8 @@ static bool wid_cfg_key_help(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("help");
-  sdl.on_sdl_key_grab = wid_cfg_key_help_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_help_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -418,8 +418,8 @@ static bool wid_cfg_key_console(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("toggle console");
-  sdl.on_sdl_key_grab = wid_cfg_key_console_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_console_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -427,8 +427,8 @@ static bool wid_cfg_key_quit(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("quit");
-  sdl.on_sdl_key_grab = wid_cfg_key_quit_set;
-  local_g_config_changed      = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_quit_set;
+  local_g_config_changed = true;
   return true;
 }
 
@@ -436,8 +436,8 @@ static bool wid_cfg_key_screenshot(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   grab_key("screenshot grab");
-  local_g_config_changed      = true;
-  sdl.on_sdl_key_grab = wid_cfg_key_screenshot_set;
+  local_g_config_changed = true;
+  sdl.on_sdl_key_grab    = wid_cfg_key_screenshot_set;
   return true;
 }
 
