@@ -64,7 +64,10 @@ std::string callstack_string(void)
 #define PATH_MAX 512
 #endif
 
-#ifndef __APPLE__
+#if defined __linux__
+//
+// I can only really get this working with linux
+//
 static void debug_crash_handler(int sig)
 {
   fprintf(stderr, "debug_crash_handler: Error: Signal %d:\n", sig);
@@ -104,7 +107,6 @@ static void debug_crash_handler(int sig)
   // Permissions for GDB
   //
   prctl(PR_SET_PTRACER, PR_SET_PTRACER_ANY, 0, 0, 0);
-#endif
 
   auto child = fork();
   if (! child) {
@@ -123,6 +125,7 @@ static void debug_crash_handler(int sig)
     //
     waitpid(child, nullptr, 0);
   }
+#endif
 }
 #endif
 
@@ -156,14 +159,10 @@ void common_error_handler(std::string &tech_support)
 void segv_handler(int sig)
 {
   TRACE_AND_INDENT();
-
   std::string tech_support = "Sorry, a crash has occurred!";
+  common_error_handler(tech_support);
 
-#ifdef __APPLE__
-  //
-  // Can't get it to work.
-  //
-#else
+#if defined __linux__
   debug_crash_handler(sig);
 #endif
 
