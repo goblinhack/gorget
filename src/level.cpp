@@ -295,6 +295,7 @@ void level_map_set(Levelp l, int z, const char *in)
       bool need_floor = false;
 
       switch (c) {
+        case CHARMAP_CHASM : continue;
         case CHARMAP_WALL :
           need_floor = true;
           tp         = tp_wall;

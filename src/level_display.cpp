@@ -34,7 +34,7 @@ static void level_display_tile_index(Levelp l, Tpp tp, uint16_t tile_index, poin
   }
 }
 
-static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t, bool deco)
+static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t)
 {
   int dw = TILE_WIDTH;
   int dh = TILE_HEIGHT;
@@ -80,13 +80,16 @@ static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t, bool deco)
 
   if (tp_is_blit_on_ground(tp)) {
     //
-    // On the ground
-    //
-    tl.y -= (pix_height - dh);
-    //
     // Center x
     //
     tl.x -= (pix_width - dw) / 2;
+    tl.y -= (pix_height - dh) / 2;
+    //
+    // On the ground
+    //
+    tl.y += TILE_WIDTH / 2;
+    tl.y -= TILE_HEIGHT / 2;
+    tl.y -= TILE_HEIGHT / 4;
   } else if (tp_is_blit_centered(tp)) {
     //
     // Centered
@@ -118,10 +121,6 @@ static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t, bool deco)
     if (thing_is_dir_left(t) || thing_is_dir_tl(t) || thing_is_dir_bl(t)) {
       std::swap(tl.x, br.x);
     }
-  }
-
-  if (deco) {
-    return;
   }
 
   level_display_tile_index(l, tp, tile_index, tl, br, point(0, 0));
@@ -164,11 +163,11 @@ static void level_display_cursor(Levelp l, point p)
   }
 
   if (tp) {
-    level_display_obj(l, p, tp, NULL_THING, false);
+    level_display_obj(l, p, tp, NULL_THING);
   }
 }
 
-static void level_display_slot(Levelp l, point3d p, int slot, int depth, bool deco)
+static void level_display_slot(Levelp l, point3d p, int slot, int depth)
 {
   Tpp  tp;
   auto t = thing_and_tp_get(l, p, slot, &tp);
@@ -180,7 +179,7 @@ static void level_display_slot(Levelp l, point3d p, int slot, int depth, bool de
     return;
   }
 
-  level_display_obj(l, make_point(p), tp, t, deco);
+  level_display_obj(l, make_point(p), tp, t);
 }
 
 void level_display(Levelp l)
@@ -194,10 +193,9 @@ void level_display(Levelp l)
   if (! player) {
     return;
   }
-  auto z = player->at.z;
 
   //
-  // Soft scroll to the player/
+  // Soft scroll to the player
   //
   level_scroll_to_player(l);
 
@@ -209,48 +207,18 @@ void level_display(Levelp l)
   glClear(GL_COLOR_BUFFER_BIT);
   blit_init();
 
-  const bool deco    = true;
-  const bool no_deco = false;
-
   //
   // We need to find out what pixel on the map the mouse is over
   //
   game_visible_map_mouse_get(game, &visible_map_mouse_x, &visible_map_mouse_y);
 
   for (auto y = l->miny; y < l->maxy; y++) {
-    for (auto x = l->maxx - 1; x >= l->minx; x--) {
-      for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        point3d p(x, y, z);
-        level_display_slot(l, p, slot, MAP_Z_DEPTH_FLOOR, no_deco);
-        level_display_slot(l, p, slot, MAP_Z_DEPTH_WALL, no_deco);
-      }
-    }
-  }
-
-  //
-  // Doors only
-  //
-  for (auto y = l->miny; y < l->maxy; y++) {
-    for (auto x = l->maxx - 1; x >= l->minx; x--) {
-      for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        point3d p(x, y, z);
-        level_display_slot(l, p, slot, MAP_Z_DEPTH_DOOR, no_deco);
-        level_display_slot(l, p, slot, MAP_Z_DEPTH_OBJ1, no_deco);
-        level_display_slot(l, p, slot, MAP_Z_DEPTH_OBJ2, no_deco);
-        level_display_slot(l, p, slot, MAP_Z_DEPTH_PLAYER, no_deco);
-      }
-    }
-  }
-
-  //
-  // Shadows
-  //
-  for (auto y = l->miny; y < l->maxy; y++) {
-    for (auto x = l->maxx - 1; x >= l->minx; x--) {
-      for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-        point3d p(x, y, z);
-        level_display_slot(l, p, slot, MAP_Z_DEPTH_WALL, deco);
-        level_display_slot(l, p, slot, MAP_Z_DEPTH_DOOR, deco);
+    for (int z = MAP_Z_DEPTH_FLOOR; z < MAP_Z_DEPTH_CURSOR; z++) {
+      for (auto x = l->maxx - 1; x >= l->minx; x--) {
+        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+          point3d p(x, y, player->at.z);
+          level_display_slot(l, p, slot, z);
+        }
       }
     }
   }

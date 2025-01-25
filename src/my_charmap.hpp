@@ -18,6 +18,7 @@ enum {
   CHARMAP_PLAYER3  = '3',
   CHARMAP_PLAYER4  = '4',
   CHARMAP_TREASURE = '$',
+  CHARMAP_CHASM    = 'C',
   CHARMAP_WALL     = 'x',
   // end sort marker1 }
 };
