@@ -213,8 +213,8 @@ void level_display(Levelp l)
   game_visible_map_mouse_get(game, &visible_map_mouse_x, &visible_map_mouse_y);
 
   for (auto y = l->miny; y < l->maxy; y++) {
-    for (int z = MAP_Z_DEPTH_FLOOR; z < MAP_Z_DEPTH_CURSOR; z++) {
-      for (auto x = l->maxx - 1; x >= l->minx; x--) {
+    for (auto x = l->maxx - 1; x >= l->minx; x--) {
+      for (int z = 0; z < MAP_Z_DEPTH_CURSOR; z++) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
           point3d p(x, y, player->at.z);
           level_display_slot(l, p, slot, z);

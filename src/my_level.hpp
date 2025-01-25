@@ -82,7 +82,7 @@ typedef struct Level_ {
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ][ MAP_SLOTS ];
   //
-  // All thing structure memory.
+  // All things structure memory.
   //
   Thing thing_body[ 1 << THING_COMMON_ID_BITS ];
   //

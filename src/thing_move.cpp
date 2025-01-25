@@ -306,7 +306,7 @@ void thing_push(Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  point3d p(t->pix_at.x / TILE_WIDTH, t->pix_at.y / TILE_HEIGHT, t->at.z);
+  point3d p(t->at.x, t->at.y, t->at.z);
 
   if (level_is_oob(l, p)) {
     return;
