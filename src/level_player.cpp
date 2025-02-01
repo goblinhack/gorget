@@ -7,26 +7,27 @@
 #include "my_level.hpp"
 #include "my_tp.hpp"
 
-Thingp thing_player(Levelp l)
+Thingp thing_player(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (! l) {
+  auto v = game_levels_get(g);
+  if (! v) {
     return nullptr;
   }
 
-  if (! l->player) {
+  if (! v->player_id) {
     return nullptr;
   }
 
-  return thing_find(l, l->player);
+  return thing_find(g, v, v->player_id);
 }
 
-void thing_player_move_delta(Levelp l, int dx, int dy, int dz)
+void thing_player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
 {
   TRACE_NO_INDENT();
 
-  auto t = thing_player(l);
+  auto t = thing_player(g);
   if (! t) {
     return;
   }
@@ -34,93 +35,103 @@ void thing_player_move_delta(Levelp l, int dx, int dy, int dz)
   //
   // Override any mouse request with the key move.
   //
-  level_cursor_path_reset(l);
+  level_cursor_path_reset(g, v, l);
 
   //
   // Wait until the end of the tick
   //
-  if (level_tick_is_in_progress(l)) {
+  if (level_tick_is_in_progress(g, v, l)) {
     return;
   }
 
-  point3d to(t->at.x + dx, t->at.y + dy, t->at.z + dz);
-  if (thing_can_move_to(l, t, to)) {
-    thing_move_to(l, t, to);
+  point to(t->at.x + dx, t->at.y + dy);
+  if (thing_can_move_to(g, v, l, t, to)) {
+    thing_move_to(g, v, l, t, to);
   }
 
-  thing_player_move_reset(l);
+  thing_player_move_reset(g, v, l);
 }
 
 //
 // All keys have been released, forget any accumulation of events
 //
-void thing_player_move_reset(Levelp l)
+void thing_player_move_reset(Gamep g, Levelsp v, Levelp l)
 {
-  l->requested_move_up    = false;
-  l->requested_move_left  = false;
-  l->requested_move_keft  = false;
-  l->requested_move_right = false;
+  v->requested_move_up    = false;
+  v->requested_move_left  = false;
+  v->requested_move_keft  = false;
+  v->requested_move_right = false;
 }
 
 //
 // Allow moves to accumulate so we can do diagonal moves.
 //
-void thing_player_move_accum(Levelp l, bool up, bool down, bool left, bool right)
+void thing_player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right)
 {
   if (up) {
-    l->requested_move_up = up;
+    v->requested_move_up = up;
   }
 
   if (down) {
-    l->requested_move_left = down;
+    v->requested_move_left = down;
   }
 
   if (left) {
-    l->requested_move_keft = left;
+    v->requested_move_keft = left;
   }
 
   if (right) {
-    l->requested_move_right = right;
+    v->requested_move_right = right;
   }
 }
 
 //
 // Attempt to move
 //
-bool thing_player_move_request(Levelp l, bool up, bool down, bool left, bool right)
+bool thing_player_move_request(Gamep g, bool up, bool down, bool left, bool right)
 {
-  thing_player_move_accum(l, up, down, left, right);
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  thing_player_move_accum(g, v, l, up, down, left, right);
 
   //
   // If a move is in progress, do nothing
   //
-  if (level_tick_is_in_progress(l)) {
+  if (level_tick_is_in_progress(g, v, l)) {
     //
     // But if the player presses the keys again towards the end of the tick, allow that.
     //
     return false;
   }
 
-  if (l->requested_move_up) {
-    if (l->requested_move_keft) {
-      thing_player_move_delta(l, -1, -1, 0);
-    } else if (l->requested_move_right) {
-      thing_player_move_delta(l, 1, -1, 0);
+  if (v->requested_move_up) {
+    if (v->requested_move_keft) {
+      thing_player_move_delta(g, v, l, -1, -1, 0);
+    } else if (v->requested_move_right) {
+      thing_player_move_delta(g, v, l, 1, -1, 0);
     } else {
-      thing_player_move_delta(l, 0, -1, 0);
+      thing_player_move_delta(g, v, l, 0, -1, 0);
     }
-  } else if (l->requested_move_left) {
-    if (l->requested_move_keft) {
-      thing_player_move_delta(l, -1, 1, 0);
-    } else if (l->requested_move_right) {
-      thing_player_move_delta(l, 1, 1, 0);
+  } else if (v->requested_move_left) {
+    if (v->requested_move_keft) {
+      thing_player_move_delta(g, v, l, -1, 1, 0);
+    } else if (v->requested_move_right) {
+      thing_player_move_delta(g, v, l, 1, 1, 0);
     } else {
-      thing_player_move_delta(l, 0, 1, 0);
+      thing_player_move_delta(g, v, l, 0, 1, 0);
     }
-  } else if (l->requested_move_keft) {
-    thing_player_move_delta(l, -1, 0, 0);
-  } else if (l->requested_move_right) {
-    thing_player_move_delta(l, 1, 0, 0);
+  } else if (v->requested_move_keft) {
+    thing_player_move_delta(g, v, l, -1, 0, 0);
+  } else if (v->requested_move_right) {
+    thing_player_move_delta(g, v, l, 1, 0, 0);
   }
 
   return true;

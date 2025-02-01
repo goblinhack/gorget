@@ -9,15 +9,14 @@
 #include "my_enums.hpp"
 #include "my_game_defs.hpp"
 #include "my_minimal.hpp"
-#include "my_point.hpp"   // does not seem to make the compile speed much worse
-#include "my_point3d.hpp" // does not seem to make the compile speed much worse
+#include "my_point.hpp" // does not seem to make the compile speed much worse
 
 //
 // Entropy is always > 0 for Thing IDs to distinguish them
-// A thing ID is composed as: // [ Entropy bits] [ ID bits ]
+// A thing ID is composed as: [ Entropy bits] [ ID bits ]
 //
 #define THING_COMMON_ID_ENTROPY_BITS    6
-#define THING_COMMON_ID_BITS            16
+#define THING_COMMON_ID_BITS            22
 #define THING_COMMON_ID_BASE            (1U << (THING_COMMON_ID_BITS))
 #define THING_COMMON_ID_ENTROPY_MASK    (((1U << THING_COMMON_ID_ENTROPY_BITS) - 1) << THING_COMMON_ID_BITS)
 #define THING_COMMON_ID_MASK            ((1U << THING_COMMON_ID_BITS) - 1)
@@ -27,7 +26,7 @@
 //
 // Essentially equates to the max number of monsters
 //
-#define THING_AI_MAX        65535 /* sizeof ai_id */
+#define THING_AI_MAX        65535 /* The size of ai_id */
 #define THING_MOVE_PATH_MAX MAP_WIDTH
 
 typedef struct ThingAi_ {
@@ -57,22 +56,26 @@ typedef struct Thing_ {
   //
   ThingAiId ai_id;
   //
+  // Which level am I on?
+  //
+  point level_num;
+  //
   // Map co-ords.
   //
-  point3d at;
+  point at;
   //
   // Previous map co-ords. Does not change when the move finishes.
   //
-  point3d old_at;
+  point old_at;
   //
   // Previous map co-ords used for interpolation when moving. Changes when
   // the move finishes.
   //
-  point3d moving_from;
+  point moving_from;
   //
   // Last location we were pushed onto the map.
   //
-  point3d last_pushed_at;
+  point last_pushed_at;
   //
   // Direction
   //
@@ -117,18 +120,19 @@ typedef struct Thing_ {
   // Pushed onto the map?
   //
   bool is_on_map : 1;
+  bool is_moving : 1;
 } Thing;
 
 Tpp thing_tp(Thingp t);
 
-Thingp thing_and_tp_get(Levelp, point3d, int slot, Tpp * = nullptr);
-Thingp thing_find(Levelp, ThingId id);
-Thingp thing_find_optional(Levelp, ThingId id);
-Thingp thing_get(Levelp, point3d, int slot);
-Thingp thing_init(Levelp, Tpp, point3d);
-Thingp thing_player(Levelp);
+Thingp thing_and_tp_get_at(Gamep, Levelsp, Levelp, point p, int slot, Tpp * = nullptr);
+Thingp thing_find(Gamep, Levelsp, ThingId id);
+Thingp thing_find_optional(Gamep, Levelsp, ThingId id);
+Thingp thing_get(Gamep, Levelsp, Levelp, point p, int slot);
+Thingp thing_init(Gamep, Levelsp, Levelp, Tpp, point p);
+Thingp thing_player(Gamep);
 
-ThingAip thing_ai(Levelp, Thingp);
+ThingAip thing_ai(Gamep, Thingp);
 
 void thing_dir_bl_set(Thingp, uint8_t);
 void thing_dir_br_set(Thingp, uint8_t);
@@ -138,27 +142,27 @@ void thing_dir_right_set(Thingp, uint8_t);
 void thing_dir_tl_set(Thingp, uint8_t);
 void thing_dir_tr_set(Thingp, uint8_t);
 void thing_dir_up_set(Thingp, uint8_t);
-void thing_fini(Levelp, Thingp);
-void thing_interpolate(Levelp, Thingp, float dt);
-void thing_player_map_center(Levelp);
-void thing_player_move_accum(Levelp, bool up, bool down, bool left, bool right);
-void thing_player_move_delta(Levelp, int dx, int dy, int dz);
-void thing_player_move_reset(Levelp);
-void thing_move_finish(Levelp, Thingp);
-void thing_tick_end(Levelp, Thingp);
-void thing_tick_idle(Levelp, Thingp);
-void thing_tick_begin(Levelp, Thingp);
-void thing_pop(Levelp, Thingp);
-void thing_push(Levelp, Thingp);
+void thing_fini(Gamep, Levelsp, Levelp, Thingp);
+void thing_interpolate(Gamep, Thingp, float dt);
+void thing_player_map_center(Gamep, Levelsp, Levelp);
+void thing_player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right);
+void thing_player_move_delta(Gamep, Levelsp, Levelp, int dx, int dy, int dz);
+void thing_player_move_reset(Gamep, Levelsp, Levelp);
+void thing_move_finish(Gamep, Levelsp, Levelp, Thingp);
+void thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
+void thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
+void thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
+void thing_pop(Gamep, Levelsp, Levelp, Thingp);
+void thing_push(Gamep, Levelsp, Levelp, Thingp);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
-void thing_update(Levelp, Thingp);
+void thing_update(Gamep, Thingp);
 
-bool thing_can_move_to(Levelp, Thingp, point3d to);
-bool thing_move_to_next(Levelp l, Thingp t);
-bool thing_player_move_request(Levelp, bool up, bool down, bool left, bool right);
+bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
+bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp t);
+bool thing_player_move_request(Gamep, bool up, bool down, bool left, bool right);
 bool thing_is_dir_down(Thingp t);
 bool thing_is_dir_tr(Thingp t);
-bool thing_move_to(Levelp, Thingp, point3d to);
+bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
 bool thing_is_dir_tl(Thingp t);
 bool thing_is_dir_br(Thingp t);
 bool thing_is_dir_bl(Thingp t);

@@ -110,13 +110,13 @@ void ascii_set_scissors(point tl, point br)
   scissors_br      = br;
 }
 
-void pixel_to_ascii(int *x, int *y)
+void pixel_to_ascii(Gamep g, int *x, int *y)
 {
   float mx = *x;
   float my = *y;
 
-  mx /= (((float) game_window_pix_width_get(game)) / ((float) TERM_WIDTH));
-  my /= (((float) game_window_pix_height_get(game)) / ((float) TERM_HEIGHT));
+  mx /= (((float) game_window_pix_width_get(g)) / ((float) TERM_WIDTH));
+  my /= (((float) game_window_pix_height_get(g)) / ((float) TERM_HEIGHT));
 
   if (mx >= TERM_WIDTH - 1) {
     mx = TERM_WIDTH - 1;
@@ -717,7 +717,7 @@ void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, const char *tile
 //
 // Display one z layer of the ascii.
 //
-static void ascii_blit(void)
+static void ascii_blit(Gamep g)
 {
   int   x;
   int   y;
@@ -731,8 +731,8 @@ static void ascii_blit(void)
   float mx = sdl.mouse_x;
   float my = sdl.mouse_y;
 #endif
-  const auto dw = game_ascii_pix_width_get(game);
-  const auto dh = game_ascii_pix_height_get(game);
+  const auto dw = game_ascii_pix_width_get(g);
+  const auto dh = game_ascii_pix_height_get(g);
 
   tile_y = 0;
   for (y = 0; y < TERM_HEIGHT; y++) {
@@ -887,13 +887,13 @@ static void ascii_blit(void)
 //
 // The big ascii renderer
 //
-void ascii_display(void)
+void ascii_display(Gamep g)
 {
   mouse_found = false;
 
-  gl_enter_2d_mode(game_window_pix_width_get(game), game_window_pix_height_get(game));
+  gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
   blit_init();
-  ascii_blit();
+  ascii_blit(g);
   blit_flush();
 
 #ifdef ENABLE_UI_ASCII_MOUSE

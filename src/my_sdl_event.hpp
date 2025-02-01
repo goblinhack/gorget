@@ -9,8 +9,7 @@
 #include <SDL.h>
 #include <array>
 
-// #include "my_command.hpp"
-// #include "my_main.hpp"
+#include "my_minimal.hpp"
 #include "my_time.hpp"
 
 enum {
@@ -87,7 +86,7 @@ public:
   //
   // Key grabbing for customization of keys
   //
-  using on_sdl_key_grab_t = void (*)(SDL_Keysym);
+  using on_sdl_key_grab_t = void (*)(Gamep, SDL_Keysym);
   on_sdl_key_grab_t on_sdl_key_grab {};
   SDL_Keysym        grabbed_key {};
 

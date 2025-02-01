@@ -8,13 +8,13 @@
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 
-void sdl_screenshot(void)
+void sdl_screenshot(Gamep g)
 {
   TRACE_AND_INDENT();
   g_do_screenshot = 1;
 }
 
-void sdl_screenshot_do(void)
+void sdl_screenshot_do(Gamep g)
 {
   TRACE_AND_INDENT();
   GL_ERROR_CHECK();
@@ -22,7 +22,7 @@ void sdl_screenshot_do(void)
   int w;
   int h;
   GL_ERROR_CHECK();
-  fbo_get_size(fbo, w, h);
+  fbo_get_size(g, fbo, w, h);
   GL_ERROR_CHECK();
   blit_fbo_bind(fbo);
   GL_ERROR_CHECK();
@@ -63,12 +63,12 @@ void sdl_screenshot_do(void)
   count++;
 }
 
-std::vector< uint8_t > sdl_fbo_save(int fbo)
+std::vector< uint8_t > sdl_fbo_save(Gamep g, int fbo)
 {
   TRACE_AND_INDENT();
   int w;
   int h;
-  fbo_get_size(fbo, w, h);
+  fbo_get_size(g, fbo, w, h);
   GL_ERROR_CHECK();
 
   blit_fbo_bind(fbo);
@@ -89,7 +89,7 @@ std::vector< uint8_t > sdl_fbo_save(int fbo)
   return pixels;
 }
 
-void sdl_fbo_load(int fbo, const std::vector< uint8_t > &pixels)
+void sdl_fbo_load(Gamep g, int fbo, const std::vector< uint8_t > &pixels)
 {
   TRACE_AND_INDENT();
   if (pixels.empty()) {
@@ -98,7 +98,7 @@ void sdl_fbo_load(int fbo, const std::vector< uint8_t > &pixels)
 
   int w;
   int h;
-  fbo_get_size(fbo, w, h);
+  fbo_get_size(g, fbo, w, h);
   GL_ERROR_CHECK();
 
   blit_fbo_bind(fbo);
@@ -114,12 +114,12 @@ void sdl_fbo_load(int fbo, const std::vector< uint8_t > &pixels)
   GL_ERROR_CHECK();
 }
 
-void sdl_fbo_dump(int fbo, const std::string &name)
+void sdl_fbo_dump(Gamep g, int fbo, const std::string &name)
 {
   TRACE_AND_INDENT();
   int w;
   int h;
-  fbo_get_size(fbo, w, h);
+  fbo_get_size(g, fbo, w, h);
   GL_ERROR_CHECK();
 
   blit_fbo_push(fbo);

@@ -270,12 +270,12 @@ void blit_colored(int tex, GLushort left, GLushort top, GLushort right, float bo
                   color color_tl, color color_tr);
 void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
                   GLushort right, GLushort bottom, color color_bl, color color_br, color color_tl, color color_tr);
-void blit_fbo(int fbo);
+void blit_fbo(Gamep, int fbo);
 void blit_fbo_push(int fbo);
 void blit_fbo_pop(void);
 void blit_fbo_bind(int fbo);
 void blit_fbo_bind_locked(int fbo);
-void blit_fbo_window_pix(int fbo);
+void blit_fbo_window_pix(Gamep, int fbo);
 void blit_fbo_unbind(void);
 void blit_fbo_unbind_locked(void);
 void blit_fini(void);
@@ -285,21 +285,21 @@ void blit_flush_colored_triangle_fan(void);
 void blit_flush_triangle_fan(float *begin, float *end);
 void blit_flush_triangle_fan(void);
 void blit_init(void);
-void fbo_get_size(int fbo, int &w, int &h);
+void fbo_get_size(Gamep, int fbo, int &w, int &h);
 void gl_blitline(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
 void gl_blitquad(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
 void gl_blitquad(const point tl, const point tr, const point bl, const point br);
 void gl_blitsquare(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
-void gl_enter_2_5d_mode(void);
-void gl_enter_2d_mode(int, int);
-void gl_enter_2d_mode(void);
+void gl_enter_2_5d_mode(Gamep);
+void gl_enter_2d_mode(Gamep, int, int);
+void gl_enter_2d_mode(Gamep);
 void gl_error(GLenum err);
 void gl_ext_init(void);
-void gl_init_2d_mode(void);
-void gl_fini_2d_mode(void);
-void gl_init_fbo(void);
-void gl_fini_fbo(void);
-void gl_leave_2d_mode(void);
+void gl_init_2d_mode(Gamep);
+void gl_fini_2d_mode(Gamep);
+void gl_init_fbo(Gamep);
+void gl_fini_fbo(Gamep);
+void gl_leave_2d_mode(Gamep);
 void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
              GLushort left, GLushort top, GLushort right, GLushort bottom, uint8_t r1, uint8_t g1, uint8_t b1,
              uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,

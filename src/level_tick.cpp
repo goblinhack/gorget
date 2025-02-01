@@ -9,84 +9,84 @@
 #include "my_main.hpp"
 #include "my_tp.hpp"
 
-static void level_tick_begin(Levelp);
-static void level_tick_body(Levelp, float dt);
-static void level_tick_end(Levelp);
-static void level_tick_idle(Levelp);
-static void level_tick_time_step(Levelp);
+static void level_tick_begin(Gamep, Levelsp, Levelp);
+static void level_tick_body(Gamep, Levelsp, Levelp, float dt);
+static void level_tick_end(Gamep, Levelsp, Levelp);
+static void level_tick_idle(Gamep, Levelsp, Levelp);
+static void level_tick_time_step(Gamep, Levelsp, Levelp);
 
-void level_tick(Levelp l)
+void level_tick(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  l->last_time_step = l->time_step;
-  if (l->tick_in_progress) {
+  v->last_time_step = v->time_step;
+  if (v->tick_in_progress) {
     //
     // A tick is running
     //
-    level_tick_time_step(l);
-  } else if (l->tick_begin_requested) {
+    level_tick_time_step(g, v, l);
+  } else if (v->tick_begin_requested) {
     //
     // Start the tick
     //
-    level_tick_begin(l);
+    level_tick_begin(g, v, l);
   } else {
     //
     // Idle state
     //
-    level_tick_idle(l);
+    level_tick_idle(g, v, l);
   }
 
   //
   // Move things
   //
-  if (l->tick_in_progress) {
-    level_tick_body(l, l->time_step - l->last_time_step);
+  if (v->tick_in_progress) {
+    level_tick_body(g, v, l, v->time_step - v->last_time_step);
   }
 
   //
   // End of tick?
   //
-  if (l->tick_end_requested) {
-    level_tick_end(l);
+  if (v->tick_end_requested) {
+    level_tick_end(g, v, l);
   }
 }
 
-static void level_tick_time_step(Levelp l)
+static void level_tick_time_step(Gamep g, Levelsp v, Levelp l)
 {
-  if (! l->frame_begin) {
+  if (! v->frame_begin) {
     //
     // First tick
     //
-    l->frame_begin = l->frame;
-    l->time_step   = 0.0;
+    v->frame_begin = v->frame;
+    v->time_step   = 0.0;
   } else {
     //
     // Continue the tick
     //
-    l->time_step = ((float) (l->frame - l->frame_begin)) / (float) TICK_DURATION_MS;
-    if (l->time_step >= 1.0) {
+    v->time_step = ((float) (v->frame - v->frame_begin)) / (float) TICK_DURATION_MS;
+    if (v->time_step >= 1.0) {
       //
       // Tick has surpassed its time
       //
-      l->time_step          = 1.0;
-      l->tick_end_requested = true;
+      v->time_step          = 1.0;
+      v->tick_end_requested = true;
     }
   }
 }
 
-static void level_tick_body(Levelp l, float dt)
+static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 {
   TRACE_NO_INDENT();
 
-  auto p = thing_player(l);
+  auto p = thing_player(g);
   if (! p) {
     return;
   }
 
-  int player_speed = p->speed;
+  const int player_speed = p->speed;
 
-  FOR_ALL_THINGS_Z_DEPTH(l, t, p->at.z)
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     //                   Tick 1              Tick 2
     //            =================== ===================
@@ -97,96 +97,104 @@ static void level_tick_body(Levelp l, float dt)
     // speed 100  tick           tick
     // speed 50   tick
     //
+    if (! t->is_moving) {
+      continue;
+    }
+
     t->thing_dt += dt * ((float) t->speed / (float) player_speed);
+    if (thing_is_player(t)) {
+      TOPCON("at %u,%u moving_from %u,%u %f", t->at.x, t->at.y, t->moving_from.x, t->moving_from.y, t->thing_dt);
+    }
+
     if (t->thing_dt >= 1.0) {
       t->thing_dt = 1.0;
     }
 
-    thing_interpolate(l, t, t->thing_dt);
+    thing_interpolate(g, t, t->thing_dt);
 
     //
     // If the thing tick has completed, finish its move.
     //
     if (t->thing_dt >= 1.0) {
       t->thing_dt = 0.0;
-      thing_move_finish(l, t);
+      thing_move_finish(g, v, l, t);
     }
   }
 }
 
-static void level_tick_begin(Levelp l)
+static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 {
-  l->tick++;
-  l->tick_begin_requested  = false;
-  l->frame_begin           = l->frame;
-  l->time_step             = 0.0;
-  l->tick_in_progress      = true;
-  l->requested_auto_scroll = true;
+  v->tick++;
+  v->tick_begin_requested  = false;
+  v->frame_begin           = v->frame;
+  v->time_step             = 0.0;
+  v->tick_in_progress      = true;
+  v->requested_auto_scroll = true;
 
-  auto p = thing_player(l);
+  auto p = thing_player(g);
   if (! p) {
     return;
   }
 
-  FOR_ALL_THINGS_Z_DEPTH(l, t, p->at.z)
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     if (thing_is_tickable(t)) {
-      thing_tick_begin(l, t);
+      thing_tick_begin(g, v, l, t);
     }
   }
 }
 
-static void level_tick_idle(Levelp l)
+static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
 {
-  auto p = thing_player(l);
+  auto p = thing_player(g);
   if (! p) {
     return;
   }
 
-  FOR_ALL_THINGS_Z_DEPTH(l, t, p->at.z)
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     if (thing_is_tickable(t)) {
-      thing_tick_idle(l, t);
+      thing_tick_idle(g, v, l, t);
     }
   }
 }
 
-void level_tick_begin_requested(Levelp l, const char *why)
+void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 {
   TRACE_NO_INDENT();
 
-  l->tick_begin_requested = true;
+  v->tick_begin_requested = true;
 
-  l->requested_move_up    = false;
-  l->requested_move_left  = false;
-  l->requested_move_keft  = false;
-  l->requested_move_right = false;
+  v->requested_move_up    = false;
+  v->requested_move_left  = false;
+  v->requested_move_keft  = false;
+  v->requested_move_right = false;
 }
 
-static void level_tick_end(Levelp l)
+static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  l->tick_in_progress   = false;
-  l->tick_end_requested = false;
-  l->time_step          = 0;
+  v->tick_in_progress   = false;
+  v->tick_end_requested = false;
+  v->time_step          = 0;
 
-  auto p = thing_player(l);
+  auto p = thing_player(g);
   if (! p) {
     return;
   }
 
-  FOR_ALL_THINGS_Z_DEPTH(l, t, p->at.z)
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     if (thing_is_tickable(t)) {
-      thing_tick_end(l, t);
+      thing_tick_end(g, v, l, t);
     }
   }
 }
 
-bool level_tick_is_in_progress(Levelp l)
+bool level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  return l->tick_in_progress;
+  return v->tick_in_progress;
 }

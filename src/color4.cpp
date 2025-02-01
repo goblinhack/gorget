@@ -191,7 +191,7 @@ color YELLOWGREEN;
 
 void color_init4(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   color_set("ink", &INK, 54, 47, 47, 255);
   color_set("lightsteelblue1", &LIGHTSTEELBLUE1, 202, 225, 255, 255);

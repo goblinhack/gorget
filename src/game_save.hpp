@@ -291,7 +291,7 @@ void Game::save_config(void)
   out << bits(c);
 }
 
-void wid_save_destroy(class Game *g)
+void wid_save_destroy(Gamep g)
 {
   TRACE_AND_INDENT();
   if (wid_save) {
@@ -301,7 +301,7 @@ void wid_save_destroy(class Game *g)
   }
 }
 
-static bool wid_save_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -353,7 +353,7 @@ static bool wid_save_key_up(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_save_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_save_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -364,7 +364,7 @@ static bool wid_save_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_save_mouse_up(Widp w, int x, int y, uint32_t button)
+static bool wid_save_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   auto slot = wid_get_int_context(w);
@@ -373,7 +373,7 @@ static bool wid_save_mouse_up(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_save_cancel(Widp w, int x, int y, uint32_t button)
+static bool wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_save_destroy(game);
@@ -392,21 +392,21 @@ void Game::save_select(void)
   int   menu_width  = UI_WID_POPUP_WIDTH_WIDE;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_save = new WidPopup("Game load", outer_tl, outer_br, nullptr, "", false, false);
+  wid_save = new WidPopup(game, "Game load", outer_tl, outer_br, nullptr, "", false, false);
 
-  wid_set_on_key_up(wid_save->wid_popup_container, wid_save_key_up);
-  wid_set_on_key_down(wid_save->wid_popup_container, wid_save_key_down);
+  wid_set_on_key_up(game, wid_save->wid_popup_container, wid_save_key_up);
+  wid_set_on_key_down(game, wid_save->wid_popup_container, wid_save_key_down);
 
   {
     TRACE_AND_INDENT();
     auto p = wid_save->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "back");
+    auto w = wid_new_square_button(game, p, "back");
 
     point tl(menu_width / 2 - 4, menu_height - 4);
     point br(menu_width / 2 + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_on_mouse_up(w, wid_save_cancel);
+    wid_set_on_mouse_up(game, w, wid_save_cancel);
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, "BACK");
@@ -414,8 +414,8 @@ void Game::save_select(void)
 
   game_load_headers_only = true;
 
-  wid_save->log(UI_LOGGING_EMPTY_LINE);
-  wid_save->log("Choose a save slot.");
+  wid_save->log(game, UI_LOGGING_EMPTY_LINE);
+  wid_save->log(game, "Choose a save slot.");
 
   int y_at = 3;
   for (auto slot = 0; slot < UI_WID_SAVE_SLOTS; slot++) {
@@ -427,7 +427,7 @@ void Game::save_select(void)
     }
 
     auto  p = wid_save->wid_text_area->wid_text_area;
-    auto  w = wid_new_square_button(p, "save slot");
+    auto  w = wid_new_square_button(game, p, "save slot");
     point tl(0, y_at);
     point br(menu_width - 2, y_at);
 
@@ -454,7 +454,7 @@ void Game::save_select(void)
       // Cannot save over
       //
     } else {
-      wid_set_on_mouse_up(w, wid_save_mouse_up);
+      wid_set_on_mouse_up(game, w, wid_save_mouse_up);
       wid_set_int_context(w, slot);
     }
 
@@ -463,9 +463,9 @@ void Game::save_select(void)
     y_at++;
   }
   game_load_headers_only = false;
-  wid_update(wid_save->wid_text_area->wid_text_area);
+  wid_update(game, wid_save->wid_text_area->wid_text_area);
 
   state_change(STATE_SAVE_MENU, "save select");
 }
 
-void wid_save_select(class Game *g) { g->save_select(); }
+void wid_save_select(Gamep g) { g->save_select(); }

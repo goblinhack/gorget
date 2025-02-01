@@ -135,14 +135,14 @@ bool music_find(const char *name_alias)
   return result != all_music.end();
 }
 
-void music_update_volume(class Game *g)
+void music_update_volume(Gamep g)
 {
   TRACE_AND_INDENT();
   Mix_VolumeMusic(game_music_volume_get(g));
   SDL_ClearError();
 }
 
-bool music_play(const char *name)
+bool music_play(Gamep g, const char *name)
 {
   TRACE_AND_INDENT();
 
@@ -151,7 +151,7 @@ bool music_play(const char *name)
   }
   music_current = name;
 
-  music_update_volume(game);
+  music_update_volume(g);
 
   auto music = all_music.find(name);
   if (music == all_music.end()) {

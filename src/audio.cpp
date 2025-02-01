@@ -11,14 +11,14 @@ uint8_t audio_init_done;
 
 void audio_fini(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   Mix_CloseAudio();
   audio_init_done = false;
 }
 
 bool audio_init(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   //
   // Output sampling freq in samples per second (Hz).
   // you might use MIX_DEFAULT_FREQUENCY(22050) since that is a good value

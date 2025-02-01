@@ -10,12 +10,17 @@
 
 WidPopup::~WidPopup()
 {
-  wid_destroy(&wid_popup_container);
+  TRACE_AND_INDENT();
+
+  extern Gamep game;
+  auto         g = game;
+
+  wid_destroy(g, &wid_popup_container);
   delete wid_text_area;
 }
 
-WidPopup::WidPopup(const std::string vname, point vtl, point vbr, Tilep vtitle_tile, const std::string vbackground,
-                   bool horiz_scroll, bool vert_scoll, int scroll_height)
+WidPopup::WidPopup(Gamep g, const std::string vname, point vtl, point vbr, Tilep vtitle_tile,
+                   const std::string vbackground, bool horiz_scroll, bool vert_scoll, int scroll_height)
     : tl(vtl), br(vbr), title_tile(vtitle_tile), background(vbackground)
 {
   TRACE_AND_INDENT();
@@ -46,7 +51,7 @@ WidPopup::WidPopup(const std::string vname, point vtl, point vbr, Tilep vtitle_t
   }
 
   {
-    wid_popup_container = wid_new_square_window("wid_popup " + this->name);
+    wid_popup_container = wid_new_square_window(g, "wid_popup " + this->name);
     wid_set_pos(wid_popup_container, tl, br);
     wid_set_style(wid_popup_container, UI_WID_STYLE_SOLID_NONE);
     if (background != "") {
@@ -57,7 +62,7 @@ WidPopup::WidPopup(const std::string vname, point vtl, point vbr, Tilep vtitle_t
   }
 
   if (title_tile) {
-    auto w       = wid_new_square_button(wid_popup_container, "wid title " + this->name);
+    auto w       = wid_new_square_button(g, wid_popup_container, "wid title " + this->name);
     wid_title    = w;
     auto title_x = (outer_w - tile_size) / 2;
     wid_set_pos(w, point(title_x + 0, 1), point(title_x + tile_size - 1, tile_size));
@@ -69,41 +74,42 @@ WidPopup::WidPopup(const std::string vname, point vtl, point vbr, Tilep vtitle_t
   {
     point box_tl(0, tile_size);
     point box_br(inner_w, inner_h + tile_size);
-    wid_text_area = new WidTextBox(box_tl, box_br, wid_popup_container, horiz_scroll, vert_scoll, scroll_height);
+    wid_text_area = new WidTextBox(g, box_tl, box_br, wid_popup_container, horiz_scroll, vert_scoll, scroll_height);
   }
 
-  wid_update(wid_popup_container);
+  wid_update(g, wid_popup_container);
 }
 
 //
 // Log a message to the popup
 //
-void WidPopup::log(std::string s, wid_text_format format, std::string color)
+void WidPopup::log(Gamep g, std::string s, wid_text_format format, std::string color)
 {
   TRACE_AND_INDENT();
-  wid_text_area->log(s, format, color);
+
+  wid_text_area->log(g, s, format, color);
 }
 
 //
 // Get rid of trailing empty lines
 //
-void WidPopup::compress(void)
+void WidPopup::compress(Gamep g)
 {
   TRACE_NO_INDENT();
 
   int utilized = wid_text_area->line_count;
 
-  wid_resize(wid_popup_container, -1, utilized + 1);
-  wid_resize(wid_text_area->wid_text_area, -1, utilized + 1);
-  wid_resize(wid_text_area->wid_text_box_container, -1, utilized + 1);
+  wid_resize(g, wid_popup_container, -1, utilized + 1);
+  wid_resize(g, wid_text_area->wid_text_area, -1, utilized + 1);
+  wid_resize(g, wid_text_area->wid_text_box_container, -1, utilized + 1);
 
   //
   // We don't need a scrollbar if we've not exceeded size limits
   //
   if (utilized < inner_h) {
     if (wid_text_area->wid_vert_scroll) {
-      wid_hide(wid_text_area->wid_vert_scroll);
-      wid_hide(wid_get_parent(wid_text_area->wid_vert_scroll));
+      wid_hide(g, wid_text_area->wid_vert_scroll);
+      wid_hide(g, wid_get_parent(wid_text_area->wid_vert_scroll));
     }
   }
 }

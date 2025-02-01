@@ -35,16 +35,17 @@ public:
 
 public:
   ~WidPopup();
-  WidPopup(const std::string name, point tl, point br, Tilep title_tile = nullptr, const std::string background = "",
-           bool horiz_scroll = true, bool vert_scoll = true, int vert_scroll_size = -1);
+  WidPopup(Gamep, const std::string name, point tl, point br, Tilep title_tile = nullptr,
+           const std::string background = "", bool horiz_scroll = true, bool vert_scoll = true,
+           int vert_scroll_size = -1);
 
 public:
-  void log(std::string s, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
+  void log(Gamep, std::string s, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
 
   //
   // Get rid of trailing empty lines
   //
-  void compress(void);
+  void compress(Gamep);
 };
 
 #endif

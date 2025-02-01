@@ -12,9 +12,10 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-Levelp level_new(void)
+Levelsp levels_new(Gamep g)
 {
-  TRACE_NO_INDENT();
+  LOG("Levels new");
+  TRACE_AND_INDENT();
 
   //
   // Allocate the level as a flat C structure to allow history rewind
@@ -22,28 +23,43 @@ Levelp level_new(void)
   // NOTE: if we use "new" here, the initialization is visibly slower.
   // DO NOT USE C++ classes or types
   //
-  Levelp l;
-  LOG("Level memory:  %u Mb", SIZEOF(Level) / (1024 * 1024));
-  LOG("Thing AI:      %u Mb", SIZEOF(l->thing_ai) / (1024 * 1024));
-  LOG("Thing structs: %u Mb", SIZEOF(l->thing_body) / (1024 * 1024));
-  LOG("Thing IDs:     %u Mb", SIZEOF(l->thing_id) / (1024 * 1024));
-  LOG("Thing size:    %u b", SIZEOF(Thing));
+  Levelsp v;
+  LOG("Levels memory:  %lu Mb", sizeof(Levels) / (1024 * 1024));
+  LOG("Level memory:   %lu Mb", sizeof(Level) / (1024 * 1024));
+  LOG("Thing AI:       %lu Mb", sizeof(v->thing_ai) / (1024 * 1024));
+  LOG("Thing structs:  %lu Mb", sizeof(v->thing_body) / (1024 * 1024));
+  LOG("Thing levels:   %lu Mb", sizeof(v->level) / (1024 * 1024));
+  LOG("Thing size:     %lu b", sizeof(Thing));
+  LOG("Max things:     %u", THING_COMMON_ID_BASE - 1);
 
-  l = (Levelp) myzalloc(SIZEOF(*l), "l");
-  if (! l) {
+  v = (Levelsp) myzalloc(sizeof(*v), "v");
+  if (! v) {
     return nullptr;
   }
 
-  int z = 0;
-  level_dungeon_create_and_place(l, z);
-  level_assign_tiles(l, z);
-  level_scroll_warp_to_player(l);
+  level_new(g, v, point(0, 0));
 
-  return l;
+  return v;
+}
+
+void levels_fini(Gamep g, Levelsp v)
+{
+  LOG("Levels fini");
+  TRACE_AND_INDENT();
+
+  Levelp l;
+
+  FOR_ALL_LEVELS(g, v, l)
+  {
+    TRACE_NO_INDENT();
+    level_fini(g, v, l);
+  }
+
+  myfree(v);
 }
 
 #if 0
-void level_map_constructor(Levelp l)
+void level_map_constructor(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -188,34 +204,49 @@ void level_map_constructor(Levelp l)
 }
 #endif
 
-void level_fini(Levelp l)
+Levelp level_new(Gamep g, Levelsp v, point p)
 {
   TRACE_NO_INDENT();
 
-  FOR_ALL_THINGS_ALL_DEPTHS(l, t) { thing_fini(l, t); }
-  myfree(l);
+  auto l = game_level_get(g, v, p.x, p.y);
+  memset(l, 0, sizeof(*l));
+
+  level_dungeon_create_and_place(g, v, l);
+  level_assign_tiles(g, v, l);
+  level_scroll_warp_to_player(g, v, l);
+
+  return l;
 }
 
-bool level_set_thing_id(Levelp l, point3d p, int slot, ThingId id)
+void level_fini(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_fini(g, v, l, t); }
+
+  memset(l, 0, sizeof(*l));
+}
+
+bool level_set_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot, ThingId id)
 {
   if (level_is_oob(l, p)) {
     return false;
   }
-  l->thing_id[ p.x ][ p.y ][ p.z ][ slot ] = id;
+  l->thing_id[ p.x ][ p.y ][ slot ] = id;
   return true;
 }
 
-ThingId level_get_thing_id(Levelp l, point3d p, int slot)
+ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot)
 {
   if (level_is_oob(l, p)) {
     return 0;
   }
-  return l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
+  return l->thing_id[ p.x ][ p.y ][ slot ];
 }
 
-bool level_flag(Levelp l, ThingFlag f, point3d p)
+bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, point p)
 {
-  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, p)
+  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, p)
   {
     if (tp_flag(it_tp, f)) {
       return true;
@@ -224,7 +255,7 @@ bool level_flag(Levelp l, ThingFlag f, point3d p)
   return false;
 }
 
-bool level_is_oob(Level *l, point p)
+bool level_is_oob(Levelp l, point p)
 {
   if (! l) {
     return true;
@@ -244,30 +275,7 @@ bool level_is_oob(Level *l, point p)
   return false;
 }
 
-bool level_is_oob(Level *l, point3d p)
-{
-  if (p.z < 0) {
-    return true;
-  }
-  if (p.z >= MAP_DEPTH) {
-    return true;
-  }
-  if (p.x < 0) {
-    return true;
-  }
-  if (p.y < 0) {
-    return true;
-  }
-  if (p.x >= MAP_WIDTH) {
-    return true;
-  }
-  if (p.y >= MAP_HEIGHT) {
-    return true;
-  }
-  return false;
-}
-
-void level_map_set(Levelp l, int z, const char *in)
+void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
 {
   TRACE_NO_INDENT();
   const auto row_len      = MAP_WIDTH;
@@ -333,9 +341,9 @@ void level_map_set(Levelp l, int z, const char *in)
 
       if (need_floor) {
         auto tp_add = tp_floor;
-        auto t      = thing_init(l, tp_add, point3d(x, y, z));
+        auto t      = thing_init(g, v, l, tp_add, point(x, y));
         if (t) {
-          thing_push(l, t);
+          thing_push(g, v, l, t);
         }
       }
 
@@ -343,15 +351,15 @@ void level_map_set(Levelp l, int z, const char *in)
         continue;
       }
 
-      auto t = thing_init(l, tp, point3d(x, y, z));
+      auto t = thing_init(g, v, l, tp, point(x, y));
       if (t) {
-        thing_push(l, t);
+        thing_push(g, v, l, t);
       }
     }
   }
 }
 
-bool level_is_same_type(Levelp l, point3d p, Tpp tp)
+bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, point p, Tpp tp)
 {
   TRACE_NO_INDENT();
 
@@ -365,7 +373,7 @@ bool level_is_same_type(Levelp l, point3d p, Tpp tp)
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     Tpp    it_tp;
-    Thingp it = thing_and_tp_get(l, p, slot, &it_tp);
+    Thingp it = thing_and_tp_get_at(g, v, l, p, slot, &it_tp);
     if (! it) {
       continue;
     }
@@ -376,7 +384,7 @@ bool level_is_same_type(Levelp l, point3d p, Tpp tp)
   return false;
 }
 
-void level_bounds_set(Levelp l)
+void level_bounds_set(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
@@ -391,28 +399,28 @@ void level_bounds_set(Levelp l)
   //
   // Set the scroll bounds
   //
-  if (l->pixel_map_at.x < 0) {
-    l->pixel_map_at.x = 0;
+  if (v->pixel_map_at.x < 0) {
+    v->pixel_map_at.x = 0;
   }
-  if (l->pixel_map_at.y < 0) {
-    l->pixel_map_at.y = 0;
+  if (v->pixel_map_at.y < 0) {
+    v->pixel_map_at.y = 0;
   }
 
-  int max_pix_x = (MAP_WIDTH * dw) - game_pix_width_get(game);
-  int max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(game);
+  int max_pix_x = (MAP_WIDTH * dw) - game_pix_width_get(g);
+  int max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(g);
 
-  if (l->pixel_map_at.x > max_pix_x) {
-    l->pixel_map_at.x = max_pix_x;
+  if (v->pixel_map_at.x > max_pix_x) {
+    v->pixel_map_at.x = max_pix_x;
   }
-  if (l->pixel_map_at.y > max_pix_y) {
-    l->pixel_map_at.y = max_pix_y;
+  if (v->pixel_map_at.y > max_pix_y) {
+    v->pixel_map_at.y = max_pix_y;
   }
 
   //
   // Set the tile bounds
   //
-  int tmp_minx = l->pixel_map_at.x / dw;
-  int tmp_miny = l->pixel_map_at.y / dh;
+  int tmp_minx = v->pixel_map_at.x / dw;
+  int tmp_miny = v->pixel_map_at.y / dh;
   tmp_minx -= clipping_border;
   tmp_minx -= clipping_border;
 
@@ -423,8 +431,8 @@ void level_bounds_set(Levelp l)
     tmp_miny = 0;
   }
 
-  int tmp_maxx = (l->pixel_map_at.x + game_map_pix_width_get(game)) / dw;
-  int tmp_maxy = (l->pixel_map_at.y + game_map_pix_height_get(game)) / dh;
+  int tmp_maxx = (v->pixel_map_at.x + game_map_pix_width_get(g)) / dw;
+  int tmp_maxy = (v->pixel_map_at.y + game_map_pix_height_get(g)) / dh;
 
   tmp_maxx += clipping_border;
   tmp_maxy += clipping_border;
@@ -436,8 +444,8 @@ void level_bounds_set(Levelp l)
     tmp_maxy = MAP_HEIGHT;
   }
 
-  l->minx = tmp_minx;
-  l->miny = tmp_miny;
-  l->maxx = tmp_maxx;
-  l->maxy = tmp_maxy;
+  v->minx = tmp_minx;
+  v->miny = tmp_miny;
+  v->maxx = tmp_maxx;
+  v->maxy = tmp_maxy;
 }

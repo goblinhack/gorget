@@ -17,7 +17,7 @@
 //
 // Get the mouse position, so when displaying tiles we can work out where the cursor is now.
 //
-void level_mouse_position_get(Levelp l)
+void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_AND_INDENT();
 
@@ -28,7 +28,7 @@ void level_mouse_position_get(Levelp l)
   int visible_map_tl_y;
   int visible_map_br_x;
   int visible_map_br_y;
-  game_visible_map_pix_get(game, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
+  game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
   //
   // Find out what pixel on the map the mouse is over
@@ -38,13 +38,13 @@ void level_mouse_position_get(Levelp l)
   int map_pix_width   = visible_map_br_x - visible_map_tl_x;
   int map_pix_height  = visible_map_br_y - visible_map_tl_y;
 
-  float scale_x             = (float) map_pix_width / (float) game_pix_width_get(game);
-  float scale_y             = (float) map_pix_height / (float) game_pix_height_get(game);
+  float scale_x             = (float) map_pix_width / (float) game_pix_width_get(g);
+  float scale_y             = (float) map_pix_height / (float) game_pix_height_get(g);
   int   visible_map_mouse_x = (int) ((float) rel_map_mouse_x / scale_x);
   int   visible_map_mouse_y = (int) ((float) rel_map_mouse_y / scale_y);
 
   //
   // Now we wait for level_display to find the cursor
   //
-  game_visible_map_mouse_set(game, visible_map_mouse_x, visible_map_mouse_y);
+  game_visible_map_mouse_set(g, visible_map_mouse_x, visible_map_mouse_y);
 }

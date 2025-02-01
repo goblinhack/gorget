@@ -11,7 +11,7 @@
 
 static inline void term_puts_fg(unsigned char a)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   static const char *data[] = {
       "[30m", "[31m", "[32m", "[33m", "[34m", "[35m", "[36m", "[37m", "\033[m",
@@ -26,7 +26,7 @@ static inline void term_puts_fg(unsigned char a)
 
 static void term_puts_fgbg(unsigned char fg, unsigned char bg)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   static const char *data[] = {
       "[40;30m", "[40;31m", "[40;32m", "[40;33m", "[40;34m", "[40;35m", "[40;36m", "[40;37m",
@@ -52,7 +52,7 @@ static void term_puts_fgbg(unsigned char fg, unsigned char bg)
 
 static term_color term_color_string_to_index(const char **s)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (! strncmp(*s, "black$", SIZEOF("black$") - 1)) {
     *s += SIZEOF("black$") - 1;
@@ -102,7 +102,7 @@ static term_color term_color_string_to_index(const char **s)
 
 void term_log(const char *s)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   char c;
 
   int fg = TERM_COLOR_WHITE;

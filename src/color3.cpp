@@ -74,7 +74,7 @@ color WATER;
 
 void color_init3(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   // begin sort marker2 {
   color_set("deepwater", &DEEPWATER, 20, 38, 124, 255);

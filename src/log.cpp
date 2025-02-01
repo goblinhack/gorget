@@ -298,6 +298,9 @@ void myerr(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
+  extern Gamep game;
+  auto         g = game;
+
   static bool nested_error;
   if (nested_error) {
     return;
@@ -321,7 +324,7 @@ void myerr(const char *fmt, ...)
     va_end(args);
   }
 
-  wid_unset_focus();
+  wid_unset_focus(g);
   wid_unset_focus_lock();
 
   nested_error = false;

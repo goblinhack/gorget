@@ -304,7 +304,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   auto     vec = read_lzo_file(file_to_load, &uncompressed_len, &cs);
   if (vec.size() <= 0) {
     if (! game_load_headers_only) {
-      wid_error("load error, empty file [" + file_to_load + "] ?");
+      wid_error(game, "load error, empty file [" + file_to_load + "] ?");
     }
     return false;
   }
@@ -349,7 +349,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   in >> bits(target);
   if (! game_load_error.empty()) {
     if (! game_load_headers_only) {
-      wid_error("load error, " + game_load_error);
+      wid_error(game, "load error, " + game_load_error);
     }
     return false;
   }
@@ -386,7 +386,7 @@ void Game::load(void)
   load(save_file, *this);
   g_loading = false;
 
-  sdl_config_update_all();
+  sdl_config_update_all(game);
 
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
@@ -427,7 +427,7 @@ void Game::load(int slot)
   load(this_save_file, *this);
   g_loading = false;
 
-  sdl_config_update_all();
+  sdl_config_update_all(game);
 
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
@@ -436,7 +436,7 @@ void Game::load(int slot)
 
   CON("Loaded the game from %s.", this_save_file.c_str());
 
-  sdl_display_reset();
+  sdl_display_reset(game);
 }
 
 void Game::load_snapshot(void)
@@ -455,7 +455,7 @@ void Game::load_snapshot(void)
   load(this_save_file, *this);
   g_loading = false;
 
-  sdl_config_update_all();
+  sdl_config_update_all(game);
 
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
@@ -465,7 +465,7 @@ void Game::load_snapshot(void)
   CON("Loaded the game from %s.", this_save_file.c_str());
 }
 
-void wid_load_destroy(class Game *g)
+void wid_load_destroy(Gamep g)
 {
   TRACE_AND_INDENT();
   if (wid_load) {
@@ -475,7 +475,7 @@ void wid_load_destroy(class Game *g)
   }
 }
 
-static bool wid_load_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -529,7 +529,7 @@ static bool wid_load_key_up(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_load_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -540,7 +540,7 @@ static bool wid_load_key_down(Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_load_mouse_up(Widp w, int x, int y, uint32_t button)
+static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   auto slot = wid_get_int_context(w);
@@ -549,7 +549,7 @@ static bool wid_load_mouse_up(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_load_saved_snapshot(Widp w, int x, int y, uint32_t button)
+static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   game->load_snapshot();
@@ -557,7 +557,7 @@ static bool wid_load_saved_snapshot(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_load_cancel(Widp w, int x, int y, uint32_t button)
+static bool wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_load_destroy(game);
@@ -579,21 +579,21 @@ void Game::load_select(void)
   int   menu_width  = UI_WID_POPUP_WIDTH_WIDE;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_load = new WidPopup("Game load", outer_tl, outer_br, nullptr, "", false, false);
+  wid_load = new WidPopup(game, "Game load", outer_tl, outer_br, nullptr, "", false, false);
 
-  wid_set_on_key_up(wid_load->wid_popup_container, wid_load_key_up);
-  wid_set_on_key_down(wid_load->wid_popup_container, wid_load_key_down);
+  wid_set_on_key_up(game, wid_load->wid_popup_container, wid_load_key_up);
+  wid_set_on_key_down(game, wid_load->wid_popup_container, wid_load_key_down);
 
   {
     TRACE_AND_INDENT();
     auto p = wid_load->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "back");
+    auto w = wid_new_square_button(game, p, "back");
 
     point tl(menu_width / 2 - 4, menu_height - 4);
     point br(menu_width / 2 + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_on_mouse_up(w, wid_load_cancel);
+    wid_set_on_mouse_up(game, w, wid_load_cancel);
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, "BACK");
@@ -601,7 +601,7 @@ void Game::load_select(void)
 
   game_load_headers_only = true;
 
-  wid_load->log("Choose a load slot.");
+  wid_load->log(game, "Choose a load slot.");
 
   int y_at = 3;
   for (auto slot = 0; slot < UI_WID_SAVE_SLOTS; slot++) {
@@ -613,7 +613,7 @@ void Game::load_select(void)
     }
 
     auto  p = wid_load->wid_text_area->wid_text_area;
-    auto  w = wid_new_square_button(p, "load slot");
+    auto  w = wid_new_square_button(game, p, "load slot");
     point tl(0, y_at);
     point br(menu_width - 2, y_at);
 
@@ -639,9 +639,9 @@ void Game::load_select(void)
         s += tmp.save_meta;
       }
       if (slot == UI_WID_SAVE_SLOTS - 1) {
-        wid_set_on_mouse_up(w, wid_load_saved_snapshot);
+        wid_set_on_mouse_up(game, w, wid_load_saved_snapshot);
       } else {
-        wid_set_on_mouse_up(w, wid_load_mouse_up);
+        wid_set_on_mouse_up(game, w, wid_load_mouse_up);
       }
       wid_set_style(w, UI_WID_STYLE_GREEN);
       slot_valid[ slot ] = true;
@@ -653,12 +653,12 @@ void Game::load_select(void)
     y_at++;
   }
   game_load_headers_only = false;
-  wid_update(wid_load->wid_text_area->wid_text_area);
+  wid_update(game, wid_load->wid_text_area->wid_text_area);
 
   game->state_change(STATE_LOAD_MENU, "load select");
 }
 
-void wid_load_select(class Game *g) { g->load_select(); }
+void wid_load_select(Gamep g) { g->load_select(); }
 
 void game_load_last_config(const char *appdata)
 {
@@ -666,7 +666,8 @@ void game_load_last_config(const char *appdata)
 
   LOG("INI: Load config");
 
-  game              = new Game(std::string(appdata));
+  game = new Game(std::string(appdata));
+
   auto config_error = game->load_config();
 
   //
@@ -689,6 +690,7 @@ void game_load_last_config(const char *appdata)
   } else if (! config_error.empty()) {
     SDL_MSG_BOX("Config error: %s. Will need to reset config.", config_error.c_str());
     delete game;
+    game = nullptr;
     reset_globals();
     game = new Game(std::string(appdata));
     game_save_config(game);

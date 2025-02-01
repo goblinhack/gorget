@@ -11,7 +11,7 @@
 
 static WidPopup *wid_quit_window;
 
-void wid_quit_destroy(class Game *g)
+void wid_quit_destroy(Gamep g)
 {
   TRACE_NO_INDENT();
 
@@ -22,44 +22,44 @@ void wid_quit_destroy(class Game *g)
   }
 }
 
-static bool wid_quit_yes(Widp w, int x, int y, uint32_t button)
+static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   LOG("INF: Quit, yes");
 
-  if (game_level_get(game)) {
-    LOG("INF: Continue game");
+  if (game_levels_get(g)) {
+    LOG("INF: Continue g");
 
-    game_destroy_level(game);
-    wid_quit_destroy(game);
-    wid_main_menu_select(game);
+    game_destroy_levels(g);
+    wid_quit_destroy(g);
+    wid_main_menu_select(g);
   } else {
-    LOG("INF: Exit game");
+    LOG("INF: Exit g");
 
-    wid_quit_destroy(game);
+    wid_quit_destroy(g);
     DIE_CLEAN("Quit");
   }
   return true;
 }
 
-static bool wid_quit_no(Widp w, int x, int y, uint32_t button)
+static bool wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   LOG("INF: Quit, no");
 
-  wid_quit_destroy(game);
+  wid_quit_destroy(g);
 
-  if (! game_level_get(game)) {
-    wid_main_menu_select(game);
+  if (! game_levels_get(g)) {
+    wid_main_menu_select(g);
   }
   return true;
 }
 
-static bool wid_quit_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_quit_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
-  if (sdlk_eq(*key, game_key_console_get(game))) {
+  if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
   }
 
@@ -74,12 +74,12 @@ static bool wid_quit_key_up(Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'y' :
-              case 'Y' : wid_quit_yes(nullptr, 0, 0, 0); return true;
+              case 'Y' : wid_quit_yes(g, nullptr, 0, 0, 0); return true;
               case 'n' :
-              case 'N' : wid_quit_no(nullptr, 0, 0, 0); return true;
+              case 'N' : wid_quit_no(g, nullptr, 0, 0, 0); return true;
               case 'b' :
               case 'B' :
-              case SDLK_ESCAPE : wid_quit_no(nullptr, 0, 0, 0); return true;
+              case SDLK_ESCAPE : wid_quit_no(g, nullptr, 0, 0, 0); return true;
             }
           }
       }
@@ -88,18 +88,18 @@ static bool wid_quit_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static bool wid_quit_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
-  if (sdlk_eq(*key, game_key_console_get(game))) {
+  if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
   }
 
   return true;
 }
 
-void wid_quit_select(class Game *g)
+void wid_quit_select(Gamep g)
 {
   TRACE_NO_INDENT();
   LOG("INF: Quit select");
@@ -111,7 +111,7 @@ void wid_quit_select(class Game *g)
   auto m = TERM_WIDTH / 2;
   auto n = TERM_HEIGHT / 2;
 
-  if (game_level_get(g)) {
+  if (game_levels_get(g)) {
     n = TERM_HEIGHT / 3;
   }
 
@@ -119,19 +119,19 @@ void wid_quit_select(class Game *g)
   point outer_br(m + UI_WID_POPUP_WIDTH_NORMAL / 2, n + 3);
   auto  width = outer_br.x - outer_tl.x;
 
-  wid_quit_window = new WidPopup("Game quit", outer_tl, outer_br, nullptr, "", false, false);
+  wid_quit_window = new WidPopup(g, "Game quit", outer_tl, outer_br, nullptr, "", false, false);
   {
     TRACE_NO_INDENT();
     Widp w = wid_quit_window->wid_popup_container;
-    wid_set_on_key_up(w, wid_quit_key_up);
-    wid_set_on_key_down(w, wid_quit_key_down);
+    wid_set_on_key_up(g, w, wid_quit_key_up);
+    wid_set_on_key_down(g, w, wid_quit_key_down);
   }
 
   int y_at = 0;
   {
     TRACE_NO_INDENT();
     auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Quit");
+    auto w = wid_new_square_button(g, p, "Quit");
 
     point tl(0, y_at);
     point br(width, y_at);
@@ -144,12 +144,12 @@ void wid_quit_select(class Game *g)
   {
     TRACE_NO_INDENT();
     auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Yes");
+    auto w = wid_new_square_button(g, p, "Yes");
 
     point tl(0, y_at);
     point br(width / 2 - 2, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_RED);
-    wid_set_on_mouse_up(w, wid_quit_yes);
+    wid_set_on_mouse_up(g, w, wid_quit_yes);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=white$Y%%fg=reset$es");
   }
@@ -157,17 +157,17 @@ void wid_quit_select(class Game *g)
   {
     TRACE_NO_INDENT();
     auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "No");
+    auto w = wid_new_square_button(g, p, "No");
 
     point tl(width / 2, y_at);
     point br(width - 2, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
-    wid_set_on_mouse_up(w, wid_quit_no);
+    wid_set_on_mouse_up(g, w, wid_quit_no);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=white$N%%fg=reset$o");
   }
 
-  wid_update(wid_quit_window->wid_text_area->wid_text_area);
+  wid_update(g, wid_quit_window->wid_text_area->wid_text_area);
 
-  game_state_change(game, STATE_QUIT_MENU, "quit select");
+  game_state_change(g, STATE_QUIT_MENU, "quit select");
 }

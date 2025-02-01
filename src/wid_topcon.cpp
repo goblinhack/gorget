@@ -16,7 +16,7 @@
 #include <algorithm>
 #include <map>
 
-static void wid_topcon_wid_create(void);
+static void wid_topcon_wid_create(Gamep);
 
 Widp wid_topcon_container {};
 Widp wid_topcon_vert_scroll {};
@@ -28,19 +28,19 @@ static int         last_msg_count;
 
 static std::map< unsigned int, std::string > wid_topcon_lines;
 
-void wid_topcon_fini(void)
+void wid_topcon_fini(Gamep g)
 {
   TRACE_NO_INDENT();
-  wid_destroy(&wid_topcon_container);
-  wid_destroy(&wid_topcon_vert_scroll);
-  wid_destroy(&wid_topcon_input_line);
-  wid_destroy(&wid_topcon_window);
+  wid_destroy(g, &wid_topcon_container);
+  wid_destroy(g, &wid_topcon_vert_scroll);
+  wid_destroy(g, &wid_topcon_input_line);
+  wid_destroy(g, &wid_topcon_window);
 }
 
-uint8_t wid_topcon_init(void)
+uint8_t wid_topcon_init(Gamep g)
 {
   TRACE_NO_INDENT();
-  wid_topcon_wid_create();
+  wid_topcon_wid_create(g);
 
   last_msg       = "";
   last_msg_count = 0;
@@ -51,14 +51,15 @@ uint8_t wid_topcon_init(void)
 //
 // Scroll back to the bottom of the screen.
 //
-static void wid_topcon_reset_scroll(void)
+static void wid_topcon_reset_scroll(Gamep g)
 {
   TRACE_NO_INDENT();
+
   if (! wid_topcon_vert_scroll) {
     return;
   }
 
-  wid_move_to_bottom(wid_topcon_vert_scroll);
+  wid_move_to_bottom(g, wid_topcon_vert_scroll);
 }
 
 static void wid_topcon_scroll(Widp w, std::string str)
@@ -77,7 +78,7 @@ static void wid_topcon_scroll(Widp w, std::string str)
   }
 }
 
-static void wid_topcon_replace(Widp w, std::string str)
+static void wid_topcon_replace(Gamep g, Widp w, std::string str)
 {
   TRACE_NO_INDENT();
   Widp tmp {};
@@ -103,7 +104,10 @@ static void wid_topcon_log_(std::string s)
     return;
   }
 
-  wid_topcon_reset_scroll();
+  extern Gamep game;
+  auto         g = game;
+
+  wid_topcon_reset_scroll(g);
 
   //
   // Before the topcon is ready, we buffer the logs.
@@ -121,17 +125,17 @@ static void wid_topcon_log_(std::string s)
   //
   // Flush the logs now the topcon exists.
   //
-  wid_topcon_flush();
+  wid_topcon_flush(g);
 
   auto curr_msg = wid_get_text(wid_get_head(wid_topcon_input_line));
 
   if (last_msg == s) {
     s = last_msg + " (x" + std::to_string(last_msg_count + 2) + ")";
     last_msg_count++;
-    wid_topcon_replace(wid_topcon_input_line, s);
+    wid_topcon_replace(g, wid_topcon_input_line, s);
   } else if (! curr_msg.empty() && length_without_format(curr_msg) + length_without_format(s) + 1 < UI_TOPCON_WIDTH) {
     curr_msg = curr_msg + " " + s;
-    wid_topcon_replace(wid_topcon_input_line, curr_msg);
+    wid_topcon_replace(g, wid_topcon_input_line, curr_msg);
     last_msg       = "";
     last_msg_count = 0;
   } else {
@@ -141,7 +145,7 @@ static void wid_topcon_log_(std::string s)
   }
 }
 
-void wid_topcon_flush(void)
+void wid_topcon_flush(Gamep g)
 {
   TRACE_NO_INDENT();
   auto iter = wid_topcon_lines.begin();
@@ -151,7 +155,7 @@ void wid_topcon_flush(void)
     iter = wid_topcon_lines.erase(iter);
   }
 
-  wid_topcon_reset_scroll();
+  wid_topcon_reset_scroll(g);
 }
 
 //
@@ -176,13 +180,13 @@ void wid_topcon_log(std::string s)
 //
 // Create the topcon
 //
-static void wid_topcon_wid_create(void)
+static void wid_topcon_wid_create(Gamep g)
 {
   TRACE_NO_INDENT();
   int h = UI_TOPCON_VIS_HEIGHT;
 
   if (wid_topcon_window) {
-    wid_topcon_fini();
+    wid_topcon_fini(g);
   }
 
   TRACE_NO_INDENT();
@@ -190,7 +194,7 @@ static void wid_topcon_wid_create(void)
     point tl = make_point(UI_LEFTBAR_WIDTH, 0);
     point br = make_point(UI_LEFTBAR_WIDTH + UI_TOPCON_VIS_WIDTH - 1, h - 1);
 
-    wid_topcon_window = wid_new_square_window("wid topcon");
+    wid_topcon_window = wid_new_square_window(g, "wid topcon");
     wid_set_name(wid_topcon_window, "wid topcon window");
     wid_set_pos(wid_topcon_window, tl, br);
     wid_set_shape_none(wid_topcon_window);
@@ -201,7 +205,7 @@ static void wid_topcon_wid_create(void)
     point tl = make_point(0, 0);
     point br = make_point(UI_TOPCON_VIS_WIDTH - 1, h - 1);
 
-    wid_topcon_container = wid_new_container(wid_topcon_window, "wid topcon container");
+    wid_topcon_container = wid_new_container(g, wid_topcon_window, "wid topcon container");
     wid_set_pos(wid_topcon_container, tl, br);
     wid_set_shape_none(wid_topcon_container);
     wid_set_style(wid_topcon_container, UI_WID_STYLE_CONSOLE);
@@ -221,13 +225,13 @@ static void wid_topcon_wid_create(void)
       point br = make_point(UI_TOPCON_WIDTH - 1, row_bottom);
 
       TRACE_NO_INDENT();
-      child = wid_new_container(wid_topcon_container, "");
+      child = wid_new_container(g, wid_topcon_container, "");
 
       wid_set_shape_none(child);
       wid_set_pos(child, tl, br);
       wid_set_text_lhs(child, true);
 
-      wid_set_prev(child, prev);
+      wid_set_prev(g, child, prev);
       prev = child;
 
       if (row == 0) {
@@ -241,9 +245,9 @@ static void wid_topcon_wid_create(void)
   }
 
   TRACE_NO_INDENT();
-  wid_topcon_vert_scroll = wid_new_vert_scroll_bar(wid_topcon_window, "", wid_topcon_container);
-  wid_visible(wid_get_parent(wid_topcon_vert_scroll));
-  wid_update(wid_topcon_window);
+  wid_topcon_vert_scroll = wid_new_vert_scroll_bar(g, wid_topcon_window, "", wid_topcon_container);
+  wid_visible(g, wid_get_parent(wid_topcon_vert_scroll));
+  wid_update(g, wid_topcon_window);
 }
 
 std::vector< std::string > wid_topcon_serialize(void)

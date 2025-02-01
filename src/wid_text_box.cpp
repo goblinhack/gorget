@@ -11,21 +11,27 @@
 
 WidTextBox::~WidTextBox()
 {
+  TRACE_AND_INDENT();
+
+  extern Gamep game;
+  auto         g = game;
+
   if (wid_horiz_scroll) {
-    wid_destroy(&wid_horiz_scroll);
+    wid_destroy(g, &wid_horiz_scroll);
   }
   if (wid_vert_scroll) {
-    wid_destroy(&wid_vert_scroll);
+    wid_destroy(g, &wid_vert_scroll);
   }
-  wid_destroy(&wid_text_last);
-  wid_destroy(&wid_text_area);
+  wid_destroy(g, &wid_text_last);
+  wid_destroy(g, &wid_text_area);
 }
 
-WidTextBox::WidTextBox(point vtl, point vbr, Widp vparent, bool vhoriz_scroll, bool vvert_scoll,
+WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool vhoriz_scroll, bool vvert_scoll,
                        int vscroll_height_in)
     : scroll_height(vscroll_height_in), tl(vtl), br(vbr), wid_parent(vparent)
 {
   TRACE_AND_INDENT();
+
   int w = br.x - tl.x;
   int h = br.y - tl.y;
   width = w;
@@ -42,10 +48,10 @@ WidTextBox::WidTextBox(point vtl, point vbr, Widp vparent, bool vhoriz_scroll, b
 
   {
     if (vparent) {
-      wid_text_box_container = wid_new_square_button(vparent, "wid text box");
+      wid_text_box_container = wid_new_square_button(g, vparent, "wid text box");
       wid_set_shape_none(wid_text_box_container);
     } else {
-      wid_text_box_container = wid_new_square_window("wid text box");
+      wid_text_box_container = wid_new_square_window(g, "wid text box");
       wid_set_style(wid_text_box_container, UI_WID_STYLE_GREEN);
     }
     wid_set_pos(wid_text_box_container, tl, br);
@@ -55,10 +61,10 @@ WidTextBox::WidTextBox(point vtl, point vbr, Widp vparent, bool vhoriz_scroll, b
     point inner_tl(1, 1);
     point inner_br(w - 1, h - 1);
 
-    wid_text_area = wid_new_square_button(wid_text_box_container, "wid text inner area");
+    wid_text_area = wid_new_square_button(g, wid_text_box_container, "wid text inner area");
     wid_set_pos(wid_text_area, inner_tl, inner_br);
     wid_set_shape_none(wid_text_area);
-    // wid_set_style(wid_text_area, UI_WID_STYLE_RED);
+    // wid_set_style( wid_text_area, UI_WID_STYLE_RED);
 
     w = inner_br.x - inner_tl.x;
     h = inner_br.y - inner_tl.y;
@@ -84,14 +90,14 @@ WidTextBox::WidTextBox(point vtl, point vbr, Widp vparent, bool vhoriz_scroll, b
       point text_tl(0, row_bottom);
       point text_br(w, row_bottom);
 
-      child = wid_new_container(wid_text_area, "");
+      child = wid_new_container(g, wid_text_area, "");
       children.push_back(child);
 
       wid_set_shape_none(child);
       wid_set_pos(child, text_tl, text_br);
       wid_set_text_centerx(child, true);
 
-      wid_set_prev(child, prev);
+      wid_set_prev(g, child, prev);
       prev = child;
 
       if (row == 0) {
@@ -102,36 +108,37 @@ WidTextBox::WidTextBox(point vtl, point vbr, Widp vparent, bool vhoriz_scroll, b
       wid_set_name(child, "text_box output");
     }
 
-    wid_raise(wid_text_last);
+    wid_raise(g, wid_text_last);
   }
 
   if (vvert_scoll) {
-    wid_vert_scroll = wid_new_vert_scroll_bar(wid_text_box_container, "text box vert scroll", wid_text_area);
+    wid_vert_scroll = wid_new_vert_scroll_bar(g, wid_text_box_container, "text box vert scroll", wid_text_area);
   }
 
   if (vhoriz_scroll) {
-    wid_horiz_scroll = wid_new_horiz_scroll_bar(wid_text_box_container, "text box horiz scroll", wid_text_area);
+    wid_horiz_scroll = wid_new_horiz_scroll_bar(g, wid_text_box_container, "text box horiz scroll", wid_text_area);
   }
 
-  wid_update(wid_text_box_container);
+  wid_update(g, wid_text_box_container);
 
   if (vhoriz_scroll) {
-    wid_hide(wid_get_parent(wid_horiz_scroll));
-    wid_hide(wid_horiz_scroll);
+    wid_hide(g, wid_get_parent(wid_horiz_scroll));
+    wid_hide(g, wid_horiz_scroll);
   }
 
   if (vvert_scoll) {
-    wid_visible(wid_get_parent(wid_vert_scroll));
-    wid_visible(wid_vert_scroll);
+    wid_visible(g, wid_get_parent(wid_vert_scroll));
+    wid_visible(g, wid_vert_scroll);
   }
 }
 
 //
 // Get the wid on the bottom of the list/screen.
 //
-void WidTextBox::log_(std::string str, wid_text_format format, std::string color)
+void WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, std::string color)
 {
   TRACE_AND_INDENT();
+
   Widp tmp {};
   Widp text_wid {};
 
@@ -140,7 +147,7 @@ void WidTextBox::log_(std::string str, wid_text_format format, std::string color
       text_wid = children[ height - line_count - 1 ];
       wid_set_text(text_wid, str);
       line_count++;
-      wid_update(wid_text_box_container);
+      wid_update(g, wid_text_box_container);
     } else {
       CON("Text box overflow on [%s] height %d line_count %d", str.c_str(), height, line_count);
       backtrace_dump();
@@ -160,17 +167,17 @@ void WidTextBox::log_(std::string str, wid_text_format format, std::string color
     }
 
     if (wid_vert_scroll) {
-      wid_move_to_top(wid_vert_scroll);
+      wid_move_to_top(g, wid_vert_scroll);
     }
     line_count++;
 
     int show_scrollbars_at = wid_get_height(wid_text_area);
     if (line_count > show_scrollbars_at) {
       if (wid_horiz_scroll) {
-        wid_visible(wid_get_parent(wid_horiz_scroll));
+        wid_visible(g, wid_get_parent(wid_horiz_scroll));
       }
       if (wid_vert_scroll) {
-        wid_visible(wid_get_parent(wid_vert_scroll));
+        wid_visible(g, wid_get_parent(wid_vert_scroll));
       }
     }
   }
@@ -191,9 +198,10 @@ void WidTextBox::log_(std::string str, wid_text_format format, std::string color
 //
 // Log a message to the text_box
 //
-void WidTextBox::log(std::string s, wid_text_format format, std::string color)
+void WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std::string color)
 {
   TRACE_AND_INDENT();
+
   int chars_per_line = wid_get_width(wid_text_area);
 
   auto d = split(s, chars_per_line);
@@ -203,7 +211,7 @@ void WidTextBox::log(std::string s, wid_text_format format, std::string color)
     // Handles %%fg=...$ with no text due to a split
     //
     if (length_without_format(c)) {
-      log_(c, format, color);
+      log_(g, c, format, color);
     }
   }
 }

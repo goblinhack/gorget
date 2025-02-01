@@ -177,14 +177,17 @@ class Wid;
 class WidPopup;
 
 struct Level_;
+struct Levels_;
 struct Thing_;
 struct ThingAi_;
 struct Dmap_;
 struct SDL_Surface;
 
+using Gamep     = class Game *;
 using Dmapp     = struct Dmap_ *;
 using Fontp     = class Font *;
 using Levelp    = struct Level_ *;
+using Levelsp   = struct Levels_ *;
 using Lightp    = class Light *;
 using Texp      = class Tex *;
 using ThingId   = unsigned int;

@@ -48,9 +48,9 @@ std::initializer_list< std::string > tps = {
 class Tp
 {
 public:
-  uint8_t z_depth {};
-
   TpId id {};
+
+  uint8_t z_prio {};
 
   std::vector< class Tile * > tiles;
 
@@ -64,8 +64,6 @@ public:
   int speed {100};
   // end sort marker2 }
 
-  uint8_t player_index {};
-
   Tp(void);
   ~Tp(void);
 
@@ -73,7 +71,7 @@ public:
   void rarity_set(int v);
   void text_real_name_set(const std::string &v);
   void text_short_name_set(const std::string &v);
-  void z_depth_set(int v);
+  void obj_group_set(int v);
 
   std::string name;
   std::string text_real_name;
@@ -359,11 +357,8 @@ bool tp_flag(Tpp tp, ThingFlag f) { return tp->flag[ f ]; }
 
 void tp_flag_set(Tpp tp, ThingFlag f, bool val) { tp->flag[ f ] = val; }
 
-uint8_t tp_player_index_get(Tpp tp) { return tp->player_index; };
-void    tp_player_index_set(Tpp tp, uint8_t val) { tp->player_index = val; };
-
-void    tp_z_depth_set(Tpp tp, uint8_t val) { tp->z_depth = val; };
-uint8_t tp_z_depth_get(Tpp tp) { return tp->z_depth; };
+void    tp_z_prio_set(Tpp tp, uint8_t val) { tp->z_prio = val; };
+uint8_t tp_z_prio_get(Tpp tp) { return tp->z_prio; };
 
 void tp_speed_set(Tpp tp, int val) { tp->speed = val; };
 int  tp_speed_get(Tpp tp) { return tp->speed; };

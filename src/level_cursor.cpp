@@ -15,11 +15,11 @@
 
 static std::vector< point > cursor_path;
 
-void level_cursor_set(Level *l, point p)
+void level_cursor_set(Gamep g, Levelsp v, point p)
 {
   TRACE_AND_INDENT();
 
-  l->cursor_at = p;
+  v->cursor_at = p;
 }
 
 //
@@ -28,14 +28,12 @@ void level_cursor_set(Level *l, point p)
 // For the first pass, restrict to tiles we have walked on
 // For the first pass, any tiles will do
 //
-static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp player, point start, point end,
-                                                                int attempt)
+static std::vector< point > level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player,
+                                                                point start, point end, int attempt)
 {
   TRACE_AND_INDENT();
 
   static std::vector< point > empty;
-
-  int z = player->at.z;
 
   Dmap  d {};
   point dmap_start = start;
@@ -57,7 +55,7 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
     maxy = dmap_start.y;
   }
 
-  auto border = game_tiles_visible_across_get(game);
+  auto border = game_tiles_visible_across_get(g);
   minx -= border;
   miny -= border;
   maxx += border;
@@ -79,25 +77,25 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
   //
   // If standing on a hazard, then plot a course that allows travel over hazards.
   //
-  if (level_is_cursor_path_hazard_at(l, player->at.x, player->at.y, z)) {
+  if (level_is_cursor_path_hazard(g, v, l, player->at)) {
     //
     // Just map the shortest path outta here
     //
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        if (level_is_cursor_path_blocker_at(l, x, y, z)) {
+        if (level_is_cursor_path_blocker(g, v, l, point(x, y))) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
         } else {
           d.val[ x ][ y ] = DMAP_IS_PASSABLE;
         }
       }
     }
-  } else if (level_is_cursor_path_hazard_at(l, l->cursor_at.x, l->cursor_at.y, z)) {
+  } else if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
     bool                               got_one = false;
     std::initializer_list< ThingFlag > init    = {is_lava, is_chasm};
 
     for (auto i : init) {
-      if (level_flag(l, i, point3d(l->cursor_at.x, l->cursor_at.y, z))) {
+      if (level_flag(g, v, l, i, point(v->cursor_at.x, v->cursor_at.y))) {
         got_one = true;
 
         //
@@ -109,10 +107,10 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
         //
         for (auto y = miny; y < maxy; y++) {
           for (auto x = minx; x < maxx; x++) {
-            point3d p(x, y, z);
+            point p(x, y);
 
-            if (level_is_cursor_path_hazard(l, p)) {
-              if (! level_flag(l, i, p)) {
+            if (level_is_cursor_path_hazard(g, v, l, p)) {
+              if (! level_flag(g, v, l, i, p)) {
                 d.val[ x ][ y ] = DMAP_IS_WALL;
                 continue;
               }
@@ -131,9 +129,9 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
       //
       for (auto y = miny; y < maxy; y++) {
         for (auto x = minx; x < maxx; x++) {
-          point3d p(x, y, z);
+          point p(x, y);
 
-          if (level_is_cursor_path_blocker(l, p) || level_is_cursor_path_hazard(l, p)) {
+          if (level_is_cursor_path_blocker(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
             d.val[ x ][ y ] = DMAP_IS_WALL;
           } else {
             d.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -147,9 +145,9 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
     //
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        point3d p(x, y, z);
+        point p(x, y);
 
-        if (level_is_cursor_path_blocker(l, p) || level_is_cursor_path_hazard(l, p)) {
+        if (level_is_cursor_path_blocker(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
         } else {
           d.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -164,16 +162,16 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
   if (attempt == 1) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        point3d p(x, y, z);
+        point p(x, y);
 
-        if (! l->is_walked[ x ][ y ][ z ]) {
+        if (! l->is_walked[ x ][ y ]) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
         }
 
         //
         // Probably best to not use tiles where there is a monster
         //
-        if (level_is_monst(l, p)) {
+        if (level_is_monst(g, v, l, p)) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
         }
       }
@@ -212,11 +210,11 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Levelp l, Thingp
 //
 // Returns true on success
 //
-static std::vector< point > level_cursor_path_draw_line(Levelp l, point start, point end)
+static std::vector< point > level_cursor_path_draw_line(Gamep g, Levelsp v, Levelp l, point start, point end)
 {
   static std::vector< point > empty;
 
-  auto player = thing_player(l);
+  auto player = thing_player(g);
   if (! player) {
     return empty;
   }
@@ -226,8 +224,8 @@ static std::vector< point > level_cursor_path_draw_line(Levelp l, point start, p
   //
   // The first path prefers visited tiles.
   //
-  auto attempt1 = level_cursor_path_draw_line_attempt(l, player, start, end, 1);
-  auto attempt2 = level_cursor_path_draw_line_attempt(l, player, start, end, 2);
+  auto attempt1 = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 1);
+  auto attempt2 = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 2);
 
   std::vector< point > best;
 
@@ -245,61 +243,61 @@ static std::vector< point > level_cursor_path_draw_line(Levelp l, point start, p
 //
 // Stop following the current path
 //
-void level_cursor_path_reset(Levelp l)
+void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 {
-  auto t = thing_player(l);
+  auto t = thing_player(g);
   if (! t) {
     //
     // If no player, clear the cursor
     //
-    memset(l->cursor, 0, SIZEOF(l->cursor));
+    memset(v->cursor, 0, SIZEOF(v->cursor));
     return;
   }
 
-  auto aip = thing_ai(l, t);
+  auto aip = thing_ai(g, t);
   if (! aip) {
     //
     // If no player, clear the cursor
     //
-    memset(l->cursor, 0, SIZEOF(l->cursor));
+    memset(v->cursor, 0, SIZEOF(v->cursor));
     return;
   }
 
-  l->request_follow_path = false;
-  l->is_following_a_path = false;
+  v->request_follow_path = false;
+  v->is_following_a_path = false;
   aip->move_path.size    = 0;
 }
 
 //
 // Copy the mouse path to the thing
 //
-static void level_cursor_path_apply(Levelp l, std::vector< point > &move_path)
+static void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< point > &move_path)
 {
-  auto t = thing_player(l);
+  auto t = thing_player(g);
   if (! t) {
     //
     // If no player, clear the cursor
     //
-    memset(l->cursor, 0, SIZEOF(l->cursor));
+    memset(v->cursor, 0, SIZEOF(v->cursor));
     return;
   }
 
-  auto aip = thing_ai(l, t);
+  auto aip = thing_ai(g, t);
   if (! aip) {
     //
     // If no player, clear the cursor
     //
-    memset(l->cursor, 0, SIZEOF(l->cursor));
+    memset(v->cursor, 0, SIZEOF(v->cursor));
     return;
   }
 
-  if (l->request_follow_path) {
+  if (v->request_follow_path) {
     //
     // Player wants to start following or replace the current path.
     //
-    l->request_follow_path = false;
-    l->is_following_a_path = true;
-  } else if (l->is_following_a_path) {
+    v->request_follow_path = false;
+    v->is_following_a_path = true;
+  } else if (v->is_following_a_path) {
     //
     // Already following a path, stick to it until completion.
     //
@@ -325,53 +323,53 @@ static void level_cursor_path_apply(Levelp l, std::vector< point > &move_path)
 //
 // Recreate the mouse path
 //
-static void level_cursor_path_create(Levelp l)
+static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
 {
-  auto player = thing_player(l);
+  auto player = thing_player(g);
   if (! player) {
     //
     // If no player, clear the cursor
     //
-    memset(l->cursor, 0, SIZEOF(l->cursor));
+    memset(v->cursor, 0, SIZEOF(v->cursor));
     return;
   }
 
   //
   // Has something changed?
   //
-  if ((player->at == player->old_at) && (l->cursor_at == l->old_cursor_at)) {
+  if ((player->at == player->old_at) && (v->cursor_at == v->old_cursor_at)) {
     return;
   }
 
   //
   // Clear the path.
   //
-  memset(l->cursor, 0, SIZEOF(l->cursor));
+  memset(v->cursor, 0, SIZEOF(v->cursor));
 
   //
   // Draw the path
   //
-  cursor_path = level_cursor_path_draw_line(l, make_point(player->at), l->cursor_at);
+  cursor_path = level_cursor_path_draw_line(g, v, l, player->at, v->cursor_at);
   for (auto p : cursor_path) {
-    l->cursor[ p.x ][ p.y ] = CURSOR_PATH;
+    v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
   }
-  l->cursor[ l->cursor_at.x ][ l->cursor_at.y ] = CURSOR_AT;
+  v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;
 
-  l->old_cursor_at = l->cursor_at;
+  v->old_cursor_at = v->cursor_at;
 }
 
 //
 // Recreate and possibly apply the mouse path to the player
 //
-void level_cursor_update(Levelp l)
+void level_cursor_update(Gamep g, Levelsp v, Levelp l)
 {
   //
   // Recreate the mouse path
   //
-  level_cursor_path_create(l);
+  level_cursor_path_create(g, v, l);
 
   //
   // Update the player with the path.
   //
-  level_cursor_path_apply(l, cursor_path);
+  level_cursor_path_apply(g, v, l, cursor_path);
 }

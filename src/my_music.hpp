@@ -13,8 +13,8 @@ bool music_init(void);
 void music_fini(void);
 bool music_load(uint32_t rate, const char *file, const char *name);
 bool music_find(const char *);
-bool music_play(const char *);
+bool music_play(Gamep, const char *);
 bool music_halt(void);
-void music_update_volume(class Game *);
+void music_update_volume(Gamep);
 
 #endif

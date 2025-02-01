@@ -17,13 +17,13 @@ static Widp wid_rightbar {};
 
 static WidPopup *wid_rightbar_popup;
 
-static bool wid_rightbar_create_window(class Game *g)
+static bool wid_rightbar_create_window(Gamep g)
 {
   TRACE_AND_INDENT();
   DBG2("Remake rightbar");
 
-  auto level = game_level_get(g);
-  if (! level) {
+  auto v = game_levels_get(g);
+  if (! v) {
     return false;
   }
 
@@ -35,20 +35,20 @@ static bool wid_rightbar_create_window(class Game *g)
     point tl(TERM_WIDTH - width, 0);
     point br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
 
-    wid_rightbar = wid_new_square_window("wid rightbar");
+    wid_rightbar = wid_new_square_window(g, "wid rightbar");
     wid_set_ignore_scroll_events(wid_rightbar, true);
     wid_set_pos(wid_rightbar, tl, br);
     wid_set_style(wid_rightbar, UI_WID_STYLE_NORMAL);
-    wid_lower(wid_rightbar);
+    wid_lower(g, wid_rightbar);
   }
 
   y_at = 4;
   {
     TRACE_AND_INDENT();
-    auto  w = wid_new_square_button(wid_rightbar, "level no");
+    auto  w = wid_new_square_button(g, wid_rightbar, "level no");
     point tl(0, y_at);
     point br(width - 1, y_at);
-    auto  s = dynprintf("Level %u", level->num);
+    auto  s = dynprintf("Level %u,%u", v->level_num.x, v->level_num.y);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -59,11 +59,11 @@ static bool wid_rightbar_create_window(class Game *g)
   if (0) {
     y_at++;
     TRACE_AND_INDENT();
-    auto  w = wid_new_plain(wid_rightbar, "Seed");
+    auto  w = wid_new_plain(g, wid_rightbar, "Seed");
     point tl(0, y_at);
     point br(width - 1, y_at);
 
-    auto s = dynprintf("Seed: %%fg=gray$%s", game_seed_name_get(game));
+    auto s = dynprintf("Seed: %%fg=gray$%s", game_seed_name_get(g));
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_shape_none(w);
@@ -78,11 +78,11 @@ static bool wid_rightbar_create_window(class Game *g)
     point tl(0, y_at);
     point br(width - 1, y_at);
     auto  s = dynprintf("%04u %04u", 0, 100);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, s);
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_color(w, WID_COLOR_TEXT_FG, RED);
-    wid_set_shape_none(w);
+    wid_set_pos( w, tl, br);
+    wid_set_text( w, s);
+    wid_set_style( w, UI_WID_STYLE_NORMAL);
+    wid_set_color(g, w, WID_COLOR_TEXT_FG, RED);
+    wid_set_shape_none( w);
     myfree(s);
   }
 
@@ -93,11 +93,11 @@ static bool wid_rightbar_create_window(class Game *g)
     point tl(0, y_at);
     point br(width - 1, y_at);
     auto  s = dynprintf("%4u %4u", 0, 100);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, s);
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_color(w, WID_COLOR_TEXT_FG, DODGERBLUE);
-    wid_set_shape_none(w);
+    wid_set_pos( w, tl, br);
+    wid_set_text( w, s);
+    wid_set_style( w, UI_WID_STYLE_NORMAL);
+    wid_set_color(g, w, WID_COLOR_TEXT_FG, DODGERBLUE);
+    wid_set_shape_none( w);
     myfree(s);
   }
 
@@ -108,11 +108,11 @@ static bool wid_rightbar_create_window(class Game *g)
     point tl(0, y_at);
     point br(width - 1, y_at);
     auto  s = dynprintf("%4u %4u", 0, 100);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, s);
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_color(w, WID_COLOR_TEXT_FG, YELLOW);
-    wid_set_shape_none(w);
+    wid_set_pos( w, tl, br);
+    wid_set_text( w, s);
+    wid_set_style( w, UI_WID_STYLE_NORMAL);
+    wid_set_color(g, w, WID_COLOR_TEXT_FG, YELLOW);
+    wid_set_shape_none( w);
     myfree(s);
   }
 
@@ -123,42 +123,42 @@ static bool wid_rightbar_create_window(class Game *g)
     point tl(0, y_at);
     point br(width - 1, y_at);
     auto  s = dynprintf("%4u %4u", 0, 100);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, s);
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
-    wid_set_shape_none(w);
+    wid_set_pos( w, tl, br);
+    wid_set_text( w, s);
+    wid_set_style( w, UI_WID_STYLE_NORMAL);
+    wid_set_color(g, w, WID_COLOR_TEXT_FG, GREEN);
+    wid_set_shape_none( w);
     myfree(s);
   }
 #endif
 
-  wid_update(wid_rightbar);
+  wid_update(g, wid_rightbar);
 
   DBG2("Remade rightbar");
 
   return true;
 }
 
-void wid_rightbar_fini(class Game *g)
+void wid_rightbar_fini(Gamep g)
 {
   TRACE_AND_INDENT();
-  wid_destroy(&wid_rightbar);
+  wid_destroy(g, &wid_rightbar);
 
   delete wid_rightbar_popup;
   wid_rightbar_popup = nullptr;
 }
 
-bool wid_rightbar_init(class Game *g)
+bool wid_rightbar_init(Gamep g)
 {
   TRACE_AND_INDENT();
   return wid_rightbar_create_window(g);
 }
 
-bool wid_rightbar_create(class Game *g)
+bool wid_rightbar_create(Gamep g)
 {
   wid_rightbar_fini(g);
 
-  auto level = game_level_get(g);
+  auto level = game_levels_get(g);
   if (! level) {
     return false;
   }

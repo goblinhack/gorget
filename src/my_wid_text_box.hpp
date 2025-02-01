@@ -6,6 +6,7 @@
 #ifndef _MY_WID_TEXT_BOX_HPP_
 #define _MY_WID_TEXT_BOX_HPP_
 
+#include "my_minimal.hpp"
 #include "my_wid.hpp"
 
 #include <map>
@@ -39,12 +40,13 @@ public:
   Widp  wid_vert_scroll {};
 
   ~WidTextBox();
-  WidTextBox(point tl, point br, Widp, bool horiz_scroll = true, bool vert_scoll = true, int scroll_height = -1);
+  WidTextBox(Gamep, point tl, point br, Widp, bool horiz_scroll = true, bool vert_scoll = true,
+             int scroll_height = -1);
 
 private:
-  void log_(std::string str, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
+  void log_(Gamep, const std::string &, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
 
 public:
-  void log(std::string s, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
+  void log(Gamep, const std::string &, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
 };
 #endif

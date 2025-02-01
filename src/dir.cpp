@@ -19,7 +19,7 @@
  */
 bool dir_exists(const char *indir)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   struct stat buf;
   char       *dir;
   uint8_t     rc;
@@ -46,7 +46,7 @@ bool dir_exists(const char *indir)
  */
 char *dir_dot(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   static char buf[ MAXPATHLEN ];
 
   dospath2unix(getcwd(buf, SIZEOF(buf)));
@@ -60,7 +60,7 @@ char *dir_dot(void)
  */
 char *dir_dotdot(char *s)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   uint32_t size;
   char    *end;
 
@@ -87,7 +87,7 @@ char *dir_dotdot(char *s)
  */
 char *dospath2unix(char *in)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   char *s = in;
 
   while (*s) {

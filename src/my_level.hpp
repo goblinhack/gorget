@@ -24,9 +24,29 @@ typedef struct Level_ {
   // faster to malloc and memset versus default construction.
   //////////////////////////////////////////////////////////////
   //
-  // Level number.
+  // What things are where? Each Id points to a thing structure.
   //
-  uint8_t num;
+  ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
+  //
+  // Has the player been on this tile?
+  //
+  bool is_walked[ MAP_WIDTH ][ MAP_HEIGHT ];
+  //////////////////////////////////////////////////////////////
+  // No c++ types can be used here, to allow easy level replay
+  //////////////////////////////////////////////////////////////
+} Level;
+
+typedef struct Levels_ {
+  //////////////////////////////////////////////////////////////
+  // No c++ types can be used here, to allow easy level replay
+  //
+  // Why C types only ? For large data structures it is visibly
+  // faster to malloc and memset versus default construction.
+  //////////////////////////////////////////////////////////////
+  //
+  // Current level being played
+  //
+  point level_num;
   //
   // Increments once per event loop.
   //
@@ -73,14 +93,13 @@ typedef struct Level_ {
   //
   bool is_following_a_path : 1;
   //
-  // TODO
   // Set when something modifies the map and we need to update caches.
   //
   bool is_map_changed : 1;
   //
   // What things are where? Each Id points to a thing structure.
   //
-  ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ][ MAP_SLOTS ];
+  Level level[ LEVELS_ACROSS ][ LEVELS_DOWN ];
   //
   // All things structure memory.
   //
@@ -92,15 +111,7 @@ typedef struct Level_ {
   //
   // The current player.
   //
-  ThingId player;
-  //
-  // Which player are we controlling.
-  //
-  uint8_t player_index;
-  //
-  // Has the player been on this tile?
-  //
-  bool is_walked[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ];
+  ThingId player_id;
   //
   // What the player is currently highlighting.
   //
@@ -112,7 +123,7 @@ typedef struct Level_ {
   //
   point pixel_map_at;
   //
-  // Level display bounds
+  // Levels display bounds
   //
   int minx;
   int miny;
@@ -121,40 +132,47 @@ typedef struct Level_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
-} Level;
+} Levels;
 
-Levelp level_new(void);
+Levelsp levels_new(Gamep);
+void    levels_fini(Gamep, Levelsp);
 
-ThingId level_get_thing_id(Levelp, point3d, int slot);
+Levelp level_new(Gamep, Levelsp, point);
+void   level_fini(Gamep, Levelsp, Levelp);
 
-bool level_flag(Levelp, ThingFlag, point3d);
+ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
+
+bool level_flag(Gamep, Levelsp, Levelp, ThingFlag, point p);
 bool level_is_oob(Levelp, point);
-bool level_is_oob(Levelp, point3d);
-bool level_is_same_type(Levelp, point3d, Tpp);
-bool level_set_thing_id(Levelp, point3d, int slot, ThingId);
-bool level_tick_is_in_progress(Levelp);
+bool level_is_same_obj_type_at(Gamep, Levelsp, Levelp, point p, Tpp);
+bool level_set_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot, ThingId);
+bool level_tick_is_in_progress(Gamep, Levelsp, Levelp);
 
-void level_anim(Levelp);
-void level_assign_tiles(Levelp, int z);
-void level_bounds_set(Levelp);
-void level_cursor_set(Levelp, point);
-void level_cursor_update(Levelp);
-void level_display(Levelp);
-void level_dungeon_create_and_place(Levelp, int z);
-void level_fini(Levelp);
-void level_map_set(Levelp, int z, const char *);
-void level_mouse_position_get(Levelp);
-void level_scroll_delta(Levelp, point);
-void level_cursor_path_reset(Levelp);
-void level_scroll_to_player(Levelp);
-void level_scroll_warp_to_player(Levelp);
-void level_tick_begin_requested(Levelp, const char *);
-void level_tick(Levelp);
+void level_anim(Gamep, Levelsp, Levelp);
+void level_assign_tiles(Gamep, Levelsp, Levelp);
+void level_bounds_set(Gamep, Levelsp);
+void level_cursor_set(Gamep, Levelsp, point);
+void level_cursor_update(Gamep, Levelsp, Levelp);
+void level_display(Gamep, Levelsp, Levelp);
+void level_dungeon_create_and_place(Gamep, Levelsp, Levelp);
+void level_map_set(Gamep, Levelsp, Levelp, const char *);
+void level_mouse_position_get(Gamep, Levelsp, Levelp);
+void level_scroll_delta(Gamep, Levelsp, point);
+void level_cursor_path_reset(Gamep, Levelsp, Levelp);
+void level_scroll_to_player(Gamep, Levelsp, Levelp);
+void level_scroll_warp_to_player(Gamep, Levelsp, Levelp);
+void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
+void level_tick(Gamep, Levelsp, Levelp);
+
+#define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                \
+  for (auto _y_ = 0; _y_ < LEVELS_DOWN; _y_++)                                                                       \
+    for (auto _x_ = 0; _x_ < LEVELS_ACROSS; _x_++)                                                                   \
+      if ((_l_ = &v->level[ _x_ ][ _y_ ]))
 
 //
-// Walk all things on all Z depths
+// Walk all things, all levels
 //
-#define FOR_ALL_THINGS_ALL_DEPTHS(_l_, _t_)                                                                          \
+#define FOR_ALL_THINGS_ALL_LEVELS(_g_, _v_, _t_)                                                                     \
   Thingp t;                                                                                                          \
   for (auto _id_ = 0; _id_ < 1 << THING_COMMON_ID_BITS; _id_++)                                                      \
     if (_l_->thing_body[ _id_ ].id)                                                                                  \
@@ -163,27 +181,27 @@ void level_tick(Levelp);
 //
 // For all things at this Z depth
 //
-#define FOR_ALL_THINGS_Z_DEPTH(_l_, _t_, _z_)                                                                        \
+#define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                  \
   Thingp _t_;                                                                                                        \
   Tpp    _tp_;                                                                                                       \
   for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                        \
     for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                       \
-      for (auto _slot_ = 0; _t_ = thing_and_tp_get(_l_, point3d(_x_, _y_, _z_), _slot_, &_tp_), _slot_ < MAP_SLOTS;  \
-           _slot_++)                                                                                                 \
+      for (auto _slot_ = 0;                                                                                          \
+           _t_ = thing_and_tp_get_at(_g_, _v_, _l_, point(_x_, _y_), _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)   \
         if (_t_)
 
 //
 // For all things at a specific location
 //
-#define FOR_ALL_THINGS_AT(_l_, _t_, _p_)                                                                             \
+#define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                   \
   Thingp _t_;                                                                                                        \
-  for (auto _slot_ = 0; _t_ = thing_get(_l_, _p_, _slot_), _slot_ < MAP_SLOTS; _slot_++)                             \
+  for (auto _slot_ = 0; _t_ = thing_get(_g_, _v_, _l_, _p_, _slot_), _slot_ < MAP_SLOTS; _slot_++)                   \
     if (_t_)
 
-#define FOR_ALL_THINGS_AND_TPS_AT(_l_, _t_, _tp_, _p_)                                                               \
+#define FOR_ALL_THINGS_AND_TPS_AT(_g_, _v_, _l_, _t_, _tp_, _p_)                                                     \
   Thingp _t_;                                                                                                        \
   Tpp    _tp_;                                                                                                       \
-  for (auto _slot_ = 0; _t_ = thing_and_tp_get(_l_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)               \
+  for (auto _slot_ = 0; _t_ = thing_and_tp_get_at(_g_, _v_, _l_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)  \
     if (_t_)
 
 #endif // _MY_LEVEL_H_

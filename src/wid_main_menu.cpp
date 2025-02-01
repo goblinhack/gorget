@@ -14,7 +14,7 @@
 
 WidPopup *wid_main_menu_window;
 
-void wid_main_menu_destroy(class Game *g)
+void wid_main_menu_destroy(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -22,64 +22,64 @@ void wid_main_menu_destroy(class Game *g)
   wid_main_menu_window = nullptr;
 }
 
-void wid_main_menu_hide(class Game *g)
+void wid_main_menu_hide(Gamep g)
 {
   TRACE_AND_INDENT();
-  wid_hide(wid_main_menu_window->wid_popup_container);
+  wid_hide(g, wid_main_menu_window->wid_popup_container);
 }
 
-static bool wid_main_menu_load_game(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_load_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_load_select(game);
+  wid_load_select(g);
   return false;
 }
 
-static bool wid_main_menu_config(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_config(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_cfg_top_menu(game);
-  wid_main_menu_hide(game);
+  wid_cfg_top_menu(g);
+  wid_main_menu_hide(g);
   return false;
 }
 
-static bool game_menu_new_game(Widp w, int x, int y, uint32_t button)
+static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_main_menu_hide(game);
-  wid_main_menu_destroy(game);
-  wid_new_game(game);
+  wid_main_menu_hide(g);
+  wid_main_menu_destroy(g);
+  wid_new_game(g);
   return false;
 }
 
-static bool wid_main_menu_credits_game(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_credits_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_credits_select(game);
-  wid_main_menu_destroy(game);
+  wid_credits_select(g);
+  wid_main_menu_destroy(g);
   return false;
 }
 
-static bool wid_main_menu_quit_game(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_quit_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_quit_select(game);
-  wid_main_menu_destroy(game);
+  wid_quit_select(g);
+  wid_main_menu_destroy(g);
   return false;
 }
 
-static bool wid_main_menu_hiscores(Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_hiscores_show(game);
+  wid_hiscores_show(g);
   return false;
 }
 
-static bool wid_main_menu_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game_key_console_get(game))) {
+  if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
   }
 
@@ -96,17 +96,17 @@ static bool wid_main_menu_key_up(Widp w, const struct SDL_Keysym *key)
               case SDLK_RETURN :
               case ' ' :
               case 'n' :
-              case 'N' : game_menu_new_game(nullptr, 0, 0, 0); return true;
+              case 'N' : game_menu_new_game(g, nullptr, 0, 0, 0); return true;
               case 'l' :
-              case 'L' : wid_main_menu_load_game(nullptr, 0, 0, 0); return true;
+              case 'L' : wid_main_menu_load_game(g, nullptr, 0, 0, 0); return true;
               case 'o' :
-              case 'O' : wid_main_menu_config(nullptr, 0, 0, 0); return true;
+              case 'O' : wid_main_menu_config(g, nullptr, 0, 0, 0); return true;
               case 'c' :
-              case 'C' : wid_main_menu_credits_game(nullptr, 0, 0, 0); return true;
+              case 'C' : wid_main_menu_credits_game(g, nullptr, 0, 0, 0); return true;
               case 'h' :
-              case 'H' : wid_main_menu_hiscores(nullptr, 0, 0, 0); return true;
+              case 'H' : wid_main_menu_hiscores(g, nullptr, 0, 0, 0); return true;
               case 'q' :
-              case 'Q' : wid_main_menu_quit_game(nullptr, 0, 0, 0); return true;
+              case 'Q' : wid_main_menu_quit_game(g, nullptr, 0, 0, 0); return true;
             }
           }
       }
@@ -115,11 +115,11 @@ static bool wid_main_menu_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static bool wid_main_menu_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game_key_console_get(game))) {
+  if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
   }
 
@@ -129,7 +129,7 @@ static bool wid_main_menu_key_down(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static void game_display_title_bg(void)
+static void game_display_title_bg(Gamep g)
 {
   TRACE_AND_INDENT();
   glcolor(WHITE);
@@ -138,11 +138,11 @@ static void game_display_title_bg(void)
   std::string t = "title_bg";
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
+            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
-static void game_display_title_fg1(void)
+static void game_display_title_fg1(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -152,11 +152,11 @@ static void game_display_title_fg1(void)
   std::string t = "title_fg1_1";
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
+            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
-static void game_display_title_fg2(void)
+static void game_display_title_fg2(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -184,7 +184,7 @@ static void game_display_title_fg2(void)
   std::string t = "title_fg2_1";
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
+            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
@@ -221,7 +221,7 @@ color color_change_hue(const color &in, const float fHue)
   return out;
 }
 
-static void game_display_title_fg3(void)
+static void game_display_title_fg3(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -245,12 +245,12 @@ static void game_display_title_fg3(void)
   if (r > 255) {
     r = 255;
   }
-  fg.r  = r;
-  int g = ((float) fg.g) * bright;
-  if (g > 255) {
-    g = 255;
+  fg.r      = r;
+  int green = ((float) fg.g) * bright;
+  if (green > 255) {
+    green = 255;
   }
-  fg.g  = g;
+  fg.g  = green;
   int b = ((float) fg.b) * bright;
   if (b > 255) {
     b = 255;
@@ -264,11 +264,11 @@ static void game_display_title_fg3(void)
   std::string t = "title_fg3_1";
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
+            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
-static void game_display_title_fg4(void)
+static void game_display_title_fg4(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -289,20 +289,20 @@ static void game_display_title_fg4(void)
   std::string t = "title_fg4_" + std::to_string(frame);
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(game), game_window_pix_height_get(game)));
+            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
-static void wid_main_menu_tick(Widp w)
+static void wid_main_menu_tick(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
   if (0) {
-    game_display_title_bg();
-    game_display_title_fg1();
-    game_display_title_fg2();
-    game_display_title_fg3();
-    game_display_title_fg4();
+    game_display_title_bg(g);
+    game_display_title_fg1(g);
+    game_display_title_fg2(g);
+    game_display_title_fg3(g);
+    game_display_title_fg4(g);
   }
 
   if (wid_main_menu_window) {
@@ -315,7 +315,7 @@ static void wid_main_menu_tick(Widp w)
   }
 }
 
-void wid_main_menu_select(class Game *g)
+void wid_main_menu_select(Gamep g)
 {
   TRACE_AND_INDENT();
   LOG("Main menu");
@@ -333,31 +333,31 @@ void wid_main_menu_select(class Game *g)
   int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_main_menu_window = new WidPopup("Main menu", outer_tl, outer_br, nullptr, "nothing", false, false);
+  wid_main_menu_window = new WidPopup(g, "Main menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
     TRACE_NO_INDENT();
     Widp w = wid_main_menu_window->wid_popup_container;
-    wid_set_on_key_up(w, wid_main_menu_key_up);
-    wid_set_on_key_down(w, wid_main_menu_key_down);
-    wid_set_on_tick(w, wid_main_menu_tick);
+    wid_set_on_key_up(g, w, wid_main_menu_key_up);
+    wid_set_on_key_down(g, w, wid_main_menu_key_down);
+    wid_set_on_tick(g, w, wid_main_menu_tick);
   }
 
   int y_at = 0;
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "New Game");
+    auto w = wid_new_square_button(g, p, "New Game");
 
     point tl(0, y_at);
     point br(button_width, y_at + box_height - 1);
-    wid_set_mode(w, WID_MODE_OVER);
+    wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(w, game_menu_new_game);
+    wid_set_on_mouse_up(g, w, game_menu_new_game);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$N%%fg=reset$ew game%%fg=reset$");
   }
@@ -365,15 +365,15 @@ void wid_main_menu_select(class Game *g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Load Game");
+    auto w = wid_new_square_button(g, p, "Load Game");
 
     point tl(0, y_at);
     point br(button_width, y_at + box_height - 1);
-    wid_set_mode(w, WID_MODE_OVER);
+    wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(w, wid_main_menu_load_game);
+    wid_set_on_mouse_up(g, w, wid_main_menu_load_game);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$L%%fg=" UI_TEXT_COLOR_STR "$oad game");
   }
@@ -381,15 +381,15 @@ void wid_main_menu_select(class Game *g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Options");
+    auto w = wid_new_square_button(g, p, "Options");
 
     point tl(0, y_at);
     point br(button_width, y_at + box_height - 1);
-    wid_set_mode(w, WID_MODE_OVER);
+    wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(w, wid_main_menu_config);
+    wid_set_on_mouse_up(g, w, wid_main_menu_config);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$O%%fg=" UI_TEXT_COLOR_STR "$ptions");
   }
@@ -397,15 +397,15 @@ void wid_main_menu_select(class Game *g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Credits");
+    auto w = wid_new_square_button(g, p, "Credits");
 
     point tl(0, y_at);
     point br(button_width, y_at + box_height - 1);
-    wid_set_mode(w, WID_MODE_OVER);
+    wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(w, wid_main_menu_credits_game);
+    wid_set_on_mouse_up(g, w, wid_main_menu_credits_game);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$C%%fg=" UI_TEXT_COLOR_STR "$redits");
   }
@@ -413,15 +413,15 @@ void wid_main_menu_select(class Game *g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Hiscores");
+    auto w = wid_new_square_button(g, p, "Hiscores");
 
     point tl(0, y_at);
     point br(button_width, y_at + box_height - 1);
-    wid_set_mode(w, WID_MODE_OVER);
+    wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(w, wid_main_menu_hiscores);
+    wid_set_on_mouse_up(g, w, wid_main_menu_hiscores);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$H%%fg=" UI_TEXT_COLOR_STR "$iscores");
   }
@@ -429,27 +429,27 @@ void wid_main_menu_select(class Game *g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Quit Game");
+    auto w = wid_new_square_button(g, p, "Quit Game");
 
     point tl(0, y_at);
     point br(button_width, y_at + box_height - 1);
-    wid_set_mode(w, WID_MODE_OVER);
+    wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(w, wid_main_menu_quit_game);
+    wid_set_on_mouse_up(g, w, wid_main_menu_quit_game);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Q%%fg=" UI_TEXT_COLOR_STR "$uit Game");
   }
 
-  wid_update(wid_main_menu_window->wid_text_area->wid_text_area);
+  wid_update(g, wid_main_menu_window->wid_text_area->wid_text_area);
 }
 
-void wid_new_game(class Game *g)
+void wid_new_game(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  game_create_level(g);
-  game_state_reset(g, "new game");
-  game_entered_level(g);
+  game_state_reset(g, "new g");
+  game_create_levels(g);
+  game_start_playing(g);
 }

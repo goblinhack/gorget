@@ -23,7 +23,7 @@ static unsigned char *file_io_read(const char *filename, int *len);
 
 unsigned char *file_load(const char *filename, int *outlen)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   unsigned char *out;
   char          *alt_filename;
 
@@ -167,7 +167,7 @@ unsigned char *file_load(const char *filename, int *outlen)
 
 unsigned char *file_io_read(const char *filename, int *out_len)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   unsigned char *buffer;
   FILE          *file;
   int            len;
@@ -226,7 +226,7 @@ unsigned char *file_io_read(const char *filename, int *out_len)
 
 int file_write(const char *filename, unsigned char *buffer, int len)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   FILE   *file;
   uint8_t rc;
 
@@ -264,7 +264,7 @@ int file_write(const char *filename, unsigned char *buffer, int len)
  */
 uint8_t file_exists(const char *filename)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   struct stat buf;
 
   if (! filename) {
@@ -283,7 +283,7 @@ uint8_t file_exists(const char *filename)
 
 unsigned char *file_io_read_if_exists(const char *filename, int *out_len)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 #if 0
   unsigned char *ret;
   char *mz_filename;
@@ -323,7 +323,7 @@ unsigned char *file_io_read_if_exists(const char *filename, int *out_len)
  */
 int file_size(const char *filename)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   struct stat buf;
 
   if (stat(filename, &buf) >= 0) {
@@ -338,7 +338,7 @@ int file_size(const char *filename)
  */
 uint8_t file_non_zero_size_exists(const char *filename)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (! file_exists(filename)) {
     return 0;
   }
@@ -355,7 +355,7 @@ uint8_t file_non_zero_size_exists(const char *filename)
  */
 uint8_t file_unlink(const char *filename)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (! file_exists(filename)) {
     return 0;
   }
@@ -370,7 +370,7 @@ uint8_t file_unlink(const char *filename)
  */
 double file_age(const char *filename)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   struct stat buf;
 
   if (stat(filename, &buf) < 0) {
@@ -387,7 +387,7 @@ double file_age(const char *filename)
  */
 uint8_t file_exists_and_is_newer_than(const char *filename1, const char *filename2)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   struct stat buf1;
   struct stat buf2;
   double      delta;

@@ -11,7 +11,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_wid_console.hpp"
 
-void sdl_display(class Game *g)
+void sdl_display(Gamep g)
 {
   blit_fbo_bind(FBO_FINAL);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -23,13 +23,13 @@ void sdl_display(class Game *g)
   glBlendFunc(GL_ONE, GL_ZERO);
 
   if (g) {
-    auto level = game_level_get(g);
+    auto level = game_levels_get(g);
     if (level) {
       //
       // Get the pixel extents of the map on screen
       //
-      auto w                = game_ascii_pix_width_get(game);
-      auto h                = game_ascii_pix_height_get(game);
+      auto w                = game_ascii_pix_width_get(g);
+      auto h                = game_ascii_pix_height_get(g);
       int  visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
       int  visible_map_tl_y = h * UI_TOPCON_HEIGHT;
       int  visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
@@ -45,21 +45,21 @@ void sdl_display(class Game *g)
   }
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  blit_fbo_window_pix(FBO_WID);
+  blit_fbo_window_pix(g, FBO_WID);
   blit_fbo_unbind();
 
   glBlendFunc(GL_ONE, GL_ZERO);
-  blit_fbo_window_pix(FBO_FINAL);
+  blit_fbo_window_pix(g, FBO_FINAL);
 
   //
   // Screenshot?
   //
   if (unlikely(g_do_screenshot)) {
     g_do_screenshot = 0;
-    sdl_screenshot_do();
+    sdl_screenshot_do(g);
   }
 
-  SDL_Delay(game_sdl_delay_get(game));
+  SDL_Delay(game_sdl_delay_get(g));
 
   //
   // Flip
@@ -67,18 +67,18 @@ void sdl_display(class Game *g)
   SDL_GL_SwapWindow(sdl.window);
 }
 
-void sdl_display_reset(void)
+void sdl_display_reset(Gamep g)
 {
   CON("SDL: Video resetting");
 
   auto old_console = wid_console_serialize();
 
-  wid_console_fini();
-  config_game_gfx_update();
+  wid_console_fini(g);
+  config_game_gfx_update(g);
 
-  wid_console_init();
-  wid_hide(wid_console_window);
-  sdl_flush_display(game);
+  wid_console_init(g);
+  wid_hide(g, wid_console_window);
+  sdl_flush_display(g);
 
   wid_console_deserialize(old_console);
 
@@ -87,8 +87,8 @@ void sdl_display_reset(void)
   //
   // wid_gc_all();
   //
-  wid_display_all();
+  wid_display_all(g);
 
   CON("SDL: Video reset");
-  sdl_flush_display(game);
+  sdl_flush_display(g);
 }

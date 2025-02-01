@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_enums.hpp"
+#include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_minimal.hpp"
@@ -20,11 +21,11 @@
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 
-static Thingp thing_alloc(Levelp l, Tpp tp, point3d);
-static void   thing_free(Levelp l, Thingp t);
+static Thingp thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, point);
+static void   thing_free(Gamep, Levelsp, Levelp, Thingp t);
 
-static ThingAip thing_ai_alloc(Levelp l, Thingp t);
-static void     thing_ai_free(Levelp l, Thingp t);
+static ThingAip thing_ai_alloc(Gamep, Levelsp, Levelp, Thingp t);
+static void     thing_ai_free(Gamep, Levelsp, Levelp, Thingp t);
 
 Tpp thing_tp(Thingp t)
 {
@@ -35,11 +36,11 @@ Tpp thing_tp(Thingp t)
   return nullptr;
 }
 
-Thingp thing_init(Levelp l, Tpp tp, point3d at)
+Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
 {
   TRACE_NO_INDENT();
 
-  auto t = thing_alloc(l, tp, at);
+  auto t = thing_alloc(g, v, l, tp, at);
   if (! t) {
     return nullptr;
   }
@@ -66,29 +67,27 @@ Thingp thing_init(Levelp l, Tpp tp, point3d at)
   // Assign the player
   //
   if (tp_is_player(tp)) {
-    if (tp_player_index_get(tp) == l->player_index) {
-      l->player = t->id;
-    }
+    v->player_id = t->id;
   }
 
-  thing_update(l, t);
+  thing_update(g, t);
 
   return t;
 }
 
-void thing_fini(Levelp l, Thingp t)
+void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  thing_free(l, t);
+  thing_free(g, v, l, t);
 }
 
-static Thingp thing_alloc(Levelp l, Tpp tp, point3d)
+static Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, point)
 {
   TRACE_NO_INDENT();
 
   for (auto index = 0; index < (1 << THING_COMMON_ID_BITS); index++) {
-    auto t = &l->thing_body[ index ];
+    auto t = &v->thing_body[ index ];
     if (t->id) {
       continue;
     }
@@ -108,7 +107,7 @@ static Thingp thing_alloc(Levelp l, Tpp tp, point3d)
     t->tp_id = tp_id_get(tp);
 
     if (thing_is_monst(t) || thing_is_player(t)) {
-      thing_ai_alloc(l, t);
+      thing_ai_alloc(g, v, l, t);
     }
 
     return t;
@@ -117,21 +116,21 @@ static Thingp thing_alloc(Levelp l, Tpp tp, point3d)
   DIE("out of things");
 }
 
-static void thing_free(Levelp l, Thingp t)
+static void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto o = thing_find(l, t->id);
+  auto o = thing_find(g, v, t->id);
   if (t != o) {
     DIE("Thing mismatch found for id, %" PRIX32 "", t->id);
   }
 
-  thing_ai_free(l, t);
+  thing_ai_free(g, v, l, t);
 
   memset((void *) t, 0, SIZEOF(*t));
 }
 
-static ThingAip thing_ai_alloc(Levelp l, Thingp t)
+static ThingAip thing_ai_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -146,11 +145,11 @@ static ThingAip thing_ai_alloc(Levelp l, Thingp t)
       continue;
     }
 
-    if (! l->thing_ai[ ai_id ].in_use) {
-      l->thing_ai[ ai_id ].in_use = true;
+    if (! v->thing_ai[ ai_id ].in_use) {
+      v->thing_ai[ ai_id ].in_use = true;
       t->ai_id                    = ai_id;
       last_index                  = ai_id;
-      return &l->thing_ai[ ai_id ];
+      return &v->thing_ai[ ai_id ];
     }
   }
 
@@ -158,7 +157,7 @@ static ThingAip thing_ai_alloc(Levelp l, Thingp t)
   return 0;
 }
 
-static void thing_ai_free(Levelp l, Thingp t)
+static void thing_ai_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -167,27 +166,32 @@ static void thing_ai_free(Levelp l, Thingp t)
     return;
   }
 
-  if (! l->thing_ai[ ai_id ].in_use) {
+  if (! v->thing_ai[ ai_id ].in_use) {
     ERR("freeing unused Thing AI ID is not in use, %" PRIX32 "", ai_id);
   }
 
-  l->thing_ai[ ai_id ].in_use = false;
+  v->thing_ai[ ai_id ].in_use = false;
   t->ai_id                    = 0;
 }
 
-ThingAip thing_ai(Levelp l, Thingp t)
+ThingAip thing_ai(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return nullptr;
+  }
 
   auto ai_id = t->ai_id;
   if (! ai_id) {
     return nullptr;
   }
 
-  return &l->thing_ai[ ai_id ];
+  return &v->thing_ai[ ai_id ];
 }
 
-void thing_update(Level *l, Thingp t)
+void thing_update(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -196,17 +200,16 @@ void thing_update(Level *l, Thingp t)
   t->speed = tp_speed_get(tp);
 }
 
-Thingp thing_get(Levelp l, point3d p, int slot)
+Thingp thing_get(Gamep g, Levelsp v, Levelp l, point p, int slot)
 {
   TRACE_NO_INDENT();
 
-  ThingId id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
-
+  ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
   if (! id) {
     return nullptr;
   }
 
-  auto t = thing_find(l, id);
+  auto t = thing_find(g, v, id);
   if (! t) {
     return nullptr;
   }
@@ -214,11 +217,11 @@ Thingp thing_get(Levelp l, point3d p, int slot)
   return t;
 }
 
-Thingp thing_and_tp_get(Levelp l, point3d p, int slot, Tpp *out)
+Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, point p, int slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
-  ThingId id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
+  ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
 
   if (out) {
     *out = nullptr;
@@ -228,7 +231,7 @@ Thingp thing_and_tp_get(Levelp l, point3d p, int slot, Tpp *out)
     return nullptr;
   }
 
-  auto t = thing_find(l, id);
+  auto t = thing_find(g, v, id);
   if (! t) {
     return nullptr;
   }
@@ -240,7 +243,7 @@ Thingp thing_and_tp_get(Levelp l, point3d p, int slot, Tpp *out)
   return t;
 }
 
-Thingp thing_find_optional(Level *l, ThingId id)
+Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 {
   TRACE_NO_INDENT();
 
@@ -253,14 +256,14 @@ Thingp thing_find_optional(Level *l, ThingId id)
 
   ASSERT_EX(index, <, (1 << THING_COMMON_ID_BITS));
 
-  auto t = &l->thing_body[ index ];
+  auto t = &v->thing_body[ index ];
   if (t->id == thing_id) {
     return t;
   }
   return nullptr;
 }
 
-Thingp thing_find(Levelp l, ThingId id)
+Thingp thing_find(Gamep g, Levelsp v, ThingId id)
 {
   TRACE_NO_INDENT();
 
@@ -269,7 +272,7 @@ Thingp thing_find(Levelp l, ThingId id)
 
   ASSERT_EX(index, <, (1 << THING_COMMON_ID_BITS));
 
-  auto t = &l->thing_body[ index ];
+  auto t = &v->thing_body[ index ];
   if (! t) {
     DIE("Thing not found for id, %" PRIX32 "", id);
   }
@@ -284,38 +287,38 @@ Thingp thing_find(Levelp l, ThingId id)
 //
 // Called at the beginning of each tick
 //
-void thing_tick_begin(Levelp l, Thingp t) { TRACE_NO_INDENT(); }
+void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }
 
 //
 // Called when the level is idle
 //
-void thing_tick_idle(Levelp l, Thingp t)
+void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   //
   // If asked to follow the mouse path, start walking
   //
-  thing_move_to_next(l, t);
+  thing_move_to_next(g, v, l, t);
 }
 
 //
 // Called at the end of each tick
 //
-void thing_tick_end(Levelp l, Thingp t)
+void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   //
   // Mark the tick as completed
   //
-  if (t->tick == l->tick) {
+  if (t->tick == v->tick) {
     return;
   }
-  t->tick = l->tick;
+  t->tick = v->tick;
 
   //
   // If following the mouse path, keep going
   //
-  thing_move_to_next(l, t);
+  thing_move_to_next(g, v, l, t);
 }

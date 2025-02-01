@@ -101,9 +101,9 @@ public:
   std::string version = "" MYVER "";
 
   //
-  // Current level
+  // All levels
   //
-  Levelp level {};
+  Levelsp level {};
 
   //
   // Used to check for changes in the size of this struct.
@@ -201,9 +201,9 @@ public:
   Game(std::string appdata);
   Game(void) = default;
 
-  void create_level(void);
-  void entered_level(void);
-  void destroy_level(void);
+  void create_levels(void);
+  void start_playing(void);
+  void destroy_levels(void);
   void display(void);
   void fini(void);
   void init(void);
@@ -227,6 +227,8 @@ public:
   std::string load_config(void);
 };
 
+class Game *game;
+
 #include "game_load.hpp"
 #include "game_save.hpp"
 
@@ -234,7 +236,9 @@ void Config::fini(void) { TRACE_AND_INDENT(); }
 
 void Config::reset(void)
 {
+  LOG("INF: Game reset");
   TRACE_AND_INDENT();
+
   config_pix_height      = {};
   config_pix_width       = {};
   debug_mode             = false;
@@ -280,15 +284,18 @@ void Config::reset(void)
   // key_unused1.mod  = KMOD_NUM;
 }
 
-void game_config_reset(class Game *g) { g->config.reset(); }
+void game_config_reset(Gamep g) { g->config.reset(); }
 
 Game::Game(std::string vappdata)
 {
+  LOG("INF: Game load %s", vappdata.c_str());
   TRACE_AND_INDENT();
+
+  auto g = this;
 
   config.reset();
 
-  this->appdata = vappdata;
+  g->appdata = vappdata;
 
   saved_dir = appdata + DIR_SEP + "gorget" + DIR_SEP;
   save_slot = 1;
@@ -303,18 +310,20 @@ void Game::init(void)
 {
   LOG("INF: Game init");
   TRACE_AND_INDENT();
+
   set_seed();
 }
-void game_init(class Game *g) { g->init(); }
+void game_init(Gamep g) { g->init(); }
 
 void Game::fini(void)
 {
   LOG("FIN: Game fini");
   TRACE_AND_INDENT();
+
   state_change(STATE_QUITTING, "quitting");
-  destroy_level();
+  destroy_levels();
 }
-void game_fini(class Game *g)
+void game_fini(Gamep g)
 {
   if (! g) {
     return;
@@ -325,7 +334,7 @@ void game_fini(class Game *g)
   game = NULL;
 }
 
-void game_save_config(class Game *g) { g->save_config(); }
+void game_save_config(Gamep g) { g->save_config(); }
 
 void Game::set_seed(void)
 {
@@ -341,24 +350,26 @@ void Game::set_seed(void)
   pcg_srand(seed);
 }
 
-void Game::create_level(void)
+void Game::create_levels(void)
 {
   LOG("Game create level");
   TRACE_AND_INDENT();
 
+  auto g = this;
   set_seed();
-  destroy_level();
+  destroy_levels();
 
-  LOG("Level create");
-  level = level_new();
+  auto v = levels_new(g);
+  game_level_set(g, v, 0, 0);
 }
-void game_create_level(class Game *g) { g->create_level(); }
+void game_create_levels(Gamep g) { g->create_levels(); }
 
-void Game::entered_level(void)
+void Game::start_playing(void)
 {
-  LOG("Game entered level");
+  LOG("Game started playing");
   TRACE_AND_INDENT();
 
+  auto g = this;
   TOPCON("Welcome to the dungeons of dread, home of the black dragon, %%fg=red$Gorget%%fg=reset$.");
   TOPCON("Complete all %%fg=yellow$16%%fg=reset$ levels and collect the Darkenstone to win.");
 
@@ -379,34 +390,43 @@ void Game::entered_level(void)
   CON("%%fg=green$Version: " MYVER "%%fg=reset$");
   CON("Press %%fg=yellow$<tab>%%fg=reset$ to complete commands.");
   CON("Press %%fg=yellow$?%%fg=reset$ to show command options.");
-  wid_topcon_flush();
+  wid_topcon_flush(g);
 }
-void game_entered_level(class Game *g) { g->entered_level(); }
+void game_start_playing(Gamep g) { g->start_playing(); }
 
-void Game::destroy_level(void)
+void Game::destroy_levels(void)
 {
   LOG("Game destroy level");
   TRACE_AND_INDENT();
 
-  if (level) {
-    auto l = level;
-    level_fini(l);
-    level = nullptr;
+  auto g = this;
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
   }
+
+  levels_fini(g, v);
 }
-void game_destroy_level(class Game *g) { g->destroy_level(); }
+void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
 void Game::display(void)
 {
-  if (level) {
-    level_tick(level);
-    level_anim(level);
-    level_mouse_position_get(level);
-    level_display(level);
-    level_cursor_update(level);
+  auto g = this;
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
+
+  auto l = game_level_get(g, v);
+  if (l) {
+    level_tick(g, v, l);
+    level_anim(g, v, l);
+    level_mouse_position_get(g, v, l);
+    level_display(g, v, l);
+    level_cursor_update(g, v, l);
   }
 }
-void game_display(class Game *g) { g->display(); }
+void game_display(Gamep g) { g->display(); }
 
 std::string gama_state_to_string(int state)
 {
@@ -427,19 +447,30 @@ std::string gama_state_to_string(int state)
 //
 void Game::state_reset(const std::string &why)
 {
-  if (level) {
-    state_change(STATE_PLAYING, why);
+  LOG("State reset: %s", why.c_str());
+  TRACE_AND_INDENT();
+
+  auto g = this;
+  auto v = game_levels_get(g);
+  if (v) {
+    auto l = game_level_get(g, v);
+    if (l) {
+      state_change(STATE_PLAYING, why);
+    } else {
+      state_change(STATE_MAIN_MENU, why);
+    }
   } else {
     state_change(STATE_MAIN_MENU, why);
   }
 }
-void game_state_reset(class Game *g, const char *why) { g->state_reset(why); }
+void game_state_reset(Gamep g, const char *why) { g->state_reset(why); }
 
 void Game::state_change(uint8_t new_state, const std::string &why)
 {
   TRACE_NO_INDENT();
 
-  if (game->state == new_state) {
+  auto g = this;
+  if (g->state == new_state) {
     return;
   }
 
@@ -462,30 +493,18 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   switch (new_state) {
     case STATE_MAIN_MENU :
-      wid_load_destroy(game);
-      wid_save_destroy(game);
-      wid_quit_destroy(game);
-      wid_rightbar_fini(game);
-      wid_leftbar_fini(game);
-      wid_topcon_fini();
-      break;
     case STATE_PLAYING :
-      wid_main_menu_destroy(game);
-      wid_load_destroy(game);
-      wid_save_destroy(game);
-      wid_quit_destroy(game);
-      wid_rightbar_init(game);
-      wid_leftbar_init(game);
-      wid_topcon_init();
-      break;
     case STATE_QUITTING :
-      wid_main_menu_destroy(game);
-      wid_load_destroy(game);
-      wid_save_destroy(game);
-      wid_quit_destroy(game);
-      wid_rightbar_init(game);
-      wid_leftbar_init(game);
-      wid_topcon_init();
+      wid_leftbar_fini(g);
+      wid_leftbar_init(g);
+      wid_load_destroy(g);
+      wid_main_menu_destroy(g);
+      wid_quit_destroy(g);
+      wid_rightbar_fini(g);
+      wid_rightbar_init(g);
+      wid_save_destroy(g);
+      wid_topcon_fini(g);
+      wid_topcon_init(g);
       break;
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
@@ -498,16 +517,13 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   state = new_state;
 }
-void game_state_change(class Game *g, uint8_t new_state, const char *why)
-{
-  g->state_change(new_state, std::string(why));
-}
+void game_state_change(Gamep g, uint8_t new_state, const char *why) { g->state_change(new_state, std::string(why)); }
 
-void game_load_config(class Game *g) { g->load_config(); }
+void game_load_config(Gamep g) { g->load_config(); }
 
-class HiScores *game_hiscores_get(class Game *g) { return &g->config.hiscores; }
+class HiScores *game_hiscores_get(Gamep g) { return &g->config.hiscores; }
 
-void game_visible_map_pix_get(class Game *g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
+void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
                               int *visible_map_br_y)
 {
   *visible_map_tl_x = g->visible_map_tl_x;
@@ -516,7 +532,7 @@ void game_visible_map_pix_get(class Game *g, int *visible_map_tl_x, int *visible
   *visible_map_br_y = g->visible_map_br_y;
 }
 
-void game_visible_map_pix_set(class Game *g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
+void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
                               int visible_map_br_y)
 {
   g->visible_map_tl_x = visible_map_tl_x;
@@ -525,149 +541,168 @@ void game_visible_map_pix_set(class Game *g, int visible_map_tl_x, int visible_m
   g->visible_map_br_y = visible_map_br_y;
 }
 
-void game_visible_map_mouse_get(class Game *g, int *visible_map_mouse_x, int *visible_map_mouse_y)
+void game_visible_map_mouse_get(Gamep g, int *visible_map_mouse_x, int *visible_map_mouse_y)
 {
   *visible_map_mouse_x = g->visible_map_mouse_x;
   *visible_map_mouse_y = g->visible_map_mouse_y;
 }
 
-void game_visible_map_mouse_set(class Game *g, int visible_map_mouse_x, int visible_map_mouse_y)
+void game_visible_map_mouse_set(Gamep g, int visible_map_mouse_x, int visible_map_mouse_y)
 {
   g->visible_map_mouse_x = visible_map_mouse_x;
   g->visible_map_mouse_y = visible_map_mouse_y;
 }
 
-int  game_tiles_visible_across_get(class Game *g) { return g->config.tiles_visible_across; }
-void game_tiles_visible_across_set(class Game *g, int val) { g->config.tiles_visible_across = val; }
+int  game_tiles_visible_across_get(Gamep g) { return g->config.tiles_visible_across; }
+void game_tiles_visible_across_set(Gamep g, int val) { g->config.tiles_visible_across = val; }
 
-int  game_tiles_visible_down_get(class Game *g) { return g->config.tiles_visible_down; }
-void game_tiles_visible_down_set(class Game *g, int val) { g->config.tiles_visible_down = val; }
+int  game_tiles_visible_down_get(Gamep g) { return g->config.tiles_visible_down; }
+void game_tiles_visible_down_set(Gamep g, int val) { g->config.tiles_visible_down = val; }
 
-int  game_last_mouse_down_get(class Game *g) { return g->last_mouse_down; }
-void game_last_mouse_down_set(class Game *g, int val) { g->last_mouse_down = val; }
+int  game_last_mouse_down_get(Gamep g) { return g->last_mouse_down; }
+void game_last_mouse_down_set(Gamep g, int val) { g->last_mouse_down = val; }
 
-int  game_last_pause_get(class Game *g) { return g->last_pause; }
-void game_last_pause_set(class Game *g, int val) { g->last_pause = val; }
+int  game_last_pause_get(Gamep g) { return g->last_pause; }
+void game_last_pause_set(Gamep g, int val) { g->last_pause = val; }
 
-int  game_serialized_size_get(class Game *g) { return g->serialized_size; }
-void game_serialized_size_set(class Game *g, int val) { g->serialized_size = val; }
+int  game_serialized_size_get(Gamep g) { return g->serialized_size; }
+void game_serialized_size_set(Gamep g, int val) { g->serialized_size = val; }
 
-float game_aspect_ratio_get(class Game *g) { return g->config.aspect_ratio; }
-void  game_aspect_ratio_set(class Game *g, float val) { g->config.aspect_ratio = val; }
+float game_aspect_ratio_get(Gamep g) { return g->config.aspect_ratio; }
+void  game_aspect_ratio_set(Gamep g, float val) { g->config.aspect_ratio = val; }
 
-int  game_ui_term_height_get(class Game *g) { return g->config.ui_term_height; }
-void game_ui_term_height_set(class Game *g, int val) { g->config.ui_term_height = val; }
+int  game_ui_term_height_get(Gamep g) { return g->config.ui_term_height; }
+void game_ui_term_height_set(Gamep g, int val) { g->config.ui_term_height = val; }
 
-int  game_ui_term_width_get(class Game *g) { return g->config.ui_term_width; }
-void game_ui_term_width_set(class Game *g, int val) { g->config.ui_term_width = val; }
+int  game_ui_term_width_get(Gamep g) { return g->config.ui_term_width; }
+void game_ui_term_width_set(Gamep g, int val) { g->config.ui_term_width = val; }
 
-bool game_debug_mode_get(class Game *g) { return g->config.debug_mode; }
-void game_debug_mode_set(class Game *g, bool val) { g->config.debug_mode = val; }
+bool game_debug_mode_get(Gamep g) { return g->config.debug_mode; }
+void game_debug_mode_set(Gamep g, bool val) { g->config.debug_mode = val; }
 
-bool game_fps_counter_get(class Game *g) { return g->config.fps_counter; }
-void game_fps_counter_set(class Game *g, bool val) { g->config.fps_counter = val; }
+bool game_fps_counter_get(Gamep g) { return g->config.fps_counter; }
+void game_fps_counter_set(Gamep g, bool val) { g->config.fps_counter = val; }
 
-int  game_fps_value_get(class Game *g) { return g->fps_value; }
-void game_fps_value_set(class Game *g, int val) { g->fps_value = val; }
+int  game_fps_value_get(Gamep g) { return g->fps_value; }
+void game_fps_value_set(Gamep g, int val) { g->fps_value = val; }
 
-bool game_gfx_allow_highdpi_get(class Game *g) { return g->config.gfx_allow_highdpi; }
-void game_gfx_allow_highdpi_set(class Game *g, bool val) { g->config.gfx_allow_highdpi = val; }
+bool game_gfx_allow_highdpi_get(Gamep g) { return g->config.gfx_allow_highdpi; }
+void game_gfx_allow_highdpi_set(Gamep g, bool val) { g->config.gfx_allow_highdpi = val; }
 
-bool game_gfx_borderless_get(class Game *g) { return g->config.gfx_borderless; }
-void game_gfx_borderless_set(class Game *g, bool val) { g->config.gfx_borderless = val; }
+bool game_gfx_borderless_get(Gamep g) { return g->config.gfx_borderless; }
+void game_gfx_borderless_set(Gamep g, bool val) { g->config.gfx_borderless = val; }
 
-bool game_gfx_fullscreen_get(class Game *g) { return g->config.gfx_fullscreen; }
-void game_gfx_fullscreen_set(class Game *g, bool val) { g->config.gfx_fullscreen = val; }
+bool game_gfx_fullscreen_get(Gamep g) { return g->config.gfx_fullscreen; }
+void game_gfx_fullscreen_set(Gamep g, bool val) { g->config.gfx_fullscreen = val; }
 
-bool game_gfx_fullscreen_desktop_get(class Game *g) { return g->config.gfx_fullscreen_desktop; }
-void game_gfx_fullscreen_desktop_set(class Game *g, bool val) { g->config.gfx_fullscreen_desktop = val; }
+bool game_gfx_fullscreen_desktop_get(Gamep g) { return g->config.gfx_fullscreen_desktop; }
+void game_gfx_fullscreen_desktop_set(Gamep g, bool val) { g->config.gfx_fullscreen_desktop = val; }
 
-bool game_gfx_vsync_enable_get(class Game *g) { return g->config.gfx_vsync_enable; }
-void game_gfx_vsync_enable_set(class Game *g, bool val) { g->config.gfx_vsync_enable = val; }
+bool game_gfx_vsync_enable_get(Gamep g) { return g->config.gfx_vsync_enable; }
+void game_gfx_vsync_enable_set(Gamep g, bool val) { g->config.gfx_vsync_enable = val; }
 
-bool game_mouse_wheel_lr_negated_get(class Game *g) { return g->config.mouse_wheel_lr_negated; }
-void game_mouse_wheel_lr_negated_set(class Game *g, bool val) { g->config.mouse_wheel_lr_negated = val; }
+bool game_mouse_wheel_lr_negated_get(Gamep g) { return g->config.mouse_wheel_lr_negated; }
+void game_mouse_wheel_lr_negated_set(Gamep g, bool val) { g->config.mouse_wheel_lr_negated = val; }
 
-bool game_mouse_wheel_ud_negated_get(class Game *g) { return g->config.mouse_wheel_ud_negated; }
-void game_mouse_wheel_ud_negated_set(class Game *g, bool val) { g->config.mouse_wheel_ud_negated = val; }
+bool game_mouse_wheel_ud_negated_get(Gamep g) { return g->config.mouse_wheel_ud_negated; }
+void game_mouse_wheel_ud_negated_set(Gamep g, bool val) { g->config.mouse_wheel_ud_negated = val; }
 
-int  game_config_pix_height_get(class Game *g) { return g->config.config_pix_height; }
-void game_config_pix_height_set(class Game *g, int val) { g->config.config_pix_height = val; }
+int  game_config_pix_height_get(Gamep g) { return g->config.config_pix_height; }
+void game_config_pix_height_set(Gamep g, int val) { g->config.config_pix_height = val; }
 
-int  game_config_pix_width_get(class Game *g) { return g->config.config_pix_width; }
-void game_config_pix_width_set(class Game *g, int val) { g->config.config_pix_width = val; }
+int  game_config_pix_width_get(Gamep g) { return g->config.config_pix_width; }
+void game_config_pix_width_set(Gamep g, int val) { g->config.config_pix_width = val; }
 
-int  game_pix_height_get(class Game *g) { return g->config.game_pix_height; }
-void game_pix_height_set(class Game *g, int val) { g->config.game_pix_height = val; }
+int  game_pix_height_get(Gamep g) { return g->config.game_pix_height; }
+void game_pix_height_set(Gamep g, int val) { g->config.game_pix_height = val; }
 
-int  game_pix_width_get(class Game *g) { return g->config.game_pix_width; }
-void game_pix_width_set(class Game *g, int val) { g->config.game_pix_width = val; }
+int  game_pix_width_get(Gamep g) { return g->config.game_pix_width; }
+void game_pix_width_set(Gamep g, int val) { g->config.game_pix_width = val; }
 
-int  game_map_pix_height_get(class Game *g) { return g->config.map_pix_height; }
-void game_map_pix_height_set(class Game *g, int val) { g->config.map_pix_height = val; }
+int  game_map_pix_height_get(Gamep g) { return g->config.map_pix_height; }
+void game_map_pix_height_set(Gamep g, int val) { g->config.map_pix_height = val; }
 
-int  game_map_pix_width_get(class Game *g) { return g->config.map_pix_width; }
-void game_map_pix_width_set(class Game *g, int val) { g->config.map_pix_width = val; }
+int  game_map_pix_width_get(Gamep g) { return g->config.map_pix_width; }
+void game_map_pix_width_set(Gamep g, int val) { g->config.map_pix_width = val; }
 
-int  game_window_pix_height_get(class Game *g) { return g->config.window_pix_height; }
-void game_window_pix_height_set(class Game *g, int val) { g->config.window_pix_height = val; }
+int  game_window_pix_height_get(Gamep g) { return g->config.window_pix_height; }
+void game_window_pix_height_set(Gamep g, int val) { g->config.window_pix_height = val; }
 
-int  game_window_pix_width_get(class Game *g) { return g->config.window_pix_width; }
-void game_window_pix_width_set(class Game *g, int val) { g->config.window_pix_width = val; }
+int  game_window_pix_width_get(Gamep g) { return g->config.window_pix_width; }
+void game_window_pix_width_set(Gamep g, int val) { g->config.window_pix_width = val; }
 
-int  game_ascii_pix_height_get(class Game *g) { return g->config.ascii_pix_height; }
-void game_ascii_pix_height_set(class Game *g, int val) { g->config.ascii_pix_height = val; }
+int  game_ascii_pix_height_get(Gamep g) { return g->config.ascii_pix_height; }
+void game_ascii_pix_height_set(Gamep g, int val) { g->config.ascii_pix_height = val; }
 
-int  game_ascii_pix_width_get(class Game *g) { return g->config.ascii_pix_width; }
-void game_ascii_pix_width_set(class Game *g, int val) { g->config.ascii_pix_width = val; }
+int  game_ascii_pix_width_get(Gamep g) { return g->config.ascii_pix_width; }
+void game_ascii_pix_width_set(Gamep g, int val) { g->config.ascii_pix_width = val; }
 
-int  game_music_volume_get(class Game *g) { return g->config.music_volume; }
-void game_music_volume_set(class Game *g, int val) { g->config.music_volume = val; }
+int  game_music_volume_get(Gamep g) { return g->config.music_volume; }
+void game_music_volume_set(Gamep g, int val) { g->config.music_volume = val; }
 
-int  game_sdl_delay_get(class Game *g) { return g->config.sdl_delay; }
-void game_sdl_delay_set(class Game *g, int val) { g->config.sdl_delay = val; }
+int  game_sdl_delay_get(Gamep g) { return g->config.sdl_delay; }
+void game_sdl_delay_set(Gamep g, int val) { g->config.sdl_delay = val; }
 
-int  game_sound_volume_get(class Game *g) { return g->config.sound_volume; }
-void game_sound_volume_set(class Game *g, int val) { g->config.sound_volume = val; }
+int  game_sound_volume_get(Gamep g) { return g->config.sound_volume; }
+void game_sound_volume_set(Gamep g, int val) { g->config.sound_volume = val; }
 
-Levelp game_level_get(class Game *g) { return g->level; }
-void   game_level_set(class Game *g, Levelp val) { g->level = val; }
+Levelsp game_levels_get(Gamep g) { return g->level; }
+void    game_levels_set(Gamep g, Levelsp val) { g->level = val; }
 
-const char *game_seed_name_get(class Game *g) { return g->seed_name.c_str(); }
-void        game_seed_name_set(class Game *g, const char *val) { g->seed_name = std::string(val); }
+Levelp game_level_get(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+  auto x = v->level_num.x;
+  auto y = v->level_num.y;
+  return &v->level[ x ][ y ];
+}
+Levelp game_level_get(Gamep g, Levelsp v, int x, int y)
+{
+  TRACE_NO_INDENT();
+  return &v->level[ x ][ y ];
+}
+Levelp game_level_set(Gamep g, Levelsp v, int x, int y)
+{
+  TRACE_NO_INDENT();
+  v->level_num = point(x, y);
+  return game_level_get(g, v);
+}
 
-SDL_Keysym game_key_attack_get(class Game *g) { return g->config.key_attack; }
-void       game_key_attack_set(class Game *g, SDL_Keysym key) { g->config.key_attack = key; }
+const char *game_seed_name_get(Gamep g) { return g->seed_name.c_str(); }
+void        game_seed_name_set(Gamep g, const char *val) { g->seed_name = std::string(val); }
 
-SDL_Keysym game_key_console_get(class Game *g) { return g->config.key_console; }
-void       game_key_console_set(class Game *g, SDL_Keysym key) { g->config.key_console = key; }
+SDL_Keysym game_key_attack_get(Gamep g) { return g->config.key_attack; }
+void       game_key_attack_set(Gamep g, SDL_Keysym key) { g->config.key_attack = key; }
 
-SDL_Keysym game_key_help_get(class Game *g) { return g->config.key_help; }
-void       game_key_help_set(class Game *g, SDL_Keysym key) { g->config.key_help = key; }
+SDL_Keysym game_key_console_get(Gamep g) { return g->config.key_console; }
+void       game_key_console_set(Gamep g, SDL_Keysym key) { g->config.key_console = key; }
 
-SDL_Keysym game_key_load_get(class Game *g) { return g->config.key_load; }
-void       game_key_load_set(class Game *g, SDL_Keysym key) { g->config.key_load = key; }
+SDL_Keysym game_key_help_get(Gamep g) { return g->config.key_help; }
+void       game_key_help_set(Gamep g, SDL_Keysym key) { g->config.key_help = key; }
 
-SDL_Keysym game_key_move_down_get(class Game *g) { return g->config.key_move_down; }
-void       game_key_move_down_set(class Game *g, SDL_Keysym key) { g->config.key_move_down = key; }
+SDL_Keysym game_key_load_get(Gamep g) { return g->config.key_load; }
+void       game_key_load_set(Gamep g, SDL_Keysym key) { g->config.key_load = key; }
 
-SDL_Keysym game_key_move_left_get(class Game *g) { return g->config.key_move_left; }
-void       game_key_move_left_set(class Game *g, SDL_Keysym key) { g->config.key_move_left = key; }
+SDL_Keysym game_key_move_down_get(Gamep g) { return g->config.key_move_down; }
+void       game_key_move_down_set(Gamep g, SDL_Keysym key) { g->config.key_move_down = key; }
 
-SDL_Keysym game_key_move_right_get(class Game *g) { return g->config.key_move_right; }
-void       game_key_move_right_set(class Game *g, SDL_Keysym key) { g->config.key_move_right = key; }
+SDL_Keysym game_key_move_left_get(Gamep g) { return g->config.key_move_left; }
+void       game_key_move_left_set(Gamep g, SDL_Keysym key) { g->config.key_move_left = key; }
 
-SDL_Keysym game_key_move_up_get(class Game *g) { return g->config.key_move_up; }
-void       game_key_move_up_set(class Game *g, SDL_Keysym key) { g->config.key_move_up = key; }
+SDL_Keysym game_key_move_right_get(Gamep g) { return g->config.key_move_right; }
+void       game_key_move_right_set(Gamep g, SDL_Keysym key) { g->config.key_move_right = key; }
 
-SDL_Keysym game_key_quit_get(class Game *g) { return g->config.key_quit; }
-void       game_key_quit_set(class Game *g, SDL_Keysym key) { g->config.key_quit = key; }
+SDL_Keysym game_key_move_up_get(Gamep g) { return g->config.key_move_up; }
+void       game_key_move_up_set(Gamep g, SDL_Keysym key) { g->config.key_move_up = key; }
 
-SDL_Keysym game_key_save_get(class Game *g) { return g->config.key_save; }
-void       game_key_save_set(class Game *g, SDL_Keysym key) { g->config.key_save = key; }
+SDL_Keysym game_key_quit_get(Gamep g) { return g->config.key_quit; }
+void       game_key_quit_set(Gamep g, SDL_Keysym key) { g->config.key_quit = key; }
 
-SDL_Keysym game_key_screenshot_get(class Game *g) { return g->config.key_screenshot; }
-void       game_key_screenshot_set(class Game *g, SDL_Keysym key) { g->config.key_screenshot = key; }
+SDL_Keysym game_key_save_get(Gamep g) { return g->config.key_save; }
+void       game_key_save_set(Gamep g, SDL_Keysym key) { g->config.key_save = key; }
 
-SDL_Keysym game_key_unused1_get(class Game *g) { return g->config.key_unused1; }
-void       game_key_unused1_set(class Game *g, SDL_Keysym key) { g->config.key_unused1 = key; }
+SDL_Keysym game_key_screenshot_get(Gamep g) { return g->config.key_screenshot; }
+void       game_key_screenshot_set(Gamep g, SDL_Keysym key) { g->config.key_screenshot = key; }
+
+SDL_Keysym game_key_unused1_get(Gamep g) { return g->config.key_unused1; }
+void       game_key_unused1_set(Gamep g, SDL_Keysym key) { g->config.key_unused1 = key; }

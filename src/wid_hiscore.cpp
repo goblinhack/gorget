@@ -12,19 +12,19 @@
 
 static WidPopup *wid_hiscore_window;
 
-static void wid_hiscore_destroy(void)
+static void wid_hiscore_destroy(Gamep g)
 {
   TRACE_AND_INDENT();
   delete wid_hiscore_window;
   wid_hiscore_window = nullptr;
-  wid_main_menu_select(game);
+  wid_main_menu_select(g);
 }
 
-static bool wid_hiscore_key_up(Widp w, const struct SDL_Keysym *key)
+static bool wid_hiscore_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game_key_console_get(game))) {
+  if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
   }
 
@@ -44,7 +44,7 @@ static bool wid_hiscore_key_up(Widp w, const struct SDL_Keysym *key)
               case SDLK_ESCAPE :
                 {
                   TRACE_AND_INDENT();
-                  wid_hiscore_destroy();
+                  wid_hiscore_destroy(g);
                   return true;
                 }
             }
@@ -58,43 +58,43 @@ static bool wid_hiscore_key_up(Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static bool wid_hiscore_key_down(Widp w, const struct SDL_Keysym *key)
+static bool wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
-  if (sdlk_eq(*key, game_key_console_get(game))) {
+  if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
   }
 
   return true;
 }
 
-static bool wid_hiscore_mouse_up(Widp w, int x, int y, uint32_t button)
+static bool wid_hiscore_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  wid_hiscore_destroy();
+  wid_hiscore_destroy(g);
   return true;
 }
 
-void wid_hiscores_show(class Game *g)
+void wid_hiscores_show(Gamep g)
 {
   TRACE_AND_INDENT();
 
   if (wid_hiscore_window) {
-    wid_hiscore_destroy();
+    wid_hiscore_destroy(g);
   }
 
   int   menu_height = 26;
   int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_hiscore_window = new WidPopup("hiscores", outer_tl, outer_br, nullptr, "", false, false);
+  wid_hiscore_window = new WidPopup(g, "hiscores", outer_tl, outer_br, nullptr, "", false, false);
 
   {
     TRACE_AND_INDENT();
     Widp w = wid_hiscore_window->wid_popup_container;
-    wid_set_on_key_up(w, wid_hiscore_key_up);
-    wid_set_on_key_down(w, wid_hiscore_key_down);
+    wid_set_on_key_up(g, w, wid_hiscore_key_up);
+    wid_set_on_key_down(g, w, wid_hiscore_key_down);
   }
 
   auto hiscores = game_hiscores_get(g);
@@ -127,7 +127,7 @@ void wid_hiscores_show(class Game *g)
       snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%7s  %-*s %-*s %-5s", color, "Score", name_field_len,
                capitalise(name).c_str(), when_field_len, when, "Lvl");
 
-      wid_hiscore_window->log(tmp);
+      wid_hiscore_window->log(g, tmp);
     }
 
     std::string name = h->name.c_str();
@@ -144,25 +144,25 @@ void wid_hiscores_show(class Game *g)
     snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u  %-*s %-*s %-5u", color, h->score, name_field_len, name.c_str(),
              when_field_len, when.c_str(), h->level_reached);
 
-    wid_hiscore_window->log(UI_LOGGING_EMPTY_LINE);
-    wid_hiscore_window->log(tmp);
+    wid_hiscore_window->log(g, UI_LOGGING_EMPTY_LINE);
+    wid_hiscore_window->log(g, tmp);
     h++;
   }
 
   {
     TRACE_AND_INDENT();
     auto p = wid_hiscore_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "hiscore");
+    auto w = wid_new_square_button(g, p, "hiscore");
 
     point tl(menu_width / 2 - 4, menu_height - 4);
     point br(menu_width / 2 + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_on_mouse_up(w, wid_hiscore_mouse_up);
+    wid_set_on_mouse_up(g, w, wid_hiscore_mouse_up);
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, "BACK");
   }
 
-  wid_update(wid_hiscore_window->wid_text_area->wid_text_area);
+  wid_update(g, wid_hiscore_window->wid_text_area->wid_text_area);
 }

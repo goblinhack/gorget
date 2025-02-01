@@ -124,7 +124,7 @@ uint8_t command_init(void)
   return true;
 }
 
-void command_add(command_fn_t callback, std::string input, std::string readable)
+void command_add(Gamep g, command_fn_t callback, std::string input, std::string readable)
 {
   TRACE_NO_INDENT();
 
@@ -146,7 +146,7 @@ void command_add(command_fn_t callback, std::string input, std::string readable)
   tokens_to_string(readable.c_str(), &command->readable_tokens);
 }
 
-static int command_matches(const char *input, char *output, uint8_t show_ambiguous, uint8_t show_complete,
+static int command_matches(Gamep g, const char *input, char *output, uint8_t show_ambiguous, uint8_t show_complete,
                            uint8_t execute_command, void *context)
 {
   TRACE_NO_INDENT();
@@ -320,13 +320,13 @@ static int command_matches(const char *input, char *output, uint8_t show_ambiguo
   }
 
   if (execute_command && matched_command && (matches == 1)) {
-    (*matched_command->callback)(&input_tokens, context);
+    (*matched_command->callback)(g, &input_tokens, context);
   }
 
   return matches;
 }
 
-uint8_t command_handle(const char *input, char *expandedtext, uint8_t show_ambiguous, uint8_t show_complete,
+uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t show_ambiguous, uint8_t show_complete,
                        uint8_t execute_command, void *context)
 {
   TRACE_NO_INDENT();
@@ -339,7 +339,7 @@ uint8_t command_handle(const char *input, char *expandedtext, uint8_t show_ambig
   /*
    * Check for ambiguous commands.
    */
-  matches = command_matches(input, expandedtext, false, false, execute_command, context);
+  matches = command_matches(g, input, expandedtext, false, false, execute_command, context);
   if (matches == 0) {
     CON(">%%fg=red$Unknown command: \"%s\"%%fg=reset$", input);
     return false;
@@ -354,17 +354,17 @@ uint8_t command_handle(const char *input, char *expandedtext, uint8_t show_ambig
       }
     }
 
-    command_matches(input, expandedtext, show_ambiguous, show_complete, execute_command, context);
+    command_matches(g, input, expandedtext, show_ambiguous, show_complete, execute_command, context);
 
     if (! show_ambiguous) {
       if (expandedtext) {
         if (! strcasecmp(input, expandedtext)) {
           CON(">%%fg=red$Incomplete command, \"%s\"%%fg=reset$. Try:", input);
 
-          command_matches(input, expandedtext, true, show_complete, execute_command, context);
+          command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
         }
       } else {
-        command_matches(input, expandedtext, true, show_complete, execute_command, context);
+        command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
       }
     }
 
@@ -374,20 +374,20 @@ uint8_t command_handle(const char *input, char *expandedtext, uint8_t show_ambig
   if (! execute_command && (matches == 1)) {
     CON(">%%fg=red$Incomplete command, \"%s\"%%fg=reset$. Try:", input);
 
-    command_matches(input, expandedtext, true, show_complete, execute_command, context);
+    command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
   }
 
   return true;
 }
 
-uint8_t command_handle(std::string input, std::string *expanded_text, uint8_t show_ambiguous, uint8_t show_complete,
-                       uint8_t execute_command, void *context)
+uint8_t command_handle(Gamep g, std::string input, std::string *expanded_text, uint8_t show_ambiguous,
+                       uint8_t show_complete, uint8_t execute_command, void *context)
 {
   char buf[ MAXSTR ];
 
   buf[ 0 ] = '\0';
 
-  uint8_t r = command_handle(input.c_str(), &buf[ 0 ], show_ambiguous, show_complete, execute_command, context);
+  uint8_t r = command_handle(g, input.c_str(), &buf[ 0 ], show_ambiguous, show_complete, execute_command, context);
 
   if (expanded_text) {
     *expanded_text = std::string(buf);

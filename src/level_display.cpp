@@ -15,7 +15,8 @@
 static int visible_map_mouse_x;
 static int visible_map_mouse_y;
 
-static void level_display_tile_index(Levelp l, Tpp tp, uint16_t tile_index, point tl, point br, point offset)
+static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint16_t tile_index, point tl, point br,
+                                     point offset)
 {
   auto tile = tile_index_to_tile(tile_index);
   if (! tile) {
@@ -34,7 +35,7 @@ static void level_display_tile_index(Levelp l, Tpp tp, uint16_t tile_index, poin
   }
 }
 
-static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t)
+static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
 {
   int dw = TILE_WIDTH;
   int dh = TILE_HEIGHT;
@@ -76,7 +77,7 @@ static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t)
     tl.y = p.y * TILE_WIDTH;
   }
 
-  tl -= l->pixel_map_at;
+  tl -= v->pixel_map_at;
 
   if (tp_is_blit_on_ground(tp)) {
     //
@@ -105,16 +106,6 @@ static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t)
   br.y = tl.y + pix_height;
 
   //
-  // Is the cursor here?
-  //
-  if (tp_is_floor(tp)) {
-    if ((visible_map_mouse_x >= tl.x) && (visible_map_mouse_x < br.x) && (visible_map_mouse_y >= tl.y)
-        && (visible_map_mouse_y < br.y)) {
-      level_cursor_set(l, p);
-    }
-  }
-
-  //
   // Flippable?
   //
   if (tp_is_animated_can_hflip(tp)) {
@@ -123,14 +114,28 @@ static void level_display_obj(Levelp l, point p, Tpp tp, Thingp t)
     }
   }
 
-  level_display_tile_index(l, tp, tile_index, tl, br, point(0, 0));
+  level_display_tile_index(g, v, l, tp, tile_index, tl, br, point(0, 0));
+
+  //
+  // Is the cursor here?
+  //
+  if (tp_is_floor(tp)) {
+    tl.x -= TILE_WIDTH / 2;
+    tl.y += TILE_HEIGHT / 2;
+    br.x -= TILE_WIDTH / 2;
+    br.y += TILE_HEIGHT / 2;
+    if ((visible_map_mouse_x >= tl.x) && (visible_map_mouse_x < br.x) && (visible_map_mouse_y >= tl.y)
+        && (visible_map_mouse_y < br.y)) {
+      level_cursor_set(g, v, p);
+    }
+  }
 }
 
-static void level_display_cursor(Levelp l, point p)
+static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)
 {
   Tpp tp = nullptr;
 
-  switch (l->cursor[ p.x ][ p.y ]) {
+  switch (v->cursor[ p.x ][ p.y ]) {
     case CURSOR_NONE :
       //
       // Normal case. No cursor or anything else here.
@@ -163,33 +168,33 @@ static void level_display_cursor(Levelp l, point p)
   }
 
   if (tp) {
-    level_display_obj(l, p, tp, NULL_THING);
+    level_display_obj(g, v, l, p, tp, NULL_THING);
   }
 }
 
-static void level_display_slot(Levelp l, point3d p, int slot, int depth)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, point p, int slot, int prio)
 {
   Tpp  tp;
-  auto t = thing_and_tp_get(l, p, slot, &tp);
+  auto t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
   if (! tp) {
     return;
   }
 
-  if (tp_z_depth_get(tp) != depth) {
+  if (tp_z_prio_get(tp) != prio) {
     return;
   }
 
-  level_display_obj(l, make_point(p), tp, t);
+  level_display_obj(g, v, l, p, tp, t);
 }
 
-void level_display(Levelp l)
+void level_display(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
   //
   // What level is the player on?
   //
-  auto player = thing_player(l);
+  auto player = thing_player(g);
   if (! player) {
     return;
   }
@@ -197,7 +202,7 @@ void level_display(Levelp l)
   //
   // Soft scroll to the player
   //
-  level_scroll_to_player(l);
+  level_scroll_to_player(g, v, l);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glcolor(WHITE);
@@ -210,14 +215,14 @@ void level_display(Levelp l)
   //
   // We need to find out what pixel on the map the mouse is over
   //
-  game_visible_map_mouse_get(game, &visible_map_mouse_x, &visible_map_mouse_y);
+  game_visible_map_mouse_get(g, &visible_map_mouse_x, &visible_map_mouse_y);
 
-  for (auto y = l->miny; y < l->maxy; y++) {
-    for (auto x = l->maxx - 1; x >= l->minx; x--) {
-      for (int z = 0; z < MAP_Z_DEPTH_CURSOR; z++) {
+  for (auto y = v->miny; y < v->maxy; y++) {
+    FOR_ALL_Z_PRIO(z_prio)
+    {
+      for (auto x = v->minx; x < v->maxx; x++) {
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          point3d p(x, y, player->at.z);
-          level_display_slot(l, p, slot, z);
+          level_display_slot(g, v, l, point(x, y), slot, z_prio);
         }
       }
     }
@@ -226,10 +231,10 @@ void level_display(Levelp l)
   //
   // Top level cursor
   //
-  for (auto y = l->miny; y < l->maxy; y++) {
-    for (auto x = l->maxx - 1; x >= l->minx; x--) {
+  for (auto y = v->miny; y < v->maxy; y++) {
+    for (auto x = v->minx; x < v->maxx; x++) {
       point p(x, y);
-      level_display_cursor(l, p);
+      level_display_cursor(g, v, l, p);
     }
   }
 

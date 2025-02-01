@@ -25,7 +25,7 @@ HiScores::HiScores(void)
 
 HiScores::~HiScores(void) { TRACE_AND_INDENT(); }
 
-void HiScores::add_new_hiscore(int score, int level_num, const std::string &name)
+void HiScores::add_new_hiscore(Gamep g, int score, int level_num, const std::string &name)
 {
   TRACE_AND_INDENT();
   auto        h = hiscores.begin();
@@ -39,7 +39,7 @@ void HiScores::add_new_hiscore(int score, int level_num, const std::string &name
 
       hiscores.resize(HiScore::max);
 
-      game_save_config(game);
+      game_save_config(g);
       return;
     }
 

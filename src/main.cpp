@@ -38,10 +38,12 @@ static char      **ARGV;
 static std::string original_program_name;
 static bool        seed_manually_set {};
 
-void quit(void)
+void quit(Gamep *g_in)
 {
   TRACE_AND_INDENT();
   LOG("FIN: Quitting, start cleanup");
+  Gamep g = *g_in;
+  *g_in   = nullptr;
 
   if (g_quitting) {
     LOG("FIN: Quitting, nested");
@@ -61,13 +63,13 @@ void quit(void)
 #endif
 
   LOG("FIN: SDL exit");
-  sdl_exit();
+  sdl_prepare_to_exit(g);
 
   LOG("FIN: Tp fini");
   tp_fini();
 
   LOG("FIN: Wid console fini");
-  wid_console_fini();
+  wid_console_fini(g);
 
   LOG("FIN: Commands fini");
   command_fini();
@@ -100,16 +102,21 @@ void quit(void)
   sound_fini();
 
   LOG("FIN: SDL fini");
-  sdl_fini();
+  sdl_fini(g);
 
   //
   // Do this last as sdl_fini depends on it.
   //
   LOG("FIN: Game fini");
-  game_fini(game);
+  game_fini(g);
+  g = nullptr;
 
+  //
+  // Wid fini has to be after game fini, as the game state change to none will
+  // destroy remaining windows.
+  //
   LOG("FIN: Wid fini");
-  wid_fini();
+  wid_fini(nullptr);
 
   if (EXEC_FULL_PATH_AND_NAME) {
     myfree(EXEC_FULL_PATH_AND_NAME);
@@ -145,16 +152,17 @@ void quit(void)
   LOG("FIN: Cleanup done");
 }
 
-void restart(class Game *g)
+void restart(Gamep g)
 {
   TRACE_AND_INDENT();
+
   char *args[] = {nullptr, (char *) "-restart", nullptr};
   char *executable;
 
   if (g_opt_debug1) {
-    wid_visible(wid_console_window);
-    wid_raise(wid_console_window);
-    wid_update(wid_console_window);
+    wid_visible(g, wid_console_window);
+    wid_raise(g, wid_console_window);
+    wid_update(g, wid_console_window);
   }
 
   executable = (char *) original_program_name.c_str();
@@ -180,7 +188,11 @@ void restart(class Game *g)
 void die(void)
 {
   TRACE_AND_INDENT();
-  quit();
+
+  extern Gamep game;
+  auto         g = game;
+
+  quit(&g);
 
   LOG("Bye, error exit");
   fprintf(MY_STDERR, "exit(1) error\n");
@@ -588,21 +600,22 @@ static std::string create_appdata_dir(void)
   return std::string(appdata);
 }
 
-void flush_the_console(void)
+void flush_the_console(Gamep g)
 {
   //
   // Easier to see progress on windows where there is no console
   //
 #ifdef _WIN32
-  wid_visible(wid_console_window);
-  sdl_flush_display(game, true);
+  wid_visible(g, wid_console_window);
+  sdl_flush_display(g, true);
 #endif
 }
 
 int main(int argc, char *argv[])
 {
   TRACE_NO_INDENT();
-  ARGV = argv;
+  Gamep g = nullptr;
+  ARGV    = argv;
 
   auto appdata = create_appdata_dir(); // Want this first so we get all logs
 
@@ -678,7 +691,9 @@ int main(int argc, char *argv[])
   // Create and load the last saved game
   //
   game_load_last_config(appdata.c_str());
-  game_init(game);
+  extern Gamep game;
+  g = game;
+  game_init(g);
 
   {
     TRACE_NO_INDENT();
@@ -689,13 +704,13 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    sdl_config_update_all();
+    sdl_config_update_all(g);
   }
 
   {
     TRACE_NO_INDENT();
     if (g_need_restart) {
-      restart(game);
+      restart(g);
     }
   }
 
@@ -743,12 +758,12 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     LOG("INI: Load console");
-    if (! wid_console_init()) {
+    if (! wid_console_init(g)) {
       ERR("Wid_console init");
     }
     LOG("INI: Loaded");
-    wid_toggle_hidden(wid_console_window);
-    flush_the_console();
+    wid_toggle_hidden(g, wid_console_window);
+    flush_the_console(g);
   }
 
   //
@@ -758,7 +773,7 @@ int main(int argc, char *argv[])
     TRACE_NO_INDENT();
     original_program_name = std::string(argv[ 0 ]);
     LOG("INI: Original program name: %s", original_program_name.c_str());
-    flush_the_console();
+    flush_the_console(g);
   }
 
   {
@@ -776,7 +791,7 @@ int main(int argc, char *argv[])
     ERR("Tile init");
   }
   LOG("INI: Loaded");
-  flush_the_console();
+  flush_the_console(g);
 
   {
     TRACE_NO_INDENT();
@@ -785,7 +800,7 @@ int main(int argc, char *argv[])
       ERR("Tex init");
     }
     LOG("INI: Loaded");
-    flush_the_console();
+    flush_the_console(g);
   }
 
   {
@@ -795,7 +810,7 @@ int main(int argc, char *argv[])
       ERR("Audio init");
     }
     LOG("INI: Loaded");
-    flush_the_console();
+    flush_the_console(g);
   }
 
   {
@@ -805,7 +820,7 @@ int main(int argc, char *argv[])
       ERR("Music init");
     }
     LOG("INI: Loaded");
-    flush_the_console();
+    flush_the_console(g);
   }
 
   {
@@ -817,14 +832,14 @@ int main(int argc, char *argv[])
     sound_load(0.5, "data/sounds/interface/click2.wav", "click");
     sound_load(0.5, "data/sounds/interface/error.wav", "error");
     LOG("INI: Loaded");
-    flush_the_console();
+    flush_the_console(g);
   }
 
   {
     TRACE_NO_INDENT();
     LOG("INI: Find resource locations for gfx and music");
     find_file_locations();
-    flush_the_console();
+    flush_the_console(g);
   }
 
   {
@@ -842,45 +857,45 @@ int main(int argc, char *argv[])
       ERR("Command init");
     }
     LOG("INI: Loaded");
-    flush_the_console();
+    flush_the_console(g);
   }
 
   {
     TRACE_NO_INDENT();
-    flush_the_console();
+    flush_the_console(g);
 
     //
     // Main menu
     //
     TRACE_NO_INDENT();
     if (g_opt_restarted) {
-      wid_cfg_gfx_select(game);
+      wid_cfg_gfx_select(g);
       g_opt_restarted = false;
     } else if (g_opt_quick_start) {
-      wid_new_game(game);
+      wid_new_game(g);
     } else {
-      wid_main_menu_select(game);
+      wid_main_menu_select(g);
     }
 
-    flush_the_console();
+    flush_the_console(g);
   }
 
-  wid_hide(wid_console_window);
+  wid_hide(g, wid_console_window);
 
   g_opt_no_slow_log_flush = false;
 
   TRACE_NO_INDENT();
-  sdl_loop();
+  sdl_loop(g);
   LOG("FIN: SDL loop finished");
-  flush_the_console();
+  flush_the_console(g);
 
   if (g_need_restart) {
     g_need_restart = false;
-    restart(game);
+    restart(g);
   }
 
   CON("FIN: Quit");
-  quit();
+  quit(&g);
 
   CON("FIN: Goodbye my friend and take care until next time!");
   return 0;

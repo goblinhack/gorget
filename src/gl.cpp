@@ -29,13 +29,13 @@ void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLs
   CON("GL CALLBACK: type = 0x%x, severity = 0x%x, message = %s\n", type, severity, message);
 }
 
-void gl_init_2d_mode(void)
+void gl_init_2d_mode(Gamep g)
 {
   LOG("SDL: init 2d mode");
   TRACE_AND_INDENT();
   GL_ERROR_CHECK();
 
-  gl_leave_2d_mode();
+  gl_leave_2d_mode(g);
 
   //
   // Enable Textures
@@ -57,7 +57,7 @@ void gl_init_2d_mode(void)
   // Setup our viewport
   //
   LOG("GFX: OpenGL enable viewport");
-  glViewport(0, 0, game_window_pix_width_get(game), game_window_pix_height_get(game));
+  glViewport(0, 0, game_window_pix_width_get(g), game_window_pix_height_get(g));
   GL_ERROR_CHECK();
 
   //
@@ -66,7 +66,7 @@ void gl_init_2d_mode(void)
   glLoadIdentity();
   GL_ERROR_CHECK();
 
-  gl_init_fbo();
+  gl_init_fbo(g);
 
   glLineWidth(1.0);
   GL_ERROR_CHECK();
@@ -76,24 +76,24 @@ void gl_init_2d_mode(void)
   LOG("GFX: OpenGL initialized");
 }
 
-void gl_fini_2d_mode(void)
+void gl_fini_2d_mode(Gamep g)
 {
   LOG("SDL: fini 2d mode");
   TRACE_AND_INDENT();
   GL_ERROR_CHECK();
 
-  gl_leave_2d_mode();
-  gl_fini_fbo();
+  gl_leave_2d_mode(g);
+  gl_fini_fbo(g);
   GL_ERROR_CHECK();
 }
 
-void gl_enter_2d_mode(void)
+void gl_enter_2d_mode(Gamep g)
 {
   // LOG("SDL: enter 2d mode");
   TRACE_AND_INDENT();
   GL_ERROR_CHECK();
 
-  gl_leave_2d_mode();
+  gl_leave_2d_mode(g);
 
   //
   // Change to the projection matrix and set our viewing volume.
@@ -112,15 +112,15 @@ void gl_enter_2d_mode(void)
   //
   // 2D projection
   //
-  if (! game_pix_width_get(game) || ! game_pix_height_get(game)) {
-    LOG("Cannot call glOrtho(%d,%d)", game_pix_width_get(game), game_pix_height_get(game));
+  if (! game_pix_width_get(g) || ! game_pix_height_get(g)) {
+    LOG("Cannot call glOrtho(%d,%d)", game_pix_width_get(g), game_pix_height_get(g));
     return;
   }
 
-  glOrtho(0,                         // left
-          game_pix_width_get(game),  // right
-          game_pix_height_get(game), // bottom
-          0,                         // top
+  glOrtho(0,                      // left
+          game_pix_width_get(g),  // right
+          game_pix_height_get(g), // bottom
+          0,                      // top
           -1200.0, 1200.0);
   GL_ERROR_CHECK();
 
@@ -140,13 +140,13 @@ void gl_enter_2d_mode(void)
   in_2d_mode = true;
 }
 
-void gl_enter_2d_mode(int w, int h)
+void gl_enter_2d_mode(Gamep g, int w, int h)
 {
   // LOG("SDL: enter 2d mode %ux%u", w, h);
   TRACE_AND_INDENT();
   GL_ERROR_CHECK();
 
-  gl_leave_2d_mode();
+  gl_leave_2d_mode(g);
 
   //
   // Change to the projection matrix and set our viewing volume.
@@ -191,7 +191,7 @@ void gl_enter_2d_mode(int w, int h)
   in_2d_mode = true;
 }
 
-void gl_leave_2d_mode(void)
+void gl_leave_2d_mode(Gamep g)
 {
   if (! in_2d_mode) {
     return;
@@ -402,7 +402,7 @@ static void gl_fini_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint 
   memset(g_fbo_size, 0, sizeof(g_fbo_size));
 }
 
-void gl_init_fbo(void)
+void gl_init_fbo(Gamep g)
 {
   int i;
 
@@ -414,7 +414,7 @@ void gl_init_fbo(void)
     int tex_height;
 
     // old size check
-    fbo_get_size(i, tex_width, tex_height);
+    fbo_get_size(g, i, tex_width, tex_height);
 
     //
     // If no change in size then do not reset the FBO
@@ -433,7 +433,7 @@ void gl_init_fbo(void)
     gl_init_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
     g_fbo_size[ i ] = isize(tex_width, tex_height);
 
-    gl_enter_2d_mode(tex_width, tex_height);
+    gl_enter_2d_mode(g, tex_width, tex_height);
     blit_fbo_bind(i);
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -444,7 +444,7 @@ void gl_init_fbo(void)
   GL_ERROR_CHECK();
 }
 
-void gl_fini_fbo(void)
+void gl_fini_fbo(Gamep g)
 {
   int i;
 
@@ -455,7 +455,7 @@ void gl_fini_fbo(void)
     int tex_width;
     int tex_height;
 
-    fbo_get_size(i, tex_width, tex_height);
+    fbo_get_size(g, i, tex_width, tex_height);
 
     gl_fini_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
     g_fbo_size[ i ] = isize(0, 0);
@@ -465,42 +465,41 @@ void gl_fini_fbo(void)
   GL_ERROR_CHECK();
 }
 
-void fbo_get_size(int fbo, int &w, int &h)
+void fbo_get_size(Gamep g, int fbo, int &w, int &h)
 {
-  w = game_pix_width_get(game);
-  h = game_pix_height_get(game);
+  w = game_pix_width_get(g);
+  h = game_pix_height_get(g);
 
   switch (fbo) {
     case FBO_MAP :
-      w = game_map_pix_width_get(game);
-      h = game_map_pix_height_get(game);
+      w = game_map_pix_width_get(g);
+      h = game_map_pix_height_get(g);
       break;
     case FBO_WID :
-      w = game_window_pix_width_get(game);
-      h = game_window_pix_height_get(game);
+      w = game_window_pix_width_get(g);
+      h = game_window_pix_height_get(g);
       break;
     case FBO_FINAL :
-      w = game_window_pix_width_get(game);
-      h = game_window_pix_height_get(game);
+      w = game_window_pix_width_get(g);
+      h = game_window_pix_height_get(g);
       break;
   }
 }
 
-void blit_fbo(int fbo)
+void blit_fbo(Gamep g, int fbo)
 {
   int tex_width;
   int tex_height;
-  fbo_get_size(fbo, tex_width, tex_height);
+  fbo_get_size(g, fbo, tex_width, tex_height);
   blit_init();
   blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height);
   blit_flush();
 }
 
-void blit_fbo_window_pix(int fbo)
+void blit_fbo_window_pix(Gamep g, int fbo)
 {
   blit_init();
-  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_window_pix_width_get(game),
-       game_window_pix_height_get(game));
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_window_pix_width_get(g), game_window_pix_height_get(g));
   blit_flush();
 }
 

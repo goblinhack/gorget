@@ -45,7 +45,7 @@ int sdl_filter_events(void *userdata, SDL_Event *event)
   }
 }
 
-static void __attribute__((noinline)) sdl_event_keydown_repeat(SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
   //
   // Pressing the same key
@@ -70,7 +70,7 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(SDL_Keysym *key, 
   sdl.key_repeat_this_key = time_ms();
 }
 
-static bool __attribute__((noinline)) sdl_event_keydown_same_key(SDL_Keysym *key)
+static bool __attribute__((noinline)) sdl_event_keydown_same_key(Gamep g, SDL_Keysym *key)
 {
   //
   // SDL2 has no auto repeat.
@@ -89,18 +89,18 @@ static bool __attribute__((noinline)) sdl_event_keydown_same_key(SDL_Keysym *key
   return true;
 }
 
-static void __attribute__((noinline)) sdl_event_keydown_handler(SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_keydown_handler(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
   last_key_pressed.scancode = key->scancode;
   last_key_pressed.sym      = key->sym;
   last_key_pressed.mod      = key->mod;
 
-  wid_key_down(key, sdl.mouse_x, sdl.mouse_y);
+  wid_key_down(g, key, sdl.mouse_x, sdl.mouse_y);
 
   sdl.shift_held = (key->mod & KMOD_SHIFT) ? 1 : 0;
 }
 
-static void __attribute__((noinline)) sdl_event_keydown(SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
   sdl.event_count++;
 
@@ -110,8 +110,8 @@ static void __attribute__((noinline)) sdl_event_keydown(SDL_Keysym *key, SDL_Eve
   //
   // SDL2 has no auto repeat.
   //
-  if (sdl_event_keydown_same_key(key)) {
-    sdl_event_keydown_repeat(key, event);
+  if (sdl_event_keydown_same_key(g, key)) {
+    sdl_event_keydown_repeat(g, key, event);
   } else {
     //
     // Pressing a different key
@@ -119,10 +119,10 @@ static void __attribute__((noinline)) sdl_event_keydown(SDL_Keysym *key, SDL_Eve
     sdl.key_repeat_count = 0;
   }
 
-  sdl_event_keydown_handler(key, event);
+  sdl_event_keydown_handler(g, key, event);
 }
 
-static void __attribute__((noinline)) sdl_event_keyup(SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
   sdl.event_count++;
   if (g_grab_next_key) {
@@ -132,7 +132,7 @@ static void __attribute__((noinline)) sdl_event_keyup(SDL_Keysym *key, SDL_Event
     g_grab_next_key = false;
     sdl.grabbed_key = sdlk_normalize(event->key.keysym);
     if (sdl.on_sdl_key_grab) {
-      (*sdl.on_sdl_key_grab)(sdl.grabbed_key);
+      (*sdl.on_sdl_key_grab)(g, sdl.grabbed_key);
     }
     return;
   }
@@ -147,12 +147,12 @@ static void __attribute__((noinline)) sdl_event_keyup(SDL_Keysym *key, SDL_Event
 
   key = &event->key.keysym;
 
-  wid_key_up(key, sdl.mouse_x, sdl.mouse_y);
+  wid_key_up(g, key, sdl.mouse_x, sdl.mouse_y);
 
   sdl.shift_held = (key->mod & KMOD_SHIFT) ? 1 : 0;
 }
 
-static void __attribute__((noinline)) sdl_event_mousemotion(SDL_Keysym *key, SDL_Event *event,
+static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym *key, SDL_Event *event,
                                                             bool &processed_mouse_motion_event)
 {
   sdl.event_count++;
@@ -179,12 +179,12 @@ static void __attribute__((noinline)) sdl_event_mousemotion(SDL_Keysym *key, SDL
   wid_mouse_visible = 1;
   sdl.mouse_tick++;
   if (! processed_mouse_motion_event) {
-    wid_mouse_motion(game, mx, my, event->motion.xrel, event->motion.yrel, 0, 0);
+    wid_mouse_motion(g, mx, my, event->motion.xrel, event->motion.yrel, 0, 0);
     processed_mouse_motion_event = true;
   }
 }
 
-static void __attribute__((noinline)) sdl_event_mousedown(SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
   sdl.event_count++;
   sdl.mouse_down                = sdl_get_mouse();
@@ -199,11 +199,11 @@ static void __attribute__((noinline)) sdl_event_mousedown(SDL_Keysym *key, SDL_E
   wid_mouse_visible    = 1;
   wid_mouse_two_clicks = (now - sdl.mouse_down_when < UI_MOUSE_DOUBLE_CLICK);
 
-  wid_mouse_down(game, event->button.button, sdl.mouse_x, sdl.mouse_y);
+  wid_mouse_down(g, event->button.button, sdl.mouse_x, sdl.mouse_y);
   sdl.mouse_down_when = now;
 }
 
-static void __attribute__((noinline)) sdl_event_mouseup(SDL_Keysym *key, SDL_Event *event)
+static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
   sdl.event_count++;
   sdl.mouse_down                = sdl_get_mouse();
@@ -214,10 +214,10 @@ static void __attribute__((noinline)) sdl_event_mouseup(SDL_Keysym *key, SDL_Eve
   DBG("SDL: Mouse UP: button %d released at %d,%d state %d", event->button.button, event->button.x, event->button.y,
       sdl.mouse_down);
 
-  wid_mouse_up(game, event->button.button, sdl.mouse_x, sdl.mouse_y);
+  wid_mouse_up(g, event->button.button, sdl.mouse_x, sdl.mouse_y);
 }
 
-void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
+void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 {
   TRACE_NO_INDENT();
   SDL_Keysym *key = &event->key.keysym;
@@ -227,20 +227,20 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
   switch (event->type) {
     case SDL_KEYDOWN :
       LOG("SDL: Event key down");
-      sdl_event_keydown(key, event);
+      sdl_event_keydown(g, key, event);
       break;
     case SDL_KEYUP :
       LOG("SDL: Event key up");
-      sdl_event_keyup(key, event);
+      sdl_event_keyup(g, key, event);
       break;
-    case SDL_MOUSEMOTION : sdl_event_mousemotion(key, event, processed_mouse_motion_event); break;
+    case SDL_MOUSEMOTION : sdl_event_mousemotion(g, key, event, processed_mouse_motion_event); break;
     case SDL_MOUSEBUTTONDOWN :
       LOG("SDL: Event mouse button down");
-      sdl_event_mousedown(key, event);
+      sdl_event_mousedown(g, key, event);
       break;
     case SDL_MOUSEBUTTONUP :
       LOG("SDL: Event mouse button up");
-      sdl_event_mouseup(key, event);
+      sdl_event_mouseup(g, key, event);
       break;
     case SDL_TEXTINPUT :
       {
@@ -280,11 +280,11 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
         //
         // Handle "natural" scrolling direction.
         //
-        if (! game_mouse_wheel_lr_negated_get(game)) {
+        if (! game_mouse_wheel_lr_negated_get(g)) {
           sdl.wheel_x = -sdl.wheel_x;
         }
 
-        if (game_mouse_wheel_ud_negated_get(game)) {
+        if (game_mouse_wheel_ud_negated_get(g)) {
           sdl.wheel_y = -sdl.wheel_y;
         }
 
@@ -294,7 +294,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
         wid_mouse_visible = 1;
         sdl.mouse_tick++;
         if (! processed_mouse_motion_event) {
-          wid_mouse_motion(game, sdl.mouse_x, sdl.mouse_y, 0, 0, -sdl.wheel_x, sdl.wheel_y);
+          wid_mouse_motion(g, sdl.mouse_x, sdl.mouse_y, 0, 0, -sdl.wheel_x, sdl.wheel_y);
           processed_mouse_motion_event = true;
         }
         break;
@@ -334,7 +334,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
 
         if (sdl.right_fire || sdl.left_fire) {
           sdl_get_mouse();
-          wid_joy_button(game, sdl.mouse_x, sdl.mouse_y);
+          wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
         }
 
         break;
@@ -415,7 +415,7 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
         DBG("SDL: Joystick %d: Button %d pressed", event->jbutton.which, event->jbutton.button);
         sdl.joy_buttons[ event->jbutton.button ] = (uint8_t) 1;
         sdl_get_mouse();
-        wid_joy_button(game, sdl.mouse_x, sdl.mouse_y);
+        wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
         break;
       }
     case SDL_JOYBUTTONUP :
@@ -451,18 +451,9 @@ void sdl_event(SDL_Event *event, bool &processed_mouse_motion_event)
   }
 }
 
-static void sdl_key_repeat_events_(void)
+void sdl_key_repeat_events(Gamep g)
 {
   TRACE_NO_INDENT();
-
-  if (! game) {
-    return;
-  }
-
-  auto l = game_level_get(game);
-  if (! l) {
-    return;
-  }
 
   const uint8_t *state = SDL_GetKeyboardState(nullptr);
 
@@ -471,10 +462,10 @@ static void sdl_key_repeat_events_(void)
   static bool left_held_prev;
   static bool right_held_prev;
 
-  bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(game)) ];
-  bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(game)) ];
-  bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(game)) ];
-  bool right_held = state[ sdlk_to_scancode(game_key_move_right_get(game)) ];
+  bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(g)) ];
+  bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(g)) ];
+  bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(g)) ];
+  bool right_held = state[ sdlk_to_scancode(game_key_move_right_get(g)) ];
 
   //
   // Keypad stuff is hardcoded.
@@ -567,7 +558,7 @@ static void sdl_key_repeat_events_(void)
   }
 
   if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_PLAYER, last_movement_keypress)) {
-    if (thing_player_move_request(l, up, down, left, right)) {
+    if (thing_player_move_request(g, up, down, left, right)) {
       last_movement_keypress = time_ms();
 
       if (up_pressed > 0) {
@@ -585,5 +576,3 @@ static void sdl_key_repeat_events_(void)
     }
   }
 }
-
-void sdl_key_repeat_events(void) { sdl_key_repeat_events_(); }

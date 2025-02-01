@@ -134,7 +134,7 @@ bool sound_find(const std::string &alias)
   return result != all_sound.end();
 }
 
-bool sound_play(const std::string &alias)
+bool sound_play(Gamep g, const std::string &alias)
 {
   TRACE_AND_INDENT();
 
@@ -151,7 +151,7 @@ bool sound_play(const std::string &alias)
     return false;
   }
 
-  float volume = sound->second->volume * (((float) game_sound_volume_get(game)) / ((float) MIX_MAX_VOLUME));
+  float volume = sound->second->volume * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
 
   volume *= MIX_MAX_VOLUME;
 
@@ -176,7 +176,7 @@ bool sound_play(const std::string &alias)
   return true;
 }
 
-bool sound_play_channel(int channel, const std::string &alias)
+bool sound_play_channel(Gamep g, int channel, const std::string &alias)
 {
   TRACE_AND_INDENT();
 
@@ -193,7 +193,7 @@ bool sound_play_channel(int channel, const std::string &alias)
     return false;
   }
 
-  float volume = sound->second->volume * (((float) game_sound_volume_get(game)) / ((float) MIX_MAX_VOLUME));
+  float volume = sound->second->volume * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
 
   volume *= MIX_MAX_VOLUME;
 

@@ -221,7 +221,7 @@ color GREY;
 
 void color_init2(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   // begin sort marker2 {
   color_set("gray", &GRAY, 190, 190, 190, 255);

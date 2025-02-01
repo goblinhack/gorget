@@ -164,7 +164,7 @@ color VVDARKSLATEBLUE;
 
 void color_init1(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   // begin sort marker2 {
   color_set("aquamarine", &AQUAMARINE, 127, 255, 212, 255);

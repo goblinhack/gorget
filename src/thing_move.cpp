@@ -212,7 +212,7 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 //
 // Handles manual and mouse follow moves
 //
-bool thing_move_to(Levelp l, Thingp t, point3d to)
+bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 {
   if (level_is_oob(l, to)) {
     return false;
@@ -222,7 +222,7 @@ bool thing_move_to(Levelp l, Thingp t, point3d to)
     return false;
   }
 
-  thing_pop(l, t);
+  thing_pop(g, v, l, t);
 
   t->pix_at.x = t->at.x * TILE_WIDTH;
   t->pix_at.y = t->at.y * TILE_HEIGHT;
@@ -230,11 +230,15 @@ bool thing_move_to(Levelp l, Thingp t, point3d to)
   t->old_at      = t->at;
   t->moving_from = t->at;
   t->at          = to;
+  t->is_moving   = true;
+  if (thing_is_player(t)) {
+    TOPCON("moved %u,%u from %u,%u %f", t->at.x, t->at.y, t->moving_from.x, t->moving_from.y, t->thing_dt);
+  }
 
-  thing_push(l, t);
+  thing_push(g, v, l, t);
 
   if (thing_is_player(t)) {
-    level_tick_begin_requested(l, "player moved");
+    level_tick_begin_requested(g, v, l, "player moved");
   }
 
   return true;
@@ -243,17 +247,18 @@ bool thing_move_to(Levelp l, Thingp t, point3d to)
 //
 // Move is completed. Need to stop interpolating.
 //
-void thing_move_finish(Levelp l, Thingp t)
+void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   t->moving_from = t->at;
+  t->is_moving   = false;
 }
 
 //
 // Returns true if the thing can move to this location
 //
-bool thing_can_move_to(Levelp l, Thingp t, point3d to)
+bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 {
   if (level_is_oob(l, to)) {
     return false;
@@ -269,7 +274,7 @@ bool thing_can_move_to(Levelp l, Thingp t, point3d to)
 
   auto my_tp = thing_tp(t);
 
-  FOR_ALL_THINGS_AND_TPS_AT(l, it, it_tp, to)
+  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, to)
   {
     if (tp_is_player(my_tp) && tp_is_obs_player(it_tp)) {
       return false;
@@ -286,7 +291,7 @@ bool thing_can_move_to(Levelp l, Thingp t, point3d to)
 //
 // For things moving between tiles, calculate the pixel they are at based on the timestep
 //
-void thing_interpolate(Level *l, Thingp t, float dt)
+void thing_interpolate(Gamep g, Thingp t, float dt)
 {
   if (t->moving_from == t->at) {
     return;
@@ -302,12 +307,11 @@ void thing_interpolate(Level *l, Thingp t, float dt)
 //
 // Push the thing onto the level
 //
-void thing_push(Levelp l, Thingp t)
+void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  point3d p(t->at.x, t->at.y, t->at.z);
-
+  point p = t->at;
   if (level_is_oob(l, p)) {
     return;
   }
@@ -316,7 +320,7 @@ void thing_push(Levelp l, Thingp t)
   // Already at this location?
   //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
+    auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
     if (o_id == t->id) {
       return;
     }
@@ -325,21 +329,20 @@ void thing_push(Levelp l, Thingp t)
   //
   // Detach from the old location
   //
-  thing_pop(l, t);
+  thing_pop(g, v, l, t);
 
   //
   // Need to push to the new location.
   //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
+    auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
     if (! o_id) {
-      l->thing_id[ p.x ][ p.y ][ p.z ][ slot ] = t->id;
 
       //
       // Keep track of tiles the player has been on.
       //
       if (tp_is_player(thing_tp(t))) {
-        l->is_walked[ p.x ][ p.y ][ p.z ] = true;
+        l->is_walked[ p.x ][ p.y ] = true;
       }
 
       //
@@ -356,6 +359,36 @@ void thing_push(Levelp l, Thingp t)
       //
       t->is_on_map      = true;
       t->last_pushed_at = p;
+
+      //
+      // Sort the map slots by z prio for display order.
+      //
+      ThingId slots_sorted[ MAP_SLOTS ] = {};
+      auto    slots_sorted_count        = 0;
+
+      FOR_ALL_Z_PRIO(z_prio)
+      {
+        for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
+          auto    slotp = &l->thing_id[ p.x ][ p.y ][ slot_tmp ];
+          ThingId oid   = *slotp;
+          if (oid) {
+            Thingp o    = thing_find(g, v, oid);
+            auto   o_tp = thing_tp(o);
+            if (o && (tp_z_prio_get(o_tp) == z_prio)) {
+              slots_sorted[ slots_sorted_count++ ] = oid;
+              *slotp                               = 0;
+            }
+          }
+        }
+      }
+
+      //
+      // Copy the new sorted slots.
+      //
+      for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
+        l->thing_id[ p.x ][ p.y ][ slot_tmp ] = slots_sorted[ slot_tmp ];
+      }
+
       return;
     }
   }
@@ -366,7 +399,7 @@ void thing_push(Levelp l, Thingp t)
 //
 // Pop the thing off the level
 //
-void thing_pop(Levelp l, Thingp t)
+void thing_pop(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -376,17 +409,17 @@ void thing_pop(Levelp l, Thingp t)
   if (! t->is_on_map) {
     return;
   }
-  point3d p = t->last_pushed_at;
+  point p = t->last_pushed_at;
 
   if (level_is_oob(l, p)) {
     return;
   }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ p.x ][ p.y ][ p.z ][ slot ];
+    auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
     if (o_id == t->id) {
-      l->thing_id[ p.x ][ p.y ][ p.z ][ slot ] = 0;
-      t->is_on_map                             = false;
+      l->thing_id[ p.x ][ p.y ][ slot ] = 0;
+      t->is_on_map                      = false;
       return;
     }
   }
@@ -397,11 +430,11 @@ void thing_pop(Levelp l, Thingp t)
 //
 // Return true if there is a move to pop.
 //
-static bool thing_move_path_pop(Levelp l, Thingp t, point *out)
+static bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, point *out)
 {
   TRACE_NO_INDENT();
 
-  auto aip = thing_ai(l, t);
+  auto aip = thing_ai(g, t);
   if (! aip) {
     return false;
   }
@@ -423,26 +456,38 @@ static bool thing_move_path_pop(Levelp l, Thingp t, point *out)
 //
 // Move to the next path on the popped path if it exits.
 //
-bool thing_move_to_next(Levelp l, Thingp t)
+bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! l->is_following_a_path) {
+  //
+  // If already moving, do not pop the next path tile
+  //
+  if (t->is_moving) {
     return false;
   }
 
+  //
+  // If not following a path, then nothing to pop
+  //
+  if (! v->is_following_a_path) {
+    return false;
+  }
+
+  //
+  // Get the next tile to move to
+  //
   point move_next;
-  if (! thing_move_path_pop(l, t, &move_next)) {
-    l->is_following_a_path = false;
+  if (! thing_move_path_pop(g, v, l, t, &move_next)) {
+    v->is_following_a_path = false;
     return false;
   }
 
-  point3d move_to(move_next.x, move_next.y, t->at.z);
-  if (! thing_can_move_to(l, t, move_to)) {
-    l->is_following_a_path = false;
+  if (! thing_can_move_to(g, v, l, t, move_next)) {
+    v->is_following_a_path = false;
     return false;
   }
 
-  thing_move_to(l, t, move_to);
+  thing_move_to(g, v, l, t, move_next);
   return true;
 }

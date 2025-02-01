@@ -60,11 +60,8 @@ void tp_random_dungeon_init(void);
 bool tp_flag(Tpp tp, ThingFlag);
 void tp_flag_set(Tpp tp, ThingFlag, bool val);
 
-uint8_t tp_player_index_get(Tpp tp);
-void    tp_player_index_set(Tpp tp, uint8_t val);
-
-void    tp_z_depth_set(Tpp tp, uint8_t val);
-uint8_t tp_z_depth_get(Tpp tp);
+void    tp_z_prio_set(Tpp tp, uint8_t val);
+uint8_t tp_z_prio_get(Tpp tp);
 
 void tp_speed_set(Tpp tp, int val);
 int  tp_speed_get(Tpp tp);

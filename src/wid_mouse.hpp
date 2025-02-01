@@ -20,11 +20,11 @@ static int wid_mouse_motion_recursion;
 static int saved_mouse_x;
 static int saved_mouse_y;
 
-void wid_mouse_motion_end(void) {}
+void wid_mouse_motion_end(Gamep g) {}
 
-void wid_mouse_motion_begin(Widp w, int x, int y) { wid_mouse_motion_end(); }
+void wid_mouse_motion_begin(Gamep g, Widp w, int x, int y) { wid_mouse_motion_end(g); }
 
-void wid_mouse_focus_end(void)
+void wid_mouse_focus_end(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -39,21 +39,21 @@ void wid_mouse_focus_end(void)
   }
 
   if (w->on_mouse_focus_end) {
-    w->on_mouse_focus_end(w);
+    w->on_mouse_focus_end(g, w);
   }
 }
 
-void wid_mouse_focus_begin(Widp w)
+void wid_mouse_focus_begin(Gamep g, Widp w)
 {
   TRACE_AND_INDENT();
 
   Widp top {};
 
   if (unlikely(! w)) {
-    wid_mouse_focus_end();
+    wid_mouse_focus_end(g);
     wid_focus = nullptr;
 
-    wid_find_top_focus();
+    wid_set_top_focus(g);
     return;
   }
 
@@ -61,7 +61,7 @@ void wid_mouse_focus_begin(Widp w)
     return;
   }
 
-  wid_mouse_focus_end();
+  wid_mouse_focus_end(g);
 
   if (wid_ignore_for_focus(w)) {
     return;
@@ -73,11 +73,11 @@ void wid_mouse_focus_begin(Widp w)
   top->focus_last = w->focus_order;
 
   if (w->on_mouse_focus_begin) {
-    w->on_mouse_focus_begin(w);
+    w->on_mouse_focus_begin(g, w);
   }
 }
 
-void wid_mouse_over_end(void)
+void wid_mouse_over_end(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -100,18 +100,18 @@ void wid_mouse_over_end(void)
     return;
   }
 
-  wid_set_mode(w, WID_MODE_NORMAL);
+  wid_set_mode(g, w, WID_MODE_NORMAL);
 
   if (wid_exiting) {
     return;
   }
 
   if (w->on_mouse_over_end) {
-    w->on_mouse_over_end(w);
+    w->on_mouse_over_end(g, w);
   }
 }
 
-static bool wid_mouse_over_begin(Widp w, uint32_t x, uint32_t y, int relx, int rely, int wheelx, int wheely)
+static bool wid_mouse_over_begin(Gamep g, Widp w, uint32_t x, uint32_t y, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_AND_INDENT();
 
@@ -158,7 +158,7 @@ static bool wid_mouse_over_begin(Widp w, uint32_t x, uint32_t y, int relx, int r
     return false;
   }
 
-  wid_mouse_over_end();
+  wid_mouse_over_end(g);
 
   wid_over = w;
   if (! wid_ignore_events(wid_over)) {
@@ -166,31 +166,31 @@ static bool wid_mouse_over_begin(Widp w, uint32_t x, uint32_t y, int relx, int r
     // DBG("mouse over %s mouse %d,%d.", wid_over->name.c_str(), ascii_mouse_x, ascii_mouse_y);
   }
 
-  wid_set_mode(w, WID_MODE_OVER);
+  wid_set_mode(g, w, WID_MODE_OVER);
 
   if (w->on_mouse_over_begin) {
-    (w->on_mouse_over_begin)(w, relx, rely, wheelx, wheely);
+    (w->on_mouse_over_begin)(g, w, relx, rely, wheelx, wheely);
   }
 
   return true;
 }
-void wid_set_on_mouse_down(Widp w, on_mouse_down_t fn) { w->on_mouse_down = fn; }
+void wid_set_on_mouse_down(Gamep g, Widp w, on_mouse_down_t fn) { w->on_mouse_down = fn; }
 
-void wid_set_on_mouse_held(Widp w, on_mouse_down_t fn) { w->on_mouse_held = fn; }
+void wid_set_on_mouse_held(Gamep g, Widp w, on_mouse_down_t fn) { w->on_mouse_held = fn; }
 
-void wid_set_on_mouse_up(Widp w, on_mouse_up_t fn) { w->on_mouse_up = fn; }
+void wid_set_on_mouse_up(Gamep g, Widp w, on_mouse_up_t fn) { w->on_mouse_up = fn; }
 
-void wid_set_on_mouse_motion(Widp w, on_mouse_motion_t fn) { w->on_mouse_motion = fn; }
+void wid_set_on_mouse_motion(Gamep g, Widp w, on_mouse_motion_t fn) { w->on_mouse_motion = fn; }
 
-void wid_set_on_mouse_focus_begin(Widp w, on_mouse_focus_begin_t fn) { w->on_mouse_focus_begin = fn; }
+void wid_set_on_mouse_focus_begin(Gamep g, Widp w, on_mouse_focus_begin_t fn) { w->on_mouse_focus_begin = fn; }
 
-void wid_set_on_mouse_focus_end(Widp w, on_mouse_focus_end_t fn) { w->on_mouse_focus_end = fn; }
+void wid_set_on_mouse_focus_end(Gamep g, Widp w, on_mouse_focus_end_t fn) { w->on_mouse_focus_end = fn; }
 
-void wid_set_on_mouse_over_begin(Widp w, on_mouse_over_begin_t fn) { w->on_mouse_over_begin = fn; }
+void wid_set_on_mouse_over_begin(Gamep g, Widp w, on_mouse_over_begin_t fn) { w->on_mouse_over_begin = fn; }
 
-void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn) { w->on_mouse_over_end = fn; }
+void wid_set_on_mouse_over_end(Gamep g, Widp w, on_mouse_over_end_t fn) { w->on_mouse_over_end = fn; }
 
-bool wid_scroll_trough_mouse_down(Widp w, int x, int y, uint32_t button)
+bool wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
 
@@ -224,7 +224,7 @@ bool wid_scroll_trough_mouse_down(Widp w, int x, int y, uint32_t button)
     }
 
     if (dx || dy) {
-      wid_set_mode(child, WID_MODE_ACTIVE);
+      wid_set_mode(g, child, WID_MODE_ACTIVE);
     }
 
     if (! wid_get_moveable_horiz(child)) {
@@ -235,13 +235,13 @@ bool wid_scroll_trough_mouse_down(Widp w, int x, int y, uint32_t button)
       dy = 0;
     }
 
-    wid_move_delta(child, dx, dy);
+    wid_move_delta(g, child, dx, dy);
   }
 
   return true;
 }
 
-bool wid_scroll_trough_mouse_motion(Widp w, int x, int y, int relx, int rely, int wheelx, int wheely)
+bool wid_scroll_trough_mouse_motion(Gamep g, Widp w, int x, int y, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_AND_INDENT();
 
@@ -278,7 +278,7 @@ bool wid_scroll_trough_mouse_motion(Widp w, int x, int y, int relx, int rely, in
 
   for (auto &child : worklist) {
     if (dx || dy) {
-      wid_set_mode(child, WID_MODE_ACTIVE);
+      wid_set_mode(g, child, WID_MODE_ACTIVE);
     }
 
     if (! wid_get_moveable_horiz(child)) {
@@ -289,13 +289,13 @@ bool wid_scroll_trough_mouse_motion(Widp w, int x, int y, int relx, int rely, in
       dy = 0;
     }
 
-    wid_move_delta(child, dx, dy);
+    wid_move_delta(g, child, dx, dy);
   }
 
   return true;
 }
 
-void wid_update_mouse(void)
+void wid_update_mouse(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -308,7 +308,7 @@ void wid_update_mouse(void)
 
   SDL_GetMouseState(&x, &y);
 
-  wid_mouse_motion(game, x, y, 0, 0, 0, 0);
+  wid_mouse_motion(g, x, y, 0, 0, 0, 0);
 }
 
 Widp wid_find_under_mouse(void)
@@ -331,7 +331,7 @@ Widp wid_find_under_mouse(void)
   return nullptr;
 }
 
-Widp wid_find_under_mouse_when_scrolling(void)
+Widp wid_find_under_mouse_when_scrolling(Gamep g)
 {
   TRACE_AND_INDENT();
 
@@ -352,7 +352,7 @@ Widp wid_find_under_mouse_when_scrolling(void)
   return w;
 }
 
-static Widp wid_mouse_down_handler_at(Widp w, int x, int y, uint8_t strict)
+static Widp wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
 {
   TRACE_AND_INDENT();
 
@@ -394,7 +394,7 @@ static Widp wid_mouse_down_handler_at(Widp w, int x, int y, uint8_t strict)
       continue;
     }
 
-    Widp closer_match = wid_mouse_down_handler_at(child, x, y, true /* strict */);
+    Widp closer_match = wid_mouse_down_handler_at(g, child, x, y, true /* strict */);
     if (closer_match) {
       return closer_match;
     }
@@ -431,7 +431,7 @@ static Widp wid_mouse_down_handler_at(Widp w, int x, int y, uint8_t strict)
   return nullptr;
 }
 
-static Widp wid_mouse_held_handler_at(Widp w, int x, int y, uint8_t strict)
+static Widp wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
 {
   TRACE_AND_INDENT();
 
@@ -469,7 +469,7 @@ static Widp wid_mouse_held_handler_at(Widp w, int x, int y, uint8_t strict)
       continue;
     }
 
-    Widp closer_match = wid_mouse_held_handler_at(child, x, y, true /* strict */);
+    Widp closer_match = wid_mouse_held_handler_at(g, child, x, y, true /* strict */);
     if (closer_match) {
       return closer_match;
     }
@@ -506,7 +506,7 @@ static Widp wid_mouse_held_handler_at(Widp w, int x, int y, uint8_t strict)
   return nullptr;
 }
 
-static Widp wid_mouse_up_handler_at(Widp w, int x, int y, uint8_t strict)
+static Widp wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
 {
   TRACE_AND_INDENT();
 
@@ -544,7 +544,7 @@ static Widp wid_mouse_up_handler_at(Widp w, int x, int y, uint8_t strict)
       continue;
     }
 
-    Widp closer_match = wid_mouse_up_handler_at(child, x, y, true /* strict */);
+    Widp closer_match = wid_mouse_up_handler_at(g, child, x, y, true /* strict */);
     if (closer_match) {
       return closer_match;
     }
@@ -581,18 +581,18 @@ static Widp wid_mouse_up_handler_at(Widp w, int x, int y, uint8_t strict)
   return nullptr;
 }
 
-static Widp wid_mouse_down_handler(int x, int y)
+static Widp wid_mouse_down_handler(Gamep g, int x, int y)
 {
   TRACE_AND_INDENT();
 
   Widp w {};
 
-  w = wid_mouse_down_handler_at(wid_focus, x, y, true /* strict */);
+  w = wid_mouse_down_handler_at(g, wid_focus, x, y, true /* strict */);
   if (w) {
     return w;
   }
 
-  w = wid_mouse_down_handler_at(wid_over, x, y, true /* strict */);
+  w = wid_mouse_down_handler_at(g, wid_over, x, y, true /* strict */);
   if (w) {
     return w;
   }
@@ -605,7 +605,7 @@ static Widp wid_mouse_down_handler(int x, int y)
         continue;
       }
 
-      c = wid_mouse_down_handler_at(c, x, y, true /* strict */);
+      c = wid_mouse_down_handler_at(g, c, x, y, true /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -622,7 +622,7 @@ static Widp wid_mouse_down_handler(int x, int y)
         continue;
       }
 
-      c = wid_mouse_down_handler_at(c, x, y, false /* strict */);
+      c = wid_mouse_down_handler_at(g, c, x, y, false /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -634,18 +634,18 @@ static Widp wid_mouse_down_handler(int x, int y)
   return nullptr;
 }
 
-static Widp wid_mouse_held_handler(int x, int y)
+static Widp wid_mouse_held_handler(Gamep g, int x, int y)
 {
   TRACE_AND_INDENT();
 
   Widp w {};
 
-  w = wid_mouse_held_handler_at(wid_focus, x, y, true /* strict */);
+  w = wid_mouse_held_handler_at(g, wid_focus, x, y, true /* strict */);
   if (w) {
     return w;
   }
 
-  w = wid_mouse_held_handler_at(wid_over, x, y, true /* strict */);
+  w = wid_mouse_held_handler_at(g, wid_over, x, y, true /* strict */);
   if (w) {
     return w;
   }
@@ -658,7 +658,7 @@ static Widp wid_mouse_held_handler(int x, int y)
         continue;
       }
 
-      c = wid_mouse_held_handler_at(c, x, y, true /* strict */);
+      c = wid_mouse_held_handler_at(g, c, x, y, true /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -675,7 +675,7 @@ static Widp wid_mouse_held_handler(int x, int y)
         continue;
       }
 
-      c = wid_mouse_held_handler_at(c, x, y, false /* strict */);
+      c = wid_mouse_held_handler_at(g, c, x, y, false /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -687,18 +687,18 @@ static Widp wid_mouse_held_handler(int x, int y)
   return nullptr;
 }
 
-static Widp wid_mouse_up_handler(int x, int y)
+static Widp wid_mouse_up_handler(Gamep g, int x, int y)
 {
   TRACE_AND_INDENT();
 
   Widp w {};
 
-  w = wid_mouse_up_handler_at(wid_focus, x, y, true /* strict */);
+  w = wid_mouse_up_handler_at(g, wid_focus, x, y, true /* strict */);
   if (w) {
     return w;
   }
 
-  w = wid_mouse_up_handler_at(wid_over, x, y, true /* strict */);
+  w = wid_mouse_up_handler_at(g, wid_over, x, y, true /* strict */);
   if (w) {
     return w;
   }
@@ -711,7 +711,7 @@ static Widp wid_mouse_up_handler(int x, int y)
         continue;
       }
 
-      c = wid_mouse_up_handler_at(c, x, y, true /* strict */);
+      c = wid_mouse_up_handler_at(g, c, x, y, true /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -728,7 +728,7 @@ static Widp wid_mouse_up_handler(int x, int y)
         continue;
       }
 
-      c = wid_mouse_up_handler_at(c, x, y, false /* strict */);
+      c = wid_mouse_up_handler_at(g, c, x, y, false /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -757,7 +757,7 @@ static Widp wid_mouse_motion_handler(int x, int y, int relx, int rely, int wheel
   return nullptr;
 }
 
-void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheelx, int wheely)
+void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_AND_INDENT();
 
@@ -771,7 +771,7 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
   //
   // Map to ascii
   //
-  pixel_to_ascii(&x, &y);
+  pixel_to_ascii(g, &x, &y);
   if (! ascii_ok(x, y)) {
     return;
   }
@@ -828,7 +828,7 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
     // Over a new wid.
     //
 
-    while (w && ! wid_mouse_over_begin(w, x, y, relx, rely, wheelx, wheely)) {
+    while (w && ! wid_mouse_over_begin(g, w, x, y, relx, rely, wheelx, wheely)) {
       w = w->parent;
     }
 
@@ -848,7 +848,7 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
 
     w = wid_mouse_motion_handler(x, y, relx, rely, wheelx, wheely);
     if (w) {
-      if (wid_mouse_over_begin(w, x, y, relx, rely, wheelx, wheely)) {
+      if (wid_mouse_over_begin(g, w, x, y, relx, rely, wheelx, wheely)) {
         over = true;
       }
 
@@ -857,7 +857,7 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
       // scrollbars.
       //
       if (w->on_mouse_motion) {
-        if ((w->on_mouse_motion)(w, x, y, relx, rely, wheelx, wheely)) {
+        if ((w->on_mouse_motion)(g, w, x, y, relx, rely, wheelx, wheely)) {
           got_one = true;
           break;
         }
@@ -878,7 +878,7 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
           if (w->scrollbar_vert && ! wid_get_moveable_no_user_scroll(w->scrollbar_vert)) {
 
             got_one = true;
-            wid_move_delta(w->scrollbar_vert, 0, -wheely);
+            wid_move_delta(g, w->scrollbar_vert, 0, -wheely);
             done = true;
           }
         }
@@ -887,7 +887,7 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
           if (w->scrollbar_horiz && ! wid_get_moveable_no_user_scroll(w->scrollbar_horiz)) {
 
             got_one = true;
-            wid_move_delta(w->scrollbar_horiz, -wheelx, 0);
+            wid_move_delta(g, w->scrollbar_horiz, -wheelx, 0);
             done = true;
           }
         }
@@ -909,7 +909,7 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
   }
 
   if (! over) {
-    wid_mouse_over_end();
+    wid_mouse_over_end(g);
   }
 
   //
@@ -925,7 +925,7 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
         }
 
         if (w && w->on_mouse_motion) {
-          if ((w->on_mouse_motion)(w, x, y, relx, rely, wheelx, wheely)) {
+          if ((w->on_mouse_motion)(g, w, x, y, relx, rely, wheelx, wheely)) {
             got_one = true;
           }
         }
@@ -942,20 +942,20 @@ void wid_mouse_motion(class Game *g, int x, int y, int relx, int rely, int wheel
   }
 }
 
-void wid_mouse_down(class Game *g, uint32_t button, int x, int y)
+void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
 {
   TRACE_AND_INDENT();
 
   Widp w {};
 
-  pixel_to_ascii(&x, &y);
+  pixel_to_ascii(g, &x, &y);
   if (! ascii_ok(x, y)) {
     return;
   }
   ascii_mouse_x = x;
   ascii_mouse_y = y;
 
-  w = wid_mouse_down_handler(x, y);
+  w = wid_mouse_down_handler(g, x, y);
   if (unlikely(! w)) {
     return;
   }
@@ -963,18 +963,18 @@ void wid_mouse_down(class Game *g, uint32_t button, int x, int y)
   //
   // Raise on mouse.
   //
-  if ((w->on_mouse_down && (w->on_mouse_down)(w, x, y, button)) || wid_get_moveable(w)) {
-    sound_play("click");
+  if ((w->on_mouse_down && (w->on_mouse_down)(g, w, x, y, button)) || wid_get_moveable(w)) {
+    sound_play(g, "click");
 
-    wid_set_focus(w);
-    wid_set_mode(w, WID_MODE_ACTIVE);
-    wid_raise(w);
+    wid_set_focus(g, w);
+    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_raise(g, w);
 
     //
     // Move on mouse.
     //
     if (wid_get_moveable(w)) {
-      wid_mouse_motion_begin(w, x, y);
+      wid_mouse_motion_begin(g, w, x, y);
       return;
     }
 
@@ -986,34 +986,34 @@ void wid_mouse_down(class Game *g, uint32_t button, int x, int y)
   }
 
   if (wid_get_moveable(w)) {
-    wid_set_mode(w, WID_MODE_ACTIVE);
-    wid_raise(w);
-    wid_mouse_motion_begin(w, x, y);
+    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_raise(g, w);
+    wid_mouse_motion_begin(g, w, x, y);
     return;
   }
 
   if (game_mouse_down(g, x, y, button)) {
-    sound_play("click");
+    sound_play(g, "click");
     if (g) {
       game_last_mouse_down_set(g, time_ms_cached());
     }
   }
 }
 
-void wid_mouse_held(uint32_t button, int x, int y)
+void wid_mouse_held(Gamep g, uint32_t button, int x, int y)
 {
   TRACE_AND_INDENT();
 
   Widp w {};
 
-  pixel_to_ascii(&x, &y);
+  pixel_to_ascii(g, &x, &y);
   if (! ascii_ok(x, y)) {
     return;
   }
   ascii_mouse_x = x;
   ascii_mouse_y = y;
 
-  w = wid_mouse_held_handler(x, y);
+  w = wid_mouse_held_handler(g, x, y);
   if (unlikely(! w)) {
     return;
   }
@@ -1021,17 +1021,17 @@ void wid_mouse_held(uint32_t button, int x, int y)
   //
   // Raise on mouse.
   //
-  if ((w->on_mouse_held && (w->on_mouse_held)(w, x, y, button)) || wid_get_moveable(w)) {
+  if ((w->on_mouse_held && (w->on_mouse_held)(g, w, x, y, button)) || wid_get_moveable(w)) {
 
-    wid_set_focus(w);
-    wid_set_mode(w, WID_MODE_ACTIVE);
-    wid_raise(w);
+    wid_set_focus(g, w);
+    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_raise(g, w);
 
     //
     // Move on mouse.
     //
     if (wid_get_moveable(w)) {
-      wid_mouse_motion_begin(w, x, y);
+      wid_mouse_motion_begin(g, w, x, y);
       return;
     }
 
@@ -1039,45 +1039,45 @@ void wid_mouse_held(uint32_t button, int x, int y)
   }
 
   if (wid_get_moveable(w)) {
-    wid_set_mode(w, WID_MODE_ACTIVE);
-    wid_raise(w);
-    wid_mouse_motion_begin(w, x, y);
+    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_raise(g, w);
+    wid_mouse_motion_begin(g, w, x, y);
     return;
   }
 }
 
-void wid_mouse_up(class Game *g, uint32_t button, int x, int y)
+void wid_mouse_up(Gamep g, uint32_t button, int x, int y)
 {
   TRACE_AND_INDENT();
 
   Widp w {};
 
-  pixel_to_ascii(&x, &y);
+  pixel_to_ascii(g, &x, &y);
   if (! ascii_ok(x, y)) {
     return;
   }
   ascii_mouse_x = x;
   ascii_mouse_y = y;
 
-  wid_mouse_motion_end();
+  wid_mouse_motion_end(g);
 
-  w = wid_mouse_up_handler(x, y);
+  w = wid_mouse_up_handler(g, x, y);
   if (unlikely(! w)) {
     return;
   }
 
-  if ((w->on_mouse_up && (w->on_mouse_up)(w, x, y, button)) || wid_get_moveable(w)) {
-    sound_play("click");
+  if ((w->on_mouse_up && (w->on_mouse_up)(g, w, x, y, button)) || wid_get_moveable(w)) {
+    sound_play(g, "click");
 
-    wid_set_mode(w, WID_MODE_ACTIVE);
-    wid_raise(w);
+    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_raise(g, w);
     return;
   }
 
   game_mouse_up(g, x, y, button);
 }
 
-void wid_mouse_hide(int value)
+void wid_mouse_hide(Gamep g, int value)
 {
   TRACE_AND_INDENT();
 
@@ -1086,7 +1086,7 @@ void wid_mouse_hide(int value)
   if (visible != wid_mouse_visible) {
     wid_mouse_visible = visible;
     if (visible) {
-      sdl_mouse_warp(saved_mouse_x, saved_mouse_y);
+      sdl_mouse_warp(g, saved_mouse_x, saved_mouse_y);
     } else {
       saved_mouse_x = sdl.mouse_x;
       saved_mouse_y = sdl.mouse_y;
@@ -1094,7 +1094,7 @@ void wid_mouse_hide(int value)
   }
 }
 
-void wid_mouse_warp(Widp w)
+void wid_mouse_warp(Gamep g, Widp w)
 {
   TRACE_AND_INDENT();
 
@@ -1105,10 +1105,10 @@ void wid_mouse_warp(Widp w)
   int x = (tlx + brx) / 2.0;
   int y = (tly + bry) / 2.0;
 
-  sdl_mouse_warp(x, y);
+  sdl_mouse_warp(g, x, y);
 }
 
-void wid_mouse_move(Widp w)
+void wid_mouse_move(Gamep g, Widp w)
 {
   TRACE_AND_INDENT();
 

@@ -12,11 +12,11 @@ Fontp font_ui;
 
 static std::map< std::string, Fontp > fonts;
 
-void font_fini(void) { TRACE_AND_INDENT(); }
+void font_fini(void) { TRACE_NO_INDENT(); }
 
 static Fontp font_load(std::string name)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   auto f = font_find(name);
 
   if (f) {
@@ -55,7 +55,7 @@ static Fontp font_load(std::string name)
 
 Fontp font_find(std::string file)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (file == "") {
     ERR("No filename given for font find %s", __FUNCTION__);
     return nullptr;
@@ -125,7 +125,7 @@ Tilep Font::font_get_tile(int u)
 
 uint8_t font_init(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   font_ui             = font_load("font");
   font_ui->tile_index = 1;

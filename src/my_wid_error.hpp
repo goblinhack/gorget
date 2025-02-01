@@ -3,4 +3,7 @@
 //
 
 #pragma once
-extern void wid_error(std::string error);
+
+#include "my_wid_popup.hpp"
+
+extern void wid_error(Gamep, std::string error);

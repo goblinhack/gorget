@@ -133,10 +133,13 @@ void common_error_handler(std::string &tech_support)
 {
   TRACE_AND_INDENT();
 
+  extern Gamep game;
+  auto         g = game;
+
   tech_support += "\n";
 
-  auto seed_name = game_seed_name_get(game);
-  if (game && seed_name && *seed_name) {
+  auto seed_name = game_seed_name_get(g);
+  if (g && seed_name && *seed_name) {
     tech_support += "Seed name: " + std::string(seed_name) + "\n";
   }
   tech_support += "Could you please email goblinhack@gmail.com and attach the following files and trace info?\n";

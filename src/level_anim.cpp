@@ -9,18 +9,17 @@
 #include "my_time.hpp"
 #include "my_tp.hpp"
 
-void level_anim(Levelp l)
+void level_anim(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
   //
   // What level is the player on?
   //
-  auto player = thing_player(l);
+  auto player = thing_player(g);
   if (! player) {
     return;
   }
-  int z = player->at.z;
 
   auto            ts = time_ms();
   static uint32_t last_ts;
@@ -34,11 +33,11 @@ void level_anim(Levelp l)
   last_ts        = ts;
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    for (auto y = l->miny; y < l->maxy; y++) {
-      for (auto x = l->minx; x < l->maxx; x++) {
-        Tpp     tp;
-        point3d p(x, y, z);
-        Thingp  t = thing_and_tp_get(l, p, slot, &tp);
+    for (auto y = v->miny; y < v->maxy; y++) {
+      for (auto x = v->minx; x < v->maxx; x++) {
+        Tpp    tp;
+        point  p(x, y);
+        Thingp t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
         if (! t) {
           continue;
         }
