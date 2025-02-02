@@ -24,6 +24,14 @@ typedef struct Level_ {
   // faster to malloc and memset versus default construction.
   //////////////////////////////////////////////////////////////
   //
+  // Where this level is in the bigger map
+  //
+  point level_num;
+  //
+  // Flags
+  //
+  bool initialized : 1;
+  //
   // What things are where? Each Id points to a thing structure.
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
@@ -134,11 +142,11 @@ typedef struct Levels_ {
   //////////////////////////////////////////////////////////////
 } Levels;
 
-Levelsp levels_new(Gamep);
-void    levels_fini(Gamep, Levelsp);
+Levelsp levels_create(Gamep);
+void    levels_destroy(Gamep, Levelsp);
 
-Levelp level_new(Gamep, Levelsp, point);
-void   level_fini(Gamep, Levelsp, Levelp);
+Levelp level_create(Gamep, Levelsp, point);
+void   level_destroy(Gamep, Levelsp, Levelp);
 
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
 

@@ -12,9 +12,9 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-Levelsp levels_new(Gamep g)
+Levelsp levels_create(Gamep g)
 {
-  LOG("Levels new");
+  LOG("Levels create");
   TRACE_AND_INDENT();
 
   //
@@ -37,12 +37,12 @@ Levelsp levels_new(Gamep g)
     return nullptr;
   }
 
-  level_new(g, v, point(0, 0));
+  level_create(g, v, point(0, 0));
 
   return v;
 }
 
-void levels_fini(Gamep g, Levelsp v)
+void levels_destroy(Gamep g, Levelsp v)
 {
   LOG("Levels fini");
   TRACE_AND_INDENT();
@@ -52,7 +52,7 @@ void levels_fini(Gamep g, Levelsp v)
   FOR_ALL_LEVELS(g, v, l)
   {
     TRACE_NO_INDENT();
-    level_fini(g, v, l);
+    level_destroy(g, v, l);
   }
 
   myfree(v);
@@ -204,12 +204,15 @@ void level_map_constructor(Gamep g, Levelsp v, Levelp l)
 }
 #endif
 
-Levelp level_new(Gamep g, Levelsp v, point p)
+Levelp level_create(Gamep g, Levelsp v, point level_num)
 {
-  TRACE_NO_INDENT();
+  LOG("Level create %u,%u", level_num.x, level_num.y);
+  TRACE_AND_INDENT();
 
-  auto l = game_level_get(g, v, p.x, p.y);
+  auto l = game_level_get(g, v, level_num.x, level_num.y);
   memset(l, 0, sizeof(*l));
+  l->level_num   = level_num;
+  l->initialized = true;
 
   level_dungeon_create_and_place(g, v, l);
   level_assign_tiles(g, v, l);
@@ -218,12 +221,17 @@ Levelp level_new(Gamep g, Levelsp v, point p)
   return l;
 }
 
-void level_fini(Gamep g, Levelsp v, Levelp l)
+void level_destroy(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
+  if (! l || ! l->initialized) {
+    return;
+  }
+
+  LOG("Level destroy %u,%u", l->level_num.x, l->level_num.y);
+  TRACE_AND_INDENT();
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_fini(g, v, l, t); }
-
   memset(l, 0, sizeof(*l));
 }
 

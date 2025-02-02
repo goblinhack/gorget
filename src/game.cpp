@@ -359,7 +359,7 @@ void Game::create_levels(void)
   set_seed();
   destroy_levels();
 
-  auto v = levels_new(g);
+  auto v = levels_create(g);
   game_level_set(g, v, 0, 0);
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
@@ -405,7 +405,7 @@ void Game::destroy_levels(void)
     return;
   }
 
-  levels_fini(g, v);
+  levels_destroy(g, v);
 }
 void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 

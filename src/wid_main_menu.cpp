@@ -16,7 +16,7 @@ WidPopup *wid_main_menu_window;
 
 void wid_main_menu_destroy(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   delete wid_main_menu_window;
   wid_main_menu_window = nullptr;
@@ -24,20 +24,20 @@ void wid_main_menu_destroy(Gamep g)
 
 void wid_main_menu_hide(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_hide(g, wid_main_menu_window->wid_popup_container);
 }
 
 static bool wid_main_menu_load_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_load_select(g);
   return false;
 }
 
 static bool wid_main_menu_config(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_cfg_top_menu(g);
   wid_main_menu_hide(g);
   return false;
@@ -45,7 +45,7 @@ static bool wid_main_menu_config(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_main_menu_hide(g);
   wid_main_menu_destroy(g);
   wid_new_game(g);
@@ -54,7 +54,7 @@ static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_main_menu_credits_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_credits_select(g);
   wid_main_menu_destroy(g);
   return false;
@@ -62,7 +62,7 @@ static bool wid_main_menu_credits_game(Gamep g, Widp w, int x, int y, uint32_t b
 
 static bool wid_main_menu_quit_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_quit_select(g);
   wid_main_menu_destroy(g);
   return false;
@@ -70,14 +70,14 @@ static bool wid_main_menu_quit_game(Gamep g, Widp w, int x, int y, uint32_t butt
 
 static bool wid_main_menu_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_hiscores_show(g);
   return false;
 }
 
 static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -90,7 +90,7 @@ static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
       switch (key->sym) {
         default :
           {
-            TRACE_AND_INDENT();
+            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case SDLK_RETURN :
@@ -117,7 +117,7 @@ static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -131,7 +131,7 @@ static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
 
 static void game_display_title_bg(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   glcolor(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -144,7 +144,7 @@ static void game_display_title_bg(Gamep g)
 
 static void game_display_title_fg1(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   glcolor(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -158,7 +158,7 @@ static void game_display_title_fg1(Gamep g)
 
 static void game_display_title_fg2(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   static color fg    = WHITE;
   static int   delta = 10;
@@ -223,7 +223,7 @@ color color_change_hue(const color &in, const float fHue)
 
 static void game_display_title_fg3(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   static color fg  = RED;
   static int   hue = 0;
@@ -270,7 +270,7 @@ static void game_display_title_fg3(Gamep g)
 
 static void game_display_title_fg4(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   glcolor(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -317,8 +317,8 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 
 void wid_main_menu_select(Gamep g)
 {
+  LOG("INF: Main menu");
   TRACE_AND_INDENT();
-  LOG("Main menu");
 
   if (wid_main_menu_window) {
     wid_main_menu_destroy(g);
@@ -447,9 +447,10 @@ void wid_main_menu_select(Gamep g)
 
 void wid_new_game(Gamep g)
 {
+  LOG("INF: New game");
   TRACE_NO_INDENT();
 
-  game_state_reset(g, "new g");
+  game_state_reset(g, "new game");
   game_create_levels(g);
   game_start_playing(g);
 }

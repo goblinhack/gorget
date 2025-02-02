@@ -40,8 +40,9 @@ static bool        seed_manually_set {};
 
 void quit(Gamep *g_in)
 {
-  TRACE_AND_INDENT();
   LOG("FIN: Quitting, start cleanup");
+  TRACE_AND_INDENT();
+
   Gamep g = *g_in;
   *g_in   = nullptr;
 
@@ -62,52 +63,24 @@ void quit(Gamep *g_in)
   signal(SIGFPE, nullptr); // uninstall our handler
 #endif
 
-  LOG("FIN: SDL exit");
   sdl_prepare_to_exit(g);
-
-  LOG("FIN: Tp fini");
   tp_fini();
-
-  LOG("FIN: Wid console fini");
   wid_console_fini(g);
-
-  LOG("FIN: Commands fini");
   command_fini();
-
-  LOG("FIN: Font fini");
   font_fini();
-
-  LOG("FIN: Tex fini");
   tex_fini();
-
-  LOG("FIN: Wid tiles fini");
   wid_tiles_fini();
-
-  LOG("FIN: Tile fini");
   tile_fini();
-
-  LOG("FIN: Blit fini");
   blit_fini();
-
-  LOG("FIN: Color fini");
   color_fini();
-
-  LOG("FIN: Audio fini");
   audio_fini();
-
-  LOG("FIN: Music fini");
   music_fini();
-
-  LOG("FIN: Sound fini");
   sound_fini();
-
-  LOG("FIN: SDL fini");
   sdl_fini(g);
 
   //
   // Do this last as sdl_fini depends on it.
   //
-  LOG("FIN: Game fini");
   game_fini(g);
   g = nullptr;
 
@@ -338,7 +311,7 @@ cleanup:
 //
 static void find_exec_dir(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   find_executable();
 
   //
@@ -366,7 +339,7 @@ static void find_exec_dir(void)
 //
 static void find_data_dir(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   DATA_PATH = dynprintf("%sdata" DIR_SEP, EXEC_DIR);
   if (dir_exists(DATA_PATH)) {
     return;
@@ -387,7 +360,7 @@ static void find_data_dir(void)
 //
 static void find_ttf_dir(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   TTF_PATH = dynprintf("%sdata" DIR_SEP "ttf" DIR_SEP, EXEC_DIR);
   if (dir_exists(TTF_PATH)) {
     return;
@@ -408,7 +381,7 @@ static void find_ttf_dir(void)
 //
 static void find_gfx_dir(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   GFX_PATH = dynprintf("%sdata" DIR_SEP "gfx" DIR_SEP, EXEC_DIR);
   if (dir_exists(GFX_PATH)) {
     return;
@@ -429,7 +402,8 @@ static void find_gfx_dir(void)
 //
 static void find_file_locations(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
+
   find_exec_dir();
   find_data_dir();
   find_ttf_dir();
@@ -441,7 +415,7 @@ static void find_file_locations(void)
 
 static void usage(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   static int whinged;
 
   if (whinged) {
@@ -466,7 +440,7 @@ static void usage(void)
 
 static void parse_args(int argc, char *argv[])
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   int i;
 
   //
@@ -726,7 +700,6 @@ int main(int argc, char *argv[])
     TRACE_NO_INDENT();
     LOG("INI: Load early gfx tiles, text, UI etc...");
     gfx_init();
-    LOG("INI: Loaded");
   }
 
   //
@@ -743,7 +716,6 @@ int main(int argc, char *argv[])
     if (! font_init()) {
       ERR("Font init");
     }
-    LOG("INI: Loaded");
   }
 
   {
@@ -752,7 +724,6 @@ int main(int argc, char *argv[])
     if (! wid_init()) {
       ERR("Wid init");
     }
-    LOG("INI: Loaded");
   }
 
   {
@@ -761,7 +732,6 @@ int main(int argc, char *argv[])
     if (! wid_console_init(g)) {
       ERR("Wid_console init");
     }
-    LOG("INI: Loaded");
     wid_toggle_hidden(g, wid_console_window);
     flush_the_console(g);
   }
@@ -790,7 +760,6 @@ int main(int argc, char *argv[])
   if (! tile_init()) {
     ERR("Tile init");
   }
-  LOG("INI: Loaded");
   flush_the_console(g);
 
   {
@@ -799,7 +768,6 @@ int main(int argc, char *argv[])
     if (! tex_init()) {
       ERR("Tex init");
     }
-    LOG("INI: Loaded");
     flush_the_console(g);
   }
 
@@ -809,7 +777,6 @@ int main(int argc, char *argv[])
     if (! audio_init()) {
       ERR("Audio init");
     }
-    LOG("INI: Loaded");
     flush_the_console(g);
   }
 
@@ -819,7 +786,6 @@ int main(int argc, char *argv[])
     if (! music_init()) {
       ERR("Music init");
     }
-    LOG("INI: Loaded");
     flush_the_console(g);
   }
 
@@ -831,7 +797,6 @@ int main(int argc, char *argv[])
     }
     sound_load(0.5, "data/sounds/interface/click2.wav", "click");
     sound_load(0.5, "data/sounds/interface/error.wav", "error");
-    LOG("INI: Loaded");
     flush_the_console(g);
   }
 
@@ -856,7 +821,6 @@ int main(int argc, char *argv[])
     if (! command_init()) {
       ERR("Command init");
     }
-    LOG("INI: Loaded");
     flush_the_console(g);
   }
 
