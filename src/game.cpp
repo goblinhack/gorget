@@ -497,17 +497,25 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   switch (new_state) {
     case STATE_MAIN_MENU :
-    case STATE_PLAYING :
     case STATE_QUITTING :
       wid_leftbar_fini(g);
-      wid_leftbar_init(g);
       wid_load_destroy(g);
       wid_main_menu_destroy(g);
       wid_quit_destroy(g);
       wid_rightbar_fini(g);
-      wid_rightbar_init(g);
       wid_save_destroy(g);
       wid_topcon_fini(g);
+      break;
+    case STATE_PLAYING :
+      wid_leftbar_fini(g);
+      wid_load_destroy(g);
+      wid_main_menu_destroy(g);
+      wid_quit_destroy(g);
+      wid_rightbar_fini(g);
+      wid_save_destroy(g);
+      wid_topcon_fini(g);
+      wid_leftbar_init(g);
+      wid_rightbar_init(g);
       wid_topcon_init(g);
       break;
     case STATE_KEYBOARD_MENU :

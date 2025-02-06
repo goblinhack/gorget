@@ -162,8 +162,6 @@ void common_error_handler(std::string &tech_support)
 void segv_handler(int sig)
 {
   TRACE_AND_INDENT();
-  std::string tech_support = "Sorry, a crash has occurred!";
-  common_error_handler(tech_support);
 
 #if defined __linux__
   debug_crash_handler(sig);

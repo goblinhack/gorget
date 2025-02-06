@@ -56,6 +56,7 @@ void levels_destroy(Gamep g, Levelsp v)
   }
 
   myfree(v);
+  game_levels_set(g, nullptr);
 }
 
 #if 0
