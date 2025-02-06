@@ -8,9 +8,9 @@
 
 #define UI_CONSOLE_HEIGHT           (TERM_HEIGHT * 2)
 #define UI_CONSOLE_INPUT_COLOR      ORANGE
-#define UI_CONSOLE_TEXT_COLOR       GRAY
+#define UI_CONSOLE_TEXT_COLOR       WHITE
 #define UI_CONSOLE_WIDTH            (TERM_WIDTH - 3)
-#define UI_CURSOR_COLOR             GRAY
+#define UI_CURSOR_COLOR             PURPLE
 #define UI_CURSOR_OTHER_COLOR       WHITE
 #define UI_FONT_HEIGHT              8
 #define UI_FONT_WIDTH               6

@@ -39,12 +39,6 @@ void game_tiles_visible_down_set(Gamep, int val);
 int  game_last_mouse_down_get(Gamep);
 void game_last_mouse_down_set(Gamep, int);
 
-int  game_last_pause_get(Gamep);
-void game_last_pause_set(Gamep, int);
-
-int  game_serialized_size_get(Gamep);
-void game_serialized_size_set(Gamep, int);
-
 float game_aspect_ratio_get(Gamep);
 void  game_aspect_ratio_set(Gamep, float);
 

@@ -25,11 +25,12 @@ enum {
 };
 
 enum {
-  MAP_Z_PRIO_FIRST,
-  MAP_Z_PRIO_NORMAL,  // e.g. podium
-  MAP_Z_PRIO_INFRONT, // e.g. player
+  MAP_Z_PRIO_BEHIND,
+  MAP_Z_PRIO_NORMAL, // e.g. player
+  MAP_Z_PRIO_INFRONT,
   MAP_Z_PRIO_LAST
 };
+#define MAP_Z_PRIO_FIRST MAP_Z_PRIO_BEHIND
 
 #define FOR_ALL_Z_PRIO(_z_prio_) for (uint8_t _z_prio_ = MAP_Z_PRIO_FIRST; _z_prio_ < MAP_Z_PRIO_LAST; _z_prio_++)
 

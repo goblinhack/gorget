@@ -19,7 +19,11 @@ using Config = class Config_
 public:
   std::string version = "" MYVER "";
 
+  //
+  // Used to check for changes in the size of this struct.
+  //
   int serialized_size = {};
+
   //
   // Keep flags int size so the header size will change on a new flag.
   // It does not always for new bools.
@@ -180,7 +184,6 @@ public:
   // Temporary. Dampens mouse clicks
   //
   int last_mouse_down {};
-  int last_pause {};
 
   //
   // These are the onscreen map pixel co-ords.
@@ -360,6 +363,7 @@ void Game::create_levels(void)
   destroy_levels();
 
   auto v = levels_create(g);
+  game_levels_set(g, v);
   game_level_set(g, v, 0, 0);
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
@@ -517,15 +521,44 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   state = new_state;
 }
-void game_state_change(Gamep g, uint8_t new_state, const char *why) { g->state_change(new_state, std::string(why)); }
+void game_state_change(Gamep g, uint8_t new_state, const char *why)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->state_change(new_state, std::string(why));
+}
 
-void game_load_config(Gamep g) { g->load_config(); }
+void game_load_config(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->load_config();
+}
 
-class HiScores *game_hiscores_get(Gamep g) { return &g->config.hiscores; }
+class HiScores *game_hiscores_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return nullptr;
+  }
+  return &g->config.hiscores;
+}
 
 void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
                               int *visible_map_br_y)
 {
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
   *visible_map_tl_x = g->visible_map_tl_x;
   *visible_map_tl_y = g->visible_map_tl_y;
   *visible_map_br_x = g->visible_map_br_x;
@@ -535,6 +568,11 @@ void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_t
 void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
                               int visible_map_br_y)
 {
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
   g->visible_map_tl_x = visible_map_tl_x;
   g->visible_map_tl_y = visible_map_tl_y;
   g->visible_map_br_x = visible_map_br_x;
@@ -543,115 +581,603 @@ void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_
 
 void game_visible_map_mouse_get(Gamep g, int *visible_map_mouse_x, int *visible_map_mouse_y)
 {
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
   *visible_map_mouse_x = g->visible_map_mouse_x;
   *visible_map_mouse_y = g->visible_map_mouse_y;
 }
 
 void game_visible_map_mouse_set(Gamep g, int visible_map_mouse_x, int visible_map_mouse_y)
 {
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
   g->visible_map_mouse_x = visible_map_mouse_x;
   g->visible_map_mouse_y = visible_map_mouse_y;
 }
 
-int  game_tiles_visible_across_get(Gamep g) { return g->config.tiles_visible_across; }
-void game_tiles_visible_across_set(Gamep g, int val) { g->config.tiles_visible_across = val; }
+int game_tiles_visible_across_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return MAP_TILES_ACROSS;
+  }
+  return g->config.tiles_visible_across;
+}
+void game_tiles_visible_across_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.tiles_visible_across = val;
+}
 
-int  game_tiles_visible_down_get(Gamep g) { return g->config.tiles_visible_down; }
-void game_tiles_visible_down_set(Gamep g, int val) { g->config.tiles_visible_down = val; }
+int game_tiles_visible_down_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return MAP_TILES_DOWN;
+  }
+  return g->config.tiles_visible_down;
+}
+void game_tiles_visible_down_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.tiles_visible_down = val;
+}
 
-int  game_last_mouse_down_get(Gamep g) { return g->last_mouse_down; }
-void game_last_mouse_down_set(Gamep g, int val) { g->last_mouse_down = val; }
+int game_last_mouse_down_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->last_mouse_down;
+}
+void game_last_mouse_down_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->last_mouse_down = val;
+}
 
-int  game_last_pause_get(Gamep g) { return g->last_pause; }
-void game_last_pause_set(Gamep g, int val) { g->last_pause = val; }
+float game_aspect_ratio_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 1;
+  }
+  return g->config.aspect_ratio;
+}
+void game_aspect_ratio_set(Gamep g, float val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.aspect_ratio = val;
+}
 
-int  game_serialized_size_get(Gamep g) { return g->serialized_size; }
-void game_serialized_size_set(Gamep g, int val) { g->serialized_size = val; }
+int game_ui_term_height_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return TERM_HEIGHT_DEF;
+  }
+  return g->config.ui_term_height;
+}
+void game_ui_term_height_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.ui_term_height = val;
+}
 
-float game_aspect_ratio_get(Gamep g) { return g->config.aspect_ratio; }
-void  game_aspect_ratio_set(Gamep g, float val) { g->config.aspect_ratio = val; }
+int game_ui_term_width_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return TERM_WIDTH_DEF;
+  }
+  return g->config.ui_term_width;
+}
+void game_ui_term_width_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.ui_term_width = val;
+}
 
-int  game_ui_term_height_get(Gamep g) { return g->config.ui_term_height; }
-void game_ui_term_height_set(Gamep g, int val) { g->config.ui_term_height = val; }
+bool game_debug_mode_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.debug_mode;
+}
+void game_debug_mode_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.debug_mode = val;
+}
 
-int  game_ui_term_width_get(Gamep g) { return g->config.ui_term_width; }
-void game_ui_term_width_set(Gamep g, int val) { g->config.ui_term_width = val; }
+bool game_fps_counter_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.fps_counter;
+}
+void game_fps_counter_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.fps_counter = val;
+}
 
-bool game_debug_mode_get(Gamep g) { return g->config.debug_mode; }
-void game_debug_mode_set(Gamep g, bool val) { g->config.debug_mode = val; }
+int game_fps_value_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->fps_value;
+}
+void game_fps_value_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->fps_value = val;
+}
 
-bool game_fps_counter_get(Gamep g) { return g->config.fps_counter; }
-void game_fps_counter_set(Gamep g, bool val) { g->config.fps_counter = val; }
+bool game_gfx_allow_highdpi_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.gfx_allow_highdpi;
+}
+void game_gfx_allow_highdpi_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_allow_highdpi = val;
+}
 
-int  game_fps_value_get(Gamep g) { return g->fps_value; }
-void game_fps_value_set(Gamep g, int val) { g->fps_value = val; }
+bool game_gfx_borderless_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.gfx_borderless;
+}
+void game_gfx_borderless_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_borderless = val;
+}
 
-bool game_gfx_allow_highdpi_get(Gamep g) { return g->config.gfx_allow_highdpi; }
-void game_gfx_allow_highdpi_set(Gamep g, bool val) { g->config.gfx_allow_highdpi = val; }
+bool game_gfx_fullscreen_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.gfx_fullscreen;
+}
+void game_gfx_fullscreen_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_fullscreen = val;
+}
 
-bool game_gfx_borderless_get(Gamep g) { return g->config.gfx_borderless; }
-void game_gfx_borderless_set(Gamep g, bool val) { g->config.gfx_borderless = val; }
+bool game_gfx_fullscreen_desktop_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.gfx_fullscreen_desktop;
+}
+void game_gfx_fullscreen_desktop_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_fullscreen_desktop = val;
+}
 
-bool game_gfx_fullscreen_get(Gamep g) { return g->config.gfx_fullscreen; }
-void game_gfx_fullscreen_set(Gamep g, bool val) { g->config.gfx_fullscreen = val; }
+bool game_gfx_vsync_enable_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.gfx_vsync_enable;
+}
+void game_gfx_vsync_enable_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_vsync_enable = val;
+}
 
-bool game_gfx_fullscreen_desktop_get(Gamep g) { return g->config.gfx_fullscreen_desktop; }
-void game_gfx_fullscreen_desktop_set(Gamep g, bool val) { g->config.gfx_fullscreen_desktop = val; }
+bool game_mouse_wheel_lr_negated_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.mouse_wheel_lr_negated;
+}
+void game_mouse_wheel_lr_negated_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.mouse_wheel_lr_negated = val;
+}
 
-bool game_gfx_vsync_enable_get(Gamep g) { return g->config.gfx_vsync_enable; }
-void game_gfx_vsync_enable_set(Gamep g, bool val) { g->config.gfx_vsync_enable = val; }
+bool game_mouse_wheel_ud_negated_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.mouse_wheel_ud_negated;
+}
+void game_mouse_wheel_ud_negated_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.mouse_wheel_ud_negated = val;
+}
 
-bool game_mouse_wheel_lr_negated_get(Gamep g) { return g->config.mouse_wheel_lr_negated; }
-void game_mouse_wheel_lr_negated_set(Gamep g, bool val) { g->config.mouse_wheel_lr_negated = val; }
+int game_config_pix_height_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.config_pix_height;
+}
+void game_config_pix_height_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.config_pix_height = val;
+}
 
-bool game_mouse_wheel_ud_negated_get(Gamep g) { return g->config.mouse_wheel_ud_negated; }
-void game_mouse_wheel_ud_negated_set(Gamep g, bool val) { g->config.mouse_wheel_ud_negated = val; }
+int game_config_pix_width_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.config_pix_width;
+}
+void game_config_pix_width_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.config_pix_width = val;
+}
 
-int  game_config_pix_height_get(Gamep g) { return g->config.config_pix_height; }
-void game_config_pix_height_set(Gamep g, int val) { g->config.config_pix_height = val; }
+int game_pix_height_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.game_pix_height;
+}
+void game_pix_height_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.game_pix_height = val;
+}
 
-int  game_config_pix_width_get(Gamep g) { return g->config.config_pix_width; }
-void game_config_pix_width_set(Gamep g, int val) { g->config.config_pix_width = val; }
+int game_pix_width_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.game_pix_width;
+}
+void game_pix_width_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.game_pix_width = val;
+}
 
-int  game_pix_height_get(Gamep g) { return g->config.game_pix_height; }
-void game_pix_height_set(Gamep g, int val) { g->config.game_pix_height = val; }
+int game_map_pix_height_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.map_pix_height;
+}
+void game_map_pix_height_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.map_pix_height = val;
+}
 
-int  game_pix_width_get(Gamep g) { return g->config.game_pix_width; }
-void game_pix_width_set(Gamep g, int val) { g->config.game_pix_width = val; }
+int game_map_pix_width_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.map_pix_width;
+}
+void game_map_pix_width_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.map_pix_width = val;
+}
 
-int  game_map_pix_height_get(Gamep g) { return g->config.map_pix_height; }
-void game_map_pix_height_set(Gamep g, int val) { g->config.map_pix_height = val; }
+int game_window_pix_height_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.window_pix_height;
+}
+void game_window_pix_height_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.window_pix_height = val;
+}
 
-int  game_map_pix_width_get(Gamep g) { return g->config.map_pix_width; }
-void game_map_pix_width_set(Gamep g, int val) { g->config.map_pix_width = val; }
+int game_window_pix_width_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.window_pix_width;
+}
+void game_window_pix_width_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.window_pix_width = val;
+}
 
-int  game_window_pix_height_get(Gamep g) { return g->config.window_pix_height; }
-void game_window_pix_height_set(Gamep g, int val) { g->config.window_pix_height = val; }
+int game_ascii_pix_height_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.ascii_pix_height;
+}
+void game_ascii_pix_height_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.ascii_pix_height = val;
+}
 
-int  game_window_pix_width_get(Gamep g) { return g->config.window_pix_width; }
-void game_window_pix_width_set(Gamep g, int val) { g->config.window_pix_width = val; }
+int game_ascii_pix_width_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.ascii_pix_width;
+}
+void game_ascii_pix_width_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.ascii_pix_width = val;
+}
 
-int  game_ascii_pix_height_get(Gamep g) { return g->config.ascii_pix_height; }
-void game_ascii_pix_height_set(Gamep g, int val) { g->config.ascii_pix_height = val; }
+int game_music_volume_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.music_volume;
+}
+void game_music_volume_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.music_volume = val;
+}
 
-int  game_ascii_pix_width_get(Gamep g) { return g->config.ascii_pix_width; }
-void game_ascii_pix_width_set(Gamep g, int val) { g->config.ascii_pix_width = val; }
+int game_sdl_delay_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.sdl_delay;
+}
+void game_sdl_delay_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.sdl_delay = val;
+}
 
-int  game_music_volume_get(Gamep g) { return g->config.music_volume; }
-void game_music_volume_set(Gamep g, int val) { g->config.music_volume = val; }
+int game_sound_volume_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  return g->config.sound_volume;
+}
+void game_sound_volume_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.sound_volume = val;
+}
 
-int  game_sdl_delay_get(Gamep g) { return g->config.sdl_delay; }
-void game_sdl_delay_set(Gamep g, int val) { g->config.sdl_delay = val; }
-
-int  game_sound_volume_get(Gamep g) { return g->config.sound_volume; }
-void game_sound_volume_set(Gamep g, int val) { g->config.sound_volume = val; }
-
-Levelsp game_levels_get(Gamep g) { return g->level; }
-void    game_levels_set(Gamep g, Levelsp val) { g->level = val; }
+Levelsp game_levels_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return nullptr;
+  }
+  return g->level;
+}
+void game_levels_set(Gamep g, Levelsp val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->level = val;
+}
 
 Levelp game_level_get(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return nullptr;
+  }
   auto x = v->level_num.x;
   auto y = v->level_num.y;
   return &v->level[ x ][ y ];
@@ -659,50 +1185,218 @@ Levelp game_level_get(Gamep g, Levelsp v)
 Levelp game_level_get(Gamep g, Levelsp v, int x, int y)
 {
   TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return nullptr;
+  }
   return &v->level[ x ][ y ];
 }
 Levelp game_level_set(Gamep g, Levelsp v, int x, int y)
 {
   TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return nullptr;
+  }
   v->level_num = point(x, y);
   return game_level_get(g, v);
 }
 
-const char *game_seed_name_get(Gamep g) { return g->seed_name.c_str(); }
-void        game_seed_name_set(Gamep g, const char *val) { g->seed_name = std::string(val); }
+const char *game_seed_name_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return "";
+  return g->seed_name.c_str();
+}
+void game_seed_name_set(Gamep g, const char *val)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->seed_name = std::string(val);
+}
 
-SDL_Keysym game_key_attack_get(Gamep g) { return g->config.key_attack; }
-void       game_key_attack_set(Gamep g, SDL_Keysym key) { g->config.key_attack = key; }
+static SDL_Keysym no_key;
 
-SDL_Keysym game_key_console_get(Gamep g) { return g->config.key_console; }
-void       game_key_console_set(Gamep g, SDL_Keysym key) { g->config.key_console = key; }
+SDL_Keysym game_key_attack_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_attack;
+}
+void game_key_attack_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_attack = key;
+}
 
-SDL_Keysym game_key_help_get(Gamep g) { return g->config.key_help; }
-void       game_key_help_set(Gamep g, SDL_Keysym key) { g->config.key_help = key; }
+SDL_Keysym game_key_console_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_console;
+}
+void game_key_console_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_console = key;
+}
 
-SDL_Keysym game_key_load_get(Gamep g) { return g->config.key_load; }
-void       game_key_load_set(Gamep g, SDL_Keysym key) { g->config.key_load = key; }
+SDL_Keysym game_key_help_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_help;
+}
+void game_key_help_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_help = key;
+}
 
-SDL_Keysym game_key_move_down_get(Gamep g) { return g->config.key_move_down; }
-void       game_key_move_down_set(Gamep g, SDL_Keysym key) { g->config.key_move_down = key; }
+SDL_Keysym game_key_load_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_load;
+}
+void game_key_load_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_load = key;
+}
 
-SDL_Keysym game_key_move_left_get(Gamep g) { return g->config.key_move_left; }
-void       game_key_move_left_set(Gamep g, SDL_Keysym key) { g->config.key_move_left = key; }
+SDL_Keysym game_key_move_down_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_move_down;
+}
+void game_key_move_down_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_move_down = key;
+}
 
-SDL_Keysym game_key_move_right_get(Gamep g) { return g->config.key_move_right; }
-void       game_key_move_right_set(Gamep g, SDL_Keysym key) { g->config.key_move_right = key; }
+SDL_Keysym game_key_move_left_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_move_left;
+}
+void game_key_move_left_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_move_left = key;
+}
 
-SDL_Keysym game_key_move_up_get(Gamep g) { return g->config.key_move_up; }
-void       game_key_move_up_set(Gamep g, SDL_Keysym key) { g->config.key_move_up = key; }
+SDL_Keysym game_key_move_right_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_move_right;
+}
+void game_key_move_right_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_move_right = key;
+}
 
-SDL_Keysym game_key_quit_get(Gamep g) { return g->config.key_quit; }
-void       game_key_quit_set(Gamep g, SDL_Keysym key) { g->config.key_quit = key; }
+SDL_Keysym game_key_move_up_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_move_up;
+}
+void game_key_move_up_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_move_up = key;
+}
 
-SDL_Keysym game_key_save_get(Gamep g) { return g->config.key_save; }
-void       game_key_save_set(Gamep g, SDL_Keysym key) { g->config.key_save = key; }
+SDL_Keysym game_key_quit_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_quit;
+}
+void game_key_quit_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_quit = key;
+}
 
-SDL_Keysym game_key_screenshot_get(Gamep g) { return g->config.key_screenshot; }
-void       game_key_screenshot_set(Gamep g, SDL_Keysym key) { g->config.key_screenshot = key; }
+SDL_Keysym game_key_save_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_save;
+}
+void game_key_save_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_save = key;
+}
 
-SDL_Keysym game_key_unused1_get(Gamep g) { return g->config.key_unused1; }
-void       game_key_unused1_set(Gamep g, SDL_Keysym key) { g->config.key_unused1 = key; }
+SDL_Keysym game_key_screenshot_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_screenshot;
+}
+void game_key_screenshot_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return;
+  g->config.key_screenshot = key;
+}
+
+SDL_Keysym game_key_unused1_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused1;
+}
+void game_key_unused1_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused1 = key;
+}

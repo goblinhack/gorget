@@ -12,6 +12,7 @@
 #define MAP_HEIGHT        32
 #define MAP_SLOTS         16
 #define MAP_TILES_ACROSS  20
+#define MAP_TILES_DOWN    20
 #define MAP_SCROLL_BORDER 0.4
 #define MAP_SCROLL_SPEED  5
 #define TICK_DURATION_MS  1000

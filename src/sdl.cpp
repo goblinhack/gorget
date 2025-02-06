@@ -45,6 +45,10 @@ void sdl_video_fini(Gamep g)
 
 void sdl_fini(Gamep g)
 {
+  if (! sdl.init_video) {
+    return;
+  }
+
   LOG("SDL: Fini");
   TRACE_AND_INDENT();
 
@@ -880,7 +884,7 @@ void config_game_gfx_update(Gamep g)
   // Now convert that to pixels
   //
   double visible_game_map_w = (double) TILE_WIDTH * MAP_TILES_ACROSS;
-  double visible_game_map_h = (double) TILE_HEIGHT * (MAP_TILES_ACROSS / ratio);
+  double visible_game_map_h = (double) TILE_HEIGHT * (MAP_TILES_DOWN / ratio);
   //
   // Compensate for any additional pixels the rounding of the terminal cells loses
   //
