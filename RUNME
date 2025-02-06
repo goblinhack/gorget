@@ -95,13 +95,6 @@ tech_support()
         cat src/Makefile
         echo
 
-        log_info "DEBUG: Makefile output for debugging:"
-        echo =====================================================
-        set -x
-        make -e -n -d all
-        set +x
-        echo
-
     ) >> $LOG 2>&1
 }
 
@@ -193,9 +186,9 @@ make pre
 run build/build.sh $LOG
 
 if [ $? -ne 0 ]; then
+    log_err "Build failed."
     log_info "Gathering tech support info to $LOG"
     tech_support >> $LOG
-    log_err "Build failed."
     log_err "Could you send $LOG to $MAINTAINER?"
     log_err "Or file an issue at https://github.com/goblinhack/gorget"
     exit 1
