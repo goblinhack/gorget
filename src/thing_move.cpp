@@ -231,8 +231,9 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
   t->moving_from = t->at;
   t->at          = to;
   t->is_moving   = true;
+
   if (thing_is_player(t)) {
-    TOPCON("moved %u,%u from %u,%u %f", t->at.x, t->at.y, t->moving_from.x, t->moving_from.y, t->thing_dt);
+    CON("id %x moved %u,%u from %u,%u %f", t->id, t->at.x, t->at.y, t->moving_from.x, t->moving_from.y, t->thing_dt);
   }
 
   thing_push(g, v, l, t);

@@ -51,7 +51,7 @@ bool wid_console_init(Gamep g)
     command_add(g, config_fps_counter_set, "set fps [01]", "enable frames per sec counter");
     command_add(g, config_gfx_vsync_enable, "set vsync [01]", "enable vertical sync enable");
     command_add(g, config_errored, "clear errored", "used to clear a previous error");
-    command_add(g, sdl_user_exit, "quit", "exit g");
+    command_add(g, sdl_user_exit, "quit", "exit game");
     wid_console_commands_inited = true;
   }
 

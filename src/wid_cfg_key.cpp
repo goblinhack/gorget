@@ -390,7 +390,7 @@ static bool wid_cfg_key_unused1(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_key_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  grab_key(g, "save g");
+  grab_key(g, "save game");
   sdl.on_sdl_key_grab    = wid_cfg_key_save_set;
   local_g_config_changed = true;
   return true;
@@ -399,7 +399,7 @@ static bool wid_cfg_key_save(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_key_load(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  grab_key(g, "load g");
+  grab_key(g, "load game");
   sdl.on_sdl_key_grab    = wid_cfg_key_load_set;
   local_g_config_changed = true;
   return true;
@@ -614,7 +614,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Save g");
+    wid_set_text(w, "Save game");
   }
   {
     TRACE_AND_INDENT();
@@ -645,7 +645,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Load g");
+    wid_set_text(w, "Load game");
   }
   {
     TRACE_AND_INDENT();

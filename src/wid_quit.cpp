@@ -28,13 +28,13 @@ static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
   LOG("INF: Quit, yes");
 
   if (game_levels_get(g)) {
-    LOG("INF: Continue g");
+    LOG("INF: Continue game");
 
     game_destroy_levels(g);
     wid_quit_destroy(g);
     wid_main_menu_select(g);
   } else {
-    LOG("INF: Exit g");
+    LOG("INF: Exit game");
 
     wid_quit_destroy(g);
     DIE_CLEAN("Quit");

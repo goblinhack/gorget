@@ -122,9 +122,10 @@ static void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto o = thing_find(g, v, t->id);
   if (t != o) {
-    DIE("Thing mismatch found for id, %" PRIX32 "", t->id);
+    DIE("Thing mismatch found for id, %" PRIx32 "", t->id);
   }
 
+  thing_pop(g, v, l, t);
   thing_ai_free(g, v, l, t);
 
   memset((void *) t, 0, SIZEOF(*t));
@@ -167,7 +168,7 @@ static void thing_ai_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (! v->thing_ai[ ai_id ].in_use) {
-    ERR("freeing unused Thing AI ID is not in use, %" PRIX32 "", ai_id);
+    ERR("freeing unused Thing AI ID is not in use, %" PRIx32 "", ai_id);
   }
 
   v->thing_ai[ ai_id ].in_use = false;
@@ -274,11 +275,11 @@ Thingp thing_find(Gamep g, Levelsp v, ThingId id)
 
   auto t = &v->thing_body[ index ];
   if (! t) {
-    DIE("Thing not found for id, %" PRIX32 "", id);
+    DIE("Thing not found for id, %" PRIx32 "", id);
   }
 
   if (t->id != id) {
-    DIE("Thing found but entropy mismatch for id, %" PRIX32 "", id);
+    DIE("Thing found as id %" PRIx32 " but entropy mismatch for id, %" PRIx32 "", t->id, id);
   }
 
   return t;
