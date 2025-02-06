@@ -26,10 +26,7 @@ std::initializer_list< std::string > tps = {
     // clang-format off
     "", // ID 0 means unused
     "wall1",
-    "player1",
-    "player2",
-    "player3",
-    "player4",
+    "player",
     /* begin shell marker1 */
     /* shell for i in $(find . -name "*.cpp" | xargs grep -h "tp_load(\"" | awk '{print $4}' | cut -d\" -f2) */
     /* shell do */

@@ -74,7 +74,7 @@ static bool wid_leftbar_create_window(Gamep g)
   y_at = 8;
   {
     TRACE_AND_INDENT();
-    auto  w = wid_new_square_button(wid_leftbar, "player1");
+    auto  w = wid_new_square_button(wid_leftbar, "player");
     point tl(0, y_at);
     point br(width - 1, y_at);
     auto  s = dynprintf("%04u %04u", 0, 100);

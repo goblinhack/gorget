@@ -364,7 +364,8 @@ void Game::create_levels(void)
 
   auto v = levels_create(g);
   game_levels_set(g, v);
-  game_level_set(g, v, 0, 0);
+  auto l = game_level_set(g, v, 0, 0);
+  level_scroll_warp_to_player(g, v, l);
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
 

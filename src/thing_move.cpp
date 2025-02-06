@@ -357,8 +357,9 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       //
       // Save where we were pushed so we can pop the same location
       //
-      t->is_on_map      = true;
-      t->last_pushed_at = p;
+      t->is_on_map                      = true;
+      t->last_pushed_at                 = p;
+      l->thing_id[ p.x ][ p.y ][ slot ] = t->id;
 
       //
       // Sort the map slots by z prio for display order.

@@ -14,10 +14,7 @@ enum {
   CHARMAP_EXIT     = 'E',
   CHARMAP_KEY      = 'k',
   CHARMAP_MONST1   = 'm',
-  CHARMAP_PLAYER1  = '1',
-  CHARMAP_PLAYER2  = '2',
-  CHARMAP_PLAYER3  = '3',
-  CHARMAP_PLAYER4  = '4',
+  CHARMAP_PLAYER   = '@',
   CHARMAP_TREASURE = '$',
   CHARMAP_WALL     = 'x',
   // end sort marker1 }

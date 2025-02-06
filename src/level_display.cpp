@@ -217,16 +217,11 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   game_visible_map_mouse_get(g, &visible_map_mouse_x, &visible_map_mouse_y);
 
-  fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
   for (auto y = v->miny; y < v->maxy; y++) {
-    fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
     FOR_ALL_Z_PRIO(z_prio)
     {
-      fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
       for (auto x = v->minx; x < v->maxx; x++) {
-        fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
         for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
           level_display_slot(g, v, l, point(x, y), slot, z_prio);
         }
       }

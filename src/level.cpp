@@ -294,14 +294,11 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
     DIE("bad map size, expected %d, got %d", (int) strlen(in), (int) expected_len);
   }
 
-  auto tp_wall    = tp_random(is_wall);
-  auto tp_door    = tp_find_mand("door");
-  auto tp_floor   = tp_find_mand("floor");
-  auto tp_exit    = tp_find_mand("exit");
-  auto tp_player1 = tp_find_mand("player1");
-  auto tp_player2 = tp_find_mand("player2");
-  auto tp_player3 = tp_find_mand("player3");
-  auto tp_player4 = tp_find_mand("player4");
+  auto tp_wall   = tp_random(is_wall);
+  auto tp_door   = tp_find_mand("door");
+  auto tp_floor  = tp_find_mand("floor");
+  auto tp_exit   = tp_find_mand("exit");
+  auto tp_player = tp_find_mand("player");
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
@@ -323,21 +320,9 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_TREASURE : break;
         case CHARMAP_MONST1 : break;
-        case CHARMAP_PLAYER1 :
+        case CHARMAP_PLAYER :
           need_floor = true;
-          tp         = tp_player1;
-          break;
-        case CHARMAP_PLAYER2 :
-          need_floor = true;
-          tp         = tp_player2;
-          break;
-        case CHARMAP_PLAYER3 :
-          need_floor = true;
-          tp         = tp_player3;
-          break;
-        case CHARMAP_PLAYER4 :
-          need_floor = true;
-          tp         = tp_player4;
+          tp         = tp_player;
           break;
         case CHARMAP_EXIT :
           need_floor = true;

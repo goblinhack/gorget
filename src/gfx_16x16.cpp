@@ -27,7 +27,7 @@ void gfx_init_16x16(void)
       "",
       "",
       // ##############################################################################
-      "player1.idle.0",
+      "player.idle.0",
       "player2.idle.0",
       "player3.idle.0",
       "player4.idle.0",
