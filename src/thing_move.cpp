@@ -470,7 +470,7 @@ bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If not following a path, then nothing to pop
   //
-  if (! v->is_following_a_path) {
+  if (! v->player_currently_following_a_path) {
     return false;
   }
 
@@ -479,12 +479,18 @@ bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   point move_next;
   if (! thing_move_path_pop(g, v, l, t, &move_next)) {
-    v->is_following_a_path = false;
+    //
+    // If could not pop, then no path is left
+    //
+    v->player_currently_following_a_path = false;
     return false;
   }
 
   if (! thing_can_move_to(g, v, l, t, move_next)) {
-    v->is_following_a_path = false;
+    //
+    // If could not move, then abort the path walk
+    //
+    v->player_currently_following_a_path = false;
     return false;
   }
 

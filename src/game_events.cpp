@@ -30,7 +30,7 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   auto v = game_levels_get(g);
   if (v) {
-    v->request_follow_path = true;
+    v->player_pressed_button_and_waiting_for_a_path = true;
     return true;
   }
 

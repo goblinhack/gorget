@@ -112,7 +112,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     //
     // If the thing tick has completed, finish its move.
     //
-    if (t->thing_dt >= 1.0) {
+    if (t->thing_dt >= 0.99) { // dt increments can end up very close to 1
       t->thing_dt = 0.0;
       thing_move_finish(g, v, l, t);
     }

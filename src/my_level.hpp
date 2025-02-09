@@ -95,11 +95,11 @@ typedef struct Levels_ {
   //
   // The user has pressed the mouse and wants to follow the mouse path.
   //
-  bool request_follow_path : 1;
+  bool player_pressed_button_and_waiting_for_a_path : 1;
   //
   // set when the player starts following the mouse path.
   //
-  bool is_following_a_path : 1;
+  bool player_currently_following_a_path : 1;
   //
   // Set when something modifies the map and we need to update caches.
   //

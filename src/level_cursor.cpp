@@ -6,6 +6,7 @@
 #include "my_dmap.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_point.hpp"
 #include "my_sdl_event.hpp"
 #include "my_tp.hpp"
@@ -265,9 +266,9 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  v->request_follow_path = false;
-  v->is_following_a_path = false;
-  aip->move_path.size    = 0;
+  v->player_pressed_button_and_waiting_for_a_path = false;
+  v->player_currently_following_a_path            = false;
+  aip->move_path.size                             = 0;
 }
 
 //
@@ -293,13 +294,13 @@ static void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< p
     return;
   }
 
-  if (v->request_follow_path) {
+  if (v->player_pressed_button_and_waiting_for_a_path) {
     //
     // Player wants to start following or replace the current path.
     //
-    v->request_follow_path = false;
-    v->is_following_a_path = true;
-  } else if (v->is_following_a_path) {
+    v->player_pressed_button_and_waiting_for_a_path = false;
+    v->player_currently_following_a_path            = true;
+  } else if (v->player_currently_following_a_path) {
     //
     // Already following a path, stick to it until completion.
     //
