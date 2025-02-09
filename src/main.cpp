@@ -64,7 +64,6 @@ void quit(Gamep *g_in)
 #endif
 
   sdl_prepare_to_exit(g);
-  tp_fini();
   wid_console_fini(g);
   command_fini();
   font_fini();
@@ -85,10 +84,14 @@ void quit(Gamep *g_in)
   g = nullptr;
 
   //
-  // Wid fini has to be after game fini, as the game state change to none will
+  // Must be post game_fini
+  //
+  tp_fini();
+
+  //
+  // Wid fini has to be after game_fini, as the game state change to none will
   // destroy remaining windows.
   //
-  LOG("FIN: Wid fini");
   wid_fini(nullptr);
 
   if (EXEC_FULL_PATH_AND_NAME) {
