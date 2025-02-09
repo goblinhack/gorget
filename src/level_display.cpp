@@ -155,11 +155,15 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, point p, int slot, int prio)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, point p, int slot, int depth, int prio)
 {
   Tpp  tp;
   auto t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
   if (! tp) {
+    return;
+  }
+
+  if (tp_z_depth_get(tp) != depth) {
     return;
   }
 
@@ -198,12 +202,15 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   // Display tiles in z prio order
   //
-  for (auto y = v->miny; y < v->maxy; y++) {
-    FOR_ALL_Z_PRIO(z_prio)
-    {
-      for (auto x = v->minx; x < v->maxx; x++) {
-        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          level_display_slot(g, v, l, point(x, y), slot, z_prio);
+  FOR_ALL_Z_PRIO(z_depth)
+  {
+    for (auto y = v->miny; y < v->maxy; y++) {
+      FOR_ALL_Z_PRIO(z_prio)
+      {
+        for (auto x = v->minx; x < v->maxx; x++) {
+          for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+            level_display_slot(g, v, l, point(x, y), slot, z_depth, z_prio);
+          }
         }
       }
     }

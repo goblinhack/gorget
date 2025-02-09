@@ -214,7 +214,7 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 //
 bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 {
-  if (is_oob( to)) {
+  if (is_oob(to)) {
     return false;
   }
 
@@ -231,10 +231,6 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
   t->moving_from = t->at;
   t->at          = to;
   t->is_moving   = true;
-
-  if (thing_is_player(t)) {
-    CON("id %x moved %u,%u from %u,%u %f", t->id, t->at.x, t->at.y, t->moving_from.x, t->moving_from.y, t->thing_dt);
-  }
 
   thing_push(g, v, l, t);
 
@@ -261,7 +257,7 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 {
-  if (is_oob( to)) {
+  if (is_oob(to)) {
     return false;
   }
 
@@ -313,7 +309,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   point p = t->at;
-  if (is_oob( p)) {
+  if (is_oob(p)) {
     return;
   }
 
@@ -362,33 +358,35 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       t->last_pushed_at                 = p;
       l->thing_id[ p.x ][ p.y ][ slot ] = t->id;
 
-      //
-      // Sort the map slots by z prio for display order.
-      //
-      ThingId slots_sorted[ MAP_SLOTS ] = {};
-      auto    slots_sorted_count        = 0;
+      if (0) {
+        //
+        // Sort the map slots by z prio for display order.
+        //
+        ThingId slots_sorted[ MAP_SLOTS ] = {};
+        auto    slots_sorted_count        = 0;
 
-      FOR_ALL_Z_PRIO(z_prio)
-      {
-        for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
-          auto    slotp = &l->thing_id[ p.x ][ p.y ][ slot_tmp ];
-          ThingId oid   = *slotp;
-          if (oid) {
-            Thingp o    = thing_find(g, v, oid);
-            auto   o_tp = thing_tp(o);
-            if (o && (tp_z_prio_get(o_tp) == z_prio)) {
-              slots_sorted[ slots_sorted_count++ ] = oid;
-              *slotp                               = 0;
+        FOR_ALL_Z_PRIO(z_prio)
+        {
+          for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
+            auto    slotp = &l->thing_id[ p.x ][ p.y ][ slot_tmp ];
+            ThingId oid   = *slotp;
+            if (oid) {
+              Thingp o    = thing_find(g, v, oid);
+              auto   o_tp = thing_tp(o);
+              if (o && (tp_z_prio_get(o_tp) == z_prio)) {
+                slots_sorted[ slots_sorted_count++ ] = oid;
+                *slotp                               = 0;
+              }
             }
           }
         }
-      }
 
-      //
-      // Copy the new sorted slots.
-      //
-      for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
-        l->thing_id[ p.x ][ p.y ][ slot_tmp ] = slots_sorted[ slot_tmp ];
+        //
+        // Copy the new sorted slots.
+        //
+        for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
+          l->thing_id[ p.x ][ p.y ][ slot_tmp ] = slots_sorted[ slot_tmp ];
+        }
       }
 
       return;
@@ -413,7 +411,7 @@ void thing_pop(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
   point p = t->last_pushed_at;
 
-  if (is_oob( p)) {
+  if (is_oob(p)) {
     return;
   }
 

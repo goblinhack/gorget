@@ -102,9 +102,6 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     }
 
     t->thing_dt += dt * ((float) t->speed / (float) player_speed);
-    if (thing_is_player(t)) {
-      TOPCON("at %u,%u moving_from %u,%u %f", t->at.x, t->at.y, t->moving_from.x, t->moving_from.y, t->thing_dt);
-    }
 
     if (t->thing_dt >= 1.0) {
       t->thing_dt = 1.0;

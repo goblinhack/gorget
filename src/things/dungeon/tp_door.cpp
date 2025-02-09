@@ -17,6 +17,7 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_obs_monst, true);
   tp_flag_set(tp, is_obs_player, true);
   tp_flag_set(tp, is_tiled, true);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 

@@ -24,12 +24,13 @@ enum {
   TILE_LAYER_MAX,
 };
 
-enum {
-  MAP_Z_PRIO_BEHIND,
-  MAP_Z_PRIO_NORMAL, // e.g. player
-  MAP_Z_PRIO_INFRONT,
-  MAP_Z_PRIO_LAST
-};
+enum { MAP_Z_DEPTH_FLOOR, MAP_Z_DEPTH_OBJ, MAP_Z_DEPTH_LAST };
+#define MAP_Z_DEPTH_FIRST MAP_Z_DEPTH_FLOOR
+
+#define FOR_ALL_Z_DEPTH(_z_depth_)                                                                                   \
+  for (uint8_t _z_depth_ = MAP_Z_DEPTH_FIRST; _z_depth_ < MAP_Z_DEPTH_LAST; _z_depth_++)
+
+enum { MAP_Z_PRIO_BEHIND, MAP_Z_PRIO_NORMAL, MAP_Z_PRIO_INFRONT, MAP_Z_PRIO_LAST };
 #define MAP_Z_PRIO_FIRST MAP_Z_PRIO_BEHIND
 
 #define FOR_ALL_Z_PRIO(_z_prio_) for (uint8_t _z_prio_ = MAP_Z_PRIO_FIRST; _z_prio_ < MAP_Z_PRIO_LAST; _z_prio_++)

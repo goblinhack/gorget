@@ -47,6 +47,14 @@ class Tp
 public:
   TpId id {};
 
+  //
+  // This allows us to draw floors, then objs and walls in order
+  //
+  uint8_t z_depth {};
+
+  //
+  // This is for objects at the same z depth
+  //
   uint8_t z_prio {};
 
   std::vector< class Tile * > tiles;
@@ -353,6 +361,9 @@ const char *to_short_string(Tpp tp) { return tp->text_short_name.c_str(); }
 bool tp_flag(Tpp tp, ThingFlag f) { return tp->flag[ f ]; }
 
 void tp_flag_set(Tpp tp, ThingFlag f, bool val) { tp->flag[ f ] = val; }
+
+void    tp_z_depth_set(Tpp tp, uint8_t val) { tp->z_depth = val; };
+uint8_t tp_z_depth_get(Tpp tp) { return tp->z_depth; };
 
 void    tp_z_prio_set(Tpp tp, uint8_t val) { tp->z_prio = val; };
 uint8_t tp_z_prio_get(Tpp tp) { return tp->z_prio; };

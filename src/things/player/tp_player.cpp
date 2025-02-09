@@ -18,7 +18,8 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_player, true);
   tp_flag_set(tp, is_tickable, true);
   tp_speed_set(tp, 100);
-  tp_z_prio_set(tp, MAP_Z_PRIO_INFRONT);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+  tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
   auto delay = 100;

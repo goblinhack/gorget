@@ -13,7 +13,8 @@ bool tp_load_floor(void)
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_floor, true);
-  tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
+  tp_z_prio_set(tp, MAP_Z_PRIO_BEHIND);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, tile_find_mand("floor.1"));
