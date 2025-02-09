@@ -47,6 +47,8 @@ int sdl_filter_events(void *userdata, SDL_Event *event)
 
 static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
+  TRACE_NO_INDENT();
+
   //
   // Pressing the same key
   //
@@ -72,6 +74,8 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keys
 
 static bool __attribute__((noinline)) sdl_event_keydown_same_key(Gamep g, SDL_Keysym *key)
 {
+  TRACE_NO_INDENT();
+
   //
   // SDL2 has no auto repeat.
   //
@@ -91,6 +95,8 @@ static bool __attribute__((noinline)) sdl_event_keydown_same_key(Gamep g, SDL_Ke
 
 static void __attribute__((noinline)) sdl_event_keydown_handler(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
+  TRACE_NO_INDENT();
+
   last_key_pressed.scancode = key->scancode;
   last_key_pressed.sym      = key->sym;
   last_key_pressed.mod      = key->mod;
@@ -102,6 +108,8 @@ static void __attribute__((noinline)) sdl_event_keydown_handler(Gamep g, SDL_Key
 
 static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
+  TRACE_NO_INDENT();
+
   sdl.event_count++;
 
   LOG("SDL: Keyboard: Key pressed keycode 0x%08" PRIx32 " = %s %d", event->key.keysym.sym,
@@ -124,6 +132,8 @@ static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key
 
 static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
+  TRACE_NO_INDENT();
+
   sdl.event_count++;
   if (g_grab_next_key) {
     LOG("SDL: Keyboard: Grabbed 0x%08" PRIx32 " = %s / %s", event->key.keysym.sym,
@@ -155,6 +165,8 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
 static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym *key, SDL_Event *event,
                                                             bool &processed_mouse_motion_event)
 {
+  TRACE_NO_INDENT();
+
   sdl.event_count++;
   sdl.mouse_down = sdl_get_mouse();
   int        mx;
@@ -173,7 +185,7 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym 
   last_mx = mx;
   last_my = my;
 
-  DBG("SDL: Mouse: Moved to @%d,%d (rel %d,%d) state %d (actually at %d,%d)", event->motion.x, event->motion.y,
+  LOG("SDL: Mouse: Moved to @%d,%d (rel %d,%d) state %d (actually at %d,%d)", event->motion.x, event->motion.y,
       event->motion.xrel, event->motion.yrel, sdl.mouse_down, mx, my);
 
   wid_mouse_visible = 1;
@@ -186,13 +198,15 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym 
 
 static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
+  TRACE_NO_INDENT();
+
   sdl.event_count++;
   sdl.mouse_down                = sdl_get_mouse();
   sdl.last_mouse_held_down_when = time_ms();
   sdl.held_mouse_x              = sdl.mouse_x;
   sdl.held_mouse_y              = sdl.mouse_y;
 
-  DBG("SDL: Mouse DOWN: button %d pressed at %d,%d state %X", event->button.button, event->button.x, event->button.y,
+  LOG("SDL: Mouse DOWN: button %d pressed at %d,%d state %X", event->button.button, event->button.x, event->button.y,
       sdl.mouse_down);
 
   auto now             = time_ms();
@@ -205,13 +219,15 @@ static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Keysym *k
 
 static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Keysym *key, SDL_Event *event)
 {
+  TRACE_NO_INDENT();
+
   sdl.event_count++;
   sdl.mouse_down                = sdl_get_mouse();
   sdl.last_mouse_held_down_when = 0;
   sdl.held_mouse_x              = 0;
   sdl.held_mouse_y              = 0;
 
-  DBG("SDL: Mouse UP: button %d released at %d,%d state %d", event->button.button, event->button.x, event->button.y,
+  LOG("SDL: Mouse UP: button %d released at %d,%d state %d", event->button.button, event->button.x, event->button.y,
       sdl.mouse_down);
 
   wid_mouse_up(g, event->button.button, sdl.mouse_x, sdl.mouse_y);
@@ -220,6 +236,7 @@ static void __attribute__((noinline)) sdl_event_mouseup(Gamep g, SDL_Keysym *key
 void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 {
   TRACE_NO_INDENT();
+
   SDL_Keysym *key = &event->key.keysym;
 
   wid_mouse_two_clicks = false;
@@ -251,7 +268,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
     case SDL_MOUSEWHEEL :
       {
         sdl.event_count++;
-        DBG("SDL: Mouse: Wheel scrolled %d in x and %d in y in window %d", event->wheel.x, event->wheel.y,
+        LOG("SDL: Mouse: Wheel scrolled %d in x and %d in y in window %d", event->wheel.x, event->wheel.y,
             event->wheel.windowID);
 
         sdl_get_mouse();
@@ -302,7 +319,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
     case SDL_JOYAXISMOTION :
       {
         sdl.event_count++;
-        DBG("SDL: Joystick %d: Axis %d moved by %d", event->jaxis.which, event->jaxis.axis, event->jaxis.value);
+        LOG("SDL: Joystick %d: Axis %d moved by %d", event->jaxis.which, event->jaxis.axis, event->jaxis.value);
 
         int axis  = event->jaxis.axis;
         int value = event->jaxis.value;
@@ -317,7 +334,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         sdl.right_fire = false;
 
         if (sdl.joy_axes[ 2 ] > sdl.joy_deadzone) {
-          DBG("SDL: left fire");
+          LOG("SDL: left fire");
           sdl.left_fire                               = true;
           sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = (uint8_t) 1;
         } else {
@@ -325,7 +342,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         }
 
         if (sdl.joy_axes[ 5 ] > sdl.joy_deadzone) {
-          DBG("SDL: right fire");
+          LOG("SDL: right fire");
           sdl.right_fire                               = true;
           sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = (uint8_t) 1;
         } else {
@@ -342,59 +359,59 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
     case SDL_JOYBALLMOTION :
       {
         sdl.event_count++;
-        DBG("SDL: Joystick %d: Ball %d moved by %d,%d", event->jball.which, event->jball.ball, event->jball.xrel,
+        LOG("SDL: Joystick %d: Ball %d moved by %d,%d", event->jball.which, event->jball.ball, event->jball.xrel,
             event->jball.yrel);
         break;
       }
     case SDL_JOYHATMOTION :
       {
         sdl.event_count++;
-        DBG("SDL: Joystick %d: Hat %d moved to ", event->jhat.which, event->jhat.hat);
+        LOG("SDL: Joystick %d: Hat %d moved to ", event->jhat.which, event->jhat.hat);
 
         switch (event->jhat.value) {
           case SDL_HAT_CENTERED : break;
           case SDL_HAT_UP :
             {
-              DBG("SDL: UP");
+              LOG("SDL: UP");
               sdl.joy2_up = true;
               break;
             }
           case SDL_HAT_RIGHTUP :
             {
-              DBG("SDL: RIGHTUP");
+              LOG("SDL: RIGHTUP");
               sdl.joy2_right = true;
               sdl.joy2_up    = true;
               break;
             }
           case SDL_HAT_RIGHT :
             {
-              DBG("SDL: RIGHT");
+              LOG("SDL: RIGHT");
               sdl.joy2_right = true;
               break;
             }
           case SDL_HAT_RIGHTDOWN :
             {
-              DBG("SDL: RIGHTDOWN");
+              LOG("SDL: RIGHTDOWN");
               sdl.joy2_right = true;
               sdl.joy2_down  = true;
               break;
             }
           case SDL_HAT_DOWN :
             {
-              DBG("SDL: DOWN");
+              LOG("SDL: DOWN");
               sdl.joy2_down = true;
               break;
             }
           case SDL_HAT_LEFTDOWN :
             {
-              DBG("SDL: LEFTDOWN");
+              LOG("SDL: LEFTDOWN");
               sdl.joy2_left = true;
               sdl.joy2_down = true;
               break;
             }
           case SDL_HAT_LEFT :
             {
-              DBG("SDL: LEFT");
+              LOG("SDL: LEFT");
               sdl.joy2_left = true;
               break;
             }
@@ -402,17 +419,17 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
             {
               sdl.joy2_left = true;
               sdl.joy2_up   = true;
-              DBG("SDL: LEFTUP");
+              LOG("SDL: LEFTUP");
               break;
             }
-          default : DBG("SDL: UNKNOWN"); break;
+          default : LOG("SDL: UNKNOWN"); break;
         }
         break;
       }
     case SDL_JOYBUTTONDOWN :
       {
         sdl.event_count++;
-        DBG("SDL: Joystick %d: Button %d pressed", event->jbutton.which, event->jbutton.button);
+        LOG("SDL: Joystick %d: Button %d pressed", event->jbutton.which, event->jbutton.button);
         sdl.joy_buttons[ event->jbutton.button ] = (uint8_t) 1;
         sdl_get_mouse();
         wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
@@ -421,13 +438,13 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
     case SDL_JOYBUTTONUP :
       {
         sdl.event_count++;
-        DBG("SDL: Joystick %d: Button %d released", event->jbutton.which, event->jbutton.button);
+        LOG("SDL: Joystick %d: Button %d released", event->jbutton.which, event->jbutton.button);
         sdl.joy_buttons[ event->jbutton.button ] = (uint8_t) 0;
         break;
       }
     case SDL_CLIPBOARDUPDATE :
       {
-        DBG("SDL: Clipboard updated");
+        LOG("SDL: Clipboard updated");
         break;
       }
     case SDL_QUIT :
@@ -440,12 +457,12 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
       }
     case SDL_USEREVENT :
       {
-        DBG("SDL: User event %d", event->user.code);
+        LOG("SDL: User event %d", event->user.code);
         break;
       }
     default :
       {
-        DBG("SDL: Unknown event %d", event->type);
+        LOG("SDL: Unknown event %d", event->type);
         break;
       }
   }

@@ -14,7 +14,7 @@
 //
 uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
 {
-  DBG("Game mouse down");
+  LOG("Game mouse down");
   TRACE_AND_INDENT();
 
   if (wid_some_recent_event_occurred()) {
@@ -22,6 +22,10 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
   }
 
   if (! g) {
+    return false;
+  }
+
+  if (game_state(g) != STATE_PLAYING) {
     return false;
   }
 
@@ -42,7 +46,7 @@ uint8_t game_mouse_up(Gamep g, int x, int y, uint32_t button) { return false; }
 uint8_t game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely)
 {
   DBG2("Game mouse motion");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (wid_some_recent_event_occurred()) {
     return false;
@@ -58,22 +62,22 @@ uint8_t game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx,
 
 uint8_t game_input(Gamep g, const SDL_Keysym *key)
 {
+  LOG("Pressed a key");
   TRACE_NO_INDENT();
-  DBG("INF: Pressed a key");
 
   if (! g) {
-    DBG("INF: Pressed a key; no game");
+    DBG("Pressed a key; no game");
     return false;
   }
 
   auto v = game_levels_get(g);
   if (! v) {
-    DBG("INF: Pressed a key; no levels");
+    DBG("Pressed a key; no levels");
     return false;
   }
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    DBG("INF: Pressed a key; over console, ignore");
+    DBG("Pressed a key; over console, ignore");
     return false;
   }
 
@@ -92,7 +96,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   }
 
   if (sdlk_eq(*key, game_key_quit_get(g))) {
-    LOG("INF: Pressed quit key");
+    LOG("Pressed quit key");
     TRACE_AND_INDENT();
     if (g_opt_quick_start) {
       DIE_CLEAN("Quick quit");
@@ -102,22 +106,22 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   }
 
   if (sdlk_eq(*key, game_key_help_get(g))) {
-    LOG("INF: Pressed help key");
+    LOG("Pressed help key");
     TRACE_AND_INDENT();
     wid_cfg_keyboard_select(g);
     return true;
   }
   if (sdlk_eq(*key, game_key_load_get(g))) {
-    LOG("INF: Pressed load key");
+    LOG("Pressed load key");
     TRACE_AND_INDENT();
-    LOG("INF: Loading game");
+    LOG("Loading game");
     wid_load_select(g);
     return true;
   }
   if (sdlk_eq(*key, game_key_save_get(g))) {
-    LOG("INF: Pressed save key");
+    LOG("Pressed save key");
     TRACE_AND_INDENT();
-    LOG("INF: Saving the game");
+    LOG("Saving the game");
     wid_save_select(g);
     return true;
   }

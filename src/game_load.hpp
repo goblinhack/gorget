@@ -621,7 +621,7 @@ void Game::load_select(void)
     if (! load(tmp_file, tmp)) {
       if (! game_load_error.empty()) {
         s += game_load_error;
-        wid_set_style(w, UI_WID_STYLE_RED);
+        wid_set_style(w, UI_WID_STYLE_HORIZ_DARK);
         CON("GAME LOADING ERROR: %s", game_load_error.c_str());
       } else {
         if (slot == UI_WID_SAVE_SLOTS - 1) {
@@ -643,7 +643,7 @@ void Game::load_select(void)
       } else {
         wid_set_on_mouse_up(game, w, wid_load_mouse_up);
       }
-      wid_set_style(w, UI_WID_STYLE_GREEN);
+      wid_set_style(w, UI_WID_STYLE_HORIZ_LIGHT);
       slot_valid[ slot ] = true;
     }
     wid_set_int_context(w, slot);

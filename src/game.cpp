@@ -266,16 +266,16 @@ void Config::reset(void)
 
   key_attack.sym     = SDLK_SPACE;
   key_help.sym       = SDLK_h;
-  key_load.sym       = SDLK_F11;
+  key_load.sym       = SDLK_F12;
   key_move_down.sym  = SDLK_s;
   key_move_left.sym  = SDLK_a;
   key_move_right.sym = SDLK_d;
   key_move_up.sym    = SDLK_w;
   key_quit.sym       = SDLK_q;
   key_quit.mod       = KMOD_SHIFT;
-  key_save.sym       = SDLK_F12;
+  key_save.sym       = SDLK_F1;
   key_screenshot.sym = SDLK_F10;
-  key_console.sym    = SDLK_TAB;
+  key_console.sym    = SDLK_BACKQUOTE;
   key_console.mod    = KMOD_SHIFT;
   music_volume       = {MIX_MAX_VOLUME / 3};
   sdl_delay          = 10;
@@ -373,6 +373,8 @@ void Game::start_playing(void)
   TRACE_AND_INDENT();
 
   auto g = this;
+
+  wid_topcon_init(g);
   TOPCON("Welcome to the dungeons of dread, home of the black dragon, %%fg=red$Gorget%%fg=reset$.");
   TOPCON("Complete all %%fg=yellow$16%%fg=reset$ levels and collect the Darkenstone to win.");
 
@@ -417,6 +419,10 @@ void Game::display(void)
   auto g = this;
   auto v = game_levels_get(g);
   if (! v) {
+    return;
+  }
+
+  if (game->state != STATE_PLAYING) {
     return;
   }
 
@@ -468,6 +474,8 @@ void Game::state_reset(const std::string &why)
 }
 void game_state_reset(Gamep g, const char *why) { g->state_reset(why); }
 
+uint8_t game_state(Gamep g) { return g->state; }
+
 void Game::state_change(uint8_t new_state, const std::string &why)
 {
   TRACE_NO_INDENT();
@@ -497,25 +505,24 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   switch (new_state) {
     case STATE_MAIN_MENU :
     case STATE_QUITTING :
-      wid_leftbar_fini(g);
       wid_load_destroy(g);
       wid_main_menu_destroy(g);
       wid_quit_destroy(g);
-      wid_rightbar_fini(g);
       wid_save_destroy(g);
+
+      wid_leftbar_fini(g);
+      wid_rightbar_fini(g);
       wid_topcon_fini(g);
       break;
     case STATE_PLAYING :
-      wid_leftbar_fini(g);
       wid_load_destroy(g);
       wid_main_menu_destroy(g);
       wid_quit_destroy(g);
-      wid_rightbar_fini(g);
       wid_save_destroy(g);
-      wid_topcon_fini(g);
-      wid_leftbar_init(g);
-      wid_rightbar_init(g);
-      wid_topcon_init(g);
+      if (old_state == STATE_MAIN_MENU) {
+        wid_leftbar_init(g);
+        wid_rightbar_init(g);
+      }
       break;
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :

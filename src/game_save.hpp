@@ -431,7 +431,7 @@ void Game::save_select(void)
     point tl(0, y_at);
     point br(menu_width - 2, y_at);
 
-    std::string s = std::to_string(slot) + " ";
+    std::string s = std::to_string(slot) + ": ";
     if (! load(tmp_file, tmp)) {
       if (slot == UI_WID_SAVE_SLOTS - 1) {
         s += "<no snapshot>";
@@ -446,7 +446,6 @@ void Game::save_select(void)
         s += tmp.save_meta;
       }
       wid_set_style(w, UI_WID_STYLE_HORIZ_LIGHT);
-      wid_set_style(w, UI_WID_STYLE_GREEN);
     }
 
     if (slot == UI_WID_SAVE_SLOTS - 1) {

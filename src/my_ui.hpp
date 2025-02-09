@@ -36,7 +36,7 @@
 #define UI_TYPE_PIXELART            0
 #define UI_TYPES_MAX                1
 #define UI_WID_POPUP_WIDTH_NORMAL   18
-#define UI_WID_POPUP_WIDTH_WIDE     24
+#define UI_WID_POPUP_WIDTH_WIDE     60
 #define UI_WID_SAVE_SLOTS           10 // How many save game slots
 
 //
