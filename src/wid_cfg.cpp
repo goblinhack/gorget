@@ -217,4 +217,6 @@ void wid_cfg_top_menu(Gamep g)
   }
 
   wid_update(g, wid_cfg_top_window->wid_text_area->wid_text_area);
+
+  game_state_change(g, STATE_MAIN_MENU, "main menu");
 }

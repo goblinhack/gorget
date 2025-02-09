@@ -453,4 +453,5 @@ void wid_new_game(Gamep g)
   game_state_reset(g, "new game");
   game_create_levels(g);
   game_start_playing(g);
+  game_state_change(g, STATE_PLAYING, "new game");
 }

@@ -27,9 +27,6 @@ void game_visible_map_pix_get(Gamep, int *visible_map_tl_x, int *visible_map_tl_
 void game_visible_map_pix_set(Gamep, int visible_map_tl_x, int visible_map_tl_y, int visible_map_br_x,
                               int visible_map_br_y);
 
-void game_visible_map_mouse_get(Gamep game, int *visible_map_mouse_x, int *visible_map_mouse_y);
-void game_visible_map_mouse_set(Gamep game, int visible_map_mouse_x, int visible_map_mouse_y);
-
 int  game_tiles_visible_across_get(Gamep);
 void game_tiles_visible_across_set(Gamep, int val);
 

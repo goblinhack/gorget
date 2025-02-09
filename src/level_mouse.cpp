@@ -9,6 +9,7 @@
 #include "my_main.hpp"
 #include "my_point.hpp"
 #include "my_sdl_event.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
 
 #include <string.h>
@@ -20,6 +21,10 @@
 void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_AND_INDENT();
+
+  if (! v || ! l) {
+    return;
+  }
 
   //
   // Get the visible map bounds
@@ -44,7 +49,14 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   int   visible_map_mouse_y = (int) ((float) rel_map_mouse_y / scale_y);
 
   //
-  // Now we wait for level_display to find the cursor
+  // Compenstate for level scroll
   //
-  game_visible_map_mouse_set(g, visible_map_mouse_x, visible_map_mouse_y);
+  visible_map_mouse_x += v->pixel_map_at.x;
+  visible_map_mouse_y += v->pixel_map_at.y;
+
+  //
+  // Update teh cursor
+  //
+  point p(visible_map_mouse_x / TILE_WIDTH, visible_map_mouse_y / TILE_HEIGHT);
+  level_cursor_set(g, v, p);
 }

@@ -12,9 +12,6 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-static int visible_map_mouse_x;
-static int visible_map_mouse_y;
-
 static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint16_t tile_index, point tl, point br,
                                      point offset)
 {
@@ -115,20 +112,6 @@ static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thi
   }
 
   level_display_tile_index(g, v, l, tp, tile_index, tl, br, point(0, 0));
-
-  //
-  // Is the cursor here?
-  //
-  if (tp_is_floor(tp)) {
-    tl.x -= TILE_WIDTH / 2;
-    tl.y += TILE_HEIGHT / 2;
-    br.x -= TILE_WIDTH / 2;
-    br.y += TILE_HEIGHT / 2;
-    if ((visible_map_mouse_x >= tl.x) && (visible_map_mouse_x < br.x) && (visible_map_mouse_y >= tl.y)
-        && (visible_map_mouse_y < br.y)) {
-      level_cursor_set(g, v, p);
-    }
-  }
 }
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)
@@ -213,10 +196,8 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   blit_init();
 
   //
-  // We need to find out what pixel on the map the mouse is over
+  // Display tiles in z prio order
   //
-  game_visible_map_mouse_get(g, &visible_map_mouse_x, &visible_map_mouse_y);
-
   for (auto y = v->miny; y < v->maxy; y++) {
     FOR_ALL_Z_PRIO(z_prio)
     {

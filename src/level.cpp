@@ -238,7 +238,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
 
 bool level_set_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot, ThingId id)
 {
-  if (level_is_oob(l, p)) {
+  if (is_oob(p)) {
     return false;
   }
   l->thing_id[ p.x ][ p.y ][ slot ] = id;
@@ -247,7 +247,7 @@ bool level_set_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot, Thin
 
 ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot)
 {
-  if (level_is_oob(l, p)) {
+  if (is_oob(p)) {
     return 0;
   }
   return l->thing_id[ p.x ][ p.y ][ slot ];
@@ -264,11 +264,8 @@ bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, point p)
   return false;
 }
 
-bool level_is_oob(Levelp l, point p)
+bool is_oob(point p)
 {
-  if (! l) {
-    return true;
-  }
   if (p.x < 0) {
     return true;
   }
@@ -361,7 +358,7 @@ bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, point p, Tpp tp)
     return false;
   }
 
-  if (level_is_oob(l, p)) {
+  if (is_oob(p)) {
     return false;
   }
 

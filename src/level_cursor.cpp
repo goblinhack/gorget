@@ -19,7 +19,9 @@ void level_cursor_set(Gamep g, Levelsp v, point p)
 {
   TRACE_AND_INDENT();
 
-  v->cursor_at = p;
+  if (! is_oob( p)) {
+    v->cursor_at = p;
+  }
 }
 
 //

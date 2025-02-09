@@ -150,8 +150,9 @@ void   level_destroy(Gamep, Levelsp, Levelp);
 
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
 
+bool is_oob(point);
+
 bool level_flag(Gamep, Levelsp, Levelp, ThingFlag, point p);
-bool level_is_oob(Levelp, point);
 bool level_is_same_obj_type_at(Gamep, Levelsp, Levelp, point p, Tpp);
 bool level_set_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot, ThingId);
 bool level_tick_is_in_progress(Gamep, Levelsp, Levelp);

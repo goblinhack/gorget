@@ -214,7 +214,7 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 //
 bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 {
-  if (level_is_oob(l, to)) {
+  if (is_oob( to)) {
     return false;
   }
 
@@ -261,7 +261,7 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 {
-  if (level_is_oob(l, to)) {
+  if (is_oob( to)) {
     return false;
   }
 
@@ -313,7 +313,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   point p = t->at;
-  if (level_is_oob(l, p)) {
+  if (is_oob( p)) {
     return;
   }
 
@@ -413,7 +413,7 @@ void thing_pop(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
   point p = t->last_pushed_at;
 
-  if (level_is_oob(l, p)) {
+  if (is_oob( p)) {
     return;
   }
 

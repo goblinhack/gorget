@@ -192,8 +192,6 @@ public:
   int visible_map_tl_y;
   int visible_map_br_x;
   int visible_map_br_y;
-  int visible_map_mouse_x;
-  int visible_map_mouse_y;
 
   /////////////////////////////////////////////////////////////////////////
   // not worth saving
@@ -586,28 +584,6 @@ void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_
   g->visible_map_tl_y = visible_map_tl_y;
   g->visible_map_br_x = visible_map_br_x;
   g->visible_map_br_y = visible_map_br_y;
-}
-
-void game_visible_map_mouse_get(Gamep g, int *visible_map_mouse_x, int *visible_map_mouse_y)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  *visible_map_mouse_x = g->visible_map_mouse_x;
-  *visible_map_mouse_y = g->visible_map_mouse_y;
-}
-
-void game_visible_map_mouse_set(Gamep g, int visible_map_mouse_x, int visible_map_mouse_y)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  g->visible_map_mouse_x = visible_map_mouse_x;
-  g->visible_map_mouse_y = visible_map_mouse_y;
 }
 
 int game_tiles_visible_across_get(Gamep g)
