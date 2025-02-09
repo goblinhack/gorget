@@ -301,7 +301,9 @@ Game::Game(std::string vappdata)
   saved_dir = appdata + DIR_SEP + "gorget" + DIR_SEP;
   save_slot = 1;
 
-  save_meta = "seed " + seed_name + ", ";
+  if (seed_name != "") {
+    save_meta = "seed " + seed_name + ", ";
+  }
   save_meta += string_timestamp();
 
   save_file = saved_dir + "saved-slot-" + std::to_string(save_slot);
