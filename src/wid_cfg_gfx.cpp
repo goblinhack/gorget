@@ -357,7 +357,23 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, res);
     wid_set_text_lhs(w, true);
   }
-  if (! game_gfx_fullscreen_desktop_get(g)) {
+
+  if (game_gfx_fullscreen_desktop_get(g)) {
+    y_at++;
+    {
+      TRACE_AND_INDENT();
+      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto w = wid_new_square_button(g, p, "Notice");
+
+      point tl(1, y_at);
+      point br(width - 2, y_at);
+      wid_set_shape_none(w);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, "** Disable full desktop to change **");
+      wid_set_text_lhs(w, true);
+    }
+    y_at++;
+  } else {
     {
       TRACE_AND_INDENT();
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
@@ -498,7 +514,7 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Fullscreen desktop");
+    auto w = wid_new_square_button(g, p, "Full desktop");
 
     point tl(1, y_at);
     point br(width / 2, y_at);
