@@ -91,19 +91,17 @@ static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t butt
   if (local_g_config_changed) {
     local_g_config_changed = false;
     game_load_config(g);
-    sdl_config_update_all(g);
   }
   wid_cfg_keyboard_destroy(g);
 
   if (game_levels_get(g)) {
     //
-    // Back to the g
+    // Back to the game
     //
   } else {
     wid_cfg_top_menu(g);
   }
 
-  sdl_config_update_all(g);
   return true;
 }
 
@@ -116,7 +114,7 @@ static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button
 
   if (game_levels_get(g)) {
     //
-    // Back to the g
+    // Back to the game
     //
   } else {
     wid_cfg_top_menu(g);
@@ -132,7 +130,7 @@ static bool wid_cfg_keyboard_back(Gamep g, Widp w, int x, int y, uint32_t button
 
   if (game_levels_get(g)) {
     //
-    // Back to the g
+    // Back to the game
     //
   } else {
     wid_cfg_top_menu(g);
