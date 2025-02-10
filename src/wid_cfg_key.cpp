@@ -18,7 +18,7 @@ static bool local_g_config_changed;
 
 static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   SDL_Keysym none = {};
 
   if (sdlk_eq(game_key_help_get(g), code)) {
@@ -69,7 +69,7 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
 
 void wid_cfg_keyboard_destroy(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = false;
 
   if (! wid_cfg_keyboard_window) {
@@ -86,7 +86,7 @@ void wid_cfg_keyboard_destroy(Gamep g)
 
 static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   CON("INF: Reload config");
   if (local_g_config_changed) {
     local_g_config_changed = false;
@@ -109,7 +109,7 @@ static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t butt
 
 static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   CON("INF: Save config");
   game_save_config(g);
   wid_cfg_keyboard_destroy(g);
@@ -127,7 +127,7 @@ static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button
 
 static bool wid_cfg_keyboard_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_cfg_keyboard_destroy(g);
 
   if (game_levels_get(g)) {
@@ -145,7 +145,7 @@ static SDL_Keysym none = {};
 
 static void wid_cfg_key_move_left_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_move_left_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -155,7 +155,7 @@ static void wid_cfg_key_move_left_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_move_right_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_move_right_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -165,7 +165,7 @@ static void wid_cfg_key_move_right_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_move_up_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_move_up_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -175,7 +175,7 @@ static void wid_cfg_key_move_up_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_move_down_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_move_down_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -185,7 +185,7 @@ static void wid_cfg_key_move_down_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_attack_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_attack_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -195,7 +195,7 @@ static void wid_cfg_key_attack_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_unused1_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_unused1_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -205,7 +205,7 @@ static void wid_cfg_key_unused1_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_save_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_save_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -215,7 +215,7 @@ static void wid_cfg_key_save_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_load_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_load_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -225,7 +225,7 @@ static void wid_cfg_key_load_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_help_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_help_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -235,7 +235,7 @@ static void wid_cfg_key_help_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_console_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_console_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -245,7 +245,7 @@ static void wid_cfg_key_console_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_quit_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_quit_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -255,7 +255,7 @@ static void wid_cfg_key_quit_set(Gamep g, SDL_Keysym code)
 
 static void wid_cfg_key_screenshot_set(Gamep g, SDL_Keysym code)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   game_key_screenshot_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
@@ -265,7 +265,7 @@ static void wid_cfg_key_screenshot_set(Gamep g, SDL_Keysym code)
 
 static void grab_key(Gamep g, const std::string which)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_notice("Press a key for " + which);
   g_grab_next_key        = true;
   local_g_config_changed = true;
@@ -273,7 +273,7 @@ static void grab_key(Gamep g, const std::string which)
 
 static bool wid_cfg_keyboard_profile_arrow_keys(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   SDL_Keysym k {};
 
   local_g_config_changed = true;
@@ -304,7 +304,7 @@ static bool wid_cfg_keyboard_profile_arrow_keys(Gamep g, Widp w, int x, int y, u
 
 static bool wid_cfg_keyboard_profile_wasd(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   SDL_Keysym k = {};
 
   local_g_config_changed = true;
@@ -335,7 +335,7 @@ static bool wid_cfg_keyboard_profile_wasd(Gamep g, Widp w, int x, int y, uint32_
 
 static bool wid_cfg_key_move_left(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "move left");
   sdl.on_sdl_key_grab    = wid_cfg_key_move_left_set;
   local_g_config_changed = true;
@@ -344,7 +344,7 @@ static bool wid_cfg_key_move_left(Gamep g, Widp w, int x, int y, uint32_t button
 
 static bool wid_cfg_key_move_right(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "move right");
   sdl.on_sdl_key_grab    = wid_cfg_key_move_right_set;
   local_g_config_changed = true;
@@ -353,7 +353,7 @@ static bool wid_cfg_key_move_right(Gamep g, Widp w, int x, int y, uint32_t butto
 
 static bool wid_cfg_key_move_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "move up");
   sdl.on_sdl_key_grab    = wid_cfg_key_move_up_set;
   local_g_config_changed = true;
@@ -362,7 +362,7 @@ static bool wid_cfg_key_move_up(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_move_down(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "move down");
   sdl.on_sdl_key_grab    = wid_cfg_key_move_down_set;
   local_g_config_changed = true;
@@ -371,7 +371,7 @@ static bool wid_cfg_key_move_down(Gamep g, Widp w, int x, int y, uint32_t button
 
 static bool wid_cfg_key_attack(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "attack");
   sdl.on_sdl_key_grab    = wid_cfg_key_attack_set;
   local_g_config_changed = true;
@@ -380,7 +380,7 @@ static bool wid_cfg_key_attack(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_unused1(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "item unused1");
   sdl.on_sdl_key_grab    = wid_cfg_key_unused1_set;
   local_g_config_changed = true;
@@ -389,7 +389,7 @@ static bool wid_cfg_key_unused1(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "save game");
   sdl.on_sdl_key_grab    = wid_cfg_key_save_set;
   local_g_config_changed = true;
@@ -398,7 +398,7 @@ static bool wid_cfg_key_save(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_load(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "load game");
   sdl.on_sdl_key_grab    = wid_cfg_key_load_set;
   local_g_config_changed = true;
@@ -407,7 +407,7 @@ static bool wid_cfg_key_load(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_help(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "help");
   sdl.on_sdl_key_grab    = wid_cfg_key_help_set;
   local_g_config_changed = true;
@@ -416,7 +416,7 @@ static bool wid_cfg_key_help(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_console(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "toggle console");
   sdl.on_sdl_key_grab    = wid_cfg_key_console_set;
   local_g_config_changed = true;
@@ -425,7 +425,7 @@ static bool wid_cfg_key_console(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_quit(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "quit");
   sdl.on_sdl_key_grab    = wid_cfg_key_quit_set;
   local_g_config_changed = true;
@@ -434,7 +434,7 @@ static bool wid_cfg_key_quit(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_screenshot(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   grab_key(g, "screenshot grab");
   local_g_config_changed = true;
   sdl.on_sdl_key_grab    = wid_cfg_key_screenshot_set;
@@ -443,7 +443,7 @@ static bool wid_cfg_key_screenshot(Gamep g, Widp w, int x, int y, uint32_t butto
 
 static bool wid_cfg_keyboard_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -456,7 +456,7 @@ static bool wid_cfg_keyboard_key_up(Gamep g, Widp w, const struct SDL_Keysym *ke
       switch (key->sym) {
         default :
           {
-            TRACE_AND_INDENT();
+            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'b' :
@@ -472,7 +472,7 @@ static bool wid_cfg_keyboard_key_up(Gamep g, Widp w, const struct SDL_Keysym *ke
 
 static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -483,7 +483,7 @@ static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *
 
 void wid_cfg_keyboard_select(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_notice_destroy();
 
   if (wid_cfg_keyboard_window) {
@@ -494,30 +494,31 @@ void wid_cfg_keyboard_select(Gamep g)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point outer_tl(m - TERM_WIDTH / 2, 2);
-  point outer_br(m + TERM_WIDTH / 2 - 1, TERM_HEIGHT - 2);
+  point outer_tl(m - TERM_WIDTH / 4, 10);
+  point outer_br(m + TERM_WIDTH / 4, TERM_HEIGHT - 10);
   auto  width = outer_br.x - outer_tl.x;
 
   wid_cfg_keyboard_window = new WidPopup(g, "Keyboard select", outer_tl, outer_br, nullptr, "", false, true);
 
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     Widp w = wid_cfg_keyboard_window->wid_popup_container;
     wid_set_on_key_up(g, w, wid_cfg_keyboard_key_up);
     wid_set_on_key_down(g, w, wid_cfg_keyboard_key_down);
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
   }
 
   auto rhs_button_left  = 5;
-  auto rhs_button_right = 20;
+  auto rhs_button_right = 33;
 
   int y_at = 0;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Keyboard");
 
     point tl(0, y_at);
-    point br(width - 1, y_at);
+    point br(width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Keyboard");
@@ -525,7 +526,7 @@ void wid_cfg_keyboard_select(Gamep g)
 
   y_at = 2;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Back");
 
@@ -538,24 +539,24 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Back");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Save");
 
-    point tl(width - 18, y_at);
-    point br(width - 13, y_at + 2);
+    point tl(width - 17, y_at);
+    point br(width - 12, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(g, w, wid_cfg_keyboard_save);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Save");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Cancel");
 
-    point tl(width - 11, y_at);
-    point br(width - 4, y_at + 2);
+    point tl(width - 10, y_at);
+    point br(width - 3, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(g, w, wid_cfg_keyboard_cancel);
     wid_set_pos(w, tl, br);
@@ -568,12 +569,12 @@ void wid_cfg_keyboard_select(Gamep g)
 
   y_at += 3;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "");
 
     point tl(1, y_at);
-    point br(width - 4, y_at);
+    point br(width - 3, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -584,12 +585,12 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "");
 
     point tl(1, y_at);
-    point br(width - 4, y_at);
+    point br(width - 3, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -605,7 +606,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "save");
 
@@ -617,7 +618,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Save game");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -636,7 +637,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "load");
 
@@ -648,7 +649,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Load game");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -668,7 +669,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at += 2;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move up");
 
@@ -684,7 +685,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Move up");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -705,7 +706,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move left");
 
@@ -717,7 +718,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Move left");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -736,7 +737,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move down");
 
@@ -748,7 +749,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Move down");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -767,7 +768,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move right");
 
@@ -779,7 +780,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Move right");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -803,7 +804,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Attack");
 
@@ -815,7 +816,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Attack");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -839,7 +840,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Take a screenshot");
 
@@ -851,7 +852,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Take a screenshot");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -875,7 +876,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "quit");
 
@@ -887,7 +888,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Quit");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -906,7 +907,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "console");
 
@@ -918,7 +919,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Debug console (+shift)");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "console");
 
@@ -937,7 +938,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "help");
 
@@ -949,7 +950,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "This useless help");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
@@ -970,7 +971,7 @@ void wid_cfg_keyboard_select(Gamep g)
   ///////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused1");
 
@@ -982,7 +983,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_text(w, "Unused1");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 

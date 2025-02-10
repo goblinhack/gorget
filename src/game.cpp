@@ -276,7 +276,6 @@ void Config::reset(void)
   key_save.sym       = SDLK_F1;
   key_screenshot.sym = SDLK_F10;
   key_console.sym    = SDLK_BACKQUOTE;
-  key_console.mod    = KMOD_SHIFT;
   music_volume       = {MIX_MAX_VOLUME / 3};
   sdl_delay          = 10;
   sound_volume       = {MIX_MAX_VOLUME / 2};

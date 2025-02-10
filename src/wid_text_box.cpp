@@ -26,7 +26,7 @@ WidTextBox::~WidTextBox()
   wid_destroy(g, &wid_text_area);
 }
 
-WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool vhoriz_scroll, bool vvert_scoll,
+WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool horiz_scroll, bool vert_scroll,
                        int vscroll_height_in)
     : scroll_height(vscroll_height_in), tl(vtl), br(vbr), wid_parent(vparent)
 {
@@ -37,7 +37,7 @@ WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool vhoriz_
   width = w;
 
   if (scroll_height == -1) {
-    if (vvert_scoll) {
+    if (vert_scroll) {
       scroll_height = h * 2;
     } else {
       scroll_height = h;
@@ -77,7 +77,7 @@ WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool vhoriz_
     Widp prev {};
 
     int lines_of_text;
-    if (vvert_scoll) {
+    if (vert_scroll) {
       lines_of_text = scroll_height;
     } else {
       lines_of_text = wid_get_height(wid_text_area);
@@ -111,22 +111,22 @@ WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool vhoriz_
     wid_raise(g, wid_text_last);
   }
 
-  if (vvert_scoll) {
+  if (vert_scroll) {
     wid_vert_scroll = wid_new_vert_scroll_bar(g, wid_text_box_container, "text box vert scroll", wid_text_area);
   }
 
-  if (vhoriz_scroll) {
+  if (horiz_scroll) {
     wid_horiz_scroll = wid_new_horiz_scroll_bar(g, wid_text_box_container, "text box horiz scroll", wid_text_area);
   }
 
   wid_update(g, wid_text_box_container);
 
-  if (vhoriz_scroll) {
+  if (horiz_scroll) {
     wid_hide(g, wid_get_parent(wid_horiz_scroll));
     wid_hide(g, wid_horiz_scroll);
   }
 
-  if (vvert_scoll) {
+  if (vert_scroll) {
     wid_visible(g, wid_get_parent(wid_vert_scroll));
     wid_visible(g, wid_vert_scroll);
   }
@@ -149,8 +149,7 @@ void WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
       line_count++;
       wid_update(g, wid_text_box_container);
     } else {
-      CON("Text box overflow on [%s] height %d line_count %d", str.c_str(), height, line_count);
-      backtrace_dump();
+      ERR("Text box overflow on [%s] height %d line_count %d", str.c_str(), height, line_count);
       return;
     }
   } else {
