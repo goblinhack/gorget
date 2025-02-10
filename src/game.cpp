@@ -272,7 +272,6 @@ void Config::reset(void)
   key_move_right.sym = SDLK_d;
   key_move_up.sym    = SDLK_w;
   key_quit.sym       = SDLK_q;
-  key_quit.mod       = KMOD_SHIFT;
   key_save.sym       = SDLK_F1;
   key_screenshot.sym = SDLK_F10;
   key_console.sym    = SDLK_BACKQUOTE;
@@ -501,7 +500,7 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   TRACE_AND_INDENT();
 
   //
-  // Actions for the new state
+  // Cleanup actions for the new state
   //
   switch (new_state) {
     case STATE_MAIN_MENU :
@@ -520,6 +519,21 @@ void Game::state_change(uint8_t new_state, const std::string &why)
       wid_main_menu_destroy(g);
       wid_quit_destroy(g);
       wid_save_destroy(g);
+      break;
+    case STATE_KEYBOARD_MENU :
+    case STATE_LOAD_MENU :
+    case STATE_SAVE_MENU :
+    case STATE_QUIT_MENU : break;
+  }
+
+  //
+  // Enter the new state
+  //
+  switch (new_state) {
+    case STATE_MAIN_MENU : wid_main_menu_select(g); break;
+
+    case STATE_QUITTING : break;
+    case STATE_PLAYING :
       if (old_state == STATE_MAIN_MENU) {
         wid_leftbar_init(g);
         wid_rightbar_init(g);

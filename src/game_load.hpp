@@ -32,7 +32,7 @@ std::array< bool, UI_WID_SAVE_SLOTS > slot_valid;
 
 std::istream &operator>>(std::istream &in, Bits< SDL_Keysym & > my)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   in >> bits(my.t.scancode);
   in >> bits(my.t.sym);
   in >> bits(my.t.mod);
@@ -42,7 +42,7 @@ std::istream &operator>>(std::istream &in, Bits< SDL_Keysym & > my)
 
 std::istream &operator>>(std::istream &in, Bits< Config & > my)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   in >> bits(my.t.version);
   LOG("Read config: version                      = [%s]", my.t.version.c_str());
@@ -199,7 +199,7 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
 
 std::istream &operator>>(std::istream &in, Bits< class Game & > my)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   in >> bits(my.t.version);
   in >> bits(my.t.serialized_size);
 
@@ -237,7 +237,7 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
 // ios::ate, open at end
 std::vector< char > read_file(const std::string filename)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
   if (ifs.is_open()) {
     ifs.unsetf(std::ios::skipws);
@@ -255,7 +255,7 @@ std::vector< char > read_file(const std::string filename)
 
 static std::vector< char > read_lzo_file(const std::string filename, lzo_uint *uncompressed_sz, uint32_t *cs)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
   if (ifs.is_open()) {
     // tellg is not ideal, look into <filesystem> post mojave
@@ -281,7 +281,7 @@ static std::vector< char > read_lzo_file(const std::string filename, lzo_uint *u
 
 uint32_t csum(char *mem, uint32_t len)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   uint32_t ret = 0;
   while (len--) {
     ret <<= 1;
@@ -293,7 +293,7 @@ uint32_t csum(char *mem, uint32_t len)
 
 bool Game::load(std::string file_to_load, class Game &target)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   game_load_error = "";
 
   //
@@ -362,7 +362,7 @@ bool Game::load(std::string file_to_load, class Game &target)
 
 std::string Game::load_config(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   game_load_error = "";
 
   auto          filename = saved_dir + "config";
@@ -376,7 +376,7 @@ std::string Game::load_config(void)
 
 void Game::load(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   LOG("-");
   CON("INF: Loading %s", save_file.c_str());
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
@@ -396,7 +396,7 @@ void Game::load(void)
 
 void Game::load(int slot)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (slot < 0) {
     return;
   }
@@ -441,7 +441,7 @@ void Game::load(int slot)
 
 void Game::load_snapshot(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   game->fini();
 
   auto this_save_file = saved_dir + "saved-snapshot";
@@ -467,7 +467,7 @@ void Game::load_snapshot(void)
 
 void wid_load_destroy(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (wid_load) {
     delete wid_load;
     wid_load = nullptr;
@@ -477,7 +477,7 @@ void wid_load_destroy(Gamep g)
 
 static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game->config.key_console)) {
     return false;
@@ -516,7 +516,7 @@ static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_AND_INDENT();
+                  TRACE_NO_INDENT();
                   CON("INF: Load game cancelled");
                   wid_load_destroy(game);
                   return true;
@@ -531,7 +531,7 @@ static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 static bool wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game->config.key_console)) {
     return false;
@@ -542,7 +542,7 @@ static bool wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   auto slot = wid_get_int_context(w);
   game->load(slot);
   wid_load_destroy(game);
@@ -551,7 +551,7 @@ static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   game->load_snapshot();
   wid_load_destroy(game);
   return true;
@@ -559,15 +559,15 @@ static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t butt
 
 static bool wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_load_destroy(game);
   return true;
 }
 
 void Game::load_select(void)
 {
+  CON("INF: Load menu");
   TRACE_AND_INDENT();
-  CON("INF: Loading a saved game");
 
   if (wid_load) {
     return;
@@ -585,7 +585,7 @@ void Game::load_select(void)
   wid_set_on_key_down(game, wid_load->wid_popup_container, wid_load_key_down);
 
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_load->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(game, p, "back");
 

@@ -185,8 +185,8 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym 
   last_mx = mx;
   last_my = my;
 
-  LOG("SDL: Mouse: Moved to @%d,%d (rel %d,%d) state %d (actually at %d,%d)", event->motion.x, event->motion.y,
-      event->motion.xrel, event->motion.yrel, sdl.mouse_down, mx, my);
+  DBG2("SDL: Mouse: Moved to @%d,%d (rel %d,%d) state %d (actually at %d,%d)", event->motion.x, event->motion.y,
+       event->motion.xrel, event->motion.yrel, sdl.mouse_down, mx, my);
 
   wid_mouse_visible = 1;
   sdl.mouse_tick++;
