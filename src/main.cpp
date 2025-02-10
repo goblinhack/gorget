@@ -681,6 +681,14 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
+    if (! sdl_init_display(g)) {
+      ERR("SDL: Init");
+    }
+  }
+
+  {
+
+    TRACE_NO_INDENT();
     sdl_config_update_all(g);
   }
 

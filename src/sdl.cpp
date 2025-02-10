@@ -192,7 +192,7 @@ uint8_t sdl_init(void)
   return true;
 }
 
-static uint8_t sdl_init_display(Gamep g)
+uint8_t sdl_init_display(Gamep g)
 {
   int video_width;
   int video_height;
@@ -706,8 +706,6 @@ void config_game_gfx_update(Gamep g)
 {
   LOG("SDL: Update");
   TRACE_AND_INDENT();
-
-  sdl_init_display(g);
 
   //
   // Display ratio

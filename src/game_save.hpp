@@ -293,12 +293,16 @@ void Game::save_config(void)
 
 void wid_save_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
-  if (wid_save) {
-    delete wid_save;
-    wid_save = nullptr;
-    g->state_reset("wid save destroy");
+  if (! wid_save) {
+    return;
   }
+
+  LOG("Wid save destroy");
+  TRACE_AND_INDENT();
+
+  delete wid_save;
+  wid_save = nullptr;
+  g->state_reset("wid save destroy");
 }
 
 static bool wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)

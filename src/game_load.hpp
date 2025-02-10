@@ -99,8 +99,8 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: config_pix_height      = %d", my.t.config_pix_height);
   LOG("Read config: config_pix_width       = %d", my.t.config_pix_width);
   LOG("Read config: aspect_ratio           = %f", my.t.aspect_ratio);
-  LOG("Read config: ascii_pix_height        = %d", my.t.ascii_pix_height);
-  LOG("Read config: ascii_pix_width         = %d", my.t.ascii_pix_width);
+  LOG("Read config: ascii_pix_height       = %d", my.t.ascii_pix_height);
+  LOG("Read config: ascii_pix_width        = %d", my.t.ascii_pix_width);
   LOG("Read config: game_pix_height        = %d", my.t.game_pix_height);
   LOG("Read config: game_pix_width         = %d", my.t.game_pix_width);
   LOG("Read config: map_pix_height         = %d", my.t.map_pix_height);
@@ -293,7 +293,9 @@ uint32_t csum(char *mem, uint32_t len)
 
 bool Game::load(std::string file_to_load, class Game &target)
 {
-  TRACE_NO_INDENT();
+  LOG("Load: %s", file_to_load.c_str());
+  TRACE_AND_INDENT();
+
   game_load_error = "";
 
   //
@@ -376,7 +378,9 @@ std::string Game::load_config(void)
 
 void Game::load(void)
 {
-  TRACE_NO_INDENT();
+  LOG("Load");
+  TRACE_AND_INDENT();
+
   LOG("-");
   CON("INF: Loading %s", save_file.c_str());
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
@@ -387,16 +391,18 @@ void Game::load(void)
   g_loading = false;
 
   sdl_config_update_all(game);
-
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   CON("INF: Loaded %s, seed %u", save_file.c_str(), seed);
   LOG("-");
+  sdl_display_reset(game);
 }
 
 void Game::load(int slot)
 {
-  TRACE_NO_INDENT();
+  LOG("Load slot: %d", slot);
+  TRACE_AND_INDENT();
+
   if (slot < 0) {
     return;
   }
@@ -410,6 +416,7 @@ void Game::load(int slot)
     return;
   }
 
+  LOG("Clean up current game");
   game->fini();
 
   auto this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
@@ -428,20 +435,20 @@ void Game::load(int slot)
   g_loading = false;
 
   sdl_config_update_all(game);
-
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   CON("INF: Loaded %s, seed %d", this_save_file.c_str(), seed);
   LOG("-");
 
   CON("Loaded the game from %s.", this_save_file.c_str());
-
   sdl_display_reset(game);
 }
 
 void Game::load_snapshot(void)
 {
-  TRACE_NO_INDENT();
+  LOG("Load snapshot");
+  TRACE_AND_INDENT();
+
   game->fini();
 
   auto this_save_file = saved_dir + "saved-snapshot";
@@ -467,12 +474,16 @@ void Game::load_snapshot(void)
 
 void wid_load_destroy(Gamep g)
 {
-  TRACE_NO_INDENT();
-  if (wid_load) {
-    delete wid_load;
-    wid_load = nullptr;
-    game->state_reset("wid load destroy");
+  if (! wid_load) {
+    return;
   }
+
+  LOG("Wid load destroy");
+  TRACE_AND_INDENT();
+
+  delete wid_load;
+  wid_load = nullptr;
+  game->state_reset("wid load destroy");
 }
 
 static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
@@ -542,7 +553,9 @@ static bool wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_NO_INDENT();
+  CON("INF: Load selected slot");
+  TRACE_AND_INDENT();
+
   auto slot = wid_get_int_context(w);
   game->load(slot);
   wid_load_destroy(game);
@@ -551,7 +564,9 @@ static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_NO_INDENT();
+  CON("INF: Load snapshot");
+  TRACE_AND_INDENT();
+
   game->load_snapshot();
   wid_load_destroy(game);
   return true;
@@ -559,7 +574,9 @@ static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t butt
 
 static bool wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_NO_INDENT();
+  CON("INF: Load cancel");
+  TRACE_AND_INDENT();
+
   wid_load_destroy(game);
   return true;
 }

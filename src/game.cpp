@@ -233,7 +233,11 @@ class Game *game;
 #include "game_load.hpp"
 #include "game_save.hpp"
 
-void Config::fini(void) { TRACE_AND_INDENT(); }
+void Config::fini(void)
+{
+  LOG("Game fini");
+  TRACE_AND_INDENT();
+}
 
 void Config::reset(void)
 {
@@ -509,7 +513,6 @@ void Game::state_change(uint8_t new_state, const std::string &why)
       wid_main_menu_destroy(g);
       wid_quit_destroy(g);
       wid_save_destroy(g);
-
       wid_leftbar_fini(g);
       wid_rightbar_fini(g);
       wid_topcon_fini(g);
@@ -531,14 +534,21 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   switch (new_state) {
     case STATE_MAIN_MENU : wid_main_menu_select(g); break;
-
     case STATE_QUITTING : break;
     case STATE_PLAYING :
-      if (old_state == STATE_MAIN_MENU) {
-        wid_leftbar_init(g);
-        wid_rightbar_init(g);
+      switch (old_state) {
+        case STATE_QUITTING : /* from loading */
+        case STATE_MAIN_MENU :
+          LOG("Create left and right bars");
+          wid_leftbar_init(g);
+          wid_rightbar_init(g);
+          break;
+        case STATE_KEYBOARD_MENU :
+        case STATE_PLAYING :
+        case STATE_LOAD_MENU :
+        case STATE_SAVE_MENU :
+        case STATE_QUIT_MENU : break;
       }
-      break;
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
     case STATE_SAVE_MENU :

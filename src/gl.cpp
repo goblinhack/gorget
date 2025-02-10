@@ -421,7 +421,7 @@ void gl_init_fbo(Gamep g)
     //
     if (g_fbo_size[ i ] == isize(tex_width, tex_height)) {
       LOG("No change in size for FBO %u, %ux%u", i, tex_width, tex_height);
-      continue;
+      // continue;
     }
     if (g_fbo_size[ i ].w) {
       LOG("Change in size for FBO %u, %ux%u -> %ux%u", i, g_fbo_size[ i ].w, g_fbo_size[ i ].h, tex_width,
