@@ -5,6 +5,7 @@
 #include "3rdparty/minilzo.hpp"
 #include "my_alloc.hpp"
 #include "my_callstack.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
 #include "my_wid_error.hpp"
@@ -15,7 +16,7 @@
 static WidPopup *wid_load;
 
 static std::string                    game_load_error;
-bool                                  game_load_headers_only;
+bool                                  game_headers_only;
 extern int                            GAME_SAVE_MARKER_EOL;
 extern int                            GAME_SAVE_MARKER_CONFIG;
 std::array< bool, UI_WID_SAVE_SLOTS > slot_valid;
@@ -215,20 +216,19 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   in >> bits(my.t.save_slot);
   in >> bits(my.t.save_meta);
   in >> bits(my.t.save_file);
-  if (game_load_headers_only) {
+  if (game_headers_only) {
     return in;
   }
   in >> bits(my.t.appdata);
   in >> bits(my.t.saved_dir);
-  in >> bits(my.t.config);
-  if (! game_load_error.empty()) {
-    return in;
-  }
-
   in >> bits(my.t.seed);
   in >> bits(my.t.seed_manually_set);
   in >> bits(my.t.seed_name);
   in >> bits(my.t.fps_value);
+
+  Levelsp tmp = (Levelsp) mymalloc(sizeof(Levels), "loaded level");
+  in.read(reinterpret_cast< char * >(tmp), sizeof(Levels));
+  my.t.levels = tmp;
 
   return in;
 }
@@ -305,7 +305,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   uint32_t cs;
   auto     vec = read_lzo_file(file_to_load, &uncompressed_len, &cs);
   if (vec.size() <= 0) {
-    if (! game_load_headers_only) {
+    if (! game_headers_only) {
       wid_error(game, "load error, empty file [" + file_to_load + "] ?");
     }
     return false;
@@ -321,7 +321,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   lzo_uint new_len = 0;
   int      r = lzo1x_decompress((lzo_bytep) compressed, compressed_len, (lzo_bytep) uncompressed, &new_len, nullptr);
   if (r == LZO_E_OK && new_len == uncompressed_len) {
-    if (! game_load_headers_only) {
+    if (! game_headers_only) {
       CON("INF: Loading %s, decompress %luMb -> %luMb", file_to_load.c_str(),
           (unsigned long) compressed_len / (1024 * 1024), (unsigned long) uncompressed_len / (1024 * 1024));
     }
@@ -350,7 +350,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   game_load_error = "";
   in >> bits(target);
   if (! game_load_error.empty()) {
-    if (! game_load_headers_only) {
+    if (! game_headers_only) {
       wid_error(game, "load error, " + game_load_error);
     }
     return false;
@@ -374,28 +374,6 @@ std::string Game::load_config(void)
   }
 
   return game_load_error;
-}
-
-void Game::load(void)
-{
-  LOG("Load");
-  TRACE_AND_INDENT();
-
-  LOG("-");
-  CON("INF: Loading %s", save_file.c_str());
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
-
-  g_loading = true;
-  load(save_file, *this);
-  g_loading = false;
-
-  sdl_config_update_all(game);
-  LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Loaded %s, seed %u", save_file.c_str(), seed);
-  LOG("-");
-  sdl_display_reset(game);
 }
 
 void Game::load(int slot)
@@ -434,14 +412,14 @@ void Game::load(int slot)
   load(this_save_file, *this);
   g_loading = false;
 
-  sdl_config_update_all(game);
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   CON("INF: Loaded %s, seed %d", this_save_file.c_str(), seed);
   LOG("-");
 
   CON("Loaded the game from %s.", this_save_file.c_str());
-  sdl_display_reset(game);
+
+  state_change(STATE_PLAYING, "loaded game");
 }
 
 void Game::load_snapshot(void)
@@ -462,14 +440,14 @@ void Game::load_snapshot(void)
   load(this_save_file, *this);
   g_loading = false;
 
-  sdl_config_update_all(game);
-
   LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   CON("INF: Loaded %s, seed %d", this_save_file.c_str(), seed);
   LOG("-");
 
   CON("Loaded the game from %s.", this_save_file.c_str());
+
+  state_change(STATE_PLAYING, "loaded snapshot");
 }
 
 void wid_load_destroy(Gamep g)
@@ -616,14 +594,14 @@ void Game::load_select(void)
     wid_set_text(w, "BACK");
   }
 
-  game_load_headers_only = true;
+  game_headers_only = true;
 
   wid_load->log(game, "Choose a load slot.");
 
   int y_at = 3;
   for (auto slot = 0; slot < UI_WID_SAVE_SLOTS; slot++) {
     Game tmp;
-    auto tmp_file = saved_dir + "saved-slot-" + std::to_string(slot);
+    auto tmp_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
 
     if (slot == UI_WID_SAVE_SLOTS - 1) {
       tmp_file = saved_dir + "saved-snapshot";
@@ -669,7 +647,7 @@ void Game::load_select(void)
     wid_set_text(w, s);
     y_at++;
   }
-  game_load_headers_only = false;
+  game_headers_only = false;
   wid_update(game, wid_load->wid_text_area->wid_text_area);
 
   game->state_change(STATE_LOAD_MENU, "load select");

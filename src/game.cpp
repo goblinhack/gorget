@@ -107,7 +107,7 @@ public:
   //
   // All levels
   //
-  Levelsp level {};
+  Levelsp levels {};
 
   //
   // Used to check for changes in the size of this struct.
@@ -212,12 +212,10 @@ public:
   void save_select(void);
   void load_snapshot(void);
   void load(int slot);
-  void load(void);
   void save_config(void);
   void save_snapshot_check();
   void save_snapshot(void);
   void save(int slot);
-  void save(void);
   void set_currently_saving_snapshot(void);
   void set_seed(void);
   void state_change(uint8_t state, const std::string &);
@@ -420,6 +418,7 @@ void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
 void Game::display(void)
 {
+  TRACE_NO_INDENT();
   auto g = this;
   auto v = game_levels_get(g);
   if (! v) {
@@ -1176,7 +1175,7 @@ Levelsp game_levels_get(Gamep g)
     ERR("No game pointer set");
     return nullptr;
   }
-  return g->level;
+  return g->levels;
 }
 void game_levels_set(Gamep g, Levelsp val)
 {
@@ -1185,7 +1184,7 @@ void game_levels_set(Gamep g, Levelsp val)
     ERR("No game pointer set");
     return;
   }
-  g->level = val;
+  g->levels = val;
 }
 
 Levelp game_level_get(Gamep g, Levelsp v)
@@ -1193,6 +1192,10 @@ Levelp game_level_get(Gamep g, Levelsp v)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
+    return nullptr;
+  }
+  if (unlikely(! v)) {
+    ERR("No levels pointer set");
     return nullptr;
   }
   auto x = v->level_num.x;
@@ -1206,6 +1209,10 @@ Levelp game_level_get(Gamep g, Levelsp v, int x, int y)
     ERR("No game pointer set");
     return nullptr;
   }
+  if (unlikely(! v)) {
+    ERR("No levels pointer set");
+    return nullptr;
+  }
   return &v->level[ x ][ y ];
 }
 Levelp game_level_set(Gamep g, Levelsp v, int x, int y)
@@ -1213,6 +1220,10 @@ Levelp game_level_set(Gamep g, Levelsp v, int x, int y)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
+    return nullptr;
+  }
+  if (unlikely(! v)) {
+    ERR("No levels pointer set");
     return nullptr;
   }
   v->level_num = point(x, y);

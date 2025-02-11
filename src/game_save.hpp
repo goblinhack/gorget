@@ -11,7 +11,7 @@
 
 static WidPopup *wid_save;
 
-extern bool game_load_headers_only;
+extern bool game_headers_only;
 bool        game_save_config_only;
 int         GAME_SAVE_MARKER_EOL    = 123456;
 int         GAME_SAVE_MARKER_CONFIG = 987654;
@@ -99,12 +99,14 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
   out << bits(my.t.save_file);
   out << bits(my.t.appdata);
   out << bits(my.t.saved_dir);
-  out << bits(my.t.config);
-
   out << bits(my.t.seed);
   out << bits(my.t.seed_manually_set);
   out << bits(my.t.seed_name);
   out << bits(my.t.fps_value);
+
+  if (! game_headers_only) {
+    out.write(reinterpret_cast< const char * >(my.t.levels), sizeof(*my.t.levels));
+  }
 
   return out;
 }
@@ -210,22 +212,6 @@ bool Game::save(std::string file_to_save)
   return true;
 }
 
-void Game::save(void)
-{
-  TRACE_NO_INDENT();
-  LOG("-");
-  CON("INF: Saving %s", save_file.c_str());
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
-
-  save(save_file);
-
-  LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Saved %s, seed %u", save_file.c_str(), seed);
-  LOG("-");
-}
-
 void Game::save(int slot)
 {
   TRACE_NO_INDENT();
@@ -237,10 +223,26 @@ void Game::save(int slot)
     return;
   }
 
-  auto this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
+  auto this_save_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
 
   LOG("-");
-  CON("INF: Saving %s", this_save_file.c_str());
+  CON("INF: Saving info only to: %s", this_save_file.c_str());
+  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
+  LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
+
+  game_headers_only = true;
+  save(this_save_file);
+  game_headers_only = false;
+
+  LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
+  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
+  CON("INF: Saved %s, seed %u", this_save_file.c_str(), seed);
+  LOG("-");
+
+  this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
+
+  LOG("-");
+  CON("INF: Saving levels to: %s", this_save_file.c_str());
   LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
   LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
 
@@ -417,7 +419,7 @@ void Game::save_select(void)
     wid_set_text(w, "BACK");
   }
 
-  game_load_headers_only = true;
+  game_headers_only = true;
 
   wid_save->log(game, UI_LOGGING_EMPTY_LINE);
   wid_save->log(game, "Choose a save slot.");
@@ -425,7 +427,7 @@ void Game::save_select(void)
   int y_at = 3;
   for (auto slot = 0; slot < UI_WID_SAVE_SLOTS; slot++) {
     Game tmp;
-    auto tmp_file = saved_dir + "saved-slot-" + std::to_string(slot);
+    auto tmp_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
 
     if (slot == UI_WID_SAVE_SLOTS - 1) {
       tmp_file = saved_dir + "saved-snapshot";
@@ -466,7 +468,7 @@ void Game::save_select(void)
     wid_set_text(w, s);
     y_at++;
   }
-  game_load_headers_only = false;
+  game_headers_only = false;
   wid_update(game, wid_save->wid_text_area->wid_text_area);
 
   state_change(STATE_SAVE_MENU, "save select");
