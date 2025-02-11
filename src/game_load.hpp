@@ -253,7 +253,7 @@ std::vector< char > read_file(const std::string filename)
   return bytes;
 }
 
-static std::vector< char > read_lzo_file(const std::string filename, lzo_uint *uncompressed_sz, uint32_t *cs)
+static std::vector< char > read_lzo_file(const std::string filename, lzo_uint *uncompressed_sz)
 {
   TRACE_NO_INDENT();
   std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
@@ -267,28 +267,14 @@ static std::vector< char > read_lzo_file(const std::string filename, lzo_uint *u
     ifs.seekg(0, std::ios::beg);
     ifs.unsetf(std::ios::skipws);
     ifs.read((char *) uncompressed_sz, sizeof(*uncompressed_sz));
-    ifs.read((char *) cs, sizeof(*cs));
 
     sz -= (int) sizeof(*uncompressed_sz);
-    sz -= (int) sizeof(*cs);
     std::vector< char > bytes(sz);
     ifs.read(bytes.data(), sz);
     return bytes;
   }
   std::vector< char > bytes;
   return bytes;
-}
-
-uint32_t csum(char *mem, uint32_t len)
-{
-  TRACE_NO_INDENT();
-  uint32_t ret = 0;
-  while (len--) {
-    ret <<= 1;
-    ret ^= *mem;
-    mem++;
-  }
-  return ret;
 }
 
 bool Game::load(std::string file_to_load, class Game &target)
@@ -302,8 +288,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   // Read to a vector and then copy to a C buffer for LZO to use
   //
   lzo_uint uncompressed_len;
-  uint32_t cs;
-  auto     vec = read_lzo_file(file_to_load, &uncompressed_len, &cs);
+  auto     vec = read_lzo_file(file_to_load, &uncompressed_len);
   if (vec.size() <= 0) {
     if (! game_headers_only) {
       wid_error(game, "load error, empty file [" + file_to_load + "] ?");
@@ -328,12 +313,6 @@ bool Game::load(std::string file_to_load, class Game &target)
   } else {
     /* this should NEVER happen */
     ERR("LZO internal error - decompression failed: %d", r);
-    return false;
-  }
-
-  uint32_t csin = csum((char *) uncompressed, (uint32_t) uncompressed_len);
-  if (cs != csin) {
-    ERR("Corrupt file, checksum mismatch");
     return false;
   }
 

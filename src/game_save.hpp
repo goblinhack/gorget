@@ -150,8 +150,8 @@ bool Game::save(std::string file_to_save)
   int      r
       = lzo1x_1_compress((lzo_bytep) uncompressed, uncompressed_len, (lzo_bytep) compressed, &compressed_len, wrkmem);
   if (r == LZO_E_OK) {
-    LOG("Saved as %s, compress %luMb -> %luMb", file_to_save.c_str(),
-        (unsigned long) uncompressed_len / (1024 * 1024), (unsigned long) compressed_len / (1024 * 1024));
+    LOG("Compressed %luMb -> %luMb", (unsigned long) uncompressed_len / (1024 * 1024),
+        (unsigned long) compressed_len / (1024 * 1024));
   } else {
     ERR("LZO internal error - compression failed: %d", r);
     return false;
@@ -193,19 +193,19 @@ bool Game::save(std::string file_to_save)
   //
   // Save the post compress buffer
   //
-  uint32_t cs = csum((char *) uncompressed, uncompressed_len);
-
   auto ofile = fopen(file_to_save.c_str(), "wb");
   if (! ofile) {
     ERR("Failed to open %s for writing: %s", file_to_save.c_str(), strerror(errno));
     return false;
   }
-  LOG("Opened [%s] for writing", file_to_save.c_str());
+
+  LOG("Opened: %s for writing", file_to_save.c_str());
 
   fwrite((char *) &uncompressed_len, sizeof(uncompressed_len), 1, ofile);
-  fwrite((char *) &cs, sizeof(cs), 1, ofile);
   fwrite(compressed, compressed_len, 1, ofile);
   fclose(ofile);
+
+  LOG("Wrote: %s", file_to_save.c_str());
 
   free(uncompressed);
   free(compressed);
