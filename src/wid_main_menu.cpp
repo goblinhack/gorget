@@ -317,7 +317,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 
 void wid_main_menu_select(Gamep g)
 {
-  LOG("INF: Main menu");
+  LOG("Main menu");
   TRACE_AND_INDENT();
 
   if (wid_main_menu_window) {
@@ -447,7 +447,7 @@ void wid_main_menu_select(Gamep g)
 
 void wid_new_game(Gamep g)
 {
-  LOG("INF: New game");
+  LOG("New game");
   TRACE_NO_INDENT();
 
   game_state_reset(g, "new game");

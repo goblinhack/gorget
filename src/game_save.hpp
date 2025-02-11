@@ -113,7 +113,9 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
 
 bool Game::save(std::string file_to_save)
 {
-  TRACE_NO_INDENT();
+  LOG("Save: %s", file_to_save.c_str());
+  TRACE_AND_INDENT();
+
   std::stringstream s(std::ios::in | std::ios::out | std::ios::binary);
 
   const class Game &c = *this;
@@ -148,7 +150,7 @@ bool Game::save(std::string file_to_save)
   int      r
       = lzo1x_1_compress((lzo_bytep) uncompressed, uncompressed_len, (lzo_bytep) compressed, &compressed_len, wrkmem);
   if (r == LZO_E_OK) {
-    LOG("INF: Saved as %s, compress %luMb -> %luMb", file_to_save.c_str(),
+    LOG("Saved as %s, compress %luMb -> %luMb", file_to_save.c_str(),
         (unsigned long) uncompressed_len / (1024 * 1024), (unsigned long) compressed_len / (1024 * 1024));
   } else {
     ERR("LZO internal error - compression failed: %d", r);
@@ -198,7 +200,7 @@ bool Game::save(std::string file_to_save)
     ERR("Failed to open %s for writing: %s", file_to_save.c_str(), strerror(errno));
     return false;
   }
-  LOG("INF: Opened [%s] for writing", file_to_save.c_str());
+  LOG("Opened [%s] for writing", file_to_save.c_str());
 
   fwrite((char *) &uncompressed_len, sizeof(uncompressed_len), 1, ofile);
   fwrite((char *) &cs, sizeof(cs), 1, ofile);
@@ -214,7 +216,9 @@ bool Game::save(std::string file_to_save)
 
 void Game::save(int slot)
 {
-  TRACE_NO_INDENT();
+  LOG("Save slot: %d", slot);
+  TRACE_AND_INDENT();
+
   if (slot < 0) {
     return;
   }
@@ -225,56 +229,37 @@ void Game::save(int slot)
 
   auto this_save_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
 
-  LOG("-");
-  CON("INF: Saving info only to: %s", this_save_file.c_str());
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
-
+  LOG("Saving: %s", this_save_file.c_str());
   game_headers_only = true;
   save(this_save_file);
   game_headers_only = false;
 
-  LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Saved %s, seed %u", this_save_file.c_str(), seed);
-  LOG("-");
-
   this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
 
-  LOG("-");
-  CON("INF: Saving levels to: %s", this_save_file.c_str());
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
-
+  LOG("Saving: %s", this_save_file.c_str());
   save(this_save_file);
-
-  LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Saved %s, seed %u", this_save_file.c_str(), seed);
-  LOG("-");
+  LOG("Saved %s, seed %u", this_save_file.c_str(), seed);
 
   CON("Saved the game to %s.", this_save_file.c_str());
 }
 
 void Game::save_snapshot(void)
 {
-  CON("Autosaving...");
+  LOG("Save snapshot");
+  TRACE_AND_INDENT();
 
-  TRACE_NO_INDENT();
+  auto this_save_file = saved_dir + "saved-snapshot-info";
 
-  auto this_save_file = saved_dir + "saved-snapshot";
-
-  LOG("-");
-  CON("INF: Saving %s", this_save_file.c_str());
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
-
+  LOG("Saving: %s", this_save_file.c_str());
+  game_headers_only = true;
   save(this_save_file);
+  game_headers_only = true;
 
-  LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Saved %s, seed %u", this_save_file.c_str(), seed);
-  LOG("-");
+  this_save_file = saved_dir + "saved-snapshot";
+
+  LOG("Saving: %s", this_save_file.c_str());
+  save(this_save_file);
+  LOG("Saved %s, seed %u", this_save_file.c_str(), seed);
 
   CON("%%fg=green$Autosaved.%%fg=reset$");
 }
@@ -288,7 +273,7 @@ void Game::save_config(void)
     ERR("Failed to open %s for writing: %s", filename.c_str(), strerror(errno));
     return;
   }
-  LOG("INF: Opened [%s] for writing", filename.c_str());
+  LOG("Opened [%s] for writing", filename.c_str());
   const Config &c = game->config;
   out << bits(c);
 }
@@ -347,7 +332,7 @@ static bool wid_save_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
               case SDLK_ESCAPE :
                 {
                   TRACE_NO_INDENT();
-                  CON("INF: Save game cancelled");
+                  LOG("Save game cancelled");
                   wid_save_destroy(game);
                   return true;
                 }
@@ -388,7 +373,7 @@ static bool wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 
 void Game::save_select(void)
 {
-  CON("INF: Save menu");
+  LOG("Save menu");
   TRACE_AND_INDENT();
 
   if (wid_save) {
@@ -399,7 +384,7 @@ void Game::save_select(void)
   int   menu_width  = UI_WID_POPUP_WIDTH_WIDE;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_save = new WidPopup(game, "Game load", outer_tl, outer_br, nullptr, "", false, false);
+  wid_save = new WidPopup(game, "Game save", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(game, wid_save->wid_popup_container, wid_save_key_up);
   wid_set_on_key_down(game, wid_save->wid_popup_container, wid_save_key_down);

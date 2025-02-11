@@ -40,14 +40,14 @@ static bool        seed_manually_set {};
 
 void quit(Gamep *g_in)
 {
-  LOG("FIN: Quitting, start cleanup");
+  LOG("Quitting, start cleanup");
   TRACE_AND_INDENT();
 
   Gamep g = *g_in;
   *g_in   = nullptr;
 
   if (g_quitting) {
-    LOG("FIN: Quitting, nested");
+    LOG("Quitting, nested");
     return;
   }
 
@@ -125,7 +125,7 @@ void quit(Gamep *g_in)
   }
 #endif
 
-  LOG("FIN: Cleanup done");
+  LOG("Cleanup done");
 }
 
 void restart(Gamep g)
@@ -151,7 +151,7 @@ void restart(Gamep g)
   executable = (char *) "gorget.exe";
 #endif
 
-  CON("FIN: Run \"%s\"", executable);
+  CON("Run \"%s\"", executable);
   if (g_opt_debug1) {
     sdl_flush_display(g, true);
   }
@@ -861,7 +861,7 @@ int main(int argc, char *argv[])
 
   TRACE_NO_INDENT();
   sdl_loop(g);
-  LOG("FIN: SDL loop finished");
+  LOG("SDL loop finished");
   flush_the_console(g);
 
   if (g_need_restart) {
@@ -869,9 +869,9 @@ int main(int argc, char *argv[])
     restart(g);
   }
 
-  CON("FIN: Quit");
+  CON("Quit");
   quit(&g);
 
-  CON("FIN: Goodbye my friend and take care until next time!");
+  CON("Goodbye my friend and take care until next time!");
   return 0;
 }

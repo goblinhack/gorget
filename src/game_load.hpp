@@ -322,7 +322,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   int      r = lzo1x_decompress((lzo_bytep) compressed, compressed_len, (lzo_bytep) uncompressed, &new_len, nullptr);
   if (r == LZO_E_OK && new_len == uncompressed_len) {
     if (! game_headers_only) {
-      CON("INF: Loading %s, decompress %luMb -> %luMb", file_to_load.c_str(),
+      LOG("Loading: %s, decompress %luMb -> %luMb", file_to_load.c_str(),
           (unsigned long) compressed_len / (1024 * 1024), (unsigned long) uncompressed_len / (1024 * 1024));
     }
   } else {
@@ -390,7 +390,7 @@ void Game::load(int slot)
   }
 
   if (! slot_valid[ slot ]) {
-    CON("No game at that slot.");
+    LOG("No game at that slot.");
     return;
   }
 
@@ -403,19 +403,11 @@ void Game::load(int slot)
     this_save_file = saved_dir + "saved-snapshot";
   }
 
-  LOG("-");
-  CON("INF: Loading %s", this_save_file.c_str());
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
-
+  LOG("Loading: %s", this_save_file.c_str());
   g_loading = true;
   load(this_save_file, *this);
   g_loading = false;
-
-  LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Loaded %s, seed %d", this_save_file.c_str(), seed);
-  LOG("-");
+  LOG("Loaded %s, seed %u", this_save_file.c_str(), seed);
 
   CON("Loaded the game from %s.", this_save_file.c_str());
 
@@ -431,19 +423,11 @@ void Game::load_snapshot(void)
 
   auto this_save_file = saved_dir + "saved-snapshot";
 
-  LOG("-");
-  CON("INF: Loading %s", this_save_file.c_str());
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  LOG("v v v v v v v v v v v v v v v v v v v v v v v v v v v");
-
+  LOG("Loading: %s", this_save_file.c_str());
   g_loading = true;
   load(this_save_file, *this);
   g_loading = false;
-
-  LOG("^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^");
-  LOG("| | | | | | | | | | | | | | | | | | | | | | | | | | |");
-  CON("INF: Loaded %s, seed %d", this_save_file.c_str(), seed);
-  LOG("-");
+  LOG("Loaded %s, seed %u", this_save_file.c_str(), seed);
 
   CON("Loaded the game from %s.", this_save_file.c_str());
 
@@ -494,7 +478,7 @@ static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
                 {
                   int slot = c - '0';
                   if (! slot_valid[ slot ]) {
-                    CON("No game at that slot.");
+                    LOG("No game at that slot.");
                   } else {
                     game->load(slot);
                     wid_load_destroy(game);
@@ -506,7 +490,7 @@ static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
               case SDLK_ESCAPE :
                 {
                   TRACE_NO_INDENT();
-                  CON("INF: Load game cancelled");
+                  LOG("Load game cancelled");
                   wid_load_destroy(game);
                   return true;
                 }
@@ -531,7 +515,7 @@ static bool wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  CON("INF: Load selected slot");
+  LOG("Load selected slot");
   TRACE_AND_INDENT();
 
   auto slot = wid_get_int_context(w);
@@ -542,7 +526,7 @@ static bool wid_load_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  CON("INF: Load snapshot");
+  LOG("Load snapshot");
   TRACE_AND_INDENT();
 
   game->load_snapshot();
@@ -552,7 +536,7 @@ static bool wid_load_saved_snapshot(Gamep g, Widp w, int x, int y, uint32_t butt
 
 static bool wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  CON("INF: Load cancel");
+  LOG("Load cancel");
   TRACE_AND_INDENT();
 
   wid_load_destroy(game);
@@ -561,7 +545,7 @@ static bool wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 
 void Game::load_select(void)
 {
-  CON("INF: Load menu");
+  LOG("Load menu");
   TRACE_AND_INDENT();
 
   if (wid_load) {
@@ -604,7 +588,7 @@ void Game::load_select(void)
     auto tmp_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
 
     if (slot == UI_WID_SAVE_SLOTS - 1) {
-      tmp_file = saved_dir + "saved-snapshot";
+      tmp_file = saved_dir + "saved-snapshot-info";
     }
 
     auto  p = wid_load->wid_text_area->wid_text_area;

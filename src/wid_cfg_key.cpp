@@ -87,7 +87,7 @@ void wid_cfg_keyboard_destroy(Gamep g)
 static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  CON("INF: Reload config");
+  CON("Reload config");
   if (local_g_config_changed) {
     local_g_config_changed = false;
     game_load_config(g);
@@ -108,7 +108,7 @@ static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t butt
 static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  CON("INF: Save config");
+  CON("Save config");
   game_save_config(g);
   wid_cfg_keyboard_destroy(g);
 

@@ -57,7 +57,7 @@ bool music_init(void)
 
 void music_fini(void)
 {
-  LOG("FIN: Music fini");
+  LOG("Music fini");
   TRACE_AND_INDENT();
   if (music_init_done) {
     music_init_done = false;

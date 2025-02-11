@@ -11,7 +11,7 @@ uint8_t audio_init_done;
 
 void audio_fini(void)
 {
-  LOG("FIN: Audio fini");
+  LOG("Audio fini");
   TRACE_AND_INDENT();
   Mix_CloseAudio();
   audio_init_done = false;

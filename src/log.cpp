@@ -390,12 +390,12 @@ static void sdl_msgerr_(const char *fmt, va_list args)
   vsnprintf(buf, MAXLONGSTR, fmt, args);
 
 #if SDL_MAJOR_VERSION >= 2
-  CON("INF: Show SDL message box");
+  CON("Show SDL message box");
   //
   // The window is needed else the box appears behind the main window.
   //
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, sdl.window);
-  CON("INF: Launched SDL message box");
+  CON("Launched SDL message box");
 #endif
 }
 

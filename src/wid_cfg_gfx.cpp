@@ -24,7 +24,7 @@ static void wid_cfg_gfx_destroy(Gamep g)
 static bool wid_cfg_gfx_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Save config");
+  CON("Save config");
   game_save_config(g);
 
   wid_cfg_gfx_destroy(g);
@@ -38,7 +38,7 @@ static bool wid_cfg_gfx_save(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_gfx_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Reload config");
+  CON("Reload config");
   wid_cfg_gfx_destroy(g);
   wid_cfg_top_menu(g);
   return true;
@@ -55,7 +55,7 @@ static bool wid_cfg_gfx_back(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Toggle vsync");
+  CON("Toggle vsync");
   game_gfx_vsync_enable_set(g, ! game_gfx_vsync_enable_get(g));
   config_gfx_vsync_update(g);
 
@@ -66,7 +66,7 @@ static bool wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp w, int x, int y, uint3
 static bool wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Toggle gfx fullscreen");
+  CON("Toggle gfx fullscreen");
   game_gfx_fullscreen_set(g, ! game_gfx_fullscreen_get(g));
 
   if (game_gfx_fullscreen_get(g)) {
@@ -88,7 +88,7 @@ static bool wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_
 static bool wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Toggle gfx fullscreen desktop");
+  CON("Toggle gfx fullscreen desktop");
   game_gfx_fullscreen_desktop_set(g, ! game_gfx_fullscreen_desktop_get(g));
 
   if (game_gfx_fullscreen_desktop_get(g)) {
@@ -110,7 +110,7 @@ static bool wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y,
 static bool wid_cfg_gfx_allow_highdpi_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Toggle gfx allow highdpi");
+  CON("Toggle gfx allow highdpi");
   game_gfx_allow_highdpi_set(g, ! game_gfx_allow_highdpi_get(g));
 
   wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
@@ -120,7 +120,7 @@ static bool wid_cfg_gfx_allow_highdpi_toggle(Gamep g, Widp w, int x, int y, uint
 static bool wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Toggle gfx borderless");
+  CON("Toggle gfx borderless");
   game_gfx_borderless_set(g, ! game_gfx_borderless_get(g));
   SDL_SetWindowBordered(sdl.window, game_gfx_borderless_get(g) ? SDL_TRUE : SDL_FALSE);
 
@@ -131,7 +131,7 @@ static bool wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_
 static bool wid_cfg_other_fps_counter_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Toggle fps counter");
+  CON("Toggle fps counter");
   game_fps_counter_set(g, ! game_fps_counter_get(g));
 
   wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
@@ -142,7 +142,7 @@ static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t 
 {
   TRACE_AND_INDENT();
   auto res = std::to_string(game_window_pix_width_get(g)) + "x" + std::to_string(game_window_pix_height_get(g));
-  CON("INF: Increment resolution (current %s)", res.c_str());
+  CON("Increment resolution (current %s)", res.c_str());
   auto                                     n = SDL_GetNumDisplayModes(0);
   std::string                              chosen;
   std::vector< std::string >               cands;
@@ -175,11 +175,11 @@ static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t 
     game_config_pix_width_set(g, mode.w);
     game_config_pix_height_set(g, mode.h);
     SDL_SetWindowSize(sdl.window, mode.w, mode.h);
-    CON("INF: New resolution %s", chosen.c_str());
+    CON("New resolution %s", chosen.c_str());
     wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   } else {
     sound_play(g, "error");
-    CON("INF: At maximum resolution (current %s)", res.c_str());
+    CON("At maximum resolution (current %s)", res.c_str());
   }
 
   return true;
@@ -189,7 +189,7 @@ static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t 
 {
   TRACE_AND_INDENT();
   auto res = std::to_string(game_window_pix_width_get(g)) + "x" + std::to_string(game_window_pix_height_get(g));
-  CON("INF: Decrement resolution (current %s)", res.c_str());
+  CON("Decrement resolution (current %s)", res.c_str());
   auto                                     n = SDL_GetNumDisplayModes(0);
   std::string                              chosen;
   std::vector< std::string >               cands;
@@ -222,11 +222,11 @@ static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t 
     game_config_pix_width_set(g, mode.w);
     game_config_pix_height_set(g, mode.h);
     SDL_SetWindowSize(sdl.window, mode.w, mode.h);
-    CON("INF: New resolution %s", chosen.c_str());
+    CON("New resolution %s", chosen.c_str());
     wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   } else {
     sound_play(g, "error");
-    CON("INF: At minimm resolution (current %s)", res.c_str());
+    CON("At minimm resolution (current %s)", res.c_str());
   }
 
   return true;

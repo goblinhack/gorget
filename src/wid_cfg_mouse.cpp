@@ -23,7 +23,7 @@ static void wid_cfg_mouse_destroy(Gamep g)
 static bool wid_cfg_mouse_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Reload config");
+  CON("Reload config");
   if (local_g_config_changed) {
     local_g_config_changed = false;
     game_load_config(g);
@@ -37,7 +37,7 @@ static bool wid_cfg_mouse_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_mouse_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Save config");
+  CON("Save config");
   game_save_config(g);
   wid_cfg_mouse_destroy(g);
   wid_cfg_top_menu(g);
@@ -56,7 +56,7 @@ static bool wid_cfg_mouse_wheel_lr_negated(Gamep g, Widp w, int x, int y, uint32
 {
   TRACE_AND_INDENT();
   local_g_config_changed = true;
-  CON("INF: Toggle wheel mouse lr");
+  CON("Toggle wheel mouse lr");
   game_mouse_wheel_lr_negated_set(g, ! game_mouse_wheel_lr_negated_get(g));
   wid_cfg_mouse_select(g);
   return true;
@@ -66,7 +66,7 @@ static bool wid_cfg_mouse_wheel_ud_negated(Gamep g, Widp w, int x, int y, uint32
 {
   TRACE_AND_INDENT();
   local_g_config_changed = true;
-  CON("INF: Toggle wheel mouse ud");
+  CON("Toggle wheel mouse ud");
   game_mouse_wheel_ud_negated_set(g, ! game_mouse_wheel_ud_negated_get(g));
   wid_cfg_mouse_select(g);
   return true;

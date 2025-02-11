@@ -109,7 +109,7 @@ static bool wid_cfg_top_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 void wid_cfg_top_menu(Gamep g)
 {
   TRACE_AND_INDENT();
-  CON("INF: Config menu");
+  CON("Config menu");
 
   if (wid_cfg_top_window) {
     wid_cfg_top_destroy(g);

@@ -46,7 +46,7 @@ bool sound_init(void)
 
 void sound_fini(void)
 {
-  LOG("FIN: Sound fini");
+  LOG("Sound fini");
   TRACE_AND_INDENT();
   if (sound_init_done) {
     sound_init_done = false;

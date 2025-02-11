@@ -239,7 +239,7 @@ void Config::fini(void)
 
 void Config::reset(void)
 {
-  LOG("INF: Game reset");
+  LOG("Game reset");
   TRACE_AND_INDENT();
 
   config_pix_height      = {};
@@ -289,7 +289,7 @@ void game_config_reset(Gamep g) { g->config.reset(); }
 
 Game::Game(std::string vappdata)
 {
-  LOG("INF: Game load %s", vappdata.c_str());
+  LOG("Game load %s", vappdata.c_str());
   TRACE_AND_INDENT();
 
   auto g = this;
@@ -311,7 +311,7 @@ Game::Game(std::string vappdata)
 
 void Game::init(void)
 {
-  LOG("INF: Game init");
+  LOG("Game init");
   TRACE_AND_INDENT();
 
   set_seed();
@@ -320,7 +320,7 @@ void game_init(Gamep g) { g->init(); }
 
 void Game::fini(void)
 {
-  LOG("FIN: Game fini");
+  LOG("Game fini");
   TRACE_AND_INDENT();
 
   state_change(STATE_QUITTING, "quitting");
@@ -498,7 +498,7 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   // Why oh why change state
   //
-  LOG("INF: Game state change: %s -> %s, reason: %s", gama_state_to_string(old_state).c_str(),
+  LOG("Game state change: %s -> %s, reason: %s", gama_state_to_string(old_state).c_str(),
       gama_state_to_string(new_state).c_str(), why.c_str());
   TRACE_AND_INDENT();
 

@@ -25,16 +25,16 @@ void wid_quit_destroy(Gamep g)
 static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  LOG("INF: Quit, yes");
+  LOG("Quit, yes");
 
   if (game_levels_get(g)) {
-    LOG("INF: Continue game");
+    LOG("Continue game");
 
     game_destroy_levels(g);
     wid_quit_destroy(g);
     wid_main_menu_select(g);
   } else {
-    LOG("INF: Exit game");
+    LOG("Exit game");
 
     wid_quit_destroy(g);
     DIE_CLEAN("Quit");
@@ -45,7 +45,7 @@ static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  LOG("INF: Quit, no");
+  LOG("Quit, no");
 
   wid_quit_destroy(g);
 
@@ -102,7 +102,7 @@ static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 void wid_quit_select(Gamep g)
 {
   TRACE_NO_INDENT();
-  LOG("INF: Quit select");
+  LOG("Quit select");
 
   if (wid_quit_window) {
     wid_quit_destroy(g);

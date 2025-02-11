@@ -226,7 +226,7 @@ void sdl_loop(Gamep g)
     // Config change?
     //
     if (unlikely(g_need_restart)) {
-      LOG("INF: Restart needed");
+      LOG("Restart needed");
       break;
     }
 

@@ -26,7 +26,7 @@ static void wid_cfg_sound_destroy(Gamep g)
 static bool wid_cfg_sound_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Reload config");
+  CON("Reload config");
   if (local_g_config_changed) {
     local_g_config_changed = false;
     game_load_config(g);
@@ -40,7 +40,7 @@ static bool wid_cfg_sound_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_sound_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  CON("INF: Save config");
+  CON("Save config");
   game_save_config(g);
   wid_cfg_sound_destroy(g);
   wid_cfg_top_menu(g);
@@ -59,7 +59,7 @@ static bool wid_cfg_sound_effects_volume_incr(Gamep g, Widp w, int x, int y, uin
 {
   TRACE_AND_INDENT();
   local_g_config_changed = true;
-  CON("INF: Increment sound volume");
+  CON("Increment sound volume");
   auto vol = game_sound_volume_get(g);
   game_sound_volume_set(g, vol + 1);
   if (game_sound_volume_get(g) > MIX_MAX_VOLUME) {
@@ -73,7 +73,7 @@ static bool wid_cfg_sound_effects_volume_decr(Gamep g, Widp w, int x, int y, uin
 {
   TRACE_AND_INDENT();
   local_g_config_changed = true;
-  CON("INF: Decrement sound volume");
+  CON("Decrement sound volume");
   auto vol = game_sound_volume_get(g);
   game_sound_volume_set(g, vol - 1);
   if (game_sound_volume_get(g) < 0) {
@@ -87,7 +87,7 @@ static bool wid_cfg_sound_music_volume_incr(Gamep g, Widp w, int x, int y, uint3
 {
   TRACE_AND_INDENT();
   local_g_config_changed = true;
-  CON("INF: Increment music volume");
+  CON("Increment music volume");
   auto vol = game_music_volume_get(g);
   game_music_volume_set(g, vol + 1);
   if (game_music_volume_get(g) > MIX_MAX_VOLUME) {
@@ -102,7 +102,7 @@ static bool wid_cfg_sound_music_volume_decr(Gamep g, Widp w, int x, int y, uint3
 {
   TRACE_AND_INDENT();
   local_g_config_changed = true;
-  CON("INF: Decrement music volume");
+  CON("Decrement music volume");
   auto vol = game_music_volume_get(g);
   game_music_volume_set(g, vol - 1);
   if (game_music_volume_get(g) < 0) {

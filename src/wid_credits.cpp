@@ -77,7 +77,7 @@ static bool wid_credits_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 void wid_credits_select(Gamep g)
 {
   TRACE_AND_INDENT();
-  CON("INF: Credits");
+  CON("Credits");
 
   if (wid_credits_window) {
     wid_credits_destroy(g);
