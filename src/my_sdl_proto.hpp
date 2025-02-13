@@ -6,6 +6,8 @@
 #ifndef _MY_SDL_PROTO_HPP_
 #define _MY_SDL_PROTO_HPP_
 
+#include "my_minimal.hpp"
+
 #include <SDL.h>
 #include <string>
 #include <vector>

@@ -116,6 +116,10 @@ bool Game::save(std::string file_to_save)
   LOG("Save: %s", file_to_save.c_str());
   TRACE_AND_INDENT();
 
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Saving...", 0.25);
+  }
+
   std::stringstream s(std::ios::in | std::ios::out | std::ios::binary);
 
   const class Game &c = *this;
@@ -146,6 +150,10 @@ bool Game::save(std::string file_to_save)
 
   HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
 
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Compressing...", 0.5);
+  }
+
   lzo_uint compressed_len = 0;
   int      r
       = lzo1x_1_compress((lzo_bytep) uncompressed, uncompressed_len, (lzo_bytep) compressed, &compressed_len, wrkmem);
@@ -154,6 +162,7 @@ bool Game::save(std::string file_to_save)
         (unsigned long) compressed_len / (1024 * 1024));
   } else {
     ERR("LZO internal error - compression failed: %d", r);
+    wid_progress_bar_destroy(this);
     return false;
   }
 
@@ -176,6 +185,7 @@ bool Game::save(std::string file_to_save)
     } else {
       /* this should NEVER happen */
       ERR("LZO internal error - decompression failed: %d", check);
+      wid_progress_bar_destroy(this);
       return false;
     }
   }
@@ -190,12 +200,17 @@ bool Game::save(std::string file_to_save)
   }
 #endif
 
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Writing...", 0.75);
+  }
+
   //
   // Save the post compress buffer
   //
   auto ofile = fopen(file_to_save.c_str(), "wb");
   if (! ofile) {
     ERR("Failed to open %s for writing: %s", file_to_save.c_str(), strerror(errno));
+    wid_progress_bar_destroy(this);
     return false;
   }
 
@@ -210,6 +225,12 @@ bool Game::save(std::string file_to_save)
   free(uncompressed);
   free(compressed);
   free(wrkmem);
+
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Saved", 1.0);
+  }
+
+  wid_progress_bar_destroy(this);
 
   return true;
 }

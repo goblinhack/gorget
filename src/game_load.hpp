@@ -10,6 +10,7 @@
 #include "my_serialize.hpp"
 #include "my_wid_error.hpp"
 #include "my_wid_popup.hpp"
+#include "my_wid_progress_bar.hpp"
 
 #include <array>
 
@@ -288,11 +289,18 @@ bool Game::load(std::string file_to_load, class Game &target)
   // Read to a vector and then copy to a C buffer for LZO to use
   //
   lzo_uint uncompressed_len;
-  auto     vec = read_lzo_file(file_to_load, &uncompressed_len);
+
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Loading...", 0.0);
+  }
+
+  auto vec = read_lzo_file(file_to_load, &uncompressed_len);
+
   if (vec.size() <= 0) {
     if (! game_headers_only) {
       wid_error(game, "load error, empty file [" + file_to_load + "] ?");
     }
+    wid_progress_bar_destroy(this);
     return false;
   }
 
@@ -302,6 +310,10 @@ bool Game::load(std::string file_to_load, class Game &target)
   HEAP_ALLOC(compressed, compressed_len);
   HEAP_ALLOC(uncompressed, uncompressed_len);
   memcpy(compressed, data, compressed_len);
+
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Decompressing...", 0.5);
+  }
 
   lzo_uint new_len = 0;
   int      r = lzo1x_decompress((lzo_bytep) compressed, compressed_len, (lzo_bytep) uncompressed, &new_len, nullptr);
@@ -313,7 +325,12 @@ bool Game::load(std::string file_to_load, class Game &target)
   } else {
     /* this should NEVER happen */
     ERR("LZO internal error - decompression failed: %d", r);
+    wid_progress_bar_destroy(this);
     return false;
+  }
+
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Reading...", 0.75);
   }
 
 #if 0
@@ -337,6 +354,12 @@ bool Game::load(std::string file_to_load, class Game &target)
 
   free(uncompressed);
   free(compressed);
+
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Loaded", 1.0);
+  }
+
+  wid_progress_bar_destroy(this);
 
   return true;
 }

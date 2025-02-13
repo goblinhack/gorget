@@ -812,6 +812,20 @@ static void gfx_ui_init_15(void)
   tile_load_arr("data/gfx/ui/ui_horiz_scroll2.tga", "ui_box15", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
+static void gfx_ui_init_progress_bar(void)
+{
+  const char *tiles[] = {
+      "progress_bar.1",  "progress_bar.2",  "progress_bar.3",  "progress_bar.4",  "progress_bar.5",
+      "progress_bar.6",  "progress_bar.7",  "progress_bar.8",  "progress_bar.9",  "progress_bar.10",
+      "progress_bar.11", "progress_bar.12", "progress_bar.13", "progress_bar.14", "progress_bar.15",
+      "progress_bar.16", "progress_bar.17", "progress_bar.18", "progress_bar.19", "progress_bar.20",
+      "progress_bar.21", "progress_bar.22", "progress_bar.23", "progress_bar.24", "progress_bar.25",
+      "progress_bar.26", "progress_bar.27", "progress_bar.28", "progress_bar.29", "progress_bar.30",
+      "progress_bar.31", "progress_bar.32",
+  };
+  tile_load_arr("data/gfx/ui/progress_bar.tga", "progress_bar", 256, 32, ARRAY_SIZE(tiles), tiles);
+}
+
 void gfx_init(void)
 {
   gfx_init_font_ui();
@@ -835,6 +849,7 @@ void gfx_init(void)
   gfx_ui_init_7();
   gfx_ui_init_8();
   gfx_ui_init_9();
+  gfx_ui_init_progress_bar();
   // end sort marker1 }
 }
 
