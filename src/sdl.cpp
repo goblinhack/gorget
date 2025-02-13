@@ -56,8 +56,6 @@ void sdl_fini(Gamep g)
 
   LOG("SDL: Quit");
   SDL_Quit();
-
-  LOG("SDL: Quit done");
 }
 
 static inline void sdl_list_video_size(void)
@@ -196,7 +194,6 @@ uint8_t sdl_init_display(Gamep g)
 {
   int video_width;
   int video_height;
-  int value;
 
   sdl.init_video = 1;
 
@@ -299,7 +296,6 @@ uint8_t sdl_init_display(Gamep g)
     ERR("SDL_GL_CreateContext failed %s", SDL_GetError());
     return false;
   }
-  LOG("SDL: SDL_GL_CreateContext( done");
 
   LOG("SDL: Call SDL_GL_MakeCurrent()");
   if (SDL_GL_MakeCurrent(sdl.window, sdl.context) < 0) {
@@ -307,22 +303,25 @@ uint8_t sdl_init_display(Gamep g)
     ERR("SDL_GL_MakeCurrent failed %s", SDL_GetError());
     return false;
   }
-  LOG("SDL: SDL_GL_MakeCurrent() done");
 
   SDL_ClearError();
 
   //
   // Clear the screen, both buffers
   //
-  LOG("SDL: Clear screens");
   glcolor(WHITE);
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  SDL_GL_SwapWindow(sdl.window);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  SDL_GL_SwapWindow(sdl.window);
 
-  LOG("SDL: Call SDL_SetWindowTitle");
+  //
+  // Do we really need to do this? it takes a small bit of time.
+  //
+  if (0) {
+    SDL_GL_SwapWindow(sdl.window);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    SDL_GL_SwapWindow(sdl.window);
+  }
+
   SDL_SetWindowTitle(sdl.window, "gorget");
 
   LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
@@ -330,26 +329,6 @@ uint8_t sdl_init_display(Gamep g)
   LOG("SDL: OpenGL Version  : %s", glGetString(GL_VERSION));
 
   IF_DEBUG { DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS)); }
-
-  SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &value);
-  LOG("SDL: Red size    : %d", value);
-
-  SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &value);
-  LOG("SDL: Green size  : %d", value);
-
-  SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &value);
-  LOG("SDL: Blue size   : %d", value);
-
-  SDL_GL_GetAttribute(SDL_GL_DEPTH_SIZE, &value);
-  LOG("SDL: Depth size  : %d", value);
-
-  SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &value);
-  LOG("SDL: Double buf  : %d", value);
-
-  SDL_GL_GetAttribute(SDL_GL_ACCELERATED_VISUAL, &value);
-  LOG("SDL: Hw Accel    : %d", value);
-
-  LOG("SDL: Vsync       : %d", SDL_GL_GetSwapInterval());
 
   return true;
 }
@@ -664,12 +643,12 @@ uint8_t config_errored(Gamep g, class Tokens *tokens, void *context)
 
 void sdl_config_update_all(Gamep g)
 {
-  TRACE_NO_INDENT();
   LOG("SDL: Update config");
+  TRACE_AND_INDENT();
+
   config_game_gfx_update(g);
   config_gfx_vsync_update(g);
   gl_init_2d_mode(g);
-  LOG("SDL: Updated config");
 }
 
 //

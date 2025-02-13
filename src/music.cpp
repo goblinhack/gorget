@@ -46,7 +46,7 @@ bool music_init(void)
   //
   int flags   = MIX_INIT_OGG;
   int initted = Mix_Init(flags);
-  LOG("SDL: Mix_Init");
+  LOG("SDL: Load mixer");
   if ((initted & flags) != flags) {
     ERR("Mix_Init: Failed to init required OGG support");
   }

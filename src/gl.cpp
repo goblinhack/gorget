@@ -31,10 +31,10 @@ void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLs
 
 void gl_init_2d_mode(Gamep g)
 {
-  LOG("SDL: init 2d mode");
+  LOG("SDL: Init 2d mode");
   TRACE_AND_INDENT();
-  GL_ERROR_CHECK();
 
+  GL_ERROR_CHECK();
   gl_leave_2d_mode(g);
 
   //
