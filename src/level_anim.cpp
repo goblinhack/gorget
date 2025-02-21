@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_tile.hpp"
 #include "my_time.hpp"
 #include "my_tp.hpp"
@@ -39,6 +40,10 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
         point  p(x, y);
         Thingp t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
         if (! t) {
+          continue;
+        }
+
+        if (! tp_is_animated(tp)) {
           continue;
         }
 

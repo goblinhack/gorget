@@ -61,6 +61,7 @@ enum { MONST_CLASS_A, MONST_CLASS_MAX };
   list_macro(is_walk_through_walls, "is_walk_through_walls"),         /* ............................ */             \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),     /* ............................ */             \
       list_macro(is_animated_no_dir, "is_animated_no_dir"),           /* ............................ */             \
+      list_macro(is_animated, "is_animated"),                         /* ............................ */             \
       list_macro(is_blit_centered, "is_blit_centered"),               /* ............................ */             \
       list_macro(is_blit_on_ground, "is_blit_on_ground"),             /* ............................ */             \
       list_macro(is_blit_outlined, "is_blit_outlined"),               /* ............................ */             \
@@ -189,6 +190,7 @@ enum { MONST_CLASS_A, MONST_CLASS_MAX };
 #define tp_is_walk_through_walls(tp)   tp_flag(tp, is_walk_through_walls)
 #define tp_is_animated_can_hflip(tp)   tp_flag(tp, is_animated_can_hflip)
 #define tp_is_animated_no_dir(tp)      tp_flag(tp, is_animated_no_dir)
+#define tp_is_animated(tp)             tp_flag(tp, is_animated)
 #define tp_is_blit_centered(tp)        tp_flag(tp, is_blit_centered)
 #define tp_is_blit_on_ground(tp)       tp_flag(tp, is_blit_on_ground)
 #define tp_is_blit_outlined(tp)        tp_flag(tp, is_blit_outlined)
@@ -315,6 +317,7 @@ enum { MONST_CLASS_A, MONST_CLASS_MAX };
 #define thing_is_walk_through_walls(thing)   tp_flag(thing_tp(thing), is_walk_through_walls)
 #define thing_is_animated_can_hflip(thing)   tp_flag(thing_tp(thing), is_animated_can_hflip)
 #define thing_is_animated_no_dir(thing)      tp_flag(thing_tp(thing), is_animated_no_dir)
+#define thing_is_animated(thing)             tp_flag(thing_tp(thing), is_animated)
 #define thing_is_blit_centered(thing)        tp_flag(thing_tp(thing), is_blit_centered)
 #define thing_is_blit_on_ground(thing)       tp_flag(thing_tp(thing), is_blit_on_ground)
 #define thing_is_blit_outlined(thing)        tp_flag(thing_tp(thing), is_blit_outlined)
@@ -442,6 +445,7 @@ enum { MONST_CLASS_A, MONST_CLASS_MAX };
 #define level_is_walk_through_walls(g, v, l, p)   level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_animated_can_hflip(g, v, l, p)   level_flag(g, v, l, is_animated_can_hflip, p)
 #define level_is_animated_no_dir(g, v, l, p)      level_flag(g, v, l, is_animated_no_dir, p)
+#define level_is_animated(g, v, l, p)             level_flag(g, v, l, is_animated, p)
 #define level_is_blit_centered(g, v, l, p)        level_flag(g, v, l, is_blit_centered, p)
 #define level_is_blit_on_ground(g, v, l, p)       level_flag(g, v, l, is_blit_on_ground, p)
 #define level_is_blit_outlined(g, v, l, p)        level_flag(g, v, l, is_blit_outlined, p)

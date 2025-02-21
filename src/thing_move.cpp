@@ -334,21 +334,13 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
     if (! o_id) {
+      auto tp = thing_tp(t);
 
       //
       // Keep track of tiles the player has been on.
       //
-      if (tp_is_player(thing_tp(t))) {
+      if (tp_is_player(tp)) {
         l->is_walked[ p.x ][ p.y ] = true;
-      }
-
-      //
-      // Set an initial tile so we can see the thing
-      //
-      auto tp   = tp_find(t->tp_id);
-      auto tile = tp_first_tile(tp);
-      if (tile) {
-        t->tile_index = tile_global_index(tile);
       }
 
       //

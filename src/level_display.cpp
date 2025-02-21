@@ -12,16 +12,12 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint16_t tile_index, point tl, point br,
-                                     point offset)
+static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint16_t tile_index, point tl, point br)
 {
   auto tile = tile_index_to_tile(tile_index);
   if (! tile) {
     return;
   }
-
-  tl += offset;
-  br += offset;
 
   if (tp_is_blit_outlined(tp)) {
     tile_blit_outline(tile, tl, br, WHITE, BLACK, false);
@@ -40,7 +36,7 @@ static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thi
   point tl;
   point br;
 
-  int tile_index;
+  uint16_t tile_index;
 
   if (t) {
     tile_index = t->tile_index;
@@ -78,16 +74,8 @@ static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thi
 
   if (tp_is_blit_on_ground(tp)) {
     //
-    // Center x
-    //
-    tl.x -= (pix_width - dw) / 2;
-    tl.y -= (pix_height - dh) / 2;
-    //
     // On the ground
     //
-    tl.y += TILE_WIDTH / 2;
-    tl.y -= TILE_HEIGHT / 2;
-    tl.y -= TILE_HEIGHT / 4;
   } else if (tp_is_blit_centered(tp)) {
     //
     // Centered
@@ -111,7 +99,7 @@ static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thi
     }
   }
 
-  level_display_tile_index(g, v, l, tp, tile_index, tl, br, point(0, 0));
+  level_display_tile_index(g, v, l, tp, tile_index, tl, br);
 }
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)

@@ -58,9 +58,12 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
   auto index = pcg_rand() % tp_tiles_size(tp);
   auto tile  = tp_tiles_get(tp, index);
   if (tile) {
-    t->tile_index = tile_index(tile);
-    auto i        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
-    t->anim_index = i;
+    t->tile_index = tile_global_index(tile);
+
+    if (tp_is_animated(tp)) {
+      auto i        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
+      t->anim_index = i;
+    }
   }
 
   //
