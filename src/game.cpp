@@ -86,6 +86,25 @@ public:
   SDL_Keysym key_save       = {};
   SDL_Keysym key_screenshot = {};
   SDL_Keysym key_unused1    = {};
+  SDL_Keysym key_unused2    = {};
+  SDL_Keysym key_unused3    = {};
+  SDL_Keysym key_unused4    = {};
+  SDL_Keysym key_unused5    = {};
+  SDL_Keysym key_unused6    = {};
+  SDL_Keysym key_unused7    = {};
+  SDL_Keysym key_unused8    = {};
+  SDL_Keysym key_unused9    = {};
+  SDL_Keysym key_unused10   = {};
+  SDL_Keysym key_unused11   = {};
+  SDL_Keysym key_unused12   = {};
+  SDL_Keysym key_unused13   = {};
+  SDL_Keysym key_unused14   = {};
+  SDL_Keysym key_unused15   = {};
+  SDL_Keysym key_unused16   = {};
+  SDL_Keysym key_unused17   = {};
+  SDL_Keysym key_unused18   = {};
+  SDL_Keysym key_unused19   = {};
+  SDL_Keysym key_unused20   = {};
 
   //
   // Ok, not really config...
@@ -281,8 +300,7 @@ void Config::reset(void)
   sdl_delay          = 10;
   sound_volume       = {MIX_MAX_VOLUME / 2};
 
-  // key_unused1.sym  = SDLK_TAB;
-  // key_unused1.mod  = KMOD_NUM;
+  key_unused1.sym = SDLK_TAB;
 }
 
 void game_config_reset(Gamep g) { g->config.reset(); }
@@ -1427,4 +1445,327 @@ void game_key_unused1_set(Gamep g, SDL_Keysym key)
     return;
   }
   g->config.key_unused1 = key;
+}
+
+SDL_Keysym game_key_unused2_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused2;
+}
+void game_key_unused2_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused2 = key;
+}
+
+SDL_Keysym game_key_unused3_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused3;
+}
+void game_key_unused3_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused3 = key;
+}
+
+SDL_Keysym game_key_unused4_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused4;
+}
+void game_key_unused4_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused4 = key;
+}
+
+SDL_Keysym game_key_unused5_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused5;
+}
+void game_key_unused5_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused5 = key;
+}
+
+SDL_Keysym game_key_unused6_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused6;
+}
+void game_key_unused6_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused6 = key;
+}
+
+SDL_Keysym game_key_unused7_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused7;
+}
+void game_key_unused7_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused7 = key;
+}
+
+SDL_Keysym game_key_unused8_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused8;
+}
+void game_key_unused8_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused8 = key;
+}
+
+SDL_Keysym game_key_unused9_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused9;
+}
+void game_key_unused9_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused9 = key;
+}
+
+SDL_Keysym game_key_unused10_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused10;
+}
+void game_key_unused10_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused10 = key;
+}
+
+SDL_Keysym game_key_unused11_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused11;
+}
+void game_key_unused11_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused11 = key;
+}
+
+SDL_Keysym game_key_unused12_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused12;
+}
+void game_key_unused12_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused12 = key;
+}
+
+SDL_Keysym game_key_unused13_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused13;
+}
+void game_key_unused13_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused13 = key;
+}
+
+SDL_Keysym game_key_unused14_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused14;
+}
+void game_key_unused14_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused14 = key;
+}
+
+SDL_Keysym game_key_unused15_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused15;
+}
+void game_key_unused15_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused15 = key;
+}
+
+SDL_Keysym game_key_unused16_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused16;
+}
+void game_key_unused16_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused16 = key;
+}
+
+SDL_Keysym game_key_unused17_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused17;
+}
+void game_key_unused17_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused17 = key;
+}
+
+SDL_Keysym game_key_unused18_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused18;
+}
+void game_key_unused18_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused18 = key;
+}
+
+SDL_Keysym game_key_unused19_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused19;
+}
+void game_key_unused19_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused19 = key;
+}
+
+SDL_Keysym game_key_unused20_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! g)
+    return no_key;
+  return g->config.key_unused20;
+}
+void game_key_unused20_set(Gamep g, SDL_Keysym key)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.key_unused20 = key;
 }

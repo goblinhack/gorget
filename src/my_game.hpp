@@ -160,6 +160,63 @@ void       game_key_screenshot_set(Gamep, SDL_Keysym);
 SDL_Keysym game_key_unused1_get(Gamep);
 void       game_key_unused1_set(Gamep, SDL_Keysym);
 
+SDL_Keysym game_key_unused2_get(Gamep);
+void       game_key_unused2_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused3_get(Gamep);
+void       game_key_unused3_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused4_get(Gamep);
+void       game_key_unused4_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused5_get(Gamep);
+void       game_key_unused5_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused6_get(Gamep);
+void       game_key_unused6_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused7_get(Gamep);
+void       game_key_unused7_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused8_get(Gamep);
+void       game_key_unused8_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused9_get(Gamep);
+void       game_key_unused9_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused10_get(Gamep);
+void       game_key_unused10_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused11_get(Gamep);
+void       game_key_unused11_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused12_get(Gamep);
+void       game_key_unused12_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused13_get(Gamep);
+void       game_key_unused13_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused14_get(Gamep);
+void       game_key_unused14_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused15_get(Gamep);
+void       game_key_unused15_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused16_get(Gamep);
+void       game_key_unused16_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused17_get(Gamep);
+void       game_key_unused17_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused18_get(Gamep);
+void       game_key_unused18_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused19_get(Gamep);
+void       game_key_unused19_set(Gamep, SDL_Keysym);
+
+SDL_Keysym game_key_unused20_get(Gamep);
+void       game_key_unused20_set(Gamep, SDL_Keysym);
+
 uint8_t game_input(Gamep, const SDL_Keysym *key);
 uint8_t game_mouse_down(Gamep, int x, int y, uint32_t button);
 uint8_t game_mouse_motion(Gamep, int x, int y, int relx, int rely, int wheelx, int wheely);

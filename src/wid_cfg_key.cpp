@@ -65,6 +65,82 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
     CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused1%%fg=reset$");
     game_key_unused1_set(g, none);
   }
+  if (sdlk_eq(game_key_unused2_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused2%%fg=reset$");
+    game_key_unused2_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused3_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused3%%fg=reset$");
+    game_key_unused3_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused4_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused4%%fg=reset$");
+    game_key_unused4_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused5_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused5%%fg=reset$");
+    game_key_unused5_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused6_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused6%%fg=reset$");
+    game_key_unused6_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused7_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused7%%fg=reset$");
+    game_key_unused7_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused8_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused8%%fg=reset$");
+    game_key_unused8_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused9_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused9%%fg=reset$");
+    game_key_unused9_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused10_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused10%%fg=reset$");
+    game_key_unused10_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused11_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused11%%fg=reset$");
+    game_key_unused11_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused12_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused12%%fg=reset$");
+    game_key_unused12_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused13_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused13%%fg=reset$");
+    game_key_unused13_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused14_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused14%%fg=reset$");
+    game_key_unused14_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused15_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused15%%fg=reset$");
+    game_key_unused15_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused16_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused16%%fg=reset$");
+    game_key_unused16_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused17_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused17%%fg=reset$");
+    game_key_unused17_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused18_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused18%%fg=reset$");
+    game_key_unused18_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused19_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused19%%fg=reset$");
+    game_key_unused19_set(g, none);
+  }
+  if (sdlk_eq(game_key_unused20_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused20%%fg=reset$");
+    game_key_unused20_set(g, none);
+  }
 }
 
 void wid_cfg_keyboard_destroy(Gamep g)
@@ -198,6 +274,196 @@ static void wid_cfg_key_unused1_set(Gamep g, SDL_Keysym code)
   game_key_unused1_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused1_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused2_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused2_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused2_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused3_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused3_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused3_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused4_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused4_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused4_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused5_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused5_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused5_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused6_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused6_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused6_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused7_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused7_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused7_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused8_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused8_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused8_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused9_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused9_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused9_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused10_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused10_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused10_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused11_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused11_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused11_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused12_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused12_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused12_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused13_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused13_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused13_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused14_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused14_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused14_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused15_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused15_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused15_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused16_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused16_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused16_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused17_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused17_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused17_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused18_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused18_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused18_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused19_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused19_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused19_set(g, code);
+  wid_cfg_keyboard_select(g);
+}
+
+static void wid_cfg_key_unused20_set(Gamep g, SDL_Keysym code)
+{
+  TRACE_NO_INDENT();
+  local_g_config_changed = true;
+  game_key_unused20_set(g, none);
+  wid_cfg_check_for_conflicts(g, code);
+  game_key_unused20_set(g, code);
   wid_cfg_keyboard_select(g);
 }
 
@@ -379,8 +645,179 @@ static bool wid_cfg_key_attack(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_cfg_key_unused1(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  grab_key(g, "item unused1");
+  grab_key(g, "unused1");
   sdl.on_sdl_key_grab    = wid_cfg_key_unused1_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused2(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused2");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused2_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused3(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused3");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused3_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused4(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused4");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused4_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused5(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused5");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused5_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused6(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused6");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused6_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused7(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused7");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused7_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused8(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused8");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused8_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused9(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused9");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused9_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused10(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused10");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused10_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused11(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused11");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused11_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused12(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused12");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused12_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused13(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused13");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused13_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused14(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused14");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused14_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused15(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused15");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused15_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused16(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused16");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused16_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused17(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused17");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused17_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused18(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused18");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused18_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused19(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused19");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused19_set;
+  local_g_config_changed = true;
+  return true;
+}
+
+static bool wid_cfg_key_unused20(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  grab_key(g, "unused20");
+  sdl.on_sdl_key_grab    = wid_cfg_key_unused20_set;
   local_g_config_changed = true;
   return true;
 }
@@ -914,7 +1351,7 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Debug console (+shift)");
+    wid_set_text(w, "Debug console");
   }
   {
     TRACE_NO_INDENT();
@@ -994,6 +1431,595 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused1_get(g)));
     wid_set_on_mouse_up(g, w, wid_cfg_key_unused1);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused2
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused2");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused2");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused2_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused2);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused3
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused3");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused3");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused3_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused3);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused4
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused4");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused4");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused4_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused4);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused5
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused5");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused5");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused5_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused5);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused6
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused6");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused6");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused6_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused6);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused7
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused7");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused7");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused7_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused7);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused8
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused8");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused8");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused8_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused8);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused9
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused9");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused9");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused9_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused9);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused10
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused10");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused10");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused10_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused10);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused11
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused11");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused11");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused11_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused11);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused12
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused12");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused12");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused12_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused12);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused13
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused13");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused13");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused13_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused13);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused14
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused14");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused14");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused14_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused14);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused15
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused15");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused15");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused15_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused15);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused16
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused16");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused16");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused16_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused16);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused17
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused17");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused17");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused17_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused17);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused18
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused18");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused18");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused18_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused18);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused19
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused19");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused19");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused19_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused19);
+  }
+  ///////////////////////////////////////////////////////////////////////
+  // unused20
+  ///////////////////////////////////////////////////////////////////////
+  y_at++;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "unused20");
+
+    point tl(1, y_at);
+    point br(width / 2, y_at);
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+    wid_set_text_lhs(w, true);
+    wid_set_text(w, "Unused20");
+  }
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "value");
+
+    point tl(width / 2 + rhs_button_left, y_at);
+    point br(width / 2 + rhs_button_right, y_at);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, ::to_string(game_key_unused20_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_unused20);
   }
 
   wid_update(g, wid_cfg_keyboard_window->wid_text_area->wid_text_area);
