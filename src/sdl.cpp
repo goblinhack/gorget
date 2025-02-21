@@ -861,7 +861,8 @@ void config_game_gfx_update(Gamep g)
   // Now convert that to pixels
   //
   double visible_game_map_w = (double) TILE_WIDTH * MAP_TILES_ACROSS;
-  double visible_game_map_h = (double) TILE_HEIGHT * (MAP_TILES_DOWN / ratio);
+  double visible_game_map_h = (double) TILE_HEIGHT * ceil(MAP_TILES_DOWN / ratio);
+
   //
   // Compensate for any additional pixels the rounding of the terminal cells loses
   //
@@ -870,6 +871,11 @@ void config_game_gfx_update(Gamep g)
       = (game_ascii_pix_height_get(g) * TERM_HEIGHT) / (double) game_window_pix_height_get(g);
   visible_game_map_w *= pixel_rounding_w_fixup;
   visible_game_map_h *= pixel_rounding_h_fixup;
+
+  //
+  // For now use a square map, ignoring the above
+  //
+  visible_game_map_h = visible_game_map_w;
 
   game_pix_width_set(g, visible_game_map_w);
   game_pix_height_set(g, visible_game_map_h);
