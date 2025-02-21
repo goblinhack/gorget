@@ -831,7 +831,6 @@ void gfx_init(void)
   gfx_init_font_ui();
 
   // begin sort marker1 {
-  gfx_init_12x12();
   gfx_init_24x24();
   gfx_ui_init_0();
   gfx_ui_init_1();

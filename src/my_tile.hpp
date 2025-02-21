@@ -12,8 +12,8 @@
 
 class Tile;
 
-#define TILE_HEIGHT     12
-#define TILE_WIDTH      12
+#define TILE_HEIGHT     24
+#define TILE_WIDTH      24
 #define TILE_HEIGHT_MAX 24
 #define TILE_WIDTH_MAX  24 // Largest tile for collisions
 

@@ -11,6 +11,7 @@
 #define ENABLE_DEBUG_TRACE        // (SLOW) Function tracing
 #define ENABLE_PTRCHECK_HISTORY 2 // Per pointer history (when in --debug2 mode)
 
+#undef ENABLE_TILE_BOUNDS        // For collisions
 #undef ENABLE_DEBUG_GFX_GL_BLEND // Use to debug specific blends
 #undef ENABLE_DEBUG_MEM_LEAKS    // Check for leaks at exit
 #undef ENABLE_DEBUG_PTRCHECK     // (VERY SLOW) Debug ptrcheck itself
