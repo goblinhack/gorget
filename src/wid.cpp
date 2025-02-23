@@ -20,6 +20,10 @@
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
+#ifdef ENABLE_DEBUG_GFX_GL_BLEND
+#include <unistd.h>
+#endif
+
 typedef struct {
   //
   // Colors

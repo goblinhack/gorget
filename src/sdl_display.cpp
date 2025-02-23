@@ -36,10 +36,19 @@ void sdl_display(Gamep g)
       int  visible_map_br_y = (TERM_HEIGHT - 2) * h;
       game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
+      //
+      // Brighter map effect
+      //
+      glBlendFunc(GL_ONE, GL_DST_COLOR);
+
       blit_init();
       blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
            visible_map_br_y);
+      blit_flush();
 
+      blit_init();
+      blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+           visible_map_br_y);
       blit_flush();
     }
   }
@@ -47,7 +56,6 @@ void sdl_display(Gamep g)
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   blit_fbo_window_pix(g, FBO_WID);
   blit_fbo_unbind();
-
   glBlendFunc(GL_ONE, GL_ZERO);
   blit_fbo_window_pix(g, FBO_FINAL);
 
