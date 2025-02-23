@@ -44,9 +44,6 @@ void sdl_display(Gamep g)
       blit_init();
       blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
            visible_map_br_y);
-      blit_flush();
-
-      blit_init();
       blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
            visible_map_br_y);
       blit_flush();
