@@ -14,6 +14,9 @@
 
 static WidPopup *wid_cfg_gfx_window;
 
+static SDL_DisplayMode pending_mode;
+static bool            pending_mode_set;
+
 static void wid_cfg_gfx_destroy(Gamep g)
 {
   TRACE_AND_INDENT();
@@ -138,11 +141,34 @@ static bool wid_cfg_other_fps_counter_toggle(Gamep g, Widp w, int x, int y, uint
   return true;
 }
 
+static bool wid_cfg_gfx_resolution_apply(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_AND_INDENT();
+
+  SDL_DisplayMode mode = pending_mode;
+  pending_mode_set     = false;
+
+  game_window_pix_width_set(g, mode.w);
+  game_window_pix_height_set(g, mode.h);
+  game_config_pix_width_set(g, mode.w);
+  game_config_pix_height_set(g, mode.h);
+  SDL_SetWindowSize(sdl.window, mode.w, mode.h);
+  wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+
+  return true;
+}
+
 static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   auto res = std::to_string(game_window_pix_width_get(g)) + "x" + std::to_string(game_window_pix_height_get(g));
-  CON("Increment resolution (current %s)", res.c_str());
+  if (pending_mode_set) {
+    res = std::to_string(pending_mode.w) + "x" + std::to_string(pending_mode.h);
+    CON("Increment resolution (pending %s)", res.c_str());
+  } else {
+    CON("Increment resolution (current %s)", res.c_str());
+  }
+
   auto                                     n = SDL_GetNumDisplayModes(0);
   std::string                              chosen;
   std::vector< std::string >               cands;
@@ -170,13 +196,10 @@ static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t 
   if (chosen != "") {
     SDL_DisplayMode mode = modes[ chosen ];
     LOG(" - chosen: %s", chosen.c_str());
-    game_window_pix_width_set(g, mode.w);
-    game_window_pix_height_set(g, mode.h);
-    game_config_pix_width_set(g, mode.w);
-    game_config_pix_height_set(g, mode.h);
-    SDL_SetWindowSize(sdl.window, mode.w, mode.h);
-    CON("New resolution %s", chosen.c_str());
-    wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+    pending_mode_set = true;
+    pending_mode     = mode;
+    CON("Pending resolution %s", chosen.c_str());
+    wid_cfg_gfx_select(g);
   } else {
     sound_play(g, "error");
     CON("At maximum resolution (current %s)", res.c_str());
@@ -189,7 +212,13 @@ static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t 
 {
   TRACE_AND_INDENT();
   auto res = std::to_string(game_window_pix_width_get(g)) + "x" + std::to_string(game_window_pix_height_get(g));
-  CON("Decrement resolution (current %s)", res.c_str());
+  if (pending_mode_set) {
+    res = std::to_string(pending_mode.w) + "x" + std::to_string(pending_mode.h);
+    CON("Decrement resolution (pending %s)", res.c_str());
+  } else {
+    CON("Decrement resolution (current %s)", res.c_str());
+  }
+
   auto                                     n = SDL_GetNumDisplayModes(0);
   std::string                              chosen;
   std::vector< std::string >               cands;
@@ -217,13 +246,10 @@ static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t 
   if (chosen != "") {
     SDL_DisplayMode mode = modes[ chosen ];
     LOG(" - chosen: %s", chosen.c_str());
-    game_window_pix_width_set(g, mode.w);
-    game_window_pix_height_set(g, mode.h);
-    game_config_pix_width_set(g, mode.w);
-    game_config_pix_height_set(g, mode.h);
-    SDL_SetWindowSize(sdl.window, mode.w, mode.h);
-    CON("New resolution %s", chosen.c_str());
-    wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+    pending_mode_set = true;
+    pending_mode     = mode;
+    CON("Pending resolution %s", chosen.c_str());
+    wid_cfg_gfx_select(g);
   } else {
     sound_play(g, "error");
     CON("At minimm resolution (current %s)", res.c_str());
@@ -327,6 +353,19 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_text(w, "%%fg=white$B%%fg=reset$ack");
   }
 
+  if (pending_mode_set) {
+    TRACE_AND_INDENT();
+    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "Apply");
+
+    point tl(10, y_at);
+    point br(16, y_at + 2);
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_on_mouse_up(g, w, wid_cfg_gfx_resolution_apply);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, "Apply");
+  }
+
   /////////////////////////////////////////////////////////////////////////
   // resolution
   /////////////////////////////////////////////////////////////////////////
@@ -354,26 +393,15 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_pos(w, tl, br);
 
     auto res = std::to_string(game_window_pix_width_get(g)) + "x" + std::to_string(game_window_pix_height_get(g));
+    if (pending_mode_set) {
+      res = std::to_string(pending_mode.w) + "x" + std::to_string(pending_mode.h);
+    }
+
     wid_set_text(w, res);
     wid_set_text_lhs(w, true);
   }
 
-  if (game_gfx_fullscreen_desktop_get(g)) {
-    y_at++;
-    {
-      TRACE_AND_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_square_button(g, p, "Notice");
-
-      point tl(1, y_at);
-      point br(width - 2, y_at);
-      wid_set_shape_none(w);
-      wid_set_pos(w, tl, br);
-      wid_set_text(w, "** Disable full desktop to change **");
-      wid_set_text_lhs(w, true);
-    }
-    y_at++;
-  } else {
+  if (! game_gfx_fullscreen_desktop_get(g)) {
     {
       TRACE_AND_INDENT();
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
@@ -472,42 +500,6 @@ void wid_cfg_gfx_select(Gamep g)
   y_at++;
 
   /////////////////////////////////////////////////////////////////////////
-  // Fullscreen
-  /////////////////////////////////////////////////////////////////////////
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Fullscreen");
-
-    point tl(1, y_at);
-    point br(width / 2, y_at);
-    wid_set_shape_none(w);
-    wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
-    wid_set_text(w, "Fullscreen");
-  }
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Fullscreen value");
-
-    point tl(23, y_at);
-    point br(37, y_at);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_gfx_fullscreen_toggle);
-
-    if (game_gfx_fullscreen_get(g)) {
-      wid_set_text(w, "True");
-    } else {
-      wid_set_text(w, "False");
-    }
-  }
-
-  /////////////////////////////////////////////////////////////////////////
   // Fullscreen desktop
   /////////////////////////////////////////////////////////////////////////
   y_at++;
@@ -544,26 +536,43 @@ void wid_cfg_gfx_select(Gamep g)
     }
   }
 
+  if (game_gfx_fullscreen_desktop_get(g)) {
+    y_at++;
+    {
+      TRACE_AND_INDENT();
+      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto w = wid_new_square_button(g, p, "Notice");
+
+      point tl(1, y_at);
+      point br(width - 2, y_at);
+      wid_set_shape_none(w);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, "^^ Disable to change resolution ^^");
+      wid_set_text_lhs(w, true);
+    }
+    y_at++;
+    y_at++;
+  }
+
   /////////////////////////////////////////////////////////////////////////
-  // fullscreen desktop
+  // Fullscreen
   /////////////////////////////////////////////////////////////////////////
-  y_at++;
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "High DPI res");
+    auto w = wid_new_square_button(g, p, "Fullscreen");
 
     point tl(1, y_at);
     point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "High DPI resolution");
+    wid_set_text(w, "Fullscreen");
   }
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "High DPI value");
+    auto w = wid_new_square_button(g, p, "Fullscreen value");
 
     point tl(23, y_at);
     point br(37, y_at);
@@ -572,17 +581,58 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_gfx_allow_highdpi_toggle);
+    wid_set_on_mouse_up(g, w, wid_cfg_gfx_fullscreen_toggle);
 
-    if (game_gfx_allow_highdpi_get(g)) {
+    if (game_gfx_fullscreen_get(g)) {
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");
     }
   }
 
+  if (0) {
+    /////////////////////////////////////////////////////////////////////////
+    // High DPI
+    //
+    // Seems to have issues with mouse position, so disabled
+    /////////////////////////////////////////////////////////////////////////
+    y_at++;
+    {
+      TRACE_AND_INDENT();
+      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto w = wid_new_square_button(g, p, "High DPI res");
+
+      point tl(1, y_at);
+      point br(width / 2, y_at);
+      wid_set_shape_none(w);
+      wid_set_pos(w, tl, br);
+      wid_set_text_lhs(w, true);
+      wid_set_text(w, "High DPI resolution");
+    }
+    {
+      TRACE_AND_INDENT();
+      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto w = wid_new_square_button(g, p, "High DPI value");
+
+      point tl(23, y_at);
+      point br(37, y_at);
+      wid_set_mode(g, w, WID_MODE_OVER);
+      wid_set_style(w, box_highlight_style);
+      wid_set_mode(g, w, WID_MODE_NORMAL);
+      wid_set_style(w, box_style);
+      wid_set_pos(w, tl, br);
+      wid_set_on_mouse_up(g, w, wid_cfg_gfx_allow_highdpi_toggle);
+
+      if (game_gfx_allow_highdpi_get(g)) {
+        wid_set_text(w, "True");
+      } else {
+        wid_set_text(w, "False");
+      }
+    }
+  }
+
   /////////////////////////////////////////////////////////////////////////
-  // borderless
+  // Borderless
   /////////////////////////////////////////////////////////////////////////
   y_at++;
   {
