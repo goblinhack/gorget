@@ -104,7 +104,7 @@ public:
   SDL_Keysym key_unused17   = {};
   SDL_Keysym key_unused18   = {};
   SDL_Keysym key_unused19   = {};
-  SDL_Keysym key_unused20   = {};
+  SDL_Keysym key_zoom       = {};
 
   //
   // Ok, not really config...
@@ -282,8 +282,8 @@ void Config::reset(void)
   aspect_ratio           = {};
   window_pix_height      = {};
   window_pix_width       = {};
-  tiles_visible_across   = {};
-  tiles_visible_down     = {};
+  tiles_visible_across   = MAP_TILES_ACROSS_DEF;
+  tiles_visible_down     = MAP_TILES_DOWN_DEF;
 
   key_attack.sym     = SDLK_SPACE;
   key_help.sym       = SDLK_h;
@@ -295,6 +295,7 @@ void Config::reset(void)
   key_quit.sym       = SDLK_q;
   key_save.sym       = SDLK_F1;
   key_screenshot.sym = SDLK_F10;
+  key_zoom.sym       = SDLK_z;
   key_console.sym    = SDLK_BACKQUOTE;
   music_volume       = {MIX_MAX_VOLUME / 3};
   sdl_delay          = 10;
@@ -382,8 +383,8 @@ void Game::create_levels(void)
 
   auto v = levels_create(g);
   game_levels_set(g, v);
-  auto l = game_level_set(g, v, 0, 0);
-  level_scroll_warp_to_player(g, v, l);
+  game_level_set(g, v, 0, 0);
+  level_scroll_warp_to_player(g, v);
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
 
@@ -640,7 +641,7 @@ int game_tiles_visible_across_get(Gamep g)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
-    return MAP_TILES_ACROSS;
+    return MAP_TILES_ACROSS_DEF;
   }
   return g->config.tiles_visible_across;
 }
@@ -659,7 +660,7 @@ int game_tiles_visible_down_get(Gamep g)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
-    return MAP_TILES_DOWN;
+    return MAP_TILES_DOWN_DEF;
   }
   return g->config.tiles_visible_down;
 }
@@ -1753,19 +1754,19 @@ void game_key_unused19_set(Gamep g, SDL_Keysym key)
   g->config.key_unused19 = key;
 }
 
-SDL_Keysym game_key_unused20_get(Gamep g)
+SDL_Keysym game_key_zoom_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (! g)
     return no_key;
-  return g->config.key_unused20;
+  return g->config.key_zoom;
 }
-void game_key_unused20_set(Gamep g, SDL_Keysym key)
+void game_key_zoom_set(Gamep g, SDL_Keysym key)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.key_unused20 = key;
+  g->config.key_zoom = key;
 }

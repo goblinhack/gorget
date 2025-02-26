@@ -83,7 +83,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.key_unused17);
   out << bits(my.t.key_unused18);
   out << bits(my.t.key_unused19);
-  out << bits(my.t.key_unused20);
+  out << bits(my.t.key_zoom);
   out << bits(my.t.map_pix_height);
   out << bits(my.t.map_pix_width);
   out << bits(my.t.mouse_wheel_lr_negated);

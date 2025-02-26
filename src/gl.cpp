@@ -402,7 +402,7 @@ static void gl_fini_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint 
   memset(g_fbo_size, 0, sizeof(g_fbo_size));
 }
 
-void gl_init_fbo(Gamep g)
+void gl_init_fbo(Gamep g, int fbo)
 {
   int i;
 
@@ -412,6 +412,15 @@ void gl_init_fbo(Gamep g)
   for (i = 0; i < MAX_FBO; i++) {
     int tex_width;
     int tex_height;
+
+    //
+    // Filter to a specific fbo?
+    //
+    if (fbo != -1) {
+      if (i != fbo) {
+        continue;
+      }
+    }
 
     // old size check
     fbo_get_size(g, i, tex_width, tex_height);
@@ -433,11 +442,13 @@ void gl_init_fbo(Gamep g)
     gl_init_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
     g_fbo_size[ i ] = isize(tex_width, tex_height);
 
-    gl_enter_2d_mode(g, tex_width, tex_height);
-    blit_fbo_bind(i);
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    blit_fbo_unbind();
+    if (0) {
+      gl_enter_2d_mode(g, tex_width, tex_height);
+      blit_fbo_bind(i);
+      glClearColor(0, 0, 0, 0);
+      glClear(GL_COLOR_BUFFER_BIT);
+      blit_fbo_unbind();
+    }
   }
 
   LOG("GFX: OpenGL created FBOs");

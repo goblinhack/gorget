@@ -860,8 +860,8 @@ void config_game_gfx_update(Gamep g)
   //
   // Now convert that to pixels
   //
-  double visible_game_map_w = (double) TILE_WIDTH * MAP_TILES_ACROSS;
-  double visible_game_map_h = (double) TILE_HEIGHT * ceil(MAP_TILES_DOWN / ratio);
+  double visible_game_map_w = (double) TILE_WIDTH * game_tiles_visible_across_get(g);
+  double visible_game_map_h = (double) TILE_HEIGHT * ceil(game_tiles_visible_down_get(g) / ratio);
 
   //
   // Compensate for any additional pixels the rounding of the terminal cells loses

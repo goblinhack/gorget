@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
@@ -81,8 +82,29 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     return false;
   }
 
-  if (sdlk_eq(*key, game_key_unused1_get(g))) {
-    // TODO
+  if (sdlk_eq(*key, game_key_zoom_get(g))) {
+    DBG("Zoom alt");
+    if (game_tiles_visible_across_get(g) == MAP_TILES_ACROSS_DEF) {
+      //
+      // Zoom out
+      //
+      game_tiles_visible_across_set(g, MAP_TILES_ACROSS_DEF * 2);
+      game_tiles_visible_down_set(g, MAP_TILES_ACROSS_DEF * 2);
+    } else {
+      //
+      // Zoom in
+      //
+      game_tiles_visible_across_set(g, MAP_TILES_ACROSS_DEF);
+      game_tiles_visible_down_set(g, MAP_TILES_ACROSS_DEF);
+    }
+
+    //
+    // Need to resize the map buffers and re-center
+    //
+    config_game_gfx_update(g);
+    gl_init_fbo(g, FBO_MAP);
+    level_scroll_warp_to_player(g, v);
+
     return false; // To avoid click noise
   }
 

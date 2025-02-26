@@ -42,12 +42,6 @@ extern std::string g_log_stdout_filename;
 extern FILE *g_log_stdout;
 extern FILE *g_log_stderr;
 
-//
-// The number of tiles on screen.
-//
-extern int TILES_VISIBLE_ACROSS;
-extern int TILES_VISIBLE_DOWN;
-
 void DYING(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void CROAK(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void CROAK_CLEAN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);

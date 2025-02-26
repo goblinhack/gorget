@@ -214,8 +214,8 @@ void       game_key_unused18_set(Gamep, SDL_Keysym);
 SDL_Keysym game_key_unused19_get(Gamep);
 void       game_key_unused19_set(Gamep, SDL_Keysym);
 
-SDL_Keysym game_key_unused20_get(Gamep);
-void       game_key_unused20_set(Gamep, SDL_Keysym);
+SDL_Keysym game_key_zoom_get(Gamep);
+void       game_key_zoom_set(Gamep, SDL_Keysym);
 
 uint8_t game_input(Gamep, const SDL_Keysym *key);
 uint8_t game_mouse_down(Gamep, int x, int y, uint32_t button);

@@ -297,7 +297,7 @@ void gl_error(GLenum err);
 void gl_ext_init(void);
 void gl_init_2d_mode(Gamep);
 void gl_fini_2d_mode(Gamep);
-void gl_init_fbo(Gamep);
+void gl_init_fbo(Gamep, int fbo = -1);
 void gl_fini_fbo(Gamep);
 void gl_leave_2d_mode(Gamep);
 void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,

@@ -217,7 +217,7 @@ Levelp level_create(Gamep g, Levelsp v, point level_num)
 
   level_dungeon_create_and_place(g, v, l);
   level_assign_tiles(g, v, l);
-  level_scroll_warp_to_player(g, v, l);
+  level_scroll_warp_to_player(g, v);
 
   return l;
 }

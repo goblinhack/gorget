@@ -100,7 +100,7 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_unused17);
   in >> bits(my.t.key_unused18);
   in >> bits(my.t.key_unused19);
-  in >> bits(my.t.key_unused20);
+  in >> bits(my.t.key_zoom);
   in >> bits(my.t.map_pix_height);
   in >> bits(my.t.map_pix_width);
   in >> bits(my.t.mouse_wheel_lr_negated);

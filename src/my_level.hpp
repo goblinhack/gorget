@@ -168,8 +168,8 @@ void level_map_set(Gamep, Levelsp, Levelp, const char *);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);
 void level_scroll_delta(Gamep, Levelsp, point);
 void level_cursor_path_reset(Gamep, Levelsp, Levelp);
-void level_scroll_to_player(Gamep, Levelsp, Levelp);
-void level_scroll_warp_to_player(Gamep, Levelsp, Levelp);
+void level_scroll_to_player(Gamep, Levelsp);
+void level_scroll_warp_to_player(Gamep, Levelsp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 

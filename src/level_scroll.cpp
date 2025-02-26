@@ -11,7 +11,7 @@
 //
 // Soft scroll to the player/
 //
-void level_scroll_to_player(Gamep g, Levelsp v, Levelp l)
+void level_scroll_to_player(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
@@ -77,7 +77,7 @@ void level_scroll_delta(Gamep g, Levelsp v, point delta)
 //
 // Jump to the player immediately.
 //
-void level_scroll_warp_to_player(Gamep g, Levelsp v, Levelp l)
+void level_scroll_warp_to_player(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
