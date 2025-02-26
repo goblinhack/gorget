@@ -8,8 +8,8 @@
 
 #define LEVELS_ACROSS        16
 #define LEVELS_DOWN          16
-#define MAP_WIDTH            32
-#define MAP_HEIGHT           32
+#define MAP_WIDTH            48
+#define MAP_HEIGHT           48
 #define MAP_SLOTS            16
 #define MAP_TILES_ACROSS_DEF 16
 #define MAP_TILES_DOWN_DEF   16

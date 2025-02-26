@@ -84,12 +84,13 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
 
   if (sdlk_eq(*key, game_key_zoom_get(g))) {
     DBG("Zoom alt");
+
     if (game_tiles_visible_across_get(g) == MAP_TILES_ACROSS_DEF) {
       //
       // Zoom out
       //
-      game_tiles_visible_across_set(g, MAP_TILES_ACROSS_DEF * 2);
-      game_tiles_visible_down_set(g, MAP_TILES_ACROSS_DEF * 2);
+      game_tiles_visible_across_set(g, MAP_WIDTH);
+      game_tiles_visible_down_set(g, MAP_HEIGHT);
     } else {
       //
       // Zoom in
