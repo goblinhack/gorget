@@ -6,6 +6,7 @@
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_tile.hpp"
 
 //

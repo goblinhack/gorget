@@ -104,7 +104,13 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     //
     config_game_gfx_update(g);
     gl_init_fbo(g, FBO_MAP);
-    level_scroll_warp_to_player(g, v);
+
+    //
+    // If following the player already, then no need to re-center
+    //
+    if (! v->requested_auto_scroll) {
+      level_scroll_warp_to_player(g, v);
+    }
 
     return false; // To avoid click noise
   }
