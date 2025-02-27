@@ -127,7 +127,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   if (sdlk_eq(*key, game_key_quit_get(g))) {
     LOG("Pressed quit key");
     TRACE_AND_INDENT();
-    if (g_opt_quick_start) {
+    if (g_opt_test_start) {
       DIE_CLEAN("Quick quit");
     }
     wid_quit_select(g);

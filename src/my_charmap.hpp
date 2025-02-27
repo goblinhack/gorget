@@ -9,9 +9,10 @@
 enum {
   // begin sort marker1 {
   CHARMAP_CHASM    = 'C',
-  CHARMAP_DOOR     = '=',
-  CHARMAP_EMPTY    = '.',
+  CHARMAP_EMPTY    = ' ',
+  CHARMAP_FLOOR    = '.',
   CHARMAP_EXIT     = 'E',
+  CHARMAP_DOOR     = 'D',
   CHARMAP_KEY      = 'k',
   CHARMAP_MONST1   = 'm',
   CHARMAP_PLAYER   = '@',

@@ -22,6 +22,7 @@
 #include "my_game.hpp"
 #include "my_gfx.hpp"
 #include "my_gl.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_ptrcheck.hpp"
@@ -76,6 +77,7 @@ void quit(Gamep *g_in)
   music_fini();
   sound_fini();
   sdl_fini(g);
+  rooms_fini(g);
 
   //
   // Do this last as sdl_fini depends on it.
@@ -437,6 +439,7 @@ static void usage(void)
   CON(" --debug3                    -- All debugs. Slow.");
   CON(" --no-debug                  -- Disable debugs.");
   CON(" --test-start                -- Skip main menu.");
+  CON(" --test-rooms                -- Test rooms and then exit.");
   CON(" ");
   CON("Written by goblinhack@gmail.com");
 }
@@ -498,7 +501,12 @@ static void parse_args(int argc, char *argv[])
     }
 
     if (! strcasecmp(argv[ i ], "--test-start") || ! strcasecmp(argv[ i ], "-test-start")) {
-      g_opt_quick_start = true;
+      g_opt_test_start = true;
+      continue;
+    }
+
+    if (! strcasecmp(argv[ i ], "--test-rooms") || ! strcasecmp(argv[ i ], "-test-rooms")) {
+      g_opt_test_rooms = true;
       continue;
     }
 
@@ -671,6 +679,14 @@ int main(int argc, char *argv[])
   extern Gamep game;
   g = game;
   game_init(g);
+
+  {
+    rooms_init(g);
+    if (g_opt_test_rooms) {
+      rooms_test(g);
+      DIE_CLEAN("done");
+    }
+  }
 
   {
     TRACE_NO_INDENT();
@@ -846,7 +862,7 @@ int main(int argc, char *argv[])
     if (g_opt_restarted) {
       wid_cfg_gfx_select(g);
       g_opt_restarted = false;
-    } else if (g_opt_quick_start) {
+    } else if (g_opt_test_start) {
       wid_new_game(g);
     } else {
       wid_main_menu_select(g);

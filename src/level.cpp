@@ -326,7 +326,8 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           tp         = tp_exit;
           break;
         case CHARMAP_KEY : need_floor = true; break;
-        case CHARMAP_EMPTY : need_floor = true; break;
+        case CHARMAP_FLOOR : need_floor = true; break;
+        case CHARMAP_EMPTY : break;
         default : DIE("unexpected map char '%c'", c);
       }
 

@@ -213,4 +213,8 @@ void level_tick(Gamep, Levelsp, Levelp);
   for (auto _slot_ = 0; _t_ = thing_and_tp_get_at(_g_, _v_, _l_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)  \
     if (_t_)
 
+void rooms_test(Gamep);
+void rooms_init(Gamep);
+void rooms_fini(Gamep);
+
 #endif // _MY_LEVEL_H_
