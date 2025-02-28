@@ -439,7 +439,8 @@ static void usage(void)
   CON(" --debug3                    -- All debugs. Slow.");
   CON(" --no-debug                  -- Disable debugs.");
   CON(" --test-start                -- Skip main menu.");
-  CON(" --test-rooms                -- Test rooms and then exit.");
+  CON(" --test-rooms                -- Test room gen and then exit.");
+  CON(" --test-levels               -- Test level gen and then exit.");
   CON(" ");
   CON("Written by goblinhack@gmail.com");
 }
@@ -507,6 +508,11 @@ static void parse_args(int argc, char *argv[])
 
     if (! strcasecmp(argv[ i ], "--test-rooms") || ! strcasecmp(argv[ i ], "-test-rooms")) {
       g_opt_test_rooms = true;
+      continue;
+    }
+
+    if (! strcasecmp(argv[ i ], "--test-levels") || ! strcasecmp(argv[ i ], "-test-levels")) {
+      g_opt_test_levels = true;
       continue;
     }
 
@@ -684,6 +690,11 @@ int main(int argc, char *argv[])
     rooms_init(g);
     if (g_opt_test_rooms) {
       rooms_test(g);
+      DIE_CLEAN("done");
+    }
+
+    if (g_opt_test_levels) {
+      level_gen_test(g);
       DIE_CLEAN("done");
     }
   }

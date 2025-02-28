@@ -27,7 +27,8 @@ bool g_quitting;          // Exiting the game
 bool g_opt_no_slow_log_flush;    // Do not flush after each console log at start
 bool g_opt_override_debug_level; // Temporary used to disable debugs on load
 bool g_opt_test_start;           // Start in the main menu
-bool g_opt_test_rooms;           // Test room creation
+bool g_opt_test_rooms;           // Test room gen
+bool g_opt_test_levels;          // Test level gen
 bool g_opt_restarted;            // Post restart
 
 // --debug  Basic debug
@@ -48,4 +49,5 @@ void reset_globals(void)
   g_opt_override_debug_level = false;
   g_opt_test_start           = false;
   g_opt_test_rooms           = false;
+  g_opt_test_levels          = false;
 }

@@ -372,6 +372,10 @@ void Game::set_seed(void)
   pcg_srand(seed);
 }
 
+void game_set_seed(Gamep g) { g->set_seed(); }
+
+const char *game_get_seed(Gamep g) { return g->seed_name.c_str(); }
+
 void Game::create_levels(void)
 {
   LOG("Game create level");

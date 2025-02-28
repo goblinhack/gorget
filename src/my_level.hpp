@@ -217,4 +217,7 @@ void rooms_test(Gamep);
 void rooms_init(Gamep);
 void rooms_fini(Gamep);
 
+void level_gen_test(Gamep);
+void level_gen_stats_dump(Gamep);
+
 #endif // _MY_LEVEL_H_

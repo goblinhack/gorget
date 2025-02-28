@@ -25,6 +25,14 @@ public:
 using point  = my_apoint< short >;
 using fpoint = my_apoint< float >;
 
+//
+// Needed for std::map
+//
+template < typename T > bool operator<(my_apoint< T > const &a, my_apoint< T > const &b)
+{
+  return (a.x < b.x) || (a.x == b.x && a.y < b.y);
+}
+
 template < typename T > bool           operator==(my_apoint< T > const &, my_apoint< T > const &);
 template < typename T > my_apoint< T > operator+(my_apoint< T > const &, my_apoint< T > const &);
 template < typename T > my_apoint< T > operator-(my_apoint< T > const &, my_apoint< T > const &);
