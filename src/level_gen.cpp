@@ -105,6 +105,11 @@ public:
   std::map< std::pair< class Room *, class Room * >, bool > rooms_connected;
 
   //
+  // Additional adjacent rooms connected from the first pass
+  //
+  int rooms_adj_connected = {};
+
+  //
   // Level tiles and room info
   //
   Cell data[ MAP_WIDTH ][ MAP_HEIGHT ];
@@ -1034,7 +1039,10 @@ static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l, bool de
         switch (l->data[ x ][ y ].c) {
           case CHARMAP_FLOOR :
             {
-              if (d100() > 10) {
+              //
+              // Decrease the chance of connecting leaf rooms so we don't get too many
+              //
+              if (d100() > 10 - l->rooms_adj_connected) {
                 continue;
               }
 
@@ -1084,6 +1092,7 @@ static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l, bool de
                   // If the rooms are not connected, then join them via a corridor
                   //
                   if (l->rooms_connected.find(conn) == l->rooms_connected.end()) {
+                    l->rooms_adj_connected++;
                     l->rooms_connected[ conn ] = true;
                     for (auto d = 1; d < dist; d++) {
                       point adj(x + direction.x * d, y + direction.y * d);
