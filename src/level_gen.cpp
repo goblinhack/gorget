@@ -26,18 +26,11 @@ static int MAX_LEVEL_GEN_MIN_BRIDGE_LEN                            = 6;
 static int MAX_LEVEL_ROOM_COUNT                                    = 100;
 static int MIN_LEVEL_ROOM_COUNT                                    = 10;
 
-//
-// Statistics
-//
-static int level_place_room_first_fail_count;
-static int level_place_room_subs_fail_count;
-static int level_place_room_dup_count;
-static int level_place_fail_count;
-static int level_find_door_fail_count;
-
 class Cell;
 class Room;
 class LevelGen;
+
+static int level_place_fail_count;
 
 static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg = nullptr);
 
@@ -108,6 +101,14 @@ public:
   // Additional adjacent rooms connected from the first pass
   //
   int rooms_adj_connected = {};
+
+  //
+  // Statistics
+  //
+  int level_place_room_first_fail_count = {};
+  int level_place_room_subs_fail_count  = {};
+  int level_place_room_dup_count        = {};
+  int level_find_door_fail_count        = {};
 
   //
   // Level tiles and room info
@@ -660,17 +661,18 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
 //
 // Level stats
 //
-void level_gen_stats_dump(Gamep g)
+void level_gen_stats_dump(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  LOG("Level errors:");
+  LOG("Global level errors:");
   LOG("- place level fail:             %d", level_place_fail_count);
-  LOG("- place first room fail:        %d", level_place_room_first_fail_count);
-  LOG("- place subsequent room fail:   %d", level_place_room_subs_fail_count);
-  LOG("- find door to place room fail: %d", level_find_door_fail_count);
-  LOG("Level info:");
-  LOG("- place room duplicate found: %d", level_place_room_dup_count);
+  LOG("Per level errors:");
+  LOG("- place first room fail:        %d", l->level_place_room_first_fail_count);
+  LOG("- place subsequent room fail:   %d", l->level_place_room_subs_fail_count);
+  LOG("- find door to place room fail: %d", l->level_find_door_fail_count);
+  LOG("Per level info:");
+  LOG("- place room duplicate found: %d", l->level_place_room_dup_count);
 }
 
 //
@@ -765,7 +767,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
     auto r = l->room_first = room_random_get(g, l);
 
     if (! room_can_place_at(g, l, r, at)) {
-      level_place_room_first_fail_count++;
+      l->level_place_room_first_fail_count++;
       continue;
     }
 
@@ -816,7 +818,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
       class Room *room_other = {};
 
       if (! level_gen_random_door_get(g, l, &door_other, &room_other)) {
-        level_find_door_fail_count++;
+        l->level_find_door_fail_count++;
         rooms_place_fail = true;
         break;
       }
@@ -832,7 +834,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
         //
         r = room_random_get(g, l);
         if (l->rooms_placed.find(r) != l->rooms_placed.end()) {
-          level_place_room_dup_count++;
+          l->level_place_room_dup_count++;
           rooms_place_fail = true;
           continue;
         }
@@ -854,7 +856,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
           //
           point door_intersection_at = door_other - d;
           if (! room_can_place_at(g, l, r, door_intersection_at)) {
-            level_place_room_subs_fail_count++;
+            l->level_place_room_subs_fail_count++;
             continue;
           }
 
@@ -904,6 +906,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
   }
 
   delete l;
+  l = nullptr;
 
   level_place_fail_count++;
 
@@ -1171,18 +1174,6 @@ static class LevelGen *level_gen(Gamep g)
   return l;
 }
 
-void level_gen_test(Gamep g)
-{
-  TRACE_NO_INDENT();
-
-  auto l = level_gen(g);
-  if (l) {
-    level_gen_dump(g, l);
-  }
-
-  level_gen_stats_dump(g);
-}
-
 //
 // Create all rooms
 //
@@ -1191,19 +1182,22 @@ void rooms_init(Gamep g)
   TRACE_NO_INDENT();
 
   /* clang-format off */
+
   room_add(g, __FUNCTION__, __LINE__, "no-name",
-           (const char *)"  D  ",
-           (const char *)"D... ",
-           (const char *)" ...D",
-           (const char *)" D   ",
+           (const char *)"  D     ",
+           (const char *)"  . 55  ",
+           (const char *)" ....5  ",
+           (const char *)"D....5  ",
+           (const char *)" ......D",
+           (const char *)"   D    ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__, "no-name",
-           (const char *)"  D 55",
-           (const char *)" ....5",
-           (const char *)"D.... ",
-           (const char *)" ....D",
-           (const char *)"   D  ",
+           (const char *)"  D 55   ",
+           (const char *)" ....5   ",
+           (const char *)"D....55  ",
+           (const char *)" .......D",
+           (const char *)"   D     ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__, "no-name",
@@ -1211,7 +1205,22 @@ void rooms_init(Gamep g)
            (const char *)" 5....5 ",
            (const char *)"D...... ",
            (const char *)" 5.....D",
+           (const char *)"  55.5  ",
+           (const char *)"    .   ",
            (const char *)"    D   ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, "no-name",
+           (const char *)"   D      ",
+           (const char *)" 5...555  ",
+           (const char *)"D......5  ",
+           (const char *)" 5.......D",
+           (const char *)"  cCCCc   ",
+           (const char *)"  5...5   ",
+           (const char *)"  5...5   ",
+           (const char *)"  5...5   ",
+           (const char *)"    .     ",
+           (const char *)"    D     ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__, "no-name",
@@ -1598,9 +1607,9 @@ void rooms_init(Gamep g)
            (const char *)"         D   ",
            (const char *)"        5..5 ",
            (const char *)" 5     55... ",
-           (const char *)"D..... ..... ",
+           (const char *)"D.....c..... ",
            (const char *)" 5....c..... ",
-           (const char *)" 55... .....D",
+           (const char *)" 55...c.....D",
            (const char *)"        D    ",
            nullptr);
 
@@ -1608,9 +1617,9 @@ void rooms_init(Gamep g)
            (const char *)"         D   ",
            (const char *)"        5..5 ",
            (const char *)"        5... ",
-           (const char *)"D..... ..... ",
+           (const char *)"D.....c..... ",
            (const char *)" 5....c..... ",
-           (const char *)" 5.... ..... ",
+           (const char *)" 5....c..... ",
            (const char *)" 5...   .... ",
            (const char *)" 55..   ....D",
            (const char *)"   D         ",
@@ -1632,9 +1641,9 @@ void rooms_init(Gamep g)
            (const char *)"    D    D   ",
            (const char *)"  5..5  5..5 ",
            (const char *)"  ...5  5... ",
-           (const char *)"D........... ",
-           (const char *)" 5.......... ",
-           (const char *)" 55.........D",
+           (const char *)"D.....cc.... ",
+           (const char *)" 5....cc.... ",
+           (const char *)" 55...cc....D",
            (const char *)"        D    ",
            nullptr);
 
@@ -1650,10 +1659,10 @@ void rooms_init(Gamep g)
 
   room_add(g, __FUNCTION__, __LINE__, "no-name",
            (const char *)"         D   ",
-           (const char *)" 55.........D",
-           (const char *)" 5.........5 ",
-           (const char *)"D..........5 ",
-           (const char *)" 5.   .....5 ",
+           (const char *)" 55..c......D",
+           (const char *)" 5....c....5 ",
+           (const char *)"D......c...5 ",
+           (const char *)" 5.   c....5 ",
            (const char *)" 55   ....55 ",
            (const char *)"        D    ",
            nullptr);
@@ -1665,11 +1674,11 @@ void rooms_init(Gamep g)
            (const char *)"     5...... ",
            (const char *)"     5...... ",
            (const char *)"   55....... ",
-           (const char *)"D........... ",
-           (const char *)"   ......... ",
-           (const char *)"   .........D",
-           (const char *)"   ......... ",
-           (const char *)"   ......... ",
+           (const char *)"D.c......... ",
+           (const char *)"  c......... ",
+           (const char *)"  c.........D",
+           (const char *)"  c......... ",
+           (const char *)"  c......... ",
            (const char *)"   5........ ",
            (const char *)"           D ",
            nullptr);
@@ -1678,11 +1687,11 @@ void rooms_init(Gamep g)
            (const char *)"         D   ",
            (const char *)"     5555..  ",
            (const char *)"     5.....  ",
-           (const char *)"     5...... ",
-           (const char *)"     5...... ",
-           (const char *)"   55....... ",
-           (const char *)"D........... ",
-           (const char *)"   .........D",
+           (const char *)"     5..cc.. ",
+           (const char *)"     5..ccc. ",
+           (const char *)"   55...ccc. ",
+           (const char *)"D......ccc.. ",
+           (const char *)"   ......c..D",
            (const char *)"   5........ ",
            (const char *)"           D ",
            nullptr);
@@ -1764,23 +1773,46 @@ void rooms_init(Gamep g)
 
   room_add(g, __FUNCTION__, __LINE__, "no-name",
            (const char *)"             D        ",
-           (const char *)"     5555.........5   ",
-           (const char *)"     5.............5  ",
-           (const char *)"     5............... ",
-           (const char *)"     5............... ",
-           (const char *)"   55................D",
-           (const char *)" 5...............     ",
-           (const char *)"5...............5     ",
-           (const char *)"5................5    ",
-           (const char *)"5................5    ",
-           (const char *)" 5..............5     ",
-           (const char *)" 5..............5     ",
+           (const char *)"  5555555.........5   ",
+           (const char *)"  555555...........5  ",
+           (const char *)"  5555.5............. ",
+           (const char *)"  55555.............. ",
+           (const char *)"  555................D",
+           (const char *)" 5...............55   ",
+           (const char *)"5...............5555  ",
+           (const char *)"5................5555 ",
+           (const char *)"55...............5555 ",
+           (const char *)" 555............5555  ",
+           (const char *)" 5555...........555   ",
            (const char *)" 5..............5     ",
            (const char *)"D.................D   ",
            (const char *)" 5.............55     ",
            (const char *)"  5........5          ",
            (const char *)"    D                 ",
            nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, "no-name",
+           (const char *)"             D          ",
+           (const char *)"      5555.......555555 ",
+           (const char *)"     5555..........5555 ",
+           (const char *)"     55..............55 ",
+           (const char *)"   5555................ ",
+           (const char *)"   5555................ ",
+           (const char *)"   5555................ ",
+           (const char *)"  555..................D",
+           (const char *)" 55................55   ",
+           (const char *)"55................5555  ",
+           (const char *)"55.................5555 ",
+           (const char *)"55.................5555 ",
+           (const char *)" 55...............5555  ",
+           (const char *)" 55...............555   ",
+           (const char *)" 5................5     ",
+           (const char *)"D.....................D ",
+           (const char *)" 5...........555555     ",
+           (const char *)"  5.....555555          ",
+           (const char *)"    D                   ",
+           nullptr);
+
   /* clang-format on */
 }
 
@@ -1791,4 +1823,17 @@ void rooms_test(Gamep g)
 {
   TRACE_NO_INDENT();
   rooms_dump(g);
+}
+
+void level_gen_test(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  for (auto test = 0; test < 100; test++) {
+    auto l = level_gen(g);
+    if (l) {
+      level_gen_dump(g, l);
+      level_gen_stats_dump(g, l);
+    }
+  }
 }
