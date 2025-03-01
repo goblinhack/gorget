@@ -19,8 +19,10 @@
 //
 static int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED                       = 100;
 static int MAX_LEVEL_GEN_TRIES_FOR_PLACING_ANY_ROOM_WITH_SAME_DOOR = 500;
-static int MAX_LEVEL_GEN_TRIES_FOR_WALKING_DOORS                   = 500;
+static int MAX_LEVEL_GEN_TRIES_FOR_WALKING_DOORS                   = 100;
 static int MAX_LEVEL_GEN_TRIES_FOR_PLACING_NEW_ROOMS               = 100;
+static int MAX_LEVEL_GEN_CORRIDOR_LEN                              = 10;
+static int MAX_LEVEL_GEN_MIN_BRIDGE_LEN                            = 6;
 static int MAX_LEVEL_ROOM_COUNT                                    = 100;
 static int MIN_LEVEL_ROOM_COUNT                                    = 10;
 
@@ -96,6 +98,11 @@ public:
   // All level doors.
   //
   std::vector< point > doors_all;
+
+  //
+  // Rooms that can reach each other via a door.
+  //
+  std::map< std::pair< class Room *, class Room * >, bool > rooms_connected;
 
   //
   // Level tiles and room info
@@ -664,7 +671,7 @@ void level_gen_stats_dump(Gamep g)
 //
 // Update the list of all doors, and return a new unwalked door to use
 //
-static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door)
+static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_out, class Room **room_out)
 {
   TRACE_NO_INDENT();
 
@@ -708,7 +715,12 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door)
   //
   // Return a random door
   //
-  *door = l->doors_all[ pcg_random_range(0, l->doors_all.size()) ];
+  *door_out = l->doors_all[ pcg_random_range(0, l->doors_all.size()) ];
+  *room_out = l->data[ door_out->x ][ door_out->y ].room;
+
+  if (! *room_out) {
+    ERR("Found a door with no room");
+  }
 
   return true;
 }
@@ -716,7 +728,7 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door)
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_gen_create_rooms(Gamep g)
+static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
 {
   TRACE_NO_INDENT();
 
@@ -737,8 +749,9 @@ static class LevelGen *level_gen_create_rooms(Gamep g)
     //
     // Choose a random start point for the rooms
     //
-    int   x = pcg_random_range(0, MAP_WIDTH);
-    int   y = pcg_random_range(0, MAP_HEIGHT);
+    int   border = MAP_WIDTH / 4;
+    int   x      = pcg_random_range(border, MAP_WIDTH - border);
+    int   y      = pcg_random_range(border, MAP_HEIGHT - border);
     point at(x, y);
 
     //
@@ -756,7 +769,9 @@ static class LevelGen *level_gen_create_rooms(Gamep g)
     //
     // Placed the first room
     //
-    level_gen_dump(g, l, "placed first room");
+    if (unlikely(debug)) {
+      level_gen_dump(g, l, "placed first room");
+    }
 
     //
     // Ok, we have our first room. Keep placing rooms now.
@@ -769,8 +784,11 @@ static class LevelGen *level_gen_create_rooms(Gamep g)
     //
     int room_placed_failure_count = 0;
     while ((int) l->rooms_placed.size() < MAX_LEVEL_ROOM_COUNT) {
-      LOG("rooms placed %d door_place_tries %d room_placed_failure_count %d", (int) l->rooms_placed.size(),
-          door_place_tries, room_placed_failure_count);
+      if (unlikely(debug)) {
+        LOG("rooms placed %d door_place_tries %d room_placed_failure_count %d", (int) l->rooms_placed.size(),
+            door_place_tries, room_placed_failure_count);
+      }
+
       //
       // Only try to place rooms against doors so many times
       //
@@ -789,8 +807,10 @@ static class LevelGen *level_gen_create_rooms(Gamep g)
       //
       // Find a random door that we have not walked before
       //
-      point door_at;
-      if (! level_gen_random_door_get(g, l, &door_at)) {
+      point       door_other;
+      class Room *room_other = {};
+
+      if (! level_gen_random_door_get(g, l, &door_other, &room_other)) {
         level_find_door_fail_count++;
         rooms_place_fail = true;
         break;
@@ -827,7 +847,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g)
           // ....D....
           // ...   ...
           //
-          point door_intersection_at = door_at - d;
+          point door_intersection_at = door_other - d;
           if (! room_can_place_at(g, l, r, door_intersection_at)) {
             level_place_room_subs_fail_count++;
             continue;
@@ -841,14 +861,16 @@ static class LevelGen *level_gen_create_rooms(Gamep g)
           //
           // Don't try this door again
           //
-          l->doors_walked[ door_at ] = true;
+          l->doors_walked[ door_other ] = true;
 
           room_was_placed = true;
           break;
         }
 
         if (room_was_placed) {
-          level_gen_dump(g, l, "placed another room");
+          if (unlikely(debug)) {
+            level_gen_dump(g, l, "placed another room");
+          }
           room_placed_failure_count = 0;
           break;
         }
@@ -879,9 +901,242 @@ static class LevelGen *level_gen_create_rooms(Gamep g)
   delete l;
 
   level_place_fail_count++;
-  LOG("Failed to create room with seed: %s", game_get_seed(g));
+
+  if (unlikely(debug)) {
+    LOG("Failed to create room with seed: %s", game_get_seed(g));
+  }
 
   return nullptr;
+}
+
+//
+// Get rid of tiles that go nowhere
+//
+static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
+{
+  TRACE_NO_INDENT();
+
+  bool did_something = false;
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_DOOR :
+          {
+            //
+            // Check the door goes from and to somewhere. Diagonals don't count.
+            //
+            int neb_count = 0;
+
+            neb_count += (l->data[ x - 1 ][ y ].c != CHARMAP_EMPTY) ? 1 : 0;
+            neb_count += (l->data[ x + 1 ][ y ].c != CHARMAP_EMPTY) ? 1 : 0;
+            neb_count += (l->data[ x ][ y - 1 ].c != CHARMAP_EMPTY) ? 1 : 0;
+            neb_count += (l->data[ x ][ y + 1 ].c != CHARMAP_EMPTY) ? 1 : 0;
+
+            if (neb_count <= 1) {
+              l->data[ x ][ y ].c = CHARMAP_EMPTY;
+              did_something       = true;
+            }
+            break;
+          }
+        case CHARMAP_FLOOR :
+          {
+            //
+            // Check the floor tile is not alone in the world.
+            //
+            int neb_count = 0;
+
+            neb_count += (l->data[ x - 1 ][ y ].c == CHARMAP_EMPTY) ? 1 : 0;
+            neb_count += (l->data[ x + 1 ][ y ].c == CHARMAP_EMPTY) ? 1 : 0;
+            neb_count += (l->data[ x ][ y - 1 ].c == CHARMAP_EMPTY) ? 1 : 0;
+            neb_count += (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) ? 1 : 0;
+
+            //
+            // Choose 3 not 4 to make the rooms have fewer single random tiles
+            // on the edges. Makes it look more formed.
+            //
+            if (neb_count >= 3) {
+              l->data[ x ][ y ].c = CHARMAP_EMPTY;
+              did_something       = true;
+            }
+            break;
+          }
+      }
+    }
+  }
+  return did_something;
+}
+
+//
+// Keep track of which room is connected to another via a door
+//
+static void level_gen_scan_connected_rooms(Gamep g, class LevelGen *l, bool debug)
+{
+  TRACE_NO_INDENT();
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_DOOR :
+          {
+            {
+              auto room_a = l->data[ x - 1 ][ y ].room;
+              auto room_b = l->data[ x + 1 ][ y ].room;
+
+              if (room_a && room_b) {
+                if (room_a < room_b) {
+                  std::pair< class Room *, class Room * > conn(room_a, room_b);
+                  l->rooms_connected[ conn ] = true;
+                } else {
+                  std::pair< class Room *, class Room * > conn(room_b, room_a);
+                  l->rooms_connected[ conn ] = true;
+                }
+              }
+            }
+
+            {
+              auto room_a = l->data[ x ][ y + 1 ].room;
+              auto room_b = l->data[ x ][ y - 1 ].room;
+
+              if (room_a && room_b) {
+                if (room_a < room_b) {
+                  std::pair< class Room *, class Room * > conn(room_a, room_b);
+                  l->rooms_connected[ conn ] = true;
+                } else {
+                  std::pair< class Room *, class Room * > conn(room_b, room_a);
+                  l->rooms_connected[ conn ] = true;
+                }
+              }
+            }
+
+            break;
+          }
+      }
+    }
+  }
+}
+
+//
+// Add corridors between rooms that are not connected
+//
+static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l, bool debug)
+{
+  TRACE_NO_INDENT();
+
+  const std::initializer_list< point > directions = {point(-1, 0), point(1, 0), point(0, -1), point(0, 1)};
+
+  //
+  // Shortest distance is 2, which is ". ."
+  //
+  for (int dist = 2; dist < MAX_LEVEL_GEN_CORRIDOR_LEN; dist++) {
+    for (int y = dist; y < MAP_HEIGHT - dist - 1; y++) {
+      for (int x = dist; x < MAP_WIDTH - dist - 1; x++) {
+        switch (l->data[ x ][ y ].c) {
+          case CHARMAP_FLOOR :
+            {
+              if (d100() > 10) {
+                continue;
+              }
+
+              for (auto direction : directions) {
+                //
+                // Check there is nothing in the way
+                //
+                bool has_clear_path = true;
+                for (auto d = 1; d < dist; d++) {
+                  point adj(x + direction.x * d, y + direction.y * d);
+                  if ((l->data[ adj.x ][ adj.y ].c != CHARMAP_EMPTY)) {
+                    has_clear_path = false;
+                    break;
+                  }
+                }
+                if (! has_clear_path) {
+                  continue;
+                }
+
+                //
+                // Check there is a room at the end of the blank space
+                //
+                point dest(x + direction.x * dist, y + direction.y * dist);
+                if (l->data[ dest.x ][ dest.y ].c != CHARMAP_FLOOR) {
+                  continue;
+                }
+
+                //
+                // Check the two rooms at either end of the corridor are different.
+                //
+                auto room_a = l->data[ x ][ y ].room;
+                auto room_b = l->data[ dest.x ][ dest.y ].room;
+
+                if (room_a != room_b) {
+                  std::pair< class Room *, class Room * > conn;
+                  if (room_a && room_b) {
+                    if (room_a < room_b) {
+                      conn.first  = room_a;
+                      conn.second = room_b;
+                    } else {
+                      conn.first  = room_b;
+                      conn.second = room_a;
+                    }
+                  }
+
+                  //
+                  // If the rooms are not connected, then join them via a corridor
+                  //
+                  if (l->rooms_connected.find(conn) == l->rooms_connected.end()) {
+                    l->rooms_connected[ conn ] = true;
+                    for (auto d = 1; d < dist; d++) {
+                      point adj(x + direction.x * d, y + direction.y * d);
+
+                      if (dist >= MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
+                        l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
+                      } else {
+                        l->data[ adj.x ][ adj.y ].c = CHARMAP_CORRIDOR;
+                      }
+
+                      l->data[ adj.x ][ adj.y ].room = room_a;
+                    }
+                  }
+                }
+              }
+
+              break;
+            }
+        }
+      }
+    }
+  }
+}
+
+//
+// Make bridges dramatic...
+//
+static void level_gen_add_chasms_around_bridges(Gamep g, class LevelGen *l, bool debug)
+{
+  TRACE_NO_INDENT();
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_BRIDGE :
+          {
+            if (l->data[ x - 1 ][ y ].c == CHARMAP_EMPTY) {
+              l->data[ x - 1 ][ y ].c = CHARMAP_CHASM;
+            }
+            if (l->data[ x + 1 ][ y ].c == CHARMAP_EMPTY) {
+              l->data[ x + 1 ][ y ].c = CHARMAP_CHASM;
+            }
+            if (l->data[ x ][ y - 1 ].c == CHARMAP_EMPTY) {
+              l->data[ x ][ y - 1 ].c = CHARMAP_CHASM;
+            }
+            if (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) {
+              l->data[ x ][ y + 1 ].c = CHARMAP_CHASM;
+            }
+            break;
+          }
+      }
+    }
+  }
 }
 
 //
@@ -891,12 +1146,18 @@ static class LevelGen *level_gen(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  LevelGen *l = level_gen_create_rooms(g);
+  bool debug = false;
+
+  LevelGen *l = level_gen_create_rooms(g, debug);
   if (! l) {
     return l;
   }
 
-  // level_gen_trim_dead_end_doors(l);
+  while (level_gen_trim_dead_tiles(g, l, debug)) {}
+
+  level_gen_scan_connected_rooms(g, l, debug);
+  level_gen_connect_adjacent_rooms(g, l, debug);
+  level_gen_add_chasms_around_bridges(g, l, debug);
 
   return l;
 }
@@ -921,6 +1182,13 @@ void rooms_init(Gamep g)
   TRACE_NO_INDENT();
 
   /* clang-format off */
+  room_add(g, __FUNCTION__, __LINE__, "no-name",
+           (const char *)"  D  ",
+           (const char *)"D... ",
+           (const char *)" ...D",
+           (const char *)" D   ",
+           nullptr);
+
   room_add(g, __FUNCTION__, __LINE__, "no-name",
            (const char *)"  D 55",
            (const char *)" ....5",

@@ -12,6 +12,8 @@ enum {
   CHARMAP_CHASM_50 = 'c',
   CHARMAP_EMPTY    = ' ',
   CHARMAP_FLOOR    = '.',
+  CHARMAP_CORRIDOR = ',',
+  CHARMAP_BRIDGE   = '=',
   CHARMAP_FLOOR_50 = '5',
   CHARMAP_FLOOR_40 = '4',
   CHARMAP_FLOOR_30 = '3',
