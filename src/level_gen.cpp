@@ -12,6 +12,7 @@
 #include "my_random.hpp"
 #include <map>
 #include <stdarg.h>
+#include <thread>
 #include <vector>
 
 //
@@ -2052,15 +2053,39 @@ void rooms_test(Gamep g)
   rooms_dump(g);
 }
 
+#define MAX_LEVELS 100
+static std::array< class LevelGen *, MAX_LEVELS > levels = {};
+
+//
+// Create a level and store in the array of levels
+//
+static void level_gen_create_level(Gamep g, int which)
+{
+  TRACE_NO_INDENT();
+
+  auto l          = level_gen(g);
+  levels[ which ] = l;
+}
+
 void level_gen_test(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto test = 0; test < 100; test++) {
-    auto l = level_gen(g);
+  int                        max_threads = MAX_LEVELS;
+  std::vector< std::thread > threads;
+
+  for (auto i = 0; i < max_threads; i++) {
+    threads.push_back(std::thread(level_gen_create_level, g, i));
+  }
+
+  for (auto i = 0; i < max_threads; i++) {
+    threads[ i ].join();
+  }
+
+  for (auto i = 0; i < max_threads; i++) {
+    auto l = levels[ i ];
     if (l) {
       level_gen_dump(g, l);
-      level_gen_stats_dump(g, l);
     }
   }
 }

@@ -31,10 +31,13 @@ struct callframe {
 //
 #define MAXCALLFRAME 255
 
+#define USE_THREADS
+
 #ifdef USE_THREADS
 #ifdef __MAIN__
 thread_local struct callframe callframes[ MAXCALLFRAME ];
 thread_local unsigned char    g_callframes_depth;
+thread_local unsigned char    g_callframes_indent;
 #else
 extern thread_local struct callframe callframes[ MAXCALLFRAME ];
 extern thread_local unsigned char    g_callframes_depth;
