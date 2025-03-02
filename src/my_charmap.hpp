@@ -23,7 +23,7 @@ enum {
   CHARMAP_DOOR     = 'D',
   CHARMAP_KEY      = 'k',
   CHARMAP_MONST1   = 'm',
-  CHARMAP_PLAYER   = '@',
+  CHARMAP_START    = '@',
   CHARMAP_TREASURE = '$',
   CHARMAP_WALL     = 'x',
   // end sort marker1 }

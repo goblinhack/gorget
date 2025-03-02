@@ -317,7 +317,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_TREASURE : break;
         case CHARMAP_MONST1 : break;
-        case CHARMAP_PLAYER :
+        case CHARMAP_START :
           need_floor = true;
           tp         = tp_player;
           break;

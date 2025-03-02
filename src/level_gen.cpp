@@ -20,7 +20,7 @@
 static int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED                       = 100;
 static int MAX_LEVEL_GEN_TRIES_FOR_PLACING_ANY_ROOM_WITH_SAME_DOOR = 500;
 static int MAX_LEVEL_GEN_TRIES_FOR_WALKING_DOORS                   = 100;
-static int MAX_LEVEL_GEN_TRIES_FOR_PLACING_NEW_ROOMS               = 100;
+static int MAX_LEVEL_GEN_TRIES_FOR_PLACING_NEW_ROOMS               = 300;
 static int MAX_LEVEL_GEN_CORRIDOR_LEN                              = 10;
 static int MAX_LEVEL_GEN_MIN_BRIDGE_LEN                            = 6;
 static int MAX_LEVEL_ROOM_COUNT                                    = 100;
@@ -116,6 +116,13 @@ public:
   Cell data[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
+typedef enum {
+  ROOM_TYPE_START,
+#define ROOM_TYPE_FIRST ROOM_TYPE_START
+  ROOM_TYPE_NORMAL,
+  ROOM_TYPE_MAX
+} RoomType;
+
 class Room
 {
 private:
@@ -127,6 +134,11 @@ public:
   // Globally unique
   //
   int room_no = {};
+
+  //
+  // Start room?
+  //
+  RoomType room_type;
 
   //
   // Room size
@@ -157,7 +169,7 @@ public:
 };
 
 static int                         room_no;
-static std::vector< class Room * > rooms;
+static std::vector< class Room * > rooms_all[ ROOM_TYPE_MAX ];
 
 //
 // Scan the room now it is created, for any things of interest
@@ -186,15 +198,16 @@ static class Room *room_rotate(Gamep g, class Room *r)
   TRACE_NO_INDENT();
 
   auto n = new Room();
-  rooms.push_back(n);
+  rooms_all[ r->room_type ].push_back(n);
 
-  n->room_no = ++room_no;
-  n->name    = r->name;
-  n->file    = r->file;
-  n->line    = r->line;
-  n->width   = r->height;
-  n->height  = r->width;
-  n->data    = (char *) myzalloc(r->width * r->height, "room data");
+  n->room_no   = ++room_no;
+  n->room_type = r->room_type;
+  n->name      = r->name;
+  n->file      = r->file;
+  n->line      = r->line;
+  n->width     = r->height;
+  n->height    = r->width;
+  n->data      = (char *) myzalloc(r->width * r->height, "room data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -217,15 +230,16 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
   TRACE_NO_INDENT();
 
   auto n = new Room();
-  rooms.push_back(n);
+  rooms_all[ r->room_type ].push_back(n);
 
-  n->room_no = ++room_no;
-  n->name    = r->name;
-  n->file    = r->file;
-  n->line    = r->line;
-  n->width   = r->width;
-  n->height  = r->height;
-  n->data    = (char *) myzalloc(r->width * r->height, "room data");
+  n->room_no   = ++room_no;
+  n->room_type = r->room_type;
+  n->name      = r->name;
+  n->file      = r->file;
+  n->line      = r->line;
+  n->width     = r->width;
+  n->height    = r->height;
+  n->data      = (char *) myzalloc(r->width * r->height, "room data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -243,7 +257,7 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
 //
 // Add a room and copies with all possible rotations
 //
-static void room_add(Gamep g, const char *file, int line, const char *name, ...)
+static void room_add(Gamep g, const char *file, int line, RoomType room_type, const char *name, ...)
 {
   TRACE_NO_INDENT();
 
@@ -292,7 +306,7 @@ static void room_add(Gamep g, const char *file, int line, const char *name, ...)
         case CHARMAP_EXIT :
         case CHARMAP_KEY :
         case CHARMAP_MONST1 :
-        case CHARMAP_PLAYER :
+        case CHARMAP_START :
         case CHARMAP_TREASURE :
         case CHARMAP_FLOOR_50 :
         case CHARMAP_FLOOR_40 :
@@ -333,15 +347,16 @@ static void room_add(Gamep g, const char *file, int line, const char *name, ...)
   // Allocate space for the room
   //
   class Room *r = new Room();
-  rooms.push_back(r);
+  rooms_all[ room_type ].push_back(r);
 
-  r->room_no = ++room_no;
-  r->name    = std::string(name);
-  r->file    = file;
-  r->line    = line;
-  r->width   = room_width;
-  r->height  = room_height;
-  r->data    = (char *) myzalloc(room_width * room_height, "room data");
+  r->room_no   = ++room_no;
+  r->room_type = room_type;
+  r->name      = std::string(name);
+  r->file      = file;
+  r->line      = line;
+  r->width     = room_width;
+  r->height    = room_height;
+  r->data      = (char *) myzalloc(room_width * room_height, "room data");
 
   //
   // Now read the room again
@@ -369,11 +384,11 @@ static void room_add(Gamep g, const char *file, int line, const char *name, ...)
 //
 // Get a random room.
 //
-static class Room *room_random_get(Gamep g, class LevelGen *l)
+static class Room *room_random_get(Gamep g, class LevelGen *l, RoomType room_type)
 {
   TRACE_NO_INDENT();
 
-  return rooms[ pcg_random_range(0, rooms.size()) ];
+  return rooms_all[ room_type ][ pcg_random_range(0, rooms_all[ room_type ].size()) ];
 }
 
 //
@@ -403,8 +418,10 @@ static void rooms_dump(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto r : rooms) {
-    room_dump(g, r);
+  for (auto room_type = (int) ROOM_TYPE_FIRST; room_type < (int) ROOM_TYPE_MAX; room_type++) {
+    for (auto r : rooms_all[ room_type ]) {
+      room_dump(g, r);
+    }
   }
 }
 
@@ -564,7 +581,7 @@ static void room_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
         case CHARMAP_EXIT : break;
         case CHARMAP_KEY : break;
         case CHARMAP_MONST1 : break;
-        case CHARMAP_PLAYER : break;
+        case CHARMAP_START : break;
         case CHARMAP_TREASURE :
         case CHARMAP_FLOOR_50 :
           if (d100() > 50) {
@@ -629,8 +646,10 @@ void rooms_fini(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto r : rooms) {
-    delete r;
+  for (auto room_type = (int) ROOM_TYPE_FIRST; room_type < (int) ROOM_TYPE_MAX; room_type++) {
+    for (auto r : rooms_all[ room_type ]) {
+      delete r;
+    }
   }
 }
 
@@ -672,7 +691,7 @@ void level_gen_stats_dump(Gamep g, class LevelGen *l)
   LOG("- place subsequent room fail:   %d", l->level_place_room_subs_fail_count);
   LOG("- find door to place room fail: %d", l->level_find_door_fail_count);
   LOG("Per level info:");
-  LOG("- place room duplicate found: %d", l->level_place_room_dup_count);
+  LOG("- duplicate room skipped:       %d", l->level_place_room_dup_count);
 }
 
 //
@@ -764,7 +783,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
     //
     // Choose a random first room and place it
     //
-    auto r = l->room_first = room_random_get(g, l);
+    auto r = l->room_first = room_random_get(g, l, ROOM_TYPE_START);
 
     if (! room_can_place_at(g, l, r, at)) {
       l->level_place_room_first_fail_count++;
@@ -783,8 +802,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
     //
     // Ok, we have our first room. Keep placing rooms now.
     //
-    int  door_place_tries = 0;
-    bool rooms_place_fail = false;
+    int door_place_tries = 0;
 
     //
     // Up to the maximum rooms per level
@@ -800,7 +818,6 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
       // Only try to place rooms against doors so many times
       //
       if (door_place_tries++ > MAX_LEVEL_GEN_TRIES_FOR_WALKING_DOORS) {
-        rooms_place_fail = true;
         break;
       }
 
@@ -819,7 +836,6 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
 
       if (! level_gen_random_door_get(g, l, &door_other, &room_other)) {
         l->level_find_door_fail_count++;
-        rooms_place_fail = true;
         break;
       }
 
@@ -832,10 +848,9 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
         //
         // Get a new room we have not placed before to try to place
         //
-        r = room_random_get(g, l);
+        r = room_random_get(g, l, ROOM_TYPE_NORMAL);
         if (l->rooms_placed.find(r) != l->rooms_placed.end()) {
           l->level_place_room_dup_count++;
-          rooms_place_fail = true;
           continue;
         }
 
@@ -885,24 +900,19 @@ static class LevelGen *level_gen_create_rooms(Gamep g, bool debug)
       room_placed_failure_count++;
     }
 
-    if (rooms_place_fail) {
+    //
+    // If we placed enough rooms, this level is good enough to go
+    //
+    if ((int) l->rooms_placed.size() > MIN_LEVEL_ROOM_COUNT) {
       //
-      // If we placed enough rooms, this level is good enough to go
+      // Success
       //
-      if ((int) l->rooms_placed.size() > MIN_LEVEL_ROOM_COUNT) {
-        return l;
-      }
-
-      //
-      // Not enough rooms
-      //
-      continue;
+      return l;
     }
 
     //
-    // Success
+    // Not enough rooms
     //
-    return l;
   }
 
   delete l;
@@ -1073,41 +1083,50 @@ static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l, bool de
                   continue;
                 }
 
-                //
-                // Check the two rooms at either end of the corridor are different.
-                //
                 auto room_a = l->data[ x ][ y ].room;
                 auto room_b = l->data[ dest.x ][ dest.y ].room;
 
-                if (room_a != room_b) {
-                  std::pair< class Room *, class Room * > conn;
-                  if (room_a && room_b) {
-                    if (room_a < room_b) {
-                      conn.first  = room_a;
-                      conn.second = room_b;
-                    } else {
-                      conn.first  = room_b;
-                      conn.second = room_a;
-                    }
+                //
+                // Check the two rooms at either end of the corridor are different.
+                //
+                if (room_a == room_b) {
+                  continue;
+                }
+
+                //
+                // Keep connections to the start room minimal
+                //
+                if (room_a->room_type != room_b->room_type) {
+                  continue;
+                }
+
+                std::pair< class Room *, class Room * > conn;
+                if (room_a && room_b) {
+                  if (room_a < room_b) {
+                    conn.first  = room_a;
+                    conn.second = room_b;
+                  } else {
+                    conn.first  = room_b;
+                    conn.second = room_a;
                   }
+                }
 
-                  //
-                  // If the rooms are not connected, then join them via a corridor
-                  //
-                  if (l->rooms_connected.find(conn) == l->rooms_connected.end()) {
-                    l->rooms_adj_connected++;
-                    l->rooms_connected[ conn ] = true;
-                    for (auto d = 1; d < dist; d++) {
-                      point adj(x + direction.x * d, y + direction.y * d);
+                //
+                // If the rooms are not connected, then join them via a corridor
+                //
+                if (l->rooms_connected.find(conn) == l->rooms_connected.end()) {
+                  l->rooms_adj_connected++;
+                  l->rooms_connected[ conn ] = true;
+                  for (auto d = 1; d < dist; d++) {
+                    point adj(x + direction.x * d, y + direction.y * d);
 
-                      if (dist >= MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
-                        l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
-                      } else {
-                        l->data[ adj.x ][ adj.y ].c = CHARMAP_CORRIDOR;
-                      }
-
-                      l->data[ adj.x ][ adj.y ].room = room_a;
+                    if (dist >= MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
+                      l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
+                    } else {
+                      l->data[ adj.x ][ adj.y ].c = CHARMAP_CORRIDOR;
                     }
+
+                    l->data[ adj.x ][ adj.y ].room = room_a;
                   }
                 }
               }
@@ -1183,7 +1202,64 @@ void rooms_init(Gamep g)
 
   /* clang-format off */
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_START, "no-name",
+           (const char *)"    D     ",
+           (const char *)"    .     ",
+           (const char *)"  ........",
+           (const char *)"  ........",
+           (const char *)"D.........",
+           (const char *)"  ........",
+           (const char *)"  .....@..",
+           (const char *)"  ........",
+           (const char *)"  ........",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_START, "no-name",
+           (const char *)"D......  ",
+           (const char *)"  ...... ",
+           (const char *)"  .......",
+           (const char *)"  .......",
+           (const char *)"   ...@..",
+           (const char *)"    .....",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_START, "no-name",
+           (const char *)"  .......",
+           (const char *)"D........",
+           (const char *)"  .......",
+           (const char *)"  .......",
+           (const char *)"    ...@.",
+           (const char *)"    .....",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_START, "no-name",
+           (const char *)"     D ",
+           (const char *)"    ...",
+           (const char *)"    ...",
+           (const char *)".......",
+           (const char *)".......",
+           (const char *)".@.....",
+           (const char *)".......",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_START, "no-name",
+           (const char *)"D......",
+           (const char *)"      .",
+           (const char *)"      .",
+           (const char *)" ......",
+           (const char *)".......",
+           (const char *)".@.....",
+           (const char *)"...... ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_START, "no-name",
+           (const char *)"......   ",
+           (const char *)".@....   ",
+           (const char *)"........D",
+           (const char *)"......   ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"  D     ",
            (const char *)"  . 55  ",
            (const char *)" ....5  ",
@@ -1192,7 +1268,39 @@ void rooms_init(Gamep g)
            (const char *)"   D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"  D     ",
+           (const char *)"  . 55  ",
+           (const char *)"D....55 ",
+           (const char *)" ......D",
+           (const char *)"   D    ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"  D            ",
+           (const char *)"  . 55 55 55   ",
+           (const char *)"D............5 ",
+           (const char *)" 5............D",
+           (const char *)"   D    55     ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"  D            ",
+           (const char *)"  .            ",
+           (const char *)"D............5 ",
+           (const char *)" 5............D",
+           (const char *)"   D    55     ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"  D  5....5    ",
+           (const char *)"  . 5......5   ",
+           (const char *)"D............5 ",
+           (const char *)" 5............D",
+           (const char *)"   D  5555     ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"  D 55   ",
            (const char *)" ....5   ",
            (const char *)"D....55  ",
@@ -1200,7 +1308,28 @@ void rooms_init(Gamep g)
            (const char *)"   D     ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"  D 55   ",
+           (const char *)" ....5   ",
+           (const char *)" ....5   ",
+           (const char *)" ....5   ",
+           (const char *)" ....5   ",
+           (const char *)"D....55  ",
+           (const char *)" .......D",
+           (const char *)"   D     ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"  D 55   ",
+           (const char *)" ....5   ",
+           (const char *)"D....55  ",
+           (const char *)" .......D",
+           (const char *)" .......D",
+           (const char *)" .......D",
+           (const char *)"   D     ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D    ",
            (const char *)" 5....5 ",
            (const char *)"D...... ",
@@ -1210,7 +1339,7 @@ void rooms_init(Gamep g)
            (const char *)"    D   ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D      ",
            (const char *)" 5...555  ",
            (const char *)"D......5  ",
@@ -1223,7 +1352,7 @@ void rooms_init(Gamep g)
            (const char *)"    D     ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D    ",
            (const char *)" ...555 ",
            (const char *)" .....5 ",
@@ -1232,7 +1361,27 @@ void rooms_init(Gamep g)
            (const char *)"    D 5 ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"   D            ",
+           (const char *)" 5..    55  55  ",
+           (const char *)" ...55  55  55  ",
+           (const char *)"D.............. ",
+           (const char *)" 5.....5555....D",
+           (const char *)"    D 55  55    ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"   D            ",
+           (const char *)" 5..    55  55  ",
+           (const char *)" ...55555555555 ",
+           (const char *)"D........555...5",
+           (const char *)" 5.............5",
+           (const char *)" 55............ ",
+           (const char *)"  5....5555....D",
+           (const char *)"    D 55  55    ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D    ",
            (const char *)" ...555 ",
            (const char *)" .....5 ",
@@ -1242,7 +1391,19 @@ void rooms_init(Gamep g)
            (const char *)"    D 5 ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"   D     ",
+           (const char *)" ...555  ",
+           (const char *)" .....5  ",
+           (const char *)"D......5 ",
+           (const char *)" 5.....5 ",
+           (const char *)" 5.....5 ",
+           (const char *)" 5....5  ",
+           (const char *)" 555....D",
+           (const char *)"    D 5  ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"     D   ",
            (const char *)" ..55.55 ",
            (const char *)" ......5 ",
@@ -1252,7 +1413,7 @@ void rooms_init(Gamep g)
            (const char *)"    D  5 ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"     D    ",
            (const char *)" ..55.555 ",
            (const char *)" .......5 ",
@@ -1262,7 +1423,7 @@ void rooms_init(Gamep g)
            (const char *)"    D   5 ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"     D     ",
            (const char *)" ..55.5555 ",
            (const char *)" ........5 ",
@@ -1272,7 +1433,7 @@ void rooms_init(Gamep g)
            (const char *)"    D 5555 ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"        D   ",
            (const char *)" .....55.55 ",
            (const char *)" .........5 ",
@@ -1282,7 +1443,7 @@ void rooms_init(Gamep g)
            (const char *)"    D 55 55 ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"  D     ",
            (const char *)" 5..... ",
            (const char *)" 5..... ",
@@ -1293,7 +1454,7 @@ void rooms_init(Gamep g)
            (const char *)"    D 5 ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D    ",
            (const char *)" 55.....",
            (const char *)" 5......",
@@ -1305,7 +1466,7 @@ void rooms_init(Gamep g)
            (const char *)"    D . ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D   ",
            (const char *)" 5.....",
            (const char *)" 5.....",
@@ -1318,7 +1479,7 @@ void rooms_init(Gamep g)
            (const char *)"  D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D   ",
            (const char *)" ...55 ",
            (const char *)" ....5 ",
@@ -1336,7 +1497,43 @@ void rooms_init(Gamep g)
            (const char *)"  D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"   D               ",
+           (const char *)" ...............55 ",
+           (const char *)" ................5 ",
+           (const char *)" ..............55  ",
+           (const char *)" ..............5   ",
+           (const char *)" .....55           ",
+           (const char *)" .....5            ",
+           (const char *)" .....             ",
+           (const char *)" .....             ",
+           (const char *)"D.....             ",
+           (const char *)" 5....             ",
+           (const char *)" 5....             ",
+           (const char *)" 5....             ",
+           (const char *)" 5....D            ",
+           (const char *)"  D                ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"   D               ",
+           (const char *)" .....             ",
+           (const char *)" .....             ",
+           (const char *)" .....5            ",
+           (const char *)" .....55           ",
+           (const char *)" ...............55 ",
+           (const char *)" ................5 ",
+           (const char *)" ..............55  ",
+           (const char *)" ..............5   ",
+           (const char *)"D.....             ",
+           (const char *)" 5....             ",
+           (const char *)" 5....             ",
+           (const char *)" 5....             ",
+           (const char *)" 5....D            ",
+           (const char *)"  D                ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D   ",
            (const char *)" ...55 ",
            (const char *)" ....5 ",
@@ -1354,7 +1551,7 @@ void rooms_init(Gamep g)
            (const char *)"  D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D    ",
            (const char *)" ...55  ",
            (const char *)" ....5  ",
@@ -1372,7 +1569,7 @@ void rooms_init(Gamep g)
            (const char *)"   D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"   D         ",
            (const char *)" 5.......... ",
            (const char *)" 5..........D",
@@ -1385,7 +1582,7 @@ void rooms_init(Gamep g)
            (const char *)"  D          ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"  D     ",
            (const char *)" 5..... ",
            (const char *)" 5..... ",
@@ -1398,7 +1595,7 @@ void rooms_init(Gamep g)
            (const char *)"  D     ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"    D     ",
            (const char *)"   5.555  ",
            (const char *)"   5....5 ",
@@ -1411,7 +1608,7 @@ void rooms_init(Gamep g)
            (const char *)"    D     ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"    D     ",
            (const char *)"   5..... ",
            (const char *)"  5...... ",
@@ -1424,7 +1621,7 @@ void rooms_init(Gamep g)
            (const char *)"      D   ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"    D     ",
            (const char *)"  55.55.. ",
            (const char *)" 5....... ",
@@ -1437,7 +1634,7 @@ void rooms_init(Gamep g)
            (const char *)"    D     ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"    D   55",
            (const char *)"  ...555.5",
            (const char *)"  .......5",
@@ -1450,7 +1647,7 @@ void rooms_init(Gamep g)
            (const char *)"55  D     ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)" D           ",
            (const char *)" ..........  ",
            (const char *)" 5.........  ",
@@ -1463,7 +1660,7 @@ void rooms_init(Gamep g)
            (const char *)"    D        ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)" D           ",
            (const char *)" .555        ",
            (const char *)" ...5   5555 ",
@@ -1476,7 +1673,7 @@ void rooms_init(Gamep g)
            (const char *)"    D        ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"D........555 ",
            (const char *)" ..55.......5",
            (const char *)"    CCc.....5",
@@ -1488,7 +1685,7 @@ void rooms_init(Gamep g)
            (const char *)"    D        ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"D.........   ",
            (const char *)" 555........ ",
            (const char *)"    5ccc.... ",
@@ -1501,7 +1698,7 @@ void rooms_init(Gamep g)
            (const char *)"    D        ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"     D       ",
            (const char *)"  5.....5    ",
            (const char *)" 5........5  ",
@@ -1513,7 +1710,7 @@ void rooms_init(Gamep g)
            (const char *)"    D        ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"     D       ",
            (const char *)"  5....5  .. ",
            (const char *)" 5......cc.. ",
@@ -1525,7 +1722,7 @@ void rooms_init(Gamep g)
            (const char *)"    D        ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"         ..5 ",
            (const char *)"         ... ",
@@ -1539,7 +1736,7 @@ void rooms_init(Gamep g)
            (const char *)"           D ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"         ..5 ",
            (const char *)"         ... ",
@@ -1555,7 +1752,7 @@ void rooms_init(Gamep g)
            (const char *)"           D ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"  ....   ..5 ",
            (const char *)"  ....cCc... ",
@@ -1571,7 +1768,7 @@ void rooms_init(Gamep g)
            (const char *)"           D ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"   ........5 ",
            (const char *)"   c........ ",
@@ -1587,7 +1784,7 @@ void rooms_init(Gamep g)
            (const char *)"           D ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"        5..55",
            (const char *)"       5....5",
@@ -1603,7 +1800,23 @@ void rooms_init(Gamep g)
            (const char *)"           D ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"         D   ",
+           (const char *)"...........55",
+           (const char *)"............5",
+           (const char *)"5...........5",
+           (const char *)" 5...........",
+           (const char *)"  5..........",
+           (const char *)"   5.........",
+           (const char *)"   5.........",
+           (const char *)"   5.........",
+           (const char *)"D............",
+           (const char *)"  5......... ",
+           (const char *)"   55555....D",
+           (const char *)"        D  . ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"        5..5 ",
            (const char *)" 5     55... ",
@@ -1613,7 +1826,7 @@ void rooms_init(Gamep g)
            (const char *)"        D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"        5..5 ",
            (const char *)"        5... ",
@@ -1625,7 +1838,21 @@ void rooms_init(Gamep g)
            (const char *)"   D         ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
+           (const char *)"         D   ",
+           (const char *)"        5..5 ",
+           (const char *)"        5... ",
+           (const char *)"D.....c..... ",
+           (const char *)" 5....c..... ",
+           (const char *)" 5....c..... ",
+           (const char *)" 5...ccc.... ",
+           (const char *)" 55..ccc.... ",
+           (const char *)" 5...ccc.... ",
+           (const char *)" 55.........D",
+           (const char *)"   D         ",
+           nullptr);
+
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"        5..5 ",
            (const char *)"        5... ",
@@ -1637,7 +1864,7 @@ void rooms_init(Gamep g)
            (const char *)"   D         ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"    D    D   ",
            (const char *)"  5..5  5..5 ",
            (const char *)"  ...5  5... ",
@@ -1647,7 +1874,7 @@ void rooms_init(Gamep g)
            (const char *)"        D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)" 55......... ",
            (const char *)" 5.........5 ",
@@ -1657,7 +1884,7 @@ void rooms_init(Gamep g)
            (const char *)"        D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)" 55..c......D",
            (const char *)" 5....c....5 ",
@@ -1667,7 +1894,7 @@ void rooms_init(Gamep g)
            (const char *)"        D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"       5...  ",
            (const char *)"      5....  ",
@@ -1683,7 +1910,7 @@ void rooms_init(Gamep g)
            (const char *)"           D ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D   ",
            (const char *)"     5555..  ",
            (const char *)"     5.....  ",
@@ -1696,7 +1923,7 @@ void rooms_init(Gamep g)
            (const char *)"           D ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"             D  ",
            (const char *)"     5555.....  ",
            (const char *)"     5........  ",
@@ -1709,7 +1936,7 @@ void rooms_init(Gamep g)
            (const char *)"      5...5   D ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"             D     ",
            (const char *)"     5555......55  ",
            (const char *)"     5..........5  ",
@@ -1722,7 +1949,7 @@ void rooms_init(Gamep g)
            (const char *)"      5...5   D    ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"             D        ",
            (const char *)"     5555.........5   ",
            (const char *)"     5.............5  ",
@@ -1735,7 +1962,7 @@ void rooms_init(Gamep g)
            (const char *)"      5...5   D       ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"     D          ",
            (const char *)"  55...5        ",
            (const char *)" 5......5       ",
@@ -1753,7 +1980,7 @@ void rooms_init(Gamep g)
            (const char *)"    D           ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"         D         ",
            (const char *)"  55......5        ",
            (const char *)" 5.........5       ",
@@ -1771,7 +1998,7 @@ void rooms_init(Gamep g)
            (const char *)"    D              ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"             D        ",
            (const char *)"  5555555.........5   ",
            (const char *)"  555555...........5  ",
@@ -1791,7 +2018,7 @@ void rooms_init(Gamep g)
            (const char *)"    D                 ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "no-name",
+  room_add(g, __FUNCTION__, __LINE__, ROOM_TYPE_NORMAL, "no-name",
            (const char *)"             D          ",
            (const char *)"      5555.......555555 ",
            (const char *)"     5555..........5555 ",
