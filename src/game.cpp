@@ -347,6 +347,8 @@ void Game::fini(void)
 }
 void game_fini(Gamep g)
 {
+  TRACE_NO_INDENT();
+
   if (! g) {
     return;
   }
@@ -356,10 +358,17 @@ void game_fini(Gamep g)
   game = NULL;
 }
 
-void game_save_config(Gamep g) { g->save_config(); }
+void game_save_config(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  g->save_config();
+}
 
 void Game::set_seed(void)
 {
+  TRACE_NO_INDENT();
+
   if (g_opt_seed_name != "") {
     seed_name = g_opt_seed_name;
   } else {
@@ -372,9 +381,36 @@ void Game::set_seed(void)
   pcg_srand(seed);
 }
 
-void game_set_seed(Gamep g) { g->set_seed(); }
+void game_set_seed(Gamep g)
+{
+  TRACE_NO_INDENT();
 
-const char *game_get_seed(Gamep g) { return g->seed_name.c_str(); }
+  g->set_seed();
+}
+
+const char *game_get_seed(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  return g->seed_name.c_str();
+}
+
+uint32_t game_get_seed_num(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  return g->seed;
+}
+
+void game_set_seed_for_thread(Gamep g, uint32_t seed)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Not saved in the class and is thread local
+  //
+  pcg_srand(seed);
+}
 
 void Game::create_levels(void)
 {

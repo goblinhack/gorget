@@ -306,17 +306,96 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
       bool need_floor = false;
 
       switch (c) {
-        case CHARMAP_CHASM : continue;
+        case CHARMAP_CHASM :
+          tp = nullptr; /* todo */
+          continue;
         case CHARMAP_WALL :
           need_floor = true;
           tp         = tp_wall;
           break;
-        case CHARMAP_DOOR :
+        case CHARMAP_JOIN :
           need_floor = true;
           tp         = tp_door;
           break;
-        case CHARMAP_TREASURE : break;
-        case CHARMAP_MONST1 : break;
+        case CHARMAP_TREASURE1 :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_TREASURE2 :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_TELEPORT :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_FOLIAGE :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_SHALLOW_WATER :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_DEEP_WATER :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_FOOD :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_BARREL :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_PILLAR :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_TRAP :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_LAVA :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_BRIDGE :
+          tp = nullptr; /* todo */
+          break;
+        case CHARMAP_BRAZIER :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_DOOR :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_SECRET_DOOR :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_DRY_GRASS :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_MONST1 :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_MONST2 :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_MOB1 :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_MOB2 :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
         case CHARMAP_START :
           need_floor = true;
           tp         = tp_player;
@@ -325,8 +404,14 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           need_floor = true;
           tp         = tp_exit;
           break;
-        case CHARMAP_KEY : need_floor = true; break;
-        case CHARMAP_FLOOR : need_floor = true; break;
+        case CHARMAP_KEY :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_FLOOR :
+          need_floor = true;
+          tp         = nullptr; /* todo */
+          break;
         case CHARMAP_EMPTY : break;
         default : DIE("unexpected map char '%c'", c);
       }
