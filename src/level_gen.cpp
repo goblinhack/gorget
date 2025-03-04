@@ -18,21 +18,29 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                                              = 100;
-static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED                       = 100;
-static const int MAX_LEVEL_GEN_TRIES_FOR_PLACING_ANY_ROOM_WITH_SAME_DOOR = 500;
-static const int MAX_LEVEL_GEN_TRIES_FOR_WALKING_DOORS                   = 100;
-static const int MAX_LEVEL_GEN_TRIES_FOR_PLACING_NEW_ROOMS               = 1000;
-static const int MAX_LEVEL_GEN_CORRIDOR_LEN                              = 10;
-static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN                            = 6;
-static const int MAX_LEVEL_ROOM_COUNT                                    = 100;
-static const int MIN_LEVEL_ROOM_COUNT                                    = 10;
+static const int MAX_LEVELS                        = 100;
+static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000;
+static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 500;
+static const int MAX_LEVEL_GEN_CORRIDOR_LEN        = 20;
+static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 6;
+static const int MAX_LEVEL_ROOM_COUNT              = 25;
+static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = MAX_LEVEL_ROOM_COUNT * 2;
+static const int MIN_LEVEL_ROOM_COUNT              = 10;
 
 class Cell;
 class Room;
 class LevelGen;
 
-static int level_place_fail_count;
+//
+// Statistics
+//
+static int level_create_fail;
+static int level_place_first_room_fail;
+static int level_place_subsequent_room_fail;
+static int level_tried_to_place_existing_room_fail;
+static int level_find_door_fail_count;
+static int level_not_enough_rooms;
+static int level_no_exit_room;
 
 static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg = nullptr);
 
@@ -97,7 +105,7 @@ public:
   //
   // All level doors.
   //
-  std::vector< point > doors_all;
+  std::vector< point > doors_not_explored;
 
   //
   // Rooms that can reach each other via a door.
@@ -113,14 +121,6 @@ public:
   // Only one exit per level
   //
   bool has_placed_exit = {};
-
-  //
-  // Statistics
-  //
-  int level_place_room_first_fail_count = {};
-  int level_place_room_subs_fail_count  = {};
-  int level_place_room_dup_count        = {};
-  int level_find_door_fail_count        = {};
 
   //
   // Level tiles and room info
@@ -507,8 +507,27 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
         // Doors can overlap doors in the same tile.
         //
         switch (l->data[ p.x ][ p.y ].c) {
+          case CHARMAP_SHALLOW_WATER :
+          case CHARMAP_DEEP_WATER :
+            //
+            // Ok to overwrite a chasm tile
+            //
+            break;
           case CHARMAP_CHASM :
+            //
+            // Ok to overwrite a chasm tile
+            //
+            break;
+          case CHARMAP_LAVA :
+            //
+            // Ok to overwrite a chasm tile
+            //
+            break;
           case CHARMAP_EMPTY :
+            //
+            // Ok to overwrite an empty tile
+            //
+            break;
           case CHARMAP_JOIN :
             //
             // ok
@@ -690,6 +709,8 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
     LOG("Level: %s.%d", l->seed.c_str(), l->which);
   }
 
+  LOG("Room count: %d", (int) l->rooms_placed.size());
+
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
@@ -704,18 +725,18 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
 //
 // Level stats
 //
-void level_gen_stats_dump(Gamep g, class LevelGen *l)
+void level_gen_stats_dump(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  LOG("Global level errors:");
-  LOG("- place level fail:             %d", level_place_fail_count);
-  LOG("Per level errors:");
-  LOG("- place first room fail:        %d", l->level_place_room_first_fail_count);
-  LOG("- place subsequent room fail:   %d", l->level_place_room_subs_fail_count);
-  LOG("- find door to place room fail: %d", l->level_find_door_fail_count);
-  LOG("Per level info:");
-  LOG("- duplicate room skipped:       %d", l->level_place_room_dup_count);
+  LOG("Level errors:");
+  LOG("- create level fail:               %d", level_create_fail);
+  LOG("- place first room fail:           %d", level_place_first_room_fail);
+  LOG("- place subsequent room fail:      %d", level_place_subsequent_room_fail);
+  LOG("- find door to place room fail:    %d", level_find_door_fail_count);
+  LOG("- tried to place a duplicate room: %d", level_tried_to_place_existing_room_fail);
+  LOG("- not enough rooms generated:      %d", level_not_enough_rooms);
+  LOG("- no exit room generated:          %d", level_no_exit_room);
 }
 
 //
@@ -725,7 +746,7 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_ou
 {
   TRACE_NO_INDENT();
 
-  l->doors_all.clear();
+  l->doors_not_explored.clear();
 
   //
   // Build a vector of all doors that have not been walked before
@@ -751,25 +772,234 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_ou
       //
       // Add to the candidates
       //
-      l->doors_all.push_back(point(x, y));
+      l->doors_not_explored.push_back(point(x, y));
     }
   }
 
   //
   // Did we find any new doors?
   //
-  if (! l->doors_all.size()) {
+  if (! l->doors_not_explored.size()) {
     return false;
   }
 
   //
   // Return a random door
   //
-  *door_out = l->doors_all[ pcg_random_range(0, l->doors_all.size()) ];
+  *door_out = l->doors_not_explored[ pcg_random_range(0, l->doors_not_explored.size()) ];
   *room_out = l->data[ door_out->x ][ door_out->y ].room;
 
   if (! *room_out) {
     ERR("Found a door with no room");
+  }
+
+  return true;
+}
+
+//
+// Place a room of the given type at a specific door
+//
+static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, const point door_other,
+                                                      class Room *room_other, const RoomType room_type)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Try multiple rooms with this door
+  //
+  int room_place_tries = 0;
+
+  while (room_place_tries++ < MAX_LEVEL_GEN_ROOM_PLACE_TRIES) {
+    //
+    // Get a new room we have not placed before to try to place
+    //
+    auto r = room_random_get(g, l, room_type);
+    if (l->rooms_placed.find(r) != l->rooms_placed.end()) {
+      level_tried_to_place_existing_room_fail++;
+      continue;
+    }
+
+    //
+    // For each door in the room, can it be placed to connect to the door passed in?
+    //
+    for (auto d : r->doors) {
+      //
+      // Place at the D joining rooms e.g.:
+      //
+      //       ...
+      //     D....
+      //       ...
+      //
+      // ...   ...
+      // ....D....
+      // ...   ...
+      //
+      point door_intersection_at = door_other - d;
+      if (! room_can_place_at(g, l, r, door_intersection_at)) {
+        level_place_subsequent_room_fail++;
+        continue;
+      }
+
+      //
+      // Place the room
+      //
+      room_place_at(g, l, r, door_intersection_at);
+
+      //
+      // Have placed an exit?
+      //
+      if (r->room_type == ROOM_TYPE_EXIT) {
+        l->has_placed_exit = true;
+      }
+
+      //
+      // Don't try this door again
+      //
+      l->doors_walked[ door_other ] = true;
+
+      //
+      // Success
+      //
+      return true;
+    }
+  }
+
+  //
+  // Failed
+  //
+  return false;
+}
+
+//
+// Place a room of the given type at a random door
+//
+static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_type)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Find a random door that we have not walked before
+  //
+  point       door_other;
+  class Room *room_other = {};
+  if (! level_gen_random_door_get(g, l, &door_other, &room_other)) {
+    level_find_door_fail_count++;
+    return false;
+  }
+
+  //
+  // Try multiple rooms with this door
+  //
+  return level_gen_place_room_at_door_intersection(g, l, door_other, room_other, room_type);
+}
+
+//
+// The first room has been placed. Place all the rest.
+//
+static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
+{
+  TRACE_NO_INDENT();
+
+  int attempts = 0;
+
+  //
+  // Keep placing rooms until we hit the max allowed
+  //
+  while ((int) l->rooms_placed.size() < MAX_LEVEL_ROOM_COUNT) {
+    if (unlikely(debug)) {
+      LOG("rooms placed %d attempts %d", (int) l->rooms_placed.size(), attempts);
+    }
+
+    //
+    // Ensure we loop only so many times
+    //
+    if (attempts++ > MAX_LEVEL_GEN_TRIES_CREATE_ROOM) {
+      break;
+    }
+
+    //
+    // The room type to place
+    //
+    RoomType room_type = ROOM_TYPE_NORMAL;
+
+    //
+    // If we have not yet placed an exit room, should we?
+    //
+    if (! l->has_placed_exit) {
+      if ((int) l->rooms_placed.size() > MIN_LEVEL_ROOM_COUNT) {
+        //
+        // If we have the minimum rooms, then likely we're far enough away from
+        // the start room now to try placing an exit room.
+        //
+        room_type = ROOM_TYPE_EXIT;
+      } else if (attempts > (MAX_LEVEL_GEN_TRIES_CREATE_ROOM / 2)) {
+        //
+        // If we're running out of room place attempts, try an exit room
+        //
+        room_type = ROOM_TYPE_EXIT;
+      }
+    }
+
+    //
+    // Create another room if possible
+    //
+    level_gen_create_another_room(g, l, room_type);
+
+    //
+    // If we are out of doors to walk, no point in continuing.
+    //
+    if (! l->doors_not_explored.size()) {
+      return;
+    }
+  }
+}
+
+//
+// Place the first room
+//
+static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Choose a random start point for the rooms
+  //
+  int border = MAP_WIDTH / 3;
+  int x;
+  int y;
+  if (l->which == 0) {
+    //
+    // First level start in the top left
+    //
+    x = pcg_random_range(0, border);
+    y = pcg_random_range(0, border);
+  } else {
+    //
+    // Other levels start somewhere central
+    //
+    x = pcg_random_range(border, MAP_WIDTH - border);
+    y = pcg_random_range(border, MAP_HEIGHT - border);
+  }
+
+  point at(x, y);
+
+  //
+  // Choose a random first room and place it
+  //
+  auto r = l->room_first = room_random_get(g, l, ROOM_TYPE_START);
+
+  if (! room_can_place_at(g, l, r, at)) {
+    level_place_first_room_fail++;
+    return false;
+  }
+
+  room_place_at(g, l, r, at);
+
+  //
+  // Placed the first room
+  //
+  if (unlikely(debug)) {
+    level_gen_dump(g, l, "placed first room");
   }
 
   return true;
@@ -798,173 +1028,43 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
     l->which = which;
 
     //
-    // Choose a random start point for the rooms
+    // Place the first room
     //
-    int   border = MAP_WIDTH / 4;
-    int   x      = pcg_random_range(border, MAP_WIDTH - border);
-    int   y      = pcg_random_range(border, MAP_HEIGHT - border);
-    point at(x, y);
-
-    //
-    // Choose a random first room and place it
-    //
-    auto r = l->room_first = room_random_get(g, l, ROOM_TYPE_START);
-
-    if (! room_can_place_at(g, l, r, at)) {
-      l->level_place_room_first_fail_count++;
+    if (! level_gen_create_first_room(g, l, debug)) {
       continue;
     }
 
-    room_place_at(g, l, r, at);
+    //
+    // Place the remaining rooms
+    //
+    level_gen_create_remaining_rooms(g, l, debug);
 
     //
-    // Placed the first room
+    // Check we have enough rooms
     //
-    if (unlikely(debug)) {
-      level_gen_dump(g, l, "placed first room");
+    if ((int) l->rooms_placed.size() < MIN_LEVEL_ROOM_COUNT) {
+      level_not_enough_rooms++;
+      continue;
     }
 
     //
-    // Ok, we have our first room. Keep placing rooms now.
+    // Check we have an exit room
     //
-    int door_place_tries = 0;
-
-    //
-    // Up to the maximum rooms per level
-    //
-    int room_placed_failure_count = 0;
-    while ((int) l->rooms_placed.size() < MAX_LEVEL_ROOM_COUNT) {
-      if (unlikely(debug)) {
-        LOG("rooms placed %d door_place_tries %d room_placed_failure_count %d", (int) l->rooms_placed.size(),
-            door_place_tries, room_placed_failure_count);
-      }
-
-      //
-      // Only try to place rooms against doors so many times
-      //
-      if (door_place_tries++ > MAX_LEVEL_GEN_TRIES_FOR_WALKING_DOORS) {
-        break;
-      }
-
-      //
-      // Tried enough times to place rooms and failed
-      //
-      if (room_placed_failure_count > MAX_LEVEL_GEN_TRIES_FOR_PLACING_NEW_ROOMS) {
-        break;
-      }
-
-      //
-      // If struggling to place a room, try an exit
-      //
-      RoomType room_type = ROOM_TYPE_NORMAL;
-
-      if (! l->has_placed_exit) {
-        if ((int) l->rooms_placed.size() > MIN_LEVEL_ROOM_COUNT) {
-          room_type = ROOM_TYPE_EXIT;
-        } else if (room_placed_failure_count > (MAX_LEVEL_GEN_TRIES_FOR_PLACING_NEW_ROOMS / 10) * 5) {
-          room_type = ROOM_TYPE_EXIT;
-        }
-      }
-
-      //
-      // Find a random door that we have not walked before
-      //
-      point       door_other;
-      class Room *room_other = {};
-
-      if (! level_gen_random_door_get(g, l, &door_other, &room_other)) {
-        l->level_find_door_fail_count++;
-        break;
-      }
-
-      //
-      // Try multiple rooms with this door
-      //
-      bool room_was_placed  = false;
-      int  room_place_tries = 0;
-      while (room_place_tries++ < MAX_LEVEL_GEN_TRIES_FOR_PLACING_ANY_ROOM_WITH_SAME_DOOR) {
-        //
-        // Get a new room we have not placed before to try to place
-        //
-        r = room_random_get(g, l, room_type);
-
-        if (l->rooms_placed.find(r) != l->rooms_placed.end()) {
-          l->level_place_room_dup_count++;
-          continue;
-        }
-
-        //
-        // For each door in the room, can it be placed to connect to this door?
-        //
-        for (auto d : r->doors) {
-          //
-          // Place at the D joining rooms e.g.:
-          //
-          //       ...
-          //     D....
-          //       ...
-          //
-          // ...   ...
-          // ....D....
-          // ...   ...
-          //
-          point door_intersection_at = door_other - d;
-          if (! room_can_place_at(g, l, r, door_intersection_at)) {
-            l->level_place_room_subs_fail_count++;
-            continue;
-          }
-
-          //
-          // Place the room
-          //
-          room_place_at(g, l, r, door_intersection_at);
-
-          if (r->room_type == ROOM_TYPE_EXIT) {
-            l->has_placed_exit = true;
-          }
-
-          //
-          // Don't try this door again
-          //
-          l->doors_walked[ door_other ] = true;
-
-          room_was_placed = true;
-          break;
-        }
-
-        if (room_was_placed) {
-          if (unlikely(debug)) {
-            level_gen_dump(g, l, "placed another room");
-          }
-          room_placed_failure_count = 0;
-          break;
-        }
-      }
-      room_placed_failure_count++;
+    if (! l->has_placed_exit) {
+      level_no_exit_room++;
+      continue;
     }
 
     //
-    // If we placed enough rooms, this level is good enough to go
+    // Success
     //
-    if ((int) l->rooms_placed.size() > MIN_LEVEL_ROOM_COUNT) {
-      //
-      // Success
-      //
-      if (! l->has_placed_exit) {
-        CON("failed to place exit");
-      }
-      return l;
-    }
-
-    //
-    // Not enough rooms
-    //
+    return l;
   }
 
   delete l;
   l = nullptr;
 
-  level_place_fail_count++;
+  level_create_fail++;
 
   if (unlikely(debug)) {
     LOG("Failed to create room with seed: %s", game_get_seed(g));
@@ -12953,4 +13053,6 @@ void level_gen_test(Gamep g)
       level_gen_dump(g, l);
     }
   }
+
+  level_gen_stats_dump(g);
 }
