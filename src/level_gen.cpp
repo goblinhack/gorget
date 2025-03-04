@@ -2321,7 +2321,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ... ..... ",
            (const char *)" .T. ..@..^",
            (const char *)" ... ..b.. ",
@@ -2335,7 +2334,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ... ..... ",
            (const char *)" .T. ..@..^",
            (const char *)" ... ..b.. ",
@@ -2349,8 +2347,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    .....  ",
            (const char *)"    .   f  ",
            (const char *)"    s      ",
@@ -2377,7 +2373,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)"  . .....m ",
            (const char *)"  . .T.... ",
@@ -2391,10 +2386,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    ^      ",
            (const char *)"    .      ",
            (const char *)"   .....   ",
@@ -2904,8 +2895,6 @@ void rooms_init(Gamep g)
            (const char *)"  ww.@..ww ",
            (const char *)" WWww..www ",
            (const char *)"  Wwww ww  ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -2917,9 +2906,6 @@ void rooms_init(Gamep g)
            (const char *)"`....w.@.. ",
            (const char *)"...wwww... ",
            (const char *)"..wWWWww.. ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -2973,9 +2959,6 @@ void rooms_init(Gamep g)
            (const char *)"  ww.@..ww ",
            (const char *)" WWww..www ",
            (const char *)"  Wwww ww  ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -2986,10 +2969,6 @@ void rooms_init(Gamep g)
            (const char *)"`....w.@.. ",
            (const char *)" ..wwww..  ",
            (const char *)"  wWWWww   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3213,7 +3192,6 @@ void rooms_init(Gamep g)
            (const char *)" ....C.... ",
            (const char *)" ..CC..... ",
            (const char *)" .CC....@.^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3269,7 +3247,6 @@ void rooms_init(Gamep g)
            (const char *)"|M..s`.... ",
            (const char *)".$$.   ... ",
            (const char *)"|..|       ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3297,7 +3274,6 @@ void rooms_init(Gamep g)
            (const char *)" CCCCCCCC. ",
            (const char *)" ....CC.C.^",
            (const char *)" .m......  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3307,11 +3283,6 @@ void rooms_init(Gamep g)
            (const char *)"  C.....   ",
            (const char *)" CCC       ",
            (const char *)"  C        ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3325,7 +3296,6 @@ void rooms_init(Gamep g)
            (const char *)"...   .C.. ",
            (const char *)".@.....C.. ",
            (const char *)"......     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3339,7 +3309,6 @@ void rooms_init(Gamep g)
            (const char *)" .  ..... .",
            (const char *)" .....@.. .",
            (const char *)"    .....s.",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3409,7 +3378,6 @@ void rooms_init(Gamep g)
            (const char *)"  L.......^",
            (const char *)"    L..    ",
            (const char *)"    LL.    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3479,7 +3447,6 @@ void rooms_init(Gamep g)
            (const char *)" .........^",
            (const char *)"   .....   ",
            (const char *)"   .....   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3507,7 +3474,6 @@ void rooms_init(Gamep g)
            (const char *)"    .....  ",
            (const char *)"    .....  ",
            (const char *)"    .....  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3535,7 +3501,6 @@ void rooms_init(Gamep g)
            (const char *)"   .....   ",
            (const char *)"  B.....B  ",
            (const char *)"   .....   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3548,8 +3513,6 @@ void rooms_init(Gamep g)
            (const char *)"   ....... ",
            (const char *)"    ...... ",
            (const char *)"      . .  ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3577,7 +3540,6 @@ void rooms_init(Gamep g)
            (const char *)"   ....... ",
            (const char *)"   ....... ",
            (const char *)"   .......^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3633,7 +3595,6 @@ void rooms_init(Gamep g)
            (const char *)"   s       ",
            (const char *)"   `   m$  ",
            (const char *)"   .....   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3661,7 +3622,6 @@ void rooms_init(Gamep g)
            (const char *)" .....     ",
            (const char *)" C.C..s..$ ",
            (const char *)" CCC.. ..$ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3693,7 +3653,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     CC.C  ",
            (const char *)"  CC....CC ",
            (const char *)"  C......C ",
@@ -3763,7 +3722,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)"   .....   ",
            (const char *)"   .....   ",
@@ -3773,7 +3731,6 @@ void rooms_init(Gamep g)
            (const char *)"   s       ",
            (const char *)"   `   m$  ",
            (const char *)"   ``...   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3791,7 +3748,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ....#..ww ",
            (const char *)" ....#...w ",
            (const char *)" ........w ",
@@ -3833,7 +3789,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ..   ..  ",
            (const char *)"  .......  ",
            (const char *)"   .L.L.   ",
@@ -3871,7 +3826,6 @@ void rooms_init(Gamep g)
            (const char *)" ......    ",
            (const char *)" w.w...s.. ",
            (const char *)" Www..  .$ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3917,7 +3871,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   .... .. ",
            (const char *)"  .b...... ",
@@ -3931,7 +3884,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"^...D...w  ",
            (const char *)"     ..@ww ",
            (const char *)" . ......w ",
@@ -3941,7 +3893,6 @@ void rooms_init(Gamep g)
            (const char *)" ...C.CCC.^",
            (const char *)" w.......w ",
            (const char *)" www|.|www ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -3969,11 +3920,9 @@ void rooms_init(Gamep g)
            (const char *)"    w....  ",
            (const char *)"     $  #  ",
            (const char *)"        ^  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ww   #   ",
            (const char *)"  ww...#   ",
            (const char *)"   wwww.   ",
@@ -4039,7 +3988,6 @@ void rooms_init(Gamep g)
            (const char *)"    www..w ",
            (const char *)"    wWwW.w ",
            (const char *)"        ^  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4081,7 +4029,6 @@ void rooms_init(Gamep g)
            (const char *)" ..wwwww.. ",
            (const char *)" w......w. ",
            (const char *)" www...www ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4155,7 +4102,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   . t .   ",
            (const char *)"  .. . ... ",
@@ -4207,7 +4153,6 @@ void rooms_init(Gamep g)
            (const char *)"  $......  ",
            (const char *)"        #  ",
            (const char *)"        ^  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4220,12 +4165,9 @@ void rooms_init(Gamep g)
            (const char *)"  wWWw.... ",
            (const char *)"   Ww.@... ",
            (const char *)"     ..... ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   .....   ",
            (const char *)"  ........ ",
@@ -4263,7 +4205,6 @@ void rooms_init(Gamep g)
            (const char *)"   .LLL... ",
            (const char *)" $s....... ",
            (const char *)" m       . ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4277,7 +4218,6 @@ void rooms_init(Gamep g)
            (const char *)"  $.b....  ",
            (const char *)"        .  ",
            (const char *)"        ^  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4333,7 +4273,6 @@ void rooms_init(Gamep g)
            (const char *)"  w.....ww ",
            (const char *)"  ww...ww  ",
            (const char *)"      m    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4347,7 +4286,6 @@ void rooms_init(Gamep g)
            (const char *)"    ...... ",
            (const char *)"    .....  ",
            (const char *)"        ^  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4435,7 +4373,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"     m ... ",
            (const char *)"     # ... ",
@@ -4459,7 +4396,6 @@ void rooms_init(Gamep g)
            (const char *)"   ....... ",
            (const char *)"   ....m   ",
            (const char *)"       ^   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4487,7 +4423,6 @@ void rooms_init(Gamep g)
            (const char *)"  ........ ",
            (const char *)"  ..m...#  ",
            (const char *)"        ^  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4501,11 +4436,9 @@ void rooms_init(Gamep g)
            (const char *)" w.....www ",
            (const char *)" ww...wwwW ",
            (const char *)" Ww....wWW ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"     .     ",
            (const char *)" CCC...CCC ",
@@ -4529,7 +4462,6 @@ void rooms_init(Gamep g)
            (const char *)" CCCCCC.CC ",
            (const char *)" CCCCC.... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4543,7 +4475,6 @@ void rooms_init(Gamep g)
            (const char *)" CCCC .    ",
            (const char *)"  CC  .... ",
            (const char *)"  $   . .. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4571,11 +4502,9 @@ void rooms_init(Gamep g)
            (const char *)" w.....www ",
            (const char *)" ww...wwwW ",
            (const char *)" WwwwwwwW  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"     .     ",
            (const char *)" www...www ",
@@ -4599,7 +4528,6 @@ void rooms_init(Gamep g)
            (const char *)" Wwwwww.ww ",
            (const char *)" WWwww.... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4613,7 +4541,6 @@ void rooms_init(Gamep g)
            (const char *)" wwww .....",
            (const char *)"  ww  .... ",
            (const char *)"  $   . .. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -4641,11 +4568,9 @@ void rooms_init(Gamep g)
            (const char *)" w  ...www ",
            (const char *)" W  ..wwwW ",
            (const char *)" WWwwwwwW  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  T        ",
            (const char *)"  .        ",
            (const char *)"  .  E     ",
@@ -4659,9 +4584,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     E     ",
            (const char *)"    ...    ",
            (const char *)"   ..M..   ",
@@ -4673,9 +4595,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     E     ",
            (const char *)"    ...    ",
            (const char *)"   ..M..   ",
@@ -4701,9 +4620,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     E     ",
            (const char *)"    ...    ",
            (const char *)"   G...G   ",
@@ -5005,7 +4921,6 @@ void rooms_init(Gamep g)
            (const char *)"..g.C.Cwwf ",
            (const char *)"    C.C    ",
            (const char *)"    C.C    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5019,7 +4934,6 @@ void rooms_init(Gamep g)
            (const char *)"  ..CCC....",
            (const char *)"  $gCCCC...",
            (const char *)"  CCC   CC ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5037,7 +4951,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   ``.``.! ",
            (const char *)"   `..B``` ",
@@ -5047,7 +4960,6 @@ void rooms_init(Gamep g)
            (const char *)"       CCD ",
            (const char *)"   ..$CCC. ",
            (const char *)"   ...CCC. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5075,7 +4987,6 @@ void rooms_init(Gamep g)
            (const char *)"  g. . wwf ",
            (const char *)"     .     ",
            (const char *)"     .     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5088,8 +4999,6 @@ void rooms_init(Gamep g)
            (const char *)"  www.M.   ",
            (const char *)"  ..       ",
            (const char *)"  $g       ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5107,7 +5016,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   ``.ww.! ",
            (const char *)"   `..Bwww ",
@@ -5130,8 +5038,6 @@ void rooms_init(Gamep g)
            (const char *)" ......C   ",
            (const char *)" CC...CE   ",
            (const char *)" CCC.      ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5149,7 +5055,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"     .     ",
            (const char *)"  f.....   ",
@@ -5159,11 +5064,9 @@ void rooms_init(Gamep g)
            (const char *)" LLLL.M.   ",
            (const char *)"LL..       ",
            (const char *)"L $g       ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"       g!  ",
            (const char *)"   ......  ",
@@ -5177,8 +5080,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   ``.LL.! ",
            (const char *)"   `..BLLL ",
@@ -5191,7 +5092,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"     .     ",
            (const char *)"   ..C.C!  ",
@@ -5201,11 +5101,9 @@ void rooms_init(Gamep g)
            (const char *)" .....tC   ",
            (const char *)" CC...CE   ",
            (const char *)" CCC.      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^ ..  ",
            (const char *)"   f...b.  ",
            (const char *)"   .....   ",
@@ -5219,22 +5117,15 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   f...    ",
            (const char *)"   ..t..   ",
            (const char *)"   ..E..   ",
            (const char *)"  !.....   ",
            (const char *)"   b..M.   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   M.b..!  ",
            (const char *)"   .b...   ",
            (const char *)"^.........^",
@@ -5243,7 +5134,6 @@ void rooms_init(Gamep g)
            (const char *)"    ...    ",
            (const char *)"    B.B    ",
            (const char *)"     .     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5269,9 +5159,6 @@ void rooms_init(Gamep g)
            (const char *)"     .LL.  ",
            (const char *)"     .LL.  ",
            (const char *)"     M..E  ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5285,7 +5172,6 @@ void rooms_init(Gamep g)
            (const char *)"   M.......",
            (const char *)"   $f.LLLLL",
            (const char *)"     .     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5299,11 +5185,9 @@ void rooms_init(Gamep g)
            (const char *)"     ....  ",
            (const char *)"     .     ",
            (const char *)"    ..     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ^    f  ",
            (const char *)"   ......  ",
            (const char *)"   |LL..   ",
@@ -5313,7 +5197,6 @@ void rooms_init(Gamep g)
            (const char *)"    ...    ",
            (const char *)"    B.B    ",
            (const char *)"    BEB    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5341,7 +5224,6 @@ void rooms_init(Gamep g)
            (const char *)"   ..M..   ",
            (const char *)"   . E .   ",
            (const char *)"   .   .   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5359,8 +5241,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   !....   ",
            (const char *)"   ..wwwww ",
            (const char *)"^.......ME ",
@@ -5369,12 +5249,9 @@ void rooms_init(Gamep g)
            (const char *)"      w    ",
            (const char *)"      ww   ",
            (const char *)"      ww$  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   ww...!  ",
            (const char *)"   www..   ",
            (const char *)"^.wwwww.   ",
@@ -5383,7 +5260,6 @@ void rooms_init(Gamep g)
            (const char *)"    ...    ",
            (const char *)"    B.B    ",
            (const char *)"    BMB    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5411,7 +5287,6 @@ void rooms_init(Gamep g)
            (const char *)" s  www  . ",
            (const char *)" .   E   . ",
            (const char *)" $       C ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5420,30 +5295,16 @@ void rooms_init(Gamep g)
            (const char *)"   .....   ",
            (const char *)"   ..M..   ",
            (const char *)"^......!   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   M....   ",
            (const char *)"   ...!... ",
            (const char *)"^........E ",
            (const char *)"   f...... ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   f       ",
            (const char *)"   ....MC$ ",
            (const char *)" B |....C. ",
@@ -5453,7 +5314,6 @@ void rooms_init(Gamep g)
            (const char *)"     .     ",
            (const char *)"    B.B    ",
            (const char *)"     .     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5495,11 +5355,9 @@ void rooms_init(Gamep g)
            (const char *)"   LL.LL  .",
            (const char *)"    L.L   .",
            (const char *)"    ELL g.!",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  CCCCCCC  ",
            (const char *)"  C!....C  ",
            (const char *)"  C..CCCCC ",
@@ -5507,13 +5365,9 @@ void rooms_init(Gamep g)
            (const char *)"  C..CCCCC ",
            (const char *)"  C....MC  ",
            (const char *)"  CCCCCCC  ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   C.M.C   ",
            (const char *)"  CC.C.C   ",
            (const char *)"  C.CbC.CCB",
@@ -5522,8 +5376,6 @@ void rooms_init(Gamep g)
            (const char *)"  CC.C.C   ",
            (const char *)"   C..!C   ",
            (const char *)"    CCCC   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5551,12 +5403,9 @@ void rooms_init(Gamep g)
            (const char *)" CCCC.CCCC ",
            (const char *)"    CEC    ",
            (const char *)"    CCC    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" LLLL....! ",
            (const char *)" LE.LL..b. ",
            (const char *)" LLLLLL... ",
@@ -5565,12 +5414,9 @@ void rooms_init(Gamep g)
            (const char *)" .LLLLL... ",
            (const char *)" .......m. ",
            (const char *)"     ^     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     ....! ",
            (const char *)"    .L....^",
            (const char *)"   .LL.... ",
@@ -5579,12 +5425,9 @@ void rooms_init(Gamep g)
            (const char *)" ....L..   ",
            (const char *)" f.....    ",
            (const char *)"      E    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" !.m..L..B ",
            (const char *)" ....L..m. ",
            (const char *)" ...LL.... ",
@@ -5592,12 +5435,9 @@ void rooms_init(Gamep g)
            (const char *)"        .  ",
            (const char *)"       LLL ",
            (const char *)"       LEL ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)"^........B ",
            (const char *)" ....L.... ",
@@ -5611,7 +5451,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"     .     ",
            (const char *)" $.. . .$. ",
@@ -5625,7 +5464,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ........B ",
            (const char *)" ....w.... ",
            (const char *)" ...www... ",
@@ -5634,8 +5472,6 @@ void rooms_init(Gamep g)
            (const char *)" ....w..f. ",
            (const char *)" E........ ",
            (const char *)"     ^     ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5647,23 +5483,14 @@ void rooms_init(Gamep g)
            (const char *)" ...ww.... ",
            (const char *)"^.!..w..   ",
            (const char *)" B....E    ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ..m..w..B ",
            (const char *)" ....w.... ",
            (const char *)"^...ww..!. ",
            (const char *)" ..wwwww.. ",
            (const char *)"    wEw    ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5677,7 +5504,6 @@ void rooms_init(Gamep g)
            (const char *)" ....$m... ",
            (const char *)"    .www.  ",
            (const char *)"    ....E  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5695,8 +5521,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   B.!.B   ",
            (const char *)"    .C.    ",
            (const char *)"    .C.    ",
@@ -5705,25 +5529,17 @@ void rooms_init(Gamep g)
            (const char *)"    mC.    ",
            (const char *)"   B...B   ",
            (const char *)"     E     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  B B B !  ",
            (const char *)"  .......  ",
            (const char *)"^.gCCECCt.^",
            (const char *)"  .......  ",
            (const char *)"   B B B   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"C.CCCCC... ",
            (const char *)" .C..CCCCC ",
            (const char *)"  CCCC..C. ",
@@ -5732,12 +5548,9 @@ void rooms_init(Gamep g)
            (const char *)" ...C.E.CC ",
            (const char *)" ...C...C  ",
            (const char *)" g.CCCCCC  ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"         ^ ",
            (const char *)" .....C... ",
            (const char *)" .!..CC... ",
@@ -5751,7 +5564,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" m....  .g ",
            (const char *)" ..!.C  .. ",
@@ -5761,7 +5573,6 @@ void rooms_init(Gamep g)
            (const char *)" CCCCCCC.. ",
            (const char *)" g........ ",
            (const char *)"  ^      E ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -5775,11 +5586,9 @@ void rooms_init(Gamep g)
            (const char *)"    E.m  . ",
            (const char *)"     s   . ",
            (const char *)"     ..... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .LLLL.L. ",
            (const char *)"  .LLLL... ",
            (const char *)"  .LLLLLL. ",
@@ -5801,13 +5610,9 @@ void rooms_init(Gamep g)
            (const char *)" ...LE..LL ",
            (const char *)" ...L...L  ",
            (const char *)" g.LLLLLL  ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" .....L... ",
            (const char *)" .!..LL... ",
            (const char *)" ...LLL.m. ",
@@ -5817,11 +5622,9 @@ void rooms_init(Gamep g)
            (const char *)"     L.m.. ",
            (const char *)"     LLLL. ",
            (const char *)"     $...f ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" m....  .g ",
            (const char *)" ....L  .. ",
            (const char *)"     L  .. ",
@@ -5830,13 +5633,9 @@ void rooms_init(Gamep g)
            (const char *)"^LLLLLLL.. ",
            (const char *)" g...t...! ",
            (const char *)"     ^     ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    ww.    ",
            (const char *)"    .w.    ",
            (const char *)"    .w.    ",
@@ -5844,12 +5643,9 @@ void rooms_init(Gamep g)
            (const char *)"    .w.    ",
            (const char *)"    .w.    ",
            (const char *)"    E.m    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"  wwwww.w. ",
            (const char *)"  wwwww...^",
@@ -5863,7 +5659,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"w.wwwww...^",
            (const char *)"     wwwww ",
            (const char *)"     w..w.^",
@@ -5872,12 +5667,9 @@ void rooms_init(Gamep g)
            (const char *)"     .f.ww ",
            (const char *)"     ..Ew  ",
            (const char *)" g.wwwwww  ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" .....w... ",
            (const char *)" ....ww...^",
@@ -5891,7 +5683,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" m....  .g ",
            (const char *)" ....w  .. ",
@@ -5900,13 +5691,9 @@ void rooms_init(Gamep g)
            (const char *)" wwww!www. ",
            (const char *)" wwEwwww.. ",
            (const char *)" g........ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   Lm..L   ",
            (const char *)"   L.C.L   ",
            (const char *)"   L.C.L   ",
@@ -5915,12 +5702,9 @@ void rooms_init(Gamep g)
            (const char *)"   L.C.L   ",
            (const char *)"  EL!..L   ",
            (const char *)"   LLLLL   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  .CCCC.C. ",
            (const char *)"  .CCCC...^",
            (const char *)"  .CCCCCC. ",
@@ -5933,7 +5717,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"C.CCCCC...^",
            (const char *)" .C..CC.CC ",
            (const char *)"  CCCC!.C. ",
@@ -5943,11 +5726,9 @@ void rooms_init(Gamep g)
            (const char *)" ...C...C  ",
            (const char *)" g.CCCCCC  ",
            (const char *)"     E     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" .....C.!. ",
            (const char *)" .E..CC...^",
@@ -5961,7 +5742,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" m....  .$ ",
            (const char *)" ....C  LL ",
@@ -5971,11 +5751,9 @@ void rooms_init(Gamep g)
            (const char *)" CC.CCCC.. ",
            (const char *)" g.......! ",
            (const char *)"      E    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"    E..    ",
            (const char *)"    .w.    ",
            (const char *)"    .w.    ",
@@ -5984,12 +5762,9 @@ void rooms_init(Gamep g)
            (const char *)"    .w.    ",
            (const char *)"    ...    ",
            (const char *)"      ^    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .w.wwww. ",
            (const char *)"  .wwEwww. ",
            (const char *)"  .wwww!w. ",
@@ -6011,9 +5786,6 @@ void rooms_init(Gamep g)
            (const char *)" ...w..tww ",
            (const char *)" ...wE..w  ",
            (const char *)" g.wwwwww  ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6027,7 +5799,6 @@ void rooms_init(Gamep g)
            (const char *)" ....w.m.. ",
            (const char *)" .wwwwwww. ",
            (const char *)" ....$....^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6040,36 +5811,23 @@ void rooms_init(Gamep g)
            (const char *)" wwwwwww.. ",
            (const char *)" g.......B ",
            (const char *)"        E  ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     E     ",
            (const char *)"   CCCCC   ",
            (const char *)" CCC...CCC ",
            (const char *)"^..B..!...^",
            (const char *)" CCC...CfC ",
            (const char *)"   CCCCC   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .$.m..$E ",
            (const char *)"      .    ",
            (const char *)" CCCCCCCCC ",
            (const char *)"^====!====^",
            (const char *)" CCCCCCCCC ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6081,9 +5839,6 @@ void rooms_init(Gamep g)
            (const char *)" CCCCCCCCC ",
            (const char *)" CCCCCCCC  ",
            (const char *)" g....!.$  ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6096,12 +5851,9 @@ void rooms_init(Gamep g)
            (const char *)"        .g ",
            (const char *)"     !...  ",
            (const char *)"     E     ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"^m....  Bg ",
            (const char *)" .!..w  .. ",
            (const char *)" ...ww  .. ",
@@ -6115,7 +5867,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)" ..t.|.... ",
            (const char *)"^..|gL.|.. ",
@@ -6129,8 +5880,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)"^......... ",
            (const char *)" ...L.L... ",
@@ -6138,12 +5887,9 @@ void rooms_init(Gamep g)
            (const char *)" LLLLLLLLL ",
            (const char *)" .LLLLLLL. ",
            (const char *)" ..m.....$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"    ^      ",
            (const char *)"  ......LL ",
            (const char *)" m.......L ",
@@ -6157,8 +5903,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"^........m ",
            (const char *)" LLLL...b. ",
            (const char *)" ...L..... ",
@@ -6166,12 +5910,9 @@ void rooms_init(Gamep g)
            (const char *)" ...LLLL.. ",
            (const char *)" ......L.. ",
            (const char *)" ...m..L..^",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" ...L...bb ",
            (const char *)" .b.L..... ",
@@ -6180,12 +5921,9 @@ void rooms_init(Gamep g)
            (const char *)" ...LLL... ",
            (const char *)"^....L.... ",
            (const char *)" $...LL.m. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)" ......... ",
            (const char *)"^..|gL.... ",
@@ -6199,8 +5937,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)" ...|.|... ",
            (const char *)"^...L.L... ",
@@ -6208,13 +5944,9 @@ void rooms_init(Gamep g)
            (const char *)" LLLL.LLLL ",
            (const char *)" .LLL.LLL.^",
            (const char *)" ..m.....$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ......LL ",
            (const char *)" ........L ",
            (const char *)" |..L..... ",
@@ -6227,8 +5959,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ...|.|..f ",
            (const char *)" LLL...... ",
            (const char *)" |.LLL..b. ",
@@ -6236,12 +5966,9 @@ void rooms_init(Gamep g)
            (const char *)" |..LLLL.. ",
            (const char *)" .....LL..^",
            (const char *)" ...m..L.. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"         ^ ",
            (const char *)" ...L..... ",
            (const char *)" ...L..LL. ",
@@ -6250,8 +5977,6 @@ void rooms_init(Gamep g)
            (const char *)"^...LLL..L ",
            (const char *)" ....L....^",
            (const char *)" $...LL.m. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6265,11 +5990,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)"    C.C    ",
            (const char *)"     ^     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" g..C.C... ",
            (const char *)" ...C.CC.. ",
            (const char *)" ..CC.CCC. ",
@@ -6307,7 +6030,6 @@ void rooms_init(Gamep g)
            (const char *)" . ....... ",
            (const char *)" .       . ",
            (const char *)" ..$   g.g ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6325,7 +6047,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)" ..t.|.... ",
            (const char *)"^...gC.... ",
@@ -6339,8 +6060,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)"^......... ",
            (const char *)" ...C.C... ",
@@ -6348,12 +6067,9 @@ void rooms_init(Gamep g)
            (const char *)" CCCCCCCCC ",
            (const char *)" .CCCCCCC. ",
            (const char *)" ..m.....$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"    ^      ",
            (const char *)"  ......CC ",
            (const char *)" m.......C ",
@@ -6367,8 +6083,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"^........m ",
            (const char *)" CCCC...b. ",
            (const char *)" ...C..... ",
@@ -6376,12 +6090,9 @@ void rooms_init(Gamep g)
            (const char *)" ...CCCC.. ",
            (const char *)" ......C.. ",
            (const char *)" ...m..C..^",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" ...C...bb ",
            (const char *)" .b.C..... ",
@@ -6390,12 +6101,9 @@ void rooms_init(Gamep g)
            (const char *)" ...CCC... ",
            (const char *)"^....C.... ",
            (const char *)" $...CC.m. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)" ......... ",
            (const char *)"^..|gC.... ",
@@ -6409,8 +6117,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)" ...|.|... ",
            (const char *)"^...C.C... ",
@@ -6418,13 +6124,9 @@ void rooms_init(Gamep g)
            (const char *)" CCCC.CCCC ",
            (const char *)" .CCC.CCC.^",
            (const char *)" ..m.....$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ......CC ",
            (const char *)" ........C ",
            (const char *)" |..C..... ",
@@ -6437,8 +6139,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ...|.|..f ",
            (const char *)" CCC...... ",
            (const char *)" |.CCC..b. ",
@@ -6446,12 +6146,9 @@ void rooms_init(Gamep g)
            (const char *)" |..CCCC.. ",
            (const char *)" .....CC..^",
            (const char *)" ...m..C.. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"         ^ ",
            (const char *)" ...C..... ",
            (const char *)" ...C..CC. ",
@@ -6460,8 +6157,6 @@ void rooms_init(Gamep g)
            (const char *)"^...CCC..C ",
            (const char *)" ....C....^",
            (const char *)" $...CC.m. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6475,11 +6170,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)"    C.C    ",
            (const char *)"     ^     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" g..C.C... ",
            (const char *)" ...C.CC.. ",
            (const char *)" ..CC.CCC. ",
@@ -6517,7 +6210,6 @@ void rooms_init(Gamep g)
            (const char *)" . ....... ",
            (const char *)" .       . ",
            (const char *)" ..$   g.g ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6535,7 +6227,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)" ....|...  ",
            (const char *)"^..|g..|.. ",
@@ -6549,8 +6240,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ... ...  ",
            (const char *)" .... .... ",
            (const char *)"^.... .... ",
@@ -6558,13 +6247,9 @@ void rooms_init(Gamep g)
            (const char *)" .... .... ",
            (const char *)" .... ....^",
            (const char *)" ..m. ...$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ........ ",
            (const char *)" m..... .. ",
            (const char *)" ...... .. ",
@@ -6577,8 +6262,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ... ....m ",
            (const char *)" ... ...b. ",
            (const char *)" ... .....^",
@@ -6586,13 +6269,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)"^......... ",
            (const char *)" ...m..... ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" .......bb ",
            (const char *)" .b.. .... ",
            (const char *)"^.... .... ",
@@ -6600,12 +6279,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)" .........^",
            (const char *)" $......m. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)"  .......  ",
            (const char *)"^..|g..... ",
@@ -6619,8 +6295,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)" ...|.|... ",
            (const char *)" ......... ",
@@ -6629,12 +6303,9 @@ void rooms_init(Gamep g)
            (const char *)" ...C.C... ",
            (const char *)"  .m.....$ ",
            (const char *)"      ^    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ........ ",
            (const char *)" ......  . ",
            (const char *)" |...... . ",
@@ -6647,8 +6318,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ...|.|..f ",
            (const char *)" ......... ",
            (const char *)" |.. . .b. ",
@@ -6656,13 +6325,9 @@ void rooms_init(Gamep g)
            (const char *)" |.. . ... ",
            (const char *)" .........^",
            (const char *)" ...m..... ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ........ ",
            (const char *)" ....... .^",
            (const char *)" ...... .. ",
@@ -6670,8 +6335,6 @@ void rooms_init(Gamep g)
            (const char *)" .... .... ",
            (const char *)"^... ..... ",
            (const char *)" $......m. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6685,11 +6348,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)"    C.C    ",
            (const char *)"     ^     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" g..C.C... ",
            (const char *)" ...C.CC.. ",
            (const char *)" ..CC.CCC. ",
@@ -6703,7 +6364,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .....    ",
            (const char *)" .......   ",
            (const char *)" |..C....| ",
@@ -6712,8 +6372,6 @@ void rooms_init(Gamep g)
            (const char *)"   ..CC..  ",
            (const char *)"    ...    ",
            (const char *)"      ^    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7025,7 +6683,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ..=CC.kg ",
            (const char *)" ...=CC... ",
            (const char *)" ...=CCCCC ",
@@ -7034,12 +6691,9 @@ void rooms_init(Gamep g)
            (const char *)" C..m.C... ",
            (const char *)" CC...C..C ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ........ ",
            (const char *)" ...CCCC.. ",
            (const char *)" ..CCCCCC. ",
@@ -7049,7 +6703,6 @@ void rooms_init(Gamep g)
            (const char *)" g........ ",
            (const char *)" .       . ",
            (const char *)" .CC$CC... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7067,7 +6720,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  C=CCC..g ",
            (const char *)" CC=CCC.k. ",
            (const char *)" CC=CCC... ",
@@ -7081,7 +6733,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"^.....CC.k ",
            (const char *)" ....CCC.. ",
            (const char *)" ...CCCCCC ",
@@ -7095,9 +6746,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    CCCC   ",
            (const char *)" CCCCCCCCC ",
            (const char *)"^=========^",
@@ -7109,8 +6757,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   CCC     ",
            (const char *)"  CCCCCC   ",
            (const char *)" CCC...CCC ",
@@ -7123,7 +6769,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"    .T.    ",
            (const char *)"   C...C   ",
            (const char *)"  CCk..CC  ",
@@ -7133,12 +6778,9 @@ void rooms_init(Gamep g)
            (const char *)"  CCCCCCC  ",
            (const char *)"      ..   ",
            (const char *)"      .$   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" CCCCCC... ",
            (const char *)" CCCCCC.k. ",
            (const char *)" CCCCCCCCC ",
@@ -7146,12 +6788,9 @@ void rooms_init(Gamep g)
            (const char *)" CCCCCCCCC ",
            (const char *)" CCCCCCCCC ",
            (const char *)" CCCCCCCCC ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"         ^ ",
            (const char *)"^...CCCC.. ",
            (const char *)" ...====.. ",
@@ -7160,12 +6799,9 @@ void rooms_init(Gamep g)
            (const char *)" ......CC.^",
            (const char *)" ......C.g ",
            (const char *)"  ....C.k$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ..=C...g ",
            (const char *)" ...=C.... ",
            (const char *)" ...=Ck... ",
@@ -7174,12 +6810,9 @@ void rooms_init(Gamep g)
            (const char *)" L..m.L... ",
            (const char *)" LL...L..L ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  T....... ",
            (const char *)"^......... ",
            (const char *)" ...CCC... ",
@@ -7189,11 +6822,9 @@ void rooms_init(Gamep g)
            (const char *)" g........^",
            (const char *)" .       . ",
            (const char *)" .CC$CC... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ..C....C. ",
            (const char *)" ..Ck..CC. ",
            (const char *)" ..CCCCC.. ",
@@ -7231,11 +6862,9 @@ void rooms_init(Gamep g)
            (const char *)"  ....L..$ ",
            (const char *)"     .     ",
            (const char *)"     .     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .......g ",
            (const char *)" ......... ",
            (const char *)" |....k... ",
@@ -7244,8 +6873,6 @@ void rooms_init(Gamep g)
            (const char *)" ...m.CCC. ",
            (const char *)" B........ ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7259,7 +6886,6 @@ void rooms_init(Gamep g)
            (const char *)" g........ ",
            (const char *)" .       . ",
            (const char *)" .CC$CC... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7300,12 +6926,9 @@ void rooms_init(Gamep g)
            (const char *)" ......C.. ",
            (const char *)" B.......$ ",
            (const char *)"   ^       ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   LLL...g ",
            (const char *)"   LL..... ",
            (const char *)"   LL.LLLL ",
@@ -7314,12 +6937,9 @@ void rooms_init(Gamep g)
            (const char *)"   ....... ",
            (const char *)"   ...B.B  ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ......B  ",
            (const char *)" .........^",
            (const char *)" ...CCC... ",
@@ -7357,7 +6977,6 @@ void rooms_init(Gamep g)
            (const char *)" .T....... ",
            (const char *)" ........$ ",
            (const char *)"      ^    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7375,7 +6994,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   B...LLL ",
            (const char *)"   .....LL ",
            (const char *)"   ......L ",
@@ -7389,7 +7007,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)" CCCCCCB..^",
            (const char *)" ......... ",
@@ -7399,11 +7016,9 @@ void rooms_init(Gamep g)
            (const char *)"  ........ ",
            (const char *)"  ..BCCCCC ",
            (const char *)" ^......gk ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ...CkC... ",
            (const char *)" .|CCCCCC. ",
            (const char *)" .CCCCCCg. ",
@@ -7412,8 +7027,6 @@ void rooms_init(Gamep g)
            (const char *)" .gCCCCCC. ",
            (const char *)" .CCCCCC|. ",
            (const char *)" .....CC.. ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7426,8 +7039,6 @@ void rooms_init(Gamep g)
            (const char *)" .....C... ",
            (const char *)" B......$. ",
            (const char *)" .B.......^",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7441,11 +7052,9 @@ void rooms_init(Gamep g)
            (const char *)" CCC..CCC  ",
            (const char *)" f.B......^",
            (const char *)" ..B...... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   .....LL ",
            (const char *)"   ......L ",
            (const char *)"   ....... ",
@@ -7459,7 +7068,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)" LLLLLLL.. ",
            (const char *)" ......... ",
@@ -7469,7 +7077,6 @@ void rooms_init(Gamep g)
            (const char *)"  ........ ",
            (const char *)"  ..LLLLLL ",
            (const char *)"  ......gk ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7483,7 +7090,6 @@ void rooms_init(Gamep g)
            (const char *)" ..LL.LL.. ",
            (const char *)" ......... ",
            (const char *)"    ^      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7496,8 +7102,6 @@ void rooms_init(Gamep g)
            (const char *)" .....L... ",
            (const char *)"  ........ ",
            (const char *)"   ......$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7511,7 +7115,6 @@ void rooms_init(Gamep g)
            (const char *)" .LL....L  ",
            (const char *)" ..L...... ",
            (const char *)" L........^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7529,7 +7132,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)" LLLLLLL.. ",
            (const char *)" ..L...... ",
@@ -7543,7 +7145,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ...LkL... ",
            (const char *)" ..LLgLL.. ",
            (const char *)" .LL...LL. ",
@@ -7553,7 +7154,6 @@ void rooms_init(Gamep g)
            (const char *)" ..LLgLL.. ",
            (const char *)" ......... ",
            (const char *)"  ^        ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7567,7 +7167,6 @@ void rooms_init(Gamep g)
            (const char *)"  ........ ",
            (const char *)"   ......$ ",
            (const char *)"      ^    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7599,7 +7198,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)" CCCCCCC.. ",
            (const char *)" ..CC..... ",
@@ -7613,7 +7211,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ...CkC... ",
            (const char *)" ..CCgCC.. ",
            (const char *)" .CC...CC. ",
@@ -7623,7 +7220,6 @@ void rooms_init(Gamep g)
            (const char *)" ..CCgCC.. ",
            (const char *)" ...C.C... ",
            (const char *)"  ^        ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7637,7 +7233,6 @@ void rooms_init(Gamep g)
            (const char *)"  ...C.... ",
            (const char *)"   .C....$ ",
            (const char *)"      ^    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7655,7 +7250,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ....... ",
            (const char *)"   ....... ",
            (const char *)"   ....... ",
@@ -7669,7 +7263,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ....C..  ",
            (const char *)" .....C... ",
            (const char *)" .....CC.. ",
@@ -7679,11 +7272,9 @@ void rooms_init(Gamep g)
            (const char *)"  ......C. ",
            (const char *)"  ........ ",
            (const char *)"  ......gk ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" CC..k.... ",
            (const char *)" C...g.... ",
            (const char *)" ......... ",
@@ -7693,7 +7284,6 @@ void rooms_init(Gamep g)
            (const char *)" ........  ",
            (const char *)" .......   ",
            (const char *)"  ^        ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7707,11 +7297,9 @@ void rooms_init(Gamep g)
            (const char *)"  ........ ",
            (const char *)"   ......$ ",
            (const char *)"       ^   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ........ ",
            (const char *)" .......k. ",
            (const char *)" ......... ",
@@ -7721,11 +7309,9 @@ void rooms_init(Gamep g)
            (const char *)" ........  ",
            (const char *)" ......... ",
            (const char *)" .........^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ....... ",
            (const char *)"   ..CCCCC ",
            (const char *)"   ..Cg..C ",
@@ -7749,7 +7335,6 @@ void rooms_init(Gamep g)
            (const char *)"  ........ ",
            (const char *)"  .......g ",
            (const char *)"  ......gk ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7762,8 +7347,6 @@ void rooms_init(Gamep g)
            (const char *)" ....CC... ",
            (const char *)" .....CC.. ",
            (const char *)" .........^",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7776,8 +7359,6 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)"  ........^",
            (const char *)"   ......$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -7791,7 +7372,6 @@ void rooms_init(Gamep g)
            (const char *)" ..... ..  ",
            (const char *)" ..... ... ",
            (const char *)" ......... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -8271,10 +7851,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" ..        ",
            (const char *)"  ....     ",
@@ -8299,10 +7875,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)"  .   ...$ ",
            (const char *)"  ... .... ",
@@ -8313,10 +7885,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"^...   .   ",
            (const char *)" .L.   .   ",
@@ -8327,10 +7895,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    ^      ",
            (const char *)"    .      ",
            (const char *)"^......    ",
@@ -8341,10 +7905,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" ..        ",
            (const char *)"  ....     ",
@@ -8355,11 +7915,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"^..        ",
            (const char *)"  .....    ",
            (const char *)"  C....    ",
@@ -8369,10 +7924,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)"  .        ",
            (const char *)"  ...      ",
@@ -8383,10 +7934,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"^...   .   ",
            (const char *)" .C.   .   ",
@@ -8397,10 +7944,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    ^      ",
            (const char *)"    .      ",
            (const char *)"^......    ",
@@ -8411,10 +7954,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" ..        ",
            (const char *)"  ....     ",
@@ -8504,8 +8043,6 @@ void rooms_init(Gamep g)
            (const char *)"    C...C  ",
            (const char *)"     C...C ",
            (const char *)"         ^ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -8518,13 +8055,9 @@ void rooms_init(Gamep g)
            (const char *)"  C...C    ",
            (const char *)"   C...C   ",
            (const char *)"      ^    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)" ..   C.C  ",
            (const char *)"  ..  C.C  ",
@@ -8532,13 +8065,9 @@ void rooms_init(Gamep g)
            (const char *)" ..m..     ",
            (const char *)" ....^     ",
            (const char *)" ^         ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    ^      ",
            (const char *)"    ..     ",
            (const char *)"^......    ",
@@ -8546,13 +8075,9 @@ void rooms_init(Gamep g)
            (const char *)"   ..CC..  ",
            (const char *)"   ......^ ",
            (const char *)"     ^     ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" ....^     ",
            (const char *)"    .      ",
@@ -8560,8 +8085,6 @@ void rooms_init(Gamep g)
            (const char *)"    .      ",
            (const char *)"    .      ",
            (const char *)"    ^      ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -8873,7 +8396,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ...C....  ",
            (const char *)" ...CC.m.. ",
            (const char *)" ....C.... ",
@@ -8882,8 +8404,6 @@ void rooms_init(Gamep g)
            (const char *)"  ...CC... ",
            (const char *)"   ...CC.. ",
            (const char *)"      C    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -8911,11 +8431,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)"      ..   ",
            (const char *)"       ^   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ....w.w. ",
            (const char *)" ...wwwwww ",
            (const char *)" ....wwwww ",
@@ -8924,8 +8442,6 @@ void rooms_init(Gamep g)
            (const char *)" ..mwww..B ",
            (const char *)"  ........ ",
            (const char *)"  .f   ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -8943,7 +8459,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" f.ww....  ",
            (const char *)" ...ww.m.. ",
            (const char *)" ..ww ww.. ",
@@ -8951,13 +8466,9 @@ void rooms_init(Gamep g)
            (const char *)" ...w w... ",
            (const char *)" ...www... ",
            (const char *)" B....ww.. ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ... ..... ",
            (const char *)" ...  ..f. ",
            (const char *)" .... .... ",
@@ -8965,9 +8476,6 @@ void rooms_init(Gamep g)
            (const char *)" ....L.... ",
            (const char *)" LLLLLL... ",
            (const char *)" ..... ..$ ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -8979,13 +8487,9 @@ void rooms_init(Gamep g)
            (const char *)"^......... ",
            (const char *)" LLL.LL...^",
            (const char *)" $.....L.. ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ....     ",
            (const char *)" ......    ",
            (const char *)" ......    ",
@@ -9009,7 +8513,6 @@ void rooms_init(Gamep g)
            (const char *)" ....C.... ",
            (const char *)"   CCCC .. ",
            (const char *)"        f. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9023,7 +8526,6 @@ void rooms_init(Gamep g)
            (const char *)" B...CC... ",
            (const char *)"   CCCCC   ",
            (const char *)"  CCC      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9037,7 +8539,6 @@ void rooms_init(Gamep g)
            (const char *)" WWWWwww.. ",
            (const char *)"  WWWW     ",
            (const char *)"   WWWW    ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9050,13 +8551,9 @@ void rooms_init(Gamep g)
            (const char *)"  ..wwWw.. ",
            (const char *)"   ...wwww ",
            (const char *)"     wwww  ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ....L.L. ",
            (const char *)" ...LLLLLL ",
            (const char *)" ....LLLLL ",
@@ -9065,11 +8562,9 @@ void rooms_init(Gamep g)
            (const char *)" ...LLL... ",
            (const char *)"  f....... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" LL......  ",
            (const char *)" LLL....f. ",
@@ -9078,12 +8573,9 @@ void rooms_init(Gamep g)
            (const char *)" ....LLL.. ",
            (const char *)" ...LLL...^",
            (const char *)" ..LL..... ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ..LL....  ",
            (const char *)" ...LL.m.. ",
@@ -9092,12 +8584,9 @@ void rooms_init(Gamep g)
            (const char *)" ....L.... ",
            (const char *)" ...LLL... ",
            (const char *)"  ....LL..^",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ...L..... ",
            (const char *)" ...LL.... ",
@@ -9106,12 +8595,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)" LLLL.....^",
            (const char *)" .....L..$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)" ...L..... ",
            (const char *)" ...LL.... ",
@@ -9125,7 +8611,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)"  ...   .  ",
            (const char *)"  .m.  f.  ",
@@ -9134,12 +8619,9 @@ void rooms_init(Gamep g)
            (const char *)"  .....b.. ",
            (const char *)"  B....... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ...f    ",
            (const char *)"   ..b.    ",
            (const char *)"   B......^",
@@ -9149,11 +8631,9 @@ void rooms_init(Gamep g)
            (const char *)" . $...... ",
            (const char *)" .       m ",
            (const char *)"^......... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"      L    ",
            (const char *)"    LLLL   ",
            (const char *)" .LLLLLLL. ",
@@ -9161,13 +8641,9 @@ void rooms_init(Gamep g)
            (const char *)" .LLLLLLL. ",
            (const char *)"   LLLL    ",
            (const char *)"     L     ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ....L  $. ",
            (const char *)" ...LL  .. ",
            (const char *)" ...LL  .. ",
@@ -9177,7 +8653,6 @@ void rooms_init(Gamep g)
            (const char *)" LL      . ",
            (const char *)"   ff..... ",
            (const char *)"   ff      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9195,7 +8670,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ...      ",
            (const char *)"  .m.      ",
            (const char *)"  ...      ",
@@ -9205,11 +8679,9 @@ void rooms_init(Gamep g)
            (const char *)" $..s .... ",
            (const char *)" ....  ^   ",
            (const char *)" m...      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ....LLL ",
            (const char *)"   .b..LLL ",
            (const char *)"   ....... ",
@@ -9223,9 +8695,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" .LLLLLLL. ",
            (const char *)"^.........^",
            (const char *)" .LLL.LLL. ",
@@ -9265,7 +8734,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ...LLLL. ",
            (const char *)"  ...L.. L ",
            (const char *)"  ...LL..L ",
@@ -9279,7 +8747,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ..LLLLL ",
            (const char *)" fC....LLL ",
            (const char *)"   ..L...L ",
@@ -9293,7 +8760,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   LL      ",
            (const char *)"   LLLL    ",
            (const char *)" .LLLLLLL. ",
@@ -9335,8 +8801,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ....C.C. ",
            (const char *)" ...CCCCCC ",
            (const char *)" ....CCCCC ",
@@ -9345,11 +8809,9 @@ void rooms_init(Gamep g)
            (const char *)" ...CCC... ",
            (const char *)"  f.CCC... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" CC......  ",
            (const char *)" CCC....f. ",
@@ -9358,12 +8820,9 @@ void rooms_init(Gamep g)
            (const char *)" ....CCC.. ",
            (const char *)" ...CCC...^",
            (const char *)" ..CC..... ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ..CC....  ",
            (const char *)" ...CC.m.. ",
@@ -9372,12 +8831,9 @@ void rooms_init(Gamep g)
            (const char *)" ....C.... ",
            (const char *)" ...CCC... ",
            (const char *)"  ....CC..^",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ...C..... ",
            (const char *)" ...CC.... ",
@@ -9386,12 +8842,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)" CCCC.....^",
            (const char *)" .....C..$ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)" ...C..... ",
            (const char *)" ...CC.... ",
@@ -9405,7 +8858,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .......  ",
            (const char *)"  ...   .  ",
            (const char *)"  .m.  f.  ",
@@ -9414,12 +8866,9 @@ void rooms_init(Gamep g)
            (const char *)"  .....b.. ",
            (const char *)"  B....... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ...f    ",
            (const char *)"   ..b.    ",
            (const char *)"   B......^",
@@ -9429,7 +8878,6 @@ void rooms_init(Gamep g)
            (const char *)" . $...... ",
            (const char *)" .       m ",
            (const char *)"^......... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9447,7 +8895,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ....C  $. ",
            (const char *)" ...CC  .. ",
            (const char *)" ...CC  .. ",
@@ -9457,7 +8904,6 @@ void rooms_init(Gamep g)
            (const char *)" CC      . ",
            (const char *)"   ff..... ",
            (const char *)"   ff      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9475,7 +8921,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ...      ",
            (const char *)"  .m.      ",
            (const char *)"  ...      ",
@@ -9485,11 +8930,9 @@ void rooms_init(Gamep g)
            (const char *)" $..s .... ",
            (const char *)" ....  ^   ",
            (const char *)" m...      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ....CCC ",
            (const char *)"   .b..CCC ",
            (const char *)"   ....... ",
@@ -9503,9 +8946,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" .CCCCCCC. ",
            (const char *)"^.........^",
            (const char *)" .CCC.CCC. ",
@@ -9545,7 +8985,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ...CCCC. ",
            (const char *)"  ...C.. C ",
            (const char *)"  ...CC..C ",
@@ -9559,7 +8998,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ..CCCCC ",
            (const char *)" fC....CCC ",
            (const char *)"   ..C...C ",
@@ -9573,7 +9011,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   CC      ",
            (const char *)"   CCCC    ",
            (const char *)" .CCCCCCC. ",
@@ -9615,9 +9052,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ....w.w. ",
            (const char *)" f..wwwwww ",
            (const char *)" ....wwwww ",
@@ -9629,8 +9063,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ww......B ",
            (const char *)" www...... ",
@@ -9639,13 +9071,9 @@ void rooms_init(Gamep g)
            (const char *)" ...mwww.. ",
            (const char *)" ...www...^",
            (const char *)" ..ww...f. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ..ww....  ",
            (const char *)" f..ww.m.. ",
            (const char *)" ....w.... ",
@@ -9653,13 +9081,9 @@ void rooms_init(Gamep g)
            (const char *)" ....w.... ",
            (const char *)" ...www...^",
            (const char *)" B....ww.. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ...C.....^",
            (const char *)" ...CC..f. ",
            (const char *)" ....C.... ",
@@ -9667,12 +9091,9 @@ void rooms_init(Gamep g)
            (const char *)" ....C.... ",
            (const char *)" CCCCCC... ",
            (const char *)" .....C..$ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)" ...C....f ",
            (const char *)" ...CC.... ",
@@ -9681,40 +9102,27 @@ void rooms_init(Gamep g)
            (const char *)"^......... ",
            (const char *)" CCC.CC... ",
            (const char *)" $.....C.. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ....w.w. ",
            (const char *)" f..wwwwww ",
            (const char *)" ....w.... ",
            (const char *)" ..mwww..B ",
            (const char *)"  ........^",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ww......B ",
            (const char *)" www...... ",
            (const char *)" ...mwww.. ",
            (const char *)" ...www...^",
            (const char *)" ..ww...f. ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" ..ww....  ",
            (const char *)" f..ww.m.. ",
@@ -9722,27 +9130,18 @@ void rooms_init(Gamep g)
            (const char *)" ...www... ",
            (const char *)" B....ww.. ",
            (const char *)"         ^ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ...C.....^",
            (const char *)" ...CC..f. ",
            (const char *)" ....C.... ",
            (const char *)" CCCCCC... ",
            (const char *)"^.....C..$ ",
            (const char *)" ^         ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)" ...C....f ",
            (const char *)" ...CC.... ",
@@ -9750,14 +9149,9 @@ void rooms_init(Gamep g)
            (const char *)" CCC.CC... ",
            (const char *)" $.....C.. ",
            (const char *)"         ^ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ....C.C. ",
            (const char *)" ...CCCCCC ",
            (const char *)" ....CCCCC ",
@@ -9769,9 +9163,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" CC....... ",
            (const char *)" CCC...f.. ",
            (const char *)" .C.C..... ",
@@ -9779,12 +9170,9 @@ void rooms_init(Gamep g)
            (const char *)" ....CCC.. ",
            (const char *)" ...CCC... ",
            (const char *)"^..CC..... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" ..CC....f ",
            (const char *)" ...CC.m..^",
@@ -9797,9 +9185,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ...C..... ",
            (const char *)"^...CC..f. ",
            (const char *)" ....C.... ",
@@ -9811,8 +9196,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"      ^    ",
            (const char *)" ...C...f. ",
            (const char *)" ...CC.... ",
@@ -9821,11 +9204,9 @@ void rooms_init(Gamep g)
            (const char *)" ..CC.$C.. ",
            (const char *)"^...CCCCC. ",
            (const char *)"  ....C...^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ...      ",
            (const char *)"  ...      ",
            (const char *)"  .m.      ",
@@ -9834,12 +9215,9 @@ void rooms_init(Gamep g)
            (const char *)"  .....b.. ",
            (const char *)"  B.f.....^",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ....    ",
            (const char *)"   ..b.    ",
            (const char *)"   B.....f ",
@@ -9849,21 +9227,13 @@ void rooms_init(Gamep g)
            (const char *)" . $...... ",
            (const char *)" .       m ",
            (const char *)" ......... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" .CCCCCCC. ",
            (const char *)"^....m....^",
            (const char *)" .CCCCCCC. ",
            (const char *)"   CCCCC   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9876,8 +9246,6 @@ void rooms_init(Gamep g)
            (const char *)" CCCC..... ",
            (const char *)" CC        ",
            (const char *)"  C      f ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9895,7 +9263,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  f.. .... ",
            (const char *)"  .m.s.... ",
            (const char *)"  ... ...$ ",
@@ -9905,11 +9272,9 @@ void rooms_init(Gamep g)
            (const char *)" $..s .... ",
            (const char *)" ....  ^   ",
            (const char *)" m...      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   f...CCC ",
            (const char *)"   .b..CCC ",
            (const char *)"   ....... ",
@@ -9923,9 +9288,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" .CCCCCCC. ",
            (const char *)"^.........^",
            (const char *)" .CCC.CCC. ",
@@ -9965,7 +9327,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ...CCCCC ",
            (const char *)"  ...C...C ",
            (const char *)"  ...C...C ",
@@ -9979,7 +9340,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ....CCC ",
            (const char *)" fC....CCC ",
            (const char *)"   ....... ",
@@ -9993,9 +9353,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" .CCCCCCC. ",
            (const char *)"^.........^",
            (const char *)" .CCCCCCC. ",
@@ -10035,9 +9392,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ....w.w. ",
            (const char *)" ...wwwwww ",
            (const char *)" ....wwwww ",
@@ -10049,8 +9403,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ww......B ",
            (const char *)" www...... ",
@@ -10059,12 +9411,9 @@ void rooms_init(Gamep g)
            (const char *)" ...mwww.. ",
            (const char *)" ...www... ",
            (const char *)" ..ww..... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)" ..ww....  ",
            (const char *)" ...ww.m..^",
@@ -10073,12 +9422,9 @@ void rooms_init(Gamep g)
            (const char *)" ....w.... ",
            (const char *)" ...www... ",
            (const char *)" B....ww.. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)"  . .....  ",
            (const char *)" .........^",
@@ -10091,8 +9437,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"   ....... ",
            (const char *)"   ....... ",
@@ -10105,121 +9449,68 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"...wwwwwww ",
            (const char *)".....ww..B ",
            (const char *)".......... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ww......B.",
            (const char *)" Wwwwww....",
            (const char *)" wwww......",
            (const char *)" ^         ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"^..wwww....",
            (const char *)" ...wwwww..",
            (const char *)" B.wwwwwww.",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)"  ..wwww...",
            (const char *)"^...www.m..",
            (const char *)"  .wwww..$.",
            (const char *)"  ^        ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"   ..www.. ",
            (const char *)" m..www...^",
            (const char *)" $.www...$ ",
            (const char *)"    ^      ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"$..LLLLLLL ",
            (const char *)"..LL.LL... ",
            (const char *)".LLL...... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" LL........",
            (const char *)" .LLLLL....",
            (const char *)" .LLL......",
            (const char *)" ^         ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"^..LLLL....",
            (const char *)" ...LLLLL..",
            (const char *)" ..LLLLLLL.",
            (const char *)"  s       s",
            (const char *)"  .........",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)"  ..LLLL...",
            (const char *)"^...LLL.m..",
@@ -10227,26 +9518,17 @@ void rooms_init(Gamep g)
            (const char *)"  s    s. .",
            (const char *)"  ......  .",
            (const char *)"          ^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"   ..LLL.. ",
            (const char *)" m..L.L...^",
            (const char *)" $.LLLL..$ ",
            (const char *)"    ^      ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"  wwwwwwww ",
            (const char *)" wwwwwwwww^",
@@ -10259,8 +9541,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"   wwwwwww ",
            (const char *)"  w`wwww w ",
@@ -10269,12 +9549,9 @@ void rooms_init(Gamep g)
            (const char *)" wwwwwwwww ",
            (const char *)" wwWWWWww  ",
            (const char *)" wwwwwww   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)" wwwwwwww  ",
            (const char *)" wwwwwwmww ",
@@ -10283,12 +9560,9 @@ void rooms_init(Gamep g)
            (const char *)" w    `www ",
            (const char *)" ww```wwww ",
            (const char *)"  wwwwwwww^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    ^      ",
            (const char *)" wwwwwww`` ",
            (const char *)" wwWWWwww` ",
@@ -10297,12 +9571,9 @@ void rooms_init(Gamep g)
            (const char *)" w     www ",
            (const char *)" w wmw www^",
            (const char *)" wsww$ ww$ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)" wwwwwwwww ",
            (const char *)" wwWww   w ",
@@ -10315,7 +9586,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ...      ",
            (const char *)"  ...      ",
            (const char *)"  .m.      ",
@@ -10324,12 +9594,9 @@ void rooms_init(Gamep g)
            (const char *)"  .....b..^",
            (const char *)"  B....... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   ....    ",
            (const char *)"   ..b.    ",
            (const char *)"   B...... ",
@@ -10339,21 +9606,13 @@ void rooms_init(Gamep g)
            (const char *)" . $...... ",
            (const char *)" .       m ",
            (const char *)" ......... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" $..... .. ",
            (const char *)" ....m. .. ",
            (const char *)"^......... ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -10364,10 +9623,6 @@ void rooms_init(Gamep g)
            (const char *)" .....   . ",
            (const char *)" .....   . ",
            (const char *)" ......... ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -10413,8 +9668,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ........L ",
            (const char *)" L......LL ",
@@ -10483,8 +9736,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" LL......L ",
            (const char *)" L.......L ",
@@ -10973,7 +10224,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   ..t..   ",
            (const char *)"  ..`....  ",
@@ -10987,7 +10237,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)"     ...   ",
            (const char *)"    .....  ",
@@ -10996,12 +10245,9 @@ void rooms_init(Gamep g)
            (const char *)" ..`C!C`.  ",
            (const char *)"  .`CCC.   ",
            (const char *)"   ````    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"    .t.    ",
            (const char *)"   ..C..   ",
@@ -11011,11 +10257,9 @@ void rooms_init(Gamep g)
            (const char *)"    `..    ",
            (const char *)"    |`|    ",
            (const char *)"     !     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   .....   ",
            (const char *)"  ...C...  ",
@@ -11029,7 +10273,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"     .     ",
            (const char *)"    ...    ",
@@ -11065,9 +10308,6 @@ void rooms_init(Gamep g)
            (const char *)" ...CC....^",
            (const char *)" ..$.C..   ",
            (const char *)" B.....    ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11107,9 +10347,6 @@ void rooms_init(Gamep g)
            (const char *)" .!. . ... ",
            (const char *)" ... C  .. ",
            (const char *)" B...CCD.$ ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11121,9 +10358,6 @@ void rooms_init(Gamep g)
            (const char *)" C.C.C.g.C ",
            (const char *)" ... .C.C. ",
            (const char *)" C.C.C. .C ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11141,7 +10375,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" g.....C.. ",
            (const char *)" .b...CCC. ",
            (const char *)" ......C.. ",
@@ -11151,7 +10384,6 @@ void rooms_init(Gamep g)
            (const char *)" .......g. ",
            (const char *)"  .......b ",
            (const char *)"   . . .   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11197,7 +10429,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  .C.....  ",
            (const char *)" C.C.|.|.. ",
            (const char *)" C.C...... ",
@@ -11207,7 +10438,6 @@ void rooms_init(Gamep g)
            (const char *)" C.C...... ",
            (const char *)" C.C. . .. ",
            (const char *)"  .C.....  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11253,8 +10483,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" C........ ",
            (const char *)" .C.CC.... ",
@@ -11267,8 +10495,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"         ^ ",
            (const char *)"  ....C... ",
            (const char *)"  ....C.!. ",
@@ -11277,12 +10503,9 @@ void rooms_init(Gamep g)
            (const char *)" ...CC.... ",
            (const char *)" ...C.  .. ",
            (const char *)" .g.C....  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" ...C....B ",
            (const char *)" ...CCCC.. ",
@@ -11291,12 +10514,9 @@ void rooms_init(Gamep g)
            (const char *)" . .C.m... ",
            (const char *)" ...CCC... ",
            (const char *)" B....C..m ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" ...C....G ",
            (const char *)" CCCCCC... ",
@@ -11305,12 +10525,9 @@ void rooms_init(Gamep g)
            (const char *)" ..CCt.... ",
            (const char *)" ...CCCCCC ",
            (const char *)" .m....... ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"         ^ ",
            (const char *)" G....C... ",
            (const char *)" ...CCC... ",
@@ -11319,12 +10536,9 @@ void rooms_init(Gamep g)
            (const char *)" ...C..... ",
            (const char *)" ...CCC... ",
            (const char *)" ...C.C..$ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)" ^         ",
            (const char *)" ....C..g$ ",
            (const char *)" ....Ct... ",
@@ -11337,8 +10551,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)"  .....    ",
            (const char *)"  ......   ",
@@ -11347,12 +10559,9 @@ void rooms_init(Gamep g)
            (const char *)" ....CC... ",
            (const char *)" CCCCCCt.. ",
            (const char *)" g....t..  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)"   ..C...B ",
            (const char *)"  ..CC.... ",
@@ -11361,12 +10570,9 @@ void rooms_init(Gamep g)
            (const char *)" .C...m... ",
            (const char *)" ...   ... ",
            (const char *)" B..   ..m ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)" ........G ",
            (const char *)" .b.... .. ",
@@ -11375,12 +10581,9 @@ void rooms_init(Gamep g)
            (const char *)" .....C... ",
            (const char *)" ...   ... ",
            (const char *)" ...   .m. ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)" G...  ... ",
            (const char *)" ..... . . ",
@@ -11389,7 +10592,6 @@ void rooms_init(Gamep g)
            (const char *)"     .C... ",
            (const char *)" .....C... ",
            (const char *)" ..m.....$ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11402,8 +10604,6 @@ void rooms_init(Gamep g)
            (const char *)"  .m....T. ",
            (const char *)"  B....... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11421,8 +10621,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)" B.......B ",
            (const char *)"^...m..... ",
@@ -11491,8 +10689,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"        ^  ",
            (const char *)" ...b..... ",
            (const char *)" ......m..^",
@@ -11501,7 +10697,6 @@ void rooms_init(Gamep g)
            (const char *)"     D     ",
            (const char *)"   .CCC.   ",
            (const char *)"   .m..$   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11543,7 +10738,6 @@ void rooms_init(Gamep g)
            (const char *)" $... .... ",
            (const char *)" ....  ^   ",
            (const char *)" G.$.      ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11561,8 +10755,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"       ^   ",
            (const char *)" ....B.... ",
            (const char *)"^.......b. ",
@@ -11571,7 +10763,6 @@ void rooms_init(Gamep g)
            (const char *)"     .     ",
            (const char *)"   .....   ",
            (const char *)"   ...m$   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11609,11 +10800,6 @@ void rooms_init(Gamep g)
            (const char *)"  .m.m.    ",
            (const char *)"  $.mm.    ",
            (const char *)"  .m.m$    ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11641,7 +10827,6 @@ void rooms_init(Gamep g)
            (const char *)"     D     ",
            (const char *)"   .CCC.   ",
            (const char *)"   $$$$$   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11711,7 +10896,6 @@ void rooms_init(Gamep g)
            (const char *)"     D     ",
            (const char *)"   .CCC.   ",
            (const char *)"   $$$$$   ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11813,8 +10997,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"      ^    ",
            (const char *)" B.......B ",
            (const char *)" ...CCC... ",
@@ -11827,8 +11009,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" .M....C.. ",
            (const char *)" ...CCC... ",
@@ -11837,12 +11017,9 @@ void rooms_init(Gamep g)
            (const char *)" ....GC... ",
            (const char *)" ...CCC... ",
            (const char *)" B........ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"   ^       ",
            (const char *)" .b.....B  ",
            (const char *)" ...CCC..  ",
@@ -11851,12 +11028,9 @@ void rooms_init(Gamep g)
            (const char *)" . ...C... ",
            (const char *)" ...CCC... ",
            (const char *)" B.......M ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)"   .....   ",
            (const char *)"  ..CCC.   ",
@@ -11865,12 +11039,9 @@ void rooms_init(Gamep g)
            (const char *)" ..CM$C... ",
            (const char *)" ..CCCC... ",
            (const char *)"  .......  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"     ^     ",
            (const char *)" G......B  ",
            (const char *)" ...CCC..  ",
@@ -11892,8 +11063,6 @@ void rooms_init(Gamep g)
            (const char *)" ..L..L... ",
            (const char *)" ..L...... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11919,9 +11088,6 @@ void rooms_init(Gamep g)
            (const char *)" .....L... ",
            (const char *)" ..M..L. . ",
            (const char *)"  ....t... ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11933,9 +11099,6 @@ void rooms_init(Gamep g)
            (const char *)" . ..LL... ",
            (const char *)" .. ..L... ",
            (const char *)"  ....L.G$ ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11948,12 +11111,9 @@ void rooms_init(Gamep g)
            (const char *)" .....LL..^",
            (const char *)" $..m.L..  ",
            (const char *)"        ^  ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" M........ ",
            (const char *)" ...LLLLLL ",
            (const char *)" ..LLL...f ",
@@ -11976,8 +11136,6 @@ void rooms_init(Gamep g)
            (const char *)" ...LLL... ",
            (const char *)" M......b. ",
            (const char *)"      ^    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -11989,9 +11147,6 @@ void rooms_init(Gamep g)
            (const char *)" ..LM.L... ",
            (const char *)" ..LLLL..  ",
            (const char *)" ..M....   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12018,8 +11173,6 @@ void rooms_init(Gamep g)
            (const char *)" LLLLLL.   ",
            (const char *)" ..L.L.... ",
            (const char *)"         ^ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12032,8 +11185,6 @@ void rooms_init(Gamep g)
            (const char *)" ..C..C... ",
            (const char *)" ..C...... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12059,9 +11210,6 @@ void rooms_init(Gamep g)
            (const char *)" .....C... ",
            (const char *)" ..M..C. . ",
            (const char *)"  ....t... ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12073,9 +11221,6 @@ void rooms_init(Gamep g)
            (const char *)" . ..CC... ",
            (const char *)" .. ..C... ",
            (const char *)"  ....C.G$ ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12088,12 +11233,9 @@ void rooms_init(Gamep g)
            (const char *)" .....CC..^",
            (const char *)" $..m.C..  ",
            (const char *)"        ^  ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" M........ ",
            (const char *)" ...CCCCCC ",
            (const char *)" ..CCC...f ",
@@ -12116,8 +11258,6 @@ void rooms_init(Gamep g)
            (const char *)" ...CCC... ",
            (const char *)" M......b. ",
            (const char *)"      ^    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12129,9 +11269,6 @@ void rooms_init(Gamep g)
            (const char *)" ..CM.C... ",
            (const char *)" ..CCCC..  ",
            (const char *)" ..M....   ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12158,12 +11295,9 @@ void rooms_init(Gamep g)
            (const char *)" CCCCCC.   ",
            (const char *)" ..C.C.... ",
            (const char *)"         ^ ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" B...www.. ",
            (const char *)" ...www... ",
            (const char *)" ...ww.M.. ",
@@ -12177,7 +11311,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" wwww....B ",
            (const char *)" ..wwww... ",
            (const char *)" ...w..... ",
@@ -12191,7 +11324,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" .www....B ",
            (const char *)" ...www.M. ",
            (const char *)" ...w..... ",
@@ -12213,9 +11345,6 @@ void rooms_init(Gamep g)
            (const char *)" ...wWw... ",
            (const char *)" M.wwww. . ",
            (const char *)" .ww...... ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12233,7 +11362,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"      .b.  ",
            (const char *)"      M$.^ ",
            (const char *)"      .b.  ",
@@ -12241,9 +11369,6 @@ void rooms_init(Gamep g)
            (const char *)"      b.b  ",
            (const char *)"      .$.  ",
            (const char *)"      b.b  ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12256,26 +11381,17 @@ void rooms_init(Gamep g)
            (const char *)"   ...b.   ",
            (const char *)"   .$...   ",
            (const char *)"   .b..    ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"  ^....    ",
            (const char *)"    ...... ",
            (const char *)"    .M..$. ",
            (const char *)"      ....^",
            (const char *)"         ^ ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"  ^        ",
            (const char *)"  .        ",
            (const char *)"  .        ",
@@ -12285,14 +11401,9 @@ void rooms_init(Gamep g)
            (const char *)"  .....    ",
            (const char *)"  .$...    ",
            (const char *)"  ........^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            (const char *)"    ^      ",
            (const char *)"    .      ",
            (const char *)"    M      ",
@@ -12303,7 +11414,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" $t......B ",
            (const char *)" t.LLL.... ",
            (const char *)" LLLLkL... ",
@@ -12312,12 +11422,9 @@ void rooms_init(Gamep g)
            (const char *)" ....L.... ",
            (const char *)" !$....... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" g........ ",
            (const char *)" ...LL..!. ",
            (const char *)" ..LkLL... ",
@@ -12325,13 +11432,9 @@ void rooms_init(Gamep g)
            (const char *)" LLL.L....^",
            (const char *)" ....LLL.. ",
            (const char *)" $...L.... ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" LL.....L  ",
            (const char *)" L..LL...L ",
            (const char *)" ..LLLL.!. ",
@@ -12341,11 +11444,9 @@ void rooms_init(Gamep g)
            (const char *)" ....L...$ ",
            (const char *)"  s  .     ",
            (const char *)" $!  .     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" L......L! ",
            (const char *)" ...LLL... ",
            (const char *)" LLLL!LLLL ",
@@ -12369,11 +11470,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)"  s      . ",
            (const char *)" !.   m..s ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" !.......B ",
            (const char *)" ..CCC.... ",
            (const char *)" CCCCCC... ",
@@ -12387,7 +11486,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" g.......! ",
            (const char *)" ...CC.... ",
            (const char *)" ..CCCC...^",
@@ -12401,7 +11499,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" CC....CCk ",
            (const char *)" C..CC..CC^",
            (const char *)" ..CCCC..C ",
@@ -12411,7 +11508,6 @@ void rooms_init(Gamep g)
            (const char *)" !...C.... ",
            (const char *)" s   .  s  ",
            (const char *)" $   .  .$ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12439,11 +11535,9 @@ void rooms_init(Gamep g)
            (const char *)" ......... ",
            (const char *)" ..      . ",
            (const char *)"^..      .^",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" k.......B ",
            (const char *)" ..www.... ",
            (const char *)" www!ww... ",
@@ -12457,7 +11551,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" g.....b.$ ",
            (const char *)" ...ww.... ",
            (const char *)" ..wwww... ",
@@ -12465,13 +11558,11 @@ void rooms_init(Gamep g)
            (const char *)" www.w....^",
            (const char *)" ....www.. ",
            (const char *)" $...w.... ",
-           (const char *)"           ",
            (const char *)" .m..C...T ",
            (const char *)" T...C.$.m ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" ww......  ",
            (const char *)" w..ww...w ",
            (const char *)" ..ww$w... ",
@@ -12481,11 +11572,9 @@ void rooms_init(Gamep g)
            (const char *)" k...w...$ ",
            (const char *)"     .     ",
            (const char *)" $..s.     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" w......w  ",
            (const char *)" ..wwwww.. ",
            (const char *)" wwww$wwww ",
@@ -12513,7 +11602,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" .... ..$  ",
            (const char *)" .b..D...  ",
            (const char *)" .... ..$  ",
@@ -12527,7 +11615,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)"   wwww..$ ",
            (const char *)"  ww!www.. ",
            (const char *)"   wwww... ",
@@ -12537,7 +11624,6 @@ void rooms_init(Gamep g)
            (const char *)"  m .wwwww ",
            (const char *)"  .      . ",
            (const char *)"  .      C ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12551,11 +11637,9 @@ void rooms_init(Gamep g)
            (const char *)" ....w...$ ",
            (const char *)"     .     ",
            (const char *)" $   .   $ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" w......w  ",
            (const char *)" ..wwwww.. ",
            (const char *)" wwww$wwww ",
@@ -12592,8 +11676,6 @@ void rooms_init(Gamep g)
            (const char *)" ... `.... ",
            (const char *)" $$. ..... ",
            (const char *)"       ^   ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12605,9 +11687,6 @@ void rooms_init(Gamep g)
            (const char *)" s         ",
            (const char *)" ....s``.. ",
            (const char *)" $... ...$ ",
-           (const char *)"           ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12621,7 +11700,6 @@ void rooms_init(Gamep g)
            (const char *)" k.. `...$ ",
            (const char *)"     .     ",
            (const char *)" $..s.     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12653,7 +11731,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" .... ..$  ",
            (const char *)" .b..s...  ",
            (const char *)" .... ..$  ",
@@ -12677,7 +11754,6 @@ void rooms_init(Gamep g)
            (const char *)"  m .````` ",
            (const char *)"  .      . ",
            (const char *)"  .s.C.C.C ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12691,7 +11767,6 @@ void rooms_init(Gamep g)
            (const char *)" ....`...$ ",
            (const char *)"     .     ",
            (const char *)" $..s.s..$ ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12723,7 +11798,6 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" .... m.m  ",
            (const char *)" ..m.D...  ",
            (const char *)" m... m.m  ",
@@ -12746,8 +11820,7 @@ void rooms_init(Gamep g)
            (const char *)"  $ m$$..! ",
            (const char *)"  m .m$..! ",
            (const char *)"  .      . ",
-           (const char *)"  .      C ",
-           (const char *)"           ",
+           (const char *)"  .......C ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12759,9 +11832,8 @@ void rooms_init(Gamep g)
            (const char *)" !.....m.. ",
            (const char *)" ..m...... ",
            (const char *)" g.......g ",
-           (const char *)"     C     ",
-           (const char *)" $   C   $ ",
-           (const char *)"           ",
+           (const char *)" s  CCC  s ",
+           (const char *)" $...C...$ ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12788,21 +11860,23 @@ void rooms_init(Gamep g)
            (const char *)"  . D    .^",
            (const char *)"  ........ ",
            (const char *)"  s   .    ",
-           (const char *)" .!   .    ",
+           (const char *)"  !   .    ",
            (const char *)"      ^    ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"           ",
            (const char *)" m... ...  ",
            (const char *)" ....s...  ",
            (const char *)" .!.. ...  ",
            (const char *)" .... .m.  ",
-           (const char *)" .... .... ",
+           (const char *)" 5... .... ",
            (const char *)"   D  |.|  ",
-           (const char *)" $..$  .   ",
+           (const char *)" 5..5  .   ",
            (const char *)" .... |.|  ",
            (const char *)" ....  .   ",
+           (const char *)" ....  .   ",
+           (const char *)" ....  .   ",
+           (const char *)" $..$  .   ",
            (const char *)"       ^   ",
            nullptr);
 
@@ -12816,12 +11890,16 @@ void rooms_init(Gamep g)
            (const char *)"  $ m$$$.! ",
            (const char *)"  m .m$$$! ",
            (const char *)"  .      . ",
-           (const char *)"  .  !   C ",
-           (const char *)"           ",
+           (const char *)"  .      . ",
+           (const char *)"  .      . ",
+           (const char *)"  .s.!...C ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
+           (const char *)"       ^   ",
+           (const char *)"    ....   ",
+           (const char *)"    .      ",
+           (const char *)"    ..     ",
            (const char *)"  .......  ",
            (const char *)" ... $..!. ",
            (const char *)" ...$$!... ",
@@ -12830,8 +11908,7 @@ void rooms_init(Gamep g)
            (const char *)" ..m...... ",
            (const char *)"  .....!.  ",
            (const char *)"     C     ",
-           (const char *)" $   C   ! ",
-           (const char *)"           ",
+           (const char *)" $..sCs..! ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12843,9 +11920,9 @@ void rooms_init(Gamep g)
            (const char *)" . ....... ",
            (const char *)" w ....www ",
            (const char *)" w M..www$ ",
-           (const char *)"   ....  D ",
-           (const char *)"   ...  .$ ",
-           (const char *)"   ....D$. ",
+           (const char *)" ww....  D ",
+           (const char *)"  ww..  .$ ",
+           (const char *)"   ww..D$. ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12854,11 +11931,11 @@ void rooms_init(Gamep g)
            (const char *)"  ........ ",
            (const char *)"  .    D . ",
            (const char *)"^.. $!$M . ",
-           (const char *)"  . .... . ",
+           (const char *)"  s .... . ",
            (const char *)"  . !... .^",
-           (const char *)"  . $..$ . ",
-           (const char *)"      D    ",
-           (const char *)"      .    ",
+           (const char *)"  . $..$ s ",
+           (const char *)"  .   D  . ",
+           (const char *)"  $..s.s.m ",
            (const char *)"      ^    ",
            nullptr);
 
@@ -12873,12 +11950,13 @@ void rooms_init(Gamep g)
            (const char *)" $...!     ",
            (const char *)" b....     ",
            (const char *)" .m..m     ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"   ^       ",
            (const char *)"   ....L.$ ",
+           (const char *)"         . ",
+           (const char *)"         . ",
            (const char *)"         . ",
            (const char *)" ....C...m ",
            (const char *)"     s     ",
@@ -12901,7 +11979,6 @@ void rooms_init(Gamep g)
            (const char *)"LL    LLLL ",
            (const char *)"  $$!  LLL ",
            (const char *)"  $!$   L  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12920,15 +11997,15 @@ void rooms_init(Gamep g)
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"   ^       ",
-           (const char *)"   .       ",
+           (const char *)"   s       ",
            (const char *)"  ........ ",
            (const char *)"  .    s . ",
            (const char *)"  . $!$m . ",
            (const char *)"  . g!m! . ",
            (const char *)"  . m$!m . ",
-           (const char *)"  . $mf$ . ",
-           (const char *)"  .      . ",
-           (const char *)"  .......m^",
+           (const char *)"  . $mf$ s^",
+           (const char *)"^s.        ",
+           (const char *)"  ...m...s ",
            (const char *)"         ^ ",
            nullptr);
 
@@ -12940,28 +12017,28 @@ void rooms_init(Gamep g)
            (const char *)"   s       ",
            (const char *)"  .L..LLL$ ",
            (const char *)" ..!..LLLm ",
-           (const char *)" ....      ",
-           (const char *)" b....     ",
+           (const char *)".....      ",
+           (const char *)".b....     ",
            (const char *)" .....CCC! ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"   ^       ",
            (const char *)" ......... ",
-           (const char *)" .CCCCCC.. ",
+           (const char *)" CCCCCCCCC ",
+           (const char *)" ccccccccc ",
            (const char *)" ........m ",
-           (const char *)"  LLLLL    ",
+           (const char *)"  ..s..    ",
            (const char *)"   LLL     ",
-           (const char *)"  LLL      ",
+           (const char *)"  L.L      ",
            (const char *)" LLL       ",
            (const char *)" .!.       ",
-           (const char *)"           ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"    ^      ",
+           (const char *)"    .      ",
+           (const char *)"    .      ",
            (const char *)" LL.C...!  ",
            (const char *)" !L..$..!  ",
            (const char *)" LLL$$!.m  ",
@@ -12971,7 +12048,6 @@ void rooms_init(Gamep g)
            (const char *)"      LLL  ",
            (const char *)"  $$!  LLL ",
            (const char *)"  $!$.s..  ",
-           (const char *)"           ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -12991,15 +12067,16 @@ void rooms_init(Gamep g)
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"   ^       ",
            (const char *)"   .       ",
-           (const char *)"  ........ ",
+           (const char *)"   .       ",
+           (const char *)"   .       ",
+           (const char *)"^......... ",
            (const char *)"  s      s ",
            (const char *)"  ..$!$m.. ",
            (const char *)" L..g!m!.. ",
            (const char *)" L..m$!m.. ",
            (const char *)" L..$mf$.. ",
            (const char *)" L.!...... ",
-           (const char *)" L......!.^",
-           (const char *)"  ^        ",
+           (const char *)" L......!. ",
            nullptr);
   /* clang-format on */
 }
