@@ -18,10 +18,9 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 100;
+static const int MAX_LEVELS                        = 1;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000;
 static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 500;
-static const int MAX_LEVEL_GEN_CORRIDOR_LEN        = 20;
 static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 6;
 static const int MAX_LEVEL_ROOM_COUNT              = 25;
 static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = MAX_LEVEL_ROOM_COUNT * 2;
@@ -1135,8 +1134,9 @@ static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
             walkable_tile += level_gen_tile_is_walkable(g, l, x, y + 1) ? 1 : 0;
 
             if (walkable_tile <= 1) {
-              l->data[ x ][ y ].c = CHARMAP_EMPTY;
-              did_something       = true;
+              l->data[ x ][ y ].c    = CHARMAP_EMPTY;
+              l->data[ x ][ y ].room = nullptr;
+              did_something          = true;
             }
             break;
           }
@@ -1154,8 +1154,9 @@ static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
             empty_tile += (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) ? 1 : 0;
 
             if (empty_tile >= 3) {
-              l->data[ x ][ y ].c = CHARMAP_EMPTY;
-              did_something       = true;
+              l->data[ x ][ y ].c    = CHARMAP_EMPTY;
+              l->data[ x ][ y ].room = nullptr;
+              did_something          = true;
             }
             break;
           }
@@ -1216,111 +1217,145 @@ static void level_gen_scan_connected_rooms(Gamep g, class LevelGen *l, bool debu
 
 //
 // Add corridors between rooms that are not connected
+// Shortest distance is 2, which is ". ."
 //
-static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l, bool debug)
+static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, class LevelGen *l, int dist,
+                                                                      int chance, bool debug)
 {
   TRACE_NO_INDENT();
 
   const std::initializer_list< point > directions = {point(-1, 0), point(1, 0), point(0, -1), point(0, 1)};
 
-  //
-  // Shortest distance is 2, which is ". ."
-  //
-  for (int dist = 2; dist < MAX_LEVEL_GEN_CORRIDOR_LEN; dist++) {
-    for (int y = dist; y < MAP_HEIGHT - dist - 1; y++) {
-      for (int x = dist; x < MAP_WIDTH - dist - 1; x++) {
-        switch (l->data[ x ][ y ].c) {
-          case CHARMAP_FLOOR :
-            {
+  for (int y = dist; y < MAP_HEIGHT - dist - 1; y++) {
+    for (int x = dist; x < MAP_WIDTH - dist - 1; x++) {
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_FLOOR :
+          {
+            //
+            // Decrease the chance of connecting leaf rooms so we don't get too many
+            //
+            if (d100() > chance - l->rooms_adj_connected * 5) {
+              continue;
+            }
+
+            for (auto direction : directions) {
               //
-              // Decrease the chance of connecting leaf rooms so we don't get too many
+              // Check there is nothing in the way
               //
-              if (d100() > 10 - l->rooms_adj_connected) {
+              bool has_clear_path = true;
+              for (auto d = 1; d < dist; d++) {
+                point adj(x + direction.x * d, y + direction.y * d);
+                if ((l->data[ adj.x ][ adj.y ].c != CHARMAP_EMPTY)) {
+                  has_clear_path = false;
+                  break;
+                }
+              }
+              if (! has_clear_path) {
                 continue;
               }
 
-              for (auto direction : directions) {
-                //
-                // Check there is nothing in the way
-                //
-                bool has_clear_path = true;
-                for (auto d = 1; d < dist; d++) {
-                  point adj(x + direction.x * d, y + direction.y * d);
-                  if ((l->data[ adj.x ][ adj.y ].c != CHARMAP_EMPTY)) {
-                    has_clear_path = false;
-                    break;
-                  }
-                }
-                if (! has_clear_path) {
-                  continue;
-                }
+              //
+              // Check there is a room at the end of the blank space
+              //
+              point dest(x + direction.x * dist, y + direction.y * dist);
+              if (l->data[ dest.x ][ dest.y ].c != CHARMAP_FLOOR) {
+                continue;
+              }
 
-                //
-                // Check there is a room at the end of the blank space
-                //
-                point dest(x + direction.x * dist, y + direction.y * dist);
-                if (l->data[ dest.x ][ dest.y ].c != CHARMAP_FLOOR) {
-                  continue;
-                }
+              auto room_a = l->data[ x ][ y ].room;
+              auto room_b = l->data[ dest.x ][ dest.y ].room;
 
-                auto room_a = l->data[ x ][ y ].room;
-                auto room_b = l->data[ dest.x ][ dest.y ].room;
+              //
+              // Check the two rooms at either end of the corridor are different.
+              //
+              if (room_a == room_b) {
+                continue;
+              }
 
-                //
-                // Check the two rooms at either end of the corridor are different.
-                //
-                if (room_a == room_b) {
-                  continue;
-                }
+              //
+              // Keep connections to the start room minimal
+              //
+              if (room_a->room_type == ROOM_TYPE_START) {
+                continue;
+              }
+              if (room_b->room_type == ROOM_TYPE_START) {
+                continue;
+              }
 
-                //
-                // Keep connections to the start room minimal
-                //
-                if (room_a->room_type != room_b->room_type) {
-                  continue;
-                }
-
-                std::pair< class Room *, class Room * > conn;
-                if (room_a && room_b) {
-                  if (room_a < room_b) {
-                    conn.first  = room_a;
-                    conn.second = room_b;
-                  } else {
-                    conn.first  = room_b;
-                    conn.second = room_a;
-                  }
-                }
-
-                //
-                // If the rooms are not connected, then join them via a corridor
-                //
-                if (l->rooms_connected.find(conn) == l->rooms_connected.end()) {
-                  l->rooms_adj_connected++;
-                  l->rooms_connected[ conn ] = true;
-                  for (auto d = 1; d < dist; d++) {
-                    point adj(x + direction.x * d, y + direction.y * d);
-
-                    if (dist >= MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
-                      l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
-                    } else {
-                      l->data[ adj.x ][ adj.y ].c = CHARMAP_CORRIDOR;
-                    }
-
-                    l->data[ adj.x ][ adj.y ].room = room_a;
-                  }
+              std::pair< class Room *, class Room * > conn;
+              if (room_a && room_b) {
+                if (room_a < room_b) {
+                  conn.first  = room_a;
+                  conn.second = room_b;
+                } else {
+                  conn.first  = room_b;
+                  conn.second = room_a;
                 }
               }
 
-              break;
+              //
+              // If the rooms are not connected, then join them via a corridor
+              //
+              if (l->rooms_connected.find(conn) == l->rooms_connected.end()) {
+                l->rooms_adj_connected++;
+                l->rooms_connected[ conn ] = true;
+                for (auto d = 1; d < dist; d++) {
+                  point adj(x + direction.x * d, y + direction.y * d);
+
+                  if (dist >= MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
+                    l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
+                  } else {
+                    l->data[ adj.x ][ adj.y ].c = CHARMAP_CORRIDOR;
+                  }
+
+                  l->data[ adj.x ][ adj.y ].room = room_a;
+                }
+              }
             }
-        }
+
+            break;
+          }
       }
     }
   }
 }
 
 //
-// Make bridges dramatic...
+// Add corridors between rooms that are not connected
+// Shortest distance is 2, which is ". ."
+//
+static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l, bool debug)
+{
+  TRACE_NO_INDENT();
+
+  const std::initializer_list< std::pair< int, int > > dists = {
+      std::pair(2 /* corridor length */, 100 /* percentage chance of occuring */),
+      std::pair(3 /* corridor length */, 100 /* percentage chance of occuring */),
+      std::pair(4 /* corridor length */, 100 /* percentage chance of occuring */),
+      std::pair(5 /* corridor length */, 90 /* percentage chance of occuring */),
+      std::pair(6 /* corridor length */, 90 /* percentage chance of occuring */),
+      std::pair(7 /* corridor length */, 90 /* percentage chance of occuring */),
+      std::pair(8 /* corridor length */, 50 /* percentage chance of occuring */),
+      std::pair(9 /* corridor length */, 50 /* percentage chance of occuring */),
+      std::pair(10 /* corridor length */, 50 /* percentage chance of occuring */),
+      std::pair(11 /* corridor length */, 50 /* percentage chance of occuring */),
+      std::pair(12 /* corridor length */, 10 /* percentage chance of occuring */),
+      std::pair(13 /* corridor length */, 10 /* percentage chance of occuring */),
+      std::pair(14 /* corridor length */, 10 /* percentage chance of occuring */),
+      std::pair(15 /* corridor length */, 10 /* percentage chance of occuring */),
+      std::pair(16 /* corridor length */, 5 /* percentage chance of occuring */),
+      std::pair(17 /* corridor length */, 5 /* percentage chance of occuring */),
+      std::pair(18 /* corridor length */, 5 /* percentage chance of occuring */),
+      std::pair(19 /* corridor length */, 5 /* percentage chance of occuring */),
+      std::pair(20 /* corridor length */, 5 /* percentage chance of occuring */),
+  };
+  for (auto d : dists) {
+    level_gen_connect_adjacent_rooms_with_distance_and_chance(g, l, d.first, d.second, debug);
+  }
+}
+
+//
+// Make bridges dramatic by adding chasms around them
 //
 static void level_gen_add_chasms_around_bridges(Gamep g, class LevelGen *l, bool debug)
 {
@@ -1364,10 +1399,24 @@ static class LevelGen *level_gen(Gamep g, int which)
     return l;
   }
 
+  //
+  // Get rid of tiles that go nowhere
+  //
   while (level_gen_trim_dead_tiles(g, l, debug)) {}
 
+  //
+  // Keep track of which room is connected to another via a door
+  //
   level_gen_scan_connected_rooms(g, l, debug);
+
+  //
+  // Add corridors between rooms that are not connected
+  //
   level_gen_connect_adjacent_rooms(g, l, debug);
+
+  //
+  // Make bridges dramatic by adding chasms around them
+  //
   level_gen_add_chasms_around_bridges(g, l, debug);
 
   return l;
@@ -1395,7 +1444,7 @@ static void level_gen_create_level(Gamep g, int which)
   // Per thread seed
   //
   auto seed = game_get_seed_num(g);
-  game_set_seed_for_thread(g, seed * which);
+  game_set_seed_for_thread(g, seed + seed * which);
 
   auto l          = level_gen(g, which);
   levels[ which ] = l;
