@@ -137,6 +137,12 @@ public:
   // Level tiles and room info
   //
   Cell data[ MAP_WIDTH ][ MAP_HEIGHT ];
+
+  //
+  // Used for celular automata
+  //
+  uint8_t map_new[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t map_old[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
 typedef enum {
@@ -1034,6 +1040,125 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   return true;
 }
 
+static void cave_generation(Gamep g, class LevelGen *l, int r1, int r2)
+{
+  uint8_t x, y;
+
+  if (0) {
+    printf("before:\n");
+    for (y = 2; y < MAP_HEIGHT; y++) {
+      for (x = 2; x < MAP_WIDTH; x++) {
+        if (l->map_new[ x ][ y ]) {
+          printf("x");
+        } else {
+          printf(" ");
+        }
+      }
+      printf("\n");
+    }
+    printf("\n");
+  }
+
+  for (x = 2; x < MAP_WIDTH; x++) {
+    for (y = 2; y < MAP_HEIGHT; y++) {
+
+      uint8_t adjcount = 0;
+
+#define ADJ(i, j) adjcount += l->map_new[ x + i ][ y + j ];
+
+      ADJ(-1, -1);
+      ADJ(-1, 0);
+      ADJ(-1, 1);
+
+      ADJ(0, -1);
+      ADJ(0, 0);
+      ADJ(0, 1);
+
+      ADJ(1, -1);
+      ADJ(1, 0);
+      ADJ(1, 1);
+
+      if (adjcount >= r1) {
+        continue;
+      }
+
+      ADJ(-2, -1);
+      ADJ(-2, 0);
+      ADJ(-2, 1);
+
+      ADJ(-1, -2);
+      ADJ(-1, 2);
+
+      ADJ(0, -2);
+      ADJ(0, 2);
+
+      ADJ(1, -2);
+      ADJ(1, 2);
+
+      ADJ(2, -1);
+      ADJ(2, 0);
+      ADJ(2, 1);
+
+      //
+      // Adjust for the grow threshold for rock or flow.
+      //
+      if (adjcount <= r2) {
+        //
+        // map_old set to 0 already.
+        //
+      } else {
+        l->map_old[ x ][ y ] = 1;
+      }
+    }
+  }
+
+  if (0) {
+    printf("after:\n");
+    for (y = 2; y < MAP_HEIGHT; y++) {
+      for (x = 2; x < MAP_WIDTH; x++) {
+        if (l->map_new[ x ][ y ]) {
+          printf("x");
+        } else {
+          printf(" ");
+        }
+      }
+      printf("\n");
+    }
+    printf("\n");
+  }
+}
+
+static void level_gen_add_water(Gamep g, class LevelGen *l, uint32_t fill_prob, int r1, int r2, int map_generations)
+{
+  uint8_t x, y, i;
+
+  memset(l->map_new, 0, sizeof(l->map_new));
+  for (x = 2; x < MAP_WIDTH - 2; x++) {
+    for (y = 2; y < MAP_HEIGHT - 2; y++) {
+      if (pcg_random_range(0, 10000) < fill_prob) {
+        l->map_new[ x ][ y ] = 1;
+      }
+    }
+  }
+
+  for (i = 0; i < map_generations; i++) {
+    cave_generation(g, l, r1, r2);
+    memcpy(l->map_new, l->map_old, sizeof(l->map_old));
+    memset(l->map_old, 0, sizeof(l->map_old));
+  }
+
+  for (x = 2; x < MAP_WIDTH - 2; x++) {
+    for (y = 2; y < MAP_HEIGHT - 2; y++) {
+      if (l->map_new[ x ][ y ]) {
+        if (l->data[ x ][ y ].c == CHARMAP_EMPTY) {
+          l->data[ x ][ y ].c    = CHARMAP_SHALLOW_WATER;
+          l->data[ x ][ y ].room = nullptr;
+        }
+      }
+    }
+  }
+}
+
 //
 // Create rooms from the current seed
 //
@@ -1448,6 +1573,11 @@ static class LevelGen *level_gen(Gamep g, int which)
   // Make bridges dramatic by adding chasms around them
   //
   level_gen_add_chasms_around_bridges(g, l, debug);
+
+  //
+  // Add water
+  //
+  level_gen_add_water(g, l, 1000, 9, 3, 3);
 
   return l;
 }
