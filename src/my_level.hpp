@@ -216,6 +216,7 @@ void level_tick(Gamep, Levelsp, Levelp);
 void rooms_test(Gamep);
 void rooms_init(Gamep);
 void rooms_fini(Gamep);
+void room_add(Gamep, const char *file, int line, ...);
 
 void level_gen_test(Gamep);
 void level_gen_stats_dump(Gamep);
