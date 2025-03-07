@@ -1074,6 +1074,41 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
 }
 
 //
+// Has to be a tile you could walk on
+//
+static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
+{
+  switch (l->data[ x ][ y ].c) {
+    case CHARMAP_BARREL : return true;
+    case CHARMAP_BRAZIER : return true;
+    case CHARMAP_BRIDGE : return true;
+    case CHARMAP_CORRIDOR : return true;
+    case CHARMAP_DEEP_WATER : return true;
+    case CHARMAP_DOOR : return true;
+    case CHARMAP_DRY_GRASS : return true;
+    case CHARMAP_EXIT : return true;
+    case CHARMAP_FLOOR : return true;
+    case CHARMAP_FOLIAGE : return true;
+    case CHARMAP_FOOD : return true;
+    case CHARMAP_JOIN : return true;
+    case CHARMAP_KEY : return true;
+    case CHARMAP_MOB1 : return true;
+    case CHARMAP_MOB2 : return true;
+    case CHARMAP_MONST1 : return true;
+    case CHARMAP_MONST2 : return true;
+    case CHARMAP_PILLAR : return true;
+    case CHARMAP_SECRET_DOOR : return true;
+    case CHARMAP_SHALLOW_WATER : return true;
+    case CHARMAP_START : return true;
+    case CHARMAP_TELEPORT : return true;
+    case CHARMAP_TRAP : return true;
+    case CHARMAP_TREASURE1 : return true;
+    case CHARMAP_TREASURE2 : return true;
+    default : return false;
+  }
+}
+
+//
 // Get rid of tiles that go nowhere
 //
 static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
@@ -1090,16 +1125,16 @@ static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
         case CHARMAP_JOIN :
           {
             //
-            // Check the door goes from and to somewhere. Diagonals don't count.
+            // Check the door/corridor goes from and to somewhere. Diagonals don't count.
             //
-            int neb_count = 0;
+            int walkable_tile = 0;
 
-            neb_count += (l->data[ x - 1 ][ y ].c != CHARMAP_EMPTY) ? 1 : 0;
-            neb_count += (l->data[ x + 1 ][ y ].c != CHARMAP_EMPTY) ? 1 : 0;
-            neb_count += (l->data[ x ][ y - 1 ].c != CHARMAP_EMPTY) ? 1 : 0;
-            neb_count += (l->data[ x ][ y + 1 ].c != CHARMAP_EMPTY) ? 1 : 0;
+            walkable_tile += level_gen_tile_is_walkable(g, l, x - 1, y) ? 1 : 0;
+            walkable_tile += level_gen_tile_is_walkable(g, l, x + 1, y) ? 1 : 0;
+            walkable_tile += level_gen_tile_is_walkable(g, l, x, y - 1) ? 1 : 0;
+            walkable_tile += level_gen_tile_is_walkable(g, l, x, y + 1) ? 1 : 0;
 
-            if (neb_count <= 1) {
+            if (walkable_tile <= 1) {
               l->data[ x ][ y ].c = CHARMAP_EMPTY;
               did_something       = true;
             }
@@ -1108,20 +1143,17 @@ static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
         case CHARMAP_FLOOR :
           {
             //
-            // Check the floor tile is not alone in the world.
-            //
-            int neb_count = 0;
-
-            neb_count += (l->data[ x - 1 ][ y ].c == CHARMAP_EMPTY) ? 1 : 0;
-            neb_count += (l->data[ x + 1 ][ y ].c == CHARMAP_EMPTY) ? 1 : 0;
-            neb_count += (l->data[ x ][ y - 1 ].c == CHARMAP_EMPTY) ? 1 : 0;
-            neb_count += (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) ? 1 : 0;
-
-            //
-            // Choose 3 not 4 to make the rooms have fewer single random tiles
+            // Choose 3 not 4 nebs to make the rooms have fewer single random tiles
             // on the edges. Makes it look more formed.
             //
-            if (neb_count >= 3) {
+            int empty_tile = 0;
+
+            empty_tile += (l->data[ x - 1 ][ y ].c == CHARMAP_EMPTY) ? 1 : 0;
+            empty_tile += (l->data[ x + 1 ][ y ].c == CHARMAP_EMPTY) ? 1 : 0;
+            empty_tile += (l->data[ x ][ y - 1 ].c == CHARMAP_EMPTY) ? 1 : 0;
+            empty_tile += (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) ? 1 : 0;
+
+            if (empty_tile >= 3) {
               l->data[ x ][ y ].c = CHARMAP_EMPTY;
               did_something       = true;
             }
@@ -5825,9 +5857,9 @@ void rooms_init(Gamep g)
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"  .$.m..$E ",
            (const char *)"      .    ",
-           (const char *)" CCCCCCCCC ",
-           (const char *)"^====!====^",
-           (const char *)" CCCCCCCCC ",
+           (const char *)" CCCCCCCC.B",
+           (const char *)"^====!===.$",
+           (const char *)" CCCCCCCC.B",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -6747,43 +6779,43 @@ void rooms_init(Gamep g)
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"    CCCC   ",
-           (const char *)" CCCCCCCCC ",
-           (const char *)"^=========^",
-           (const char *)" CCCCCCCCC ",
+           (const char *)" CCCCCCCCC.",
+           (const char *)"^=========m",
+           (const char *)" CCCCCCCCC.",
            (const char *)"  CCCC..CC ",
-           (const char *)"    CCk.CC ",
-           (const char *)"    CC..C  ",
-           (const char *)"     C..   ",
+           (const char *)"    CCk.CC.",
+           (const char *)"    CC..C..",
+           (const char *)"     C.....",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"   CCC     ",
            (const char *)"  CCCCCC   ",
            (const char *)" CCC...CCC ",
-           (const char *)"^===.k.CCC ",
-           (const char *)" CCC...===^",
-           (const char *)"  CCCC=CCC ",
-           (const char *)"   CCC=CC  ",
-           (const char *)"    CC=C   ",
-           (const char *)"     C=C   ",
+           (const char *)"^===.k.CCC.",
+           (const char *)" CCC...===.",
+           (const char *)"  CCCC=CCC.",
+           (const char *)"   CCC=CC .",
+           (const char *)"    CC=C ..",
+           (const char *)"     C....m",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"    .T.    ",
            (const char *)"   C...C   ",
            (const char *)"  CCk..CC  ",
-           (const char *)" CCCCCCCCC ",
-           (const char *)"^=========^",
-           (const char *)" CCCCCCCCC ",
-           (const char *)"  CCCCCCC  ",
-           (const char *)"      ..   ",
-           (const char *)"      .$   ",
+           (const char *)" CCCCCCCCC.",
+           (const char *)"^=========.",
+           (const char *)" CCCCCCCCC.",
+           (const char *)"  CCCCCCC .",
+           (const char *)"      ..CC.",
+           (const char *)"      .$CC.",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)" CCCCCC... ",
-           (const char *)" CCCCCC.k. ",
-           (const char *)" CCCCCCCCC ",
+           (const char *)" CCCCCC....",
+           (const char *)" CCCCCC.k..",
+           (const char *)" CCCCCCCCCC",
            (const char *)"^=========^",
            (const char *)" CCCCCCCCC ",
            (const char *)" CCCCCCCCC ",
@@ -7068,27 +7100,27 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)"  .......  ",
-           (const char *)" LLLLLLL.. ",
-           (const char *)" ......... ",
-           (const char *)" ..LLLLLLL ",
-           (const char *)"  ........ ",
-           (const char *)"   LLLLLL.^",
-           (const char *)"  ........ ",
-           (const char *)"  ..LLLLLL ",
+           (const char *)"  .......5 ",
+           (const char *)"5LLLLLLL..5",
+           (const char *)"5.........5",
+           (const char *)"5..LLLLLLL ",
+           (const char *)" 5........ ",
+           (const char *)"  5LLLLLL.^",
+           (const char *)"  5....... ",
+           (const char *)" ...LLLLLL ",
            (const char *)"  ......gk ",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)"  ^        ",
-           (const char *)" ...LkL... ",
+           (const char *)" 5..LkL..5 ",
            (const char *)" ..LLgLL.. ",
            (const char *)" .LLL.LLL. ",
            (const char *)" .LLL.LLL.^",
            (const char *)" .LLL.LLL. ",
            (const char *)" .LLL.LLL. ",
            (const char *)" ..LL.LL.. ",
-           (const char *)" ......... ",
+           (const char *)" 5.......5 ",
            (const char *)"    ^      ",
            nullptr);
 
@@ -9230,10 +9262,10 @@ void rooms_init(Gamep g)
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
-           (const char *)" .CCCCCCC. ",
-           (const char *)"^....m....^",
-           (const char *)" .CCCCCCC. ",
-           (const char *)"   CCCCC   ",
+           (const char *)"  CCCCCCC..",
+           (const char *)"^########..",
+           (const char *)"  CCCCCCC..",
+           (const char *)"   CC.$Cm..",
            nullptr);
 
   room_add(g, __FUNCTION__, __LINE__,
@@ -9354,7 +9386,7 @@ void rooms_init(Gamep g)
 
   room_add(g, __FUNCTION__, __LINE__,
            (const char *)" .CCCCCCC. ",
-           (const char *)"^.........^",
+           (const char *)"^#########^",
            (const char *)" .CCCCCCC. ",
            (const char *)"     C     ",
            (const char *)"     .     ",
