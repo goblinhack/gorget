@@ -18,13 +18,14 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 1;
+static const int MAX_LEVELS                        = 100;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000;
 static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 500;
 static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 6;
 static const int MAX_LEVEL_ROOM_COUNT              = 25;
 static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = MAX_LEVEL_ROOM_COUNT * 2;
 static const int MIN_LEVEL_ROOM_COUNT              = 10;
+static const int MIN_LEVEL_EXIT_DISTANCE           = (MAP_WIDTH / 4) * 2;
 
 class Cell;
 class Room;
@@ -38,6 +39,7 @@ static int level_place_first_room_fail;
 static int level_place_subsequent_room_fail;
 static int level_tried_to_place_existing_room_fail;
 static int level_find_door_fail_count;
+static int level_exit_is_too_close_to_start;
 static int level_not_enough_rooms;
 static int level_no_exit_room;
 
@@ -120,6 +122,16 @@ public:
   // Only one exit per level
   //
   bool has_placed_exit = {};
+
+  //
+  // Where the player start is
+  //
+  point start;
+
+  //
+  // Where the exit is
+  //
+  point exit;
 
   //
   // Level tiles and room info
@@ -672,6 +684,13 @@ static void room_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
       //
       point p(rx + at.x, ry + at.y);
 
+      if (room_c == CHARMAP_START) {
+        l->start = p;
+      }
+      if (room_c == CHARMAP_EXIT) {
+        l->exit = p;
+      }
+
       class Cell *cell = &l->data[ p.x ][ p.y ];
       cell->c          = room_c;
       cell->room       = r;
@@ -733,6 +752,7 @@ void level_gen_stats_dump(Gamep g)
   LOG("- place first room fail:           %d", level_place_first_room_fail);
   LOG("- place subsequent room fail:      %d", level_place_subsequent_room_fail);
   LOG("- find door to place room fail:    %d", level_find_door_fail_count);
+  LOG("- exit was too close to the start: %d", level_exit_is_too_close_to_start);
   LOG("- tried to place a duplicate room: %d", level_tried_to_place_existing_room_fail);
   LOG("- not enough rooms generated:      %d", level_not_enough_rooms);
   LOG("- no exit room generated:          %d", level_no_exit_room);
@@ -884,6 +904,16 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
   if (! level_gen_random_door_get(g, l, &door_other, &room_other)) {
     level_find_door_fail_count++;
     return false;
+  }
+
+  //
+  // Don't place the exit too close to the start point
+  //
+  if (room_type == ROOM_TYPE_EXIT) {
+    if (distance(door_other, l->start) < MIN_LEVEL_EXIT_DISTANCE) {
+      level_exit_is_too_close_to_start++;
+      return false;
+    }
   }
 
   //
