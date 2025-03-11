@@ -1606,7 +1606,7 @@ void rooms_init(Gamep g)
            (const char *)"    ^               ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "",
+  room_add(g, __FUNCTION__, __LINE__,
            (const char *)"             ^          ",
            (const char *)"      5555.......555555 ",
            (const char *)"     5555..........5555 ",
@@ -1628,7 +1628,7 @@ void rooms_init(Gamep g)
            (const char *)"    ^                   ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "",
+  room_add(g, __FUNCTION__, __LINE__,
            (const char *)"             ^          ",
            (const char *)"      5555.......555555 ",
            (const char *)"     5555.......C..5555 ",
@@ -1650,7 +1650,7 @@ void rooms_init(Gamep g)
            (const char *)"    ^                   ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "",
+  room_add(g, __FUNCTION__, __LINE__,
            (const char *)"              ^          ",
            (const char *)"       5555.......555555 ",
            (const char *)"      5555..........5555 ",
@@ -1676,7 +1676,7 @@ void rooms_init(Gamep g)
            (const char *)"     ^                   ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "",
+  room_add(g, __FUNCTION__, __LINE__,
            (const char *)"              ^          ",
            (const char *)"       5555.... $.555555 ",
            (const char *)"      5555..... ....5555 ",
@@ -1702,7 +1702,7 @@ void rooms_init(Gamep g)
            (const char *)"     ^                   ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "",
+  room_add(g, __FUNCTION__, __LINE__,
            (const char *)"                ^          ",
            (const char *)"      5555..........55555  ",
            (const char *)"     5555.............5555 ",
@@ -1728,7 +1728,7 @@ void rooms_init(Gamep g)
            (const char *)"    ^                      ",
            nullptr);
 
-  room_add(g, __FUNCTION__, __LINE__, "",
+  room_add(g, __FUNCTION__, __LINE__,
            (const char *)"                ^          ",
            (const char *)"      5555..........55555  ",
            (const char *)"     5555.............5555 ",

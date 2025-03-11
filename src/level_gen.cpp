@@ -27,6 +27,7 @@ static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = MAX_LEVEL_ROOM_COUNT * 2;
 static const int MIN_LEVEL_ROOM_COUNT              = 10;
 static const int MIN_LEVEL_EXIT_DISTANCE           = (MAP_WIDTH / 4) * 2;
 static const int MAP_LEVEL_BLOB_BORDER             = MAP_WIDTH / 4;
+static const int MAP_LEVEL_CELLULAR_BORDER         = 2;
 
 class Cell;
 class Room;
@@ -92,8 +93,8 @@ public:
   //
   // Used for cellular automata
   //
-  uint8_t curr[ MAP_WIDTH ][ MAP_HEIGHT ];
-  uint8_t prev[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t curr[ MAP_WIDTH + MAP_LEVEL_CELLULAR_BORDER ][ MAP_HEIGHT + MAP_LEVEL_CELLULAR_BORDER ];
+  uint8_t prev[ MAP_WIDTH + MAP_LEVEL_CELLULAR_BORDER ][ MAP_HEIGHT + MAP_LEVEL_CELLULAR_BORDER ];
 
   //
   // Keeps track of the largest blob so fat
@@ -1094,7 +1095,7 @@ static void cave_dump(Gamep g, class LevelGen *l)
   for (y = 0; y < MAP_HEIGHT; y++) {
     printf("|");
     for (x = 0; x < MAP_WIDTH; x++) {
-      if (l->cave.curr[ x ][ y ]) {
+      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
         printf("x");
       } else {
         printf(" ");
@@ -1124,10 +1125,11 @@ static void cave_generation(Gamep g, class LevelGen *l, uint32_t fill_prob, int 
   //
   if (! map_generations) {
     memset(l->cave.curr, 0, sizeof(l->cave.curr));
-    for (x = 2; x < MAP_WIDTH - 2; x++) {
-      for (y = 2; y < MAP_HEIGHT - 2; y++) {
+
+    for (x = 0; x < MAP_WIDTH; x++) {
+      for (y = 0; y < MAP_HEIGHT; y++) {
         if (pcg_random_range(0, 10000) < fill_prob) {
-          l->cave.curr[ x ][ y ] = 1;
+          l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] = 1;
         }
       }
     }
@@ -1138,12 +1140,12 @@ static void cave_generation(Gamep g, class LevelGen *l, uint32_t fill_prob, int 
     cave_dump(g, l);
   }
 
-  for (x = 2; x < MAP_WIDTH - 2; x++) {
-    for (y = 2; y < MAP_HEIGHT - 2; y++) {
+  for (x = 0; x < MAP_WIDTH; x++) {
+    for (y = 0; y < MAP_HEIGHT; y++) {
 
       uint8_t adjcount = 0;
 
-#define ADJ(i, j) adjcount += l->cave.curr[ x + i ][ y + j ];
+#define ADJ(i, j) adjcount += l->cave.curr[ x + i + MAP_LEVEL_CELLULAR_BORDER ][ y + j + MAP_LEVEL_CELLULAR_BORDER ];
 
       ADJ(-1, -1);
       ADJ(-1, 0);
@@ -1186,7 +1188,7 @@ static void cave_generation(Gamep g, class LevelGen *l, uint32_t fill_prob, int 
         // prev set to 0 already.
         //
       } else {
-        l->cave.prev[ x ][ y ] = 1;
+        l->cave.prev[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] = 1;
       }
     }
   }
@@ -1212,22 +1214,6 @@ static void cave_generations(Gamep g, class LevelGen *l, uint32_t fill_prob, int
 static int cave_generation_fill_blob_cand(Gamep g, class Cave *c, int x, int y, uint16_t size, uint16_t id)
 {
   //
-  // Out of bounds?
-  //
-  if (x < 2) {
-    return size;
-  }
-  if (y < 2) {
-    return size;
-  }
-  if (x > MAP_WIDTH - 2) {
-    return size;
-  }
-  if (x > MAP_HEIGHT - 2) {
-    return size;
-  }
-
-  //
   // Already walked?
   //
   if (c->blob.id[ x ][ y ]) {
@@ -1238,7 +1224,7 @@ static int cave_generation_fill_blob_cand(Gamep g, class Cave *c, int x, int y, 
   //
   // If nothing here, stop the recurse
   //
-  auto i = c->curr[ x ][ y ];
+  auto i = c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ];
   if (! i) {
     return size;
   }
@@ -1247,10 +1233,18 @@ static int cave_generation_fill_blob_cand(Gamep g, class Cave *c, int x, int y, 
   // Increase the blob size
   //
   size += i;
-  size = cave_generation_fill_blob_cand(g, c, x - 1, y, size, id);
-  size = cave_generation_fill_blob_cand(g, c, x + 1, y, size, id);
-  size = cave_generation_fill_blob_cand(g, c, x, y - 1, size, id);
-  size = cave_generation_fill_blob_cand(g, c, x, y + 1, size, id);
+  if (x > 0) {
+    size = cave_generation_fill_blob_cand(g, c, x - 1, y, size, id);
+  }
+  if (x < MAP_WIDTH - 1) {
+    size = cave_generation_fill_blob_cand(g, c, x + 1, y, size, id);
+  }
+  if (y > 0) {
+    size = cave_generation_fill_blob_cand(g, c, x, y - 1, size, id);
+  }
+  if (y < MAP_HEIGHT - 1) {
+    size = cave_generation_fill_blob_cand(g, c, x, y + 1, size, id);
+  }
 
   return size;
 }
@@ -1278,7 +1272,7 @@ static void cave_generation_keep_largest_blob(Gamep g, class Cave *c)
   //
   for (x = MAP_LEVEL_BLOB_BORDER; x < MAP_WIDTH - MAP_LEVEL_BLOB_BORDER; x++) {
     for (y = MAP_LEVEL_BLOB_BORDER; y < MAP_HEIGHT - MAP_LEVEL_BLOB_BORDER; y++) {
-      if (c->curr[ x ][ y ] && ! c->blob.id[ x ][ y ]) {
+      if (c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] && ! c->blob.id[ x ][ y ]) {
         //
         // Flood fill and get the size of this blob
         //
@@ -1302,10 +1296,10 @@ static void cave_generation_keep_largest_blob(Gamep g, class Cave *c)
   y                = c->blob.largest_at.y;
   uint16_t best_id = c->blob.id[ x ][ y ];
 
-  for (x = 2; x < MAP_WIDTH - 2; x++) {
-    for (y = 2; y < MAP_HEIGHT - 2; y++) {
+  for (x = 0; x < MAP_WIDTH; x++) {
+    for (y = 0; y < MAP_HEIGHT; y++) {
       if (c->blob.id[ x ][ y ] != best_id) {
-        c->curr[ x ][ y ] = 0;
+        c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] = 0;
       }
     }
   }
@@ -1329,9 +1323,9 @@ static void level_gen_water(Gamep g, class LevelGen *l)
   //
   cave_generation_keep_largest_blob(g, &l->cave);
 
-  for (x = 2; x < MAP_WIDTH - 2; x++) {
-    for (y = 2; y < MAP_HEIGHT - 2; y++) {
-      if (l->cave.curr[ x ][ y ]) {
+  for (x = 0; x < MAP_WIDTH; x++) {
+    for (y = 0; y < MAP_HEIGHT; y++) {
+      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
 
         switch (l->data[ x ][ y ].c) {
           case CHARMAP_KEY :
