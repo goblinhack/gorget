@@ -26,6 +26,7 @@ static const int MAX_LEVEL_ROOM_COUNT              = 25;
 static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = MAX_LEVEL_ROOM_COUNT * 2;
 static const int MIN_LEVEL_ROOM_COUNT              = 10;
 static const int MIN_LEVEL_EXIT_DISTANCE           = (MAP_WIDTH / 4) * 2;
+static const int MAP_LEVEL_BLOB_BORDER             = MAP_WIDTH / 4;
 
 class Cell;
 class Room;
@@ -58,9 +59,46 @@ public:
   char c = {};
 
   //
+  // Optional water
+  //
+  bool water = {};
+
+  //
   // The room this cell was sourced from
   //
   class Room *room = {};
+};
+
+class Blob
+{
+private:
+public:
+  Blob(void) {};
+
+  //
+  // Keeps track of the largest blob so fat
+  //
+  point    largest_at;
+  uint16_t largest_size;
+  uint16_t id[ MAP_WIDTH ][ MAP_HEIGHT ];
+};
+
+class Cave
+{
+private:
+public:
+  Cave(void) {};
+
+  //
+  // Used for cellular automata
+  //
+  uint8_t curr[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t prev[ MAP_WIDTH ][ MAP_HEIGHT ];
+
+  //
+  // Keeps track of the largest blob so fat
+  //
+  Blob blob;
 };
 
 class LevelGen
@@ -138,11 +176,7 @@ public:
   //
   Cell data[ MAP_WIDTH ][ MAP_HEIGHT ];
 
-  //
-  // Used for celular automata
-  //
-  uint8_t map_new[ MAP_WIDTH ][ MAP_HEIGHT ];
-  uint8_t map_old[ MAP_WIDTH ][ MAP_HEIGHT ];
+  Cave cave = {};
 };
 
 typedef enum {
@@ -339,6 +373,7 @@ void room_add(Gamep g, const char *file, int line, ...)
         case CHARMAP_TREASURE1 : break;
         case CHARMAP_TREASURE2 : break;
         case CHARMAP_SHALLOW_WATER : break;
+        case CHARMAP_WATER : break;
         case CHARMAP_DEEP_WATER : break;
         case CHARMAP_TELEPORT : break;
         case CHARMAP_FOLIAGE : break;
@@ -524,10 +559,11 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
         // Doors can overlap doors in the same tile.
         //
         switch (l->data[ p.x ][ p.y ].c) {
+          case CHARMAP_WATER :
           case CHARMAP_SHALLOW_WATER :
           case CHARMAP_DEEP_WATER :
             //
-            // Ok to overwrite a chasm tile
+            // Ok to overwrite a water tile
             //
             break;
           case CHARMAP_CHASM :
@@ -537,7 +573,7 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
             break;
           case CHARMAP_LAVA :
             //
-            // Ok to overwrite a chasm tile
+            // Ok to overwrite a lava tile
             //
             break;
           case CHARMAP_EMPTY :
@@ -738,7 +774,11 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
-      tmp += l->data[ x ][ y ].c;
+      if (l->data[ x ][ y ].water) {
+        tmp += CHARMAP_WATER;
+      } else {
+        tmp += l->data[ x ][ y ].c;
+      }
     }
     LOG("[%s]", tmp.c_str());
   }
@@ -1040,31 +1080,70 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   return true;
 }
 
-static void cave_generation(Gamep g, class LevelGen *l, int r1, int r2)
+static void cave_dump(Gamep g, class LevelGen *l)
 {
   uint8_t x, y;
 
-  if (0) {
-    printf("before:\n");
-    for (y = 2; y < MAP_HEIGHT; y++) {
-      for (x = 2; x < MAP_WIDTH; x++) {
-        if (l->map_new[ x ][ y ]) {
-          printf("x");
-        } else {
-          printf(" ");
-        }
+  printf("+");
+  for (x = 0; x < MAP_WIDTH; x++) {
+    printf("-");
+  }
+  printf("+");
+  printf("\n");
+
+  for (y = 0; y < MAP_HEIGHT; y++) {
+    printf("|");
+    for (x = 0; x < MAP_WIDTH; x++) {
+      if (l->cave.curr[ x ][ y ]) {
+        printf("x");
+      } else {
+        printf(" ");
       }
-      printf("\n");
     }
+    printf("|");
     printf("\n");
   }
 
-  for (x = 2; x < MAP_WIDTH; x++) {
-    for (y = 2; y < MAP_HEIGHT; y++) {
+  printf("+");
+  for (x = 0; x < MAP_WIDTH; x++) {
+    printf("-");
+  }
+  printf("+");
+  printf("\n");
+}
+
+//
+// Iterate a single generations for cellular automata
+//
+static void cave_generation(Gamep g, class LevelGen *l, uint32_t fill_prob, int r1, int r2, int map_generations)
+{
+  uint8_t x, y;
+
+  //
+  // Reset the cave map on the first generation
+  //
+  if (! map_generations) {
+    memset(l->cave.curr, 0, sizeof(l->cave.curr));
+    for (x = 2; x < MAP_WIDTH - 2; x++) {
+      for (y = 2; y < MAP_HEIGHT - 2; y++) {
+        if (pcg_random_range(0, 10000) < fill_prob) {
+          l->cave.curr[ x ][ y ] = 1;
+        }
+      }
+    }
+  }
+
+  if (0) {
+    printf("before:\n");
+    cave_dump(g, l);
+  }
+
+  for (x = 2; x < MAP_WIDTH - 2; x++) {
+    for (y = 2; y < MAP_HEIGHT - 2; y++) {
 
       uint8_t adjcount = 0;
 
-#define ADJ(i, j) adjcount += l->map_new[ x + i ][ y + j ];
+#define ADJ(i, j) adjcount += l->cave.curr[ x + i ][ y + j ];
 
       ADJ(-1, -1);
       ADJ(-1, 0);
@@ -1104,55 +1183,213 @@ static void cave_generation(Gamep g, class LevelGen *l, int r1, int r2)
       //
       if (adjcount <= r2) {
         //
-        // map_old set to 0 already.
+        // prev set to 0 already.
         //
       } else {
-        l->map_old[ x ][ y ] = 1;
+        l->cave.prev[ x ][ y ] = 1;
       }
     }
   }
 
   if (0) {
     printf("after:\n");
-    for (y = 2; y < MAP_HEIGHT; y++) {
-      for (x = 2; x < MAP_WIDTH; x++) {
-        if (l->map_new[ x ][ y ]) {
-          printf("x");
-        } else {
-          printf(" ");
-        }
-      }
-      printf("\n");
-    }
-    printf("\n");
+    cave_dump(g, l);
   }
 }
 
-static void level_gen_add_water(Gamep g, class LevelGen *l, uint32_t fill_prob, int r1, int r2, int map_generations)
+//
+// Iterate the generations for cellular automata
+//
+static void cave_generations(Gamep g, class LevelGen *l, uint32_t fill_prob, int r1, int r2, int map_generations)
 {
-  uint8_t x, y, i;
+  for (auto gen = 0; gen < map_generations; gen++) {
+    cave_generation(g, l, fill_prob, r1, r2, gen);
+    memcpy(l->cave.curr, l->cave.prev, sizeof(l->cave.prev));
+    memset(l->cave.prev, 0, sizeof(l->cave.prev));
+  }
+}
 
-  memset(l->map_new, 0, sizeof(l->map_new));
-  for (x = 2; x < MAP_WIDTH - 2; x++) {
-    for (y = 2; y < MAP_HEIGHT - 2; y++) {
-      if (pcg_random_range(0, 10000) < fill_prob) {
-        l->map_new[ x ][ y ] = 1;
+static int cave_generation_fill_blob_cand(Gamep g, class Cave *c, int x, int y, uint16_t size, uint16_t id)
+{
+  //
+  // Out of bounds?
+  //
+  if (x < 2) {
+    return size;
+  }
+  if (y < 2) {
+    return size;
+  }
+  if (x > MAP_WIDTH - 2) {
+    return size;
+  }
+  if (x > MAP_HEIGHT - 2) {
+    return size;
+  }
+
+  //
+  // Already walked?
+  //
+  if (c->blob.id[ x ][ y ]) {
+    return size;
+  }
+  c->blob.id[ x ][ y ] = id;
+
+  //
+  // If nothing here, stop the recurse
+  //
+  auto i = c->curr[ x ][ y ];
+  if (! i) {
+    return size;
+  }
+
+  //
+  // Increase the blob size
+  //
+  size += i;
+  size = cave_generation_fill_blob_cand(g, c, x - 1, y, size, id);
+  size = cave_generation_fill_blob_cand(g, c, x + 1, y, size, id);
+  size = cave_generation_fill_blob_cand(g, c, x, y - 1, size, id);
+  size = cave_generation_fill_blob_cand(g, c, x, y + 1, size, id);
+
+  return size;
+}
+
+//
+// Post generation of the cave, keep all but the largest blob
+//
+static void cave_generation_keep_largest_blob(Gamep g, class Cave *c)
+{
+  uint16_t x, y;
+  uint16_t id = 1;
+
+  //
+  // Reset the set of walked tiles
+  //
+  memset(c->blob.id, 0, sizeof(c->blob.id));
+
+  //
+  // Keep track of the largest blob
+  //
+  c->blob.largest_size = 0;
+
+  //
+  // Scan a central chunk of the level so we ignore blobs on the edges
+  //
+  for (x = MAP_LEVEL_BLOB_BORDER; x < MAP_WIDTH - MAP_LEVEL_BLOB_BORDER; x++) {
+    for (y = MAP_LEVEL_BLOB_BORDER; y < MAP_HEIGHT - MAP_LEVEL_BLOB_BORDER; y++) {
+      if (c->curr[ x ][ y ] && ! c->blob.id[ x ][ y ]) {
+        //
+        // Flood fill and get the size of this blob
+        //
+        auto size = cave_generation_fill_blob_cand(g, c, x, y, 0, id++);
+        if (size > c->blob.largest_size) {
+          c->blob.largest_size = size;
+          c->blob.largest_at   = point(x, y);
+        }
       }
     }
   }
 
-  for (i = 0; i < map_generations; i++) {
-    cave_generation(g, l, r1, r2);
-    memcpy(l->map_new, l->map_old, sizeof(l->map_old));
-    memset(l->map_old, 0, sizeof(l->map_old));
+  //
+  // If we found a large blob, then erase all other tiles
+  //
+  if (! c->blob.largest_size) {
+    return;
   }
+
+  x                = c->blob.largest_at.x;
+  y                = c->blob.largest_at.y;
+  uint16_t best_id = c->blob.id[ x ][ y ];
 
   for (x = 2; x < MAP_WIDTH - 2; x++) {
     for (y = 2; y < MAP_HEIGHT - 2; y++) {
-      if (l->map_new[ x ][ y ]) {
-        if (l->data[ x ][ y ].c == CHARMAP_EMPTY) {
-          l->data[ x ][ y ].c    = CHARMAP_SHALLOW_WATER;
-          l->data[ x ][ y ].room = nullptr;
+      if (c->blob.id[ x ][ y ] != best_id) {
+        c->curr[ x ][ y ] = 0;
+      }
+    }
+  }
+}
+
+static void level_gen_water(Gamep g, class LevelGen *l)
+{
+  uint8_t  x, y;
+  uint32_t fill_prob       = 1000;
+  int      r1              = 10; // higher r1 gives a more rounded look
+  int      r2              = 3;  // smaller r2 gives a smaller pool
+  int      map_generations = 3;
+
+  //
+  // Generate a cave
+  //
+  cave_generations(g, l, fill_prob, r1, r2, map_generations);
+
+  //
+  // Keep a central-ish lake only
+  //
+  cave_generation_keep_largest_blob(g, &l->cave);
+
+  for (x = 2; x < MAP_WIDTH - 2; x++) {
+    for (y = 2; y < MAP_HEIGHT - 2; y++) {
+      if (l->cave.curr[ x ][ y ]) {
+
+        switch (l->data[ x ][ y ].c) {
+          case CHARMAP_KEY :
+          case CHARMAP_LAVA :
+          case CHARMAP_BRIDGE :
+          case CHARMAP_EXIT :
+          case CHARMAP_START :
+            //
+            // No water
+            //
+            continue;
+          case CHARMAP_WALL :
+            if (d100() < 20) {
+              l->data[ x ][ y ].c     = CHARMAP_EMPTY;
+              l->data[ x ][ y ].water = true;
+              break;
+            }
+          case CHARMAP_PILLAR :
+          case CHARMAP_FOLIAGE :
+          case CHARMAP_TREASURE1 :
+          case CHARMAP_TREASURE2 :
+          case CHARMAP_MONST1 :
+          case CHARMAP_MONST2 :
+            //
+            // Keep the character but add water
+            //
+            l->data[ x ][ y ].water = true;
+            break;
+          case CHARMAP_CORRIDOR :
+          case CHARMAP_TRAP :
+          case CHARMAP_BRAZIER :
+          case CHARMAP_FOOD :
+          case CHARMAP_DOOR :
+          case CHARMAP_SECRET_DOOR :
+          case CHARMAP_DRY_GRASS :
+          case CHARMAP_BARREL :
+          case CHARMAP_TELEPORT :
+          case CHARMAP_MOB1 :
+          case CHARMAP_MOB2 :
+          case CHARMAP_EMPTY :
+          case CHARMAP_FLOOR :
+          case CHARMAP_CHASM :
+          case CHARMAP_JOIN :
+            //
+            // Remove the character and add water
+            //
+            l->data[ x ][ y ].c     = CHARMAP_EMPTY;
+            l->data[ x ][ y ].water = true;
+            break;
+          case CHARMAP_SHALLOW_WATER :
+          case CHARMAP_DEEP_WATER :
+          case CHARMAP_WATER :
+            //
+            // Perma water
+            //
+            l->data[ x ][ y ].c     = CHARMAP_EMPTY;
+            l->data[ x ][ y ].water = true;
+            break;
         }
       }
     }
@@ -1253,6 +1490,7 @@ static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
     case CHARMAP_PILLAR : return true;
     case CHARMAP_SECRET_DOOR : return true;
     case CHARMAP_SHALLOW_WATER : return true;
+    case CHARMAP_WATER : return true;
     case CHARMAP_START : return true;
     case CHARMAP_TELEPORT : return true;
     case CHARMAP_TRAP : return true;
@@ -1276,6 +1514,7 @@ static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
       switch (l->data[ x ][ y ].c) {
         case CHARMAP_CORRIDOR :
         case CHARMAP_TRAP :
+        case CHARMAP_DOOR :
         case CHARMAP_JOIN :
           {
             //
@@ -1541,6 +1780,47 @@ static void level_gen_add_chasms_around_bridges(Gamep g, class LevelGen *l, bool
 }
 
 //
+// Make bridges dramatic by adding chasms around them
+//
+static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l, bool debug)
+{
+  TRACE_NO_INDENT();
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      if ((l->data[ x ][ y ].c != CHARMAP_EMPTY) && (l->data[ x ][ y ].c != CHARMAP_WALL)) {
+        {
+          if (l->data[ x - 1 ][ y - 1 ].c == CHARMAP_EMPTY) {
+            l->data[ x - 1 ][ y - 1 ].c = CHARMAP_WALL;
+          }
+          if (l->data[ x - 1 ][ y + 1 ].c == CHARMAP_EMPTY) {
+            l->data[ x - 1 ][ y + 1 ].c = CHARMAP_WALL;
+          }
+          if (l->data[ x + 1 ][ y - 1 ].c == CHARMAP_EMPTY) {
+            l->data[ x + 1 ][ y - 1 ].c = CHARMAP_WALL;
+          }
+          if (l->data[ x + 1 ][ y + 1 ].c == CHARMAP_EMPTY) {
+            l->data[ x + 1 ][ y + 1 ].c = CHARMAP_WALL;
+          }
+          if (l->data[ x - 1 ][ y ].c == CHARMAP_EMPTY) {
+            l->data[ x - 1 ][ y ].c = CHARMAP_WALL;
+          }
+          if (l->data[ x + 1 ][ y ].c == CHARMAP_EMPTY) {
+            l->data[ x + 1 ][ y ].c = CHARMAP_WALL;
+          }
+          if (l->data[ x ][ y - 1 ].c == CHARMAP_EMPTY) {
+            l->data[ x ][ y - 1 ].c = CHARMAP_WALL;
+          }
+          if (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) {
+            l->data[ x ][ y + 1 ].c = CHARMAP_WALL;
+          }
+        }
+      }
+    }
+  }
+}
+
+//
 // Create a level from the current game seed
 //
 static class LevelGen *level_gen(Gamep g, int which)
@@ -1575,9 +1855,14 @@ static class LevelGen *level_gen(Gamep g, int which)
   level_gen_add_chasms_around_bridges(g, l, debug);
 
   //
+  // Add walls
+  //
+  level_gen_add_walls_around_rooms(g, l, debug);
+
+  //
   // Add water
   //
-  level_gen_add_water(g, l, 1000, 9, 3, 3);
+  level_gen_water(g, l);
 
   return l;
 }
