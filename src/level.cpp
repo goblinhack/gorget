@@ -337,14 +337,6 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           need_floor = true;
           tp         = nullptr; /* todo */
           break;
-        case CHARMAP_SHALLOW_WATER :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_DEEP_WATER :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
         case CHARMAP_BARREL :
           need_floor = true;
           tp         = nullptr; /* todo */

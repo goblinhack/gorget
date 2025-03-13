@@ -217,6 +217,9 @@ void rooms_test(Gamep);
 void rooms_init(Gamep);
 void rooms_fini(Gamep);
 void room_add(Gamep, const char *file, int line, ...);
+void rooms_start(Gamep);
+void rooms_exit(Gamep);
+void rooms_prefab(Gamep);
 
 void level_gen_test(Gamep);
 void level_gen_stats_dump(Gamep);

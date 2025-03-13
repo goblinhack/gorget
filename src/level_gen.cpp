@@ -22,9 +22,9 @@ static const int MAX_LEVELS                        = 1;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000;
 static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 500;
 static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 20;
-static const int MAX_LEVEL_ROOM_COUNT              = 25;
+static const int MAX_LEVEL_ROOM_COUNT              = 20;
 static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = MAX_LEVEL_ROOM_COUNT * 2;
-static const int MIN_LEVEL_ROOM_COUNT              = 3;
+static const int MIN_LEVEL_ROOM_COUNT              = 10;
 static const int MIN_LEVEL_EXIT_DISTANCE           = MAP_WIDTH / 4;
 static const int MAP_LEVEL_BLOB_CENTERING          = MAP_WIDTH / 4;
 static const int MAP_LEVEL_CELLULAR_BORDER         = 2;
@@ -58,11 +58,6 @@ public:
   // Room char
   //
   char c = {};
-
-  //
-  // Optional water
-  //
-  bool water = {};
 
   //
   // The room this cell was sourced from
@@ -370,16 +365,14 @@ void room_add(Gamep g, const char *file, int line, ...)
         case CHARMAP_JOIN : break;
         case CHARMAP_EMPTY : break;
         case CHARMAP_FLOOR : break;
-        case CHARMAP_KEY :
+        case CHARMAP_KEY : break;
         case CHARMAP_MONST1 : break;
         case CHARMAP_MONST2 : break;
         case CHARMAP_MOB1 : break;
         case CHARMAP_MOB2 : break;
         case CHARMAP_TREASURE1 : break;
         case CHARMAP_TREASURE2 : break;
-        case CHARMAP_SHALLOW_WATER : break;
         case CHARMAP_WATER : break;
-        case CHARMAP_DEEP_WATER : break;
         case CHARMAP_TELEPORT : break;
         case CHARMAP_FOLIAGE : break;
         case CHARMAP_DOOR : break;
@@ -578,7 +571,7 @@ static void rooms_dump(Gamep g)
 //
 // Can we place a room here on the level?
 //
-static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
+static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point at, bool picky_about_placement)
 {
   //
   // Check the room is clear to be placed here.
@@ -625,8 +618,6 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
         //
         switch (l->data[ p.x ][ p.y ].c) {
           case CHARMAP_WATER :
-          case CHARMAP_SHALLOW_WATER :
-          case CHARMAP_DEEP_WATER :
             //
             // Ok to overwrite a water tile
             //
@@ -690,19 +681,43 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
       //
       for (int dy = -1; dy <= 1; dy++) {
         for (int dx = -1; dx <= 1; dx++) {
-          switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-            case CHARMAP_CHASM :
-            case CHARMAP_EMPTY :
-            case CHARMAP_JOIN :
-              //
-              // ok
-              //
-              break;
-            default :
-              //
-              // Collision.
-              //
-              return false;
+          //
+          // By default, no overlap with other tiles
+          //
+          if (picky_about_placement) {
+            switch (l->data[ p.x + dx ][ p.y + dy ].c) {
+              case CHARMAP_EMPTY :
+              case CHARMAP_JOIN :
+                //
+                // ok
+                //
+                break;
+              default :
+                //
+                // Collision.
+                //
+                return false;
+            }
+          } else {
+            //
+            // Allow overlap with water, chasms, lava
+            //
+            switch (l->data[ p.x + dx ][ p.y + dy ].c) {
+              case CHARMAP_WATER :
+              case CHARMAP_LAVA :
+              case CHARMAP_CHASM :
+              case CHARMAP_EMPTY :
+              case CHARMAP_JOIN :
+                //
+                // ok
+                //
+                break;
+              default :
+                //
+                // Collision.
+                //
+                return false;
+            }
           }
         }
       }
@@ -839,11 +854,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
-      if (l->data[ x ][ y ].water) {
-        tmp += CHARMAP_WATER;
-      } else {
-        tmp += l->data[ x ][ y ].c;
-      }
+      tmp += l->data[ x ][ y ].c;
     }
     LOG("[%s]", tmp.c_str());
   }
@@ -964,8 +975,9 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       // ....D....
       // ...   ...
       //
-      point door_intersection_at = door_other - d;
-      if (! room_can_place_at(g, l, r, door_intersection_at)) {
+      point door_intersection_at  = door_other - d;
+      bool  picky_about_placement = room_place_tries < (MAX_LEVEL_GEN_ROOM_PLACE_TRIES / 2);
+      if (! room_can_place_at(g, l, r, door_intersection_at, picky_about_placement)) {
         level_place_subsequent_room_fail++;
         continue;
       }
@@ -1127,13 +1139,12 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   //
   // Choose a random first room and place it
   //
-  auto r = l->room_first = room_random_get(g, l, ROOM_TYPE_START);
-
-  if (! room_can_place_at(g, l, r, at)) {
+  auto r = l->room_first     = room_random_get(g, l, ROOM_TYPE_START);
+  bool picky_about_placement = true;
+  if (! room_can_place_at(g, l, r, at, picky_about_placement)) {
     level_place_first_room_fail++;
     return false;
   }
-  // CON("%s:%d", r->file, r->line);
 
   room_place_at(g, l, r, at);
 
@@ -1268,7 +1279,7 @@ static void cave_generation(Gamep g, class LevelGen *l, uint32_t fill_prob, int 
 //
 // Iterate the generations for cellular automata
 //
-static void cave_generations(Gamep g, class LevelGen *l, uint32_t fill_prob, int r1, int r2, int map_generations)
+static void cave_create(Gamep g, class LevelGen *l, uint32_t fill_prob, int r1, int r2, int map_generations)
 {
   for (auto gen = 0; gen < map_generations; gen++) {
     cave_generation(g, l, fill_prob, r1, r2, gen);
@@ -1463,18 +1474,21 @@ static void cave_generation_center_blob(Gamep g, class Cave *c)
   }
 }
 
-static void level_gen_water(Gamep g, class LevelGen *l)
+//
+// Place a single large pool of water on the level
+//
+static void level_gen_single_large_pool_in_center(Gamep g, class LevelGen *l)
 {
   uint8_t  x, y;
   uint32_t fill_prob       = 1000;
   int      r1              = 10; // higher r1 gives a more rounded look
-  int      r2              = 3;  // smaller r2 gives a smaller pool
+  int      r2              = 4;  // larger r2 gives a smaller pool
   int      map_generations = 3;
 
   //
   // Generate a cave
   //
-  cave_generations(g, l, fill_prob, r1, r2, map_generations);
+  cave_create(g, l, fill_prob, r1, r2, map_generations);
 
   //
   // Keep a single large blob for the lake
@@ -1520,27 +1534,16 @@ static void level_gen_water(Gamep g, class LevelGen *l)
           case CHARMAP_MOB1 :
           case CHARMAP_MOB2 :
           case CHARMAP_CHASM :
-          case CHARMAP_SHALLOW_WATER :
-          case CHARMAP_DEEP_WATER :
+          case CHARMAP_WALL :
             //
             // No water
             //
-            break;
-          case CHARMAP_WALL :
-            //
-            // Maybe water
-            //
-            if (d100() < 20) {
-              l->data[ x ][ y ].c     = CHARMAP_EMPTY;
-              l->data[ x ][ y ].water = true;
-            }
             break;
           case CHARMAP_EMPTY :
             //
             // Perma water
             //
-            l->data[ x ][ y ].c     = CHARMAP_WATER;
-            l->data[ x ][ y ].water = true;
+            l->data[ x ][ y ].c = CHARMAP_WATER;
             break;
         }
       }
@@ -1580,7 +1583,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
     //
     // Add water
     //
-    level_gen_water(g, l);
+    level_gen_single_large_pool_in_center(g, l);
 
     //
     // Place the remaining rooms
@@ -1631,7 +1634,6 @@ static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
     case CHARMAP_BRAZIER : return true;
     case CHARMAP_BRIDGE : return true;
     case CHARMAP_CORRIDOR : return true;
-    case CHARMAP_DEEP_WATER : return true;
     case CHARMAP_DOOR : return true;
     case CHARMAP_DRY_GRASS : return true;
     case CHARMAP_EXIT : return true;
@@ -1645,7 +1647,6 @@ static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
     case CHARMAP_MONST2 : return true;
     case CHARMAP_PILLAR : return true;
     case CHARMAP_SECRET_DOOR : return true;
-    case CHARMAP_SHALLOW_WATER : return true;
     case CHARMAP_WATER : return true;
     case CHARMAP_START : return true;
     case CHARMAP_TELEPORT : return true;
@@ -1795,11 +1796,15 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
               bool has_clear_path = true;
               for (auto d = 1; d < dist; d++) {
                 point adj(x + direction.x * d, y + direction.y * d);
-                if ((l->data[ adj.x ][ adj.y ].c != CHARMAP_EMPTY)) {
-                  has_clear_path = false;
-                  break;
+                switch (l->data[ adj.x ][ adj.y ].c) {
+                  case CHARMAP_WATER :
+                  case CHARMAP_CHASM :
+                  case CHARMAP_LAVA :
+                  case CHARMAP_EMPTY : break;
+                  default : has_clear_path = false; break;
                 }
               }
+
               if (! has_clear_path) {
                 continue;
               }
@@ -1949,8 +1954,40 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l, bool de
         continue;
       }
 
-      if ((c != CHARMAP_EMPTY) && (c != CHARMAP_WALL)) {
-        {
+      switch (c) {
+        case CHARMAP_EMPTY :
+        case CHARMAP_WALL : break;
+        case CHARMAP_CHASM :
+        case CHARMAP_CHASM_50 :
+        case CHARMAP_JOIN :
+        case CHARMAP_FLOOR :
+        case CHARMAP_KEY :
+        case CHARMAP_MONST1 :
+        case CHARMAP_MONST2 :
+        case CHARMAP_MOB1 :
+        case CHARMAP_MOB2 :
+        case CHARMAP_TREASURE1 :
+        case CHARMAP_TREASURE2 :
+        case CHARMAP_WATER :
+        case CHARMAP_TELEPORT :
+        case CHARMAP_FOLIAGE :
+        case CHARMAP_DOOR :
+        case CHARMAP_SECRET_DOOR :
+        case CHARMAP_DRY_GRASS :
+        case CHARMAP_BARREL :
+        case CHARMAP_CORRIDOR :
+        case CHARMAP_PILLAR :
+        case CHARMAP_TRAP :
+        case CHARMAP_LAVA :
+        case CHARMAP_BRIDGE :
+        case CHARMAP_BRAZIER :
+        case CHARMAP_FLOOR_50 :
+        case CHARMAP_FLOOR_40 :
+        case CHARMAP_FLOOR_30 :
+        case CHARMAP_FLOOR_20 :
+        case CHARMAP_FLOOR_10 :
+        case CHARMAP_EXIT :
+        case CHARMAP_START :
           if (l->data[ x - 1 ][ y - 1 ].c == CHARMAP_EMPTY) {
             l->data[ x - 1 ][ y - 1 ].c = CHARMAP_WALL;
           }
@@ -1975,7 +2012,7 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l, bool de
           if (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) {
             l->data[ x ][ y + 1 ].c = CHARMAP_WALL;
           }
-        }
+          break;
       }
     }
   }
@@ -2023,7 +2060,7 @@ static class LevelGen *level_gen(Gamep g, int which)
   //
   // Add water
   //
-  // level_gen_water(g, l);
+  // level_gen_single_large_pool_in_center(g, l);
 
   return l;
 }
