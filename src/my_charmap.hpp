@@ -40,7 +40,6 @@ enum {
   CHARMAP_SHALLOW_WATER = 'w',
   CHARMAP_WATER         = '~',
   CHARMAP_DEEP_WATER    = 'W',
-  CHARMAP_FOOD          = 'f',
   CHARMAP_TREASURE1     = '$',
   CHARMAP_TREASURE2     = '!',
   CHARMAP_WALL          = 'x',
