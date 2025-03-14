@@ -557,7 +557,7 @@ static void room_dump(Gamep g, class Room *r)
 //
 // Dump all rooms
 //
-static void rooms_dump(Gamep g)
+void rooms_dump(Gamep g)
 {
   TRACE_NO_INDENT();
 
@@ -2063,15 +2063,6 @@ static class LevelGen *level_gen(Gamep g, int which)
   // level_gen_single_large_pool_in_center(g, l);
 
   return l;
-}
-
-//
-// Test rooms
-//
-void rooms_test(Gamep g)
-{
-  TRACE_NO_INDENT();
-  rooms_dump(g);
 }
 
 static std::array< class LevelGen *, MAX_LEVELS > levels = {};
