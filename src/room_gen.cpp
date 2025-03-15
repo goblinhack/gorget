@@ -3,11 +3,13 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_cave.hpp"
 #include "my_charmap.hpp"
 #include "my_dice.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 
@@ -102,6 +104,46 @@ static void grid_clear(Gamep g, Grid *grid)
   TRACE_NO_INDENT();
 
   memset(grid->data, CHARMAP_EMPTY, sizeof(grid->data));
+}
+
+//
+// Get the top left and bottom right bounds of the room
+//
+static bool grid_keep_largest_chunk(Gamep g, class Grid *grid)
+{
+  Cave cave = {};
+  int  x, y;
+
+  //
+  // Populate the cave with the room
+  //
+  for (y = 0; y < MAP_HEIGHT; y++) {
+    for (x = 0; x < MAP_WIDTH; x++) {
+      if (grid->data[ x ][ y ] != CHARMAP_EMPTY) {
+        cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] = 1;
+      }
+    }
+  }
+
+  //
+  // Keep largest blob only
+  //
+  cave_generation_keep_largest_blob(g, &cave);
+
+  //
+  // Map that back to a room shape
+  //
+  grid_clear(g, grid);
+
+  for (y = 0; y < MAP_HEIGHT; y++) {
+    for (x = 0; x < MAP_WIDTH; x++) {
+      if (cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
+        grid->data[ x ][ y ] = CHARMAP_FLOOR;
+      }
+    }
+  }
+
+  return true;
 }
 
 //
@@ -468,6 +510,12 @@ static bool rooms_dump_one(Gamep g, int which)
       grid_design_chunky_room(g, &grid);
       break;
   }
+
+  //
+  // Always ensure we have a contiguous blob. If we have two seperate room fragments,
+  // this will end up with only one.
+  //
+  grid_keep_largest_chunk(g, &grid);
 
   if (! grid_get_bounds(g, &grid)) {
     return false;
