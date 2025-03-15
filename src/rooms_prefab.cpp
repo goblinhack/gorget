@@ -7,7 +7,7 @@
 #include "my_level.hpp"
 
 //
-// Create all rooms
+// Create all prefab rooms
 //
 void rooms_prefab(Gamep g)
 {
@@ -15,7 +15,7 @@ void rooms_prefab(Gamep g)
 
   /* clang-format off */
 
-  room_add(g, __FUNCTION__, __LINE__, 
+  room_add(g, true /* check */, __FUNCTION__, __LINE__, 
            (const char *)"    ^       ",
            (const char *)" xxx.xxxxxx ",
            (const char *)" x........x ",

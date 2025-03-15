@@ -20,13 +20,13 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 1;
+static const int MAX_LEVELS                        = 100;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000;
 static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 500;
 static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 20;
-static const int MAX_LEVEL_ROOM_COUNT              = 20;
+static const int MAX_LEVEL_ROOM_COUNT              = 40;
 static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = MAX_LEVEL_ROOM_COUNT * 2;
-static const int MIN_LEVEL_ROOM_COUNT              = 10;
+static const int MIN_LEVEL_ROOM_COUNT              = 25;
 static const int MIN_LEVEL_EXIT_DISTANCE           = MAP_WIDTH / 4;
 
 class Cell;
@@ -278,7 +278,7 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
 //
 // Add a room and copies with all possible rotations
 //
-void room_add(Gamep g, const char *file, int line, ...)
+void room_add(Gamep g, bool check, const char *file, int line, ...)
 {
   TRACE_NO_INDENT();
 
@@ -451,25 +451,44 @@ void room_add(Gamep g, const char *file, int line, ...)
   // Sanity check on exits that we have no tiles in the same column or row
   // as an exit; it makes it harder to join rooms together
   //
-  for (int y = 0; y < r->height; y++) {
-    for (int x = 0; x < r->width; x++) {
-      auto c = r->data[ (y * r->width) + x ];
-      if ((c != CHARMAP_EMPTY) && (c != CHARMAP_JOIN)) {
-        if ((y == 0) && has_exit_up) {
-          DIE("room has exit up and tiles in same row %s:%d", file, line);
-          return;
-        }
-        if ((y == r->height - 1) && has_exit_down) {
-          DIE("room has exit down and tiles in same row %s:%d", file, line);
-          return;
-        }
-        if ((x == 0) && has_exit_left) {
-          DIE("room has exit left and tiles in same column %s:%d", file, line);
-          return;
-        }
-        if ((x == r->width - 1) && has_exit_right) {
-          DIE("room has exit right and tiles in same column %s:%d", file, line);
-          return;
+  if (check) {
+    for (int y = 0; y < r->height; y++) {
+      for (int x = 0; x < r->width; x++) {
+        auto c = r->data[ (y * r->width) + x ];
+        if ((c != CHARMAP_EMPTY) && (c != CHARMAP_JOIN)) {
+
+          //
+          // Exclude corners
+          //
+          if ((x == 0) && (y == 0)) {
+            continue;
+          }
+          if ((x == 0) && (y == r->height - 1)) {
+            continue;
+          }
+          if ((x == r->width - 1) && (y == 0)) {
+            continue;
+          }
+          if ((x == r->width - 1) && (y == r->height - 1)) {
+            continue;
+          }
+
+          if ((y == 0) && has_exit_up) {
+            DIE("room has exit up and tiles in same row %s:%d", file, line);
+            return;
+          }
+          if ((y == r->height - 1) && has_exit_down) {
+            DIE("room has exit down and tiles in same row %s:%d", file, line);
+            return;
+          }
+          if ((x == 0) && has_exit_left) {
+            DIE("room has exit left and tiles in same column %s:%d", file, line);
+            return;
+          }
+          if ((x == r->width - 1) && has_exit_right) {
+            DIE("room has exit right and tiles in same column %s:%d", file, line);
+            return;
+          }
         }
       }
     }
@@ -624,7 +643,6 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
             //
             switch (l->data[ p.x + dx ][ p.y + dy ].c) {
               case CHARMAP_CHASM :
-              case CHARMAP_JOIN :
                 //
                 // Collision.
                 //
@@ -940,7 +958,8 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       // ...   ...
       //
       point door_intersection_at  = door_other - d;
-      bool  picky_about_placement = room_place_tries < (MAX_LEVEL_GEN_ROOM_PLACE_TRIES / 2);
+      bool  picky_about_placement = room_place_tries < ((MAX_LEVEL_GEN_ROOM_PLACE_TRIES / 10) * 8);
+      picky_about_placement       = true;
       if (! room_can_place_at(g, l, r, door_intersection_at, picky_about_placement)) {
         level_place_subsequent_room_fail++;
         continue;
@@ -1056,7 +1075,10 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
       }
     }
 
-    level_gen_dump(g, l);
+    if (0) {
+      level_gen_dump(g, l);
+    }
+
     //
     // Create another room if possible
     //
@@ -1160,7 +1182,7 @@ static void cave_dump(Gamep g, class LevelGen *l)
 static void level_gen_single_large_pool_in_center(Gamep g, class LevelGen *l)
 {
   uint8_t  x, y;
-  uint32_t fill_prob       = 1000;
+  uint32_t fill_prob       = 1250;
   int      r1              = 10; // higher r1 gives a more rounded look
   int      r2              = 4;  // larger r2 gives a smaller pool
   int      map_generations = 3;

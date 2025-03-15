@@ -15,7 +15,6 @@
 
 #include <stdlib.h>
 
-static const int MAX_ROOMS         = 100;
 static const int MAX_ROOM_CORRIDOR = 3;
 static const int ROOM_BORDER       = 2;
 
@@ -57,6 +56,11 @@ public:
   int room_width {};
   int room_height {};
   int door_count {};
+
+  //
+  // Where to write the room data to
+  //
+  FILE *out;
 };
 
 //
@@ -66,17 +70,17 @@ static void grid_dump(Gamep g, Grid *grid)
 {
   TRACE_NO_INDENT();
 
-  printf("room_add(g, __FUNCTION__, __LINE__,\n");
+  fprintf(grid->out, "  room_add(g, false /* check */, __FUNCTION__, __LINE__,\n");
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
-    printf("         (const char *)\"");
+    fprintf(grid->out, "           (const char *)\"");
     for (int x = 0; x < MAP_WIDTH; x++) {
-      printf("%c", grid->data[ x ][ y ]);
+      fprintf(grid->out, "%c", grid->data[ x ][ y ]);
     }
-    printf("\",\n");
+    fprintf(grid->out, "\",\n");
   }
-  printf("         nullptr);\n");
-  printf("\n");
+  fprintf(grid->out, "           nullptr);\n");
+  fprintf(grid->out, "\n");
 }
 
 //
@@ -86,17 +90,17 @@ static void grid_room_only_dump(Gamep g, Grid *grid)
 {
   TRACE_NO_INDENT();
 
-  printf("room_add(g, __FUNCTION__, __LINE__,\n");
+  fprintf(grid->out, "  room_add(g, false /* check */, __FUNCTION__, __LINE__,\n");
 
   for (int y = grid->tl.y; y <= grid->br.y; y++) {
-    printf("         (const char *)\"");
+    fprintf(grid->out, "           (const char *)\"");
     for (int x = grid->tl.x; x <= grid->br.x; x++) {
-      printf("%c", grid->data[ x ][ y ]);
+      fprintf(grid->out, "%c", grid->data[ x ][ y ]);
     }
-    printf("\",\n");
+    fprintf(grid->out, "\",\n");
   }
-  printf("         nullptr);\n");
-  printf("\n");
+  fprintf(grid->out, "           nullptr);\n");
+  fprintf(grid->out, "\n");
 }
 
 static void grid_clear(Gamep g, Grid *grid)
@@ -487,12 +491,15 @@ static void grid_design_chunky_room(Gamep g, Grid *grid)
 //
 // Dump a random room of the given type
 //
-static bool rooms_dump_one(Gamep g, int which)
+static bool rooms_dump_one(Gamep g, FILE *out, int which)
 {
   TRACE_NO_INDENT();
 
   Grid grid;
+
   grid_clear(g, &grid);
+
+  grid.out = out;
 
   switch (which) {
     case ROOM_TYPE_CROSS : grid_design_cross_room(g, &grid); break;
@@ -553,16 +560,55 @@ static bool rooms_dump_one(Gamep g, int which)
   return true;
 }
 
-void rooms_test(Gamep g)
+//
+// Dump a random room of the given type
+//
+static void rooms_dump_n(Gamep g, int n, int which, const char *name)
 {
-  for (auto r = 0; r < MAX_ROOMS; r++) {
-    // rooms_dump_one(g, ROOM_TYPE_CROSS);
-    //    rooms_dump_one(g, ROOM_TYPE_CROSS_SYM);
-    //    rooms_dump_one(g, ROOM_TYPE_SMALL);
-    //    rooms_dump_one(g, ROOM_TYPE_CIRCULAR);
-    //    rooms_dump_one(g, ROOM_TYPE_CHUNKY);
-    rooms_dump_one(g, ROOM_TYPE_BLEND1);
-    // rooms_dump_one(g, ROOM_TYPE_BLEND2);
+  TRACE_NO_INDENT();
+
+  std::string f = "src/rooms_" + std::string(name) + ".cpp";
+
+  FILE *out = fopen(f.c_str(), "w+");
+  if (! out) {
+    DIE("could not write to %s", f.c_str());
   }
+
+  fprintf(out, "//\n");
+  fprintf(out, "// Copyright Neil McGill, goblinhack@gmail.com\n");
+  fprintf(out, "//\n");
+  fprintf(out, "\n");
+  fprintf(out, "#include \"my_callstack.hpp\"\n");
+  fprintf(out, "#include \"my_charmap.hpp\"\n");
+  fprintf(out, "#include \"my_level.hpp\"\n");
+  fprintf(out, "\n");
+  fprintf(out, "//\n");
+  fprintf(out, "// Rooms of type '%s'\n", name);
+  fprintf(out, "//\n");
+  fprintf(out, "void rooms_%s(Gamep g)\n", name);
+  fprintf(out, "{\n");
+  fprintf(out, "  TRACE_NO_INDENT();\n");
+  fprintf(out, "\n");
+  fprintf(out, "  /* clang-format off */\n");
+  fprintf(out, "\n");
+
+  for (auto r = 0; r < n; r++) {
+    rooms_dump_one(g, out, which);
+  }
+
+  fprintf(out, "  /* clang-format on */\n");
+  fprintf(out, "}\n");
+
+  fclose(out);
 }
 
+void rooms_test(Gamep g)
+{
+  rooms_dump_n(g, 500, ROOM_TYPE_CROSS, "cross");
+  rooms_dump_n(g, 500, ROOM_TYPE_CROSS_SYM, "cross_sym");
+  rooms_dump_n(g, 1000, ROOM_TYPE_SMALL, "small");
+  rooms_dump_n(g, 200, ROOM_TYPE_CIRCULAR, "circular");
+  rooms_dump_n(g, 200, ROOM_TYPE_CHUNKY, "chunky");
+  rooms_dump_n(g, 100, ROOM_TYPE_BLEND2, "blend2");
+  rooms_dump_n(g, 100, ROOM_TYPE_BLEND1, "blend1");
+}

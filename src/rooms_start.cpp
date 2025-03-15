@@ -7,7 +7,7 @@
 #include "my_level.hpp"
 
 //
-// Create all rooms
+// Create all start rooms
 //
 void rooms_start(Gamep g)
 {
@@ -15,7 +15,7 @@ void rooms_start(Gamep g)
 
   /* clang-format off */
 
-  room_add(g, __FUNCTION__, __LINE__, 
+  room_add(g, true, __FUNCTION__, __LINE__, 
            (const char *)"    ^       ",
            (const char *)" xxx.xxxxxx ",
            (const char *)" x........x ",
