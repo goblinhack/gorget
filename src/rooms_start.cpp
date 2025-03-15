@@ -16,17 +16,17 @@ void rooms_start(Gamep g)
   /* clang-format off */
 
   room_add(g, true, __FUNCTION__, __LINE__, 
-           (const char *)"    ^       ",
-           (const char *)" xxx.xxxxxx ",
-           (const char *)" x........x ",
-           (const char *)" x........x ",
-           (const char *)"^.........x ",
-           (const char *)" x........x ",
-           (const char *)" x........x ",
-           (const char *)" x......@.x ",
-           (const char *)" x........x ",
-           (const char *)" xxxxxxxxxx ",
-           (const char *)"            ",
+           (const char *)"    ^      ",
+           (const char *)" xxx.xxxxx ",
+           (const char *)" x.......x ",
+           (const char *)" x.......x ",
+           (const char *)"^........x ",
+           (const char *)" x...@...x ",
+           (const char *)" x.......x ",
+           (const char *)" x.......x^",
+           (const char *)" x.......x ",
+           (const char *)" xxxxxxxxx ",
+           (const char *)"   ^       ",
            nullptr);
 
   /* clang-format on */

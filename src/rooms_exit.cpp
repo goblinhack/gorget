@@ -19,14 +19,14 @@ void rooms_exit(Gamep g)
            (const char *)"    ^       ",
            (const char *)" xxx.xxxxxx ",
            (const char *)" x........x ",
+           (const char *)" x.........^",
            (const char *)" x........x ",
            (const char *)" x........x ",
            (const char *)" x........x ",
+           (const char *)"^.......E.x ",
            (const char *)" x........x ",
-           (const char *)" x......E.x ",
-           (const char *)" x........x ",
-           (const char *)" xxxxxxxxxx ",
-           (const char *)"            ",
+           (const char *)" xxxxx.xxxx ",
+           (const char *)"      ^     ",
            nullptr);
 
   /* clang-format on */

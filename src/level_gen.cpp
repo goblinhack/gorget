@@ -20,14 +20,14 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 100;
+static const int MAX_LEVELS                        = 1;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000;
-static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 500;
-static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 20;
-static const int MAX_LEVEL_ROOM_COUNT              = 40;
-static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = MAX_LEVEL_ROOM_COUNT * 2;
-static const int MIN_LEVEL_ROOM_COUNT              = 25;
+static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 200;
+static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 6;
+static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = 100;
 static const int MIN_LEVEL_EXIT_DISTANCE           = MAP_WIDTH / 4;
+static const int MIN_LEVEL_ROOM_COUNT              = 5;
+static const int LEVEL_WATER_GEN_PROB              = 1200;
 
 class Cell;
 class Room;
@@ -84,11 +84,18 @@ public:
   // This is a copy of the game seed
   //
   std::string seed;
+  uint32_t    seed_num {};
 
   //
   // Sub level
   //
-  int which;
+  int which {};
+
+  //
+  // The number of rooms to aim for for a given depth.
+  //
+  int min_level_room_count {};
+  int max_level_room_count {};
 
   //
   // The starting room
@@ -554,7 +561,7 @@ void rooms_dump(Gamep g)
 //
 // Can we place a room here on the level?
 //
-static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point at, bool picky_about_placement)
+static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
 {
   //
   // Check the room is clear to be placed here.
@@ -597,108 +604,36 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
       //
       if (unlikely(room_c == CHARMAP_JOIN)) {
         //
-        // Doors can overlap doors in the same tile.
+        // Doors can overlap.
         //
-        switch (l->data[ p.x ][ p.y ].c) {
-          case CHARMAP_WATER :
-            //
-            // Ok to overwrite a water tile
-            //
-            break;
-          case CHARMAP_CHASM :
-            //
-            // Ok to overwrite a chasm tile
-            //
-            break;
-          case CHARMAP_LAVA :
-            //
-            // Ok to overwrite a lava tile
-            //
-            break;
-          case CHARMAP_EMPTY :
-            //
-            // Ok to overwrite an empty tile
-            //
-            break;
-          case CHARMAP_JOIN :
-            //
-            // ok
-            //
-            break;
-          default :
-            //
-            // Collision.
-            //
-            return false;
+        if (l->data[ p.x ][ p.y ].c == CHARMAP_JOIN) {
+          continue;
         }
-
-        for (int dy = -1; dy <= 1; dy++) {
-          for (int dx = -1; dx <= 1; dx++) {
-            if (! dx && ! dy) {
-              continue;
-            }
-
-            //
-            // No doors next to each other
-            //
-            switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-              case CHARMAP_CHASM :
-                //
-                // Collision.
-                //
-                return false;
-              default :
-                //
-                // ok
-                //
-                break;
-            }
-          }
-        }
-        continue;
       }
 
       //
-      // Check all adjacent tiles
+      // Check all adjacent tiles for an adjacent room
       //
       for (int dy = -1; dy <= 1; dy++) {
         for (int dx = -1; dx <= 1; dx++) {
-          //
-          // By default, no overlap with other tiles
-          //
-          if (picky_about_placement) {
+          if (! dx && ! dy) {
             switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-              case CHARMAP_EMPTY :
               case CHARMAP_JOIN :
-                //
-                // ok
-                //
-                break;
-              default :
-                //
-                // Collision.
-                //
-                return false;
+              case CHARMAP_EMPTY : break;
+              default : return false;
             }
           } else {
             //
-            // Allow overlap with water, chasms, lava
+            // Allow certain tiles, like water to be adjacent. This way a room can be created
+            // right at the water edge.
             //
             switch (l->data[ p.x + dx ][ p.y + dy ].c) {
               case CHARMAP_WATER :
               case CHARMAP_LAVA :
               case CHARMAP_CHASM :
-              case CHARMAP_EMPTY :
               case CHARMAP_JOIN :
-                //
-                // ok
-                //
-                break;
-              default :
-                //
-                // Collision.
-                //
-                return false;
+              case CHARMAP_EMPTY : break;
+              default : return false;
             }
           }
         }
@@ -831,6 +766,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
     LOG("Level: %s.%d", l->seed.c_str(), l->which);
   }
 
+  LOG("Seed: %u", l->seed_num);
   LOG("Room count: %d", (int) l->rooms_placed.size());
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
@@ -957,10 +893,8 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       // ....D....
       // ...   ...
       //
-      point door_intersection_at  = door_other - d;
-      bool  picky_about_placement = room_place_tries < ((MAX_LEVEL_GEN_ROOM_PLACE_TRIES / 10) * 8);
-      picky_about_placement       = true;
-      if (! room_can_place_at(g, l, r, door_intersection_at, picky_about_placement)) {
+      point door_intersection_at = door_other - d;
+      if (! room_can_place_at(g, l, r, door_intersection_at)) {
         level_place_subsequent_room_fail++;
         continue;
       }
@@ -1040,7 +974,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
   //
   // Keep placing rooms until we hit the max allowed
   //
-  while ((int) l->rooms_placed.size() < MAX_LEVEL_ROOM_COUNT) {
+  while ((int) l->rooms_placed.size() < l->max_level_room_count) {
     if (unlikely(debug)) {
       LOG("rooms placed %d attempts %d", (int) l->rooms_placed.size(), attempts);
     }
@@ -1061,7 +995,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
     // If we have not yet placed an exit room, should we?
     //
     if (! l->has_placed_exit) {
-      if ((int) l->rooms_placed.size() > MIN_LEVEL_ROOM_COUNT) {
+      if ((int) l->rooms_placed.size() > l->min_level_room_count) {
         //
         // If we have the minimum rooms, then likely we're far enough away from
         // the start room now to try placing an exit room.
@@ -1125,9 +1059,8 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   //
   // Choose a random first room and place it
   //
-  auto r = l->room_first     = room_random_get(g, l, ROOM_TYPE_START);
-  bool picky_about_placement = true;
-  if (! room_can_place_at(g, l, r, at, picky_about_placement)) {
+  auto r = l->room_first = room_random_get(g, l, ROOM_TYPE_START);
+  if (! room_can_place_at(g, l, r, at)) {
     level_place_first_room_fail++;
     return false;
   }
@@ -1182,7 +1115,7 @@ static void cave_dump(Gamep g, class LevelGen *l)
 static void level_gen_single_large_pool_in_center(Gamep g, class LevelGen *l)
 {
   uint8_t  x, y;
-  uint32_t fill_prob       = 1250;
+  uint32_t fill_prob       = LEVEL_WATER_GEN_PROB;
   int      r1              = 10; // higher r1 gives a more rounded look
   int      r2              = 4;  // larger r2 gives a smaller pool
   int      map_generations = 3;
@@ -1271,9 +1204,16 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
       l = nullptr;
     }
 
-    l        = new LevelGen();
-    l->seed  = std::string(game_get_seed(g));
-    l->which = which;
+    l                       = new LevelGen();
+    l->seed                 = std::string(game_get_seed(g));
+    l->which                = which;
+    l->min_level_room_count = MIN_LEVEL_ROOM_COUNT + (which / 10);
+    l->max_level_room_count = l->min_level_room_count + 5;
+
+    //
+    // Add water
+    //
+    level_gen_single_large_pool_in_center(g, l);
 
     //
     // Place the first room
@@ -1283,19 +1223,14 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
     }
 
     //
-    // Add water
-    //
-    level_gen_single_large_pool_in_center(g, l);
-
-    //
     // Place the remaining rooms
     //
     level_gen_create_remaining_rooms(g, l, debug);
 
     //
-    // Check we have enough rooms
+    // Check we have enough rooms. Add a few more for deeper levels.
     //
-    if ((int) l->rooms_placed.size() < MIN_LEVEL_ROOM_COUNT) {
+    if ((int) l->rooms_placed.size() < l->min_level_room_count) {
       level_not_enough_rooms++;
       continue;
     }
@@ -1779,10 +1714,12 @@ static void level_gen_create_level(Gamep g, int which)
   //
   // Per thread seed
   //
-  auto seed = game_get_seed_num(g);
-  game_set_seed_for_thread(g, seed + seed * which);
+  uint32_t seed_num = game_get_seed_num(g);
+  seed_num += seed_num * which;
+  game_set_seed_for_thread(g, seed_num);
 
   auto l          = level_gen(g, which);
+  l->seed_num     = seed_num;
   levels[ which ] = l;
 }
 

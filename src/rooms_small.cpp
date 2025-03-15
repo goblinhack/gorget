@@ -16,5211 +16,80 @@ void rooms_small(Gamep g)
   /* clang-format off */
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"   .....  ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)" ......^",
-           (const char *)"^.....  ",
-           (const char *)" .....  ",
-           (const char *)" .      ",
-           (const char *)" ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"      .   ",
-           (const char *)"^.......  ",
-           (const char *)"   ......^",
-           (const char *)"   .....  ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"    .  ",
-           (const char *)"    .  ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"   ^       ",
-           (const char *)"   .       ",
-           (const char *)"  ........^",
-           (const char *)"^......    ",
-           (const char *)"  .....    ",
-           (const char *)"  ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^       ",
-           (const char *)"  .       ",
-           (const char *)"  .       ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"  .....   ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"  .... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^     ",
-           (const char *)"^..........^",
-           (const char *)"    .....   ",
-           (const char *)"    .....   ",
-           (const char *)"      .     ",
-           (const char *)"      ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^       ",
-           (const char *)"  .       ",
-           (const char *)"  .       ",
-           (const char *)"^........^",
-           (const char *)"  ...     ",
-           (const char *)"  ...     ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"^........^",
-           (const char *)"  ....    ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ...   ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"^.........^",
-           (const char *)" ....      ",
-           (const char *)" ^         ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"  ....   ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^      ",
-           (const char *)" .      ",
-           (const char *)" .      ",
-           (const char *)"^.....  ",
-           (const char *)" ......^",
-           (const char *)" .....  ",
-           (const char *)" .      ",
-           (const char *)" .      ",
-           (const char *)" ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"^........^",
-           (const char *)"  ....    ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"   .      ",
-           (const char *)"^........^",
-           (const char *)"   ...    ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"   ...    ",
-           (const char *)"^........^",
-           (const char *)"   ...    ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"  ......^",
-           (const char *)"^.....   ",
-           (const char *)"  ....   ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"^.........^",
+           (const char *)"^.......   ",
+           (const char *)"   .......^",
            (const char *)"   .....   ",
-           (const char *)"   .       ",
            (const char *)"   ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"  ..... ",
-           (const char *)"^......^",
-           (const char *)"  ..... ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^....   ",
-           (const char *)"  .....^",
-           (const char *)"  ...   ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"     ^   ",
            (const char *)"     .   ",
            (const char *)"^.......^",
-           (const char *)"    ...  ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"^.....   ",
-           (const char *)"  ......^",
-           (const char *)"  ....   ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"    .  ",
-           (const char *)"    .  ",
-           (const char *)"^.....^",
-           (const char *)"   ... ",
-           (const char *)"    .  ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"  .....   ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"      .   ",
-           (const char *)"      .   ",
-           (const char *)"    ....  ",
-           (const char *)"^........^",
-           (const char *)"    ....  ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"    .      ",
-           (const char *)"    .      ",
-           (const char *)"^.........^",
-           (const char *)"    ....   ",
-           (const char *)"    ....   ",
-           (const char *)"    .      ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"   ....   ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .    ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^...... ",
-           (const char *)"  .....^",
-           (const char *)"  ..... ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^     ",
-           (const char *)"     .     ",
-           (const char *)"^.........^",
-           (const char *)"   ....    ",
-           (const char *)"    .      ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^       ",
-           (const char *)"^..........^",
-           (const char *)"    ....    ",
-           (const char *)"      ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^       ",
-           (const char *)"^..........^",
-           (const char *)"   .....    ",
-           (const char *)"    ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"  .....^",
-           (const char *)"^.....  ",
-           (const char *)"  ....  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"^......    ",
-           (const char *)"  ........^",
-           (const char *)"  .....    ",
-           (const char *)"   .       ",
-           (const char *)"   ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"^.....  ",
-           (const char *)"   ....^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)" ....   ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"  .....  ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^...  ",
-           (const char *)" ....^",
-           (const char *)" ...  ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^....  ",
-           (const char *)"  ....^",
-           (const char *)"  ...  ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"^.......^",
-           (const char *)"  ....   ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^       ",
-           (const char *)"^........^",
-           (const char *)"  ....    ",
-           (const char *)"  .       ",
-           (const char *)"  .       ",
-           (const char *)"  .       ",
-           (const char *)"  ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   .  ",
-           (const char *)"   .  ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   ....  ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"  ....^",
-           (const char *)"^..... ",
-           (const char *)"  .... ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"   .       ",
-           (const char *)"   .       ",
-           (const char *)"   .       ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^       ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"  .       ",
-           (const char *)"  ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^      ",
-           (const char *)"^..........^",
-           (const char *)"     ...    ",
-           (const char *)"     ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"^........^",
-           (const char *)"     .... ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"    .  ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"  .... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"^........^",
-           (const char *)"   ...    ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"    .      ",
-           (const char *)"   .....   ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"    .      ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"  ..... ",
-           (const char *)"^......^",
-           (const char *)"  ..... ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"  ....    ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^      ",
-           (const char *)" .      ",
-           (const char *)" ....   ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"  ..... ",
-           (const char *)"  ..... ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^    ",
-           (const char *)"^..........^",
-           (const char *)"    .....   ",
-           (const char *)"    .....   ",
-           (const char *)"    ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"^......  ",
-           (const char *)"  ......^",
-           (const char *)"  .....  ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)" .....^",
-           (const char *)"^....  ",
-           (const char *)" ....  ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"   .....  ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^      ",
-           (const char *)"       .      ",
-           (const char *)"^............^",
-           (const char *)"    .....     ",
-           (const char *)"      ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   ...    ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"   .      ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)" .....   ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"   .....^",
-           (const char *)"^....... ",
-           (const char *)"   ..... ",
-           (const char *)"      ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)" .....  ",
-           (const char *)" .....  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"   ..... ",
-           (const char *)"^.......^",
-           (const char *)"   ..... ",
+           (const char *)"    .... ",
+           (const char *)"    .... ",
+           (const char *)"      .  ",
            (const char *)"      .  ",
            (const char *)"      ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"  ...   ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"^.......  ",
-           (const char *)"    .....^",
-           (const char *)"    ....  ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"^........^",
-           (const char *)"     .... ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"^......  ",
-           (const char *)"   .....^",
-           (const char *)"   ....  ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"      .   ",
-           (const char *)"      .   ",
-           (const char *)"^........^",
-           (const char *)"    ..... ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"   ...    ",
-           (const char *)"^........^",
-           (const char *)"   ...    ",
-           (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^      ",
-           (const char *)" .      ",
-           (const char *)"^......^",
-           (const char *)" .....  ",
-           (const char *)" .      ",
-           (const char *)" ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"   .....^",
-           (const char *)"^.....   ",
-           (const char *)"   ...   ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)" .....  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^     ",
-           (const char *)"^..........^",
-           (const char *)"     ....   ",
-           (const char *)"     .      ",
-           (const char *)"     ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"  .  ",
-           (const char *)"  .  ",
-           (const char *)"  .  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  .  ",
-           (const char *)"  .  ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"^...   ",
-           (const char *)" .....^",
-           (const char *)" ...   ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"^.......^",
-           (const char *)"    ...  ",
-           (const char *)"    ...  ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  .... ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^        ",
-           (const char *)"  .        ",
-           (const char *)"^.........^",
-           (const char *)"  .....    ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"  .....   ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"  .....  ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"   .....^",
-           (const char *)"^......  ",
-           (const char *)"   ....  ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^.....  ",
-           (const char *)"   ....^",
-           (const char *)"   ...  ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   ... ",
-           (const char *)"^.....^",
-           (const char *)"   ... ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"  ... ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^    ",
-           (const char *)"      .    ",
-           (const char *)"   .....   ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"      .   ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^..... ",
-           (const char *)"   ...^",
-           (const char *)"   ... ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"^.........^",
-           (const char *)"   ...     ",
-           (const char *)"   .       ",
-           (const char *)"   .       ",
-           (const char *)"   ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^      ",
-           (const char *)"^...........^",
-           (const char *)"   .....     ",
-           (const char *)"   .....     ",
-           (const char *)"     ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"^....  ",
-           (const char *)"  ....^",
-           (const char *)"  ...  ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^      ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)" ....    ",
-           (const char *)"^.......^",
-           (const char *)" ....    ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"^....  ",
-           (const char *)"  ....^",
-           (const char *)"  ...  ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^      ",
-           (const char *)"^........   ",
-           (const char *)"     ......^",
-           (const char *)"     ....   ",
-           (const char *)"       ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"  ....    ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"   ...   ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^      ",
-           (const char *)" .      ",
-           (const char *)"^......^",
-           (const char *)" .....  ",
-           (const char *)" .....  ",
-           (const char *)" .      ",
-           (const char *)" .      ",
-           (const char *)" ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^      ",
-           (const char *)"^..........^",
-           (const char *)"    ....    ",
-           (const char *)"    .       ",
-           (const char *)"    ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   .  ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^     ",
-           (const char *)"^...........^",
-           (const char *)"    .....    ",
-           (const char *)"       ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"  ....^",
-           (const char *)"^..... ",
-           (const char *)"  .... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"   .....   ",
-           (const char *)"      .    ",
-           (const char *)"      ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^    ",
-           (const char *)"      .    ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"   ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  ..... ",
-           (const char *)"^......^",
-           (const char *)"  ..... ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"    .  ",
-           (const char *)"  ....^",
-           (const char *)"^..... ",
-           (const char *)"  .... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^     ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"      .    ",
-           (const char *)"      ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^        ",
-           (const char *)"    .        ",
-           (const char *)"    ....     ",
-           (const char *)"^...........^",
-           (const char *)"    ....     ",
-           (const char *)"      ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^     ",
-           (const char *)"^...........^",
-           (const char *)"    .....    ",
-           (const char *)"    .        ",
-           (const char *)"    ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"^.....  ",
-           (const char *)"   ....^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)" ...  ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"  ...^",
-           (const char *)"^.... ",
-           (const char *)"  ... ",
-           (const char *)"   .  ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"    .  ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"    .  ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^       ",
-           (const char *)" .       ",
-           (const char *)"^....    ",
-           (const char *)" .......^",
-           (const char *)" ....    ",
-           (const char *)"  .      ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" .   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)" .   ",
-           (const char *)" .   ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^     ",
-           (const char *)"^.......   ",
-           (const char *)"    ......^",
-           (const char *)"    ....   ",
-           (const char *)"     .     ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"  ..... ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  .... ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"    .  ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^      ",
-           (const char *)"     .      ",
-           (const char *)"^..........^",
-           (const char *)"    ....    ",
-           (const char *)"    ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"    .  ",
-           (const char *)"    .  ",
-           (const char *)"    .  ",
-           (const char *)"^.....^",
-           (const char *)"   ... ",
-           (const char *)"    .  ",
-           (const char *)"    .  ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"   ...   ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"  .....^",
-           (const char *)"^...... ",
-           (const char *)"  ..... ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^   ",
-           (const char *)"     ....  ",
-           (const char *)"^.........^",
-           (const char *)"     ....  ",
-           (const char *)"       .   ",
-           (const char *)"       ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"  ...  ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)" .....  ",
-           (const char *)" .....  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^    ",
-           (const char *)"      .    ",
-           (const char *)"^.........^",
-           (const char *)"     ...   ",
-           (const char *)"      .    ",
-           (const char *)"      ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"   .  ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"  ... ",
-           (const char *)"   .  ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"  ....  ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"^.......^",
-           (const char *)"  ....   ",
-           (const char *)"  ....   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"    ...   ",
-           (const char *)"    ...   ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^....  ",
-           (const char *)"  ....^",
-           (const char *)"  ...  ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"  ...   ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"^........^",
-           (const char *)"    ...   ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^        ",
-           (const char *)"  ........^",
-           (const char *)"^.....     ",
-           (const char *)"  ....     ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)"^.....^",
-           (const char *)" ...   ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"^.........^",
-           (const char *)"  ....     ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"      .   ",
-           (const char *)"      .   ",
-           (const char *)"^........^",
-           (const char *)"     ...  ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^         ",
-           (const char *)"^..........^",
-           (const char *)"  .....     ",
-           (const char *)"    ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^.....  ",
-           (const char *)"   ....^",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"   ..... ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"  ......^",
-           (const char *)"^.....   ",
-           (const char *)"  ....   ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^      ",
-           (const char *)"      .      ",
-           (const char *)"      .      ",
-           (const char *)"^...........^",
-           (const char *)"    .....    ",
-           (const char *)"    .        ",
-           (const char *)"    ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"   ^      ",
            (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"^........^",
-           (const char *)"  ....    ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"   .      ",
-           (const char *)"^.....    ",
+           (const char *)"^......   ",
            (const char *)"  .......^",
-           (const char *)"  ....    ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"^.......^",
-           (const char *)"  ....   ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"  .....    ",
-           (const char *)"^.........^",
-           (const char *)"  .....    ",
-           (const char *)"    .      ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^        ",
-           (const char *)"^.........^",
-           (const char *)"  .....    ",
-           (const char *)"   .       ",
-           (const char *)"   ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"     .    ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^      ",
-           (const char *)"^..........^",
-           (const char *)"  .....     ",
-           (const char *)"   .        ",
-           (const char *)"   .        ",
-           (const char *)"   ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"^.....   ",
-           (const char *)"  ......^",
-           (const char *)"  ....   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^      ",
-           (const char *)"     .      ",
-           (const char *)"     .      ",
-           (const char *)"^..........^",
-           (const char *)"    ....    ",
-           (const char *)"     .      ",
-           (const char *)"     ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   ....^",
-           (const char *)"^...... ",
-           (const char *)"   .... ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)"^.....^",
-           (const char *)" ...   ",
-           (const char *)" ...   ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  ....^",
-           (const char *)"^....  ",
-           (const char *)"  ...  ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"   .....  ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"^.......^",
-           (const char *)" .....   ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"  .....  ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"^.....   ",
-           (const char *)"  ......^",
-           (const char *)"  ....   ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"^.......^",
-           (const char *)"  ...    ",
-           (const char *)"  .      ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  ..... ",
-           (const char *)"^......^",
-           (const char *)"  ..... ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"     .    ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"^......  ",
-           (const char *)"   .....^",
-           (const char *)"   ....  ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"   .  ",
-           (const char *)"   .  ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"  ... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"  .....  ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)" ...    ",
-           (const char *)" .      ",
-           (const char *)" ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^        ",
-           (const char *)"^.........^",
-           (const char *)" .....     ",
-           (const char *)" ^         ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"^.....^",
-           (const char *)" ...   ",
-           (const char *)" ...   ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"   .... ",
-           (const char *)"   .... ",
-           (const char *)"     .  ",
-           (const char *)"     .  ",
-           (const char *)"     ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   ...^",
-           (const char *)"^..... ",
-           (const char *)"   ... ",
-           (const char *)"    .  ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"^...... ",
-           (const char *)"   ....^",
-           (const char *)"   .... ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"  .... ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"  ... ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"^........^",
            (const char *)"  .....   ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)" ...   ",
-           (const char *)"^.....^",
-           (const char *)" ...   ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)"^.....^",
-           (const char *)" ...   ",
-           (const char *)" ...   ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"^.....   ",
-           (const char *)"   .....^",
-           (const char *)"   ...   ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"  ....  ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ..... ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^     ",
-           (const char *)"     .     ",
-           (const char *)"^.........^",
-           (const char *)"     ....  ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^        ",
-           (const char *)"^...........^",
-           (const char *)"    ....     ",
-           (const char *)"     ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^  ",
-           (const char *)"^......^",
-           (const char *)"  ..... ",
-           (const char *)"  ..... ",
-           (const char *)"     ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"  .  ",
-           (const char *)"  .  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" .   ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)" ...    ",
-           (const char *)" ...    ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"  ......^",
-           (const char *)"^......  ",
-           (const char *)"  .....  ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^       ",
-           (const char *)"    .       ",
-           (const char *)"^..........^",
-           (const char *)"   .....    ",
-           (const char *)"      ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^      ",
-           (const char *)"     .      ",
-           (const char *)"^..........^",
-           (const char *)"   ....     ",
-           (const char *)"   .        ",
-           (const char *)"   ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^...... ",
-           (const char *)"   ....^",
-           (const char *)"   .... ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"    .      ",
-           (const char *)"  ........^",
-           (const char *)"^......    ",
-           (const char *)"  .....    ",
-           (const char *)"   ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"   ....  ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"        ^   ",
-           (const char *)"^..........^",
-           (const char *)"       .... ",
-           (const char *)"         .  ",
-           (const char *)"         ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^     ",
-           (const char *)"      .     ",
-           (const char *)"^..........^",
-           (const char *)"    .....   ",
-           (const char *)"      .     ",
-           (const char *)"      ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^    ",
-           (const char *)"^.......   ",
-           (const char *)"    ......^",
-           (const char *)"    ....   ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)" ...  ",
-           (const char *)" .    ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"   .....  ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"      .   ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"   .  ",
-           (const char *)"   .  ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)" ....  ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)" ...  ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"    ......^",
-           (const char *)"^......    ",
-           (const char *)"    ...    ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"  .....   ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
+           (const char *)"  .       ",
            (const char *)"  ^       ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
+           (const char *)"    ^  ",
+           (const char *)"    .  ",
+           (const char *)"    .  ",
+           (const char *)"    .  ",
+           (const char *)"^.....^",
+           (const char *)"   ... ",
+           (const char *)"   .   ",
+           (const char *)"   ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
+           (const char *)"  ^    ",
+           (const char *)"  .    ",
+           (const char *)"  .    ",
+           (const char *)"^.....^",
+           (const char *)"  ...  ",
+           (const char *)"  ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^    ",
-           (const char *)"^.........^",
-           (const char *)"     ..... ",
-           (const char *)"        .  ",
-           (const char *)"        ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" .   ",
-           (const char *)" .   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  .  ",
-           (const char *)"  .  ",
-           (const char *)"  .  ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"^.......^",
-           (const char *)"  ....   ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" .   ",
-           (const char *)" .   ",
-           (const char *)" .   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" .   ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^      ",
-           (const char *)"     .      ",
-           (const char *)"^..........^",
-           (const char *)"   .....    ",
-           (const char *)"      ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
+           (const char *)"  ^    ",
+           (const char *)"  .    ",
+           (const char *)"  ...  ",
+           (const char *)"^.....^",
+           (const char *)"  ...  ",
+           (const char *)"  .    ",
+           (const char *)"  ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"  ^     ",
            (const char *)"  .     ",
-           (const char *)" ......^",
-           (const char *)"^....   ",
-           (const char *)" ....   ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^.....  ",
-           (const char *)"   ....^",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^    ",
-           (const char *)"    .....   ",
-           (const char *)"^..........^",
-           (const char *)"    .....   ",
-           (const char *)"      .     ",
-           (const char *)"      ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^        ",
-           (const char *)"^..........^",
-           (const char *)"   ...      ",
-           (const char *)"   .        ",
-           (const char *)"   ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
            (const char *)"^......^",
-           (const char *)"   ...  ",
+           (const char *)"  ..... ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
            (const char *)"    ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"^.....   ",
-           (const char *)"  ......^",
-           (const char *)"  ....   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"^......  ",
-           (const char *)"  ......^",
-           (const char *)"  .....  ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^     ",
-           (const char *)"     .     ",
-           (const char *)"     .     ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"    .      ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .    ",
-           (const char *)" .    ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)" .    ",
-           (const char *)" .    ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"   .  ",
-           (const char *)"   .  ",
-           (const char *)"   .  ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"   .....  ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"    .... ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"  ^  ",
            (const char *)"^...^",
            (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^     ",
-           (const char *)"^.........^",
-           (const char *)"     ....  ",
-           (const char *)"     .     ",
-           (const char *)"     .     ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"  .....  ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^  ",
-           (const char *)"       .  ",
-           (const char *)"^........^",
-           (const char *)"    ..... ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
            (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
+           (const char *)" ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
@@ -5231,11 +100,285 @@ void rooms_small(Gamep g)
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
            (const char *)"   .    ",
+           (const char *)"   ...  ",
+           (const char *)"^......^",
+           (const char *)"   ...  ",
+           (const char *)"    ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)" .... ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
+           (const char *)"   .    ",
+           (const char *)"   .    ",
+           (const char *)"^......^",
+           (const char *)"   ...  ",
+           (const char *)"   ...  ",
+           (const char *)"    .   ",
+           (const char *)"    ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^    ",
+           (const char *)"    .    ",
+           (const char *)"^.......^",
+           (const char *)"    ...  ",
+           (const char *)"    ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^   ",
+           (const char *)"^......^",
+           (const char *)" .....  ",
+           (const char *)" .....  ",
+           (const char *)" ^      ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^       ",
+           (const char *)"^........^",
+           (const char *)"  .....   ",
+           (const char *)"     ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"  ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)" ..... ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)"^.... ",
+           (const char *)" ....^",
+           (const char *)" .... ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
+           (const char *)"   .    ",
+           (const char *)" ......^",
+           (const char *)"^....   ",
+           (const char *)" ....   ",
+           (const char *)"   .    ",
+           (const char *)"   ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)" .... ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"  ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^   ",
+           (const char *)"   .   ",
+           (const char *)"   .   ",
+           (const char *)"^.....^",
+           (const char *)"  ...  ",
+           (const char *)"  .    ",
+           (const char *)"  .    ",
+           (const char *)"  ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)" ...^",
+           (const char *)"^... ",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)" .... ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)" ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^... ",
+           (const char *)" ...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^    ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)" ....^",
+           (const char *)"^.... ",
+           (const char *)" .... ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^    ",
+           (const char *)" ....^",
+           (const char *)"^.... ",
+           (const char *)" .... ",
+           (const char *)"  ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"    .  ",
+           (const char *)"    .  ",
+           (const char *)"  ....^",
+           (const char *)"^..... ",
+           (const char *)"  .... ",
+           (const char *)"    .  ",
+           (const char *)"    .  ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^   ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^      ",
+           (const char *)"   .      ",
+           (const char *)"  .......^",
+           (const char *)"^.....    ",
+           (const char *)"  ....    ",
+           (const char *)"   .      ",
+           (const char *)"   ^      ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)" ..... ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)" ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"  ...  ",
+           (const char *)"^.....^",
+           (const char *)"  ...  ",
+           (const char *)"   .   ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
+           (const char *)"   .    ",
+           (const char *)"   .    ",
+           (const char *)"   ...  ",
+           (const char *)"^......^",
+           (const char *)"   ...  ",
            (const char *)"   ^    ",
            nullptr);
 
@@ -5244,6 +387,372 @@ void rooms_small(Gamep g)
            (const char *)"^...^",
            (const char *)" ... ",
            (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
+           (const char *)"   .    ",
+           (const char *)"   .    ",
+           (const char *)"   .    ",
+           (const char *)"^......^",
+           (const char *)"  ...   ",
+           (const char *)"   .    ",
+           (const char *)"   ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)"^....^",
+           (const char *)" ...  ",
+           (const char *)" .    ",
+           (const char *)" .    ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)" ..... ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"      ^   ",
+           (const char *)"      .   ",
+           (const char *)"     ....^",
+           (const char *)"^........ ",
+           (const char *)"     .... ",
+           (const char *)"       .  ",
+           (const char *)"       .  ",
+           (const char *)"       ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)" ...^",
+           (const char *)"^... ",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"^...   ",
+           (const char *)" .....^",
+           (const char *)" ...   ",
+           (const char *)"  .    ",
+           (const char *)"  ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
+           (const char *)"   .    ",
+           (const char *)"   .    ",
+           (const char *)"^......^",
+           (const char *)"   ...  ",
+           (const char *)"   ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"       ^    ",
+           (const char *)"^..........^",
+           (const char *)"    .....   ",
+           (const char *)"     ^      ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^   ",
+           (const char *)" .....^",
+           (const char *)"^..... ",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
+           (const char *)"   .    ",
+           (const char *)"^....   ",
+           (const char *)"  .....^",
+           (const char *)"  ...   ",
+           (const char *)"   .    ",
+           (const char *)"   .    ",
+           (const char *)"   ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"     ^   ",
+           (const char *)"^.......^",
+           (const char *)"   ..... ",
+           (const char *)"      .  ",
+           (const char *)"      .  ",
+           (const char *)"      .  ",
+           (const char *)"      ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^... ",
+           (const char *)" ...^",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)" ....^",
+           (const char *)"^.... ",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^      ",
+           (const char *)"  .      ",
+           (const char *)"  .      ",
+           (const char *)"^.......^",
+           (const char *)"  ....   ",
+           (const char *)"  .      ",
+           (const char *)"  ^      ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^    ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^      ",
+           (const char *)"   .      ",
+           (const char *)"^........^",
+           (const char *)"   ....   ",
+           (const char *)"     .    ",
+           (const char *)"     .    ",
+           (const char *)"     ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)" ....^",
+           (const char *)"^.... ",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^   ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"   ....^",
+           (const char *)"^.....  ",
+           (const char *)"   ...  ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"    ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^    ",
+           (const char *)"    .    ",
+           (const char *)"^.......^",
+           (const char *)"  .....  ",
+           (const char *)"    .    ",
+           (const char *)"    .    ",
+           (const char *)"    ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^   ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^   ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"  ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^     ",
+           (const char *)"  .     ",
+           (const char *)"  ....  ",
+           (const char *)"^......^",
+           (const char *)"  ....  ",
+           (const char *)"  .     ",
+           (const char *)"  .     ",
+           (const char *)"  ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^      ",
+           (const char *)"  .      ",
+           (const char *)"  ......^",
+           (const char *)"^......  ",
+           (const char *)"  .....  ",
+           (const char *)"     .   ",
+           (const char *)"     ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)" ... ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)" .....^",
+           (const char *)"^..... ",
+           (const char *)" ..... ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^   ",
+           (const char *)" ..... ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)" ..... ",
+           (const char *)"  ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)" .... ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"  ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^   ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"^......^",
+           (const char *)"   ...  ",
+           (const char *)"   ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"     ^    ",
+           (const char *)"^........^",
+           (const char *)"   .....  ",
+           (const char *)"    .     ",
+           (const char *)"    ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"  .    ",
+           (const char *)"  .    ",
+           (const char *)"  .    ",
+           (const char *)" .....^",
+           (const char *)"^....  ",
+           (const char *)" ....  ",
+           (const char *)" .     ",
+           (const char *)" ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
+           (const char *)"   .    ",
+           (const char *)"^......^",
+           (const char *)"  ...   ",
+           (const char *)"   .    ",
+           (const char *)"   .    ",
+           (const char *)"   .    ",
+           (const char *)"   ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^     ",
+           (const char *)"   .     ",
+           (const char *)"^.......^",
+           (const char *)"  ....   ",
+           (const char *)"   ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^      ",
+           (const char *)"  .      ",
+           (const char *)"^.....   ",
+           (const char *)"  ......^",
+           (const char *)"  ....   ",
+           (const char *)"    .    ",
+           (const char *)"    .    ",
+           (const char *)"    ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
@@ -5252,200 +761,84 @@ void rooms_small(Gamep g)
            (const char *)"   .     ",
            (const char *)"^.......^",
            (const char *)"  ...    ",
-           (const char *)"  ^      ",
+           (const char *)"   .     ",
+           (const char *)"   ^     ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^     ",
-           (const char *)"^..........^",
-           (const char *)"    .....   ",
-           (const char *)"      .     ",
-           (const char *)"      ^     ",
+           (const char *)"    ^     ",
+           (const char *)"    .     ",
+           (const char *)"  ....    ",
+           (const char *)"^........^",
+           (const char *)"  ....    ",
+           (const char *)"  .       ",
+           (const char *)"  .       ",
+           (const char *)"  ^       ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)"  .   ",
+           (const char *)"^....^",
+           (const char *)"  ... ",
+           (const char *)"  .   ",
+           (const char *)"  .   ",
+           (const char *)"  ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)"^... ",
+           (const char *)" ...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"  ^    ",
+           (const char *)"  .    ",
            (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"  ....  ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"^.....  ",
-           (const char *)"   ....^",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"    .  ",
-           (const char *)"  ....^",
-           (const char *)"^..... ",
-           (const char *)"  .... ",
+           (const char *)"  ...  ",
+           (const char *)"  ...  ",
            (const char *)"   .   ",
            (const char *)"   ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"    ...  ",
-           (const char *)"    ...  ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
+           (const char *)"  ^  ",
+           (const char *)" ... ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)" ^   ",
-           (const char *)" ...^",
            (const char *)"^... ",
+           (const char *)" ...^",
            (const char *)" ... ",
            (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^    ",
-           (const char *)"^......... ",
-           (const char *)"     .....^",
-           (const char *)"     ..... ",
-           (const char *)"      .    ",
-           (const char *)"      ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"^......   ",
-           (const char *)"   ......^",
-           (const char *)"   ....   ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^     ",
-           (const char *)"   .......^",
-           (const char *)"^.......   ",
-           (const char *)"   .....   ",
-           (const char *)"      .    ",
-           (const char *)"      ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"   .  ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .....^",
-           (const char *)"^.....   ",
-           (const char *)"   ...   ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)" ^   ",
-           (const char *)" .   ",
-           (const char *)" ... ",
            (const char *)"^...^",
            (const char *)" ... ",
-           (const char *)"  .  ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
+           (const char *)" ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
@@ -5454,21 +847,22 @@ void rooms_small(Gamep g)
            (const char *)"  .      ",
            (const char *)"^.......^",
            (const char *)" .....   ",
+           (const char *)"    .    ",
+           (const char *)"    ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^    ",
+           (const char *)"    .    ",
+           (const char *)"    .    ",
+           (const char *)"^.......^",
+           (const char *)" .....   ",
+           (const char *)" .       ",
            (const char *)" .       ",
            (const char *)" ^       ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"      .   ",
-           (const char *)"      .   ",
-           (const char *)"^........^",
-           (const char *)"    ..... ",
-           (const char *)"    ..... ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)" ^     ",
            (const char *)"^.....^",
            (const char *)" ..... ",
@@ -5476,378 +870,506 @@ void rooms_small(Gamep g)
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"    ....  ",
-           (const char *)"^........^",
-           (const char *)"    ....  ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
+           (const char *)"  ^  ",
            (const char *)"^...^",
            (const char *)" ... ",
-           (const char *)"  ^  ",
+           (const char *)" ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
+           (const char *)"  ^   ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"   ^  ",
+           (const char *)"   .  ",
+           (const char *)"^.... ",
+           (const char *)" ....^",
+           (const char *)" .... ",
+           (const char *)" .    ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)" ...^",
+           (const char *)"^... ",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)" .... ",
            (const char *)"^....^",
            (const char *)" .... ",
            (const char *)" ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    ...  ",
-           (const char *)"^.......^",
-           (const char *)"    ...  ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
+           (const char *)" ^   ",
+           (const char *)" ... ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"  ^  ",
+           (const char *)" ... ",
            (const char *)"^...^",
            (const char *)" ... ",
            (const char *)"  ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"  ..... ",
-           (const char *)"  ..... ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
+           (const char *)"   ^   ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"   ^  ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
+           (const char *)"^....^",
            (const char *)" .... ",
            (const char *)"   ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
+           (const char *)"  ^   ",
+           (const char *)" .... ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"  ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ...  ",
+           (const char *)"   ^   ",
            (const char *)"^.....^",
            (const char *)"  ...  ",
+           (const char *)"  ...  ",
+           (const char *)"   .   ",
            (const char *)"   .   ",
            (const char *)"   ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
+           (const char *)"^....^",
+           (const char *)" .... ",
            (const char *)" .... ",
            (const char *)" ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)" .....^",
+           (const char *)"^..... ",
+           (const char *)" ..... ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^   ",
+           (const char *)"    .   ",
+           (const char *)"^.....  ",
+           (const char *)"   ....^",
+           (const char *)"   ...  ",
+           (const char *)"   .    ",
+           (const char *)"   ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)" ...^",
+           (const char *)"^... ",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"  .    ",
+           (const char *)"^.....^",
+           (const char *)"  ...  ",
+           (const char *)"  ...  ",
+           (const char *)"   .   ",
+           (const char *)"   .   ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)" ....^",
+           (const char *)"^.... ",
+           (const char *)" .... ",
+           (const char *)"  ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^    ",
+           (const char *)" .    ",
+           (const char *)" .    ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"  .   ",
+           (const char *)"  ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^  ",
+           (const char *)"   .  ",
+           (const char *)"   .  ",
+           (const char *)"   .  ",
+           (const char *)"^.... ",
+           (const char *)" ....^",
+           (const char *)" .... ",
+           (const char *)"   .  ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"    ^    ",
-           (const char *)"    .    ",
            (const char *)"    .    ",
            (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
+           (const char *)"  ....   ",
+           (const char *)"  ....   ",
+           (const char *)"  .      ",
+           (const char *)"  ^      ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
+           (const char *)"     ^   ",
+           (const char *)"   ..... ",
+           (const char *)"^.......^",
+           (const char *)"   ..... ",
+           (const char *)"     ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"         ^   ",
-           (const char *)"^...........^",
-           (const char *)"      .....  ",
-           (const char *)"        .    ",
-           (const char *)"        ^    ",
+           (const char *)" ^     ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"  ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"  .  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  .  ",
-           (const char *)"  ^  ",
+           (const char *)"      ^    ",
+           (const char *)"      .    ",
+           (const char *)"^.........^",
+           (const char *)"    ....   ",
+           (const char *)"      ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"    ^  ",
            (const char *)"^.....^",
-           (const char *)" ..... ",
+           (const char *)"   ... ",
+           (const char *)"   .   ",
            (const char *)"   ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ..... ",
-           (const char *)"    ^    ",
+           (const char *)"  ^   ",
+           (const char *)"^.... ",
+           (const char *)" ....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
+           (const char *)"     ^      ",
+           (const char *)"     .      ",
+           (const char *)"     .      ",
+           (const char *)"    ....    ",
+           (const char *)"^..........^",
+           (const char *)"    ....    ",
+           (const char *)"    ^       ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^    ",
+           (const char *)" .... ",
            (const char *)"^....^",
            (const char *)" .... ",
            (const char *)" ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"^.......  ",
-           (const char *)"   ......^",
-           (const char *)"   .....  ",
-           (const char *)"   ^      ",
+           (const char *)"  ^   ",
+           (const char *)" .... ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^     ",
+           (const char *)" .     ",
+           (const char *)"^.....^",
+           (const char *)" ...   ",
+           (const char *)" .     ",
+           (const char *)" .     ",
+           (const char *)" .     ",
+           (const char *)" ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"  .    ",
+           (const char *)"  .    ",
+           (const char *)"^.....^",
+           (const char *)" ....  ",
+           (const char *)" ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^     ",
+           (const char *)"   .     ",
+           (const char *)"   .     ",
+           (const char *)"^.......^",
+           (const char *)" ....    ",
+           (const char *)"  .      ",
+           (const char *)"  ^      ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^... ",
+           (const char *)" ...^",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)" ..... ",
+           (const char *)"   ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^     ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"  ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)" ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^    ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"  ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^       ",
+           (const char *)"   .......^",
+           (const char *)"^......    ",
+           (const char *)"   ....    ",
+           (const char *)"   .       ",
+           (const char *)"   ^       ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^     ",
+           (const char *)"  .     ",
+           (const char *)"^......^",
+           (const char *)"  ...   ",
+           (const char *)"  ...   ",
+           (const char *)"  .     ",
+           (const char *)"  ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^    ",
+           (const char *)"^.......^",
+           (const char *)"   ..... ",
+           (const char *)"     .   ",
+           (const char *)"     ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^   ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^     ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"  ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)" ...^",
+           (const char *)"^... ",
+           (const char *)" ... ",
+           (const char *)" ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ... ",
+           (const char *)" ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"     ^     ",
-           (const char *)"     .     ",
-           (const char *)"     .     ",
-           (const char *)"    ......^",
-           (const char *)"^........  ",
+           (const char *)"^.........^",
+           (const char *)"    ...    ",
+           (const char *)"    .      ",
+           (const char *)"    .      ",
+           (const char *)"    ^      ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"  ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^    ",
+           (const char *)"   .    ",
+           (const char *)"^......^",
+           (const char *)"  ....  ",
+           (const char *)"  ....  ",
+           (const char *)"  .     ",
+           (const char *)"  .     ",
+           (const char *)"  ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"     ^    ",
+           (const char *)"    .....^",
+           (const char *)"^.......  ",
+           (const char *)"    ....  ",
+           (const char *)"      .   ",
+           (const char *)"      ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"     ^     ",
+           (const char *)"    .....  ",
+           (const char *)"^.........^",
            (const char *)"    .....  ",
            (const char *)"     ^     ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
+           (const char *)" ^    ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)" ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^     ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ^      ",
+           (const char *)"   .      ",
            (const char *)"^........^",
-           (const char *)"    ....  ",
-           (const char *)"    ....  ",
+           (const char *)"   .....  ",
+           (const char *)"    .     ",
            (const char *)"    ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^    ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"  ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"    ^  ",
-           (const char *)" ..... ",
            (const char *)"^.....^",
            (const char *)" ..... ",
            (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^       ",
-           (const char *)" .       ",
-           (const char *)"^.......^",
-           (const char *)" .....   ",
-           (const char *)" .....   ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  ...^",
-           (const char *)"^.... ",
-           (const char *)"  ... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"^...     ",
-           (const char *)" .......^",
-           (const char *)" ...     ",
-           (const char *)" .       ",
-           (const char *)" .       ",
-           (const char *)" ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^    ",
-           (const char *)"      .    ",
-           (const char *)"^.........^",
-           (const char *)"    ....   ",
-           (const char *)"      .    ",
-           (const char *)"      ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"  ....   ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"   .       ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"   .       ",
-           (const char *)"   ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^      ",
-           (const char *)" .      ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)" ....   ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"  ^     ",
+           (const char *)"  .     ",
            (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)" .      ",
-           (const char *)" ^      ",
+           (const char *)"  ....  ",
+           (const char *)"    ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
+           (const char *)"  ^       ",
+           (const char *)"  .       ",
+           (const char *)"^.....    ",
+           (const char *)"  .......^",
+           (const char *)"  ....    ",
+           (const char *)"    ^     ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
+           (const char *)"      ^   ",
+           (const char *)"      .   ",
+           (const char *)"^........^",
+           (const char *)"     .... ",
+           (const char *)"       .  ",
+           (const char *)"       ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"       ^    ",
+           (const char *)"       .    ",
+           (const char *)"       .    ",
+           (const char *)"    .......^",
+           (const char *)"^........   ",
+           (const char *)"    .....   ",
+           (const char *)"    .       ",
+           (const char *)"    .       ",
+           (const char *)"    ^       ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
@@ -5855,217 +1377,211 @@ void rooms_small(Gamep g)
            (const char *)"    .  ",
            (const char *)"^.....^",
            (const char *)"  .... ",
+           (const char *)"  .... ",
            (const char *)"   .   ",
            (const char *)"   .   ",
            (const char *)"   ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"   .....^",
-           (const char *)"^....... ",
-           (const char *)"   ..... ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^.....  ",
-           (const char *)"   ....^",
-           (const char *)"   ...  ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^    ",
-           (const char *)"       .    ",
-           (const char *)"       .    ",
-           (const char *)"^..........^",
-           (const char *)"    .....   ",
-           (const char *)"     .      ",
-           (const char *)"     ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"   ...  ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^      ",
-           (const char *)"    .      ",
-           (const char *)"    .      ",
-           (const char *)"    ......^",
-           (const char *)"^......    ",
-           (const char *)"    ...    ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^......   ",
-           (const char *)"   ......^",
-           (const char *)"   ....   ",
-           (const char *)"     .    ",
+           (const char *)"      ^   ",
+           (const char *)"      .   ",
+           (const char *)"    .....^",
+           (const char *)"^.......  ",
+           (const char *)"    ....  ",
            (const char *)"     ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
+           (const char *)" ^   ",
+           (const char *)" ...^",
+           (const char *)"^... ",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^   ",
+           (const char *)"  .   ",
+           (const char *)" ...  ",
+           (const char *)"^....^",
+           (const char *)" ...  ",
+           (const char *)"  ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^    ",
            (const char *)"^.......^",
-           (const char *)" ....    ",
+           (const char *)"    ...  ",
+           (const char *)"     .   ",
+           (const char *)"     ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)"^.....^",
+           (const char *)" ..... ",
+           (const char *)" ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"     ^      ",
+           (const char *)"^..........^",
+           (const char *)"    ....    ",
+           (const char *)"    .       ",
+           (const char *)"    .       ",
+           (const char *)"    ^       ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"       ^  ",
+           (const char *)"^........^",
+           (const char *)"     .... ",
+           (const char *)"      .   ",
+           (const char *)"      .   ",
+           (const char *)"      ^   ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^     ",
+           (const char *)"  .     ",
+           (const char *)"  .....^",
+           (const char *)"^....   ",
+           (const char *)"  ...   ",
+           (const char *)"  .     ",
+           (const char *)"  ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^       ",
+           (const char *)" ...     ",
+           (const char *)"^.......^",
+           (const char *)" ...     ",
            (const char *)" .       ",
            (const char *)" ^       ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
+           (const char *)"  ^     ",
+           (const char *)"  .....^",
+           (const char *)"^.....  ",
+           (const char *)"  ....  ",
+           (const char *)"    .   ",
+           (const char *)"    ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"    ^     ",
+           (const char *)"    ^       ",
+           (const char *)"    .       ",
+           (const char *)"^..........^",
+           (const char *)"   .....    ",
+           (const char *)"    .       ",
+           (const char *)"    ^       ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   ....  ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
+           (const char *)"    ^  ",
            (const char *)"^.....^",
            (const char *)" ..... ",
-           (const char *)" ^     ",
+           (const char *)"  ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
+           (const char *)"  ^     ",
+           (const char *)"^....   ",
+           (const char *)"  .....^",
+           (const char *)"  ...   ",
+           (const char *)"  .     ",
+           (const char *)"  .     ",
+           (const char *)"  ^     ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^   ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"^......^",
+           (const char *)"   ...  ",
+           (const char *)"   .    ",
+           (const char *)"   ^    ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"      ^  ",
+           (const char *)"      .  ",
+           (const char *)"   .....^",
+           (const char *)"^....... ",
+           (const char *)"   ..... ",
+           (const char *)"      .  ",
+           (const char *)"      ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^      ",
            (const char *)"  ......^",
            (const char *)"^......  ",
            (const char *)"  .....  ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
+           (const char *)"     .   ",
+           (const char *)"     ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
+           (const char *)"    ^      ",
+           (const char *)"    .      ",
+           (const char *)"^.........^",
+           (const char *)"   .....   ",
+           (const char *)"    ^      ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
+           (const char *)"   ^  ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"    ^  ",
+           (const char *)" .....^",
+           (const char *)"^..... ",
            (const char *)" ..... ",
-           (const char *)" ^     ",
+           (const char *)"    ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"  ^  ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^      ",
+           (const char *)" .      ",
+           (const char *)"^....   ",
+           (const char *)" ......^",
+           (const char *)" ....   ",
+           (const char *)" .      ",
+           (const char *)" .      ",
+           (const char *)" .      ",
+           (const char *)" ^      ",
+           nullptr);
+
+  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" ^   ",
+           (const char *)"^...^",
+           (const char *)" ... ",
+           (const char *)" ... ",
+           (const char *)"  ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
@@ -6077,293 +1593,36 @@ void rooms_small(Gamep g)
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"    ^     ",
+           (const char *)"    .     ",
            (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"   ^      ",
+           (const char *)"   ....   ",
+           (const char *)"     ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
+           (const char *)" ^    ",
+           (const char *)" .... ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
+           (const char *)"     ^   ",
+           (const char *)"     .   ",
+           (const char *)"     .   ",
+           (const char *)"^......  ",
+           (const char *)"  ......^",
+           (const char *)"  .....  ",
+           (const char *)"    .    ",
+           (const char *)"    ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"      ^      ",
-           (const char *)"      .      ",
            (const char *)"^...........^",
-           (const char *)"   .....     ",
-           (const char *)"   ^         ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)"^.....^",
-           (const char *)" ...   ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" .     ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
-           (const char *)"  ... ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^       ",
-           (const char *)"^........^",
-           (const char *)" ....     ",
-           (const char *)" ....     ",
-           (const char *)" .        ",
-           (const char *)" ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ...   ",
-           (const char *)"^........^",
-           (const char *)"    ...   ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^        ",
-           (const char *)"   .        ",
-           (const char *)"^..........^",
-           (const char *)"   .....    ",
-           (const char *)"   ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"   ....    ",
-           (const char *)"^.........^",
-           (const char *)"   ....    ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"   .  ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^...  ",
-           (const char *)" ....^",
-           (const char *)" ...  ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)" .....    ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^     ",
-           (const char *)"     .     ",
-           (const char *)"^.........^",
-           (const char *)"   ....    ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"   ...    ",
-           (const char *)"   ...    ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"^.........^",
-           (const char *)"  .....    ",
-           (const char *)"  .        ",
-           (const char *)"  ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
+           (const char *)"    .....    ",
+           (const char *)"     ^       ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
@@ -6371,139 +1630,7 @@ void rooms_small(Gamep g)
            (const char *)" ...^",
            (const char *)"^... ",
            (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"   .       ",
-           (const char *)"^.........^",
-           (const char *)" .....     ",
-           (const char *)"    .      ",
-           (const char *)"    .      ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^       ",
-           (const char *)"^......   ",
-           (const char *)"  .......^",
-           (const char *)"  .....   ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)" .....  ",
-           (const char *)" .....  ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^      ",
-           (const char *)"^......^",
-           (const char *)" .....  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
            (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"^.......^",
-           (const char *)"    .... ",
-           (const char *)"      .  ",
-           (const char *)"      .  ",
-           (const char *)"      ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
@@ -6514,1594 +1641,72 @@ void rooms_small(Gamep g)
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)" .....    ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
+           (const char *)"  ^     ",
+           (const char *)"  .     ",
+           (const char *)"  .     ",
+           (const char *)"^......^",
+           (const char *)"  ..... ",
+           (const char *)"    .   ",
+           (const char *)"    ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
+           (const char *)"  ^     ",
+           (const char *)"  .     ",
+           (const char *)"  .     ",
+           (const char *)"  .     ",
            (const char *)"  .....^",
-           (const char *)"^....   ",
-           (const char *)"  ...   ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
+           (const char *)"^...... ",
+           (const char *)"  ..... ",
+           (const char *)"    .   ",
+           (const char *)"    ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)" ^    ",
            (const char *)"^....^",
            (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"  ....    ",
-           (const char *)"^........^",
-           (const char *)"  ....    ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)" .... ",
            (const char *)"  ^   ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"^.......^",
-           (const char *)"   ..... ",
-           (const char *)"     ^   ",
+           (const char *)"     ^     ",
+           (const char *)"     .     ",
+           (const char *)"^.........^",
+           (const char *)"   .....   ",
+           (const char *)"   ^       ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
+           (const char *)" ^   ",
            (const char *)"^...^",
-           (const char *)" ... ",
            (const char *)" ... ",
            (const char *)" ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
+           (const char *)"  ^   ",
+           (const char *)"^....^",
+           (const char *)" .... ",
+           (const char *)"   ^  ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
+           (const char *)"    ^   ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"^......^",
+           (const char *)"   ...  ",
+           (const char *)"    .   ",
+           (const char *)"    .   ",
+           (const char *)"    ^   ",
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
            (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)"  ... ",
            (const char *)"   .  ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"   .      ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"   ....   ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"   ......^",
-           (const char *)"^......   ",
-           (const char *)"   ....   ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   ...    ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .    ",
-           (const char *)" .    ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)" .    ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^     ",
-           (const char *)"^..........^",
-           (const char *)"    ....    ",
-           (const char *)"    .       ",
-           (const char *)"    ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"^.......^",
-           (const char *)"    .... ",
-           (const char *)"    .... ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"  .....   ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"^........^",
-           (const char *)"  ....    ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^        ",
-           (const char *)"^....     ",
-           (const char *)" ........^",
-           (const char *)" ....     ",
-           (const char *)"  ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"  ........^",
-           (const char *)"^......    ",
-           (const char *)"  .....    ",
-           (const char *)"  .        ",
-           (const char *)"  .        ",
-           (const char *)"  ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"  .....  ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"  ...   ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)" ....   ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ...^",
-           (const char *)"^..... ",
-           (const char *)"   ... ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"^........^",
-           (const char *)"   ...    ",
-           (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^       ",
-           (const char *)"^.......^",
-           (const char *)" .....   ",
-           (const char *)" .....   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"   ....  ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^     ",
-           (const char *)"      .     ",
-           (const char *)"^..........^",
-           (const char *)"    .....   ",
-           (const char *)"    .       ",
-           (const char *)"    .       ",
-           (const char *)"    ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)" ....    ",
-           (const char *)"^.......^",
-           (const char *)" ....    ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)" .    ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"  .....  ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"  .      ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"   .... ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"       ^      ",
-           (const char *)"^............^",
-           (const char *)"     .....    ",
-           (const char *)"       ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^      ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"^.....   ",
-           (const char *)" .......^",
-           (const char *)" .....   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^    ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"   .....   ",
-           (const char *)"    .      ",
-           (const char *)"    ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^      ",
-           (const char *)" .      ",
-           (const char *)"^.....  ",
-           (const char *)" ......^",
-           (const char *)" .....  ",
-           (const char *)" .      ",
-           (const char *)" ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"   .....^",
-           (const char *)"^....... ",
-           (const char *)"   ..... ",
-           (const char *)"     .   ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"^.......^",
-           (const char *)"  .....  ",
-           (const char *)"  .....  ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"  .      ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)" .......^",
-           (const char *)"^.....   ",
-           (const char *)" .....   ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^       ",
-           (const char *)"  .       ",
-           (const char *)"  .......^",
-           (const char *)"^......   ",
-           (const char *)"  .....   ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)" .....   ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^       ",
-           (const char *)"    .       ",
-           (const char *)"^..........^",
-           (const char *)"   .....    ",
-           (const char *)"      ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^.......  ",
-           (const char *)"   ......^",
-           (const char *)"   .....  ",
-           (const char *)"     .    ",
-           (const char *)"     ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"  ....  ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^         ",
-           (const char *)"^............^",
-           (const char *)"    ....      ",
-           (const char *)"      ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^     ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^...   ",
-           (const char *)" .....^",
-           (const char *)" ...   ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"    .    ",
-           (const char *)"   .....^",
-           (const char *)"^.....   ",
-           (const char *)"   ...   ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^.....    ",
-           (const char *)" ........^",
-           (const char *)" .....    ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)" ....   ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"^.....  ",
-           (const char *)"   ....^",
-           (const char *)"   ...  ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^  ",
-           (const char *)"^.......^",
-           (const char *)"   ..... ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"  .    ",
-           (const char *)"  .    ",
-           (const char *)"  ...  ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^        ",
-           (const char *)"   .        ",
-           (const char *)"   .        ",
-           (const char *)"^..........^",
-           (const char *)"   ....     ",
-           (const char *)"   .        ",
-           (const char *)"   ^        ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)" .    ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)" .    ",
-           (const char *)" .    ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"  .... ",
-           (const char *)"^.....^",
-           (const char *)"  .... ",
-           (const char *)"  .    ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"^....^",
-           (const char *)" ...  ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)"  ...   ",
-           (const char *)"   .    ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^    ",
-           (const char *)"   .    ",
-           (const char *)"^......^",
-           (const char *)"   .... ",
-           (const char *)"   .    ",
-           (const char *)"   ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ....  ",
-           (const char *)"    .    ",
-           (const char *)"    ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)" ....^",
-           (const char *)"^.... ",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"   .       ",
-           (const char *)"^.........^",
-           (const char *)"  .....    ",
-           (const char *)"     .     ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"^.....  ",
-           (const char *)" ......^",
-           (const char *)" .....  ",
-           (const char *)" ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"  ......^",
-           (const char *)"^.....   ",
-           (const char *)"  ....   ",
-           (const char *)"  .      ",
-           (const char *)"  ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^     ",
-           (const char *)"   .     ",
-           (const char *)"   .     ",
-           (const char *)"^.......^",
-           (const char *)"   ...   ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)" .     ",
-           (const char *)"^.....^",
-           (const char *)" ....  ",
-           (const char *)" .     ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^     ",
-           (const char *)"^..........^",
-           (const char *)"    ....    ",
-           (const char *)"    ^       ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)"  .   ",
-           (const char *)"  .   ",
+           (const char *)"   .  ",
            (const char *)"^....^",
            (const char *)"  ... ",
            (const char *)"  ... ",
@@ -8111,343 +1716,10 @@ void rooms_small(Gamep g)
            nullptr);
 
   room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"^......   ",
-           (const char *)"  .......^",
-           (const char *)"  .....   ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" ..... ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^     ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^     ",
-           (const char *)"  .     ",
-           (const char *)"  .     ",
-           (const char *)"^......^",
-           (const char *)"  ....  ",
-           (const char *)"  .     ",
-           (const char *)"  ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^  ",
-           (const char *)"^.... ",
-           (const char *)" ....^",
-           (const char *)" .... ",
-           (const char *)"  ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"   .....^",
-           (const char *)"^......  ",
-           (const char *)"   ....  ",
-           (const char *)"   .     ",
            (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^   ",
-           (const char *)"      .   ",
-           (const char *)"      .   ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"      ^     ",
-           (const char *)"^..........^",
-           (const char *)"    .....   ",
-           (const char *)"     .      ",
-           (const char *)"     ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"  .....   ",
-           (const char *)"^........^",
-           (const char *)"  .....   ",
-           (const char *)"   .      ",
-           (const char *)"   ^      ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"  ...  ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^   ",
-           (const char *)"     .   ",
-           (const char *)"     .   ",
            (const char *)"^.......^",
-           (const char *)"    ...  ",
-           (const char *)"     ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"^..... ",
-           (const char *)" .....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"  ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^   ",
-           (const char *)" .... ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)"   ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^   ",
-           (const char *)"    .   ",
-           (const char *)"^......^",
-           (const char *)"   ...  ",
-           (const char *)"    .   ",
-           (const char *)"    ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ...^",
-           (const char *)"^... ",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^       ",
-           (const char *)"^.........^",
-           (const char *)"   .....   ",
-           (const char *)"   .....   ",
-           (const char *)"     .     ",
-           (const char *)"     ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)" ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^    ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"   ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"   .      ",
-           (const char *)"   ....   ",
-           (const char *)"^........^",
-           (const char *)"   ....   ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^      ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)"^.....^",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
+           (const char *)"   ..... ",
            (const char *)"    ^    ",
-           (const char *)"    .    ",
-           (const char *)"^.......^",
-           (const char *)"  ....   ",
-           (const char *)"   .     ",
-           (const char *)"   ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^   ",
-           (const char *)" ... ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)"  ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"  ^  ",
-           (const char *)"^... ",
-           (const char *)" ...^",
-           (const char *)" ... ",
-           (const char *)" ^   ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"    ^  ",
-           (const char *)" .....^",
-           (const char *)"^..... ",
-           (const char *)" ..... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)" ^    ",
-           (const char *)"^....^",
-           (const char *)" .... ",
-           (const char *)" .... ",
-           (const char *)" ^    ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"   ^   ",
-           (const char *)"   .   ",
-           (const char *)"   .   ",
-           (const char *)"^.....^",
-           (const char *)"   ... ",
-           (const char *)"   ... ",
-           (const char *)"    ^  ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"^........^",
-           (const char *)"   .....  ",
-           (const char *)"    .     ",
-           (const char *)"    .     ",
-           (const char *)"    ^     ",
-           nullptr);
-
-  room_add(g, false /* check */, __FUNCTION__, __LINE__,
-           (const char *)"     ^    ",
-           (const char *)"     .    ",
-           (const char *)"     .    ",
-           (const char *)"^........^",
-           (const char *)"    ....  ",
-           (const char *)"    ....  ",
-           (const char *)"      .   ",
-           (const char *)"      ^   ",
            nullptr);
 
   /* clang-format on */
