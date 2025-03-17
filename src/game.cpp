@@ -164,14 +164,14 @@ public:
   Config config;
 
   //
-  // All randomness jumps off of this.
-  //
-  uint32_t seed {};
-
-  //
   // Human readable version of the above seed.
   //
   std::string seed_name {};
+
+  //
+  // All randomness jumps off of this.
+  //
+  uint32_t seed_num {};
 
   //
   // Seed has been manually set, so stick with it
@@ -375,10 +375,21 @@ void Game::set_seed(void)
     seed_name = random_name(SIZEOF("4294967295") - 1);
   }
 
-  seed = string_to_hash(seed_name);
+  //
+  // If a number, use that as the seed, else convert the string to hash number
+  //
+  char *p;
+  seed_num = strtol(seed_name.c_str(), &p, 10);
+  if (*p) {
+    //
+    // Conversion failed, not a number
+    //
+    seed_num = string_to_hash(seed_name);
+  }
+  seed_num = 1243354;
 
-  LOG("Set seed, name '%s', seed %u", seed_name.c_str(), seed);
-  pcg_srand(seed);
+  LOG("Set seed, name '%s', seed %u", seed_name.c_str(), seed_num);
+  pcg_srand(seed_num);
 }
 
 void game_set_seed(Gamep g)
@@ -399,17 +410,7 @@ uint32_t game_get_seed_num(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  return g->seed;
-}
-
-void game_set_seed_for_thread(Gamep g, uint32_t seed)
-{
-  TRACE_NO_INDENT();
-
-  //
-  // Not saved in the class and is thread local
-  //
-  pcg_srand(seed);
+  return g->seed_num;
 }
 
 void Game::create_levels(void)

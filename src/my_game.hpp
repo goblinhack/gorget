@@ -243,7 +243,6 @@ void        game_save_snapshot(Gamep);
 void        game_save_snapshot_check(Gamep);
 void        game_set_currently_saving_snapshot(Gamep);
 void        game_set_seed(Gamep);
-void        game_set_seed_for_thread(Gamep, uint32_t seed);
 void        game_start_playing(Gamep);
 void        game_state_change(Gamep, uint8_t state, const char *);
 void        game_state_reset(Gamep, const char *);

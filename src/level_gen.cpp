@@ -20,13 +20,13 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 1;
+static const int MAX_LEVELS                        = 100;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000;
-static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 200;
+static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 10000;
 static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 6;
 static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = 100;
 static const int MIN_LEVEL_EXIT_DISTANCE           = MAP_WIDTH / 4;
-static const int MIN_LEVEL_ROOM_COUNT              = 5;
+static const int MIN_LEVEL_ROOM_COUNT              = 10;
 static const int LEVEL_WATER_GEN_PROB              = 1200;
 
 class Cell;
@@ -1009,8 +1009,8 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
       }
     }
 
-    if (0) {
-      level_gen_dump(g, l);
+    if (unlikely(debug)) {
+      level_gen_dump(g, l, "placed another room");
     }
 
     //
@@ -1040,18 +1040,27 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   int border = MAP_WIDTH / 3;
   int x;
   int y;
-  if (l->which == 0) {
+
+  if (g_opt_test_levels) {
     //
-    // First level start in the top left
-    //
-    x = pcg_random_range(0, border);
-    y = pcg_random_range(0, border);
-  } else {
-    //
-    // Other levels start somewhere central
+    // Keep all levels identical to help in debugging
     //
     x = pcg_random_range(border, MAP_WIDTH - border);
     y = pcg_random_range(border, MAP_HEIGHT - border);
+  } else {
+    if (l->which == 0) {
+      //
+      // First level start in the top left
+      //
+      x = pcg_random_range(0, border);
+      y = pcg_random_range(0, border);
+    } else {
+      //
+      // Other levels start somewhere central
+      //
+      x = pcg_random_range(border, MAP_WIDTH - border);
+      y = pcg_random_range(border, MAP_HEIGHT - border);
+    }
   }
 
   point at(x, y);
@@ -1208,7 +1217,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
     l->seed                 = std::string(game_get_seed(g));
     l->which                = which;
     l->min_level_room_count = MIN_LEVEL_ROOM_COUNT + (which / 10);
-    l->max_level_room_count = l->min_level_room_count + 5;
+    l->max_level_room_count = l->min_level_room_count + 10;
 
     //
     // Add water
@@ -1662,7 +1671,7 @@ static class LevelGen *level_gen(Gamep g, int which)
 {
   TRACE_NO_INDENT();
 
-  bool debug = false;
+  bool debug = g_opt_debug1;
 
   LevelGen *l = level_gen_create_rooms(g, which, debug);
   if (! l) {
@@ -1694,11 +1703,6 @@ static class LevelGen *level_gen(Gamep g, int which)
   //
   level_gen_add_walls_around_rooms(g, l, debug);
 
-  //
-  // Add water
-  //
-  // level_gen_single_large_pool_in_center(g, l);
-
   return l;
 }
 
@@ -1716,7 +1720,7 @@ static void level_gen_create_level(Gamep g, int which)
   //
   uint32_t seed_num = game_get_seed_num(g);
   seed_num += seed_num * which;
-  game_set_seed_for_thread(g, seed_num);
+  pcg_srand(seed_num);
 
   auto l          = level_gen(g, which);
   l->seed_num     = seed_num;

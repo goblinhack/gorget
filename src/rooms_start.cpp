@@ -23,10 +23,10 @@ void rooms_start(Gamep g)
            (const char *)"^........x ",
            (const char *)" x...@...x ",
            (const char *)" x.......x ",
-           (const char *)" x.......x^",
+           (const char *)" x.......x ",
            (const char *)" x.......x ",
            (const char *)" xxxxxxxxx ",
-           (const char *)"   ^       ",
+           (const char *)"           ",
            nullptr);
 
   /* clang-format on */

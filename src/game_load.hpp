@@ -241,9 +241,9 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   }
   in >> bits(my.t.appdata);
   in >> bits(my.t.saved_dir);
-  in >> bits(my.t.seed);
   in >> bits(my.t.seed_manually_set);
   in >> bits(my.t.seed_name);
+  in >> bits(my.t.seed_num);
   in >> bits(my.t.fps_value);
 
   Levelsp tmp = (Levelsp) mymalloc(sizeof(Levels), "loaded level");
@@ -428,7 +428,7 @@ void Game::load(int slot)
   g_loading = true;
   load(this_save_file, *this);
   g_loading = false;
-  LOG("Loaded %s, seed %u", this_save_file.c_str(), seed);
+  LOG("Loaded %s, seed %u", this_save_file.c_str(), seed_num);
 
   CON("Loaded the game from %s.", this_save_file.c_str());
 
@@ -448,7 +448,7 @@ void Game::load_snapshot(void)
   g_loading = true;
   load(this_save_file, *this);
   g_loading = false;
-  LOG("Loaded %s, seed %u", this_save_file.c_str(), seed);
+  LOG("Loaded %s, seed %u", this_save_file.c_str(), seed_num);
 
   CON("Loaded the game from %s.", this_save_file.c_str());
 

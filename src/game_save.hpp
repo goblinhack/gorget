@@ -118,9 +118,9 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
   out << bits(my.t.save_file);
   out << bits(my.t.appdata);
   out << bits(my.t.saved_dir);
-  out << bits(my.t.seed);
   out << bits(my.t.seed_manually_set);
   out << bits(my.t.seed_name);
+  out << bits(my.t.seed_num);
   out << bits(my.t.fps_value);
 
   if (! game_headers_only) {
@@ -278,7 +278,7 @@ void Game::save(int slot)
 
   LOG("Saving: %s", this_save_file.c_str());
   save(this_save_file);
-  LOG("Saved %s, seed %u", this_save_file.c_str(), seed);
+  LOG("Saved %s, seed %u", this_save_file.c_str(), seed_num);
 
   CON("Saved the game to %s.", this_save_file.c_str());
 }
@@ -299,7 +299,7 @@ void Game::save_snapshot(void)
 
   LOG("Saving: %s", this_save_file.c_str());
   save(this_save_file);
-  LOG("Saved %s, seed %u", this_save_file.c_str(), seed);
+  LOG("Saved %s, seed %u", this_save_file.c_str(), seed_num);
 
   CON("%%fg=green$Autosaved.%%fg=reset$");
 }

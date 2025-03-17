@@ -28,9 +28,9 @@
  * your project.
  */
 
-#include <stdint.h>
+#include "my_main.hpp"
 
-// state for global RNGs
+#include <stdint.h>
 
 struct pcg_state_setseq_64 { // Internals are *Private*.
   uint64_t state;            // RNG state.  All values are possible.
@@ -49,15 +49,14 @@ uint32_t pcg32_random_r(pcg32_random_t *rng)
   uint32_t xorshifted = ((oldstate >> 18u) ^ oldstate) >> 27u;
   uint32_t rot        = oldstate >> 59u;
   uint32_t r          = (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
-  // LOG("RAND %u ", r);
-  // backtrace_dump();
   return r;
 }
 
 void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq)
 {
-  rng->state = 0U;
-  rng->inc   = (initseq << 1u) | 1u;
+  pcg32_global = PCG32_INITIALIZER;
+  rng->state   = 0U;
+  rng->inc     = (initseq << 1u) | 1u;
   pcg32_random_r(rng);
   rng->state += initstate;
   pcg32_random_r(rng);
