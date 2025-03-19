@@ -1650,22 +1650,44 @@ static void level_gen_add_chasms_around_bridges(Gamep g, class LevelGen *l, bool
 {
   TRACE_NO_INDENT();
 
+  char bridge_type = CHARMAP_CHASM;
+
+  //
+  // If adjacent to water, make the bridge over water
+  //
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -1; dx <= 1; dx++) {
+          if (l->data[ x + dx ][ y + dy ].c == CHARMAP_WATER) {
+            bridge_type = CHARMAP_WATER;
+            goto add_bridge;
+          }
+        }
+      }
+    }
+  }
+
+add_bridge:
+  //
+  // Create the bridge
+  //
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
       switch (l->data[ x ][ y ].c) {
         case CHARMAP_BRIDGE :
           {
             if (l->data[ x - 1 ][ y ].c == CHARMAP_EMPTY) {
-              l->data[ x - 1 ][ y ].c = CHARMAP_CHASM;
+              l->data[ x - 1 ][ y ].c = bridge_type;
             }
             if (l->data[ x + 1 ][ y ].c == CHARMAP_EMPTY) {
-              l->data[ x + 1 ][ y ].c = CHARMAP_CHASM;
+              l->data[ x + 1 ][ y ].c = bridge_type;
             }
             if (l->data[ x ][ y - 1 ].c == CHARMAP_EMPTY) {
-              l->data[ x ][ y - 1 ].c = CHARMAP_CHASM;
+              l->data[ x ][ y - 1 ].c = bridge_type;
             }
             if (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) {
-              l->data[ x ][ y + 1 ].c = CHARMAP_CHASM;
+              l->data[ x ][ y + 1 ].c = bridge_type;
             }
             break;
           }
