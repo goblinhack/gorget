@@ -224,6 +224,7 @@ void rooms_circular(Gamep);
 void rooms_cross(Gamep);
 void rooms_cross_sym(Gamep);
 void rooms_small(Gamep);
+void rooms_medium(Gamep);
 void rooms_start(Gamep);
 void rooms_exit(Gamep);
 void rooms_prefab(Gamep);

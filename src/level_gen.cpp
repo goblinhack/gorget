@@ -20,14 +20,16 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 100;
-static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000;
-static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES    = 10000;
-static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN      = 6;
-static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM   = 100;
-static const int MIN_LEVEL_EXIT_DISTANCE           = MAP_WIDTH / 4;
-static const int MIN_LEVEL_ROOM_COUNT              = 10;
-static const int LEVEL_WATER_GEN_PROB              = 1200;
+static const int MAX_LEVELS                            = 100;
+static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED     = 1000000;
+static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES        = 50;
+static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN          = 6;
+static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM       = 100;
+static const int MAX_LEVEL_GEN_TRIES_CREATE_FIRST_ROOM = 100;
+static const int MIN_LEVEL_EXIT_DISTANCE               = MAP_WIDTH / 4;
+static const int MIN_LEVEL_ROOM_COUNT                  = 10;
+static const int LEVEL_WATER_GEN_FILL_PROB             = 1200;
+static const int LEVEL_WATER_GEN_PROB                  = 80;
 
 class Cell;
 class Room;
@@ -105,7 +107,7 @@ public:
   //
   // Used to make sure we place each room uniquely per level
   //
-  std::map< class Room *, bool > rooms_placed;
+  std::unordered_map< class Room *, bool > rooms_placed;
 
   //
   // Which doors we expanded off of.
@@ -196,10 +198,36 @@ public:
   // All doors in the room
   //
   std::vector< point > doors;
+
+  //
+  // Points adjacent to doors
+  //
+  std::vector< point > door_adjacent_tile;
 };
 
 static int                         room_no;
 static std::vector< class Room * > rooms_all[ ROOM_TYPE_MAX ];
+
+//
+// Read a room char
+//
+static char room_char(Gamep g, class Room *r, int x, int y)
+{
+  if (x < 0) {
+    return CHARMAP_EMPTY;
+  }
+  if (y < 0) {
+    return CHARMAP_EMPTY;
+  }
+  if (x >= r->width) {
+    return CHARMAP_EMPTY;
+  }
+  if (y > r->height) {
+    return CHARMAP_EMPTY;
+  }
+
+  return r->data[ (y * r->width) + x ];
+}
 
 //
 // Scan the room now it is created, for any things of interest
@@ -210,11 +238,27 @@ static void room_scan(Gamep g, class Room *r)
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
-      auto c = r->data[ (y * r->width) + x ];
+      auto c = room_char(g, r, x, y);
 
-      switch (c) {
-        case CHARMAP_JOIN : r->doors.push_back(point(x, y)); continue;
-        default : break;
+      if (c == CHARMAP_JOIN) {
+        point p(x, y);
+        r->doors.push_back(p);
+
+        //
+        // Look for tiles next to the door. We will use these to check if room placement works
+        //
+        if (room_char(g, r, x - 1, y) != CHARMAP_EMPTY) {
+          r->door_adjacent_tile.push_back(point(x - 1, y));
+        }
+        if (room_char(g, r, x + 1, y) != CHARMAP_EMPTY) {
+          r->door_adjacent_tile.push_back(point(x + 1, y));
+        }
+        if (room_char(g, r, x, y - 1) != CHARMAP_EMPTY) {
+          r->door_adjacent_tile.push_back(point(x, y - 1));
+        }
+        if (room_char(g, r, x, y + 1) != CHARMAP_EMPTY) {
+          r->door_adjacent_tile.push_back(point(x, y + 1));
+        }
       }
     }
   }
@@ -561,8 +605,97 @@ void rooms_dump(Gamep g)
 //
 // Can we place a room here on the level?
 //
+static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point at, int rx, int ry)
+{
+  //
+  // Check we have something to place here.
+  //
+  char room_c = r->data[ (ry * r->width) + rx ];
+  if (unlikely(room_c == CHARMAP_EMPTY)) {
+    return true;
+  }
+
+  //
+  // Where we're placing tiles
+  //
+  point p(rx + at.x, ry + at.y);
+
+  //
+  // We need one tile of edge around rooms.
+  //
+  if (unlikely(p.x <= 0)) {
+    return false;
+  }
+  if (unlikely(p.x >= MAP_WIDTH - 1)) {
+    return false;
+  }
+  if (unlikely(p.y <= 0)) {
+    return false;
+  }
+  if (unlikely(p.y >= MAP_HEIGHT - 1)) {
+    return false;
+  }
+
+  //
+  // Special door handling
+  //
+  if (unlikely(room_c == CHARMAP_JOIN)) {
+    //
+    // Doors can overlap.
+    //
+    if (l->data[ p.x ][ p.y ].c == CHARMAP_JOIN) {
+      return true;
+    }
+  }
+
+  //
+  // Check all adjacent tiles for an adjacent room
+  //
+  for (int dy = -1; dy <= 1; dy++) {
+    for (int dx = -1; dx <= 1; dx++) {
+      if (! dx && ! dy) {
+        switch (l->data[ p.x + dx ][ p.y + dy ].c) {
+          case CHARMAP_JOIN :
+          case CHARMAP_EMPTY : break;
+          default : return false;
+        }
+      } else {
+        //
+        // Allow certain tiles, like water to be adjacent. This way a room can be created
+        // right at the water edge.
+        //
+        switch (l->data[ p.x + dx ][ p.y + dy ].c) {
+          case CHARMAP_WATER :
+          case CHARMAP_LAVA :
+          case CHARMAP_CHASM :
+          case CHARMAP_JOIN :
+          case CHARMAP_EMPTY : break;
+          default : return false;
+        }
+      }
+    }
+  }
+
+  //
+  // Can place here
+  //
+  return true;
+}
+
+//
+// Can we place a room here on the level?
+//
 static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
 {
+  //
+  // Optimization, check edge tiles first
+  //
+  for (auto p : r->door_adjacent_tile) {
+    if (! room_can_place_at(g, l, r, at, p.x, p.y)) {
+      return false;
+    }
+  }
+
   //
   // Check the room is clear to be placed here.
   //
@@ -570,73 +703,8 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
   //
   for (int ry = 0; ry < r->height; ry++) {
     for (int rx = 0; rx < r->width; rx++) {
-      //
-      // Check we have something to place here.
-      //
-      char room_c = r->data[ (ry * r->width) + rx ];
-      if (unlikely(room_c == CHARMAP_EMPTY)) {
-        continue;
-      }
-
-      //
-      // Where we're placing tiles
-      //
-      point p(rx + at.x, ry + at.y);
-
-      //
-      // We need one tile of edge around rooms.
-      //
-      if (unlikely(p.x <= 0)) {
+      if (! room_can_place_at(g, l, r, at, rx, ry)) {
         return false;
-      }
-      if (unlikely(p.x >= MAP_WIDTH - 1)) {
-        return false;
-      }
-      if (unlikely(p.y <= 0)) {
-        return false;
-      }
-      if (unlikely(p.y >= MAP_HEIGHT - 1)) {
-        return false;
-      }
-
-      //
-      // Special door handling
-      //
-      if (unlikely(room_c == CHARMAP_JOIN)) {
-        //
-        // Doors can overlap.
-        //
-        if (l->data[ p.x ][ p.y ].c == CHARMAP_JOIN) {
-          continue;
-        }
-      }
-
-      //
-      // Check all adjacent tiles for an adjacent room
-      //
-      for (int dy = -1; dy <= 1; dy++) {
-        for (int dx = -1; dx <= 1; dx++) {
-          if (! dx && ! dy) {
-            switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-              case CHARMAP_JOIN :
-              case CHARMAP_EMPTY : break;
-              default : return false;
-            }
-          } else {
-            //
-            // Allow certain tiles, like water to be adjacent. This way a room can be created
-            // right at the water edge.
-            //
-            switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-              case CHARMAP_WATER :
-              case CHARMAP_LAVA :
-              case CHARMAP_CHASM :
-              case CHARMAP_JOIN :
-              case CHARMAP_EMPTY : break;
-              default : return false;
-            }
-          }
-        }
       }
     }
   }
@@ -866,7 +934,9 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
   //
   // Try multiple rooms with this door
   //
-  int room_place_tries = 0;
+  int room_place_tries   = 0;
+  int room_width_failed  = 0;
+  int room_height_failed = 0;
 
   while (room_place_tries++ < MAX_LEVEL_GEN_ROOM_PLACE_TRIES) {
     //
@@ -876,6 +946,18 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
     if (l->rooms_placed.find(r) != l->rooms_placed.end()) {
       level_tried_to_place_existing_room_fail++;
       continue;
+    }
+
+    //
+    // If a certain size failed, do not try that or bigger again
+    //
+    if (room_width_failed) {
+      if (r->width >= room_width_failed) {
+        continue;
+      }
+      if (r->height >= room_height_failed) {
+        continue;
+      }
     }
 
     //
@@ -895,7 +977,6 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       //
       point door_intersection_at = door_other - d;
       if (! room_can_place_at(g, l, r, door_intersection_at)) {
-        level_place_subsequent_room_fail++;
         continue;
       }
 
@@ -921,6 +1002,10 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       //
       return true;
     }
+
+    level_place_subsequent_room_fail++;
+    room_width_failed  = r->width;
+    room_height_failed = r->height;
   }
 
   //
@@ -1037,30 +1122,22 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   //
   // Choose a random start point for the rooms
   //
-  int border = MAP_WIDTH / 3;
+  int border = MAP_WIDTH / 4;
   int x;
   int y;
 
-  if (g_opt_test_levels) {
+  if (l->which == 0) {
     //
-    // Keep all levels identical to help in debugging
+    // First level start in the top left
+    //
+    x = pcg_random_range(0, border);
+    y = pcg_random_range(0, border);
+  } else {
+    //
+    // Other levels start somewhere central
     //
     x = pcg_random_range(border, MAP_WIDTH - border);
     y = pcg_random_range(border, MAP_HEIGHT - border);
-  } else {
-    if (l->which == 0) {
-      //
-      // First level start in the top left
-      //
-      x = pcg_random_range(0, border);
-      y = pcg_random_range(0, border);
-    } else {
-      //
-      // Other levels start somewhere central
-      //
-      x = pcg_random_range(border, MAP_WIDTH - border);
-      y = pcg_random_range(border, MAP_HEIGHT - border);
-    }
   }
 
   point at(x, y);
@@ -1070,7 +1147,6 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   //
   auto r = l->room_first = room_random_get(g, l, ROOM_TYPE_START);
   if (! room_can_place_at(g, l, r, at)) {
-    level_place_first_room_fail++;
     return false;
   }
 
@@ -1124,7 +1200,7 @@ static void cave_dump(Gamep g, class LevelGen *l)
 static void level_gen_single_large_pool_in_center(Gamep g, class LevelGen *l)
 {
   uint8_t  x, y;
-  uint32_t fill_prob       = LEVEL_WATER_GEN_PROB;
+  uint32_t fill_prob       = LEVEL_WATER_GEN_FILL_PROB;
   int      r1              = 10; // higher r1 gives a more rounded look
   int      r2              = 4;  // larger r2 gives a smaller pool
   int      map_generations = 3;
@@ -1204,6 +1280,8 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
 
   LevelGen *l = {};
 
+  bool add_water = d100() < LEVEL_WATER_GEN_PROB;
+
   for (int level_gen_tries = 0; level_gen_tries < MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED; level_gen_tries++) {
     //
     // Start with a fresh level each try
@@ -1222,12 +1300,22 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
     //
     // Add water
     //
-    level_gen_single_large_pool_in_center(g, l);
+    if (add_water) {
+      level_gen_single_large_pool_in_center(g, l);
+    }
 
     //
     // Place the first room
     //
-    if (! level_gen_create_first_room(g, l, debug)) {
+    bool first_room_placed = false;
+    for (auto attempts = 0; attempts < MAX_LEVEL_GEN_TRIES_CREATE_FIRST_ROOM; attempts++) {
+      if (level_gen_create_first_room(g, l, debug)) {
+        first_room_placed = true;
+        break;
+      }
+    }
+    if (! first_room_placed) {
+      level_place_first_room_fail++;
       continue;
     }
 
@@ -1722,7 +1810,11 @@ static void level_gen_create_level(Gamep g, int which)
   seed_num += seed_num * which;
   pcg_srand(seed_num);
 
-  auto l          = level_gen(g, which);
+  auto l = level_gen(g, which);
+  if (! l) {
+    return;
+  }
+
   l->seed_num     = seed_num;
   levels[ which ] = l;
 }

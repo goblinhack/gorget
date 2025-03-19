@@ -20,6 +20,7 @@ void rooms_init(Gamep g)
   rooms_cross(g);
   rooms_cross_sym(g);
   rooms_small(g);
+  rooms_medium(g);
   rooms_exit(g);
   rooms_prefab(g);
 }

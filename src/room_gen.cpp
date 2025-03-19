@@ -22,6 +22,7 @@ enum {
   ROOM_TYPE_CROSS,
   ROOM_TYPE_CROSS_SYM,
   ROOM_TYPE_SMALL,
+  ROOM_TYPE_MEDIUM,
   ROOM_TYPE_CIRCULAR,
   ROOM_TYPE_CHUNKY,
   ROOM_TYPE_BLEND1,
@@ -271,7 +272,7 @@ static void grid_add_exits(Gamep g, Grid *grid)
   int x;
   int y;
 
-  while (grid->door_count == 0) {
+  for (;;) {
     //
     // Top door
     //
@@ -281,8 +282,11 @@ static void grid_add_exits(Gamep g, Grid *grid)
     if ((grid->data[ x ][ y ] == CHARMAP_EMPTY) && (grid->data[ x ][ y + 1 ] == CHARMAP_FLOOR)) {
       grid->data[ x ][ y ] = CHARMAP_JOIN;
       grid->door_count++;
+      break;
     }
+  }
 
+  for (;;) {
     //
     // Bottom door
     //
@@ -292,8 +296,11 @@ static void grid_add_exits(Gamep g, Grid *grid)
     if ((grid->data[ x ][ y ] == CHARMAP_EMPTY) && (grid->data[ x ][ y - 1 ] == CHARMAP_FLOOR)) {
       grid->data[ x ][ y ] = CHARMAP_JOIN;
       grid->door_count++;
+      break;
     }
+  }
 
+  for (;;) {
     //
     // Left door
     //
@@ -303,8 +310,11 @@ static void grid_add_exits(Gamep g, Grid *grid)
     if ((grid->data[ x ][ y ] == CHARMAP_EMPTY) && (grid->data[ x + 1 ][ y ] == CHARMAP_FLOOR)) {
       grid->data[ x ][ y ] = CHARMAP_JOIN;
       grid->door_count++;
+      break;
     }
+  }
 
+  for (;;) {
     //
     // Right door
     //
@@ -314,6 +324,7 @@ static void grid_add_exits(Gamep g, Grid *grid)
     if ((grid->data[ x ][ y ] == CHARMAP_EMPTY) && (grid->data[ x - 1 ][ y ] == CHARMAP_FLOOR)) {
       grid->data[ x ][ y ] = CHARMAP_JOIN;
       grid->door_count++;
+      break;
     }
   }
 }
@@ -435,7 +446,19 @@ static void grid_design_small_room(Gamep g, Grid *grid)
   int width, height;
 
   width  = pcg_random_range(3, 6);
-  height = pcg_random_range(2, 4);
+  height = pcg_random_range(3, 6);
+
+  grid_draw_rectangle(g, grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
+}
+
+static void grid_design_medium_room(Gamep g, Grid *grid)
+{
+  TRACE_NO_INDENT();
+
+  int width, height;
+
+  width  = pcg_random_range(6, 10);
+  height = pcg_random_range(4, 10);
 
   grid_draw_rectangle(g, grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
@@ -505,6 +528,7 @@ static bool rooms_dump_one(Gamep g, FILE *out, int which)
     case ROOM_TYPE_CROSS : grid_design_cross_room(g, &grid); break;
     case ROOM_TYPE_CROSS_SYM : grid_design_cross_room_symmetrical(g, &grid); break;
     case ROOM_TYPE_SMALL : grid_design_small_room(g, &grid); break;
+    case ROOM_TYPE_MEDIUM : grid_design_medium_room(g, &grid); break;
     case ROOM_TYPE_CIRCULAR : grid_design_circular_room(g, &grid); break;
     case ROOM_TYPE_CHUNKY : grid_design_chunky_room(g, &grid); break;
     case ROOM_TYPE_BLEND1 :
@@ -604,11 +628,12 @@ static void rooms_dump_n(Gamep g, int n, int which, const char *name)
 
 void rooms_test(Gamep g)
 {
-  rooms_dump_n(g, 200, ROOM_TYPE_CROSS, "cross");
-  rooms_dump_n(g, 200, ROOM_TYPE_CROSS_SYM, "cross_sym");
-  rooms_dump_n(g, 200, ROOM_TYPE_SMALL, "small");
+  rooms_dump_n(g, 500, ROOM_TYPE_CROSS, "cross");
+  rooms_dump_n(g, 500, ROOM_TYPE_CROSS_SYM, "cross_sym");
+  rooms_dump_n(g, 1000, ROOM_TYPE_SMALL, "small");
+  rooms_dump_n(g, 500, ROOM_TYPE_MEDIUM, "medium");
   rooms_dump_n(g, 200, ROOM_TYPE_CIRCULAR, "circular");
-  rooms_dump_n(g, 200, ROOM_TYPE_CHUNKY, "chunky");
-  rooms_dump_n(g, 100, ROOM_TYPE_BLEND2, "blend2");
-  rooms_dump_n(g, 100, ROOM_TYPE_BLEND1, "blend1");
+  rooms_dump_n(g, 500, ROOM_TYPE_CHUNKY, "chunky");
+  rooms_dump_n(g, 500, ROOM_TYPE_BLEND2, "blend2");
+  rooms_dump_n(g, 500, ROOM_TYPE_BLEND1, "blend1");
 }
