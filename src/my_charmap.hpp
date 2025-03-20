@@ -18,6 +18,7 @@ enum {
   CHARMAP_EMPTY       = ' ',
   CHARMAP_EXIT        = 'E',
   CHARMAP_FLOOR       = '.',
+  CHARMAP_DIRT        = ',',
   CHARMAP_DOOR        = 'D',
   CHARMAP_SECRET_DOOR = 's',
   CHARMAP_BARREL      = 'b',

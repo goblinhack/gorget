@@ -1757,6 +1757,199 @@ add_bridge:
 }
 
 //
+// Grow lakes, chasms etc...
+//
+static void level_gen_grow_hazards(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  char changed[ MAP_WIDTH ][ MAP_HEIGHT ] = {};
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+
+      switch (c) {
+        case CHARMAP_CHASM :
+        case CHARMAP_LAVA :
+        case CHARMAP_WATER :
+          if (d100() < 50) {
+            continue;
+          }
+
+          if (l->data[ x - 1 ][ y - 1 ].c == CHARMAP_EMPTY) {
+            if (d100() < 50) {
+              changed[ x - 1 ][ y - 1 ] = c;
+            }
+          }
+          if (l->data[ x - 1 ][ y + 1 ].c == CHARMAP_EMPTY) {
+            if (d100() < 50) {
+              changed[ x - 1 ][ y + 1 ] = c;
+            }
+          }
+          if (l->data[ x + 1 ][ y - 1 ].c == CHARMAP_EMPTY) {
+            if (d100() < 50) {
+              changed[ x + 1 ][ y - 1 ] = c;
+            }
+          }
+          if (l->data[ x + 1 ][ y + 1 ].c == CHARMAP_EMPTY) {
+            if (d100() < 50) {
+              changed[ x + 1 ][ y + 1 ] = c;
+            }
+          }
+          if (l->data[ x - 1 ][ y ].c == CHARMAP_EMPTY) {
+            if (d100() < 50) {
+              changed[ x - 1 ][ y ] = c;
+            }
+          }
+          if (l->data[ x + 1 ][ y ].c == CHARMAP_EMPTY) {
+            if (d100() < 50) {
+              changed[ x + 1 ][ y ] = c;
+            }
+          }
+          if (l->data[ x ][ y - 1 ].c == CHARMAP_EMPTY) {
+            if (d100() < 50) {
+              changed[ x ][ y - 1 ] = c;
+            }
+          }
+          if (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) {
+            if (d100() < 50) {
+              changed[ x ][ y + 1 ] = c;
+            }
+          }
+          break;
+      }
+    }
+  }
+
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      auto c = changed[ x ][ y ];
+      if (c) {
+        l->data[ x ][ y ].c = c;
+      }
+    }
+  }
+}
+
+//
+// Grow island of safety
+//
+static void level_gen_grow_islands(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  char changed[ MAP_WIDTH ][ MAP_HEIGHT ] = {};
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+
+      switch (c) {
+        case CHARMAP_DIRT :
+
+          if (l->data[ x - 1 ][ y - 1 ].c == CHARMAP_WATER) {
+            if (d100() < 50) {
+              changed[ x - 1 ][ y - 1 ] = c;
+            }
+          }
+          if (l->data[ x - 1 ][ y + 1 ].c == CHARMAP_WATER) {
+            if (d100() < 50) {
+              changed[ x - 1 ][ y + 1 ] = c;
+            }
+          }
+          if (l->data[ x + 1 ][ y - 1 ].c == CHARMAP_WATER) {
+            if (d100() < 50) {
+              changed[ x + 1 ][ y - 1 ] = c;
+            }
+          }
+          if (l->data[ x + 1 ][ y + 1 ].c == CHARMAP_WATER) {
+            if (d100() < 50) {
+              changed[ x + 1 ][ y + 1 ] = c;
+            }
+          }
+          if (l->data[ x - 1 ][ y ].c == CHARMAP_WATER) {
+            if (d100() < 50) {
+              changed[ x - 1 ][ y ] = c;
+            }
+          }
+          if (l->data[ x + 1 ][ y ].c == CHARMAP_WATER) {
+            if (d100() < 50) {
+              changed[ x + 1 ][ y ] = c;
+            }
+          }
+          if (l->data[ x ][ y - 1 ].c == CHARMAP_WATER) {
+            if (d100() < 50) {
+              changed[ x ][ y - 1 ] = c;
+            }
+          }
+          if (l->data[ x ][ y + 1 ].c == CHARMAP_WATER) {
+            if (d100() < 50) {
+              changed[ x ][ y + 1 ] = c;
+            }
+          }
+          break;
+      }
+    }
+  }
+
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      auto c = changed[ x ][ y ];
+      if (c) {
+        l->data[ x ][ y ].c = c;
+      }
+    }
+  }
+}
+
+//
+// Add islands of safety
+//
+static void level_gen_add_islands(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  char changed[ MAP_WIDTH ][ MAP_HEIGHT ] = {};
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+
+      switch (c) {
+        case CHARMAP_CHASM :
+        case CHARMAP_LAVA :
+        case CHARMAP_WATER :
+          if (d100() < 95) {
+            continue;
+          }
+
+          if (/* top left  */ l->data[ x - 1 ][ y - 1 ].c == c &&
+              /* bot right */ l->data[ x - 1 ][ y + 1 ].c == c &&
+              /* top right */ l->data[ x + 1 ][ y - 1 ].c == c &&
+              /* bot right */ l->data[ x + 1 ][ y + 1 ].c == c &&
+              /* left      */ l->data[ x - 1 ][ y ].c == c &&
+              /* right     */ l->data[ x + 1 ][ y ].c == c &&
+              /* top       */ l->data[ x ][ y - 1 ].c == c &&
+              /* bot       */ l->data[ x ][ y + 1 ].c == c) {
+            changed[ x ][ y + 1 ] = CHARMAP_DIRT;
+          }
+          break;
+      }
+    }
+  }
+
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      auto c = changed[ x ][ y ];
+      if (c) {
+        l->data[ x ][ y ].c = c;
+      }
+    }
+  }
+}
+
+//
 // Make bridges dramatic by adding chasms around them
 //
 static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
@@ -1766,15 +1959,13 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
       auto c = l->data[ x ][ y ].c;
-      if (c == CHARMAP_WATER) {
-        continue;
-      }
-
       switch (c) {
-        case CHARMAP_EMPTY :
-        case CHARMAP_WALL : break;
+        case CHARMAP_WATER :
+        case CHARMAP_LAVA :
         case CHARMAP_CHASM :
         case CHARMAP_CHASM_50 :
+        case CHARMAP_EMPTY :
+        case CHARMAP_WALL : break;
         case CHARMAP_JOIN :
         case CHARMAP_FLOOR :
         case CHARMAP_KEY :
@@ -1784,7 +1975,6 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_MOB2 :
         case CHARMAP_TREASURE1 :
         case CHARMAP_TREASURE2 :
-        case CHARMAP_WATER :
         case CHARMAP_TELEPORT :
         case CHARMAP_FOLIAGE :
         case CHARMAP_DOOR :
@@ -1794,7 +1984,6 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_CORRIDOR :
         case CHARMAP_PILLAR :
         case CHARMAP_TRAP :
-        case CHARMAP_LAVA :
         case CHARMAP_BRIDGE :
         case CHARMAP_BRAZIER :
         case CHARMAP_FLOOR_50 :
@@ -1865,6 +2054,21 @@ static class LevelGen *level_gen(Gamep g, int which)
   // Make bridges dramatic by adding chasms around them
   //
   level_gen_add_chasms_around_bridges(g, l);
+
+  //
+  // Add islands of safety
+  //
+  level_gen_add_islands(g, l);
+
+  //
+  // Grow lakes, chasms etc...
+  //
+  level_gen_grow_hazards(g, l);
+
+  //
+  // Make islands bigger
+  //
+  level_gen_grow_islands(g, l);
 
   //
   // Add walls
