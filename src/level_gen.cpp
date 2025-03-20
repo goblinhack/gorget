@@ -57,12 +57,18 @@ static const int MIN_LEVEL_ROOM_COUNT = 10;
 //
 // Cellular auto fill prob
 //
-static const int LEVEL_WATER_GEN_FILL_PROB = 1200;
+static const int LEVEL_BLOB_GEN_FILL_PROB = 1200;
 
 //
 // Chance of creating a pool on a level
 //
-static const int LEVEL_WATER_GEN_PROB = 80;
+static const int LEVEL_BLOB_GEN_PROB = 80;
+
+//
+// Chances of creating, tested in the following order, with the default being water
+//
+static const int LEVEL_BLOB_LAVA_GEN_PROB  = 5;
+static const int LEVEL_BLOB_CHASM_GEN_PROB = 10;
 
 class Cell;
 class Room;
@@ -1254,12 +1260,12 @@ static void cave_dump(Gamep g, class LevelGen *l)
 }
 
 //
-// Place a single large pool of water on the level
+// Place a single large pool of water/lava/chasm on the level
 //
-static void level_gen_single_large_pool_in_center(Gamep g, class LevelGen *l)
+static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, char c)
 {
   uint8_t  x, y;
-  uint32_t fill_prob       = LEVEL_WATER_GEN_FILL_PROB;
+  uint32_t fill_prob       = LEVEL_BLOB_GEN_FILL_PROB;
   int      r1              = 10; // higher r1 gives a more rounded look
   int      r2              = 4;  // larger r2 gives a smaller pool
   int      map_generations = 3;
@@ -1322,7 +1328,7 @@ static void level_gen_single_large_pool_in_center(Gamep g, class LevelGen *l)
             //
             // Perma water
             //
-            l->data[ x ][ y ].c = CHARMAP_WATER;
+            l->data[ x ][ y ].c = c;
             break;
         }
       }
@@ -1339,7 +1345,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which)
 
   LevelGen *l = {};
 
-  bool add_water = d100() < LEVEL_WATER_GEN_PROB;
+  bool add_blob = d100() < LEVEL_BLOB_GEN_PROB;
 
   for (int level_gen_tries = 0; level_gen_tries < MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED; level_gen_tries++) {
     //
@@ -1358,10 +1364,24 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which)
     l->debug          = g_opt_debug1;
 
     //
-    // Add water
+    // Add a blob of hazard in the center of the level
     //
-    if (add_water) {
-      level_gen_single_large_pool_in_center(g, l);
+    if (add_blob) {
+      //
+      // The blob type
+      //
+      auto chance    = d100();
+      char blob_type = CHARMAP_WATER;
+
+      if (chance < LEVEL_BLOB_LAVA_GEN_PROB) {
+        blob_type = CHARMAP_LAVA;
+      } else if (chance < LEVEL_BLOB_CHASM_GEN_PROB) {
+        blob_type = CHARMAP_CHASM;
+      } else {
+        blob_type = CHARMAP_WATER;
+      }
+
+      level_gen_single_large_blob_in_center(g, l, blob_type);
     }
 
     //
@@ -1721,6 +1741,10 @@ static void level_gen_add_chasms_around_bridges(Gamep g, class LevelGen *l)
         for (int dx = -1; dx <= 1; dx++) {
           if (l->data[ x + dx ][ y + dy ].c == CHARMAP_WATER) {
             bridge_type = CHARMAP_WATER;
+            goto add_bridge;
+          }
+          if (l->data[ x + dx ][ y + dy ].c == CHARMAP_LAVA) {
+            bridge_type = CHARMAP_LAVA;
             goto add_bridge;
           }
         }
