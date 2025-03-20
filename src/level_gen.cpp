@@ -20,16 +20,48 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                            = 100;
-static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED     = 1000000;
-static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES        = 50;
-static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN          = 6;
-static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM       = 100;
+static const int MAX_LEVELS                        = 100;
+static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000000;
+
+//
+// How many times to try adding a room
+//
+static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM = 100;
+
+//
+// How many times to try adding the first room
+//
 static const int MAX_LEVEL_GEN_TRIES_CREATE_FIRST_ROOM = 100;
-static const int MIN_LEVEL_EXIT_DISTANCE               = MAP_WIDTH / 4;
-static const int MIN_LEVEL_ROOM_COUNT                  = 10;
-static const int LEVEL_WATER_GEN_FILL_PROB             = 1200;
-static const int LEVEL_WATER_GEN_PROB                  = 80;
+
+//
+// How many times to try placing a random room next to a door
+//
+static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES = 50;
+
+//
+// After this length, corridors become bridges
+//
+static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN = 6;
+
+//
+// How far away the start and exit should be at a minimum
+//
+static const int MIN_LEVEL_EXIT_DISTANCE = MAP_WIDTH / 4;
+
+//
+// How many rooms qualify as a dungeon
+//
+static const int MIN_LEVEL_ROOM_COUNT = 10;
+
+//
+// Cellular auto fill prob
+//
+static const int LEVEL_WATER_GEN_FILL_PROB = 1200;
+
+//
+// Chance of creating a pool on a level
+//
+static const int LEVEL_WATER_GEN_PROB = 80;
 
 class Cell;
 class Room;
@@ -222,7 +254,7 @@ static char room_char(Gamep g, class Room *r, int x, int y)
   if (x >= r->width) {
     return CHARMAP_EMPTY;
   }
-  if (y > r->height) {
+  if (y >= r->height) {
     return CHARMAP_EMPTY;
   }
 
