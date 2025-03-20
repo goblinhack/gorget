@@ -386,7 +386,6 @@ void Game::set_seed(void)
     //
     seed_num = string_to_hash(seed_name);
   }
-  seed_num = 1243354;
 
   LOG("Set seed, name '%s', seed %u", seed_name.c_str(), seed_num);
   pcg_srand(seed_num);
