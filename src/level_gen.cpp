@@ -26,7 +26,7 @@ static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000000;
 //
 // How many times to try adding a room
 //
-static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM = 100;
+static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM = 1000;
 
 //
 // How many times to try adding the first room
@@ -49,7 +49,7 @@ static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN = 6;
 static const int MIN_LEVEL_EXIT_DISTANCE = MAP_WIDTH / 4;
 
 //
-// How many rooms qualify as a dungeon
+// How many rooms qualify as a dungeon. This increases with depth.
 //
 static const int MIN_LEVEL_ROOM_COUNT = 10;
 
@@ -115,6 +115,11 @@ public:
   ~LevelGen(void) {}
 
   //
+  // Dump levels as generating them, enable via -debug
+  //
+  bool debug {};
+
+  //
   // This is a copy of the game seed
   //
   std::string seed;
@@ -128,8 +133,8 @@ public:
   //
   // The number of rooms to aim for for a given depth.
   //
-  int min_level_room_count {};
-  int max_level_room_count {};
+  int min_room_count {};
+  int max_room_count {};
 
   //
   // The starting room
@@ -872,7 +877,17 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
-      tmp += l->data[ x ][ y ].c;
+      point p(x, y);
+
+      if (l->doors_walked.find(p) != l->doors_walked.end()) {
+        if (l->debug) {
+          tmp += "D";
+        } else {
+          tmp += l->data[ x ][ y ].c;
+        }
+      } else {
+        tmp += l->data[ x ][ y ].c;
+      }
     }
     LOG("[%s]", tmp.c_str());
   }
@@ -939,6 +954,9 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_ou
   // Did we find any new doors?
   //
   if (! l->doors_not_explored.size()) {
+    if (unlikely(l->debug)) {
+      LOG("no more doors");
+    }
     return false;
   }
 
@@ -947,6 +965,11 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_ou
   //
   *door_out = l->doors_not_explored[ pcg_random_range(0, l->doors_not_explored.size()) ];
   *room_out = l->data[ door_out->x ][ door_out->y ].room;
+
+  //
+  // Don't try this door again
+  //
+  l->doors_walked[ *door_out ] = true;
 
   if (! *room_out) {
     ERR("Found a door with no room");
@@ -1025,11 +1048,6 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       }
 
       //
-      // Don't try this door again
-      //
-      l->doors_walked[ door_other ] = true;
-
-      //
       // Success
       //
       return true;
@@ -1082,7 +1100,7 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
 //
 // The first room has been placed. Place all the rest.
 //
-static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
+static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -1091,16 +1109,32 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
   //
   // Keep placing rooms until we hit the max allowed
   //
-  while ((int) l->rooms_placed.size() < l->max_level_room_count) {
-    if (unlikely(debug)) {
-      LOG("rooms placed %d attempts %d", (int) l->rooms_placed.size(), attempts);
+  while ((int) l->rooms_placed.size() < l->max_room_count) {
+    if (unlikely(l->debug)) {
+      LOG("rooms placed %d (max %d) attempts %d doors-tried %d doors-not-tried %d", (int) l->rooms_placed.size(),
+          l->max_room_count, attempts, (int) l->doors_walked.size(), (int) l->doors_not_explored.size());
     }
 
     //
     // Ensure we loop only so many times
     //
     if (attempts++ > MAX_LEVEL_GEN_TRIES_CREATE_ROOM) {
+      if (unlikely(l->debug)) {
+        LOG("have tried enough times to place a room");
+      }
       break;
+    }
+
+    //
+    // Ran out of doors to try?
+    //
+    if ((int) l->doors_walked.size()) {
+      if (l->doors_not_explored.empty()) {
+        if (unlikely(l->debug)) {
+          LOG("have tried all doors");
+        }
+        break;
+      }
     }
 
     //
@@ -1112,7 +1146,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
     // If we have not yet placed an exit room, should we?
     //
     if (! l->has_placed_exit) {
-      if ((int) l->rooms_placed.size() > l->min_level_room_count) {
+      if ((int) l->rooms_placed.size() > l->min_room_count) {
         //
         // If we have the minimum rooms, then likely we're far enough away from
         // the start room now to try placing an exit room.
@@ -1126,7 +1160,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
       }
     }
 
-    if (unlikely(debug)) {
+    if (unlikely(l->debug)) {
       level_gen_dump(g, l, "placed another room");
     }
 
@@ -1147,7 +1181,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l, bool debug)
 //
 // Place the first room
 //
-static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
+static bool level_gen_create_first_room(Gamep g, LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -1158,19 +1192,11 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   int x;
   int y;
 
-  if (l->which == 0) {
-    //
-    // First level start in the top left
-    //
-    x = pcg_random_range(0, border);
-    y = pcg_random_range(0, border);
-  } else {
-    //
-    // Other levels start somewhere central
-    //
-    x = pcg_random_range(border, MAP_WIDTH - border);
-    y = pcg_random_range(border, MAP_HEIGHT - border);
-  }
+  //
+  // Start somewhere central
+  //
+  x = pcg_random_range(border, MAP_WIDTH - border);
+  y = pcg_random_range(border, MAP_HEIGHT - border);
 
   point at(x, y);
 
@@ -1187,7 +1213,7 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l, bool debug)
   //
   // Placed the first room
   //
-  if (unlikely(debug)) {
+  if (unlikely(l->debug)) {
     level_gen_dump(g, l, "placed first room");
   }
 
@@ -1306,7 +1332,7 @@ static void level_gen_single_large_pool_in_center(Gamep g, class LevelGen *l)
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
+static class LevelGen *level_gen_create_rooms(Gamep g, int which)
 {
   TRACE_NO_INDENT();
 
@@ -1323,11 +1349,12 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
       l = nullptr;
     }
 
-    l                       = new LevelGen();
-    l->seed                 = std::string(game_get_seed(g));
-    l->which                = which;
-    l->min_level_room_count = MIN_LEVEL_ROOM_COUNT + (which / 10);
-    l->max_level_room_count = l->min_level_room_count + 10;
+    l                 = new LevelGen();
+    l->seed           = std::string(game_get_seed(g));
+    l->which          = which;
+    l->min_room_count = MIN_LEVEL_ROOM_COUNT + (which / 10);
+    l->max_room_count = l->min_room_count + 10;
+    l->debug          = g_opt_debug1;
 
     //
     // Add water
@@ -1341,7 +1368,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
     //
     bool first_room_placed = false;
     for (auto attempts = 0; attempts < MAX_LEVEL_GEN_TRIES_CREATE_FIRST_ROOM; attempts++) {
-      if (level_gen_create_first_room(g, l, debug)) {
+      if (level_gen_create_first_room(g, l)) {
         first_room_placed = true;
         break;
       }
@@ -1354,12 +1381,12 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
     //
     // Place the remaining rooms
     //
-    level_gen_create_remaining_rooms(g, l, debug);
+    level_gen_create_remaining_rooms(g, l);
 
     //
     // Check we have enough rooms. Add a few more for deeper levels.
     //
-    if ((int) l->rooms_placed.size() < l->min_level_room_count) {
+    if ((int) l->rooms_placed.size() < l->min_room_count) {
       level_not_enough_rooms++;
       continue;
     }
@@ -1383,7 +1410,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which, bool debug)
 
   level_create_fail++;
 
-  if (unlikely(debug)) {
+  if (unlikely(l->debug)) {
     LOG("Failed to create room with seed: %s", game_get_seed(g));
   }
 
@@ -1426,7 +1453,7 @@ static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
 //
 // Get rid of tiles that go nowhere
 //
-static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
+static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -1486,7 +1513,7 @@ static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l, bool debug)
 //
 // Keep track of which room is connected to another via a door
 //
-static void level_gen_scan_connected_rooms(Gamep g, class LevelGen *l, bool debug)
+static void level_gen_scan_connected_rooms(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -1537,7 +1564,7 @@ static void level_gen_scan_connected_rooms(Gamep g, class LevelGen *l, bool debu
 // Shortest distance is 2, which is ". ."
 //
 static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, class LevelGen *l, int dist,
-                                                                      int chance, bool debug)
+                                                                      int chance)
 {
   TRACE_NO_INDENT();
 
@@ -1551,7 +1578,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
             //
             // Decrease the chance of connecting leaf rooms so we don't get too many
             //
-            if (d100() > chance - l->rooms_adj_connected * 5) {
+            if (d100() > chance) {
               continue;
             }
 
@@ -1645,40 +1672,40 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
 // Add corridors between rooms that are not connected
 // Shortest distance is 2, which is ". ."
 //
-static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l, bool debug)
+static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
   const std::initializer_list< std::pair< int, int > > dists = {
-      std::pair(2 /* corridor length */, 100 /* percentage chance of occuring */),
-      std::pair(3 /* corridor length */, 100 /* percentage chance of occuring */),
-      std::pair(4 /* corridor length */, 100 /* percentage chance of occuring */),
-      std::pair(5 /* corridor length */, 90 /* percentage chance of occuring */),
-      std::pair(6 /* corridor length */, 90 /* percentage chance of occuring */),
-      std::pair(7 /* corridor length */, 90 /* percentage chance of occuring */),
-      std::pair(8 /* corridor length */, 50 /* percentage chance of occuring */),
-      std::pair(9 /* corridor length */, 50 /* percentage chance of occuring */),
-      std::pair(10 /* corridor length */, 50 /* percentage chance of occuring */),
-      std::pair(11 /* corridor length */, 50 /* percentage chance of occuring */),
-      std::pair(12 /* corridor length */, 10 /* percentage chance of occuring */),
-      std::pair(13 /* corridor length */, 10 /* percentage chance of occuring */),
-      std::pair(14 /* corridor length */, 10 /* percentage chance of occuring */),
-      std::pair(15 /* corridor length */, 10 /* percentage chance of occuring */),
-      std::pair(16 /* corridor length */, 5 /* percentage chance of occuring */),
-      std::pair(17 /* corridor length */, 5 /* percentage chance of occuring */),
-      std::pair(18 /* corridor length */, 5 /* percentage chance of occuring */),
-      std::pair(19 /* corridor length */, 5 /* percentage chance of occuring */),
-      std::pair(20 /* corridor length */, 5 /* percentage chance of occuring */),
+      std::pair(2 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(3 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(4 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(5 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(6 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(7 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(8 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(9 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(10 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(11 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(12 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(13 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(14 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(15 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(16 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(17 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(18 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(19 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(20 /* corridor length */, 20 /* percentage chance of occuring */),
   };
   for (auto d : dists) {
-    level_gen_connect_adjacent_rooms_with_distance_and_chance(g, l, d.first, d.second, debug);
+    level_gen_connect_adjacent_rooms_with_distance_and_chance(g, l, d.first, d.second);
   }
 }
 
 //
 // Make bridges dramatic by adding chasms around them
 //
-static void level_gen_add_chasms_around_bridges(Gamep g, class LevelGen *l, bool debug)
+static void level_gen_add_chasms_around_bridges(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -1731,7 +1758,7 @@ add_bridge:
 //
 // Make bridges dramatic by adding chasms around them
 //
-static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l, bool debug)
+static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -1813,9 +1840,7 @@ static class LevelGen *level_gen(Gamep g, int which)
 {
   TRACE_NO_INDENT();
 
-  bool debug = g_opt_debug1;
-
-  LevelGen *l = level_gen_create_rooms(g, which, debug);
+  LevelGen *l = level_gen_create_rooms(g, which);
   if (! l) {
     return l;
   }
@@ -1823,27 +1848,27 @@ static class LevelGen *level_gen(Gamep g, int which)
   //
   // Get rid of tiles that go nowhere
   //
-  while (level_gen_trim_dead_tiles(g, l, debug)) {}
+  while (level_gen_trim_dead_tiles(g, l)) {}
 
   //
   // Keep track of which room is connected to another via a door
   //
-  level_gen_scan_connected_rooms(g, l, debug);
+  level_gen_scan_connected_rooms(g, l);
 
   //
   // Add corridors between rooms that are not connected
   //
-  level_gen_connect_adjacent_rooms(g, l, debug);
+  level_gen_connect_adjacent_rooms(g, l);
 
   //
   // Make bridges dramatic by adding chasms around them
   //
-  level_gen_add_chasms_around_bridges(g, l, debug);
+  level_gen_add_chasms_around_bridges(g, l);
 
   //
   // Add walls
   //
-  level_gen_add_walls_around_rooms(g, l, debug);
+  level_gen_add_walls_around_rooms(g, l);
 
   return l;
 }
