@@ -15,7 +15,7 @@ void rooms_exit(Gamep g)
 
   /* clang-format off */
 
-  room_add(g, true, __FUNCTION__, __LINE__, 
+  room_add(g, true /* check exits */, __FUNCTION__, __LINE__, 
            (const char *)"    ^       ",
            (const char *)" xxx.xxxxxx ",
            (const char *)" x........x ",

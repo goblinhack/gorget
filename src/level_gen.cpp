@@ -373,7 +373,7 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
 //
 // Add a room and copies with all possible rotations
 //
-void room_add(Gamep g, bool check, const char *file, int line, ...)
+void room_add(Gamep g, bool check_exits, const char *file, int line, ...)
 {
   TRACE_NO_INDENT();
 
@@ -546,7 +546,7 @@ void room_add(Gamep g, bool check, const char *file, int line, ...)
   // Sanity check on exits that we have no tiles in the same column or row
   // as an exit; it makes it harder to join rooms together
   //
-  if (check) {
+  if (check_exits) {
     for (int y = 0; y < r->height; y++) {
       for (int x = 0; x < r->width; x++) {
         auto c = r->data[ (y * r->width) + x ];
@@ -2099,6 +2099,9 @@ static class LevelGen *level_gen(Gamep g, int which)
   //
   level_gen_add_walls_around_rooms(g, l);
 
+  //
+  // Remove chasms next to water etc...
+  //
   return l;
 }
 
