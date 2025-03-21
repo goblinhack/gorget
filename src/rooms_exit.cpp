@@ -983,7 +983,7 @@ void rooms_exit(Gamep g)
            (const char *)"  xxxxxxxxx",
            nullptr);
 
-  room_add(g, true /* check exits */, __FUNCTION__, __CINE__,
+  room_add(g, true /* check exits */, __FUNCTION__, __LINE__,
            (const char *)"        ^  ",
            (const char *)"  xxxxxx.xx",
            (const char *)"  x$.C....x",
@@ -1011,6 +1011,7 @@ void rooms_exit(Gamep g)
            (const char *)"xxx..M..xx ",
            (const char *)"  x. E .x  ",
            (const char *)"  xxxxxxx  ",
+           nullptr);
 
   room_add(g, true /* check exits */, __FUNCTION__, __LINE__,
            (const char *)"  xxxxxxx   ",
