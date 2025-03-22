@@ -32,12 +32,12 @@ static const int MAX_LEVEL_GEN_TRIES_CREATE_ROOM = 1000;
 //
 // How many times to try adding the first room
 //
-static const int MAX_LEVEL_GEN_TRIES_CREATE_FIRST_ROOM = 100;
+static const int MAX_LEVEL_GEN_TRIES_CREATE_FIRST_ROOM = 200;
 
 //
 // How many times to try placing a random room next to a door
 //
-static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES = 50;
+static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES = 200;
 
 //
 // After this length, corridors become bridges
@@ -52,7 +52,7 @@ static const int MIN_LEVEL_EXIT_DISTANCE = MAP_WIDTH / 4;
 //
 // How many rooms qualify as a dungeon. This increases with depth.
 //
-static const int MIN_LEVEL_ROOM_COUNT = 10;
+static const int MIN_LEVEL_ROOM_COUNT = 15;
 
 //
 // Cellular auto fill prob
@@ -82,7 +82,6 @@ static int level_place_first_room_fail;
 static int level_place_subsequent_room_fail;
 static int level_tried_to_place_existing_room_fail;
 static int level_find_door_fail_count;
-static int level_exit_is_too_close_to_start;
 static int level_not_enough_rooms;
 static int level_no_exit_room;
 
@@ -914,7 +913,6 @@ void level_gen_stats_dump(Gamep g)
   LOG("- place first room fail:           %d", level_place_first_room_fail);
   LOG("- place subsequent room fail:      %d", level_place_subsequent_room_fail);
   LOG("- find door to place room fail:    %d", level_find_door_fail_count);
-  LOG("- exit was too close to the start: %d", level_exit_is_too_close_to_start);
   LOG("- tried to place a duplicate room: %d", level_tried_to_place_existing_room_fail);
   LOG("- not enough rooms generated:      %d", level_not_enough_rooms);
   LOG("- no exit room generated:          %d", level_no_exit_room);
@@ -1089,19 +1087,30 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
   }
 
   //
-  // Don't place the exit too close to the start point
+  // If this door is too close, then switch to a normal room
   //
   if (room_type == ROOM_TYPE_EXIT) {
     if (distance(door_other, l->start) < MIN_LEVEL_EXIT_DISTANCE) {
-      level_exit_is_too_close_to_start++;
-      return false;
+      room_type = ROOM_TYPE_NORMAL;
     }
   }
 
   //
   // Try multiple rooms with this door
   //
-  return level_gen_place_room_at_door_intersection(g, l, door_other, room_other, room_type);
+  if (level_gen_place_room_at_door_intersection(g, l, door_other, room_other, room_type)) {
+    return true;
+  }
+
+  //
+  // Try again
+  //
+  if (room_type == ROOM_TYPE_EXIT) {
+    room_type = ROOM_TYPE_NORMAL;
+    return level_gen_place_room_at_door_intersection(g, l, door_other, room_other, room_type);
+  }
+
+  return false;
 }
 
 //
@@ -1144,26 +1153,29 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
       }
     }
 
-    //
-    // The room type to place
-    //
     RoomType room_type = ROOM_TYPE_NORMAL;
 
     //
     // If we have not yet placed an exit room, should we?
     //
     if (! l->has_placed_exit) {
-      if ((int) l->rooms_placed.size() > l->min_room_count) {
+      if (d100() < 50) {
+        room_type = ROOM_TYPE_EXIT;
+      } else if ((int) l->rooms_placed.size() > l->min_room_count) {
         //
         // If we have the minimum rooms, then likely we're far enough away from
         // the start room now to try placing an exit room.
         //
-        room_type = ROOM_TYPE_EXIT;
+        if (d100() < 50) {
+          room_type = ROOM_TYPE_EXIT;
+        }
       } else if (attempts > (MAX_LEVEL_GEN_TRIES_CREATE_ROOM / 2)) {
         //
         // If we're running out of room place attempts, try an exit room
         //
-        room_type = ROOM_TYPE_EXIT;
+        if (d100() < 50) {
+          room_type = ROOM_TYPE_EXIT;
+        }
       }
     }
 
