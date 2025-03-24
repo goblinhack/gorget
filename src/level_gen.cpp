@@ -45,6 +45,16 @@ static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES = 200;
 static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN = 6;
 
 //
+// How many times to try to replace part of the dungeon
+//
+static const int MAX_LEVEL_GEN_FRAGMENT_TRIES = 100;
+
+//
+// The max amount of fragments to create
+//
+static const int MAX_LEVEL_GEN_FRAGMENTS = 10;
+
+//
 // How far away the start and exit should be at a minimum
 //
 static const int MIN_LEVEL_EXIT_DISTANCE = MAP_WIDTH / 4;
@@ -143,6 +153,11 @@ public:
   int max_room_count {};
 
   //
+  // How many room fragments we've added
+  //
+  int fragment_count {};
+
+  //
   // The starting room
   //
   class Room *room_first = {};
@@ -232,7 +247,7 @@ public:
   char *data = {};
 
   //
-  // For keeping track of which rooms we add
+  // For keeping track of source location
   //
   const char *file = {};
   int         line = {};
@@ -250,6 +265,40 @@ public:
 
 static int                         room_no;
 static std::vector< class Room * > rooms_all[ ROOM_TYPE_MAX ];
+
+class FragmentAlt
+{
+private:
+public:
+  FragmentAlt(void) {}
+  ~FragmentAlt(void) { myfree(data); }
+
+  //
+  // Globally unique
+  //
+  int fragment_alt_no = {};
+
+  //
+  // FragmentAlt size
+  //
+  int width  = {};
+  int height = {};
+
+  //
+  // FragmentAlt data
+  //
+  char *data = {};
+
+  //
+  // For keeping track of source location
+  //
+  const char *file = {};
+  int         line = {};
+};
+
+static int                                fragment_alt_no;
+static std::vector< class FragmentAlt * > fragment_alts_all;
+static std::vector< class FragmentAlt * > fragment_alts_curr;
 
 class Fragment
 {
@@ -275,10 +324,15 @@ public:
   char *data = {};
 
   //
-  // For keeping track of which fragments we add
+  // For keeping track of source location
   //
   const char *file = {};
   int         line = {};
+
+  //
+  // Alternatives for this fragment
+  //
+  std::vector< class FragmentAlt * > fragment_alts;
 };
 
 static int                             fragment_no;
@@ -866,6 +920,458 @@ void rooms_fini(Gamep g)
   }
 }
 
+#if 0
+//
+// Read a fragment_alt char
+//
+static char fragment_alt_char(Gamep g, class FragmentAlt *r, int x, int y)
+{
+  if (x < 0) {
+    return CHARMAP_EMPTY;
+  }
+  if (y < 0) {
+    return CHARMAP_EMPTY;
+  }
+  if (x >= r->width) {
+    return CHARMAP_EMPTY;
+  }
+  if (y >= r->height) {
+    return CHARMAP_EMPTY;
+  }
+
+  return r->data[ (y * r->width) + x ];
+}
+#endif
+
+//
+// Rotate the current fragment_alt clockwise and put that into a new fragment_alt
+//
+static class FragmentAlt *fragment_alt_rotate(Gamep g, class FragmentAlt *r)
+{
+  TRACE_NO_INDENT();
+
+  auto n = new FragmentAlt();
+  fragment_alts_all.push_back(n);
+  fragment_alts_curr.push_back(n);
+
+  n->fragment_alt_no = fragment_alt_no++;
+  n->file            = r->file;
+  n->line            = r->line;
+  n->width           = r->height;
+  n->height          = r->width;
+  n->data            = (char *) myzalloc(r->width * r->height, "fragment_alt data");
+
+  for (int y = 0; y < r->height; y++) {
+    for (int x = 0; x < r->width; x++) {
+      int nx                          = n->width - y - 1;
+      int ny                          = x;
+      n->data[ (ny * n->width) + nx ] = r->data[ (y * r->width) + x ];
+    }
+  }
+
+  return n;
+}
+
+//
+// Flip the current fragment_alt horizontally and put that into a new fragment_alt
+//
+static class FragmentAlt *fragment_alt_flip_horiz(Gamep g, class FragmentAlt *r)
+{
+  TRACE_NO_INDENT();
+
+  auto n = new FragmentAlt();
+  fragment_alts_all.push_back(n);
+  fragment_alts_curr.push_back(n);
+
+  n->fragment_alt_no = fragment_alt_no++;
+  n->file            = r->file;
+  n->line            = r->line;
+  n->width           = r->width;
+  n->height          = r->height;
+  n->data            = (char *) myzalloc(r->width * r->height, "fragment_alt data");
+
+  for (int y = 0; y < r->height; y++) {
+    for (int x = 0; x < r->width; x++) {
+      int nx                          = r->width - x - 1;
+      int ny                          = y;
+      n->data[ (ny * r->width) + nx ] = r->data[ (y * r->width) + x ];
+    }
+  }
+
+  return n;
+}
+
+//
+// Add a fragment_alt and copies with all possible rotations
+//
+bool fragment_alt_add(Gamep g, const char *file, int line, ...)
+{
+  TRACE_NO_INDENT();
+
+  va_list ap;
+  int     fragment_alt_width  = 0;
+  int     fragment_alt_height = 0;
+
+  //
+  // First scan, get width and height
+  //
+  va_start(ap, line);
+
+  for (;;) {
+    const char *fragment_alt_line = va_arg(ap, const char *);
+    if (! fragment_alt_line) {
+      break;
+    }
+
+    int this_line_width = (int) strlen(fragment_alt_line);
+
+    if (! fragment_alt_width) {
+      //
+      // Get the fragment_alt width
+      //
+      fragment_alt_width = this_line_width;
+    } else {
+      //
+      // Check width is constant
+      //
+      if (fragment_alt_width != this_line_width) {
+        DIE("fragment_alt has inconsistent width in fragment_alt %s:%d", file, line);
+        return false;
+      }
+    }
+
+    //
+    // Check the fragment_alt contents are known characters
+    //
+    for (auto i = 0; i < fragment_alt_width; i++) {
+      switch (fragment_alt_line[ i ]) {
+        case CHARMAP_CHASM : break;
+        case CHARMAP_CHASM_50 : break;
+        case CHARMAP_JOIN : break;
+        case CHARMAP_EMPTY : break;
+        case CHARMAP_FLOOR : break;
+        case CHARMAP_KEY : break;
+        case CHARMAP_MONST1 : break;
+        case CHARMAP_MONST2 : break;
+        case CHARMAP_MOB1 : break;
+        case CHARMAP_MOB2 : break;
+        case CHARMAP_TREASURE1 : break;
+        case CHARMAP_TREASURE2 : break;
+        case CHARMAP_WATER : break;
+        case CHARMAP_TELEPORT : break;
+        case CHARMAP_FOLIAGE : break;
+        case CHARMAP_DOOR : break;
+        case CHARMAP_SECRET_DOOR : break;
+        case CHARMAP_DRY_GRASS : break;
+        case CHARMAP_BARREL : break;
+        case CHARMAP_CORRIDOR : break;
+        case CHARMAP_PILLAR : break;
+        case CHARMAP_TRAP : break;
+        case CHARMAP_LAVA : break;
+        case CHARMAP_BRIDGE : break;
+        case CHARMAP_BRAZIER : break;
+        case CHARMAP_FLOOR_50 : break;
+        case CHARMAP_WALL : break;
+        case CHARMAP_EXIT : break;
+        case CHARMAP_START : break;
+        default :
+          DIE("fragment_alt has unknown char [%c] in fragment_alt %s:%d", fragment_alt_line[ i ], file, line);
+          return false;
+      }
+    }
+
+    fragment_alt_height++;
+  }
+
+  va_end(ap);
+
+  //
+  // Check the fragment_alt sizes
+  //
+  if (! fragment_alt_width) {
+    DIE("fragment_alt has no width in fragment_alt %s:%d", file, line);
+    return false;
+  }
+  if (! fragment_alt_height) {
+    DIE("fragment_alt has no height in fragment_alt %s:%d", file, line);
+    return false;
+  }
+  if (fragment_alt_width >= MAP_WIDTH) {
+    DIE("fragment_alt is too wide in fragment_alt %s:%d", file, line);
+    return false;
+  }
+  if (fragment_alt_height >= MAP_HEIGHT) {
+    DIE("fragment_alt is too tall in fragment_alt %s:%d", file, line);
+    return false;
+  }
+
+  //
+  // Allocate space for the fragment_alt
+  //
+  class FragmentAlt *r = new FragmentAlt();
+  fragment_alts_all.push_back(r);
+
+  fragment_alts_curr.clear();
+  fragment_alts_curr.push_back(r);
+
+  r->fragment_alt_no = fragment_alt_no++;
+  r->file            = file;
+  r->line            = line;
+  r->width           = fragment_alt_width;
+  r->height          = fragment_alt_height;
+  r->data            = (char *) myzalloc(fragment_alt_width * fragment_alt_height, "fragment_alt data");
+
+  //
+  // Now read the fragment_alt again
+  //
+  va_start(ap, line);
+
+  for (int y = 0; y < r->height; y++) {
+    const char *fragment_alt_line = va_arg(ap, char *);
+    for (int x = 0; x < r->width; x++) {
+      auto c = fragment_alt_line[ x ];
+
+      r->data[ (y * r->width) + x ] = c;
+    }
+  }
+
+  va_end(ap);
+
+  //
+  // Make alternate fragment_alts
+  //
+  fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_rotate(g, r)));
+  fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_flip_horiz(g, r))));
+
+  //
+  // Push the alternatives onto the end of each fragment
+  //
+  int i = 0;
+  for (auto f : fragments_curr) {
+    f->fragment_alts.push_back(fragment_alts_curr[ i++ ]);
+  }
+
+  return true;
+}
+
+//
+// Get a random fragment_alt.
+//
+#if 0
+static class FragmentAlt *fragment_alt_random_get(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  if (! fragment_alts_all.size()) {
+    DIE("no fragment_alts");
+  }
+
+  return fragment_alts_all[ pcg_random_range(0, fragment_alts_all.size()) ];
+}
+#endif
+
+//
+// Dump a fragment_alt
+//
+static void fragment_alt_dump(Gamep g, class FragmentAlt *r)
+{
+  TRACE_NO_INDENT();
+
+  LOG("FragmentAlt %d %s:%d", r->fragment_alt_no, r->file, r->line);
+
+  for (int y = 0; y < r->height; y++) {
+    std::string tmp;
+    for (int x = 0; x < r->width; x++) {
+      tmp += r->data[ (y * r->width) + x ];
+    }
+    LOG("[%s]", tmp.c_str());
+  }
+
+  LOG("-");
+}
+
+//
+// Dump all fragment_alts
+//
+void fragment_alts_dump(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  for (auto r : fragment_alts_all) {
+    fragment_alt_dump(g, r);
+  }
+}
+
+#if 0
+//
+// Can we place a fragment_alt here on the level?
+//
+static bool fragment_alt_can_place_at(Gamep g, class LevelGen *l, class FragmentAlt *r, point at, int rx, int ry)
+{
+  //
+  // Check we have something to place here.
+  //
+  char fragment_alt_c = r->data[ (ry * r->width) + rx ];
+  if (unlikely(fragment_alt_c == CHARMAP_EMPTY)) {
+    return true;
+  }
+
+  //
+  // Where we're placing tiles
+  //
+  point p(rx + at.x, ry + at.y);
+
+  //
+  // We need one tile of edge around fragment_alts.
+  //
+  if (unlikely(p.x <= 0)) {
+    return false;
+  }
+  if (unlikely(p.x >= MAP_WIDTH - 1)) {
+    return false;
+  }
+  if (unlikely(p.y <= 0)) {
+    return false;
+  }
+  if (unlikely(p.y >= MAP_HEIGHT - 1)) {
+    return false;
+  }
+
+  //
+  // Special door handling
+  //
+  if (unlikely(fragment_alt_c == CHARMAP_JOIN)) {
+    //
+    // Doors can overlap.
+    //
+    if (l->data[ p.x ][ p.y ].c == CHARMAP_JOIN) {
+      return true;
+    }
+  }
+
+  //
+  // Check all adjacent tiles for an adjacent fragment_alt
+  //
+  for (int dy = -1; dy <= 1; dy++) {
+    for (int dx = -1; dx <= 1; dx++) {
+      if (! dx && ! dy) {
+        switch (l->data[ p.x + dx ][ p.y + dy ].c) {
+          case CHARMAP_JOIN :
+          case CHARMAP_EMPTY : break;
+          default : return false;
+        }
+      } else {
+        //
+        // Allow certain tiles, like water to be adjacent. This way a fragment_alt can be created
+        // right at the water edge.
+        //
+        switch (l->data[ p.x + dx ][ p.y + dy ].c) {
+          case CHARMAP_WATER :
+          case CHARMAP_LAVA :
+          case CHARMAP_CHASM :
+          case CHARMAP_JOIN :
+          case CHARMAP_EMPTY : break;
+          default : return false;
+        }
+      }
+    }
+  }
+
+  //
+  // Can place here
+  //
+  return true;
+}
+
+//
+// Can we place a fragment_alt here on the level?
+//
+static bool fragment_alt_can_place_at(Gamep g, class LevelGen *l, class FragmentAlt *r, point at)
+{
+  //
+  // Check the fragment_alt is clear to be placed here.
+  //
+  for (int ry = 0; ry < r->height; ry++) {
+    for (int rx = 0; rx < r->width; rx++) {
+      if (! fragment_alt_can_place_at(g, l, r, at, rx, ry)) {
+        return false;
+      }
+    }
+  }
+
+  //
+  // Can place here
+  //
+  return true;
+}
+
+//
+// Place a fragment_alt on the level
+//
+static void fragment_alt_place_at(Gamep g, class LevelGen *l, class FragmentAlt *r, point at)
+{
+  //
+  // The fragment_alt should be clear to place at this point
+  //
+  for (int ry = 0; ry < r->height; ry++) {
+    for (int rx = 0; rx < r->width; rx++) {
+      //
+      // Check we have something to place here.
+      //
+      char fragment_alt_c = r->data[ (ry * r->width) + rx ];
+      if (fragment_alt_c == CHARMAP_EMPTY) {
+        continue;
+      }
+
+      //
+      // Check if we need to modify tiles when placing
+      //
+      switch (fragment_alt_c) {
+        case CHARMAP_CHASM_50 :
+          if (d100() > 50) {
+            fragment_alt_c = CHARMAP_FLOOR;
+          } else {
+            fragment_alt_c = CHARMAP_CHASM;
+          }
+          break;
+        case CHARMAP_FLOOR_50 :
+          if (d100() > 50) {
+            fragment_alt_c = CHARMAP_EMPTY;
+          } else {
+            fragment_alt_c = CHARMAP_FLOOR;
+          }
+          break;
+        default : break;
+      }
+
+      if (fragment_alt_c == CHARMAP_EMPTY) {
+        continue;
+      }
+
+      //
+      // Where we're placing tiles
+      //
+      point p(rx + at.x, ry + at.y);
+
+      class Cell *cell = &l->data[ p.x ][ p.y ];
+      cell->c          = fragment_alt_c;
+    }
+  }
+}
+#endif
+
+//
+// Clean up fragment_alts
+//
+void fragment_alts_fini(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  for (auto r : fragment_alts_all) {
+    delete r;
+  }
+}
+
 //
 // Read a fragment char
 //
@@ -885,18 +1391,6 @@ static char fragment_char(Gamep g, class Fragment *r, int x, int y)
   }
 
   return r->data[ (y * r->width) + x ];
-}
-
-//
-// Scan the fragment now it is created, for any things of interest
-//
-static void fragment_scan(Gamep g, class Fragment *r)
-{
-  TRACE_NO_INDENT();
-
-  //
-  // Nothing to do yet
-  //
 }
 
 //
@@ -924,8 +1418,6 @@ static class Fragment *fragment_rotate(Gamep g, class Fragment *r)
       n->data[ (ny * n->width) + nx ] = r->data[ (y * r->width) + x ];
     }
   }
-
-  fragment_scan(g, n);
 
   return n;
 }
@@ -955,8 +1447,6 @@ static class Fragment *fragment_flip_horiz(Gamep g, class Fragment *r)
       n->data[ (ny * r->width) + nx ] = r->data[ (y * r->width) + x ];
     }
   }
-
-  fragment_scan(g, n);
 
   return n;
 }
@@ -1103,8 +1593,6 @@ bool fragment_add(Gamep g, const char *file, int line, ...)
   fragment_rotate(g, fragment_rotate(g, fragment_rotate(g, r)));
   fragment_rotate(g, fragment_rotate(g, fragment_rotate(g, fragment_flip_horiz(g, r))));
 
-  fragment_scan(g, r);
-
   return true;
 }
 
@@ -1120,6 +1608,81 @@ static class Fragment *fragment_random_get(Gamep g, class LevelGen *l)
   }
 
   return fragments_all[ pcg_random_range(0, fragments_all.size()) ];
+}
+
+//
+// Can we match a fragment against the location
+//
+static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point at)
+{
+  for (int ry = 0; ry < f->height; ry++) {
+    for (int rx = 0; rx < f->width; rx++) {
+
+      auto c = fragment_char(g, f, rx, ry);
+      if (c == CHARMAP_EMPTY) {
+        continue;
+      }
+
+      point p(rx + at.x, ry + at.y);
+
+      if (unlikely(p.x <= 0)) {
+        return false;
+      }
+      if (unlikely(p.x >= MAP_WIDTH - 1)) {
+        return false;
+      }
+      if (unlikely(p.y <= 0)) {
+        return false;
+      }
+      if (unlikely(p.y >= MAP_HEIGHT - 1)) {
+        return false;
+      }
+
+      if (c != l->data[ p.x ][ p.y ].c) {
+        return false;
+      }
+    }
+  }
+
+  //
+  // Match
+  //
+  return true;
+}
+
+//
+// Place the fragment
+//
+static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, point at)
+{
+  for (int ry = 0; ry < f->height; ry++) {
+    for (int rx = 0; rx < f->width; rx++) {
+
+      auto c = fragment_char(g, f, rx, ry);
+      if (c == CHARMAP_EMPTY) {
+        continue;
+      }
+
+      point p(rx + at.x, ry + at.y);
+
+      if (unlikely(p.x <= 0)) {
+        continue;
+      }
+      if (unlikely(p.x >= MAP_WIDTH - 1)) {
+        continue;
+      }
+      if (unlikely(p.y <= 0)) {
+        continue;
+      }
+      if (unlikely(p.y >= MAP_HEIGHT - 1)) {
+        continue;
+      }
+
+      l->data[ p.x ][ p.y ].c = c;
+      l->data[ p.x ][ p.y ].c = 'X';
+      // XXX
+    }
+  }
 }
 
 //
@@ -1149,166 +1712,8 @@ void fragments_dump(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto fragment_type = (int) ROOM_TYPE_FIRST; fragment_type < (int) ROOM_TYPE_MAX; fragment_type++) {
-    for (auto r : fragments_all) {
-      fragment_dump(g, r);
-    }
-  }
-}
-
-//
-// Can we place a fragment here on the level?
-//
-static bool fragment_can_place_at(Gamep g, class LevelGen *l, class Fragment *r, point at, int rx, int ry)
-{
-  //
-  // Check we have something to place here.
-  //
-  char fragment_c = r->data[ (ry * r->width) + rx ];
-  if (unlikely(fragment_c == CHARMAP_EMPTY)) {
-    return true;
-  }
-
-  //
-  // Where we're placing tiles
-  //
-  point p(rx + at.x, ry + at.y);
-
-  //
-  // We need one tile of edge around fragments.
-  //
-  if (unlikely(p.x <= 0)) {
-    return false;
-  }
-  if (unlikely(p.x >= MAP_WIDTH - 1)) {
-    return false;
-  }
-  if (unlikely(p.y <= 0)) {
-    return false;
-  }
-  if (unlikely(p.y >= MAP_HEIGHT - 1)) {
-    return false;
-  }
-
-  //
-  // Special door handling
-  //
-  if (unlikely(fragment_c == CHARMAP_JOIN)) {
-    //
-    // Doors can overlap.
-    //
-    if (l->data[ p.x ][ p.y ].c == CHARMAP_JOIN) {
-      return true;
-    }
-  }
-
-  //
-  // Check all adjacent tiles for an adjacent fragment
-  //
-  for (int dy = -1; dy <= 1; dy++) {
-    for (int dx = -1; dx <= 1; dx++) {
-      if (! dx && ! dy) {
-        switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-          case CHARMAP_JOIN :
-          case CHARMAP_EMPTY : break;
-          default : return false;
-        }
-      } else {
-        //
-        // Allow certain tiles, like water to be adjacent. This way a fragment can be created
-        // right at the water edge.
-        //
-        switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-          case CHARMAP_WATER :
-          case CHARMAP_LAVA :
-          case CHARMAP_CHASM :
-          case CHARMAP_JOIN :
-          case CHARMAP_EMPTY : break;
-          default : return false;
-        }
-      }
-    }
-  }
-
-  //
-  // Can place here
-  //
-  return true;
-}
-
-//
-// Can we place a fragment here on the level?
-//
-static bool fragment_can_place_at(Gamep g, class LevelGen *l, class Fragment *r, point at)
-{
-  //
-  // Check the fragment is clear to be placed here.
-  //
-  for (int ry = 0; ry < r->height; ry++) {
-    for (int rx = 0; rx < r->width; rx++) {
-      if (! fragment_can_place_at(g, l, r, at, rx, ry)) {
-        return false;
-      }
-    }
-  }
-
-  //
-  // Can place here
-  //
-  return true;
-}
-
-//
-// Place a fragment on the level
-//
-static void fragment_place_at(Gamep g, class LevelGen *l, class Fragment *r, point at)
-{
-  //
-  // The fragment should be clear to place at this point
-  //
-  for (int ry = 0; ry < r->height; ry++) {
-    for (int rx = 0; rx < r->width; rx++) {
-      //
-      // Check we have something to place here.
-      //
-      char fragment_c = r->data[ (ry * r->width) + rx ];
-      if (fragment_c == CHARMAP_EMPTY) {
-        continue;
-      }
-
-      //
-      // Check if we need to modify tiles when placing
-      //
-      switch (fragment_c) {
-        case CHARMAP_CHASM_50 :
-          if (d100() > 50) {
-            fragment_c = CHARMAP_FLOOR;
-          } else {
-            fragment_c = CHARMAP_CHASM;
-          }
-          break;
-        case CHARMAP_FLOOR_50 :
-          if (d100() > 50) {
-            fragment_c = CHARMAP_EMPTY;
-          } else {
-            fragment_c = CHARMAP_FLOOR;
-          }
-          break;
-        default : break;
-      }
-
-      if (fragment_c == CHARMAP_EMPTY) {
-        continue;
-      }
-
-      //
-      // Where we're placing tiles
-      //
-      point p(rx + at.x, ry + at.y);
-
-      class Cell *cell = &l->data[ p.x ][ p.y ];
-      cell->c          = fragment_c;
-    }
+  for (auto r : fragments_all) {
+    fragment_dump(g, r);
   }
 }
 
@@ -1319,10 +1724,8 @@ void fragments_fini(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto fragment_type = (int) ROOM_TYPE_FIRST; fragment_type < (int) ROOM_TYPE_MAX; fragment_type++) {
-    for (auto r : fragments_all) {
-      delete r;
-    }
+  for (auto r : fragments_all) {
+    delete r;
   }
 }
 
@@ -2517,6 +2920,41 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
   }
 }
 
+static void level_gen_add_fragments(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  int tries = 0;
+  while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
+    auto f = fragment_random_get(g, l);
+    if (! f) {
+      return;
+    }
+
+    std::vector< point > cands;
+
+    for (int y = 0; y < MAP_HEIGHT - f->height; y++) {
+      for (int x = 0; x < MAP_WIDTH - f->width; x++) {
+        point at(x, y);
+        if (fragment_match(g, l, f, at)) {
+          cands.push_back(at);
+        }
+      }
+    }
+
+    if (cands.empty()) {
+      continue;
+    }
+
+    auto cand = cands[ pcg_rand() % cands.size() ];
+    fragment_put(g, l, f, cand);
+
+    if (l->fragment_count++ >= MAX_LEVEL_GEN_FRAGMENTS) {
+      return;
+    }
+  }
+}
+
 //
 // Create a level from the current game seed
 //
@@ -2565,9 +3003,19 @@ static class LevelGen *level_gen(Gamep g, int which)
   level_gen_grow_islands(g, l);
 
   //
+  // Add fragments before we add walls
+  //
+  level_gen_add_fragments(g, l);
+
+  //
   // Add walls
   //
   level_gen_add_walls_around_rooms(g, l);
+
+  //
+  // And add again after, in case some can now match
+  //
+  level_gen_add_fragments(g, l);
 
   //
   // Remove chasms next to water etc...

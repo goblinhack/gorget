@@ -23,15 +23,13 @@ void fragments_init(Gamep g)
                        (const char *)"x....",
                        (const char *)"x....",
                        nullptr)) {
-#if 0
-      fragment_alias_add(g, f, __FUNCTION__, __LINE__, 
-                         (const char *)"xxxx.",
-                         (const char *)"x$.C.",
-                         (const char *)"x..C.",
-                         (const char *)"xCCC.",
-                         (const char *)".....",
-                         nullptr);
-#endif
+          fragment_alt_add(g, __FUNCTION__, __LINE__, 
+                           (const char *)"xxxx.",
+                           (const char *)"x$.C.",
+                           (const char *)"x..C.",
+                           (const char *)"xCCC.",
+                           (const char *)".....",
+                           nullptr);
       }
   }
 

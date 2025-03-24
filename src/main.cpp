@@ -79,6 +79,7 @@ void quit(Gamep *g_in)
   sdl_fini(g);
   rooms_fini(g);
   fragments_fini(g);
+  fragment_alts_fini(g);
 
   //
   // Do this last as sdl_fini depends on it.
