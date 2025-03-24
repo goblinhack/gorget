@@ -1,5 +1,5 @@
 //
-// Copyright Neil McGill, goblinhack@gmail.com
+// Copyright goblinhack@gmail.com
 //
 
 bool templates_init(void);

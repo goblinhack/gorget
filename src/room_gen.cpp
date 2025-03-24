@@ -1,5 +1,5 @@
 //
-// Copyright Neil McGill, goblinhack@gmail.com
+// Copyright goblinhack@gmail.com
 //
 
 #include "my_callstack.hpp"
@@ -599,7 +599,7 @@ static void rooms_dump_n(Gamep g, int n, int which, const char *name)
   }
 
   fprintf(out, "//\n");
-  fprintf(out, "// Copyright Neil McGill, goblinhack@gmail.com\n");
+  fprintf(out, "// Copyright goblinhack@gmail.com\n");
   fprintf(out, "//\n");
   fprintf(out, "\n");
   fprintf(out, "#include \"my_callstack.hpp\"\n");

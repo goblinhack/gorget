@@ -1,5 +1,5 @@
 //
-// Copyright Neil McGill, goblinhack@gmail.com
+// Copyright goblinhack@gmail.com
 //
 
 #pragma once
@@ -23,10 +23,6 @@ enum {
   CHARMAP_SECRET_DOOR = 's',
   CHARMAP_BARREL      = 'b',
   CHARMAP_BRAZIER     = 'B',
-  CHARMAP_FLOOR_10    = '1',
-  CHARMAP_FLOOR_20    = '2',
-  CHARMAP_FLOOR_30    = '3',
-  CHARMAP_FLOOR_40    = '4',
   CHARMAP_FLOOR_50    = '5',
   CHARMAP_JOIN        = '^',
   CHARMAP_KEY         = 'k',

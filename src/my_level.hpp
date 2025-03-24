@@ -1,5 +1,5 @@
 //
-// Copyright Neil McGill, goblinhack@gmail.com
+// Copyright goblinhack@gmail.com
 //
 
 #pragma once
@@ -228,6 +228,11 @@ void rooms_medium(Gamep);
 void rooms_start(Gamep);
 void rooms_exit(Gamep);
 void rooms_prefab(Gamep);
+
+void fragments_init(Gamep);
+void fragments_fini(Gamep);
+bool fragment_add(Gamep, const char *file, int line, ...);
+void fragment_alias_add(Gamep, void *ctx, const char *file, int line, ...);
 
 void level_gen_test(Gamep);
 void level_gen_stats_dump(Gamep);

@@ -1,5 +1,5 @@
 //
-// Copyright Neil McGill, goblinhack@gmail.com
+// Copyright goblinhack@gmail.com
 //
 
 #include <ctime>
@@ -78,6 +78,7 @@ void quit(Gamep *g_in)
   sound_fini();
   sdl_fini(g);
   rooms_fini(g);
+  fragments_fini(g);
 
   //
   // Do this last as sdl_fini depends on it.
@@ -688,6 +689,7 @@ int main(int argc, char *argv[])
 
   {
     rooms_init(g);
+    fragments_init(g);
     if (g_opt_test_rooms) {
       rooms_test(g);
       DIE_CLEAN("done");
