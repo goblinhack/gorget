@@ -21,7 +21,7 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 100;
+static const int MAX_LEVELS                        = 1;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000000;
 
 //
@@ -920,7 +920,6 @@ void rooms_fini(Gamep g)
   }
 }
 
-#if 0
 //
 // Read a fragment_alt char
 //
@@ -941,7 +940,6 @@ static char fragment_alt_char(Gamep g, class FragmentAlt *r, int x, int y)
 
   return r->data[ (y * r->width) + x ];
 }
-#endif
 
 //
 // Rotate the current fragment_alt clockwise and put that into a new fragment_alt
@@ -1611,6 +1609,38 @@ static class Fragment *fragment_random_get(Gamep g, class LevelGen *l)
 }
 
 //
+// Dump a fragment
+//
+static void fragment_dump(Gamep g, class Fragment *r)
+{
+  TRACE_NO_INDENT();
+
+  LOG("Fragment %d %s:%d", r->fragment_no, r->file, r->line);
+
+  for (int y = 0; y < r->height; y++) {
+    std::string tmp;
+    for (int x = 0; x < r->width; x++) {
+      tmp += r->data[ (y * r->width) + x ];
+    }
+    LOG("[%s]", tmp.c_str());
+  }
+
+  LOG("-");
+}
+
+//
+// Dump all fragments
+//
+void fragments_dump(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  for (auto r : fragments_all) {
+    fragment_dump(g, r);
+  }
+}
+
+//
 // Can we match a fragment against the location
 //
 static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point at)
@@ -1655,10 +1685,20 @@ static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point 
 //
 static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, point at)
 {
+  TRACE_NO_INDENT();
+
+  if (f->fragment_alts.empty()) {
+    fragment_dump(g, f);
+    DIE("no alternative fragments for fragment");
+    return;
+  }
+
+  auto a = f->fragment_alts[ pcg_rand() % f->fragment_alts.size() ];
+
   for (int ry = 0; ry < f->height; ry++) {
     for (int rx = 0; rx < f->width; rx++) {
 
-      auto c = fragment_char(g, f, rx, ry);
+      auto c = fragment_alt_char(g, a, rx, ry);
       if (c == CHARMAP_EMPTY) {
         continue;
       }
@@ -1679,41 +1719,7 @@ static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, point at
       }
 
       l->data[ p.x ][ p.y ].c = c;
-      l->data[ p.x ][ p.y ].c = 'X';
-      // XXX
     }
-  }
-}
-
-//
-// Dump a fragment
-//
-static void fragment_dump(Gamep g, class Fragment *r)
-{
-  TRACE_NO_INDENT();
-
-  LOG("Fragment %d %s:%d", r->fragment_no, r->file, r->line);
-
-  for (int y = 0; y < r->height; y++) {
-    std::string tmp;
-    for (int x = 0; x < r->width; x++) {
-      tmp += r->data[ (y * r->width) + x ];
-    }
-    LOG("[%s]", tmp.c_str());
-  }
-
-  LOG("-");
-}
-
-//
-// Dump all fragments
-//
-void fragments_dump(Gamep g)
-{
-  TRACE_NO_INDENT();
-
-  for (auto r : fragments_all) {
-    fragment_dump(g, r);
   }
 }
 
