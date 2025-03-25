@@ -74,13 +74,13 @@ static void grid_dump(Gamep g, Grid *grid)
   fprintf(grid->out, "  room_add(g, false /* check */, __FUNCTION__, __LINE__,\n");
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
-    fprintf(grid->out, "           (const char *)\"");
+    fprintf(grid->out, "           /* line */ (const char *) \"");
     for (int x = 0; x < MAP_WIDTH; x++) {
       fprintf(grid->out, "%c", grid->data[ x ][ y ]);
     }
     fprintf(grid->out, "\",\n");
   }
-  fprintf(grid->out, "           nullptr);\n");
+  fprintf(grid->out, "           /* end */ nullptr);\n");
   fprintf(grid->out, "\n");
 }
 
@@ -94,13 +94,13 @@ static void grid_room_only_dump(Gamep g, Grid *grid)
   fprintf(grid->out, "  room_add(g, false /* check */, __FUNCTION__, __LINE__,\n");
 
   for (int y = grid->tl.y; y <= grid->br.y; y++) {
-    fprintf(grid->out, "           (const char *)\"");
+    fprintf(grid->out, "           /* line */ (const char *) \"");
     for (int x = grid->tl.x; x <= grid->br.x; x++) {
       fprintf(grid->out, "%c", grid->data[ x ][ y ]);
     }
     fprintf(grid->out, "\",\n");
   }
-  fprintf(grid->out, "           nullptr);\n");
+  fprintf(grid->out, "           /* end */ nullptr);\n");
   fprintf(grid->out, "\n");
 }
 
@@ -613,14 +613,11 @@ static void rooms_dump_n(Gamep g, int n, int which, const char *name)
   fprintf(out, "{\n");
   fprintf(out, "  TRACE_NO_INDENT();\n");
   fprintf(out, "\n");
-  fprintf(out, "  /* clang-format off */\n");
-  fprintf(out, "\n");
 
   for (auto r = 0; r < n; r++) {
     rooms_dump_one(g, out, which);
   }
 
-  fprintf(out, "  /* clang-format on */\n");
   fprintf(out, "}\n");
 
   fclose(out);

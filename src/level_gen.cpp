@@ -21,7 +21,7 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 1;
+static const int MAX_LEVELS                        = 100;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000000;
 
 //
