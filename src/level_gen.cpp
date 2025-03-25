@@ -52,7 +52,7 @@ static const int MAX_LEVEL_GEN_FRAGMENT_TRIES = 100;
 //
 // The max amount of fragments to create
 //
-static const int MAX_LEVEL_GEN_FRAGMENTS = 10;
+static const int MAX_LEVEL_GEN_FRAGMENTS = 20;
 
 //
 // How far away the start and exit should be at a minimum
@@ -1649,9 +1649,6 @@ static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point 
     for (int rx = 0; rx < f->width; rx++) {
 
       auto c = fragment_char(g, f, rx, ry);
-      if (c == CHARMAP_EMPTY) {
-        continue;
-      }
 
       point p(rx + at.x, ry + at.y);
 
@@ -3022,6 +3019,11 @@ static class LevelGen *level_gen(Gamep g, int which)
   // And add again after, in case some can now match
   //
   level_gen_add_fragments(g, l);
+
+  //
+  // Add walls again in case a fragment extended the room
+  //
+  level_gen_add_walls_around_rooms(g, l);
 
   //
   // Remove chasms next to water etc...
