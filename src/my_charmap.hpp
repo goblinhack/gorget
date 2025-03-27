@@ -37,6 +37,7 @@ enum {
   CHARMAP_WATER       = '~',
   CHARMAP_TREASURE1   = '$',
   CHARMAP_TREASURE2   = '!',
+  CHARMAP_WILDCARD    = '?',
   CHARMAP_WALL        = 'x',
   // end sort marker1 }
 };

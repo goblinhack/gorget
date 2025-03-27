@@ -523,35 +523,35 @@ void room_add(Gamep g, int chance, bool check_exits, const char *file, int line,
     //
     for (auto i = 0; i < room_width; i++) {
       switch (room_line[ i ]) {
+        case CHARMAP_BARREL : break;
+        case CHARMAP_BRAZIER : break;
+        case CHARMAP_BRIDGE : break;
         case CHARMAP_CHASM : break;
         case CHARMAP_CHASM_50 : break;
-        case CHARMAP_JOIN : break;
+        case CHARMAP_CORRIDOR : break;
+        case CHARMAP_DOOR : break;
+        case CHARMAP_DRY_GRASS : break;
         case CHARMAP_EMPTY : break;
+        case CHARMAP_EXIT : room_type = ROOM_TYPE_EXIT; break;
         case CHARMAP_FLOOR : break;
+        case CHARMAP_FLOOR_50 : break;
+        case CHARMAP_FOLIAGE : break;
+        case CHARMAP_JOIN : break;
         case CHARMAP_KEY : break;
-        case CHARMAP_MONST1 : break;
-        case CHARMAP_MONST2 : break;
+        case CHARMAP_LAVA : break;
         case CHARMAP_MOB1 : break;
         case CHARMAP_MOB2 : break;
+        case CHARMAP_MONST1 : break;
+        case CHARMAP_MONST2 : break;
+        case CHARMAP_PILLAR : break;
+        case CHARMAP_SECRET_DOOR : break;
+        case CHARMAP_START : room_type = ROOM_TYPE_START; break;
+        case CHARMAP_TELEPORT : break;
+        case CHARMAP_TRAP : break;
         case CHARMAP_TREASURE1 : break;
         case CHARMAP_TREASURE2 : break;
-        case CHARMAP_WATER : break;
-        case CHARMAP_TELEPORT : break;
-        case CHARMAP_FOLIAGE : break;
-        case CHARMAP_DOOR : break;
-        case CHARMAP_SECRET_DOOR : break;
-        case CHARMAP_DRY_GRASS : break;
-        case CHARMAP_BARREL : break;
-        case CHARMAP_CORRIDOR : break;
-        case CHARMAP_PILLAR : break;
-        case CHARMAP_TRAP : break;
-        case CHARMAP_LAVA : break;
-        case CHARMAP_BRIDGE : break;
-        case CHARMAP_BRAZIER : break;
-        case CHARMAP_FLOOR_50 : break;
         case CHARMAP_WALL : break;
-        case CHARMAP_EXIT : room_type = ROOM_TYPE_EXIT; break;
-        case CHARMAP_START : room_type = ROOM_TYPE_START; break;
+        case CHARMAP_WATER : break;
         default : DIE("room has unknown char [%c] in room %s:%d", room_line[ i ], file, line); return;
       }
     }
@@ -1063,35 +1063,35 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
     //
     for (auto i = 0; i < fragment_alt_width; i++) {
       switch (fragment_alt_line[ i ]) {
+        case CHARMAP_BARREL : break;
+        case CHARMAP_BRAZIER : break;
+        case CHARMAP_BRIDGE : break;
         case CHARMAP_CHASM : break;
         case CHARMAP_CHASM_50 : break;
-        case CHARMAP_JOIN : break;
+        case CHARMAP_CORRIDOR : break;
+        case CHARMAP_DOOR : break;
+        case CHARMAP_DRY_GRASS : break;
         case CHARMAP_EMPTY : break;
+        case CHARMAP_EXIT : break;
         case CHARMAP_FLOOR : break;
+        case CHARMAP_FLOOR_50 : break;
+        case CHARMAP_FOLIAGE : break;
+        case CHARMAP_JOIN : break;
         case CHARMAP_KEY : break;
-        case CHARMAP_MONST1 : break;
-        case CHARMAP_MONST2 : break;
+        case CHARMAP_LAVA : break;
         case CHARMAP_MOB1 : break;
         case CHARMAP_MOB2 : break;
+        case CHARMAP_MONST1 : break;
+        case CHARMAP_MONST2 : break;
+        case CHARMAP_PILLAR : break;
+        case CHARMAP_SECRET_DOOR : break;
+        case CHARMAP_START : break;
+        case CHARMAP_TELEPORT : break;
+        case CHARMAP_TRAP : break;
         case CHARMAP_TREASURE1 : break;
         case CHARMAP_TREASURE2 : break;
-        case CHARMAP_WATER : break;
-        case CHARMAP_TELEPORT : break;
-        case CHARMAP_FOLIAGE : break;
-        case CHARMAP_DOOR : break;
-        case CHARMAP_SECRET_DOOR : break;
-        case CHARMAP_DRY_GRASS : break;
-        case CHARMAP_BARREL : break;
-        case CHARMAP_CORRIDOR : break;
-        case CHARMAP_PILLAR : break;
-        case CHARMAP_TRAP : break;
-        case CHARMAP_LAVA : break;
-        case CHARMAP_BRIDGE : break;
-        case CHARMAP_BRAZIER : break;
-        case CHARMAP_FLOOR_50 : break;
         case CHARMAP_WALL : break;
-        case CHARMAP_EXIT : break;
-        case CHARMAP_START : break;
+        case CHARMAP_WATER : break;
         default :
           DIE("fragment_alt has unknown char [%c] in fragment_alt %s:%d", fragment_alt_line[ i ], file, line);
           return false;
@@ -1363,35 +1363,36 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
     //
     for (auto i = 0; i < fragment_width; i++) {
       switch (fragment_line[ i ]) {
+        case CHARMAP_BARREL : break;
+        case CHARMAP_BRAZIER : break;
+        case CHARMAP_BRIDGE : break;
         case CHARMAP_CHASM : break;
         case CHARMAP_CHASM_50 : break;
-        case CHARMAP_JOIN : break;
+        case CHARMAP_CORRIDOR : break;
+        case CHARMAP_DOOR : break;
+        case CHARMAP_DRY_GRASS : break;
         case CHARMAP_EMPTY : break;
+        case CHARMAP_EXIT : break;
         case CHARMAP_FLOOR : break;
+        case CHARMAP_FLOOR_50 : break;
+        case CHARMAP_FOLIAGE : break;
+        case CHARMAP_JOIN : break;
         case CHARMAP_KEY : break;
-        case CHARMAP_MONST1 : break;
-        case CHARMAP_MONST2 : break;
+        case CHARMAP_LAVA : break;
         case CHARMAP_MOB1 : break;
         case CHARMAP_MOB2 : break;
+        case CHARMAP_MONST1 : break;
+        case CHARMAP_MONST2 : break;
+        case CHARMAP_PILLAR : break;
+        case CHARMAP_SECRET_DOOR : break;
+        case CHARMAP_START : break;
+        case CHARMAP_TELEPORT : break;
+        case CHARMAP_TRAP : break;
         case CHARMAP_TREASURE1 : break;
         case CHARMAP_TREASURE2 : break;
-        case CHARMAP_WATER : break;
-        case CHARMAP_TELEPORT : break;
-        case CHARMAP_FOLIAGE : break;
-        case CHARMAP_DOOR : break;
-        case CHARMAP_SECRET_DOOR : break;
-        case CHARMAP_DRY_GRASS : break;
-        case CHARMAP_BARREL : break;
-        case CHARMAP_CORRIDOR : break;
-        case CHARMAP_PILLAR : break;
-        case CHARMAP_TRAP : break;
-        case CHARMAP_LAVA : break;
-        case CHARMAP_BRIDGE : break;
-        case CHARMAP_BRAZIER : break;
-        case CHARMAP_FLOOR_50 : break;
         case CHARMAP_WALL : break;
-        case CHARMAP_EXIT : break;
-        case CHARMAP_START : break;
+        case CHARMAP_WATER : break;
+        case CHARMAP_WILDCARD : break;
         default :
           DIE("fragment has unknown char [%c] in fragment %s:%d", fragment_line[ i ], file, line);
           return false;
@@ -1527,6 +1528,9 @@ static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point 
     for (int rx = 0; rx < f->width; rx++) {
 
       auto c = fragment_char(g, f, rx, ry);
+      if (c == CHARMAP_WILDCARD) {
+        continue;
+      }
 
       point p(rx + at.x, ry + at.y);
 
@@ -1542,7 +1546,6 @@ static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point 
       if (unlikely(p.y >= MAP_HEIGHT - 1)) {
         return false;
       }
-
       if (c != l->data[ p.x ][ p.y ].c) {
         return false;
       }
@@ -2057,30 +2060,30 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
       if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
 
         switch (l->data[ x ][ y ].c) {
+          case CHARMAP_BARREL :
+          case CHARMAP_BRAZIER :
+          case CHARMAP_BRIDGE :
+          case CHARMAP_CHASM :
+          case CHARMAP_CORRIDOR :
+          case CHARMAP_DOOR :
+          case CHARMAP_DRY_GRASS :
+          case CHARMAP_EXIT :
+          case CHARMAP_FLOOR :
+          case CHARMAP_FOLIAGE :
+          case CHARMAP_JOIN :
           case CHARMAP_KEY :
           case CHARMAP_LAVA :
-          case CHARMAP_BRIDGE :
-          case CHARMAP_EXIT :
-          case CHARMAP_START :
-          case CHARMAP_DOOR :
-          case CHARMAP_JOIN :
-          case CHARMAP_CORRIDOR :
-          case CHARMAP_FLOOR :
-          case CHARMAP_PILLAR :
-          case CHARMAP_FOLIAGE :
-          case CHARMAP_TREASURE1 :
-          case CHARMAP_TREASURE2 :
-          case CHARMAP_MONST1 :
-          case CHARMAP_MONST2 :
-          case CHARMAP_TRAP :
-          case CHARMAP_BRAZIER :
-          case CHARMAP_SECRET_DOOR :
-          case CHARMAP_DRY_GRASS :
-          case CHARMAP_BARREL :
-          case CHARMAP_TELEPORT :
           case CHARMAP_MOB1 :
           case CHARMAP_MOB2 :
-          case CHARMAP_CHASM :
+          case CHARMAP_MONST1 :
+          case CHARMAP_MONST2 :
+          case CHARMAP_PILLAR :
+          case CHARMAP_SECRET_DOOR :
+          case CHARMAP_START :
+          case CHARMAP_TELEPORT :
+          case CHARMAP_TRAP :
+          case CHARMAP_TREASURE1 :
+          case CHARMAP_TREASURE2 :
           case CHARMAP_WALL :
             //
             // No water
@@ -2223,12 +2226,12 @@ static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
     case CHARMAP_MONST2 : return true;
     case CHARMAP_PILLAR : return true;
     case CHARMAP_SECRET_DOOR : return true;
-    case CHARMAP_WATER : return true;
     case CHARMAP_START : return true;
     case CHARMAP_TELEPORT : return true;
     case CHARMAP_TRAP : return true;
     case CHARMAP_TREASURE1 : return true;
     case CHARMAP_TREASURE2 : return true;
+    case CHARMAP_WATER : return true;
     default : return false;
   }
 }
@@ -2752,29 +2755,29 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_CHASM_50 :
         case CHARMAP_EMPTY :
         case CHARMAP_WALL : break;
-        case CHARMAP_JOIN :
+        case CHARMAP_BARREL :
+        case CHARMAP_BRAZIER :
+        case CHARMAP_BRIDGE :
+        case CHARMAP_CORRIDOR :
+        case CHARMAP_DOOR :
+        case CHARMAP_DRY_GRASS :
+        case CHARMAP_EXIT :
         case CHARMAP_FLOOR :
+        case CHARMAP_FLOOR_50 :
+        case CHARMAP_FOLIAGE :
+        case CHARMAP_JOIN :
         case CHARMAP_KEY :
-        case CHARMAP_MONST1 :
-        case CHARMAP_MONST2 :
         case CHARMAP_MOB1 :
         case CHARMAP_MOB2 :
+        case CHARMAP_MONST1 :
+        case CHARMAP_MONST2 :
+        case CHARMAP_PILLAR :
+        case CHARMAP_SECRET_DOOR :
+        case CHARMAP_START :
+        case CHARMAP_TELEPORT :
+        case CHARMAP_TRAP :
         case CHARMAP_TREASURE1 :
         case CHARMAP_TREASURE2 :
-        case CHARMAP_TELEPORT :
-        case CHARMAP_FOLIAGE :
-        case CHARMAP_DOOR :
-        case CHARMAP_SECRET_DOOR :
-        case CHARMAP_DRY_GRASS :
-        case CHARMAP_BARREL :
-        case CHARMAP_CORRIDOR :
-        case CHARMAP_PILLAR :
-        case CHARMAP_TRAP :
-        case CHARMAP_BRIDGE :
-        case CHARMAP_BRAZIER :
-        case CHARMAP_FLOOR_50 :
-        case CHARMAP_EXIT :
-        case CHARMAP_START :
           if (l->data[ x - 1 ][ y - 1 ].c == CHARMAP_EMPTY) {
             l->data[ x - 1 ][ y - 1 ].c = CHARMAP_WALL;
           }
