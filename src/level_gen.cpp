@@ -228,7 +228,12 @@ public:
   //
   // Globally unique
   //
-  int room_no = {};
+  int id = {};
+
+  //
+  // Chance of appearing
+  //
+  int chance = {CHANCE_NORMAL};
 
   //
   // Start room?
@@ -276,7 +281,12 @@ public:
   //
   // Globally unique
   //
-  int fragment_alt_no = {};
+  int id = {};
+
+  //
+  // Chance of appearing
+  //
+  int chance = {CHANCE_NORMAL};
 
   //
   // FragmentAlt size
@@ -310,7 +320,12 @@ public:
   //
   // Globally unique
   //
-  int fragment_no = {};
+  int id = {};
+
+  //
+  // Chance of appearing
+  //
+  int chance = {CHANCE_NORMAL};
 
   //
   // Fragment size
@@ -405,7 +420,8 @@ static class Room *room_rotate(Gamep g, class Room *r)
   auto n = new Room();
   rooms_all[ r->room_type ].push_back(n);
 
-  n->room_no   = room_no++;
+  n->id        = room_no++;
+  n->chance    = r->chance;
   n->room_type = r->room_type;
   n->file      = r->file;
   n->line      = r->line;
@@ -436,7 +452,8 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
   auto n = new Room();
   rooms_all[ r->room_type ].push_back(n);
 
-  n->room_no   = room_no++;
+  n->id        = room_no++;
+  n->chance    = r->chance;
   n->room_type = r->room_type;
   n->file      = r->file;
   n->line      = r->line;
@@ -460,7 +477,7 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
 //
 // Add a room and copies with all possible rotations
 //
-void room_add(Gamep g, bool check_exits, const char *file, int line, ...)
+void room_add(Gamep g, int chance, bool check_exits, const char *file, int line, ...)
 {
   TRACE_NO_INDENT();
 
@@ -570,7 +587,8 @@ void room_add(Gamep g, bool check_exits, const char *file, int line, ...)
   class Room *r = new Room();
   rooms_all[ room_type ].push_back(r);
 
-  r->room_no   = room_no++;
+  r->id        = room_no++;
+  r->chance    = chance;
   r->room_type = room_type;
   r->file      = file;
   r->line      = line;
@@ -702,7 +720,7 @@ static void room_dump(Gamep g, class Room *r)
 {
   TRACE_NO_INDENT();
 
-  LOG("Room %d %s:%d", r->room_no, r->file, r->line);
+  LOG("Room %d %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
     std::string tmp;
@@ -952,12 +970,13 @@ static class FragmentAlt *fragment_alt_rotate(Gamep g, class FragmentAlt *r)
   fragment_alts_all.push_back(n);
   fragment_alts_curr.push_back(n);
 
-  n->fragment_alt_no = fragment_alt_no++;
-  n->file            = r->file;
-  n->line            = r->line;
-  n->width           = r->height;
-  n->height          = r->width;
-  n->data            = (char *) myzalloc(r->width * r->height, "fragment_alt data");
+  n->id     = fragment_no++;
+  n->chance = r->chance;
+  n->file   = r->file;
+  n->line   = r->line;
+  n->width  = r->height;
+  n->height = r->width;
+  n->data   = (char *) myzalloc(r->width * r->height, "fragment_alt data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -981,12 +1000,13 @@ static class FragmentAlt *fragment_alt_flip_horiz(Gamep g, class FragmentAlt *r)
   fragment_alts_all.push_back(n);
   fragment_alts_curr.push_back(n);
 
-  n->fragment_alt_no = fragment_alt_no++;
-  n->file            = r->file;
-  n->line            = r->line;
-  n->width           = r->width;
-  n->height          = r->height;
-  n->data            = (char *) myzalloc(r->width * r->height, "fragment_alt data");
+  n->id     = fragment_alt_no++;
+  n->chance = r->chance;
+  n->file   = r->file;
+  n->line   = r->line;
+  n->width  = r->width;
+  n->height = r->height;
+  n->data   = (char *) myzalloc(r->width * r->height, "fragment_alt data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1002,7 +1022,7 @@ static class FragmentAlt *fragment_alt_flip_horiz(Gamep g, class FragmentAlt *r)
 //
 // Add a fragment_alt and copies with all possible rotations
 //
-bool fragment_alt_add(Gamep g, const char *file, int line, ...)
+bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
 {
   TRACE_NO_INDENT();
 
@@ -1112,12 +1132,13 @@ bool fragment_alt_add(Gamep g, const char *file, int line, ...)
   fragment_alts_curr.clear();
   fragment_alts_curr.push_back(r);
 
-  r->fragment_alt_no = fragment_alt_no++;
-  r->file            = file;
-  r->line            = line;
-  r->width           = fragment_alt_width;
-  r->height          = fragment_alt_height;
-  r->data            = (char *) myzalloc(fragment_alt_width * fragment_alt_height, "fragment_alt data");
+  r->id     = fragment_alt_no++;
+  r->chance = chance;
+  r->file   = file;
+  r->line   = line;
+  r->width  = fragment_alt_width;
+  r->height = fragment_alt_height;
+  r->data   = (char *) myzalloc(fragment_alt_width * fragment_alt_height, "fragment_alt data");
 
   //
   // Now read the fragment_alt again
@@ -1153,20 +1174,25 @@ bool fragment_alt_add(Gamep g, const char *file, int line, ...)
 }
 
 //
-// Get a random fragment_alt.
+// Get a random alt fragment.
 //
-#if 0
-static class FragmentAlt *fragment_alt_random_get(Gamep g, class LevelGen *l)
+static class FragmentAlt *fragment_alt_random_get(Gamep g, class LevelGen *l, Fragment *f)
 {
   TRACE_NO_INDENT();
 
-  if (! fragment_alts_all.size()) {
-    DIE("no fragment_alts");
+  if (! f->fragment_alts.size()) {
+    return nullptr;
   }
 
-  return fragment_alts_all[ pcg_random_range(0, fragment_alts_all.size()) ];
+  int tries = 0;
+  while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
+    auto a = f->fragment_alts[ pcg_random_range(0, f->fragment_alts.size()) ];
+    if (d10000() < a->chance) {
+      return a;
+    }
+  }
+  return nullptr;
 }
-#endif
 
 //
 // Dump a fragment_alt
@@ -1175,7 +1201,7 @@ static void fragment_alt_dump(Gamep g, class FragmentAlt *r)
 {
   TRACE_NO_INDENT();
 
-  LOG("FragmentAlt %d %s:%d", r->fragment_alt_no, r->file, r->line);
+  LOG("FragmentAlt %d %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
     std::string tmp;
@@ -1199,164 +1225,6 @@ void fragment_alts_dump(Gamep g)
     fragment_alt_dump(g, r);
   }
 }
-
-#if 0
-//
-// Can we place a fragment_alt here on the level?
-//
-static bool fragment_alt_can_place_at(Gamep g, class LevelGen *l, class FragmentAlt *r, point at, int rx, int ry)
-{
-  //
-  // Check we have something to place here.
-  //
-  char fragment_alt_c = r->data[ (ry * r->width) + rx ];
-  if (unlikely(fragment_alt_c == CHARMAP_EMPTY)) {
-    return true;
-  }
-
-  //
-  // Where we're placing tiles
-  //
-  point p(rx + at.x, ry + at.y);
-
-  //
-  // We need one tile of edge around fragment_alts.
-  //
-  if (unlikely(p.x <= 0)) {
-    return false;
-  }
-  if (unlikely(p.x >= MAP_WIDTH - 1)) {
-    return false;
-  }
-  if (unlikely(p.y <= 0)) {
-    return false;
-  }
-  if (unlikely(p.y >= MAP_HEIGHT - 1)) {
-    return false;
-  }
-
-  //
-  // Special door handling
-  //
-  if (unlikely(fragment_alt_c == CHARMAP_JOIN)) {
-    //
-    // Doors can overlap.
-    //
-    if (l->data[ p.x ][ p.y ].c == CHARMAP_JOIN) {
-      return true;
-    }
-  }
-
-  //
-  // Check all adjacent tiles for an adjacent fragment_alt
-  //
-  for (int dy = -1; dy <= 1; dy++) {
-    for (int dx = -1; dx <= 1; dx++) {
-      if (! dx && ! dy) {
-        switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-          case CHARMAP_JOIN :
-          case CHARMAP_EMPTY : break;
-          default : return false;
-        }
-      } else {
-        //
-        // Allow certain tiles, like water to be adjacent. This way a fragment_alt can be created
-        // right at the water edge.
-        //
-        switch (l->data[ p.x + dx ][ p.y + dy ].c) {
-          case CHARMAP_WATER :
-          case CHARMAP_LAVA :
-          case CHARMAP_CHASM :
-          case CHARMAP_JOIN :
-          case CHARMAP_EMPTY : break;
-          default : return false;
-        }
-      }
-    }
-  }
-
-  //
-  // Can place here
-  //
-  return true;
-}
-
-//
-// Can we place a fragment_alt here on the level?
-//
-static bool fragment_alt_can_place_at(Gamep g, class LevelGen *l, class FragmentAlt *r, point at)
-{
-  //
-  // Check the fragment_alt is clear to be placed here.
-  //
-  for (int ry = 0; ry < r->height; ry++) {
-    for (int rx = 0; rx < r->width; rx++) {
-      if (! fragment_alt_can_place_at(g, l, r, at, rx, ry)) {
-        return false;
-      }
-    }
-  }
-
-  //
-  // Can place here
-  //
-  return true;
-}
-
-//
-// Place a fragment_alt on the level
-//
-static void fragment_alt_place_at(Gamep g, class LevelGen *l, class FragmentAlt *r, point at)
-{
-  //
-  // The fragment_alt should be clear to place at this point
-  //
-  for (int ry = 0; ry < r->height; ry++) {
-    for (int rx = 0; rx < r->width; rx++) {
-      //
-      // Check we have something to place here.
-      //
-      char fragment_alt_c = r->data[ (ry * r->width) + rx ];
-      if (fragment_alt_c == CHARMAP_EMPTY) {
-        continue;
-      }
-
-      //
-      // Check if we need to modify tiles when placing
-      //
-      switch (fragment_alt_c) {
-        case CHARMAP_CHASM_50 :
-          if (d100() > 50) {
-            fragment_alt_c = CHARMAP_FLOOR;
-          } else {
-            fragment_alt_c = CHARMAP_CHASM;
-          }
-          break;
-        case CHARMAP_FLOOR_50 :
-          if (d100() > 50) {
-            fragment_alt_c = CHARMAP_EMPTY;
-          } else {
-            fragment_alt_c = CHARMAP_FLOOR;
-          }
-          break;
-        default : break;
-      }
-
-      if (fragment_alt_c == CHARMAP_EMPTY) {
-        continue;
-      }
-
-      //
-      // Where we're placing tiles
-      //
-      point p(rx + at.x, ry + at.y);
-
-      class Cell *cell = &l->data[ p.x ][ p.y ];
-      cell->c          = fragment_alt_c;
-    }
-  }
-}
-#endif
 
 //
 // Clean up fragment_alts
@@ -1402,12 +1270,13 @@ static class Fragment *fragment_rotate(Gamep g, class Fragment *r)
   fragments_all.push_back(n);
   fragments_curr.push_back(n);
 
-  n->fragment_no = fragment_no++;
-  n->file        = r->file;
-  n->line        = r->line;
-  n->width       = r->height;
-  n->height      = r->width;
-  n->data        = (char *) myzalloc(r->width * r->height, "fragment data");
+  n->id     = fragment_no++;
+  n->chance = r->chance;
+  n->file   = r->file;
+  n->line   = r->line;
+  n->width  = r->height;
+  n->height = r->width;
+  n->data   = (char *) myzalloc(r->width * r->height, "fragment data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1431,12 +1300,13 @@ static class Fragment *fragment_flip_horiz(Gamep g, class Fragment *r)
   fragments_all.push_back(n);
   fragments_curr.push_back(n);
 
-  n->fragment_no = fragment_no++;
-  n->file        = r->file;
-  n->line        = r->line;
-  n->width       = r->width;
-  n->height      = r->height;
-  n->data        = (char *) myzalloc(r->width * r->height, "fragment data");
+  n->id     = fragment_no++;
+  n->chance = r->chance;
+  n->file   = r->file;
+  n->line   = r->line;
+  n->width  = r->width;
+  n->height = r->height;
+  n->data   = (char *) myzalloc(r->width * r->height, "fragment data");
 
   for (int y = 0; y < r->height; y++) {
     for (int x = 0; x < r->width; x++) {
@@ -1452,7 +1322,7 @@ static class Fragment *fragment_flip_horiz(Gamep g, class Fragment *r)
 //
 // Add a fragment and copies with all possible rotations
 //
-bool fragment_add(Gamep g, const char *file, int line, ...)
+bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
 {
   TRACE_NO_INDENT();
 
@@ -1562,12 +1432,13 @@ bool fragment_add(Gamep g, const char *file, int line, ...)
   fragments_curr.clear();
   fragments_curr.push_back(r);
 
-  r->fragment_no = fragment_no++;
-  r->file        = file;
-  r->line        = line;
-  r->width       = fragment_width;
-  r->height      = fragment_height;
-  r->data        = (char *) myzalloc(fragment_width * fragment_height, "fragment data");
+  r->id     = fragment_no++;
+  r->chance = chance;
+  r->file   = file;
+  r->line   = line;
+  r->width  = fragment_width;
+  r->height = fragment_height;
+  r->data   = (char *) myzalloc(fragment_width * fragment_height, "fragment data");
 
   //
   // Now read the fragment again
@@ -1605,7 +1476,14 @@ static class Fragment *fragment_random_get(Gamep g, class LevelGen *l)
     DIE("no fragments");
   }
 
-  return fragments_all[ pcg_random_range(0, fragments_all.size()) ];
+  int tries = 0;
+  while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
+    auto f = fragments_all[ pcg_random_range(0, fragments_all.size()) ];
+    if (d10000() < f->chance) {
+      return f;
+    }
+  }
+  return nullptr;
 }
 
 //
@@ -1615,7 +1493,7 @@ static void fragment_dump(Gamep g, class Fragment *r)
 {
   TRACE_NO_INDENT();
 
-  LOG("Fragment %d %s:%d", r->fragment_no, r->file, r->line);
+  LOG("Fragment %d %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
     std::string tmp;
@@ -1690,7 +1568,10 @@ static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, point at
     return;
   }
 
-  auto a = f->fragment_alts[ pcg_rand() % f->fragment_alts.size() ];
+  auto a = fragment_alt_random_get(g, l, f);
+  if (! a) {
+    return;
+  }
 
   for (int ry = 0; ry < f->height; ry++) {
     for (int rx = 0; rx < f->width; rx++) {
@@ -1747,6 +1628,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
 
   LOG("Seed: %u", l->seed_num);
   LOG("Room count: %d", (int) l->rooms_placed.size());
+  LOG("Fragment count: %d", l->fragment_count);
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;

@@ -216,7 +216,7 @@ void level_tick(Gamep, Levelsp, Levelp);
 void rooms_test(Gamep);
 void rooms_init(Gamep);
 void rooms_fini(Gamep);
-void room_add(Gamep, bool check, const char *file, int line, ...);
+void room_add(Gamep, int chance, bool check, const char *file, int line, ...);
 void rooms_blend1(Gamep);
 void rooms_blend2(Gamep);
 void rooms_chunky(Gamep);
@@ -232,10 +232,23 @@ void rooms_prefab(Gamep);
 void fragments_init(Gamep);
 void fragments_fini(Gamep);
 void fragment_alts_fini(Gamep);
-bool fragment_add(Gamep, const char *file, int line, ...);
-bool fragment_alt_add(Gamep, const char *file, int line, ...);
+bool fragment_add(Gamep, int chance, const char *file, int line, ...);
+bool fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
 
 void level_gen_test(Gamep);
 void level_gen_stats_dump(Gamep);
+
+enum {
+  CHANCE_VVV_UNLIKELY = 1,
+  CHANCE_VV_UNLIKELY  = 10,
+  CHANCE_V_UNLIKELY   = 100,
+  CHANCE_UNLIKELY     = 1000,
+  CHANCE_NORMAL       = 10000,
+};
+
+enum {
+  NO_FLAGS = 0,
+  ROOM_CHECK_EXIT_FLAG    = 1,
+};
 
 #endif // _MY_LEVEL_H_
