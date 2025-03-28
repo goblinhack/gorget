@@ -26,6 +26,11 @@ if [[ $DONE -eq 1 ]]; then
     exit 0
 fi
 
+#
+# Remove mac dot underscore files
+#
+find . -type f -name '._*' -delete
+
 COUNT=$(find data/gfx -newer data/gfx.tgz -type f | wc -l)
 if [[ $COUNT -gt 0 ]];
 then
@@ -75,3 +80,8 @@ then
         exit 1
     fi
 fi
+
+#
+# Remove mac dot underscore files
+#
+find . -type f -name '._*' -delete
