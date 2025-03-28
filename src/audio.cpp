@@ -48,7 +48,6 @@ bool audio_init(void)
 
   if (! audio_init_done) {
     if (Mix_OpenAudio(audio_freq, audio_format, channels, chunksize) != 0) {
-
       ERR("Mix_OpenAudio fail: %s %s", Mix_GetError(), SDL_GetError());
       SDL_ClearError();
       return false;

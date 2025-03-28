@@ -147,22 +147,42 @@ void restart(Gamep g)
 
   executable = (char *) original_program_name.c_str();
 
-#ifdef _WIN32
+  bool use_system;
+
+#ifdef __linux__
+  //
+  // For some reason SDL audio fails if we use execve
+  //
+  use_system = true;
+#elif _WIN32
   //
   // Windows has spaces in the path name and that ends up being incorrectly
   // split by execve on the 2nd boot. So, just avoid the issue.
   //
   executable = (char *) "gorget.exe";
+  use_system = false;
+#else
+  use_system = false;
 #endif
 
-  CON("Run \"%s\"", executable);
+  CON("Restart \"%s\"", executable);
   if (g_opt_debug1) {
     sdl_flush_display(g, true);
   }
 
-  args[ 0 ] = executable;
-  execve(executable, (char *const *) args, nullptr);
-  DIE("Failed to restart");
+  CON("Quit");
+  quit(&g);
+
+  if (use_system) {
+    char tmp_cmd[ PATH_MAX ];
+    snprintf(tmp_cmd, sizeof(tmp_cmd), "%s &", executable);
+    system(tmp_cmd);
+    exit(0);
+  } else {
+    args[ 0 ] = executable;
+    execve(executable, (char *const *) args, nullptr);
+    DIE("Failed to restart");
+  }
 }
 
 void die(void)
