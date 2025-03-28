@@ -731,7 +731,7 @@ void config_game_gfx_update(Gamep g)
   //
   int tries = 100;
   while (tries-- > 0) {
-    if ((TERM_WIDTH >= TERM_WIDTH_MAX) || (TERM_HEIGHT >= TERM_HEIGHT_MAX)) {
+    if ((TERM_WIDTH > TERM_WIDTH_MAX) || (TERM_HEIGHT > TERM_HEIGHT_MAX)) {
       LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) > max terminal size, try smaller font",
           TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width,
           font_height);
@@ -752,14 +752,14 @@ void config_game_gfx_update(Gamep g)
       continue;
     }
 
-    if (TERM_WIDTH >= TERM_WIDTH_MAX) {
+    if (TERM_WIDTH > TERM_WIDTH_MAX) {
       LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) > max width", TERM_WIDTH, TERM_HEIGHT,
           TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_WIDTH = TERM_WIDTH_MAX;
       continue;
     }
 
-    if (TERM_HEIGHT >= TERM_HEIGHT_MAX) {
+    if (TERM_HEIGHT > TERM_HEIGHT_MAX) {
       LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) > max height", TERM_WIDTH, TERM_HEIGHT,
           TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       TERM_HEIGHT = TERM_HEIGHT_MAX;
