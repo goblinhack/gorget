@@ -33,13 +33,13 @@ void sdl_display(Gamep g)
       int  visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
       int  visible_map_tl_y = h * UI_TOPCON_HEIGHT;
       int  visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
-      int  visible_map_br_y = (TERM_HEIGHT - 2) * h;
+      int  visible_map_br_y = TERM_HEIGHT * h;
 
       //
       // Pixel perfect, but may be too large
       //
-      // visible_map_br_x = visible_map_tl_x + TILE_WIDTH * game_tiles_visible_across_get(g);
-      // visible_map_br_y = visible_map_tl_y + TILE_HEIGHT * game_tiles_visible_down_get(g);
+      // visible_map_br_x = visible_map_tl_x + TILE_WIDTH * game_tiles_visible_across_get(g) * 2;
+      // visible_map_br_y = visible_map_tl_y + TILE_HEIGHT * game_tiles_visible_down_get(g) * 2;
       game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
       //
