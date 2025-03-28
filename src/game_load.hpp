@@ -47,9 +47,9 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   TRACE_NO_INDENT();
 
   in >> bits(my.t.version);
-  LOG("Read config: version                      = [%s]", my.t.version.c_str());
+  LOG("Read config: version                = [%s]", my.t.version.c_str());
   in >> bits(my.t.serialized_size);
-  LOG("Read config: serialized_size              = %d", my.t.serialized_size);
+  LOG("Read config: serialized_size        = %d", my.t.serialized_size);
 
   if (my.t.serialized_size != sizeof(Config)) {
     game_load_error = "bad save file header version";
