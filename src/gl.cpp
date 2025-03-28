@@ -399,7 +399,10 @@ static void gl_fini_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint 
   memset(g_fbo_id, 0, sizeof(g_fbo_id));
   memset(g_fbo_tex_id, 0, sizeof(g_fbo_tex_id));
   memset(g_render_buf_id, 0, sizeof(g_render_buf_id));
-  memset(g_fbo_size, 0, sizeof(g_fbo_size));
+
+  for (auto i = 0; i < MAX_FBO; i++) {
+    g_fbo_size[ i ] = isize(0, 0);
+  }
 }
 
 void gl_init_fbo(Gamep g, int fbo)

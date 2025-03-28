@@ -26,7 +26,8 @@ typedef struct Level_ {
   //
   // Where this level is in the bigger map
   //
-  point level_num;
+  int level_num_x;
+  int level_num_y;
   //
   // Flags
   //
@@ -54,7 +55,8 @@ typedef struct Levels_ {
   //
   // Current level being played
   //
-  point level_num;
+  int level_num_x;
+  int level_num_y;
   //
   // Increments once per event loop.
   //
@@ -247,8 +249,8 @@ enum {
 };
 
 enum {
-  NO_FLAGS = 0,
-  ROOM_CHECK_EXIT_FLAG    = 1,
+  NO_FLAGS             = 0,
+  ROOM_CHECK_EXIT_FLAG = 1,
 };
 
 #endif // _MY_LEVEL_H_

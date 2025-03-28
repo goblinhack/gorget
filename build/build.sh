@@ -71,9 +71,9 @@ help_full()
       log_warn "  dnf install -y libmikmod-devel"
       log_warn "  dnf install -y libfishsound-devel"
       log_warn " "
-      set -x
       log_warn "Install the following for Ubuntu?"
-      apt-get install -y build-essential \
+      set -x
+      sudo apt-get install -y build-essential \
                       g++ \
                       git \
                       libegl1 \
@@ -97,7 +97,8 @@ help_full()
                       vim \
                       xutils-dev
       set +x
-      log_warn "Now re-run RUNME"
+      echo "Now re-run RUNME"
+      exit 0
       ;;
     *MING*|*MSYS*)
       log_warn "Install the following?"
@@ -161,7 +162,8 @@ help_full()
         ${MINGW_PKG_TYPE}-x86_64-xz \
         ${MINGW_PKG_TYPE}-x86_64-zlib
       set +x
-      log_warn "Now re-run RUNME"
+      echo "Now re-run RUNME"
+      exit 0
       ;;
     *Darwin*)
       log_warn "Install MAC ports then install:"
@@ -200,7 +202,7 @@ esac
 
 sdl_help()
 {
-    log_err "No SDL2 found"
+    log_err "I need SDL2 and SDL2 mixer installed"
     help_full
     exit 1
 }
@@ -227,18 +229,17 @@ if [ "$SDL2_CONFIG" != "" ]; then
 fi
 
 log_info "SDL2 config                : $SDL2_CONFIG"
-log_info "SDL2 version               : "$($SDL2_CONFIG --version) 2>/dev/null
-log_info "SDL2 libs                  : "$($SDL2_CONFIG --libs) 2>/dev/null
-log_info "SDL2 static libs           : "$($SDL2_CONFIG --static-libs) 2>/dev/null
-log_info "SDL2 cflags                : "$($SDL2_CONFIG --cflags) 2>/dev/null
-log_info "SDL2 prefix                : "$($SDL2_CONFIG --prefix) 2>/dev/null
-log_info "SDL2 exec-prefix           : "$($SDL2_CONFIG --exec-prefix) 2>/dev/null
+log_info "SDL2 version               : "$($SDL2_CONFIG --version 2>/dev/null)
+log_info "SDL2 libs                  : "$($SDL2_CONFIG --libs 2>/dev/null)
+log_info "SDL2 static libs           : "$($SDL2_CONFIG --static-libs 2>/dev/null)
+log_info "SDL2 cflags                : "$($SDL2_CONFIG --cflags 2>/dev/null)
+log_info "SDL2 prefix                : "$($SDL2_CONFIG --prefix 2>/dev/null)
+log_info "SDL2 exec-prefix           : "$($SDL2_CONFIG --exec-prefix 2>/dev/null)
 log_info "SDL2 include path          : $SDL2_INC_PATH"
 log_info "SDL2 mixer.h               : $SDL2_MIXER"
 #log_info "SDL2 found                 : $SDL2_SCORE"
 
 if [[ $SDL2_SCORE != "1" ]]; then
-    log_err "I need SDL2 and SDL2 mixer installed"
     sdl_help
     exit 1
 fi
@@ -249,7 +250,6 @@ fi
 SDL_LIBS=$($SDL2_CONFIG --libs)
 if [ $? -ne 0 ]
 then
-    log_err "Please install SDL2."
     sdl_help
     exit 1
 fi
@@ -257,7 +257,6 @@ fi
 C_FLAGS=$($SDL2_CONFIG --cflags | sed 's/ \-D_REENTRANT//g')
 if [ $? -ne 0 ]
 then
-    log_err "Please install SDL2."
     sdl_help
     exit 1
 fi

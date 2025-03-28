@@ -1257,8 +1257,8 @@ Levelp game_level_get(Gamep g, Levelsp v)
     ERR("No levels pointer set");
     return nullptr;
   }
-  auto x = v->level_num.x;
-  auto y = v->level_num.y;
+  auto x = v->level_num_x;
+  auto y = v->level_num_y;
   return &v->level[ x ][ y ];
 }
 Levelp game_level_get(Gamep g, Levelsp v, int x, int y)
@@ -1285,7 +1285,8 @@ Levelp game_level_set(Gamep g, Levelsp v, int x, int y)
     ERR("No levels pointer set");
     return nullptr;
   }
-  v->level_num = point(x, y);
+  v->level_num_x = x;
+  v->level_num_y = y;
   return game_level_get(g, v);
 }
 

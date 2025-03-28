@@ -210,9 +210,10 @@ Levelp level_create(Gamep g, Levelsp v, point level_num)
   LOG("Level create %u,%u", level_num.x, level_num.y);
   TRACE_AND_INDENT();
 
-  auto l = game_level_get(g, v, level_num.x, level_num.y);
+  Level *l = game_level_get(g, v, level_num.x, level_num.y);
   memset(l, 0, sizeof(*l));
-  l->level_num   = level_num;
+  l->level_num_x = level_num.x;
+  l->level_num_y = level_num.y;
   l->initialized = true;
 
   level_dungeon_create_and_place(g, v, l);
@@ -229,7 +230,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  LOG("Level destroy %u,%u", l->level_num.x, l->level_num.y);
+  LOG("Level destroy %u,%u", l->level_num_x, l->level_num_y);
   TRACE_AND_INDENT();
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_fini(g, v, l, t); }
