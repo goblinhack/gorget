@@ -3237,6 +3237,10 @@ static void wid_update_internal(Gamep g, Widp w)
   int brx;
   int bry;
 
+  if (! w) {
+    return;
+  }
+
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   //
@@ -3299,6 +3303,10 @@ static void wid_update_internal(Gamep g, Widp w)
 void wid_update(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
+
+  if (! w) {
+    return;
+  }
 
   wid_update_internal(g, w);
 
@@ -5212,11 +5220,9 @@ printf("========================================= %d\n", wid_total_count);
 
 #ifdef ENABLE_DEBUG_UI_FOCUS
   if (wid_focus) {
-
     ascii_putf(0, TERM_HEIGHT - 4, WHITE, GRAY, L"focus %s", to_string(wid_focus).c_str());
   }
   if (wid_over) {
-
     ascii_putf(0, TERM_HEIGHT - 3, WHITE, GRAY, L"over  %s", to_string(wid_over).c_str());
   }
 #endif

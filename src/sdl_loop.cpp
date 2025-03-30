@@ -41,8 +41,6 @@ void sdl_loop(Gamep g)
   sdl_mouse_center(g);
   SDL_SetEventFilter(sdl_filter_events, nullptr);
 
-  glEnable(GL_TEXTURE_2D);
-
   //
   // Wait for events
   //
@@ -52,29 +50,11 @@ void sdl_loop(Gamep g)
 
   g_main_loop_running = true;
 
-  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  GL_ERROR_CHECK();
-
-  if (game_gfx_vsync_enable_get(g)) {
-    SDL_GL_SetSwapInterval(1);
-  } else {
-    SDL_GL_SetSwapInterval(0);
-  }
-  GL_ERROR_CHECK();
-
-  SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-  GL_ERROR_CHECK();
-
-  gl_enter_2d_mode(g);
+  // gl_enter_2d_mode(g);
 
 #ifdef ENABLE_UI_ASCII_MOUSE
   SDL_ShowCursor(0);
 #endif
-
-  //
-  // Causes a 0.3 sec delay first time it seems to run
-  //
-  SDL_PumpEvents();
 
   for (; /*ever*/;) {
     // DBG("SDL: tick");

@@ -618,10 +618,12 @@ void flush_the_console(Gamep g)
   //
   // Easier to see progress on windows where there is no console
   //
-#ifdef _WIN32
-  wid_visible(g, wid_console_window);
-  sdl_flush_display(g, true);
-#endif
+  if (g_opt_debug1) {
+    wid_visible(g, wid_console_window);
+    wid_raise(g, wid_console_window);
+    wid_update(g, wid_console_window);
+    sdl_flush_display(g, true);
+  }
 }
 
 int main(int argc, char *argv[])
@@ -742,11 +744,26 @@ int main(int argc, char *argv[])
     sdl_config_update_all(g);
   }
 
+  //
+  // Causes a 0.3 sec delay first time it seems to run
+  //
+  SDL_PumpEvents();
+
   {
     TRACE_NO_INDENT();
     if (g_need_restart) {
       restart(g);
     }
+  }
+
+  {
+    TRACE_NO_INDENT();
+    if (g_opt_debug1) {
+      CON("INI: Load early gfx tiles, text, UI etc...");
+    } else {
+      LOG("INI: Load early gfx tiles, text, UI etc...");
+    }
+    gfx_init();
   }
 
   //
@@ -757,23 +774,25 @@ int main(int argc, char *argv[])
     SDL_GL_SetSwapInterval(0);
   }
 
-  {
-    TRACE_NO_INDENT();
-    LOG("INI: Load early gfx tiles, text, UI etc...");
-    gfx_init();
-  }
-
   //
   // Random number
   //
-  LOG("INI: Init random seed");
+  if (g_opt_debug1) {
+    CON("INI: Init random seed");
+  } else {
+    LOG("INI: Init random seed");
+  }
   pcg_srand((unsigned int) std::time(nullptr));
 
   color_init();
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load fonts");
+    if (g_opt_debug1) {
+      CON("INI: Load fonts");
+    } else {
+      LOG("INI: Load fonts");
+    }
     if (! font_init()) {
       ERR("Font init");
     }
@@ -781,7 +800,11 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load widgets");
+    if (g_opt_debug1) {
+      CON("INI: Load widgets");
+    } else {
+      LOG("INI: Load widgets");
+    }
     if (! wid_init()) {
       ERR("Wid init");
     }
@@ -789,12 +812,42 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load console");
+    if (g_opt_debug1) {
+      CON("INI: Load console");
+    } else {
+      LOG("INI: Load console");
+    }
     if (! wid_console_init(g)) {
       ERR("Wid_console init");
     }
     wid_toggle_hidden(g, wid_console_window);
     flush_the_console(g);
+
+    if (g_opt_debug1) {
+      wid_visible(g, wid_console_window);
+      wid_raise(g, wid_console_window);
+      wid_update(g, wid_console_window);
+    }
+  }
+
+  {
+    CON("%%fg=red$          @@@@@@@@   @@@@@@   @@@@@@@    @@@@@@@@  @@@@@@@@  @@@@@@@%%fg=reset$");
+    CON("%%fg=red$         @@@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@  @@@@@@@%%fg=reset$");
+    CON("%%fg=red$         !@@        @@!  @@@  @@!  @@@  !@@        @@!         @@!%%fg=reset$");
+    CON("%%fg=red$         !@!        !@!  @!@  !@!  @!@  !@!        !@!         !@!%%fg=reset$");
+    CON("%%fg=red$         !@! @!@!@  @!@  !@!  @!@!!@!   !@! @!@!@  @!!!:!      @!!%%fg=reset$");
+    CON("%%fg=red$         !!! !!@!!  !@!  !!!  !!@!@!    !!! !!@!!  !!!!!:      !!!%%fg=reset$");
+    CON("%%fg=red$         :!!   !!:  !!:  !!!  !!: :!!   :!!   !!:  !!:         !!:%%fg=reset$");
+    CON("%%fg=red$         :!:   !::  :!:  !:!  :!:  !:!  :!:   !::  :!:         :!:%%fg=reset$");
+    CON("%%fg=red$          ::: ::::  ::::: ::  ::   :::   ::: ::::   :: ::::     ::%%fg=reset$");
+    CON("%%fg=red$          :: :: :    : :  :    :   : :   :: :: :   : :: ::      :%%fg=reset$");
+    CON("%%fg=red$           :              :    .         :: :      :  :  :%%fg=reset$");
+    CON("%%fg=red$           .              :               : .      .     .%%fg=reset$");
+    CON("%%fg=red$                          :               .%%fg=reset$");
+    CON("%%fg=red$                          .%%fg=reset$");
+    CON("%%fg=green$Version: " MYVER "%%fg=reset$");
+    CON("Press %%fg=yellow$<tab>%%fg=reset$ to complete commands.");
+    CON("Press %%fg=yellow$?%%fg=reset$ to show command options.");
   }
 
   //
@@ -803,29 +856,41 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     original_program_name = std::string(argv[ 0 ]);
-    LOG("INI: Original program name: %s", original_program_name.c_str());
+    if (g_opt_debug1) {
+      CON("INI: Original program name: %s", original_program_name.c_str());
+    } else {
+      LOG("INI: Original program name: %s", original_program_name.c_str());
+    }
     flush_the_console(g);
   }
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load tiles");
+    if (g_opt_debug1) {
+      CON("INI: Load tiles");
+    } else {
+      LOG("INI: Load tiles");
+    }
     if (! wid_tiles_init()) {
       ERR("Wid tiles init");
     }
   }
 
   {
+    TRACE_NO_INDENT();
+    if (! tile_init()) {
+      ERR("Tile init");
+    }
+    flush_the_console(g);
   }
-  TRACE_NO_INDENT();
-  if (! tile_init()) {
-    ERR("Tile init");
-  }
-  flush_the_console(g);
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load textures");
+    if (g_opt_debug1) {
+      CON("INI: Load textures");
+    } else {
+      LOG("INI: Load textures");
+    }
     if (! tex_init()) {
       ERR("Tex init");
     }
@@ -834,7 +899,11 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load audio");
+    if (g_opt_debug1) {
+      CON("INI: Load audio");
+    } else {
+      LOG("INI: Load audio");
+    }
     if (! audio_init()) {
       ERR("Audio init");
     }
@@ -843,7 +912,11 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load music");
+    if (g_opt_debug1) {
+      CON("INI: Load music");
+    } else {
+      LOG("INI: Load music");
+    }
     if (! music_init()) {
       ERR("Music init");
     }
@@ -852,7 +925,11 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load sound");
+    if (g_opt_debug1) {
+      CON("INI: Load sound");
+    } else {
+      LOG("INI: Load sound");
+    }
     if (! sound_init()) {
       ERR("Sound init");
     }
@@ -863,14 +940,22 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Find resource locations for gfx and music");
+    if (g_opt_debug1) {
+      CON("INI: Find resource locations for gfx and music");
+    } else {
+      LOG("INI: Find resource locations for gfx and music");
+    }
     find_file_locations();
     flush_the_console(g);
   }
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load templates");
+    if (g_opt_debug1) {
+      CON("INI: Load templates");
+    } else {
+      LOG("INI: Load templates");
+    }
     if (! tp_init()) {
       ERR("Templates init");
     }
@@ -878,7 +963,11 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    LOG("INI: Load commands");
+    if (g_opt_debug1) {
+      CON("INI: Load commands");
+    } else {
+      LOG("INI: Load commands");
+    }
     if (! command_init()) {
       ERR("Command init");
     }
@@ -906,6 +995,23 @@ int main(int argc, char *argv[])
   }
 
   wid_hide(g, wid_console_window);
+
+  {
+    glEnable(GL_TEXTURE_2D);
+
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    GL_ERROR_CHECK();
+
+    if (game_gfx_vsync_enable_get(g)) {
+      SDL_GL_SetSwapInterval(1);
+    } else {
+      SDL_GL_SetSwapInterval(0);
+    }
+    GL_ERROR_CHECK();
+
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    GL_ERROR_CHECK();
+  }
 
   g_opt_no_slow_log_flush = false;
 

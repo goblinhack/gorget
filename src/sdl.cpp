@@ -662,25 +662,6 @@ uint8_t sdl_user_exit(Gamep g, class Tokens *tokens, void *context)
   return true;
 }
 
-void sdl_flush_display(Gamep g, bool force)
-{
-  TRACE_NO_INDENT();
-
-  if (! force) {
-    IF_NODEBUG { return; }
-    if (g_opt_no_slow_log_flush) {
-      return;
-    }
-  }
-
-  glEnable(GL_TEXTURE_2D);
-  gl_enter_2d_mode(g);
-  wid_display_all(g);
-  gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
-
-  sdl_display(g);
-}
-
 void config_game_gfx_update(Gamep g)
 {
   LOG("SDL: Update");

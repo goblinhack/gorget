@@ -3,6 +3,7 @@
 //
 
 #include "my_ascii.hpp"
+#include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
@@ -13,6 +14,8 @@
 
 void sdl_display(Gamep g)
 {
+  TRACE_NO_INDENT();
+
   blit_fbo_bind(FBO_FINAL);
   glClear(GL_COLOR_BUFFER_BIT);
   glcolor(WHITE);
@@ -34,6 +37,7 @@ void sdl_display(Gamep g)
       int  visible_map_tl_y = h * UI_TOPCON_HEIGHT;
       int  visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
       int  visible_map_br_y = TERM_HEIGHT * h;
+      visible_map_br_y      = visible_map_tl_y + (visible_map_br_x - visible_map_tl_x);
 
       //
       // Pixel perfect, but may be too large
@@ -41,6 +45,9 @@ void sdl_display(Gamep g)
       // visible_map_br_x = visible_map_tl_x + TILE_WIDTH * game_tiles_visible_across_get(g) * 2;
       // visible_map_br_y = visible_map_tl_y + TILE_HEIGHT * game_tiles_visible_down_get(g) * 2;
       game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+
+      w = visible_map_br_x - visible_map_tl_x;
+      h = visible_map_br_y - visible_map_tl_y;
 
       //
       // Brighter map effect
@@ -76,6 +83,22 @@ void sdl_display(Gamep g)
   // Flip
   //
   SDL_GL_SwapWindow(sdl.window);
+}
+
+void sdl_flush_display(Gamep g, bool force)
+{
+  TRACE_NO_INDENT();
+
+  if (! force) {
+    IF_NODEBUG { return; }
+    if (g_opt_no_slow_log_flush) {
+      return;
+    }
+  }
+
+  wid_display_all(g);
+  gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
+  sdl_display(g);
 }
 
 void sdl_display_reset(Gamep g)

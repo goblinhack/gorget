@@ -46,18 +46,21 @@ public:
 
   int config_pix_height = {};
   int config_pix_width  = {};
+
   //
   // The pixel perfect screen
   //
   int game_pix_height = {};
   int game_pix_width  = {};
+
   //
   // This is the size of the game map within the game FBO
   //
   int map_pix_height = {};
   int map_pix_width  = {};
+
   //
-  // The actual display res
+  // The actual display resolution
   //
   int window_pix_height = {};
   int window_pix_width  = {};
@@ -438,24 +441,6 @@ void Game::start_playing(void)
   wid_topcon_init(g);
   TOPCON("Welcome to the dungeons of dread, home of the black dragon, %%fg=red$Gorget%%fg=reset$.");
   TOPCON("Complete all %%fg=yellow$16%%fg=reset$ levels and collect the Darkenstone to win.");
-
-  CON("%%fg=red$          @@@@@@@@   @@@@@@   @@@@@@@    @@@@@@@@  @@@@@@@@  @@@@@@@%%fg=reset$");
-  CON("%%fg=red$         @@@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@  @@@@@@@%%fg=reset$");
-  CON("%%fg=red$         !@@        @@!  @@@  @@!  @@@  !@@        @@!         @@!%%fg=reset$");
-  CON("%%fg=red$         !@!        !@!  @!@  !@!  @!@  !@!        !@!         !@!%%fg=reset$");
-  CON("%%fg=red$         !@! @!@!@  @!@  !@!  @!@!!@!   !@! @!@!@  @!!!:!      @!!%%fg=reset$");
-  CON("%%fg=red$         !!! !!@!!  !@!  !!!  !!@!@!    !!! !!@!!  !!!!!:      !!!%%fg=reset$");
-  CON("%%fg=red$         :!!   !!:  !!:  !!!  !!: :!!   :!!   !!:  !!:         !!:%%fg=reset$");
-  CON("%%fg=red$         :!:   !::  :!:  !:!  :!:  !:!  :!:   !::  :!:         :!:%%fg=reset$");
-  CON("%%fg=red$          ::: ::::  ::::: ::  ::   :::   ::: ::::   :: ::::     ::%%fg=reset$");
-  CON("%%fg=red$          :: :: :    : :  :    :   : :   :: :: :   : :: ::      :%%fg=reset$");
-  CON("%%fg=red$           :              :    .         :: :      :  :  :%%fg=reset$");
-  CON("%%fg=red$           .              :               : .      .     .%%fg=reset$");
-  CON("%%fg=red$                          :               .%%fg=reset$");
-  CON("%%fg=red$                          .%%fg=reset$");
-  CON("%%fg=green$Version: " MYVER "%%fg=reset$");
-  CON("Press %%fg=yellow$<tab>%%fg=reset$ to complete commands.");
-  CON("Press %%fg=yellow$?%%fg=reset$ to show command options.");
   wid_topcon_flush(g);
 }
 void game_start_playing(Gamep g) { g->start_playing(); }
