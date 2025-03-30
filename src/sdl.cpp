@@ -857,7 +857,7 @@ void config_game_gfx_update(Gamep g)
   //
   // For now use a square map, ignoring the above
   //
-  visible_game_map_h = visible_game_map_w;
+  // visible_game_map_h = visible_game_map_w;
 
   game_pix_width_set(g, visible_game_map_w);
   game_pix_height_set(g, visible_game_map_h);
