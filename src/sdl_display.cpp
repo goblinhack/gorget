@@ -46,9 +46,6 @@ void sdl_display(Gamep g)
       // visible_map_br_y = visible_map_tl_y + TILE_HEIGHT * game_tiles_visible_down_get(g) * 2;
       game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
-      w = visible_map_br_x - visible_map_tl_x;
-      h = visible_map_br_y - visible_map_tl_y;
-
       //
       // Brighter map effect
       //

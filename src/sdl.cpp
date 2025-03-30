@@ -836,8 +836,9 @@ void config_game_gfx_update(Gamep g)
   // What size in terminal cells does the map take up?
   //
   double term_cells_w = TERM_WIDTH - (UI_LEFTBAR_WIDTH + UI_RIGHTBAR_WIDTH);
-  double term_cells_h = TERM_HEIGHT - UI_TOPCON_HEIGHT - 2;
+  double term_cells_h = TERM_HEIGHT - UI_TOPCON_HEIGHT;
   double ratio        = (term_cells_w / ((double) UI_FONT_HEIGHT / (double) UI_FONT_WIDTH)) / term_cells_h;
+
   //
   // Now convert that to pixels
   //
