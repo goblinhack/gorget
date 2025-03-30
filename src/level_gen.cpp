@@ -12,6 +12,7 @@
 #include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
+#include <array>
 #include <map>
 #include <stdarg.h>
 #include <thread>
