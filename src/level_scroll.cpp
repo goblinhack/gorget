@@ -88,8 +88,8 @@ void level_scroll_warp_to_player(Gamep g, Levelsp v)
   }
 
   v->pixel_map_at = t->pix_at;
-  v->pixel_map_at.x -= game_map_pix_width_get(g) / 2;
-  v->pixel_map_at.y -= game_map_pix_height_get(g) / 2;
+  v->pixel_map_at.x -= game_map_fbo_width_get(g) / 2;
+  v->pixel_map_at.y -= game_map_fbo_height_get(g) / 2;
 
   level_bounds_set(g, v);
 }

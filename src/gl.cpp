@@ -112,15 +112,15 @@ void gl_enter_2d_mode(Gamep g)
   //
   // 2D projection
   //
-  if (! game_pix_width_get(g) || ! game_pix_height_get(g)) {
-    LOG("Cannot call glOrtho(%d,%d)", game_pix_width_get(g), game_pix_height_get(g));
+  if (! game_map_fbo_width_get(g) || ! game_map_fbo_height_get(g)) {
+    LOG("Cannot call glOrtho(%d,%d)", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
     return;
   }
 
-  glOrtho(0,                      // left
-          game_pix_width_get(g),  // right
-          game_pix_height_get(g), // bottom
-          0,                      // top
+  glOrtho(0,                          // left
+          game_map_fbo_width_get(g),  // right
+          game_map_fbo_height_get(g), // bottom
+          0,                          // top
           -1200.0, 1200.0);
   GL_ERROR_CHECK();
 
@@ -481,13 +481,13 @@ void gl_fini_fbo(Gamep g)
 
 void fbo_get_size(Gamep g, int fbo, int &w, int &h)
 {
-  w = game_pix_width_get(g);
-  h = game_pix_height_get(g);
+  w = game_map_fbo_width_get(g);
+  h = game_map_fbo_height_get(g);
 
   switch (fbo) {
     case FBO_MAP :
-      w = game_map_pix_width_get(g);
-      h = game_map_pix_height_get(g);
+      w = game_map_fbo_width_get(g);
+      h = game_map_fbo_height_get(g);
       break;
     case FBO_WID :
       w = game_window_pix_width_get(g);

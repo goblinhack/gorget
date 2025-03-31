@@ -192,7 +192,7 @@ void sdl_loop(Gamep g)
       }
     }
 
-    gl_enter_2d_mode(g, game_pix_width_get(g), game_pix_height_get(g));
+    gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
 
     glcolor(WHITE);
     game_display(g);

@@ -837,100 +837,53 @@ void config_game_gfx_update(Gamep g)
     return;
   }
 
-  //
-  // What size in terminal cells does the map take up?
-  //
-  double term_cells_w = TERM_WIDTH - (UI_LEFTBAR_WIDTH + UI_RIGHTBAR_WIDTH);
-  double term_cells_h = TERM_HEIGHT - UI_TOPCON_HEIGHT;
-  double ratio        = (term_cells_w / ((double) UI_FONT_HEIGHT / (double) UI_FONT_WIDTH)) / term_cells_h;
-
-  //
-  // Now convert that to pixels
-  //
-  double visible_game_map_w = (double) TILE_WIDTH * game_tiles_visible_across_get(g);
-  double visible_game_map_h = (double) TILE_HEIGHT * ceil(game_tiles_visible_down_get(g) / ratio);
-
-  //
-  // Compensate for any additional pixels the rounding of the terminal cells loses
-  //
-  double pixel_rounding_w_fixup = (game_ascii_pix_width_get(g) * TERM_WIDTH) / (double) game_window_pix_width_get(g);
-  double pixel_rounding_h_fixup
-      = (game_ascii_pix_height_get(g) * TERM_HEIGHT) / (double) game_window_pix_height_get(g);
-  visible_game_map_w *= pixel_rounding_w_fixup;
-  visible_game_map_h *= pixel_rounding_h_fixup;
-
-  //
-  // For now use a square map, ignoring the above
-  //
-  visible_game_map_h = visible_game_map_w;
-  // visible_game_map_w = visible_game_map_h;
-
-  game_pix_width_set(g, visible_game_map_w);
-  game_pix_height_set(g, visible_game_map_h);
-
-  if (! game_pix_width_get(g)) {
-    ERR("g->config.game_pix_width is zero");
-    return;
-  }
-  if (! game_pix_height_get(g)) {
-    ERR("g->config.game_pix_height is zero");
-    return;
-  }
-
   LOG("SDL: Map:");
 
-  {
-    auto   w                = game_ascii_pix_width_get(g);
-    auto   h                = game_ascii_pix_height_get(g);
-    int    visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
-    int    visible_map_tl_y = h * UI_TOPCON_HEIGHT;
-    int    visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
-    int    visible_map_br_y = TERM_HEIGHT * h;
-    double map_w            = visible_map_br_x - visible_map_tl_x;
-    double map_h            = visible_map_br_y - visible_map_tl_y;
+  auto   w                = game_ascii_pix_width_get(g);
+  auto   h                = game_ascii_pix_height_get(g);
+  int    visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
+  int    visible_map_tl_y = h * UI_TOPCON_HEIGHT;
+  int    visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
+  int    visible_map_br_y = TERM_HEIGHT * h;
+  double map_w            = visible_map_br_x - visible_map_tl_x;
+  double map_h            = visible_map_br_y - visible_map_tl_y;
 
-    double max_fbo_w = TILE_WIDTH * MAP_WIDTH;
-    double max_fbo_h = TILE_HEIGHT * MAP_HEIGHT;
+  double max_fbo_w = TILE_WIDTH * MAP_WIDTH;
+  double max_fbo_h = TILE_HEIGHT * MAP_HEIGHT;
 
-    double map_w_h_ratio = map_w / map_h;
-    double fbo_w         = (double) TILE_WIDTH * game_tiles_visible_across_get(g);
-    double fbo_h         = ceil(fbo_w / map_w_h_ratio);
+  double map_w_h_ratio = map_w / map_h;
+  double fbo_w         = (double) TILE_WIDTH * game_tiles_visible_across_get(g);
+  double fbo_h         = ceil(fbo_w / map_w_h_ratio);
 
-    if (fbo_w > max_fbo_w) {
-      fbo_w = max_fbo_w;
-    }
-
-    if (fbo_h > max_fbo_h) {
-      fbo_h = max_fbo_h;
-    }
-
-    LOG("SDL: - map location         : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-        visible_map_br_y);
-    LOG("SDL: - map onscreen sz      : %gx%g", map_w, map_h);
-    LOG("SDL: - map w to h ratio     : %g", map_w_h_ratio);
-    LOG("SDL: - map fbo sz           : %gx%g", fbo_w, fbo_h);
-    LOG("SDL: - map max fbo sz       : %gx%g", max_fbo_w, max_fbo_h);
-
-    game_pix_width_set(g, fbo_w);
-    game_pix_height_set(g, fbo_h);
-
-    game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+  if (fbo_w > max_fbo_w) {
+    fbo_w = max_fbo_w;
   }
+
+  if (fbo_h > max_fbo_h) {
+    fbo_h = max_fbo_h;
+  }
+
+  LOG("SDL: - map location         : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+      visible_map_br_y);
+  LOG("SDL: - map onscreen sz      : %gx%g", map_w, map_h);
+  LOG("SDL: - map w to h ratio     : %g", map_w_h_ratio);
+  LOG("SDL: - map fbo sz           : %gx%g", fbo_w, fbo_h);
+  LOG("SDL: - map max fbo sz       : %gx%g", max_fbo_w, max_fbo_h);
+
+  game_map_fbo_width_set(g, fbo_w);
+  game_map_fbo_height_set(g, fbo_h);
+  game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //
-  game_map_pix_width_set(g, game_pix_width_get(g));
-  game_map_pix_height_set(g, game_pix_height_get(g));
-
-  float tiles_across = game_pix_width_get(g) / TILE_WIDTH;
-  float tiles_down   = game_pix_height_get(g) / TILE_HEIGHT;
+  float tiles_across = game_map_fbo_width_get(g) / TILE_WIDTH;
+  float tiles_down   = game_map_fbo_height_get(g) / TILE_HEIGHT;
 
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);
 
-  LOG("SDL: - game map pixel sz    : %dx%d", game_pix_width_get(g), game_pix_height_get(g));
-  LOG("SDL: - visible map pixel sz : %dx%d", game_map_pix_width_get(g), game_map_pix_height_get(g));
+  LOG("SDL: - game map pixel sz    : %dx%d", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
   LOG("SDL: Map");
   LOG("SDL: - size                 : %dx%d", MAP_WIDTH, MAP_HEIGHT);
 }

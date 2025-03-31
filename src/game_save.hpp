@@ -46,8 +46,8 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.config_pix_width);
   out << bits(my.t.debug_mode);
   out << bits(my.t.fps_counter);
-  out << bits(my.t.game_pix_height);
-  out << bits(my.t.game_pix_width);
+  out << bits(my.t.map_fbo_height);
+  out << bits(my.t.map_fbo_width);
   out << bits(my.t.gfx_allow_highdpi);
   out << bits(my.t.gfx_borderless);
   out << bits(my.t.gfx_fullscreen);
@@ -84,8 +84,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.key_unused18);
   out << bits(my.t.key_unused19);
   out << bits(my.t.key_zoom);
-  out << bits(my.t.map_pix_height);
-  out << bits(my.t.map_pix_width);
   out << bits(my.t.mouse_wheel_lr_negated);
   out << bits(my.t.mouse_wheel_ud_negated);
   out << bits(my.t.music_volume);

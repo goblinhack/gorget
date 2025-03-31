@@ -476,8 +476,8 @@ void level_bounds_set(Gamep g, Levelsp v)
     v->pixel_map_at.y = 0;
   }
 
-  int max_pix_x = (MAP_WIDTH * dw) - game_pix_width_get(g);
-  int max_pix_y = (MAP_HEIGHT * dh) - game_pix_height_get(g);
+  int max_pix_x = (MAP_WIDTH * dw) - game_map_fbo_width_get(g);
+  int max_pix_y = (MAP_HEIGHT * dh) - game_map_fbo_height_get(g);
 
   if (v->pixel_map_at.x > max_pix_x) {
     v->pixel_map_at.x = max_pix_x;
@@ -501,8 +501,8 @@ void level_bounds_set(Gamep g, Levelsp v)
     tmp_miny = 0;
   }
 
-  int tmp_maxx = (v->pixel_map_at.x + game_map_pix_width_get(g)) / dw;
-  int tmp_maxy = (v->pixel_map_at.y + game_map_pix_height_get(g)) / dh;
+  int tmp_maxx = (v->pixel_map_at.x + game_map_fbo_width_get(g)) / dw;
+  int tmp_maxy = (v->pixel_map_at.y + game_map_fbo_height_get(g)) / dh;
 
   tmp_maxx += clipping_border;
   tmp_maxy += clipping_border;

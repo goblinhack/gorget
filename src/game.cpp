@@ -48,16 +48,10 @@ public:
   int config_pix_width  = {};
 
   //
-  // The pixel perfect screen
+  // The visible map FBO
   //
-  int game_pix_height = {};
-  int game_pix_width  = {};
-
-  //
-  // This is the size of the game map within the game FBO
-  //
-  int map_pix_height = {};
-  int map_pix_width  = {};
+  int map_fbo_height = {};
+  int map_fbo_width  = {};
 
   //
   // The actual display resolution
@@ -268,10 +262,8 @@ void Config::reset(void)
   config_pix_width       = {};
   debug_mode             = false;
   fps_counter            = false;
-  game_pix_height        = {};
-  game_pix_width         = {};
-  map_pix_height         = {};
-  map_pix_width          = {};
+  map_fbo_height         = {};
+  map_fbo_width          = {};
   gfx_allow_highdpi      = false;
   gfx_borderless         = true;
   gfx_fullscreen_desktop = true;
@@ -1003,80 +995,44 @@ void game_config_pix_width_set(Gamep g, int val)
   g->config.config_pix_width = val;
 }
 
-int game_pix_height_get(Gamep g)
+int game_map_fbo_height_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return 0;
   }
-  return g->config.game_pix_height;
-}
-void game_pix_height_set(Gamep g, int val)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  g->config.game_pix_height = val;
+  return g->config.map_fbo_height;
 }
 
-int game_pix_width_get(Gamep g)
+int game_map_fbo_width_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return 0;
   }
-  return g->config.game_pix_width;
-}
-void game_pix_width_set(Gamep g, int val)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  g->config.game_pix_width = val;
+  return g->config.map_fbo_width;
 }
 
-int game_map_pix_height_get(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return 0;
-  }
-  return g->config.map_pix_height;
-}
-void game_map_pix_height_set(Gamep g, int val)
+void game_map_fbo_height_set(Gamep g, int val)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.map_pix_height = val;
+  g->config.map_fbo_height = val;
 }
 
-int game_map_pix_width_get(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return 0;
-  }
-  return g->config.map_pix_width;
-}
-void game_map_pix_width_set(Gamep g, int val)
+void game_map_fbo_width_set(Gamep g, int val)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.map_pix_width = val;
+  g->config.map_fbo_width = val;
 }
 
 int game_window_pix_height_get(Gamep g)

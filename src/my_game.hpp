@@ -81,17 +81,11 @@ void game_config_pix_height_set(Gamep, int);
 int  game_config_pix_width_get(Gamep);
 void game_config_pix_width_set(Gamep, int);
 
-int  game_pix_height_get(Gamep);
-void game_pix_height_set(Gamep, int);
+int  game_map_fbo_height_get(Gamep);
+void game_map_fbo_height_set(Gamep, int);
 
-int  game_pix_width_get(Gamep);
-void game_pix_width_set(Gamep, int);
-
-int  game_map_pix_height_get(Gamep);
-void game_map_pix_height_set(Gamep, int);
-
-int  game_map_pix_width_get(Gamep);
-void game_map_pix_width_set(Gamep, int);
+int  game_map_fbo_width_get(Gamep);
+void game_map_fbo_width_set(Gamep, int);
 
 int  game_window_pix_height_get(Gamep);
 void game_window_pix_height_set(Gamep, int);

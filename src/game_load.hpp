@@ -63,8 +63,8 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.config_pix_width);
   in >> bits(my.t.debug_mode);
   in >> bits(my.t.fps_counter);
-  in >> bits(my.t.game_pix_height);
-  in >> bits(my.t.game_pix_width);
+  in >> bits(my.t.map_fbo_height);
+  in >> bits(my.t.map_fbo_width);
   in >> bits(my.t.gfx_allow_highdpi);
   in >> bits(my.t.gfx_borderless);
   in >> bits(my.t.gfx_fullscreen);
@@ -101,8 +101,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_unused18);
   in >> bits(my.t.key_unused19);
   in >> bits(my.t.key_zoom);
-  in >> bits(my.t.map_pix_height);
-  in >> bits(my.t.map_pix_width);
   in >> bits(my.t.mouse_wheel_lr_negated);
   in >> bits(my.t.mouse_wheel_ud_negated);
   in >> bits(my.t.music_volume);
@@ -122,10 +120,8 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: aspect_ratio           = %f", my.t.aspect_ratio);
   LOG("Read config: ascii_pix_height       = %d", my.t.ascii_pix_height);
   LOG("Read config: ascii_pix_width        = %d", my.t.ascii_pix_width);
-  LOG("Read config: game_pix_height        = %d", my.t.game_pix_height);
-  LOG("Read config: game_pix_width         = %d", my.t.game_pix_width);
-  LOG("Read config: map_pix_height         = %d", my.t.map_pix_height);
-  LOG("Read config: map_pix_width          = %d", my.t.map_pix_width);
+  LOG("Read config: map_fbo_height         = %d", my.t.map_fbo_height);
+  LOG("Read config: map_fbo_width          = %d", my.t.map_fbo_width);
   LOG("Read config: tiles_visible_across   = %d", my.t.tiles_visible_across);
   LOG("Read config: tiles_visible_down     = %d", my.t.tiles_visible_down);
 
@@ -186,20 +182,12 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     game_load_error += "config_pix_width is invalid";
     return in;
   }
-  if (my.t.game_pix_height < 0) {
-    game_load_error += "game_pix_height is invalid";
+  if (my.t.map_fbo_height < 0) {
+    game_load_error += "map_fbo_height is invalid";
     return in;
   }
-  if (my.t.game_pix_width < 0) {
-    game_load_error += "game_pix_width is invalid";
-    return in;
-  }
-  if (my.t.map_pix_height < 0) {
-    game_load_error += "map_pix_height is invalid";
-    return in;
-  }
-  if (my.t.map_pix_width < 0) {
-    game_load_error += "map_pix_width is invalid";
+  if (my.t.map_fbo_width < 0) {
+    game_load_error += "map_fbo_width is invalid";
     return in;
   }
   if (my.t.aspect_ratio < 0) {

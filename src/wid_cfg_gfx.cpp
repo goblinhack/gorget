@@ -551,7 +551,6 @@ void wid_cfg_gfx_select(Gamep g)
       wid_set_text_lhs(w, true);
     }
     y_at++;
-    y_at++;
   }
 
   /////////////////////////////////////////////////////////////////////////

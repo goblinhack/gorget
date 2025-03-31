@@ -43,8 +43,8 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   int map_pix_width   = visible_map_br_x - visible_map_tl_x;
   int map_pix_height  = visible_map_br_y - visible_map_tl_y;
 
-  float scale_x             = (float) map_pix_width / (float) game_pix_width_get(g);
-  float scale_y             = (float) map_pix_height / (float) game_pix_height_get(g);
+  float scale_x             = (float) map_pix_width / (float) game_map_fbo_width_get(g);
+  float scale_y             = (float) map_pix_height / (float) game_map_fbo_height_get(g);
   int   visible_map_mouse_x = (int) ((float) rel_map_mouse_x / scale_x);
   int   visible_map_mouse_y = (int) ((float) rel_map_mouse_y / scale_y);
 
