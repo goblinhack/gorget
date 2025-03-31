@@ -264,6 +264,11 @@ uint8_t sdl_init_display(Gamep g)
       ERR("SDL: Cannot enable high DPI: %s", SDL_GetError());
     }
   }
+  if (0) {
+    video_width  = 1920 / 2;
+    video_height = 1200 / 2;
+    video_flags &= ~SDL_WINDOW_FULLSCREEN_DESKTOP;
+  }
 
   LOG("SDL: Create window size %ux%u", video_width, video_height);
   sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
@@ -857,7 +862,8 @@ void config_game_gfx_update(Gamep g)
   //
   // For now use a square map, ignoring the above
   //
-  // visible_game_map_h = visible_game_map_w;
+  visible_game_map_h = visible_game_map_w;
+  // visible_game_map_w = visible_game_map_h;
 
   game_pix_width_set(g, visible_game_map_w);
   game_pix_height_set(g, visible_game_map_h);
