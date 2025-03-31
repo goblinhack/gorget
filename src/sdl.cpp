@@ -264,7 +264,7 @@ uint8_t sdl_init_display(Gamep g)
       ERR("SDL: Cannot enable high DPI: %s", SDL_GetError());
     }
   }
-  if (0) {
+  if (1) {
     video_width  = 1920 / 2;
     video_height = 1200 / 2;
     video_flags &= ~SDL_WINDOW_FULLSCREEN_DESKTOP;

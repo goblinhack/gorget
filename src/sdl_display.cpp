@@ -37,7 +37,7 @@ void sdl_display(Gamep g)
       int  visible_map_tl_y = h * UI_TOPCON_HEIGHT;
       int  visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
       int  visible_map_br_y = TERM_HEIGHT * h;
-      // visible_map_br_y      = visible_map_tl_y + (visible_map_br_x - visible_map_tl_x);
+      visible_map_br_y      = visible_map_tl_y + (visible_map_br_x - visible_map_tl_x);
 
       //
       // Pixel perfect, but may be too large
