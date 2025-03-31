@@ -877,6 +877,31 @@ void config_game_gfx_update(Gamep g)
     return;
   }
 
+  {
+    auto w                = game_ascii_pix_width_get(g);
+    auto h                = game_ascii_pix_height_get(g);
+    int  visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
+    int  visible_map_tl_y = h * UI_TOPCON_HEIGHT;
+    int  visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
+    int  visible_map_br_y = TERM_HEIGHT * h;
+
+    double map_w         = visible_map_br_x - visible_map_tl_x;
+    double map_h         = visible_map_br_y - visible_map_tl_y;
+    double map_w_h_ratio = map_w / map_h;
+
+    double fbo_w = (double) TILE_WIDTH * game_tiles_visible_across_get(g);
+    double fbo_h = ceil(fbo_w / map_w_h_ratio);
+    CON("%dx%d", visible_map_br_x - visible_map_tl_x, visible_map_br_y - visible_map_tl_y);
+    CON("%gx%g", map_w, map_h);
+    CON("%g", map_w_h_ratio);
+    CON("%gx%g", fbo_w, fbo_h);
+
+    game_pix_width_set(g, fbo_w);
+    game_pix_height_set(g, fbo_h);
+
+    game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+  }
+
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //

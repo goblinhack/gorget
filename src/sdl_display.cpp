@@ -31,20 +31,11 @@ void sdl_display(Gamep g)
       //
       // Get the pixel extents of the map on screen
       //
-      auto w                = game_ascii_pix_width_get(g);
-      auto h                = game_ascii_pix_height_get(g);
-      int  visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
-      int  visible_map_tl_y = h * UI_TOPCON_HEIGHT;
-      int  visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
-      int  visible_map_br_y = TERM_HEIGHT * h;
-      visible_map_br_y      = visible_map_tl_y + (visible_map_br_x - visible_map_tl_x);
-
-      //
-      // Pixel perfect, but may be too large
-      //
-      // visible_map_br_x = visible_map_tl_x + TILE_WIDTH * game_tiles_visible_across_get(g) * 2;
-      // visible_map_br_y = visible_map_tl_y + TILE_HEIGHT * game_tiles_visible_down_get(g) * 2;
-      game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+      int visible_map_tl_x;
+      int visible_map_tl_y;
+      int visible_map_br_x;
+      int visible_map_br_y;
+      game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
       //
       // Brighter map effect
