@@ -718,9 +718,8 @@ void config_game_gfx_update(Gamep g)
   int tries = 100;
   while (tries-- > 0) {
     if ((TERM_WIDTH > TERM_WIDTH_MAX) || (TERM_HEIGHT > TERM_HEIGHT_MAX)) {
-      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) > max terminal size, try smaller font",
-          TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width,
-          font_height);
+      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) > max terminal size, try larger font", TERM_WIDTH,
+          TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
       font_width *= 2;
       font_height *= 2;
       TERM_WIDTH  = game_window_pix_width_get(g) / font_width;
@@ -729,8 +728,9 @@ void config_game_gfx_update(Gamep g)
     }
 
     if ((TERM_WIDTH < TERM_WIDTH_MIN) || (TERM_HEIGHT < TERM_HEIGHT_MIN)) {
-      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) < min terminal size, try larger font", TERM_WIDTH,
-          TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width, font_height);
+      LOG("SDL: Terminal (try %ux%u min %ux%u max %ux%u font %ux%u) < min terminal size, try smaller font",
+          TERM_WIDTH, TERM_HEIGHT, TERM_WIDTH_MIN, TERM_HEIGHT_MIN, TERM_WIDTH_MAX, TERM_HEIGHT_MAX, font_width,
+          font_height);
       font_width /= 2;
       font_height /= 2;
       TERM_WIDTH  = game_window_pix_width_get(g) / font_width;
@@ -877,24 +877,39 @@ void config_game_gfx_update(Gamep g)
     return;
   }
 
+  LOG("SDL: Map:");
+
   {
-    auto w                = game_ascii_pix_width_get(g);
-    auto h                = game_ascii_pix_height_get(g);
-    int  visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
-    int  visible_map_tl_y = h * UI_TOPCON_HEIGHT;
-    int  visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
-    int  visible_map_br_y = TERM_HEIGHT * h;
+    auto   w                = game_ascii_pix_width_get(g);
+    auto   h                = game_ascii_pix_height_get(g);
+    int    visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
+    int    visible_map_tl_y = h * UI_TOPCON_HEIGHT;
+    int    visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
+    int    visible_map_br_y = TERM_HEIGHT * h;
+    double map_w            = visible_map_br_x - visible_map_tl_x;
+    double map_h            = visible_map_br_y - visible_map_tl_y;
 
-    double map_w         = visible_map_br_x - visible_map_tl_x;
-    double map_h         = visible_map_br_y - visible_map_tl_y;
+    double max_fbo_w = TILE_WIDTH * MAP_WIDTH;
+    double max_fbo_h = TILE_HEIGHT * MAP_HEIGHT;
+
     double map_w_h_ratio = map_w / map_h;
+    double fbo_w         = (double) TILE_WIDTH * game_tiles_visible_across_get(g);
+    double fbo_h         = ceil(fbo_w / map_w_h_ratio);
 
-    double fbo_w = (double) TILE_WIDTH * game_tiles_visible_across_get(g);
-    double fbo_h = ceil(fbo_w / map_w_h_ratio);
-    CON("%dx%d", visible_map_br_x - visible_map_tl_x, visible_map_br_y - visible_map_tl_y);
-    CON("%gx%g", map_w, map_h);
-    CON("%g", map_w_h_ratio);
-    CON("%gx%g", fbo_w, fbo_h);
+    if (fbo_w > max_fbo_w) {
+      fbo_w = max_fbo_w;
+    }
+
+    if (fbo_h > max_fbo_h) {
+      fbo_h = max_fbo_h;
+    }
+
+    LOG("SDL: - map location         : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+        visible_map_br_y);
+    LOG("SDL: - map onscreen sz      : %gx%g", map_w, map_h);
+    LOG("SDL: - map w to h ratio     : %g", map_w_h_ratio);
+    LOG("SDL: - map fbo sz           : %gx%g", fbo_w, fbo_h);
+    LOG("SDL: - map max fbo sz       : %gx%g", max_fbo_w, max_fbo_h);
 
     game_pix_width_set(g, fbo_w);
     game_pix_height_set(g, fbo_h);
@@ -914,7 +929,6 @@ void config_game_gfx_update(Gamep g)
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);
 
-  LOG("SDL: Buffers:");
   LOG("SDL: - game map pixel sz    : %dx%d", game_pix_width_get(g), game_pix_height_get(g));
   LOG("SDL: - visible map pixel sz : %dx%d", game_map_pix_width_get(g), game_map_pix_height_get(g));
   LOG("SDL: Map");

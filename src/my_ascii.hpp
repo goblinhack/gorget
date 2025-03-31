@@ -11,8 +11,8 @@
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-#define TERM_WIDTH_DEF  180
-#define TERM_HEIGHT_DEF 90
+#define TERM_WIDTH_DEF  240
+#define TERM_HEIGHT_DEF 120
 
 #define TERM_WIDTH_MIN  120
 #define TERM_HEIGHT_MIN 60
