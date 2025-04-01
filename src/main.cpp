@@ -37,7 +37,6 @@
 
 static char      **ARGV;
 static std::string original_program_name;
-static bool        seed_manually_set {};
 
 void quit(Gamep *g_in)
 {
@@ -486,8 +485,7 @@ static void parse_args(int argc, char *argv[])
 
   for (i = 1; i < argc; i++) {
     if (! strcasecmp(argv[ i ], "--seed") || ! strcasecmp(argv[ i ], "-seed")) {
-      g_opt_seed_name   = argv[ i + 1 ];
-      seed_manually_set = true;
+      g_opt_seed_name = argv[ i + 1 ];
       i++;
       continue;
     }

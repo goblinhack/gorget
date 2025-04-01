@@ -139,9 +139,10 @@ void common_error_handler(std::string &tech_support)
   tech_support += "\n";
 
   auto seed_name = game_seed_name_get(g);
-  if (g && seed_name && *seed_name) {
+  if (*seed_name) {
     tech_support += "Seed name: " + std::string(seed_name) + "\n";
   }
+
   tech_support += "Could you please email goblinhack@gmail.com and attach the following files and trace info?\n";
   tech_support += g_log_stdout_filename;
   tech_support += "\n";

@@ -229,7 +229,6 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   }
   in >> bits(my.t.appdata);
   in >> bits(my.t.saved_dir);
-  in >> bits(my.t.seed_manually_set);
   in >> bits(my.t.seed_name);
   in >> bits(my.t.seed_num);
   in >> bits(my.t.fps_value);
@@ -657,13 +656,6 @@ void game_load_last_config(const char *appdata)
   game = new Game(std::string(appdata));
 
   auto config_error = game->load_config();
-
-  //
-  // If the seed is set on the command line, make it stick
-  //
-  if (game->seed_manually_set) {
-    game->seed_manually_set = true;
-  }
 
   std::string version = "" MYVER "";
 

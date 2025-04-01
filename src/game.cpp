@@ -14,6 +14,8 @@
 
 #include <SDL_mixer.h>
 
+static SDL_Keysym no_key;
+
 using Config = class Config_
 {
 public:
@@ -171,11 +173,6 @@ public:
   uint32_t seed_num {};
 
   //
-  // Seed has been manually set, so stick with it
-  //
-  bool seed_manually_set {};
-
-  //
   // Current fram-erate
   //
   int fps_value = {};
@@ -229,11 +226,9 @@ public:
   void load_snapshot(void);
   void load(int slot);
   void save_config(void);
-  void save_snapshot_check();
   void save_snapshot(void);
   void save(int slot);
-  void set_currently_saving_snapshot(void);
-  void set_seed(void);
+  void seed_set(const char *seed = nullptr);
   void state_change(uint8_t state, const std::string &);
   void state_reset(const std::string &);
   bool load(std::string save_file, class Game &target);
@@ -328,7 +323,7 @@ void Game::init(void)
   LOG("Game init");
   TRACE_AND_INDENT();
 
-  set_seed();
+  seed_set();
 }
 void game_init(Gamep g) { g->init(); }
 
@@ -357,16 +352,26 @@ void game_save_config(Gamep g)
 {
   TRACE_NO_INDENT();
 
+  if (! g) {
+    ERR("No game pointer set");
+    return;
+  }
+
   g->save_config();
 }
 
-void Game::set_seed(void)
+void Game::seed_set(const char *maybe_seed)
 {
   TRACE_NO_INDENT();
 
-  if (g_opt_seed_name != "") {
+  if (maybe_seed) {
+    LOG("Set seed from ui");
+    seed_name = std::string(maybe_seed);
+  } else if (g_opt_seed_name != "") {
+    LOG("Set seed from command line");
     seed_name = g_opt_seed_name;
   } else {
+    LOG("Set random seed, none manually set");
     seed_name = random_name(SIZEOF("4294967295") - 1);
   }
 
@@ -386,23 +391,38 @@ void Game::set_seed(void)
   pcg_srand(seed_num);
 }
 
-void game_set_seed(Gamep g)
+void game_seed_name_set(Gamep g, const char *maybe_seed)
 {
   TRACE_NO_INDENT();
 
-  g->set_seed();
+  if (! g) {
+    ERR("No game pointer set");
+    return;
+  }
+
+  g->seed_set(maybe_seed);
 }
 
-const char *game_get_seed(Gamep g)
+const char *game_seed_name_get(Gamep g)
 {
   TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return "";
+  }
 
   return g->seed_name.c_str();
 }
 
-uint32_t game_get_seed_num(Gamep g)
+uint32_t game_seed_num_get(Gamep g)
 {
   TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return 0;
+  }
 
   return g->seed_num;
 }
@@ -413,7 +433,7 @@ void Game::create_levels(void)
   TRACE_AND_INDENT();
 
   auto g = this;
-  set_seed();
+  seed_set();
   destroy_levels();
 
   auto v = levels_create(g);
@@ -1230,23 +1250,6 @@ Levelp game_level_set(Gamep g, Levelsp v, int x, int y)
   v->level_num_y = y;
   return game_level_get(g, v);
 }
-
-const char *game_seed_name_get(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (! g)
-    return "";
-  return g->seed_name.c_str();
-}
-void game_seed_name_set(Gamep g, const char *val)
-{
-  TRACE_NO_INDENT();
-  if (! g)
-    return;
-  g->seed_name = std::string(val);
-}
-
-static SDL_Keysym no_key;
 
 SDL_Keysym game_key_attack_get(Gamep g)
 {

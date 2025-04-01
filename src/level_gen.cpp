@@ -2123,7 +2123,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which)
     }
 
     l                 = new LevelGen();
-    l->seed           = std::string(game_get_seed(g));
+    l->seed           = std::string(game_seed_name_get(g));
     l->which          = which;
     l->min_room_count = MIN_LEVEL_ROOM_COUNT + (which / 10);
     l->max_room_count = l->min_room_count + 10;
@@ -2198,7 +2198,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which)
   level_create_fail++;
 
   if (unlikely(l->debug)) {
-    LOG("Failed to create room with seed: %s", game_get_seed(g));
+    LOG("Failed to create room with seed: %s", game_seed_name_get(g));
   }
 
   return nullptr;
@@ -2929,7 +2929,7 @@ static void level_gen_create_level(Gamep g, int which)
   //
   // Per thread seed
   //
-  uint32_t seed_num = game_get_seed_num(g);
+  uint32_t seed_num = game_seed_num_get(g);
   seed_num += seed_num * which;
   pcg_srand(seed_num);
 
