@@ -38,5 +38,5 @@ void wid_choose_seed_select(Gamep g)
 
   const char *seed = game_seed_name_get(g);
   wid_choose_seed  = wid_keyboard(g, std::string(seed), "Enter a name or number for the dungeon seed", selected,
-                                  cancelled, UI_RIGHTBAR_WIDTH);
+                                  cancelled, MAX_SEED_NAME_LEN);
 }

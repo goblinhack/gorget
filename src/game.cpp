@@ -173,6 +173,11 @@ public:
   uint32_t seed_num {};
 
   //
+  // The source of the seed
+  //
+  SeedSource seed_source {SEED_SOURCE_RANDOM};
+
+  //
   // Current fram-erate
   //
   int fps_value = {};
@@ -191,7 +196,7 @@ public:
   //
   // Temporary. Global states
   //
-  uint8_t state {STATE_MAIN_MENU};
+  GameState state {STATE_MAIN_MENU};
 
   //
   // Temporary. Dampens mouse clicks
@@ -229,7 +234,7 @@ public:
   void save_snapshot(void);
   void save(int slot);
   void seed_set(const char *seed = nullptr);
-  void state_change(uint8_t state, const std::string &);
+  void state_change(GameState state, const std::string &);
   void state_reset(const std::string &);
   bool load(std::string save_file, class Game &target);
   bool save(std::string save_file);
@@ -364,12 +369,16 @@ void Game::seed_set(const char *maybe_seed)
 {
   TRACE_NO_INDENT();
 
+  seed_source = SEED_SOURCE_RANDOM;
+
   if (maybe_seed) {
     LOG("Set seed from ui");
-    seed_name = std::string(maybe_seed);
+    seed_name   = std::string(maybe_seed);
+    seed_source = SEED_SOURCE_USER;
   } else if (g_opt_seed_name != "") {
     LOG("Set seed from command line");
-    seed_name = g_opt_seed_name;
+    seed_name   = g_opt_seed_name;
+    seed_source = SEED_SOURCE_COMMAND_LINE;
   } else {
     LOG("Set random seed, none manually set");
     seed_name = random_name(SIZEOF("4294967295") - 1);
@@ -413,6 +422,18 @@ const char *game_seed_name_get(Gamep g)
   }
 
   return g->seed_name.c_str();
+}
+
+SeedSource game_seed_source_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return SEED_SOURCE_RANDOM;
+  }
+
+  return g->seed_source;
 }
 
 uint32_t game_seed_num_get(Gamep g)
@@ -535,7 +556,7 @@ void game_state_reset(Gamep g, const char *why) { g->state_reset(why); }
 
 uint8_t game_state(Gamep g) { return g->state; }
 
-void Game::state_change(uint8_t new_state, const std::string &why)
+void Game::state_change(GameState new_state, const std::string &why)
 {
   TRACE_NO_INDENT();
 
@@ -615,7 +636,7 @@ void Game::state_change(uint8_t new_state, const std::string &why)
   //
   state = new_state;
 }
-void game_state_change(Gamep g, uint8_t new_state, const char *why)
+void game_state_change(Gamep g, GameState new_state, const char *why)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {

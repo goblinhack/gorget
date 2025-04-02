@@ -96,7 +96,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.window_pix_height);
   out << bits(my.t.window_pix_width);
 
-  out << bits(g_opt_seed_name);
   out << bits(my.t.hiscores);
 
   auto eol = GAME_SAVE_MARKER_CONFIG;
@@ -116,8 +115,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
   out << bits(my.t.save_file);
   out << bits(my.t.appdata);
   out << bits(my.t.saved_dir);
-  out << bits(my.t.seed_name);
-  out << bits(my.t.seed_num);
   out << bits(my.t.fps_value);
 
   if (! game_headers_only) {
@@ -275,7 +272,6 @@ void Game::save(int slot)
 
   LOG("Saving: %s", this_save_file.c_str());
   save(this_save_file);
-  LOG("Saved %s, seed %u", this_save_file.c_str(), seed_num);
 
   CON("Saved the game to %s.", this_save_file.c_str());
 }
@@ -296,7 +292,6 @@ void Game::save_snapshot(void)
 
   LOG("Saving: %s", this_save_file.c_str());
   save(this_save_file);
-  LOG("Saved %s, seed %u", this_save_file.c_str(), seed_num);
 
   CON("%%fg=green$Autosaved.%%fg=reset$");
 }

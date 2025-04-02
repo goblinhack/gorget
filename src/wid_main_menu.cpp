@@ -306,12 +306,18 @@ static void wid_main_menu_tick(Gamep g, Widp w)
   }
 
   if (wid_main_menu_window) {
-    ascii_putf(1, 1, GREEN, BLACK, "V" MYVER);
+    ascii_putf(TERM_WIDTH - sizeof(MYVER), TERM_HEIGHT - 1, GREEN, BLACK, "V" MYVER);
 
-    if (! g_opt_seed_name.empty()) {
-      auto seed_name = "Seed: '" + g_opt_seed_name + "'";
-      ascii_putf(1, 2, YELLOW, BLACK, seed_name);
+    std::string seed_name(game_seed_name_get(g));
+    auto        seed_text = "Seed: '" + seed_name + "'";
+
+    switch (game_seed_source_get(g)) {
+      case SEED_SOURCE_COMMAND_LINE : seed_text += " (set via cli)"; break;
+      case SEED_SOURCE_USER : seed_text += " (set via user)"; break;
+      case SEED_SOURCE_RANDOM : seed_text += " (randomly generated)"; break;
     }
+
+    ascii_putf(0, TERM_HEIGHT - 1, YELLOW, BLACK, seed_text);
   }
 }
 

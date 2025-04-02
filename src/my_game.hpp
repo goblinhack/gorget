@@ -10,7 +10,7 @@
 
 #include <SDL.h>
 
-enum {
+typedef enum {
   STATE_MAIN_MENU,
   STATE_PLAYING,
   STATE_QUITTING,
@@ -18,7 +18,15 @@ enum {
   STATE_LOAD_MENU,     // Loading a game
   STATE_SAVE_MENU,     // Saving a game
   STATE_QUIT_MENU,     // Pondering quitting
-};
+} GameState;
+
+#define MAX_SEED_NAME_LEN 32
+
+typedef enum {
+  SEED_SOURCE_RANDOM,
+  SEED_SOURCE_USER,
+  SEED_SOURCE_COMMAND_LINE,
+} SeedSource;
 
 class HiScores *game_hiscores_get(Gamep);
 
@@ -116,6 +124,7 @@ Levelp game_level_get(Gamep g, Levelsp, int x, int y);
 Levelp game_level_set(Gamep g, Levelsp, int x, int y);
 
 const char *game_seed_name_get(Gamep);
+SeedSource  game_seed_source_get(Gamep);
 uint32_t    game_seed_num_get(Gamep);
 void        game_seed_name_set(Gamep, const char *);
 
@@ -236,7 +245,7 @@ void    game_save_snapshot(Gamep);
 void    game_save_snapshot_check(Gamep);
 void    game_set_currently_saving_snapshot(Gamep);
 void    game_start_playing(Gamep);
-void    game_state_change(Gamep, uint8_t state, const char *);
+void    game_state_change(Gamep, GameState state, const char *);
 void    game_state_reset(Gamep, const char *);
 void    game_unset_currently_saving_snapshot(Gamep);
 void    game_unset_request_reset_state_change(Gamep);

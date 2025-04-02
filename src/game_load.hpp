@@ -137,24 +137,12 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: music_volume           = %d", my.t.music_volume);
   LOG("Read config: sdl_delay              = %d", my.t.sdl_delay);
   LOG("Read config: sound_volume           = %d", my.t.sound_volume);
-  // seed name handled below
 
   if (! g_opt_override_debug_level) {
     if (my.t.debug_mode) {
       g_opt_debug3 = false;
       g_opt_debug2 = true;
       g_opt_debug1 = true;
-    }
-  }
-
-  //
-  // Allow the command line to override.
-  //
-  {
-    std::string tmp;
-    in >> bits(tmp);
-    if (g_opt_seed_name.empty()) {
-      g_opt_seed_name = tmp;
     }
   }
 
@@ -229,8 +217,6 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   }
   in >> bits(my.t.appdata);
   in >> bits(my.t.saved_dir);
-  in >> bits(my.t.seed_name);
-  in >> bits(my.t.seed_num);
   in >> bits(my.t.fps_value);
 
   Levelsp tmp = (Levelsp) mymalloc(sizeof(Levels), "loaded level");
@@ -415,7 +401,6 @@ void Game::load(int slot)
   g_loading = true;
   load(this_save_file, *this);
   g_loading = false;
-  LOG("Loaded %s, seed %u", this_save_file.c_str(), seed_num);
 
   CON("Loaded the game from %s.", this_save_file.c_str());
 
@@ -435,7 +420,6 @@ void Game::load_snapshot(void)
   g_loading = true;
   load(this_save_file, *this);
   g_loading = false;
-  LOG("Loaded %s, seed %u", this_save_file.c_str(), seed_num);
 
   CON("Loaded the game from %s.", this_save_file.c_str());
 
