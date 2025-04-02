@@ -13,7 +13,7 @@ extern void wid_load_destroy(Gamep);
 extern void wid_save_destroy(Gamep);
 extern void wid_quit_destroy(Gamep);
 extern void wid_cfg_gfx_select(Gamep);
-extern void wid_choose_seed_select(Gamep);
+extern void wid_seed_select(Gamep);
 extern void wid_cfg_keyboard_select(Gamep);
 extern void wid_cfg_mouse_select(Gamep);
 extern void wid_cfg_sound_select(Gamep);

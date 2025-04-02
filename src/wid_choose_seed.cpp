@@ -30,7 +30,7 @@ static void cancelled(Gamep g, Widp w, const std::string &text)
   wid_main_menu_select(g);
 }
 
-void wid_choose_seed_select(Gamep g)
+void wid_seed_select(Gamep g)
 {
   TRACE_AND_INDENT();
 

@@ -711,20 +711,6 @@ static void wid_keyboard_tick(Gamep g, Widp w)
   }
 }
 
-static void wid_keyboard_bg_tick(Gamep g, Widp w)
-{
-  TRACE_AND_INDENT();
-
-  glcolor(WHITE);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-  std::string t = "grid";
-  blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
-  blit_flush();
-}
-
 Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wid_keyboard_event_t selected,
                   wid_keyboard_event_t cancelled, size_t max_len)
 {
@@ -815,7 +801,6 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
 
     wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_on_tick(g, w, wid_keyboard_bg_tick);
   }
 
   /*

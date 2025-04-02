@@ -28,7 +28,7 @@ void wid_main_menu_hide(Gamep g)
   wid_hide(g, wid_main_menu_window->wid_popup_container);
 }
 
-static bool wid_main_menu_load_game(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_load_select(g);
@@ -52,7 +52,7 @@ static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
   return false;
 }
 
-static bool wid_main_menu_credits_game(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_credits(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_credits_select(g);
@@ -60,7 +60,15 @@ static bool wid_main_menu_credits_game(Gamep g, Widp w, int x, int y, uint32_t b
   return false;
 }
 
-static bool wid_main_menu_quit_game(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  wid_seed_select(g);
+  wid_main_menu_destroy(g);
+  return false;
+}
+
+static bool wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_quit_select(g);
@@ -98,15 +106,17 @@ static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'n' :
               case 'N' : game_menu_new_game(g, nullptr, 0, 0, 0); return true;
               case 'l' :
-              case 'L' : wid_main_menu_load_game(g, nullptr, 0, 0, 0); return true;
+              case 'L' : wid_main_menu_load(g, nullptr, 0, 0, 0); return true;
               case 'o' :
               case 'O' : wid_main_menu_config(g, nullptr, 0, 0, 0); return true;
+              case 's' :
+              case 'S' : wid_main_menu_seed(g, nullptr, 0, 0, 0); return true;
               case 'c' :
-              case 'C' : wid_main_menu_credits_game(g, nullptr, 0, 0, 0); return true;
+              case 'C' : wid_main_menu_credits(g, nullptr, 0, 0, 0); return true;
               case 'h' :
               case 'H' : wid_main_menu_hiscores(g, nullptr, 0, 0, 0); return true;
               case 'q' :
-              case 'Q' : wid_main_menu_quit_game(g, nullptr, 0, 0, 0); return true;
+              case 'Q' : wid_main_menu_quit(g, nullptr, 0, 0, 0); return true;
             }
           }
       }
@@ -335,7 +345,7 @@ void wid_main_menu_select(Gamep g)
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  int   menu_height = 20;
+  int   menu_height = 23;
   int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
   point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
@@ -379,7 +389,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(g, w, wid_main_menu_load_game);
+    wid_set_on_mouse_up(g, w, wid_main_menu_load);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$L%%fg=" UI_TEXT_COLOR_STR "$oad game");
   }
@@ -403,6 +413,22 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(g, p, "Choose seed");
+
+    point tl(0, y_at);
+    point br(button_width, y_at + box_height - 1);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    wid_set_on_mouse_up(g, w, wid_main_menu_seed);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$S%%fg=" UI_TEXT_COLOR_STR "$eed select");
+  }
+  y_at += box_step;
+  {
+    TRACE_NO_INDENT();
+    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Credits");
 
     point tl(0, y_at);
@@ -411,7 +437,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(g, w, wid_main_menu_credits_game);
+    wid_set_on_mouse_up(g, w, wid_main_menu_credits);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$C%%fg=" UI_TEXT_COLOR_STR "$redits");
   }
@@ -443,7 +469,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(g, w, wid_main_menu_quit_game);
+    wid_set_on_mouse_up(g, w, wid_main_menu_quit);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Q%%fg=" UI_TEXT_COLOR_STR "$uit Game");
   }
