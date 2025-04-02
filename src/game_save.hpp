@@ -438,7 +438,7 @@ void Game::save_select(void)
 
   game_headers_only = true;
 
-  wid_save->log(game, UI_LOGGING_EMPTY_LINE);
+  wid_save->log_empty_line(game);
   wid_save->log(game, "Choose a save slot.");
 
   int y_at = 3;

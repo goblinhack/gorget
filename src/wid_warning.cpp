@@ -96,9 +96,9 @@ void wid_warning(Gamep g, std::string warning)
   wid_set_on_key_down(g, wid_warning_window->wid_popup_container, wid_warning_key_down);
   wid_set_do_not_lower(wid_warning_window->wid_popup_container, true);
 
-  wid_warning_window->log(g, UI_LOGGING_EMPTY_LINE);
+  wid_warning_window->log_empty_line(g);
   wid_warning_window->log(g, warning);
-  wid_warning_window->log(g, UI_LOGGING_EMPTY_LINE);
+  wid_warning_window->log_empty_line(g);
 
   auto y_at = 4;
   {

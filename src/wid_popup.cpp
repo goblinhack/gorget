@@ -10,7 +10,7 @@
 
 WidPopup::~WidPopup()
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   extern Gamep game;
   auto         g = game;
@@ -23,7 +23,7 @@ WidPopup::WidPopup(Gamep g, const std::string vname, point vtl, point vbr, Tilep
                    const std::string vbackground, bool horiz_scroll, bool vert_scoll, int scroll_height)
     : tl(vtl), br(vbr), title_tile(vtitle_tile), background(vbackground)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   outer_w = br.x - tl.x;
   outer_h = br.y - tl.y;
@@ -85,9 +85,19 @@ WidPopup::WidPopup(Gamep g, const std::string vname, point vtl, point vbr, Tilep
 //
 void WidPopup::log(Gamep g, std::string s, wid_text_format format, std::string color)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   wid_text_area->log(g, s, format, color);
+}
+
+//
+// Log a blank line to the popup
+//
+void WidPopup::log_empty_line(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  wid_text_area->log_empty_line(g);
 }
 
 //

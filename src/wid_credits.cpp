@@ -94,15 +94,15 @@ void wid_credits_select(Gamep g)
 
   wid_credits_window->log(g, "%%fg=white$Development");
   wid_credits_window->log(g, "goblinhack@gmail.com");
-  wid_credits_window->log(g, UI_LOGGING_EMPTY_LINE);
+  wid_credits_window->log_empty_line(g);
   wid_credits_window->log(g, "%%fg=white$Graphics");
   wid_credits_window->log(g, "Urizen 1 bit tileset");
   wid_credits_window->log(g, "goblinhack@gmail.com");
-  wid_credits_window->log(g, UI_LOGGING_EMPTY_LINE);
+  wid_credits_window->log_empty_line(g);
   wid_credits_window->log(g, "%%fg=white$Music");
   wid_credits_window->log(g, "Markus Heichelbech");
   wid_credits_window->log(g, "C.E.McGill");
-  wid_credits_window->log(g, UI_LOGGING_EMPTY_LINE);
+  wid_credits_window->log_empty_line(g);
   wid_credits_window->log(g, "%%fg=white$Sounds");
   wid_credits_window->log(g, "See README.md");
 

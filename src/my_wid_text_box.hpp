@@ -48,5 +48,6 @@ private:
 
 public:
   void log(Gamep, const std::string &, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
+  void log_empty_line(Gamep);
 };
 #endif

@@ -144,7 +144,7 @@ void wid_hiscores_show(Gamep g)
     snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u  %-*s %-*s %-5u", color, h->score, name_field_len, name.c_str(),
              when_field_len, when.c_str(), h->level_reached);
 
-    wid_hiscore_window->log(g, UI_LOGGING_EMPTY_LINE);
+    wid_hiscore_window->log_empty_line(g);
     wid_hiscore_window->log(g, tmp);
     h++;
   }

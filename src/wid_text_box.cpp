@@ -11,7 +11,7 @@
 
 WidTextBox::~WidTextBox()
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   extern Gamep game;
   auto         g = game;
@@ -30,7 +30,7 @@ WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool horiz_s
                        int vscroll_height_in)
     : scroll_height(vscroll_height_in), tl(vtl), br(vbr), wid_parent(vparent)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   int w = br.x - tl.x;
   int h = br.y - tl.y;
@@ -137,7 +137,7 @@ WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool horiz_s
 //
 void WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, std::string color)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   Widp tmp {};
   Widp text_wid {};
@@ -195,11 +195,11 @@ void WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
 }
 
 //
-// Log a message to the text_box
+// Log a message to the text box
 //
 void WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std::string color)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   int chars_per_line = wid_get_width(wid_text_area);
 
@@ -213,4 +213,14 @@ void WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std:
       log_(g, c, format, color);
     }
   }
+}
+
+//
+// Log a blank line to the text box
+//
+void WidTextBox::log_empty_line(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  log_(g, " ");
 }

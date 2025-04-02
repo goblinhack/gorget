@@ -41,6 +41,7 @@ public:
 
 public:
   void log(Gamep, std::string s, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
+  void log_empty_line(Gamep);
 
   //
   // Get rid of trailing empty lines

@@ -16,7 +16,6 @@
 #define UI_FONT_WIDTH               6
 #define UI_LEFTBAR_WIDTH            33  // In characters
 #define UI_RIGHTBAR_WIDTH           33  // In characters
-#define UI_LOGGING_EMPTY_LINE       "`" // Complete hack, char I use to force space
 #define UI_MOUSE_DOUBLE_CLICK       500 // Double click time
 #define UI_MOUSE_WHEEL_SCALE        2.0 // How much the wheel mouse moves.
 #define UI_MOUSE_WHEEL_SCALE_MAX    10

@@ -88,11 +88,11 @@ void wid_error(Gamep g, std::string error)
 
   wid_error_window->log(g, "ERROR: %%fg=red$" + error);
   wid_error_window->log(g, "Press ESCAPE to dismiss this window");
-  wid_error_window->log(g, UI_LOGGING_EMPTY_LINE);
-  wid_error_window->log(g, UI_LOGGING_EMPTY_LINE);
-  wid_error_window->log(g, UI_LOGGING_EMPTY_LINE);
+  wid_error_window->log_empty_line(g);
+  wid_error_window->log_empty_line(g);
+  wid_error_window->log_empty_line(g);
   wid_error_window->log(g, "Please send a screenshot to %%fg=white$goblinhack@gmail.com");
-  wid_error_window->log(g, UI_LOGGING_EMPTY_LINE);
+  wid_error_window->log_empty_line(g);
   sdl_screenshot_do(g);
 
   {
