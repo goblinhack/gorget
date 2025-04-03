@@ -35,6 +35,7 @@ enum {
   CHARMAP_TELEPORT    = 'T',
   CHARMAP_FOLIAGE     = '`',
   CHARMAP_WATER       = '~',
+  CHARMAP_DEEP_WATER  = '\"',
   CHARMAP_TREASURE1   = '$',
   CHARMAP_TREASURE2   = '!',
   CHARMAP_WILDCARD    = '?',

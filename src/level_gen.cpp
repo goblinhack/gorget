@@ -553,6 +553,7 @@ void room_add(Gamep g, int chance, bool check_exits, const char *file, int line,
         case CHARMAP_TREASURE2 : break;
         case CHARMAP_WALL : break;
         case CHARMAP_WATER : break;
+        case CHARMAP_DEEP_WATER : break;
         default : DIE("room has unknown char [%c] in room %s:%d", room_line[ i ], file, line); return;
       }
     }
@@ -812,6 +813,7 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
         //
         switch (l->data[ p.x + dx ][ p.y + dy ].c) {
           case CHARMAP_WATER :
+          case CHARMAP_DEEP_WATER :
           case CHARMAP_LAVA :
           case CHARMAP_CHASM :
           case CHARMAP_JOIN :
@@ -1093,6 +1095,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_TREASURE2 : break;
         case CHARMAP_WALL : break;
         case CHARMAP_WATER : break;
+        case CHARMAP_DEEP_WATER : break;
         default :
           DIE("fragment_alt has unknown char [%c] in fragment_alt %s:%d", fragment_alt_line[ i ], file, line);
           return false;
@@ -1393,6 +1396,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_TREASURE2 : break;
         case CHARMAP_WALL : break;
         case CHARMAP_WATER : break;
+        case CHARMAP_DEEP_WATER : break;
         case CHARMAP_WILDCARD : break;
         default :
           DIE("fragment has unknown char [%c] in fragment %s:%d", fragment_line[ i ], file, line);
@@ -2233,6 +2237,7 @@ static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
     case CHARMAP_TREASURE1 : return true;
     case CHARMAP_TREASURE2 : return true;
     case CHARMAP_WATER : return true;
+    case CHARMAP_DEEP_WATER : return true;
     default : return false;
   }
 }
@@ -2378,6 +2383,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
                 point adj(x + direction.x * d, y + direction.y * d);
                 switch (l->data[ adj.x ][ adj.y ].c) {
                   case CHARMAP_WATER :
+                  case CHARMAP_DEEP_WATER :
                   case CHARMAP_CHASM :
                   case CHARMAP_LAVA :
                   case CHARMAP_EMPTY : break;
@@ -2722,15 +2728,15 @@ static void level_gen_add_islands(Gamep g, class LevelGen *l)
               /* right     */ l->data[ x + 1 ][ y ].c == c &&
               /* top       */ l->data[ x ][ y - 1 ].c == c &&
               /* bot       */ l->data[ x ][ y + 1 ].c == c) {
-            changed[ x ][ y + 1 ] = CHARMAP_DIRT;
+            changed[ x ][ y ] = CHARMAP_DIRT;
           }
           break;
       }
     }
   }
 
-  for (int y = 0; y < MAP_HEIGHT; y++) {
-    for (int x = 0; x < MAP_WIDTH; x++) {
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
       auto c = changed[ x ][ y ];
       if (c) {
         l->data[ x ][ y ].c = c;
@@ -2751,6 +2757,7 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
       auto c = l->data[ x ][ y ].c;
       switch (c) {
         case CHARMAP_WATER :
+        case CHARMAP_DEEP_WATER :
         case CHARMAP_LAVA :
         case CHARMAP_CHASM :
         case CHARMAP_CHASM_50 :
@@ -2963,7 +2970,7 @@ static bool level_gen_remove_chasm_conflicts(Gamep g, class LevelGen *l)
 }
 
 //
-// e.g. chasm next to water
+// Remove tiles that do not go together, like water next to lava
 //
 static void level_gen_remove_conflicting_tiles(Gamep g, class LevelGen *l)
 {
@@ -2975,6 +2982,50 @@ static void level_gen_remove_conflicting_tiles(Gamep g, class LevelGen *l)
     ;
   while (level_gen_remove_chasm_conflicts(g, l))
     ;
+}
+
+//
+// Change water to deep water if possible
+//
+static void level_gen_create_deep_water(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  char changed[ MAP_WIDTH ][ MAP_HEIGHT ] = {};
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+
+      switch (c) {
+        case CHARMAP_WATER :
+          if (d100() < 10) {
+            continue;
+          }
+
+          if (/* top left  */ l->data[ x - 1 ][ y - 1 ].c == c &&
+              /* bot right */ l->data[ x - 1 ][ y + 1 ].c == c &&
+              /* top right */ l->data[ x + 1 ][ y - 1 ].c == c &&
+              /* bot right */ l->data[ x + 1 ][ y + 1 ].c == c &&
+              /* left      */ l->data[ x - 1 ][ y ].c == c &&
+              /* right     */ l->data[ x + 1 ][ y ].c == c &&
+              /* top       */ l->data[ x ][ y - 1 ].c == c &&
+              /* bot       */ l->data[ x ][ y + 1 ].c == c) {
+            changed[ x ][ y ] = CHARMAP_DEEP_WATER;
+          }
+          break;
+      }
+    }
+  }
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = changed[ x ][ y ];
+      if (c) {
+        l->data[ x ][ y ].c = c;
+      }
+    }
+  }
 }
 
 static void level_gen_add_fragments(Gamep g, class LevelGen *l)
@@ -3080,9 +3131,14 @@ static class LevelGen *level_gen(Gamep g, int which)
   level_gen_add_walls_around_rooms(g, l);
 
   //
-  // e.g. chasm next to water
+  // Remove tiles that do not go together, like water next to lava
   //
   level_gen_remove_conflicting_tiles(g, l);
+
+  //
+  // Create deep water
+  //
+  level_gen_create_deep_water(g, l);
 
   //
   // Remove chasms next to water etc...
