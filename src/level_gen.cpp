@@ -46,6 +46,12 @@ static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES = 200;
 static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN = 6;
 
 //
+// Per level minimums
+//
+static const int MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL = 6;
+static const int MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL    = 6;
+
+//
 // How many times to try to replace part of the dungeon
 //
 static const int MAX_LEVEL_GEN_FRAGMENT_TRIES = 100;
@@ -154,6 +160,20 @@ public:
   int max_room_count {};
 
   //
+  // How many monsters?
+  //
+  int monst_count {};
+  int monst1_count {};
+  int monst2_count {};
+
+  //
+  // How much treasure?
+  //
+  int treasure_count {};
+  int treasure1_count {};
+  int treasure2_count {};
+
+  //
   // How many room fragments we've added
   //
   int fragment_count {};
@@ -161,7 +181,12 @@ public:
   //
   // The starting room
   //
-  class Room *room_first = {};
+  class Room *room_entrance = {};
+
+  //
+  // The exitting room
+  //
+  class Room *room_exit = {};
 
   //
   // Used to make sure we place each room uniquely per level
@@ -1610,6 +1635,44 @@ static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, point at
 }
 
 //
+// Add fragments if we find any matches
+//
+static void level_gen_add_fragments(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  int tries = 0;
+  while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
+    auto f = fragment_random_get(g, l);
+    if (! f) {
+      return;
+    }
+
+    std::vector< point > cands;
+
+    for (int y = 0; y < MAP_HEIGHT - f->height; y++) {
+      for (int x = 0; x < MAP_WIDTH - f->width; x++) {
+        point at(x, y);
+        if (fragment_match(g, l, f, at)) {
+          cands.push_back(at);
+        }
+      }
+    }
+
+    if (cands.empty()) {
+      continue;
+    }
+
+    auto cand = cands[ pcg_rand() % cands.size() ];
+    fragment_put(g, l, f, cand);
+
+    if (l->fragment_count++ >= MAX_LEVEL_GEN_FRAGMENTS) {
+      return;
+    }
+  }
+}
+
+//
 // Clean up fragments
 //
 void fragments_fini(Gamep g)
@@ -1637,6 +1700,8 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   LOG("Seed: %u", l->seed_num);
   LOG("Room count: %d", (int) l->rooms_placed.size());
   LOG("Fragment count: %d", l->fragment_count);
+  LOG("Treasure count: %d (normal:%d enhanced:%d)", l->treasure_count, l->treasure1_count, l->treasure2_count);
+  LOG("Monst count   : %d (normal:%d enhanced:%d)", l->monst_count, l->monst1_count, l->monst2_count);
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
@@ -1808,6 +1873,7 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       //
       if (r->room_type == ROOM_TYPE_EXIT) {
         l->has_placed_exit = true;
+        l->room_exit       = r;
       }
 
       //
@@ -1980,7 +2046,7 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l)
   //
   // Choose a random first room and place it
   //
-  auto r = l->room_first = room_random_get(g, l, ROOM_TYPE_START);
+  auto r = l->room_entrance = room_random_get(g, l, ROOM_TYPE_START);
   if (! room_can_place_at(g, l, r, at)) {
     return false;
   }
@@ -2209,13 +2275,12 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which)
 }
 
 //
-// Has to be a tile you could walk on
+// Has to be a tile you could walk or swim on
 //
-static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
+static bool level_gen_tile_is_traversable(Gamep g, class LevelGen *l, int x, int y)
 {
   switch (l->data[ x ][ y ].c) {
     case CHARMAP_BARREL : return true;
-    case CHARMAP_BRAZIER : return true;
     case CHARMAP_BRIDGE : return true;
     case CHARMAP_CORRIDOR : return true;
     case CHARMAP_DOOR : return true;
@@ -2229,10 +2294,8 @@ static bool level_gen_tile_is_walkable(Gamep g, class LevelGen *l, int x, int y)
     case CHARMAP_MOB2 : return true;
     case CHARMAP_MONST1 : return true;
     case CHARMAP_MONST2 : return true;
-    case CHARMAP_PILLAR : return true;
     case CHARMAP_SECRET_DOOR : return true;
     case CHARMAP_START : return true;
-    case CHARMAP_TELEPORT : return true;
     case CHARMAP_TRAP : return true;
     case CHARMAP_TREASURE1 : return true;
     case CHARMAP_TREASURE2 : return true;
@@ -2264,10 +2327,10 @@ static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l)
             //
             int walkable_tile = 0;
 
-            walkable_tile += level_gen_tile_is_walkable(g, l, x - 1, y) ? 1 : 0;
-            walkable_tile += level_gen_tile_is_walkable(g, l, x + 1, y) ? 1 : 0;
-            walkable_tile += level_gen_tile_is_walkable(g, l, x, y - 1) ? 1 : 0;
-            walkable_tile += level_gen_tile_is_walkable(g, l, x, y + 1) ? 1 : 0;
+            walkable_tile += level_gen_tile_is_traversable(g, l, x - 1, y) ? 1 : 0;
+            walkable_tile += level_gen_tile_is_traversable(g, l, x + 1, y) ? 1 : 0;
+            walkable_tile += level_gen_tile_is_traversable(g, l, x, y - 1) ? 1 : 0;
+            walkable_tile += level_gen_tile_is_traversable(g, l, x, y + 1) ? 1 : 0;
 
             if (walkable_tile <= 1) {
               l->data[ x ][ y ].c    = CHARMAP_EMPTY;
@@ -3028,38 +3091,139 @@ static void level_gen_create_deep_water(Gamep g, class LevelGen *l)
   }
 }
 
-static void level_gen_add_fragments(Gamep g, class LevelGen *l)
+//
+// See what's on the level
+//
+static void level_gen_count_monsters_and_treasure(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  int tries = 0;
-  while (tries++ < MAX_LEVEL_GEN_FRAGMENT_TRIES) {
-    auto f = fragment_random_get(g, l);
-    if (! f) {
-      return;
-    }
+  l->monst_count     = 0;
+  l->monst1_count    = 0;
+  l->monst2_count    = 0;
+  l->treasure_count  = 0;
+  l->treasure1_count = 0;
+  l->treasure2_count = 0;
 
-    std::vector< point > cands;
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
 
-    for (int y = 0; y < MAP_HEIGHT - f->height; y++) {
-      for (int x = 0; x < MAP_WIDTH - f->width; x++) {
-        point at(x, y);
-        if (fragment_match(g, l, f, at)) {
-          cands.push_back(at);
-        }
+      switch (c) {
+        case CHARMAP_MONST1 :
+          l->monst_count++;
+          l->monst1_count++;
+          break;
+        case CHARMAP_MONST2 :
+          l->monst_count++;
+          l->monst2_count++;
+          break;
+        case CHARMAP_TREASURE1 :
+          l->treasure_count++;
+          l->treasure1_count++;
+          break;
+        case CHARMAP_TREASURE2 :
+          l->treasure_count++;
+          l->treasure2_count++;
+          break;
       }
     }
+  }
+}
 
-    if (cands.empty()) {
+//
+// Try to add some more content
+//
+static void level_gen_add_content(Gamep g, class LevelGen *l, int nmonst, int ntreasure)
+{
+  TRACE_NO_INDENT();
+
+  std::vector< point > cands;
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+
+      switch (c) {
+        case CHARMAP_FLOOR :
+          if (/* top left  */ l->data[ x - 1 ][ y - 1 ].c == CHARMAP_FLOOR &&
+              /* bot right */ l->data[ x - 1 ][ y + 1 ].c == CHARMAP_FLOOR &&
+              /* top right */ l->data[ x + 1 ][ y - 1 ].c == CHARMAP_FLOOR &&
+              /* bot right */ l->data[ x + 1 ][ y + 1 ].c == CHARMAP_FLOOR &&
+              /* left      */ l->data[ x - 1 ][ y ].c == CHARMAP_FLOOR &&
+              /* right     */ l->data[ x + 1 ][ y ].c == CHARMAP_FLOOR &&
+              /* top       */ l->data[ x ][ y - 1 ].c == CHARMAP_FLOOR &&
+              /* bot       */ l->data[ x ][ y + 1 ].c == CHARMAP_FLOOR) {
+            cands.push_back(point(x, y));
+          }
+          break;
+      }
+    }
+  }
+
+  CON("%d", (int) cands.size());
+  if (cands.empty()) {
+    return;
+  }
+
+  //
+  // Place all the monsters we can
+  //
+  while (nmonst-- > 0) {
+    auto cand = cands[ pcg_rand() % cands.size() ];
+    auto x    = cand.x;
+    auto y    = cand.y;
+    auto r    = l->data[ x ][ y ].room;
+    if (r && (l->room_entrance == r)) {
       continue;
     }
 
-    auto cand = cands[ pcg_rand() % cands.size() ];
-    fragment_put(g, l, f, cand);
-
-    if (l->fragment_count++ >= MAX_LEVEL_GEN_FRAGMENTS) {
-      return;
+    if (d100() < 90) {
+      l->data[ x ][ y ].c = CHARMAP_MONST1;
+    } else {
+      l->data[ x ][ y ].c = CHARMAP_MONST2;
     }
+  }
+
+  //
+  // Place all the treasure we can
+  //
+  while (ntreasure-- > 0) {
+    auto cand = cands[ pcg_rand() % cands.size() ];
+    auto x    = cand.x;
+    auto y    = cand.y;
+    auto r    = l->data[ x ][ y ].room;
+
+    if (r && (l->room_entrance == r)) {
+      l->data[ x ][ y ].c = CHARMAP_TREASURE1;
+      continue;
+    }
+
+    if (r && (l->room_exit == r)) {
+      l->data[ x ][ y ].c = CHARMAP_TREASURE2;
+      continue;
+    }
+
+    if (d100() < 90) {
+      l->data[ x ][ y ].c = CHARMAP_TREASURE1;
+    } else {
+      l->data[ x ][ y ].c = CHARMAP_TREASURE2;
+    }
+  }
+}
+
+//
+// Try to add some more content
+//
+static void level_gen_add_content(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  int need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->monst_count;
+  int need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->treasure_count;
+
+  if ((need_monsts > 0) || (need_treasure > 0)) {
+    level_gen_add_content(g, l, need_monsts, need_treasure);
   }
 }
 
@@ -3141,8 +3305,20 @@ static class LevelGen *level_gen(Gamep g, int which)
   level_gen_create_deep_water(g, l);
 
   //
-  // Remove chasms next to water etc...
+  // See how much we generated
   //
+  level_gen_count_monsters_and_treasure(g, l);
+
+  //
+  // If not enough monsters, add some randomly
+  //
+  level_gen_add_content(g, l);
+
+  //
+  // Final count
+  //
+  level_gen_count_monsters_and_treasure(g, l);
+
   return l;
 }
 
