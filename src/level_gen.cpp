@@ -2809,6 +2809,174 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
   }
 }
 
+//
+// e.g. chasm next to water
+//
+static bool level_gen_remove_water_conflicts(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  bool did_something = false;
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+      if (c == CHARMAP_WATER) {
+        if ((l->data[ x - 1 ][ y - 1 ].c == CHARMAP_LAVA) || l->data[ x - 1 ][ y - 1 ].c == CHARMAP_CHASM) {
+          l->data[ x - 1 ][ y - 1 ].c = CHARMAP_WATER;
+          did_something               = true;
+        }
+        if ((l->data[ x - 1 ][ y + 1 ].c == CHARMAP_LAVA) || l->data[ x - 1 ][ y + 1 ].c == CHARMAP_CHASM) {
+          l->data[ x - 1 ][ y + 1 ].c = CHARMAP_WATER;
+          did_something               = true;
+        }
+        if ((l->data[ x + 1 ][ y - 1 ].c == CHARMAP_LAVA) || l->data[ x + 1 ][ y - 1 ].c == CHARMAP_CHASM) {
+          l->data[ x + 1 ][ y - 1 ].c = CHARMAP_WATER;
+          did_something               = true;
+        }
+        if ((l->data[ x + 1 ][ y + 1 ].c == CHARMAP_LAVA) || l->data[ x + 1 ][ y + 1 ].c == CHARMAP_CHASM) {
+          l->data[ x + 1 ][ y + 1 ].c = CHARMAP_WATER;
+          did_something               = true;
+        }
+        if ((l->data[ x - 1 ][ y ].c == CHARMAP_LAVA) || l->data[ x - 1 ][ y ].c == CHARMAP_CHASM) {
+          l->data[ x - 1 ][ y ].c = CHARMAP_WATER;
+          did_something           = true;
+        }
+        if ((l->data[ x + 1 ][ y ].c == CHARMAP_LAVA) || l->data[ x + 1 ][ y ].c == CHARMAP_CHASM) {
+          l->data[ x + 1 ][ y ].c = CHARMAP_WATER;
+          did_something           = true;
+        }
+        if ((l->data[ x ][ y - 1 ].c == CHARMAP_LAVA) || l->data[ x ][ y - 1 ].c == CHARMAP_CHASM) {
+          l->data[ x ][ y - 1 ].c = CHARMAP_WATER;
+          did_something           = true;
+        }
+        if ((l->data[ x ][ y + 1 ].c == CHARMAP_LAVA) || l->data[ x ][ y + 1 ].c == CHARMAP_CHASM) {
+          l->data[ x ][ y + 1 ].c = CHARMAP_WATER;
+          did_something           = true;
+        }
+      }
+    }
+  }
+  return did_something;
+}
+
+//
+// e.g. chasm next to lava
+//
+static bool level_gen_remove_lava_conflicts(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  bool did_something = false;
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+      if (c == CHARMAP_LAVA) {
+        if ((l->data[ x - 1 ][ y - 1 ].c == CHARMAP_WATER) || l->data[ x - 1 ][ y - 1 ].c == CHARMAP_CHASM) {
+          l->data[ x - 1 ][ y - 1 ].c = CHARMAP_LAVA;
+          did_something               = true;
+        }
+        if ((l->data[ x - 1 ][ y + 1 ].c == CHARMAP_WATER) || l->data[ x - 1 ][ y + 1 ].c == CHARMAP_CHASM) {
+          l->data[ x - 1 ][ y + 1 ].c = CHARMAP_LAVA;
+          did_something               = true;
+        }
+        if ((l->data[ x + 1 ][ y - 1 ].c == CHARMAP_WATER) || l->data[ x + 1 ][ y - 1 ].c == CHARMAP_CHASM) {
+          l->data[ x + 1 ][ y - 1 ].c = CHARMAP_LAVA;
+          did_something               = true;
+        }
+        if ((l->data[ x + 1 ][ y + 1 ].c == CHARMAP_WATER) || l->data[ x + 1 ][ y + 1 ].c == CHARMAP_CHASM) {
+          l->data[ x + 1 ][ y + 1 ].c = CHARMAP_LAVA;
+          did_something               = true;
+        }
+        if ((l->data[ x - 1 ][ y ].c == CHARMAP_WATER) || l->data[ x - 1 ][ y ].c == CHARMAP_CHASM) {
+          l->data[ x - 1 ][ y ].c = CHARMAP_LAVA;
+          did_something           = true;
+        }
+        if ((l->data[ x + 1 ][ y ].c == CHARMAP_WATER) || l->data[ x + 1 ][ y ].c == CHARMAP_CHASM) {
+          l->data[ x + 1 ][ y ].c = CHARMAP_LAVA;
+          did_something           = true;
+        }
+        if ((l->data[ x ][ y - 1 ].c == CHARMAP_WATER) || l->data[ x ][ y - 1 ].c == CHARMAP_CHASM) {
+          l->data[ x ][ y - 1 ].c = CHARMAP_LAVA;
+          did_something           = true;
+        }
+        if ((l->data[ x ][ y + 1 ].c == CHARMAP_WATER) || l->data[ x ][ y + 1 ].c == CHARMAP_CHASM) {
+          l->data[ x ][ y + 1 ].c = CHARMAP_LAVA;
+          did_something           = true;
+        }
+      }
+    }
+  }
+  return did_something;
+}
+
+//
+// e.g. water next to chasm
+//
+static bool level_gen_remove_chasm_conflicts(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  bool did_something = false;
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+      if (c == CHARMAP_CHASM) {
+        if ((l->data[ x - 1 ][ y - 1 ].c == CHARMAP_WATER) || l->data[ x - 1 ][ y - 1 ].c == CHARMAP_LAVA) {
+          l->data[ x - 1 ][ y - 1 ].c = CHARMAP_CHASM;
+          did_something               = true;
+        }
+        if ((l->data[ x - 1 ][ y + 1 ].c == CHARMAP_WATER) || l->data[ x - 1 ][ y + 1 ].c == CHARMAP_LAVA) {
+          l->data[ x - 1 ][ y + 1 ].c = CHARMAP_CHASM;
+          did_something               = true;
+        }
+        if ((l->data[ x + 1 ][ y - 1 ].c == CHARMAP_WATER) || l->data[ x + 1 ][ y - 1 ].c == CHARMAP_LAVA) {
+          l->data[ x + 1 ][ y - 1 ].c = CHARMAP_CHASM;
+          did_something               = true;
+        }
+        if ((l->data[ x + 1 ][ y + 1 ].c == CHARMAP_WATER) || l->data[ x + 1 ][ y + 1 ].c == CHARMAP_LAVA) {
+          l->data[ x + 1 ][ y + 1 ].c = CHARMAP_CHASM;
+          did_something               = true;
+        }
+        if ((l->data[ x - 1 ][ y ].c == CHARMAP_WATER) || l->data[ x - 1 ][ y ].c == CHARMAP_LAVA) {
+          l->data[ x - 1 ][ y ].c = CHARMAP_CHASM;
+          did_something           = true;
+        }
+        if ((l->data[ x + 1 ][ y ].c == CHARMAP_WATER) || l->data[ x + 1 ][ y ].c == CHARMAP_LAVA) {
+          l->data[ x + 1 ][ y ].c = CHARMAP_CHASM;
+          did_something           = true;
+        }
+        if ((l->data[ x ][ y - 1 ].c == CHARMAP_WATER) || l->data[ x ][ y - 1 ].c == CHARMAP_LAVA) {
+          l->data[ x ][ y - 1 ].c = CHARMAP_CHASM;
+          did_something           = true;
+        }
+        if ((l->data[ x ][ y + 1 ].c == CHARMAP_WATER) || l->data[ x ][ y + 1 ].c == CHARMAP_LAVA) {
+          l->data[ x ][ y + 1 ].c = CHARMAP_CHASM;
+          did_something           = true;
+        }
+      }
+    }
+  }
+  return did_something;
+}
+
+//
+// e.g. chasm next to water
+//
+static void level_gen_remove_conflicting_tiles(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  while (level_gen_remove_water_conflicts(g, l))
+    ;
+  while (level_gen_remove_lava_conflicts(g, l))
+    ;
+  while (level_gen_remove_chasm_conflicts(g, l))
+    ;
+}
+
 static void level_gen_add_fragments(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
@@ -2910,6 +3078,11 @@ static class LevelGen *level_gen(Gamep g, int which)
   // Add walls again in case a fragment extended the room
   //
   level_gen_add_walls_around_rooms(g, l);
+
+  //
+  // e.g. chasm next to water
+  //
+  level_gen_remove_conflicting_tiles(g, l);
 
   //
   // Remove chasms next to water etc...
