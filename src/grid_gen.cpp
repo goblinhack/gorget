@@ -99,7 +99,7 @@ static void snake_walk(Gamep g, Grid *grid, point at, int turn_chance, int count
     //
     // Ensure we never try to create too many levels
     //
-    if (grid_count_levels(g, grid) >= LEVELS_COUNT) {
+    if (grid_count_levels(g, grid) >= MAX_LEVELS) {
       return;
     }
 
@@ -162,7 +162,7 @@ static void snake_dive(Gamep g, Grid *grid, point at, int dive_chance)
     //
     // Ensure we never try to create too many levels
     //
-    if (grid_count_levels(g, grid) >= LEVELS_COUNT) {
+    if (grid_count_levels(g, grid) >= MAX_LEVELS) {
       return;
     }
 

@@ -459,7 +459,7 @@ void Game::create_levels(void)
 
   auto v = levels_create(g);
   game_levels_set(g, v);
-  game_level_set(g, v, 0, 0);
+  game_level_set(g, v, 0);
   level_scroll_warp_to_player(g, v);
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
@@ -1239,11 +1239,10 @@ Levelp game_level_get(Gamep g, Levelsp v)
     ERR("No levels pointer set");
     return nullptr;
   }
-  auto x = v->level_num_x;
-  auto y = v->level_num_y;
-  return &v->level[ x ][ y ];
+  auto n = v->level_num;
+  return &v->level[ n ];
 }
-Levelp game_level_get(Gamep g, Levelsp v, int x, int y)
+Levelp game_level_get(Gamep g, Levelsp v, int n)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1254,9 +1253,9 @@ Levelp game_level_get(Gamep g, Levelsp v, int x, int y)
     ERR("No levels pointer set");
     return nullptr;
   }
-  return &v->level[ x ][ y ];
+  return &v->level[ n ];
 }
-Levelp game_level_set(Gamep g, Levelsp v, int x, int y)
+Levelp game_level_set(Gamep g, Levelsp v, int n)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1267,8 +1266,7 @@ Levelp game_level_set(Gamep g, Levelsp v, int x, int y)
     ERR("No levels pointer set");
     return nullptr;
   }
-  v->level_num_x = x;
-  v->level_num_y = y;
+  v->level_num = n;
   return game_level_get(g, v);
 }
 

@@ -26,12 +26,11 @@ typedef struct Level_ {
   //
   // Where this level is in the bigger map
   //
-  int level_num_x;
-  int level_num_y;
+  int level_num;
   //
   // Flags
   //
-  bool initialized : 1;
+  uint8_t initialized : 1;
   //
   // What things are where? Each Id points to a thing structure.
   //
@@ -39,7 +38,7 @@ typedef struct Level_ {
   //
   // Has the player been on this tile?
   //
-  bool is_walked[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t is_walked[ MAP_WIDTH ][ MAP_HEIGHT ];
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
@@ -55,8 +54,7 @@ typedef struct Levels_ {
   //
   // Current level being played
   //
-  int level_num_x;
-  int level_num_y;
+  int level_num;
   //
   // Increments once per event loop.
   //
@@ -81,35 +79,35 @@ typedef struct Levels_ {
   //
   // Player has moved.
   //
-  bool tick_begin_requested : 1;
-  bool tick_end_requested   : 1;
+  uint8_t tick_begin_requested : 1;
+  uint8_t tick_end_requested   : 1;
   //
   // If the player has moved, we need to scroll the map
   //
-  bool requested_auto_scroll : 1;
+  uint8_t requested_auto_scroll : 1;
   //
   // Player move request.
   //
-  bool requested_move_left  : 1;
-  bool requested_move_keft  : 1;
-  bool requested_move_right : 1;
-  bool requested_move_up    : 1;
+  uint8_t requested_move_left  : 1;
+  uint8_t requested_move_keft  : 1;
+  uint8_t requested_move_right : 1;
+  uint8_t requested_move_up    : 1;
   //
   // The user has pressed the mouse and wants to follow the mouse path.
   //
-  bool player_pressed_button_and_waiting_for_a_path : 1;
+  uint8_t player_pressed_button_and_waiting_for_a_path : 1;
   //
   // set when the player starts following the mouse path.
   //
-  bool player_currently_following_a_path : 1;
+  uint8_t player_currently_following_a_path : 1;
   //
   // Set when something modifies the map and we need to update caches.
   //
-  bool is_map_changed : 1;
+  uint8_t is_map_changed : 1;
   //
-  // What things are where? Each Id points to a thing structure.
+  // Flag array of all levels. The levels equate to one tile in the level grid.
   //
-  Level level[ LEVELS_ACROSS ][ LEVELS_DOWN ];
+  Level level[ MAX_LEVELS ];
   //
   // All things structure memory.
   //
@@ -147,7 +145,7 @@ typedef struct Levels_ {
 Levelsp levels_create(Gamep);
 void    levels_destroy(Gamep, Levelsp);
 
-Levelp level_create(Gamep, Levelsp, point);
+Levelp level_create(Gamep, Levelsp, int);
 void   level_destroy(Gamep, Levelsp, Levelp);
 
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
@@ -176,9 +174,8 @@ void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 
 #define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                \
-  for (auto _y_ = 0; _y_ < LEVELS_DOWN; _y_++)                                                                       \
-    for (auto _x_ = 0; _x_ < LEVELS_ACROSS; _x_++)                                                                   \
-      if ((_l_ = &v->level[ _x_ ][ _y_ ]))
+  for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                      \
+    if ((_l_ = &v->level[ _n_ ]))
 
 //
 // Walk all things, all levels

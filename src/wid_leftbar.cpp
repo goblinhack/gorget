@@ -48,7 +48,7 @@ static bool wid_leftbar_create_window(Gamep g)
     auto  w = wid_new_square_button(g, wid_leftbar, "level no");
     point tl(0, y_at);
     point br(width - 1, y_at);
-    auto  s = dynprintf("Level %u,%u", v->level_num_x, v->level_num_y);
+    auto  s = dynprintf("Level %u", v->level_num);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_NORMAL);

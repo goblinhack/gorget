@@ -22,7 +22,6 @@
 //
 // How many times to try creating a single level
 //
-static const int MAX_LEVELS                        = 100;
 static const int MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED = 1000000;
 
 //
@@ -3161,7 +3160,6 @@ static void level_gen_add_content(Gamep g, class LevelGen *l, int nmonst, int nt
     }
   }
 
-  CON("%d", (int) cands.size());
   if (cands.empty()) {
     return;
   }
