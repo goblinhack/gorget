@@ -6,8 +6,9 @@
 #ifndef _MY_GAME_DEFS_HPP_
 #define _MY_GAME_DEFS_HPP_
 
-#define LEVELS_ACROSS        16
-#define LEVELS_DOWN          16
+#define LEVELS_ACROSS        (MAP_WIDTH / 3)
+#define LEVELS_DOWN          (MAP_HEIGHT / 3)
+#define LEVELS_COUNT         100
 #define MAP_WIDTH            48
 #define MAP_HEIGHT           48
 #define MAP_SLOTS            16

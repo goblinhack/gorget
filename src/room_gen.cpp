@@ -625,6 +625,8 @@ static void rooms_dump_n(Gamep g, int n, int which, const char *name)
 
 void rooms_test(Gamep g)
 {
+  TRACE_NO_INDENT();
+
   rooms_dump_n(g, 500, ROOM_TYPE_CROSS, "cross");
   rooms_dump_n(g, 500, ROOM_TYPE_CROSS_SYM, "cross_sym");
   rooms_dump_n(g, 1000, ROOM_TYPE_SMALL, "small");

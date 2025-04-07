@@ -29,6 +29,7 @@ extern bool g_opt_no_slow_log_flush;    // Do not flush after each console log a
 extern bool g_opt_override_debug_level; // Temporary, used to disable existing debugs
 extern bool g_opt_test_start;           // Start in the main menu
 extern bool g_opt_test_rooms;           // Test room gen
+extern bool g_opt_test_grid;            // Test room grid gen
 extern bool g_opt_test_levels;          // Test level gen
 extern bool g_opt_restarted;            // Post restart
 extern bool g_opt_debug1;
