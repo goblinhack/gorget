@@ -15,11 +15,14 @@
 #include <cinttypes>
 #include <iostream>
 #include <map>
+#include <mutex>
 #include <sstream>
 #include <string.h>
 #include <string>
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
+
+static std::mutex thing_mutex;
 
 static Thingp thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, point);
 static void   thing_free(Gamep, Levelsp, Levelp, Thingp t);
@@ -89,7 +92,23 @@ static Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, point)
 {
   TRACE_NO_INDENT();
 
-  for (auto index = 0; index < (1 << THING_COMMON_ID_BITS); index++) {
+  thing_mutex.lock();
+
+  static ThingId last_index;
+
+  for (ThingId n = 0; n < (1 << THING_COMMON_ID_BITS); n++) {
+    //
+    // Wrap around
+    //
+    ThingId index = (last_index + n + 1) % (1 << THING_COMMON_ID_BITS);
+
+    //
+    // Skip index 0
+    //
+    if (! index) {
+      continue;
+    }
+
     auto t = &v->thing_body[ index ];
     if (t->id) {
       continue;
@@ -113,8 +132,14 @@ static Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, point)
       thing_ai_alloc(g, v, l, t);
     }
 
+    last_index = index;
+
+    thing_mutex.unlock();
+
     return t;
   }
+
+  thing_mutex.unlock();
 
   DIE("out of things");
 }
@@ -122,6 +147,8 @@ static Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, point)
 static void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
+
+  thing_mutex.lock();
 
   auto o = thing_find(g, v, t->id);
   if (t != o) {
@@ -132,6 +159,8 @@ static void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_ai_free(g, v, l, t);
 
   memset((void *) t, 0, SIZEOF(*t));
+
+  thing_mutex.unlock();
 }
 
 static ThingAip thing_ai_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)

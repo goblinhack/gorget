@@ -346,7 +346,7 @@ Tpp tp_random(ThingFlag f)
 {
   TRACE_NO_INDENT();
   if (unlikely(! tp_flag_map[ f ].size())) {
-    DIE("No wall found");
+    DIE("No tp found for %d", f);
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);

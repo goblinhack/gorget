@@ -284,6 +284,7 @@ bool is_oob(point p)
 void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
 {
   TRACE_NO_INDENT();
+
   const auto row_len      = MAP_WIDTH;
   auto       expected_len = row_len * MAP_HEIGHT;
 
@@ -405,7 +406,10 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           tp         = nullptr; /* todo */
           break;
         case CHARMAP_EMPTY : break;
-        default : DIE("unexpected map char '%c'", c);
+        default :
+          if (! g_opt_test_levels) {
+            DIE("unexpected map char '%c'", c);
+          }
       }
 
       if (need_floor) {

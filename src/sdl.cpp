@@ -264,10 +264,9 @@ uint8_t sdl_init_display(Gamep g)
       ERR("SDL: Cannot enable high DPI: %s", SDL_GetError());
     }
   }
-  if (0) {
-    video_width  = 1920 / 2;
-    video_height = 1200 / 2;
-    video_flags &= ~SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+  if (g_opt_test_grid || g_opt_test_rooms || g_opt_test_levels) {
+    video_flags = SDL_WINDOW_OPENGL;
   }
 
   LOG("SDL: Create window size %ux%u", video_width, video_height);
@@ -654,6 +653,8 @@ void sdl_config_update_all(Gamep g)
   config_game_gfx_update(g);
   config_gfx_vsync_update(g);
   gl_init_2d_mode(g);
+
+  LOG("SDL: Updated config");
 }
 
 //

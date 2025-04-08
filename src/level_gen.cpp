@@ -150,7 +150,7 @@ public:
   //
   // Sub level
   //
-  int which {};
+  int level_num {};
 
   //
   // The number of rooms to aim for for a given depth.
@@ -1691,9 +1691,9 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   TRACE_NO_INDENT();
 
   if (msg) {
-    LOG("Level: %s.%d (%s)", l->seed.c_str(), l->which, msg);
+    LOG("Level: %s.%d (%s)", l->seed.c_str(), l->level_num, msg);
   } else {
-    LOG("Level: %s.%d", l->seed.c_str(), l->which);
+    LOG("Level: %s.%d", l->seed.c_str(), l->level_num);
   }
 
   LOG("Seed: %u", l->seed_num);
@@ -1721,6 +1721,24 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   }
 
   LOG("-");
+}
+
+//
+// Convert a level into a single string
+//
+static std::string level_gen_string(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  std::string out;
+
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      out += l->data[ x ][ y ].c;
+    }
+  }
+
+  return out;
 }
 
 //
@@ -2174,7 +2192,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_gen_create_rooms(Gamep g, int which)
+static class LevelGen *level_gen_create_rooms(Gamep g, int level_num)
 {
   TRACE_NO_INDENT();
 
@@ -2193,8 +2211,8 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int which)
 
     l                 = new LevelGen();
     l->seed           = std::string(game_seed_name_get(g));
-    l->which          = which;
-    l->min_room_count = MIN_LEVEL_ROOM_COUNT + (which / 10);
+    l->level_num      = level_num;
+    l->min_room_count = MIN_LEVEL_ROOM_COUNT + (level_num / 10);
     l->max_room_count = l->min_room_count + 10;
     l->debug          = g_opt_debug1;
 
@@ -3225,14 +3243,25 @@ static void level_gen_add_content(Gamep g, class LevelGen *l)
   }
 }
 
-//
-// Create a level from the current game seed
-//
-static class LevelGen *level_gen(Gamep g, int which)
+static void level_gen_create(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  LevelGen *l = level_gen_create_rooms(g, which);
+  auto v            = game_levels_get(g);
+  auto level_string = level_gen_string(g, l);
+  auto level        = game_level_get(g, v, l->level_num);
+
+  level_map_set(g, v, level, level_string.c_str());
+}
+
+//
+// Create a level from the current game seed
+//
+static class LevelGen *level_gen(Gamep g, int level_num)
+{
+  TRACE_NO_INDENT();
+
+  LevelGen *l = level_gen_create_rooms(g, level_num);
   if (! l) {
     return l;
   }
@@ -3317,6 +3346,8 @@ static class LevelGen *level_gen(Gamep g, int which)
   //
   level_gen_count_monsters_and_treasure(g, l);
 
+  level_gen_create(g, l);
+
   return l;
 }
 
@@ -3325,7 +3356,7 @@ static std::array< class LevelGen *, MAX_LEVELS > levels = {};
 //
 // Create a level and store in the array of levels
 //
-static void level_gen_create_level(Gamep g, int which)
+static void level_gen_create_level(Gamep g, int level_num)
 {
   TRACE_NO_INDENT();
 
@@ -3333,16 +3364,16 @@ static void level_gen_create_level(Gamep g, int which)
   // Per thread seed
   //
   uint32_t seed_num = game_seed_num_get(g);
-  seed_num += seed_num * which;
+  seed_num += seed_num * level_num;
   pcg_srand(seed_num);
 
-  auto l = level_gen(g, which);
+  auto l = level_gen(g, level_num);
   if (! l) {
     return;
   }
 
-  l->seed_num     = seed_num;
-  levels[ which ] = l;
+  l->seed_num         = seed_num;
+  levels[ level_num ] = l;
 }
 
 void level_gen_test(Gamep g)
@@ -3352,11 +3383,8 @@ void level_gen_test(Gamep g)
   int                        max_threads = MAX_LEVELS;
   std::vector< std::thread > threads;
 
-  if (0) {
-    for (auto i = 0; i < MAX_LEVELS; i++) {
-      level_gen_create_level(g, i);
-    }
-  }
+  auto v = levels_create(g);
+  game_levels_set(g, v);
 
   for (auto i = 0; i < max_threads; i++) {
     threads.push_back(std::thread(level_gen_create_level, g, i));

@@ -174,7 +174,7 @@ void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 
 #define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                \
-  for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                      \
+  for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                        \
     if ((_l_ = &v->level[ _n_ ]))
 
 //

@@ -715,26 +715,6 @@ int main(int argc, char *argv[])
   game_init(g);
 
   {
-    rooms_init(g);
-    fragments_init(g);
-
-    if (g_opt_test_grid) {
-      grid_test(g);
-      DIE_CLEAN("done");
-    }
-
-    if (g_opt_test_rooms) {
-      rooms_test(g);
-      DIE_CLEAN("done");
-    }
-
-    if (g_opt_test_levels) {
-      level_gen_test(g);
-      DIE_CLEAN("done");
-    }
-  }
-
-  {
     TRACE_NO_INDENT();
     if (! sdl_init()) {
       ERR("SDL: Init");
@@ -749,15 +729,22 @@ int main(int argc, char *argv[])
   }
 
   {
-
     TRACE_NO_INDENT();
     sdl_config_update_all(g);
   }
 
-  //
-  // Causes a 0.3 sec delay first time it seems to run
-  //
-  SDL_PumpEvents();
+  if (g_opt_test_grid || g_opt_test_rooms || g_opt_test_levels) {
+    //
+    // Skip for speed of test setuip
+    //
+  } else {
+    //
+    // Causes a 0.3 sec delay first time it seems to run
+    //
+    LOG("SDL: Pump events");
+    SDL_PumpEvents();
+    LOG("SDL: Pump events done");
+  }
 
   {
     TRACE_NO_INDENT();
@@ -982,6 +969,26 @@ int main(int argc, char *argv[])
       ERR("Command init");
     }
     flush_the_console(g);
+  }
+
+  {
+    rooms_init(g);
+    fragments_init(g);
+
+    if (g_opt_test_grid) {
+      grid_test(g);
+      DIE_CLEAN("done");
+    }
+
+    if (g_opt_test_rooms) {
+      rooms_test(g);
+      DIE_CLEAN("done");
+    }
+
+    if (g_opt_test_levels) {
+      level_gen_test(g);
+      DIE_CLEAN("done");
+    }
   }
 
   {
