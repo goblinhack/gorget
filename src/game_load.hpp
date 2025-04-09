@@ -635,7 +635,7 @@ void game_load_last_config(const char *appdata)
 {
   TRACE_NO_INDENT();
 
-  LOG("INI: Load config");
+  LOG("Load config");
 
   game = new Game(std::string(appdata));
 

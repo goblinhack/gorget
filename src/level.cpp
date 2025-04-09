@@ -21,21 +21,22 @@ void levels_stats_dump(Gamep g)
     return;
   }
 
-  LOG("Total memory:       %lu Mb", sizeof(Levels) / (1024 * 1024));
-  LOG("Per level memory:   %lu Kb", sizeof(Level) / (1024));
-  LOG("Thing AI:           %lu Mb", sizeof(v->thing_ai) / (1024 * 1024));
-  LOG("Thing structs:      %lu Mb", sizeof(v->thing_body) / (1024 * 1024));
-  LOG("Levels:             %lu Mb", sizeof(v->level) / (1024 * 1024));
-  LOG("Thing size:         %lu b", sizeof(Thing));
-  LOG("Max things:         %u", THING_COMMON_ID_BASE - 1);
+  LOG("Level stats:");
+  LOG("- Total memory:       %lu Mb", sizeof(Levels) / (1024 * 1024));
+  LOG("- Per level memory:   %lu Kb", sizeof(Level) / (1024));
+  LOG("- Thing AI:           %lu Mb", sizeof(v->thing_ai) / (1024 * 1024));
+  LOG("- Thing structs:      %lu Mb", sizeof(v->thing_body) / (1024 * 1024));
+  LOG("- Levels:             %lu Mb", sizeof(v->level) / (1024 * 1024));
+  LOG("- Thing size:         %lu b", sizeof(Thing));
+  LOG("- Max things:         %u", THING_COMMON_ID_BASE - 1);
 
   thing_stats_dump(g, v);
 }
 
 Levelsp levels_memory_alloc(Gamep g)
 {
-  LOG("Levels create");
-  TRACE_AND_INDENT();
+  LOG("Levels alloc memory");
+  TRACE_NO_INDENT();
 
   auto v = game_levels_get(g);
   if (v) {
@@ -59,6 +60,7 @@ Levelsp levels_memory_alloc(Gamep g)
 
 static void levels_memory_free(Gamep g, Levelsp v)
 {
+  LOG("Levels free memory");
   TRACE_NO_INDENT();
 
   myfree(v);
@@ -68,7 +70,7 @@ static void levels_memory_free(Gamep g, Levelsp v)
 
 void levels_destroy(Gamep g, Levelsp v)
 {
-  LOG("Levels fini");
+  LOG("Levels destroy");
   TRACE_AND_INDENT();
 
   Levelp l;
@@ -82,9 +84,9 @@ void levels_destroy(Gamep g, Levelsp v)
   levels_memory_free(g, v);
 }
 
-Levelp level_switch(Gamep g, Levelsp v, int level_num)
+Levelp level_change(Gamep g, Levelsp v, int level_num)
 {
-  LOG("Level switch %u", level_num);
+  LOG("Level change to %u", level_num);
   TRACE_AND_INDENT();
 
   Level *l = game_level_get(g, v, level_num);
@@ -102,7 +104,8 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  DBG("Level destroy %u", l->level_num);
+  LOG("Level destroy %u", l->level_num);
+  TRACE_AND_INDENT();
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_fini(g, v, l, t); }
   memset(l, 0, sizeof(*l));

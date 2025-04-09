@@ -198,7 +198,7 @@ Levelsp levels_memory_alloc(Gamep);
 void    levels_destroy(Gamep, Levelsp);
 void    levels_stats_dump(Gamep g);
 
-Levelp level_switch(Gamep, Levelsp, int);
+Levelp level_change(Gamep, Levelsp, int);
 void   level_destroy(Gamep, Levelsp, Levelp);
 
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);

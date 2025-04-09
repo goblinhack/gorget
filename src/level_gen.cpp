@@ -1748,7 +1748,7 @@ void level_gen_stats_dump(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  LOG("Level errors:");
+  LOG("Level generation errors:");
   LOG("- create level fail:               %d", level_create_fail);
   LOG("- place first room fail:           %d", level_place_first_room_fail);
   LOG("- place subsequent room fail:      %d", level_place_subsequent_room_fail);
@@ -3397,7 +3397,8 @@ static void level_gen_create_level(Gamep g, int level_num)
 //
 void level_gen_create_levels(Gamep g)
 {
-  TRACE_NO_INDENT();
+  LOG("Levels generate (max %u)", MAX_LEVELS);
+  TRACE_AND_INDENT();
 
   int                        max_threads = MAX_LEVELS;
   std::vector< std::thread > threads;

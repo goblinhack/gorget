@@ -40,7 +40,7 @@ static std::string original_program_name;
 
 void quit(Gamep *g_in)
 {
-  LOG("Quitting, start cleanup");
+  LOG("Exiting, quit callded");
   TRACE_AND_INDENT();
 
   Gamep g = *g_in;
@@ -133,6 +133,7 @@ void quit(Gamep *g_in)
 
 void restart(Gamep g)
 {
+  LOG("Exiting, restart callded");
   TRACE_AND_INDENT();
 
   char *args[] = {nullptr, (char *) "-restart", nullptr};
@@ -186,6 +187,7 @@ void restart(Gamep g)
 
 void die(void)
 {
+  LOG("Exiting, die called");
   TRACE_AND_INDENT();
 
   extern Gamep game;
@@ -204,7 +206,8 @@ void die(void)
 //
 static void find_executable(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
+
   char       *parent_dir         = nullptr;
   char       *curr_dir           = nullptr;
   std::string exec_name          = "";
@@ -213,7 +216,7 @@ static void find_executable(void)
   char       *tmp;
 
   exec_name = mybasename(ARGV[ 0 ], __FUNCTION__);
-  LOG("INI: Will use EXEC_NAME as '%s'", exec_name.c_str());
+  LOG("Will use EXEC_NAME as '%s'", exec_name.c_str());
 
   //
   // Get the current directory, ending in a single /
@@ -310,7 +313,7 @@ cleanup:
   myfree(EXEC_DIR);
   EXEC_DIR = new_EXEC_DIR;
 
-  DBG3("INI: EXEC_DIR set to %s", EXEC_DIR);
+  DBG3("EXEC_DIR set to %s", EXEC_DIR);
   DBG3("Parent dir  : \"%s\"", parent_dir);
   DBG3("Curr dir    : \"%s\"", curr_dir);
   DBG3("Full name   : \"%s\"", exec_expanded_name);
@@ -357,7 +360,7 @@ static void find_exec_dir(void)
   }
   EXEC_DIR = tmp5;
 
-  LOG("INI: Will use EXEC_DIR as '%s'", EXEC_DIR);
+  LOG("Will use EXEC_DIR as '%s'", EXEC_DIR);
 }
 
 //
@@ -475,9 +478,9 @@ static void parse_args(int argc, char *argv[])
   //
   // Parse format args
   //
-  LOG("INI: Parse command line arguments for '%s'", argv[ 0 ]);
+  LOG("Parse command line arguments for '%s'", argv[ 0 ]);
   for (i = 1; i < argc; i++) {
-    LOG("INI: + argument: \"%s\"", argv[ i ]);
+    LOG("+ argument: \"%s\"", argv[ i ]);
   }
 
   if (argc) {
@@ -602,7 +605,7 @@ static std::string create_appdata_dir(void)
     char *out             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
     g_log_stdout_filename = std::string(out);
     g_log_stdout          = fopen(out, "w+");
-    LOG("INI: Will use STDOUT as '%s'", out);
+    LOG("Will use STDOUT as '%s'", out);
     myfree(out);
   }
 
@@ -610,7 +613,7 @@ static std::string create_appdata_dir(void)
     char *err             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
     g_log_stderr_filename = std::string(err);
     g_log_stderr          = fopen(err, "w+");
-    LOG("INI: Will use STDERR as '%s'", err);
+    LOG("Will use STDERR as '%s'", err);
     myfree(err);
   }
 
@@ -638,26 +641,26 @@ int main(int argc, char *argv[])
 
   auto appdata = create_appdata_dir(); // Want this first so we get all logs
 
-  LOG("INI: Greetings mortal");
+  LOG("Greetings mortal");
 
   //////////////////////////////////////////////////////////////////////////////
   // Use LOG instead of CON until we set stdout or you see two logs
   // v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v
   //////////////////////////////////////////////////////////////////////////////
 #ifdef _WIN32
-  LOG("INI: Platform is _WIN32");
+  LOG("Platform is _WIN32");
 #endif
 #ifdef __MINGW32__
-  LOG("INI: Platform is __MINGW32__");
+  LOG("Platform is __MINGW32__");
 #endif
 #ifdef __MINGW64__
-  LOG("INI: Platform is __MINGW64__");
+  LOG("Platform is __MINGW64__");
 #endif
 #ifdef __APPLE__
-  LOG("INI: Platform is __APPLE__");
+  LOG("Platform is __APPLE__");
 #endif
 #ifdef __linux__
-  LOG("INI: Platform is __linux__");
+  LOG("Platform is __linux__");
 #endif
 
   {
@@ -666,7 +669,7 @@ int main(int argc, char *argv[])
   }
 
   {
-    LOG("INI: Ramdisk");
+    LOG("Ramdisk");
     TRACE_NO_INDENT();
     ramdisk_init();
   }
@@ -677,7 +680,7 @@ int main(int argc, char *argv[])
   //////////////////////////////////////////////////////////////////////////////
 
   {
-    LOG("INI: Create console");
+    LOG("Create console");
     TRACE_NO_INDENT();
     ascii_init();
   }
@@ -686,7 +689,7 @@ int main(int argc, char *argv[])
   // Need this to get the UTF on the console
   //
 #ifndef _WIN32
-  LOG("INI: Set locale for console");
+  LOG("Set locale for console");
   std::locale loc("");
   std::ios_base::sync_with_stdio(false);
   std::wcout.imbue(loc);
@@ -695,7 +698,7 @@ int main(int argc, char *argv[])
 #ifdef ENABLE_CRASH_HANDLER
   //
   // Crash handlers
-  LOG("INI: Install crash handlers");
+  LOG("Install crash handlers");
   signal(SIGSEGV, segv_handler);
   signal(SIGABRT, segv_handler);
   signal(SIGFPE, segv_handler);
@@ -756,9 +759,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load early gfx tiles, text, UI etc...");
+      CON("Load early gfx tiles, text, UI etc...");
     } else {
-      LOG("INI: Load early gfx tiles, text, UI etc...");
+      LOG("Load early gfx tiles, text, UI etc...");
     }
     gfx_init();
   }
@@ -775,9 +778,9 @@ int main(int argc, char *argv[])
   // Random number
   //
   if (g_opt_debug1) {
-    CON("INI: Init random seed");
+    CON("Init random seed");
   } else {
-    LOG("INI: Init random seed");
+    LOG("Init random seed");
   }
   pcg_srand((unsigned int) std::time(nullptr));
 
@@ -786,9 +789,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load fonts");
+      CON("Load fonts");
     } else {
-      LOG("INI: Load fonts");
+      LOG("Load fonts");
     }
     if (! font_init()) {
       ERR("Font init");
@@ -798,9 +801,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load widgets");
+      CON("Load widgets");
     } else {
-      LOG("INI: Load widgets");
+      LOG("Load widgets");
     }
     if (! wid_init()) {
       ERR("Wid init");
@@ -810,9 +813,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load console");
+      CON("Load console");
     } else {
-      LOG("INI: Load console");
+      LOG("Load console");
     }
     if (! wid_console_init(g)) {
       ERR("Wid_console init");
@@ -854,9 +857,9 @@ int main(int argc, char *argv[])
     TRACE_NO_INDENT();
     original_program_name = std::string(argv[ 0 ]);
     if (g_opt_debug1) {
-      CON("INI: Original program name: %s", original_program_name.c_str());
+      CON("Original program name: %s", original_program_name.c_str());
     } else {
-      LOG("INI: Original program name: %s", original_program_name.c_str());
+      LOG("Original program name: %s", original_program_name.c_str());
     }
     flush_the_console(g);
   }
@@ -864,9 +867,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load tiles");
+      CON("Load tiles");
     } else {
-      LOG("INI: Load tiles");
+      LOG("Load tiles");
     }
     if (! wid_tiles_init()) {
       ERR("Wid tiles init");
@@ -884,9 +887,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load textures");
+      CON("Load textures");
     } else {
-      LOG("INI: Load textures");
+      LOG("Load textures");
     }
     if (! tex_init()) {
       ERR("Tex init");
@@ -897,9 +900,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load audio");
+      CON("Load audio");
     } else {
-      LOG("INI: Load audio");
+      LOG("Load audio");
     }
     if (! audio_init()) {
       ERR("Audio init");
@@ -910,9 +913,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load music");
+      CON("Load music");
     } else {
-      LOG("INI: Load music");
+      LOG("Load music");
     }
     if (! music_init()) {
       ERR("Music init");
@@ -923,9 +926,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load sound");
+      CON("Load sound");
     } else {
-      LOG("INI: Load sound");
+      LOG("Load sound");
     }
     if (! sound_init()) {
       ERR("Sound init");
@@ -938,9 +941,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Find resource locations for gfx and music");
+      CON("Find resource locations for gfx and music");
     } else {
-      LOG("INI: Find resource locations for gfx and music");
+      LOG("Find resource locations for gfx and music");
     }
     find_file_locations();
     flush_the_console(g);
@@ -949,9 +952,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load templates");
+      CON("Load templates");
     } else {
-      LOG("INI: Load templates");
+      LOG("Load templates");
     }
     if (! tp_init()) {
       ERR("Templates init");
@@ -961,9 +964,9 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("INI: Load commands");
+      CON("Load commands");
     } else {
-      LOG("INI: Load commands");
+      LOG("Load commands");
     }
     if (! command_init()) {
       ERR("Command init");

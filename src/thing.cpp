@@ -179,9 +179,10 @@ void thing_stats_dump(Gamep g, Levelsp v)
     }
   }
 
-  LOG("Total things        %u", in_use_things + free_things);
-  LOG("In use things       %u", in_use_things);
-  LOG("Free things         %u", free_things);
+  LOG("Thing stats:");
+  LOG("- Total things        %u", in_use_things + free_things);
+  LOG("- In use things       %u", in_use_things);
+  LOG("- Free things         %u", free_things);
 }
 
 static ThingAip thing_ai_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
