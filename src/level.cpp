@@ -12,6 +12,26 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
+void levels_stats_dump(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
+
+  LOG("Total memory:       %lu Mb", sizeof(Levels) / (1024 * 1024));
+  LOG("Per level memory:   %lu Kb", sizeof(Level) / (1024));
+  LOG("Thing AI:           %lu Mb", sizeof(v->thing_ai) / (1024 * 1024));
+  LOG("Thing structs:      %lu Mb", sizeof(v->thing_body) / (1024 * 1024));
+  LOG("Levels:             %lu Mb", sizeof(v->level) / (1024 * 1024));
+  LOG("Thing size:         %lu b", sizeof(Thing));
+  LOG("Max things:         %u", THING_COMMON_ID_BASE - 1);
+
+  thing_stats_dump(g, v);
+}
+
 Levelsp levels_memory_alloc(Gamep g)
 {
   LOG("Levels create");
@@ -29,14 +49,6 @@ Levelsp levels_memory_alloc(Gamep g)
   // NOTE: if we use "new" here, the initialization is visibly slower.
   // DO NOT USE C++ classes or types
   //
-  LOG("Levels memory:  %lu Mb", sizeof(Levels) / (1024 * 1024));
-  LOG("Level memory:   %lu Mb", sizeof(Level) / (1024 * 1024));
-  LOG("Thing AI:       %lu Mb", sizeof(v->thing_ai) / (1024 * 1024));
-  LOG("Thing structs:  %lu Mb", sizeof(v->thing_body) / (1024 * 1024));
-  LOG("Thing levels:   %lu Mb", sizeof(v->level) / (1024 * 1024));
-  LOG("Thing size:     %lu b", sizeof(Thing));
-  LOG("Max things:     %u", THING_COMMON_ID_BASE - 1);
-
   v = (Levelsp) myzalloc(sizeof(*v), "v");
   if (! v) {
     return nullptr;
@@ -90,8 +102,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  LOG("Level destroy %u", l->level_num);
-  TRACE_AND_INDENT();
+  DBG("Level destroy %u", l->level_num);
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_fini(g, v, l, t); }
   memset(l, 0, sizeof(*l));

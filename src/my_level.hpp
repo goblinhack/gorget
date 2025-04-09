@@ -142,36 +142,6 @@ typedef struct Levels_ {
   //////////////////////////////////////////////////////////////
 } Levels;
 
-Levelsp levels_memory_alloc(Gamep);
-void    levels_destroy(Gamep, Levelsp);
-
-Levelp level_switch(Gamep, Levelsp, int);
-void   level_destroy(Gamep, Levelsp, Levelp);
-
-ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
-
-bool is_oob(point);
-
-bool level_flag(Gamep, Levelsp, Levelp, ThingFlag, point p);
-bool level_is_same_obj_type_at(Gamep, Levelsp, Levelp, point p, Tpp);
-bool level_set_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot, ThingId);
-bool level_tick_is_in_progress(Gamep, Levelsp, Levelp);
-
-void level_anim(Gamep, Levelsp, Levelp);
-void level_assign_tiles(Gamep, Levelsp, Levelp);
-void level_bounds_set(Gamep, Levelsp);
-void level_cursor_set(Gamep, Levelsp, point);
-void level_cursor_update(Gamep, Levelsp, Levelp);
-void level_display(Gamep, Levelsp, Levelp);
-void level_map_set(Gamep, Levelsp, Levelp, const char *);
-void level_mouse_position_get(Gamep, Levelsp, Levelp);
-void level_scroll_delta(Gamep, Levelsp, point);
-void level_cursor_path_reset(Gamep, Levelsp, Levelp);
-void level_scroll_to_player(Gamep, Levelsp);
-void level_scroll_warp_to_player(Gamep, Levelsp);
-void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
-void level_tick(Gamep, Levelsp, Levelp);
-
 #define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                \
   for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                        \
     if ((_l_ = &v->level[ _n_ ]))
@@ -211,6 +181,50 @@ void level_tick(Gamep, Levelsp, Levelp);
   for (auto _slot_ = 0; _t_ = thing_and_tp_get_at(_g_, _v_, _l_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++)  \
     if (_t_)
 
+enum {
+  CHANCE_VVV_UNLIKELY = 1,
+  CHANCE_VV_UNLIKELY  = 10,
+  CHANCE_V_UNLIKELY   = 100,
+  CHANCE_UNLIKELY     = 1000,
+  CHANCE_NORMAL       = 10000,
+};
+
+enum {
+  NO_FLAGS             = 0,
+  ROOM_CHECK_EXIT_FLAG = 1,
+};
+
+Levelsp levels_memory_alloc(Gamep);
+void    levels_destroy(Gamep, Levelsp);
+void    levels_stats_dump(Gamep g);
+
+Levelp level_switch(Gamep, Levelsp, int);
+void   level_destroy(Gamep, Levelsp, Levelp);
+
+ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
+
+bool is_oob(point);
+
+bool level_flag(Gamep, Levelsp, Levelp, ThingFlag, point p);
+bool level_is_same_obj_type_at(Gamep, Levelsp, Levelp, point p, Tpp);
+bool level_set_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot, ThingId);
+bool level_tick_is_in_progress(Gamep, Levelsp, Levelp);
+
+void level_anim(Gamep, Levelsp, Levelp);
+void level_assign_tiles(Gamep, Levelsp, Levelp);
+void level_bounds_set(Gamep, Levelsp);
+void level_cursor_set(Gamep, Levelsp, point);
+void level_cursor_update(Gamep, Levelsp, Levelp);
+void level_display(Gamep, Levelsp, Levelp);
+void level_map_set(Gamep, Levelsp, Levelp, const char *);
+void level_mouse_position_get(Gamep, Levelsp, Levelp);
+void level_scroll_delta(Gamep, Levelsp, point);
+void level_cursor_path_reset(Gamep, Levelsp, Levelp);
+void level_scroll_to_player(Gamep, Levelsp);
+void level_scroll_warp_to_player(Gamep, Levelsp);
+void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
+void level_tick(Gamep, Levelsp, Levelp);
+
 void grid_test(Gamep);
 
 void rooms_test(Gamep);
@@ -238,18 +252,5 @@ bool fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
 void level_gen_test(Gamep);
 void level_gen_create_levels(Gamep);
 void level_gen_stats_dump(Gamep);
-
-enum {
-  CHANCE_VVV_UNLIKELY = 1,
-  CHANCE_VV_UNLIKELY  = 10,
-  CHANCE_V_UNLIKELY   = 100,
-  CHANCE_UNLIKELY     = 1000,
-  CHANCE_NORMAL       = 10000,
-};
-
-enum {
-  NO_FLAGS             = 0,
-  ROOM_CHECK_EXIT_FLAG = 1,
-};
 
 #endif // _MY_LEVEL_H_

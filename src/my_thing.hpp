@@ -16,7 +16,7 @@
 // A thing ID is composed as: [ Entropy bits] [ ID bits ]
 //
 #define THING_COMMON_ID_ENTROPY_BITS    6
-#define THING_COMMON_ID_BITS            22
+#define THING_COMMON_ID_BITS            21
 #define THING_COMMON_ID_BASE            (1U << (THING_COMMON_ID_BITS))
 #define THING_COMMON_ID_ENTROPY_MASK    (((1U << THING_COMMON_ID_ENTROPY_BITS) - 1) << THING_COMMON_ID_BITS)
 #define THING_COMMON_ID_MASK            ((1U << THING_COMMON_ID_BITS) - 1)
@@ -131,6 +131,7 @@ Thingp thing_find_optional(Gamep, Levelsp, ThingId id);
 Thingp thing_get(Gamep, Levelsp, Levelp, point p, int slot);
 Thingp thing_init(Gamep, Levelsp, Levelp, Tpp, point p);
 Thingp thing_player(Gamep);
+void   thing_stats_dump(Gamep, Levelsp);
 
 ThingAip thing_ai(Gamep, Thingp);
 

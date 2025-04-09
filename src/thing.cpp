@@ -163,6 +163,27 @@ static void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_mutex.unlock();
 }
 
+void thing_stats_dump(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  int in_use_things = 0;
+  int free_things   = 0;
+
+  for (ThingId index = 0; index < (1 << THING_COMMON_ID_BITS); index++) {
+    auto t = &v->thing_body[ index ];
+    if (t->id) {
+      in_use_things++;
+    } else {
+      free_things++;
+    }
+  }
+
+  LOG("Total things        %u", in_use_things + free_things);
+  LOG("In use things       %u", in_use_things);
+  LOG("Free things         %u", free_things);
+}
+
 static ThingAip thing_ai_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();

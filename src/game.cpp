@@ -466,6 +466,8 @@ void Game::create_levels(void)
   }
 
   level_switch(g, v, 0);
+
+  levels_stats_dump(g);
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
 

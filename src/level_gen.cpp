@@ -3414,10 +3414,12 @@ void level_gen_create_levels(Gamep g)
     threads[ i ].join();
   }
 
-  for (auto i = 0; i < max_threads; i++) {
-    auto l = levels[ i ];
-    if (l) {
-      level_gen_dump(g, l);
+  if (g_opt_debug1) {
+    for (auto i = 0; i < max_threads; i++) {
+      auto l = levels[ i ];
+      if (l) {
+        level_gen_dump(g, l);
+      }
     }
   }
 
