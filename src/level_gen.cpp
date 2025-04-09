@@ -3252,6 +3252,8 @@ static void level_gen_create(Gamep g, class LevelGen *l)
   auto level        = game_level_get(g, v, l->level_num);
 
   level_map_set(g, v, level, level_string.c_str());
+  level->initialized = true;
+  level->level_num   = l->level_num;
 }
 
 //
@@ -3346,6 +3348,9 @@ static class LevelGen *level_gen(Gamep g, int level_num)
   //
   level_gen_count_monsters_and_treasure(g, l);
 
+  //
+  // Populate the map with things from the level created
+  //
   level_gen_create(g, l);
 
   return l;
@@ -3369,21 +3374,36 @@ static void level_gen_create_level(Gamep g, int level_num)
 
   auto l = level_gen(g, level_num);
   if (! l) {
+    ERR("No levels generated");
     return;
   }
 
   l->seed_num         = seed_num;
   levels[ level_num ] = l;
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    ERR("No levels created");
+  }
+
+  auto level = game_level_get(g, v, level_num);
+  if (! level) {
+    ERR("No level %u created", level_num);
+  }
 }
 
-void level_gen_test(Gamep g)
+//
+// Create lots of levels
+//
+void level_gen_create_levels(Gamep g)
 {
   TRACE_NO_INDENT();
 
   int                        max_threads = MAX_LEVELS;
   std::vector< std::thread > threads;
 
-  auto v = levels_create(g);
+  auto v = levels_memory_alloc(g);
+
   game_levels_set(g, v);
 
   for (auto i = 0; i < max_threads; i++) {
@@ -3402,4 +3422,11 @@ void level_gen_test(Gamep g)
   }
 
   level_gen_stats_dump(g);
+}
+
+void level_gen_test(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  level_gen_create_levels(g);
 }

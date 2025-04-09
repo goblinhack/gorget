@@ -457,10 +457,15 @@ void Game::create_levels(void)
   seed_set();
   destroy_levels();
 
-  auto v = levels_create(g);
-  game_levels_set(g, v);
-  game_level_set(g, v, 0);
-  level_scroll_warp_to_player(g, v);
+  level_gen_create_levels(g);
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    ERR("No levels created");
+    return;
+  }
+
+  level_switch(g, v, 0);
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
 
@@ -472,8 +477,7 @@ void Game::start_playing(void)
   auto g = this;
 
   wid_topcon_init(g);
-  TOPCON("Welcome to the dungeons of dread, home of the black dragon, %%fg=red$Gorget%%fg=reset$.");
-  TOPCON("Complete all %%fg=yellow$16%%fg=reset$ levels and collect the Darkenstone to win.");
+  TOPCON("Welcome to bla bla bla..., %%fg=red$Gorget%%fg=reset$. TODO.");
   wid_topcon_flush(g);
 }
 void game_start_playing(Gamep g) { g->start_playing(); }

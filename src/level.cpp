@@ -12,10 +12,16 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-Levelsp levels_create(Gamep g)
+Levelsp levels_memory_alloc(Gamep g)
 {
   LOG("Levels create");
   TRACE_AND_INDENT();
+
+  auto v = game_levels_get(g);
+  if (v) {
+    ERR("levels already allocated");
+    return v;
+  }
 
   //
   // Allocate the level as a flat C structure to allow history rewind
@@ -23,7 +29,6 @@ Levelsp levels_create(Gamep g)
   // NOTE: if we use "new" here, the initialization is visibly slower.
   // DO NOT USE C++ classes or types
   //
-  Levelsp v;
   LOG("Levels memory:  %lu Mb", sizeof(Levels) / (1024 * 1024));
   LOG("Level memory:   %lu Mb", sizeof(Level) / (1024 * 1024));
   LOG("Thing AI:       %lu Mb", sizeof(v->thing_ai) / (1024 * 1024));
@@ -37,9 +42,16 @@ Levelsp levels_create(Gamep g)
     return nullptr;
   }
 
-  level_create(g, v, 0);
-
   return v;
+}
+
+static void levels_memory_free(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  myfree(v);
+
+  game_levels_set(g, nullptr);
 }
 
 void levels_destroy(Gamep g, Levelsp v)
@@ -55,167 +67,16 @@ void levels_destroy(Gamep g, Levelsp v)
     level_destroy(g, v, l);
   }
 
-  myfree(v);
-  game_levels_set(g, nullptr);
+  levels_memory_free(g, v);
 }
 
-#if 0
-void level_map_constructor(Gamep g, Levelsp v, Levelp l)
+Levelp level_switch(Gamep g, Levelsp v, int level_num)
 {
-  TRACE_NO_INDENT();
-
-  for (;;) {
-
-#if 0
-    /*
-     * Phase 1: create a framework for the level solution e.g.
-     *
-     *           v    v  * v
-     *     1----1----1---S1
-     *      >  <|>  <|>  <|
-     *          |    |    |
-     *          |    |    |
-     *          |   *|v  *|
-     *    s.    1----1----1
-     *         ^?>  <|>  <
-     *          ?    |
-     *          ?    |
-     *      v   ?   *|   * v
-     *     2???s1???K1---D2
-     *     |        ^ >  <|
-     *     |              |
-     *     |              |
-     *     |   *    *    *|
-     *     2---E2----2----2
-     *    ^ >  <    <    <
-     */
-    auto ph1 = level_ph1();
-    if (! ph1.ok) {
-      CON("COULD NOT SOLVE PH1");
-      continue;
-    }
-    ph1.dump();
-
-    /*
-     * Phase 2: create a set of rooms that satisfy the solution e.g.:
-     *
-     * 1111111111 1........1 1111111111 1111111111
-     * 1111111111 1........1 1111111111 1111111111
-     * 11........ 11...S..11 11......11 ........11
-     * 11........ 11..111.11 11......11 ........11
-     * 11........ 11..111.11 11......11 ........11
-     * 11........ .......... .......... ........11
-     * 11111..111 1111111111 11..111111 11..111111
-     * 111111.111 1111111111 111.111111 11.1111111
-     *
-     * 111111s111 1111111111 111.111111 11.1111111
-     * 111111..11 1111111111 111.111111 11.1111111
-     * 11......11 11........ 11......11 11......11
-     * 11......11 11........ 11......11 11......11
-     * 11......11 11........ 11......11 11......11
-     * 11......11 11........ .......... ........11
-     * 111...1111 1111111111 1111..1111 11111..111
-     * 1111s11111 1111111111 11111.1111 11111.1111
-     *
-     * 1111.11111 1111111111 11111.1111 11111.1111
-     * 1111.11111 1111111111 11111.1111 1111....11
-     * 11......11 11......11 11......11 11......11
-     * 11......11 11......11 11......11 11......11
-     * 11......11 11......11 11......11 11......11
-     * 11........ .......... ........11 11......11
-     * ...1111111 1111111111 1111111... 1111111111
-     * .111111111 1111111111 111111111. 1111111111
-     *
-     * ..11111111 1111111111 111111111. 1111111111
-     * ....111111 1111111111 111111111. 1111111111
-     * 11......11 11........ 11........ ........11
-     * 11......11 11........ 11......11 ........11
-     * 11......11 11...E.... 11......11 ........11
-     * 11......11 11..111... .......... ........11
-     * 1111111111 1111111111 1111111111 1111111111
-     * 1111111111 1111111111 1111111111 1111111111
-     */
-    auto ph2 = level_ph2(ph1);
-    if (! ph2.ok) {
-      CON("COULD NOT SOLVE PH2");
-      continue;
-    }
-    ph2.dump();
-
-    /*
-     * Phase 3: Blocks joined and obstacles merged
-     *
-     * RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-     * R11111...k1........1.11111111111111111111R
-     * R......1111.111..S...11111111111111111111R
-     * R...............111.111......11........11R
-     * R.111...1..11.......111................11R
-     * R.111................11................11R
-     * R.....1111.................1...........11R
-     * R1.........11111...1.1111.11|.11111111..1R
-     * R1111......1111111111111111111111111111.1R
-     * R1......H..1111111111111111111111111111.1R
-     * R111...1H111.......11111111111111111111.1R
-     * R1......H....11.11..111........11.......1R
-     * R11111..H...........111........11......11R
-     * R1...1..H....11111.1111........11......11R
-     * R1...D..H...........11.................11R
-     * R1..11111111........1...11111111..1111111R
-     * R1.111111111111111111.1111111111.11111111R
-     * R..111111111111111111.1111111111.11111111R
-     * R...11111111111111111...11111111.11111111R
-     * R1.........11......1111......111.......11R
-     * R11........11......1111......1111......11R
-     * R11........11......1111......1111......11R
-     * R11....................................11R
-     * R11111111111111111..11111111111111111..11R
-     * R11111111111111111.111111111111111111.111R
-     * R11111111111111111.111111111111111111s111R
-     * R11......111111111.111111111111111111.111R
-     * R1........111......1111......111.......11R
-     * R1.........11......1111......111.......11R
-     * R1E........11......1111......111.......11R
-     * R1111..........................s.......11R
-     * R11.1.1111.111111111111111111111111111111R
-     * R11.1......111111111111111111111111111111R
-     * RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-     */
-    auto ph3 = level_ph3(ph2);
-    if (! ph3.ok) {
-      CON("COULD NOT SOLVE PH3");
-      continue;
-    }
-
-    /*
-     * Phase 4: replace all chars with objects
-     */
-    auto ph4 = level_ph4(ph3);
-    if (! ph4.ok) {
-      CON("COULD NOT SOLVE PH4");
-      continue;
-    }
-#endif
-
-#if 0
-    *level = ph4.data;
-#endif
-
-    return level;
-  }
-}
-#endif
-
-Levelp level_create(Gamep g, Levelsp v, int level_num)
-{
-  LOG("Level create %u", level_num);
+  LOG("Level switch %u", level_num);
   TRACE_AND_INDENT();
 
   Level *l = game_level_get(g, v, level_num);
-  memset(l, 0, sizeof(*l));
-  l->level_num   = level_num;
-  l->initialized = true;
 
-  level_dungeon_create_and_place(g, v, l);
   level_assign_tiles(g, v, l);
   level_scroll_warp_to_player(g, v);
 
@@ -408,7 +269,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
         case CHARMAP_EMPTY : break;
         default :
           if (! g_opt_test_levels) {
-            DIE("unexpected map char '%c'", c);
+            //            DIE("unexpected map char '%c'", c);
           }
       }
 

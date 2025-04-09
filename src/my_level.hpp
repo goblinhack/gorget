@@ -142,10 +142,10 @@ typedef struct Levels_ {
   //////////////////////////////////////////////////////////////
 } Levels;
 
-Levelsp levels_create(Gamep);
+Levelsp levels_memory_alloc(Gamep);
 void    levels_destroy(Gamep, Levelsp);
 
-Levelp level_create(Gamep, Levelsp, int);
+Levelp level_switch(Gamep, Levelsp, int);
 void   level_destroy(Gamep, Levelsp, Levelp);
 
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
@@ -163,7 +163,6 @@ void level_bounds_set(Gamep, Levelsp);
 void level_cursor_set(Gamep, Levelsp, point);
 void level_cursor_update(Gamep, Levelsp, Levelp);
 void level_display(Gamep, Levelsp, Levelp);
-void level_dungeon_create_and_place(Gamep, Levelsp, Levelp);
 void level_map_set(Gamep, Levelsp, Levelp, const char *);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);
 void level_scroll_delta(Gamep, Levelsp, point);
@@ -237,6 +236,7 @@ bool fragment_add(Gamep, int chance, const char *file, int line, ...);
 bool fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
 
 void level_gen_test(Gamep);
+void level_gen_create_levels(Gamep);
 void level_gen_stats_dump(Gamep);
 
 enum {
