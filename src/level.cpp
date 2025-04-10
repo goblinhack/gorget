@@ -172,6 +172,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_floor  = tp_find_mand("floor");
   auto tp_exit   = tp_find_mand("exit");
   auto tp_player = tp_find_mand("player");
+  //  auto tp_entrance = tp_find_mand("entrance");
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
@@ -264,9 +265,14 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           need_floor = true;
           tp         = nullptr; /* todo */
           break;
-        case CHARMAP_START :
+        case CHARMAP_ENTRANCE :
           need_floor = true;
-          tp         = tp_player;
+          if (l->level_num == 0) {
+            tp = tp_player;
+          } else {
+            // tp = tp_entrance;
+            tp = nullptr; /* todo */
+          }
           break;
         case CHARMAP_EXIT :
           need_floor = true;

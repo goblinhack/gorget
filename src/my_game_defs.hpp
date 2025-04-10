@@ -8,7 +8,7 @@
 
 #define LEVELS_ACROSS        (MAP_WIDTH / 3)
 #define LEVELS_DOWN          (MAP_HEIGHT / 3)
-#define MAX_LEVELS         100
+#define MAX_LEVELS           101
 #define MAP_WIDTH            48
 #define MAP_HEIGHT           48
 #define MAP_SLOTS            16

@@ -570,7 +570,7 @@ void room_add(Gamep g, int chance, bool check_exits, const char *file, int line,
         case CHARMAP_MONST2 : break;
         case CHARMAP_PILLAR : break;
         case CHARMAP_SECRET_DOOR : break;
-        case CHARMAP_START : room_type = ROOM_TYPE_START; break;
+        case CHARMAP_ENTRANCE : room_type = ROOM_TYPE_START; break;
         case CHARMAP_TELEPORT : break;
         case CHARMAP_TRAP : break;
         case CHARMAP_TREASURE1 : break;
@@ -935,7 +935,7 @@ static void room_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
       //
       point p(rx + at.x, ry + at.y);
 
-      if (room_c == CHARMAP_START) {
+      if (room_c == CHARMAP_ENTRANCE) {
         l->start = p;
       }
       if (room_c == CHARMAP_EXIT) {
@@ -1112,7 +1112,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_MONST2 : break;
         case CHARMAP_PILLAR : break;
         case CHARMAP_SECRET_DOOR : break;
-        case CHARMAP_START : break;
+        case CHARMAP_ENTRANCE : break;
         case CHARMAP_TELEPORT : break;
         case CHARMAP_TRAP : break;
         case CHARMAP_TREASURE1 : break;
@@ -1413,7 +1413,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_MONST2 : break;
         case CHARMAP_PILLAR : break;
         case CHARMAP_SECRET_DOOR : break;
-        case CHARMAP_START : break;
+        case CHARMAP_ENTRANCE : break;
         case CHARMAP_TELEPORT : break;
         case CHARMAP_TRAP : break;
         case CHARMAP_TREASURE1 : break;
@@ -2167,7 +2167,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
           case CHARMAP_MONST2 :
           case CHARMAP_PILLAR :
           case CHARMAP_SECRET_DOOR :
-          case CHARMAP_START :
+          case CHARMAP_ENTRANCE :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
           case CHARMAP_TREASURE1 :
@@ -2214,7 +2214,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, int level_num)
     l->level_num      = level_num;
     l->min_room_count = MIN_LEVEL_ROOM_COUNT + (level_num / 10);
     l->max_room_count = l->min_room_count + 10;
-    l->debug          = g_opt_debug1;
+    l->debug          = g_opt_debug2;
 
     //
     // Add a blob of hazard in the center of the level
@@ -2312,7 +2312,7 @@ static bool level_gen_tile_is_traversable(Gamep g, class LevelGen *l, int x, int
     case CHARMAP_MONST1 : return true;
     case CHARMAP_MONST2 : return true;
     case CHARMAP_SECRET_DOOR : return true;
-    case CHARMAP_START : return true;
+    case CHARMAP_ENTRANCE : return true;
     case CHARMAP_TRAP : return true;
     case CHARMAP_TREASURE1 : return true;
     case CHARMAP_TREASURE2 : return true;
@@ -2861,7 +2861,7 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_MONST2 :
         case CHARMAP_PILLAR :
         case CHARMAP_SECRET_DOOR :
-        case CHARMAP_START :
+        case CHARMAP_ENTRANCE :
         case CHARMAP_TELEPORT :
         case CHARMAP_TRAP :
         case CHARMAP_TREASURE1 :
@@ -3251,9 +3251,10 @@ static void level_gen_create(Gamep g, class LevelGen *l)
   auto level_string = level_gen_string(g, l);
   auto level        = game_level_get(g, v, l->level_num);
 
-  level_map_set(g, v, level, level_string.c_str());
   level->initialized = true;
   level->level_num   = l->level_num;
+
+  level_map_set(g, v, level, level_string.c_str());
 }
 
 //
@@ -3397,11 +3398,18 @@ static void level_gen_create_level(Gamep g, int level_num)
 //
 void level_gen_create_levels(Gamep g)
 {
-  LOG("Levels generate (max %u)", MAX_LEVELS);
+  //
+  // Keep one free for the grid level
+  //
+  LOG("Levels generate (max %u)", MAX_LEVELS - 1);
   TRACE_AND_INDENT();
 
-  int                        max_threads = MAX_LEVELS;
+  int                        max_threads = MAX_LEVELS - 1;
   std::vector< std::thread > threads;
+
+  if (g_opt_debug1) {
+    max_threads = 1;
+  }
 
   auto v = levels_memory_alloc(g);
 

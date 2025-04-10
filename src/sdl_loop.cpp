@@ -140,7 +140,10 @@ void sdl_loop(Gamep g)
       // mouse position, to avoid perception of lag. Mouse motion events can be expensive
       // as we redraw the cursor path.
       //
-      DBG("SDL: Process %u events", found);
+      if (found) {
+        DBG("SDL: Process %u events", found);
+      }
+
       bool processed_mouse_motion_event = false;
       for (i = 0; i < found; ++i) {
         sdl_event(g, &events[ i ], processed_mouse_motion_event);

@@ -30,7 +30,7 @@ enum {
   CHARMAP_MONST2      = 'M',
   CHARMAP_MOB1        = 'g',
   CHARMAP_MOB2        = 'G',
-  CHARMAP_START       = '@',
+  CHARMAP_ENTRANCE    = '@',
   CHARMAP_DRY_GRASS   = '\'',
   CHARMAP_TELEPORT    = 'T',
   CHARMAP_FOLIAGE     = '`',
