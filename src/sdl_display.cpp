@@ -40,11 +40,9 @@ void sdl_display(Gamep g)
       //
       // Brighter map effect
       //
-      glBlendFunc(GL_ONE, GL_DST_COLOR);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
       blit_init();
-      blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-           visible_map_br_y);
       blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
            visible_map_br_y);
       blit_flush();
