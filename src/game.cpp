@@ -110,6 +110,11 @@ public:
   //
   HiScores hiscores;
 
+  //
+  // Zoom gfx level. Not saved as is regenerated.
+  //
+  int zoom = {};
+
   void fini(void);
   void reset(void);
 };
@@ -273,6 +278,7 @@ void Config::reset(void)
   mouse_wheel_ud_negated = false;
   ui_term_height         = {TERM_HEIGHT_DEF};
   ui_term_width          = {TERM_WIDTH_DEF};
+  zoom                   = MAP_ZOOM_DEF;
   version                = "" MYVER "";
   aspect_ratio           = {};
   window_pix_height      = {};
@@ -1779,4 +1785,23 @@ void game_key_zoom_set(Gamep g, SDL_Keysym key)
     return;
   }
   g->config.key_zoom = key;
+}
+
+int game_map_zoom_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return MAP_ZOOM_DEF;
+  }
+  return g->config.zoom;
+}
+void game_map_zoom_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.zoom = val;
 }

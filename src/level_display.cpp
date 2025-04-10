@@ -30,8 +30,9 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint1
 
 static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
 {
-  int dw = TILE_WIDTH;
-  int dh = TILE_HEIGHT;
+  int zoom = game_map_zoom_get(g);
+  int dw   = TILE_WIDTH * zoom;
+  int dh   = TILE_HEIGHT * zoom;
 
   point tl;
   point br;
@@ -54,8 +55,8 @@ static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thi
     return;
   }
 
-  auto pix_height = tile_height(tile);
-  auto pix_width  = tile_width(tile);
+  auto pix_height = tile_height(tile) * zoom;
+  auto pix_width  = tile_width(tile) * zoom;
 
   if (t) {
     //
@@ -66,9 +67,11 @@ static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thi
     //
     // Cursor
     //
-    tl.x = p.x * TILE_WIDTH;
-    tl.y = p.y * TILE_WIDTH;
+    tl.x = p.x * dw;
+    tl.y = p.y * dh;
   }
+  tl.x *= zoom;
+  tl.y *= zoom;
 
   tl -= v->pixel_map_at;
 

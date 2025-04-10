@@ -221,6 +221,9 @@ void       game_key_unused19_set(Gamep, SDL_Keysym);
 SDL_Keysym game_key_zoom_get(Gamep);
 void       game_key_zoom_set(Gamep, SDL_Keysym);
 
+int  game_map_zoom_get(Gamep g);
+void game_map_zoom_set(Gamep g, int val);
+
 uint8_t game_input(Gamep, const SDL_Keysym *key);
 uint8_t game_mouse_down(Gamep, int x, int y, uint32_t button);
 uint8_t game_mouse_motion(Gamep, int x, int y, int relx, int rely, int wheelx, int wheely);

@@ -43,20 +43,23 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   int map_pix_width   = visible_map_br_x - visible_map_tl_x;
   int map_pix_height  = visible_map_br_y - visible_map_tl_y;
 
-  float scale_x             = (float) map_pix_width / (float) game_map_fbo_width_get(g);
-  float scale_y             = (float) map_pix_height / (float) game_map_fbo_height_get(g);
-  int   visible_map_mouse_x = (int) ((float) rel_map_mouse_x / scale_x);
-  int   visible_map_mouse_y = (int) ((float) rel_map_mouse_y / scale_y);
+  int   zoom              = game_map_zoom_get(g);
+  float scale_x           = (float) map_pix_width / (float) game_map_fbo_width_get(g);
+  float scale_y           = (float) map_pix_height / (float) game_map_fbo_height_get(g);
+  scale_x                 = zoom;
+  scale_y                 = zoom;
+  int visible_map_mouse_x = (int) ((float) rel_map_mouse_x / scale_x);
+  int visible_map_mouse_y = (int) ((float) rel_map_mouse_y / scale_y);
 
   //
   // Compenstate for level scroll
   //
-  visible_map_mouse_x += v->pixel_map_at.x;
-  visible_map_mouse_y += v->pixel_map_at.y;
+  visible_map_mouse_x += v->pixel_map_at.x / zoom;
+  visible_map_mouse_y += v->pixel_map_at.y / zoom;
 
   //
-  // Update teh cursor
+  // Update the cursor
   //
-  point p(visible_map_mouse_x / TILE_WIDTH, visible_map_mouse_y / TILE_HEIGHT);
+  point p(visible_map_mouse_x / (TILE_WIDTH * zoom), visible_map_mouse_y / (TILE_HEIGHT * zoom));
   level_cursor_set(g, v, p);
 }

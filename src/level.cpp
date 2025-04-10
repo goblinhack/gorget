@@ -342,8 +342,9 @@ void level_bounds_set(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
-  auto dw = TILE_WIDTH;
-  auto dh = TILE_HEIGHT;
+  int  zoom = game_map_zoom_get(g);
+  auto dw   = TILE_WIDTH * zoom;
+  auto dh   = TILE_HEIGHT * zoom;
 
   //
   // The number of tiles additionally to draw to avoid clipping
