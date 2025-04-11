@@ -63,6 +63,8 @@ static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thi
     // All things
     //
     tl = t->pix_at;
+    tl.x *= zoom;
+    tl.y *= zoom;
   } else {
     //
     // Cursor
@@ -70,8 +72,6 @@ static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thi
     tl.x = p.x * dw;
     tl.y = p.y * dh;
   }
-  tl.x *= zoom;
-  tl.y *= zoom;
 
   tl -= v->pixel_map_at;
 

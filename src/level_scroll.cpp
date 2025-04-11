@@ -37,8 +37,9 @@ void level_scroll_to_player(Gamep g, Levelsp v)
   //
   // Where are we as a percentage on that map.
   //
-  float x = (player->pix_at.x - v->pixel_map_at.x) / (float) w;
-  float y = (player->pix_at.y - v->pixel_map_at.y) / (float) h;
+  int   zoom = game_map_zoom_get(g);
+  float x    = ((player->pix_at.x * zoom) - v->pixel_map_at.x) / (float) w;
+  float y    = ((player->pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
 
   const auto scroll_border = MAP_SCROLL_BORDER;
   const auto scroll_speed  = MAP_SCROLL_SPEED;
@@ -87,7 +88,12 @@ void level_scroll_warp_to_player(Gamep g, Levelsp v)
     return;
   }
 
+  int zoom = game_map_zoom_get(g);
+
   v->pixel_map_at = t->pix_at;
+  v->pixel_map_at.x *= zoom;
+  v->pixel_map_at.y *= zoom;
+
   v->pixel_map_at.x -= game_map_fbo_width_get(g) / 2;
   v->pixel_map_at.y -= game_map_fbo_height_get(g) / 2;
 
