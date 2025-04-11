@@ -56,15 +56,10 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     return in;
   }
 
-  in >> bits(my.t.ascii_pix_height);
-  in >> bits(my.t.ascii_pix_width);
-  in >> bits(my.t.aspect_ratio);
   in >> bits(my.t.config_pix_height);
   in >> bits(my.t.config_pix_width);
   in >> bits(my.t.debug_mode);
   in >> bits(my.t.fps_counter);
-  in >> bits(my.t.map_fbo_height);
-  in >> bits(my.t.map_fbo_width);
   in >> bits(my.t.gfx_allow_highdpi);
   in >> bits(my.t.gfx_borderless);
   in >> bits(my.t.gfx_fullscreen);
@@ -106,25 +101,9 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.music_volume);
   in >> bits(my.t.sdl_delay);
   in >> bits(my.t.sound_volume);
-  in >> bits(my.t.tiles_visible_across);
-  in >> bits(my.t.tiles_visible_down);
-  in >> bits(my.t.ui_term_height);
-  in >> bits(my.t.ui_term_width);
-  in >> bits(my.t.window_pix_height);
-  in >> bits(my.t.window_pix_width);
 
-  LOG("Read config: window_pix_height      = %d", my.t.window_pix_height);
-  LOG("Read config: window_pix_width       = %d", my.t.window_pix_width);
   LOG("Read config: config_pix_height      = %d", my.t.config_pix_height);
   LOG("Read config: config_pix_width       = %d", my.t.config_pix_width);
-  LOG("Read config: aspect_ratio           = %f", my.t.aspect_ratio);
-  LOG("Read config: ascii_pix_height       = %d", my.t.ascii_pix_height);
-  LOG("Read config: ascii_pix_width        = %d", my.t.ascii_pix_width);
-  LOG("Read config: map_fbo_height         = %d", my.t.map_fbo_height);
-  LOG("Read config: map_fbo_width          = %d", my.t.map_fbo_width);
-  LOG("Read config: tiles_visible_across   = %d", my.t.tiles_visible_across);
-  LOG("Read config: tiles_visible_down     = %d", my.t.tiles_visible_down);
-
   LOG("Read config: debug_mode             = %d", my.t.debug_mode);
   LOG("Read config: fps_counter            = %d", my.t.fps_counter);
   LOG("Read config: gfx_allow_highdpi      = %d", my.t.gfx_allow_highdpi);

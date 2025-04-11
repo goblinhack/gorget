@@ -86,7 +86,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     DBG("Zoom alt");
 
     if (game_map_zoom_get(g) == 1) {
-      game_map_zoom_set(g, 2);
+      game_map_zoom_set(g, game_map_zoom_def_get(g));
     } else {
       game_map_zoom_set(g, 1);
     }

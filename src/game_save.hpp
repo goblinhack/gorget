@@ -39,15 +39,10 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   uint32_t serialized_size = sizeof(Config);
   out << bits(serialized_size);
 
-  out << bits(my.t.ascii_pix_height);
-  out << bits(my.t.ascii_pix_width);
-  out << bits(my.t.aspect_ratio);
   out << bits(my.t.config_pix_height);
   out << bits(my.t.config_pix_width);
   out << bits(my.t.debug_mode);
   out << bits(my.t.fps_counter);
-  out << bits(my.t.map_fbo_height);
-  out << bits(my.t.map_fbo_width);
   out << bits(my.t.gfx_allow_highdpi);
   out << bits(my.t.gfx_borderless);
   out << bits(my.t.gfx_fullscreen);
@@ -89,12 +84,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.music_volume);
   out << bits(my.t.sdl_delay);
   out << bits(my.t.sound_volume);
-  out << bits(my.t.tiles_visible_across);
-  out << bits(my.t.tiles_visible_down);
-  out << bits(my.t.ui_term_height);
-  out << bits(my.t.ui_term_width);
-  out << bits(my.t.window_pix_height);
-  out << bits(my.t.window_pix_width);
 
   out << bits(my.t.hiscores);
 

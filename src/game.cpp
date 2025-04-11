@@ -278,7 +278,7 @@ void Config::reset(void)
   mouse_wheel_ud_negated = false;
   ui_term_height         = {TERM_HEIGHT_DEF};
   ui_term_width          = {TERM_WIDTH_DEF};
-  zoom                   = MAP_ZOOM_DEF;
+  zoom                   = {};
   version                = "" MYVER "";
   aspect_ratio           = {};
   window_pix_height      = {};
@@ -1804,4 +1804,23 @@ void game_map_zoom_set(Gamep g, int val)
     return;
   }
   g->config.zoom = val;
+}
+
+int game_map_zoom_def_get(Gamep g)
+{
+  int visible_map_tl_x;
+  int visible_map_tl_y;
+  int visible_map_br_x;
+  int visible_map_br_y;
+  game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
+
+  float map_pix_width = visible_map_br_x - visible_map_tl_x;
+
+  float zoom = map_pix_width / TILE_WIDTH / MAP_TILES_ACROSS_DEF;
+
+  if (zoom < 2) {
+    zoom = 2;
+  }
+
+  return (int) zoom;
 }

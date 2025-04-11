@@ -864,12 +864,18 @@ void config_game_gfx_update(Gamep g)
     fbo_h = max_fbo_h;
   }
 
+  game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+
   LOG("SDL: - map location         : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
       visible_map_br_y);
   LOG("SDL: - map onscreen sz      : %gx%g", map_w, map_h);
   LOG("SDL: - map w to h ratio     : %g", map_w_h_ratio);
   LOG("SDL: - map pix sz           : %gx%g", fbo_w, fbo_h);
   LOG("SDL: - map max pix sz       : %gx%g", max_fbo_w, max_fbo_h);
+
+  if (game_map_zoom_get(g) == 0) {
+    game_map_zoom_set(g, game_map_zoom_def_get(g));
+  }
 
   if (game_map_zoom_get(g) == 1) {
     //
@@ -885,8 +891,6 @@ void config_game_gfx_update(Gamep g)
     game_map_fbo_height_set(g, map_h);
   }
 
-  game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
-
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //
@@ -899,4 +903,6 @@ void config_game_gfx_update(Gamep g)
   LOG("SDL: - game map fbo sz      : %dx%d", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
   LOG("SDL: Map");
   LOG("SDL: - size                 : %dx%d", MAP_WIDTH, MAP_HEIGHT);
+  LOG("SDL: - tiles visible        : %dx%d", (int) tiles_across, (int) tiles_down);
+  LOG("SDL: - tiles zoom           : %d", game_map_zoom_get(g));
 }

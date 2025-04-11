@@ -278,7 +278,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         {
           static ts_t ts;
 
-          if (time_have_x_tenths_passed_since(5, ts)) {
+          if (time_have_x_tenths_passed_since(10, ts)) {
             accel = 1.0;
           } else {
             accel *= UI_MOUSE_WHEEL_SCALE;
