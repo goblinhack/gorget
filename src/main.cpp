@@ -726,7 +726,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    if (! sdl_init_display(g)) {
+    if (! sdl_display_init(g)) {
       ERR("SDL: Init");
     }
   }

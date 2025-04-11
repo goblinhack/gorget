@@ -37,7 +37,7 @@ uint8_t sdl_user_exit(Gamep, class Tokens *tokens, void *context);
 void    config_game_gfx_update(Gamep);
 void    config_gfx_vsync_update(Gamep);
 void    sdl_config_update_all(Gamep);
-uint8_t sdl_init_display(Gamep);
+uint8_t sdl_display_init(Gamep);
 void    sdl_display(Gamep);
 void    sdl_display_reset(Gamep);
 void    sdl_event(Gamep, SDL_Event *event, bool &processed_mouse_motion_event);

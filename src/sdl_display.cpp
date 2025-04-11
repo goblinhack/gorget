@@ -112,3 +112,166 @@ void sdl_display_reset(Gamep g)
   CON("SDL: Video reset");
   sdl_flush_display(g);
 }
+
+static inline void sdl_list_video_size(void)
+{
+  TRACE_NO_INDENT();
+  int i;
+
+  if (! g_opt_debug1) {
+    return;
+  }
+
+  for (i = 0; i < SDL_GetNumDisplayModes(0); ++i) {
+    SDL_DisplayMode mode;
+    SDL_GetDisplayMode(0, i, &mode);
+    DBG("+ SDL video            : %dx%d available, ratio %f", mode.w, mode.h, ((float) mode.w) / ((float) mode.h));
+  }
+}
+
+uint8_t sdl_display_init(Gamep g)
+{
+  int video_width;
+  int video_height;
+
+  sdl.init_video = 1;
+
+  sdl_list_video_size();
+
+  //
+  // If we have a saved setting, use that.
+  //
+  if (game_config_pix_width_get(g) && game_config_pix_height_get(g)) {
+    video_width  = game_config_pix_width_get(g);
+    video_height = game_config_pix_height_get(g);
+    LOG("SDL: Used saved resolution %ux%u", video_width, video_height);
+  } else {
+    //
+    // Else guess.
+    //
+    SDL_DisplayMode mode;
+    memset(&mode, 0, SIZEOF(mode));
+
+    LOG("SDL: Init display");
+    if (SDL_GetCurrentDisplayMode(0, &mode) < 0) {
+      DIE("SDL_GetCurrentDisplayMode couldn't set windowed display: %s", SDL_GetError());
+      return false;
+    }
+
+    game_config_pix_width_set(g, mode.w);
+    game_config_pix_height_set(g, mode.h);
+
+    video_width  = game_config_pix_width_get(g);
+    video_height = game_config_pix_height_get(g);
+    LOG("SDL: Used current resolution %ux%u", video_width, video_height);
+  }
+
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+  SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+
+  uint32_t video_flags;
+
+  LOG("SDL: Set SDL_WINDOW_OPENGL");
+  video_flags = SDL_WINDOW_OPENGL;
+
+  if (game_gfx_borderless_get(g)) {
+    LOG("SDL: Set SDL_WINDOW_BORDERLESS");
+    video_flags |= SDL_WINDOW_BORDERLESS;
+  }
+
+  if (game_gfx_fullscreen_get(g)) {
+    LOG("SDL: Set SDL_WINDOW_FULLSCREEN");
+    video_flags |= SDL_WINDOW_FULLSCREEN;
+  }
+
+  if (game_gfx_fullscreen_desktop_get(g)) {
+    LOG("SDL: Set SDL_WINDOW_FULLSCREEN_DESKTOP");
+    video_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+  }
+
+  if (game_gfx_allow_highdpi_get(g)) {
+    //
+    // For a lo pixel game this makes no sense as the frame
+    // buffers are really large and slows things down.
+    //
+    LOG("SDL: Calling SDL_GetDisplayDPI");
+    float dpi;
+    if (SDL_GetDisplayDPI(0, nullptr, &dpi, nullptr) == 0) {
+      video_flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+      LOG("SDL: Set SDL_WINDOW_ALLOW_HIGHDPI");
+    } else {
+      ERR("SDL: Cannot enable high DPI: %s", SDL_GetError());
+    }
+  }
+
+  if (g_opt_test_grid || g_opt_test_rooms || g_opt_test_levels) {
+    video_flags = SDL_WINDOW_OPENGL;
+  }
+
+  LOG("SDL: Create window size %ux%u", video_width, video_height);
+  sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
+                                video_flags);
+  if (! sdl.window) {
+    ERR("SDL_CreateWindow couldn't set windowed display %ux%u: %s", video_width, video_height, SDL_GetError());
+    game_config_reset(g);
+    game_save_config(g);
+    return false;
+  }
+
+  int w, h;
+  if (video_flags & SDL_WINDOW_ALLOW_HIGHDPI) {
+    SDL_GL_GetDrawableSize(sdl.window, &w, &h);
+    LOG("SDL: Created dpi window size %ux%u", w, h);
+  } else {
+    SDL_GetWindowSize(sdl.window, &w, &h);
+    LOG("SDL: Created window size %ux%u", w, h);
+  }
+
+  game_config_pix_width_set(g, w);
+  game_config_pix_height_set(g, h);
+  game_window_pix_width_set(g, w);
+  game_window_pix_height_set(g, h);
+
+  LOG("SDL: Call SDL_GL_CreateContext(%dx%d)", game_window_pix_width_get(g), game_window_pix_height_get(g));
+  sdl.context = SDL_GL_CreateContext(sdl.window);
+  if (! sdl.context) {
+    SDL_ClearError();
+    ERR("SDL_GL_CreateContext failed %s", SDL_GetError());
+    return false;
+  }
+
+  LOG("SDL: Call SDL_GL_MakeCurrent()");
+  if (SDL_GL_MakeCurrent(sdl.window, sdl.context) < 0) {
+    SDL_ClearError();
+    ERR("SDL_GL_MakeCurrent failed %s", SDL_GetError());
+    return false;
+  }
+
+  SDL_ClearError();
+
+  //
+  // Clear the screen, both buffers
+  //
+  glcolor(WHITE);
+  glClearColor(0, 0, 0, 0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  //
+  // Do we really need to do this? it takes a small bit of time.
+  //
+  if (0) {
+    SDL_GL_SwapWindow(sdl.window);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    SDL_GL_SwapWindow(sdl.window);
+  }
+
+  SDL_SetWindowTitle(sdl.window, "gorget");
+
+  LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
+  LOG("SDL: OpenGL Renderer : %s", glGetString(GL_RENDERER));
+  LOG("SDL: OpenGL Version  : %s", glGetString(GL_VERSION));
+
+  IF_DEBUG { DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS)); }
+
+  return true;
+}
