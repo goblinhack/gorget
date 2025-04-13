@@ -9,45 +9,61 @@
 
 bool tp_load_water(void)
 {
-  auto tp = tp_load("floor");
-  // begin sort marker1 {
-  tp_flag_set(tp, is_water, true);
-  tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
-  tp_z_prio_set(tp, MAP_Z_PRIO_BEHIND);
-  // end sort marker1 }
+  for (auto variant = 1; variant <= 1; variant++) {
+    auto name = "water" + std::to_string(variant);
+    auto tp   = tp_load(name.c_str());
+    // begin sort marker1 {
+    tp_flag_set(tp, is_blit_centered, true);
+    tp_flag_set(tp, is_water, true);
+    tp_flag_set(tp, is_tiled, true);
+    tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+    tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+    // end sort marker1 }
 
-  tp_tiles_push_back(tp, tile_find_mand("water.1"));
-  tp_tiles_push_back(tp, tile_find_mand("water.2"));
-  tp_tiles_push_back(tp, tile_find_mand("water.3"));
-  tp_tiles_push_back(tp, tile_find_mand("water.4"));
-  tp_tiles_push_back(tp, tile_find_mand("water.5"));
-  tp_tiles_push_back(tp, tile_find_mand("water.6"));
-  tp_tiles_push_back(tp, tile_find_mand("water.7"));
-  tp_tiles_push_back(tp, tile_find_mand("water.8"));
-  tp_tiles_push_back(tp, tile_find_mand("water.9"));
-  tp_tiles_push_back(tp, tile_find_mand("water.10"));
-  tp_tiles_push_back(tp, tile_find_mand("water.11"));
-  tp_tiles_push_back(tp, tile_find_mand("water.12"));
-  tp_tiles_push_back(tp, tile_find_mand("water.13"));
-  tp_tiles_push_back(tp, tile_find_mand("water.14"));
-  tp_tiles_push_back(tp, tile_find_mand("water.15"));
-  tp_tiles_push_back(tp, tile_find_mand("water.16"));
-  tp_tiles_push_back(tp, tile_find_mand("water.17"));
-  tp_tiles_push_back(tp, tile_find_mand("water.18"));
-  tp_tiles_push_back(tp, tile_find_mand("water.19"));
-  tp_tiles_push_back(tp, tile_find_mand("water.20"));
-  tp_tiles_push_back(tp, tile_find_mand("water.21"));
-  tp_tiles_push_back(tp, tile_find_mand("water.22"));
-  tp_tiles_push_back(tp, tile_find_mand("water.23"));
-  tp_tiles_push_back(tp, tile_find_mand("water.24"));
-  tp_tiles_push_back(tp, tile_find_mand("water.25"));
-  tp_tiles_push_back(tp, tile_find_mand("water.26"));
-  tp_tiles_push_back(tp, tile_find_mand("water.27"));
-  tp_tiles_push_back(tp, tile_find_mand("water.28"));
-  tp_tiles_push_back(tp, tile_find_mand("water.29"));
-  tp_tiles_push_back(tp, tile_find_mand("water.30"));
-  tp_tiles_push_back(tp, tile_find_mand("water.31"));
-  tp_tiles_push_back(tp, tile_find_mand("water.32"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_TL2"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T_3"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_TR2"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_TOP"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X4_180"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X4_270"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X2_270"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X2"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X1_180"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X1"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T270_3"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_BLOCK"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T90_3"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_VERT"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X4_90"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X4"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X2_180"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X2_90"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X1_90"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X1_270"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X3_180"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_X3"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T_1"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T_2"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T270_2"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T90_1"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T90"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_TL"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_TR"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_LEFT"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_HORIZ"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_RIGHT"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_NODE"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T180_2"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T180_1"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T270_1"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T90_2"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T270"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_T180"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_BL"));
+    tp_tiles_push_back(tp, tile_find_mand(name + ".IS_JOIN_BR"));
+  }
 
   return true;
 }

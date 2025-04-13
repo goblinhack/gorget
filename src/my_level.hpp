@@ -263,4 +263,9 @@ void level_gen_test(Gamep);
 void level_gen_create_levels(Gamep);
 void level_gen_stats_dump(Gamep);
 
+void level_water_update(Gamep, Levelsp, Levelp);
+void level_water_tick(Gamep, Levelsp, Levelp);
+void level_water_display(Gamep, Levelsp, Levelp, point, int fbo, int16_t minx, int16_t miny, int16_t maxx,
+                         int16_t maxy);
+
 #endif // _MY_LEVEL_H_
