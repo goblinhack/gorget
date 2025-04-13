@@ -6,10 +6,10 @@
 #ifndef _MY_THING_HPP_
 #define _MY_THING_HPP_
 
-#include "my_enums.hpp"
 #include "my_game_defs.hpp"
 #include "my_minimal.hpp"
 #include "my_point.hpp" // does not seem to make the compile speed much worse
+#include "my_tp.hpp"    // does not seem to make the compile speed much worse
 
 //
 // Entropy is always > 0 for Thing IDs to distinguish them
@@ -28,6 +28,26 @@
 //
 #define THING_AI_MAX        65535 /* The size of ai_id */
 #define THING_MOVE_PATH_MAX MAP_WIDTH
+
+enum {
+  THING_RARITY_COMMON,
+  THING_RARITY_UNCOMMON,
+  THING_RARITY_RARE,
+  THING_RARITY_VERY_RARE,
+  THING_RARITY_UNIQUE,
+};
+
+enum {
+  THING_DIR_NONE,
+  THING_DIR_DOWN,
+  THING_DIR_UP,
+  THING_DIR_LEFT,
+  THING_DIR_RIGHT,
+  THING_DIR_TL,
+  THING_DIR_BL,
+  THING_DIR_TR,
+  THING_DIR_BR,
+};
 
 typedef struct ThingAi_ {
   //

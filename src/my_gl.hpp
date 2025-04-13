@@ -237,10 +237,16 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 //
 // Frame buffer objects
 //
-#define FBO_MAP   0
-#define FBO_WID   1
-#define FBO_FINAL 2
-#define MAX_FBO   3
+enum {
+  FBO_MAP,
+  FBO_MASK1,
+  FBO_MASK2,
+  FBO_MASK3,
+  FBO_MASK4,
+  FBO_WID,
+  FBO_FINAL,
+  MAX_FBO,
+};
 
 extern uint32_t NUMBER_BYTES_PER_VERTICE_2D;
 

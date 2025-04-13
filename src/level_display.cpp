@@ -28,7 +28,7 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint1
   }
 }
 
-static void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
+void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
 {
   int zoom = game_map_zoom_get(g);
   int dw   = TILE_WIDTH * zoom;

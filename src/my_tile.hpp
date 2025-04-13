@@ -17,6 +17,22 @@ class Tile;
 #define TILE_HEIGHT_MAX TILE_HEIGHT
 #define TILE_WIDTH_MAX  TILE_WIDTH // Largest tile for collisions
 
+enum {
+  TILE_LAYER_BG_0,
+  TILE_LAYER_BG_1,
+  TILE_LAYER_FG_0,
+  TILE_LAYER_FG_1,
+  TILE_LAYER_FG_2,
+  TILE_LAYER_FG_3,
+  TILE_LAYER_FG_4,
+  TILE_LAYER_FG_5,
+  TILE_LAYER_FG_6,
+  TILE_LAYER_FG_7,
+  TILE_LAYER_FG_8,
+  TILE_LAYER_FG_9,
+  TILE_LAYER_MAX,
+};
+
 class Tex *tile_tex(Tilep);
 
 bool tile_init(void);
@@ -109,5 +125,6 @@ void tile_load_arr_sprites(std::string file, std::string tex_name, uint32_t widt
 void tile_blit_frozen(const Tilep &tile, const point tl, const point br);
 void tile_blit_burnt(const Tilep &tile, const point tl, const point br);
 void tile_blit_outline_only(const Tilep &tile, const point tl, const point br, color c);
+int  tile_gl_binding(Tilep);
 
 #endif

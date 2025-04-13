@@ -6,10 +6,539 @@
 #ifndef _MY_THING_TEMPLATE_H_
 #define _MY_THING_TEMPLATE_H_
 
-#include "my_enums.hpp"
+#include "my_enum.hpp"
 #include "my_minimal.hpp"
 
 #include <stdarg.h>
+
+#define THING_FLAG_ENUM(list_macro)                                                                                  \
+  list_macro(is_walk_through_walls, "is_walk_through_walls"),         /* ............................ */             \
+      list_macro(is_animated_can_hflip, "is_animated_can_hflip"),     /* ............................ */             \
+      list_macro(is_animated_no_dir, "is_animated_no_dir"),           /* ............................ */             \
+      list_macro(is_animated, "is_animated"),                         /* ............................ */             \
+      list_macro(is_blit_centered, "is_blit_centered"),               /* ............................ */             \
+      list_macro(is_blit_on_ground, "is_blit_on_ground"),             /* ............................ */             \
+      list_macro(is_blit_outlined, "is_blit_outlined"),               /* ............................ */             \
+      list_macro(is_blit_square_outlined, "is_blit_square_outlined"), /* ............................ */             \
+      list_macro(is_cursor, "is_cursor"),                             /* ............................ */             \
+      list_macro(is_cursor_hazard, "is_cursor_hazard"),               /* ............................ */             \
+      list_macro(is_cursor_path_blocker, "is_cursor_path_blocker"),   /* ............................ */             \
+      list_macro(is_cursor_path_hazard, "is_cursor_path_hazard"),     /* ............................ */             \
+      list_macro(is_cursor_path, "is_cursor_path"),                   /* ............................ */             \
+      list_macro(is_door, "is_door"),                                 /* ............................ */             \
+      list_macro(is_dungeon_entrance, "is_dungeon_entrance"),         /* ............................ */             \
+      list_macro(is_exit, "is_exit"),                                 /* ............................ */             \
+      list_macro(is_floor, "is_floor"),                               /* ............................ */             \
+      list_macro(is_key, "is_key"),                                   /* ............................ */             \
+      list_macro(is_monst, "is_monst"),                               /* ............................ */             \
+      list_macro(is_obs_monst, "is_obs_monst"),                       /* ............................ */             \
+      list_macro(is_obs_player, "is_obs_player"),                     /* ............................ */             \
+      list_macro(is_obs_wall_or_door, "is_obs_wall_or_door"),         /* ............................ */             \
+      list_macro(is_player, "is_player"),                             /* ............................ */             \
+      list_macro(is_tiled, "is_tiled"),                               /* ............................ */             \
+      list_macro(is_wall, "is_wall"),                                 /* ............................ */             \
+      list_macro(is_lava, "is_lava"),                                 /* ............................ */             \
+      list_macro(is_chasm, "is_chasm"),                               /* ............................ */             \
+      list_macro(is_unused1, "is_unused1"),                           /* ............................ */             \
+      list_macro(is_unused2, "is_unused2"),                           /* ............................ */             \
+      list_macro(is_unused3, "is_unused3"),                           /* ............................ */             \
+      list_macro(is_unused4, "is_unused4"),                           /* ............................ */             \
+      list_macro(is_unused5, "is_unused5"),                           /* ............................ */             \
+      list_macro(is_unused6, "is_unused6"),                           /* ............................ */             \
+      list_macro(is_unused7, "is_unused7"),                           /* ............................ */             \
+      list_macro(is_unused8, "is_unused8"),                           /* ............................ */             \
+      list_macro(is_unused9, "is_unused9"),                           /* ............................ */             \
+      list_macro(is_unused10, "is_unused10"),                         /* ............................ */             \
+      list_macro(is_unused11, "is_unused11"),                         /* ............................ */             \
+      list_macro(is_unused12, "is_unused12"),                         /* ............................ */             \
+      list_macro(is_unused13, "is_unused13"),                         /* ............................ */             \
+      list_macro(is_unused14, "is_unused14"),                         /* ............................ */             \
+      list_macro(is_unused15, "is_unused15"),                         /* ............................ */             \
+      list_macro(is_unused16, "is_unused16"),                         /* ............................ */             \
+      list_macro(is_unused17, "is_unused17"),                         /* ............................ */             \
+      list_macro(is_unused18, "is_unused18"),                         /* ............................ */             \
+      list_macro(is_unused19, "is_unused19"),                         /* ............................ */             \
+      list_macro(is_unused20, "is_unused20"),                         /* ............................ */             \
+      list_macro(is_unused21, "is_unused21"),                         /* ............................ */             \
+      list_macro(is_unused22, "is_unused22"),                         /* ............................ */             \
+      list_macro(is_unused23, "is_unused23"),                         /* ............................ */             \
+      list_macro(is_unused24, "is_unused24"),                         /* ............................ */             \
+      list_macro(is_unused25, "is_unused25"),                         /* ............................ */             \
+      list_macro(is_unused26, "is_unused26"),                         /* ............................ */             \
+      list_macro(is_unused27, "is_unused27"),                         /* ............................ */             \
+      list_macro(is_unused28, "is_unused28"),                         /* ............................ */             \
+      list_macro(is_unused29, "is_unused29"),                         /* ............................ */             \
+      list_macro(is_unused30, "is_unused30"),                         /* ............................ */             \
+      list_macro(is_unused31, "is_unused31"),                         /* ............................ */             \
+      list_macro(is_unused32, "is_unused32"),                         /* ............................ */             \
+      list_macro(is_unused33, "is_unused33"),                         /* ............................ */             \
+      list_macro(is_unused34, "is_unused34"),                         /* ............................ */             \
+      list_macro(is_unused35, "is_unused35"),                         /* ............................ */             \
+      list_macro(is_unused36, "is_unused36"),                         /* ............................ */             \
+      list_macro(is_unused37, "is_unused37"),                         /* ............................ */             \
+      list_macro(is_unused38, "is_unused38"),                         /* ............................ */             \
+      list_macro(is_unused39, "is_unused39"),                         /* ............................ */             \
+      list_macro(is_unused40, "is_unused40"),                         /* ............................ */             \
+      list_macro(is_unused41, "is_unused41"),                         /* ............................ */             \
+      list_macro(is_unused42, "is_unused42"),                         /* ............................ */             \
+      list_macro(is_unused43, "is_unused43"),                         /* ............................ */             \
+      list_macro(is_unused44, "is_unused44"),                         /* ............................ */             \
+      list_macro(is_unused45, "is_unused45"),                         /* ............................ */             \
+      list_macro(is_unused46, "is_unused46"),                         /* ............................ */             \
+      list_macro(is_unused47, "is_unused47"),                         /* ............................ */             \
+      list_macro(is_unused48, "is_unused48"),                         /* ............................ */             \
+      list_macro(is_unused49, "is_unused49"),                         /* ............................ */             \
+      list_macro(is_unused50, "is_unused50"),                         /* ............................ */             \
+      list_macro(is_unused51, "is_unused51"),                         /* ............................ */             \
+      list_macro(is_unused52, "is_unused52"),                         /* ............................ */             \
+      list_macro(is_unused53, "is_unused53"),                         /* ............................ */             \
+      list_macro(is_unused54, "is_unused54"),                         /* ............................ */             \
+      list_macro(is_unused55, "is_unused55"),                         /* ............................ */             \
+      list_macro(is_unused56, "is_unused56"),                         /* ............................ */             \
+      list_macro(is_unused57, "is_unused57"),                         /* ............................ */             \
+      list_macro(is_unused58, "is_unused58"),                         /* ............................ */             \
+      list_macro(is_unused59, "is_unused59"),                         /* ............................ */             \
+      list_macro(is_unused60, "is_unused60"),                         /* ............................ */             \
+      list_macro(is_unused61, "is_unused61"),                         /* ............................ */             \
+      list_macro(is_unused62, "is_unused62"),                         /* ............................ */             \
+      list_macro(is_unused63, "is_unused63"),                         /* ............................ */             \
+      list_macro(is_unused64, "is_unused64"),                         /* ............................ */             \
+      list_macro(is_unused65, "is_unused65"),                         /* ............................ */             \
+      list_macro(is_unused66, "is_unused66"),                         /* ............................ */             \
+      list_macro(is_unused67, "is_unused67"),                         /* ............................ */             \
+      list_macro(is_unused68, "is_unused68"),                         /* ............................ */             \
+      list_macro(is_unused69, "is_unused69"),                         /* ............................ */             \
+      list_macro(is_unused70, "is_unused70"),                         /* ............................ */             \
+      list_macro(is_unused71, "is_unused71"),                         /* ............................ */             \
+      list_macro(is_unused72, "is_unused72"),                         /* ............................ */             \
+      list_macro(is_unused73, "is_unused73"),                         /* ............................ */             \
+      list_macro(is_unused74, "is_unused74"),                         /* ............................ */             \
+      list_macro(is_unused75, "is_unused75"),                         /* ............................ */             \
+      list_macro(is_unused76, "is_unused76"),                         /* ............................ */             \
+      list_macro(is_unused77, "is_unused77"),                         /* ............................ */             \
+      list_macro(is_unused78, "is_unused78"),                         /* ............................ */             \
+      list_macro(is_unused79, "is_unused79"),                         /* ............................ */             \
+      list_macro(is_unused80, "is_unused80"),                         /* ............................ */             \
+      list_macro(is_unused81, "is_unused81"),                         /* ............................ */             \
+      list_macro(is_unused82, "is_unused82"),                         /* ............................ */             \
+      list_macro(is_unused83, "is_unused83"),                         /* ............................ */             \
+      list_macro(is_unused84, "is_unused84"),                         /* ............................ */             \
+      list_macro(is_unused85, "is_unused85"),                         /* ............................ */             \
+      list_macro(is_unused86, "is_unused86"),                         /* ............................ */             \
+      list_macro(is_unused87, "is_unused87"),                         /* ............................ */             \
+      list_macro(is_unused88, "is_unused88"),                         /* ............................ */             \
+      list_macro(is_unused89, "is_unused89"),                         /* ............................ */             \
+      list_macro(is_unused90, "is_unused90"),                         /* ............................ */             \
+      list_macro(is_unused91, "is_unused91"),                         /* ............................ */             \
+      list_macro(is_unused92, "is_unused92"),                         /* ............................ */             \
+      list_macro(is_unused93, "is_unused93"),                         /* ............................ */             \
+      list_macro(is_unused94, "is_unused94"),                         /* ............................ */             \
+      list_macro(is_unused95, "is_unused95"),                         /* ............................ */             \
+      list_macro(is_unused96, "is_unused96"),                         /* ............................ */             \
+      list_macro(is_unused97, "is_unused97"),                         /* ............................ */             \
+      list_macro(is_unused98, "is_unused98"),                         /* ............................ */             \
+      list_macro(is_water, "is_water"),                               /* ............................ */             \
+      list_macro(is_tickable, "is_tickable"),                         /* ............................ */             \
+      list_macro(THING_FLAG_MAX, "THING_FLAG_MAX"),
+
+ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
+
+#define tp_is_walk_through_walls(tp)   tp_flag(tp, is_walk_through_walls)
+#define tp_is_animated_can_hflip(tp)   tp_flag(tp, is_animated_can_hflip)
+#define tp_is_animated_no_dir(tp)      tp_flag(tp, is_animated_no_dir)
+#define tp_is_animated(tp)             tp_flag(tp, is_animated)
+#define tp_is_blit_centered(tp)        tp_flag(tp, is_blit_centered)
+#define tp_is_blit_on_ground(tp)       tp_flag(tp, is_blit_on_ground)
+#define tp_is_blit_outlined(tp)        tp_flag(tp, is_blit_outlined)
+#define tp_is_blit_square_outlined(tp) tp_flag(tp, is_blit_square_outlined)
+#define tp_is_cursor(tp)               tp_flag(tp, is_cursor)
+#define tp_is_cursor_hazard(tp)        tp_flag(tp, is_cursor_hazard)
+#define tp_is_cursor_path_blocker(tp)  tp_flag(tp, is_cursor_path_blocker)
+#define tp_is_cursor_path_hazard(tp)   tp_flag(tp, is_cursor_path_hazard)
+#define tp_is_cursor_path(tp)          tp_flag(tp, is_cursor_path)
+#define tp_is_door(tp)                 tp_flag(tp, is_door)
+#define tp_is_dungeon_entrance(tp)     tp_flag(tp, is_dungeon_entrance)
+#define tp_is_exit(tp)                 tp_flag(tp, is_exit)
+#define tp_is_floor(tp)                tp_flag(tp, is_floor)
+#define tp_is_key(tp)                  tp_flag(tp, is_key)
+#define tp_is_monst(tp)                tp_flag(tp, is_monst)
+#define tp_is_obs_monst(tp)            tp_flag(tp, is_obs_monst)
+#define tp_is_obs_player(tp)           tp_flag(tp, is_obs_player)
+#define tp_is_obs_wall_or_door(tp)     tp_flag(tp, is_obs_wall_or_door)
+#define tp_is_player(tp)               tp_flag(tp, is_player)
+#define tp_is_tiled(tp)                tp_flag(tp, is_tiled)
+#define tp_is_wall(tp)                 tp_flag(tp, is_wall)
+#define tp_is_lava(tp)                 tp_flag(tp, is_lava)
+#define tp_is_chasm(tp)                tp_flag(tp, is_chasm)
+#define tp_is_unused1(tp)              tp_flag(tp, is_unused1)
+#define tp_is_unused2(tp)              tp_flag(tp, is_unused2)
+#define tp_is_unused3(tp)              tp_flag(tp, is_unused3)
+#define tp_is_unused4(tp)              tp_flag(tp, is_unused4)
+#define tp_is_unused5(tp)              tp_flag(tp, is_unused5)
+#define tp_is_unused6(tp)              tp_flag(tp, is_unused6)
+#define tp_is_unused7(tp)              tp_flag(tp, is_unused7)
+#define tp_is_unused8(tp)              tp_flag(tp, is_unused8)
+#define tp_is_unused9(tp)              tp_flag(tp, is_unused9)
+#define tp_is_unused10(tp)             tp_flag(tp, is_unused10)
+#define tp_is_unused11(tp)             tp_flag(tp, is_unused11)
+#define tp_is_unused12(tp)             tp_flag(tp, is_unused12)
+#define tp_is_unused13(tp)             tp_flag(tp, is_unused13)
+#define tp_is_unused14(tp)             tp_flag(tp, is_unused14)
+#define tp_is_unused15(tp)             tp_flag(tp, is_unused15)
+#define tp_is_unused16(tp)             tp_flag(tp, is_unused16)
+#define tp_is_unused17(tp)             tp_flag(tp, is_unused17)
+#define tp_is_unused18(tp)             tp_flag(tp, is_unused18)
+#define tp_is_unused19(tp)             tp_flag(tp, is_unused19)
+#define tp_is_unused20(tp)             tp_flag(tp, is_unused20)
+#define tp_is_unused21(tp)             tp_flag(tp, is_unused21)
+#define tp_is_unused22(tp)             tp_flag(tp, is_unused22)
+#define tp_is_unused23(tp)             tp_flag(tp, is_unused23)
+#define tp_is_unused24(tp)             tp_flag(tp, is_unused24)
+#define tp_is_unused25(tp)             tp_flag(tp, is_unused25)
+#define tp_is_unused26(tp)             tp_flag(tp, is_unused26)
+#define tp_is_unused27(tp)             tp_flag(tp, is_unused27)
+#define tp_is_unused28(tp)             tp_flag(tp, is_unused28)
+#define tp_is_unused29(tp)             tp_flag(tp, is_unused29)
+#define tp_is_unused30(tp)             tp_flag(tp, is_unused30)
+#define tp_is_unused31(tp)             tp_flag(tp, is_unused31)
+#define tp_is_unused32(tp)             tp_flag(tp, is_unused32)
+#define tp_is_unused33(tp)             tp_flag(tp, is_unused33)
+#define tp_is_unused34(tp)             tp_flag(tp, is_unused34)
+#define tp_is_unused35(tp)             tp_flag(tp, is_unused35)
+#define tp_is_unused36(tp)             tp_flag(tp, is_unused36)
+#define tp_is_unused37(tp)             tp_flag(tp, is_unused37)
+#define tp_is_unused38(tp)             tp_flag(tp, is_unused38)
+#define tp_is_unused39(tp)             tp_flag(tp, is_unused39)
+#define tp_is_unused40(tp)             tp_flag(tp, is_unused40)
+#define tp_is_unused41(tp)             tp_flag(tp, is_unused41)
+#define tp_is_unused42(tp)             tp_flag(tp, is_unused42)
+#define tp_is_unused43(tp)             tp_flag(tp, is_unused43)
+#define tp_is_unused44(tp)             tp_flag(tp, is_unused44)
+#define tp_is_unused45(tp)             tp_flag(tp, is_unused45)
+#define tp_is_unused46(tp)             tp_flag(tp, is_unused46)
+#define tp_is_unused47(tp)             tp_flag(tp, is_unused47)
+#define tp_is_unused48(tp)             tp_flag(tp, is_unused48)
+#define tp_is_unused49(tp)             tp_flag(tp, is_unused49)
+#define tp_is_unused50(tp)             tp_flag(tp, is_unused50)
+#define tp_is_unused51(tp)             tp_flag(tp, is_unused51)
+#define tp_is_unused52(tp)             tp_flag(tp, is_unused52)
+#define tp_is_unused53(tp)             tp_flag(tp, is_unused53)
+#define tp_is_unused54(tp)             tp_flag(tp, is_unused54)
+#define tp_is_unused55(tp)             tp_flag(tp, is_unused55)
+#define tp_is_unused56(tp)             tp_flag(tp, is_unused56)
+#define tp_is_unused57(tp)             tp_flag(tp, is_unused57)
+#define tp_is_unused58(tp)             tp_flag(tp, is_unused58)
+#define tp_is_unused59(tp)             tp_flag(tp, is_unused59)
+#define tp_is_unused60(tp)             tp_flag(tp, is_unused60)
+#define tp_is_unused61(tp)             tp_flag(tp, is_unused61)
+#define tp_is_unused62(tp)             tp_flag(tp, is_unused62)
+#define tp_is_unused63(tp)             tp_flag(tp, is_unused63)
+#define tp_is_unused64(tp)             tp_flag(tp, is_unused64)
+#define tp_is_unused65(tp)             tp_flag(tp, is_unused65)
+#define tp_is_unused66(tp)             tp_flag(tp, is_unused66)
+#define tp_is_unused67(tp)             tp_flag(tp, is_unused67)
+#define tp_is_unused68(tp)             tp_flag(tp, is_unused68)
+#define tp_is_unused69(tp)             tp_flag(tp, is_unused69)
+#define tp_is_unused70(tp)             tp_flag(tp, is_unused70)
+#define tp_is_unused71(tp)             tp_flag(tp, is_unused71)
+#define tp_is_unused72(tp)             tp_flag(tp, is_unused72)
+#define tp_is_unused73(tp)             tp_flag(tp, is_unused73)
+#define tp_is_unused74(tp)             tp_flag(tp, is_unused74)
+#define tp_is_unused75(tp)             tp_flag(tp, is_unused75)
+#define tp_is_unused76(tp)             tp_flag(tp, is_unused76)
+#define tp_is_unused77(tp)             tp_flag(tp, is_unused77)
+#define tp_is_unused78(tp)             tp_flag(tp, is_unused78)
+#define tp_is_unused79(tp)             tp_flag(tp, is_unused79)
+#define tp_is_unused80(tp)             tp_flag(tp, is_unused80)
+#define tp_is_unused81(tp)             tp_flag(tp, is_unused81)
+#define tp_is_unused82(tp)             tp_flag(tp, is_unused82)
+#define tp_is_unused83(tp)             tp_flag(tp, is_unused83)
+#define tp_is_unused84(tp)             tp_flag(tp, is_unused84)
+#define tp_is_unused85(tp)             tp_flag(tp, is_unused85)
+#define tp_is_unused86(tp)             tp_flag(tp, is_unused86)
+#define tp_is_unused87(tp)             tp_flag(tp, is_unused87)
+#define tp_is_unused88(tp)             tp_flag(tp, is_unused88)
+#define tp_is_unused89(tp)             tp_flag(tp, is_unused89)
+#define tp_is_unused90(tp)             tp_flag(tp, is_unused90)
+#define tp_is_unused91(tp)             tp_flag(tp, is_unused91)
+#define tp_is_unused92(tp)             tp_flag(tp, is_unused92)
+#define tp_is_unused93(tp)             tp_flag(tp, is_unused93)
+#define tp_is_unused94(tp)             tp_flag(tp, is_unused94)
+#define tp_is_unused95(tp)             tp_flag(tp, is_unused95)
+#define tp_is_unused96(tp)             tp_flag(tp, is_unused96)
+#define tp_is_unused97(tp)             tp_flag(tp, is_unused97)
+#define tp_is_unused98(tp)             tp_flag(tp, is_unused98)
+#define tp_is_water(tp)                tp_flag(tp, is_water)
+#define tp_is_tickable(tp)             tp_flag(tp, is_tickable)
+
+#define thing_is_walk_through_walls(thing)   tp_flag(thing_tp(thing), is_walk_through_walls)
+#define thing_is_animated_can_hflip(thing)   tp_flag(thing_tp(thing), is_animated_can_hflip)
+#define thing_is_animated_no_dir(thing)      tp_flag(thing_tp(thing), is_animated_no_dir)
+#define thing_is_animated(thing)             tp_flag(thing_tp(thing), is_animated)
+#define thing_is_blit_centered(thing)        tp_flag(thing_tp(thing), is_blit_centered)
+#define thing_is_blit_on_ground(thing)       tp_flag(thing_tp(thing), is_blit_on_ground)
+#define thing_is_blit_outlined(thing)        tp_flag(thing_tp(thing), is_blit_outlined)
+#define thing_is_blit_square_outlined(thing) tp_flag(thing_tp(thing), is_blit_square_outlined)
+#define thing_is_cursor(thing)               tp_flag(thing_tp(thing), is_cursor)
+#define thing_is_cursor_hazard(thing)        tp_flag(thing_tp(thing), is_cursor_hazard)
+#define thing_is_cursor_path_blocker(thing)  tp_flag(thing_tp(thing), is_cursor_path_blocker)
+#define thing_is_cursor_path_hazard(thing)   tp_flag(thing_tp(thing), is_cursor_path_hazard)
+#define thing_is_cursor_path(thing)          tp_flag(thing_tp(thing), is_cursor_path)
+#define thing_is_door(thing)                 tp_flag(thing_tp(thing), is_door)
+#define thing_is_dungeon_entrance(thing)     tp_flag(thing_tp(thing), is_dungeon_entrance)
+#define thing_is_exit(thing)                 tp_flag(thing_tp(thing), is_exit)
+#define thing_is_floor(thing)                tp_flag(thing_tp(thing), is_floor)
+#define thing_is_key(thing)                  tp_flag(thing_tp(thing), is_key)
+#define thing_is_monst(thing)                tp_flag(thing_tp(thing), is_monst)
+#define thing_is_obs_monst(thing)            tp_flag(thing_tp(thing), is_obs_monst)
+#define thing_is_obs_player(thing)           tp_flag(thing_tp(thing), is_obs_player)
+#define thing_is_obs_wall_or_door(thing)     tp_flag(thing_tp(thing), is_obs_wall_or_door)
+#define thing_is_player(thing)               tp_flag(thing_tp(thing), is_player)
+#define thing_is_tiled(thing)                tp_flag(thing_tp(thing), is_tiled)
+#define thing_is_wall(thing)                 tp_flag(thing_tp(thing), is_wall)
+#define thing_is_lava(thing)                 tp_flag(thing_tp(thing), is_lava)
+#define thing_is_chasm(thing)                tp_flag(thing_tp(thing), is_chasm)
+#define thing_is_unused1(thing)              tp_flag(thing_tp(thing), is_unused1)
+#define thing_is_unused2(thing)              tp_flag(thing_tp(thing), is_unused2)
+#define thing_is_unused3(thing)              tp_flag(thing_tp(thing), is_unused3)
+#define thing_is_unused4(thing)              tp_flag(thing_tp(thing), is_unused4)
+#define thing_is_unused5(thing)              tp_flag(thing_tp(thing), is_unused5)
+#define thing_is_unused6(thing)              tp_flag(thing_tp(thing), is_unused6)
+#define thing_is_unused7(thing)              tp_flag(thing_tp(thing), is_unused7)
+#define thing_is_unused8(thing)              tp_flag(thing_tp(thing), is_unused8)
+#define thing_is_unused9(thing)              tp_flag(thing_tp(thing), is_unused9)
+#define thing_is_unused10(thing)             tp_flag(thing_tp(thing), is_unused10)
+#define thing_is_unused11(thing)             tp_flag(thing_tp(thing), is_unused11)
+#define thing_is_unused12(thing)             tp_flag(thing_tp(thing), is_unused12)
+#define thing_is_unused13(thing)             tp_flag(thing_tp(thing), is_unused13)
+#define thing_is_unused14(thing)             tp_flag(thing_tp(thing), is_unused14)
+#define thing_is_unused15(thing)             tp_flag(thing_tp(thing), is_unused15)
+#define thing_is_unused16(thing)             tp_flag(thing_tp(thing), is_unused16)
+#define thing_is_unused17(thing)             tp_flag(thing_tp(thing), is_unused17)
+#define thing_is_unused18(thing)             tp_flag(thing_tp(thing), is_unused18)
+#define thing_is_unused19(thing)             tp_flag(thing_tp(thing), is_unused19)
+#define thing_is_unused20(thing)             tp_flag(thing_tp(thing), is_unused20)
+#define thing_is_unused21(thing)             tp_flag(thing_tp(thing), is_unused21)
+#define thing_is_unused22(thing)             tp_flag(thing_tp(thing), is_unused22)
+#define thing_is_unused23(thing)             tp_flag(thing_tp(thing), is_unused23)
+#define thing_is_unused24(thing)             tp_flag(thing_tp(thing), is_unused24)
+#define thing_is_unused25(thing)             tp_flag(thing_tp(thing), is_unused25)
+#define thing_is_unused26(thing)             tp_flag(thing_tp(thing), is_unused26)
+#define thing_is_unused27(thing)             tp_flag(thing_tp(thing), is_unused27)
+#define thing_is_unused28(thing)             tp_flag(thing_tp(thing), is_unused28)
+#define thing_is_unused29(thing)             tp_flag(thing_tp(thing), is_unused29)
+#define thing_is_unused30(thing)             tp_flag(thing_tp(thing), is_unused30)
+#define thing_is_unused31(thing)             tp_flag(thing_tp(thing), is_unused31)
+#define thing_is_unused32(thing)             tp_flag(thing_tp(thing), is_unused32)
+#define thing_is_unused33(thing)             tp_flag(thing_tp(thing), is_unused33)
+#define thing_is_unused34(thing)             tp_flag(thing_tp(thing), is_unused34)
+#define thing_is_unused35(thing)             tp_flag(thing_tp(thing), is_unused35)
+#define thing_is_unused36(thing)             tp_flag(thing_tp(thing), is_unused36)
+#define thing_is_unused37(thing)             tp_flag(thing_tp(thing), is_unused37)
+#define thing_is_unused38(thing)             tp_flag(thing_tp(thing), is_unused38)
+#define thing_is_unused39(thing)             tp_flag(thing_tp(thing), is_unused39)
+#define thing_is_unused40(thing)             tp_flag(thing_tp(thing), is_unused40)
+#define thing_is_unused41(thing)             tp_flag(thing_tp(thing), is_unused41)
+#define thing_is_unused42(thing)             tp_flag(thing_tp(thing), is_unused42)
+#define thing_is_unused43(thing)             tp_flag(thing_tp(thing), is_unused43)
+#define thing_is_unused44(thing)             tp_flag(thing_tp(thing), is_unused44)
+#define thing_is_unused45(thing)             tp_flag(thing_tp(thing), is_unused45)
+#define thing_is_unused46(thing)             tp_flag(thing_tp(thing), is_unused46)
+#define thing_is_unused47(thing)             tp_flag(thing_tp(thing), is_unused47)
+#define thing_is_unused48(thing)             tp_flag(thing_tp(thing), is_unused48)
+#define thing_is_unused49(thing)             tp_flag(thing_tp(thing), is_unused49)
+#define thing_is_unused50(thing)             tp_flag(thing_tp(thing), is_unused50)
+#define thing_is_unused51(thing)             tp_flag(thing_tp(thing), is_unused51)
+#define thing_is_unused52(thing)             tp_flag(thing_tp(thing), is_unused52)
+#define thing_is_unused53(thing)             tp_flag(thing_tp(thing), is_unused53)
+#define thing_is_unused54(thing)             tp_flag(thing_tp(thing), is_unused54)
+#define thing_is_unused55(thing)             tp_flag(thing_tp(thing), is_unused55)
+#define thing_is_unused56(thing)             tp_flag(thing_tp(thing), is_unused56)
+#define thing_is_unused57(thing)             tp_flag(thing_tp(thing), is_unused57)
+#define thing_is_unused58(thing)             tp_flag(thing_tp(thing), is_unused58)
+#define thing_is_unused59(thing)             tp_flag(thing_tp(thing), is_unused59)
+#define thing_is_unused60(thing)             tp_flag(thing_tp(thing), is_unused60)
+#define thing_is_unused61(thing)             tp_flag(thing_tp(thing), is_unused61)
+#define thing_is_unused62(thing)             tp_flag(thing_tp(thing), is_unused62)
+#define thing_is_unused63(thing)             tp_flag(thing_tp(thing), is_unused63)
+#define thing_is_unused64(thing)             tp_flag(thing_tp(thing), is_unused64)
+#define thing_is_unused65(thing)             tp_flag(thing_tp(thing), is_unused65)
+#define thing_is_unused66(thing)             tp_flag(thing_tp(thing), is_unused66)
+#define thing_is_unused67(thing)             tp_flag(thing_tp(thing), is_unused67)
+#define thing_is_unused68(thing)             tp_flag(thing_tp(thing), is_unused68)
+#define thing_is_unused69(thing)             tp_flag(thing_tp(thing), is_unused69)
+#define thing_is_unused70(thing)             tp_flag(thing_tp(thing), is_unused70)
+#define thing_is_unused71(thing)             tp_flag(thing_tp(thing), is_unused71)
+#define thing_is_unused72(thing)             tp_flag(thing_tp(thing), is_unused72)
+#define thing_is_unused73(thing)             tp_flag(thing_tp(thing), is_unused73)
+#define thing_is_unused74(thing)             tp_flag(thing_tp(thing), is_unused74)
+#define thing_is_unused75(thing)             tp_flag(thing_tp(thing), is_unused75)
+#define thing_is_unused76(thing)             tp_flag(thing_tp(thing), is_unused76)
+#define thing_is_unused77(thing)             tp_flag(thing_tp(thing), is_unused77)
+#define thing_is_unused78(thing)             tp_flag(thing_tp(thing), is_unused78)
+#define thing_is_unused79(thing)             tp_flag(thing_tp(thing), is_unused79)
+#define thing_is_unused80(thing)             tp_flag(thing_tp(thing), is_unused80)
+#define thing_is_unused81(thing)             tp_flag(thing_tp(thing), is_unused81)
+#define thing_is_unused82(thing)             tp_flag(thing_tp(thing), is_unused82)
+#define thing_is_unused83(thing)             tp_flag(thing_tp(thing), is_unused83)
+#define thing_is_unused84(thing)             tp_flag(thing_tp(thing), is_unused84)
+#define thing_is_unused85(thing)             tp_flag(thing_tp(thing), is_unused85)
+#define thing_is_unused86(thing)             tp_flag(thing_tp(thing), is_unused86)
+#define thing_is_unused87(thing)             tp_flag(thing_tp(thing), is_unused87)
+#define thing_is_unused88(thing)             tp_flag(thing_tp(thing), is_unused88)
+#define thing_is_unused89(thing)             tp_flag(thing_tp(thing), is_unused89)
+#define thing_is_unused90(thing)             tp_flag(thing_tp(thing), is_unused90)
+#define thing_is_unused91(thing)             tp_flag(thing_tp(thing), is_unused91)
+#define thing_is_unused92(thing)             tp_flag(thing_tp(thing), is_unused92)
+#define thing_is_unused93(thing)             tp_flag(thing_tp(thing), is_unused93)
+#define thing_is_unused94(thing)             tp_flag(thing_tp(thing), is_unused94)
+#define thing_is_unused95(thing)             tp_flag(thing_tp(thing), is_unused95)
+#define thing_is_unused96(thing)             tp_flag(thing_tp(thing), is_unused96)
+#define thing_is_unused97(thing)             tp_flag(thing_tp(thing), is_unused97)
+#define thing_is_unused98(thing)             tp_flag(thing_tp(thing), is_unused98)
+#define thing_is_water(thing)                tp_flag(thing_tp(thing), is_water)
+#define thing_is_tickable(thing)             tp_flag(thing_tp(thing), is_tickable)
+
+#define level_is_walk_through_walls(g, v, l, p)   level_flag(g, v, l, is_walk_through_walls, p)
+#define level_is_animated_can_hflip(g, v, l, p)   level_flag(g, v, l, is_animated_can_hflip, p)
+#define level_is_animated_no_dir(g, v, l, p)      level_flag(g, v, l, is_animated_no_dir, p)
+#define level_is_animated(g, v, l, p)             level_flag(g, v, l, is_animated, p)
+#define level_is_blit_centered(g, v, l, p)        level_flag(g, v, l, is_blit_centered, p)
+#define level_is_blit_on_ground(g, v, l, p)       level_flag(g, v, l, is_blit_on_ground, p)
+#define level_is_blit_outlined(g, v, l, p)        level_flag(g, v, l, is_blit_outlined, p)
+#define level_is_blit_square_outlined(g, v, l, p) level_flag(g, v, l, is_blit_square_outlined, p)
+#define level_is_cursor(g, v, l, p)               level_flag(g, v, l, is_cursor, p)
+#define level_is_cursor_hazard(g, v, l, p)        level_flag(g, v, l, is_cursor_hazard, p)
+#define level_is_cursor_path_blocker(g, v, l, p)  level_flag(g, v, l, is_cursor_path_blocker, p)
+#define level_is_cursor_path_hazard(g, v, l, p)   level_flag(g, v, l, is_cursor_path_hazard, p)
+#define level_is_cursor_path(g, v, l, p)          level_flag(g, v, l, is_cursor_path, p)
+#define level_is_door(g, v, l, p)                 level_flag(g, v, l, is_door, p)
+#define level_is_dungeon_entrance(g, v, l, p)     level_flag(g, v, l, is_dungeon_entrance, p)
+#define level_is_exit(g, v, l, p)                 level_flag(g, v, l, is_exit, p)
+#define level_is_floor(g, v, l, p)                level_flag(g, v, l, is_floor, p)
+#define level_is_key(g, v, l, p)                  level_flag(g, v, l, is_key, p)
+#define level_is_monst(g, v, l, p)                level_flag(g, v, l, is_monst, p)
+#define level_is_obs_monst(g, v, l, p)            level_flag(g, v, l, is_obs_monst, p)
+#define level_is_obs_player(g, v, l, p)           level_flag(g, v, l, is_obs_player, p)
+#define level_is_obs_wall_or_door(g, v, l, p)     level_flag(g, v, l, is_obs_wall_or_door, p)
+#define level_is_player(g, v, l, p)               level_flag(g, v, l, is_player, p)
+#define level_is_tiled(g, v, l, p)                level_flag(g, v, l, is_tiled, p)
+#define level_is_wall(g, v, l, p)                 level_flag(g, v, l, is_wall, p)
+#define level_is_lava(g, v, l, p)                 level_flag(g, v, l, is_lava, p)
+#define level_is_chasm(g, v, l, p)                level_flag(g, v, l, is_chasm, p)
+#define level_is_unused1(g, v, l, p)              level_flag(g, v, l, is_unused1, p)
+#define level_is_unused2(g, v, l, p)              level_flag(g, v, l, is_unused2, p)
+#define level_is_unused3(g, v, l, p)              level_flag(g, v, l, is_unused3, p)
+#define level_is_unused4(g, v, l, p)              level_flag(g, v, l, is_unused4, p)
+#define level_is_unused5(g, v, l, p)              level_flag(g, v, l, is_unused5, p)
+#define level_is_unused6(g, v, l, p)              level_flag(g, v, l, is_unused6, p)
+#define level_is_unused7(g, v, l, p)              level_flag(g, v, l, is_unused7, p)
+#define level_is_unused8(g, v, l, p)              level_flag(g, v, l, is_unused8, p)
+#define level_is_unused9(g, v, l, p)              level_flag(g, v, l, is_unused9, p)
+#define level_is_unused10(g, v, l, p)             level_flag(g, v, l, is_unused10, p)
+#define level_is_unused11(g, v, l, p)             level_flag(g, v, l, is_unused11, p)
+#define level_is_unused12(g, v, l, p)             level_flag(g, v, l, is_unused12, p)
+#define level_is_unused13(g, v, l, p)             level_flag(g, v, l, is_unused13, p)
+#define level_is_unused14(g, v, l, p)             level_flag(g, v, l, is_unused14, p)
+#define level_is_unused15(g, v, l, p)             level_flag(g, v, l, is_unused15, p)
+#define level_is_unused16(g, v, l, p)             level_flag(g, v, l, is_unused16, p)
+#define level_is_unused17(g, v, l, p)             level_flag(g, v, l, is_unused17, p)
+#define level_is_unused18(g, v, l, p)             level_flag(g, v, l, is_unused18, p)
+#define level_is_unused19(g, v, l, p)             level_flag(g, v, l, is_unused19, p)
+#define level_is_unused20(g, v, l, p)             level_flag(g, v, l, is_unused20, p)
+#define level_is_unused21(g, v, l, p)             level_flag(g, v, l, is_unused21, p)
+#define level_is_unused22(g, v, l, p)             level_flag(g, v, l, is_unused22, p)
+#define level_is_unused23(g, v, l, p)             level_flag(g, v, l, is_unused23, p)
+#define level_is_unused24(g, v, l, p)             level_flag(g, v, l, is_unused24, p)
+#define level_is_unused25(g, v, l, p)             level_flag(g, v, l, is_unused25, p)
+#define level_is_unused26(g, v, l, p)             level_flag(g, v, l, is_unused26, p)
+#define level_is_unused27(g, v, l, p)             level_flag(g, v, l, is_unused27, p)
+#define level_is_unused28(g, v, l, p)             level_flag(g, v, l, is_unused28, p)
+#define level_is_unused29(g, v, l, p)             level_flag(g, v, l, is_unused29, p)
+#define level_is_unused30(g, v, l, p)             level_flag(g, v, l, is_unused30, p)
+#define level_is_unused31(g, v, l, p)             level_flag(g, v, l, is_unused31, p)
+#define level_is_unused32(g, v, l, p)             level_flag(g, v, l, is_unused32, p)
+#define level_is_unused33(g, v, l, p)             level_flag(g, v, l, is_unused33, p)
+#define level_is_unused34(g, v, l, p)             level_flag(g, v, l, is_unused34, p)
+#define level_is_unused35(g, v, l, p)             level_flag(g, v, l, is_unused35, p)
+#define level_is_unused36(g, v, l, p)             level_flag(g, v, l, is_unused36, p)
+#define level_is_unused37(g, v, l, p)             level_flag(g, v, l, is_unused37, p)
+#define level_is_unused38(g, v, l, p)             level_flag(g, v, l, is_unused38, p)
+#define level_is_unused39(g, v, l, p)             level_flag(g, v, l, is_unused39, p)
+#define level_is_unused40(g, v, l, p)             level_flag(g, v, l, is_unused40, p)
+#define level_is_unused41(g, v, l, p)             level_flag(g, v, l, is_unused41, p)
+#define level_is_unused42(g, v, l, p)             level_flag(g, v, l, is_unused42, p)
+#define level_is_unused43(g, v, l, p)             level_flag(g, v, l, is_unused43, p)
+#define level_is_unused44(g, v, l, p)             level_flag(g, v, l, is_unused44, p)
+#define level_is_unused45(g, v, l, p)             level_flag(g, v, l, is_unused45, p)
+#define level_is_unused46(g, v, l, p)             level_flag(g, v, l, is_unused46, p)
+#define level_is_unused47(g, v, l, p)             level_flag(g, v, l, is_unused47, p)
+#define level_is_unused48(g, v, l, p)             level_flag(g, v, l, is_unused48, p)
+#define level_is_unused49(g, v, l, p)             level_flag(g, v, l, is_unused49, p)
+#define level_is_unused50(g, v, l, p)             level_flag(g, v, l, is_unused50, p)
+#define level_is_unused51(g, v, l, p)             level_flag(g, v, l, is_unused51, p)
+#define level_is_unused52(g, v, l, p)             level_flag(g, v, l, is_unused52, p)
+#define level_is_unused53(g, v, l, p)             level_flag(g, v, l, is_unused53, p)
+#define level_is_unused54(g, v, l, p)             level_flag(g, v, l, is_unused54, p)
+#define level_is_unused55(g, v, l, p)             level_flag(g, v, l, is_unused55, p)
+#define level_is_unused56(g, v, l, p)             level_flag(g, v, l, is_unused56, p)
+#define level_is_unused57(g, v, l, p)             level_flag(g, v, l, is_unused57, p)
+#define level_is_unused58(g, v, l, p)             level_flag(g, v, l, is_unused58, p)
+#define level_is_unused59(g, v, l, p)             level_flag(g, v, l, is_unused59, p)
+#define level_is_unused60(g, v, l, p)             level_flag(g, v, l, is_unused60, p)
+#define level_is_unused61(g, v, l, p)             level_flag(g, v, l, is_unused61, p)
+#define level_is_unused62(g, v, l, p)             level_flag(g, v, l, is_unused62, p)
+#define level_is_unused63(g, v, l, p)             level_flag(g, v, l, is_unused63, p)
+#define level_is_unused64(g, v, l, p)             level_flag(g, v, l, is_unused64, p)
+#define level_is_unused65(g, v, l, p)             level_flag(g, v, l, is_unused65, p)
+#define level_is_unused66(g, v, l, p)             level_flag(g, v, l, is_unused66, p)
+#define level_is_unused67(g, v, l, p)             level_flag(g, v, l, is_unused67, p)
+#define level_is_unused68(g, v, l, p)             level_flag(g, v, l, is_unused68, p)
+#define level_is_unused69(g, v, l, p)             level_flag(g, v, l, is_unused69, p)
+#define level_is_unused70(g, v, l, p)             level_flag(g, v, l, is_unused70, p)
+#define level_is_unused71(g, v, l, p)             level_flag(g, v, l, is_unused71, p)
+#define level_is_unused72(g, v, l, p)             level_flag(g, v, l, is_unused72, p)
+#define level_is_unused73(g, v, l, p)             level_flag(g, v, l, is_unused73, p)
+#define level_is_unused74(g, v, l, p)             level_flag(g, v, l, is_unused74, p)
+#define level_is_unused75(g, v, l, p)             level_flag(g, v, l, is_unused75, p)
+#define level_is_unused76(g, v, l, p)             level_flag(g, v, l, is_unused76, p)
+#define level_is_unused77(g, v, l, p)             level_flag(g, v, l, is_unused77, p)
+#define level_is_unused78(g, v, l, p)             level_flag(g, v, l, is_unused78, p)
+#define level_is_unused79(g, v, l, p)             level_flag(g, v, l, is_unused79, p)
+#define level_is_unused80(g, v, l, p)             level_flag(g, v, l, is_unused80, p)
+#define level_is_unused81(g, v, l, p)             level_flag(g, v, l, is_unused81, p)
+#define level_is_unused82(g, v, l, p)             level_flag(g, v, l, is_unused82, p)
+#define level_is_unused83(g, v, l, p)             level_flag(g, v, l, is_unused83, p)
+#define level_is_unused84(g, v, l, p)             level_flag(g, v, l, is_unused84, p)
+#define level_is_unused85(g, v, l, p)             level_flag(g, v, l, is_unused85, p)
+#define level_is_unused86(g, v, l, p)             level_flag(g, v, l, is_unused86, p)
+#define level_is_unused87(g, v, l, p)             level_flag(g, v, l, is_unused87, p)
+#define level_is_unused88(g, v, l, p)             level_flag(g, v, l, is_unused88, p)
+#define level_is_unused89(g, v, l, p)             level_flag(g, v, l, is_unused89, p)
+#define level_is_unused90(g, v, l, p)             level_flag(g, v, l, is_unused90, p)
+#define level_is_unused91(g, v, l, p)             level_flag(g, v, l, is_unused91, p)
+#define level_is_unused92(g, v, l, p)             level_flag(g, v, l, is_unused92, p)
+#define level_is_unused93(g, v, l, p)             level_flag(g, v, l, is_unused93, p)
+#define level_is_unused94(g, v, l, p)             level_flag(g, v, l, is_unused94, p)
+#define level_is_unused95(g, v, l, p)             level_flag(g, v, l, is_unused95, p)
+#define level_is_unused96(g, v, l, p)             level_flag(g, v, l, is_unused96, p)
+#define level_is_unused97(g, v, l, p)             level_flag(g, v, l, is_unused97, p)
+#define level_is_unused98(g, v, l, p)             level_flag(g, v, l, is_unused98, p)
+#define level_is_water(g, v, l, p)                level_flag(g, v, l, is_water, p)
+#define level_is_tickable(g, v, l, p)             level_flag(g, v, l, is_tickable, p)
+
+enum { MAP_Z_DEPTH_FLOOR, MAP_Z_DEPTH_LIQUID, MAP_Z_DEPTH_OBJ, MAP_Z_DEPTH_LAST };
+#define MAP_Z_DEPTH_FIRST MAP_Z_DEPTH_FLOOR
+
+#define FOR_ALL_Z_DEPTH(_z_depth_)                                                                                   \
+  for (uint8_t _z_depth_ = MAP_Z_DEPTH_FIRST; _z_depth_ < MAP_Z_DEPTH_LAST; _z_depth_++)
+
+enum { MAP_Z_PRIO_BEHIND, MAP_Z_PRIO_NORMAL, MAP_Z_PRIO_INFRONT, MAP_Z_PRIO_LAST };
+#define MAP_Z_PRIO_FIRST MAP_Z_PRIO_BEHIND
+
+#define FOR_ALL_Z_PRIO(_z_prio_) for (uint8_t _z_prio_ = MAP_Z_PRIO_FIRST; _z_prio_ < MAP_Z_PRIO_LAST; _z_prio_++)
+
+enum { MONST_CLASS_A, MONST_CLASS_MAX };
 
 class Tp;
 

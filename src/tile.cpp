@@ -993,6 +993,8 @@ int Tile::gl_binding(void) const { return _gl_binding; }
 
 void Tile::set_gl_binding(int v) { _gl_binding = v; }
 
+int tile_gl_binding(Tilep t) { return t->gl_binding(); }
+
 int Tile::gl_binding_monochrome(void) const { return _gl_binding_monochrome; }
 
 void Tile::set_gl_binding_monochrome(int v) { _gl_binding_monochrome = v; }

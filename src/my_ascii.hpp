@@ -6,7 +6,6 @@
 #ifndef _MY_ASCII_HPP_
 #define _MY_ASCII_HPP_
 
-#include "my_enums.hpp"
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 #include "my_ui.hpp"
