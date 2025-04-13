@@ -14,19 +14,22 @@ bool templates_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
+  if (! tp_load_exit()) {
+    return false;
+  }
   if (! tp_load_floor()) {
     return false;
   }
   if (! tp_load_wall()) {
     return false;
   }
-  if (! tp_load_key()) {
-    return false;
-  }
-  if (! tp_load_exit()) {
-    return false;
-  }
   if (! tp_load_door()) {
+    return false;
+  }
+  if (! tp_load_water()) {
+    return false;
+  }
+  if (! tp_load_key()) {
     return false;
   }
   if (! tp_load_cursor_path()) {

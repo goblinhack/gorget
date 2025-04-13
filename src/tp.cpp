@@ -31,10 +31,11 @@ std::initializer_list< std::string > tps = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
+    "exit",
+    "floor",
+    "door",
     "floor",
     "key",
-    "exit",
-    "door",
     "cursor_path",
     "cursor_at",
   /* end shell marker1 */

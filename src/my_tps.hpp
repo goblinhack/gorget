@@ -9,11 +9,12 @@ bool templates_init(void);
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
+bool tp_load_exit();
 bool tp_load_floor();
 bool tp_load_wall();
-bool tp_load_key();
-bool tp_load_exit();
 bool tp_load_door();
+bool tp_load_water();
+bool tp_load_key();
 bool tp_load_cursor_path();
 bool tp_load_cursor_at();
 bool tp_load_player();
