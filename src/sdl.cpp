@@ -714,11 +714,13 @@ void config_game_gfx_update(Gamep g)
   LOG("SDL: - map pix sz           : %gx%g", fbo_w, fbo_h);
   LOG("SDL: - map max pix sz       : %gx%g", max_fbo_w, max_fbo_h);
 
-  if (game_map_zoom_get(g) == 0) {
+  int zoom = game_map_zoom_get(g);
+  if (zoom == 0) {
     game_map_zoom_set(g, game_map_zoom_def_get(g));
   }
 
-  if (game_map_zoom_get(g) == 1) {
+  zoom = game_map_zoom_get(g);
+  if (zoom == 1) {
     //
     // Zoomed out to see the entire map
     //
@@ -735,8 +737,8 @@ void config_game_gfx_update(Gamep g)
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //
-  float tiles_across = game_map_fbo_width_get(g) / TILE_WIDTH;
-  float tiles_down   = game_map_fbo_height_get(g) / TILE_HEIGHT;
+  float tiles_across = game_map_fbo_width_get(g) / (TILE_WIDTH * zoom);
+  float tiles_down   = game_map_fbo_height_get(g) / (TILE_HEIGHT * zoom);
 
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);
