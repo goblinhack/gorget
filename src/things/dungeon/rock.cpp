@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "../../my_callstack.hpp"
 #include "../../my_minimal.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
@@ -9,6 +10,8 @@
 
 bool tp_load_rock(void)
 {
+  TRACE_NO_INDENT();
+
   for (auto variant = 1; variant <= 1; variant++) {
     auto name = "rock" + std::to_string(variant);
     auto tp   = tp_load(name.c_str());

@@ -2,12 +2,15 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "../../my_callstack.hpp"
 #include "../../my_minimal.hpp"
 #include "../../my_tp.hpp"
 #include "../../my_tps.hpp"
 
 bool tp_load_key(void)
 {
+  TRACE_NO_INDENT();
+
   auto tp = tp_load("key");
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_on_ground, true);

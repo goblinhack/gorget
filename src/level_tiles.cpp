@@ -174,7 +174,12 @@ void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
           }
 
           auto which = std::string(tile_name) + "." + is_join_enum_val2str((is_join_enum) block_type);
-          auto tile  = tile_find_mand(which.c_str());
+
+          if (tp_is_animated(tp)) {
+            which += ".0";
+          }
+
+          auto tile = tile_find_mand(which.c_str());
           if (tile) {
             t->tile_index        = tile_global_index(tile);
             t->anim_class        = block_type;
