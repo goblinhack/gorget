@@ -29,6 +29,10 @@ bool tp_load_floor(void)
   tp_tiles_push_back(tp, tile_find_mand("floor.10"));
   tp_tiles_push_back(tp, tile_find_mand("floor.11"));
   tp_tiles_push_back(tp, tile_find_mand("floor.12"));
+  tp_tiles_push_back(tp, tile_find_mand("floor.13"));
+  tp_tiles_push_back(tp, tile_find_mand("floor.14"));
+  tp_tiles_push_back(tp, tile_find_mand("floor.15"));
+  tp_tiles_push_back(tp, tile_find_mand("floor.16"));
 
   return true;
 }

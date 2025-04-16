@@ -39,15 +39,6 @@ typedef struct Level_ {
   // Has the player been on this tile?
   //
   uint8_t is_walked[ MAP_WIDTH ][ MAP_HEIGHT ];
-  //
-  // Tile maps for rendering solid blocks of water etc...
-  //
-  uint8_t water_tile_map[ MAP_WIDTH + 8 ][ MAP_HEIGHT + 8 ];
-  //
-  // Animation loop counters for surface effects
-  //
-  int   water_step1;
-  float water_step2;
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////

@@ -29,7 +29,13 @@ bool templates_init(void)
   if (! tp_load_water()) {
     return false;
   }
+  if (! tp_load_rock()) {
+    return false;
+  }
   if (! tp_load_key()) {
+    return false;
+  }
+  if (! tp_load_deep_water()) {
     return false;
   }
   if (! tp_load_cursor_path()) {

@@ -7,16 +7,16 @@
 #include "../../my_tp.hpp"
 #include "../../my_tps.hpp"
 
-bool tp_load_water(void)
+bool tp_load_deep_water(void)
 {
   for (auto variant = 1; variant <= 1; variant++) {
-    auto name = "water" + std::to_string(variant);
+    auto name = "deep_water" + std::to_string(variant);
     auto tp   = tp_load(name.c_str());
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered, true);
+    tp_flag_set(tp, is_deep_water, true);
     tp_flag_set(tp, is_tiled, true);
-    tp_flag_set(tp, is_water, true);
-    tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
+    tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID2);
     tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
     // end sort marker1 }
 

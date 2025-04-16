@@ -167,12 +167,14 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
     DIE("bad map size, expected %d, got %d", (int) strlen(in), (int) expected_len);
   }
 
-  auto tp_wall   = tp_random(is_wall);
-  auto tp_water  = tp_random(is_water);
-  auto tp_door   = tp_find_mand("door");
-  auto tp_floor  = tp_find_mand("floor");
-  auto tp_exit   = tp_find_mand("exit");
-  auto tp_player = tp_find_mand("player");
+  auto tp_wall       = tp_random(is_wall);
+  auto tp_rock       = tp_random(is_rock);
+  auto tp_water      = tp_random(is_water);
+  auto tp_deep_water = tp_random(is_deep_water);
+  auto tp_door       = tp_find_mand("door");
+  auto tp_floor      = tp_find_mand("floor");
+  auto tp_exit       = tp_find_mand("exit");
+  auto tp_player     = tp_find_mand("player");
   //  auto tp_entrance = tp_find_mand("entrance");
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -180,6 +182,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
       auto offset = (row_len * y) + x;
       auto c      = in[ offset ];
       Tpp  tp     = nullptr;
+      Tpp  tp2    = nullptr;
 
       bool need_floor = false;
 
@@ -210,6 +213,11 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
         case CHARMAP_FOLIAGE :
           need_floor = true;
           tp         = nullptr; /* todo */
+          break;
+        case CHARMAP_DEEP_WATER :
+          need_floor = true;
+          tp         = tp_deep_water;
+          tp2        = tp_water;
           break;
         case CHARMAP_WATER :
           need_floor = true;
@@ -287,7 +295,10 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           need_floor = true;
           tp         = nullptr; /* todo */
           break;
-        case CHARMAP_EMPTY : break;
+        case CHARMAP_EMPTY :
+          need_floor = true;
+          tp         = tp_rock;
+          break;
         default :
           if (! g_opt_test_levels) {
             //            DIE("unexpected map char '%c'", c);
@@ -309,6 +320,13 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
       auto t = thing_init(g, v, l, tp, point(x, y));
       if (t) {
         thing_push(g, v, l, t);
+      }
+
+      if (tp2) {
+        t = thing_init(g, v, l, tp2, point(x, y));
+        if (t) {
+          thing_push(g, v, l, t);
+        }
       }
     }
   }
@@ -332,6 +350,7 @@ bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, point p, Tpp tp)
     if (! it) {
       continue;
     }
+
     if (it_tp == tp) {
       return true;
     }

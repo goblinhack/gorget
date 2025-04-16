@@ -135,8 +135,8 @@
       list_macro(is_unused94, "is_unused94"),                         /* ............................ */             \
       list_macro(is_unused95, "is_unused95"),                         /* ............................ */             \
       list_macro(is_unused96, "is_unused96"),                         /* ............................ */             \
-      list_macro(is_unused97, "is_unused97"),                         /* ............................ */             \
-      list_macro(is_unused98, "is_unused98"),                         /* ............................ */             \
+      list_macro(is_deep_water, "is_deep_water"),                     /* ............................ */             \
+      list_macro(is_rock, "is_rock"),                                 /* ............................ */             \
       list_macro(is_water, "is_water"),                               /* ............................ */             \
       list_macro(is_tickable, "is_tickable"),                         /* ............................ */             \
       list_macro(THING_FLAG_MAX, "THING_FLAG_MAX"),
@@ -266,8 +266,8 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused94(tp)             tp_flag(tp, is_unused94)
 #define tp_is_unused95(tp)             tp_flag(tp, is_unused95)
 #define tp_is_unused96(tp)             tp_flag(tp, is_unused96)
-#define tp_is_unused97(tp)             tp_flag(tp, is_unused97)
-#define tp_is_unused98(tp)             tp_flag(tp, is_unused98)
+#define tp_is_deep_water(tp)           tp_flag(tp, is_deep_water)
+#define tp_is_rock(tp)                 tp_flag(tp, is_rock)
 #define tp_is_water(tp)                tp_flag(tp, is_water)
 #define tp_is_tickable(tp)             tp_flag(tp, is_tickable)
 
@@ -394,8 +394,8 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused94(thing)             tp_flag(thing_tp(thing), is_unused94)
 #define thing_is_unused95(thing)             tp_flag(thing_tp(thing), is_unused95)
 #define thing_is_unused96(thing)             tp_flag(thing_tp(thing), is_unused96)
-#define thing_is_unused97(thing)             tp_flag(thing_tp(thing), is_unused97)
-#define thing_is_unused98(thing)             tp_flag(thing_tp(thing), is_unused98)
+#define thing_is_deep_water(thing)           tp_flag(thing_tp(thing), is_deep_water)
+#define thing_is_rock(thing)                 tp_flag(thing_tp(thing), is_rock)
 #define thing_is_water(thing)                tp_flag(thing_tp(thing), is_water)
 #define thing_is_tickable(thing)             tp_flag(thing_tp(thing), is_tickable)
 
@@ -522,12 +522,18 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused94(g, v, l, p)             level_flag(g, v, l, is_unused94, p)
 #define level_is_unused95(g, v, l, p)             level_flag(g, v, l, is_unused95, p)
 #define level_is_unused96(g, v, l, p)             level_flag(g, v, l, is_unused96, p)
-#define level_is_unused97(g, v, l, p)             level_flag(g, v, l, is_unused97, p)
-#define level_is_unused98(g, v, l, p)             level_flag(g, v, l, is_unused98, p)
+#define level_is_deep_water(g, v, l, p)           level_flag(g, v, l, is_deep_water, p)
+#define level_is_rock(g, v, l, p)                 level_flag(g, v, l, is_rock, p)
 #define level_is_water(g, v, l, p)                level_flag(g, v, l, is_water, p)
 #define level_is_tickable(g, v, l, p)             level_flag(g, v, l, is_tickable, p)
 
-enum { MAP_Z_DEPTH_FLOOR, MAP_Z_DEPTH_LIQUID, MAP_Z_DEPTH_OBJ, MAP_Z_DEPTH_LAST };
+enum {
+  MAP_Z_DEPTH_FLOOR,
+  MAP_Z_DEPTH_LIQUID,  /* e.g. water */
+  MAP_Z_DEPTH_LIQUID2, /* e.g. deep water */
+  MAP_Z_DEPTH_OBJ,     /* e.g water */
+  MAP_Z_DEPTH_LAST
+};
 #define MAP_Z_DEPTH_FIRST MAP_Z_DEPTH_FLOOR
 
 #define FOR_ALL_Z_DEPTH(_z_depth_)                                                                                   \
