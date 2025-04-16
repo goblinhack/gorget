@@ -967,8 +967,14 @@ std::string tile_name(Tilep t)
   return t->name;
 }
 
-uint32_t tile_delay_ms(Tilep t) { return t->delay_ms; }
-void     tile_delay_ms_set(Tilep t, uint32_t val) { t->delay_ms = val; }
+uint32_t tile_delay_ms(Tilep t)
+{
+  if (! t->delay_ms) {
+    return 5000;
+  }
+  return t->delay_ms;
+}
+void tile_delay_ms_set(Tilep t, uint32_t val) { t->delay_ms = val; }
 
 uint32_t tile_global_index(Tilep t) { return t->global_index; }
 void     tile_global_index_set(Tilep t, uint32_t val) { t->global_index = val; }

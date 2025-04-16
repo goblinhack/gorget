@@ -151,12 +151,14 @@ Tpp tp_find(TpId id)
 TpId tp_id_get(Tpp tp)
 {
   TRACE_NO_INDENT();
+
   return tp->id;
 }
 
 bool tp_init(void)
 {
   TRACE_NO_INDENT();
+
   tp_init_done = true;
 
   templates_init();
@@ -169,6 +171,7 @@ bool tp_init(void)
 void tp_fini(void)
 {
   TRACE_NO_INDENT();
+
   if (! tp_init_done) {
     return;
   }
@@ -195,6 +198,8 @@ void tp_fini(void)
 //
 static void tp_assign_id(const std::string &tp_name, int *id_out)
 {
+  TRACE_NO_INDENT();
+
   static std::map< std::string, int > tp_preferred_id;
 
   static const std::vector< std::string > tp_arr(tps);
@@ -255,6 +260,7 @@ Tpp tp_load(const char *name_in)
 Tilep tp_first_tile(Tpp tp, int anim_class)
 {
   TRACE_NO_INDENT();
+
   if (! tp) {
     return nullptr;
   }
@@ -347,6 +353,7 @@ Tpp tp_random_monst(int c)
 Tpp tp_random(ThingFlag f)
 {
   TRACE_NO_INDENT();
+
   if (unlikely(! tp_flag_map[ f ].size())) {
     DIE("No tp found for %d", f);
     return nullptr;
@@ -354,23 +361,84 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
-Tilep tp_tiles_get(Tpp tp, int anim_class, int index) { return tp->tiles[ anim_class ][ index ]; }
-void  tp_tiles_push_back(Tpp tp, int anim_class, Tilep val) { tp->tiles[ anim_class ].push_back(val); }
-int   tp_tiles_size(Tpp tp, int anim_class) { return (int) tp->tiles[ anim_class ].size(); }
+Tilep tp_tiles_get(Tpp tp, int anim_class, int index)
+{
+  TRACE_NO_INDENT();
 
-const char *tp_name(Tpp tp) { return tp->name.c_str(); }
-const char *to_string(Tpp tp) { return tp->text_short_name.c_str(); }
-const char *to_short_string(Tpp tp) { return tp->text_short_name.c_str(); }
+  if (index >= (int) tp->tiles[ anim_class ].size()) {
+    DIE("tile overflow tp %s class %d index %d", tp->name.c_str(), anim_class, index);
+  }
 
-bool tp_flag(Tpp tp, ThingFlag f) { return tp->flag[ f ]; }
+  return tp->tiles[ anim_class ][ index ];
+}
+void tp_tiles_push_back(Tpp tp, int anim_class, Tilep val)
+{
+  TRACE_NO_INDENT();
+  tp->tiles[ anim_class ].push_back(val);
+}
+int tp_tiles_size(Tpp tp, int anim_class)
+{
+  TRACE_NO_INDENT();
+  return (int) tp->tiles[ anim_class ].size();
+}
 
-void tp_flag_set(Tpp tp, ThingFlag f, bool val) { tp->flag[ f ] = val; }
+const char *tp_name(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  return tp->name.c_str();
+}
+const char *to_string(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  return tp->text_short_name.c_str();
+}
+const char *to_short_string(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  return tp->text_short_name.c_str();
+}
 
-void    tp_z_depth_set(Tpp tp, uint8_t val) { tp->z_depth = val; };
-uint8_t tp_z_depth_get(Tpp tp) { return tp->z_depth; };
+bool tp_flag(Tpp tp, ThingFlag f)
+{
+  TRACE_NO_INDENT();
+  return tp->flag[ f ];
+}
 
-void    tp_z_prio_set(Tpp tp, uint8_t val) { tp->z_prio = val; };
-uint8_t tp_z_prio_get(Tpp tp) { return tp->z_prio; };
+void tp_flag_set(Tpp tp, ThingFlag f, bool val)
+{
+  TRACE_NO_INDENT();
+  tp->flag[ f ] = val;
+}
 
-void tp_speed_set(Tpp tp, int val) { tp->speed = val; };
-int  tp_speed_get(Tpp tp) { return tp->speed; };
+void tp_z_depth_set(Tpp tp, uint8_t val)
+{
+  TRACE_NO_INDENT();
+  tp->z_depth = val;
+};
+uint8_t tp_z_depth_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  return tp->z_depth;
+};
+
+void tp_z_prio_set(Tpp tp, uint8_t val)
+{
+  TRACE_NO_INDENT();
+  tp->z_prio = val;
+};
+uint8_t tp_z_prio_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  return tp->z_prio;
+};
+
+void tp_speed_set(Tpp tp, int val)
+{
+  TRACE_NO_INDENT();
+  tp->speed = val;
+};
+int tp_speed_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  return tp->speed;
+};

@@ -547,55 +547,55 @@ enum { MAP_Z_PRIO_BEHIND, MAP_Z_PRIO_NORMAL, MAP_Z_PRIO_INFRONT, MAP_Z_PRIO_LAST
 enum { MONST_CLASS_A, MONST_CLASS_MAX };
 
 enum {
-  THING_ANIM_JOIN_BLOCK,  /* alias for IS_JOIN_BLOCK */
-  THING_ANIM_JOIN_HORIZ,  /* alias for IS_JOIN_HORIZ */
-  THING_ANIM_JOIN_VERT,   /* alias for IS_JOIN_VERT, */
-  THING_ANIM_JOIN_NODE,   /* alias for IS_JOIN_NODE, */
-  THING_ANIM_JOIN_LEFT,   /* alias for IS_JOIN_LEFT, */
-  THING_ANIM_JOIN_RIGHT,  /* alias for IS_JOIN_RIGHT */
-  THING_ANIM_JOIN_TOP,    /* alias for IS_JOIN_TOP,  */
-  THING_ANIM_JOIN_BOT,    /* alias for IS_JOIN_BOT,  */
-  THING_ANIM_JOIN_TL,     /* alias for IS_JOIN_TL,   */
-  THING_ANIM_JOIN_TR,     /* alias for IS_JOIN_TR,   */
   THING_ANIM_JOIN_BL,     /* alias for IS_JOIN_BL,   */
-  THING_ANIM_JOIN_BR,     /* alias for IS_JOIN_BR,   */
-  THING_ANIM_JOIN_T,      /* alias for IS_JOIN_T,    */
-  THING_ANIM_JOIN_T90,    /* alias for IS_JOIN_T90,  */
-  THING_ANIM_JOIN_T180,   /* alias for IS_JOIN_T180, */
-  THING_ANIM_JOIN_T270,   /* alias for IS_JOIN_T270, */
-  THING_ANIM_JOIN_X,      /* alias for IS_JOIN_X,    */
-  THING_ANIM_JOIN_TL2,    /* alias for IS_JOIN_TL2,  */
-  THING_ANIM_JOIN_TR2,    /* alias for IS_JOIN_TR2,  */
   THING_ANIM_JOIN_BL2,    /* alias for IS_JOIN_BL2,  */
+  THING_ANIM_JOIN_BLOCK,  /* alias for IS_JOIN_BLOCK */
+  THING_ANIM_JOIN_BOT,    /* alias for IS_JOIN_BOT,  */
+  THING_ANIM_JOIN_BR,     /* alias for IS_JOIN_BR,   */
   THING_ANIM_JOIN_BR2,    /* alias for IS_JOIN_BR2,  */
+  THING_ANIM_JOIN_HORIZ,  /* alias for IS_JOIN_HORIZ */
+  THING_ANIM_JOIN_HORIZ2, /* alias for IS_JOIN_HORIZ */
+  THING_ANIM_JOIN_LEFT,   /* alias for IS_JOIN_LEFT, */
+  THING_ANIM_JOIN_NODE,   /* alias for IS_JOIN_NODE, */
+  THING_ANIM_JOIN_RIGHT,  /* alias for IS_JOIN_RIGHT */
   THING_ANIM_JOIN_T_1,    /* alias for IS_JOIN_T_1,  */
   THING_ANIM_JOIN_T_2,    /* alias for IS_JOIN_T_2,  */
   THING_ANIM_JOIN_T_3,    /* alias for IS_JOIN_T_3,  */
-  THING_ANIM_JOIN_T90_1,  /* alias for IS_JOIN_T90_1 */
-  THING_ANIM_JOIN_T90_2,  /* alias for IS_JOIN_T90_2 */
-  THING_ANIM_JOIN_T90_3,  /* alias for IS_JOIN_T90_3 */
+  THING_ANIM_JOIN_T,      /* alias for IS_JOIN_T,    */
   THING_ANIM_JOIN_T180_1, /* alias for IS_JOIN_T180_ */
   THING_ANIM_JOIN_T180_2, /* alias for IS_JOIN_T180_ */
   THING_ANIM_JOIN_T180_3, /* alias for IS_JOIN_T180_ */
+  THING_ANIM_JOIN_T180,   /* alias for IS_JOIN_T180, */
   THING_ANIM_JOIN_T270_1, /* alias for IS_JOIN_T270_ */
   THING_ANIM_JOIN_T270_2, /* alias for IS_JOIN_T270_ */
   THING_ANIM_JOIN_T270_3, /* alias for IS_JOIN_T270_ */
-  THING_ANIM_JOIN_X1,     /* alias for IS_JOIN_X1,   */
-  THING_ANIM_JOIN_X1_270, /* alias for IS_JOIN_X1_27 */
-  THING_ANIM_JOIN_X1_180, /* alias for IS_JOIN_X1_18 */
-  THING_ANIM_JOIN_X1_90,  /* alias for IS_JOIN_X1_90 */
-  THING_ANIM_JOIN_X2,     /* alias for IS_JOIN_X2,   */
-  THING_ANIM_JOIN_X2_270, /* alias for IS_JOIN_X2_27 */
-  THING_ANIM_JOIN_X2_180, /* alias for IS_JOIN_X2_18 */
-  THING_ANIM_JOIN_X2_90,  /* alias for IS_JOIN_X2_90 */
-  THING_ANIM_JOIN_X3,     /* alias for IS_JOIN_X3,   */
-  THING_ANIM_JOIN_X3_180, /* alias for IS_JOIN_X3_18 */
-  THING_ANIM_JOIN_X4,     /* alias for IS_JOIN_X4,   */
-  THING_ANIM_JOIN_X4_270, /* alias for IS_JOIN_X4_27 */
-  THING_ANIM_JOIN_X4_180, /* alias for IS_JOIN_X4_18 */
-  THING_ANIM_JOIN_X4_90,  /* alias for IS_JOIN_X4_90 */
+  THING_ANIM_JOIN_T270,   /* alias for IS_JOIN_T270, */
+  THING_ANIM_JOIN_T90_1,  /* alias for IS_JOIN_T90_1 */
+  THING_ANIM_JOIN_T90_2,  /* alias for IS_JOIN_T90_2 */
+  THING_ANIM_JOIN_T90_3,  /* alias for IS_JOIN_T90_3 */
+  THING_ANIM_JOIN_T90,    /* alias for IS_JOIN_T90,  */
+  THING_ANIM_JOIN_TL,     /* alias for IS_JOIN_TL,   */
+  THING_ANIM_JOIN_TL2,    /* alias for IS_JOIN_TL2,  */
+  THING_ANIM_JOIN_TOP,    /* alias for IS_JOIN_TOP,  */
+  THING_ANIM_JOIN_TR,     /* alias for IS_JOIN_TR,   */
+  THING_ANIM_JOIN_TR2,    /* alias for IS_JOIN_TR2,  */
+  THING_ANIM_JOIN_VERT,   /* alias for IS_JOIN_VERT, */
   THING_ANIM_JOIN_VERT2,  /* alias for IS_JOIN_VERT2 */
-  THING_ANIM_JOIN_HORIZ2, /* alias for IS_JOIN_HORIZ */
+  THING_ANIM_JOIN_X,      /* alias for IS_JOIN_X,    */
+  THING_ANIM_JOIN_X1_180, /* alias for IS_JOIN_X1_18 */
+  THING_ANIM_JOIN_X1_270, /* alias for IS_JOIN_X1_27 */
+  THING_ANIM_JOIN_X1_90,  /* alias for IS_JOIN_X1_90 */
+  THING_ANIM_JOIN_X1,     /* alias for IS_JOIN_X1,   */
+  THING_ANIM_JOIN_X2_180, /* alias for IS_JOIN_X2_18 */
+  THING_ANIM_JOIN_X2_270, /* alias for IS_JOIN_X2_27 */
+  THING_ANIM_JOIN_X2_90,  /* alias for IS_JOIN_X2_90 */
+  THING_ANIM_JOIN_X2,     /* alias for IS_JOIN_X2,   */
+  THING_ANIM_JOIN_X3_180, /* alias for IS_JOIN_X3_18 */
+  THING_ANIM_JOIN_X3,     /* alias for IS_JOIN_X3,   */
+  THING_ANIM_JOIN_X4_180, /* alias for IS_JOIN_X4_18 */
+  THING_ANIM_JOIN_X4_270, /* alias for IS_JOIN_X4_27 */
+  THING_ANIM_JOIN_X4_90,  /* alias for IS_JOIN_X4_90 */
+  THING_ANIM_JOIN_X4,     /* alias for IS_JOIN_X4,   */
   THING_ANIM_IDLE,
   THING_ANIM_MAX
 };

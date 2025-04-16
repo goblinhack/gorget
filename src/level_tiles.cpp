@@ -15,55 +15,55 @@
 
 /* clang-format off */
 #define IS_JOIN_ENUM(list_macro)                  \
-    list_macro(IS_JOIN_BLOCK,  "IS_JOIN_BLOCK"),  \
-    list_macro(IS_JOIN_HORIZ,  "IS_JOIN_HORIZ"),  \
-    list_macro(IS_JOIN_VERT,   "IS_JOIN_VERT"),   \
-    list_macro(IS_JOIN_NODE,   "IS_JOIN_NODE"),   \
-    list_macro(IS_JOIN_LEFT,   "IS_JOIN_LEFT"),   \
-    list_macro(IS_JOIN_RIGHT,  "IS_JOIN_RIGHT"),  \
-    list_macro(IS_JOIN_TOP,    "IS_JOIN_TOP"),    \
-    list_macro(IS_JOIN_BOT,    "IS_JOIN_BOT"),    \
-    list_macro(IS_JOIN_TL,     "IS_JOIN_TL"),     \
-    list_macro(IS_JOIN_TR,     "IS_JOIN_TR"),     \
     list_macro(IS_JOIN_BL,     "IS_JOIN_BL"),     \
-    list_macro(IS_JOIN_BR,     "IS_JOIN_BR"),     \
-    list_macro(IS_JOIN_T,      "IS_JOIN_T"),      \
-    list_macro(IS_JOIN_T90,    "IS_JOIN_T90"),    \
-    list_macro(IS_JOIN_T180,   "IS_JOIN_T180"),   \
-    list_macro(IS_JOIN_T270,   "IS_JOIN_T270"),   \
-    list_macro(IS_JOIN_X,      "IS_JOIN_X"),      \
-    list_macro(IS_JOIN_TL2,    "IS_JOIN_TL2"),    \
-    list_macro(IS_JOIN_TR2,    "IS_JOIN_TR2"),    \
     list_macro(IS_JOIN_BL2,    "IS_JOIN_BL2"),    \
+    list_macro(IS_JOIN_BLOCK,  "IS_JOIN_BLOCK"),  \
+    list_macro(IS_JOIN_BOT,    "IS_JOIN_BOT"),    \
+    list_macro(IS_JOIN_BR,     "IS_JOIN_BR"),     \
     list_macro(IS_JOIN_BR2,    "IS_JOIN_BR2"),    \
+    list_macro(IS_JOIN_HORIZ,  "IS_JOIN_HORIZ"),  \
+    list_macro(IS_JOIN_HORIZ2, "IS_JOIN_HORIZ2"), \
+    list_macro(IS_JOIN_LEFT,   "IS_JOIN_LEFT"),   \
+    list_macro(IS_JOIN_NODE,   "IS_JOIN_NODE"),   \
+    list_macro(IS_JOIN_RIGHT,  "IS_JOIN_RIGHT"),  \
     list_macro(IS_JOIN_T_1,    "IS_JOIN_T_1"),    \
     list_macro(IS_JOIN_T_2,    "IS_JOIN_T_2"),    \
     list_macro(IS_JOIN_T_3,    "IS_JOIN_T_3"),    \
-    list_macro(IS_JOIN_T90_1,  "IS_JOIN_T90_1"),  \
-    list_macro(IS_JOIN_T90_2,  "IS_JOIN_T90_2"),  \
-    list_macro(IS_JOIN_T90_3,  "IS_JOIN_T90_3"),  \
+    list_macro(IS_JOIN_T,      "IS_JOIN_T"),      \
     list_macro(IS_JOIN_T180_1, "IS_JOIN_T180_1"), \
     list_macro(IS_JOIN_T180_2, "IS_JOIN_T180_2"), \
     list_macro(IS_JOIN_T180_3, "IS_JOIN_T180_3"), \
+    list_macro(IS_JOIN_T180,   "IS_JOIN_T180"),   \
     list_macro(IS_JOIN_T270_1, "IS_JOIN_T270_1"), \
     list_macro(IS_JOIN_T270_2, "IS_JOIN_T270_2"), \
     list_macro(IS_JOIN_T270_3, "IS_JOIN_T270_3"), \
-    list_macro(IS_JOIN_X1,     "IS_JOIN_X1"),     \
-    list_macro(IS_JOIN_X1_270, "IS_JOIN_X1_270"), \
-    list_macro(IS_JOIN_X1_180, "IS_JOIN_X1_180"), \
-    list_macro(IS_JOIN_X1_90,  "IS_JOIN_X1_90"),  \
-    list_macro(IS_JOIN_X2,     "IS_JOIN_X2"),     \
-    list_macro(IS_JOIN_X2_270, "IS_JOIN_X2_270"), \
-    list_macro(IS_JOIN_X2_180, "IS_JOIN_X2_180"), \
-    list_macro(IS_JOIN_X2_90,  "IS_JOIN_X2_90"),  \
-    list_macro(IS_JOIN_X3,     "IS_JOIN_X3"),     \
-    list_macro(IS_JOIN_X3_180, "IS_JOIN_X3_180"), \
-    list_macro(IS_JOIN_X4,     "IS_JOIN_X4"),     \
-    list_macro(IS_JOIN_X4_270, "IS_JOIN_X4_270"), \
-    list_macro(IS_JOIN_X4_180, "IS_JOIN_X4_180"), \
-    list_macro(IS_JOIN_X4_90,  "IS_JOIN_X4_90"),  \
+    list_macro(IS_JOIN_T270,   "IS_JOIN_T270"),   \
+    list_macro(IS_JOIN_T90_1,  "IS_JOIN_T90_1"),  \
+    list_macro(IS_JOIN_T90_2,  "IS_JOIN_T90_2"),  \
+    list_macro(IS_JOIN_T90_3,  "IS_JOIN_T90_3"),  \
+    list_macro(IS_JOIN_T90,    "IS_JOIN_T90"),    \
+    list_macro(IS_JOIN_TL,     "IS_JOIN_TL"),     \
+    list_macro(IS_JOIN_TL2,    "IS_JOIN_TL2"),    \
+    list_macro(IS_JOIN_TOP,    "IS_JOIN_TOP"),    \
+    list_macro(IS_JOIN_TR,     "IS_JOIN_TR"),     \
+    list_macro(IS_JOIN_TR2,    "IS_JOIN_TR2"),    \
+    list_macro(IS_JOIN_VERT,   "IS_JOIN_VERT"),   \
     list_macro(IS_JOIN_VERT2,  "IS_JOIN_VERT2"),  \
-    list_macro(IS_JOIN_HORIZ2, "IS_JOIN_HORIZ2"), \
+    list_macro(IS_JOIN_X,      "IS_JOIN_X"),      \
+    list_macro(IS_JOIN_X1_180, "IS_JOIN_X1_180"), \
+    list_macro(IS_JOIN_X1_270, "IS_JOIN_X1_270"), \
+    list_macro(IS_JOIN_X1_90,  "IS_JOIN_X1_90"),  \
+    list_macro(IS_JOIN_X1,     "IS_JOIN_X1"),     \
+    list_macro(IS_JOIN_X2_180, "IS_JOIN_X2_180"), \
+    list_macro(IS_JOIN_X2_270, "IS_JOIN_X2_270"), \
+    list_macro(IS_JOIN_X2_90,  "IS_JOIN_X2_90"),  \
+    list_macro(IS_JOIN_X2,     "IS_JOIN_X2"),     \
+    list_macro(IS_JOIN_X3_180, "IS_JOIN_X3_180"), \
+    list_macro(IS_JOIN_X3,     "IS_JOIN_X3"),     \
+    list_macro(IS_JOIN_X4_180, "IS_JOIN_X4_180"), \
+    list_macro(IS_JOIN_X4_270, "IS_JOIN_X4_270"), \
+    list_macro(IS_JOIN_X4_90,  "IS_JOIN_X4_90"),  \
+    list_macro(IS_JOIN_X4,     "IS_JOIN_X4"),     \
     list_macro(IS_JOIN_MAX,    "IS_JOIN_MAX")
 
 /* clang-format on */
