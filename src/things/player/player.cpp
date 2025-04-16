@@ -23,12 +23,12 @@ bool tp_load_player(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
-  auto delay = 100;
+  auto delay = 1000;
 
-  for (auto frame = 0; frame < 1; frame++) {
+  for (auto frame = 0; frame < 2; frame++) {
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
-    tp_tiles_push_back(tp, tile);
+    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
   return true;

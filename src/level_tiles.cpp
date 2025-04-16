@@ -86,10 +86,6 @@ void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
           continue;
         }
 
-        if (! tp_tiles_size(tp)) {
-          continue;
-        }
-
         if (tp_is_tiled(tp)) {
           auto tile_name = tp_name(tp);
 
@@ -181,7 +177,8 @@ void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
           auto tile  = tile_find_mand(which.c_str());
           if (tile) {
             t->tile_index        = tile_global_index(tile);
-            t->anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
+            t->anim_class        = block_type;
+            t->anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp, t->anim_class) - 1);
             t->anim_ms_remaining = pcg_random_range_inclusive(0, tile_delay_ms(tile));
           }
         }

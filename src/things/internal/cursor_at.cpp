@@ -17,7 +17,7 @@ bool tp_load_cursor_at(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
-  tp_tiles_push_back(tp, tile_find_mand("cursor_at"));
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("cursor_at"));
 
   return true;
 }

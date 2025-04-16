@@ -59,7 +59,7 @@ public:
   //
   uint8_t z_prio {};
 
-  std::vector< class Tile * > tiles;
+  std::vector< class Tile * > tiles[ THING_ANIM_MAX ];
 
   bool is_monst_class[ MONST_CLASS_MAX ] {};
 
@@ -252,23 +252,23 @@ Tpp tp_load(const char *name_in)
   return tp;
 }
 
-Tilep tp_first_tile(Tpp tp)
+Tilep tp_first_tile(Tpp tp, int anim_class)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     return nullptr;
   }
 
-  auto tiles = &tp->tiles;
+  auto tiles = &tp->tiles[ anim_class ];
 
   if (! tiles || tiles->empty()) {
-    ERR("Tp %s has no tiles", tp->name.c_str());
+    ERR("Tp %s class %d has no tiles", tp->name.c_str(), anim_class);
   }
 
   //
   // Get the first anim tile.
   //
-  return tp->tiles[ 0 ];
+  return tp->tiles[ anim_class ][ 0 ];
 }
 
 void tp_random_dungeon_init(void)
@@ -354,9 +354,9 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
-Tilep tp_tiles_get(Tpp tp, int index) { return tp->tiles[ index ]; }
-void  tp_tiles_push_back(Tpp tp, Tilep val) { tp->tiles.push_back(val); }
-int   tp_tiles_size(Tpp tp) { return (int) tp->tiles.size(); }
+Tilep tp_tiles_get(Tpp tp, int anim_class, int index) { return tp->tiles[ anim_class ][ index ]; }
+void  tp_tiles_push_back(Tpp tp, int anim_class, Tilep val) { tp->tiles[ anim_class ].push_back(val); }
+int   tp_tiles_size(Tpp tp, int anim_class) { return (int) tp->tiles[ anim_class ].size(); }
 
 const char *tp_name(Tpp tp) { return tp->name.c_str(); }
 const char *to_string(Tpp tp) { return tp->text_short_name.c_str(); }

@@ -14,6 +14,8 @@
 
 static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint16_t tile_index, point tl, point br)
 {
+  TRACE_NO_INDENT();
+
   auto tile = tile_index_to_tile(tile_index);
   if (! tile) {
     return;
@@ -30,6 +32,8 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint1
 
 void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
 {
+  TRACE_NO_INDENT();
+
   int zoom = game_map_zoom_get(g);
   int dw   = TILE_WIDTH * zoom;
   int dh   = TILE_HEIGHT * zoom;
@@ -40,9 +44,15 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
   uint16_t tile_index;
 
   if (t) {
+    //
+    // Things
+    //
     tile_index = t->tile_index;
   } else {
-    Tilep tile = tp_tiles_get(tp, 0);
+    //
+    // Cursor
+    //
+    Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
     tile_index = tile_global_index(tile);
   }
 
@@ -107,6 +117,8 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)
 {
+  TRACE_NO_INDENT();
+
   Tpp tp = nullptr;
 
   switch (v->cursor[ p.x ][ p.y ]) {
@@ -148,6 +160,8 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)
 
 static void level_display_slot(Gamep g, Levelsp v, Levelp l, point p, int slot, int depth, int prio)
 {
+  TRACE_NO_INDENT();
+
   Tpp  tp;
   auto t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
   if (! tp) {

@@ -101,6 +101,10 @@ typedef struct Thing_ {
   //
   uint8_t dir;
   //
+  // Idle etc...
+  //
+  uint8_t anim_class;
+  //
   // The current tiles[] index for this object
   //
   uint8_t anim_index;

@@ -72,11 +72,11 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
         }
 
         t->anim_index++;
-        if (t->anim_index >= tp_tiles_size(tp)) {
+        if (t->anim_index >= tp_tiles_size(tp, t->anim_class)) {
           t->anim_index = 0;
         }
 
-        tile          = tp_tiles_get(tp, t->anim_index);
+        tile          = tp_tiles_get(tp, t->anim_class, t->anim_index);
         t->tile_index = tile_global_index(tile);
 
         t->anim_ms_remaining += tile_delay_ms(tile);

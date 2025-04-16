@@ -50,6 +50,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
   t->at          = at;
   t->old_at      = at;
   t->moving_from = at;
+  t->anim_class  = THING_ANIM_IDLE;
 
   t->pix_at.x = t->at.x * TILE_WIDTH;
   t->pix_at.y = t->at.y * TILE_HEIGHT;
@@ -57,14 +58,17 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
   //
   // Assign an initial tile
   //
-  auto index = pcg_rand() % tp_tiles_size(tp);
-  auto tile  = tp_tiles_get(tp, index);
-  if (tile) {
-    t->tile_index = tile_global_index(tile);
+  auto ntiles = tp_tiles_size(tp, t->anim_class);
+  if (ntiles) {
+    auto index = pcg_rand() % ntiles;
+    auto tile  = tp_tiles_get(tp, t->anim_class, index);
+    if (tile) {
+      t->tile_index = tile_global_index(tile);
 
-    if (tp_is_animated(tp)) {
-      auto i        = pcg_random_range_inclusive(0, tp_tiles_size(tp) - 1);
-      t->anim_index = i;
+      if (tp_is_animated(tp)) {
+        auto i        = pcg_random_range_inclusive(0, ntiles - 1);
+        t->anim_index = i;
+      }
     }
   }
 
