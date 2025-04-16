@@ -3635,8 +3635,6 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
 
   if (sdlk_eq(*key, game_key_screenshot_get(g))) {
     sdl_screenshot(g);
-    CON("Screenshot taken.");
-    CON("Screenshot taken");
     return true;
   }
 

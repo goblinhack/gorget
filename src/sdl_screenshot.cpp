@@ -55,7 +55,7 @@ void sdl_screenshot_do(Gamep g)
   char *png = dynprintf("screenshot.%d.png", count);
   stbi_write_png(png, w, h, components, pixels.data(), 3 * w);
   GL_ERROR_CHECK();
-  CON("Screenshot: %s", png);
+  TOPCON("Screenshot: %s", png);
   myfree(png);
   blit_fbo_unbind();
   GL_ERROR_CHECK();
