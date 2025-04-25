@@ -37,15 +37,53 @@ void sdl_display(Gamep g)
       int visible_map_br_y;
       game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
-      //
-      // Brighter map effect
-      //
+      color c = WHITE;
+      c.a     = 255;
+      glcolor(c);
+
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
       blit_init();
       blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
            visible_map_br_y);
       blit_flush();
+
+      if (0) {
+        c.a = 5;
+        glcolor(c);
+
+        //
+        // Paste this code prior to the blend in question
+        //
+        extern int         vals[];
+        extern std::string vals_str[];
+        extern int         g_blend_a;
+        extern int         g_blend_b;
+        CON("glBlendFunc(%s, %s)", vals_str[ g_blend_a ].c_str(), vals_str[ g_blend_b ].c_str());
+        glBlendFunc(vals[ g_blend_a ], vals[ g_blend_b ]);
+
+        blit_init();
+        blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x - 1, visible_map_tl_y - 1,
+             visible_map_br_x + 1, visible_map_br_y + 1);
+        blit_flush();
+
+        if (0) {
+          blit_init();
+          blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x + 1, visible_map_tl_y + 1,
+               visible_map_br_x + 1, visible_map_br_y + 1);
+          blit_flush();
+
+          blit_init();
+          blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x + 1, visible_map_tl_y - 1,
+               visible_map_br_x + 1, visible_map_br_y - 1);
+          blit_flush();
+
+          blit_init();
+          blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x - 1, visible_map_tl_y + 1,
+               visible_map_br_x - 1, visible_map_br_y + 1);
+          blit_flush();
+        }
+      }
     }
   }
 

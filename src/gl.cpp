@@ -486,10 +486,6 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
 
   switch (fbo) {
     case FBO_MAP :
-    case FBO_MASK1 :
-    case FBO_MASK2 :
-    case FBO_MASK3 :
-    case FBO_MASK4 :
       w = game_map_fbo_width_get(g);
       h = game_map_fbo_height_get(g);
       break;
