@@ -173,6 +173,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_deep_water = tp_random(is_deep_water);
   auto tp_door       = tp_find_mand("door");
   auto tp_floor      = tp_find_mand("floor");
+  auto tp_dirt       = tp_find_mand("dirt");
   auto tp_exit       = tp_find_mand("exit");
   auto tp_player     = tp_find_mand("player");
   //  auto tp_entrance = tp_find_mand("entrance");
@@ -185,6 +186,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
       Tpp  tp2    = nullptr;
 
       bool need_floor = false;
+      bool need_dirt  = false;
 
       switch (c) {
         case CHARMAP_CHASM :
@@ -215,13 +217,13 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           tp         = nullptr; /* todo */
           break;
         case CHARMAP_DEEP_WATER :
-          need_floor = true;
-          tp         = tp_deep_water;
-          tp2        = tp_water;
+          need_dirt = true;
+          tp        = tp_deep_water;
+          tp2       = tp_water;
           break;
         case CHARMAP_WATER :
-          need_floor = true;
-          tp         = tp_water;
+          need_dirt = true;
+          tp        = tp_water;
           break;
         case CHARMAP_BARREL :
           need_floor = true;
@@ -295,9 +297,13 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           need_floor = true;
           tp         = nullptr; /* todo */
           break;
-        case CHARMAP_EMPTY :
+        case CHARMAP_DIRT :
           need_floor = true;
-          tp         = tp_rock;
+          tp         = tp_dirt;
+          break;
+        case CHARMAP_EMPTY :
+          need_dirt = true;
+          tp        = tp_rock;
           break;
         default :
           if (! g_opt_test_levels) {
@@ -307,6 +313,14 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
 
       if (need_floor) {
         auto tp_add = tp_floor;
+        auto t      = thing_init(g, v, l, tp_add, point(x, y));
+        if (t) {
+          thing_push(g, v, l, t);
+        }
+      }
+
+      if (need_dirt) {
+        auto tp_add = tp_dirt;
         auto t      = thing_init(g, v, l, tp_add, point(x, y));
         if (t) {
           thing_push(g, v, l, t);

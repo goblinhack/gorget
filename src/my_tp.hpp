@@ -134,7 +134,7 @@
       list_macro(is_unused93, "is_unused93"),                         /* ............................ */             \
       list_macro(is_unused94, "is_unused94"),                         /* ............................ */             \
       list_macro(is_unused95, "is_unused95"),                         /* ............................ */             \
-      list_macro(is_unused96, "is_unused96"),                         /* ............................ */             \
+      list_macro(is_dirt, "is_dirt"),                                 /* ............................ */             \
       list_macro(is_deep_water, "is_deep_water"),                     /* ............................ */             \
       list_macro(is_rock, "is_rock"),                                 /* ............................ */             \
       list_macro(is_water, "is_water"),                               /* ............................ */             \
@@ -265,7 +265,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused93(tp)             tp_flag(tp, is_unused93)
 #define tp_is_unused94(tp)             tp_flag(tp, is_unused94)
 #define tp_is_unused95(tp)             tp_flag(tp, is_unused95)
-#define tp_is_unused96(tp)             tp_flag(tp, is_unused96)
+#define tp_is_dirt(tp)                 tp_flag(tp, is_dirt)
 #define tp_is_deep_water(tp)           tp_flag(tp, is_deep_water)
 #define tp_is_rock(tp)                 tp_flag(tp, is_rock)
 #define tp_is_water(tp)                tp_flag(tp, is_water)
@@ -393,7 +393,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused93(thing)             tp_flag(thing_tp(thing), is_unused93)
 #define thing_is_unused94(thing)             tp_flag(thing_tp(thing), is_unused94)
 #define thing_is_unused95(thing)             tp_flag(thing_tp(thing), is_unused95)
-#define thing_is_unused96(thing)             tp_flag(thing_tp(thing), is_unused96)
+#define thing_is_dirt(thing)                 tp_flag(thing_tp(thing), is_dirt)
 #define thing_is_deep_water(thing)           tp_flag(thing_tp(thing), is_deep_water)
 #define thing_is_rock(thing)                 tp_flag(thing_tp(thing), is_rock)
 #define thing_is_water(thing)                tp_flag(thing_tp(thing), is_water)
@@ -521,7 +521,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused93(g, v, l, p)             level_flag(g, v, l, is_unused93, p)
 #define level_is_unused94(g, v, l, p)             level_flag(g, v, l, is_unused94, p)
 #define level_is_unused95(g, v, l, p)             level_flag(g, v, l, is_unused95, p)
-#define level_is_unused96(g, v, l, p)             level_flag(g, v, l, is_unused96, p)
+#define level_is_dirt(g, v, l, p)                 level_flag(g, v, l, is_dirt, p)
 #define level_is_deep_water(g, v, l, p)           level_flag(g, v, l, is_deep_water, p)
 #define level_is_rock(g, v, l, p)                 level_flag(g, v, l, is_rock, p)
 #define level_is_water(g, v, l, p)                level_flag(g, v, l, is_water, p)

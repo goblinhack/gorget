@@ -38,6 +38,7 @@ std::initializer_list< std::string > tps = {
     "floor",
     "door",
     "key",
+    "dirt",
     "cursor_path",
     "cursor_at",
   /* end shell marker1 */

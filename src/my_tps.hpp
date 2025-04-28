@@ -16,6 +16,7 @@ bool tp_load_door();
 bool tp_load_water();
 bool tp_load_rock();
 bool tp_load_key();
+bool tp_load_dirt();
 bool tp_load_deep_water();
 bool tp_load_cursor_path();
 bool tp_load_cursor_at();

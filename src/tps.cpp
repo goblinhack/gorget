@@ -35,6 +35,9 @@ bool templates_init(void)
   if (! tp_load_key()) {
     return false;
   }
+  if (! tp_load_dirt()) {
+    return false;
+  }
   if (! tp_load_deep_water()) {
     return false;
   }
