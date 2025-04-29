@@ -15,6 +15,7 @@ bool tp_load_wall();
 bool tp_load_door();
 bool tp_load_water();
 bool tp_load_rock();
+bool tp_load_treasure();
 bool tp_load_key();
 bool tp_load_dirt();
 bool tp_load_deep_water();

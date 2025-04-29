@@ -176,6 +176,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_dirt       = tp_find_mand("dirt");
   auto tp_exit       = tp_find_mand("exit");
   auto tp_player     = tp_find_mand("player");
+  auto tp_treasure   = tp_find_mand("treasure");
   //  auto tp_entrance = tp_find_mand("entrance");
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -202,11 +203,11 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_TREASURE1 :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_treasure;
           break;
         case CHARMAP_TREASURE2 :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_treasure;
           break;
         case CHARMAP_TELEPORT :
           need_floor = true;

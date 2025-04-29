@@ -32,6 +32,9 @@ bool templates_init(void)
   if (! tp_load_rock()) {
     return false;
   }
+  if (! tp_load_treasure()) {
+    return false;
+  }
   if (! tp_load_key()) {
     return false;
   }

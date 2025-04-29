@@ -37,10 +37,12 @@ std::initializer_list< std::string > tps = {
     "exit",
     "floor",
     "door",
+    "treasure",
     "key",
     "dirt",
     "cursor_path",
     "cursor_at",
+    "player",
   /* end shell marker1 */
 };
 /* clang-format on */
