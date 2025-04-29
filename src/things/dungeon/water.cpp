@@ -24,7 +24,7 @@ bool tp_load_water(void)
     tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
     // end sort marker1 }
 
-    for (auto frame = 0; frame < 4; frame++) {
+    for (auto frame = 0; frame < 2; frame++) {
       auto frame_string = std::to_string(frame);
       tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile_find_mand(name + ".IS_JOIN_BL." + frame_string));
       tp_tiles_push_back(tp, THING_ANIM_JOIN_BL2, tile_find_mand(name + ".IS_JOIN_BL2." + frame_string));
