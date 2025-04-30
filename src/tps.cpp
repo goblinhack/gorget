@@ -17,6 +17,9 @@ bool templates_init(void)
   if (! tp_load_exit()) {
     return false;
   }
+  if (! tp_load_chasm()) {
+    return false;
+  }
   if (! tp_load_floor()) {
     return false;
   }

@@ -26,8 +26,6 @@ std::initializer_list< std::string > tps = {
     "", // ID 0 means unused
     "wall1",
     "rock1",
-    "water1",
-    "deep_water1",
     "player",
     /* begin shell marker1 */
     /* shell for i in $(find . -name "*.cpp" | xargs grep -h "tp_load(\"" | awk '{print $4}' | cut -d\" -f2) */
@@ -35,11 +33,14 @@ std::initializer_list< std::string > tps = {
     /* shell echo "    \"$i\"", */
     /* shell done */
     "exit",
+    "chasm",
     "floor",
     "door",
+    "water",
     "treasure",
     "key",
     "dirt",
+    "deep_water",
     "cursor_path",
     "cursor_at",
     "player",

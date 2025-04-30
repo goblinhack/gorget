@@ -170,6 +170,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_wall       = tp_random(is_wall);
   auto tp_rock       = tp_random(is_rock);
   auto tp_water      = tp_random(is_water);
+  auto tp_chasm      = tp_random(is_chasm);
   auto tp_deep_water = tp_random(is_deep_water);
   auto tp_door       = tp_find_mand("door");
   auto tp_floor      = tp_find_mand("floor");
@@ -190,9 +191,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
       bool need_dirt  = false;
 
       switch (c) {
-        case CHARMAP_CHASM :
-          tp = nullptr; /* todo */
-          continue;
+        case CHARMAP_CHASM : tp = tp_chasm; break;
         case CHARMAP_WALL :
           need_floor = true;
           tp         = tp_wall;
@@ -206,6 +205,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           tp         = tp_treasure;
           break;
         case CHARMAP_TREASURE2 :
+          /* todo */
           need_floor = true;
           tp         = tp_treasure;
           break;
@@ -298,10 +298,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           need_floor = true;
           tp         = nullptr; /* todo */
           break;
-        case CHARMAP_DIRT :
-          need_floor = true;
-          tp         = tp_dirt;
-          break;
+        case CHARMAP_DIRT : tp = tp_dirt; break;
         case CHARMAP_EMPTY :
           need_dirt = true;
           tp        = tp_rock;
