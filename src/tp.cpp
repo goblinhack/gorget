@@ -41,6 +41,7 @@ std::initializer_list< std::string > tps = {
     "treasure",
     "lava",
     "key",
+    "corridor",
     "dirt",
     "deep_water",
     "cursor_path",
