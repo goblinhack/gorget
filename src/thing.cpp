@@ -95,6 +95,10 @@ static Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, point)
 {
   TRACE_NO_INDENT();
 
+  if (! tp) {
+    DIE("no template set for thing allocation");
+  }
+
   thing_mutex.lock();
 
   static ThingId last_index;

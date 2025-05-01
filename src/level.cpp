@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
+#include "my_dice.hpp"
 #include "my_game.hpp"
 #include "my_game_defs.hpp"
 #include "my_level.hpp"
@@ -189,12 +190,25 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
       auto offset = (row_len * y) + x;
       auto c      = in[ offset ];
       Tpp  tp     = nullptr;
-      Tpp  tp2    = nullptr;
 
-      bool need_floor = false;
-      bool need_dirt  = false;
+      bool need_floor   = false;
+      bool need_water   = false;
+      bool need_dirt    = false;
+      bool need_foliage = false;
 
       switch (c) {
+        case CHARMAP_FLOOR :
+          need_floor = true;
+          if (d100() < 5) {
+            need_foliage = true;
+          }
+          break;
+        case CHARMAP_DIRT :
+          need_dirt = true;
+          if (d100() < 50) {
+            need_foliage = true;
+          }
+          break;
         case CHARMAP_CHASM : tp = tp_chasm; break;
         case CHARMAP_JOIN : tp = tp_corridor; break;
         case CHARMAP_CORRIDOR : tp = tp_corridor; break;
@@ -217,17 +231,20 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           tp         = nullptr; /* todo */
           break;
         case CHARMAP_FOLIAGE :
-          need_floor = true;
-          tp         = tp_foliage;
+          need_floor   = true;
+          need_foliage = true;
           break;
         case CHARMAP_DEEP_WATER :
-          need_dirt = true;
-          tp        = tp_deep_water;
-          tp2       = tp_water;
+          need_dirt  = true;
+          tp         = tp_deep_water;
+          need_water = true;
           break;
         case CHARMAP_WATER :
-          need_dirt = true;
-          tp        = tp_water;
+          need_dirt  = true;
+          need_water = true;
+          if (d100() < 5) {
+            need_foliage = true;
+          }
           break;
         case CHARMAP_BARREL :
           need_floor = true;
@@ -294,11 +311,6 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           need_floor = true;
           tp         = nullptr; /* todo */
           break;
-        case CHARMAP_FLOOR :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_DIRT : tp = tp_dirt; break;
         case CHARMAP_EMPTY :
           need_dirt = true;
           tp        = tp_rock;
@@ -325,17 +337,23 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
         }
       }
 
-      if (! tp) {
-        continue;
+      if (need_water) {
+        auto t = thing_init(g, v, l, tp_water, point(x, y));
+        if (t) {
+          thing_push(g, v, l, t);
+        }
       }
 
-      auto t = thing_init(g, v, l, tp, point(x, y));
-      if (t) {
-        thing_push(g, v, l, t);
+      if (need_foliage) {
+        auto tp_add = tp_foliage;
+        auto t      = thing_init(g, v, l, tp_add, point(x, y));
+        if (t) {
+          thing_push(g, v, l, t);
+        }
       }
 
-      if (tp2) {
-        t = thing_init(g, v, l, tp2, point(x, y));
+      if (tp) {
+        auto t = thing_init(g, v, l, tp, point(x, y));
         if (t) {
           thing_push(g, v, l, t);
         }
