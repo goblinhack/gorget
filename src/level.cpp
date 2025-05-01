@@ -170,6 +170,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_wall       = tp_random(is_wall);
   auto tp_rock       = tp_random(is_rock);
   auto tp_water      = tp_random(is_water);
+  auto tp_lava       = tp_random(is_lava);
   auto tp_chasm      = tp_random(is_chasm);
   auto tp_deep_water = tp_random(is_deep_water);
   auto tp_door       = tp_find_mand("door");
@@ -240,7 +241,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_LAVA :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_lava;
           break;
         case CHARMAP_BRIDGE :
           tp = nullptr; /* todo */

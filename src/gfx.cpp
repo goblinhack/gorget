@@ -1029,6 +1029,7 @@ void gfx_init(void)
 
   // begin sort marker1 {
   gfx_init_chasm();
+  gfx_init_lava();
   gfx_init_tiles();
   gfx_init_water();
   gfx_ui_init_0();

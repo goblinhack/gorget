@@ -38,6 +38,9 @@ bool templates_init(void)
   if (! tp_load_treasure()) {
     return false;
   }
+  if (! tp_load_lava()) {
+    return false;
+  }
   if (! tp_load_key()) {
     return false;
   }
