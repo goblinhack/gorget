@@ -1028,6 +1028,7 @@ void gfx_init(void)
   gfx_init_font_ui();
 
   // begin sort marker1 {
+  gfx_init_bridge();
   gfx_init_chasm();
   gfx_init_lava();
   gfx_init_tiles();
