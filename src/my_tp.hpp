@@ -130,7 +130,7 @@
       list_macro(is_unused89, "is_unused89"),                         /* ............................ */             \
       list_macro(is_unused90, "is_unused90"),                         /* ............................ */             \
       list_macro(is_unused91, "is_unused91"),                         /* ............................ */             \
-      list_macro(is_unused92, "is_unused92"),                         /* ............................ */             \
+      list_macro(is_foliage, "is_foliage"),                           /* ............................ */             \
       list_macro(is_corridor, "is_corridor"),                         /* ............................ */             \
       list_macro(is_bridge, "is_bridge"),                             /* ............................ */             \
       list_macro(is_treasure, "is_treasure"),                         /* ............................ */             \
@@ -261,7 +261,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused89(tp)             tp_flag(tp, is_unused89)
 #define tp_is_unused90(tp)             tp_flag(tp, is_unused90)
 #define tp_is_unused91(tp)             tp_flag(tp, is_unused91)
-#define tp_is_unused92(tp)             tp_flag(tp, is_unused92)
+#define tp_is_foliage(tp)              tp_flag(tp, is_foliage)
 #define tp_is_corridor(tp)             tp_flag(tp, is_corridor)
 #define tp_is_bridge(tp)               tp_flag(tp, is_bridge)
 #define tp_is_treasure(tp)             tp_flag(tp, is_treasure)
@@ -389,7 +389,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused89(thing)             tp_flag(thing_tp(thing), is_unused89)
 #define thing_is_unused90(thing)             tp_flag(thing_tp(thing), is_unused90)
 #define thing_is_unused91(thing)             tp_flag(thing_tp(thing), is_unused91)
-#define thing_is_unused92(thing)             tp_flag(thing_tp(thing), is_unused92)
+#define thing_is_foliage(thing)              tp_flag(thing_tp(thing), is_foliage)
 #define thing_is_corridor(thing)             tp_flag(thing_tp(thing), is_corridor)
 #define thing_is_bridge(thing)               tp_flag(thing_tp(thing), is_bridge)
 #define thing_is_treasure(thing)             tp_flag(thing_tp(thing), is_treasure)
@@ -517,7 +517,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused89(g, v, l, p)             level_flag(g, v, l, is_unused89, p)
 #define level_is_unused90(g, v, l, p)             level_flag(g, v, l, is_unused90, p)
 #define level_is_unused91(g, v, l, p)             level_flag(g, v, l, is_unused91, p)
-#define level_is_unused92(g, v, l, p)             level_flag(g, v, l, is_unused92, p)
+#define level_is_foliage(g, v, l, p)              level_flag(g, v, l, is_foliage, p)
 #define level_is_corridor(g, v, l, p)             level_flag(g, v, l, is_corridor, p)
 #define level_is_bridge(g, v, l, p)               level_flag(g, v, l, is_bridge, p)
 #define level_is_treasure(g, v, l, p)             level_flag(g, v, l, is_treasure, p)

@@ -177,6 +177,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_door       = tp_find_mand("door");
   auto tp_floor      = tp_find_mand("floor");
   auto tp_corridor   = tp_find_mand("corridor");
+  auto tp_foliage    = tp_find_mand("foliage");
   auto tp_dirt       = tp_find_mand("dirt");
   auto tp_exit       = tp_find_mand("exit");
   auto tp_player     = tp_find_mand("player");
@@ -217,7 +218,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_FOLIAGE :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_foliage;
           break;
         case CHARMAP_DEEP_WATER :
           need_dirt = true;
@@ -250,7 +251,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_DOOR :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_door;
           break;
         case CHARMAP_SECRET_DOOR :
           need_floor = true;

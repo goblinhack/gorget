@@ -12,6 +12,7 @@ bool templates_init(void);
 bool tp_load_exit();
 bool tp_load_chasm();
 bool tp_load_floor();
+bool tp_load_foliage();
 bool tp_load_wall();
 bool tp_load_door();
 bool tp_load_water();
