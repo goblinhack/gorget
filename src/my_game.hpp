@@ -225,6 +225,9 @@ int  game_map_zoom_get(Gamep g);
 int  game_map_zoom_def_get(Gamep g);
 void game_map_zoom_set(Gamep g, int val);
 
+int  game_map_single_pix_size_get(Gamep g);
+void game_map_single_pix_size_set(Gamep g, int val);
+
 uint8_t game_input(Gamep, const SDL_Keysym *key);
 uint8_t game_mouse_down(Gamep, int x, int y, uint32_t button);
 uint8_t game_mouse_motion(Gamep, int x, int y, int relx, int rely, int wheelx, int wheely);

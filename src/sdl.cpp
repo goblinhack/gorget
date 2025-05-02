@@ -707,12 +707,15 @@ void config_game_gfx_update(Gamep g)
 
   game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
-  LOG("SDL: - map location         : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+  LOG("SDL: - map location          : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
       visible_map_br_y);
-  LOG("SDL: - map onscreen sz      : %gx%g", map_w, map_h);
-  LOG("SDL: - map w to h ratio     : %g", map_w_h_ratio);
-  LOG("SDL: - map pix sz           : %gx%g", fbo_w, fbo_h);
-  LOG("SDL: - map max pix sz       : %gx%g", max_fbo_w, max_fbo_h);
+  LOG("SDL: - map onscreen sz       : %gx%g", map_w, map_h);
+  LOG("SDL: - map w to h ratio      : %g", map_w_h_ratio);
+  LOG("SDL: - map pix sz            : %gx%g", fbo_w, fbo_h);
+  LOG("SDL: - map max pix sz        : %gx%g", max_fbo_w, max_fbo_h);
+
+  game_map_single_pix_size_set(g, ceil(map_w / fbo_w));
+  LOG("SDL: - map single pixel size : %g", game_map_single_pix_size_get(g));
 
   int zoom = game_map_zoom_get(g);
   if (zoom == 0) {

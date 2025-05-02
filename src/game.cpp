@@ -115,6 +115,11 @@ public:
   //
   int zoom = {};
 
+  //
+  // If the fbo is smaller than the screen, a single map pixel takes up N on screen pixels
+  //
+  int single_pix_size = {};
+
   void fini(void);
   void reset(void);
 };
@@ -279,6 +284,7 @@ void Config::reset(void)
   ui_term_height         = {TERM_HEIGHT_DEF};
   ui_term_width          = {TERM_WIDTH_DEF};
   zoom                   = {};
+  single_pix_size        = {};
   version                = "" MYVER "";
   aspect_ratio           = {};
   window_pix_height      = {};
@@ -1823,4 +1829,28 @@ int game_map_zoom_def_get(Gamep g)
   }
 
   return (int) zoom;
+}
+
+int game_map_single_pix_size_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 1;
+  }
+
+  if (! g->config.single_pix_size) {
+    return 1;
+  }
+
+  return g->config.single_pix_size;
+}
+void game_map_single_pix_size_set(Gamep g, int val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.single_pix_size = val;
 }
