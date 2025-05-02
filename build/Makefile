@@ -4,7 +4,13 @@ pre:
 
 TOP=$(shell pwd)
 DIRS=src
-FORMAT_DIRS=$(DIRS) src/things src/things/player src/things/dungeon src/things/internal
+FORMAT_DIRS=$(DIRS) \
+	    src/things \
+	    src/things/player \
+	    src/things/dungeon \
+	    src/things/monst \
+	    src/things/mob \
+	    src/things/internal
 
 all: pre
 	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )

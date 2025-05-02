@@ -1041,6 +1041,7 @@ static void gfx_init_tiles(void)
         "cursor_at",
         "exit.0",
         "door.0",
+        "door.1",
         "key.0",
         "key.1",
         "treasure.0",
@@ -1050,11 +1051,27 @@ static void gfx_init_tiles(void)
         "",
         "",
         "",
+        // ##############################################################################
+        "ghost-mob.idle.0",
+        "ghost-mob.idle.1",
+        "ghost.idle.0",
+        "ghost.idle.1",
+        "goblin-mob.idle.0",
+        "goblin-mob.idle.1",
+        "goblin.idle.0",
+        "goblin.idle.1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
         "",
         // ##############################################################################
       /* clang-format on */
   };
-  tile_load_arr("data/gfx/tiles.tga", "tiles", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr_sprites("data/gfx/tiles.tga", "tiles", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles, GL_NEAREST);
 }
 
 void gfx_init(void)

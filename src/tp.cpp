@@ -47,6 +47,10 @@ std::initializer_list< std::string > tps = {
     "deep_water",
     "cursor_path",
     "cursor_at",
+    "goblin",
+    "ghost",
+    "ghost-mob",
+    "goblin-mob",
     "player",
   /* end shell marker1 */
 };

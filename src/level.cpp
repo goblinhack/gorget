@@ -280,7 +280,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_MONST1 :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_random(is_monst1);
           break;
         case CHARMAP_MONST2 :
           need_floor = true;
@@ -288,7 +288,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_MOB1 :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_random(is_mob1);
           break;
         case CHARMAP_MOB2 :
           need_floor = true;

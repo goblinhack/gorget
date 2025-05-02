@@ -14,7 +14,7 @@ PAYLOAD=$(mktemp) || exit 1
 POST=$(mktemp) || exit 1
 OUT=$(mktemp) || exit 1
 
-for IN in $(grep "begin sort marker" --files-with-matches *.hpp *.cpp)
+for IN in $(grep "begin sort marker" --files-with-matches *.hpp *.cpp 2>/dev/null)
 do
     if [ ! -f $IN ];
     then

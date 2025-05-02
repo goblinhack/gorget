@@ -4,7 +4,7 @@
 PATH=/opt/local/libexec/gnubin:$PATH
 export PATH
 
-for i in *.cpp *.hpp
+for i in *.cpp *.hpp 
 do
   case $i in
     *stb*)

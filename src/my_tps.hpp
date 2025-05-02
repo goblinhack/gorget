@@ -26,5 +26,9 @@ bool tp_load_dirt();
 bool tp_load_deep_water();
 bool tp_load_cursor_path();
 bool tp_load_cursor_at();
+bool tp_load_goblin();
+bool tp_load_ghost();
+bool tp_load_ghost_mob();
+bool tp_load_goblin_mob();
 bool tp_load_player();
 /* end shell marker1 */

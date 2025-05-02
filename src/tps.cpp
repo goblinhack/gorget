@@ -65,6 +65,18 @@ bool templates_init(void)
   if (! tp_load_cursor_at()) {
     return false;
   }
+  if (! tp_load_goblin()) {
+    return false;
+  }
+  if (! tp_load_ghost()) {
+    return false;
+  }
+  if (! tp_load_ghost_mob()) {
+    return false;
+  }
+  if (! tp_load_goblin_mob()) {
+    return false;
+  }
   if (! tp_load_player()) {
     return false;
   }
