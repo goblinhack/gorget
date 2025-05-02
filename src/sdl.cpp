@@ -715,7 +715,7 @@ void config_game_gfx_update(Gamep g)
   LOG("SDL: - map max pix sz        : %gx%g", max_fbo_w, max_fbo_h);
 
   game_map_single_pix_size_set(g, ceil(map_w / fbo_w));
-  LOG("SDL: - map single pixel size : %g", game_map_single_pix_size_get(g));
+  LOG("SDL: - map single pixel size : %d", game_map_single_pix_size_get(g));
 
   int zoom = game_map_zoom_get(g);
   if (zoom == 0) {

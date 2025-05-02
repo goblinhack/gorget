@@ -21,12 +21,12 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint1
     return;
   }
 
-  auto single_pixel_size = game_map_single_pix_size_get(g);
+  auto single_pix_size = game_map_single_pix_size_get(g);
 
   if (tp_is_blit_outlined(tp)) {
-    tile_blit_outline(tile, tl, br, WHITE, BLACK, single_pixel_size, false);
+    tile_blit_outline(tile, tl, br, WHITE, BLACK, single_pix_size, false);
   } else if (tp_is_blit_square_outlined(tp)) {
-    tile_blit_outline(tile, tl, br, WHITE, BLACK, single_pixel_size, true);
+    tile_blit_outline(tile, tl, br, WHITE, BLACK, single_pix_size, true);
   } else {
     tile_blit(tile, tl, br);
   }

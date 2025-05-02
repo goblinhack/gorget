@@ -1012,7 +1012,7 @@ void Tile::set_gl_binding_mask(int v) { _gl_binding_mask = v; }
 //
 // Blits a whole tile. Y co-ords are inverted.
 //
-void tile_blit_outline(const Tilep &tile, const point tl, const point br, const color &c, float single_pix_size,
+void tile_blit_outline(const Tilep &tile, const point tl, const point br, const color &c, int single_pix_size,
                        bool square)
 {
   float x1, x2, y1, y2;
@@ -1051,7 +1051,7 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
 }
 
 void tile_blit_outline(const Tilep &tile, const point tl, const point br, const color &c, const color &outline,
-                       float single_pix_size, bool square)
+                       int single_pix_size, bool square)
 {
   float x1, x2, y1, y2;
 
@@ -1087,7 +1087,7 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_outline(int index, const point tl, const point br, const color &c, float single_pix_size, bool square)
+void tile_blit_outline(int index, const point tl, const point br, const color &c, int single_pix_size, bool square)
 {
   tile_blit_outline(tile_index_to_tile(index), tl, br, c, square);
 }
