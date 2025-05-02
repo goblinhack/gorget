@@ -361,7 +361,9 @@ void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If asked to follow the mouse path, start walking
   //
-  thing_move_to_next(g, v, l, t);
+  if (thing_is_player(t)) {
+    thing_move_to_next(g, v, l, t);
+  }
 }
 
 //
@@ -382,5 +384,7 @@ void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If following the mouse path, keep going
   //
-  thing_move_to_next(g, v, l, t);
+  if (thing_is_player(t)) {
+    thing_move_to_next(g, v, l, t);
+  }
 }
