@@ -714,9 +714,6 @@ void config_game_gfx_update(Gamep g)
   LOG("SDL: - map pix sz            : %gx%g", fbo_w, fbo_h);
   LOG("SDL: - map max pix sz        : %gx%g", max_fbo_w, max_fbo_h);
 
-  game_map_single_pix_size_set(g, ceil(map_w / fbo_w));
-  LOG("SDL: - map single pixel size : %d", game_map_single_pix_size_get(g));
-
   int zoom = game_map_zoom_get(g);
   if (zoom == 0) {
     game_map_zoom_set(g, game_map_zoom_def_get(g));
@@ -729,12 +726,22 @@ void config_game_gfx_update(Gamep g)
     //
     game_map_fbo_width_set(g, max_fbo_w);
     game_map_fbo_height_set(g, max_fbo_h);
+
+    //
+    // Used in outlines.
+    //
+    game_map_single_pix_size_set(g, 1);
   } else {
     //
     // Zoomed in to see a portion of the map
     //
     game_map_fbo_width_set(g, map_w);
     game_map_fbo_height_set(g, map_h);
+
+    //
+    // Used in outlines.
+    //
+    game_map_single_pix_size_set(g, ceil(map_w / fbo_w));
   }
 
   //
@@ -746,9 +753,11 @@ void config_game_gfx_update(Gamep g)
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);
 
-  LOG("SDL: - game map fbo sz      : %dx%d", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
+  LOG("SDL: - game map fbo sz       : %dx%d", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
+  LOG("SDL: - map single pixel size : %d", game_map_single_pix_size_get(g));
+
   LOG("SDL: Map");
-  LOG("SDL: - size                 : %dx%d", MAP_WIDTH, MAP_HEIGHT);
-  LOG("SDL: - tiles visible        : %dx%d", (int) tiles_across, (int) tiles_down);
-  LOG("SDL: - tiles zoom           : %d", game_map_zoom_get(g));
+  LOG("SDL: - size                  : %dx%d", MAP_WIDTH, MAP_HEIGHT);
+  LOG("SDL: - tiles visible         : %dx%d", (int) tiles_across, (int) tiles_down);
+  LOG("SDL: - tiles zoom            : %d", game_map_zoom_get(g));
 }

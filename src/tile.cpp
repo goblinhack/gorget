@@ -1034,16 +1034,18 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
 
   auto binding = tile->gl_binding_mask();
 
-  if (square) {
-    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
-    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
-    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
-    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+  if (single_pix_size) {
+    if (square) {
+      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
+      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
+      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
+      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+    }
+    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
+    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
+    blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
+    blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
   }
-  blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
-  blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
-  blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
-  blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
 
   glcolor(c);
   binding = tile->gl_binding();
@@ -1071,16 +1073,18 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
 
   auto binding = tile->gl_binding_mask();
 
-  if (square) {
-    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
-    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
-    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
-    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+  if (single_pix_size) {
+    if (square) {
+      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
+      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
+      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
+      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+    }
+    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
+    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
+    blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
+    blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
   }
-  blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
-  blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
-  blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
-  blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
 
   glcolor(c);
   binding = tile->gl_binding();

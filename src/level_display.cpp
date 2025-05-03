@@ -23,6 +23,14 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint1
 
   auto single_pix_size = game_map_single_pix_size_get(g);
 
+  //
+  // Disable outlines when zoomed out
+  //
+  int zoom = game_map_zoom_get(g);
+  if (zoom == 1) {
+    single_pix_size = 0;
+  }
+
   if (tp_is_blit_outlined(tp)) {
     tile_blit_outline(tile, tl, br, WHITE, BLACK, single_pix_size, false);
   } else if (tp_is_blit_square_outlined(tp)) {
