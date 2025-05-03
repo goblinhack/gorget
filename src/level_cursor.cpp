@@ -257,7 +257,7 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto aip = thing_ai(g, t);
+  auto aip = thing_player(g, t);
   if (! aip) {
     //
     // If no player, clear the cursor
@@ -285,7 +285,7 @@ static void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< p
     return;
   }
 
-  auto aip = thing_ai(g, t);
+  auto aip = thing_player(g, t);
   if (! aip) {
     //
     // If no player, clear the cursor

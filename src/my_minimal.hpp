@@ -180,24 +180,26 @@ struct Level_;
 struct Levels_;
 struct Thing_;
 struct ThingAi_;
+struct ThingPlayer_;
 struct Dmap_;
 struct SDL_Surface;
 
-using Gamep     = class Game *;
-using Dmapp     = struct Dmap_ *;
-using Fontp     = class Font *;
-using Levelp    = struct Level_ *;
-using Levelsp   = struct Levels_ *;
-using Lightp    = class Light *;
-using Texp      = class Tex *;
-using ThingId   = unsigned int;
-using ThingAiId = unsigned short;
-using Thingp    = struct Thing_ *;
-using ThingAip  = struct ThingAi_ *;
-using Tilep     = class Tile *;
-using TpId      = unsigned int;
-using Tpp       = class Tp *;
-using Widp      = class Wid *;
+using Gamep        = class Game *;
+using Dmapp        = struct Dmap_ *;
+using Fontp        = class Font *;
+using Levelp       = struct Level_ *;
+using Levelsp      = struct Levels_ *;
+using Lightp       = class Light *;
+using Texp         = class Tex *;
+using ThingId      = unsigned int;
+using ThingAiId    = unsigned short;
+using Thingp       = struct Thing_ *;
+using ThingAip     = struct ThingAi_ *;
+using ThingPlayerp = struct ThingPlayer_ *;
+using Tilep        = class Tile *;
+using TpId         = unsigned int;
+using Tpp          = class Tp *;
+using Widp         = class Wid *;
 
 #define NULL_TP    ((Tpp) nullptr)
 #define NULL_THING ((Thingp) nullptr)

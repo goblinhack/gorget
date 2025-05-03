@@ -253,6 +253,18 @@ ThingAip thing_ai(Gamep g, Thingp t)
   return &v->thing_ai[ ai_id ];
 }
 
+ThingPlayerp thing_player(Gamep g, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return nullptr;
+  }
+
+  return &v->thing_player;
+}
+
 void thing_update(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();

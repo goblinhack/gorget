@@ -113,9 +113,13 @@ typedef struct Levels_ {
   //
   Thing thing_body[ 1 << THING_COMMON_ID_BITS ];
   //
-  // Space for player and monster AI
+  // Space for monster AI
   //
   ThingAi thing_ai[ THING_AI_MAX ];
+  //
+  // Space for player AI
+  //
+  ThingPlayer thing_player;
   //
   // The current player.
   //

@@ -26,8 +26,8 @@
 //
 // Essentially equates to the max number of monsters
 //
-#define THING_AI_MAX        65535 /* The size of ai_id */
-#define THING_MOVE_PATH_MAX MAP_WIDTH
+#define THING_AI_MAX        65535 /* The size of thing_ai */
+#define THING_MOVE_PATH_MAX (MAP_WIDTH * 4)
 
 enum {
   THING_RARITY_COMMON,
@@ -54,11 +54,18 @@ typedef struct ThingAi_ {
   // Unique ID
   //
   uint8_t in_use : 1;
+} ThingAi;
+
+typedef struct ThingPlayer_ {
+  //
+  // Unique ID
+  //
+  uint8_t in_use : 1;
   struct {
     point   points[ THING_MOVE_PATH_MAX ];
     int16_t size;
   } move_path;
-} ThingAi;
+} ThingPlayer;
 
 typedef struct Thing_ {
   //////////////////////////////////////////////////////////////
@@ -157,7 +164,8 @@ Thingp thing_init(Gamep, Levelsp, Levelp, Tpp, point p);
 Thingp thing_player(Gamep);
 void   thing_stats_dump(Gamep, Levelsp);
 
-ThingAip thing_ai(Gamep, Thingp);
+ThingAip     thing_ai(Gamep, Thingp);
+ThingPlayerp thing_player(Gamep, Thingp);
 
 void thing_dir_bl_set(Thingp, uint8_t);
 void thing_dir_br_set(Thingp, uint8_t);

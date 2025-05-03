@@ -426,7 +426,7 @@ static bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, point *o
 {
   TRACE_NO_INDENT();
 
-  auto aip = thing_ai(g, t);
+  auto aip = thing_player(g, t);
   if (! aip) {
     return false;
   }
