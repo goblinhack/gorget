@@ -175,6 +175,8 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_bridge     = tp_random(is_bridge);
   auto tp_chasm      = tp_random(is_chasm);
   auto tp_deep_water = tp_random(is_deep_water);
+  auto tp_treasure1  = tp_random(is_treasure1);
+  auto tp_treasure2  = tp_random(is_treasure2);
   auto tp_door       = tp_find_mand("door");
   auto tp_floor      = tp_find_mand("floor");
   auto tp_corridor   = tp_find_mand("corridor");
@@ -182,7 +184,6 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_dirt       = tp_find_mand("dirt");
   auto tp_exit       = tp_find_mand("exit");
   auto tp_player     = tp_find_mand("player");
-  auto tp_treasure   = tp_find_mand("treasure");
   //  auto tp_entrance = tp_find_mand("entrance");
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
@@ -219,12 +220,11 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_TREASURE1 :
           need_floor = true;
-          tp         = tp_treasure;
+          tp         = tp_treasure1;
           break;
         case CHARMAP_TREASURE2 :
-          /* todo */
           need_floor = true;
-          tp         = tp_treasure;
+          tp         = tp_treasure2;
           break;
         case CHARMAP_TELEPORT :
           need_floor = true;

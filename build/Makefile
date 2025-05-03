@@ -10,6 +10,7 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things/dungeon \
 	    src/things/monst \
 	    src/things/mob \
+	    src/things/treasure \
 	    src/things/internal
 
 all: pre

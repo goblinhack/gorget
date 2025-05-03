@@ -128,8 +128,8 @@
       list_macro(is_unused8, "is_unused8"),                                       /* ............................ */ \
       list_macro(is_unused80, "is_unused80"),                                     /* ............................ */ \
       list_macro(is_unused81, "is_unused81"),                                     /* ............................ */ \
-      list_macro(is_unused82, "is_unused82"),                                     /* ............................ */ \
-      list_macro(is_unused83, "is_unused83"),                                     /* ............................ */ \
+      list_macro(is_treasure2, "is_treasure2"),                                   /* ............................ */ \
+      list_macro(is_treasure1, "is_treasure1"),                                   /* ............................ */ \
       list_macro(is_monst2, "is_monst2"),                                         /* ............................ */ \
       list_macro(is_mob2, "is_mob2"),                                             /* ............................ */ \
       list_macro(is_mob1, "is_mob1"),                                             /* ............................ */ \
@@ -250,8 +250,8 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused79(tp)                   tp_flag(tp, is_unused79)
 #define tp_is_unused80(tp)                   tp_flag(tp, is_unused80)
 #define tp_is_unused81(tp)                   tp_flag(tp, is_unused81)
-#define tp_is_unused82(tp)                   tp_flag(tp, is_unused82)
-#define tp_is_unused83(tp)                   tp_flag(tp, is_unused83)
+#define tp_is_treasure2(tp)                  tp_flag(tp, is_treasure2)
+#define tp_is_treasure1(tp)                  tp_flag(tp, is_treasure1)
 #define tp_is_monst2(tp)                     tp_flag(tp, is_monst2)
 #define tp_is_mob2(tp)                       tp_flag(tp, is_mob2)
 #define tp_is_mob1(tp)                       tp_flag(tp, is_mob1)
@@ -377,8 +377,8 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused79(thing)                   tp_flag(thing_tp(thing), is_unused79)
 #define thing_is_unused80(thing)                   tp_flag(thing_tp(thing), is_unused80)
 #define thing_is_unused81(thing)                   tp_flag(thing_tp(thing), is_unused81)
-#define thing_is_unused82(thing)                   tp_flag(thing_tp(thing), is_unused82)
-#define thing_is_unused83(thing)                   tp_flag(thing_tp(thing), is_unused83)
+#define thing_is_treasure2(thing)                  tp_flag(thing_tp(thing), is_treasure2)
+#define thing_is_treasure1(thing)                  tp_flag(thing_tp(thing), is_treasure1)
 #define thing_is_monst2(thing)                     tp_flag(thing_tp(thing), is_monst2)
 #define thing_is_mob2(thing)                       tp_flag(thing_tp(thing), is_mob2)
 #define thing_is_mob1(thing)                       tp_flag(thing_tp(thing), is_mob1)
@@ -504,8 +504,8 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused79(g, v, l, p)                   level_flag(g, v, l, is_unused79, p)
 #define level_is_unused80(g, v, l, p)                   level_flag(g, v, l, is_unused80, p)
 #define level_is_unused81(g, v, l, p)                   level_flag(g, v, l, is_unused81, p)
-#define level_is_unused82(g, v, l, p)                   level_flag(g, v, l, is_unused82, p)
-#define level_is_unused83(g, v, l, p)                   level_flag(g, v, l, is_unused83, p)
+#define level_is_treasure2(g, v, l, p)                  level_flag(g, v, l, is_treasure2, p)
+#define level_is_treasure1(g, v, l, p)                  level_flag(g, v, l, is_treasure1, p)
 #define level_is_monst2(g, v, l, p)                     level_flag(g, v, l, is_monst2, p)
 #define level_is_mob2(g, v, l, p)                       level_flag(g, v, l, is_mob2, p)
 #define level_is_mob1(g, v, l, p)                       level_flag(g, v, l, is_mob1, p)

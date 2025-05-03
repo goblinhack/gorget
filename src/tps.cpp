@@ -41,9 +41,6 @@ bool templates_init(void)
   if (! tp_load_rock()) {
     return false;
   }
-  if (! tp_load_treasure()) {
-    return false;
-  }
   if (! tp_load_lava()) {
     return false;
   }
@@ -69,6 +66,12 @@ bool templates_init(void)
     return false;
   }
   if (! tp_load_ghost()) {
+    return false;
+  }
+  if (! tp_load_treasure()) {
+    return false;
+  }
+  if (! tp_load_potion()) {
     return false;
   }
   if (! tp_load_ghost_mob()) {

@@ -8,17 +8,18 @@
 #include "../../my_tp.hpp"
 #include "../../my_tps.hpp"
 
-bool tp_load_treasure(void)
+bool tp_load_potion(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "treasure";
-  auto tp   = tp_load("treasure");
+  auto name = "potion";
+  auto tp   = tp_load("potion");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_on_ground, true);
   tp_flag_set(tp, is_treasure, true);
+  tp_flag_set(tp, is_treasure1, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
