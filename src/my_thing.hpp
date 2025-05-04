@@ -49,18 +49,17 @@ enum {
   THING_DIR_BR,
 };
 
+//
+// Per thing AI memory
+//
 typedef struct ThingAi_ {
-  //
-  // Unique ID
-  //
   uint8_t in_use : 1;
 } ThingAi;
 
+//
+// Player specific memory
+//
 typedef struct ThingPlayer_ {
-  //
-  // Unique ID
-  //
-  uint8_t in_use : 1;
   struct {
     point   points[ THING_MOVE_PATH_MAX ];
     int16_t size;

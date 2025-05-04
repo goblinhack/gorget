@@ -242,7 +242,7 @@ uint8_t sdl_display_init(Gamep g)
     }
   }
 
-  if (g_opt_test_grid || g_opt_test_rooms || g_opt_test_levels) {
+  if (g_opt_test_level_select_gen || g_opt_test_room_gen || g_opt_test_level_gen) {
     video_flags = SDL_WINDOW_OPENGL;
   }
 

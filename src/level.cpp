@@ -316,7 +316,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           tp        = tp_rock;
           break;
         default :
-          if (! g_opt_test_levels) {
+          if (! g_opt_test_level_gen) {
             //            DIE("unexpected map char '%c'", c);
           }
       }

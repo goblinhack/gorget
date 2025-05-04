@@ -122,6 +122,9 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     if (g_opt_test_start) {
       DIE_CLEAN("Quick quit");
     }
+    if (g_opt_test_select) {
+      DIE_CLEAN("Quick quit");
+    }
     wid_quit_select(g);
     return true;
   }

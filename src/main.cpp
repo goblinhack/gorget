@@ -462,10 +462,12 @@ static void usage(void)
   CON(" --debug2                    -- Most debugs. Most useful.");
   CON(" --debug3                    -- All debugs. Slow.");
   CON(" --no-debug                  -- Disable debugs.");
-  CON(" --test-start                -- Skip main menu.");
-  CON(" --test-rooms                -- Test room gen and then exit.");
-  CON(" --test-grid                 -- Test room grid gen and then exit.");
-  CON(" --test-levels               -- Test level gen and then exit.");
+  CON("Testing options:");
+  CON(" --test-start                -- Start in a level.");
+  CON(" --test-select               -- Start in level select.");
+  CON(" --test-room-gen             -- Test room gen and then exit.");
+  CON(" --test-level-select-gen     -- Test room grid gen and then exit.");
+  CON(" --test-level-gen            -- Test level gen and then exit.");
   CON(" ");
   CON("Written by goblinhack@gmail.com");
 }
@@ -530,18 +532,23 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--test-rooms") || ! strcasecmp(argv[ i ], "-test-rooms")) {
-      g_opt_test_rooms = true;
+    if (! strcasecmp(argv[ i ], "--test-select") || ! strcasecmp(argv[ i ], "-test-select")) {
+      g_opt_test_select = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--test-grid") || ! strcasecmp(argv[ i ], "-test-grid")) {
-      g_opt_test_grid = true;
+    if (! strcasecmp(argv[ i ], "--test-room-gen") || ! strcasecmp(argv[ i ], "-test-room-gen")) {
+      g_opt_test_room_gen = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--test-levels") || ! strcasecmp(argv[ i ], "-test-levels")) {
-      g_opt_test_levels = true;
+    if (! strcasecmp(argv[ i ], "--test-level-select-gen") || ! strcasecmp(argv[ i ], "-test-level-select-gen")) {
+      g_opt_test_level_select_gen = true;
+      continue;
+    }
+
+    if (! strcasecmp(argv[ i ], "--test-level-gen") || ! strcasecmp(argv[ i ], "-test-level-gen")) {
+      g_opt_test_level_gen = true;
       continue;
     }
 
@@ -736,7 +743,7 @@ int main(int argc, char *argv[])
     sdl_config_update_all(g);
   }
 
-  if (g_opt_test_grid || g_opt_test_rooms || g_opt_test_levels) {
+  if (g_opt_test_level_select_gen || g_opt_test_room_gen || g_opt_test_level_gen) {
     //
     // Skip for speed of test setuip
     //
@@ -978,17 +985,17 @@ int main(int argc, char *argv[])
     rooms_init(g);
     fragments_init(g);
 
-    if (g_opt_test_grid) {
+    if (g_opt_test_level_select_gen) {
       grid_test(g);
       DIE_CLEAN("done");
     }
 
-    if (g_opt_test_rooms) {
+    if (g_opt_test_room_gen) {
       rooms_test(g);
       DIE_CLEAN("done");
     }
 
-    if (g_opt_test_levels) {
+    if (g_opt_test_level_gen) {
       level_gen_test(g);
       DIE_CLEAN("done");
     }
@@ -1006,6 +1013,8 @@ int main(int argc, char *argv[])
       wid_cfg_gfx_select(g);
       g_opt_restarted = false;
     } else if (g_opt_test_start) {
+      wid_new_game(g);
+    } else if (g_opt_test_select) {
       wid_new_game(g);
     } else {
       wid_main_menu_select(g);
