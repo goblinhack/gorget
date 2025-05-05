@@ -986,7 +986,7 @@ int main(int argc, char *argv[])
     fragments_init(g);
 
     if (g_opt_test_level_select_gen) {
-      grid_test(g);
+      level_select_test(g);
       DIE_CLEAN("done");
     }
 

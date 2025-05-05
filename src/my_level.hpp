@@ -230,7 +230,7 @@ void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, point, Tpp, Thingp);
 
-void grid_test(Gamep);
+void level_select_test(Gamep);
 
 void rooms_test(Gamep);
 void rooms_init(Gamep);

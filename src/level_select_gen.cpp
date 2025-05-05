@@ -15,11 +15,11 @@
 
 #include <stdlib.h>
 
-class Grid
+class LevelSelect
 {
 private:
 public:
-  Grid(void)
+  LevelSelect(void)
   {
     for (int y = 0; y < LEVELS_DOWN; y++) {
       for (int x = 0; x < LEVELS_ACROSS; x++) {
@@ -27,7 +27,7 @@ public:
       }
     }
   }
-  ~Grid(void) {}
+  ~LevelSelect(void) {}
 
   //
   // Level tiles and grid info
@@ -43,11 +43,11 @@ public:
 //
 // Dump a level
 //
-static void grid_dump(Gamep g, Grid *grid)
+static void level_select_dump(Gamep g, LevelSelect *grid)
 {
   TRACE_NO_INDENT();
 
-  LOG("Grid, level count %d", grid->level_count);
+  LOG("LevelSelect, level count %d", grid->level_count);
 
   for (int y = 0; y < LEVELS_DOWN; y++) {
     std::string(s);
@@ -62,7 +62,7 @@ static void grid_dump(Gamep g, Grid *grid)
 //
 // Clear the grid
 //
-static void grid_clear(Gamep g, Grid *grid)
+static void level_select_clear(Gamep g, LevelSelect *grid)
 {
   TRACE_NO_INDENT();
 
@@ -72,7 +72,7 @@ static void grid_clear(Gamep g, Grid *grid)
 //
 // Count the levels created
 //
-static int grid_count_levels(Gamep g, Grid *grid)
+static int level_select_count_levels(Gamep g, LevelSelect *grid)
 {
   TRACE_NO_INDENT();
 
@@ -88,7 +88,7 @@ static int grid_count_levels(Gamep g, Grid *grid)
   return grid->level_count;
 }
 
-static void snake_walk(Gamep g, Grid *grid, point at, int turn_chance, int count)
+static void snake_walk(Gamep g, LevelSelect *grid, point at, int turn_chance, int count)
 {
   TRACE_NO_INDENT();
 
@@ -101,7 +101,7 @@ static void snake_walk(Gamep g, Grid *grid, point at, int turn_chance, int count
     //
     // Keep one free for the grid level
     //
-    if (grid_count_levels(g, grid) >= MAX_LEVELS - 1) {
+    if (level_select_count_levels(g, grid) >= MAX_LEVELS - 1) {
       return;
     }
 
@@ -139,7 +139,7 @@ static void snake_walk(Gamep g, Grid *grid, point at, int turn_chance, int count
   grid->data[ at.x ][ at.y ] = CHARMAP_FLOOR;
 }
 
-static void snake_walk(Gamep g, Grid *grid, int turn_chance, int count)
+static void snake_walk(Gamep g, LevelSelect *grid, int turn_chance, int count)
 {
   TRACE_NO_INDENT();
 
@@ -154,7 +154,7 @@ static void snake_walk(Gamep g, Grid *grid, int turn_chance, int count)
   }
 }
 
-static void snake_dive(Gamep g, Grid *grid, point at, int dive_chance)
+static void snake_dive(Gamep g, LevelSelect *grid, point at, int dive_chance)
 {
   TRACE_NO_INDENT();
 
@@ -166,7 +166,7 @@ static void snake_dive(Gamep g, Grid *grid, point at, int dive_chance)
     //
     // Keep one free for the grid level
     //
-    if (grid_count_levels(g, grid) >= MAX_LEVELS - 1) {
+    if (level_select_count_levels(g, grid) >= MAX_LEVELS - 1) {
       return;
     }
 
@@ -191,7 +191,7 @@ static void snake_dive(Gamep g, Grid *grid, point at, int dive_chance)
   grid->data[ at.x ][ at.y ] = CHARMAP_FLOOR;
 }
 
-static void snake_dive(Gamep g, Grid *grid, int dive_chance)
+static void snake_dive(Gamep g, LevelSelect *grid, int dive_chance)
 {
   TRACE_NO_INDENT();
 
@@ -207,17 +207,17 @@ static void snake_dive(Gamep g, Grid *grid, int dive_chance)
   }
 }
 
-void grid_test(Gamep g)
+void level_select_test(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  Grid grid;
+  LevelSelect grid;
 
   int len         = 10;
   int turn_chance = 10;
   int nwalks      = 10;
 
-  grid_clear(g, &grid);
+  level_select_clear(g, &grid);
   snake_dive(g, &grid, point(0, 0), 90);
   snake_dive(g, &grid, point(0, 0), 40);
   snake_dive(g, &grid, point(0, 0), 10);
@@ -227,6 +227,6 @@ void grid_test(Gamep g)
     snake_walk(g, &grid, turn_chance, len);
   }
 
-  grid_count_levels(g, &grid);
-  grid_dump(g, &grid);
+  level_select_count_levels(g, &grid);
+  level_select_dump(g, &grid);
 }

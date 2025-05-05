@@ -29,11 +29,11 @@ enum {
   ROOM_TYPE_BLEND2,
 };
 
-class Grid
+class RoomGen
 {
 private:
 public:
-  Grid(void)
+  RoomGen(void)
   {
     for (int y = 0; y < MAP_HEIGHT; y++) {
       for (int x = 0; x < MAP_WIDTH; x++) {
@@ -41,7 +41,7 @@ public:
       }
     }
   }
-  ~Grid(void) {}
+  ~RoomGen(void) {}
 
   //
   // Level tiles and room info
@@ -67,7 +67,7 @@ public:
 //
 // Dump a level
 //
-static void grid_dump(Gamep g, Grid *grid)
+static void room_gen_dump(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -87,7 +87,7 @@ static void grid_dump(Gamep g, Grid *grid)
 //
 // Dump a level
 //
-static void grid_room_only_dump(Gamep g, Grid *grid)
+static void room_gen_room_only_dump(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -104,7 +104,7 @@ static void grid_room_only_dump(Gamep g, Grid *grid)
   fprintf(grid->out, "\n");
 }
 
-static void grid_clear(Gamep g, Grid *grid)
+static void room_gen_clear(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -114,7 +114,7 @@ static void grid_clear(Gamep g, Grid *grid)
 //
 // Get the top left and bottom right bounds of the room
 //
-static bool grid_keep_largest_chunk(Gamep g, class Grid *grid)
+static bool room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 {
   Cave cave = {};
   int  x, y;
@@ -138,7 +138,7 @@ static bool grid_keep_largest_chunk(Gamep g, class Grid *grid)
   //
   // Map that back to a room shape
   //
-  grid_clear(g, grid);
+  room_gen_clear(g, grid);
 
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
@@ -154,7 +154,7 @@ static bool grid_keep_largest_chunk(Gamep g, class Grid *grid)
 //
 // Get the top left and bottom right bounds of the room
 //
-static bool grid_get_bounds(Gamep g, class Grid *grid)
+static bool room_gen_get_bounds(Gamep g, class RoomGen *grid)
 {
   int x, y;
 
@@ -228,7 +228,7 @@ static bool grid_get_bounds(Gamep g, class Grid *grid)
 //
 // Draw a rectangle in the buffer, checking for oob
 //
-static void grid_draw_rectangle(Gamep g, Grid *grid, int x, int y, int width, int height, char c)
+static void room_gen_draw_rectangle(Gamep g, RoomGen *grid, int x, int y, int width, int height, char c)
 {
   TRACE_NO_INDENT();
 
@@ -243,7 +243,7 @@ static void grid_draw_rectangle(Gamep g, Grid *grid, int x, int y, int width, in
   }
 }
 
-static void grid_draw_circle(Gamep g, Grid *grid, int x, int y, int radius, char value)
+static void room_gen_draw_circle(Gamep g, RoomGen *grid, int x, int y, int radius, char value)
 {
   TRACE_NO_INDENT();
 
@@ -265,7 +265,7 @@ static void grid_draw_circle(Gamep g, Grid *grid, int x, int y, int radius, char
 //
 // Add random exits to the room
 //
-static void grid_add_exits(Gamep g, Grid *grid)
+static void room_gen_add_exits(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -332,7 +332,7 @@ static void grid_add_exits(Gamep g, Grid *grid)
 //
 // Extend an existing exit
 //
-static void grid_add_corridor(Gamep g, Grid *grid)
+static void room_gen_add_corridor(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -391,7 +391,7 @@ static void grid_add_corridor(Gamep g, Grid *grid)
 //
 // Borrowed from Brogue; makes a crossbar room
 //
-static void grid_design_cross_room(Gamep g, Grid *grid)
+static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -408,14 +408,14 @@ static void grid_design_cross_room(Gamep g, Grid *grid)
   roomHeight2 = pcg_random_range(2, 5);
   roomY2      = (MAP_HEIGHT / 2 - roomHeight2 - (pcg_random_range(0, 2) + pcg_random_range(0, 1)));
 
-  grid_draw_rectangle(g, grid, roomX - 5, roomY + 5, roomWidth, roomHeight, CHARMAP_FLOOR);
-  grid_draw_rectangle(g, grid, roomX2 - 5, roomY2 + 5, roomWidth2, roomHeight2, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, roomX - 5, roomY + 5, roomWidth, roomHeight, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, roomX2 - 5, roomY2 + 5, roomWidth2, roomHeight2, CHARMAP_FLOOR);
 }
 
 //
 // Borrowed from Brogue; makes a symmetrical cross room
 //
-static void grid_design_cross_room_symmetrical(Gamep g, Grid *grid)
+static void room_gen_design_cross_room_symmetrical(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -433,13 +433,13 @@ static void grid_design_cross_room_symmetrical(Gamep g, Grid *grid)
     minorHeight -= 1;
   }
 
-  grid_draw_rectangle(g, grid, (MAP_WIDTH - majorWidth) / 2, (MAP_HEIGHT - minorHeight) / 2, majorWidth, minorHeight,
-                      CHARMAP_FLOOR);
-  grid_draw_rectangle(g, grid, (MAP_WIDTH - minorWidth) / 2, (MAP_HEIGHT - majorHeight) / 2, minorWidth, majorHeight,
-                      CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - majorWidth) / 2, (MAP_HEIGHT - minorHeight) / 2, majorWidth,
+                          minorHeight, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - minorWidth) / 2, (MAP_HEIGHT - majorHeight) / 2, minorWidth,
+                          majorHeight, CHARMAP_FLOOR);
 }
 
-static void grid_design_small_room(Gamep g, Grid *grid)
+static void room_gen_design_small_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -448,10 +448,10 @@ static void grid_design_small_room(Gamep g, Grid *grid)
   width  = pcg_random_range(3, 6);
   height = pcg_random_range(3, 6);
 
-  grid_draw_rectangle(g, grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
-static void grid_design_medium_room(Gamep g, Grid *grid)
+static void room_gen_design_medium_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -460,10 +460,10 @@ static void grid_design_medium_room(Gamep g, Grid *grid)
   width  = pcg_random_range(6, 10);
   height = pcg_random_range(4, 10);
 
-  grid_draw_rectangle(g, grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - width) / 2, (MAP_HEIGHT - height) / 2, width, height, CHARMAP_FLOOR);
 }
 
-static void grid_design_circular_room(Gamep g, Grid *grid)
+static void room_gen_design_circular_room(Gamep g, RoomGen *grid)
 {
   int radius;
 
@@ -473,14 +473,14 @@ static void grid_design_circular_room(Gamep g, Grid *grid)
     radius = pcg_random_range(2, 4);
   }
 
-  grid_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, radius, CHARMAP_FLOOR);
+  room_gen_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, radius, CHARMAP_FLOOR);
 
   if (radius > 6 && d100() < 50) {
-    grid_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, pcg_random_range(3, radius - 3), CHARMAP_EMPTY);
+    room_gen_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, pcg_random_range(3, radius - 3), CHARMAP_EMPTY);
   }
 }
 
-static void grid_design_chunky_room(Gamep g, Grid *grid)
+static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
@@ -488,7 +488,7 @@ static void grid_design_chunky_room(Gamep g, Grid *grid)
   int minX, maxX, minY, maxY;
   int chunkCount = pcg_random_range(2, 8);
 
-  grid_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, 2, CHARMAP_FLOOR);
+  room_gen_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, 2, CHARMAP_FLOOR);
 
   minX = MAP_WIDTH / 2 - 3;
   maxX = MAP_WIDTH / 2 + 3;
@@ -500,7 +500,7 @@ static void grid_design_chunky_room(Gamep g, Grid *grid)
     y = pcg_random_range(minY, maxY);
 
     if (grid->data[ x ][ y ] != CHARMAP_EMPTY) {
-      grid_draw_circle(g, grid, x, y, 2, CHARMAP_FLOOR);
+      room_gen_draw_circle(g, grid, x, y, 2, CHARMAP_FLOOR);
 
       i++;
       minX = std::max(1, std::min(x - 3, minX));
@@ -518,27 +518,27 @@ static bool rooms_dump_one(Gamep g, FILE *out, int which)
 {
   TRACE_NO_INDENT();
 
-  Grid grid;
+  RoomGen grid;
 
-  grid_clear(g, &grid);
+  room_gen_clear(g, &grid);
 
   grid.out = out;
 
   switch (which) {
-    case ROOM_TYPE_CROSS : grid_design_cross_room(g, &grid); break;
-    case ROOM_TYPE_CROSS_SYM : grid_design_cross_room_symmetrical(g, &grid); break;
-    case ROOM_TYPE_SMALL : grid_design_small_room(g, &grid); break;
-    case ROOM_TYPE_MEDIUM : grid_design_medium_room(g, &grid); break;
-    case ROOM_TYPE_CIRCULAR : grid_design_circular_room(g, &grid); break;
-    case ROOM_TYPE_CHUNKY : grid_design_chunky_room(g, &grid); break;
+    case ROOM_TYPE_CROSS : room_gen_design_cross_room(g, &grid); break;
+    case ROOM_TYPE_CROSS_SYM : room_gen_design_cross_room_symmetrical(g, &grid); break;
+    case ROOM_TYPE_SMALL : room_gen_design_small_room(g, &grid); break;
+    case ROOM_TYPE_MEDIUM : room_gen_design_medium_room(g, &grid); break;
+    case ROOM_TYPE_CIRCULAR : room_gen_design_circular_room(g, &grid); break;
+    case ROOM_TYPE_CHUNKY : room_gen_design_chunky_room(g, &grid); break;
     case ROOM_TYPE_BLEND1 :
-      grid_design_cross_room(g, &grid);
-      grid_design_chunky_room(g, &grid);
-      grid_design_circular_room(g, &grid);
+      room_gen_design_cross_room(g, &grid);
+      room_gen_design_chunky_room(g, &grid);
+      room_gen_design_circular_room(g, &grid);
       break;
     case ROOM_TYPE_BLEND2 :
-      grid_design_chunky_room(g, &grid);
-      grid_design_chunky_room(g, &grid);
+      room_gen_design_chunky_room(g, &grid);
+      room_gen_design_chunky_room(g, &grid);
       break;
   }
 
@@ -546,20 +546,20 @@ static bool rooms_dump_one(Gamep g, FILE *out, int which)
   // Always ensure we have a contiguous blob. If we have two seperate room fragments,
   // this will end up with only one.
   //
-  grid_keep_largest_chunk(g, &grid);
+  room_gen_keep_largest_chunk(g, &grid);
 
-  if (! grid_get_bounds(g, &grid)) {
+  if (! room_gen_get_bounds(g, &grid)) {
     return false;
   }
   if (0) {
-    grid_dump(g, &grid);
+    room_gen_dump(g, &grid);
   }
 
   //
   // Add room exits
   //
-  grid_add_exits(g, &grid);
-  if (! grid_get_bounds(g, &grid)) {
+  room_gen_add_exits(g, &grid);
+  if (! room_gen_get_bounds(g, &grid)) {
     return false;
   }
 
@@ -568,19 +568,19 @@ static bool rooms_dump_one(Gamep g, FILE *out, int which)
   //
   if (d100() < 50) {
     for (auto corridors = 0; corridors < MAX_ROOM_CORRIDOR; corridors++) {
-      grid_add_corridor(g, &grid);
-      if (! grid_get_bounds(g, &grid)) {
+      room_gen_add_corridor(g, &grid);
+      if (! room_gen_get_bounds(g, &grid)) {
         return false;
       }
 
-      grid_add_corridor(g, &grid);
-      if (! grid_get_bounds(g, &grid)) {
+      room_gen_add_corridor(g, &grid);
+      if (! room_gen_get_bounds(g, &grid)) {
         return false;
       }
     }
   }
 
-  grid_room_only_dump(g, &grid);
+  room_gen_room_only_dump(g, &grid);
   return true;
 }
 
