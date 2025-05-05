@@ -10,8 +10,8 @@
 
 bool tp_load_goblin_mob(void)
 {
-  auto name = "goblin-mob";
-  auto tp   = tp_load("goblin-mob");
+  auto name = "goblin_mob";
+  auto tp   = tp_load("goblin_mob");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_can_hflip, true);

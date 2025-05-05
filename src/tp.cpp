@@ -48,10 +48,16 @@ std::initializer_list< std::string > tps = {
     "cursor_at",
     "goblin",
     "ghost",
+    "level_visited",
+    "level_across",
+    "level_next",
+    "level_not_visited",
+    "level_final",
+    "level_down",
     "chest",
     "potion",
-    "ghost-mob",
-    "goblin-mob",
+    "ghost_mob",
+    "goblin_mob",
     "player",
   /* end shell marker1 */
 };

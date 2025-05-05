@@ -121,13 +121,13 @@
       list_macro(is_unused73, "is_unused73"),                                     /* ............................ */ \
       list_macro(is_unused74, "is_unused74"),                                     /* ............................ */ \
       list_macro(is_unused75, "is_unused75"),                                     /* ............................ */ \
-      list_macro(is_unused76, "is_unused76"),                                     /* ............................ */ \
-      list_macro(is_unused77, "is_unused77"),                                     /* ............................ */ \
-      list_macro(is_unused78, "is_unused78"),                                     /* ............................ */ \
-      list_macro(is_unused79, "is_unused79"),                                     /* ............................ */ \
+      list_macro(is_level_next, "is_level_next"),                                 /* ............................ */ \
+      list_macro(is_level_final, "is_level_final"),                               /* ............................ */ \
+      list_macro(is_level_down, "is_level_down"),                                 /* ............................ */ \
+      list_macro(is_level_across, "is_level_across"),                             /* ............................ */ \
       list_macro(is_unused8, "is_unused8"),                                       /* ............................ */ \
-      list_macro(is_unused80, "is_unused80"),                                     /* ............................ */ \
-      list_macro(is_unused81, "is_unused81"),                                     /* ............................ */ \
+      list_macro(is_level_not_visited, "is_level_not_visited"),                   /* ............................ */ \
+      list_macro(is_level_visited, "is_level_visited"),                           /* ............................ */ \
       list_macro(is_treasure2, "is_treasure2"),                                   /* ............................ */ \
       list_macro(is_treasure1, "is_treasure1"),                                   /* ............................ */ \
       list_macro(is_monst2, "is_monst2"),                                         /* ............................ */ \
@@ -244,12 +244,12 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused73(tp)                   tp_flag(tp, is_unused73)
 #define tp_is_unused74(tp)                   tp_flag(tp, is_unused74)
 #define tp_is_unused75(tp)                   tp_flag(tp, is_unused75)
-#define tp_is_unused76(tp)                   tp_flag(tp, is_unused76)
-#define tp_is_unused77(tp)                   tp_flag(tp, is_unused77)
-#define tp_is_unused78(tp)                   tp_flag(tp, is_unused78)
-#define tp_is_unused79(tp)                   tp_flag(tp, is_unused79)
-#define tp_is_unused80(tp)                   tp_flag(tp, is_unused80)
-#define tp_is_unused81(tp)                   tp_flag(tp, is_unused81)
+#define tp_is_level_next(tp)                 tp_flag(tp, is_level_next)
+#define tp_is_level_final(tp)                tp_flag(tp, is_level_final)
+#define tp_is_level_down(tp)                 tp_flag(tp, is_level_down)
+#define tp_is_level_across(tp)               tp_flag(tp, is_level_across)
+#define tp_is_level_not_visited(tp)          tp_flag(tp, is_level_not_visited)
+#define tp_is_level_visited(tp)              tp_flag(tp, is_level_visited)
 #define tp_is_treasure2(tp)                  tp_flag(tp, is_treasure2)
 #define tp_is_treasure1(tp)                  tp_flag(tp, is_treasure1)
 #define tp_is_monst2(tp)                     tp_flag(tp, is_monst2)
@@ -371,12 +371,12 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused73(thing)                   tp_flag(thing_tp(thing), is_unused73)
 #define thing_is_unused74(thing)                   tp_flag(thing_tp(thing), is_unused74)
 #define thing_is_unused75(thing)                   tp_flag(thing_tp(thing), is_unused75)
-#define thing_is_unused76(thing)                   tp_flag(thing_tp(thing), is_unused76)
-#define thing_is_unused77(thing)                   tp_flag(thing_tp(thing), is_unused77)
-#define thing_is_unused78(thing)                   tp_flag(thing_tp(thing), is_unused78)
-#define thing_is_unused79(thing)                   tp_flag(thing_tp(thing), is_unused79)
-#define thing_is_unused80(thing)                   tp_flag(thing_tp(thing), is_unused80)
-#define thing_is_unused81(thing)                   tp_flag(thing_tp(thing), is_unused81)
+#define thing_is_level_next(thing)                 tp_flag(thing_tp(thing), is_level_next)
+#define thing_is_level_final(thing)                tp_flag(thing_tp(thing), is_level_final)
+#define thing_is_level_down(thing)                 tp_flag(thing_tp(thing), is_level_down)
+#define thing_is_level_across(thing)               tp_flag(thing_tp(thing), is_level_across)
+#define thing_is_level_not_visited(thing)          tp_flag(thing_tp(thing), is_level_not_visited)
+#define thing_is_level_visited(thing)              tp_flag(thing_tp(thing), is_level_visited)
 #define thing_is_treasure2(thing)                  tp_flag(thing_tp(thing), is_treasure2)
 #define thing_is_treasure1(thing)                  tp_flag(thing_tp(thing), is_treasure1)
 #define thing_is_monst2(thing)                     tp_flag(thing_tp(thing), is_monst2)
@@ -498,12 +498,12 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused73(g, v, l, p)                   level_flag(g, v, l, is_unused73, p)
 #define level_is_unused74(g, v, l, p)                   level_flag(g, v, l, is_unused74, p)
 #define level_is_unused75(g, v, l, p)                   level_flag(g, v, l, is_unused75, p)
-#define level_is_unused76(g, v, l, p)                   level_flag(g, v, l, is_unused76, p)
-#define level_is_unused77(g, v, l, p)                   level_flag(g, v, l, is_unused77, p)
-#define level_is_unused78(g, v, l, p)                   level_flag(g, v, l, is_unused78, p)
-#define level_is_unused79(g, v, l, p)                   level_flag(g, v, l, is_unused79, p)
-#define level_is_unused80(g, v, l, p)                   level_flag(g, v, l, is_unused80, p)
-#define level_is_unused81(g, v, l, p)                   level_flag(g, v, l, is_unused81, p)
+#define level_is_level_next(g, v, l, p)                 level_flag(g, v, l, is_level_next, p)
+#define level_is_level_final(g, v, l, p)                level_flag(g, v, l, is_level_final, p)
+#define level_is_level_down(g, v, l, p)                 level_flag(g, v, l, is_level_down, p)
+#define level_is_level_across(g, v, l, p)               level_flag(g, v, l, is_level_across, p)
+#define level_is_level_not_visited(g, v, l, p)          level_flag(g, v, l, is_level_not_visited, p)
+#define level_is_level_visited(g, v, l, p)              level_flag(g, v, l, is_level_visited, p)
 #define level_is_treasure2(g, v, l, p)                  level_flag(g, v, l, is_treasure2, p)
 #define level_is_treasure1(g, v, l, p)                  level_flag(g, v, l, is_treasure1, p)
 #define level_is_monst2(g, v, l, p)                     level_flag(g, v, l, is_monst2, p)
