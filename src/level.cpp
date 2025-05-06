@@ -90,7 +90,8 @@ Levelp level_change(Gamep g, Levelsp v, int level_num)
   LOG("Level change to %u", level_num);
   TRACE_AND_INDENT();
 
-  Level *l = game_level_get(g, v, level_num);
+  game_level_set(g, v, level_num);
+  Level *l = game_level_get(g, v);
 
   level_assign_tiles(g, v, l);
   level_scroll_warp_to_player(g, v);

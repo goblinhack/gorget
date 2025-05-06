@@ -349,6 +349,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       t->is_on_map                      = true;
       t->last_pushed_at                 = p;
       l->thing_id[ p.x ][ p.y ][ slot ] = t->id;
+      // LOG("l %p %s %d,%d", (void *) l, tp_name(tp), p.x, p.y);
 
       if (0) {
         //

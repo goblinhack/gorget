@@ -469,6 +469,8 @@ void Game::create_levels(void)
   seed_set();
   destroy_levels();
 
+  level_select_create_levels(g);
+
   level_gen_create_levels(g);
 
   auto v = game_levels_get(g);
@@ -477,7 +479,12 @@ void Game::create_levels(void)
     return;
   }
 
-  level_change(g, v, 0);
+  if (g_opt_test_level_select_menu) {
+    level_change(g, v, MAX_LEVELS - 1);
+  } else {
+    level_change(g, v, 0);
+  }
+  level_change(g, v, 99);
 
   levels_stats_dump(g);
 }

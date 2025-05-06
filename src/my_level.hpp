@@ -230,8 +230,6 @@ void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, point, Tpp, Thingp);
 
-void level_select_test(Gamep);
-
 void rooms_test(Gamep);
 void rooms_init(Gamep);
 void rooms_fini(Gamep);
@@ -254,13 +252,16 @@ void fragment_alts_fini(Gamep);
 bool fragment_add(Gamep, int chance, const char *file, int line, ...);
 bool fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
 
-void level_gen_test(Gamep);
-void level_gen_create_levels(Gamep);
-void level_gen_stats_dump(Gamep);
-
 void level_water_update(Gamep, Levelsp, Levelp);
 void level_water_tick(Gamep, Levelsp, Levelp);
 void level_water_display(Gamep, Levelsp, Levelp, point, int fbo, int16_t minx, int16_t miny, int16_t maxx,
                          int16_t maxy);
+
+void level_gen_test(Gamep);
+void level_gen_create_levels(Gamep);
+void level_gen_stats_dump(Gamep);
+
+void level_select_create_levels(Gamep);
+void level_select_test(Gamep);
 
 #endif // _MY_LEVEL_H_

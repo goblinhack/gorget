@@ -28,7 +28,7 @@ extern bool g_quitting;                  // Exiting the game
 extern bool g_opt_no_slow_log_flush;     // Do not flush after each console log at start
 extern bool g_opt_override_debug_level;  // Temporary, used to disable existing debugs
 extern bool g_opt_test_start;            // Start in the main menu
-extern bool g_opt_test_select;           // Start in the select menu
+extern bool g_opt_test_level_select_menu;           // Start in the select menu
 extern bool g_opt_test_room_gen;         // Test room gen
 extern bool g_opt_test_level_select_gen; // Test level select gen
 extern bool g_opt_test_level_gen;        // Test level gen

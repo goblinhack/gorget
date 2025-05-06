@@ -464,9 +464,9 @@ static void usage(void)
   CON(" --no-debug                  -- Disable debugs.");
   CON("Testing options:");
   CON(" --test-start                -- Start in a level.");
-  CON(" --test-select               -- Start in level select.");
   CON(" --test-room-gen             -- Test room gen and then exit.");
   CON(" --test-level-select-gen     -- Test room grid gen and then exit.");
+  CON(" --test-level-select-menu    -- Start in level select.");
   CON(" --test-level-gen            -- Test level gen and then exit.");
   CON(" ");
   CON("Written by goblinhack@gmail.com");
@@ -532,11 +532,6 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--test-select") || ! strcasecmp(argv[ i ], "-test-select")) {
-      g_opt_test_select = true;
-      continue;
-    }
-
     if (! strcasecmp(argv[ i ], "--test-room-gen") || ! strcasecmp(argv[ i ], "-test-room-gen")) {
       g_opt_test_room_gen = true;
       continue;
@@ -544,6 +539,11 @@ static void parse_args(int argc, char *argv[])
 
     if (! strcasecmp(argv[ i ], "--test-level-select-gen") || ! strcasecmp(argv[ i ], "-test-level-select-gen")) {
       g_opt_test_level_select_gen = true;
+      continue;
+    }
+
+    if (! strcasecmp(argv[ i ], "--test-level-select-menu") || ! strcasecmp(argv[ i ], "-test-level-select-menu")) {
+      g_opt_test_level_select_menu = true;
       continue;
     }
 
@@ -1014,7 +1014,7 @@ int main(int argc, char *argv[])
       g_opt_restarted = false;
     } else if (g_opt_test_start) {
       wid_new_game(g);
-    } else if (g_opt_test_select) {
+    } else if (g_opt_test_level_select_menu) {
       wid_new_game(g);
     } else {
       wid_main_menu_select(g);
