@@ -24,7 +24,7 @@ bool tp_load_level_next(void)
   // end sort marker1 }
 
   for (auto frame = 0; frame < 2; frame++) {
-    const auto delay = 100; /* ms */
+    const auto delay = 1000; /* ms */
     auto       tile  = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);

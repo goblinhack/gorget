@@ -4,7 +4,6 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
@@ -84,26 +83,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
 
   if (sdlk_eq(*key, game_key_zoom_get(g))) {
     DBG("Zoom alt");
-
-    if (game_map_zoom_get(g) == 1) {
-      game_map_zoom_set(g, game_map_zoom_def_get(g));
-    } else {
-      game_map_zoom_set(g, 1);
-    }
-
-    //
-    // Need to resize the map buffers and re-center
-    //
-    config_game_gfx_update(g);
-    gl_init_fbo(g, FBO_MAP);
-
-    //
-    // If following the player already, then no need to re-center
-    //
-    if (! v->requested_auto_scroll) {
-      level_scroll_warp_to_player(g, v);
-    }
-
+    game_map_zoom_toggle(g);
     return false; // To avoid click noise
   }
 

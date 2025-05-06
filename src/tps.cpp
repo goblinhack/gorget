@@ -68,6 +68,9 @@ bool templates_init(void)
   if (! tp_load_ghost()) {
     return false;
   }
+  if (! tp_load_level_curr()) {
+    return false;
+  }
   if (! tp_load_level_visited()) {
     return false;
   }

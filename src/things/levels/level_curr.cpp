@@ -8,17 +8,17 @@
 #include "../../my_tp.hpp"
 #include "../../my_tps.hpp"
 
-bool tp_load_level_down(void)
+bool tp_load_level_curr(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "level_down";
-  auto tp   = tp_load("level_down");
+  auto name = "level_curr";
+  auto tp   = tp_load("level_curr");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
-  tp_flag_set(tp, is_level_down, true);
+  tp_flag_set(tp, is_level_curr, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

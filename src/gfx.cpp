@@ -1075,6 +1075,8 @@ static void gfx_init_tiles(void)
         "level_visited.1",
         "level_next.0",
         "level_next.1",
+        "level_curr.0",
+        "level_curr.1",
         "level_final.0",
         "level_final.1",
         "level_across.0",

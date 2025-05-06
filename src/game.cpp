@@ -4,6 +4,7 @@
 
 #include "my_ascii.hpp"
 #include "my_game.hpp"
+#include "my_gl.hpp"
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
@@ -480,8 +481,10 @@ void Game::create_levels(void)
   }
 
   if (g_opt_test_level_select_menu) {
+    game_map_zoom_out(g);
     level_change(g, v, MAX_LEVELS - 1);
   } else {
+    game_map_zoom_in(g);
     level_change(g, v, 0);
   }
 
@@ -1820,6 +1823,7 @@ void game_map_zoom_set(Gamep g, int val)
 
 int game_map_zoom_def_get(Gamep g)
 {
+  TRACE_NO_INDENT();
   int visible_map_tl_x;
   int visible_map_tl_y;
   int visible_map_br_x;
@@ -1835,6 +1839,74 @@ int game_map_zoom_def_get(Gamep g)
   }
 
   return (int) zoom;
+}
+
+//
+// Zoom update
+//
+static void game_map_zoom_update(Gamep g)
+{
+  TRACE_NO_INDENT();
+  DBG("Zoom update");
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
+
+  //
+  // Need to resize the map buffers and re-center
+  //
+  config_game_gfx_update(g);
+  gl_init_fbo(g, FBO_MAP);
+
+  //
+  // If following the player already, then no need to re-center
+  //
+  if (! v->requested_auto_scroll) {
+    level_scroll_warp_to_player(g, v);
+  }
+}
+
+//
+// Zoom in/out
+//
+void game_map_zoom_toggle(Gamep g)
+{
+  TRACE_NO_INDENT();
+  DBG("Zoom alt");
+
+  if (game_map_zoom_get(g) == 1) {
+    game_map_zoom_set(g, game_map_zoom_def_get(g));
+  } else {
+    game_map_zoom_set(g, 1);
+  }
+
+  game_map_zoom_update(g);
+}
+
+//
+// Zoom in
+//
+void game_map_zoom_in(Gamep g)
+{
+  TRACE_NO_INDENT();
+  DBG("Zoom in");
+
+  game_map_zoom_set(g, game_map_zoom_def_get(g));
+  game_map_zoom_update(g);
+}
+
+//
+// Zoom out
+//
+void game_map_zoom_out(Gamep g)
+{
+  TRACE_NO_INDENT();
+  DBG("Zoom out");
+
+  game_map_zoom_set(g, 1);
+  game_map_zoom_update(g);
 }
 
 int game_map_single_pix_size_get(Gamep g)

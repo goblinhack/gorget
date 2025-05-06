@@ -224,6 +224,9 @@ void       game_key_zoom_set(Gamep, SDL_Keysym);
 int  game_map_zoom_get(Gamep g);
 int  game_map_zoom_def_get(Gamep g);
 void game_map_zoom_set(Gamep g, int val);
+void game_map_zoom_toggle(Gamep);
+void game_map_zoom_out(Gamep);
+void game_map_zoom_in(Gamep);
 
 int  game_map_single_pix_size_get(Gamep g);
 void game_map_single_pix_size_set(Gamep g, int val);

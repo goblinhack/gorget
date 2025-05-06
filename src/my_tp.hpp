@@ -120,7 +120,7 @@
       list_macro(is_unused72, "is_unused72"),                                     /* ............................ */ \
       list_macro(is_unused73, "is_unused73"),                                     /* ............................ */ \
       list_macro(is_unused74, "is_unused74"),                                     /* ............................ */ \
-      list_macro(is_unused75, "is_unused75"),                                     /* ............................ */ \
+      list_macro(is_level_curr, "is_level_curr"),                                 /* ............................ */ \
       list_macro(is_level_next, "is_level_next"),                                 /* ............................ */ \
       list_macro(is_level_final, "is_level_final"),                               /* ............................ */ \
       list_macro(is_level_down, "is_level_down"),                                 /* ............................ */ \
@@ -243,7 +243,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused72(tp)                   tp_flag(tp, is_unused72)
 #define tp_is_unused73(tp)                   tp_flag(tp, is_unused73)
 #define tp_is_unused74(tp)                   tp_flag(tp, is_unused74)
-#define tp_is_unused75(tp)                   tp_flag(tp, is_unused75)
+#define tp_is_level_curr(tp)                 tp_flag(tp, is_level_curr)
 #define tp_is_level_next(tp)                 tp_flag(tp, is_level_next)
 #define tp_is_level_final(tp)                tp_flag(tp, is_level_final)
 #define tp_is_level_down(tp)                 tp_flag(tp, is_level_down)
@@ -370,7 +370,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused72(thing)                   tp_flag(thing_tp(thing), is_unused72)
 #define thing_is_unused73(thing)                   tp_flag(thing_tp(thing), is_unused73)
 #define thing_is_unused74(thing)                   tp_flag(thing_tp(thing), is_unused74)
-#define thing_is_unused75(thing)                   tp_flag(thing_tp(thing), is_unused75)
+#define thing_is_level_curr(thing)                 tp_flag(thing_tp(thing), is_level_curr)
 #define thing_is_level_next(thing)                 tp_flag(thing_tp(thing), is_level_next)
 #define thing_is_level_final(thing)                tp_flag(thing_tp(thing), is_level_final)
 #define thing_is_level_down(thing)                 tp_flag(thing_tp(thing), is_level_down)
@@ -497,7 +497,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused72(g, v, l, p)                   level_flag(g, v, l, is_unused72, p)
 #define level_is_unused73(g, v, l, p)                   level_flag(g, v, l, is_unused73, p)
 #define level_is_unused74(g, v, l, p)                   level_flag(g, v, l, is_unused74, p)
-#define level_is_unused75(g, v, l, p)                   level_flag(g, v, l, is_unused75, p)
+#define level_is_level_curr(g, v, l, p)                 level_flag(g, v, l, is_level_curr, p)
 #define level_is_level_next(g, v, l, p)                 level_flag(g, v, l, is_level_next, p)
 #define level_is_level_final(g, v, l, p)                level_flag(g, v, l, is_level_final, p)
 #define level_is_level_down(g, v, l, p)                 level_flag(g, v, l, is_level_down, p)

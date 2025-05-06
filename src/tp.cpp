@@ -48,6 +48,7 @@ std::initializer_list< std::string > tps = {
     "cursor_at",
     "goblin",
     "ghost",
+    "level_curr",
     "level_visited",
     "level_across",
     "level_next",

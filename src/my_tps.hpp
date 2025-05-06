@@ -27,6 +27,7 @@ bool tp_load_cursor_path();
 bool tp_load_cursor_at();
 bool tp_load_goblin();
 bool tp_load_ghost();
+bool tp_load_level_curr();
 bool tp_load_level_visited();
 bool tp_load_level_across();
 bool tp_load_level_next();

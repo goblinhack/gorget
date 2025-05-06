@@ -225,212 +225,107 @@ static std::string level_select_string(Gamep g, class LevelSelect *l)
   return out;
 }
 
-#if 0
-void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
+//
+// Create a Thing for each level
+//
+static void level_select_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
 {
   TRACE_NO_INDENT();
 
-  const auto row_len      = MAP_WIDTH;
-  auto       expected_len = row_len * MAP_HEIGHT;
+  const auto row_len                              = LEVELS_ACROSS;
+  auto       expected_len                         = row_len * LEVELS_DOWN;
+  bool       level_map[ MAP_WIDTH ][ MAP_HEIGHT ] = {};
 
   if ((int) strlen(in) != expected_len) {
-    DIE("bad map size, expected %d, got %d", (int) strlen(in), (int) expected_len);
+    DIE("bad level select map size, expected %d, got %d", (int) strlen(in), (int) expected_len);
   }
 
-  auto tp_wall       = tp_random(is_wall);
-  auto tp_rock       = tp_random(is_rock);
-  auto tp_water      = tp_random(is_water);
-  auto tp_lava       = tp_random(is_lava);
-  auto tp_bridge     = tp_random(is_bridge);
-  auto tp_chasm      = tp_random(is_chasm);
-  auto tp_deep_water = tp_random(is_deep_water);
-  auto tp_treasure1  = tp_random(is_treasure1);
-  auto tp_treasure2  = tp_random(is_treasure2);
-  auto tp_door       = tp_find_mand("door");
-  auto tp_floor      = tp_find_mand("floor");
-  auto tp_corridor   = tp_find_mand("corridor");
-  auto tp_foliage    = tp_find_mand("foliage");
-  auto tp_dirt       = tp_find_mand("dirt");
-  auto tp_exit       = tp_find_mand("exit");
-  auto tp_player     = tp_find_mand("player");
-  //  auto tp_entrance = tp_find_mand("entrance");
+  auto tp_is_level_not_visited = tp_random(is_level_not_visited);
+  auto tp_is_level_curr        = tp_random(is_level_curr);
+  auto tp_is_level_across      = tp_random(is_level_across);
+  auto tp_is_level_down        = tp_random(is_level_down);
+  auto tp_is_level_final       = tp_random(is_level_final);
+#if 0
+  auto tp_is_level_next        = tp_random(is_level_next);
+  auto tp_is_level_visited     = tp_random(is_level_visited);
+#endif
 
-  for (auto y = 0; y < MAP_HEIGHT; y++) {
-    for (auto x = 0; x < MAP_WIDTH; x++) {
+  for (auto y = 0; y < LEVELS_DOWN; y++) {
+    for (auto x = 0; x < LEVELS_ACROSS; x++) {
       auto offset = (row_len * y) + x;
       auto c      = in[ offset ];
       Tpp  tp     = nullptr;
 
-      bool need_floor   = false;
-      bool need_water   = false;
-      bool need_dirt    = false;
-      bool need_foliage = false;
-
       switch (c) {
         case CHARMAP_FLOOR :
-          need_floor = true;
-          if (d100() < 5) {
-            need_foliage = true;
+          tp = tp_is_level_not_visited;
+          if ((x == 0) && (y == 0)) {
+            tp = tp_is_level_curr;
+          }
+          if ((x == LEVELS_ACROSS - 1) && (y == LEVELS_DOWN - 1)) {
+            tp = tp_is_level_final;
           }
           break;
-        case CHARMAP_DIRT :
-          need_dirt = true;
-          if (d100() < 50) {
-            need_foliage = true;
-          }
-          break;
-        case CHARMAP_CHASM : tp = tp_chasm; break;
-        case CHARMAP_JOIN : tp = tp_corridor; break;
-        case CHARMAP_CORRIDOR : tp = tp_corridor; break;
-        case CHARMAP_BRIDGE : tp = tp_bridge; break;
-        case CHARMAP_WALL :
-          need_floor = true;
-          tp         = tp_wall;
-          break;
-        case CHARMAP_TREASURE1 :
-          need_floor = true;
-          tp         = tp_treasure1;
-          break;
-        case CHARMAP_TREASURE2 :
-          need_floor = true;
-          tp         = tp_treasure2;
-          break;
-        case CHARMAP_TELEPORT :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_FOLIAGE :
-          need_floor   = true;
-          need_foliage = true;
-          break;
-        case CHARMAP_DEEP_WATER :
-          need_dirt  = true;
-          tp         = tp_deep_water;
-          need_water = true;
-          break;
-        case CHARMAP_WATER :
-          need_dirt  = true;
-          need_water = true;
-          if (d100() < 5) {
-            need_foliage = true;
-          }
-          break;
-        case CHARMAP_BARREL :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_PILLAR :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_TRAP :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_LAVA :
-          need_floor = true;
-          tp         = tp_lava;
-          break;
-        case CHARMAP_BRAZIER :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_DOOR :
-          need_floor = true;
-          tp         = tp_door;
-          break;
-        case CHARMAP_SECRET_DOOR :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_DRY_GRASS :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_MONST1 :
-          need_floor = true;
-          tp         = tp_random(is_monst1);
-          break;
-        case CHARMAP_MONST2 :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_MOB1 :
-          need_floor = true;
-          tp         = tp_random(is_mob1);
-          break;
-        case CHARMAP_MOB2 :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_ENTRANCE :
-          need_floor = true;
-          if (l->level_num == 0) {
-            tp = tp_player;
-          } else {
-            // tp = tp_entrance;
-            tp = nullptr; /* todo */
-          }
-          break;
-        case CHARMAP_EXIT :
-          need_floor = true;
-          tp         = tp_exit;
-          break;
-        case CHARMAP_KEY :
-          need_floor = true;
-          tp         = nullptr; /* todo */
-          break;
-        case CHARMAP_EMPTY :
-          need_dirt = true;
-          tp        = tp_rock;
-          break;
-        default :
-          if (! g_opt_test_level_gen) {
-            //            DIE("unexpected map char '%c'", c);
-          }
-      }
-
-      if (need_floor) {
-        auto tp_add = tp_floor;
-        auto t      = thing_init(g, v, l, tp_add, point(x, y));
-        if (t) {
-          thing_push(g, v, l, t);
-        }
-      }
-
-      if (need_dirt) {
-        auto tp_add = tp_dirt;
-        auto t      = thing_init(g, v, l, tp_add, point(x, y));
-        if (t) {
-          thing_push(g, v, l, t);
-        }
-      }
-
-      if (need_water) {
-        auto t = thing_init(g, v, l, tp_water, point(x, y));
-        if (t) {
-          thing_push(g, v, l, t);
-        }
-      }
-
-      if (need_foliage) {
-        auto tp_add = tp_foliage;
-        auto t      = thing_init(g, v, l, tp_add, point(x, y));
-        if (t) {
-          thing_push(g, v, l, t);
-        }
+        default : break;
       }
 
       if (tp) {
-        auto t = thing_init(g, v, l, tp, point(x, y));
+        point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 1);
+        auto  t = thing_init(g, v, l, tp, at);
         if (t) {
           thing_push(g, v, l, t);
+          level_map[ x ][ y ] = true;
+        }
+      }
+    }
+  }
+
+  for (auto y = 0; y < MAP_HEIGHT - 1; y++) {
+    for (auto x = 0; x < MAP_WIDTH - 1; x++) {
+      if (level_map[ x ][ y ] && level_map[ x + 1 ][ y ]) {
+        {
+          point at(x * LEVEL_SCALE + 2, y * LEVEL_SCALE + 1);
+          auto  t = thing_init(g, v, l, tp_is_level_across, at);
+          if (t) {
+            thing_push(g, v, l, t);
+            level_map[ x ][ y ] = true;
+          }
+        }
+        {
+          point at(x * LEVEL_SCALE + 3, y * LEVEL_SCALE + 1);
+          auto  t = thing_init(g, v, l, tp_is_level_across, at);
+          if (t) {
+            thing_push(g, v, l, t);
+            level_map[ x ][ y ] = true;
+          }
+        }
+      }
+    }
+  }
+
+  for (auto y = 0; y < MAP_HEIGHT - 1; y++) {
+    for (auto x = 0; x < MAP_WIDTH - 1; x++) {
+      if (level_map[ x ][ y ] && level_map[ x ][ y + 1 ]) {
+        {
+          point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 2);
+          auto  t = thing_init(g, v, l, tp_is_level_down, at);
+          if (t) {
+            thing_push(g, v, l, t);
+            level_map[ x ][ y ] = true;
+          }
+        }
+        {
+          point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 3);
+          auto  t = thing_init(g, v, l, tp_is_level_down, at);
+          if (t) {
+            thing_push(g, v, l, t);
+            level_map[ x ][ y ] = true;
+          }
         }
       }
     }
   }
 }
-#endif
 
 void level_select_create(Gamep g, class LevelSelect *l)
 {
@@ -444,9 +339,7 @@ void level_select_create(Gamep g, class LevelSelect *l)
   level->initialized = true;
   level->level_num   = level_num;
 
-#if 0
-  level_map_set(g, v, level, level_string.c_str());
-#endif
+  level_select_map_set(g, v, level, level_string.c_str());
 }
 
 //
