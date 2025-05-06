@@ -150,7 +150,7 @@ public:
   //
   // Sub level
   //
-  int level_num {};
+  LevelNum level_num {};
 
   //
   // The number of rooms to aim for for a given depth.
@@ -2192,7 +2192,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_gen_create_rooms(Gamep g, int level_num)
+static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
@@ -3260,7 +3260,7 @@ static void level_gen_create(Gamep g, class LevelGen *l)
 //
 // Create a level from the current game seed
 //
-static class LevelGen *level_gen(Gamep g, int level_num)
+static class LevelGen *level_gen(Gamep g, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
@@ -3362,7 +3362,7 @@ static std::array< class LevelGen *, MAX_LEVELS > levels = {};
 //
 // Create a level and store in the array of levels
 //
-static void level_gen_create_level(Gamep g, int level_num)
+static void level_gen_create_level(Gamep g, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 

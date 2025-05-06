@@ -338,6 +338,15 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   }
 
   //
+  // Only create the cursor path if the player is on this level. The level
+  // select level for example, has no player.
+  //
+  if (player->level_num != l->level_num) {
+    memset(v->cursor, 0, SIZEOF(v->cursor));
+    return;
+  }
+
+  //
   // Has something changed?
   //
   if ((player->at == player->old_at) && (v->cursor_at == v->old_cursor_at)) {

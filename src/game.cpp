@@ -484,7 +484,6 @@ void Game::create_levels(void)
   } else {
     level_change(g, v, 0);
   }
-  level_change(g, v, 99);
 
   levels_stats_dump(g);
 }
@@ -1267,7 +1266,7 @@ Levelp game_level_get(Gamep g, Levelsp v)
   auto n = v->level_num;
   return &v->level[ n ];
 }
-Levelp game_level_get(Gamep g, Levelsp v, int n)
+Levelp game_level_get(Gamep g, Levelsp v, LevelNum n)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -1280,7 +1279,7 @@ Levelp game_level_get(Gamep g, Levelsp v, int n)
   }
   return &v->level[ n ];
 }
-Levelp game_level_set(Gamep g, Levelsp v, int n)
+Levelp game_level_set(Gamep g, Levelsp v, LevelNum n)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {

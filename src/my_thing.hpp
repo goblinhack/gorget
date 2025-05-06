@@ -82,13 +82,13 @@ typedef struct Thing_ {
   //
   ThingAiId ai_id;
   //
-  // Which level am I on?
-  //
-  point level_num;
-  //
   // Map co-ords.
   //
   point at;
+  //
+  // Which level am I on?
+  //
+  LevelNum level_num;
   //
   // Previous map co-ords. Does not change when the move finishes.
   //

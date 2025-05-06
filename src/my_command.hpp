@@ -19,4 +19,5 @@ uint8_t command_handle(Gamep, const char *input, char *expandedtext, uint8_t sho
 uint8_t command_handle(Gamep, std::string input, std::string *expanded_text, uint8_t show_ambiguous,
                        uint8_t show_complete, uint8_t execute_command, void *context);
 void    commands_test(void);
+
 #endif

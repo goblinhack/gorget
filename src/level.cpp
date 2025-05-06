@@ -85,7 +85,7 @@ void levels_destroy(Gamep g, Levelsp v)
   levels_memory_free(g, v);
 }
 
-Levelp level_change(Gamep g, Levelsp v, int level_num)
+Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 {
   LOG("Level change to %u", level_num);
   TRACE_AND_INDENT();

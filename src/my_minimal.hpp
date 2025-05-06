@@ -200,6 +200,7 @@ using Tilep        = class Tile *;
 using TpId         = unsigned int;
 using Tpp          = class Tp *;
 using Widp         = class Wid *;
+using LevelNum     = unsigned char;
 
 #define NULL_TP    ((Tpp) nullptr)
 #define NULL_THING ((Thingp) nullptr)

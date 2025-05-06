@@ -120,8 +120,8 @@ Levelsp game_levels_get(Gamep);
 void    game_levels_set(Gamep, Levelsp);
 
 Levelp game_level_get(Gamep g, Levelsp);
-Levelp game_level_get(Gamep g, Levelsp, int level_num);
-Levelp game_level_set(Gamep g, Levelsp, int level_num);
+Levelp game_level_get(Gamep g, Levelsp, LevelNum level_num);
+Levelp game_level_set(Gamep g, Levelsp, LevelNum level_num);
 
 const char *game_seed_name_get(Gamep);
 SeedSource  game_seed_source_get(Gamep);

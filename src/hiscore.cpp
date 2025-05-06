@@ -25,7 +25,7 @@ HiScores::HiScores(void)
 
 HiScores::~HiScores(void) { TRACE_AND_INDENT(); }
 
-void HiScores::add_new_hiscore(Gamep g, int score, int level_num, const std::string &name)
+void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std::string &name)
 {
   TRACE_AND_INDENT();
   auto        h = hiscores.begin();
