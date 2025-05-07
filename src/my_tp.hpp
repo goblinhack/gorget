@@ -142,6 +142,7 @@
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 
+// begin sort marker1 {
 #define tp_is_able_to_walk_through_walls(tp) tp_flag(tp, is_able_to_walk_through_walls)
 #define tp_is_animated_can_hflip(tp)         tp_flag(tp, is_animated_can_hflip)
 #define tp_is_animated_no_dir(tp)            tp_flag(tp, is_animated_no_dir)
@@ -268,7 +269,9 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_walk_through_walls(tp)         tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                       tp_flag(tp, is_wall)
 #define tp_is_water(tp)                      tp_flag(tp, is_water)
+// end sort marker1 }
 
+// begin sort marker2 {
 #define thing_is_able_to_walk_through_walls(thing) tp_flag(thing_tp(thing), is_able_to_walk_through_walls)
 #define thing_is_animated_can_hflip(thing)         tp_flag(thing_tp(thing), is_animated_can_hflip)
 #define thing_is_animated_no_dir(thing)            tp_flag(thing_tp(thing), is_animated_no_dir)
@@ -395,7 +398,9 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_walk_through_walls(thing)         tp_flag(thing_tp(thing), is_walk_through_walls)
 #define thing_is_wall(thing)                       tp_flag(thing_tp(thing), is_wall)
 #define thing_is_water(thing)                      tp_flag(thing_tp(thing), is_water)
+// end sort marker2 }
 
+// begin sort marker3 {
 #define level_is_able_to_walk_through_walls(g, v, l, p) level_flag(g, v, l, is_able_to_walk_through_walls, p)
 #define level_is_animated_can_hflip(g, v, l, p)         level_flag(g, v, l, is_animated_can_hflip, p)
 #define level_is_animated_no_dir(g, v, l, p)            level_flag(g, v, l, is_animated_no_dir, p)
@@ -522,6 +527,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_walk_through_walls(g, v, l, p)         level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                       level_flag(g, v, l, is_wall, p)
 #define level_is_water(g, v, l, p)                      level_flag(g, v, l, is_water, p)
+// end sort marker3 }
 
 enum {
   MAP_Z_DEPTH_FLOOR,
