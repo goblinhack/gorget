@@ -51,6 +51,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
   t->old_at      = at;
   t->moving_from = at;
   t->anim_class  = THING_ANIM_IDLE;
+  t->level_num   = l->level_num;
 
   t->pix_at.x = t->at.x * TILE_WIDTH;
   t->pix_at.y = t->at.y * TILE_HEIGHT;
@@ -77,6 +78,20 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
   //
   if (tp_is_player(tp)) {
     v->player_id = t->id;
+
+    //
+    // First time entering this level?
+    //
+    if (! l->entered) {
+      level_entered(g, v, l);
+    }
+  }
+
+  //
+  // Assign the current level select id. This is only valid when in the select screen.
+  //
+  if (tp_is_level_curr(tp)) {
+    v->level_select_id = t->id;
   }
 
   thing_update(g, t);
@@ -160,6 +175,19 @@ static void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   auto o = thing_find(g, v, t->id);
   if (t != o) {
     DIE("Thing mismatch found for id, %" PRIx32 "", t->id);
+  }
+
+  auto tp = thing_tp(t);
+
+  //
+  // Clean up references
+  //
+  if (tp_is_player(tp)) {
+    v->player_id = 0;
+  }
+
+  if (tp_is_level_curr(tp)) {
+    v->level_select_id = 0;
   }
 
   thing_pop(g, v, l, t);

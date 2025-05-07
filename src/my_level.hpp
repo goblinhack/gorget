@@ -28,9 +28,21 @@ typedef struct Level_ {
   //
   LevelNum level_num;
   //
+  // Where on the level select grid is this level
+  //
+  point level_select_at;
+  //
   // Flags
   //
   uint8_t initialized : 1;
+  //
+  // Player has entered level
+  //
+  uint8_t entered : 1;
+  //
+  // Player has completed level
+  //
+  uint8_t completed : 1;
   //
   // What things are where? Each Id points to a thing structure.
   //
@@ -43,6 +55,29 @@ typedef struct Level_ {
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
 } Level;
+
+typedef struct LevelSelectCell_ {
+  //
+  // If there is a level here
+  //
+  uint8_t is_set;
+  //
+  // Back pointer to the level here, if any
+  //
+  Levelp level;
+} LevelSelectCell;
+
+typedef struct LevelSelect_ {
+  //
+  // Level tiles and grid info
+  //
+  LevelSelectCell data[ LEVELS_ACROSS ][ LEVELS_DOWN ];
+
+  //
+  // How many levels generated
+  //
+  int level_count;
+} LevelSelect;
 
 typedef struct Levels_ {
   //////////////////////////////////////////////////////////////
@@ -109,6 +144,10 @@ typedef struct Levels_ {
   //
   Level level[ MAX_LEVELS ];
   //
+  // Which levels are where
+  //
+  LevelSelect level_select;
+  //
   // All things structure memory.
   //
   Thing thing_body[ 1 << THING_COMMON_ID_BITS ];
@@ -124,6 +163,10 @@ typedef struct Levels_ {
   // The current player.
   //
   ThingId player_id;
+  //
+  // Used in level selection, this is the current level thing
+  //
+  ThingId level_select_id;
   //
   // What the player is currently highlighting.
   //
@@ -203,6 +246,8 @@ void    levels_destroy(Gamep, Levelsp);
 void    levels_stats_dump(Gamep g);
 
 Levelp level_change(Gamep, Levelsp, LevelNum);
+void   level_entered(Gamep, Levelsp, Levelp);
+void   level_completed(Gamep, Levelsp, Levelp);
 void   level_destroy(Gamep, Levelsp, Levelp);
 
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
@@ -224,8 +269,8 @@ void level_map_set(Gamep, Levelsp, Levelp, const char *);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);
 void level_scroll_delta(Gamep, Levelsp, point);
 void level_cursor_path_reset(Gamep, Levelsp, Levelp);
-void level_scroll_to_player(Gamep, Levelsp);
-void level_scroll_warp_to_player(Gamep, Levelsp);
+void level_scroll_to_focus(Gamep, Levelsp);
+void level_scroll_warp_to_focus(Gamep, Levelsp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, point, Tpp, Thingp);
@@ -261,7 +306,8 @@ void level_gen_test(Gamep);
 void level_gen_create_levels(Gamep);
 void level_gen_stats_dump(Gamep);
 
-void level_select_create_levels(Gamep);
-void level_select_test(Gamep);
+void   level_select_create_levels(Gamep);
+void   level_select_test(Gamep);
+Thingp thing_level_select(Gamep);
 
 #endif // _MY_LEVEL_H_

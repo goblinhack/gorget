@@ -10,14 +10,40 @@
 #include "my_tile.hpp"
 
 //
-// Soft scroll to the player/
+// We focus on the current level if on the level select screen.
+// Failing that we focus on the player if playing a level.
 //
-void level_scroll_to_player(Gamep g, Levelsp v)
+Thingp level_scroll_target(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (! player) {
+  //
+  // If on the select level, do we have a current level?
+  //
+  auto l = game_level_get(g, v);
+  if (l && (l->level_num == LEVEL_SELECT_ID)) {
+    Thingp target = thing_level_select(g);
+    if (target) {
+      return target;
+    }
+  }
+
+  return thing_player(g);
+}
+
+//
+// Soft scroll to the player/level.
+//
+void level_scroll_to_focus(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // We focus on the current level if on the level select screen.
+  // Failing that we focus on the player if playing a level.
+  //
+  Thingp target = level_scroll_target(g, v);
+  if (! target) {
     return;
   }
 
@@ -38,8 +64,8 @@ void level_scroll_to_player(Gamep g, Levelsp v)
   // Where are we as a percentage on that map.
   //
   int   zoom = game_map_zoom_get(g);
-  float x    = ((player->pix_at.x * zoom) - v->pixel_map_at.x) / (float) w;
-  float y    = ((player->pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
+  float x    = ((target->pix_at.x * zoom) - v->pixel_map_at.x) / (float) w;
+  float y    = ((target->pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
 
   const auto scroll_border = MAP_SCROLL_BORDER;
   const auto scroll_speed  = MAP_SCROLL_SPEED;
@@ -77,20 +103,24 @@ void level_scroll_delta(Gamep g, Levelsp v, point delta)
 }
 
 //
-// Jump to the player immediately.
+// Jump to the target immediately.
 //
-void level_scroll_warp_to_player(Gamep g, Levelsp v)
+void level_scroll_warp_to_focus(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
-  auto t = thing_player(g);
-  if (! t) {
+  //
+  // We focus on the current level if on the level select screen.
+  // Failing that we focus on the player if playing a level.
+  //
+  Thingp target = level_scroll_target(g, v);
+  if (! target) {
     return;
   }
 
   int zoom = game_map_zoom_get(g);
 
-  v->pixel_map_at = t->pix_at;
+  v->pixel_map_at = target->pix_at;
   v->pixel_map_at.x *= zoom;
   v->pixel_map_at.y *= zoom;
 

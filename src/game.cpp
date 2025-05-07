@@ -480,11 +480,11 @@ void Game::create_levels(void)
     return;
   }
 
+  game_map_zoom_in(g);
+
   if (g_opt_test_level_select_menu) {
-    game_map_zoom_out(g);
-    level_change(g, v, MAX_LEVELS - 1);
+    level_change(g, v, LEVEL_SELECT_ID);
   } else {
-    game_map_zoom_in(g);
     level_change(g, v, 0);
   }
 
@@ -1280,6 +1280,10 @@ Levelp game_level_get(Gamep g, Levelsp v, LevelNum n)
     ERR("No levels pointer set");
     return nullptr;
   }
+  if (n >= MAX_LEVELS) {
+    ERR("Exceeded max level: %u", n);
+    return nullptr;
+  }
   return &v->level[ n ];
 }
 Levelp game_level_set(Gamep g, Levelsp v, LevelNum n)
@@ -1291,6 +1295,10 @@ Levelp game_level_set(Gamep g, Levelsp v, LevelNum n)
   }
   if (unlikely(! v)) {
     ERR("No levels pointer set");
+    return nullptr;
+  }
+  if (n >= MAX_LEVELS) {
+    ERR("Exceeded max level: %u", n);
     return nullptr;
   }
   v->level_num = n;
@@ -1864,7 +1872,7 @@ static void game_map_zoom_update(Gamep g)
   // If following the player already, then no need to re-center
   //
   if (! v->requested_auto_scroll) {
-    level_scroll_warp_to_player(g, v);
+    level_scroll_warp_to_focus(g, v);
   }
 }
 

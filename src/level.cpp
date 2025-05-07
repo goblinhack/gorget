@@ -85,6 +85,22 @@ void levels_destroy(Gamep g, Levelsp v)
   levels_memory_free(g, v);
 }
 
+void level_entered(Gamep g, Levelsp v, Levelp l)
+{
+  LOG("Level entered: %u", l->level_num);
+  TRACE_AND_INDENT();
+
+  l->entered = true;
+}
+
+void level_completed(Gamep g, Levelsp v, Levelp l)
+{
+  LOG("Level completed: %u", l->level_num);
+  TRACE_AND_INDENT();
+
+  l->completed = true;
+}
+
 Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 {
   LOG("Level change to %u", level_num);
@@ -94,7 +110,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   Level *l = game_level_get(g, v);
 
   level_assign_tiles(g, v, l);
-  level_scroll_warp_to_player(g, v);
+  level_scroll_warp_to_focus(g, v);
 
   return l;
 }
