@@ -69,14 +69,19 @@ typedef struct LevelSelectCell_ {
 
 typedef struct LevelSelect_ {
   //
-  // Level tiles and grid info
+  // Set when we have populated the levels.
   //
-  LevelSelectCell data[ LEVELS_ACROSS ][ LEVELS_DOWN ];
+  uint8_t is_populated;
 
   //
   // How many levels generated
   //
-  int level_count;
+  LevelNum level_count;
+
+  //
+  // Level tiles and grid info
+  //
+  LevelSelectCell data[ LEVELS_ACROSS ][ LEVELS_DOWN ];
 } LevelSelect;
 
 typedef struct Levels_ {
@@ -308,6 +313,7 @@ void level_gen_stats_dump(Gamep);
 
 void   level_select_create_levels(Gamep);
 void   level_select_test(Gamep);
+void   level_select_destroy(Gamep, Levelsp, Levelp);
 Thingp thing_level_select(Gamep);
 
 #endif // _MY_LEVEL_H_

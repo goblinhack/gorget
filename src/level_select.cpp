@@ -98,72 +98,6 @@ static int level_select_count_levels(Gamep g, Levelsp v, LevelSelect *s)
   return s->level_count;
 }
 
-static void snake_walk(Gamep g, Levelsp v, LevelSelect *s, point at, int turn_chance, int count)
-{
-  TRACE_NO_INDENT();
-
-  point dir(1, 0);
-  point end(LEVELS_ACROSS - 1, LEVELS_DOWN - 1);
-
-  while (count-- > 0) {
-    //
-    // Ensure we never try to create too many levels
-    //
-    // Keep one free for the select level
-    //
-    if (level_select_count_levels(g, v, s) >= LEVEL_SELECT_ID) {
-      return;
-    }
-
-    at += dir;
-
-    if (at.x < 0) {
-      at.x = 0;
-    }
-    if (at.y < 0) {
-      at.y = 0;
-    }
-    if (at.x > LEVELS_ACROSS - 1) {
-      at.x = LEVELS_ACROSS - 1;
-    }
-    if (at.y > LEVELS_DOWN - 1) {
-      at.y = LEVELS_DOWN - 1;
-    }
-
-    s->data[ at.x ][ at.y ].is_set = true;
-
-    auto chance = d100();
-    if (chance < turn_chance) {
-      if (dir == point(1, 0)) {
-        dir = point(0, 1);
-      } else if (dir == point(0, 1)) {
-        dir = point(-1, 0);
-      } else if (dir == point(-1, 0)) {
-        dir = point(0, -1);
-      } else if (dir == point(0, -1)) {
-        dir = point(1, 0);
-      }
-    }
-  }
-
-  s->data[ at.x ][ at.y ].is_set = true;
-}
-
-static void snake_walk(Gamep g, Levelsp v, LevelSelect *s, int turn_chance, int count)
-{
-  TRACE_NO_INDENT();
-
-  while (true) {
-    auto x = pcg_random_range(0, LEVELS_ACROSS);
-    auto y = pcg_random_range(0, LEVELS_DOWN);
-
-    if (s->data[ x ][ y ].is_set) {
-      snake_walk(g, v, s, point(x, y), turn_chance, count);
-      return;
-    }
-  }
-}
-
 static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, point at, int dive_chance)
 {
   TRACE_NO_INDENT();
@@ -392,12 +326,42 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
   }
 }
 
-void level_select_create(Gamep g, Levelsp, LevelSelect *s)
+//
+// Create the level grid
+//
+static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
+{
+  TRACE_NO_INDENT();
+
+  if (s->is_populated) {
+    return;
+  }
+
+  s->is_populated = true;
+
+  //
+  // Use a consistent seed
+  //
+  uint32_t seed_num = game_seed_num_get(g);
+  pcg_srand(seed_num);
+
+  snake_dive(g, v, s, point(0, 0), 90);
+  snake_dive(g, v, s, 90);
+  snake_dive(g, v, s, point(0, 0), 50);
+  snake_dive(g, v, s, point(0, 0), 30);
+  snake_dive(g, v, s, point(0, 0), 30);
+  snake_dive(g, v, s, point(0, 0), 30);
+  snake_dive(g, v, s, 30);
+}
+
+//
+// Create the things that are used to represent levels
+//
+static void level_select_create_things(Gamep g, Levelsp v, LevelSelect *s)
 {
   TRACE_NO_INDENT();
 
   auto level_num = LEVEL_SELECT_ID;
-  auto v         = game_levels_get(g);
   auto l         = game_level_get(g, v, level_num);
 
   //
@@ -423,32 +387,27 @@ void level_select_create_levels(Gamep g)
   game_levels_set(g, v);
   LevelSelect *s = &v->level_select;
 
-  //
-  // Use a consistent seed
-  //
-  uint32_t seed_num = game_seed_num_get(g);
-  pcg_srand(seed_num);
-
-  int len         = 10;
-  int turn_chance = 10;
-  int nwalks      = 10;
-
-  snake_dive(g, v, s, point(0, 0), 90);
-  snake_dive(g, v, s, 90);
-  snake_dive(g, v, s, point(0, 0), 50);
-  snake_dive(g, v, s, point(0, 0), 30);
-  snake_dive(g, v, s, point(0, 0), 30);
-  snake_dive(g, v, s, point(0, 0), 30);
-  snake_dive(g, v, s, 30);
-
-  for (auto walks = 0; walks < nwalks; walks++) {
-    snake_walk(g, v, s, turn_chance, len);
-  }
-
+  level_select_create(g, v, s);
+  level_select_dump(g, v, s);
   level_select_count_levels(g, v, s);
   level_select_assign_levels(g, v, s);
-  level_select_dump(g, v, s);
-  level_select_create(g, v, s);
+  level_select_create_things(g, v, s);
+}
+
+//
+// Clean up the level select snake walk
+//
+void level_select_destroy(Gamep g, Levelsp v, Levelp l)
+{
+  LOG("Level select destroy");
+  TRACE_AND_INDENT();
+
+  if (! l || ! l->initialized) {
+    return;
+  }
+
+  LevelSelect *s = &v->level_select;
+  memset(s, 0, sizeof(*s));
 }
 
 void level_select_test(Gamep g)
@@ -459,19 +418,7 @@ void level_select_test(Gamep g)
   game_levels_set(g, v);
   LevelSelect *s = &v->level_select;
 
-  int len         = 10;
-  int turn_chance = 10;
-  int nwalks      = 10;
-
-  snake_dive(g, v, s, point(0, 0), 90);
-  snake_dive(g, v, s, point(0, 0), 40);
-  snake_dive(g, v, s, point(0, 0), 10);
-  snake_dive(g, v, s, 10);
-
-  for (auto walks = 0; walks < nwalks; walks++) {
-    snake_walk(g, v, s, turn_chance, len);
-  }
-
-  level_select_count_levels(g, v, s);
+  level_select_create(g, v, s);
   level_select_dump(g, v, s);
+  level_select_count_levels(g, v, s);
 }

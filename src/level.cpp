@@ -125,7 +125,18 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   LOG("Level destroy %u", l->level_num);
   TRACE_AND_INDENT();
 
+  //
+  // Remove all things
+  //
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_fini(g, v, l, t); }
+
+  //
+  // Clean up the level select snake walk
+  //
+  if (l->level_num == LEVEL_SELECT_ID) {
+    level_select_destroy(g, v, l);
+  }
+
   memset(l, 0, sizeof(*l));
 }
 
