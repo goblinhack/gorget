@@ -314,6 +314,7 @@ void level_gen_stats_dump(Gamep);
 void   level_select_create_levels(Gamep);
 void   level_select_test(Gamep);
 void   level_select_destroy(Gamep, Levelsp, Levelp);
+void   level_select_cursor_update(Gamep, Levelsp, Levelp);
 Thingp thing_level_select(Gamep);
 
 #endif // _MY_LEVEL_H_

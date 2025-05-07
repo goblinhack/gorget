@@ -12,6 +12,7 @@
 #include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
+#include "my_tp.hpp"
 
 #include <stdlib.h>
 
@@ -392,6 +393,11 @@ void level_select_create_levels(Gamep g)
   level_select_count_levels(g, v, s);
   level_select_assign_levels(g, v, s);
   level_select_create_things(g, v, s);
+
+  TOPCON("");
+  TOPCON("");
+  TOPCON("%%fg=yellow$Choose your next level, mortal. Mouse over levels for monster/treasure info.%%fg=reset$");
+  TOPCON("test");
 }
 
 //
@@ -408,6 +414,54 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 
   LevelSelect *s = &v->level_select;
   memset(s, 0, sizeof(*s));
+}
+
+//
+// If in level select mode, update what we're hovering over
+//
+static void level_select_cursor_update_level(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  auto is_monst_count    = 0;
+  auto is_treasure_count = 0;
+
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    if (thing_is_monst1(t)) {
+      is_monst_count++;
+    }
+
+    if (thing_is_treasure(t)) {
+      is_treasure_count++;
+    }
+  }
+
+  TOPCON("%d/%d/%d", l->level_num, is_monst_count, is_treasure_count);
+}
+
+//
+// If in level select mode, update what we're hovering over
+//
+void level_select_cursor_update(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  if (l->level_num != LEVEL_SELECT_ID) {
+    return;
+  }
+
+  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
+  {
+    auto         x          = v->cursor_at.x / LEVEL_SCALE;
+    auto         y          = v->cursor_at.y / LEVEL_SCALE;
+    LevelSelect *s          = &v->level_select;
+    auto         level_over = s->data[ x ][ y ].level;
+
+    if (level_over) {
+      level_select_cursor_update_level(g, v, level_over);
+    }
+  }
 }
 
 void level_select_test(Gamep g)

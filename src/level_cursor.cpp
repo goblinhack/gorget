@@ -384,4 +384,9 @@ void level_cursor_update(Gamep g, Levelsp v, Levelp l)
   // Update the player with the path.
   //
   level_cursor_path_apply(g, v, l, cursor_path);
+
+  //
+  // If in level select mode, update what we're hovering over
+  //
+  level_select_cursor_update(g, v, l);
 }
