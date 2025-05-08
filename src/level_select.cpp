@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_cave.hpp"
 #include "my_charmap.hpp"
+#include "my_color_defs.hpp"
 #include "my_dice.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
@@ -12,8 +13,12 @@
 #include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
+#include "my_string.hpp"
 #include "my_tp.hpp"
+#include "my_ui.hpp"
+#include "my_wid.hpp"
 
+#include <map>
 #include <stdlib.h>
 
 //
@@ -417,27 +422,122 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 }
 
 //
-// If in level select mode, update what we're hovering over
+// Show a sorted list of vales
 //
-static void level_select_cursor_update_level(Gamep g, Levelsp v, Levelp l)
+static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp parent,
+                                           std::map< std::string, int > map_in, std::string map_name, int width,
+                                           int x_at, int y_at)
 {
   TRACE_NO_INDENT();
 
-  auto is_monst_count    = 0;
-  auto is_treasure_count = 0;
+  if (! map_in.size()) {
+    return y_at;
+  }
 
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
+    TRACE_NO_INDENT();
+    auto  w = wid_new_square_button(g, parent, map_name);
+    point tl(x_at, y_at);
+    point br(width - 1, y_at);
+    auto  s = dynprintf("%s:", map_name.c_str());
+    wid_set_color(w, WID_COLOR_TEXT_FG, YELLOW);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, s);
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_shape_none(w);
+    wid_set_text_lhs(w, true);
+    myfree(s);
+  }
+  y_at++;
+
+  while (map_in.size()) {
+    std::string highest;
+    for (auto m : map_in) {
+      auto name = m.first;
+      auto val  = m.second;
+      if (highest.empty()) {
+        highest = name;
+      } else if (val > map_in[ highest ]) {
+        highest = name;
+      }
+    }
+
+    {
+      TRACE_NO_INDENT();
+      auto  w = wid_new_square_button(g, parent, map_name);
+      point tl(x_at, y_at);
+      point br(width - 1, y_at);
+      auto  s = dynprintf("  %u x %s", map_in[ highest ], highest.c_str());
+      wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, s);
+      wid_set_style(w, UI_WID_STYLE_NORMAL);
+      wid_set_shape_none(w);
+      wid_set_text_lhs(w, true);
+      myfree(s);
+    }
+    y_at++;
+
+    map_in.erase(highest);
+  }
+
+  return y_at;
+}
+
+//
+// If in level select mode, update what we're hovering over
+//
+void level_select_cursor_update_level(Gamep g, Levelsp v, Levelp l, Widp parent)
+{
+  TRACE_NO_INDENT();
+
+  auto         x          = v->cursor_at.x / LEVEL_SCALE;
+  auto         y          = v->cursor_at.y / LEVEL_SCALE;
+  LevelSelect *s          = &v->level_select;
+  auto         level_over = s->data[ x ][ y ].level;
+
+  std::map< std::string, int > mobs;
+  std::map< std::string, int > monsts;
+  std::map< std::string, int > treasure;
+
+  FOR_ALL_THINGS_ON_LEVEL(g, v, level_over, t)
+  {
+    auto name = tp_name(thing_tp(t));
+
+    if (thing_is_mob(t)) {
+      mobs[ name ]++;
+    }
+
     if (thing_is_monst1(t)) {
-      is_monst_count++;
+      monsts[ name ]++;
     }
 
     if (thing_is_treasure(t)) {
-      is_treasure_count++;
+      treasure[ name ]++;
     }
   }
 
-  TOPCON("%d/%d/%d", l->level_num, is_monst_count, is_treasure_count);
+  auto x_at  = 1;
+  auto y_at  = 4;
+  auto width = UI_RIGHTBAR_WIDTH;
+
+  {
+    TRACE_NO_INDENT();
+    auto  w = wid_new_square_button(g, parent, "contents");
+    point tl(x_at, y_at);
+    point br(width - 1, y_at);
+    wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, "Contents:");
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_shape_none(w);
+    wid_set_text_lhs(w, true);
+  }
+
+  y_at++;
+  y_at = level_select_show_sorted_values(g, v, level_over, parent, mobs, "Mobs", width, x_at, y_at);
+  y_at = level_select_show_sorted_values(g, v, level_over, parent, monsts, "Monsters", width, x_at, y_at);
+  y_at = level_select_show_sorted_values(g, v, level_over, parent, treasure, "Loot", width, x_at, y_at);
 }
 
 //
@@ -459,7 +559,7 @@ void level_select_cursor_update(Gamep g, Levelsp v, Levelp l)
     auto         level_over = s->data[ x ][ y ].level;
 
     if (level_over) {
-      level_select_cursor_update_level(g, v, level_over);
+      game_request_to_remake_rightbar_set(g);
     }
   }
 }

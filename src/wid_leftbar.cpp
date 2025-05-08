@@ -19,8 +19,10 @@ static WidPopup *wid_leftbar_popup;
 
 static bool wid_leftbar_create_window(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   DBG2("Remake leftbar");
+
+  wid_leftbar_fini(g);
 
   auto v = game_levels_get(g);
   if (! v) {
@@ -31,7 +33,7 @@ static bool wid_leftbar_create_window(Gamep g)
   int y_at  = 0;
 
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     point tl(0, 0);
     point br(width - 1, TERM_HEIGHT - 1);
 
@@ -44,7 +46,7 @@ static bool wid_leftbar_create_window(Gamep g)
 
   y_at = 4;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto  w = wid_new_square_button(g, wid_leftbar, "level no");
     point tl(0, y_at);
     point br(width - 1, y_at);
@@ -58,7 +60,7 @@ static bool wid_leftbar_create_window(Gamep g)
 
   if (0) {
     y_at++;
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto  w = wid_new_plain(g, wid_leftbar, "Seed");
     point tl(0, y_at);
     point br(width - 1, y_at);
@@ -73,7 +75,7 @@ static bool wid_leftbar_create_window(Gamep g)
 #if 0
   y_at = 8;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto  w = wid_new_square_button(wid_leftbar, "player");
     point tl(0, y_at);
     point br(width - 1, y_at);
@@ -88,7 +90,7 @@ static bool wid_leftbar_create_window(Gamep g)
 
   y_at = 13;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto  w = wid_new_square_button(wid_leftbar, "player2");
     point tl(0, y_at);
     point br(width - 1, y_at);
@@ -103,7 +105,7 @@ static bool wid_leftbar_create_window(Gamep g)
 
   y_at = 18;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto  w = wid_new_square_button(wid_leftbar, "player2");
     point tl(0, y_at);
     point br(width - 1, y_at);
@@ -118,7 +120,7 @@ static bool wid_leftbar_create_window(Gamep g)
 
   y_at = 23;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto  w = wid_new_square_button(wid_leftbar, "player2");
     point tl(0, y_at);
     point br(width - 1, y_at);
@@ -141,7 +143,7 @@ static bool wid_leftbar_create_window(Gamep g)
 
 void wid_leftbar_fini(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_destroy(g, &wid_leftbar);
 
   delete wid_leftbar_popup;
@@ -150,7 +152,7 @@ void wid_leftbar_fini(Gamep g)
 
 bool wid_leftbar_init(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   return wid_leftbar_create_window(g);
 }
 

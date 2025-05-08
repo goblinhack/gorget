@@ -316,5 +316,6 @@ void   level_select_test(Gamep);
 void   level_select_destroy(Gamep, Levelsp, Levelp);
 void   level_select_cursor_update(Gamep, Levelsp, Levelp);
 Thingp thing_level_select(Gamep);
+void   level_select_cursor_update_level(Gamep, Levelsp, Levelp, Widp);
 
 #endif // _MY_LEVEL_H_

@@ -111,16 +111,6 @@ public:
   //
   HiScores hiscores;
 
-  //
-  // Zoom gfx level. Not saved as is regenerated.
-  //
-  int zoom = {};
-
-  //
-  // If the fbo is smaller than the screen, a single map pixel takes up N on screen pixels
-  //
-  int single_pix_size = {};
-
   void fini(void);
   void reset(void);
 };
@@ -200,9 +190,19 @@ public:
   /////////////////////////////////////////////////////////////////////////
 
   //
-  // Game is ending and levels are being destroyed.
+  // Zoom gfx level. Not saved as is regenerated.
   //
-  bool is_being_destroyed {};
+  int zoom = {};
+
+  //
+  // If the fbo is smaller than the screen, a single map pixel takes up N on screen pixels.
+  //
+  int single_pix_size = {};
+
+  //
+  // Remake the right bar next tick.
+  //
+  bool request_to_remake_rightbar {};
 
   //
   // Temporary. Global states
@@ -246,6 +246,7 @@ public:
   void save(int slot);
   void seed_set(const char *seed = nullptr);
   void state_change(GameState state, const std::string &);
+  void tick(void);
   void state_reset(const std::string &);
   bool load(std::string save_file, class Game &target);
   bool save(std::string save_file);
@@ -284,8 +285,6 @@ void Config::reset(void)
   mouse_wheel_ud_negated = false;
   ui_term_height         = {TERM_HEIGHT_DEF};
   ui_term_width          = {TERM_WIDTH_DEF};
-  zoom                   = {};
-  single_pix_size        = {};
   version                = "" MYVER "";
   aspect_ratio           = {};
   window_pix_height      = {};
@@ -520,30 +519,6 @@ void Game::destroy_levels(void)
 }
 void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
-void Game::display(void)
-{
-  TRACE_NO_INDENT();
-  auto g = this;
-  auto v = game_levels_get(g);
-  if (! v) {
-    return;
-  }
-
-  if (game->state != STATE_PLAYING) {
-    return;
-  }
-
-  auto l = game_level_get(g, v);
-  if (l) {
-    level_tick(g, v, l);
-    level_anim(g, v, l);
-    level_mouse_position_get(g, v, l);
-    level_display(g, v, l);
-    level_cursor_update(g, v, l);
-  }
-}
-void game_display(Gamep g) { g->display(); }
-
 std::string gama_state_to_string(int state)
 {
   switch (state) {
@@ -671,6 +646,92 @@ void game_state_change(Gamep g, GameState new_state, const char *why)
     return;
   }
   g->state_change(new_state, std::string(why));
+}
+
+//
+// Do something per tick in a given state
+//
+void Game::tick(void)
+{
+  TRACE_NO_INDENT();
+
+  auto g = this;
+  auto v = game_levels_get(g);
+
+  switch (state) {
+    case STATE_MAIN_MENU : break;
+    case STATE_QUITTING : break;
+    case STATE_PLAYING :
+      if (v) {
+        auto l = game_level_get(g, v);
+        if (l) {
+          level_tick(g, v, l);
+          level_anim(g, v, l);
+
+          if (game->request_to_remake_rightbar) {
+            wid_rightbar_init(g);
+          }
+        }
+      }
+      break;
+    case STATE_KEYBOARD_MENU : break;
+    case STATE_LOAD_MENU : break;
+    case STATE_SAVE_MENU : break;
+    case STATE_QUIT_MENU : break;
+  }
+
+  //
+  // Common to all states
+  //
+  game_request_to_remake_rightbar_set(g, false);
+}
+void game_tick(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->tick();
+}
+
+//
+// Display the game
+//
+void Game::display(void)
+{
+  TRACE_NO_INDENT();
+
+  auto g = this;
+  auto v = game_levels_get(g);
+
+  switch (state) {
+    case STATE_MAIN_MENU : break;
+    case STATE_QUITTING : break;
+    case STATE_PLAYING :
+      if (v) {
+        auto l = game_level_get(g, v);
+        if (l) {
+          level_mouse_position_get(g, v, l);
+          level_display(g, v, l);
+          level_cursor_update(g, v, l);
+        }
+      }
+      break;
+    case STATE_KEYBOARD_MENU : break;
+    case STATE_LOAD_MENU : break;
+    case STATE_SAVE_MENU : break;
+    case STATE_QUIT_MENU : break;
+  }
+}
+void game_display(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->display();
 }
 
 void game_load_config(Gamep g)
@@ -1817,7 +1878,7 @@ int game_map_zoom_get(Gamep g)
     ERR("No game pointer set");
     return MAP_ZOOM_DEF;
   }
-  return g->config.zoom;
+  return g->zoom;
 }
 void game_map_zoom_set(Gamep g, int val)
 {
@@ -1826,7 +1887,7 @@ void game_map_zoom_set(Gamep g, int val)
     ERR("No game pointer set");
     return;
   }
-  g->config.zoom = val;
+  g->zoom = val;
 }
 
 int game_map_zoom_def_get(Gamep g)
@@ -1925,11 +1986,11 @@ int game_map_single_pix_size_get(Gamep g)
     return 1;
   }
 
-  if (! g->config.single_pix_size) {
+  if (! g->single_pix_size) {
     return 1;
   }
 
-  return g->config.single_pix_size;
+  return g->single_pix_size;
 }
 void game_map_single_pix_size_set(Gamep g, int val)
 {
@@ -1938,5 +1999,25 @@ void game_map_single_pix_size_set(Gamep g, int val)
     ERR("No game pointer set");
     return;
   }
-  g->config.single_pix_size = val;
+  g->single_pix_size = val;
+}
+
+bool game_request_to_remake_rightbar_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 1;
+  }
+
+  return g->request_to_remake_rightbar;
+}
+void game_request_to_remake_rightbar_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_remake_rightbar = val;
 }

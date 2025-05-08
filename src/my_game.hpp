@@ -221,6 +221,9 @@ void       game_key_unused19_set(Gamep, SDL_Keysym);
 SDL_Keysym game_key_zoom_get(Gamep);
 void       game_key_zoom_set(Gamep, SDL_Keysym);
 
+bool game_request_to_remake_rightbar_get(Gamep);
+void game_request_to_remake_rightbar_set(Gamep, bool = true);
+
 int  game_map_zoom_get(Gamep g);
 int  game_map_zoom_def_get(Gamep g);
 void game_map_zoom_set(Gamep g, int val);
@@ -241,6 +244,7 @@ void    game_config_reset(Gamep);
 void    game_create_levels(Gamep);
 void    game_destroy_levels(Gamep);
 void    game_display(Gamep);
+void    game_tick(Gamep);
 void    game_fini(Gamep);
 void    game_init(Gamep);
 void    game_load(Gamep);
