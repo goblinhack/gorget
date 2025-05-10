@@ -10,6 +10,7 @@
 #include "my_gl.hpp"
 #include "my_string.hpp"
 #include "my_time.hpp"
+#include "my_tp.hpp"
 #include "my_ui.hpp"
 
 struct ascii_ {
@@ -338,6 +339,32 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
             got_pct = false;
             continue;
           }
+          if ((len > 4) && (std::string(text_iter, text_iter + 4) == "tex=")) {
+            text_iter += 4;
+            got_pct = false;
+            continue;
+          }
+          if ((len > 3) && (std::string(text_iter, text_iter + 3) == "tp=")) {
+            text_iter += 3;
+            auto        tmp  = std::string(text_iter, text.end());
+            int         slen = 0;
+            const char *c    = tmp.c_str();
+            auto        tp   = string2tp(&c, &slen);
+            text_iter += slen;
+
+            tile    = tp_first_tile(tp, THING_ANIM_IDLE);
+            got_pct = false;
+            continue;
+          }
+          if ((len > 5) && (std::string(text_iter, text_iter + 5) == "tile=")) {
+            text_iter += 5;
+            auto tmp  = std::string(text_iter, text.end());
+            int  slen = 0;
+            tile      = string2tile(tmp, &slen);
+            text_iter += slen;
+            got_pct = false;
+            continue;
+          }
           continue;
         }
       }
@@ -488,6 +515,30 @@ int ascii_strlen(std::string const &text)
 
               continue;
             }
+            if ((len > 3) && (std::string(text_iter, text_iter + 3) == "tp=")) {
+              text_iter += 3;
+              auto        tmp  = std::string(text_iter, text.end());
+              int         slen = 0;
+              const char *c    = tmp.c_str();
+              (void) string2tp(&c, &slen);
+              text_iter += slen;
+              got_pct = false;
+              continue;
+            }
+            if ((len > 4) && (std::string(text_iter, text_iter + 4) == "tex=")) {
+              text_iter += 4;
+              got_pct = false;
+              continue;
+            }
+            if ((len > 5) && (std::string(text_iter, text_iter + 5) == "tile=")) {
+              text_iter += 5;
+              auto tmp  = std::string(text_iter, text.end());
+              int  slen = 0;
+              (void) string2tile(tmp, &slen);
+              text_iter += slen;
+              got_pct = false;
+              continue;
+            }
           } else {
             break;
           }
@@ -535,6 +586,27 @@ std::string ascii_strip(std::string const &text)
         int  slen = 0;
         (void) string2color(tmp, &slen);
         text_iter += slen + 1;
+        continue;
+      }
+      if (std::string(text_iter, text_iter + 3) == "tp=") {
+        text_iter += 3;
+        auto        tmp  = std::string(text_iter, text.end());
+        int         slen = 0;
+        const char *c    = tmp.c_str();
+        (void) string2tp(&c, &slen);
+        text_iter += slen;
+        continue;
+      }
+      if (std::string(text_iter, text_iter + 4) == "tex=") {
+        text_iter += 4;
+        continue;
+      }
+      if (std::string(text_iter, text_iter + 5) == "tile=") {
+        text_iter += 5;
+        auto tmp  = std::string(text_iter, text.end());
+        int  slen = 0;
+        (void) string2tile(tmp, &slen);
+        text_iter += slen;
         continue;
       }
     }

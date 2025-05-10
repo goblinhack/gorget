@@ -623,8 +623,7 @@ Tpp  tp_find(TpId id);
 Tpp  tp_find_mand(const char *);
 Tpp  tp_find_opt(const char *);
 
-Tpp string2tp(const char **s);
-Tpp string2tp(const char **s, int *len);
+Tpp string2tp(const char **s, int *len = nullptr);
 Tpp tp_load(const char *);
 Tpp tp_random(ThingFlag);
 Tpp tp_random_dungeon_entrance(void);

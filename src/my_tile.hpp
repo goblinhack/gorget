@@ -22,14 +22,6 @@ enum {
   TILE_LAYER_BG_1,
   TILE_LAYER_FG_0,
   TILE_LAYER_FG_1,
-  TILE_LAYER_FG_2,
-  TILE_LAYER_FG_3,
-  TILE_LAYER_FG_4,
-  TILE_LAYER_FG_5,
-  TILE_LAYER_FG_6,
-  TILE_LAYER_FG_7,
-  TILE_LAYER_FG_8,
-  TILE_LAYER_FG_9,
   TILE_LAYER_MAX,
 };
 
@@ -43,10 +35,9 @@ int tile_width(Tilep);
 
 std::string tile_name_get(Tilep);
 
-Tilep string2tile(const char **s);
-Tilep string2tile(std::string &s, int *len);
+Tilep string2tile(const char **s, int *len = nullptr);
+Tilep string2tile(std::string &s, int *len = nullptr);
 Tilep tile_find_mand(std::string name);
-Tilep tile_from_surface(struct SDL_Surface *surface, std::string optional_file, std::string name);
 Tilep tile_index_to_tile(int i);
 Tilep tile_find(std::string name);
 
@@ -103,10 +94,10 @@ void tile_blit_shadow_section(const class Tp *&tp, uint16_t index, const point t
                               const point tl, const point br);
 void tile_free(Tilep);
 void tile_coords(Tilep, float *x1, float *y1, float *x2, float *y2);
-void tile_load(std::string file, uint32_t width, uint32_t height, uint32_t nargs, ...);
-void tile_load_arr(std::string file, std::string tex_name, uint32_t width, uint32_t height, uint32_t nargs,
+void tile_load(const char *, uint32_t width, uint32_t height, uint32_t nargs, ...);
+void tile_load_arr(const char *file, const char *tex_name, uint32_t width, uint32_t height, uint32_t nargs,
                    const char *arr[]);
-void tile_load_arr_sprites(std::string file, std::string tex_name, uint32_t width, uint32_t height, uint32_t nargs,
+void tile_load_arr_sprites(const char *file, const char *tex_name, uint32_t width, uint32_t height, uint32_t nargs,
                            const char *arr[], int gl_mode);
 void tile_blit_frozen(const Tilep &tile, const point tl, const point br);
 void tile_blit_burnt(const Tilep &tile, const point tl, const point br);
