@@ -8,6 +8,8 @@
 
 #include "my_minimal.hpp"
 
+#include <string>
+
 extern char *DATA_PATH;
 extern char *EXEC_DIR;
 extern char *EXEC_FULL_PATH_AND_NAME;

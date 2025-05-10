@@ -884,7 +884,18 @@ static void ascii_blit(Gamep g)
 
       {
         auto depth = TILE_LAYER_BG_1;
-        if (cell->tile[ depth ]) {
+        auto tile  = cell->tile[ depth ];
+        if (tile) {
+          //
+          // As the font is not square, if showing a non square tile, then make it so
+          //
+          if (tile_width(tile) != UI_FONT_WIDTH) {
+            tile_br.y       = tile_y + dw;
+            auto centralize = (dh - dw) / 2;
+            tile_tl.y += centralize;
+            tile_br.y += centralize;
+          }
+
           color color_tl = cell->color_tl[ depth ];
           color color_tr = cell->color_tr[ depth ];
           color color_bl = cell->color_bl[ depth ];
@@ -898,14 +909,25 @@ static void ascii_blit(Gamep g)
       }
 
       for (int depth = TILE_LAYER_FG_1; depth < TILE_LAYER_MAX; depth++) {
-        if (cell->tile[ depth ]) {
+        auto tile = cell->tile[ depth ];
+        if (tile) {
+          //
+          // As the font is not square, if showing a non square tile, then make it so
+          //
+          if (tile_width(tile) != UI_FONT_WIDTH) {
+            tile_br.y       = tile_y + dw;
+            auto centralize = (dh - dw) / 2;
+            tile_tl.y += centralize;
+            tile_br.y += centralize;
+          }
+
           color color_tl = cell->color_tl[ depth ];
           color color_tr = cell->color_tr[ depth ];
           color color_bl = cell->color_bl[ depth ];
           color color_br = cell->color_br[ depth ];
 
           tile_blit_section_colored(
-              cell->tile[ depth ], fpoint(cell->tx[ depth ], cell->ty[ depth ]),
+              tile, fpoint(cell->tx[ depth ], cell->ty[ depth ]),
               fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br,
               color_tl, color_tr, color_bl, color_br);
         }
@@ -935,11 +957,20 @@ static void ascii_blit(Gamep g)
       // Foreground
       //
       {
-        auto depth = TILE_LAYER_FG_0;
-        tile_br.x  = tile_x + dw;
-        Tilep tile = cell->tile[ depth ];
+        auto  depth = TILE_LAYER_FG_0;
+        Tilep tile  = cell->tile[ depth ];
 
         if (tile) {
+          //
+          // As the font is not square, if showing a non square tile, then make it so
+          //
+          if (tile_width(tile) != UI_FONT_WIDTH) {
+            tile_br.y       = tile_y + dw;
+            auto centralize = (dh - dw) / 2;
+            tile_tl.y += centralize;
+            tile_br.y += centralize;
+          }
+
           color fg_color_tl = cell->color_tl[ depth ];
           color fg_color_tr = cell->color_tr[ depth ];
           color fg_color_bl = cell->color_bl[ depth ];
