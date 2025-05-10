@@ -19,6 +19,7 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_blit_on_ground, true);
   tp_flag_set(tp, is_blit_square_outlined, true);
   tp_flag_set(tp, is_mob, true);
+  tp_short_name_set(tp, "goblin den");
   tp_flag_set(tp, is_mob1, true);
   tp_flag_set(tp, is_tickable, true);
   tp_speed_set(tp, 100);

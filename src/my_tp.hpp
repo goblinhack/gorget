@@ -606,12 +606,16 @@ class Tp;
 
 bool tp_init(void);
 
-const char *text_a_or_an(Tpp);
-const char *text_long_capitalised(Tpp);
-const char *text_short_capitalised(Tpp);
-const char *to_short_string(Tpp);
-const char *to_string(Tpp);
 const char *tp_name(Tpp);
+
+const char *tp_short_name(Tpp);
+void        tp_short_name_set(Tpp, const char *);
+
+const char *tp_long_name(Tpp);
+void        tp_long_name_set(Tpp, const char *);
+
+const char *tp_real_name(Tpp);
+void        tp_real_name_set(Tpp, const char *);
 
 int   tp_tiles_size(Tpp tp, int anim_class);
 Tilep tp_first_tile(class Tp *, int anim_class);

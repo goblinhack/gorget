@@ -23,6 +23,7 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_tickable, true);
   tp_speed_set(tp, 100);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+  tp_short_name_set(tp, "pile of bones");
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 

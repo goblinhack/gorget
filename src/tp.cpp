@@ -79,30 +79,54 @@ public:
   //
   uint8_t z_prio {};
 
+  //
+  // Animation tiles
+  //
   std::vector< class Tile * > tiles[ THING_ANIM_MAX ];
 
+  //
+  // Which classes does this monst belong too
+  //
   bool is_monst_class[ MONST_CLASS_MAX ] {};
 
+  //
+  // See ThingFlag
+  //
   uint8_t flag[ THING_FLAG_MAX ] = {};
 
-  // begin sort marker2 {
+  //
+  // Chance of this appearing on a level
+  //
+  //
   int chance_d1000_appearing {};
-  int rarity {};
+
+  //
+  // Speed compared to player
+  //
   int speed {100};
-  // end sort marker2 }
+
+  //
+  // Internal name
+  //
+  std::string name;
+
+  //
+  // For mimics
+  //
+  std::string real_name;
+
+  //
+  // Short name for lists
+  //
+  std::string short_name;
+
+  //
+  // Longer name for attacks text
+  //
+  std::string long_name;
 
   Tp(void);
   ~Tp(void);
-
-  void name_set(const std::string &v);
-  void rarity_set(int v);
-  void text_real_name_set(const std::string &v);
-  void text_short_name_set(const std::string &v);
-  void obj_group_set(int v);
-
-  std::string name;
-  std::string text_real_name;
-  std::string text_short_name;
 };
 
 using Tpidmap = std::vector< class Tp * >;
@@ -262,9 +286,8 @@ Tpp tp_load(const char *name_in)
     DIE("tp_load: thing template name [%s] already loaded", name_in);
   }
 
-  auto tp             = new Tp();
-  tp->name            = name;
-  tp->text_short_name = name;
+  auto tp  = new Tp();
+  tp->name = name;
 
   auto result = tp_name_map.insert(std::make_pair(name, tp));
   if (! result.second) {
@@ -407,15 +430,50 @@ const char *tp_name(Tpp tp)
   TRACE_NO_INDENT();
   return tp->name.c_str();
 }
-const char *to_string(Tpp tp)
+
+void tp_short_name_set(Tpp tp, const char *name_in)
 {
   TRACE_NO_INDENT();
-  return tp->text_short_name.c_str();
+  tp->short_name = std::string(name_in);
 }
-const char *to_short_string(Tpp tp)
+
+const char *tp_short_name(Tpp tp)
 {
   TRACE_NO_INDENT();
-  return tp->text_short_name.c_str();
+  if (tp->short_name.empty()) {
+    return tp_name(tp);
+  }
+  return tp->short_name.c_str();
+}
+
+void tp_long_name_set(Tpp tp, const char *name_in)
+{
+  TRACE_NO_INDENT();
+  tp->long_name = std::string(name_in);
+}
+
+const char *tp_long_name(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (tp->long_name.empty()) {
+    return tp_short_name(tp);
+  }
+  return tp->long_name.c_str();
+}
+
+void tp_real_name_set(Tpp tp, const char *name_in)
+{
+  TRACE_NO_INDENT();
+  tp->real_name = std::string(name_in);
+}
+
+const char *tp_real_name(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (tp->real_name.empty()) {
+    return tp_short_name(tp);
+  }
+  return tp->real_name.c_str();
 }
 
 bool tp_flag(Tpp tp, ThingFlag f)
