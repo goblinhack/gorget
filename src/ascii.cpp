@@ -350,7 +350,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
             int         slen = 0;
             const char *c    = tmp.c_str();
             auto        tp   = string2tp(&c, &slen);
-            text_iter += slen;
+            text_iter += slen - 1;
 
             tile    = tp_first_tile(tp, THING_ANIM_IDLE);
             got_pct = false;
@@ -361,7 +361,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
             auto tmp  = std::string(text_iter, text.end());
             int  slen = 0;
             tile      = string2tile(tmp, &slen);
-            text_iter += slen;
+            text_iter += slen - 1;
             got_pct = false;
             continue;
           }
@@ -521,7 +521,7 @@ int ascii_strlen(std::string const &text)
               int         slen = 0;
               const char *c    = tmp.c_str();
               (void) string2tp(&c, &slen);
-              text_iter += slen;
+              text_iter += slen - 1;
               got_pct = false;
               continue;
             }
@@ -535,7 +535,7 @@ int ascii_strlen(std::string const &text)
               auto tmp  = std::string(text_iter, text.end());
               int  slen = 0;
               (void) string2tile(tmp, &slen);
-              text_iter += slen;
+              text_iter += slen - 1;
               got_pct = false;
               continue;
             }
@@ -594,7 +594,7 @@ std::string ascii_strip(std::string const &text)
         int         slen = 0;
         const char *c    = tmp.c_str();
         (void) string2tp(&c, &slen);
-        text_iter += slen;
+        text_iter += slen - 1;
         continue;
       }
       if (std::string(text_iter, text_iter + 4) == "tex=") {
@@ -606,7 +606,7 @@ std::string ascii_strip(std::string const &text)
         auto tmp  = std::string(text_iter, text.end());
         int  slen = 0;
         (void) string2tile(tmp, &slen);
-        text_iter += slen;
+        text_iter += slen - 1;
         continue;
       }
     }

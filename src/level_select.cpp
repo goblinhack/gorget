@@ -467,7 +467,7 @@ static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp pa
       auto  w = wid_new_square_button(g, parent, map_name);
       point tl(x_at, y_at);
       point br(width - 1, y_at);
-      auto  s = dynprintf("  %u x %s", map_in[ highest ], highest.c_str());
+      auto  s = dynprintf("  %u x %%tp=%s$ %s", map_in[ highest ], highest.c_str(), highest.c_str());
       wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
       wid_set_pos(w, tl, br);
       wid_set_text(w, s);
