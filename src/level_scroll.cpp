@@ -34,7 +34,7 @@ Thingp level_scroll_target(Gamep g, Levelsp v)
 //
 // Soft scroll to the player/level.
 //
-void level_scroll_to_focus(Gamep g, Levelsp v)
+void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -86,26 +86,26 @@ void level_scroll_to_focus(Gamep g, Levelsp v)
     v->pixel_map_at.y -= (scroll_border - y) * scroll_speed;
   }
 
-  level_bounds_set(g, v);
+  level_bounds_set(g, v, l);
 }
 
 //
 // Scroll the map e.g. via mouse
 //
-void level_scroll_delta(Gamep g, Levelsp v, point delta)
+void level_scroll_delta(Gamep g, Levelsp v, Levelp l, point delta)
 {
   TRACE_NO_INDENT();
 
   v->pixel_map_at += delta;
   v->requested_auto_scroll = false;
 
-  level_bounds_set(g, v);
+  level_bounds_set(g, v, l);
 }
 
 //
 // Jump to the target immediately.
 //
-void level_scroll_warp_to_focus(Gamep g, Levelsp v)
+void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -127,5 +127,5 @@ void level_scroll_warp_to_focus(Gamep g, Levelsp v)
   v->pixel_map_at.x -= game_map_fbo_width_get(g) / 2;
   v->pixel_map_at.y -= game_map_fbo_height_get(g) / 2;
 
-  level_bounds_set(g, v);
+  level_bounds_set(g, v, l);
 }

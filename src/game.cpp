@@ -1933,7 +1933,10 @@ static void game_map_zoom_update(Gamep g)
   // If following the player already, then no need to re-center
   //
   if (! v->requested_auto_scroll) {
-    level_scroll_warp_to_focus(g, v);
+    auto l = game_level_get(g, v);
+    if (l) {
+      level_scroll_warp_to_focus(g, v, l);
+    }
   }
 }
 

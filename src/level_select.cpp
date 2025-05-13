@@ -652,7 +652,7 @@ void level_select_chosen(Gamep g, Levelsp v, Levelp l)
       //
       if (new_level) {
         thing_level_change(g, v, new_level, thing_player(g));
-        level_scroll_warp_to_focus(g, v);
+        level_scroll_warp_to_focus(g, v, l);
       }
 
       return;

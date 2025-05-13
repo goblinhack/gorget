@@ -72,7 +72,10 @@ uint8_t game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx,
 
   auto v = game_levels_get(g);
   if (v) {
-    level_scroll_delta(g, v, point(wheelx, -wheely));
+    auto l = game_level_get(g, v);
+    if (l) {
+      level_scroll_delta(g, v, l, point(wheelx, -wheely));
+    }
   }
 
   return true;

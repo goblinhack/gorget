@@ -211,7 +211,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   // Soft scroll to the player
   //
-  level_scroll_to_focus(g, v);
+  level_scroll_to_focus(g, v, l);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glcolor(WHITE);

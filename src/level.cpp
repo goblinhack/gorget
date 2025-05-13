@@ -146,7 +146,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
     return new_level;
   }
 
-  level_scroll_warp_to_focus(g, v);
+  level_scroll_warp_to_focus(g, v, new_level);
   level_dump(g, v, new_level);
 
   return new_level;
@@ -248,7 +248,7 @@ bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, point p, Tpp tp)
   return false;
 }
 
-void level_bounds_set(Gamep g, Levelsp v)
+void level_bounds_set(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -313,4 +313,14 @@ void level_bounds_set(Gamep g, Levelsp v)
   v->miny = tmp_miny;
   v->maxx = tmp_maxx;
   v->maxy = tmp_maxy;
+
+  //
+  // We need to animate all the level tiles in sync, so might as well draw the whole level
+  //
+  if (l->level_num == LEVEL_SELECT_ID) {
+    v->minx = 0;
+    v->miny = 0;
+    v->maxx = MAP_WIDTH;
+    v->maxy = MAP_HEIGHT;
+  }
 }
