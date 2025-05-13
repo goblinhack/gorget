@@ -16,6 +16,7 @@
       list_macro(is_able_to_walk_through_walls, "is_able_to_walk_through_walls"), /* ............................ */ \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),                 /* ............................ */ \
       list_macro(is_animated_no_dir, "is_animated_no_dir"),                       /* ............................ */ \
+      list_macro(is_animated_same_first_tile, "is_animated_same_first_tile"),     /* ............................ */ \
       list_macro(is_animated, "is_animated"),                                     /* ............................ */ \
       list_macro(is_blit_centered, "is_blit_centered"),                           /* ............................ */ \
       list_macro(is_blit_on_ground, "is_blit_on_ground"),                         /* ............................ */ \
@@ -133,7 +134,6 @@
       list_macro(is_unused71, "is_unused71"),                                     /* ............................ */ \
       list_macro(is_unused72, "is_unused72"),                                     /* ............................ */ \
       list_macro(is_unused73, "is_unused73"),                                     /* ............................ */ \
-      list_macro(is_unused74, "is_unused74"),                                     /* ............................ */ \
       list_macro(is_unused8, "is_unused8"),                                       /* ............................ */ \
       list_macro(is_unused9, "is_unused9"),                                       /* ............................ */ \
       list_macro(is_wall, "is_wall"),                                             /* ............................ */ \
@@ -146,6 +146,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_able_to_walk_through_walls(tp) tp_flag(tp, is_able_to_walk_through_walls)
 #define tp_is_animated_can_hflip(tp)         tp_flag(tp, is_animated_can_hflip)
 #define tp_is_animated_no_dir(tp)            tp_flag(tp, is_animated_no_dir)
+#define tp_is_animated_same_first_tile(tp)   tp_flag(tp, is_animated_same_first_tile)
 #define tp_is_animated(tp)                   tp_flag(tp, is_animated)
 #define tp_is_blit_centered(tp)              tp_flag(tp, is_blit_centered)
 #define tp_is_blit_on_ground(tp)             tp_flag(tp, is_blit_on_ground)
@@ -263,7 +264,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused71(tp)                   tp_flag(tp, is_unused71)
 #define tp_is_unused72(tp)                   tp_flag(tp, is_unused72)
 #define tp_is_unused73(tp)                   tp_flag(tp, is_unused73)
-#define tp_is_unused74(tp)                   tp_flag(tp, is_unused74)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                    tp_flag(tp, is_unused9)
 #define tp_is_walk_through_walls(tp)         tp_flag(tp, is_walk_through_walls)
@@ -275,6 +275,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_able_to_walk_through_walls(thing) tp_flag(thing_tp(thing), is_able_to_walk_through_walls)
 #define thing_is_animated_can_hflip(thing)         tp_flag(thing_tp(thing), is_animated_can_hflip)
 #define thing_is_animated_no_dir(thing)            tp_flag(thing_tp(thing), is_animated_no_dir)
+#define thing_is_animated_same_first_tile(thing)   tp_flag(thing_tp(thing), is_animated_same_first_tile)
 #define thing_is_animated(thing)                   tp_flag(thing_tp(thing), is_animated)
 #define thing_is_blit_centered(thing)              tp_flag(thing_tp(thing), is_blit_centered)
 #define thing_is_blit_on_ground(thing)             tp_flag(thing_tp(thing), is_blit_on_ground)
@@ -392,7 +393,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused71(thing)                   tp_flag(thing_tp(thing), is_unused71)
 #define thing_is_unused72(thing)                   tp_flag(thing_tp(thing), is_unused72)
 #define thing_is_unused73(thing)                   tp_flag(thing_tp(thing), is_unused73)
-#define thing_is_unused74(thing)                   tp_flag(thing_tp(thing), is_unused74)
 #define thing_is_unused8(thing)                    tp_flag(thing_tp(thing), is_unused8)
 #define thing_is_unused9(thing)                    tp_flag(thing_tp(thing), is_unused9)
 #define thing_is_walk_through_walls(thing)         tp_flag(thing_tp(thing), is_walk_through_walls)
@@ -404,6 +404,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_able_to_walk_through_walls(g, v, l, p) level_flag(g, v, l, is_able_to_walk_through_walls, p)
 #define level_is_animated_can_hflip(g, v, l, p)         level_flag(g, v, l, is_animated_can_hflip, p)
 #define level_is_animated_no_dir(g, v, l, p)            level_flag(g, v, l, is_animated_no_dir, p)
+#define level_is_animated_same_first_tile(g, v, l, p)   level_flag(g, v, l, is_animated_same_first_tile, p)
 #define level_is_animated(g, v, l, p)                   level_flag(g, v, l, is_animated, p)
 #define level_is_blit_centered(g, v, l, p)              level_flag(g, v, l, is_blit_centered, p)
 #define level_is_blit_on_ground(g, v, l, p)             level_flag(g, v, l, is_blit_on_ground, p)
@@ -521,7 +522,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused71(g, v, l, p)                   level_flag(g, v, l, is_unused71, p)
 #define level_is_unused72(g, v, l, p)                   level_flag(g, v, l, is_unused72, p)
 #define level_is_unused73(g, v, l, p)                   level_flag(g, v, l, is_unused73, p)
-#define level_is_unused74(g, v, l, p)                   level_flag(g, v, l, is_unused74, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                    level_flag(g, v, l, is_unused9, p)
 #define level_is_walk_through_walls(g, v, l, p)         level_flag(g, v, l, is_walk_through_walls, p)

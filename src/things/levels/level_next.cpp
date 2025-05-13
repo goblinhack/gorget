@@ -16,6 +16,7 @@ bool tp_load_level_next(void)
   auto tp   = tp_load("level_next");
 
   // begin sort marker1 {
+  tp_flag_set(tp, is_animated_same_first_tile, true);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_level_next, true);

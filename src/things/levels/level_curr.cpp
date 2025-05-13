@@ -16,6 +16,7 @@ bool tp_load_level_curr(void)
   auto tp   = tp_load("level_curr");
 
   // begin sort marker1 {
+  tp_flag_set(tp, is_animated_same_first_tile, true);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_level_curr, true);
