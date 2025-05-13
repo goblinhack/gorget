@@ -289,6 +289,13 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
           level_select->debug[ at.x ][ at.y ] = '?';
         }
 
+        //
+        // Show all levels as next when debugging
+        //
+        if (g_opt_test_level_select_menu && (tp == tp_is_level_not_visited)) {
+          tp = tp_is_level_next;
+        }
+
         auto t = thing_init(g, v, level_select, tp, at);
         if (t) {
           thing_push(g, v, level_select, t);
