@@ -33,6 +33,24 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
   // Follow the mouse path?
   //
   auto v = game_levels_get(g);
+  if (! v) {
+    return true;
+  }
+
+  auto l = game_level_get(g, v);
+  if (l) {
+    //
+    // If in level select mode, enter the new level
+    //
+    if (l->level_num == LEVEL_SELECT_ID) {
+      level_select_chosen(g, v, l);
+      return true;
+    }
+  }
+
+  //
+  // Else start following the cursor path
+  //
   if (v) {
     v->player_pressed_button_and_waiting_for_a_path = true;
     return true;

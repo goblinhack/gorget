@@ -12,13 +12,20 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, uint16_t tile_index, point tl, point br)
+static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, uint16_t tile_index, point tl,
+                                     point br)
 {
   TRACE_NO_INDENT();
 
   auto tile = tile_index_to_tile(tile_index);
   if (! tile) {
     return;
+  }
+
+  if (0) {
+    if (t && thing_is_player(t)) {
+      TOPCON("player %u.%u, %u,%u", t->at.x, t->at.y, t->pix_at.x, t->pix_at.y);
+    }
   }
 
   auto single_pix_size = game_map_single_pix_size_get(g);
@@ -122,7 +129,7 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
     }
   }
 
-  level_display_tile_index(g, v, l, tp, tile_index, tl, br);
+  level_display_tile_index(g, v, l, tp, t, tile_index, tl, br);
 }
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)

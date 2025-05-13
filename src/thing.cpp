@@ -53,9 +53,6 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
   t->anim_class  = THING_ANIM_IDLE;
   t->level_num   = l->level_num;
 
-  t->pix_at.x = t->at.x * TILE_WIDTH;
-  t->pix_at.y = t->at.y * TILE_HEIGHT;
-
   //
   // Assign an initial tile
   //
@@ -94,7 +91,12 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
     v->level_select_id = t->id;
   }
 
-  thing_update(g, t);
+  t->speed = tp_speed_get(tp);
+
+  //
+  // Need to update with the new pixel position
+  //
+  thing_update_pos(g, t);
 
   return t;
 }
@@ -190,12 +192,59 @@ static void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
     v->level_select_id = 0;
   }
 
-  thing_pop(g, v, l, t);
+  thing_pop(g, v, t);
   thing_ai_free(g, v, l, t);
 
   memset((void *) t, 0, SIZEOF(*t));
 
   thing_mutex.unlock();
+}
+
+//
+// Return the level of the thing
+//
+Levelp thing_level(Gamep g, Levelsp v, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto o = thing_find(g, v, t->id);
+  if (t != o) {
+    DIE("Thing mismatch found for id, %" PRIx32 "", t->id);
+  }
+
+  return game_level_get(g, v, t->level_num);
+}
+
+//
+// Move the thing immediately to the new level entrance
+//
+void thing_level_change(Gamep g, Levelsp v, Levelp new_level, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (! t) {
+    return;
+  }
+
+  auto old_level = game_level_get(g, v, t->level_num);
+  if (old_level == new_level) {
+    return;
+  }
+
+  //
+  // Leave the old level
+  //
+  thing_pop(g, v, t);
+
+  //
+  // Join the level, but at the old position
+  //
+  thing_push(g, v, new_level, t);
+
+  //
+  // Now move to the correct location
+  //
+  thing_warp_to(g, v, new_level, t, new_level->entrance);
 }
 
 void thing_stats_dump(Gamep g, Levelsp v)
@@ -291,15 +340,6 @@ ThingPlayerp thing_player(Gamep g, Thingp t)
   }
 
   return &v->thing_player;
-}
-
-void thing_update(Gamep g, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  auto tp = thing_tp(t);
-
-  t->speed = tp_speed_get(tp);
 }
 
 Thingp thing_get(Gamep g, Levelsp v, Levelp l, point p, int slot)

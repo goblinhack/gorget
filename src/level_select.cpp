@@ -173,6 +173,8 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
     player_level = game_level_get(g, v, player->level_num);
   }
 
+  memset(level_select->debug, ' ', sizeof(level_select->debug));
+
   auto tp_is_level_not_visited = tp_random(is_level_not_visited);
   auto tp_is_level_curr        = tp_random(is_level_curr);
   auto tp_is_level_across      = tp_random(is_level_across);
@@ -221,31 +223,40 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
       }
 
       //
+      // Can we enter this level?
+      //
+      l->ready = false;
+
+      //
       // If not visited, is it a next level for the current level?
       //
       if (player_level && (tp == tp_is_level_not_visited)) {
         if (y < LEVELS_DOWN - 1) {
           LevelSelectCell *o = &s->data[ x ][ y + 1 ];
           if (o->level == player_level) {
-            tp = tp_is_level_next;
+            tp       = tp_is_level_next;
+            l->ready = true;
           }
         }
         if (x < LEVELS_ACROSS - 1) {
           LevelSelectCell *o = &s->data[ x + 1 ][ y ];
           if (o->level == player_level) {
-            tp = tp_is_level_next;
+            tp       = tp_is_level_next;
+            l->ready = true;
           }
         }
         if (y > 0) {
           LevelSelectCell *o = &s->data[ x ][ y - 1 ];
           if (o->level == player_level) {
-            tp = tp_is_level_next;
+            tp       = tp_is_level_next;
+            l->ready = true;
           }
         }
         if (x < 0) {
           LevelSelectCell *o = &s->data[ x - 1 ][ y ];
           if (o->level == player_level) {
-            tp = tp_is_level_next;
+            tp       = tp_is_level_next;
+            l->ready = true;
           }
         }
       }
@@ -259,7 +270,26 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
 
       if (tp) {
         point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 1);
-        auto  t = thing_init(g, v, level_select, tp, at);
+
+        //
+        // Save debugging
+        //
+        level_select->debug[ at.x ][ at.y ] = '#';
+
+        if (tp == tp_is_level_not_visited) {
+          level_select->debug[ at.x ][ at.y ] = '?';
+        }
+        if (tp == tp_is_level_curr) {
+          level_select->debug[ at.x ][ at.y ] = '@';
+        }
+        if (tp == tp_is_level_final) {
+          level_select->debug[ at.x ][ at.y ] = 'E';
+        }
+        if (tp == tp_is_level_next) {
+          level_select->debug[ at.x ][ at.y ] = '?';
+        }
+
+        auto t = thing_init(g, v, level_select, tp, at);
         if (t) {
           thing_push(g, v, level_select, t);
         }
@@ -283,7 +313,9 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
 
       {
         point at(x * LEVEL_SCALE + 2, y * LEVEL_SCALE + 1);
-        auto  t = thing_init(g, v, level_select, tp_is_level_across, at);
+        level_select->debug[ at.x ][ at.y ] = '-';
+
+        auto t = thing_init(g, v, level_select, tp_is_level_across, at);
         if (t) {
           thing_push(g, v, level_select, t);
         }
@@ -291,7 +323,9 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
 
       {
         point at(x * LEVEL_SCALE + 3, y * LEVEL_SCALE + 1);
-        auto  t = thing_init(g, v, level_select, tp_is_level_across, at);
+        level_select->debug[ at.x ][ at.y ] = '-';
+
+        auto t = thing_init(g, v, level_select, tp_is_level_across, at);
         if (t) {
           thing_push(g, v, level_select, t);
         }
@@ -315,7 +349,9 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
 
       {
         point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 2);
-        auto  t = thing_init(g, v, level_select, tp_is_level_down, at);
+        level_select->debug[ at.x ][ at.y ] = '|';
+
+        auto t = thing_init(g, v, level_select, tp_is_level_down, at);
         if (t) {
           thing_push(g, v, level_select, t);
         }
@@ -323,7 +359,9 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
 
       {
         point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 3);
-        auto  t = thing_init(g, v, level_select, tp_is_level_down, at);
+        level_select->debug[ at.x ][ at.y ] = '|';
+
+        auto t = thing_init(g, v, level_select, tp_is_level_down, at);
         if (t) {
           thing_push(g, v, level_select, t);
         }
@@ -375,8 +413,9 @@ static void level_select_create_things(Gamep g, Levelsp v, LevelSelect *s)
   //
   level_destroy(g, v, l);
 
-  l->initialized = true;
-  l->level_num   = level_num;
+  l->initialized   = true;
+  l->level_num     = level_num;
+  l->info.seed_num = game_seed_num_get(g);
 
   level_select_map_set(g, v, s);
 }
@@ -402,7 +441,6 @@ void level_select_create_levels(Gamep g)
   TOPCON("");
   TOPCON("");
   TOPCON("%%fg=yellow$Choose your next level, mortal. Mouse over levels for monster/treasure info.%%fg=reset$");
-  TOPCON("test");
 }
 
 //
@@ -492,7 +530,7 @@ static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp pa
 //
 // If in level select mode, update what we're hovering over
 //
-void level_select_cursor_update_level(Gamep g, Levelsp v, Levelp l, Widp parent)
+void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
 {
   TRACE_NO_INDENT();
 
@@ -548,7 +586,7 @@ void level_select_cursor_update_level(Gamep g, Levelsp v, Levelp l, Widp parent)
 //
 // If in level select mode, update what we're hovering over
 //
-void level_select_cursor_update(Gamep g, Levelsp v, Levelp l)
+void level_select_update(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -565,6 +603,52 @@ void level_select_cursor_update(Gamep g, Levelsp v, Levelp l)
 
     if (level_over) {
       game_request_to_remake_rightbar_set(g);
+    }
+  }
+}
+
+//
+// If in level select mode, enter the chosen level
+//
+void level_select_chosen(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  if (l->level_num != LEVEL_SELECT_ID) {
+    return;
+  }
+
+  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
+  {
+    auto         x          = v->cursor_at.x / LEVEL_SCALE;
+    auto         y          = v->cursor_at.y / LEVEL_SCALE;
+    LevelSelect *s          = &v->level_select;
+    auto         level_over = s->data[ x ][ y ].level;
+
+    if (level_over) {
+      //
+      // We're hovering over a level and have pressed the mouse
+      //
+      Levelp new_level = nullptr;
+
+      //
+      // Switch to the chosen level if possible
+      //
+      if (g_opt_test_level_select_menu || level_over->ready) {
+        new_level = level_change(g, v, level_over->level_num);
+      } else {
+        TOPCON("You cannot enter this level. Yet. Choose a flashing level.");
+      }
+
+      //
+      // Move the player also
+      //
+      if (new_level) {
+        thing_level_change(g, v, new_level, thing_player(g));
+        level_scroll_warp_to_focus(g, v);
+      }
+
+      return;
     }
   }
 }

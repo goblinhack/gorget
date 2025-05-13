@@ -222,7 +222,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
     return false;
   }
 
-  thing_pop(g, v, l, t);
+  thing_pop(g, v, t);
 
   t->pix_at.x = t->at.x * TILE_WIDTH;
   t->pix_at.y = t->at.y * TILE_HEIGHT;
@@ -237,6 +237,43 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
   if (thing_is_player(t)) {
     level_tick_begin_requested(g, v, l, "player moved");
   }
+
+  return true;
+}
+
+//
+// Handles immediate moves even across levels.
+//
+bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, point to)
+{
+  if (is_oob(to)) {
+    return false;
+  }
+
+  //
+  // Check if already present.
+  //
+  auto curr_level = thing_level(g, v, t);
+  if (new_level == curr_level) {
+    if (to == t->at) {
+      return false;
+    }
+  }
+
+  thing_pop(g, v, t);
+
+  t->pix_at.x = t->at.x * TILE_WIDTH;
+  t->pix_at.y = t->at.y * TILE_HEIGHT;
+
+  t->old_at = t->at;
+  t->at     = to;
+
+  thing_push(g, v, new_level, t);
+
+  //
+  // Need to update with the new pixel position
+  //
+  thing_update_pos(g, t);
 
   return true;
 }
@@ -302,6 +339,15 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
 }
 
 //
+// Post init/warp, we need to update the position so we can determine the level draw bounds
+//
+void thing_update_pos(Gamep g, Thingp t)
+{
+  t->pix_at.x = t->at.x * TILE_WIDTH;
+  t->pix_at.y = t->at.y * TILE_HEIGHT;
+}
+
+//
 // Push the thing onto the level
 //
 void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -326,7 +372,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Detach from the old location
   //
-  thing_pop(g, v, l, t);
+  thing_pop(g, v, t);
 
   //
   // Need to push to the new location.
@@ -347,9 +393,13 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       // Save where we were pushed so we can pop the same location
       //
       t->is_on_map                      = true;
+      t->level_num                      = l->level_num;
       t->last_pushed_at                 = p;
       l->thing_id[ p.x ][ p.y ][ slot ] = t->id;
-      // LOG("l %p %s %d,%d", (void *) l, tp_name(tp), p.x, p.y);
+
+      if (0) {
+        LOG("l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp), p.x, p.y);
+      }
 
       if (0) {
         //
@@ -392,9 +442,14 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Pop the thing off the level
 //
-void thing_pop(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_pop(Gamep g, Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
+
+  auto l = thing_level(g, v, t);
+  if (! l) {
+    return;
+  }
 
   //
   // Pop from where we were pushed

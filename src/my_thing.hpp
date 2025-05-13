@@ -161,6 +161,7 @@ Thingp thing_find_optional(Gamep, Levelsp, ThingId id);
 Thingp thing_get(Gamep, Levelsp, Levelp, point p, int slot);
 Thingp thing_init(Gamep, Levelsp, Levelp, Tpp, point p);
 Thingp thing_player(Gamep);
+Levelp thing_level(Gamep, Levelsp, Thingp);
 void   thing_stats_dump(Gamep, Levelsp);
 
 ThingAip     thing_ai(Gamep, Thingp);
@@ -184,10 +185,11 @@ void thing_move_finish(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
-void thing_pop(Gamep, Levelsp, Levelp, Thingp);
+void thing_pop(Gamep, Levelsp, Thingp);
 void thing_push(Gamep, Levelsp, Levelp, Thingp);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
-void thing_update(Gamep, Thingp);
+void thing_level_change(Gamep, Levelsp, Levelp, Thingp);
+void thing_update_pos(Gamep, Thingp);
 
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
 bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp t);
@@ -195,6 +197,7 @@ bool thing_player_move_request(Gamep, bool up, bool down, bool left, bool right)
 bool thing_is_dir_down(Thingp t);
 bool thing_is_dir_tr(Thingp t);
 bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
+bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, point to);
 bool thing_is_dir_tl(Thingp t);
 bool thing_is_dir_br(Thingp t);
 bool thing_is_dir_bl(Thingp t);

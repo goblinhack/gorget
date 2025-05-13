@@ -16,6 +16,48 @@ enum {
   CURSOR_AT,
 };
 
+typedef struct LevelInfo_ {
+  //////////////////////////////////////////////////////////////
+  // No c++ types can be used here, to allow easy level replay
+  //
+  // Why C types only ? For large data structures it is visibly
+  // faster to malloc and memset versus default construction.
+  //////////////////////////////////////////////////////////////
+
+  //
+  // Seed used to generated this level
+  //
+  uint32_t seed_num;
+
+  //
+  // How many rooms?
+  //
+  int room_count;
+
+  //
+  // How many monsters?
+  //
+  int monst_count;
+  int monst1_count;
+  int monst2_count;
+
+  //
+  // How much treasure?
+  //
+  int treasure_count;
+  int treasure1_count;
+  int treasure2_count;
+
+  //
+  // How many room fragments we've added
+  //
+  int fragment_count;
+
+  //////////////////////////////////////////////////////////////
+  // No c++ types can be used here, to allow easy level replay
+  //////////////////////////////////////////////////////////////
+} LevelInfo;
+
 typedef struct Level_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
@@ -28,9 +70,21 @@ typedef struct Level_ {
   //
   LevelNum level_num;
   //
+  // Level generation info
+  //
+  LevelInfo info;
+  //
   // Where on the level select grid is this level
   //
   point level_select_at;
+  //
+  // Where to being this level
+  //
+  point entrance;
+  //
+  // Where to exit this level
+  //
+  point exit;
   //
   // Flags
   //
@@ -44,6 +98,10 @@ typedef struct Level_ {
   //
   uint8_t completed : 1;
   //
+  // Player can enter this level
+  //
+  uint8_t ready : 1;
+  //
   // What things are where? Each Id points to a thing structure.
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
@@ -51,6 +109,10 @@ typedef struct Level_ {
   // Has the player been on this tile?
   //
   uint8_t is_walked[ MAP_WIDTH ][ MAP_HEIGHT ];
+  //
+  // Original character map when the level was generated
+  //
+  char debug[ MAP_WIDTH ][ MAP_HEIGHT ];
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
@@ -314,8 +376,10 @@ void level_gen_stats_dump(Gamep);
 void   level_select_create_levels(Gamep);
 void   level_select_test(Gamep);
 void   level_select_destroy(Gamep, Levelsp, Levelp);
-void   level_select_cursor_update(Gamep, Levelsp, Levelp);
+void   level_select_update(Gamep, Levelsp, Levelp);
+void   level_select_chosen(Gamep, Levelsp, Levelp);
 Thingp thing_level_select(Gamep);
-void   level_select_cursor_update_level(Gamep, Levelsp, Levelp, Widp);
+void   level_select_show_contents(Gamep, Levelsp, Levelp, Widp);
+void   level_dump(Gamep, Levelsp, Levelp);
 
 #endif // _MY_LEVEL_H_

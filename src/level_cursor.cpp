@@ -388,5 +388,5 @@ void level_cursor_update(Gamep g, Levelsp v, Levelp l)
   //
   // If in level select mode, update what we're hovering over
   //
-  level_select_cursor_update(g, v, l);
+  level_select_update(g, v, l);
 }

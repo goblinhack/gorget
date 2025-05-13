@@ -141,7 +141,11 @@ void sdl_loop(Gamep g)
       // as we redraw the cursor path.
       //
       if (found) {
-        DBG("SDL: Process %u events", found);
+        if (found > 1) {
+          DBG("SDL: Process %u events", found);
+        } else {
+          DBG("SDL: Process %u event", found);
+        }
       }
 
       bool processed_mouse_motion_event = false;

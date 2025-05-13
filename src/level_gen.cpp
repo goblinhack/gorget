@@ -133,6 +133,7 @@ public:
         data[ x ][ y ].room = nullptr;
       }
     }
+    memset(&info, 0, sizeof(info));
   }
   ~LevelGen(void) {}
 
@@ -142,10 +143,9 @@ public:
   bool debug {};
 
   //
-  // This is a copy of the game seed
+  // Level gen stats
   //
-  std::string seed;
-  uint32_t    seed_num {};
+  LevelInfo info;
 
   //
   // Sub level
@@ -157,25 +157,6 @@ public:
   //
   int min_room_count {};
   int max_room_count {};
-
-  //
-  // How many monsters?
-  //
-  int monst_count {};
-  int monst1_count {};
-  int monst2_count {};
-
-  //
-  // How much treasure?
-  //
-  int treasure_count {};
-  int treasure1_count {};
-  int treasure2_count {};
-
-  //
-  // How many room fragments we've added
-  //
-  int fragment_count {};
 
   //
   // The starting room
@@ -949,6 +930,7 @@ static void room_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
   }
 
   l->rooms_placed[ r ] = true;
+  l->info.room_count   = (int) l->rooms_placed.size();
 }
 
 //
@@ -1665,7 +1647,7 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
     auto cand = cands[ pcg_rand() % cands.size() ];
     fragment_put(g, l, f, cand);
 
-    if (l->fragment_count++ >= MAX_LEVEL_GEN_FRAGMENTS) {
+    if (l->info.fragment_count++ >= MAX_LEVEL_GEN_FRAGMENTS) {
       return;
     }
   }
@@ -1691,16 +1673,17 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   TRACE_NO_INDENT();
 
   if (msg) {
-    LOG("Level: %s.%d (%s)", l->seed.c_str(), l->level_num, msg);
+    LOG("Level: %u (%s)", l->level_num, msg);
   } else {
-    LOG("Level: %s.%d", l->seed.c_str(), l->level_num);
+    LOG("Level: %u", l->level_num);
   }
 
-  LOG("Seed: %u", l->seed_num);
-  LOG("Room count: %d", (int) l->rooms_placed.size());
-  LOG("Fragment count: %d", l->fragment_count);
-  LOG("Treasure count: %d (normal:%d enhanced:%d)", l->treasure_count, l->treasure1_count, l->treasure2_count);
-  LOG("Monst count   : %d (normal:%d enhanced:%d)", l->monst_count, l->monst1_count, l->monst2_count);
+  LOG("Seed          : %u", l->info.seed_num);
+  LOG("Room count    : %d", l->info.room_count);
+  LOG("Fragment count: %d", l->info.fragment_count);
+  LOG("Treasure count: %d (normal:%d enhanced:%d)", l->info.treasure_count, l->info.treasure1_count,
+      l->info.treasure2_count);
+  LOG("Monst count   : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count, l->info.monst2_count);
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
@@ -2209,8 +2192,15 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
       l = nullptr;
     }
 
-    l                 = new LevelGen();
-    l->seed           = std::string(game_seed_name_get(g));
+    l = new LevelGen();
+
+    //
+    // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
+    //
+    uint32_t seed_num = game_seed_num_get(g) + ((level_num + 1) * MAX_LEVELS) + level_gen_tries;
+    pcg_srand(seed_num);
+    l->info.seed_num = seed_num;
+
     l->level_num      = level_num;
     l->min_room_count = MIN_LEVEL_ROOM_COUNT + (level_num / 10);
     l->max_room_count = l->min_room_count + 10;
@@ -3115,12 +3105,12 @@ static void level_gen_count_monsters_and_treasure(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  l->monst_count     = 0;
-  l->monst1_count    = 0;
-  l->monst2_count    = 0;
-  l->treasure_count  = 0;
-  l->treasure1_count = 0;
-  l->treasure2_count = 0;
+  l->info.monst_count     = 0;
+  l->info.monst1_count    = 0;
+  l->info.monst2_count    = 0;
+  l->info.treasure_count  = 0;
+  l->info.treasure1_count = 0;
+  l->info.treasure2_count = 0;
 
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
@@ -3128,20 +3118,20 @@ static void level_gen_count_monsters_and_treasure(Gamep g, class LevelGen *l)
 
       switch (c) {
         case CHARMAP_MONST1 :
-          l->monst_count++;
-          l->monst1_count++;
+          l->info.monst_count++;
+          l->info.monst1_count++;
           break;
         case CHARMAP_MONST2 :
-          l->monst_count++;
-          l->monst2_count++;
+          l->info.monst_count++;
+          l->info.monst2_count++;
           break;
         case CHARMAP_TREASURE1 :
-          l->treasure_count++;
-          l->treasure1_count++;
+          l->info.treasure_count++;
+          l->info.treasure1_count++;
           break;
         case CHARMAP_TREASURE2 :
-          l->treasure_count++;
-          l->treasure2_count++;
+          l->info.treasure_count++;
+          l->info.treasure2_count++;
           break;
       }
     }
@@ -3235,8 +3225,8 @@ static void level_gen_add_content(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  int need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->monst_count;
-  int need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->treasure_count;
+  int need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->info.monst_count;
+  int need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->info.treasure_count;
 
   if ((need_monsts > 0) || (need_treasure > 0)) {
     level_gen_add_content(g, l, need_monsts, need_treasure);
@@ -3254,7 +3244,20 @@ static void level_gen_create(Gamep g, class LevelGen *l)
   level->initialized = true;
   level->level_num   = l->level_num;
 
+  //
+  // Create things
+  //
   level_map_set(g, v, level, level_string.c_str());
+
+  //
+  // Create joined up tiles
+  //
+  level_assign_tiles(g, v, level);
+
+  //
+  // Copy useful level stats for later debugging.
+  //
+  level->info = l->info;
 }
 
 //
@@ -3366,20 +3369,12 @@ static void level_gen_create_level(Gamep g, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
-  //
-  // Per thread seed
-  //
-  uint32_t seed_num = game_seed_num_get(g);
-  seed_num += seed_num * level_num;
-  pcg_srand(seed_num);
-
   auto l = level_gen(g, level_num);
   if (! l) {
     ERR("No levels generated");
     return;
   }
 
-  l->seed_num         = seed_num;
   levels[ level_num ] = l;
 
   auto v = game_levels_get(g);

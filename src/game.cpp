@@ -499,7 +499,7 @@ void Game::start_playing(void)
   auto g = this;
 
   wid_topcon_init(g);
-  TOPCON("Welcome to bla bla bla..., %%fg=red$Gorget%%fg=reset$. TODO.");
+  TOPCON("Welcome to bla bla bla..., %%fg=red$Gorget%%fg=reset$.");
   wid_topcon_flush(g);
 }
 void game_start_playing(Gamep g) { g->start_playing(); }

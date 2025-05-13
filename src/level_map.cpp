@@ -44,9 +44,12 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      auto offset = (row_len * y) + x;
-      auto c      = in[ offset ];
-      Tpp  tp     = nullptr;
+      auto  offset = (row_len * y) + x;
+      auto  c      = in[ offset ];
+      Tpp   tp     = nullptr;
+      point at(x, y);
+
+      l->debug[ x ][ y ] = c;
 
       bool need_floor   = false;
       bool need_water   = false;
@@ -158,10 +161,12 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
             // tp = tp_entrance;
             tp = nullptr; /* todo */
           }
+          l->entrance = at;
           break;
         case CHARMAP_EXIT :
           need_floor = true;
           tp         = tp_exit;
+          l->exit    = at;
           break;
         case CHARMAP_KEY :
           need_floor = true;

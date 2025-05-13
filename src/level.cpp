@@ -34,6 +34,35 @@ void levels_stats_dump(Gamep g)
   thing_stats_dump(g, v);
 }
 
+void level_dump(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  LOG("Level         : %d", l->level_num);
+  LOG("Seed          : %u", l->info.seed_num);
+
+  if (l->info.room_count) {
+    LOG("Room count    : %d", l->info.room_count);
+    LOG("Fragment count: %d", l->info.fragment_count);
+    LOG("Treasure count: %d (normal:%d enhanced:%d)", l->info.treasure_count, l->info.treasure1_count,
+        l->info.treasure2_count);
+    LOG("Monst count   : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count,
+        l->info.monst2_count);
+  }
+
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+    std::string tmp;
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      point p(x, y);
+
+      tmp += l->debug[ x ][ y ];
+    }
+    LOG("[%s]", tmp.c_str());
+  }
+
+  LOG("-");
+}
+
 Levelsp levels_memory_alloc(Gamep g)
 {
   LOG("Levels alloc memory");
@@ -101,18 +130,26 @@ void level_completed(Gamep g, Levelsp v, Levelp l)
   l->completed = true;
 }
 
+//
+// Change the current
+//
 Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 {
   LOG("Level change to %u", level_num);
   TRACE_AND_INDENT();
 
+  Level *old_level = game_level_get(g, v);
   game_level_set(g, v, level_num);
-  Level *l = game_level_get(g, v);
+  Level *new_level = game_level_get(g, v);
 
-  level_assign_tiles(g, v, l);
+  if (old_level == new_level) {
+    return new_level;
+  }
+
   level_scroll_warp_to_focus(g, v);
+  level_dump(g, v, new_level);
 
-  return l;
+  return new_level;
 }
 
 void level_destroy(Gamep g, Levelsp v, Levelp l)
