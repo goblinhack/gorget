@@ -471,13 +471,13 @@ void Game::create_levels(void)
 
   level_select_create_levels(g);
 
-  level_gen_create_levels(g);
-
   auto v = game_levels_get(g);
   if (! v) {
-    ERR("No levels created");
+    ERR("No level memory created");
     return;
   }
+
+  level_gen_create_levels(g, v);
 
   game_map_zoom_in(g);
 

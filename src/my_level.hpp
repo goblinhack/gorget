@@ -370,7 +370,7 @@ void level_water_display(Gamep, Levelsp, Levelp, point, int fbo, int16_t minx, i
                          int16_t maxy);
 
 void level_gen_test(Gamep);
-void level_gen_create_levels(Gamep);
+void level_gen_create_levels(Gamep, Levelsp);
 void level_gen_stats_dump(Gamep);
 
 void   level_select_create_levels(Gamep);

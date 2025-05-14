@@ -6,7 +6,7 @@
 #ifndef _MY_GAME_DEFS_HPP_
 #define _MY_GAME_DEFS_HPP_
 
-#define LEVEL_SCALE          3
+#define LEVEL_SCALE          4
 #define LEVELS_ACROSS        (MAP_WIDTH / LEVEL_SCALE)
 #define LEVELS_DOWN          (MAP_HEIGHT / LEVEL_SCALE)
 #define MAX_LEVELS           101

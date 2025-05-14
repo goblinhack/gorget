@@ -322,18 +322,8 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
         continue;
       }
 
-      {
-        point at(x * LEVEL_SCALE + 2, y * LEVEL_SCALE + 1);
-        level_select->debug[ at.x ][ at.y ] = '-';
-
-        auto t = thing_init(g, v, level_select, tp_is_level_across, at);
-        if (t) {
-          thing_push(g, v, level_select, t);
-        }
-      }
-
-      {
-        point at(x * LEVEL_SCALE + 3, y * LEVEL_SCALE + 1);
+      for (auto div = 0; div < LEVEL_SCALE - 1; div++) {
+        point at(x * LEVEL_SCALE + div + 2, y * LEVEL_SCALE + 1);
         level_select->debug[ at.x ][ at.y ] = '-';
 
         auto t = thing_init(g, v, level_select, tp_is_level_across, at);
@@ -358,18 +348,8 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
         continue;
       }
 
-      {
-        point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 2);
-        level_select->debug[ at.x ][ at.y ] = '|';
-
-        auto t = thing_init(g, v, level_select, tp_is_level_down, at);
-        if (t) {
-          thing_push(g, v, level_select, t);
-        }
-      }
-
-      {
-        point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 3);
+      for (auto div = 0; div < LEVEL_SCALE - 1; div++) {
+        point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + div + 2);
         level_select->debug[ at.x ][ at.y ] = '|';
 
         auto t = thing_init(g, v, level_select, tp_is_level_down, at);
@@ -429,6 +409,8 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
   snake_dive(g, v, s, point(0, 0), 30);
   snake_dive(g, v, s, point(0, 0), 30);
   snake_dive(g, v, s, point(0, 0), 30);
+  snake_dive(g, v, s, 30);
+  snake_dive(g, v, s, 30);
   snake_dive(g, v, s, 30);
 }
 

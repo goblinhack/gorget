@@ -3391,15 +3391,17 @@ static void level_gen_create_level(Gamep g, LevelNum level_num)
 //
 // Create lots of levels
 //
-void level_gen_create_levels(Gamep g)
+void level_gen_create_levels(Gamep g, Levelsp v)
 {
+  LevelSelect *s           = &v->level_select;
+  int          max_threads = s->level_count;
+
   //
-  // Keep one free for the grid level
+  // We keep one level free for the grid level
   //
-  LOG("Level generation (max %u):", LEVEL_SELECT_ID);
+  LOG("Level generation (max %u):", s->level_count);
   TRACE_AND_INDENT();
 
-  int                        max_threads = LEVEL_SELECT_ID;
   std::vector< std::thread > threads;
 
   if (g_opt_debug1) {
@@ -3430,5 +3432,8 @@ void level_gen_test(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  level_gen_create_levels(g);
+  auto v = levels_memory_alloc(g);
+  game_levels_set(g, v);
+
+  level_gen_create_levels(g, v);
 }
