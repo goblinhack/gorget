@@ -886,16 +886,6 @@ static void ascii_blit(Gamep g)
         auto depth = TILE_LAYER_BG_1;
         auto tile  = cell->tile[ depth ];
         if (tile) {
-          //
-          // As the font is not square, if showing a non square tile, then make it so
-          //
-          if (tile_width(tile) != UI_FONT_WIDTH) {
-            tile_br.y       = tile_y + dw;
-            auto centralize = (dh - dw) / 2;
-            tile_tl.y += centralize;
-            tile_br.y += centralize;
-          }
-
           color color_tl = cell->color_tl[ depth ];
           color color_tr = cell->color_tr[ depth ];
           color color_bl = cell->color_bl[ depth ];
@@ -911,16 +901,6 @@ static void ascii_blit(Gamep g)
       for (int depth = TILE_LAYER_FG_1; depth < TILE_LAYER_MAX; depth++) {
         auto tile = cell->tile[ depth ];
         if (tile) {
-          //
-          // As the font is not square, if showing a non square tile, then make it so
-          //
-          if (tile_width(tile) != UI_FONT_WIDTH) {
-            tile_br.y       = tile_y + dw;
-            auto centralize = (dh - dw) / 2;
-            tile_tl.y += centralize;
-            tile_br.y += centralize;
-          }
-
           color color_tl = cell->color_tl[ depth ];
           color color_tr = cell->color_tr[ depth ];
           color color_bl = cell->color_bl[ depth ];
