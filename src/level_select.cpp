@@ -225,7 +225,7 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
       //
       // Can we enter this level?
       //
-      l->ready = false;
+      l->next_level = false;
 
       //
       // If not visited, is it a next level for the current level?
@@ -234,31 +234,35 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
         if (y < LEVELS_DOWN - 1) {
           LevelSelectCell *o = &s->data[ x ][ y + 1 ];
           if (o->level == player_level) {
-            tp       = tp_is_level_next;
-            l->ready = true;
+            tp            = tp_is_level_next;
+            l->next_level = true;
           }
         }
         if (x < LEVELS_ACROSS - 1) {
           LevelSelectCell *o = &s->data[ x + 1 ][ y ];
           if (o->level == player_level) {
-            tp       = tp_is_level_next;
-            l->ready = true;
+            tp            = tp_is_level_next;
+            l->next_level = true;
           }
         }
         if (y > 0) {
           LevelSelectCell *o = &s->data[ x ][ y - 1 ];
           if (o->level == player_level) {
-            tp       = tp_is_level_next;
-            l->ready = true;
+            tp            = tp_is_level_next;
+            l->next_level = true;
           }
         }
         if (x < 0) {
           LevelSelectCell *o = &s->data[ x - 1 ][ y ];
           if (o->level == player_level) {
-            tp       = tp_is_level_next;
-            l->ready = true;
+            tp            = tp_is_level_next;
+            l->next_level = true;
           }
         }
+      }
+
+      if (g_opt_test_level_select_menu) {
+        l->next_level = true;
       }
 
       //
@@ -484,14 +488,14 @@ static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp pa
     auto  w = wid_new_square_button(g, parent, map_name);
     point tl(x_at, y_at);
     point br(width - 1, y_at);
-    auto  s = dynprintf("%s:", map_name.c_str());
+    auto  s1 = dynprintf(" %s:", map_name.c_str());
     wid_set_color(w, WID_COLOR_TEXT_FG, YELLOW);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, s);
+    wid_set_text(w, s1);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_shape_none(w);
     wid_set_text_lhs(w, true);
-    myfree(s);
+    myfree(s1);
   }
   y_at++;
 
@@ -516,15 +520,15 @@ static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp pa
       auto        tp   = tp_find_mand(highest.c_str());
       std::string name = tp_short_name(tp);
 
-      auto s = dynprintf("  %u x %%tp=%s$ %s", map_in[ highest ], highest.c_str(), name.c_str());
+      auto s2 = dynprintf("  %u x %%tp=%s$ %s", map_in[ highest ], highest.c_str(), name.c_str());
 
       wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
       wid_set_pos(w, tl, br);
-      wid_set_text(w, s);
+      wid_set_text(w, s2);
       wid_set_style(w, UI_WID_STYLE_NORMAL);
       wid_set_shape_none(w);
       wid_set_text_lhs(w, true);
-      myfree(s);
+      myfree(s2);
     }
     y_at++;
 
@@ -541,10 +545,10 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
 {
   TRACE_NO_INDENT();
 
-  auto         x          = v->cursor_at.x / LEVEL_SCALE;
-  auto         y          = v->cursor_at.y / LEVEL_SCALE;
-  LevelSelect *s          = &v->level_select;
-  auto         level_over = s->data[ x ][ y ].level;
+  auto         x            = v->cursor_at.x / LEVEL_SCALE;
+  auto         y            = v->cursor_at.y / LEVEL_SCALE;
+  LevelSelect *level_select = &v->level_select;
+  auto         level_over   = level_select->data[ x ][ y ].level;
 
   std::map< std::string, int > mobs;
   std::map< std::string, int > monsts;
@@ -573,6 +577,65 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
 
   {
     TRACE_NO_INDENT();
+    auto  w = wid_new_square_button(g, parent, "level");
+    point tl(x_at, y_at);
+    point br(width - 1, y_at);
+    wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
+    wid_set_pos(w, tl, br);
+    auto s = dynprintf("Level %u", level_over->level_num);
+    wid_set_text(w, s);
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_shape_none(w);
+    wid_set_text_lhs(w, true);
+    myfree(s);
+    y_at++;
+  }
+
+  if (level_over->completed) {
+    {
+      TRACE_NO_INDENT();
+      auto  w = wid_new_square_button(g, parent, "level");
+      point tl(x_at, y_at);
+      point br(width - 1, y_at);
+      wid_set_color(w, WID_COLOR_TEXT_FG, YELLOW);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, " You completed this level");
+      wid_set_style(w, UI_WID_STYLE_NORMAL);
+      wid_set_shape_none(w);
+      wid_set_text_lhs(w, true);
+      y_at++;
+    }
+    {
+      TRACE_NO_INDENT();
+      auto  w = wid_new_square_button(g, parent, "level");
+      point tl(x_at, y_at);
+      point br(width - 1, y_at);
+      wid_set_color(w, WID_COLOR_TEXT_FG, YELLOW);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, " You can re-enter this level");
+      wid_set_style(w, UI_WID_STYLE_NORMAL);
+      wid_set_shape_none(w);
+      wid_set_text_lhs(w, true);
+      y_at++;
+    }
+  } else if (level_over->next_level) {
+    TRACE_NO_INDENT();
+    auto  w = wid_new_square_button(g, parent, "level");
+    point tl(x_at, y_at);
+    point br(width - 1, y_at);
+    wid_set_color(w, WID_COLOR_TEXT_FG, YELLOW);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, " You can enter this level");
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_shape_none(w);
+    wid_set_text_lhs(w, true);
+    y_at++;
+  }
+
+  y_at++;
+
+  {
+    TRACE_NO_INDENT();
     auto  w = wid_new_square_button(g, parent, "contents");
     point tl(x_at, y_at);
     point br(width - 1, y_at);
@@ -582,9 +645,9 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_shape_none(w);
     wid_set_text_lhs(w, true);
+    y_at++;
   }
 
-  y_at++;
   y_at = level_select_show_sorted_values(g, v, level_over, parent, mobs, "Mobs", width, x_at, y_at);
   y_at = level_select_show_sorted_values(g, v, level_over, parent, monsts, "Monsters", width, x_at, y_at);
   y_at = level_select_show_sorted_values(g, v, level_over, parent, treasure, "Loot", width, x_at, y_at);
@@ -639,9 +702,9 @@ void level_select_chosen(Gamep g, Levelsp v, Levelp l)
       Levelp new_level = nullptr;
 
       //
-      // Switch to the chosen level if possible
+      // Switch to the chosen level if possible; allow going back to the old level to clean up if needed
       //
-      if (g_opt_test_level_select_menu || level_over->ready) {
+      if (level_over->completed || level_over->next_level) {
         new_level = level_change(g, v, level_over->level_num);
       } else {
         TOPCON("You cannot enter this level. Yet. Choose a flashing level.");

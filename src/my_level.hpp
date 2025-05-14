@@ -100,7 +100,7 @@ typedef struct Level_ {
   //
   // Player can enter this level
   //
-  uint8_t ready : 1;
+  uint8_t next_level : 1;
   //
   // What things are where? Each Id points to a thing structure.
   //

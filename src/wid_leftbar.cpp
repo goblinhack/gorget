@@ -47,15 +47,13 @@ static bool wid_leftbar_create_window(Gamep g)
   y_at = 4;
   {
     TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(g, wid_leftbar, "level no");
+    auto  w = wid_new_square_button(g, wid_leftbar, "todo");
     point tl(0, y_at);
     point br(width - 1, y_at);
-    auto  s = dynprintf("Level %u", v->level_num);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, s);
+    wid_set_text(w, "TODO");
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_shape_none(w);
-    myfree(s);
   }
 
   if (0) {
