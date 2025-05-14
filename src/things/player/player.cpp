@@ -15,9 +15,9 @@ bool tp_load_player(void)
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_can_hflip, true);
-  tp_flag_set(tp, is_blit_square_outlined, true);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_blit_square_outlined, true);
   tp_flag_set(tp, is_player, true);
   tp_flag_set(tp, is_tickable, true);
   tp_speed_set(tp, 100);

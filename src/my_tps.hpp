@@ -17,6 +17,7 @@ bool tp_load_wall();
 bool tp_load_door();
 bool tp_load_water();
 bool tp_load_bridge();
+bool tp_load_entrance();
 bool tp_load_rock();
 bool tp_load_lava();
 bool tp_load_key();

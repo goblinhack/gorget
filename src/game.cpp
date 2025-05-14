@@ -497,9 +497,26 @@ void Game::start_playing(void)
   TRACE_AND_INDENT();
 
   auto g = this;
+  if (! g) {
+    return;
+  }
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
 
   wid_topcon_init(g);
-  TOPCON("Welcome to bla bla bla..., %%fg=red$Gorget%%fg=reset$.");
+
+  auto l = game_level_get(g, v);
+  if (! 1) {
+    return;
+  }
+
+  if (l->level_num == 0) {
+    TOPCON("Welcome to bla bla bla..., %%fg=red$Gorget%%fg=reset$.");
+  }
+
   wid_topcon_flush(g);
 }
 void game_start_playing(Gamep g) { g->start_playing(); }

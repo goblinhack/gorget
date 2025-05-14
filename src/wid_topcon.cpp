@@ -170,6 +170,11 @@ void wid_topcon_log(std::string s)
     DIE("No TERM_WIDTH set");
   }
 
+  if (s.empty()) {
+    wid_topcon_scroll(wid_topcon_input_line, "");
+    return;
+  }
+
   auto d = split(s, chars_per_line);
 
   for (const auto &c : d) {

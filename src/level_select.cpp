@@ -379,6 +379,29 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
       }
     }
   }
+
+  //
+  // Add some rocks in empty spaces
+  //
+  for (auto y = 0; y < MAP_HEIGHT; y++) {
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      auto  count = 0;
+      point at(x, y);
+      FOR_ALL_THINGS_AND_TPS_AT(g, v, level_select, it, it_tp, at) { count++; }
+      if (! count) {
+        auto tp_rock = tp_random(is_dirt);
+        auto t       = thing_init(g, v, level_select, tp_rock, at);
+        if (t) {
+          thing_push(g, v, level_select, t);
+        }
+      }
+    }
+  }
+
+  //
+  // Create joined up tiles (for the rocks)
+  //
+  level_assign_tiles(g, v, level_select);
 }
 
 //
@@ -449,6 +472,7 @@ void level_select_create_levels(Gamep g)
   level_select_assign_levels(g, v, s);
   level_select_create_things(g, v, s);
 
+  TOPCON("");
   TOPCON("");
   TOPCON("");
   TOPCON("%%fg=yellow$Choose your next level, mortal. Mouse over levels for monster/treasure info.%%fg=reset$");
@@ -716,6 +740,10 @@ void level_select_chosen(Gamep g, Levelsp v, Levelp l)
       if (new_level) {
         thing_level_change(g, v, new_level, thing_player(g));
         level_scroll_warp_to_focus(g, v, l);
+        TOPCON("");
+        TOPCON("");
+        TOPCON("");
+        TOPCON("%%fg=yellow$You enter level %u.%%fg=reset$", new_level->level_num);
       }
 
       return;

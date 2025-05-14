@@ -38,6 +38,9 @@ bool templates_init(void)
   if (! tp_load_bridge()) {
     return false;
   }
+  if (! tp_load_entrance()) {
+    return false;
+  }
   if (! tp_load_rock()) {
     return false;
   }

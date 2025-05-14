@@ -40,7 +40,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_dirt       = tp_find_mand("dirt");
   auto tp_exit       = tp_find_mand("exit");
   auto tp_player     = tp_find_mand("player");
-  //  auto tp_entrance = tp_find_mand("entrance");
+  auto tp_entrance   = tp_find_mand("entrance");
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
@@ -158,8 +158,8 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           if (l->level_num == 0) {
             tp = tp_player;
           } else {
-            // tp = tp_entrance;
-            tp = nullptr; /* todo */
+            need_floor = true;
+            tp         = tp_entrance;
           }
           l->entrance = at;
           break;
