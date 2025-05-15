@@ -864,7 +864,7 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
   }
 }
 
-static bool is_obs_wall_or_door_at(const Dmap *D, int x, int y)
+static bool is_obstacle_at(const Dmap *D, int x, int y)
 {
   if ((x >= MAP_WIDTH) || (y >= MAP_HEIGHT) || (x < 0) || (y < 0)) {
     return true;
@@ -891,35 +891,35 @@ bool dmap_can_i_move_diagonally(const Dmap *D, point a, point b, point c)
   auto mx = c.x;
   auto my = c.y;
 
-  if (px - 1 == mx && py + 1 == my && px == nx && py + 1 == ny && ! is_obs_wall_or_door_at(D, px - 1, py)) {
+  if (px - 1 == mx && py + 1 == my && px == nx && py + 1 == ny && ! is_obstacle_at(D, px - 1, py)) {
     return true;
   }
 
-  if (px - 1 == mx && py + 1 == my && px - 1 == nx && py == ny && ! is_obs_wall_or_door_at(D, px, py + 1)) {
+  if (px - 1 == mx && py + 1 == my && px - 1 == nx && py == ny && ! is_obstacle_at(D, px, py + 1)) {
     return true;
   }
 
-  if (px + 1 == mx && py + 1 == my && px == nx && py + 1 == ny && ! is_obs_wall_or_door_at(D, px + 1, py)) {
+  if (px + 1 == mx && py + 1 == my && px == nx && py + 1 == ny && ! is_obstacle_at(D, px + 1, py)) {
     return true;
   }
 
-  if (px + 1 == mx && py + 1 == my && px + 1 == nx && py == ny && ! is_obs_wall_or_door_at(D, px, py + 1)) {
+  if (px + 1 == mx && py + 1 == my && px + 1 == nx && py == ny && ! is_obstacle_at(D, px, py + 1)) {
     return true;
   }
 
-  if (px - 1 == mx && py - 1 == my && px == nx && py - 1 == ny && ! is_obs_wall_or_door_at(D, px - 1, py)) {
+  if (px - 1 == mx && py - 1 == my && px == nx && py - 1 == ny && ! is_obstacle_at(D, px - 1, py)) {
     return true;
   }
 
-  if (px - 1 == mx && py - 1 == my && px - 1 == nx && py == ny && ! is_obs_wall_or_door_at(D, px, py - 1)) {
+  if (px - 1 == mx && py - 1 == my && px - 1 == nx && py == ny && ! is_obstacle_at(D, px, py - 1)) {
     return true;
   }
 
-  if (px + 1 == mx && py - 1 == my && px == nx && py - 1 == ny && ! is_obs_wall_or_door_at(D, px + 1, py)) {
+  if (px + 1 == mx && py - 1 == my && px == nx && py - 1 == ny && ! is_obstacle_at(D, px + 1, py)) {
     return true;
   }
 
-  if (px + 1 == mx && py - 1 == my && px + 1 == nx && py == ny && ! is_obs_wall_or_door_at(D, px, py - 1)) {
+  if (px + 1 == mx && py - 1 == my && px + 1 == nx && py == ny && ! is_obstacle_at(D, px, py - 1)) {
     return true;
   }
   return false;
@@ -1095,18 +1095,18 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
     // s.
     // .e
     if (((hop0.x + 1) == hop1.x) && ((hop0.y + 1) == hop1.y)) {
-      if (is_obs_wall_or_door_at(D, hop0.x + 1, hop0.y) && is_obs_wall_or_door_at(D, hop0.x, hop0.y + 1)) {
+      if (is_obstacle_at(D, hop0.x + 1, hop0.y) && is_obstacle_at(D, hop0.x, hop0.y + 1)) {
         //
         // Allow fully diagonal moves between walls?
         //
-      } else if (is_obs_wall_or_door_at(D, hop0.x + 1, hop0.y)) {
+      } else if (is_obstacle_at(D, hop0.x + 1, hop0.y)) {
         //
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
         out.push_back(point(hop0.x, hop0.y + 1));
         continue;
-      } else if (is_obs_wall_or_door_at(D, hop0.x, hop0.y + 1)) {
+      } else if (is_obstacle_at(D, hop0.x, hop0.y + 1)) {
         //
         // Try to make a path around the obstacle
         //
@@ -1119,18 +1119,18 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
     // .s
     // e.
     if (((hop0.x - 1) == hop1.x) && ((hop0.y + 1) == hop1.y)) {
-      if (is_obs_wall_or_door_at(D, hop0.x - 1, hop0.y) && is_obs_wall_or_door_at(D, hop0.x, hop0.y + 1)) {
+      if (is_obstacle_at(D, hop0.x - 1, hop0.y) && is_obstacle_at(D, hop0.x, hop0.y + 1)) {
         //
         // Allow fully diagonal moves between walls?
         //
-      } else if (is_obs_wall_or_door_at(D, hop0.x - 1, hop0.y)) {
+      } else if (is_obstacle_at(D, hop0.x - 1, hop0.y)) {
         //
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
         out.push_back(point(hop0.x, hop0.y + 1));
         continue;
-      } else if (is_obs_wall_or_door_at(D, hop0.x, hop0.y + 1)) {
+      } else if (is_obstacle_at(D, hop0.x, hop0.y + 1)) {
         //
         // Try to make a path around the obstacle
         //
@@ -1143,18 +1143,18 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
     // .e
     // s.
     if (((hop0.x + 1) == hop1.x) && ((hop0.y - 1) == hop1.y)) {
-      if (is_obs_wall_or_door_at(D, hop0.x + 1, hop0.y) && is_obs_wall_or_door_at(D, hop0.x, hop0.y - 1)) {
+      if (is_obstacle_at(D, hop0.x + 1, hop0.y) && is_obstacle_at(D, hop0.x, hop0.y - 1)) {
         //
         // Allow fully diagonal moves between walls?
         //
-      } else if (is_obs_wall_or_door_at(D, hop0.x + 1, hop0.y)) {
+      } else if (is_obstacle_at(D, hop0.x + 1, hop0.y)) {
         //
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
         out.push_back(point(hop0.x, hop0.y - 1));
         continue;
-      } else if (is_obs_wall_or_door_at(D, hop0.x, hop0.y - 1)) {
+      } else if (is_obstacle_at(D, hop0.x, hop0.y - 1)) {
         //
         // Try to make a path around the obstacle
         //
@@ -1167,18 +1167,18 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
     // e.
     // .s
     if (((hop0.x - 1) == hop1.x) && ((hop0.y - 1) == hop1.y)) {
-      if (is_obs_wall_or_door_at(D, hop0.x - 1, hop0.y) && is_obs_wall_or_door_at(D, hop0.x, hop0.y - 1)) {
+      if (is_obstacle_at(D, hop0.x - 1, hop0.y) && is_obstacle_at(D, hop0.x, hop0.y - 1)) {
         //
         // Allow fully diagonal moves between walls?
         //
-      } else if (is_obs_wall_or_door_at(D, hop0.x - 1, hop0.y)) {
+      } else if (is_obstacle_at(D, hop0.x - 1, hop0.y)) {
         //
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
         out.push_back(point(hop0.x, hop0.y - 1));
         continue;
-      } else if (is_obs_wall_or_door_at(D, hop0.x, hop0.y - 1)) {
+      } else if (is_obstacle_at(D, hop0.x, hop0.y - 1)) {
         //
         // Try to make a path around the obstacle
         //

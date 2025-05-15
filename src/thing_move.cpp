@@ -306,15 +306,9 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
   auto dy = to.y - t->at.y;
   thing_set_dir_from_delta(t, dx, dy);
 
-  auto my_tp = thing_tp(t);
-
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, to)
   {
-    if (tp_is_player(my_tp) && tp_is_obs_player(it_tp)) {
-      return false;
-    }
-
-    if (tp_is_monst(my_tp) && tp_is_obs_monst(it_tp)) {
+    if (tp_is_obstacle_block(it_tp)) {
       return false;
     }
   }

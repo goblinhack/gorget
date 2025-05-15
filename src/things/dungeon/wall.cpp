@@ -18,8 +18,7 @@ bool tp_load_wall(void)
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered, true);
     tp_flag_set(tp, is_cursor_path_blocker, true);
-    tp_flag_set(tp, is_obs_monst, true);
-    tp_flag_set(tp, is_obs_player, true);
+    tp_flag_set(tp, is_obstacle_block, true);
     tp_flag_set(tp, is_tiled, true);
     tp_flag_set(tp, is_wall, true);
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

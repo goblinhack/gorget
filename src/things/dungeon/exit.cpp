@@ -16,9 +16,9 @@ bool tp_load_exit(void)
 
   auto tp = tp_load("exit");
   // begin sort marker1 {
+  tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_on_ground, true);
   tp_flag_set(tp, is_exit, true);
-  tp_flag_set(tp, is_animated, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
