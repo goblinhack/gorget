@@ -305,7 +305,7 @@ void Config::reset(void)
   key_zoom.sym       = SDLK_z;
   key_console.sym    = SDLK_BACKQUOTE;
   music_volume       = {MIX_MAX_VOLUME / 3};
-  sdl_delay          = 10;
+  sdl_delay          = 1;
   sound_volume       = {MIX_MAX_VOLUME / 2};
 
   key_unused1.sym = SDLK_TAB;
@@ -509,10 +509,6 @@ void Game::start_playing(void)
   auto l = game_level_get(g, v);
   if (! l) {
     return;
-  }
-
-  if (l->level_num == 0) {
-    TOPCON("Welcome to bla bla bla..., %%fg=red$Gorget%%fg=reset$.");
   }
 
   wid_topcon_flush(g);

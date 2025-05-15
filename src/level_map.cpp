@@ -219,6 +219,15 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           thing_push(g, v, l, t);
         }
       }
+
+      if (1) {
+        if (tp == tp_player) {
+          auto t = thing_init(g, v, l, tp_exit, point(x, y) + point(2, 0));
+          if (t) {
+            thing_push(g, v, l, t);
+          }
+        }
+      }
     }
   }
 }

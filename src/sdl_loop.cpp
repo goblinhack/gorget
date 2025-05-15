@@ -240,11 +240,16 @@ void sdl_loop(Gamep g)
       }
 
       if (unlikely(frames >= 100)) {
-        fps_ts_now = time_ms();
-        auto  diff = fps_ts_now - fps_ts_begin;
-        float fps  = (float) (frames * ONESEC) / (float) diff;
-        CON("FPS %f ", fps);
-        game_fps_value_set(g, (int) fps);
+        fps_ts_now    = time_ms();
+        uint32_t diff = fps_ts_now - fps_ts_begin;
+        if (diff != 0) {
+          float fps = (float) (frames * ONESEC) / (float) diff;
+          CON("FPS %f", fps);
+          game_fps_value_set(g, (int) fps);
+        } else {
+          CON("FPS calculating...");
+          game_fps_value_set(g, (int) 0);
+        }
         fps_ts_begin = fps_ts_now;
         frames       = 0;
       }
