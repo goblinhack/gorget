@@ -632,8 +632,11 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_PLAYING :
       switch (old_state) {
         case STATE_QUITTING : /* from loading */
+          wid_leftbar_init(g);
+          wid_rightbar_init(g);
+          wid_topcon_init(g);
+          break;
         case STATE_MAIN_MENU :
-          LOG("Create left and right bars");
           wid_leftbar_init(g);
           wid_rightbar_init(g);
           break;

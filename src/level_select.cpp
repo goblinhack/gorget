@@ -76,8 +76,8 @@ static void level_select_assign_levels(Gamep g, Levelsp v, LevelSelect *s)
           DIE("ran out of levels to assign to grid, %u", n);
         }
 
-        s->data[ x ][ y ].level = l;
-        l->level_select_at      = point(x, y);
+        s->data[ x ][ y ].level_num = l->level_num;
+        l->level_select_at          = point(x, y);
 
         n++;
       }
@@ -191,7 +191,7 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
         continue;
       }
 
-      Levelp l = c->level;
+      auto l = game_level_get(g, v, c->level_num);
       if (! l) {
         ERR("missing level in select map");
         continue;
@@ -234,14 +234,14 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
       if (player_level && (player_level->completed) && (tp == tp_is_level_not_visited)) {
         if (y > 0) {
           LevelSelectCell *o = &s->data[ x ][ y - 1 ];
-          if (o->level == player_level) {
+          if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp            = tp_is_level_next;
             l->next_level = true;
           }
         }
         if (x > 0) {
           LevelSelectCell *o = &s->data[ x - 1 ][ y ];
-          if (o->level == player_level) {
+          if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp            = tp_is_level_next;
             l->next_level = true;
           }
@@ -249,14 +249,14 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
 
         if (y < LEVELS_DOWN - 1) {
           LevelSelectCell *o = &s->data[ x ][ y + 1 ];
-          if (o->level == player_level) {
+          if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp            = tp_is_level_next;
             l->next_level = true;
           }
         }
         if (x < LEVELS_ACROSS - 1) {
           LevelSelectCell *o = &s->data[ x + 1 ][ y ];
-          if (o->level == player_level) {
+          if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp            = tp_is_level_next;
             l->next_level = true;
           }
@@ -266,42 +266,34 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
       //
       // Allow backwards moves to completed levels
       //
-      if (player_level && (tp == tp_is_level_visited)) {
+      if (player_level && l->completed && (tp == tp_is_level_visited)) {
         if (y > 0) {
           LevelSelectCell *o = &s->data[ x ][ y - 1 ];
-          if (l->completed) {
-            if (o->level == player_level) {
-              tp            = tp_is_level_next;
-              l->next_level = true;
-            }
+          if (o && o->is_set && (o->level_num == player_level->level_num)) {
+            tp            = tp_is_level_next;
+            l->next_level = true;
           }
         }
         if (x > 0) {
           LevelSelectCell *o = &s->data[ x - 1 ][ y ];
-          if (l->completed) {
-            if (o->level == player_level) {
-              tp            = tp_is_level_next;
-              l->next_level = true;
-            }
+          if (o && o->is_set && (o->level_num == player_level->level_num)) {
+            tp            = tp_is_level_next;
+            l->next_level = true;
           }
         }
 
         if (y < LEVELS_DOWN - 1) {
           LevelSelectCell *o = &s->data[ x ][ y + 1 ];
-          if (l->completed) {
-            if (o->level == player_level) {
-              tp            = tp_is_level_next;
-              l->next_level = true;
-            }
+          if (o && o->is_set && (o->level_num == player_level->level_num)) {
+            tp            = tp_is_level_next;
+            l->next_level = true;
           }
         }
         if (x < LEVELS_ACROSS - 1) {
           LevelSelectCell *o = &s->data[ x + 1 ][ y ];
-          if (l->completed) {
-            if (o->level == player_level) {
-              tp            = tp_is_level_next;
-              l->next_level = true;
-            }
+          if (o && o->is_set && (o->level_num == player_level->level_num)) {
+            tp            = tp_is_level_next;
+            l->next_level = true;
           }
         }
       }
@@ -592,10 +584,15 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
 {
   TRACE_NO_INDENT();
 
-  auto         x            = v->cursor_at.x / LEVEL_SCALE;
-  auto         y            = v->cursor_at.y / LEVEL_SCALE;
-  LevelSelect *level_select = &v->level_select;
-  auto         level_over   = level_select->data[ x ][ y ].level;
+  auto         x = v->cursor_at.x / LEVEL_SCALE;
+  auto         y = v->cursor_at.y / LEVEL_SCALE;
+  LevelSelect *s = &v->level_select;
+  Levelp       level_over;
+  if (s->data[ x ][ y ].is_set) {
+    level_over = game_level_get(g, v, s->data[ x ][ y ].level_num);
+  } else {
+    level_over = nullptr;
+  }
 
   auto   player       = thing_player(g);
   Levelp player_level = nullptr;
@@ -635,12 +632,12 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
     point br(width - 1, y_at);
     wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
     wid_set_pos(w, tl, br);
-    auto s = dynprintf("Level %u", level_over->level_num + 1);
-    wid_set_text(w, s);
+    auto tmp = dynprintf("Level %u", level_over->level_num + 1);
+    wid_set_text(w, tmp);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_shape_none(w);
     wid_set_text_lhs(w, true);
-    myfree(s);
+    myfree(tmp);
     y_at++;
   }
 
@@ -744,10 +741,15 @@ void level_select_update(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
   {
-    auto         x          = v->cursor_at.x / LEVEL_SCALE;
-    auto         y          = v->cursor_at.y / LEVEL_SCALE;
-    LevelSelect *s          = &v->level_select;
-    auto         level_over = s->data[ x ][ y ].level;
+    auto         x = v->cursor_at.x / LEVEL_SCALE;
+    auto         y = v->cursor_at.y / LEVEL_SCALE;
+    LevelSelect *s = &v->level_select;
+    Levelp       level_over;
+    if (s->data[ x ][ y ].is_set) {
+      level_over = game_level_get(g, v, s->data[ x ][ y ].level_num);
+    } else {
+      level_over = nullptr;
+    }
 
     if (level_over) {
       game_request_to_remake_rightbar_set(g);
@@ -774,12 +776,17 @@ void level_select_chosen(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
   {
-    auto         x          = (v->cursor_at.x - 1) / LEVEL_SCALE;
-    auto         y          = (v->cursor_at.y - 1) / LEVEL_SCALE;
-    int          dx         = (v->cursor_at.x - 1) % LEVEL_SCALE;
-    int          dy         = (v->cursor_at.y - 1) % LEVEL_SCALE;
-    LevelSelect *s          = &v->level_select;
-    auto         level_over = s->data[ x ][ y ].level;
+    auto         x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
+    auto         y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
+    int          dx = (v->cursor_at.x - 1) % LEVEL_SCALE;
+    int          dy = (v->cursor_at.y - 1) % LEVEL_SCALE;
+    LevelSelect *s  = &v->level_select;
+    Levelp       level_over;
+    if (s->data[ x ][ y ].is_set) {
+      level_over = game_level_get(g, v, s->data[ x ][ y ].level_num);
+    } else {
+      level_over = nullptr;
+    }
 
     if (dx || dy) {
       return;

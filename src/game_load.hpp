@@ -381,9 +381,9 @@ void Game::load(int slot)
   load(this_save_file, *this);
   g_loading = false;
 
-  CON("Loaded the game from %s.", this_save_file.c_str());
-
   state_change(STATE_PLAYING, "loaded game");
+
+  TOPCON("Loaded the game from %s", this_save_file.c_str());
 }
 
 void Game::load_snapshot(void)
@@ -400,9 +400,9 @@ void Game::load_snapshot(void)
   load(this_save_file, *this);
   g_loading = false;
 
-  CON("Loaded the game from %s.", this_save_file.c_str());
-
   state_change(STATE_PLAYING, "loaded snapshot");
+
+  TOPCON("Loaded the game from %s", this_save_file.c_str());
 }
 
 void wid_load_destroy(Gamep g)

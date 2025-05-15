@@ -126,7 +126,7 @@ typedef struct LevelSelectCell_ {
   //
   // Back pointer to the level here, if any
   //
-  Levelp level;
+  LevelNum level_num;
 } LevelSelectCell;
 
 typedef struct LevelSelect_ {

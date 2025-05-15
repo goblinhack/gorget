@@ -141,7 +141,6 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   game_level_set(g, v, level_num);
   Level *new_level = game_level_get(g, v);
 
-  TOPCON("level change %u", level_num);
   if (old_level == new_level) {
     TOPCON("");
     TOPCON("");
