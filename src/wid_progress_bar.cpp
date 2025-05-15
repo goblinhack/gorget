@@ -22,7 +22,7 @@ void wid_progress_bar_destroy(Gamep g)
 
 void wid_progress_bar(Gamep g, const std::string &title, float pct)
 {
-  LOG("Progress bar: %s, %f%%", title.c_str(), pct);
+  LOG("Progress bar: %s, %f pct", title.c_str(), pct);
   TRACE_NO_INDENT();
 
   if (wid_progress_bar_window) {

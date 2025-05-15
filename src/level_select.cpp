@@ -774,10 +774,16 @@ void level_select_chosen(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
   {
-    auto         x          = v->cursor_at.x / LEVEL_SCALE;
-    auto         y          = v->cursor_at.y / LEVEL_SCALE;
+    auto         x          = (v->cursor_at.x - 1) / LEVEL_SCALE;
+    auto         y          = (v->cursor_at.y - 1) / LEVEL_SCALE;
+    int          dx         = (v->cursor_at.x - 1) % LEVEL_SCALE;
+    int          dy         = (v->cursor_at.y - 1) % LEVEL_SCALE;
     LevelSelect *s          = &v->level_select;
     auto         level_over = s->data[ x ][ y ].level;
+
+    if (dx || dy) {
+      return;
+    }
 
     if (level_over) {
       //
