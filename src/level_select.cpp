@@ -453,11 +453,6 @@ void level_select_create_levels(Gamep g)
   level_select_count_levels(g, v, s);
   level_select_assign_levels(g, v, s);
   level_select_create_things(g, v, s);
-
-  TOPCON("");
-  TOPCON("");
-  TOPCON("");
-  TOPCON("%%fg=yellow$Choose your next level, mortal. Mouse over levels for monster/treasure info.%%fg=reset$");
 }
 
 //
@@ -722,10 +717,6 @@ void level_select_chosen(Gamep g, Levelsp v, Levelp l)
       if (new_level) {
         thing_level_change(g, v, new_level, thing_player(g));
         level_scroll_warp_to_focus(g, v, l);
-        TOPCON("");
-        TOPCON("");
-        TOPCON("");
-        TOPCON("%%fg=yellow$You enter level %u.%%fg=reset$", new_level->level_num);
       }
 
       return;

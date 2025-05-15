@@ -149,6 +149,18 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   level_scroll_warp_to_focus(g, v, new_level);
   level_dump(g, v, new_level);
 
+  if (level_num == LEVEL_SELECT_ID) {
+    TOPCON("");
+    TOPCON("");
+    TOPCON("");
+    TOPCON("%%fg=yellow$Choose your next level, mortal. Mouse over levels for monster/treasure info.%%fg=reset$");
+  } else if (level_num > 0) {
+    TOPCON("");
+    TOPCON("");
+    TOPCON("");
+    TOPCON("%%fg=yellow$You enter level %u of dungeon %s.%%fg=reset$", new_level->level_num, game_seed_name_get(g));
+  }
+
   return new_level;
 }
 

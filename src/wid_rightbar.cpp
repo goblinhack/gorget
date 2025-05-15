@@ -62,7 +62,7 @@ static bool wid_rightbar_create_window(Gamep g)
       point br(width - 1, y_at);
       wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
       wid_set_pos(w, tl, br);
-      auto s = dynprintf("Level %u Seed %s", l->level_num, game_seed_name_get(g));
+      auto s = dynprintf("Level:%u Dungeon:%s", l->level_num, game_seed_name_get(g));
       wid_set_text(w, s);
       wid_set_style(w, UI_WID_STYLE_NORMAL);
       wid_set_shape_none(w);

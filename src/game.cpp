@@ -339,7 +339,6 @@ void Game::init(void)
 {
   LOG("Game init");
   TRACE_AND_INDENT();
-
   seed_set();
 }
 void game_init(Gamep g) { g->init(); }
@@ -462,11 +461,10 @@ uint32_t game_seed_num_get(Gamep g)
 
 void Game::create_levels(void)
 {
-  LOG("Create levels");
+  CON("Create levels");
   TRACE_AND_INDENT();
 
   auto g = this;
-  seed_set();
   destroy_levels();
 
   level_select_create_levels(g);
@@ -509,7 +507,7 @@ void Game::start_playing(void)
   wid_topcon_init(g);
 
   auto l = game_level_get(g, v);
-  if (! 1) {
+  if (! l) {
     return;
   }
 
@@ -533,6 +531,11 @@ void Game::destroy_levels(void)
   TRACE_AND_INDENT();
 
   levels_destroy(g, v);
+
+  //
+  // Create a new seed for the next run
+  //
+  seed_set();
 }
 void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
