@@ -293,12 +293,14 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
     if (thing_is_player(t) && thing_is_exit(it)) {
       l->completed = true;
       level_select_create_levels(g);
+      level_cursor_path_reset(g, v, l);
       level_change(g, v, LEVEL_SELECT_ID);
       return;
     }
 
     if (thing_is_player(t) && thing_is_entrance(it)) {
       level_select_create_levels(g);
+      level_cursor_path_reset(g, v, l);
       level_change(g, v, LEVEL_SELECT_ID);
       return;
     }

@@ -267,9 +267,8 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
   }
 
   v->player_pressed_button_and_waiting_for_a_path = false;
-
-  v->player_currently_following_a_path = false;
-  aip->move_path.size                  = 0;
+  v->player_currently_following_a_path            = false;
+  aip->move_path.size                             = 0;
 }
 
 //

@@ -183,19 +183,22 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  //
+  // Only save once a tick is complete and before the next move is popped below
+  //
+  if (game_request_to_save_game_get(g)) {
+    game_request_to_save_game_set(g, false);
+    wid_save_select(g);
+  }
+
+  //
+  // This can pop the next player move
+  //
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     if (thing_is_tickable(t)) {
       thing_tick_end(g, v, l, t);
     }
-  }
-
-  //
-  // Only save once a tick is complete
-  //
-  if (game_request_to_save_game_get(g)) {
-    game_request_to_save_game_set(g, false);
-    wid_save_select(g);
   }
 }
 

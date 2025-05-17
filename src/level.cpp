@@ -189,8 +189,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  LOG("Level destroy %u", l->level_num);
-  TRACE_AND_INDENT();
+  DBG("Level destroy %u", l->level_num);
 
   //
   // Remove all things
