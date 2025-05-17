@@ -354,6 +354,11 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, point p, int slot)
 {
   TRACE_NO_INDENT();
 
+  if (! l) {
+    ERR("trying to get a thing on a null level");
+    return nullptr;
+  }
+
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
   if (! id) {
     return nullptr;
@@ -370,6 +375,11 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, point p, int slot)
 Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, point p, int slot, Tpp *out)
 {
   TRACE_NO_INDENT();
+
+  if (! l) {
+    ERR("trying to get a thing on a null level");
+    return nullptr;
+  }
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
 

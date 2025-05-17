@@ -584,8 +584,15 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
 {
   TRACE_NO_INDENT();
 
-  auto         x = v->cursor_at.x / LEVEL_SCALE;
-  auto         y = v->cursor_at.y / LEVEL_SCALE;
+  int x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
+  int y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
+  int dx = (v->cursor_at.x - 1) % LEVEL_SCALE;
+  int dy = (v->cursor_at.y - 1) % LEVEL_SCALE;
+
+  if (dx || dy) {
+    return;
+  }
+
   LevelSelect *s = &v->level_select;
   Levelp       level_over;
   if (s->data[ x ][ y ].is_set) {
@@ -593,6 +600,12 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
   } else {
     level_over = nullptr;
   }
+
+  if (! level_over) {
+    return;
+  }
+
+  LOG("show level contents for level %d,%d mod %d,%d %p", x, y, dx, dy, (void *) level_over);
 
   auto   player       = thing_player(g);
   Levelp player_level = nullptr;
@@ -741,18 +754,23 @@ void level_select_update(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
   {
-    auto         x = v->cursor_at.x / LEVEL_SCALE;
-    auto         y = v->cursor_at.y / LEVEL_SCALE;
-    LevelSelect *s = &v->level_select;
-    Levelp       level_over;
-    if (s->data[ x ][ y ].is_set) {
-      level_over = game_level_get(g, v, s->data[ x ][ y ].level_num);
-    } else {
-      level_over = nullptr;
-    }
+    int x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
+    int y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
+    int dx = (v->cursor_at.x - 1) % LEVEL_SCALE;
+    int dy = (v->cursor_at.y - 1) % LEVEL_SCALE;
 
-    if (level_over) {
-      game_request_to_remake_rightbar_set(g);
+    if (! dx && ! dy) {
+      LevelSelect *s = &v->level_select;
+      Levelp       level_over;
+      if (s->data[ x ][ y ].is_set) {
+        level_over = game_level_get(g, v, s->data[ x ][ y ].level_num);
+      } else {
+        level_over = nullptr;
+      }
+
+      if (level_over) {
+        game_request_to_remake_rightbar_set(g);
+      }
     }
   }
 }
@@ -776,8 +794,8 @@ void level_select_chosen(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
   {
-    auto         x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
-    auto         y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
+    int          x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
+    int          y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
     int          dx = (v->cursor_at.x - 1) % LEVEL_SCALE;
     int          dy = (v->cursor_at.y - 1) % LEVEL_SCALE;
     LevelSelect *s  = &v->level_select;
@@ -788,11 +806,7 @@ void level_select_chosen(Gamep g, Levelsp v, Levelp l)
       level_over = nullptr;
     }
 
-    if (dx || dy) {
-      return;
-    }
-
-    if (level_over) {
+    if (! dx && ! dy && level_over) {
       //
       // We're hovering over a level and have pressed the mouse
       //
