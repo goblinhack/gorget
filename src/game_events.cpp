@@ -147,7 +147,11 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     LOG("Pressed save key");
     TRACE_AND_INDENT();
     LOG("Saving the game");
-    game_request_to_save_game_set(g);
+    if (v->tick_in_progress) {
+      game_request_to_save_game_set(g);
+    } else {
+      wid_save_select(g);
+    }
     return true;
   }
 

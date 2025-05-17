@@ -432,8 +432,6 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
     return;
   }
 
-  s->is_populated = true;
-
   //
   // Use a consistent seed
   //
@@ -449,6 +447,8 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
   snake_dive(g, v, s, 30);
   snake_dive(g, v, s, 30);
   snake_dive(g, v, s, 30);
+
+  s->is_populated = true;
 }
 
 //
@@ -479,12 +479,6 @@ void level_select_create_levels(Gamep g)
   auto v = levels_memory_alloc(g);
   game_levels_set(g, v);
   LevelSelect *s = &v->level_select;
-
-  //
-  // Level select is called upon each level exit, so need to start with a clean slate
-  //
-  auto l = game_level_get(g, v, LEVEL_SELECT_ID);
-  level_destroy(g, v, l);
 
   level_select_create(g, v, s);
   level_select_dump(g, v, s);
