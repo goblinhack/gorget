@@ -195,14 +195,19 @@ public:
   int zoom = {};
 
   //
-  // If the fbo is smaller than the screen, a single map pixel takes up N on screen pixels.
+  // If the fbo is smaller than the screen, a single map pixel takes up N on screen pixels
   //
   int single_pix_size = {};
 
   //
-  // Remake the right bar next tick.
+  // Remake the right bar next tick
   //
   bool request_to_remake_rightbar {};
+
+  //
+  // Only save the game once we get to the end of a tick to avoid saving things half way through a move
+  //
+  bool request_to_save_game {};
 
   //
   // Temporary. Global states
@@ -2042,4 +2047,24 @@ void game_request_to_remake_rightbar_set(Gamep g, bool val)
     return;
   }
   g->request_to_remake_rightbar = val;
+}
+
+bool game_request_to_save_game_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 1;
+  }
+
+  return g->request_to_save_game;
+}
+void game_request_to_save_game_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_save_game = val;
 }

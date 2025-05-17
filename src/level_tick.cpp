@@ -5,9 +5,11 @@
 #include "my_minimal.hpp"
 
 #include "my_callstack.hpp"
+#include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_tp.hpp"
+#include "my_wids.hpp"
 
 static void level_tick_begin(Gamep, Levelsp, Levelp);
 static void level_tick_body(Gamep, Levelsp, Levelp, float dt);
@@ -186,6 +188,14 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     if (thing_is_tickable(t)) {
       thing_tick_end(g, v, l, t);
     }
+  }
+
+  //
+  // Only save once a tick is complete
+  //
+  if (game_request_to_save_game_get(g)) {
+    game_request_to_save_game_set(g, false);
+    wid_save_select(g);
   }
 }
 

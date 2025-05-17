@@ -224,6 +224,9 @@ void       game_key_zoom_set(Gamep, SDL_Keysym);
 bool game_request_to_remake_rightbar_get(Gamep);
 void game_request_to_remake_rightbar_set(Gamep, bool = true);
 
+bool game_request_to_save_game_get(Gamep);
+void game_request_to_save_game_set(Gamep, bool = true);
+
 int  game_map_zoom_get(Gamep g);
 int  game_map_zoom_def_get(Gamep g);
 void game_map_zoom_set(Gamep g, int val);
