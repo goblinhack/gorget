@@ -43,7 +43,7 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
     // If in level select mode, enter the new level
     //
     if (l->level_num == LEVEL_SELECT_ID) {
-      level_select_chosen(g, v, l);
+      level_select_user_chose_a_level(g, v, l);
       return true;
     }
   }

@@ -62,7 +62,7 @@ static void level_select_dump(Gamep g, Levelsp v, LevelSelect *s)
 //
 // Assign levels to their position in the grid
 //
-void level_select_assign_levels(Gamep g, Levelsp v)
+void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
@@ -461,7 +461,7 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
 //
 // Create the things that are used to represent levels
 //
-void level_select_create_things(Gamep g, Levelsp v)
+void level_select_update_grid_tiles(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
@@ -478,7 +478,7 @@ void level_select_create_things(Gamep g, Levelsp v)
 //
 // Create the special level used to walk other levels
 //
-void level_select_create_levels(Gamep g)
+void level_select_grid_of_empty_levels(Gamep g)
 {
   LOG("Level select generate");
   TRACE_AND_INDENT();
@@ -579,7 +579,7 @@ static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp pa
 //
 // If in level select mode, update what we're hovering over
 //
-void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
+void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
 {
   TRACE_NO_INDENT();
 
@@ -744,7 +744,7 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
 //
 // If in level select mode, update what we're hovering over
 //
-void level_select_update(Gamep g, Levelsp v, Levelp l)
+void level_select_rightbar_needs_update(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -778,7 +778,7 @@ void level_select_update(Gamep g, Levelsp v, Levelp l)
 //
 // If in level select mode, enter the chosen level
 //
-void level_select_chosen(Gamep g, Levelsp v, Levelp l)
+void level_select_user_chose_a_level(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 

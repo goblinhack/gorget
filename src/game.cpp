@@ -472,17 +472,34 @@ void Game::create_levels(void)
   auto g = this;
   destroy_levels();
 
-  level_select_create_levels(g);
+  //
+  // Create the grid of empty levels. No actual levels exist yet.
+  //
+  level_select_grid_of_empty_levels(g);
 
+  //
+  // We shuld have levels memory now
+  //
   auto v = game_levels_get(g);
   if (! v) {
     ERR("No level memory created");
     return;
   }
 
+  //
+  // Crteate the actual levels
+  //
   level_gen_create_levels(g, v);
-  level_select_assign_levels(g, v);
-  level_select_create_things(g, v);
+
+  //
+  // Assign level pointers to the level grid
+  //
+  level_select_assign_levels_to_grid(g, v);
+
+  //
+  // Update the tiles show in level selection
+  //
+  level_select_update_grid_tiles(g, v);
 
   game_map_zoom_in(g);
 

@@ -346,6 +346,7 @@ void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, point, Tpp, Thingp);
+void level_dump(Gamep, Levelsp, Levelp);
 
 void rooms_test(Gamep);
 void rooms_init(Gamep);
@@ -378,15 +379,14 @@ void level_gen_test(Gamep);
 void level_gen_create_levels(Gamep, Levelsp);
 void level_gen_stats_dump(Gamep);
 
-void   level_select_create_levels(Gamep);
-void   level_select_test(Gamep);
-void   level_select_destroy(Gamep, Levelsp, Levelp);
-void   level_select_update(Gamep, Levelsp, Levelp);
-void   level_select_chosen(Gamep, Levelsp, Levelp);
-void   level_select_assign_levels(Gamep g, Levelsp);
-void   level_select_create_things(Gamep g, Levelsp);
 Thingp thing_level_select(Gamep);
-void   level_select_show_contents(Gamep, Levelsp, Levelp, Widp);
-void   level_dump(Gamep, Levelsp, Levelp);
+void   level_select_assign_levels_to_grid(Gamep g, Levelsp);
+void   level_select_destroy(Gamep, Levelsp, Levelp);
+void   level_select_grid_of_empty_levels(Gamep);
+void   level_select_rightbar_needs_update(Gamep, Levelsp, Levelp);
+void   level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, Widp);
+void   level_select_test(Gamep);
+void   level_select_update_grid_tiles(Gamep g, Levelsp);
+void   level_select_user_chose_a_level(Gamep, Levelsp, Levelp);
 
 #endif // _MY_LEVEL_H_

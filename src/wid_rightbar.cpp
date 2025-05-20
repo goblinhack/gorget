@@ -50,7 +50,7 @@ static bool wid_rightbar_create_window(Gamep g)
     //
     // If in level select mode, we show different contents
     //
-    level_select_show_contents(g, v, l, wid_rightbar);
+    level_select_rightbar_show_contents(g, v, l, wid_rightbar);
   } else {
     //
     // Normal level contents
