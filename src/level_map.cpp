@@ -31,6 +31,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_bridge     = tp_random(is_bridge);
   auto tp_chasm      = tp_random(is_chasm);
   auto tp_deep_water = tp_random(is_deep_water);
+  auto tp_brazier    = tp_random(is_brazier);
   auto tp_treasure1  = tp_random(is_treasure1);
   auto tp_treasure2  = tp_random(is_treasure2);
   auto tp_door       = tp_find_mand("door");
@@ -123,7 +124,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_BRAZIER :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_brazier;
           break;
         case CHARMAP_DOOR :
           need_floor = true;

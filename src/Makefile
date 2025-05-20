@@ -90,7 +90,7 @@ clean:
 	@([ -d "$(BUILD_DIR)" ] && rmdir $(BUILD_DIR)) || true
 
 clobber: clean
-	rm -f ramdisk_data.cpp $(wildcard ramdisk_data*.S)
+	rm -f ramdisk_data.cpp $(wildcard ramdisk_data*.S) $(wildcard *.gch) 
 
 # delete corresponding object file if dependency file needs regeneration
 $(BUILD_DIR)/%.d: ; @rm -f "$(@:.d=.o)"

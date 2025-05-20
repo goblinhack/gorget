@@ -3,7 +3,9 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_dice.hpp"
+#include "my_gl.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
@@ -32,6 +34,7 @@ std::initializer_list< std::string > tps = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
+    "brazier",
     "exit",
     "chasm",
     "floor",
@@ -125,6 +128,11 @@ public:
   // Longer name for attacks text
   //
   std::string long_name;
+
+  //
+  // For braziers and more
+  //
+  color light_color = {WHITE};
 
   Tp(void);
   ~Tp(void);
@@ -475,6 +483,18 @@ const char *tp_real_name(Tpp tp)
     return tp_short_name(tp);
   }
   return tp->real_name.c_str();
+}
+
+void tp_light_color_set(Tpp tp, const char *name_in)
+{
+  TRACE_NO_INDENT();
+  tp->light_color = color_find(name_in);
+}
+
+void tp_light_color_apply(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  glcolor(tp->light_color);
 }
 
 bool tp_flag(Tpp tp, ThingFlag f)

@@ -14,6 +14,9 @@ bool templates_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
+  if (! tp_load_brazier()) {
+    return false;
+  }
   if (! tp_load_exit()) {
     return false;
   }
