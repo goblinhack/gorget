@@ -291,17 +291,12 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, t->at)
   {
     if (thing_is_player(t) && thing_is_exit(it)) {
-      l->completed = true;
-      level_select_update_grid_tiles(g, v);
-      level_cursor_path_reset(g, v, l);
-      level_change(g, v, LEVEL_SELECT_ID);
+      thing_level_reached_exit(g, v, l, t);
       return;
     }
 
     if (thing_is_player(t) && thing_is_entrance(it)) {
-      level_select_update_grid_tiles(g, v);
-      level_cursor_path_reset(g, v, l);
-      level_change(g, v, LEVEL_SELECT_ID);
+      thing_level_reached_entrance(g, v, l, t);
       return;
     }
   }

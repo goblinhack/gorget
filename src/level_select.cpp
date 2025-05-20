@@ -825,7 +825,7 @@ void level_select_user_chose_a_level(Gamep g, Levelsp v, Levelp l)
       // Move the player also
       //
       if (new_level) {
-        thing_level_change(g, v, new_level, thing_player(g));
+        thing_level_warp_to_entrance(g, v, new_level, thing_player(g));
         level_scroll_warp_to_focus(g, v, l);
       }
 

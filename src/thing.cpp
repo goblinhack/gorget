@@ -223,38 +223,6 @@ Levelp thing_level(Gamep g, Levelsp v, Thingp t)
   return game_level_get(g, v, t->level_num);
 }
 
-//
-// Move the thing immediately to the new level entrance
-//
-void thing_level_change(Gamep g, Levelsp v, Levelp new_level, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  if (! t) {
-    return;
-  }
-
-  auto old_level = game_level_get(g, v, t->level_num);
-  if (old_level == new_level) {
-    return;
-  }
-
-  //
-  // Leave the old level
-  //
-  thing_pop(g, v, t);
-
-  //
-  // Join the level, but at the old position
-  //
-  thing_push(g, v, new_level, t);
-
-  //
-  // Now move to the correct location
-  //
-  thing_warp_to(g, v, new_level, t, new_level->entrance);
-}
-
 void thing_stats_dump(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();

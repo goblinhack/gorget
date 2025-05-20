@@ -188,8 +188,10 @@ void thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
 void thing_pop(Gamep, Levelsp, Thingp);
 void thing_push(Gamep, Levelsp, Levelp, Thingp);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
-void thing_level_change(Gamep, Levelsp, Levelp, Thingp);
+void thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
 void thing_update_pos(Gamep, Thingp);
+void thing_level_reached_exit(Gamep, Levelsp, Levelp, Thingp);
+void thing_level_reached_entrance(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
 bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp t);
