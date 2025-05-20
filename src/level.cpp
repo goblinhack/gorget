@@ -142,10 +142,6 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   Level *new_level = game_level_get(g, v);
 
   if (old_level == new_level) {
-    TOPCON("");
-    TOPCON("");
-    TOPCON("");
-    TOPCON("");
     if (new_level->level_num == 0) {
       TOPCON("Welcome to bla bla bla..., %%fg=red$Gorget%%fg=reset$.");
     }
@@ -157,23 +153,13 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 
   if (level_num == LEVEL_SELECT_ID) {
     TOPCON("");
-    TOPCON("");
-    TOPCON("");
-    TOPCON("");
     TOPCON("%%fg=yellow$Choose your next level.%%fg=reset$");
-    TOPCON("");
     TOPCON("Mouse over levels for monster/treasure info.");
   } else if (new_level->completed) {
-    TOPCON("");
-    TOPCON("");
-    TOPCON("");
     TOPCON("");
     TOPCON("%%fg=yellow$You re-enter level %u of dungeon %s.%%fg=reset$", new_level->level_num + 1,
            game_seed_name_get(g));
   } else if (level_num > 0) {
-    TOPCON("");
-    TOPCON("");
-    TOPCON("");
     TOPCON("");
     TOPCON("%%fg=yellow$You enter level %u of dungeon %s.%%fg=reset$", new_level->level_num + 1,
            game_seed_name_get(g));

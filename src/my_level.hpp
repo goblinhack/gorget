@@ -383,6 +383,8 @@ void   level_select_test(Gamep);
 void   level_select_destroy(Gamep, Levelsp, Levelp);
 void   level_select_update(Gamep, Levelsp, Levelp);
 void   level_select_chosen(Gamep, Levelsp, Levelp);
+void   level_select_assign_levels(Gamep g, Levelsp);
+void   level_select_create_things(Gamep g, Levelsp);
 Thingp thing_level_select(Gamep);
 void   level_select_show_contents(Gamep, Levelsp, Levelp, Widp);
 void   level_dump(Gamep, Levelsp, Levelp);

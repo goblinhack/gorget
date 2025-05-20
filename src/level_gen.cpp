@@ -148,7 +148,7 @@ public:
   LevelInfo info;
 
   //
-  // Sub level
+  // Level number
   //
   LevelNum level_num {};
 
@@ -3399,14 +3399,10 @@ void level_gen_create_levels(Gamep g, Levelsp v)
   //
   // We keep one level free for the grid level
   //
-  LOG("Level generation (max %u):", s->level_count);
+  LOG("Level generation (max %u)", s->level_count);
   TRACE_AND_INDENT();
 
   std::vector< std::thread > threads;
-
-  if (g_opt_debug1) {
-    //    max_threads = 1;
-  }
 
   for (auto i = 0; i < max_threads; i++) {
     threads.push_back(std::thread(level_gen_create_level, g, i));

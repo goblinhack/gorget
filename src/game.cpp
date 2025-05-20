@@ -481,6 +481,8 @@ void Game::create_levels(void)
   }
 
   level_gen_create_levels(g, v);
+  level_select_assign_levels(g, v);
+  level_select_create_things(g, v);
 
   game_map_zoom_in(g);
 

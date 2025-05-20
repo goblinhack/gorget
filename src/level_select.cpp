@@ -62,9 +62,11 @@ static void level_select_dump(Gamep g, Levelsp v, LevelSelect *s)
 //
 // Assign levels to their position in the grid
 //
-static void level_select_assign_levels(Gamep g, Levelsp v, LevelSelect *s)
+void level_select_assign_levels(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
+
+  LevelSelect *s = &v->level_select;
 
   auto n = 0;
 
@@ -74,6 +76,10 @@ static void level_select_assign_levels(Gamep g, Levelsp v, LevelSelect *s)
         auto l = game_level_get(g, v, n);
         if (! l) {
           DIE("ran out of levels to assign to grid, %u", n);
+        }
+
+        if (! l->initialized) {
+          DIE("trying to use a level that is not initialized, %u", n);
         }
 
         s->data[ x ][ y ].level_num = l->level_num;
@@ -160,13 +166,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 //
 // Create a Thing for each level
 //
-static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
+static void level_select_map_set(Gamep g, Levelsp v)
 {
   LOG("level select map");
   TRACE_NO_INDENT();
 
-  auto level_num    = LEVEL_SELECT_ID;
-  auto level_select = game_level_get(g, v, level_num);
+  LevelSelect *s            = &v->level_select;
+  auto         level_num    = LEVEL_SELECT_ID;
+  auto         level_select = game_level_get(g, v, level_num);
 
   auto   player       = thing_player(g);
   Levelp player_level = nullptr;
@@ -207,20 +214,6 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
       //
       if (l->completed) {
         tp = tp_is_level_visited;
-      }
-
-      if (player) {
-        //
-        // Where the player is currently
-        //
-        if (player->level_num == l->level_num) {
-          tp = tp_is_level_curr;
-        }
-      } else if ((x == 0) && (y == 0)) {
-        //
-        // Where the player is initially
-        //
-        tp = tp_is_level_curr;
       }
 
       //
@@ -307,6 +300,20 @@ static void level_select_map_set(Gamep g, Levelsp v, LevelSelect *s)
       //
       if ((x == LEVELS_ACROSS - 1) && (y == LEVELS_DOWN - 1)) {
         tp = tp_is_level_final;
+      }
+
+      if (player) {
+        //
+        // Where the player is currently
+        //
+        if (player->level_num == l->level_num) {
+          tp = tp_is_level_curr;
+        }
+      } else if ((x == 0) && (y == 0)) {
+        //
+        // Where the player is initially
+        //
+        tp = tp_is_level_curr;
       }
 
       if (tp) {
@@ -454,7 +461,7 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
 //
 // Create the things that are used to represent levels
 //
-static void level_select_create_things(Gamep g, Levelsp v, LevelSelect *s)
+void level_select_create_things(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
@@ -465,7 +472,7 @@ static void level_select_create_things(Gamep g, Levelsp v, LevelSelect *s)
   l->level_num     = level_num;
   l->info.seed_num = game_seed_num_get(g);
 
-  level_select_map_set(g, v, s);
+  level_select_map_set(g, v);
 }
 
 //
@@ -483,8 +490,6 @@ void level_select_create_levels(Gamep g)
   level_select_create(g, v, s);
   level_select_dump(g, v, s);
   level_select_count_levels(g, v, s);
-  level_select_assign_levels(g, v, s);
-  level_select_create_things(g, v, s);
 }
 
 //
@@ -599,7 +604,8 @@ void level_select_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
     return;
   }
 
-  LOG("show level contents for level %d,%d mod %d,%d %p", x, y, dx, dy, (void *) level_over);
+  LOG("show level contents for level %d,%d mod %d,%d %p level num %u", x, y, dx, dy, (void *) level_over,
+      level_over->level_num);
 
   auto   player       = thing_player(g);
   Levelp player_level = nullptr;

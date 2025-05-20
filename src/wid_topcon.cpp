@@ -75,6 +75,9 @@ static void wid_topcon_scroll(Widp w, std::string str)
   tmp = wid_get_head(w);
   if (tmp) {
     wid_set_text(tmp, str);
+    if (str.empty()) {
+      fprintf(stderr, "ZZZ NEIL %s %s %d empty line\n", __FILE__, __FUNCTION__, __LINE__);
+    }
   }
 }
 
@@ -138,6 +141,10 @@ static void wid_topcon_log_(std::string s)
     wid_topcon_replace(g, wid_topcon_input_line, curr_msg);
     last_msg       = "";
     last_msg_count = 0;
+  } else if (curr_msg.empty()) {
+    last_msg       = s;
+    last_msg_count = 0;
+    wid_topcon_replace(g, wid_topcon_input_line, s);
   } else {
     last_msg       = s;
     last_msg_count = 0;
