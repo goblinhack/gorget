@@ -314,7 +314,11 @@ enum {
 };
 
 enum {
-  NO_FLAGS             = 0,
+  NO_FLAGS = 0,
+  //
+  // Sanity check on exits that we have no tiles in the same column or row
+  // as an exit; it makes it harder to join rooms together
+  //
   ROOM_CHECK_EXIT_FLAG = 1,
 };
 

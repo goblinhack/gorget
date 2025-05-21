@@ -1297,7 +1297,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) "x....C.....^",
            /* line */ (const char *) "x...CC.m..x ",
            /* line */ (const char *) "x.CCCCCCCCx ",
-           /* line */ (const char *) "xE...CC...x ",
+           /* line */ (const char *) "x....CC...x ",
            /* line */ (const char *) "xE...C...$x ",
            /* line */ (const char *) "xxxxxxxxxxx ",
            /* end */ nullptr);

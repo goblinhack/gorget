@@ -483,13 +483,20 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
 //
 // Add a room and copies with all possible rotations
 //
-void room_add(Gamep g, int chance, bool check_exits, const char *file, int line, ...)
+void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, ...)
 {
   TRACE_NO_INDENT();
 
   va_list ap;
-  int     room_width  = 0;
-  int     room_height = 0;
+
+  int room_width  = 0;
+  int room_height = 0;
+
+  //
+  // Ensure not too many of certain tiles
+  //
+  int exit_count     = 0;
+  int entrance_count = 0;
 
   //
   // We scan the room to work out the room type
@@ -538,7 +545,13 @@ void room_add(Gamep g, int chance, bool check_exits, const char *file, int line,
         case CHARMAP_DOOR : break;
         case CHARMAP_DRY_GRASS : break;
         case CHARMAP_EMPTY : break;
-        case CHARMAP_EXIT : room_type = ROOM_TYPE_EXIT; break;
+        case CHARMAP_EXIT :
+          if (exit_count++) {
+            DIE("room has too many exits in room %s:%d", file, line);
+            return;
+          }
+          room_type = ROOM_TYPE_EXIT;
+          break;
         case CHARMAP_FLOOR : break;
         case CHARMAP_FLOOR_50 : break;
         case CHARMAP_FOLIAGE : break;
@@ -551,7 +564,14 @@ void room_add(Gamep g, int chance, bool check_exits, const char *file, int line,
         case CHARMAP_MONST2 : break;
         case CHARMAP_PILLAR : break;
         case CHARMAP_SECRET_DOOR : break;
-        case CHARMAP_ENTRANCE : room_type = ROOM_TYPE_START; break;
+        case CHARMAP_ENTRANCE :
+          if (entrance_count++) {
+            DIE("room has too many entrances in room %s:%d", file, line);
+            return;
+          }
+          room_type = ROOM_TYPE_START;
+          break;
+          break;
         case CHARMAP_TELEPORT : break;
         case CHARMAP_TRAP : break;
         case CHARMAP_TREASURE1 : break;
@@ -654,7 +674,7 @@ void room_add(Gamep g, int chance, bool check_exits, const char *file, int line,
   // Sanity check on exits that we have no tiles in the same column or row
   // as an exit; it makes it harder to join rooms together
   //
-  if (check_exits) {
+  if (room_flags & ROOM_CHECK_EXIT_FLAG) {
     for (int y = 0; y < r->height; y++) {
       for (int x = 0; x < r->width; x++) {
         auto c = r->data[ (y * r->width) + x ];
