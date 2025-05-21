@@ -9,6 +9,7 @@ bool templates_init(void);
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
+bool tp_load_barrel();
 bool tp_load_brazier();
 bool tp_load_exit();
 bool tp_load_chasm();
