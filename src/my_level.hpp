@@ -30,6 +30,21 @@ typedef struct LevelInfo_ {
   uint32_t seed_num;
 
   //
+  // Where the player start is
+  //
+  point entrance;
+
+  //
+  // Where the exit is
+  //
+  point exit;
+
+  //
+  // Is this tile on the main flood fill path from start to exit
+  //
+  bool on_path_entrance_to_exit[ MAP_WIDTH ][ MAP_HEIGHT ];
+
+  //
   // How many rooms?
   //
   int room_count;

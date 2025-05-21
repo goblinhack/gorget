@@ -199,19 +199,14 @@ public:
   bool has_placed_exit = {};
 
   //
-  // Where the player start is
+  // Temporary for flood fill
   //
-  point start;
-
-  //
-  // Where the exit is
-  //
-  point exit;
+  bool walked[ MAP_WIDTH ][ MAP_HEIGHT ] = {};
 
   //
   // Level tiles and room info
   //
-  Cell data[ MAP_WIDTH ][ MAP_HEIGHT ];
+  Cell data[ MAP_WIDTH ][ MAP_HEIGHT ] = {};
 
   Cave cave = {};
 };
@@ -937,10 +932,10 @@ static void room_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
       point p(rx + at.x, ry + at.y);
 
       if (room_c == CHARMAP_ENTRANCE) {
-        l->start = p;
+        l->info.entrance = p;
       }
       if (room_c == CHARMAP_EXIT) {
-        l->exit = p;
+        l->info.exit = p;
       }
 
       class Cell *cell = &l->data[ p.x ][ p.y ];
@@ -1934,7 +1929,7 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
   // If this door is too close, then switch to a normal room
   //
   if (room_type == ROOM_TYPE_EXIT) {
-    if (distance(door_other, l->start) < MIN_LEVEL_EXIT_DISTANCE) {
+    if (distance(door_other, l->info.entrance) < MIN_LEVEL_EXIT_DISTANCE) {
       room_type = ROOM_TYPE_NORMAL;
     }
   }
@@ -3167,7 +3162,7 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
 //
 // Try to add some more content
 //
-static void level_gen_add_content(Gamep g, class LevelGen *l, int nmonst, int ntreasure, bool need_teleport)
+static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l, int nmonst, int ntreasure)
 {
   TRACE_NO_INDENT();
 
@@ -3245,11 +3240,75 @@ static void level_gen_add_content(Gamep g, class LevelGen *l, int nmonst, int nt
       l->data[ x ][ y ].c = CHARMAP_TREASURE2;
     }
   }
+}
+
+//
+// Try to add some more content
+//
+static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  int need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->info.monst_count;
+  int need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->info.treasure_count;
+
+  if ((need_monsts > 0) || (need_treasure > 0)) {
+    level_gen_add_missing_monsts_and_treasure(g, l, need_monsts, need_treasure);
+  }
+}
+
+//
+// Try to add some additional teleports if needed
+//
+static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  if (l->info.teleport_count != 1) {
+    return;
+  }
+
+  std::vector< point > cands;
+
+  //
+  // Find floor tiles with floor space around them, candidates for placing items
+  //
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+
+      //
+      // Only place telports on tiles between the entrance and exit
+      //
+      if (! l->info.on_path_entrance_to_exit[ x ][ y ]) {
+        continue;
+      }
+
+      switch (c) {
+        case CHARMAP_FLOOR :
+          if (/* top left  */ l->data[ x - 1 ][ y - 1 ].c == CHARMAP_FLOOR &&
+              /* bot right */ l->data[ x - 1 ][ y + 1 ].c == CHARMAP_FLOOR &&
+              /* top right */ l->data[ x + 1 ][ y - 1 ].c == CHARMAP_FLOOR &&
+              /* bot right */ l->data[ x + 1 ][ y + 1 ].c == CHARMAP_FLOOR &&
+              /* left      */ l->data[ x - 1 ][ y ].c == CHARMAP_FLOOR &&
+              /* right     */ l->data[ x + 1 ][ y ].c == CHARMAP_FLOOR &&
+              /* top       */ l->data[ x ][ y - 1 ].c == CHARMAP_FLOOR &&
+              /* bot       */ l->data[ x ][ y + 1 ].c == CHARMAP_FLOOR) {
+            cands.push_back(point(x, y));
+          }
+          break;
+      }
+    }
+  }
+
+  if (cands.empty()) {
+    return;
+  }
 
   //
   // Place an additional teleport
   //
-  while (need_teleport) {
+  while (true) {
     auto cand = cands[ pcg_rand() % cands.size() ];
     auto x    = cand.x;
     auto y    = cand.y;
@@ -3269,19 +3328,41 @@ static void level_gen_add_content(Gamep g, class LevelGen *l, int nmonst, int nt
 }
 
 //
-// Try to add some more content
+// Recursive flood fill walkable tiles from the start
 //
-static void level_gen_add_content(Gamep g, class LevelGen *l)
+static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l, int x, int y)
 {
-  TRACE_NO_INDENT();
-
-  int  need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->info.monst_count;
-  int  need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->info.treasure_count;
-  bool need_teleport = l->info.teleport_count == 1;
-
-  if ((need_monsts > 0) || (need_treasure > 0) || need_teleport) {
-    level_gen_add_content(g, l, need_monsts, need_treasure, need_teleport);
+  //
+  // Already walked?
+  //
+  if (l->walked[ x ][ y ]) {
+    return;
   }
+  l->walked[ x ][ y ]                        = true;
+  l->info.on_path_entrance_to_exit[ x ][ y ] = level_gen_tile_is_traversable(g, l, x, y) ? 1 : 0;
+
+  if (x > 0) {
+    level_gen_mark_tiles_on_path_entrance_to_exit(g, l, x - 1, y);
+  }
+  if (x < MAP_WIDTH - 1) {
+    level_gen_mark_tiles_on_path_entrance_to_exit(g, l, x + 1, y);
+  }
+  if (y > 0) {
+    level_gen_mark_tiles_on_path_entrance_to_exit(g, l, x, y - 1);
+  }
+  if (y < MAP_HEIGHT - 1) {
+    level_gen_mark_tiles_on_path_entrance_to_exit(g, l, x, y + 1);
+  }
+}
+
+//
+// Recursive flood fill walkable tiles from the start
+//
+void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l)
+{
+  memset(l->walked, 0, sizeof(l->walked));
+  memset(l->info.on_path_entrance_to_exit, 0, sizeof(l->info.on_path_entrance_to_exit));
+  level_gen_mark_tiles_on_path_entrance_to_exit(g, l, l->info.entrance.x, l->info.entrance.y);
 }
 
 static void level_gen_create(Gamep g, class LevelGen *l)
@@ -3389,6 +3470,11 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   level_gen_create_deep_water(g, l);
 
   //
+  // Mark walkable tiles prior to adding content; as we want to check teleports are on the main path
+  //
+  level_gen_mark_tiles_on_path_entrance_to_exit(g, l);
+
+  //
   // See how much we generated
   //
   level_gen_count_items(g, l);
@@ -3396,7 +3482,12 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   //
   // If not enough monsters, add some randomly
   //
-  level_gen_add_content(g, l);
+  level_gen_add_missing_monsts_and_treasure(g, l);
+
+  //
+  // If not enough teleports
+  //
+  level_gen_add_missing_teleports(g, l);
 
   //
   // Final count
@@ -3471,6 +3562,8 @@ void level_gen_create_levels(Gamep g, Levelsp v)
       }
     }
   }
+
+  LOG("Level generation completed");
 
   level_gen_stats_dump(g);
 }
