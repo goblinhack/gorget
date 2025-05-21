@@ -531,12 +531,6 @@ void fragments_init(Gamep g)
                      /* alt  */ (const char *) ".....", nullptr);
     fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
                      /* alt  */ (const char *) ".....",
-                     /* alt  */ (const char *) ".xmx.",
-                     /* alt  */ (const char *) ".x$s.",
-                     /* alt  */ (const char *) ".xxx.",
-                     /* alt  */ (const char *) ".....", nullptr);
-    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
-                     /* alt  */ (const char *) ".....",
                      /* alt  */ (const char *) ".|.|.",
                      /* alt  */ (const char *) "..m..",
                      /* alt  */ (const char *) ".|.|.",
@@ -873,7 +867,7 @@ void fragments_init(Gamep g)
                      /* alt  */ (const char *) "xxCCCxx",
                      /* alt  */ (const char *) "x.....x", nullptr);
     fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
-                     /* alt  */ (const char *) "B..gx..",
+                     /* alt  */ (const char *) "B..gxx.",
                      /* alt  */ (const char *) "....s..",
                      /* alt  */ (const char *) "B...x.$",
                      /* alt  */ (const char *) "xxxDxxx",

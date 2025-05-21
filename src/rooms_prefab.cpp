@@ -1765,7 +1765,7 @@ void rooms_prefab(Gamep g)
            /* line */ (const char *) "   5555....C.............5 ",
            /* line */ (const char *) "   555....CCC...........5  ",
            /* line */ (const char *) "   555.CCCCCCC.........5   ",
-           /* line */ (const char *) "   555.C     C.....C...5   ",
+           /* line */ (const char *) "   555.C ... C.....C...5   ",
            /* line */ (const char *) "   555.C ... C....CCC..55  ",
            /* line */ (const char *) "   555.C $..s......C.....5 ",
            /* line */ (const char *) "   55..C ... C............ ",
@@ -1804,7 +1804,7 @@ void rooms_prefab(Gamep g)
            /* line */ (const char *) "   ...s...     ......555   ",
            /* line */ (const char *) "       .M. ... ......5     ",
            /* line */ (const char *) "       ...s.$.  ......^    ",
-           /* line */ (const char *) "           ...  555555     ",
+           /* line */ (const char *) "       ... ...  555555     ",
            /* line */ (const char *) "                ^          ",
            /* line */ (const char *) "                           ",
            /* end */ nullptr);
