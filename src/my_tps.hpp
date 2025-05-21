@@ -26,6 +26,7 @@ bool tp_load_key();
 bool tp_load_corridor();
 bool tp_load_dirt();
 bool tp_load_deep_water();
+bool tp_load_teleport();
 bool tp_load_cursor_path();
 bool tp_load_cursor_at();
 bool tp_load_goblin();

@@ -33,6 +33,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_deep_water = tp_random(is_deep_water);
   auto tp_brazier    = tp_random(is_brazier);
   auto tp_barrel     = tp_random(is_barrel);
+  auto tp_teleport   = tp_random(is_teleport);
   auto tp_treasure1  = tp_random(is_treasure1);
   auto tp_treasure2  = tp_random(is_treasure2);
   auto tp_door       = tp_find_mand("door");
@@ -89,7 +90,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_TELEPORT :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_teleport;
           break;
         case CHARMAP_FOLIAGE :
           need_floor   = true;
@@ -224,7 +225,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
 
       if (1) {
         if (tp == tp_player) {
-          auto t = thing_init(g, v, l, tp_exit, point(x, y) + point(2, 0));
+          auto t = thing_init(g, v, l, tp_teleport, point(x, y) + point(2, 0));
           if (t) {
             thing_push(g, v, l, t);
           }

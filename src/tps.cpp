@@ -65,6 +65,9 @@ bool templates_init(void)
   if (! tp_load_deep_water()) {
     return false;
   }
+  if (! tp_load_teleport()) {
+    return false;
+  }
   if (! tp_load_cursor_path()) {
     return false;
   }
