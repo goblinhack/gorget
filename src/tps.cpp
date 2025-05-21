@@ -29,6 +29,9 @@ bool templates_init(void)
   if (! tp_load_floor()) {
     return false;
   }
+  if (! tp_load_secret_door()) {
+    return false;
+  }
   if (! tp_load_foliage()) {
     return false;
   }

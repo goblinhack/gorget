@@ -126,7 +126,7 @@
       list_macro(is_unused65, "is_unused65"),                                     /* ............................ */ \
       list_macro(is_unused66, "is_unused66"),                                     /* ............................ */ \
       list_macro(is_unused67, "is_unused67"),                                     /* ............................ */ \
-      list_macro(is_unused68, "is_unused68"),                                     /* ............................ */ \
+      list_macro(is_secret_door, "is_secret_door"),                               /* ............................ */ \
       list_macro(is_teleport, "is_teleport"),                                     /* ............................ */ \
       list_macro(is_unused7, "is_unused7"),                                       /* ............................ */ \
       list_macro(is_barrel, "is_barrel"),                                         /* ............................ */ \
@@ -190,6 +190,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_obstacle_block(tp)             tp_flag(tp, is_obstacle_block)
 #define tp_is_player(tp)                     tp_flag(tp, is_player)
 #define tp_is_rock(tp)                       tp_flag(tp, is_rock)
+#define tp_is_secret_door(tp)                tp_flag(tp, is_secret_door)
 #define tp_is_teleport(tp)                   tp_flag(tp, is_teleport)
 #define tp_is_tickable(tp)                   tp_flag(tp, is_tickable)
 #define tp_is_tiled(tp)                      tp_flag(tp, is_tiled)
@@ -260,7 +261,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused65(tp)                   tp_flag(tp, is_unused65)
 #define tp_is_unused66(tp)                   tp_flag(tp, is_unused66)
 #define tp_is_unused67(tp)                   tp_flag(tp, is_unused67)
-#define tp_is_unused68(tp)                   tp_flag(tp, is_unused68)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                    tp_flag(tp, is_unused9)
@@ -318,6 +318,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_obstacle_block(thing)             tp_flag(thing_tp(thing), is_obstacle_block)
 #define thing_is_player(thing)                     tp_flag(thing_tp(thing), is_player)
 #define thing_is_rock(thing)                       tp_flag(thing_tp(thing), is_rock)
+#define thing_is_secret_door(thing)                tp_flag(thing_tp(thing), is_secret_door)
 #define thing_is_teleport(thing)                   tp_flag(thing_tp(thing), is_teleport)
 #define thing_is_tickable(thing)                   tp_flag(thing_tp(thing), is_tickable)
 #define thing_is_tiled(thing)                      tp_flag(thing_tp(thing), is_tiled)
@@ -388,7 +389,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused65(thing)                   tp_flag(thing_tp(thing), is_unused65)
 #define thing_is_unused66(thing)                   tp_flag(thing_tp(thing), is_unused66)
 #define thing_is_unused67(thing)                   tp_flag(thing_tp(thing), is_unused67)
-#define thing_is_unused68(thing)                   tp_flag(thing_tp(thing), is_unused68)
 #define thing_is_unused7(thing)                    tp_flag(thing_tp(thing), is_unused7)
 #define thing_is_unused8(thing)                    tp_flag(thing_tp(thing), is_unused8)
 #define thing_is_unused9(thing)                    tp_flag(thing_tp(thing), is_unused9)
@@ -446,6 +446,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_obstacle_block(g, v, l, p)             level_flag(g, v, l, is_obstacle_block, p)
 #define level_is_player(g, v, l, p)                     level_flag(g, v, l, is_player, p)
 #define level_is_rock(g, v, l, p)                       level_flag(g, v, l, is_rock, p)
+#define level_is_secret_door(g, v, l, p)                level_flag(g, v, l, is_secret_door, p)
 #define level_is_teleport(g, v, l, p)                   level_flag(g, v, l, is_teleport, p)
 #define level_is_tickable(g, v, l, p)                   level_flag(g, v, l, is_tickable, p)
 #define level_is_tiled(g, v, l, p)                      level_flag(g, v, l, is_tiled, p)
@@ -516,7 +517,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused65(g, v, l, p)                   level_flag(g, v, l, is_unused65, p)
 #define level_is_unused66(g, v, l, p)                   level_flag(g, v, l, is_unused66, p)
 #define level_is_unused67(g, v, l, p)                   level_flag(g, v, l, is_unused67, p)
-#define level_is_unused68(g, v, l, p)                   level_flag(g, v, l, is_unused68, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                    level_flag(g, v, l, is_unused9, p)
@@ -595,6 +595,7 @@ enum {
   THING_ANIM_JOIN_X4_90,  /* alias for IS_JOIN_X4_90 */
   THING_ANIM_JOIN_X4,     /* alias for IS_JOIN_X4,   */
   THING_ANIM_IDLE,
+  THING_ANIM_OPEN,
   THING_ANIM_DEAD,
   THING_ANIM_MAX
 };

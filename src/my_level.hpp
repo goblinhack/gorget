@@ -49,6 +49,11 @@ typedef struct LevelInfo_ {
   int treasure2_count;
 
   //
+  // How many teleports. Needs to be > 1
+  //
+  int teleport_count;
+
+  //
   // How many room fragments we've added
   //
   int fragment_count;

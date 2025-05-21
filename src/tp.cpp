@@ -39,6 +39,7 @@ std::initializer_list< std::string > tps = {
     "exit",
     "chasm",
     "floor",
+    "secret_door",
     "foliage",
     "door",
     "water",

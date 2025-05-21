@@ -3101,7 +3101,7 @@ static void level_gen_create_deep_water(Gamep g, class LevelGen *l)
 //
 // See what's on the level
 //
-static void level_gen_count_monsters_and_treasure(Gamep g, class LevelGen *l)
+static void level_gen_count_items(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -3133,6 +3133,12 @@ static void level_gen_count_monsters_and_treasure(Gamep g, class LevelGen *l)
           l->info.treasure_count++;
           l->info.treasure2_count++;
           break;
+        case CHARMAP_TELEPORT :
+          //
+          // Must have > 1 teleport
+          //
+          l->info.teleport_count++;
+          break;
       }
     }
   }
@@ -3141,12 +3147,15 @@ static void level_gen_count_monsters_and_treasure(Gamep g, class LevelGen *l)
 //
 // Try to add some more content
 //
-static void level_gen_add_content(Gamep g, class LevelGen *l, int nmonst, int ntreasure)
+static void level_gen_add_content(Gamep g, class LevelGen *l, int nmonst, int ntreasure, bool need_teleport)
 {
   TRACE_NO_INDENT();
 
   std::vector< point > cands;
 
+  //
+  // Find floor tiles with floor space around them, candidates for placing items
+  //
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
       auto c = l->data[ x ][ y ].c;
@@ -3216,6 +3225,27 @@ static void level_gen_add_content(Gamep g, class LevelGen *l, int nmonst, int nt
       l->data[ x ][ y ].c = CHARMAP_TREASURE2;
     }
   }
+
+  //
+  // Place an additional teleport
+  //
+  while (need_teleport) {
+    auto cand = cands[ pcg_rand() % cands.size() ];
+    auto x    = cand.x;
+    auto y    = cand.y;
+    auto r    = l->data[ x ][ y ].room;
+
+    if (r && (l->room_entrance == r)) {
+      continue;
+    }
+
+    if (r && (l->room_exit == r)) {
+      continue;
+    }
+
+    l->data[ x ][ y ].c = CHARMAP_TELEPORT;
+    break;
+  }
 }
 
 //
@@ -3225,11 +3255,12 @@ static void level_gen_add_content(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  int need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->info.monst_count;
-  int need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->info.treasure_count;
+  int  need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->info.monst_count;
+  int  need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->info.treasure_count;
+  bool need_teleport = l->info.teleport_count == 1;
 
-  if ((need_monsts > 0) || (need_treasure > 0)) {
-    level_gen_add_content(g, l, need_monsts, need_treasure);
+  if ((need_monsts > 0) || (need_treasure > 0) || need_teleport) {
+    level_gen_add_content(g, l, need_monsts, need_treasure, need_teleport);
   }
 }
 
@@ -3340,7 +3371,7 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   //
   // See how much we generated
   //
-  level_gen_count_monsters_and_treasure(g, l);
+  level_gen_count_items(g, l);
 
   //
   // If not enough monsters, add some randomly
@@ -3350,7 +3381,7 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   //
   // Final count
   //
-  level_gen_count_monsters_and_treasure(g, l);
+  level_gen_count_items(g, l);
 
   //
   // Populate the map with things from the level created
