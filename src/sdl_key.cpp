@@ -306,99 +306,99 @@ std::string to_string_ignoring_mods(const SDL_Keysym &k)
   }
 
   if ((k.scancode == SDL_SCANCODE_F1) || (k.sym == SDLK_F1)) {
-    return "<F1>";
+    return "F1";
   }
 
   if ((k.scancode == SDL_SCANCODE_F10) || (k.sym == SDLK_F10)) {
-    return "<F10>";
+    return "F10";
   }
 
   if ((k.scancode == SDL_SCANCODE_F11) || (k.sym == SDLK_F11)) {
-    return "<F11>";
+    return "F11";
   }
 
   if ((k.scancode == SDL_SCANCODE_F12) || (k.sym == SDLK_F12)) {
-    return "<F12>";
+    return "F12";
   }
 
   if ((k.scancode == SDL_SCANCODE_F13) || (k.sym == SDLK_F13)) {
-    return "<F13>";
+    return "F13";
   }
 
   if ((k.scancode == SDL_SCANCODE_F14) || (k.sym == SDLK_F14)) {
-    return "<F14>";
+    return "F14";
   }
 
   if ((k.scancode == SDL_SCANCODE_F15) || (k.sym == SDLK_F15)) {
-    return "<F15>";
+    return "F15";
   }
 
   if ((k.scancode == SDL_SCANCODE_F16) || (k.sym == SDLK_F16)) {
-    return "<F16>";
+    return "F16";
   }
 
   if ((k.scancode == SDL_SCANCODE_F17) || (k.sym == SDLK_F17)) {
-    return "<F17>";
+    return "F17";
   }
 
   if ((k.scancode == SDL_SCANCODE_F18) || (k.sym == SDLK_F18)) {
-    return "<F18>";
+    return "F18";
   }
 
   if ((k.scancode == SDL_SCANCODE_F19) || (k.sym == SDLK_F19)) {
-    return "<F19>";
+    return "F19";
   }
 
   if ((k.scancode == SDL_SCANCODE_F2) || (k.sym == SDLK_F2)) {
-    return "<F2>";
+    return "F2";
   }
 
   if ((k.scancode == SDL_SCANCODE_F20) || (k.sym == SDLK_F20)) {
-    return "<F20>";
+    return "F20";
   }
 
   if ((k.scancode == SDL_SCANCODE_F21) || (k.sym == SDLK_F21)) {
-    return "<F21>";
+    return "F21";
   }
 
   if ((k.scancode == SDL_SCANCODE_F22) || (k.sym == SDLK_F22)) {
-    return "<F22>";
+    return "F22";
   }
 
   if ((k.scancode == SDL_SCANCODE_F23) || (k.sym == SDLK_F23)) {
-    return "<F23>";
+    return "F23";
   }
 
   if ((k.scancode == SDL_SCANCODE_F24) || (k.sym == SDLK_F24)) {
-    return "<F24>";
+    return "F24";
   }
 
   if ((k.scancode == SDL_SCANCODE_F3) || (k.sym == SDLK_F3)) {
-    return "<F3>";
+    return "F3";
   }
 
   if ((k.scancode == SDL_SCANCODE_F4) || (k.sym == SDLK_F4)) {
-    return "<F4>";
+    return "F4";
   }
 
   if ((k.scancode == SDL_SCANCODE_F5) || (k.sym == SDLK_F5)) {
-    return "<F5>";
+    return "F5";
   }
 
   if ((k.scancode == SDL_SCANCODE_F6) || (k.sym == SDLK_F6)) {
-    return "<F6>";
+    return "F6";
   }
 
   if ((k.scancode == SDL_SCANCODE_F7) || (k.sym == SDLK_F7)) {
-    return "<F7>";
+    return "F7";
   }
 
   if ((k.scancode == SDL_SCANCODE_F8) || (k.sym == SDLK_F8)) {
-    return "<F8>";
+    return "F8";
   }
 
   if ((k.scancode == SDL_SCANCODE_F9) || (k.sym == SDLK_F9)) {
-    return "<F9>";
+    return "F9";
   }
 
   if ((k.scancode == SDL_SCANCODE_FIND) || (k.sym == SDLK_FIND)) {

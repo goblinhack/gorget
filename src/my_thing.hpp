@@ -147,9 +147,16 @@ typedef struct Thing_ {
   //
   uint8_t count[ THING_FLAG_MAX ];
   //
+  // Snuffed it.
+  //
+  bool is_dead : 1;
+  //
   // Pushed onto the map?
   //
   bool is_on_map : 1;
+  //
+  // Currently moving between tiles. The thing is already at the destination.
+  //
   bool is_moving : 1;
 } Thing;
 

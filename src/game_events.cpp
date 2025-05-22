@@ -111,7 +111,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   //
   // attack
   //
-  if (sdlk_eq(*key, game_key_attack_get(g))) {
+  if (sdlk_eq(*key, game_key_wait_get(g))) {
     CON("TODO ATTACK");
     // g->player_tick(left, right, up, down, attack, wait, jump);
     return false; // To avoid click noise

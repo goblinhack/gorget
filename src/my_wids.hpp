@@ -28,6 +28,8 @@ extern void wid_save_select(Gamep);
 extern void wid_new_game(Gamep);
 extern void wid_rightbar_fini(Gamep);
 extern bool wid_rightbar_init(Gamep);
+extern void wid_actionbar_fini(Gamep);
+extern bool wid_actionbar_init(Gamep);
 extern void wid_leftbar_fini(Gamep);
 extern bool wid_leftbar_init(Gamep);
 

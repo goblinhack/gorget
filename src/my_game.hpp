@@ -128,8 +128,8 @@ SeedSource  game_seed_source_get(Gamep);
 uint32_t    game_seed_num_get(Gamep);
 void        game_seed_name_set(Gamep, const char *);
 
-SDL_Keysym game_key_attack_get(Gamep);
-void       game_key_attack_set(Gamep, SDL_Keysym);
+SDL_Keysym game_key_wait_get(Gamep);
+void       game_key_wait_set(Gamep, SDL_Keysym);
 
 SDL_Keysym game_key_console_get(Gamep);
 void       game_key_console_set(Gamep, SDL_Keysym);
@@ -221,8 +221,8 @@ void       game_key_unused19_set(Gamep, SDL_Keysym);
 SDL_Keysym game_key_zoom_get(Gamep);
 void       game_key_zoom_set(Gamep, SDL_Keysym);
 
-bool game_request_to_remake_rightbar_get(Gamep);
-void game_request_to_remake_rightbar_set(Gamep, bool = true);
+bool game_request_to_remake_ui_get(Gamep);
+void game_request_to_remake_ui_set(Gamep, bool = true);
 
 bool game_request_to_save_game_get(Gamep);
 void game_request_to_save_game_set(Gamep, bool = true);

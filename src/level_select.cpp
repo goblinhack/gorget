@@ -769,7 +769,7 @@ void level_select_rightbar_needs_update(Gamep g, Levelsp v, Levelp l)
       }
 
       if (level_over) {
-        game_request_to_remake_rightbar_set(g);
+        game_request_to_remake_ui_set(g);
       }
     }
   }

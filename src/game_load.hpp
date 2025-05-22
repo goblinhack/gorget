@@ -65,7 +65,7 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.gfx_fullscreen);
   in >> bits(my.t.gfx_fullscreen_desktop);
   in >> bits(my.t.gfx_vsync_enable);
-  in >> bits(my.t.key_attack);
+  in >> bits(my.t.key_wait);
   in >> bits(my.t.key_console);
   in >> bits(my.t.key_help);
   in >> bits(my.t.key_load);

@@ -48,7 +48,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.gfx_fullscreen);
   out << bits(my.t.gfx_fullscreen_desktop);
   out << bits(my.t.gfx_vsync_enable);
-  out << bits(my.t.key_attack);
+  out << bits(my.t.key_wait);
   out << bits(my.t.key_console);
   out << bits(my.t.key_help);
   out << bits(my.t.key_load);

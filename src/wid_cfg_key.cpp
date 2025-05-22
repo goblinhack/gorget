@@ -257,13 +257,13 @@ static void wid_cfg_key_move_down_set(Gamep g, SDL_Keysym code)
   wid_cfg_keyboard_select(g);
 }
 
-static void wid_cfg_key_attack_set(Gamep g, SDL_Keysym code)
+static void wid_cfg_key_wait_set(Gamep g, SDL_Keysym code)
 {
   TRACE_NO_INDENT();
   local_g_config_changed = true;
-  game_key_attack_set(g, none);
+  game_key_wait_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
-  game_key_attack_set(g, code);
+  game_key_wait_set(g, code);
   wid_cfg_keyboard_select(g);
 }
 
@@ -633,11 +633,11 @@ static bool wid_cfg_key_move_down(Gamep g, Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static bool wid_cfg_key_attack(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_wait(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "attack");
-  sdl.on_sdl_key_grab    = wid_cfg_key_attack_set;
+  sdl.on_sdl_key_grab    = wid_cfg_key_wait_set;
   local_g_config_changed = true;
   return true;
 }
@@ -1241,14 +1241,14 @@ void wid_cfg_keyboard_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Attack");
+    auto w = wid_new_square_button(g, p, "Wait");
 
     point tl(1, y_at);
     point br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Attack");
+    wid_set_text(w, "Wait");
   }
   {
     TRACE_NO_INDENT();
@@ -1262,8 +1262,8 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, ::to_string(game_key_attack_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_attack);
+    wid_set_text(w, ::to_string(game_key_wait_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_wait);
   }
 
   ///////////////////////////////////////////////////////////////////////

@@ -74,7 +74,7 @@ public:
   int sdl_delay        = {};
   int sound_volume     = {};
 
-  SDL_Keysym key_attack     = {};
+  SDL_Keysym key_wait       = {};
   SDL_Keysym key_console    = {};
   SDL_Keysym key_help       = {};
   SDL_Keysym key_load       = {};
@@ -202,7 +202,7 @@ public:
   //
   // Remake the right bar next tick
   //
-  bool request_to_remake_rightbar {};
+  bool request_to_remake_ui {};
 
   //
   // Only save the game once we get to the end of a tick to avoid saving things half way through a move
@@ -297,7 +297,7 @@ void Config::reset(void)
   tiles_visible_across   = MAP_TILES_ACROSS_DEF;
   tiles_visible_down     = MAP_TILES_DOWN_DEF;
 
-  key_attack.sym     = SDLK_SPACE;
+  key_wait.sym       = SDLK_PERIOD;
   key_help.sym       = SDLK_h;
   key_load.sym       = SDLK_F12;
   key_move_down.sym  = SDLK_s;
@@ -633,6 +633,7 @@ void Game::state_change(GameState new_state, const std::string &why)
       wid_save_destroy(g);
       wid_leftbar_fini(g);
       wid_rightbar_fini(g);
+      wid_actionbar_fini(g);
       wid_topcon_fini(g);
       break;
     case STATE_PLAYING :
@@ -644,7 +645,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
     case STATE_SAVE_MENU :
-    case STATE_QUIT_MENU : break;
+    case STATE_QUIT_MENU : wid_actionbar_fini(g); break;
   }
 
   //
@@ -658,11 +659,13 @@ void Game::state_change(GameState new_state, const std::string &why)
         case STATE_QUITTING : /* from loading */
           wid_leftbar_init(g);
           wid_rightbar_init(g);
+          wid_actionbar_init(g);
           wid_topcon_init(g);
           break;
         case STATE_MAIN_MENU :
           wid_leftbar_init(g);
           wid_rightbar_init(g);
+          wid_actionbar_init(g);
           break;
         case STATE_KEYBOARD_MENU :
         case STATE_PLAYING :
@@ -711,8 +714,10 @@ void Game::tick(void)
           level_tick(g, v, l);
           level_anim(g, v, l);
 
-          if (game->request_to_remake_rightbar) {
+          if (game->request_to_remake_ui) {
+            wid_leftbar_init(g);
             wid_rightbar_init(g);
+            wid_actionbar_init(g);
           }
         }
       }
@@ -726,7 +731,7 @@ void Game::tick(void)
   //
   // Common to all states
   //
-  game_request_to_remake_rightbar_set(g, false);
+  game_request_to_remake_ui_set(g, false);
 }
 void game_tick(Gamep g)
 {
@@ -1409,19 +1414,19 @@ Levelp game_level_set(Gamep g, Levelsp v, LevelNum n)
   return game_level_get(g, v);
 }
 
-SDL_Keysym game_key_attack_get(Gamep g)
+SDL_Keysym game_key_wait_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (! g)
     return no_key;
-  return g->config.key_attack;
+  return g->config.key_wait;
 }
-void game_key_attack_set(Gamep g, SDL_Keysym key)
+void game_key_wait_set(Gamep g, SDL_Keysym key)
 {
   TRACE_NO_INDENT();
   if (! g)
     return;
-  g->config.key_attack = key;
+  g->config.key_wait = key;
 }
 
 SDL_Keysym game_key_console_get(Gamep g)
@@ -2048,7 +2053,7 @@ void game_map_single_pix_size_set(Gamep g, int val)
   g->single_pix_size = val;
 }
 
-bool game_request_to_remake_rightbar_get(Gamep g)
+bool game_request_to_remake_ui_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
@@ -2056,16 +2061,16 @@ bool game_request_to_remake_rightbar_get(Gamep g)
     return 1;
   }
 
-  return g->request_to_remake_rightbar;
+  return g->request_to_remake_ui;
 }
-void game_request_to_remake_rightbar_set(Gamep g, bool val)
+void game_request_to_remake_ui_set(Gamep g, bool val)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->request_to_remake_rightbar = val;
+  g->request_to_remake_ui = val;
 }
 
 bool game_request_to_save_game_get(Gamep g)
