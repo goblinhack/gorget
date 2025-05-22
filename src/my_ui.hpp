@@ -25,6 +25,10 @@
 #define UI_TEXT_COLOR               GRAY // Default text color
 #define UI_TEXT_COLOR_STR           "gray"
 #define UI_TEXT_HIGHLIGHT_COLOR_STR "white"
+#define UI_TEXT_SHORTCUT_COLOR_STR  "orange"
+#define UI_TEXT_WARNING_COLOR_STR   "yellow"
+#define UI_TEXT_IMPORTANT_COLOR_STR "red"
+#define UI_TEXT_RESET_COLOR         "%%fg=reset$"
 #define UI_TILE_HEIGHT              8
 #define UI_TILE_WIDTH               8
 #define UI_TOPCON_HEIGHT            4 // Scrollbar limit

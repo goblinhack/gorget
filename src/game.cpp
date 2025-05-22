@@ -671,7 +671,7 @@ void Game::state_change(GameState new_state, const std::string &why)
         case STATE_PLAYING :
         case STATE_LOAD_MENU :
         case STATE_SAVE_MENU :
-        case STATE_QUIT_MENU : break;
+        case STATE_QUIT_MENU : wid_actionbar_init(g); break;
       }
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :

@@ -43,8 +43,28 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
 
   int zoom = game_map_zoom_get(g);
 
+  //
+  // Do not allow the mouse events to have an impact when not over the map fbo
+  //
   int map_pix_width  = visible_map_br_x - visible_map_tl_x;
   int map_pix_height = visible_map_br_y - visible_map_tl_y;
+
+  if (map_mouse_x < 0) {
+    level_cursor_set(g, v, point(-1, -1));
+    return;
+  }
+  if (map_mouse_y < 0) {
+    level_cursor_set(g, v, point(-1, -1));
+    return;
+  }
+  if (map_mouse_x >= map_pix_width) {
+    level_cursor_set(g, v, point(-1, -1));
+    return;
+  }
+  if (map_mouse_y >= map_pix_height) {
+    level_cursor_set(g, v, point(-1, -1));
+    return;
+  }
 
   float scale_x = (float) map_pix_width / (float) game_map_fbo_width_get(g);
   float scale_y = (float) map_pix_height / (float) game_map_fbo_height_get(g);

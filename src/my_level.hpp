@@ -255,11 +255,21 @@ typedef struct Levels_ {
   //
   ThingId level_select_id;
   //
-  // What the player is currently highlighting.
+  // The cursor path highlighted.
   //
   uint8_t cursor[ MAP_WIDTH ][ MAP_HEIGHT ];
-  point   cursor_at;
-  point   old_cursor_at;
+  //
+  // What the player is currently highlighting.
+  //
+  point cursor_at;
+  //
+  // Previous cursor. Used to detect changes.
+  //
+  point old_cursor_at;
+  //
+  // Is the cursor over the map?
+  //
+  uint8_t cursor_at_valid : 1;
   //
   // Map scroll offset.
   //
@@ -359,6 +369,7 @@ void level_anim(Gamep, Levelsp, Levelp);
 void level_assign_tiles(Gamep, Levelsp, Levelp);
 void level_bounds_set(Gamep, Levelsp, Levelp);
 void level_cursor_set(Gamep, Levelsp, point);
+bool level_cursor_is_valid(Gamep, Levelsp);
 void level_cursor_update(Gamep, Levelsp, Levelp);
 void level_display(Gamep, Levelsp, Levelp);
 void level_map_set(Gamep, Levelsp, Levelp, const char *);

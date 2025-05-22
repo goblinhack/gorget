@@ -21,8 +21,18 @@ void level_cursor_set(Gamep g, Levelsp v, point p)
   TRACE_AND_INDENT();
 
   if (! is_oob(p)) {
-    v->cursor_at = p;
+    v->cursor_at       = p;
+    v->cursor_at_valid = true;
+  } else {
+    v->cursor_at_valid = false;
   }
+}
+
+bool level_cursor_is_valid(Gamep g, Levelsp v)
+{
+  TRACE_AND_INDENT();
+
+  return v->cursor_at_valid;
 }
 
 //
@@ -383,6 +393,13 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
 //
 void level_cursor_update(Gamep g, Levelsp v, Levelp l)
 {
+  //
+  // Only if over the map
+  //
+  if (! level_cursor_is_valid(g, v)) {
+    return;
+  }
+
   //
   // Recreate the mouse path
   //

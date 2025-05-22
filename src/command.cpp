@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_command.hpp"
+#include "my_ui.hpp"
 
 #include <array>
 #include <map>
@@ -341,16 +342,16 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
    */
   matches = command_matches(g, input, expandedtext, false, false, execute_command, context);
   if (matches == 0) {
-    CON(">%%fg=red$Unknown command: \"%s\"%%fg=reset$", input);
+    CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Unknown command: \"%s\"" UI_TEXT_RESET_COLOR "", input);
     return false;
   }
 
   if (matches > 1) {
     if (show_ambiguous) {
       if (*input) {
-        CON(">%%fg=red$Multiple matches, \"%s\"%%fg=reset$. Try:", input);
+        CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Multiple matches, \"%s\"" UI_TEXT_RESET_COLOR ". Try:", input);
       } else {
-        CON(">%%fg=red$Commands:%%fg=reset$");
+        CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Commands:" UI_TEXT_RESET_COLOR "");
       }
     }
 
@@ -359,7 +360,7 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
     if (! show_ambiguous) {
       if (expandedtext) {
         if (! strcasecmp(input, expandedtext)) {
-          CON(">%%fg=red$Incomplete command, \"%s\"%%fg=reset$. Try:", input);
+          CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Incomplete command, \"%s\"" UI_TEXT_RESET_COLOR ". Try:", input);
 
           command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
         }
@@ -372,7 +373,7 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
   }
 
   if (! execute_command && (matches == 1)) {
-    CON(">%%fg=red$Incomplete command, \"%s\"%%fg=reset$. Try:", input);
+    CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Incomplete command, \"%s\"" UI_TEXT_RESET_COLOR ". Try:", input);
 
     command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
   }

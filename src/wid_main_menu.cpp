@@ -375,7 +375,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, game_menu_new_game);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$N%%fg=reset$ew game%%fg=reset$");
+    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$N" UI_TEXT_RESET_COLOR "ew game" UI_TEXT_RESET_COLOR "");
   }
   y_at += box_step;
   {

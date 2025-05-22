@@ -350,7 +350,7 @@ void wid_cfg_gfx_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_cfg_gfx_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=white$B%%fg=reset$ack");
+    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$B" UI_TEXT_RESET_COLOR "ack");
   }
 
   if (pending_mode_set) {

@@ -17,6 +17,7 @@
 #include "my_tp.hpp"
 #include "my_ui.hpp"
 #include "my_wid.hpp"
+#include "my_wids.hpp"
 
 #include <map>
 #include <stdlib.h>
@@ -827,6 +828,12 @@ void level_select_user_chose_a_level(Gamep g, Levelsp v, Levelp l)
       if (new_level) {
         thing_level_warp_to_entrance(g, v, new_level, thing_player(g));
         level_scroll_warp_to_focus(g, v, l);
+
+        //
+        // Disable load and save buttons
+        //
+        wid_actionbar_fini(g);
+        wid_actionbar_init(g);
       }
 
       return;

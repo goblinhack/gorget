@@ -241,6 +241,7 @@ uint8_t game_input(Gamep, const SDL_Keysym *key);
 uint8_t game_mouse_down(Gamep, int x, int y, uint32_t button);
 uint8_t game_mouse_motion(Gamep, int x, int y, int relx, int rely, int wheelx, int wheely);
 uint8_t game_mouse_up(Gamep, int x, int y, uint32_t button);
+bool    game_event_save(Gamep);
 
 uint8_t game_state(Gamep);
 void    game_config_reset(Gamep);

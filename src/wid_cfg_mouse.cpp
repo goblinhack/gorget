@@ -165,7 +165,7 @@ void wid_cfg_mouse_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_cfg_mouse_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=white$B%%fg=reset$ack");
+    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$B" UI_TEXT_RESET_COLOR "ack");
   }
   {
     TRACE_AND_INDENT();
@@ -177,7 +177,7 @@ void wid_cfg_mouse_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(g, w, wid_cfg_mouse_save);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=white$S%%fg=reset$ave");
+    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$S" UI_TEXT_RESET_COLOR "ave");
   }
   {
     TRACE_AND_INDENT();
@@ -189,7 +189,7 @@ void wid_cfg_mouse_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(g, w, wid_cfg_mouse_cancel);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=white$C%%fg=reset$ancel");
+    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$C" UI_TEXT_RESET_COLOR "ancel");
   }
 
   y_at = 6;

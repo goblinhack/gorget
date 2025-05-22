@@ -71,7 +71,7 @@ void sdl_loop(Gamep g)
     static bool old_g_errored;
     if (unlikely(g_errored)) {
       if (g_errored != old_g_errored) {
-        CON("%%fg=red$An error occurred. Check the logs above.%%fg=reset$");
+        CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$An error occurred. Check the logs above." UI_TEXT_RESET_COLOR "");
         CON("To dismiss this console, press TAB.");
         CON("To continue playing at your own risk, try 'clear errored'");
         if (wid_console_window && ! wid_is_visible(wid_console_window)) {

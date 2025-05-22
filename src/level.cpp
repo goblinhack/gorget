@@ -12,6 +12,8 @@
 #include "my_ptrcheck.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_ui.hpp"
+#include "my_wids.hpp"
 
 void levels_stats_dump(Gamep g)
 {
@@ -143,7 +145,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 
   if (old_level == new_level) {
     if (new_level->level_num == 0) {
-      TOPCON("Welcome to bla bla bla..., %%fg=red$Gorget%%fg=reset$.");
+      TOPCON("Welcome to bla bla bla..., %%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Gorget" UI_TEXT_RESET_COLOR ".");
     }
     return new_level;
   }
@@ -153,17 +155,23 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 
   if (level_num == LEVEL_SELECT_ID) {
     TOPCON("");
-    TOPCON("%%fg=yellow$Choose your next level.%%fg=reset$");
+    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$Choose your next level." UI_TEXT_RESET_COLOR "");
     TOPCON("Mouse over levels for monster/treasure info.");
   } else if (new_level->completed) {
     TOPCON("");
-    TOPCON("%%fg=yellow$You re-enter level %u of dungeon %s.%%fg=reset$", new_level->level_num + 1,
-           game_seed_name_get(g));
+    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$You re-enter level %u of dungeon %s." UI_TEXT_RESET_COLOR "",
+           new_level->level_num + 1, game_seed_name_get(g));
   } else if (level_num > 0) {
     TOPCON("");
-    TOPCON("%%fg=yellow$You enter level %u of dungeon %s.%%fg=reset$", new_level->level_num + 1,
-           game_seed_name_get(g));
+    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$You enter level %u of dungeon %s." UI_TEXT_RESET_COLOR "",
+           new_level->level_num + 1, game_seed_name_get(g));
   }
+
+  //
+  // Enable/disable load and save buttons
+  //
+  wid_actionbar_fini(g);
+  wid_actionbar_init(g);
 
   return new_level;
 }

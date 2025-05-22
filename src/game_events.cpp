@@ -7,6 +7,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_ui.hpp"
 #include "my_wids.hpp"
 
 //
@@ -37,26 +38,34 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
     return true;
   }
 
+  //
+  // Have a level?
+  //
   auto l = game_level_get(g, v);
-  if (l) {
-    //
-    // If in level select mode, enter the new level
-    //
-    if (l->level_num == LEVEL_SELECT_ID) {
-      level_select_user_chose_a_level(g, v, l);
-      return true;
-    }
+  if (! l) {
+    return false;
+  }
+
+  //
+  // Over the map?
+  //
+  if (! level_cursor_is_valid(g, v)) {
+    return false;
+  }
+
+  //
+  // If in level select mode, enter the new level
+  //
+  if (l->level_num == LEVEL_SELECT_ID) {
+    level_select_user_chose_a_level(g, v, l);
+    return true;
   }
 
   //
   // Else start following the cursor path
   //
-  if (v) {
-    v->player_pressed_button_and_waiting_for_a_path = true;
-    return true;
-  }
-
-  return false;
+  v->player_pressed_button_and_waiting_for_a_path = true;
+  return true;
 }
 
 uint8_t game_mouse_up(Gamep g, int x, int y, uint32_t button) { return false; }
@@ -71,11 +80,62 @@ uint8_t game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx,
   }
 
   auto v = game_levels_get(g);
-  if (v) {
-    auto l = game_level_get(g, v);
-    if (l) {
-      level_scroll_delta(g, v, l, point(wheelx, -wheely));
-    }
+  if (! v) {
+    return false;
+  }
+
+  //
+  // Have a level?
+  //
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  //
+  // Over the map?
+  //
+  if (! level_cursor_is_valid(g, v)) {
+    return false;
+  }
+
+  level_scroll_delta(g, v, l, point(wheelx, -wheely));
+
+  return true;
+}
+
+bool game_event_save(Gamep g)
+{
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  if (player->is_dead) {
+    return false;
+  }
+
+  LOG("Saving the game");
+  TRACE_AND_INDENT();
+
+  if (l->level_num != LEVEL_SELECT_ID) {
+    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$You can only save games when you exit the level." UI_TEXT_RESET_COLOR);
+    return true;
+  }
+  if (v->tick_in_progress) {
+    game_request_to_save_game_set(g);
+  } else {
+    wid_save_select(g);
   }
 
   return true;
@@ -112,7 +172,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   // attack
   //
   if (sdlk_eq(*key, game_key_wait_get(g))) {
-    CON("TODO ATTACK");
+    CON("TODO WAIT");
     // g->player_tick(left, right, up, down, attack, wait, jump);
     return false; // To avoid click noise
   }
@@ -136,6 +196,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     wid_cfg_keyboard_select(g);
     return true;
   }
+
   if (sdlk_eq(*key, game_key_load_get(g))) {
     LOG("Pressed load key");
     TRACE_AND_INDENT();
@@ -143,15 +204,11 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     wid_load_select(g);
     return true;
   }
+
   if (sdlk_eq(*key, game_key_save_get(g))) {
     LOG("Pressed save key");
     TRACE_AND_INDENT();
-    LOG("Saving the game");
-    if (v->tick_in_progress) {
-      game_request_to_save_game_set(g);
-    } else {
-      wid_save_select(g);
-    }
+    game_event_save(g);
     return true;
   }
 

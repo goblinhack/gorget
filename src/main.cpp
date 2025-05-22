@@ -838,23 +838,23 @@ int main(int argc, char *argv[])
   }
 
   {
-    CON("%%fg=red$          @@@@@@@@   @@@@@@   @@@@@@@    @@@@@@@@  @@@@@@@@  @@@@@@@%%fg=reset$");
-    CON("%%fg=red$         @@@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@  @@@@@@@%%fg=reset$");
-    CON("%%fg=red$         !@@        @@!  @@@  @@!  @@@  !@@        @@!         @@!%%fg=reset$");
-    CON("%%fg=red$         !@!        !@!  @!@  !@!  @!@  !@!        !@!         !@!%%fg=reset$");
-    CON("%%fg=red$         !@! @!@!@  @!@  !@!  @!@!!@!   !@! @!@!@  @!!!:!      @!!%%fg=reset$");
-    CON("%%fg=red$         !!! !!@!!  !@!  !!!  !!@!@!    !!! !!@!!  !!!!!:      !!!%%fg=reset$");
-    CON("%%fg=red$         :!!   !!:  !!:  !!!  !!: :!!   :!!   !!:  !!:         !!:%%fg=reset$");
-    CON("%%fg=red$         :!:   !::  :!:  !:!  :!:  !:!  :!:   !::  :!:         :!:%%fg=reset$");
-    CON("%%fg=red$          ::: ::::  ::::: ::  ::   :::   ::: ::::   :: ::::     ::%%fg=reset$");
-    CON("%%fg=red$          :: :: :    : :  :    :   : :   :: :: :   : :: ::      :%%fg=reset$");
-    CON("%%fg=red$           :              :    .         :: :      :  :  :%%fg=reset$");
-    CON("%%fg=red$           .              :               : .      .     .%%fg=reset$");
-    CON("%%fg=red$                          :               .%%fg=reset$");
-    CON("%%fg=red$                          .%%fg=reset$");
-    CON("%%fg=green$Version: " MYVER "%%fg=reset$");
-    CON("Press %%fg=yellow$<tab>%%fg=reset$ to complete commands.");
-    CON("Press %%fg=yellow$?%%fg=reset$ to show command options.");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$          @@@@@@@@   @@@@@@   @@@@@@@    @@@@@@@@  @@@@@@@@  @@@@@@@" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$         @@@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@  @@@@@@@" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$         !@@        @@!  @@@  @@!  @@@  !@@        @@!         @@!" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$         !@!        !@!  @!@  !@!  @!@  !@!        !@!         !@!" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$         !@! @!@!@  @!@  !@!  @!@!!@!   !@! @!@!@  @!!!:!      @!!" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$         !!! !!@!!  !@!  !!!  !!@!@!    !!! !!@!!  !!!!!:      !!!" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$         :!!   !!:  !!:  !!!  !!: :!!   :!!   !!:  !!:         !!:" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$         :!:   !::  :!:  !:!  :!:  !:!  :!:   !::  :!:         :!:" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$          ::: ::::  ::::: ::  ::   :::   ::: ::::   :: ::::     ::" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$          :: :: :    : :  :    :   : :   :: :: :   : :: ::      :" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$           :              :    .         :: :      :  :  :" UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$           .              :               : .      .     ." UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$                          :               ." UI_TEXT_RESET_COLOR "");
+    CON("%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$                          ." UI_TEXT_RESET_COLOR "");
+    CON("%%fg=green$Version: " MYVER "" UI_TEXT_RESET_COLOR "");
+    CON("Press %%fg=" UI_TEXT_WARNING_COLOR_STR "$<tab>" UI_TEXT_RESET_COLOR " to complete commands.");
+    CON("Press %%fg=" UI_TEXT_WARNING_COLOR_STR "$?" UI_TEXT_RESET_COLOR " to show command options.");
   }
 
   //
