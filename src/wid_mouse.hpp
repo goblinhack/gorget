@@ -91,7 +91,6 @@ void wid_mouse_over_end(Gamep g)
   if (wid_over) {
     if (! wid_ignore_events(wid_over)) {
       wid_last_over_event = time_ms_cached();
-      // DBG("mouse over end %s mouse %d,%d.", wid_over->name.c_str(), ascii_mouse_x, ascii_mouse_y);
     }
   }
   wid_over = nullptr;
@@ -844,6 +843,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
       // function.
       //
       over = true;
+      // TOPCON("mouse motion %s mouse %d,%d.", w->name.c_str(), x, y);
     }
 
     w = wid_mouse_motion_handler(x, y, relx, rely, wheelx, wheely);
@@ -909,6 +909,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
   }
 
   if (! over) {
+    // DBG("mouse motion not over at %u,%u.", x, y);
     wid_mouse_over_end(g);
   }
 

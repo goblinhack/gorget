@@ -141,6 +141,50 @@ bool game_event_save(Gamep g)
   return true;
 }
 
+bool game_event_wait(Gamep g)
+{
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  if (player->is_dead) {
+    return false;
+  }
+
+  LOG("Waiting");
+  // g->player_tick(left, right, up, down, attack, wait, jump);
+
+  return true;
+}
+
+bool game_event_quit(Gamep g)
+{
+  LOG("Quitting");
+  TRACE_AND_INDENT();
+
+  if (g_opt_test_start) {
+    DIE_CLEAN("Quick quit");
+  }
+  if (g_opt_test_level_select_menu) {
+    DIE_CLEAN("Quick quit");
+  }
+
+  wid_quit_select(g);
+
+  return true;
+}
+
 uint8_t game_input(Gamep g, const SDL_Keysym *key)
 {
   LOG("Pressed a key");
@@ -172,21 +216,14 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   // attack
   //
   if (sdlk_eq(*key, game_key_wait_get(g))) {
-    CON("TODO WAIT");
-    // g->player_tick(left, right, up, down, attack, wait, jump);
+    LOG("Pressed wait key");
+    game_event_wait(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_quit_get(g))) {
     LOG("Pressed quit key");
-    TRACE_AND_INDENT();
-    if (g_opt_test_start) {
-      DIE_CLEAN("Quick quit");
-    }
-    if (g_opt_test_level_select_menu) {
-      DIE_CLEAN("Quick quit");
-    }
-    wid_quit_select(g);
+    game_event_quit(g);
     return true;
   }
 
