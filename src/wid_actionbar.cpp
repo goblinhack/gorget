@@ -18,6 +18,9 @@ static WidPopup *wid_over_wait {};
 static WidPopup *wid_over_quit {};
 static WidPopup *wid_actionbar_popup {};
 
+static ts_t wid_last_wait;
+static ts_t wid_last_wait_repeat;
+
 static bool wid_actionbar_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar save");
@@ -29,7 +32,6 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
 {
   TRACE_NO_INDENT();
 
-  TOPCON("over");
   int tlx;
   int tly;
   int brx;
@@ -60,7 +62,6 @@ static void wid_actionbar_save_over_end(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  TOPCON("over end");
   delete wid_over_save;
   wid_over_save = nullptr;
 }
@@ -69,6 +70,26 @@ static bool wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar wait");
   TRACE_AND_INDENT();
+
+  wid_last_wait = time_ms_cached();
+
+  return game_event_wait(g);
+}
+
+static bool wid_actionbar_repeat_wait(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  LOG("Actionbar wait");
+  TRACE_AND_INDENT();
+
+  if (! time_have_x_tenths_passed_since(1, wid_last_wait)) {
+    return true;
+  }
+
+  if (! time_have_x_tenths_passed_since(1, wid_last_wait_repeat)) {
+    return true;
+  }
+
+  wid_last_wait_repeat = time_ms_cached();
   return game_event_wait(g);
 }
 
@@ -92,16 +113,6 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry -= 1;
   tly += 1;
 
-#if 0
-  if (! time_have_x_tenths_passed_since(10, wid_last_wait)) {
-    return;
-  }
-
-  if (! time_have_x_tenths_passed_since(10, wid_last_wait_repeat)) {
-    return;
-  }
-#endif
-
   point tl(tlx, tly);
   point br(brx, bry);
 
@@ -119,7 +130,6 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
 static void wid_actionbar_wait_over_end(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
-  TOPCON("wait over end");
 
   delete wid_over_wait;
   wid_over_wait = nullptr;
@@ -221,8 +231,8 @@ bool wid_actionbar_create_window(Gamep g)
   int right_half = width - left_half;
 
   {
-    point tl = make_point(TERM_WIDTH / 2 - left_half, TERM_HEIGHT - 1);
-    point br = make_point(TERM_WIDTH / 2 + right_half - 1, TERM_HEIGHT - 1);
+    point tl = make_point(TERM_WIDTH / 2 - left_half, TERM_HEIGHT - 2);
+    point br = make_point(TERM_WIDTH / 2 + right_half - 1, TERM_HEIGHT - 2);
 
     wid_actionbar = wid_new_square_window(g, "wid actionbar");
     wid_set_ignore_scroll_events(wid_actionbar, true);
@@ -240,9 +250,7 @@ bool wid_actionbar_create_window(Gamep g)
     point br = make_point(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(g, w, wid_actionbar_wait);
-#if 0
     wid_set_on_mouse_held(g, w, wid_actionbar_repeat_wait);
-#endif
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_wait_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_wait_over_end);
     wid_set_text(w, "%%fg=" UI_TEXT_SHORTCUT_COLOR_STR "$" + ::to_string(game_key_wait_get(g))

@@ -116,19 +116,21 @@ void pixel_to_ascii(Gamep g, int *x, int *y)
   float mx = *x;
   float my = *y;
 
-  mx /= (((float) game_window_pix_width_get(g)) / ((float) TERM_WIDTH));
-  my /= (((float) game_window_pix_height_get(g)) / ((float) TERM_HEIGHT));
+  mx /= game_ascii_pix_width_get(g);
+  my /= game_ascii_pix_height_get(g);
 
-  if (mx >= TERM_WIDTH - 1) {
+  if (mx > TERM_WIDTH - 1) {
     mx = TERM_WIDTH - 1;
   }
 
-  if (my >= TERM_HEIGHT - 1) {
+  if (my > TERM_HEIGHT - 1) {
     my = TERM_HEIGHT - 1;
   }
 
-  *x = mx;
-  *y = my;
+  *x = (int) mx;
+  *y = (int) my;
+
+  // TOPCON("%d,%d", *x, *y);
 }
 
 int ascii_ok_for_scissors(int x, int y)

@@ -165,7 +165,7 @@ void sdl_loop(Gamep g)
         auto mouse_down = sdl_get_mouse();
         if (mouse_down) {
           if (sdl.last_mouse_held_down_when) {
-            if (time_have_x_hundredths_passed_since(10, sdl.last_mouse_held_down_when)) {
+            if (time_have_x_hundredths_passed_since(50, sdl.last_mouse_held_down_when)) {
               if (sdl.held_mouse_x && sdl.held_mouse_y) {
                 DBG2("SDL: Mouse DOWN: held: Button %d now at %d,%d initially at %d,%d", mouse_down, sdl.mouse_x,
                      sdl.mouse_y, sdl.held_mouse_x, sdl.held_mouse_y);
