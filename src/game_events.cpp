@@ -210,8 +210,7 @@ bool game_event_descend(Gamep g)
     return false;
   }
 
-  TOPCON("TODO descend");
-  // g->player_tick(left, right, up, down, attack, wait, jump);
+  thing_level_reached_exit(g, v, l, player);
 
   return true;
 }
@@ -245,8 +244,7 @@ bool game_event_ascend(Gamep g)
     return false;
   }
 
-  TOPCON("TODO ascend");
-  // g->player_tick(left, right, up, down, attack, wait, jump);
+  thing_level_reached_entrance(g, v, l, player);
 
   return true;
 }

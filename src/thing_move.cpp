@@ -280,7 +280,8 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, point to)
 }
 
 //
-// Move is completed. Need to stop interpolating.
+// Move to the next tile is completed. Need to stop interpolating.
+// There could be more tiles to pop.
 //
 void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -296,22 +297,48 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, t->at)
   {
-    //
-    // If at the end of the move path then we can enter or leave.
-    // Else pass through it, to allow access to otherwise inaccessible tiles.
-    //
-    if (aip->move_path.size) {
-      game_request_to_remake_ui_set(g);
-    } else {
-      game_request_to_remake_ui_set(g);
-      if (thing_is_player(t) && thing_is_exit(it)) {
-        //  thing_level_reached_exit(g, v, l, t);
-        return;
-      }
+    if (thing_is_player(t)) {
+      //
+      // At the end of the popped path or not?
+      //
+      if (aip->move_path.size) {
+        //
+        // If still more tiles to pop, do not descend automatically
+        //
+        if (thing_is_exit(it)) {
+          //
+          // To enabled the descend shortcut
+          //
+          game_request_to_remake_ui_set(g);
+          return;
+        }
 
-      if (thing_is_player(t) && thing_is_entrance(it)) {
-        // thing_level_reached_entrance(g, v, l, t);
-        return;
+        if (thing_is_entrance(it)) {
+          //
+          // To enabled the ascent shortcut
+          //
+          game_request_to_remake_ui_set(g);
+          return;
+        }
+      } else {
+        //
+        // If at the end of the move path then we can enter or leave when we get to that final tile.
+        //
+        if (thing_is_exit(it)) {
+          //
+          // Descend
+          //
+          thing_level_reached_exit(g, v, l, t);
+          return;
+        }
+
+        if (thing_is_entrance(it)) {
+          //
+          // Ascend
+          //
+          thing_level_reached_entrance(g, v, l, t);
+          return;
+        }
       }
     }
   }
