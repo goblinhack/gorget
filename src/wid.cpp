@@ -2014,14 +2014,15 @@ static void wid_destroy_immediate(Gamep g, Widp w)
   }
 
   if (w == wid_focus) {
-    wid_focus = nullptr;
+    wid_mouse_focus_end(g);
   }
 
   if (w == wid_over) {
-    wid_over = nullptr;
-    if (! wid_ignore_events(w)) {
-      wid_last_over_event = time_ms_cached();
-    }
+    //
+    // For actionbar buttons. If they create a popup, we must be called when the actionbar
+    // is destroyed, to remove the popup. Else we get a dangling popup.
+    //
+    wid_mouse_over_end(g);
   }
 
   for (auto x = 0; x < TERM_WIDTH; x++) {

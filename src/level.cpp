@@ -159,12 +159,12 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
     TOPCON("Mouse over levels for monster/treasure info.");
   } else if (new_level->completed) {
     TOPCON("");
-    TOPCON(UI_WARNING_FMT_STR "You re-enter level %u of dungeon %s." UI_RESET_FMT "",
-           new_level->level_num + 1, game_seed_name_get(g));
+    TOPCON(UI_WARNING_FMT_STR "You re-enter level %u of dungeon %s." UI_RESET_FMT "", new_level->level_num + 1,
+           game_seed_name_get(g));
   } else if (level_num > 0) {
     TOPCON("");
-    TOPCON(UI_WARNING_FMT_STR "You enter level %u of dungeon %s." UI_RESET_FMT "",
-           new_level->level_num + 1, game_seed_name_get(g));
+    TOPCON(UI_WARNING_FMT_STR "You enter level %u of dungeon %s." UI_RESET_FMT "", new_level->level_num + 1,
+           game_seed_name_get(g));
   }
 
   //
