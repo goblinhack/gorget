@@ -6,41 +6,43 @@
 #ifndef _MY_UI_HPP_
 #define _MY_UI_HPP_
 
-#define UI_CONSOLE_HEIGHT           (TERM_HEIGHT * 2)
-#define UI_CONSOLE_INPUT_COLOR      ORANGE
-#define UI_CONSOLE_TEXT_COLOR       WHITE
-#define UI_CONSOLE_WIDTH            (TERM_WIDTH - 3)
-#define UI_CURSOR_COLOR             PURPLE
-#define UI_CURSOR_OTHER_COLOR       WHITE
-#define UI_FONT_HEIGHT              8
-#define UI_FONT_WIDTH               6
-#define UI_LEFTBAR_WIDTH            33  // In characters
-#define UI_RIGHTBAR_WIDTH           33  // In characters
-#define UI_MOUSE_DOUBLE_CLICK       500 // Double click time
-#define UI_MOUSE_WHEEL_SCALE        1.0 // How much the wheel mouse moves.
-#define UI_MOUSE_WHEEL_SCALE_MAX    10
-#define UI_POPUP_TEXT_COLOR         UI_TEXT_COLOR
-#define UI_SCROLL_JOY_SCALE         1.0
-#define UI_SCROLL_JOY_SCALE_MAX     1.5
-#define UI_TEXT_COLOR               GRAY // Default text color
-#define UI_TEXT_COLOR_STR           "gray"
-#define UI_TEXT_HIGHLIGHT_COLOR_STR "white"
-#define UI_TEXT_SHORTCUT_COLOR_STR  "orange"
-#define UI_TEXT_WARNING_COLOR_STR   "yellow"
-#define UI_TEXT_IMPORTANT_COLOR_STR "red"
-#define UI_TEXT_RESET_COLOR         "%%fg=reset$"
-#define UI_TILE_HEIGHT              8
-#define UI_TILE_WIDTH               8
-#define UI_TOPCON_HEIGHT            4 // Scrollbar limit
-#define UI_TOPCON_TEXT_COLOR        UI_TEXT_COLOR
-#define UI_TOPCON_VIS_HEIGHT        UI_TOPCON_HEIGHT
-#define UI_TOPCON_VIS_WIDTH         UI_TOPCON_WIDTH
-#define UI_TOPCON_WIDTH             (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
-#define UI_TYPE_PIXELART            0
-#define UI_TYPES_MAX                1
-#define UI_WID_POPUP_WIDTH_NORMAL   18
-#define UI_WID_POPUP_WIDTH_WIDE     60
-#define UI_WID_SAVE_SLOTS           10 // How many save game slots
+#define UI_CONSOLE_HEIGHT             (TERM_HEIGHT * 2)
+#define UI_CONSOLE_INPUT_COLOR        ORANGE
+#define UI_CONSOLE_TEXT_COLOR         WHITE
+#define UI_CONSOLE_WIDTH              (TERM_WIDTH - 3)
+#define UI_CURSOR_COLOR               PURPLE
+#define UI_CURSOR_OTHER_COLOR         WHITE
+#define UI_FONT_HEIGHT                8
+#define UI_FONT_WIDTH                 6
+#define UI_LEFTBAR_WIDTH              33  // In characters
+#define UI_RIGHTBAR_WIDTH             33  // In characters
+#define UI_MOUSE_DOUBLE_CLICK         500 // Double click time
+#define UI_WID_MOUSE_WHEEL_SCALE      1.0 // How much the wheel mouse moves when over a wid
+#define UI_WID_MOUSE_WHEEL_SCALE_MAX  10
+#define UI_GAME_MOUSE_WHEEL_SCALE     2.0 // How much the wheel mouse moves
+#define UI_GAME_MOUSE_WHEEL_SCALE_MAX 20
+#define UI_POPUP_TEXT_COLOR           UI_TEXT_COLOR
+#define UI_SCROLL_JOY_SCALE           1.0
+#define UI_SCROLL_JOY_SCALE_MAX       1.5
+#define UI_TEXT_COLOR                 GRAY // Default text color
+#define UI_TEXT_COLOR_STR             "gray"
+#define UI_TEXT_HIGHLIGHT_COLOR_STR   "white"
+#define UI_TEXT_SHORTCUT_COLOR_STR    "orange"
+#define UI_TEXT_WARNING_COLOR_STR     "yellow"
+#define UI_TEXT_IMPORTANT_COLOR_STR   "red"
+#define UI_TEXT_RESET_COLOR           "%%fg=reset$"
+#define UI_TILE_HEIGHT                8
+#define UI_TILE_WIDTH                 8
+#define UI_TOPCON_HEIGHT              4 // Scrollbar limit
+#define UI_TOPCON_TEXT_COLOR          UI_TEXT_COLOR
+#define UI_TOPCON_VIS_HEIGHT          UI_TOPCON_HEIGHT
+#define UI_TOPCON_VIS_WIDTH           UI_TOPCON_WIDTH
+#define UI_TOPCON_WIDTH               (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
+#define UI_TYPE_PIXELART              0
+#define UI_TYPES_MAX                  1
+#define UI_WID_POPUP_WIDTH_NORMAL     18
+#define UI_WID_POPUP_WIDTH_WIDE       60
+#define UI_WID_SAVE_SLOTS             10 // How many save game slots
 
 //
 // Do faster processing of events, like reading the keyboard and updating widgets.

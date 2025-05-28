@@ -281,10 +281,24 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
           if (time_have_x_tenths_passed_since(10, ts)) {
             accel = 1.0;
           } else {
-            accel *= UI_MOUSE_WHEEL_SCALE;
+            if (wid_over) {
+              //
+              // Slower wheel acceleration when over a wid
+              //
+              accel *= UI_WID_MOUSE_WHEEL_SCALE;
 
-            if (accel > UI_MOUSE_WHEEL_SCALE_MAX) {
-              accel = UI_MOUSE_WHEEL_SCALE_MAX;
+              if (accel > UI_WID_MOUSE_WHEEL_SCALE_MAX) {
+                accel = UI_WID_MOUSE_WHEEL_SCALE_MAX;
+              }
+            } else {
+              //
+              // Faster wheel acceleration when over the map
+              //
+              accel *= UI_GAME_MOUSE_WHEEL_SCALE;
+
+              if (accel > UI_GAME_MOUSE_WHEEL_SCALE_MAX) {
+                accel = UI_GAME_MOUSE_WHEEL_SCALE_MAX;
+              }
             }
           }
 
