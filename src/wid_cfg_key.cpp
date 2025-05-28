@@ -45,6 +45,18 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
     CON("%%fg=orange$Conflicting keyboard mapping, disabling key move up." UI_RESET_FMT);
     game_key_move_up_set(g, none);
   }
+  if (sdlk_eq(game_key_ascend_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key descend" UI_RESET_FMT);
+    game_key_ascend_set(g, none);
+  }
+  if (sdlk_eq(game_key_ascend_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key ascend" UI_RESET_FMT);
+    game_key_ascend_set(g, none);
+  }
+  if (sdlk_eq(game_key_zoom_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key zoom" UI_RESET_FMT);
+    game_key_zoom_set(g, none);
+  }
   if (sdlk_eq(game_key_quit_get(g), code)) {
     CON("%%fg=orange$Conflicting keyboard mapping, disabling key quit." UI_RESET_FMT);
     game_key_quit_set(g, none);
@@ -62,84 +74,72 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
     game_key_console_set(g, none);
   }
   if (sdlk_eq(game_key_unused1_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused1" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused1" UI_RESET_FMT);
     game_key_unused1_set(g, none);
   }
   if (sdlk_eq(game_key_unused2_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused2" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused2" UI_RESET_FMT);
     game_key_unused2_set(g, none);
   }
   if (sdlk_eq(game_key_unused3_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused3" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused3" UI_RESET_FMT);
     game_key_unused3_set(g, none);
   }
   if (sdlk_eq(game_key_unused4_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused4" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused4" UI_RESET_FMT);
     game_key_unused4_set(g, none);
   }
   if (sdlk_eq(game_key_unused5_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused5" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused5" UI_RESET_FMT);
     game_key_unused5_set(g, none);
   }
   if (sdlk_eq(game_key_unused6_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused6" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused6" UI_RESET_FMT);
     game_key_unused6_set(g, none);
   }
   if (sdlk_eq(game_key_unused7_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused7" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused7" UI_RESET_FMT);
     game_key_unused7_set(g, none);
   }
   if (sdlk_eq(game_key_unused8_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused8" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused8" UI_RESET_FMT);
     game_key_unused8_set(g, none);
   }
   if (sdlk_eq(game_key_unused9_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused9" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused9" UI_RESET_FMT);
     game_key_unused9_set(g, none);
   }
   if (sdlk_eq(game_key_unused10_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused10" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused10" UI_RESET_FMT);
     game_key_unused10_set(g, none);
   }
   if (sdlk_eq(game_key_unused11_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused11" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused11" UI_RESET_FMT);
     game_key_unused11_set(g, none);
   }
   if (sdlk_eq(game_key_unused12_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused12" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused12" UI_RESET_FMT);
     game_key_unused12_set(g, none);
   }
   if (sdlk_eq(game_key_unused13_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused13" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused13" UI_RESET_FMT);
     game_key_unused13_set(g, none);
   }
   if (sdlk_eq(game_key_unused14_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused14" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused14" UI_RESET_FMT);
     game_key_unused14_set(g, none);
   }
   if (sdlk_eq(game_key_unused15_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused15" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused15" UI_RESET_FMT);
     game_key_unused15_set(g, none);
   }
   if (sdlk_eq(game_key_unused16_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused16" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused16" UI_RESET_FMT);
     game_key_unused16_set(g, none);
   }
   if (sdlk_eq(game_key_unused17_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused17" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused17" UI_RESET_FMT);
     game_key_unused17_set(g, none);
-  }
-  if (sdlk_eq(game_key_ascend_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused18" UI_RESET_FMT);
-    game_key_ascend_set(g, none);
-  }
-  if (sdlk_eq(game_key_ascend_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused19" UI_RESET_FMT);
-    game_key_ascend_set(g, none);
-  }
-  if (sdlk_eq(game_key_zoom_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key unused20" UI_RESET_FMT);
-    game_key_zoom_set(g, none);
   }
 }
 

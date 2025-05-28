@@ -19,6 +19,7 @@ static WidPopup *wid_over_wait {};
 static WidPopup *wid_over_ascend {};
 static WidPopup *wid_over_descend {};
 static WidPopup *wid_over_quit {};
+static WidPopup *wid_over_help {};
 static WidPopup *wid_actionbar_popup {};
 
 static ts_t wid_last_wait;
@@ -42,7 +43,7 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int width  = 32;
-  int height = 10;
+  int height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -87,7 +88,7 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, i
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int width  = 32;
-  int height = 10;
+  int height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -152,7 +153,7 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int width  = 32;
-  int height = 13;
+  int height = 10;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -258,7 +259,7 @@ static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely
   point tl(tlx, tly);
   point br(brx, bry);
 
-  wid_over_descend = new WidPopup(g, "Wait/rest", tl, br, nullptr, "", false, false);
+  wid_over_descend = new WidPopup(g, "Descend", tl, br, nullptr, "", false, false);
   wid_over_descend->log(g, UI_HIGHLIGHT_FMT_STR "Descend");
   wid_over_descend->log_empty_line(g);
   wid_over_descend->log(g, "Select this to descend further into the dungeon.");
@@ -292,7 +293,7 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, i
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int width  = 32;
-  int height = 6;
+  int height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -316,6 +317,51 @@ static void wid_actionbar_quit_over_end(Gamep g, Widp w)
 
   delete wid_over_quit;
   wid_over_quit = nullptr;
+}
+
+static bool wid_actionbar_help(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  LOG("Actionbar help");
+  TRACE_AND_INDENT();
+
+  return game_event_help(g);
+}
+
+static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+{
+  TRACE_NO_INDENT();
+
+  int tlx;
+  int tly;
+  int brx;
+  int bry;
+  wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
+
+  int width  = 32;
+  int height = 8;
+
+  tlx -= width / 2;
+  brx += width / 2;
+  tly -= height;
+  bry -= 1;
+  tly -= 0;
+
+  point tl(tlx, tly);
+  point br(brx, bry);
+
+  wid_over_help = new WidPopup(g, "Help", tl, br, nullptr, "", false, false);
+  wid_over_help->log(g, UI_HIGHLIGHT_FMT_STR "Help");
+  wid_over_help->log_empty_line(g);
+  wid_over_help->log(g, "Select this to configure keyboard options.");
+  wid_over_help->compress(g);
+}
+
+static void wid_actionbar_help_over_end(Gamep g, Widp w)
+{
+  TRACE_NO_INDENT();
+
+  delete wid_over_help;
+  wid_over_help = nullptr;
 }
 
 bool wid_actionbar_create_window(Gamep g)
@@ -347,7 +393,10 @@ bool wid_actionbar_create_window(Gamep g)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
 
   int  option_width = 10;
-  int  options      = 2;
+  int  options      = 1;
+  bool opt_wait     = true;
+  bool opt_quit     = true;
+  bool opt_help     = true;
   bool opt_load     = false;
   bool opt_save     = false;
   bool opt_descend  = level_is_exit(g, v, l, player->at);
@@ -356,6 +405,25 @@ bool wid_actionbar_create_window(Gamep g)
   if (g_opt_debug1 || (l->level_num == LEVEL_SELECT_ID)) {
     opt_save = true;
     opt_load = true;
+  }
+
+  if (l->level_num == LEVEL_SELECT_ID) {
+    opt_wait    = false;
+    opt_help    = false;
+    opt_ascend  = false;
+    opt_descend = false;
+  }
+
+  if (opt_help) {
+    options++;
+  }
+
+  if (opt_quit) {
+    options++;
+  }
+
+  if (opt_wait) {
+    options++;
   }
 
   if (opt_save) {
@@ -392,8 +460,8 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_down(g, w, wid_actionbar_descend);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_descend_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_descend_over_end);
-    wid_set_text(w,
-                 UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Wait");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g)) + UI_HIGHLIGHT_FMT_STR ""
+                        + " Descend");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -409,7 +477,8 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_down(g, w, wid_actionbar_ascend);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_ascend_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_ascend_over_end);
-    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_ascend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Wait");
+    wid_set_text(w,
+                 UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_ascend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Ascend");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -459,6 +528,22 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_save_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_save_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_save_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Save");
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    x_at += option_width + 1;
+  }
+
+  {
+    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar help");
+    point tl = make_point(x_at, 0);
+    point br = make_point(x_at + option_width - 1, 0);
+    wid_set_pos(w, tl, br);
+    wid_set_on_mouse_up(g, w, wid_actionbar_help);
+    wid_set_on_mouse_over_begin(g, w, wid_actionbar_help_over_begin);
+    wid_set_on_mouse_over_end(g, w, wid_actionbar_help_over_end);
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_help_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Help");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);

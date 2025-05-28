@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_minimal.hpp"
@@ -285,19 +286,33 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
+  auto aip = thing_player(g, t);
+  if (! aip) {
+    return;
+  }
+
   t->moving_from = t->at;
   t->is_moving   = false;
 
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, t->at)
   {
-    if (thing_is_player(t) && thing_is_exit(it)) {
-      thing_level_reached_exit(g, v, l, t);
-      return;
-    }
+    //
+    // If at the end of the move path then we can enter or leave.
+    // Else pass through it, to allow access to otherwise inaccessible tiles.
+    //
+    if (aip->move_path.size) {
+      game_request_to_remake_ui_set(g);
+    } else {
+      game_request_to_remake_ui_set(g);
+      if (thing_is_player(t) && thing_is_exit(it)) {
+        //  thing_level_reached_exit(g, v, l, t);
+        return;
+      }
 
-    if (thing_is_player(t) && thing_is_entrance(it)) {
-      thing_level_reached_entrance(g, v, l, t);
-      return;
+      if (thing_is_player(t) && thing_is_entrance(it)) {
+        // thing_level_reached_entrance(g, v, l, t);
+        return;
+      }
     }
   }
 }

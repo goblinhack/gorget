@@ -106,6 +106,9 @@ uint8_t game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx,
 
 bool game_event_save(Gamep g)
 {
+  LOG("Saving");
+  TRACE_AND_INDENT();
+
   auto v = game_levels_get(g);
   if (! v) {
     return false;
@@ -125,9 +128,6 @@ bool game_event_save(Gamep g)
     return false;
   }
 
-  LOG("Saving the game");
-  TRACE_AND_INDENT();
-
   if (l->level_num != LEVEL_SELECT_ID) {
     TOPCON(UI_WARNING_FMT_STR "You can only save games when you exit the level." UI_RESET_FMT);
     return true;
@@ -143,7 +143,7 @@ bool game_event_save(Gamep g)
 
 bool game_event_load(Gamep g)
 {
-  LOG("Loading game");
+  LOG("Loading");
   TRACE_AND_INDENT();
 
   wid_load_select(g);
@@ -153,6 +153,9 @@ bool game_event_load(Gamep g)
 
 bool game_event_wait(Gamep g)
 {
+  LOG("Wait");
+  TRACE_AND_INDENT();
+
   auto v = game_levels_get(g);
   if (! v) {
     return false;
@@ -180,6 +183,9 @@ bool game_event_wait(Gamep g)
 
 bool game_event_descend(Gamep g)
 {
+  LOG("Descend");
+  TRACE_AND_INDENT();
+
   auto v = game_levels_get(g);
   if (! v) {
     return false;
@@ -212,6 +218,9 @@ bool game_event_descend(Gamep g)
 
 bool game_event_ascend(Gamep g)
 {
+  LOG("Ascend");
+  TRACE_AND_INDENT();
+
   auto v = game_levels_get(g);
   if (! v) {
     return false;
@@ -238,6 +247,16 @@ bool game_event_ascend(Gamep g)
 
   TOPCON("TODO ascend");
   // g->player_tick(left, right, up, down, attack, wait, jump);
+
+  return true;
+}
+
+bool game_event_help(Gamep g)
+{
+  LOG("Help");
+  TRACE_AND_INDENT();
+
+  wid_cfg_keyboard_select(g);
 
   return true;
 }
@@ -313,7 +332,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   if (sdlk_eq(*key, game_key_help_get(g))) {
     LOG("Pressed help key");
     TRACE_AND_INDENT();
-    wid_cfg_keyboard_select(g);
+    game_event_help(g);
     return true;
   }
 
@@ -321,7 +340,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     LOG("Pressed load key");
     TRACE_AND_INDENT();
     LOG("Loading game");
-    wid_load_select(g);
+    game_event_load(g);
     return true;
   }
 
@@ -329,6 +348,18 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     LOG("Pressed save key");
     TRACE_AND_INDENT();
     game_event_save(g);
+    return true;
+  }
+
+  if (sdlk_eq(*key, game_key_ascend_get(g))) {
+    LOG("Pressed ascend key");
+    game_event_ascend(g);
+    return true;
+  }
+
+  if (sdlk_eq(*key, game_key_descend_get(g))) {
+    LOG("Pressed descend key");
+    game_event_descend(g);
     return true;
   }
 

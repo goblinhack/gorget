@@ -245,6 +245,7 @@ bool    game_event_save(Gamep);
 bool    game_event_load(Gamep);
 bool    game_event_quit(Gamep);
 bool    game_event_wait(Gamep);
+bool    game_event_help(Gamep);
 bool    game_event_ascend(Gamep);
 bool    game_event_descend(Gamep);
 

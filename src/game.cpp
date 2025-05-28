@@ -310,9 +310,7 @@ void Config::reset(void)
   key_zoom.sym       = SDLK_z;
   key_console.sym    = SDLK_BACKQUOTE;
   key_ascend.sym     = SDLK_LESS;
-  key_ascend.mod     = KMOD_SHIFT;
   key_descend.sym    = SDLK_GREATER;
-  key_descend.mod    = KMOD_SHIFT;
   music_volume       = {MIX_MAX_VOLUME / 3};
   sdl_delay          = 1;
   sound_volume       = {MIX_MAX_VOLUME / 2};
