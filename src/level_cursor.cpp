@@ -88,6 +88,15 @@ static std::vector< point > level_cursor_path_draw_line_attempt(Gamep g, Levelsp
   }
 
   //
+  // Seems better to use the entire map, as that way we can scroll and still see a path
+  // even if the player is some way off.
+  //
+  minx = 0;
+  miny = 0;
+  maxx = MAP_WIDTH - 1;
+  maxy = MAP_HEIGHT - 1;
+
+  //
   // If standing on a hazard, then plot a course that allows travel over hazards.
   //
   if (level_is_cursor_path_hazard(g, v, l, player->at)) {
