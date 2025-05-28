@@ -102,8 +102,8 @@ public:
   SDL_Keysym key_unused15   = {};
   SDL_Keysym key_unused16   = {};
   SDL_Keysym key_unused17   = {};
-  SDL_Keysym key_unused18   = {};
-  SDL_Keysym key_unused19   = {};
+  SDL_Keysym key_ascend     = {};
+  SDL_Keysym key_descend    = {};
   SDL_Keysym key_zoom       = {};
 
   //
@@ -309,6 +309,10 @@ void Config::reset(void)
   key_screenshot.sym = SDLK_F10;
   key_zoom.sym       = SDLK_z;
   key_console.sym    = SDLK_BACKQUOTE;
+  key_ascend.sym     = SDLK_LESS;
+  key_ascend.mod     = KMOD_SHIFT;
+  key_descend.sym    = SDLK_GREATER;
+  key_descend.mod    = KMOD_SHIFT;
   music_volume       = {MIX_MAX_VOLUME / 3};
   sdl_delay          = 1;
   sound_volume       = {MIX_MAX_VOLUME / 2};
@@ -1868,38 +1872,38 @@ void game_key_unused17_set(Gamep g, SDL_Keysym key)
   g->config.key_unused17 = key;
 }
 
-SDL_Keysym game_key_unused18_get(Gamep g)
+SDL_Keysym game_key_ascend_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (! g)
     return no_key;
-  return g->config.key_unused18;
+  return g->config.key_ascend;
 }
-void game_key_unused18_set(Gamep g, SDL_Keysym key)
+void game_key_ascend_set(Gamep g, SDL_Keysym key)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.key_unused18 = key;
+  g->config.key_ascend = key;
 }
 
-SDL_Keysym game_key_unused19_get(Gamep g)
+SDL_Keysym game_key_descend_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (! g)
     return no_key;
-  return g->config.key_unused19;
+  return g->config.key_descend;
 }
-void game_key_unused19_set(Gamep g, SDL_Keysym key)
+void game_key_descend_set(Gamep g, SDL_Keysym key)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.key_unused19 = key;
+  g->config.key_descend = key;
 }
 
 SDL_Keysym game_key_zoom_get(Gamep g)

@@ -15,6 +15,8 @@
 static Widp      wid_actionbar {};
 static WidPopup *wid_over_save {};
 static WidPopup *wid_over_wait {};
+static WidPopup *wid_over_ascend {};
+static WidPopup *wid_over_descend {};
 static WidPopup *wid_over_quit {};
 static WidPopup *wid_actionbar_popup {};
 
@@ -119,9 +121,7 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
   wid_over_wait = new WidPopup(g, "Wait/rest", tl, br, nullptr, "", false, false);
   wid_over_wait->log(g, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Wait/rest");
   wid_over_wait->log_empty_line(g);
-  wid_over_wait->log(g, "TODO");
-  wid_over_wait->log_empty_line(g);
-  wid_over_wait->log(g, "Select this to pass one turn waiting.");
+  wid_over_wait->log(g, "Select this to waste one turn of your existence waiting.");
   wid_over_wait->log_empty_line(g);
   wid_over_wait->log(g, "Hold down to pass multiple turns.");
   wid_over_wait->compress(g);
@@ -133,6 +133,98 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
 
   delete wid_over_wait;
   wid_over_wait = nullptr;
+}
+
+static bool wid_actionbar_ascend(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  LOG("Actionbar ascend");
+  TRACE_AND_INDENT();
+
+  return game_event_ascend(g);
+}
+
+static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+{
+  TRACE_NO_INDENT();
+
+  int tlx;
+  int tly;
+  int brx;
+  int bry;
+  wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
+
+  int width  = 32;
+  int height = 13;
+
+  tlx -= width / 2;
+  brx += width / 2;
+  tly -= height;
+
+  bry -= 1;
+  tly += 1;
+
+  point tl(tlx, tly);
+  point br(brx, bry);
+
+  wid_over_ascend = new WidPopup(g, "Descend", tl, br, nullptr, "", false, false);
+  wid_over_ascend->log(g, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Ascend");
+  wid_over_ascend->log_empty_line(g);
+  wid_over_ascend->log(g, "Select this return to level selection.");
+  wid_over_ascend->compress(g);
+}
+
+static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
+{
+  TRACE_NO_INDENT();
+
+  delete wid_over_ascend;
+  wid_over_ascend = nullptr;
+}
+
+static bool wid_actionbar_descend(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  LOG("Actionbar descend");
+  TRACE_AND_INDENT();
+
+  return game_event_descend(g);
+}
+
+static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+{
+  TRACE_NO_INDENT();
+
+  int tlx;
+  int tly;
+  int brx;
+  int bry;
+  wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
+
+  int width  = 32;
+  int height = 13;
+
+  tlx -= width / 2;
+  brx += width / 2;
+  tly -= height;
+
+  bry -= 1;
+  tly += 1;
+
+  point tl(tlx, tly);
+  point br(brx, bry);
+
+  wid_over_descend = new WidPopup(g, "Wait/rest", tl, br, nullptr, "", false, false);
+  wid_over_descend->log(g, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Descend");
+  wid_over_descend->log_empty_line(g);
+  wid_over_descend->log(g, "Select this to descend further into the dungeon.");
+  wid_over_descend->compress(g);
+}
+
+static void wid_actionbar_descend_over_end(Gamep g, Widp w)
+{
+  TRACE_NO_INDENT();
+
+  delete wid_over_descend;
+  wid_over_descend = nullptr;
 }
 
 static bool wid_actionbar_quit(Gamep g, Widp w, int x, int y, uint32_t button)
@@ -212,8 +304,10 @@ bool wid_actionbar_create_window(Gamep g)
   int  options      = 2;
   bool opt_load     = false;
   bool opt_save     = false;
+  bool opt_descend  = level_is_exit(g, v, l, player->at);
+  bool opt_ascend   = level_is_entrance(g, v, l, player->at);
 
-  if (l->level_num == LEVEL_SELECT_ID) {
+  if (g_opt_debug1 || (l->level_num == LEVEL_SELECT_ID)) {
     opt_save = true;
     opt_load = true;
   }
@@ -243,6 +337,40 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   int x_at = 0;
+
+  if (opt_descend) {
+    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar descend");
+    point tl = make_point(x_at, 0);
+    point br = make_point(x_at + option_width - 1, 0);
+    wid_set_pos(w, tl, br);
+    wid_set_on_mouse_down(g, w, wid_actionbar_descend);
+    wid_set_on_mouse_over_begin(g, w, wid_actionbar_descend_over_begin);
+    wid_set_on_mouse_over_end(g, w, wid_actionbar_descend_over_end);
+    wid_set_text(w, "%%fg=" UI_TEXT_SHORTCUT_COLOR_STR "$" + ::to_string(game_key_descend_get(g))
+                        + "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$" + " Wait");
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    x_at += option_width + 1;
+  }
+
+  if (opt_ascend) {
+    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar ascend");
+    point tl = make_point(x_at, 0);
+    point br = make_point(x_at + option_width - 1, 0);
+    wid_set_pos(w, tl, br);
+    wid_set_on_mouse_down(g, w, wid_actionbar_ascend);
+    wid_set_on_mouse_over_begin(g, w, wid_actionbar_ascend_over_begin);
+    wid_set_on_mouse_over_end(g, w, wid_actionbar_ascend_over_end);
+    wid_set_text(w, "%%fg=" UI_TEXT_SHORTCUT_COLOR_STR "$" + ::to_string(game_key_ascend_get(g))
+                        + "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$" + " Wait");
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    x_at += option_width + 1;
+  }
 
   {
     auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar wait");

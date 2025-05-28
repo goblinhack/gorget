@@ -93,8 +93,8 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_unused15);
   in >> bits(my.t.key_unused16);
   in >> bits(my.t.key_unused17);
-  in >> bits(my.t.key_unused18);
-  in >> bits(my.t.key_unused19);
+  in >> bits(my.t.key_ascend);
+  in >> bits(my.t.key_descend);
   in >> bits(my.t.key_zoom);
   in >> bits(my.t.mouse_wheel_lr_negated);
   in >> bits(my.t.mouse_wheel_ud_negated);

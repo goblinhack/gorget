@@ -212,11 +212,11 @@ void       game_key_unused16_set(Gamep, SDL_Keysym);
 SDL_Keysym game_key_unused17_get(Gamep);
 void       game_key_unused17_set(Gamep, SDL_Keysym);
 
-SDL_Keysym game_key_unused18_get(Gamep);
-void       game_key_unused18_set(Gamep, SDL_Keysym);
+SDL_Keysym game_key_ascend_get(Gamep);
+void       game_key_ascend_set(Gamep, SDL_Keysym);
 
-SDL_Keysym game_key_unused19_get(Gamep);
-void       game_key_unused19_set(Gamep, SDL_Keysym);
+SDL_Keysym game_key_descend_get(Gamep);
+void       game_key_descend_set(Gamep, SDL_Keysym);
 
 SDL_Keysym game_key_zoom_get(Gamep);
 void       game_key_zoom_set(Gamep, SDL_Keysym);
@@ -244,6 +244,8 @@ uint8_t game_mouse_up(Gamep, int x, int y, uint32_t button);
 bool    game_event_save(Gamep);
 bool    game_event_quit(Gamep);
 bool    game_event_wait(Gamep);
+bool    game_event_ascend(Gamep);
+bool    game_event_descend(Gamep);
 
 uint8_t game_state(Gamep);
 void    game_config_reset(Gamep);

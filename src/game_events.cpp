@@ -162,7 +162,71 @@ bool game_event_wait(Gamep g)
     return false;
   }
 
-  LOG("Waiting");
+  TOPCON("TODO Waiting");
+  // g->player_tick(left, right, up, down, attack, wait, jump);
+
+  return true;
+}
+
+bool game_event_descend(Gamep g)
+{
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  if (player->is_dead) {
+    return false;
+  }
+
+  if (! level_is_exit(g, v, l, player->at)) {
+    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$There is no level exit here to descend." UI_TEXT_RESET_COLOR);
+    return false;
+  }
+
+  TOPCON("TODO descend");
+  // g->player_tick(left, right, up, down, attack, wait, jump);
+
+  return true;
+}
+
+bool game_event_ascend(Gamep g)
+{
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  if (player->is_dead) {
+    return false;
+  }
+
+  if (! level_is_entrance(g, v, l, player->at)) {
+    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$There is no level entrance here to ascend." UI_TEXT_RESET_COLOR);
+    return false;
+  }
+
+  TOPCON("TODO ascend");
   // g->player_tick(left, right, up, down, attack, wait, jump);
 
   return true;
@@ -212,12 +276,21 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     return false; // To avoid click noise
   }
 
-  //
-  // attack
-  //
   if (sdlk_eq(*key, game_key_wait_get(g))) {
     LOG("Pressed wait key");
     game_event_wait(g);
+    return false; // To avoid click noise
+  }
+
+  if (sdlk_eq(*key, game_key_ascend_get(g))) {
+    LOG("Pressed ascend key");
+    game_event_ascend(g);
+    return false; // To avoid click noise
+  }
+
+  if (sdlk_eq(*key, game_key_descend_get(g))) {
+    LOG("Pressed descend key");
+    game_event_descend(g);
     return false; // To avoid click noise
   }
 
