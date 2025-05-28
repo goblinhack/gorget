@@ -92,18 +92,18 @@ void wid_credits_select(Gamep g)
   wid_set_on_key_up(g, wid_credits_window->wid_popup_container, wid_credits_key_up);
   wid_set_on_key_down(g, wid_credits_window->wid_popup_container, wid_credits_key_down);
 
-  wid_credits_window->log(g, "" UI_HIGHLIGHT_FMT_STR "Development");
+  wid_credits_window->log(g, UI_HIGHLIGHT_FMT_STR "Development");
   wid_credits_window->log(g, "goblinhack@gmail.com");
   wid_credits_window->log_empty_line(g);
-  wid_credits_window->log(g, "" UI_HIGHLIGHT_FMT_STR "Graphics");
+  wid_credits_window->log(g, UI_HIGHLIGHT_FMT_STR "Graphics");
   wid_credits_window->log(g, "Urizen 1 bit tileset");
   wid_credits_window->log(g, "goblinhack@gmail.com");
   wid_credits_window->log_empty_line(g);
-  wid_credits_window->log(g, "" UI_HIGHLIGHT_FMT_STR "Music");
+  wid_credits_window->log(g, UI_HIGHLIGHT_FMT_STR "Music");
   wid_credits_window->log(g, "Markus Heichelbech");
   wid_credits_window->log(g, "C.E.McGill");
   wid_credits_window->log_empty_line(g);
-  wid_credits_window->log(g, "" UI_HIGHLIGHT_FMT_STR "Sounds");
+  wid_credits_window->log(g, UI_HIGHLIGHT_FMT_STR "Sounds");
   wid_credits_window->log(g, "See README.md");
 
   {

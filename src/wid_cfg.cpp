@@ -149,7 +149,7 @@ void wid_cfg_top_menu(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_cfg_top_gfx);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "G" UI_RESET_FMT "raphics");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "G" UI_RESET_FMT "raphics");
   }
   y_at += box_step;
   {
@@ -165,7 +165,7 @@ void wid_cfg_top_menu(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_cfg_top_mouse);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "M" UI_RESET_FMT "ouse");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "M" UI_RESET_FMT "ouse");
   }
   y_at += box_step;
   {
@@ -181,7 +181,7 @@ void wid_cfg_top_menu(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_cfg_top_sound);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ound");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ound");
   }
   y_at += box_step;
   {
@@ -197,7 +197,7 @@ void wid_cfg_top_menu(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_cfg_top_keyboard);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "K" UI_RESET_FMT "eyboard");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "K" UI_RESET_FMT "eyboard");
   }
   y_at += box_step;
   {
@@ -213,7 +213,7 @@ void wid_cfg_top_menu(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_cfg_top_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ack");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ack");
   }
 
   wid_update(g, wid_cfg_top_window->wid_text_area->wid_text_area);

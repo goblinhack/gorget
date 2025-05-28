@@ -55,7 +55,7 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
   point br(brx, bry);
 
   wid_over_save = new WidPopup(g, "Load game", tl, br, nullptr, "", false, false);
-  wid_over_save->log(g, "" UI_HIGHLIGHT_FMT_STR "Load game");
+  wid_over_save->log(g, UI_HIGHLIGHT_FMT_STR "Load game");
   wid_over_save->log_empty_line(g);
   wid_over_save->log(g, "Select this to load an old game");
   wid_over_save->compress(g);
@@ -100,7 +100,7 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, i
   point br(brx, bry);
 
   wid_over_load = new WidPopup(g, "Save game", tl, br, nullptr, "", false, false);
-  wid_over_load->log(g, "" UI_HIGHLIGHT_FMT_STR "Save game");
+  wid_over_load->log(g, UI_HIGHLIGHT_FMT_STR "Save game");
   wid_over_load->log_empty_line(g);
   wid_over_load->log(g, "Select this to load your current progress");
   wid_over_load->compress(g);
@@ -165,7 +165,7 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
   point br(brx, bry);
 
   wid_over_wait = new WidPopup(g, "Wait/rest", tl, br, nullptr, "", false, false);
-  wid_over_wait->log(g, "" UI_HIGHLIGHT_FMT_STR "Wait/rest");
+  wid_over_wait->log(g, UI_HIGHLIGHT_FMT_STR "Wait/rest");
   wid_over_wait->log_empty_line(g);
   wid_over_wait->log(g, "Select this to waste one turn of your existence waiting.");
   wid_over_wait->log_empty_line(g);
@@ -213,7 +213,7 @@ static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely,
   point br(brx, bry);
 
   wid_over_ascend = new WidPopup(g, "Descend", tl, br, nullptr, "", false, false);
-  wid_over_ascend->log(g, "" UI_HIGHLIGHT_FMT_STR "Ascend");
+  wid_over_ascend->log(g, UI_HIGHLIGHT_FMT_STR "Ascend");
   wid_over_ascend->log_empty_line(g);
   wid_over_ascend->log(g, "Select this return to level selection.");
   wid_over_ascend->compress(g);
@@ -259,7 +259,7 @@ static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely
   point br(brx, bry);
 
   wid_over_descend = new WidPopup(g, "Wait/rest", tl, br, nullptr, "", false, false);
-  wid_over_descend->log(g, "" UI_HIGHLIGHT_FMT_STR "Descend");
+  wid_over_descend->log(g, UI_HIGHLIGHT_FMT_STR "Descend");
   wid_over_descend->log_empty_line(g);
   wid_over_descend->log(g, "Select this to descend further into the dungeon.");
   wid_over_descend->compress(g);
@@ -304,7 +304,7 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, i
   point br(brx, bry);
 
   wid_over_quit = new WidPopup(g, "Quit", tl, br, nullptr, "", false, false);
-  wid_over_quit->log(g, "" UI_HIGHLIGHT_FMT_STR "Quit game");
+  wid_over_quit->log(g, UI_HIGHLIGHT_FMT_STR "Quit game");
   wid_over_quit->log_empty_line(g);
   wid_over_quit->log(g, "Select this to abandon all hope.");
   wid_over_quit->compress(g);
@@ -392,8 +392,8 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_down(g, w, wid_actionbar_descend);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_descend_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_descend_over_end);
-    wid_set_text(w, "" UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g))
-                        + "" UI_HIGHLIGHT_FMT_STR "" + " Wait");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g))
+                        + UI_HIGHLIGHT_FMT_STR "" + " Wait");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -409,8 +409,8 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_down(g, w, wid_actionbar_ascend);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_ascend_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_ascend_over_end);
-    wid_set_text(w, "" UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_ascend_get(g))
-                        + "" UI_HIGHLIGHT_FMT_STR "" + " Wait");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_ascend_get(g))
+                        + UI_HIGHLIGHT_FMT_STR "" + " Wait");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -427,8 +427,8 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_held(g, w, wid_actionbar_repeat_wait);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_wait_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_wait_over_end);
-    wid_set_text(w, "" UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_wait_get(g))
-                        + "" UI_HIGHLIGHT_FMT_STR "" + " Wait");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_wait_get(g))
+                        + UI_HIGHLIGHT_FMT_STR "" + " Wait");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -444,8 +444,8 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_up(g, w, wid_actionbar_load);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_load_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_load_over_end);
-    wid_set_text(w, "" UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_load_get(g))
-                        + "" UI_HIGHLIGHT_FMT_STR "" + " Load");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_load_get(g))
+                        + UI_HIGHLIGHT_FMT_STR "" + " Load");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -461,8 +461,8 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_up(g, w, wid_actionbar_save);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_save_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_save_over_end);
-    wid_set_text(w, "" UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_save_get(g))
-                        + "" UI_HIGHLIGHT_FMT_STR "" + " Save");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_save_get(g))
+                        + UI_HIGHLIGHT_FMT_STR "" + " Save");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -478,8 +478,8 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_up(g, w, wid_actionbar_quit);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_quit_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_quit_over_end);
-    wid_set_text(w, "" UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_quit_get(g))
-                        + "" UI_HIGHLIGHT_FMT_STR "" + " Quit");
+    wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_quit_get(g))
+                        + UI_HIGHLIGHT_FMT_STR "" + " Quit");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);

@@ -375,7 +375,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, game_menu_new_game);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "ew game" UI_RESET_FMT);
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "ew game" UI_RESET_FMT);
   }
   y_at += box_step;
   {
@@ -391,7 +391,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_load);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "L" UI_FMT_STR "oad game");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "L" UI_FMT_STR "oad game");
   }
   y_at += box_step;
   {
@@ -407,7 +407,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_config);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "O" UI_FMT_STR "ptions");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "O" UI_FMT_STR "ptions");
   }
   y_at += box_step;
   {
@@ -423,7 +423,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_seed);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "S" UI_FMT_STR "eed select");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_FMT_STR "eed select");
   }
   y_at += box_step;
   {
@@ -439,7 +439,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_credits);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "C" UI_FMT_STR "redits");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_FMT_STR "redits");
   }
   y_at += box_step;
   {
@@ -455,7 +455,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_hiscores);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "H" UI_FMT_STR "iscores");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "H" UI_FMT_STR "iscores");
   }
   y_at += box_step;
   {
@@ -471,7 +471,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_quit);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "Q" UI_FMT_STR "uit Game");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Q" UI_FMT_STR "uit Game");
   }
 
   wid_update(g, wid_main_menu_window->wid_text_area->wid_text_area);
