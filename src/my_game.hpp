@@ -242,6 +242,7 @@ uint8_t game_mouse_down(Gamep, int x, int y, uint32_t button);
 uint8_t game_mouse_motion(Gamep, int x, int y, int relx, int rely, int wheelx, int wheely);
 uint8_t game_mouse_up(Gamep, int x, int y, uint32_t button);
 bool    game_event_save(Gamep);
+bool    game_event_load(Gamep);
 bool    game_event_quit(Gamep);
 bool    game_event_wait(Gamep);
 bool    game_event_ascend(Gamep);

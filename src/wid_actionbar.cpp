@@ -14,6 +14,7 @@
 
 static Widp      wid_actionbar {};
 static WidPopup *wid_over_save {};
+static WidPopup *wid_over_load {};
 static WidPopup *wid_over_wait {};
 static WidPopup *wid_over_ascend {};
 static WidPopup *wid_over_descend {};
@@ -53,10 +54,10 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
   point tl(tlx, tly);
   point br(brx, bry);
 
-  wid_over_save = new WidPopup(g, "Save game", tl, br, nullptr, "", false, false);
-  wid_over_save->log(g, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Save game");
+  wid_over_save = new WidPopup(g, "Load game", tl, br, nullptr, "", false, false);
+  wid_over_save->log(g, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Load game");
   wid_over_save->log_empty_line(g);
-  wid_over_save->log(g, "Select this to save your current progress");
+  wid_over_save->log(g, "Select this to load an old game");
   wid_over_save->compress(g);
 }
 
@@ -66,6 +67,51 @@ static void wid_actionbar_save_over_end(Gamep g, Widp w)
 
   delete wid_over_save;
   wid_over_save = nullptr;
+}
+
+static bool wid_actionbar_load(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  LOG("Actionbar load");
+  TRACE_AND_INDENT();
+  return game_event_load(g);
+}
+
+static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+{
+  TRACE_NO_INDENT();
+
+  int tlx;
+  int tly;
+  int brx;
+  int bry;
+  wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
+
+  int width  = 32;
+  int height = 10;
+
+  tlx -= width / 2;
+  brx += width / 2;
+  tly -= height;
+
+  bry -= 1;
+  tly -= 0;
+
+  point tl(tlx, tly);
+  point br(brx, bry);
+
+  wid_over_load = new WidPopup(g, "Save game", tl, br, nullptr, "", false, false);
+  wid_over_load->log(g, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Save game");
+  wid_over_load->log_empty_line(g);
+  wid_over_load->log(g, "Select this to load your current progress");
+  wid_over_load->compress(g);
+}
+
+static void wid_actionbar_load_over_end(Gamep g, Widp w)
+{
+  TRACE_NO_INDENT();
+
+  delete wid_over_load;
+  wid_over_load = nullptr;
 }
 
 static bool wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button)
@@ -395,11 +441,9 @@ bool wid_actionbar_create_window(Gamep g)
     point tl = make_point(x_at, 0);
     point br = make_point(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-#if 0
-    wid_set_on_mouse_up(w, wid_actionbar_load);
-    wid_set_on_mouse_over_begin(w, wid_actionbar_load_over_begin);
-    wid_set_on_mouse_over_end(w, wid_actionbar_load_over_end);
-#endif
+    wid_set_on_mouse_up(g, w, wid_actionbar_load);
+    wid_set_on_mouse_over_begin(g, w, wid_actionbar_load_over_begin);
+    wid_set_on_mouse_over_end(g, w, wid_actionbar_load_over_end);
     wid_set_text(w, "%%fg=" UI_TEXT_SHORTCUT_COLOR_STR "$" + ::to_string(game_key_load_get(g))
                         + "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$" + " Load");
     wid_set_mode(g, w, WID_MODE_OVER);

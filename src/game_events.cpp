@@ -141,6 +141,16 @@ bool game_event_save(Gamep g)
   return true;
 }
 
+bool game_event_load(Gamep g)
+{
+  LOG("Loading game");
+  TRACE_AND_INDENT();
+
+  wid_load_select(g);
+
+  return true;
+}
+
 bool game_event_wait(Gamep g)
 {
   auto v = game_levels_get(g);
