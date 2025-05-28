@@ -21,20 +21,22 @@
 #define UI_WID_MOUSE_WHEEL_SCALE_MAX  10
 #define UI_GAME_MOUSE_WHEEL_SCALE     2.0 // How much the wheel mouse moves
 #define UI_GAME_MOUSE_WHEEL_SCALE_MAX 20
-#define UI_POPUP_TEXT_COLOR           UI_TEXT_COLOR
+#define UI_POPUP_TEXT_COLOR           UI_COLOR
 #define UI_SCROLL_JOY_SCALE           1.0
 #define UI_SCROLL_JOY_SCALE_MAX       1.5
-#define UI_TEXT_COLOR                 GRAY // Default text color
-#define UI_TEXT_COLOR_STR             "gray"
-#define UI_TEXT_HIGHLIGHT_COLOR_STR   "white"
-#define UI_TEXT_SHORTCUT_COLOR_STR    "orange"
-#define UI_TEXT_WARNING_COLOR_STR     "yellow"
-#define UI_TEXT_IMPORTANT_COLOR_STR   "red"
-#define UI_TEXT_RESET_COLOR           "%%fg=reset$"
+#define UI_COLOR                      GRAY // Default text color
+#define UI_COLOR_STR                  "gray"
+#define UI_FMT_STR                    "%%fg=" UI_COLOR_STR "$"
+#define UI_INFO_FMT_STR               "%%fg=green$"
+#define UI_HIGHLIGHT_FMT_STR          "%%fg=white$"
+#define UI_SHORTCUT_FMT_STR           "%%fg=orange$"
+#define UI_WARNING_FMT_STR            "%%fg=yellow$"
+#define UI_IMPORTANT_FMT_STR          "%%fg=red$"
+#define UI_RESET_FMT                  "%%fg=reset$"
 #define UI_TILE_HEIGHT                8
 #define UI_TILE_WIDTH                 8
 #define UI_TOPCON_HEIGHT              4 // Scrollbar limit
-#define UI_TOPCON_TEXT_COLOR          UI_TEXT_COLOR
+#define UI_TOPCON_TEXT_COLOR          UI_COLOR
 #define UI_TOPCON_VIS_HEIGHT          UI_TOPCON_HEIGHT
 #define UI_TOPCON_VIS_WIDTH           UI_TOPCON_WIDTH
 #define UI_TOPCON_WIDTH               (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)

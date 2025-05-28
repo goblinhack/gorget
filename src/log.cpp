@@ -196,7 +196,7 @@ static void err_(const char *fmt, va_list args)
     }
 
     if (snprintf(buf + len, MAXLONGSTR - len,
-                 "ERROR: %%%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$%s%%" UI_TEXT_RESET_COLOR "", error_buf)
+                 "ERROR: %%" UI_IMPORTANT_FMT_STR "%s%%" UI_RESET_FMT "", error_buf)
         < 0) {
       ERR("truncation");
       return;
@@ -352,14 +352,14 @@ static void msgerr_(const char *fmt, va_list args)
     len = (int) strlen(buf);
   }
 
-  snprintf(buf + len, MAXLONGSTR - len, "ERROR: %%%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$");
+  snprintf(buf + len, MAXLONGSTR - len, "ERROR: %%" UI_IMPORTANT_FMT_STR "");
 
   len = (int) strlen(buf);
 
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%%" UI_TEXT_RESET_COLOR "");
+  snprintf(buf + len, MAXLONGSTR - len, "%%" UI_RESET_FMT);
 
   putf(MY_STDERR, buf);
 

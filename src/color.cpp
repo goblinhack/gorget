@@ -90,7 +90,7 @@ color string2color(const char **s)
   *s += (t - tmp);
 
   if (! strcasecmp(tmp, "reset")) {
-    return (UI_TEXT_COLOR);
+    return (UI_COLOR);
   }
 
   auto result = color_map.find(std::string(tmp));
@@ -127,7 +127,7 @@ color string2color(std::string &s, int *len)
   }
 
   if (out == "reset") {
-    return (UI_TEXT_COLOR);
+    return (UI_COLOR);
   }
 
   auto result = color_map.find(out);
@@ -159,7 +159,7 @@ color string2color(std::string &s)
   }
 
   if (out == "reset") {
-    return (UI_TEXT_COLOR);
+    return (UI_COLOR);
   }
 
   auto result = color_map.find(out);
@@ -198,7 +198,7 @@ const char *string2colorname(const char **s)
   *s += (t - tmp);
 
   if (! strcasecmp(tmp, "reset")) {
-    return (UI_TEXT_COLOR_STR);
+    return (UI_COLOR_STR);
   }
 
   auto result = color_map.find(std::string(tmp));
@@ -235,7 +235,7 @@ std::string string2colorname(std::string &s)
   }
 
   if (out == "reset") {
-    return (UI_TEXT_COLOR_STR);
+    return (UI_COLOR_STR);
   }
 
   auto result = color_map.find(out);

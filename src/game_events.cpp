@@ -129,7 +129,7 @@ bool game_event_save(Gamep g)
   TRACE_AND_INDENT();
 
   if (l->level_num != LEVEL_SELECT_ID) {
-    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$You can only save games when you exit the level." UI_TEXT_RESET_COLOR);
+    TOPCON(UI_WARNING_FMT_STR "You can only save games when you exit the level." UI_RESET_FMT);
     return true;
   }
   if (v->tick_in_progress) {
@@ -200,7 +200,7 @@ bool game_event_descend(Gamep g)
   }
 
   if (! level_is_exit(g, v, l, player->at)) {
-    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$There is no level exit here to descend." UI_TEXT_RESET_COLOR);
+    TOPCON(UI_WARNING_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
     return false;
   }
 
@@ -232,7 +232,7 @@ bool game_event_ascend(Gamep g)
   }
 
   if (! level_is_entrance(g, v, l, player->at)) {
-    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$There is no level entrance here to ascend." UI_TEXT_RESET_COLOR);
+    TOPCON(UI_WARNING_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
     return false;
   }
 

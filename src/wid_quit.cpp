@@ -151,7 +151,7 @@ void wid_quit_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(g, w, wid_quit_yes);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$Y" UI_TEXT_RESET_COLOR "es");
+    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "Y" UI_RESET_FMT "es");
   }
 
   {
@@ -164,7 +164,7 @@ void wid_quit_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(g, w, wid_quit_no);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$N" UI_TEXT_RESET_COLOR "o");
+    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "o");
   }
 
   wid_update(g, wid_quit_window->wid_text_area->wid_text_area);

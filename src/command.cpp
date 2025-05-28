@@ -342,16 +342,16 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
    */
   matches = command_matches(g, input, expandedtext, false, false, execute_command, context);
   if (matches == 0) {
-    CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Unknown command: \"%s\"" UI_TEXT_RESET_COLOR "", input);
+    CON(">" UI_IMPORTANT_FMT_STR "Unknown command: \"%s\"" UI_RESET_FMT "", input);
     return false;
   }
 
   if (matches > 1) {
     if (show_ambiguous) {
       if (*input) {
-        CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Multiple matches, \"%s\"" UI_TEXT_RESET_COLOR ". Try:", input);
+        CON(">" UI_IMPORTANT_FMT_STR "Multiple matches, \"%s\"" UI_RESET_FMT ". Try:", input);
       } else {
-        CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Commands:" UI_TEXT_RESET_COLOR "");
+        CON(">" UI_IMPORTANT_FMT_STR "Commands:" UI_RESET_FMT);
       }
     }
 
@@ -360,7 +360,7 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
     if (! show_ambiguous) {
       if (expandedtext) {
         if (! strcasecmp(input, expandedtext)) {
-          CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Incomplete command, \"%s\"" UI_TEXT_RESET_COLOR ". Try:", input);
+          CON(">" UI_IMPORTANT_FMT_STR "Incomplete command, \"%s\"" UI_RESET_FMT ". Try:", input);
 
           command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
         }
@@ -373,7 +373,7 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
   }
 
   if (! execute_command && (matches == 1)) {
-    CON(">%%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Incomplete command, \"%s\"" UI_TEXT_RESET_COLOR ". Try:", input);
+    CON(">" UI_IMPORTANT_FMT_STR "Incomplete command, \"%s\"" UI_RESET_FMT ". Try:", input);
 
     command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
   }

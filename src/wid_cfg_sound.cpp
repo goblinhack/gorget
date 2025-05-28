@@ -207,7 +207,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_cfg_sound_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$B" UI_TEXT_RESET_COLOR "ack");
+    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ack");
   }
   {
     TRACE_AND_INDENT();
@@ -219,7 +219,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(g, w, wid_cfg_sound_save);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$S" UI_TEXT_RESET_COLOR "ave");
+    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ave");
   }
   {
     TRACE_AND_INDENT();
@@ -231,7 +231,7 @@ void wid_cfg_sound_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(g, w, wid_cfg_sound_cancel);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=" UI_TEXT_HIGHLIGHT_COLOR_STR "$C" UI_TEXT_RESET_COLOR "ancel");
+    wid_set_text(w, "" UI_HIGHLIGHT_FMT_STR "C" UI_RESET_FMT "ancel");
   }
 
   y_at += 4;

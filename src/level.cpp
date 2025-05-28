@@ -145,7 +145,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 
   if (old_level == new_level) {
     if (new_level->level_num == 0) {
-      TOPCON("Welcome to bla bla bla..., %%fg=" UI_TEXT_IMPORTANT_COLOR_STR "$Gorget" UI_TEXT_RESET_COLOR ".");
+      TOPCON("Welcome to bla bla bla..., " UI_IMPORTANT_FMT_STR "Gorget" UI_RESET_FMT ".");
     }
     return new_level;
   }
@@ -155,15 +155,15 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 
   if (level_num == LEVEL_SELECT_ID) {
     TOPCON("");
-    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$Choose your next level." UI_TEXT_RESET_COLOR "");
+    TOPCON(UI_WARNING_FMT_STR "Choose your next level." UI_RESET_FMT);
     TOPCON("Mouse over levels for monster/treasure info.");
   } else if (new_level->completed) {
     TOPCON("");
-    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$You re-enter level %u of dungeon %s." UI_TEXT_RESET_COLOR "",
+    TOPCON(UI_WARNING_FMT_STR "You re-enter level %u of dungeon %s." UI_RESET_FMT "",
            new_level->level_num + 1, game_seed_name_get(g));
   } else if (level_num > 0) {
     TOPCON("");
-    TOPCON("%%fg=" UI_TEXT_WARNING_COLOR_STR "$You enter level %u of dungeon %s." UI_TEXT_RESET_COLOR "",
+    TOPCON(UI_WARNING_FMT_STR "You enter level %u of dungeon %s." UI_RESET_FMT "",
            new_level->level_num + 1, game_seed_name_get(g));
   }
 
