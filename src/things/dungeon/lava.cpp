@@ -16,6 +16,7 @@ bool tp_load_lava(void)
   auto tp   = tp_load("lava");
   // begin sort marker1 {
   tp_flag_set(tp, is_animated, true);
+  tp_flag_set(tp, is_cursor_path_hazard, true);
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_lava, true);
   tp_flag_set(tp, is_tiled, true);
