@@ -16,8 +16,8 @@ bool tp_load_chasm(void)
   auto tp   = tp_load("chasm");
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered, true);
-  tp_flag_set(tp, is_cursor_path_hazard, true);
   tp_flag_set(tp, is_chasm, true);
+  tp_flag_set(tp, is_cursor_path_hazard, true);
   tp_flag_set(tp, is_tiled, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

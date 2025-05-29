@@ -15,9 +15,9 @@ bool tp_load_deep_water(void)
   auto name = std::string("deep_water");
   auto tp   = tp_load("deep_water");
   // begin sort marker1 {
-  tp_flag_set(tp, is_cursor_path_hazard, true);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_cursor_path_hazard, true);
   tp_flag_set(tp, is_deep_water, true);
   tp_flag_set(tp, is_tiled, true);
   tp_short_name_set(tp, "deep water");
