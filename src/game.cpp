@@ -259,6 +259,8 @@ public:
   std::string load_config(void);
 };
 
+static void game_map_zoom_update(Gamep);
+
 class Game *game;
 
 #include "game_load.hpp"
@@ -567,6 +569,7 @@ std::string gama_state_to_string(int state)
     case STATE_MAIN_MENU : return "MAIN_MENU";
     case STATE_PLAYING : return "PLAYING";
     case STATE_LOAD_MENU : return "LOAD_MENU";
+    case STATE_LOADED : return "LOADED";
     case STATE_SAVE_MENU : return "SAVE_MENU";
     case STATE_QUIT_MENU : return "QUIT_MENU";
     case STATE_QUITTING : return "QUITTING";
@@ -646,6 +649,7 @@ void Game::state_change(GameState new_state, const std::string &why)
       break;
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
+    case STATE_LOADED :
     case STATE_SAVE_MENU :
     case STATE_QUIT_MENU : wid_actionbar_fini(g); break;
   }
@@ -658,11 +662,13 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_QUITTING : break;
     case STATE_PLAYING :
       switch (old_state) {
-        case STATE_QUITTING : /* from loading */
+        case STATE_QUITTING : break;
+        case STATE_LOADED :
           wid_leftbar_init(g);
           wid_rightbar_init(g);
           wid_actionbar_init(g);
           wid_topcon_init(g);
+          game_map_zoom_update(g);
           break;
         case STATE_MAIN_MENU :
           wid_leftbar_init(g);
@@ -673,10 +679,14 @@ void Game::state_change(GameState new_state, const std::string &why)
         case STATE_PLAYING :
         case STATE_LOAD_MENU :
         case STATE_SAVE_MENU :
-        case STATE_QUIT_MENU : wid_actionbar_init(g); break;
+        case STATE_QUIT_MENU :
+          if (0) {} /* clang format */
+          wid_actionbar_init(g);
+          break;
       }
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
+    case STATE_LOADED :
     case STATE_SAVE_MENU :
     case STATE_QUIT_MENU : break;
   }
@@ -726,6 +736,7 @@ void Game::tick(void)
       break;
     case STATE_KEYBOARD_MENU : break;
     case STATE_LOAD_MENU : break;
+    case STATE_LOADED : break;
     case STATE_SAVE_MENU : break;
     case STATE_QUIT_MENU : break;
   }
@@ -770,6 +781,7 @@ void Game::display(void)
       break;
     case STATE_KEYBOARD_MENU : break;
     case STATE_LOAD_MENU : break;
+    case STATE_LOADED : break;
     case STATE_SAVE_MENU : break;
     case STATE_QUIT_MENU : break;
   }

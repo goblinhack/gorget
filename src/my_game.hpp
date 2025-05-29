@@ -11,11 +11,12 @@
 #include <SDL.h>
 
 typedef enum {
-  STATE_MAIN_MENU,
-  STATE_PLAYING,
-  STATE_QUITTING,
+  STATE_MAIN_MENU,     // Main menu
+  STATE_PLAYING,       // Actively playing in a level
+  STATE_QUITTING,      // Shutting down
   STATE_KEYBOARD_MENU, // Setting keys
   STATE_LOAD_MENU,     // Loading a game
+  STATE_LOADED,        // Loaded an old game
   STATE_SAVE_MENU,     // Saving a game
   STATE_QUIT_MENU,     // Pondering quitting
 } GameState;

@@ -129,8 +129,14 @@ bool game_event_save(Gamep g)
   }
 
   if (l->level_num != LEVEL_SELECT_ID) {
-    TOPCON(UI_WARNING_FMT_STR "You can only save games when you exit the level." UI_RESET_FMT);
-    return true;
+    if (g_opt_debug1) {
+      //
+      // Allow when debugging
+      //
+    } else {
+      TOPCON(UI_WARNING_FMT_STR "You can only save games when you exit the level." UI_RESET_FMT);
+      return true;
+    }
   }
   if (v->tick_in_progress) {
     game_request_to_save_game_set(g);

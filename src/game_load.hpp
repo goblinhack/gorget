@@ -381,6 +381,7 @@ void Game::load(int slot)
   load(this_save_file, *this);
   g_loading = false;
 
+  state_change(STATE_LOADED, "reset");
   state_change(STATE_PLAYING, "loaded game");
 
   TOPCON("Loaded the game from %s", this_save_file.c_str());
@@ -416,7 +417,6 @@ void wid_load_destroy(Gamep g)
 
   delete wid_load;
   wid_load = nullptr;
-  game->state_reset("wid load destroy");
 }
 
 static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
