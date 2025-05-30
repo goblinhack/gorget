@@ -37,6 +37,7 @@ std::initializer_list< std::string > tps = {
     "barrel",
     "pillar",
     "brazier",
+    "grass",
     "exit",
     "chasm",
     "floor",

@@ -14,7 +14,8 @@ bool tp_load_foliage(void)
 
   auto tp = tp_load("foliage");
   // begin sort marker1 {
-  tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_blit_square_outlined, true);
   tp_flag_set(tp, is_foliage, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_INFRONT);

@@ -884,12 +884,19 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
   color outline = {10, 10, 10, 255};
   glcolor(outline);
 
-  const float dx = single_pix_size;
-  const float dy = single_pix_size;
-
   auto binding = tile->gl_binding_mask();
 
   if (single_pix_size) {
+    int dx = single_pix_size - 1;
+    int dy = single_pix_size - 1;
+
+    if (! dx) {
+      dx = 1;
+    }
+    if (! dy) {
+      dy = 1;
+    }
+
     if (square) {
       blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
       blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
@@ -923,12 +930,19 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
 
   glcolor(outline);
 
-  const float dx = single_pix_size;
-  const float dy = single_pix_size;
-
   auto binding = tile->gl_binding_mask();
 
   if (single_pix_size) {
+    int dx = single_pix_size - 1;
+    int dy = single_pix_size - 1;
+
+    if (! dx) {
+      dx = 1;
+    }
+    if (! dy) {
+      dy = 1;
+    }
+
     if (square) {
       blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
       blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);

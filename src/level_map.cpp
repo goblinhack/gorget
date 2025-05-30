@@ -40,6 +40,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_key         = tp_random(is_key);
   auto tp_foliage     = tp_random(is_foliage);
   auto tp_corridor    = tp_random(is_corridor);
+  auto tp_grass       = tp_random(is_grass);
   auto tp_door        = tp_find_mand("door");
   auto tp_secret_door = tp_find_mand("secret_door");
   auto tp_trap        = tp_find_mand("trap");
@@ -142,7 +143,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_GRASS :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_grass;
           break;
         case CHARMAP_MONST1 :
           need_floor = true;

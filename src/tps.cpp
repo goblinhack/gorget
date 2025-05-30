@@ -23,6 +23,9 @@ bool templates_init(void)
   if (! tp_load_brazier()) {
     return false;
   }
+  if (! tp_load_grass()) {
+    return false;
+  }
   if (! tp_load_exit()) {
     return false;
   }

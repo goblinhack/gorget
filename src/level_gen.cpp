@@ -2188,6 +2188,79 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
 }
 
 //
+// Add grass or other blobby things
+//
+static void level_gen_blob(Gamep g, class LevelGen *l, char c)
+{
+  uint8_t  x, y;
+  uint32_t fill_prob       = LEVEL_BLOB_GEN_FILL_PROB;
+  int      r1              = 4; // higher r1 gives a more rounded look
+  int      r2              = 4; // larger r2 gives a smaller pool
+  int      map_generations = 3;
+
+  //
+  // Generate a cave
+  //
+  cave_create(g, &l->cave, fill_prob, r1, r2, map_generations);
+
+  if (0) {
+    cave_dump(g, l);
+    level_gen_dump(g, l);
+  }
+
+  for (x = 0; x < MAP_WIDTH; x++) {
+    for (y = 0; y < MAP_HEIGHT; y++) {
+      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
+
+        switch (l->data[ x ][ y ].c) {
+          case CHARMAP_BARREL :
+          case CHARMAP_BRAZIER :
+          case CHARMAP_BRIDGE :
+          case CHARMAP_CHASM :
+          case CHARMAP_CHASM_50 :
+          case CHARMAP_CORRIDOR :
+          case CHARMAP_DEEP_WATER :
+          case CHARMAP_DOOR :
+          case CHARMAP_ENTRANCE :
+          case CHARMAP_EXIT :
+          case CHARMAP_FLOOR_50 :
+          case CHARMAP_FOLIAGE :
+          case CHARMAP_GRASS :
+          case CHARMAP_JOIN :
+          case CHARMAP_KEY :
+          case CHARMAP_LAVA :
+          case CHARMAP_MOB1 :
+          case CHARMAP_MOB2 :
+          case CHARMAP_MONST1 :
+          case CHARMAP_MONST2 :
+          case CHARMAP_PILLAR :
+          case CHARMAP_SECRET_DOOR :
+          case CHARMAP_TELEPORT :
+          case CHARMAP_TRAP :
+          case CHARMAP_TREASURE1 :
+          case CHARMAP_TREASURE2 :
+          case CHARMAP_WALL :
+          case CHARMAP_WILDCARD :
+          case CHARMAP_EMPTY :
+            //
+            // No grass
+            //
+            break;
+          case CHARMAP_FLOOR :
+          case CHARMAP_DIRT :
+          case CHARMAP_WATER :
+            //
+            // Grass
+            //
+            l->data[ x ][ y ].c = c;
+            break;
+        }
+      }
+    }
+  }
+}
+
+//
 // Create rooms from the current seed
 //
 static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
@@ -2277,6 +2350,12 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
       level_no_exit_room++;
       continue;
     }
+
+    //
+    // Add grass or other blobby features
+    //
+    if (1)
+      level_gen_blob(g, l, CHARMAP_GRASS);
 
     //
     // Success

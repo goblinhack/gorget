@@ -12,6 +12,7 @@ bool templates_init(void);
 bool tp_load_barrel();
 bool tp_load_pillar();
 bool tp_load_brazier();
+bool tp_load_grass();
 bool tp_load_exit();
 bool tp_load_chasm();
 bool tp_load_floor();
