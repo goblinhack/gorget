@@ -20,6 +20,7 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_barrel, true);
   tp_flag_set(tp, is_blit_on_ground, true);
   tp_flag_set(tp, is_blit_square_outlined, true);
+  tp_flag_set(tp, is_cursor_path_blocker, true);
   tp_flag_set(tp, is_obstacle_block, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

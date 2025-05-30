@@ -71,6 +71,9 @@ bool templates_init(void)
   if (! tp_load_deep_water()) {
     return false;
   }
+  if (! tp_load_trap()) {
+    return false;
+  }
   if (! tp_load_teleport()) {
     return false;
   }
@@ -81,6 +84,9 @@ bool templates_init(void)
     return false;
   }
   if (! tp_load_goblin()) {
+    return false;
+  }
+  if (! tp_load_slime()) {
     return false;
   }
   if (! tp_load_ghost()) {

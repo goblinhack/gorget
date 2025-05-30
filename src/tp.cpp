@@ -51,10 +51,12 @@ std::initializer_list< std::string > tps = {
     "corridor",
     "dirt",
     "deep_water",
+    "trap",
     "teleport",
     "cursor_path",
     "cursor_at",
     "goblin",
+    "slime",
     "ghost",
     "level_curr",
     "level_visited",
@@ -411,7 +413,7 @@ Tpp tp_random(ThingFlag f)
   TRACE_NO_INDENT();
 
   if (unlikely(! tp_flag_map[ f ].size())) {
-    DIE("No tp found for %d", f);
+    DIE("No tp found for ThingFlag %d/%s", f, ThingFlag_val2str(f));
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);

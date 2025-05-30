@@ -8,20 +8,21 @@
 #include "../../my_tp.hpp"
 #include "../../my_tps.hpp"
 
-bool tp_load_goblin_mob(void)
+bool tp_load_slime(void)
 {
-  auto name = "goblin_mob";
-  auto tp   = tp_load("goblin_mob");
+  auto name = "slime";
+  auto tp   = tp_load("slime");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_minion, true);
+  tp_flag_set(tp, is_monst, true);
   tp_flag_set(tp, is_blit_square_outlined, true);
-  tp_flag_set(tp, is_mob, true);
-  tp_flag_set(tp, is_mob2, true);
+  tp_flag_set(tp, is_monst2, true);
+  tp_flag_set(tp, is_slime, true);
   tp_flag_set(tp, is_tickable, true);
-  tp_short_name_set(tp, "goblin den");
   tp_speed_set(tp, 100);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

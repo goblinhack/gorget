@@ -37,11 +37,13 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_teleport    = tp_random(is_teleport);
   auto tp_treasure1   = tp_random(is_treasure1);
   auto tp_treasure2   = tp_random(is_treasure2);
+  auto tp_key         = tp_random(is_key);
+  auto tp_foliage     = tp_random(is_foliage);
+  auto tp_corridor    = tp_random(is_corridor);
   auto tp_door        = tp_find_mand("door");
   auto tp_secret_door = tp_find_mand("secret_door");
+  auto tp_trap        = tp_find_mand("trap");
   auto tp_floor       = tp_find_mand("floor");
-  auto tp_corridor    = tp_find_mand("corridor");
-  auto tp_foliage     = tp_find_mand("foliage");
   auto tp_dirt        = tp_find_mand("dirt");
   auto tp_exit        = tp_find_mand("exit");
   auto tp_player      = tp_find_mand("player");
@@ -120,7 +122,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_TRAP :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_trap;
           break;
         case CHARMAP_LAVA :
           need_floor = true;
@@ -148,7 +150,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_MONST2 :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_random(is_monst2);
           break;
         case CHARMAP_MOB1 :
           need_floor = true;
@@ -156,7 +158,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_MOB2 :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_random(is_mob2);
           break;
         case CHARMAP_ENTRANCE :
           need_floor = true;
@@ -175,7 +177,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           break;
         case CHARMAP_KEY :
           need_floor = true;
-          tp         = nullptr; /* todo */
+          tp         = tp_key;
           break;
         case CHARMAP_EMPTY :
           need_dirt = true;
