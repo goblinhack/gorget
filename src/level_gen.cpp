@@ -538,7 +538,7 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
         case CHARMAP_CHASM_50 : break;
         case CHARMAP_CORRIDOR : break;
         case CHARMAP_DOOR : break;
-        case CHARMAP_DRY_GRASS : break;
+        case CHARMAP_GRASS : break;
         case CHARMAP_EMPTY : break;
         case CHARMAP_EXIT :
           if (exit_count++) {
@@ -1094,7 +1094,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_CHASM_50 : break;
         case CHARMAP_CORRIDOR : break;
         case CHARMAP_DOOR : break;
-        case CHARMAP_DRY_GRASS : break;
+        case CHARMAP_GRASS : break;
         case CHARMAP_EMPTY : break;
         case CHARMAP_EXIT : break;
         case CHARMAP_FLOOR : break;
@@ -1395,7 +1395,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_CHASM_50 : break;
         case CHARMAP_CORRIDOR : break;
         case CHARMAP_DOOR : break;
-        case CHARMAP_DRY_GRASS : break;
+        case CHARMAP_GRASS : break;
         case CHARMAP_EMPTY : break;
         case CHARMAP_EXIT : break;
         case CHARMAP_FLOOR : break;
@@ -2152,7 +2152,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
           case CHARMAP_CHASM :
           case CHARMAP_CORRIDOR :
           case CHARMAP_DOOR :
-          case CHARMAP_DRY_GRASS :
+          case CHARMAP_GRASS :
           case CHARMAP_EXIT :
           case CHARMAP_FLOOR :
           case CHARMAP_FOLIAGE :
@@ -2306,7 +2306,7 @@ static bool level_gen_tile_is_traversable(Gamep g, class LevelGen *l, int x, int
     case CHARMAP_BRIDGE : return true;
     case CHARMAP_CORRIDOR : return true;
     case CHARMAP_DOOR : return true;
-    case CHARMAP_DRY_GRASS : return true;
+    case CHARMAP_GRASS : return true;
     case CHARMAP_EXIT : return true;
     case CHARMAP_FLOOR : return true;
     case CHARMAP_FOLIAGE : return true;
@@ -2853,7 +2853,7 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_BRIDGE :
         case CHARMAP_CORRIDOR :
         case CHARMAP_DOOR :
-        case CHARMAP_DRY_GRASS :
+        case CHARMAP_GRASS :
         case CHARMAP_EXIT :
         case CHARMAP_FLOOR :
         case CHARMAP_FLOOR_50 :

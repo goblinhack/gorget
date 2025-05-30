@@ -140,7 +140,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           need_floor = true;
           tp         = tp_secret_door;
           break;
-        case CHARMAP_DRY_GRASS :
+        case CHARMAP_GRASS :
           need_floor = true;
           tp         = nullptr; /* todo */
           break;
