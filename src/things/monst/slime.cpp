@@ -17,7 +17,6 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_on_ground, true);
-  tp_flag_set(tp, is_blit_square_outlined, true);
   tp_flag_set(tp, is_minion, true);
   tp_flag_set(tp, is_monst, true);
   tp_flag_set(tp, is_monst2, true);
