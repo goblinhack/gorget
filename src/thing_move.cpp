@@ -225,8 +225,8 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 
   thing_pop(g, v, t);
 
-  t->pix_at.x = t->at.x * TILE_WIDTH;
-  t->pix_at.y = t->at.y * TILE_HEIGHT;
+  t->pix_at.x = t->at.x * INNER_TILE_WIDTH;
+  t->pix_at.y = t->at.y * INNER_TILE_HEIGHT;
 
   t->old_at      = t->at;
   t->moving_from = t->at;
@@ -263,8 +263,8 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, point to)
 
   thing_pop(g, v, t);
 
-  t->pix_at.x = t->at.x * TILE_WIDTH;
-  t->pix_at.y = t->at.y * TILE_HEIGHT;
+  t->pix_at.x = t->at.x * INNER_TILE_WIDTH;
+  t->pix_at.y = t->at.y * INNER_TILE_HEIGHT;
 
   t->old_at = t->at;
   t->at     = to;
@@ -383,8 +383,8 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
   float pix_x = (float) t->moving_from.x + (((float) (t->at.x - t->moving_from.x)) * dt);
   float pix_y = (float) t->moving_from.y + (((float) (t->at.y - t->moving_from.y)) * dt);
 
-  t->pix_at.x = pix_x * TILE_WIDTH;
-  t->pix_at.y = pix_y * TILE_HEIGHT;
+  t->pix_at.x = pix_x * INNER_TILE_WIDTH;
+  t->pix_at.y = pix_y * INNER_TILE_HEIGHT;
 }
 
 //
@@ -392,8 +392,8 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
 //
 void thing_update_pos(Gamep g, Thingp t)
 {
-  t->pix_at.x = t->at.x * TILE_WIDTH;
-  t->pix_at.y = t->at.y * TILE_HEIGHT;
+  t->pix_at.x = t->at.x * INNER_TILE_WIDTH;
+  t->pix_at.y = t->at.y * INNER_TILE_HEIGHT;
 }
 
 //

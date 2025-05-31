@@ -17,8 +17,8 @@ bool tp_load_brazier(void)
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_blit_on_ground, true);
   tp_flag_set(tp, is_blit_square_outlined, true);
+  tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_brazier, true);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_obstacle_block, true);

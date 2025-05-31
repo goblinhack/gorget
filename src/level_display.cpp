@@ -52,8 +52,8 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
   TRACE_NO_INDENT();
 
   int zoom = game_map_zoom_get(g);
-  int dw   = TILE_WIDTH * zoom;
-  int dh   = TILE_HEIGHT * zoom;
+  int dw   = INNER_TILE_WIDTH * zoom;
+  int dh   = INNER_TILE_HEIGHT * zoom;
 
   point tl;
   point br;

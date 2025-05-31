@@ -669,13 +669,13 @@ void config_game_gfx_update(Gamep g)
   //
   // Work out the size of the game map
   //
-  if (! TILE_WIDTH) {
-    ERR("TILE_WIDTH zero");
+  if (! INNER_TILE_WIDTH) {
+    ERR("INNER_TILE_WIDTH zero");
     return;
   }
 
-  if (! TILE_HEIGHT) {
-    ERR("TILE_HEIGHT zero");
+  if (! INNER_TILE_HEIGHT) {
+    ERR("INNER_TILE_HEIGHT zero");
     return;
   }
 
@@ -690,11 +690,11 @@ void config_game_gfx_update(Gamep g)
   double map_w            = visible_map_br_x - visible_map_tl_x;
   double map_h            = visible_map_br_y - visible_map_tl_y;
 
-  double max_fbo_w = TILE_WIDTH * MAP_WIDTH;
-  double max_fbo_h = TILE_HEIGHT * MAP_HEIGHT;
+  double max_fbo_w = INNER_TILE_WIDTH * MAP_WIDTH;
+  double max_fbo_h = INNER_TILE_HEIGHT * MAP_HEIGHT;
 
   double map_w_h_ratio = map_w / map_h;
-  double fbo_w         = (double) TILE_WIDTH * game_tiles_visible_across_get(g);
+  double fbo_w         = (double) INNER_TILE_WIDTH * game_tiles_visible_across_get(g);
   double fbo_h         = ceil(fbo_w / map_w_h_ratio);
 
   if (fbo_w > max_fbo_w) {
@@ -747,8 +747,8 @@ void config_game_gfx_update(Gamep g)
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //
-  float tiles_across = game_map_fbo_width_get(g) / (TILE_WIDTH * zoom);
-  float tiles_down   = game_map_fbo_height_get(g) / (TILE_HEIGHT * zoom);
+  float tiles_across = game_map_fbo_width_get(g) / (INNER_TILE_WIDTH * zoom);
+  float tiles_down   = game_map_fbo_height_get(g) / (INNER_TILE_HEIGHT * zoom);
 
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);

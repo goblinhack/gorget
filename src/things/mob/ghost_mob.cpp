@@ -16,8 +16,7 @@ bool tp_load_ghost_mob(void)
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_blit_on_ground, true);
-  tp_flag_set(tp, is_blit_square_outlined, true);
+  tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_mob, true);
   tp_flag_set(tp, is_mob1, true);
   tp_flag_set(tp, is_tickable, true);

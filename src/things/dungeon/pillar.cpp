@@ -16,8 +16,7 @@ bool tp_load_pillar(void)
   auto tp   = tp_load("pillar");
 
   // begin sort marker1 {
-  tp_flag_set(tp, is_blit_on_ground, true);
-  tp_flag_set(tp, is_blit_square_outlined, true);
+  tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_cursor_path_blocker, true);
   tp_flag_set(tp, is_obstacle_block, true);
   tp_flag_set(tp, is_pillar, true);

@@ -16,7 +16,7 @@ bool tp_load_goblin(void)
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_goblin, true);
   tp_flag_set(tp, is_minion, true);
   tp_flag_set(tp, is_monst, true);

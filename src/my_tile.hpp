@@ -12,10 +12,12 @@
 
 class Tile;
 
-#define TILE_HEIGHT     12
-#define TILE_WIDTH      12
-#define TILE_HEIGHT_MAX TILE_HEIGHT
-#define TILE_WIDTH_MAX  TILE_WIDTH // Largest tile for collisions
+#define INNER_TILE_HEIGHT 12
+#define INNER_TILE_WIDTH  12
+#define OUTER_TILE_HEIGHT (INNER_TILE_WIDTH + 2)
+#define OUTER_TILE_WIDTH  (INNER_TILE_HEIGHT + 2)
+#define TILE_HEIGHT_MAX   OUTER_TILE_HEIGHT
+#define TILE_WIDTH_MAX    OUTER_TILE_WIDTH // Largest tile for collisions
 
 enum {
   TILE_LAYER_BG_0,

@@ -17,7 +17,7 @@ bool tp_load_key(void)
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_key, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

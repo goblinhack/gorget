@@ -18,7 +18,7 @@ bool tp_load_barrel(void)
   // begin sort marker1 {
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_barrel, true);
-  tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_blit_square_outlined, true);
   tp_flag_set(tp, is_cursor_path_blocker, true);
   tp_flag_set(tp, is_obstacle_block, true);

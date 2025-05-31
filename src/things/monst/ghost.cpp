@@ -17,7 +17,7 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_able_to_walk_through_walls, true);
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_blit_on_ground, true);
+  tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_ghost, true);
   tp_flag_set(tp, is_minion, true);
   tp_flag_set(tp, is_monst, true);

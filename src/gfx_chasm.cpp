@@ -64,5 +64,6 @@ void gfx_init_chasm(void)
         // ##############################################################################
       /* clang-format on */
   };
-  tile_load_arr("data/gfx/tiles_chasm.tga", "tiles_chasm", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr("data/gfx/tiles_chasm.tga", "tiles_chasm", INNER_TILE_WIDTH, INNER_TILE_HEIGHT, ARRAY_SIZE(tiles),
+                tiles);
 }
