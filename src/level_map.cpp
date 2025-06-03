@@ -59,10 +59,11 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
 
       l->debug[ x ][ y ] = c;
 
-      bool need_floor   = false;
-      bool need_water   = false;
-      bool need_dirt    = false;
-      bool need_foliage = false;
+      bool need_floor    = false;
+      bool need_corridor = false;
+      bool need_water    = false;
+      bool need_dirt     = false;
+      bool need_foliage  = false;
 
       switch (c) {
         case CHARMAP_FLOOR :
@@ -78,7 +79,7 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
           }
           break;
         case CHARMAP_CHASM : tp = tp_chasm; break;
-        case CHARMAP_JOIN : tp = tp_corridor; break;
+        case CHARMAP_JOIN : need_corridor = true; break;
         case CHARMAP_CORRIDOR : tp = tp_corridor; break;
         case CHARMAP_BRIDGE : tp = tp_bridge; break;
         case CHARMAP_WALL :
@@ -192,6 +193,14 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
 
       if (need_floor) {
         auto tp_add = tp_floor;
+        auto t      = thing_init(g, v, l, tp_add, point(x, y));
+        if (t) {
+          thing_push(g, v, l, t);
+        }
+      }
+
+      if (need_corridor) {
+        auto tp_add = tp_corridor;
         auto t      = thing_init(g, v, l, tp_add, point(x, y));
         if (t) {
           thing_push(g, v, l, t);

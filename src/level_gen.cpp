@@ -12,6 +12,8 @@
 #include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
+#include "my_time.hpp"
+
 #include <array>
 #include <map>
 #include <stdarg.h>
@@ -79,6 +81,12 @@ static const int LEVEL_BLOB_GEN_FILL_PROB = 1200;
 // Chance of creating a pool on a level
 //
 static const int LEVEL_BLOB_GEN_PROB = 80;
+
+//
+// Chance of creating some doors for a room. We always add some doors, and then a chance of more.
+//
+static const int LEVEL_DOOR_TRIES = 1;
+static const int LEVEL_DOOR_PROB  = 10;
 
 //
 // Chances of creating, tested in the following order, with the default being water
@@ -3407,6 +3415,115 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
 }
 
 //
+// Add some doors
+//
+static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  class Room *r = nullptr;
+
+  //
+  // Find a random room.
+  //
+  while (true) {
+    auto border = 4;
+    auto x      = pcg_random_range(border, MAP_WIDTH - border);
+    auto y      = pcg_random_range(border, MAP_HEIGHT - border);
+    r           = l->data[ x ][ y ].room;
+
+    if (! r) {
+      continue;
+    }
+    if (l->room_entrance == r) {
+      continue;
+    }
+    if (l->room_exit == r) {
+      continue;
+    }
+    break;
+  }
+
+  //
+  // Look for the tiles for this room.
+  //
+  for (auto y = 0; y < MAP_HEIGHT; y++) {
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      auto other_room = l->data[ x ][ y ].room;
+      if (other_room != r) {
+        continue;
+      }
+
+      //
+      // Only look for join tiles adjacent to some walkable tiles.
+      //
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_FLOOR :
+        case CHARMAP_DIRT :
+        case CHARMAP_GRASS :
+        case CHARMAP_FOLIAGE :
+
+          for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+              switch (l->data[ x + dx ][ y + dy ].c) {
+                case CHARMAP_CORRIDOR :
+                case CHARMAP_JOIN : l->data[ x + dx ][ y + dy ].c = CHARMAP_DOOR; break;
+              }
+            }
+          }
+          break;
+      }
+    }
+  }
+}
+
+//
+// Chance of creating some doors for a room. We always add some doors, and then a chance of more.
+//
+static void level_gen_add_doors(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  int tries = 0;
+
+  while (tries++ < LEVEL_DOOR_TRIES) {
+    level_gen_add_doors_do(g, l);
+  }
+
+  while (d100() < LEVEL_DOOR_PROB) {
+    level_gen_add_doors_do(g, l);
+  }
+}
+
+//
+// Remove doors that are right next to each other
+//
+static void level_gen_remove_doors_next_to_each_other(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  for (auto y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (auto x = 1; x < MAP_WIDTH - 1; x++) {
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_DOOR :
+          if (l->data[ x - 1 ][ y ].c == CHARMAP_DOOR) {
+            l->data[ x - 1 ][ y ].c = CHARMAP_CORRIDOR;
+          }
+          if (l->data[ x + 1 ][ y ].c == CHARMAP_DOOR) {
+            l->data[ x + 1 ][ y ].c = CHARMAP_CORRIDOR;
+          }
+          if (l->data[ x ][ y - 1 ].c == CHARMAP_DOOR) {
+            l->data[ x ][ y - 1 ].c = CHARMAP_CORRIDOR;
+          }
+          if (l->data[ x ][ y + 1 ].c == CHARMAP_DOOR) {
+            l->data[ x ][ y + 1 ].c = CHARMAP_CORRIDOR;
+          }
+      }
+    }
+  }
+}
+
+//
 // Recursive flood fill walkable tiles from the start
 //
 static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l, int x, int y)
@@ -3519,6 +3636,16 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   level_gen_grow_islands(g, l);
 
   //
+  // Add some doors
+  //
+  level_gen_add_doors(g, l);
+
+  //
+  // Remove some doors!
+  //
+  level_gen_remove_doors_next_to_each_other(g, l);
+
+  //
   // Add fragments before we add walls
   //
   level_gen_add_fragments(g, l);
@@ -3620,6 +3747,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
   //
   // We keep one level free for the grid level
   //
+  auto start = time_ms();
   LOG("Level generation (max %u)", s->level_count);
   TRACE_AND_INDENT();
 
@@ -3642,7 +3770,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
     }
   }
 
-  LOG("Level generation completed");
+  LOG("Level generation completed, took %u ms", time_ms() - start);
 
   level_gen_stats_dump(g);
 }
