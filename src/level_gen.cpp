@@ -269,10 +269,14 @@ public:
   //
   // All doors in the room
   //
+  // These are room co-ordinates, not map co-ordinates
+  //
   std::vector< point > doors;
 
   //
   // Points adjacent to doors
+  //
+  // These are room co-ordinates, not map co-ordinates
   //
   std::vector< point > door_adjacent_tile;
 };

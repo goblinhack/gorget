@@ -486,7 +486,7 @@ bool wid_actionbar_create_window(Gamep g)
     x_at += option_width + 1;
   }
 
-  {
+  if (opt_wait) {
     auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar wait");
     point tl = make_point(x_at, 0);
     point br = make_point(x_at + option_width - 1, 0);
@@ -535,7 +535,7 @@ bool wid_actionbar_create_window(Gamep g)
     x_at += option_width + 1;
   }
 
-  {
+  if (opt_help) {
     auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar help");
     point tl = make_point(x_at, 0);
     point br = make_point(x_at + option_width - 1, 0);
@@ -551,7 +551,7 @@ bool wid_actionbar_create_window(Gamep g)
     x_at += option_width + 1;
   }
 
-  {
+  if (opt_quit) {
     auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar quit");
     point tl = make_point(x_at, 0);
     point br = make_point(x_at + option_width - 1, 0);
