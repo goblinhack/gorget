@@ -99,7 +99,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     // speed 100  tick           tick
     // speed 50   tick
     //
-    if (! t->is_moving) {
+    if (! thing_is_moving(t)) {
       continue;
     }
 

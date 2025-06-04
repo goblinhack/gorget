@@ -4,9 +4,22 @@
 
 #include "../../my_callstack.hpp"
 #include "../../my_minimal.hpp"
+#include "../../my_thing.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
+#include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
+
+static std::string tp_brazier_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+{
+  TRACE_NO_INDENT();
+
+  if (thing_is_dead(me)) {
+    return "extinguished brazier";
+  }
+
+  return "brightly burning brazier";
+}
 
 bool tp_load_brazier(void)
 {
@@ -16,10 +29,12 @@ bool tp_load_brazier(void)
   auto tp   = tp_load("brazier");
 
   // begin sort marker1 {
+  tp_description_set(tp, tp_brazier_description_get);
   tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_blit_square_outlined, true);
   tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_blit_square_outlined, true);
   tp_flag_set(tp, is_brazier, true);
+  tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_obstacle_block, true);
   tp_light_color_set(tp, "orange");

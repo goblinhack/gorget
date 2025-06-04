@@ -781,6 +781,7 @@ void Game::display(void)
           level_mouse_position_get(g, v, l);
           level_display(g, v, l);
           level_cursor_update(g, v, l);
+          level_cursor_describe(g, v, l);
         }
       }
       break;

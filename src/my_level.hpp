@@ -371,6 +371,7 @@ void level_bounds_set(Gamep, Levelsp, Levelp);
 void level_cursor_set(Gamep, Levelsp, point);
 bool level_cursor_is_valid(Gamep, Levelsp);
 void level_cursor_update(Gamep, Levelsp, Levelp);
+void level_cursor_describe(Gamep, Levelsp, Levelp);
 void level_display(Gamep, Levelsp, Levelp);
 void level_map_set(Gamep, Levelsp, Levelp, const char *);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);

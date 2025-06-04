@@ -124,7 +124,7 @@ bool game_event_save(Gamep g)
     return false;
   }
 
-  if (player->is_dead) {
+  if (thing_is_dead(player)) {
     return false;
   }
 
@@ -177,7 +177,7 @@ bool game_event_wait(Gamep g)
     return false;
   }
 
-  if (player->is_dead) {
+  if (thing_is_dead(player)) {
     return false;
   }
 
@@ -207,7 +207,7 @@ bool game_event_descend(Gamep g)
     return false;
   }
 
-  if (player->is_dead) {
+  if (thing_is_dead(player)) {
     return false;
   }
 
@@ -241,7 +241,7 @@ bool game_event_ascend(Gamep g)
     return false;
   }
 
-  if (player->is_dead) {
+  if (thing_is_dead(player)) {
     return false;
   }
 

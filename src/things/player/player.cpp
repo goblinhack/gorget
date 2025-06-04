@@ -4,9 +4,21 @@
 
 #include "../../my_callstack.hpp"
 #include "../../my_minimal.hpp"
+#include "../../my_thing.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
+#include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
+
+static std::string tp_player_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+{
+  TRACE_NO_INDENT();
+
+  if (thing_is_dead(me)) {
+    return "Dead you";
+  }
+  return "You";
+}
 
 bool tp_load_player(void)
 {
@@ -14,9 +26,11 @@ bool tp_load_player(void)
   auto tp   = tp_load("player");
 
   // begin sort marker1 {
+  tp_description_set(tp, tp_player_description_get);
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_player, true);
   tp_flag_set(tp, is_tickable, true);
   tp_speed_set(tp, 100);

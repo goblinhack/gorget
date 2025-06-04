@@ -128,11 +128,7 @@ static void wid_botcon_log_(std::string s)
 
   auto curr_msg = wid_get_text(wid_get_head(wid_botcon_input_line));
 
-  if (last_msg == s) {
-    s = last_msg + " (x" + std::to_string(last_msg_count + 2) + ")";
-    last_msg_count++;
-    wid_botcon_replace(g, wid_botcon_input_line, s);
-  } else if (! curr_msg.empty() && length_without_format(curr_msg) + length_without_format(s) + 1 < UI_BOTCON_WIDTH) {
+  if (! curr_msg.empty() && length_without_format(curr_msg) + length_without_format(s) + 1 < UI_BOTCON_WIDTH) {
     curr_msg = curr_msg + " " + s;
     wid_botcon_replace(g, wid_botcon_input_line, curr_msg);
     last_msg       = "";

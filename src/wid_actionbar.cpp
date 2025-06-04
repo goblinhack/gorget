@@ -385,7 +385,7 @@ bool wid_actionbar_create_window(Gamep g)
     return false;
   }
 
-  if (player->is_dead) {
+  if (thing_is_dead(player)) {
     return false;
   }
 

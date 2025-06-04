@@ -6,6 +6,8 @@
 #ifndef _MY_UI_HPP_
 #define _MY_UI_HPP_
 
+#include "my_ascii.hpp"
+
 #define UI_CONSOLE_HEIGHT             (TERM_HEIGHT * 2)
 #define UI_CONSOLE_INPUT_COLOR        ORANGE
 #define UI_CONSOLE_TEXT_COLOR         WHITE

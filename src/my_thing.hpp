@@ -149,18 +149,22 @@ typedef struct Thing_ {
   //
   // Snuffed it.
   //
-  bool is_dead : 1;
+  bool _is_dead : 1;
+  //
+  // For doors, chests etc...
+  //
+  bool _is_open : 1;
   //
   // Pushed onto the map?
   //
-  bool is_on_map : 1;
+  bool _is_on_map : 1;
   //
   // Currently moving between tiles. The thing is already at the destination.
   //
-  bool is_moving : 1;
+  bool _is_moving : 1;
 } Thing;
 
-Tpp thing_tp(Thingp t);
+Tpp thing_tp(Thingp);
 
 Thingp thing_and_tp_get_at(Gamep, Levelsp, Levelp, point p, int slot, Tpp * = nullptr);
 Thingp thing_find(Gamep, Levelsp, ThingId id);
@@ -203,15 +207,27 @@ void thing_level_reached_entrance(Gamep, Levelsp, Levelp, Thingp);
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
 bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp t);
 bool thing_player_move_request(Gamep, bool up, bool down, bool left, bool right);
-bool thing_is_dir_down(Thingp t);
-bool thing_is_dir_tr(Thingp t);
+bool thing_is_dir_down(Thingp);
+bool thing_is_dir_tr(Thingp);
 bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
 bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, point to);
-bool thing_is_dir_tl(Thingp t);
-bool thing_is_dir_br(Thingp t);
-bool thing_is_dir_bl(Thingp t);
-bool thing_is_dir_left(Thingp t);
-bool thing_is_dir_right(Thingp t);
-bool thing_is_dir_up(Thingp t);
+bool thing_is_dir_tl(Thingp);
+bool thing_is_dir_br(Thingp);
+bool thing_is_dir_bl(Thingp);
+bool thing_is_dir_left(Thingp);
+bool thing_is_dir_right(Thingp);
+bool thing_is_dir_up(Thingp);
+
+bool thing_is_dead(Thingp);
+void thing_is_dead_set(Thingp, bool val = true);
+
+bool thing_is_open(Thingp);
+void thing_is_open_set(Thingp, bool val = true);
+
+bool thing_is_on_map(Thingp);
+void thing_is_on_map_set(Thingp, bool val = true);
+
+bool thing_is_moving(Thingp);
+void thing_is_moving_set(Thingp, bool val = true);
 
 #endif

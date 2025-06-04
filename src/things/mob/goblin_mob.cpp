@@ -6,7 +6,15 @@
 #include "../../my_minimal.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
+#include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
+
+static std::string tp_goblin_mob_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+{
+  TRACE_NO_INDENT();
+
+  return "goblin spawning grounds";
+}
 
 bool tp_load_goblin_mob(void)
 {
@@ -14,9 +22,11 @@ bool tp_load_goblin_mob(void)
   auto tp   = tp_load("goblin_mob");
 
   // begin sort marker1 {
+  tp_description_set(tp, tp_goblin_mob_description_get);
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_mob, true);
   tp_flag_set(tp, is_mob2, true);
   tp_flag_set(tp, is_tickable, true);

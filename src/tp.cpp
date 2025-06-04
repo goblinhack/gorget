@@ -11,6 +11,7 @@
 #include "my_random.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_tp_callbacks.hpp"
 #include "my_tps.hpp"
 
 #include <inttypes.h>
@@ -140,6 +141,11 @@ public:
   // For braziers and more
   //
   color light_color = {WHITE};
+
+  //
+  // Callbacks
+  //
+  tp_description_get_t description_get;
 
   Tp(void);
   ~Tp(void);
@@ -548,3 +554,20 @@ int tp_speed_get(Tpp tp)
   TRACE_NO_INDENT();
   return tp->speed;
 };
+
+//
+// tp description callbacks
+//
+void tp_description_set(Tpp tp, tp_description_get_t callback)
+{
+  TRACE_NO_INDENT();
+  tp->description_get = callback;
+}
+std::string tp_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+{
+  TRACE_NO_INDENT();
+  if (! tp->description_get) {
+    return "";
+  }
+  return tp->description_get(tp, me, owner, at);
+}

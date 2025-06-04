@@ -231,7 +231,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
   t->old_at      = t->at;
   t->moving_from = t->at;
   t->at          = to;
-  t->is_moving   = true;
+  thing_is_moving_set(t);
 
   thing_push(g, v, l, t);
 
@@ -293,7 +293,7 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   t->moving_from = t->at;
-  t->is_moving   = false;
+  thing_is_moving_set(t, false);
 
   FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, t->at)
   {
@@ -441,7 +441,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       //
       // Save where we were pushed so we can pop the same location
       //
-      t->is_on_map                      = true;
+      thing_is_on_map_set(t);
       t->level_num                      = l->level_num;
       t->last_pushed_at                 = p;
       l->thing_id[ p.x ][ p.y ][ slot ] = t->id;
@@ -503,7 +503,7 @@ void thing_pop(Gamep g, Levelsp v, Thingp t)
   //
   // Pop from where we were pushed
   //
-  if (! t->is_on_map) {
+  if (! thing_is_on_map(t)) {
     return;
   }
   point p = t->last_pushed_at;
@@ -516,7 +516,7 @@ void thing_pop(Gamep g, Levelsp v, Thingp t)
     auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
     if (o_id == t->id) {
       l->thing_id[ p.x ][ p.y ][ slot ] = 0;
-      t->is_on_map                      = false;
+      thing_is_on_map_set(t, false);
       return;
     }
   }
@@ -560,7 +560,7 @@ bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If already moving, do not pop the next path tile
   //
-  if (t->is_moving) {
+  if (thing_is_moving(t)) {
     return false;
   }
 

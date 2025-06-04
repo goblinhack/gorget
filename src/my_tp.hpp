@@ -119,7 +119,7 @@
       list_macro(is_unused59, "is_unused59"),                                     /* ............................ */ \
       list_macro(is_unused6, "is_unused6"),                                       /* ............................ */ \
       list_macro(is_unused60, "is_unused60"),                                     /* ............................ */ \
-      list_macro(is_unused61, "is_unused61"),                                     /* ............................ */ \
+      list_macro(is_described_cursor, "is_described_cursor"),                     /* ............................ */ \
       list_macro(is_grass, "is_grass"),                                           /* ............................ */ \
       list_macro(is_slime, "is_slime"),                                           /* ............................ */ \
       list_macro(is_ghost, "is_ghost"),                                           /* ............................ */ \
@@ -162,6 +162,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_cursor_path(tp)                tp_flag(tp, is_cursor_path)
 #define tp_is_cursor(tp)                     tp_flag(tp, is_cursor)
 #define tp_is_deep_water(tp)                 tp_flag(tp, is_deep_water)
+#define tp_is_described_cursor(tp)           tp_flag(tp, is_described_cursor)
 #define tp_is_dirt(tp)                       tp_flag(tp, is_dirt)
 #define tp_is_door(tp)                       tp_flag(tp, is_door)
 #define tp_is_dungeon_entrance(tp)           tp_flag(tp, is_dungeon_entrance)
@@ -260,7 +261,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused59(tp)                   tp_flag(tp, is_unused59)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused60(tp)                   tp_flag(tp, is_unused60)
-#define tp_is_unused61(tp)                   tp_flag(tp, is_unused61)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                    tp_flag(tp, is_unused9)
@@ -290,6 +290,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_cursor_path(thing)                tp_flag(thing_tp(thing), is_cursor_path)
 #define thing_is_cursor(thing)                     tp_flag(thing_tp(thing), is_cursor)
 #define thing_is_deep_water(thing)                 tp_flag(thing_tp(thing), is_deep_water)
+#define thing_is_described_cursor(thing)           tp_flag(thing_tp(thing), is_described_cursor)
 #define thing_is_dirt(thing)                       tp_flag(thing_tp(thing), is_dirt)
 #define thing_is_door(thing)                       tp_flag(thing_tp(thing), is_door)
 #define thing_is_dungeon_entrance(thing)           tp_flag(thing_tp(thing), is_dungeon_entrance)
@@ -388,7 +389,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define thing_is_unused59(thing)                   tp_flag(thing_tp(thing), is_unused59)
 #define thing_is_unused6(thing)                    tp_flag(thing_tp(thing), is_unused6)
 #define thing_is_unused60(thing)                   tp_flag(thing_tp(thing), is_unused60)
-#define thing_is_unused61(thing)                   tp_flag(thing_tp(thing), is_unused61)
 #define thing_is_unused7(thing)                    tp_flag(thing_tp(thing), is_unused7)
 #define thing_is_unused8(thing)                    tp_flag(thing_tp(thing), is_unused8)
 #define thing_is_unused9(thing)                    tp_flag(thing_tp(thing), is_unused9)
@@ -418,6 +418,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_cursor_path(g, v, l, p)                level_flag(g, v, l, is_cursor_path, p)
 #define level_is_cursor(g, v, l, p)                     level_flag(g, v, l, is_cursor, p)
 #define level_is_deep_water(g, v, l, p)                 level_flag(g, v, l, is_deep_water, p)
+#define level_is_described_cursor(g, v, l, p)           level_flag(g, v, l, is_described_cursor, p)
 #define level_is_dirt(g, v, l, p)                       level_flag(g, v, l, is_dirt, p)
 #define level_is_door(g, v, l, p)                       level_flag(g, v, l, is_door, p)
 #define level_is_dungeon_entrance(g, v, l, p)           level_flag(g, v, l, is_dungeon_entrance, p)
@@ -516,7 +517,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused59(g, v, l, p)                   level_flag(g, v, l, is_unused59, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused60(g, v, l, p)                   level_flag(g, v, l, is_unused60, p)
-#define level_is_unused61(g, v, l, p)                   level_flag(g, v, l, is_unused61, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                    level_flag(g, v, l, is_unused9, p)
@@ -664,4 +664,4 @@ uint8_t tp_z_prio_get(Tpp tp);
 void tp_speed_set(Tpp tp, int val);
 int  tp_speed_get(Tpp tp);
 
-#endif // THING_TEMPLATE_H_
+#endif // _MY_THING_TEMPLATE_H_

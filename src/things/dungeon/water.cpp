@@ -8,6 +8,15 @@
 #include "../../my_tp.hpp"
 #include "../../my_tps.hpp"
 
+#include "../../my_tp_callbacks.hpp"
+
+static std::string tp_water_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+{
+  TRACE_NO_INDENT();
+
+  return "shallow water";
+}
+
 bool tp_load_water(void)
 {
   TRACE_NO_INDENT();
@@ -15,8 +24,10 @@ bool tp_load_water(void)
   auto name = std::string("water");
   auto tp   = tp_load("water");
   // begin sort marker1 {
+  tp_description_set(tp, tp_water_description_get);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_tiled, true);
   tp_flag_set(tp, is_water, true);
   tp_short_name_set(tp, "shallow water");

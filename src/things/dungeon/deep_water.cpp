@@ -6,7 +6,15 @@
 #include "../../my_minimal.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
+#include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
+
+static std::string tp_deep_water_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+{
+  TRACE_NO_INDENT();
+
+  return "deep water";
+}
 
 bool tp_load_deep_water(void)
 {
@@ -15,10 +23,12 @@ bool tp_load_deep_water(void)
   auto name = std::string("deep_water");
   auto tp   = tp_load("deep_water");
   // begin sort marker1 {
+  tp_description_set(tp, tp_deep_water_description_get);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_cursor_path_hazard, true);
   tp_flag_set(tp, is_deep_water, true);
+  tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_tiled, true);
   tp_short_name_set(tp, "deep water");
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID2);

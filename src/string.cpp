@@ -939,6 +939,32 @@ std::string capitalise(std::string in)
 }
 
 //
+// foo bar -> Foo bar
+//
+std::string capitalise_first(std::string in)
+{
+  TRACE_NO_INDENT();
+  std::string out = in;
+
+  char *b          = (char *) out.c_str();
+  char *e          = b + out.size();
+  char *c          = b;
+  bool  word_start = true;
+  while (c < e) {
+    if (word_start) {
+      if (islower(*c)) {
+        *c = toupper(*c);
+      }
+      word_start = false;
+    }
+
+    c++;
+  }
+
+  return out;
+}
+
+//
 // Modify the input string with and change "pattern" to "replace_with" repeatedly.
 //
 void replace(std::string &input, const std::string &pattern, const std::string &replace_with)

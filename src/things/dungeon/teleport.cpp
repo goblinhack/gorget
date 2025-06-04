@@ -6,7 +6,15 @@
 #include "../../my_minimal.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
+#include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
+
+static std::string tp_teleport_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+{
+  TRACE_NO_INDENT();
+
+  return "teleport";
+}
 
 bool tp_load_teleport(void)
 {
@@ -16,8 +24,10 @@ bool tp_load_teleport(void)
   auto tp   = tp_load("teleport");
 
   // begin sort marker1 {
+  tp_description_set(tp, tp_teleport_description_get);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_teleport, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

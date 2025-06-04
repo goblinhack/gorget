@@ -6,7 +6,15 @@
 #include "../../my_minimal.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
+#include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
+
+static std::string tp_lava_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+{
+  TRACE_NO_INDENT();
+
+  return "lovely lava";
+}
 
 bool tp_load_lava(void)
 {
@@ -15,9 +23,11 @@ bool tp_load_lava(void)
   auto name = std::string("lava");
   auto tp   = tp_load("lava");
   // begin sort marker1 {
+  tp_description_set(tp, tp_lava_description_get);
   tp_flag_set(tp, is_animated, true);
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_cursor_path_hazard, true);
+  tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_lava, true);
   tp_flag_set(tp, is_tiled, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
