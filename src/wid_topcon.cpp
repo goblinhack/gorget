@@ -13,7 +13,6 @@
 #include "my_ui.hpp"
 #include "my_wid_topcon.hpp"
 
-#include <algorithm>
 #include <map>
 
 static void wid_topcon_wid_create(Gamep);
@@ -75,9 +74,6 @@ static void wid_topcon_scroll(Widp w, std::string str)
   tmp = wid_get_head(w);
   if (tmp) {
     wid_set_text(tmp, str);
-    if (str.empty()) {
-      fprintf(stderr, "ZZZ NEIL %s %s %d empty line\n", __FILE__, __FUNCTION__, __LINE__);
-    }
   }
 }
 
@@ -260,31 +256,4 @@ static void wid_topcon_wid_create(Gamep g)
   wid_topcon_vert_scroll = wid_new_vert_scroll_bar(g, wid_topcon_window, "", wid_topcon_container);
   wid_visible(g, wid_get_parent(wid_topcon_vert_scroll));
   wid_update(g, wid_topcon_window);
-}
-
-std::vector< std::string > wid_topcon_serialize(void)
-{
-  TRACE_NO_INDENT();
-  std::vector< std::string > r;
-  auto                       tmp = wid_get_head(wid_topcon_input_line);
-  while (tmp) {
-    auto s = wid_get_text(tmp);
-    if (s.size()) {
-      r.push_back(wid_get_text(tmp));
-    }
-    tmp = wid_get_next(tmp);
-  }
-  std::reverse(r.begin(), r.end());
-  return r;
-}
-
-void wid_topcon_deserialize(std::vector< std::string > r)
-{
-  TRACE_NO_INDENT();
-  for (const auto &s : r) {
-    auto tmp = s;
-    if (tmp.size()) {
-      TOPCON("%s", tmp.c_str());
-    }
-  }
 }

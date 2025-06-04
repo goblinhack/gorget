@@ -22,12 +22,6 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, Thing
     return;
   }
 
-  if (0) {
-    if (t && thing_is_player(t)) {
-      TOPCON("player %u.%u, %u,%u", t->at.x, t->at.y, t->pix_at.x, t->pix_at.y);
-    }
-  }
-
   auto single_pix_size = game_map_single_pix_size_get(g);
 
   //

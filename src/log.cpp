@@ -10,6 +10,7 @@
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
+#include "my_wid_botcon.hpp"
 #include "my_wid_console.hpp"
 #include "my_wid_topcon.hpp"
 
@@ -459,5 +460,27 @@ void TOPCON(const char *fmt, ...)
 
   va_start(args, fmt);
   topcon_(fmt, args);
+  va_end(args);
+}
+
+void botcon_(const char *fmt, va_list args)
+{
+  TRACE_NO_INDENT();
+
+  char buf[ MAXLONGSTR ];
+
+  vsnprintf(buf, MAXLONGSTR, fmt, args);
+
+  wid_botcon_log(buf);
+}
+
+void BOTCON(const char *fmt, ...)
+{
+  TRACE_NO_INDENT();
+
+  va_list args;
+
+  va_start(args, fmt);
+  botcon_(fmt, args);
   va_end(args);
 }

@@ -40,6 +40,11 @@
 #define UI_TOPCON_VIS_HEIGHT          UI_TOPCON_HEIGHT
 #define UI_TOPCON_VIS_WIDTH           UI_TOPCON_WIDTH
 #define UI_TOPCON_WIDTH               (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
+#define UI_BOTCON_HEIGHT              1 // Scrollbar limit
+#define UI_BOTCON_TEXT_COLOR          UI_COLOR
+#define UI_BOTCON_VIS_HEIGHT          UI_BOTCON_HEIGHT
+#define UI_BOTCON_VIS_WIDTH           UI_BOTCON_WIDTH
+#define UI_BOTCON_WIDTH               (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
 #define UI_TYPE_PIXELART              0
 #define UI_TYPES_MAX                  1
 #define UI_WID_POPUP_WIDTH_NORMAL     18

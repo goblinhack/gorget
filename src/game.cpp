@@ -10,6 +10,7 @@
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
+#include "my_wid_botcon.hpp"
 #include "my_wid_topcon.hpp"
 #include "my_wids.hpp"
 
@@ -533,6 +534,7 @@ void Game::start_playing(void)
   }
 
   wid_topcon_init(g);
+  wid_botcon_init(g);
 
   auto l = game_level_get(g, v);
   if (! l) {
@@ -540,6 +542,7 @@ void Game::start_playing(void)
   }
 
   wid_topcon_flush(g);
+  wid_botcon_flush(g);
 }
 void game_start_playing(Gamep g) { g->start_playing(); }
 
@@ -640,6 +643,7 @@ void Game::state_change(GameState new_state, const std::string &why)
       wid_rightbar_fini(g);
       wid_actionbar_fini(g);
       wid_topcon_fini(g);
+      wid_botcon_fini(g);
       break;
     case STATE_PLAYING :
       wid_load_destroy(g);
@@ -668,6 +672,7 @@ void Game::state_change(GameState new_state, const std::string &why)
           wid_rightbar_init(g);
           wid_actionbar_init(g);
           wid_topcon_init(g);
+          wid_botcon_init(g);
           game_map_zoom_update(g);
           break;
         case STATE_MAIN_MENU :
