@@ -26,6 +26,8 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_able_to_walk_through_walls, true);
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
+  tp_flag_set(tp, is_ethereal, true);
+  tp_flag_set(tp, is_levitating, true);
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_ghost, true);

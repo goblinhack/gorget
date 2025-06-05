@@ -116,9 +116,9 @@
       list_macro(is_unused56, "is_unused56"),                                     /* ............................ */ \
       list_macro(is_unused57, "is_unused57"),                                     /* ............................ */ \
       list_macro(is_unused58, "is_unused58"),                                     /* ............................ */ \
-      list_macro(is_unused59, "is_unused59"),                                     /* ............................ */ \
+      list_macro(is_ethereal, "is_ethereal"),                                     /* ............................ */ \
       list_macro(is_unused6, "is_unused6"),                                       /* ............................ */ \
-      list_macro(is_unused60, "is_unused60"),                                     /* ............................ */ \
+      list_macro(is_levitating, "is_levitating"),                                 /* ............................ */ \
       list_macro(is_described_cursor, "is_described_cursor"),                     /* ............................ */ \
       list_macro(is_grass, "is_grass"),                                           /* ............................ */ \
       list_macro(is_slime, "is_slime"),                                           /* ............................ */ \
@@ -167,6 +167,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_door(tp)                       tp_flag(tp, is_door)
 #define tp_is_dungeon_entrance(tp)           tp_flag(tp, is_dungeon_entrance)
 #define tp_is_entrance(tp)                   tp_flag(tp, is_entrance)
+#define tp_is_ethereal(tp)                   tp_flag(tp, is_ethereal)
 #define tp_is_exit(tp)                       tp_flag(tp, is_exit)
 #define tp_is_floor(tp)                      tp_flag(tp, is_floor)
 #define tp_is_foliage(tp)                    tp_flag(tp, is_foliage)
@@ -182,6 +183,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_level_next(tp)                 tp_flag(tp, is_level_next)
 #define tp_is_level_not_visited(tp)          tp_flag(tp, is_level_not_visited)
 #define tp_is_level_visited(tp)              tp_flag(tp, is_level_visited)
+#define tp_is_levitating(tp)                 tp_flag(tp, is_levitating)
 #define tp_is_light_source(tp)               tp_flag(tp, is_light_source)
 #define tp_is_minion(tp)                     tp_flag(tp, is_minion)
 #define tp_is_mob(tp)                        tp_flag(tp, is_mob)
@@ -258,9 +260,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused56(tp)                   tp_flag(tp, is_unused56)
 #define tp_is_unused57(tp)                   tp_flag(tp, is_unused57)
 #define tp_is_unused58(tp)                   tp_flag(tp, is_unused58)
-#define tp_is_unused59(tp)                   tp_flag(tp, is_unused59)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
-#define tp_is_unused60(tp)                   tp_flag(tp, is_unused60)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                    tp_flag(tp, is_unused9)
@@ -270,131 +270,131 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 // end sort marker1 }
 
 // begin sort marker2 {
-#define thing_is_able_to_walk_through_walls(thing) tp_flag(thing_tp(thing), is_able_to_walk_through_walls)
-#define thing_is_animated_can_hflip(thing)         tp_flag(thing_tp(thing), is_animated_can_hflip)
-#define thing_is_animated_no_dir(thing)            tp_flag(thing_tp(thing), is_animated_no_dir)
-#define thing_is_animated_same_first_tile(thing)   tp_flag(thing_tp(thing), is_animated_same_first_tile)
-#define thing_is_animated(thing)                   tp_flag(thing_tp(thing), is_animated)
-#define thing_is_barrel(thing)                     tp_flag(thing_tp(thing), is_barrel)
-#define thing_is_blit_centered(thing)              tp_flag(thing_tp(thing), is_blit_centered)
-#define thing_is_blit_on_ground(thing)             tp_flag(thing_tp(thing), is_blit_on_ground)
-#define thing_is_blit_outlined(thing)              tp_flag(thing_tp(thing), is_blit_outlined)
-#define thing_is_blit_square_outlined(thing)       tp_flag(thing_tp(thing), is_blit_square_outlined)
-#define thing_is_brazier(thing)                    tp_flag(thing_tp(thing), is_brazier)
-#define thing_is_bridge(thing)                     tp_flag(thing_tp(thing), is_bridge)
-#define thing_is_chasm(thing)                      tp_flag(thing_tp(thing), is_chasm)
-#define thing_is_corridor(thing)                   tp_flag(thing_tp(thing), is_corridor)
-#define thing_is_cursor_hazard(thing)              tp_flag(thing_tp(thing), is_cursor_hazard)
-#define thing_is_cursor_path_blocker(thing)        tp_flag(thing_tp(thing), is_cursor_path_blocker)
-#define thing_is_cursor_path_hazard(thing)         tp_flag(thing_tp(thing), is_cursor_path_hazard)
-#define thing_is_cursor_path(thing)                tp_flag(thing_tp(thing), is_cursor_path)
-#define thing_is_cursor(thing)                     tp_flag(thing_tp(thing), is_cursor)
-#define thing_is_deep_water(thing)                 tp_flag(thing_tp(thing), is_deep_water)
-#define thing_is_described_cursor(thing)           tp_flag(thing_tp(thing), is_described_cursor)
-#define thing_is_dirt(thing)                       tp_flag(thing_tp(thing), is_dirt)
-#define thing_is_door(thing)                       tp_flag(thing_tp(thing), is_door)
-#define thing_is_dungeon_entrance(thing)           tp_flag(thing_tp(thing), is_dungeon_entrance)
-#define thing_is_entrance(thing)                   tp_flag(thing_tp(thing), is_entrance)
-#define thing_is_exit(thing)                       tp_flag(thing_tp(thing), is_exit)
-#define thing_is_floor(thing)                      tp_flag(thing_tp(thing), is_floor)
-#define thing_is_foliage(thing)                    tp_flag(thing_tp(thing), is_foliage)
-#define thing_is_ghost(thing)                      tp_flag(thing_tp(thing), is_ghost)
-#define thing_is_goblin(thing)                     tp_flag(thing_tp(thing), is_goblin)
-#define thing_is_grass(thing)                      tp_flag(thing_tp(thing), is_grass)
-#define thing_is_key(thing)                        tp_flag(thing_tp(thing), is_key)
-#define thing_is_lava(thing)                       tp_flag(thing_tp(thing), is_lava)
-#define thing_is_level_across(thing)               tp_flag(thing_tp(thing), is_level_across)
-#define thing_is_level_curr(thing)                 tp_flag(thing_tp(thing), is_level_curr)
-#define thing_is_level_down(thing)                 tp_flag(thing_tp(thing), is_level_down)
-#define thing_is_level_final(thing)                tp_flag(thing_tp(thing), is_level_final)
-#define thing_is_level_next(thing)                 tp_flag(thing_tp(thing), is_level_next)
-#define thing_is_level_not_visited(thing)          tp_flag(thing_tp(thing), is_level_not_visited)
-#define thing_is_level_visited(thing)              tp_flag(thing_tp(thing), is_level_visited)
-#define thing_is_light_source(thing)               tp_flag(thing_tp(thing), is_light_source)
-#define thing_is_minion(thing)                     tp_flag(thing_tp(thing), is_minion)
-#define thing_is_mob(thing)                        tp_flag(thing_tp(thing), is_mob)
-#define thing_is_mob1(thing)                       tp_flag(thing_tp(thing), is_mob1)
-#define thing_is_mob2(thing)                       tp_flag(thing_tp(thing), is_mob2)
-#define thing_is_monst(thing)                      tp_flag(thing_tp(thing), is_monst)
-#define thing_is_monst1(thing)                     tp_flag(thing_tp(thing), is_monst1)
-#define thing_is_monst2(thing)                     tp_flag(thing_tp(thing), is_monst2)
-#define thing_is_obstacle_block_or_door(thing)     tp_flag(thing_tp(thing), is_obstacle_block_or_door)
-#define thing_is_obstacle_block(thing)             tp_flag(thing_tp(thing), is_obstacle_block)
-#define thing_is_pillar(thing)                     tp_flag(thing_tp(thing), is_pillar)
-#define thing_is_player(thing)                     tp_flag(thing_tp(thing), is_player)
-#define thing_is_rock(thing)                       tp_flag(thing_tp(thing), is_rock)
-#define thing_is_secret_door(thing)                tp_flag(thing_tp(thing), is_secret_door)
-#define thing_is_slime(thing)                      tp_flag(thing_tp(thing), is_slime)
-#define thing_is_teleport(thing)                   tp_flag(thing_tp(thing), is_teleport)
-#define thing_is_tickable(thing)                   tp_flag(thing_tp(thing), is_tickable)
-#define thing_is_tiled(thing)                      tp_flag(thing_tp(thing), is_tiled)
-#define thing_is_trap(thing)                       tp_flag(thing_tp(thing), is_trap)
-#define thing_is_treasure(thing)                   tp_flag(thing_tp(thing), is_treasure)
-#define thing_is_treasure1(thing)                  tp_flag(thing_tp(thing), is_treasure1)
-#define thing_is_treasure2(thing)                  tp_flag(thing_tp(thing), is_treasure2)
-#define thing_is_unused1(thing)                    tp_flag(thing_tp(thing), is_unused1)
-#define thing_is_unused10(thing)                   tp_flag(thing_tp(thing), is_unused10)
-#define thing_is_unused11(thing)                   tp_flag(thing_tp(thing), is_unused11)
-#define thing_is_unused12(thing)                   tp_flag(thing_tp(thing), is_unused12)
-#define thing_is_unused13(thing)                   tp_flag(thing_tp(thing), is_unused13)
-#define thing_is_unused14(thing)                   tp_flag(thing_tp(thing), is_unused14)
-#define thing_is_unused15(thing)                   tp_flag(thing_tp(thing), is_unused15)
-#define thing_is_unused16(thing)                   tp_flag(thing_tp(thing), is_unused16)
-#define thing_is_unused17(thing)                   tp_flag(thing_tp(thing), is_unused17)
-#define thing_is_unused18(thing)                   tp_flag(thing_tp(thing), is_unused18)
-#define thing_is_unused19(thing)                   tp_flag(thing_tp(thing), is_unused19)
-#define thing_is_unused2(thing)                    tp_flag(thing_tp(thing), is_unused2)
-#define thing_is_unused20(thing)                   tp_flag(thing_tp(thing), is_unused20)
-#define thing_is_unused21(thing)                   tp_flag(thing_tp(thing), is_unused21)
-#define thing_is_unused22(thing)                   tp_flag(thing_tp(thing), is_unused22)
-#define thing_is_unused23(thing)                   tp_flag(thing_tp(thing), is_unused23)
-#define thing_is_unused24(thing)                   tp_flag(thing_tp(thing), is_unused24)
-#define thing_is_unused25(thing)                   tp_flag(thing_tp(thing), is_unused25)
-#define thing_is_unused26(thing)                   tp_flag(thing_tp(thing), is_unused26)
-#define thing_is_unused27(thing)                   tp_flag(thing_tp(thing), is_unused27)
-#define thing_is_unused28(thing)                   tp_flag(thing_tp(thing), is_unused28)
-#define thing_is_unused29(thing)                   tp_flag(thing_tp(thing), is_unused29)
-#define thing_is_unused3(thing)                    tp_flag(thing_tp(thing), is_unused3)
-#define thing_is_unused30(thing)                   tp_flag(thing_tp(thing), is_unused30)
-#define thing_is_unused31(thing)                   tp_flag(thing_tp(thing), is_unused31)
-#define thing_is_unused32(thing)                   tp_flag(thing_tp(thing), is_unused32)
-#define thing_is_unused33(thing)                   tp_flag(thing_tp(thing), is_unused33)
-#define thing_is_unused34(thing)                   tp_flag(thing_tp(thing), is_unused34)
-#define thing_is_unused35(thing)                   tp_flag(thing_tp(thing), is_unused35)
-#define thing_is_unused36(thing)                   tp_flag(thing_tp(thing), is_unused36)
-#define thing_is_unused37(thing)                   tp_flag(thing_tp(thing), is_unused37)
-#define thing_is_unused38(thing)                   tp_flag(thing_tp(thing), is_unused38)
-#define thing_is_unused39(thing)                   tp_flag(thing_tp(thing), is_unused39)
-#define thing_is_unused4(thing)                    tp_flag(thing_tp(thing), is_unused4)
-#define thing_is_unused40(thing)                   tp_flag(thing_tp(thing), is_unused40)
-#define thing_is_unused41(thing)                   tp_flag(thing_tp(thing), is_unused41)
-#define thing_is_unused42(thing)                   tp_flag(thing_tp(thing), is_unused42)
-#define thing_is_unused43(thing)                   tp_flag(thing_tp(thing), is_unused43)
-#define thing_is_unused44(thing)                   tp_flag(thing_tp(thing), is_unused44)
-#define thing_is_unused45(thing)                   tp_flag(thing_tp(thing), is_unused45)
-#define thing_is_unused46(thing)                   tp_flag(thing_tp(thing), is_unused46)
-#define thing_is_unused47(thing)                   tp_flag(thing_tp(thing), is_unused47)
-#define thing_is_unused48(thing)                   tp_flag(thing_tp(thing), is_unused48)
-#define thing_is_unused49(thing)                   tp_flag(thing_tp(thing), is_unused49)
-#define thing_is_unused5(thing)                    tp_flag(thing_tp(thing), is_unused5)
-#define thing_is_unused50(thing)                   tp_flag(thing_tp(thing), is_unused50)
-#define thing_is_unused51(thing)                   tp_flag(thing_tp(thing), is_unused51)
-#define thing_is_unused52(thing)                   tp_flag(thing_tp(thing), is_unused52)
-#define thing_is_unused53(thing)                   tp_flag(thing_tp(thing), is_unused53)
-#define thing_is_unused54(thing)                   tp_flag(thing_tp(thing), is_unused54)
-#define thing_is_unused55(thing)                   tp_flag(thing_tp(thing), is_unused55)
-#define thing_is_unused56(thing)                   tp_flag(thing_tp(thing), is_unused56)
-#define thing_is_unused57(thing)                   tp_flag(thing_tp(thing), is_unused57)
-#define thing_is_unused58(thing)                   tp_flag(thing_tp(thing), is_unused58)
-#define thing_is_unused59(thing)                   tp_flag(thing_tp(thing), is_unused59)
-#define thing_is_unused6(thing)                    tp_flag(thing_tp(thing), is_unused6)
-#define thing_is_unused60(thing)                   tp_flag(thing_tp(thing), is_unused60)
-#define thing_is_unused7(thing)                    tp_flag(thing_tp(thing), is_unused7)
-#define thing_is_unused8(thing)                    tp_flag(thing_tp(thing), is_unused8)
-#define thing_is_unused9(thing)                    tp_flag(thing_tp(thing), is_unused9)
-#define thing_is_walk_through_walls(thing)         tp_flag(thing_tp(thing), is_walk_through_walls)
-#define thing_is_wall(thing)                       tp_flag(thing_tp(thing), is_wall)
-#define thing_is_water(thing)                      tp_flag(thing_tp(thing), is_water)
+bool thing_is_able_to_walk_through_walls(Thingp t);
+bool thing_is_animated_can_hflip(Thingp t);
+bool thing_is_animated_no_dir(Thingp t);
+bool thing_is_animated_same_first_tile(Thingp t);
+bool thing_is_animated(Thingp t);
+bool thing_is_barrel(Thingp t);
+bool thing_is_blit_centered(Thingp t);
+bool thing_is_blit_on_ground(Thingp t);
+bool thing_is_blit_outlined(Thingp t);
+bool thing_is_blit_square_outlined(Thingp t);
+bool thing_is_brazier(Thingp t);
+bool thing_is_bridge(Thingp t);
+bool thing_is_chasm(Thingp t);
+bool thing_is_corridor(Thingp t);
+bool thing_is_cursor_hazard(Thingp t);
+bool thing_is_cursor_path_blocker(Thingp t);
+bool thing_is_cursor_path_hazard(Thingp t);
+bool thing_is_cursor_path(Thingp t);
+bool thing_is_cursor(Thingp t);
+bool thing_is_deep_water(Thingp t);
+bool thing_is_described_cursor(Thingp t);
+bool thing_is_dirt(Thingp t);
+bool thing_is_door(Thingp t);
+bool thing_is_dungeon_entrance(Thingp t);
+bool thing_is_entrance(Thingp t);
+bool thing_is_ethereal(Thingp t);
+bool thing_is_exit(Thingp t);
+bool thing_is_floor(Thingp t);
+bool thing_is_foliage(Thingp t);
+bool thing_is_ghost(Thingp t);
+bool thing_is_goblin(Thingp t);
+bool thing_is_grass(Thingp t);
+bool thing_is_key(Thingp t);
+bool thing_is_lava(Thingp t);
+bool thing_is_level_across(Thingp t);
+bool thing_is_level_curr(Thingp t);
+bool thing_is_level_down(Thingp t);
+bool thing_is_level_final(Thingp t);
+bool thing_is_level_next(Thingp t);
+bool thing_is_level_not_visited(Thingp t);
+bool thing_is_level_visited(Thingp t);
+bool thing_is_levitating(Thingp t);
+bool thing_is_light_source(Thingp t);
+bool thing_is_minion(Thingp t);
+bool thing_is_mob(Thingp t);
+bool thing_is_mob1(Thingp t);
+bool thing_is_mob2(Thingp t);
+bool thing_is_monst(Thingp t);
+bool thing_is_monst1(Thingp t);
+bool thing_is_monst2(Thingp t);
+bool thing_is_obstacle_block_or_door(Thingp t);
+bool thing_is_obstacle_block(Thingp t);
+bool thing_is_pillar(Thingp t);
+bool thing_is_player(Thingp t);
+bool thing_is_rock(Thingp t);
+bool thing_is_secret_door(Thingp t);
+bool thing_is_slime(Thingp t);
+bool thing_is_teleport(Thingp t);
+bool thing_is_tickable(Thingp t);
+bool thing_is_tiled(Thingp t);
+bool thing_is_trap(Thingp t);
+bool thing_is_treasure(Thingp t);
+bool thing_is_treasure1(Thingp t);
+bool thing_is_treasure2(Thingp t);
+bool thing_is_unused1(Thingp t);
+bool thing_is_unused10(Thingp t);
+bool thing_is_unused11(Thingp t);
+bool thing_is_unused12(Thingp t);
+bool thing_is_unused13(Thingp t);
+bool thing_is_unused14(Thingp t);
+bool thing_is_unused15(Thingp t);
+bool thing_is_unused16(Thingp t);
+bool thing_is_unused17(Thingp t);
+bool thing_is_unused18(Thingp t);
+bool thing_is_unused19(Thingp t);
+bool thing_is_unused2(Thingp t);
+bool thing_is_unused20(Thingp t);
+bool thing_is_unused21(Thingp t);
+bool thing_is_unused22(Thingp t);
+bool thing_is_unused23(Thingp t);
+bool thing_is_unused24(Thingp t);
+bool thing_is_unused25(Thingp t);
+bool thing_is_unused26(Thingp t);
+bool thing_is_unused27(Thingp t);
+bool thing_is_unused28(Thingp t);
+bool thing_is_unused29(Thingp t);
+bool thing_is_unused3(Thingp t);
+bool thing_is_unused30(Thingp t);
+bool thing_is_unused31(Thingp t);
+bool thing_is_unused32(Thingp t);
+bool thing_is_unused33(Thingp t);
+bool thing_is_unused34(Thingp t);
+bool thing_is_unused35(Thingp t);
+bool thing_is_unused36(Thingp t);
+bool thing_is_unused37(Thingp t);
+bool thing_is_unused38(Thingp t);
+bool thing_is_unused39(Thingp t);
+bool thing_is_unused4(Thingp t);
+bool thing_is_unused40(Thingp t);
+bool thing_is_unused41(Thingp t);
+bool thing_is_unused42(Thingp t);
+bool thing_is_unused43(Thingp t);
+bool thing_is_unused44(Thingp t);
+bool thing_is_unused45(Thingp t);
+bool thing_is_unused46(Thingp t);
+bool thing_is_unused47(Thingp t);
+bool thing_is_unused48(Thingp t);
+bool thing_is_unused49(Thingp t);
+bool thing_is_unused5(Thingp t);
+bool thing_is_unused50(Thingp t);
+bool thing_is_unused51(Thingp t);
+bool thing_is_unused52(Thingp t);
+bool thing_is_unused53(Thingp t);
+bool thing_is_unused54(Thingp t);
+bool thing_is_unused55(Thingp t);
+bool thing_is_unused56(Thingp t);
+bool thing_is_unused57(Thingp t);
+bool thing_is_unused58(Thingp t);
+bool thing_is_unused6(Thingp t);
+bool thing_is_unused7(Thingp t);
+bool thing_is_unused8(Thingp t);
+bool thing_is_unused9(Thingp t);
+bool thing_is_walk_through_walls(Thingp t);
+bool thing_is_wall(Thingp t);
+bool thing_is_water(Thingp t);
 // end sort marker2 }
 
 // begin sort marker3 {
@@ -423,6 +423,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_door(g, v, l, p)                       level_flag(g, v, l, is_door, p)
 #define level_is_dungeon_entrance(g, v, l, p)           level_flag(g, v, l, is_dungeon_entrance, p)
 #define level_is_entrance(g, v, l, p)                   level_flag(g, v, l, is_entrance, p)
+#define level_is_ethereal(g, v, l, p)                   level_flag(g, v, l, is_ethereal, p)
 #define level_is_exit(g, v, l, p)                       level_flag(g, v, l, is_exit, p)
 #define level_is_floor(g, v, l, p)                      level_flag(g, v, l, is_floor, p)
 #define level_is_foliage(g, v, l, p)                    level_flag(g, v, l, is_foliage, p)
@@ -438,6 +439,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_level_next(g, v, l, p)                 level_flag(g, v, l, is_level_next, p)
 #define level_is_level_not_visited(g, v, l, p)          level_flag(g, v, l, is_level_not_visited, p)
 #define level_is_level_visited(g, v, l, p)              level_flag(g, v, l, is_level_visited, p)
+#define level_is_levitating(g, v, l, p)                 level_flag(g, v, l, is_levitating, p)
 #define level_is_light_source(g, v, l, p)               level_flag(g, v, l, is_light_source, p)
 #define level_is_minion(g, v, l, p)                     level_flag(g, v, l, is_minion, p)
 #define level_is_mob(g, v, l, p)                        level_flag(g, v, l, is_mob, p)
@@ -514,9 +516,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused56(g, v, l, p)                   level_flag(g, v, l, is_unused56, p)
 #define level_is_unused57(g, v, l, p)                   level_flag(g, v, l, is_unused57, p)
 #define level_is_unused58(g, v, l, p)                   level_flag(g, v, l, is_unused58, p)
-#define level_is_unused59(g, v, l, p)                   level_flag(g, v, l, is_unused59, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
-#define level_is_unused60(g, v, l, p)                   level_flag(g, v, l, is_unused60, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                    level_flag(g, v, l, is_unused9, p)
