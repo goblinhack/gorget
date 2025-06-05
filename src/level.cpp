@@ -154,6 +154,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   level_dump(g, v, new_level);
 
   if (level_num == LEVEL_SELECT_ID) {
+    BOTCON("");
     TOPCON("");
     TOPCON(UI_WARNING_FMT_STR "Choose your next level." UI_RESET_FMT);
     TOPCON("Mouse over levels for monster/treasure info.");

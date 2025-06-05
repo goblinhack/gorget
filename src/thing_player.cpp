@@ -5,7 +5,12 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
+#include "my_minimal.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
+
+#include <string.h>
 
 Thingp thing_player(Gamep g)
 {
@@ -135,4 +140,98 @@ bool thing_player_move_request(Gamep g, bool up, bool down, bool left, bool righ
   }
 
   return true;
+}
+
+//
+// Handle common level exit interactions
+//
+static void thing_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  level_select_update_grid_tiles(g, v);
+  level_cursor_path_reset(g, v, l);
+  level_change(g, v, LEVEL_SELECT_ID);
+}
+
+//
+// Handle level exit interactions
+//
+void thing_player_reached_exit(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  l->completed = true;
+  thing_player_level_leave(g, v, l, t);
+}
+
+//
+// Handle level entrance interactions
+//
+void thing_player_reached_entrance(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  thing_player_level_leave(g, v, l, t);
+}
+
+//
+// Handle interactions for a thing at its location
+//
+void thing_player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto aip = thing_player(g, t);
+  if (! aip) {
+    return;
+  }
+
+  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, t->at)
+  {
+    if (thing_is_player(t)) {
+      //
+      // At the end of the popped path or not?
+      //
+      if (aip->move_path.size) {
+        //
+        // If still more tiles to pop, do not descend automatically
+        //
+        if (thing_is_exit(it)) {
+          //
+          // To enabled the descend shortcut
+          //
+          game_request_to_remake_ui_set(g);
+          return;
+        }
+
+        if (thing_is_entrance(it)) {
+          //
+          // To enabled the ascent shortcut
+          //
+          game_request_to_remake_ui_set(g);
+          return;
+        }
+      } else {
+        //
+        // If at the end of the move path then we can enter or leave when we get to that final tile.
+        //
+        if (thing_is_exit(it)) {
+          //
+          // Descend
+          //
+          thing_player_reached_exit(g, v, l, t);
+          return;
+        }
+
+        if (thing_is_entrance(it)) {
+          //
+          // Ascend
+          //
+          thing_player_reached_entrance(g, v, l, t);
+          return;
+        }
+      }
+    }
+  }
 }
