@@ -27,8 +27,9 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 
   Thingp      owner = nullptr;
   std::string all_things_description;
+  auto        at = v->cursor_at;
 
-  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
+  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, at)
   {
     if (! tp_is_described_cursor(it_tp)) {
       continue;
@@ -37,6 +38,13 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     auto one_desc = tp_description_get(it_tp, it, owner, it->at);
 
     if (one_desc.empty()) {
+      continue;
+    }
+
+    //
+    // Water and deep water exist at the same tile. Don't describe twice.
+    //
+    if (thing_is_water(it) && level_is_deep_water(g, v, l, at)) {
       continue;
     }
 
