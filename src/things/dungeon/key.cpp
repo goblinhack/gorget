@@ -29,6 +29,7 @@ bool tp_load_key(void)
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_key, true);
+  tp_weight_set(tp, 0); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

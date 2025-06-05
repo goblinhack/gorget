@@ -34,6 +34,7 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_door, true);
   tp_flag_set(tp, is_obstacle_block, true);
   tp_flag_set(tp, is_secret_door, true);
+  tp_weight_set(tp, 1000); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

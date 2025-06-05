@@ -28,6 +28,7 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_bridge, true);
   tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_tiled, true);
+  tp_weight_set(tp, 50); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

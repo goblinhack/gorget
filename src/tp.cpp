@@ -118,6 +118,11 @@ public:
   int speed {100};
 
   //
+  // Weight in pounds
+  //
+  int weight {0};
+
+  //
   // Internal name
   //
   std::string name;
@@ -333,7 +338,7 @@ Tilep tp_first_tile(Tpp tp, int anim_class)
   auto tiles = &tp->tiles[ anim_class ];
 
   if (! tiles || tiles->empty()) {
-    ERR("Tp %s class %d has no tiles", tp->name.c_str(), anim_class);
+    ERR("tp %s class %d has no tiles", tp->name.c_str(), anim_class);
   }
 
   //
@@ -436,32 +441,54 @@ Tilep tp_tiles_get(Tpp tp, int anim_class, int index)
 
   return tp->tiles[ anim_class ][ index ];
 }
+
 void tp_tiles_push_back(Tpp tp, int anim_class, Tilep val)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->tiles[ anim_class ].push_back(val);
 }
+
 int tp_tiles_size(Tpp tp, int anim_class)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
   return (int) tp->tiles[ anim_class ].size();
 }
 
 const char *tp_name(Tpp tp)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return "<noname>";
+  }
   return tp->name.c_str();
 }
 
 void tp_short_name_set(Tpp tp, const char *name_in)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->short_name = std::string(name_in);
 }
 
 const char *tp_short_name(Tpp tp)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return "<noshortname>";
+  }
   if (tp->short_name.empty()) {
     return tp_name(tp);
   }
@@ -471,12 +498,20 @@ const char *tp_short_name(Tpp tp)
 void tp_long_name_set(Tpp tp, const char *name_in)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->long_name = std::string(name_in);
 }
 
 const char *tp_long_name(Tpp tp)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return "<nolongname>";
+  }
   if (tp->long_name.empty()) {
     return tp_short_name(tp);
   }
@@ -486,12 +521,20 @@ const char *tp_long_name(Tpp tp)
 void tp_real_name_set(Tpp tp, const char *name_in)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->real_name = std::string(name_in);
 }
 
 const char *tp_real_name(Tpp tp)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return "<norealname>";
+  }
   if (tp->real_name.empty()) {
     return tp_short_name(tp);
   }
@@ -501,58 +544,120 @@ const char *tp_real_name(Tpp tp)
 void tp_light_color_set(Tpp tp, const char *name_in)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->light_color = color_find(name_in);
 }
 
 void tp_light_color_apply(Tpp tp)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   glcolor(tp->light_color);
 }
 
 bool tp_flag(Tpp tp, ThingFlag f)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return false;
+  }
   return tp->flag[ f ];
 }
 
 void tp_flag_set(Tpp tp, ThingFlag f, bool val)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->flag[ f ] = val;
 }
 
 void tp_z_depth_set(Tpp tp, uint8_t val)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->z_depth = val;
 };
 uint8_t tp_z_depth_get(Tpp tp)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
   return tp->z_depth;
 };
 
 void tp_z_prio_set(Tpp tp, uint8_t val)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->z_prio = val;
 };
+
 uint8_t tp_z_prio_get(Tpp tp)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
   return tp->z_prio;
 };
 
 void tp_speed_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->speed = val;
 };
+
 int tp_speed_get(Tpp tp)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
   return tp->speed;
+};
+
+void tp_weight_set(Tpp tp, int val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->weight = val;
+};
+
+int tp_weight_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+  return tp->weight;
 };
 
 //
@@ -561,11 +666,20 @@ int tp_speed_get(Tpp tp)
 void tp_description_set(Tpp tp, tp_description_get_t callback)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
   tp->description_get = callback;
 }
+
 std::string tp_description_get(Tpp tp, Thingp me, Thingp owner, point at)
 {
   TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return "<nodescription>";
+  }
   if (! tp->description_get) {
     return "";
   }

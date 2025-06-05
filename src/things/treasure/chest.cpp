@@ -37,6 +37,7 @@ bool tp_load_treasure(void)
   tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_treasure, true);
   tp_flag_set(tp, is_treasure2, true);
+  tp_weight_set(tp, 100); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

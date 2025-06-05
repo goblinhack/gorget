@@ -26,15 +26,16 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_able_to_walk_through_walls, true);
   tp_flag_set(tp, is_animated_can_hflip, true);
   tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_ethereal, true);
-  tp_flag_set(tp, is_levitating, true);
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_described_cursor, true);
+  tp_flag_set(tp, is_ethereal, true);
   tp_flag_set(tp, is_ghost, true);
+  tp_flag_set(tp, is_levitating, true);
   tp_flag_set(tp, is_minion, true);
   tp_flag_set(tp, is_monst, true);
   tp_flag_set(tp, is_tickable, true);
   tp_speed_set(tp, 100);
+  tp_weight_set(tp, 0); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

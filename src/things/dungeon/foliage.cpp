@@ -26,6 +26,7 @@ bool tp_load_foliage(void)
   tp_flag_set(tp, is_blit_centered, true);
   tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_foliage, true);
+  tp_weight_set(tp, 10); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_INFRONT);
   // end sort marker1 }

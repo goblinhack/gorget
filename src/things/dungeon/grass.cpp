@@ -30,6 +30,7 @@ bool tp_load_grass(void)
   // begin sort marker1 {
   tp_description_set(tp, tp_grass_description_get);
   tp_flag_set(tp, is_blit_centered, true);
+  tp_flag_set(tp, is_crushable_underfoot, true);
   tp_flag_set(tp, is_described_cursor, true);
   tp_flag_set(tp, is_grass, true);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

@@ -31,6 +31,7 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_tiled, true);
   tp_flag_set(tp, is_water, true);
   tp_short_name_set(tp, "shallow water");
+  tp_weight_set(tp, 100); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

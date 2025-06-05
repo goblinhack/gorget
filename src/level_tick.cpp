@@ -86,7 +86,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     return;
   }
 
-  const int player_speed = p->speed;
+  const int player_speed = thing_speed(p);
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
@@ -103,7 +103,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       continue;
     }
 
-    t->thing_dt += dt * ((float) t->speed / (float) player_speed);
+    t->thing_dt += dt * ((float) thing_speed(t) / (float) player_speed);
 
     if (t->thing_dt >= 1.0) {
       t->thing_dt = 1.0;

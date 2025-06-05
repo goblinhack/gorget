@@ -125,7 +125,11 @@ typedef struct Thing_ {
   //
   // Move speed, with 100 being normal. Updated at start of tick.
   //
-  int16_t speed;
+  int16_t _speed;
+  //
+  // Weight in pounds. Impacts things like grass being crushed.
+  //
+  int16_t _weight;
   //
   // Template ID
   //
@@ -232,5 +236,139 @@ void thing_is_on_map_set(Thingp, bool val = true);
 
 bool thing_is_moving(Thingp);
 void thing_is_moving_set(Thingp, bool val = true);
+
+int  thing_speed(Thingp);
+void thing_speed_set(Thingp, int val);
+
+int  thing_weight(Thingp t);
+void thing_weight_set(Thingp, int val);
+
+// begin sort marker1 {
+bool thing_is_able_to_walk_through_walls(Thingp t);
+bool thing_is_animated_can_hflip(Thingp t);
+bool thing_is_animated_no_dir(Thingp t);
+bool thing_is_animated_same_first_tile(Thingp t);
+bool thing_is_animated(Thingp t);
+bool thing_is_barrel(Thingp t);
+bool thing_is_blit_centered(Thingp t);
+bool thing_is_blit_on_ground(Thingp t);
+bool thing_is_blit_outlined(Thingp t);
+bool thing_is_blit_square_outlined(Thingp t);
+bool thing_is_brazier(Thingp t);
+bool thing_is_bridge(Thingp t);
+bool thing_is_chasm(Thingp t);
+bool thing_is_corridor(Thingp t);
+bool thing_is_crushable_underfoot(Thingp t);
+bool thing_is_cursor_hazard(Thingp t);
+bool thing_is_cursor_path_blocker(Thingp t);
+bool thing_is_cursor_path_hazard(Thingp t);
+bool thing_is_cursor_path(Thingp t);
+bool thing_is_cursor(Thingp t);
+bool thing_is_deep_water(Thingp t);
+bool thing_is_described_cursor(Thingp t);
+bool thing_is_dirt(Thingp t);
+bool thing_is_door(Thingp t);
+bool thing_is_dungeon_entrance(Thingp t);
+bool thing_is_entrance(Thingp t);
+bool thing_is_ethereal(Thingp t);
+bool thing_is_exit(Thingp t);
+bool thing_is_floor(Thingp t);
+bool thing_is_foliage(Thingp t);
+bool thing_is_ghost(Thingp t);
+bool thing_is_goblin(Thingp t);
+bool thing_is_grass(Thingp t);
+bool thing_is_key(Thingp t);
+bool thing_is_lava(Thingp t);
+bool thing_is_level_across(Thingp t);
+bool thing_is_level_curr(Thingp t);
+bool thing_is_level_down(Thingp t);
+bool thing_is_level_final(Thingp t);
+bool thing_is_level_next(Thingp t);
+bool thing_is_level_not_visited(Thingp t);
+bool thing_is_level_visited(Thingp t);
+bool thing_is_levitating(Thingp t);
+bool thing_is_light_source(Thingp t);
+bool thing_is_minion(Thingp t);
+bool thing_is_mob(Thingp t);
+bool thing_is_mob1(Thingp t);
+bool thing_is_mob2(Thingp t);
+bool thing_is_monst(Thingp t);
+bool thing_is_monst1(Thingp t);
+bool thing_is_monst2(Thingp t);
+bool thing_is_obstacle_block_or_door(Thingp t);
+bool thing_is_obstacle_block(Thingp t);
+bool thing_is_pillar(Thingp t);
+bool thing_is_player(Thingp t);
+bool thing_is_rock(Thingp t);
+bool thing_is_secret_door(Thingp t);
+bool thing_is_slime(Thingp t);
+bool thing_is_teleport(Thingp t);
+bool thing_is_tickable(Thingp t);
+bool thing_is_tiled(Thingp t);
+bool thing_is_trap(Thingp t);
+bool thing_is_treasure(Thingp t);
+bool thing_is_treasure1(Thingp t);
+bool thing_is_treasure2(Thingp t);
+bool thing_is_unused1(Thingp t);
+bool thing_is_unused10(Thingp t);
+bool thing_is_unused11(Thingp t);
+bool thing_is_unused12(Thingp t);
+bool thing_is_unused13(Thingp t);
+bool thing_is_unused14(Thingp t);
+bool thing_is_unused15(Thingp t);
+bool thing_is_unused16(Thingp t);
+bool thing_is_unused17(Thingp t);
+bool thing_is_unused18(Thingp t);
+bool thing_is_unused19(Thingp t);
+bool thing_is_unused2(Thingp t);
+bool thing_is_unused20(Thingp t);
+bool thing_is_unused21(Thingp t);
+bool thing_is_unused22(Thingp t);
+bool thing_is_unused23(Thingp t);
+bool thing_is_unused24(Thingp t);
+bool thing_is_unused25(Thingp t);
+bool thing_is_unused26(Thingp t);
+bool thing_is_unused27(Thingp t);
+bool thing_is_unused28(Thingp t);
+bool thing_is_unused29(Thingp t);
+bool thing_is_unused3(Thingp t);
+bool thing_is_unused30(Thingp t);
+bool thing_is_unused31(Thingp t);
+bool thing_is_unused32(Thingp t);
+bool thing_is_unused33(Thingp t);
+bool thing_is_unused34(Thingp t);
+bool thing_is_unused35(Thingp t);
+bool thing_is_unused36(Thingp t);
+bool thing_is_unused37(Thingp t);
+bool thing_is_unused38(Thingp t);
+bool thing_is_unused39(Thingp t);
+bool thing_is_unused4(Thingp t);
+bool thing_is_unused40(Thingp t);
+bool thing_is_unused41(Thingp t);
+bool thing_is_unused42(Thingp t);
+bool thing_is_unused43(Thingp t);
+bool thing_is_unused44(Thingp t);
+bool thing_is_unused45(Thingp t);
+bool thing_is_unused46(Thingp t);
+bool thing_is_unused47(Thingp t);
+bool thing_is_unused48(Thingp t);
+bool thing_is_unused49(Thingp t);
+bool thing_is_unused5(Thingp t);
+bool thing_is_unused50(Thingp t);
+bool thing_is_unused51(Thingp t);
+bool thing_is_unused52(Thingp t);
+bool thing_is_unused53(Thingp t);
+bool thing_is_unused54(Thingp t);
+bool thing_is_unused55(Thingp t);
+bool thing_is_unused56(Thingp t);
+bool thing_is_unused57(Thingp t);
+bool thing_is_unused6(Thingp t);
+bool thing_is_unused7(Thingp t);
+bool thing_is_unused8(Thingp t);
+bool thing_is_unused9(Thingp t);
+bool thing_is_walk_through_walls(Thingp t);
+bool thing_is_wall(Thingp t);
+bool thing_is_water(Thingp t);
+// end sort marker1 }
 
 #endif

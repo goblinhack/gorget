@@ -21,6 +21,7 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_obstacle_block, true);
     tp_flag_set(tp, is_rock, true);
     tp_flag_set(tp, is_tiled, true);
+    tp_weight_set(tp, 2000); // pounds
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
     tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
     // end sort marker1 }
