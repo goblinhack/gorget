@@ -294,11 +294,6 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   t->moving_from = t->at;
   thing_is_moving_set(t, false);
-
-  //
-  // Handle interactions for a thing at its new location
-  //
-  thing_collision_handle(g, v, l, t);
 }
 
 //

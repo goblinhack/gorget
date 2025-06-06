@@ -27,12 +27,7 @@ void log_(const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-
-  if (! g_log_stdout) {
-    // No indent
-  } else {
-    snprintf(buf + len, MAXLONGSTR - len, "%s%*s", "", g_callframes_indent, "");
-  }
+  snprintf(buf + len, MAXLONGSTR - len, "%s%*s", "", g_callframes_indent, "");
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -58,10 +53,8 @@ static void warn_(const char *fmt, va_list args)
   int  len = 0;
 
   buf[ 0 ] = '\0';
-  {
-    get_timestamp(buf, MAXLONGSTR);
-    len = (int) strlen(buf);
-  }
+  get_timestamp(buf, MAXLONGSTR);
+  len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
@@ -89,12 +82,10 @@ static void con_(const char *fmt, va_list args)
   int  len = 0;
 
   buf[ 0 ] = '\0';
-  {
-    get_timestamp(buf, MAXLONGSTR);
-    len = (int) strlen(buf);
-  }
-
+  get_timestamp(buf, MAXLONGSTR);
+  len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
+
   putf(MY_STDOUT, buf);
 
   term_log(buf);
@@ -102,29 +93,6 @@ static void con_(const char *fmt, va_list args)
 
   wid_console_log(buf);
 
-  FLUSH_THE_CONSOLE();
-}
-
-void con(const char *fmt)
-{
-  TRACE_NO_INDENT();
-
-  {
-    char buf[ MAXLONGSTR ];
-
-    buf[ 0 ] = '\0';
-    get_timestamp(buf, MAXLONGSTR);
-    fprintf(MY_STDOUT, "%s", buf);
-    term_log(buf);
-  }
-
-  {
-    fprintf(MY_STDOUT, "%s\n", fmt);
-    term_log(fmt);
-    wid_console_log(fmt);
-  }
-
-  putchar('\n');
   FLUSH_THE_CONSOLE();
 }
 
@@ -144,15 +112,10 @@ static void dying_(const char *fmt, va_list args)
 
   char buf[ MAXLONGSTR ];
   int  len = 0;
-
   buf[ 0 ] = '\0';
-  {
-    get_timestamp(buf, MAXLONGSTR);
-    len = (int) strlen(buf);
-  }
-
+  get_timestamp(buf, MAXLONGSTR);
+  len = (int) strlen(buf);
   snprintf(buf + len, MAXLONGSTR - len, "DIE: ");
-
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -229,10 +192,8 @@ static void croak_(const char *fmt, va_list args)
   int  tslen = 0;
 
   buf[ 0 ] = '\0';
-  {
-    get_timestamp(buf, MAXLONGSTR);
-    tslen = len = (int) strlen(buf);
-  }
+  get_timestamp(buf, MAXLONGSTR);
+  tslen = len = (int) strlen(buf);
 
   snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
 
@@ -346,22 +307,15 @@ static void msgerr_(const char *fmt, va_list args)
   backtrace_dump();
 
   buf[ 0 ] = '\0';
-  {
-    get_timestamp(buf, MAXLONGSTR);
-    len = (int) strlen(buf);
-  }
-
-  snprintf(buf + len, MAXLONGSTR - len, "ERROR: " UI_IMPORTANT_FMT_STR);
-
+  get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-
+  snprintf(buf + len, MAXLONGSTR - len, "ERROR: " UI_IMPORTANT_FMT_STR);
+  len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
-
   len = (int) strlen(buf);
   snprintf(buf + len, MAXLONGSTR - len, UI_RESET_FMT);
 
   putf(MY_STDERR, buf);
-
   putf(MY_STDOUT, buf);
 
   fprintf(stderr, "%s\n", buf);
@@ -428,7 +382,7 @@ void putf(FILE *fp, const char *s)
   putc('\n', fp);
 }
 
-void topcon_(const char *fmt, va_list args)
+static void topcon_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
@@ -463,7 +417,7 @@ void TOPCON(const char *fmt, ...)
   va_end(args);
 }
 
-void botcon_(const char *fmt, va_list args)
+static void botcon_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 

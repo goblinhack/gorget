@@ -10,8 +10,8 @@ char *EXEC_FULL_PATH_AND_NAME;
 char *GFX_PATH;
 char *TTF_PATH;
 
-FILE       *g_log_stdout;
-FILE       *g_log_stderr;
+FILE       *g_log_stdout; // stdout is redirected to a log file
+FILE       *g_log_stderr; // stderr is redirected to a log file
 std::string g_log_stderr_filename;
 std::string g_log_stdout_filename;
 

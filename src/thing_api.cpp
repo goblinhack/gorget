@@ -68,6 +68,26 @@ void thing_is_dead_set(Thingp t, bool val)
   t->_is_dead = val;
 }
 
+bool thing_is_sleeping(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_sleeping;
+}
+
+void thing_is_sleeping_set(Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+  t->_is_sleeping = val;
+}
+
 bool thing_is_open(Thingp t)
 {
   TRACE_NO_INDENT();

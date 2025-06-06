@@ -89,26 +89,24 @@ void CROAK_CLEAN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #define ASSERT_EX(left, operator, right)
 #endif
 
-void common_error_handler(const std::string &error);
-void con(const char *fmt);
 void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void TOPCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+
+void common_error_handler(const std::string &error);
 void ctrlc_handler(int sig);
 void die(void);
-void TOPCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void topcon(const wchar_t *fmt);
-void BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void botcon(const wchar_t *fmt);
 void error_handler(const std::string &error);
 void flush_the_console(void);
 void GAME_UI_MSG_BOX(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void myerr(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void quit(Gamep *);
 void reset_globals(void);
 void restart(Gamep);
 void SDL_MSG_BOX(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void segv_handler(int sig);
-void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void flush_the_console(Gamep);
 
 #define DEBUG1 (unlikely(g_opt_debug1))

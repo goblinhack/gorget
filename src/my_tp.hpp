@@ -18,25 +18,34 @@
       list_macro(is_animated_no_dir, "is_animated_no_dir"),                       /* ............................ */ \
       list_macro(is_animated_same_first_tile, "is_animated_same_first_tile"),     /* ............................ */ \
       list_macro(is_animated, "is_animated"),                                     /* ............................ */ \
+      list_macro(is_barrel, "is_barrel"),                                         /* ............................ */ \
       list_macro(is_blit_centered, "is_blit_centered"),                           /* ............................ */ \
       list_macro(is_blit_on_ground, "is_blit_on_ground"),                         /* ............................ */ \
       list_macro(is_blit_outlined, "is_blit_outlined"),                           /* ............................ */ \
       list_macro(is_blit_square_outlined, "is_blit_square_outlined"),             /* ............................ */ \
+      list_macro(is_brazier, "is_brazier"),                                       /* ............................ */ \
       list_macro(is_bridge, "is_bridge"),                                         /* ............................ */ \
       list_macro(is_chasm, "is_chasm"),                                           /* ............................ */ \
       list_macro(is_corridor, "is_corridor"),                                     /* ............................ */ \
+      list_macro(is_crushable_underfoot, "is_crushable_underfoot"),               /* ............................ */ \
       list_macro(is_cursor_hazard, "is_cursor_hazard"),                           /* ............................ */ \
       list_macro(is_cursor_path_blocker, "is_cursor_path_blocker"),               /* ............................ */ \
       list_macro(is_cursor_path_hazard, "is_cursor_path_hazard"),                 /* ............................ */ \
       list_macro(is_cursor_path, "is_cursor_path"),                               /* ............................ */ \
       list_macro(is_cursor, "is_cursor"),                                         /* ............................ */ \
       list_macro(is_deep_water, "is_deep_water"),                                 /* ............................ */ \
+      list_macro(is_described_cursor, "is_described_cursor"),                     /* ............................ */ \
       list_macro(is_dirt, "is_dirt"),                                             /* ............................ */ \
       list_macro(is_door, "is_door"),                                             /* ............................ */ \
       list_macro(is_dungeon_entrance, "is_dungeon_entrance"),                     /* ............................ */ \
+      list_macro(is_entrance, "is_entrance"),                                     /* ............................ */ \
+      list_macro(is_ethereal, "is_ethereal"),                                     /* ............................ */ \
       list_macro(is_exit, "is_exit"),                                             /* ............................ */ \
       list_macro(is_floor, "is_floor"),                                           /* ............................ */ \
       list_macro(is_foliage, "is_foliage"),                                       /* ............................ */ \
+      list_macro(is_ghost, "is_ghost"),                                           /* ............................ */ \
+      list_macro(is_goblin, "is_goblin"),                                         /* ............................ */ \
+      list_macro(is_grass, "is_grass"),                                           /* ............................ */ \
       list_macro(is_key, "is_key"),                                               /* ............................ */ \
       list_macro(is_lava, "is_lava"),                                             /* ............................ */ \
       list_macro(is_level_across, "is_level_across"),                             /* ............................ */ \
@@ -46,6 +55,8 @@
       list_macro(is_level_next, "is_level_next"),                                 /* ............................ */ \
       list_macro(is_level_not_visited, "is_level_not_visited"),                   /* ............................ */ \
       list_macro(is_level_visited, "is_level_visited"),                           /* ............................ */ \
+      list_macro(is_levitating, "is_levitating"),                                 /* ............................ */ \
+      list_macro(is_light_source, "is_light_source"),                             /* ............................ */ \
       list_macro(is_minion, "is_minion"),                                         /* ............................ */ \
       list_macro(is_mob, "is_mob"),                                               /* ............................ */ \
       list_macro(is_mob1, "is_mob1"),                                             /* ............................ */ \
@@ -53,12 +64,17 @@
       list_macro(is_monst, "is_monst"),                                           /* ............................ */ \
       list_macro(is_monst1, "is_monst1"),                                         /* ............................ */ \
       list_macro(is_monst2, "is_monst2"),                                         /* ............................ */ \
-      list_macro(is_obstacle_block, "is_obstacle_block"),                         /* ............................ */ \
       list_macro(is_obstacle_block_or_door, "is_obstacle_block_or_door"),         /* ............................ */ \
+      list_macro(is_obstacle_block, "is_obstacle_block"),                         /* ............................ */ \
+      list_macro(is_pillar, "is_pillar"),                                         /* ............................ */ \
       list_macro(is_player, "is_player"),                                         /* ............................ */ \
       list_macro(is_rock, "is_rock"),                                             /* ............................ */ \
+      list_macro(is_secret_door, "is_secret_door"),                               /* ............................ */ \
+      list_macro(is_slime, "is_slime"),                                           /* ............................ */ \
+      list_macro(is_teleport, "is_teleport"),                                     /* ............................ */ \
       list_macro(is_tickable, "is_tickable"),                                     /* ............................ */ \
       list_macro(is_tiled, "is_tiled"),                                           /* ............................ */ \
+      list_macro(is_trap, "is_trap"),                                             /* ............................ */ \
       list_macro(is_treasure, "is_treasure"),                                     /* ............................ */ \
       list_macro(is_treasure1, "is_treasure1"),                                   /* ............................ */ \
       list_macro(is_treasure2, "is_treasure2"),                                   /* ............................ */ \
@@ -115,24 +131,8 @@
       list_macro(is_unused55, "is_unused55"),                                     /* ............................ */ \
       list_macro(is_unused56, "is_unused56"),                                     /* ............................ */ \
       list_macro(is_unused57, "is_unused57"),                                     /* ............................ */ \
-      list_macro(is_crushable_underfoot, "is_crushable_underfoot"),               /* ............................ */ \
-      list_macro(is_ethereal, "is_ethereal"),                                     /* ............................ */ \
       list_macro(is_unused6, "is_unused6"),                                       /* ............................ */ \
-      list_macro(is_levitating, "is_levitating"),                                 /* ............................ */ \
-      list_macro(is_described_cursor, "is_described_cursor"),                     /* ............................ */ \
-      list_macro(is_grass, "is_grass"),                                           /* ............................ */ \
-      list_macro(is_slime, "is_slime"),                                           /* ............................ */ \
-      list_macro(is_ghost, "is_ghost"),                                           /* ............................ */ \
-      list_macro(is_goblin, "is_goblin"),                                         /* ............................ */ \
-      list_macro(is_trap, "is_trap"),                                             /* ............................ */ \
-      list_macro(is_pillar, "is_pillar"),                                         /* ............................ */ \
-      list_macro(is_secret_door, "is_secret_door"),                               /* ............................ */ \
-      list_macro(is_teleport, "is_teleport"),                                     /* ............................ */ \
       list_macro(is_unused7, "is_unused7"),                                       /* ............................ */ \
-      list_macro(is_barrel, "is_barrel"),                                         /* ............................ */ \
-      list_macro(is_light_source, "is_light_source"),                             /* ............................ */ \
-      list_macro(is_brazier, "is_brazier"),                                       /* ............................ */ \
-      list_macro(is_entrance, "is_entrance"),                                     /* ............................ */ \
       list_macro(is_unused8, "is_unused8"),                                       /* ............................ */ \
       list_macro(is_unused9, "is_unused9"),                                       /* ............................ */ \
       list_macro(is_wall, "is_wall"),                                             /* ............................ */ \

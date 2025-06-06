@@ -20,6 +20,12 @@ void level_cursor_set(Gamep g, Levelsp v, point p)
 {
   TRACE_AND_INDENT();
 
+  //
+  // Need to update what is under the cursor
+  //
+  v->cursor_moved  = (v->cursor_at != v->old_cursor_at);
+  v->old_cursor_at = v->cursor_at;
+
   if (! is_oob(p)) {
     v->cursor_at       = p;
     v->cursor_at_valid = true;
@@ -374,13 +380,6 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   }
 
   //
-  // Has something changed?
-  //
-  if ((player->at == player->old_at) && (v->cursor_at == v->old_cursor_at)) {
-    return;
-  }
-
-  //
   // Clear the path.
   //
   memset(v->cursor, 0, SIZEOF(v->cursor));
@@ -393,14 +392,12 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
     v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
   }
   v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;
-
-  v->old_cursor_at = v->cursor_at;
 }
 
 //
-// Recreate and possibly apply the mouse path to the player
+// Recreate the mouse path and what we see under it
 //
-void level_cursor_update(Gamep g, Levelsp v, Levelp l)
+void level_cursor_path_recreate(Gamep g, Levelsp v, Levelp l)
 {
   //
   // Only if over the map
@@ -413,6 +410,24 @@ void level_cursor_update(Gamep g, Levelsp v, Levelp l)
   // Recreate the mouse path
   //
   level_cursor_path_create(g, v, l);
+
+  //
+  // If in level select mode, update what we're hovering over
+  //
+  level_select_rightbar_needs_update(g, v, l);
+}
+
+//
+// Apply the mouse path to the player
+//
+void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l)
+{
+  //
+  // Only if over the map
+  //
+  if (! level_cursor_is_valid(g, v)) {
+    return;
+  }
 
   //
   // Update the player with the path.

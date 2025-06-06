@@ -117,6 +117,11 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     if (t->thing_dt >= 0.99) { // dt increments can end up very close to 1
       t->thing_dt = 0.0;
       thing_move_finish(g, v, l, t);
+
+      //
+      // Handle interactions for a thing at its new location
+      //
+      thing_collision_handle(g, v, l, t);
     }
   }
 }

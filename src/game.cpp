@@ -780,8 +780,21 @@ void Game::display(void)
         if (l) {
           level_mouse_position_get(g, v, l);
           level_display(g, v, l);
-          level_cursor_update(g, v, l);
-          level_cursor_describe(g, v, l);
+
+          //
+          // If the cursor moved, update what we see
+          //
+          if (v->cursor_moved) {
+            level_cursor_path_recreate(g, v, l);
+            level_cursor_describe(g, v, l);
+          }
+
+          //
+          // If the player pressed the mouse, we need to apply the current cursor path and start moving.
+          //
+          if (v->player_pressed_button_and_waiting_for_a_path) {
+            level_cursor_path_apply(g, v, l);
+          }
         }
       }
       break;

@@ -195,38 +195,6 @@ typedef struct Levels_ {
   float time_step;
   float last_time_step;
   //
-  // We have to interpolate movement and this indicates that is in progress.
-  //
-  uint8_t tick_in_progress : 1;
-  //
-  // Player has moved.
-  //
-  uint8_t tick_begin_requested : 1;
-  uint8_t tick_end_requested   : 1;
-  //
-  // If the player has moved, we need to scroll the map
-  //
-  uint8_t requested_auto_scroll : 1;
-  //
-  // Player move request.
-  //
-  uint8_t requested_move_left  : 1;
-  uint8_t requested_move_keft  : 1;
-  uint8_t requested_move_right : 1;
-  uint8_t requested_move_up    : 1;
-  //
-  // The user has pressed the mouse and wants to follow the mouse path.
-  //
-  uint8_t player_pressed_button_and_waiting_for_a_path : 1;
-  //
-  // set when the player starts following the mouse path.
-  //
-  uint8_t player_currently_following_a_path : 1;
-  //
-  // Set when something modifies the map and we need to update caches.
-  //
-  uint8_t is_map_changed : 1;
-  //
   // Flag array of all levels. The levels equate to one tile in the level grid.
   //
   Level level[ MAX_LEVELS ];
@@ -267,10 +235,6 @@ typedef struct Levels_ {
   //
   point old_cursor_at;
   //
-  // Is the cursor over the map?
-  //
-  uint8_t cursor_at_valid : 1;
-  //
   // Map scroll offset.
   //
   point pixel_map_at;
@@ -281,6 +245,46 @@ typedef struct Levels_ {
   int miny;
   int maxx;
   int maxy;
+  //
+  // Is the cursor over the map?
+  //
+  uint8_t cursor_at_valid : 1;
+  //
+  // Mouse moved?
+  //
+  uint8_t cursor_moved : 1;
+  //
+  // We have to interpolate movement and this indicates that is in progress.
+  //
+  uint8_t tick_in_progress : 1;
+  //
+  // Player has moved.
+  //
+  uint8_t tick_begin_requested : 1;
+  uint8_t tick_end_requested   : 1;
+  //
+  // If the player has moved, we need to scroll the map
+  //
+  uint8_t requested_auto_scroll : 1;
+  //
+  // Player move request.
+  //
+  uint8_t requested_move_left  : 1;
+  uint8_t requested_move_keft  : 1;
+  uint8_t requested_move_right : 1;
+  uint8_t requested_move_up    : 1;
+  //
+  // The user has pressed the mouse and wants to follow the mouse path.
+  //
+  uint8_t player_pressed_button_and_waiting_for_a_path : 1;
+  //
+  // set when the player starts following the mouse path.
+  //
+  uint8_t player_currently_following_a_path : 1;
+  //
+  // Set when something modifies the map and we need to update caches.
+  //
+  uint8_t is_map_changed : 1;
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
@@ -370,7 +374,8 @@ void level_assign_tiles(Gamep, Levelsp, Levelp);
 void level_bounds_set(Gamep, Levelsp, Levelp);
 void level_cursor_set(Gamep, Levelsp, point);
 bool level_cursor_is_valid(Gamep, Levelsp);
-void level_cursor_update(Gamep, Levelsp, Levelp);
+void level_cursor_path_recreate(Gamep, Levelsp, Levelp);
+void level_cursor_path_apply(Gamep, Levelsp, Levelp);
 void level_cursor_describe(Gamep, Levelsp, Levelp);
 void level_display(Gamep, Levelsp, Levelp);
 void level_map_set(Gamep, Levelsp, Levelp, const char *);

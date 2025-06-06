@@ -97,7 +97,7 @@ public:
   bool is_open                 : 1 {};
   bool is_outline              : 1 {};
   bool is_resurrecting         : 1 {};
-  bool is_sleeping             : 1 {};
+  bool is_unused57             : 1 {};
 
 private:
   int _gl_binding {};
@@ -180,7 +180,7 @@ Tile::Tile(const class Tile *tile)
   delay_ms                = tile->delay_ms;
   dir                     = tile->dir;
   is_moving               = tile->is_moving;
-  is_sleeping             = tile->is_sleeping;
+  is_unused57             = tile->is_unused57;
   is_open                 = tile->is_open;
   is_dead                 = tile->is_dead;
   is_end_of_anim          = tile->is_end_of_anim;
@@ -836,7 +836,7 @@ void     tile_global_index_set(Tilep t, uint32_t val) { t->global_index = val; }
 
 bool tile_is_moving(Tilep t) { return t->is_moving ? true : false; }
 
-bool tile_is_sleeping(Tilep t) { return t->is_sleeping ? true : false; }
+bool tile_is_unused57(Tilep t) { return t->is_unused57 ? true : false; }
 
 bool tile_is_open(Tilep t) { return t->is_open ? true : false; }
 

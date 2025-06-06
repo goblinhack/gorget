@@ -13,23 +13,70 @@
 #include <string.h>
 
 //
-// Handle interactions for a thing at its location
+// Handle interactions for a thing at its location with a dead thing
 //
-void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_player(t)) {
-    thing_player_collision_handle(g, v, l, t);
+  //
+  // TODO
+  //
+}
+
+//
+// Handle interactions for a thing at its location with an alive thing
+//
+static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Is this grass that needs to be flattened?
+  //
+  if (thing_is_crushable_underfoot(it) && (thing_weight(me) > 10)) {
+    //
+    // Crush it
+    //
+    // thing_dead(it, me, "by crushing");
+    if (thing_is_dead(me)) {
+      return;
+    }
+  }
+}
+
+//
+// Handle interactions for a thing at its location
+//
+void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Handle player specific actions first, like leaving levels
+  //
+  if (thing_is_player(me)) {
+    thing_player_collision_handle(g, v, l, me);
+    if (thing_is_dead(me)) {
+      return;
+    }
   }
 
   //
   // Common collision handling for player and anything else
   //
-  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, t->at)
+  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, me->at)
   {
-    //
-    // TODO
-    //
+    if (thing_is_dead(it)) {
+      //
+      // Dead things
+      //
+      thing_collision_handle_dead_thing(g, v, l, it, me);
+    } else {
+      //
+      // Alive things
+      //
+      thing_collision_handle_alive_thing(g, v, l, it, me);
+    }
   }
 }

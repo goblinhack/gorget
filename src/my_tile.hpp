@@ -60,7 +60,7 @@ bool tile_is_end_of_anim(Tilep);
 bool tile_is_moving(Tilep);
 bool tile_is_open(Tilep);
 bool tile_is_resurrecting(Tilep);
-bool tile_is_sleeping(Tilep);
+bool tile_is_unused57(Tilep);
 
 void tile_blit(const Tilep &tile, const point tl, const point br);
 void tile_blit_mask(const Tilep &tile, const point tl, const point br);
