@@ -9,7 +9,7 @@
 #include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
 
-static std::string tp_lava_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+static std::string tp_lava_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, point at)
 {
   TRACE_NO_INDENT();
 
@@ -24,15 +24,16 @@ bool tp_load_lava(void)
   auto tp   = tp_load("lava");
   // begin sort marker1 {
   tp_description_set(tp, tp_lava_description_get);
-  tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_blit_centered, true);
-  tp_flag_set(tp, is_cursor_path_hazard, true);
-  tp_flag_set(tp, is_described_cursor, true);
-  tp_flag_set(tp, is_lava, true);
-  tp_flag_set(tp, is_tiled, true);
+  tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_cursor_path_hazard);
+  tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_lava);
+  tp_flag_set(tp, is_tiled);
   tp_weight_set(tp, 2000); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 8; frame++) {

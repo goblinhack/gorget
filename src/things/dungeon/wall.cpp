@@ -16,11 +16,11 @@ bool tp_load_wall(void)
     auto name = "wall" + std::to_string(variant);
     auto tp   = tp_load(name.c_str());
     // begin sort marker1 {
-    tp_flag_set(tp, is_blit_centered, true);
-    tp_flag_set(tp, is_cursor_path_blocker, true);
-    tp_flag_set(tp, is_obstacle_block, true);
-    tp_flag_set(tp, is_tiled, true);
-    tp_flag_set(tp, is_wall, true);
+    tp_flag_set(tp, is_blit_centered);
+    tp_flag_set(tp, is_cursor_path_blocker);
+    tp_flag_set(tp, is_obstacle_block);
+    tp_flag_set(tp, is_tiled);
+    tp_flag_set(tp, is_wall);
     tp_weight_set(tp, 1000); // pounds
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
     tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

@@ -99,8 +99,8 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
     v->level_select_id = t->id;
   }
 
-  thing_speed_set(t, tp_speed_get(tp));
-  thing_weight_set(t, tp_weight_get(tp));
+  thing_speed_set(g, v, l, t, tp_speed_get(tp));
+  thing_weight_set(g, v, l, t, tp_weight_get(tp));
 
   //
   // Need to update with the new pixel position

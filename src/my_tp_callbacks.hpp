@@ -9,8 +9,8 @@
 #include "my_tp.hpp"
 #include <string>
 
-typedef std::string (*tp_description_get_t)(Tpp, Thingp me, Thingp owner, point at);
+typedef std::string (*tp_description_get_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, point at);
 void        tp_description_set(Tpp, tp_description_get_t);
-std::string tp_description_get(Tpp, Thingp me, Thingp owner, point at);
+std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, point at);
 
 #endif

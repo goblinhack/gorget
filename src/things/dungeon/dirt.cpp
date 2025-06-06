@@ -14,8 +14,8 @@ bool tp_load_dirt(void)
 
   auto tp = tp_load("dirt");
   // begin sort marker1 {
-  tp_flag_set(tp, is_blit_centered, true);
-  tp_flag_set(tp, is_dirt, true);
+  tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_dirt);
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   tp_z_prio_set(tp, MAP_Z_PRIO_BEHIND);
   // end sort marker1 }

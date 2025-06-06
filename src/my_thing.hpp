@@ -206,7 +206,10 @@ void thing_set_dir_from_delta(Thingp, int dx, int dy);
 void thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
 void thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_update_pos(Gamep, Thingp);
-void thing_dead(Gamep, Levelsp, Levelp, Thingp me, Thingp maybe_killer, const char *reason);
+void thing_dead(Gamep, Levelsp, Levelp, Thingp, Thingp maybe_killer, std::string reason);
+void thing_anim_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
+void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
+void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
 
 Thingp       thing_player(Gamep);
 ThingPlayerp thing_player(Gamep, Thingp);
@@ -234,25 +237,25 @@ bool thing_is_dir_right(Thingp);
 bool thing_is_dir_up(Thingp);
 
 bool thing_is_dead(Thingp);
-void thing_is_dead_set(Thingp, bool val = true);
+void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_sleeping(Thingp);
-void thing_is_sleeping_set(Thingp, bool val = true);
+void thing_is_sleeping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_open(Thingp);
-void thing_is_open_set(Thingp, bool val = true);
+void thing_is_open_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_on_map(Thingp);
-void thing_is_on_map_set(Thingp, bool val = true);
+void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_moving(Thingp);
-void thing_is_moving_set(Thingp, bool val = true);
+void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 int  thing_speed(Thingp);
-void thing_speed_set(Thingp, int val);
+void thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 int  thing_weight(Thingp);
-void thing_weight_set(Thingp, int val);
+void thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 // begin sort marker1 {
 bool thing_is_able_to_walk_through_walls(Thingp);
@@ -299,6 +302,7 @@ bool thing_is_level_not_visited(Thingp);
 bool thing_is_level_visited(Thingp);
 bool thing_is_levitating(Thingp);
 bool thing_is_light_source(Thingp);
+bool thing_is_loggable(Thingp);
 bool thing_is_minion(Thingp);
 bool thing_is_mob(Thingp);
 bool thing_is_mob1(Thingp);
@@ -372,7 +376,6 @@ bool thing_is_unused53(Thingp);
 bool thing_is_unused54(Thingp);
 bool thing_is_unused55(Thingp);
 bool thing_is_unused56(Thingp);
-bool thing_is_unused57(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);
 bool thing_is_unused8(Thingp);

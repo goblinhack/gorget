@@ -37,7 +37,6 @@ void thing_player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int d
     return;
   }
 
-  THING_BOTCON(t, "BOTCON hello");
   //
   // Override any mouse request with the key move.
   //

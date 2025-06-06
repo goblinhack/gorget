@@ -34,7 +34,7 @@ std::string to_string(Thingp t)
   return (string_sprintf("%" PRIX32
                          /* level num   */ " L%u "
                          /* tp_name     */ "%s"
-                         /* is_unused57 */ "%s"
+                         /* is_loggable */ "%s"
                          /* is_dead     */ "%s"
                          /* is_open     */ "%s"
                          /* at          */ " @%d,%d",

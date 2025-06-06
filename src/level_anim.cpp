@@ -43,46 +43,7 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
           continue;
         }
 
-        if (! tp_is_animated(tp)) {
-          continue;
-        }
-
-        auto tile_index = t->tile_index;
-        if (! tile_index) {
-          continue;
-        }
-
-        auto tile = tile_index_to_tile(tile_index);
-        if (! tile) {
-          continue;
-        }
-
-        if (! tile_delay_ms(tile)) {
-          continue;
-        }
-
-        //
-        // Decrement the remaining time
-        //
-        if (t->anim_ms_remaining > 0) {
-          t->anim_ms_remaining -= time_step;
-          if (t->anim_ms_remaining > 0) {
-            continue;
-          }
-        }
-
-        t->anim_index++;
-        if (t->anim_index >= tp_tiles_size(tp, t->anim_class)) {
-          t->anim_index = 0;
-        }
-
-        tile          = tp_tiles_get(tp, t->anim_class, t->anim_index);
-        t->tile_index = tile_global_index(tile);
-
-        t->anim_ms_remaining += tile_delay_ms(tile);
-        if (t->anim_ms_remaining < 0) {
-          t->anim_ms_remaining = tile_delay_ms(tile);
-        }
+        thing_anim_step(g, v, l, t, time_step);
       }
     }
   }

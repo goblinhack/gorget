@@ -18,7 +18,7 @@ int thing_speed(Thingp t)
   return t->_speed;
 }
 
-void thing_speed_set(Thingp t, int val)
+void thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -38,7 +38,7 @@ int thing_weight(Thingp t)
   return t->_weight;
 }
 
-void thing_weight_set(Thingp t, int val)
+void thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -58,14 +58,20 @@ bool thing_is_dead(Thingp t)
   return t->_is_dead;
 }
 
-void thing_is_dead_set(Thingp t, bool val)
+void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return;
   }
+
+  if (t->_is_dead == val) {
+    return;
+  }
+
   t->_is_dead = val;
+  thing_is_dead_handle(g, v, l, t);
 }
 
 bool thing_is_sleeping(Thingp t)
@@ -78,7 +84,7 @@ bool thing_is_sleeping(Thingp t)
   return t->_is_sleeping;
 }
 
-void thing_is_sleeping_set(Thingp t, bool val)
+void thing_is_sleeping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -98,7 +104,7 @@ bool thing_is_open(Thingp t)
   return t->_is_open;
 }
 
-void thing_is_open_set(Thingp t, bool val)
+void thing_is_open_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -118,7 +124,7 @@ bool thing_is_on_map(Thingp t)
   return t->_is_on_map;
 }
 
-void thing_is_on_map_set(Thingp t, bool val)
+void thing_is_on_map_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -138,7 +144,7 @@ bool thing_is_moving(Thingp t)
   return t->_is_moving;
 }
 
-void thing_is_moving_set(Thingp t, bool val)
+void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -1288,14 +1294,14 @@ bool thing_is_unused56(Thingp t)
   return tp_flag(thing_tp(t), is_unused56);
 }
 
-bool thing_is_unused57(Thingp t)
+bool thing_is_loggable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused57);
+  return tp_flag(thing_tp(t), is_loggable);
 }
 
 bool thing_is_crushable_underfoot(Thingp t)

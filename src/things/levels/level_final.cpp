@@ -16,12 +16,13 @@ bool tp_load_level_final(void)
   auto tp   = tp_load("level_final");
 
   // begin sort marker1 {
-  tp_flag_set(tp, is_animated_same_first_tile, true);
-  tp_flag_set(tp, is_animated, true);
-  tp_flag_set(tp, is_blit_centered, true);
-  tp_flag_set(tp, is_level_final, true);
+  tp_flag_set(tp, is_animated_same_first_tile);
+  tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_level_final);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 2; frame++) {

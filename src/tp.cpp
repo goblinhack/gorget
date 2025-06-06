@@ -9,6 +9,7 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
+#include "my_thing.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
@@ -673,9 +674,10 @@ void tp_description_set(Tpp tp, tp_description_get_t callback)
   tp->description_get = callback;
 }
 
-std::string tp_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, point at)
 {
   TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return "<nodescription>";
@@ -683,5 +685,5 @@ std::string tp_description_get(Tpp tp, Thingp me, Thingp owner, point at)
   if (! tp->description_get) {
     return "";
   }
-  return tp->description_get(tp, me, owner, at);
+  return tp->description_get(g, v, l, me, owner, at);
 }

@@ -130,7 +130,7 @@
       list_macro(is_unused54, "is_unused54"),                                     /* ............................ */ \
       list_macro(is_unused55, "is_unused55"),                                     /* ............................ */ \
       list_macro(is_unused56, "is_unused56"),                                     /* ............................ */ \
-      list_macro(is_unused57, "is_unused57"),                                     /* ............................ */ \
+      list_macro(is_loggable, "is_loggable"),                                     /* ............................ */ \
       list_macro(is_unused6, "is_unused6"),                                       /* ............................ */ \
       list_macro(is_unused7, "is_unused7"),                                       /* ............................ */ \
       list_macro(is_unused8, "is_unused8"),                                       /* ............................ */ \
@@ -186,6 +186,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_level_visited(tp)              tp_flag(tp, is_level_visited)
 #define tp_is_levitating(tp)                 tp_flag(tp, is_levitating)
 #define tp_is_light_source(tp)               tp_flag(tp, is_light_source)
+#define tp_is_loggable(tp)                   tp_flag(tp, is_loggable)
 #define tp_is_minion(tp)                     tp_flag(tp, is_minion)
 #define tp_is_mob(tp)                        tp_flag(tp, is_mob)
 #define tp_is_mob1(tp)                       tp_flag(tp, is_mob1)
@@ -259,7 +260,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused54(tp)                   tp_flag(tp, is_unused54)
 #define tp_is_unused55(tp)                   tp_flag(tp, is_unused55)
 #define tp_is_unused56(tp)                   tp_flag(tp, is_unused56)
-#define tp_is_unused57(tp)                   tp_flag(tp, is_unused57)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
@@ -314,6 +314,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_level_visited(g, v, l, p)              level_flag(g, v, l, is_level_visited, p)
 #define level_is_levitating(g, v, l, p)                 level_flag(g, v, l, is_levitating, p)
 #define level_is_light_source(g, v, l, p)               level_flag(g, v, l, is_light_source, p)
+#define level_is_loggable(g, v, l, p)                   level_flag(g, v, l, is_loggable, p)
 #define level_is_minion(g, v, l, p)                     level_flag(g, v, l, is_minion, p)
 #define level_is_mob(g, v, l, p)                        level_flag(g, v, l, is_mob, p)
 #define level_is_mob1(g, v, l, p)                       level_flag(g, v, l, is_mob1, p)
@@ -387,7 +388,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused54(g, v, l, p)                   level_flag(g, v, l, is_unused54, p)
 #define level_is_unused55(g, v, l, p)                   level_flag(g, v, l, is_unused55, p)
 #define level_is_unused56(g, v, l, p)                   level_flag(g, v, l, is_unused56, p)
-#define level_is_unused57(g, v, l, p)                   level_flag(g, v, l, is_unused57, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)
@@ -525,7 +525,7 @@ void tp_get_id(const char *, int *id);
 void tp_random_dungeon_init(void);
 
 bool tp_flag(Tpp tp, ThingFlag);
-void tp_flag_set(Tpp tp, ThingFlag, bool val);
+void tp_flag_set(Tpp tp, ThingFlag, bool val = true);
 
 void    tp_z_depth_set(Tpp tp, uint8_t val);
 uint8_t tp_z_depth_get(Tpp tp);

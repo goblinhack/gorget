@@ -9,7 +9,7 @@
 #include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
 
-static std::string tp_foliage_description_get(Tpp tp, Thingp me, Thingp owner, point at)
+static std::string tp_foliage_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, point at)
 {
   TRACE_NO_INDENT();
 
@@ -23,12 +23,13 @@ bool tp_load_foliage(void)
   auto tp = tp_load("foliage");
   // begin sort marker1 {
   tp_description_set(tp, tp_foliage_description_get);
-  tp_flag_set(tp, is_blit_centered, true);
-  tp_flag_set(tp, is_described_cursor, true);
-  tp_flag_set(tp, is_foliage, true);
+  tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_foliage);
   tp_weight_set(tp, 10); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_INFRONT);
+  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.1"));
