@@ -32,12 +32,12 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_door);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_secret_door);
   tp_weight_set(tp, 1000); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("secret_door.idle.0"));

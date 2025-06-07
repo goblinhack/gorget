@@ -27,11 +27,11 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_bridge);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_tiled);
   tp_weight_set(tp, 50); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile_find_mand(name + ".IS_JOIN_BL"));

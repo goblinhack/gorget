@@ -36,12 +36,12 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_brazier);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_light_source, 3);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);
   tp_light_color_set(tp, "orange");
   tp_weight_set(tp, 20); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   auto delay = 200;

@@ -173,6 +173,7 @@ class HiScores;
 class Tex;
 class Tile;
 class Tp;
+class Test;
 class Wid;
 class WidPopup;
 
@@ -199,6 +200,7 @@ using ThingPlayerp = struct ThingPlayer_ *;
 using Tilep        = class Tile *;
 using TpId         = unsigned int;
 using Tpp          = class Tp *;
+using Testp        = class Test *;
 using Widp         = class Wid *;
 using LevelNum     = unsigned char;
 

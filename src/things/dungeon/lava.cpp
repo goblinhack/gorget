@@ -29,11 +29,11 @@ bool tp_load_lava(void)
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_lava);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_tiled);
   tp_weight_set(tp, 2000); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 8; frame++) {

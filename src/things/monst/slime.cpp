@@ -31,6 +31,7 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_monst2);
@@ -40,7 +41,6 @@ bool tp_load_slime(void)
   tp_weight_set(tp, 200); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   auto delay = 1000;

@@ -12,7 +12,8 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things/mob \
 	    src/things/levels \
 	    src/things/treasure \
-	    src/things/internal
+	    src/things/internal \
+	    src/tests
 
 all: pre
 	$(foreach var,$(DIRS), $(MAKE) -C $(var) $@; )

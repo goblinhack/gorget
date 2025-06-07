@@ -29,10 +29,10 @@ bool tp_load_key(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_key);
+  tp_flag_set(tp, is_loggable);
   tp_weight_set(tp, 0); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   auto delay = 1000;

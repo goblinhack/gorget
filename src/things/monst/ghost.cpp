@@ -31,6 +31,7 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_ethereal);
   tp_flag_set(tp, is_ghost);
   tp_flag_set(tp, is_levitating);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_tickable);
@@ -38,7 +39,6 @@ bool tp_load_ghost(void)
   tp_weight_set(tp, 0); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   auto delay = 1000;

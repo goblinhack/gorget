@@ -28,12 +28,12 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_pillar);
   tp_weight_set(tp, 1000); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 16; frame++) {

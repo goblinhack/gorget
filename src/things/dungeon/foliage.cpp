@@ -26,10 +26,10 @@ bool tp_load_foliage(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_foliage);
+  tp_flag_set(tp, is_loggable);
   tp_weight_set(tp, 10); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_INFRONT);
-  tp_flag_set(tp, is_loggable);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.1"));
