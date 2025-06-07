@@ -12,6 +12,12 @@
 #include "my_tp.hpp"
 
 #include <cinttypes>
+#include <iostream>
+#include <map>
+#include <mutex>
+#include <sstream>
+#include <string.h>
+#include <string>
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 
