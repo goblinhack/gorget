@@ -138,6 +138,7 @@ void tests_run(Gamep g)
   int failed = 0;
 
   for (auto &test : test_name_map) {
+
     //
     // Print the timestamp
     //
@@ -154,12 +155,26 @@ void tests_run(Gamep g)
     auto pre  = string_sprintf("Running test %-30s", name.c_str());
 
     //
-    // Run the test
+    // Preamble
     //
     term_log(pre.c_str());
-
     LOG("Running test: %s", name.c_str());
     LOG("------------------------------");
+
+    //
+    // Skip the test if needed
+    //
+    if (g_opt_test_name != "") {
+      if (name != g_opt_test_name) {
+        term_log("%%fg=yellow$skipped%%fg=reset$\n");
+        LOG("Skipped");
+        continue;
+      }
+    }
+
+    //
+    // Run the test
+    //
     if (t->callback(g)) {
       passed++;
       term_log("%%fg=green$OK%%fg=reset$\n");

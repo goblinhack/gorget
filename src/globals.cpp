@@ -37,6 +37,7 @@ bool g_opt_debug2;                        // All debugs. Slow.
 bool g_opt_tests;                         // Run tests.
 
 std::string g_opt_seed_name;
+std::string g_opt_test_name;
 
 void reset_globals(void)
 {

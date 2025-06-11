@@ -466,7 +466,8 @@ static void usage(void)
   CON(" --debug2                          -- All debugs. Slow.");
   CON(" --no-debug                        -- Disable debugs.");
   CON("Testing options:");
-  CON(" --tests                           -- Run dungeon tests.");
+  CON(" --tests                           -- Run all tests.");
+  CON(" --test foo                        -- Run test foo only.");
   CON("Quickstart options:");
   CON(" --quick-start                     -- Quick start inside level.");
   CON(" --quick-start-level-select-menu   -- Quick start in the level select menu.");
@@ -537,9 +538,11 @@ static void parse_args(int argc, char *argv[])
     }
 
     if (! strcasecmp(argv[ i ], "--test") || ! strcasecmp(argv[ i ], "-test")) {
+      g_opt_test_name    = argv[ i + 1 ];
       g_opt_tests        = true;
       g_opt_debug1       = true;
       skip_gfx_and_audio = true;
+      i++;
       continue;
     }
 

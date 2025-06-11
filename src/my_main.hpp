@@ -17,6 +17,7 @@ extern char *GFX_PATH;
 extern char *TTF_PATH;
 
 extern std::string g_opt_seed_name;
+extern std::string g_opt_test_name;
 extern std::string g_opt_player_name;
 
 extern std::string g_log_stderr_filename;
