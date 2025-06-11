@@ -34,6 +34,10 @@ bool tp_load_entrance(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
+  if (g_opt_tests) {
+    return true;
+  }
+
   for (auto frame = 0; frame < 2; frame++) {
     const auto delay = 1000; /* ms */
     auto       tile  = tile_find_mand("entrance." + std::to_string(frame));

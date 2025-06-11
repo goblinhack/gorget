@@ -9,5 +9,6 @@ bool tests_init(void);
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
-bool test_load_move();
+bool test_load_move_ok();
+bool test_load_move_obstacle();
 /* end shell marker1 */

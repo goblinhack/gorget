@@ -4944,5 +4944,4 @@ void rooms_cross_sym(Gamep g)
            /* line */ (const char *) "  ..   ",
            /* line */ (const char *) "  ^    ",
            /* end */ nullptr);
-
 }

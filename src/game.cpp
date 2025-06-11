@@ -508,7 +508,7 @@ void Game::create_levels(void)
 
   game_map_zoom_in(g);
 
-  if (g_opt_tests_level_select_menu) {
+  if (g_opt_quick_start_level_select_menu) {
     level_change(g, v, LEVEL_SELECT_ID);
   } else {
     level_change(g, v, 0);

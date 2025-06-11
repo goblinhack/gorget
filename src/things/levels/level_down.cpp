@@ -25,6 +25,10 @@ bool tp_load_level_down(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
+  if (g_opt_tests) {
+    return true;
+  }
+
   for (auto frame = 0; frame < 2; frame++) {
     const auto delay = 500; /* ms */
     auto       tile  = tile_find_mand(name + std::string(".") + std::to_string(frame));

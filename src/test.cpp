@@ -3,11 +3,16 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_console.hpp"
+#include "my_log.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_sprintf.hpp"
+#include "my_string.hpp"
 #include "my_test.hpp"
 #include "my_tests.hpp"
 #include "my_thing.hpp"
+#include "my_time.hpp"
 
 #include <inttypes.h>
 #include <map>
@@ -21,7 +26,8 @@ std::initializer_list< std::string > tests = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
-    "move",
+    "move_ok",
+    "move_obstacle",
   /* end shell marker1 */
 };
 /* clang-format on */
@@ -61,7 +67,6 @@ Testp test_find(const char *name_in)
     return result->second;
   }
 
-  DIE("test_find: thing template %s not found", name_in);
   return nullptr;
 }
 
@@ -108,6 +113,8 @@ Testp test_load(const char *name_in)
 
   std::string name(name_in);
 
+  LOG("Load test '%s'", name_in);
+
   if (test_find(name_in)) {
     DIE("test_load: test name [%s] already loaded", name_in);
   }
@@ -121,4 +128,53 @@ Testp test_load(const char *name_in)
   }
 
   return test;
+}
+
+void tests_run(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  int passed = 0;
+  int failed = 0;
+
+  for (auto &test : test_name_map) {
+    //
+    // Print the timestamp
+    //
+    char buf[ MAXLONGSTR ];
+    buf[ 0 ] = '\0';
+    get_timestamp(buf, MAXLONGSTR);
+    term_log(buf);
+
+    //
+    // Test name
+    //
+    auto name = test.first;
+    auto t    = test.second;
+    auto pre  = string_sprintf("Running test %-30s", name.c_str());
+
+    //
+    // Run the test
+    //
+    term_log(pre.c_str());
+
+    LOG("Running test: %s", name.c_str());
+    LOG("------------------------------");
+    if (t->callback(g)) {
+      passed++;
+      term_log("%%fg=green$OK%%fg=reset$\n");
+      LOG("Passed");
+    } else {
+      failed++;
+      term_log("%%fg=red$FAILED%%fg=reset$\n");
+      LOG("Failed");
+    }
+    LOG("-");
+  }
+
+  if (failed) {
+    CON("Results: %d passed, %d failed", passed, failed);
+  } else {
+    CON("All tests passed");
+  }
 }

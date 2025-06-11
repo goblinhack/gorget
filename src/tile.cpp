@@ -658,6 +658,11 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
 Tilep tile_find(std::string name)
 {
   TRACE_NO_INDENT();
+
+  if (g_opt_tests) {
+    return nullptr;
+  }
+
   if (name == "") {
     return nullptr;
   }
@@ -673,6 +678,11 @@ Tilep tile_find(std::string name)
 Tilep tile_find_mand(std::string name)
 {
   TRACE_NO_INDENT();
+
+  if (g_opt_tests) {
+    return nullptr;
+  }
+
   if (name == "") {
     ERR("No tile name given");
     return nullptr;

@@ -16,6 +16,10 @@ void sdl_display(Gamep g)
 {
   TRACE_NO_INDENT();
 
+  if (! sdl.window) {
+    return;
+  }
+
   blit_fbo_bind(FBO_FINAL);
   glClear(GL_COLOR_BUFFER_BIT);
   glcolor(WHITE);
@@ -113,6 +117,10 @@ void sdl_flush_display(Gamep g, bool force)
 {
   TRACE_NO_INDENT();
 
+  if (! sdl.window) {
+    return;
+  }
+
   if (! force) {
     IF_NODEBUG { return; }
     if (g_opt_no_slow_log_flush) {
@@ -127,6 +135,12 @@ void sdl_flush_display(Gamep g, bool force)
 
 void sdl_display_reset(Gamep g)
 {
+  TRACE_NO_INDENT();
+
+  if (! sdl.window) {
+    return;
+  }
+
   CON("SDL: Video resetting");
 
   auto old_console = wid_console_serialize();
@@ -242,7 +256,7 @@ uint8_t sdl_display_init(Gamep g)
     }
   }
 
-  if (g_opt_tests_level_select_gen || g_opt_do_room_gen || g_opt_tests_level_gen) {
+  if (g_opt_do_level_select_gen || g_opt_do_room_gen || g_opt_do_level_gen) {
     video_flags = SDL_WINDOW_OPENGL;
   }
 

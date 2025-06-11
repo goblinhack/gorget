@@ -14,7 +14,10 @@ bool tests_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
-  if (! test_load_move()) {
+  if (! test_load_move_ok()) {
+    return false;
+  }
+  if (! test_load_move_obstacle()) {
     return false;
   }
   /* end shell marker1 */

@@ -35,6 +35,10 @@ bool tp_load_teleport(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
+  if (g_opt_tests) {
+    return true;
+  }
+
   auto delay = 100;
 
   for (auto frame = 0; frame < 7; frame++) {

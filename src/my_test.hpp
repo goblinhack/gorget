@@ -18,5 +18,6 @@ Testp       test_load(const char *);
 
 typedef bool (*test_callback_t)(Gamep);
 void test_callback_set(Testp, test_callback_t);
+void tests_run(Gamep);
 
 #endif // _MY_TEST_H_

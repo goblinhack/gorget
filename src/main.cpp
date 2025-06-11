@@ -30,6 +30,8 @@
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_test.hpp"
+#include "my_tests.hpp"
 #include "my_tp.hpp"
 #include "my_wid_console.hpp"
 #include "my_wid_tiles.hpp"
@@ -37,6 +39,8 @@
 
 static char      **ARGV;
 static std::string original_program_name;
+
+static bool skip_gfx_and_audio; // For tests
 
 void quit(Gamep *g_in)
 {
@@ -455,20 +459,22 @@ static void usage(void)
   CON("Gorget, options:");
   CON(" ");
   CON("Commonly used options:");
-  CON(" --seed <name/number>        -- Set the random seed.");
+  CON(" --seed <name/number>              -- Set the random seed.");
   CON(" ");
   CON("Debugging options:");
-  CON(" --debug                     -- Basic debug.");
-  CON(" --debug2                    -- All debugs. Slow.");
-  CON(" --no-debug                  -- Disable debugs.");
+  CON(" --debug                           -- Basic debug.");
+  CON(" --debug2                          -- All debugs. Slow.");
+  CON(" --no-debug                        -- Disable debugs.");
   CON("Testing options:");
-  CON(" --test                      -- Run dungeon tests.");
-  CON(" --test-start                -- Start in a level.");
-  CON(" --test-level-select-gen     -- Test room grid gen and then exit.");
-  CON(" --test-level-select-menu    -- Start in level select.");
-  CON(" --test-level-gen            -- Test level gen and then exit.");
+  CON(" --tests                           -- Run dungeon tests.");
+  CON("Quickstart options:");
+  CON(" --quick-start                     -- Quick start inside level.");
+  CON(" --quick-start-level-select-menu   -- Quick start in the level select menu.");
+  CON("Internal testing:");
+  CON(" --do-level-gen                    -- Do level gen only.");
+  CON(" --do-level-select-gen             -- Do level select gen only.");
   CON("Code generation:");
-  CON(" --do-room-gen               -- Generate room files and then exit.");
+  CON(" --do-room-gen                     -- Generate room files only.");
   CON(" ");
   CON("Written by goblinhack@gmail.com");
 }
@@ -519,38 +525,49 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
+    if (! strcasecmp(argv[ i ], "--quick-start") || ! strcasecmp(argv[ i ], "-quick-start")) {
+      g_opt_quick_start = true;
+      continue;
+    }
+
+    if (! strcasecmp(argv[ i ], "--quick-start-level-select-menu")
+        || ! strcasecmp(argv[ i ], "-quick-start-level-select-menu")) {
+      g_opt_quick_start_level_select_menu = true;
+      continue;
+    }
+
     if (! strcasecmp(argv[ i ], "--test") || ! strcasecmp(argv[ i ], "-test")) {
-      g_opt_tests = true;
+      g_opt_tests        = true;
+      g_opt_debug1       = true;
+      skip_gfx_and_audio = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--tests") || ! strcasecmp(argv[ i ], "-tests")) {
-      g_opt_tests = true;
-      continue;
-    }
-
-    if (! strcasecmp(argv[ i ], "--test-start") || ! strcasecmp(argv[ i ], "-test-start")) {
-      g_opt_tests_start = true;
+      g_opt_tests        = true;
+      g_opt_debug1       = true;
+      skip_gfx_and_audio = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-room-gen") || ! strcasecmp(argv[ i ], "-do-room-gen")) {
-      g_opt_do_room_gen = true;
+      g_opt_do_room_gen  = true;
+      skip_gfx_and_audio = true;
+      g_opt_debug1       = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--test-level-select-gen") || ! strcasecmp(argv[ i ], "-test-level-select-gen")) {
-      g_opt_tests_level_select_gen = true;
+    if (! strcasecmp(argv[ i ], "--do-level-select-gen") || ! strcasecmp(argv[ i ], "-do-level-select-gen")) {
+      g_opt_do_level_select_gen = true;
+      skip_gfx_and_audio        = true;
+      g_opt_debug1              = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--test-level-select-menu") || ! strcasecmp(argv[ i ], "-test-level-select-menu")) {
-      g_opt_tests_level_select_menu = true;
-      continue;
-    }
-
-    if (! strcasecmp(argv[ i ], "--test-level-gen") || ! strcasecmp(argv[ i ], "-test-level-gen")) {
-      g_opt_tests_level_gen = true;
+    if (! strcasecmp(argv[ i ], "--do-level-gen") || ! strcasecmp(argv[ i ], "-do-level-gen")) {
+      g_opt_do_level_gen = true;
+      skip_gfx_and_audio = true;
+      g_opt_debug1       = true;
       continue;
     }
 
@@ -631,13 +648,25 @@ static std::string create_appdata_dir(void)
 
 void flush_the_console(Gamep g)
 {
+  TRACE_NO_INDENT();
+  if (! wid_console_window) {
+    return;
+  }
+
   //
   // Easier to see progress on windows where there is no console
   //
   if (g_opt_debug1) {
+    TRACE_NO_INDENT();
     wid_visible(g, wid_console_window);
+
+    TRACE_NO_INDENT();
     wid_raise(g, wid_console_window);
+
+    TRACE_NO_INDENT();
     wid_update(g, wid_console_window);
+
+    TRACE_NO_INDENT();
     sdl_flush_display(g, true);
   }
 }
@@ -726,28 +755,28 @@ int main(int argc, char *argv[])
   g = game;
   game_init(g);
 
-  {
+  if (! g_opt_tests) {
     TRACE_NO_INDENT();
     if (! sdl_init()) {
       ERR("SDL: Init");
     }
   }
 
-  {
+  if (! g_opt_tests) {
     TRACE_NO_INDENT();
     if (! sdl_display_init(g)) {
       ERR("SDL: Init");
     }
   }
 
-  {
+  if (! g_opt_tests) {
     TRACE_NO_INDENT();
     sdl_config_update_all(g);
   }
 
-  if (g_opt_tests_level_select_gen || g_opt_do_room_gen || g_opt_tests_level_gen) {
+  if (skip_gfx_and_audio) {
     //
-    // Skip for speed of test setuip
+    // Skip for speed of test setup
     //
   } else {
     //
@@ -765,7 +794,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  {
+  if (! g_opt_tests) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load early gfx tiles, text, UI etc...");
@@ -778,7 +807,7 @@ int main(int argc, char *argv[])
   //
   // Disable vsync so the console is faster
   //
-  {
+  if (! g_opt_tests) {
     TRACE_NO_INDENT();
     SDL_GL_SetSwapInterval(0);
   }
@@ -795,7 +824,7 @@ int main(int argc, char *argv[])
 
   color_init();
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load fonts");
@@ -807,7 +836,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load widgets");
@@ -819,7 +848,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load console");
@@ -862,7 +891,7 @@ int main(int argc, char *argv[])
   //
   // Need to preserve spaces for restarting via exec
   //
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     original_program_name = std::string(argv[ 0 ]);
     if (g_opt_debug1) {
@@ -873,7 +902,7 @@ int main(int argc, char *argv[])
     flush_the_console(g);
   }
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load tiles");
@@ -885,7 +914,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (! tile_init()) {
       ERR("Tile init");
@@ -893,7 +922,7 @@ int main(int argc, char *argv[])
     flush_the_console(g);
   }
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load textures");
@@ -906,7 +935,7 @@ int main(int argc, char *argv[])
     flush_the_console(g);
   }
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load audio");
@@ -919,7 +948,7 @@ int main(int argc, char *argv[])
     flush_the_console(g);
   }
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load music");
@@ -932,7 +961,7 @@ int main(int argc, char *argv[])
     flush_the_console(g);
   }
 
-  {
+  if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load sound");
@@ -954,7 +983,11 @@ int main(int argc, char *argv[])
     } else {
       LOG("Find resource locations for gfx and music");
     }
+
+    TRACE_NO_INDENT();
     find_file_locations();
+
+    TRACE_NO_INDENT();
     flush_the_console(g);
   }
 
@@ -987,18 +1020,34 @@ int main(int argc, char *argv[])
     rooms_init(g);
     fragments_init(g);
 
-    if (g_opt_tests_level_select_gen) {
+    if (g_opt_tests) {
+      tests_init();
+
+      CON("Running tests");
+      CON("-------------");
+      tests_run(g);
+
+      DIE_CLEAN("done");
+    }
+
+    if (g_opt_do_level_gen) {
+      CON("Creating some levels. Look in the log file for output.");
+      CON("------------------------------------------------------");
+      level_gen_test(g);
+      DIE_CLEAN("done");
+    }
+
+    if (g_opt_do_level_select_gen) {
+      CON("Creating level select levels. Look in the log file for output.");
+      CON("--------------------------------------------------------------");
       level_select_test(g);
       DIE_CLEAN("done");
     }
 
     if (g_opt_do_room_gen) {
+      CON("Creating room gen files. You will need to recompile after this.");
+      CON("---------------------------------------------------------------");
       rooms_test(g);
-      DIE_CLEAN("done");
-    }
-
-    if (g_opt_tests_level_gen) {
-      level_gen_test(g);
       DIE_CLEAN("done");
     }
   }
@@ -1014,9 +1063,9 @@ int main(int argc, char *argv[])
     if (g_opt_restarted) {
       wid_cfg_gfx_select(g);
       g_opt_restarted = false;
-    } else if (g_opt_tests_start) {
+    } else if (g_opt_quick_start) {
       wid_new_game(g);
-    } else if (g_opt_tests_level_select_menu) {
+    } else if (g_opt_quick_start_level_select_menu) {
       wid_new_game(g);
     } else {
       wid_main_menu_select(g);
