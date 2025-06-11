@@ -587,7 +587,7 @@ static bool rooms_dump_one(Gamep g, FILE *out, int which)
 //
 // Dump a random room of the given type
 //
-static void rooms_dump_n(Gamep g, int n, int which, const char *name)
+static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const char *name)
 {
   TRACE_NO_INDENT();
 
@@ -609,7 +609,7 @@ static void rooms_dump_n(Gamep g, int n, int which, const char *name)
   fprintf(out, "#include \"my_level.hpp\"\n");
   fprintf(out, "\n");
   fprintf(out, "//\n");
-  fprintf(out, "// Rooms of type '%s'\n", name);
+  fprintf(out, "// %d rooms of type '%s' from seed '%s'\n", n, name, game_seed_name_get(g));
   fprintf(out, "//\n");
   fprintf(out, "void rooms_%s(Gamep g)\n", name);
   fprintf(out, "{\n");
@@ -629,12 +629,12 @@ void rooms_test(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  rooms_dump_n(g, 500, ROOM_TYPE_CROSS, "cross");
-  rooms_dump_n(g, 500, ROOM_TYPE_CROSS_SYM, "cross_sym");
-  rooms_dump_n(g, 1000, ROOM_TYPE_SMALL, "small");
-  rooms_dump_n(g, 500, ROOM_TYPE_MEDIUM, "medium");
-  rooms_dump_n(g, 200, ROOM_TYPE_CIRCULAR, "circular");
-  rooms_dump_n(g, 500, ROOM_TYPE_CHUNKY, "chunky");
-  rooms_dump_n(g, 500, ROOM_TYPE_BLEND2, "blend2");
-  rooms_dump_n(g, 500, ROOM_TYPE_BLEND1, "blend1");
+  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CROSS, "cross");
+  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CROSS_SYM, "cross_sym");
+  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_SMALL, "small");
+  rooms_write_source_file_for_n_rooms(g, 1000, ROOM_TYPE_MEDIUM, "medium");
+  rooms_write_source_file_for_n_rooms(g, 200, ROOM_TYPE_CIRCULAR, "circular");
+  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_CHUNKY, "chunky");
+  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_BLEND2, "blend2");
+  rooms_write_source_file_for_n_rooms(g, 500, ROOM_TYPE_BLEND1, "blend1");
 }
