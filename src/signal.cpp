@@ -157,7 +157,7 @@ void common_error_handler(std::string &tech_support)
   tech_support += "\n";
   tech_support += "The goblin responsible for this shall be punished!!!\n";
 
-  SDL_MSG_BOX("%s", tech_support.c_str());
+  sdl_msg_box("%s", tech_support.c_str());
 }
 
 void segv_handler(int sig)

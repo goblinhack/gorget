@@ -313,10 +313,10 @@ cleanup:
   myfree(EXEC_DIR);
   EXEC_DIR = new_EXEC_DIR;
 
-  DBG3("EXEC_DIR set to %s", EXEC_DIR);
-  DBG3("Parent dir  : \"%s\"", parent_dir);
-  DBG3("Curr dir    : \"%s\"", curr_dir);
-  DBG3("Full name   : \"%s\"", exec_expanded_name);
+  DBG2("EXEC_DIR set to %s", EXEC_DIR);
+  DBG2("Parent dir  : \"%s\"", parent_dir);
+  DBG2("Curr dir    : \"%s\"", curr_dir);
+  DBG2("Full name   : \"%s\"", exec_expanded_name);
 
   if (path) {
     myfree(path);
@@ -459,15 +459,16 @@ static void usage(void)
   CON(" ");
   CON("Debugging options:");
   CON(" --debug                     -- Basic debug.");
-  CON(" --debug2                    -- Most debugs. Most useful.");
-  CON(" --debug3                    -- All debugs. Slow.");
+  CON(" --debug2                    -- All debugs. Slow.");
   CON(" --no-debug                  -- Disable debugs.");
   CON("Testing options:");
+  CON(" --test                      -- Run dungeon tests.");
   CON(" --test-start                -- Start in a level.");
-  CON(" --test-room-gen             -- Test room gen and then exit.");
   CON(" --test-level-select-gen     -- Test room grid gen and then exit.");
   CON(" --test-level-select-menu    -- Start in level select.");
   CON(" --test-level-gen            -- Test level gen and then exit.");
+  CON("Code generation:");
+  CON(" --do-room-gen               -- Generate room files and then exit.");
   CON(" ");
   CON("Written by goblinhack@gmail.com");
 }
@@ -500,7 +501,6 @@ static void parse_args(int argc, char *argv[])
         || ! strcasecmp(argv[ i ], "--nodebug") || ! strcasecmp(argv[ i ], "-nodebug")) {
       g_opt_debug1               = false;
       g_opt_debug2               = false;
-      g_opt_debug3               = false;
       g_opt_override_debug_level = true;
       continue;
     }
@@ -519,36 +519,38 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--debug3") || ! strcasecmp(argv[ i ], "-debug3")) {
-      g_opt_debug1               = true;
-      g_opt_debug2               = true;
-      g_opt_debug3               = true;
-      g_opt_override_debug_level = true;
+    if (! strcasecmp(argv[ i ], "--test") || ! strcasecmp(argv[ i ], "-test")) {
+      g_opt_tests = true;
+      continue;
+    }
+
+    if (! strcasecmp(argv[ i ], "--tests") || ! strcasecmp(argv[ i ], "-tests")) {
+      g_opt_tests = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--test-start") || ! strcasecmp(argv[ i ], "-test-start")) {
-      g_opt_test_start = true;
+      g_opt_tests_start = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--test-room-gen") || ! strcasecmp(argv[ i ], "-test-room-gen")) {
-      g_opt_test_room_gen = true;
+    if (! strcasecmp(argv[ i ], "--do-room-gen") || ! strcasecmp(argv[ i ], "-do-room-gen")) {
+      g_opt_do_room_gen = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--test-level-select-gen") || ! strcasecmp(argv[ i ], "-test-level-select-gen")) {
-      g_opt_test_level_select_gen = true;
+      g_opt_tests_level_select_gen = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--test-level-select-menu") || ! strcasecmp(argv[ i ], "-test-level-select-menu")) {
-      g_opt_test_level_select_menu = true;
+      g_opt_tests_level_select_menu = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--test-level-gen") || ! strcasecmp(argv[ i ], "-test-level-gen")) {
-      g_opt_test_level_gen = true;
+      g_opt_tests_level_gen = true;
       continue;
     }
 
@@ -743,7 +745,7 @@ int main(int argc, char *argv[])
     sdl_config_update_all(g);
   }
 
-  if (g_opt_test_level_select_gen || g_opt_test_room_gen || g_opt_test_level_gen) {
+  if (g_opt_tests_level_select_gen || g_opt_do_room_gen || g_opt_tests_level_gen) {
     //
     // Skip for speed of test setuip
     //
@@ -985,17 +987,17 @@ int main(int argc, char *argv[])
     rooms_init(g);
     fragments_init(g);
 
-    if (g_opt_test_level_select_gen) {
+    if (g_opt_tests_level_select_gen) {
       level_select_test(g);
       DIE_CLEAN("done");
     }
 
-    if (g_opt_test_room_gen) {
+    if (g_opt_do_room_gen) {
       rooms_test(g);
       DIE_CLEAN("done");
     }
 
-    if (g_opt_test_level_gen) {
+    if (g_opt_tests_level_gen) {
       level_gen_test(g);
       DIE_CLEAN("done");
     }
@@ -1012,9 +1014,9 @@ int main(int argc, char *argv[])
     if (g_opt_restarted) {
       wid_cfg_gfx_select(g);
       g_opt_restarted = false;
-    } else if (g_opt_test_start) {
+    } else if (g_opt_tests_start) {
       wid_new_game(g);
-    } else if (g_opt_test_level_select_menu) {
+    } else if (g_opt_tests_level_select_menu) {
       wid_new_game(g);
     } else {
       wid_main_menu_select(g);

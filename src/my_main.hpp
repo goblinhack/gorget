@@ -16,26 +16,26 @@ extern char *EXEC_FULL_PATH_AND_NAME;
 extern char *GFX_PATH;
 extern char *TTF_PATH;
 
-extern bool g_die_occurred;               // Fatal error has occurred
-extern bool g_do_screenshot;              // Grab a screen shot next fram
-extern bool g_errored;                    // An error has occurred
-extern bool g_grab_next_key;              // Waiting for key input
-extern bool g_loading;                    // Currently loading
-extern bool g_main_loop_running;          // SDL main loop is running.
-extern bool g_need_restart;               // Need to restart game
-extern bool g_quitting;                   // Exiting the game
-                                          //
-extern bool g_opt_no_slow_log_flush;      // Do not flush after each console log at start
-extern bool g_opt_override_debug_level;   // Temporary, used to disable existing debugs
-extern bool g_opt_test_start;             // Start in the main menu
-extern bool g_opt_test_level_select_menu; // Start in the select menu
-extern bool g_opt_test_room_gen;          // Test room gen
-extern bool g_opt_test_level_select_gen;  // Test level select gen
-extern bool g_opt_test_level_gen;         // Test level gen
-extern bool g_opt_restarted;              // Post restart
-extern bool g_opt_debug1;
-extern bool g_opt_debug2;
-extern bool g_opt_debug3;
+extern bool g_die_occurred;                // Fatal error has occurred
+extern bool g_do_screenshot;               // Grab a screen shot next fram
+extern bool g_errored;                     // An error has occurred
+extern bool g_grab_next_key;               // Waiting for key input
+extern bool g_loading;                     // Currently loading
+extern bool g_main_loop_running;           // SDL main loop is running.
+extern bool g_need_restart;                // Need to restart game
+extern bool g_quitting;                    // Exiting the game
+                                           //
+extern bool g_opt_no_slow_log_flush;       // Do not flush after each console log at start
+extern bool g_opt_override_debug_level;    // Temporary, used to disable existing debugs
+extern bool g_opt_tests_start;             // Start in the main menu
+extern bool g_opt_tests_level_select_menu; // Start in the select menu
+extern bool g_opt_do_room_gen;             // Test room gen
+extern bool g_opt_tests_level_select_gen;  // Test level select gen
+extern bool g_opt_tests_level_gen;         // Test level gen
+extern bool g_opt_restarted;               // Post restart
+extern bool g_opt_debug1;                  // Normal debugs
+extern bool g_opt_debug2;                  // All debugs
+extern bool g_opt_tests;                   // Dungeon tests
 
 extern std::string g_opt_seed_name;
 extern std::string g_opt_player_name;
@@ -95,62 +95,44 @@ void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void TOPCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
-void common_error_handler(const std::string &error);
-void ctrlc_handler(int sig);
 void die(void);
-void error_handler(const std::string &error);
-void flush_the_console(void);
-void GAME_UI_MSG_BOX(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void myerr(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void quit(Gamep *);
-void reset_globals(void);
 void restart(Gamep);
-void SDL_MSG_BOX(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void segv_handler(int sig);
+
+void reset_globals(void);
+void flush_the_console(void);
 void flush_the_console(Gamep);
 
-#define DEBUG1 (unlikely(g_opt_debug1))
+void common_error_handler(const std::string &error);
+void ctrlc_handler(int sig);
+void error_handler(const std::string &error);
+void segv_handler(int sig);
+
+void raise_error(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+
+#define DEBUG  (unlikely(g_opt_debug1))
 #define DEBUG2 (unlikely(g_opt_debug2))
-#define DEBUG3 (unlikely(g_opt_debug3))
 
-#define NODEBUG1 (likely(! g_opt_debug1))
+#define NODEBUG  (likely(! g_opt_debug1))
 #define NODEBUG2 (likely(! g_opt_debug2))
-#define NODEBUG3 (likely(! g_opt_debug3))
 
-#define IF_DEBUG  if (DEBUG1)
-#define IF_DEBUG1 if (DEBUG1)
+#define IF_DEBUG  if (DEBUG)
 #define IF_DEBUG2 if (DEBUG2)
-#define IF_DEBUG3 if (DEBUG3)
 
-#define IF_NODEBUG  if (NODEBUG1)
-#define IF_NODEBUG1 if (NODEBUG1)
+#define IF_NODEBUG  if (NODEBUG)
 #define IF_NODEBUG2 if (NODEBUG2)
-#define IF_NODEBUG2 if (NODEBUG2)
-#define IF_NODEBUG3 if (NODEBUG3)
-
-#define ERR                                                                                                          \
-  TRACE_NO_INDENT();                                                                                                 \
-  myerr
-
-#define dbg                                                                                                          \
-  if (DEBUG1)                                                                                                        \
-  log
-#define dbg2                                                                                                         \
-  if (DEBUG2)                                                                                                        \
-  log
-#define dbg3                                                                                                         \
-  if (DEBUG3)                                                                                                        \
-  log
 
 #define DBG                                                                                                          \
-  if (DEBUG1)                                                                                                        \
+  if (DEBUG)                                                                                                         \
   LOG
 #define DBG2                                                                                                         \
   if (DEBUG2)                                                                                                        \
   LOG
-#define DBG3                                                                                                         \
-  if (DEBUG3)                                                                                                        \
-  LOG
+
+#define ERR                                                                                                          \
+  TRACE_NO_INDENT();                                                                                                 \
+  raise_error
 
 #define MY_STDERR (g_log_stderr ? g_log_stderr : stderr)
 #define MY_STDOUT (g_log_stdout ? g_log_stdout : stdout)

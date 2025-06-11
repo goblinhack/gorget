@@ -58,7 +58,7 @@ static void warn_(const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
-  FLUSH_THE_CONSOLE();
+  FLUSH_TERMINAL();
 
   wid_console_log(buf);
 }
@@ -93,7 +93,7 @@ static void con_(const char *fmt, va_list args)
 
   wid_console_log(buf);
 
-  FLUSH_THE_CONSOLE();
+  FLUSH_TERMINAL();
 }
 
 void CON(const char *fmt, ...)
@@ -122,7 +122,7 @@ static void dying_(const char *fmt, va_list args)
   fprintf(stderr, "%s\n", buf);
   putf(MY_STDOUT, buf);
 
-  FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS();
+  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 }
 
 static void err_(const char *fmt, va_list args)
@@ -173,7 +173,7 @@ static void err_(const char *fmt, va_list args)
     wid_console_log(buf);
   }
 
-  FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS();
+  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
   nested_error = false;
 }
 
@@ -203,7 +203,7 @@ static void croak_(const char *fmt, va_list args)
   fprintf(stderr, "%s\n", buf);
 
   ERR("%s", buf + tslen);
-  FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS();
+  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 
   die();
 }
@@ -229,7 +229,7 @@ static void croak_clean_(const char *fmt, va_list args)
   }
   g_die_occurred = true;
 
-  FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS();
+  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 
   die();
 }
@@ -256,7 +256,7 @@ void DYING(const char *fmt, ...)
   va_end(args);
 }
 
-void myerr(const char *fmt, ...)
+void raise_error(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
@@ -296,46 +296,6 @@ void myerr(const char *fmt, ...)
   }
 }
 
-static void msgerr_(const char *fmt, va_list args)
-{
-  TRACE_NO_INDENT();
-
-  char buf[ MAXLONGSTR ];
-  int  len = 0;
-
-  callstack_dump();
-  backtrace_dump();
-
-  buf[ 0 ] = '\0';
-  get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "ERROR: " UI_IMPORTANT_FMT_STR);
-  len = (int) strlen(buf);
-  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
-  len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, UI_RESET_FMT);
-
-  putf(MY_STDERR, buf);
-  putf(MY_STDOUT, buf);
-
-  fprintf(stderr, "%s\n", buf);
-
-  wid_console_log(buf);
-
-  FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS();
-}
-
-void GAME_UI_MSG_BOX(const char *fmt, ...)
-{
-  TRACE_NO_INDENT();
-
-  va_list args;
-
-  va_start(args, fmt);
-  msgerr_(fmt, args);
-  va_end(args);
-}
-
 static void sdl_msgerr_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
@@ -354,7 +314,7 @@ static void sdl_msgerr_(const char *fmt, va_list args)
 #endif
 }
 
-void SDL_MSG_BOX(const char *fmt, ...)
+void sdl_msg_box(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
@@ -403,7 +363,7 @@ static void topcon_(const char *fmt, va_list args)
 
   wid_topcon_log(buf + len);
   wid_console_log(buf + len);
-  FLUSH_THE_CONSOLE();
+  FLUSH_TERMINAL();
 }
 
 void TOPCON(const char *fmt, ...)

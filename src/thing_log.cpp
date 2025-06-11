@@ -60,7 +60,7 @@ static void thing_warn_(Thingp t, const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
-  FLUSH_THE_CONSOLE();
+  FLUSH_TERMINAL();
 
   wid_console_log(buf);
 }
@@ -96,7 +96,7 @@ static void thing_con_(Thingp t, const char *fmt, va_list args)
 
   wid_console_log(buf);
 
-  FLUSH_THE_CONSOLE();
+  FLUSH_TERMINAL();
 }
 
 void THING_CON(Thingp t, const char *fmt, ...)
@@ -141,7 +141,7 @@ static void thing_err_(Thingp t, const char *fmt, va_list args)
 
   wid_console_log(buf);
 
-  FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS();
+  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 }
 
 void THING_ERR(Thingp t, const char *fmt, ...)
@@ -175,7 +175,7 @@ static void thing_topcon_(Thingp t, const char *fmt, va_list args)
 
   wid_topcon_log(buf);
   wid_console_log(buf);
-  FLUSH_THE_CONSOLE();
+  FLUSH_TERMINAL();
 }
 
 void THING_TOPCON(Thingp t, const char *fmt, ...)

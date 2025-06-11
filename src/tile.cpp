@@ -375,7 +375,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
         DIE("Tile name [%s] already used", name.c_str());
       }
 
-      IF_DEBUG3 { LOG("Add tile name [%s]", name.c_str()); }
+      IF_DEBUG2 { LOG("Add tile name [%s]", name.c_str()); }
 
       auto t      = new Tile(); // std::make_shared< class Tile >();
       auto result = all_tiles.insert(std::make_pair(name, t));

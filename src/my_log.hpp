@@ -10,7 +10,7 @@
 
 void putf(FILE *fp, const char *s);
 
-#define FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS()                                                                        \
+#define FLUSH_TERMINAL_FOR_ALL_PLATFORMS()                                                                           \
   fflush(stdout);                                                                                                    \
   fflush(stderr);                                                                                                    \
   fflush(MY_STDOUT);                                                                                                 \
@@ -21,9 +21,9 @@ void putf(FILE *fp, const char *s);
 // windows is such utter garbage that if the program crashes it does not flush
 // the goddamned console! So we need this...
 //
-#define FLUSH_THE_CONSOLE() FLUSH_THE_CONSOLE_FOR_ALL_PLATFORMS()
+#define FLUSH_TERMINAL() FLUSH_TERMINAL_FOR_ALL_PLATFORMS()
 #else
-#define FLUSH_THE_CONSOLE() // sensible OS
+#define FLUSH_TERMINAL() // sensible OS
 #endif
 
 #endif

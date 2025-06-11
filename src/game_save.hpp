@@ -140,7 +140,7 @@ bool Game::save(std::string file_to_save)
   memcpy(uncompressed, data.c_str(), uncompressed_len);
 
 #if 0
-  IF_DEBUG3 {
+  IF_DEBUG2 {
     std::cout << "before compression ";
     (void) hexdump((const unsigned char*)uncompressed, uncompressed_len);
   }
@@ -171,7 +171,7 @@ bool Game::save(std::string file_to_save)
   //
   // Uncompress and check the data matches
   //
-  IF_DEBUG3
+  IF_DEBUG2
   {
     HEAP_ALLOC(tmp_compressed, compressed_len);
     HEAP_ALLOC(tmp_uncompressed, uncompressed_len);
@@ -196,7 +196,7 @@ bool Game::save(std::string file_to_save)
   // Dump the post compress buffer
   //
 #if 0
-  IF_DEBUG3 {
+  IF_DEBUG2 {
     std::cout << "after compression ";
     (void) hexdump((const unsigned char *)compressed, compressed_len);
   }

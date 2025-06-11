@@ -119,7 +119,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
 
   if (! g_opt_override_debug_level) {
     if (my.t.debug_mode) {
-      g_opt_debug3 = false;
       g_opt_debug2 = true;
       g_opt_debug1 = true;
     }
@@ -305,7 +304,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   }
 
 #if 0
-  IF_DEBUG3 {
+  IF_DEBUG2 {
     std::cout << "decompressed as ";
     hexdump((const unsigned char *)uncompressed, uncompressed_len);
   }
@@ -623,7 +622,7 @@ void game_load_last_config(const char *appdata)
   std::string version = "" MYVER "";
 
   if (game->config.version != version) {
-    SDL_MSG_BOX("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
+    sdl_msg_box("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
                 game->config.version.c_str(), version.c_str());
     delete game;
     game = new Game(std::string(appdata));
@@ -631,7 +630,7 @@ void game_load_last_config(const char *appdata)
     game_save_config(game);
     g_errored = false;
   } else if (! config_error.empty()) {
-    SDL_MSG_BOX("Config error: %s. Will need to reset config.", config_error.c_str());
+    sdl_msg_box("Config error: %s. Will need to reset config.", config_error.c_str());
     delete game;
     game = nullptr;
     reset_globals();

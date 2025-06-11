@@ -292,7 +292,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
         }
       }
 
-      if (g_opt_test_level_select_menu) {
+      if (g_opt_tests_level_select_menu) {
         l->next_level = true;
       }
 
@@ -341,7 +341,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
         //
         // Show all levels as next when debugging
         //
-        if (g_opt_test_level_select_menu && (tp == tp_is_level_not_visited)) {
+        if (g_opt_tests_level_select_menu && (tp == tp_is_level_not_visited)) {
           tp = tp_is_level_next;
         }
 

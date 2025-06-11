@@ -593,6 +593,8 @@ static void rooms_dump_n(Gamep g, int n, int which, const char *name)
 
   std::string f = "src/rooms_" + std::string(name) + ".cpp";
 
+  CON("Write to %s", f.c_str());
+
   FILE *out = fopen(f.c_str(), "w+");
   if (! out) {
     DIE("could not write to %s", f.c_str());

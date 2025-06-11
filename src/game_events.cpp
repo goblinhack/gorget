@@ -270,10 +270,10 @@ bool game_event_quit(Gamep g)
   LOG("Quitting");
   TRACE_AND_INDENT();
 
-  if (g_opt_test_start) {
+  if (g_opt_tests_start) {
     DIE_CLEAN("Quick quit");
   }
-  if (g_opt_test_level_select_menu) {
+  if (g_opt_tests_level_select_menu) {
     DIE_CLEAN("Quick quit");
   }
 

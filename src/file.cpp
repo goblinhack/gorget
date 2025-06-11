@@ -157,7 +157,6 @@ unsigned char *file_load(const char *filename, int *outlen)
   char *popup_str = dynprintf("Filename was not found on ramdisk or "
                 "on the local disk, %s", filename);
 
-  GAME_UI_MSG_BOX("%s", popup_str);
   myfree(popup_str);
    */
   LOG("File not found \"%s\"", filename);

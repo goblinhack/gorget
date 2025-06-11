@@ -2958,7 +2958,7 @@ Widp wid_find(const std::string &name)
       return r;
     }
   }
-  // DBG3("Wid [%s] not found", name.c_str());
+  // DBG2("Wid [%s] not found", name.c_str());
   return nullptr;
 }
 
@@ -5434,7 +5434,7 @@ void WID_DBG(Widp w, const char *fmt, ...)
 {
   va_list args;
 
-  IF_NODEBUG3 { return; }
+  IF_NODEBUG2 { return; }
 
   verify(MTYPE_WID, w);
 
