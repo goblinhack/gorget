@@ -3579,7 +3579,7 @@ static void level_gen_create(Gamep g, class LevelGen *l)
   //
   // Create things
   //
-  level_map_set(g, v, level, level_string.c_str());
+  level_populate(g, v, level, level_string.c_str());
 
   //
   // Create joined up tiles

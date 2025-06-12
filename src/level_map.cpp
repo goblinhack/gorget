@@ -13,15 +13,14 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
+void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 {
   TRACE_NO_INDENT();
 
-  const auto row_len      = MAP_WIDTH;
-  auto       expected_len = row_len * MAP_HEIGHT;
+  auto expected_len = w * h;
 
   if ((int) strlen(in) != expected_len) {
-    DIE("bad map size, expected %d, got %d", (int) strlen(in), (int) expected_len);
+    DIE("bad map size, expected %d, got %d for map %dx%d", (int) strlen(in), (int) expected_len, w, h);
   }
 
   auto tp_wall        = tp_random(is_wall);
@@ -50,9 +49,9 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
   auto tp_player      = tp_find_mand("player");
   auto tp_entrance    = tp_find_mand("entrance");
 
-  for (auto y = 0; y < MAP_HEIGHT; y++) {
-    for (auto x = 0; x < MAP_WIDTH; x++) {
-      auto  offset = (row_len * y) + x;
+  for (auto y = 0; y < h; y++) {
+    for (auto x = 0; x < w; x++) {
+      auto  offset = (w * y) + x;
       auto  c      = in[ offset ];
       Tpp   tp     = nullptr;
       point at(x, y);
@@ -68,14 +67,18 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
       switch (c) {
         case CHARMAP_FLOOR :
           need_floor = true;
-          if (d100() < 5) {
-            need_foliage = true;
+          if (! g_opt_tests) {
+            if (d100() < 5) {
+              need_foliage = true;
+            }
           }
           break;
         case CHARMAP_DIRT :
           need_dirt = true;
-          if (d100() < 50) {
-            need_foliage = true;
+          if (! g_opt_tests) {
+            if (d100() < 50) {
+              need_foliage = true;
+            }
           }
           break;
         case CHARMAP_CHASM : tp = tp_chasm; break;
@@ -110,8 +113,10 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
         case CHARMAP_WATER :
           need_dirt  = true;
           need_water = true;
-          if (d100() < 5) {
-            need_foliage = true;
+          if (! g_opt_tests) {
+            if (d100() < 5) {
+              need_foliage = true;
+            }
           }
           break;
         case CHARMAP_BARREL :
@@ -247,4 +252,11 @@ void level_map_set(Gamep g, Levelsp v, Levelp l, const char *in)
       }
     }
   }
+}
+
+void level_populate(Gamep g, Levelsp v, Levelp l, const char *in)
+{
+  TRACE_NO_INDENT();
+
+  level_populate(g, v, l, MAP_WIDTH, MAP_HEIGHT, in);
 }

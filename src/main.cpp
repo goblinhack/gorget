@@ -818,13 +818,11 @@ int main(int argc, char *argv[])
   //
   // Random number
   //
-  if (g_opt_debug1) {
-    CON("Init random seed");
-  } else {
-    LOG("Init random seed");
-  }
   pcg_srand((unsigned int) std::time(nullptr));
 
+  //
+  // Colors
+  //
   color_init();
 
   if (! skip_gfx_and_audio) {
@@ -871,7 +869,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  {
+  if (! g_opt_tests) {
     CON(UI_INFO_FMT_STR "          @@@@@@@@   @@@@@@   @@@@@@@    @@@@@@@@  @@@@@@@@  @@@@@@@" UI_RESET_FMT);
     CON(UI_INFO_FMT_STR "         @@@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@  @@@@@@@" UI_RESET_FMT);
     CON(UI_INFO_FMT_STR "         !@@        @@!  @@@  @@!  @@@  !@@        @@!         @@!" UI_RESET_FMT);
@@ -981,13 +979,6 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    if (g_opt_debug1) {
-      CON("Find resource locations for gfx and music");
-    } else {
-      LOG("Find resource locations for gfx and music");
-    }
-
-    TRACE_NO_INDENT();
     find_file_locations();
 
     TRACE_NO_INDENT();
@@ -996,26 +987,21 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    if (g_opt_debug1) {
-      CON("Load templates");
-    } else {
-      LOG("Load templates");
-    }
+
+    LOG("Load templates");
     if (! tp_init()) {
       ERR("Templates init");
     }
+    LOG("Loaded templates");
   }
 
   {
     TRACE_NO_INDENT();
-    if (g_opt_debug1) {
-      CON("Load commands");
-    } else {
-      LOG("Load commands");
-    }
+    LOG("Load commands");
     if (! command_init()) {
       ERR("Command init");
     }
+    LOG("Loaded commands");
     flush_the_console(g);
   }
 

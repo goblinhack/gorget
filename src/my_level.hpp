@@ -366,7 +366,7 @@ bool is_oob(point);
 
 bool level_flag(Gamep, Levelsp, Levelp, ThingFlag, point p);
 bool level_is_same_obj_type_at(Gamep, Levelsp, Levelp, point p, Tpp);
-bool level_set_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot, ThingId);
+bool level_populate_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot, ThingId);
 bool level_tick_is_in_progress(Gamep, Levelsp, Levelp);
 
 void level_anim(Gamep, Levelsp, Levelp);
@@ -378,7 +378,8 @@ void level_cursor_path_recreate(Gamep, Levelsp, Levelp);
 void level_cursor_path_apply(Gamep, Levelsp, Levelp);
 void level_cursor_describe(Gamep, Levelsp, Levelp);
 void level_display(Gamep, Levelsp, Levelp);
-void level_map_set(Gamep, Levelsp, Levelp, const char *);
+void level_populate(Gamep, Levelsp, Levelp, const char *);
+void level_populate(Gamep, Levelsp, Levelp, int w, int h, const char *);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);
 void level_scroll_delta(Gamep, Levelsp, Levelp, point);
 void level_cursor_path_reset(Gamep, Levelsp, Levelp);
@@ -387,7 +388,10 @@ void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, point, Tpp, Thingp);
-void level_dump(Gamep, Levelsp, Levelp);
+void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
+bool level_expect(Gamep, Levelsp, Levelp, int w, int h, const char *in);
+void level_debug(Gamep, Levelsp, Levelp);
+void level_init(Gamep, Levelsp, Levelp, LevelNum);
 
 void rooms_test(Gamep);
 void rooms_init(Gamep);

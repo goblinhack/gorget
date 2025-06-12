@@ -36,7 +36,7 @@ void levels_stats_dump(Gamep g)
   thing_stats_dump(g, v);
 }
 
-void level_dump(Gamep g, Levelsp v, Levelp l)
+void level_debug(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -63,6 +63,190 @@ void level_dump(Gamep g, Levelsp v, Levelp l)
   }
 
   LOG("-");
+}
+
+//
+// Convert a level into a single string
+//
+static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
+{
+  TRACE_NO_INDENT();
+
+  std::string out;
+
+  for (int y = 0; y < h; y++) {
+    for (int x = 0; x < w; x++) {
+      char  c = CHARMAP_EMPTY;
+      point p(x, y);
+
+      if (level_is_floor(g, v, l, p)) {
+        c = CHARMAP_FLOOR;
+      }
+      if (level_is_wall(g, v, l, p)) {
+        c = CHARMAP_WALL;
+      }
+      if (level_is_barrel(g, v, l, p)) {
+        c = CHARMAP_BARREL;
+      }
+      if (level_is_brazier(g, v, l, p)) {
+        c = CHARMAP_BRAZIER;
+      }
+      if (level_is_bridge(g, v, l, p)) {
+        c = CHARMAP_BRIDGE;
+      }
+      if (level_is_chasm(g, v, l, p)) {
+        c = CHARMAP_CHASM;
+      }
+      if (level_is_corridor(g, v, l, p)) {
+        c = CHARMAP_CORRIDOR;
+      }
+      if (level_is_deep_water(g, v, l, p)) {
+        c = CHARMAP_DEEP_WATER;
+      }
+      if (level_is_dirt(g, v, l, p)) {
+        c = CHARMAP_DIRT;
+      }
+      if (level_is_door(g, v, l, p)) {
+        c = CHARMAP_DOOR;
+      }
+      if (level_is_foliage(g, v, l, p)) {
+        c = CHARMAP_FOLIAGE;
+      }
+      if (level_is_grass(g, v, l, p)) {
+        c = CHARMAP_GRASS;
+      }
+      if (level_is_key(g, v, l, p)) {
+        c = CHARMAP_KEY;
+      }
+      if (level_is_lava(g, v, l, p)) {
+        c = CHARMAP_LAVA;
+      }
+      if (level_is_mob1(g, v, l, p)) {
+        c = CHARMAP_MOB1;
+      }
+      if (level_is_mob2(g, v, l, p)) {
+        c = CHARMAP_MOB2;
+      }
+      if (level_is_monst1(g, v, l, p)) {
+        c = CHARMAP_MONST1;
+      }
+      if (level_is_monst2(g, v, l, p)) {
+        c = CHARMAP_MONST2;
+      }
+      if (level_is_pillar(g, v, l, p)) {
+        c = CHARMAP_PILLAR;
+      }
+      if (level_is_secret_door(g, v, l, p)) {
+        c = CHARMAP_SECRET_DOOR;
+      }
+      if (level_is_teleport(g, v, l, p)) {
+        c = CHARMAP_TELEPORT;
+      }
+      if (level_is_trap(g, v, l, p)) {
+        c = CHARMAP_TRAP;
+      }
+      if (level_is_treasure1(g, v, l, p)) {
+        c = CHARMAP_TREASURE1;
+      }
+      if (level_is_treasure2(g, v, l, p)) {
+        c = CHARMAP_TREASURE2;
+      }
+      if (level_is_wall(g, v, l, p)) {
+        c = CHARMAP_WALL;
+      }
+      if (level_is_water(g, v, l, p)) {
+        c = CHARMAP_WATER;
+      }
+      if (level_is_entrance(g, v, l, p)) {
+        c = CHARMAP_ENTRANCE;
+      }
+      if (level_is_exit(g, v, l, p)) {
+        c = CHARMAP_EXIT;
+      }
+      if (level_is_player(g, v, l, p)) {
+        c = CHARMAP_PLAYER;
+      }
+
+      out += c;
+    }
+  }
+
+  return out;
+}
+
+//
+// Print a level string
+//
+static void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h, std::string s)
+{
+  TRACE_NO_INDENT();
+
+  for (int y = 0; y < h; y++) {
+    std::string line;
+
+    for (int x = 0; x < w; x++) {
+      auto offset = (w * y) + x;
+      auto c      = s[ offset ];
+
+      line += c;
+    }
+    CON("[%s]", line.c_str());
+  }
+}
+
+//
+// Print a level string
+//
+void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h)
+{
+  TRACE_NO_INDENT();
+
+  std::string s = level_string(g, v, l, w, h);
+
+  level_dump(g, v, l, w, h, s);
+}
+
+//
+// Compare level contents
+//
+bool level_expect(Gamep g, Levelsp v, Levelp l, int w, int h, const char *expected)
+{
+  TRACE_NO_INDENT();
+
+  std::string found = level_string(g, v, l, w, h);
+
+  for (int y = 0; y < h; y++) {
+    std::string line;
+
+    for (int x = 0; x < w; x++) {
+      auto offset = (w * y) + x;
+      auto c      = found[ offset ];
+      auto e      = expected[ offset ];
+      if (c != e) {
+        CON("");
+        CON("Expected:");
+        level_dump(g, v, l, w, h, expected);
+        CON("");
+        CON("Found:");
+        level_dump(g, v, l, w, h);
+        CON("");
+        ERR("Level contents not as expected");
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
+{
+  TRACE_NO_INDENT();
+
+  memset(l, 0, sizeof(*l));
+
+  l->initialized = true;
+  l->level_num   = n;
 }
 
 Levelsp levels_memory_alloc(Gamep g)
@@ -140,7 +324,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   TRACE_AND_INDENT();
 
   Level *old_level = game_level_get(g, v);
-  game_level_set(g, v, level_num);
+  game_level_populate(g, v, level_num);
   Level *new_level = game_level_get(g, v);
 
   if (old_level == new_level) {
@@ -151,7 +335,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   }
 
   level_scroll_warp_to_focus(g, v, new_level);
-  level_dump(g, v, new_level);
+  level_debug(g, v, new_level);
 
   if (level_num == LEVEL_SELECT_ID) {
     BOTCON("");
@@ -201,7 +385,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   memset(l, 0, sizeof(*l));
 }
 
-bool level_set_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot, ThingId id)
+bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot, ThingId id)
 {
   if (is_oob(p)) {
     return false;

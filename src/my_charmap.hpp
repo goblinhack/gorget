@@ -19,6 +19,7 @@ enum {
   CHARMAP_DOOR        = 'D',
   CHARMAP_EMPTY       = ' ',
   CHARMAP_ENTRANCE    = '@',
+  CHARMAP_PLAYER      = '@',
   CHARMAP_EXIT        = 'E',
   CHARMAP_FLOOR       = '.',
   CHARMAP_FLOOR_50    = '5',

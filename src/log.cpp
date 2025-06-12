@@ -146,7 +146,9 @@ static void err_(const char *fmt, va_list args)
     len            = (int) strlen(error_buf);
     vsnprintf(error_buf + len, MAXLONGSTR - len, fmt, args);
 
-    error_handler(error_buf);
+    if (! g_opt_tests) {
+      error_handler(error_buf);
+    }
   }
 
   {
@@ -305,12 +307,12 @@ static void sdl_msgerr_(const char *fmt, va_list args)
   vsnprintf(buf, MAXLONGSTR, fmt, args);
 
 #if SDL_MAJOR_VERSION >= 2
-  CON("Show SDL message box");
+  LOG("Show SDL message box");
   //
   // The window is needed else the box appears behind the main window.
   //
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, sdl.window);
-  CON("Launched SDL message box");
+  LOG("Launched SDL message box");
 #endif
 }
 

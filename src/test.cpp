@@ -139,13 +139,8 @@ void tests_run(Gamep g)
 
   for (auto &test : test_name_map) {
 
-    //
-    // Print the timestamp
-    //
-    char buf[ MAXLONGSTR ];
-    buf[ 0 ] = '\0';
-    get_timestamp(buf, MAXLONGSTR);
-    term_log(buf);
+    bool result  = false;
+    bool skipped = false;
 
     //
     // Test name
@@ -157,7 +152,6 @@ void tests_run(Gamep g)
     //
     // Preamble
     //
-    term_log(pre.c_str());
     LOG("Running test: %s", name.c_str());
     LOG("------------------------------");
 
@@ -166,16 +160,34 @@ void tests_run(Gamep g)
     //
     if (g_opt_test_name != "") {
       if (name != g_opt_test_name) {
-        term_log("%%fg=yellow$skipped%%fg=reset$\n");
-        LOG("Skipped");
-        continue;
+        skipped = true;
       }
     }
 
     //
     // Run the test
     //
-    if (t->callback(g)) {
+    if (! skipped) {
+      result = t->callback(g);
+    }
+
+    //
+    // Print the timestamp
+    //
+    char buf[ MAXLONGSTR ];
+    buf[ 0 ] = '\0';
+    get_timestamp(buf, MAXLONGSTR);
+    term_log(buf);
+
+    //
+    // Test preamble. We print this after the test has ran to avoid messing up the output.
+    //
+    term_log(pre.c_str());
+
+    if (skipped) {
+      term_log("%%fg=yellow$skipped%%fg=reset$\n");
+      LOG("Skipped");
+    } else if (result) {
       passed++;
       term_log("%%fg=green$OK%%fg=reset$\n");
       LOG("Passed");

@@ -1387,14 +1387,14 @@ Levelsp game_levels_get(Gamep g)
   }
   return g->levels;
 }
-void game_levels_set(Gamep g, Levelsp val)
+Levelsp game_levels_set(Gamep g, Levelsp val)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
-    return;
+    return nullptr;
   }
-  g->levels = val;
+  return g->levels = val;
 }
 
 Levelp game_level_get(Gamep g, Levelsp v)
@@ -1428,7 +1428,7 @@ Levelp game_level_get(Gamep g, Levelsp v, LevelNum n)
   }
   return &v->level[ n ];
 }
-Levelp game_level_set(Gamep g, Levelsp v, LevelNum n)
+Levelp game_level_populate(Gamep g, Levelsp v, LevelNum n)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
