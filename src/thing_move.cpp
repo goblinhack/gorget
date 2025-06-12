@@ -30,6 +30,8 @@ bool thing_is_dir_left(Thingp t) { return (t->dir == THING_DIR_LEFT); }
 //
 void thing_dir_set_none(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -45,6 +47,8 @@ void thing_dir_set_none(Thingp t)
 //
 void thing_dir_set_down(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -60,6 +64,8 @@ void thing_dir_set_down(Thingp t)
 //
 void thing_dir_set_up(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -75,6 +81,8 @@ void thing_dir_set_up(Thingp t)
 //
 void thing_dir_set_left(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -90,6 +98,8 @@ void thing_dir_set_left(Thingp t)
 //
 void thing_dir_set_right(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -105,6 +115,8 @@ void thing_dir_set_right(Thingp t)
 //
 void thing_dir_set_tl(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -120,6 +132,8 @@ void thing_dir_set_tl(Thingp t)
 //
 void thing_dir_set_bl(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -135,6 +149,8 @@ void thing_dir_set_bl(Thingp t)
 //
 void thing_dir_set_tr(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -150,6 +166,8 @@ void thing_dir_set_tr(Thingp t)
 //
 void thing_dir_set_br(Thingp t)
 {
+  TRACE_NO_INDENT();
+
   if (tp_is_animated_no_dir(thing_tp(t))) {
     return;
   }
@@ -165,6 +183,8 @@ void thing_dir_set_br(Thingp t)
 //
 void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 {
+  TRACE_NO_INDENT();
+
   if (dx < 0) {
     if (dy > 0) {
       thing_dir_set_bl(t);
@@ -215,6 +235,8 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 //
 bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 {
+  TRACE_NO_INDENT();
+
   if (is_oob(to)) {
     return false;
   }
@@ -247,6 +269,8 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 //
 bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, point to)
 {
+  TRACE_NO_INDENT();
+
   if (is_oob(to)) {
     return false;
   }
@@ -301,6 +325,8 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 {
+  TRACE_NO_INDENT();
+
   if (is_oob(to)) {
     return false;
   }
@@ -328,6 +354,8 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 //
 void thing_interpolate(Gamep g, Thingp t, float dt)
 {
+  TRACE_NO_INDENT();
+
   if (t->moving_from == t->at) {
     return;
   }
@@ -344,6 +372,8 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
 //
 void thing_update_pos(Gamep g, Thingp t)
 {
+  TRACE_NO_INDENT();
+
   t->pix_at.x = t->at.x * INNER_TILE_WIDTH;
   t->pix_at.y = t->at.y * INNER_TILE_HEIGHT;
 }

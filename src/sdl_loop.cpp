@@ -254,23 +254,6 @@ void sdl_loop(Gamep g)
         frames       = 0;
       }
     }
-
-    //
-    // Fixed frame counter, 100 per second
-    //
-    auto level = game_levels_get(g);
-    if (level) {
-      static uint32_t level_ts_begin;
-      static uint32_t level_ts_now;
-
-      if (unlikely(! level_ts_begin)) {
-        level_ts_begin = time_ms();
-      }
-
-      level_ts_now = time_ms();
-      level->frame += level_ts_now - level_ts_begin;
-      level_ts_begin = level_ts_now;
-    }
   }
 
   DBG("Exited main loop");

@@ -471,7 +471,7 @@ uint32_t game_seed_num_get(Gamep g)
 
 void Game::create_levels(void)
 {
-  CON("Create levels");
+  LOG("Create levels");
   TRACE_AND_INDENT();
 
   auto g = this;
@@ -736,6 +736,20 @@ void Game::tick(void)
             wid_rightbar_init(g);
             wid_actionbar_init(g);
           }
+
+          //
+          // Fixed frame counter, 100 per second
+          //
+          static uint32_t level_ts_begin;
+          static uint32_t level_ts_now;
+
+          if (unlikely(! level_ts_begin)) {
+            level_ts_begin = time_ms();
+          }
+
+          level_ts_now = time_ms();
+          v->frame += level_ts_now - level_ts_begin;
+          level_ts_begin = level_ts_now;
         }
       }
       break;

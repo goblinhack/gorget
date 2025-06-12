@@ -163,6 +163,11 @@ void wid_botcon_flush(Gamep g)
 void wid_botcon_log(std::string s)
 {
   TRACE_NO_INDENT();
+
+  if (g_opt_tests) {
+    return;
+  }
+
   int chars_per_line = UI_BOTCON_WIDTH;
 
   if (! TERM_WIDTH) {

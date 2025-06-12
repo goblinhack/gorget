@@ -147,7 +147,7 @@ void tests_run(Gamep g)
     //
     auto name = test.first;
     auto t    = test.second;
-    auto pre  = string_sprintf("Running test %-30s", name.c_str());
+    auto pre  = string_sprintf("Test %-30s", name.c_str());
 
     //
     // Preamble
