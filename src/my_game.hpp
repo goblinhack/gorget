@@ -269,7 +269,7 @@ void    game_set_currently_saving_snapshot(Gamep);
 void    game_start_playing(Gamep);
 void    game_state_change(Gamep, GameState state, const char *);
 void    game_state_reset(Gamep, const char *);
-void    game_tick_wait_to_finish(Gamep, Levelsp, Levelp);
+void    game_wait_for_tick_to_finish(Gamep, Levelsp, Levelp);
 void    game_tick(Gamep);
 void    game_unset_currently_saving_snapshot(Gamep);
 void    game_unset_request_reset_state_change(Gamep);

@@ -817,7 +817,7 @@ void game_tick(Gamep g)
 //
 // Wait for completion of the tick
 //
-void game_tick_wait_to_finish(Gamep g, Levelsp v, Levelp l)
+void game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 {
   auto next_tick = v->tick + 1;
 

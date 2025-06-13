@@ -4,7 +4,7 @@
 
 #include "../my_test.hpp"
 
-static bool test_move_obstacle(Gamep g)
+static bool test_move_obstacle(Gamep g, Testp t)
 {
   TRACE_NO_INDENT();
 

@@ -209,7 +209,7 @@ void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h)
 //
 // Compare level contents
 //
-bool level_expect(Gamep g, Levelsp v, Levelp l, int w, int h, const char *expected)
+bool level_match_contents(Gamep g, Levelsp v, Levelp l, int w, int h, const char *expected)
 {
   TRACE_NO_INDENT();
 

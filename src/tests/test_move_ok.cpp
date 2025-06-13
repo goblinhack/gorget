@@ -7,17 +7,18 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_move_ok(Gamep g)
+static bool test_move_ok(Gamep g, Testp t)
 {
   LOG("Test: move_ok");
   TRACE_AND_INDENT();
 
   LevelNum level_num = 0;
-  Levelsp  v;
-  Levelp   l;
-  auto     w = 7;
-  auto     h = 7;
+  auto     w         = 7;
+  auto     h         = 7;
 
+  //
+  // How the dungeon starts out, and how we expect it to change
+  //
   std::string start
       = "xxxxxxx"
         "x.....x"
@@ -62,7 +63,8 @@ static bool test_move_ok(Gamep g)
   //
   // Create the level and start playing
   //
-  v = game_test_init(g, &l, level_num, w, h, start.c_str());
+  Levelp  l;
+  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
 
   //
   // The guts of the test
@@ -77,13 +79,20 @@ static bool test_move_ok(Gamep g)
   // Move right
   //
   {
-    LOG("Sub-test: move right");
+    TEST_LOG(t, "move right");
     TRACE_AND_INDENT();
     up = down = left = right = false;
     right                    = true;
-    thing_player_move_request(g, up, down, left, right);
-    game_tick_wait_to_finish(g, v, l);
-    if (! (result = level_expect(g, v, l, w, h, expect1.c_str()))) {
+
+    if (! (result = player_move_request(g, up, down, left, right))) {
+      TEST_FAILED(t);
+      goto exit;
+    }
+
+    game_wait_for_tick_to_finish(g, v, l);
+
+    if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
+      TEST_FAILED(t);
       goto exit;
     }
   }
@@ -92,13 +101,20 @@ static bool test_move_ok(Gamep g)
   // Move down
   //
   {
-    LOG("Sub-test: move down");
+    TEST_LOG(t, "move down");
     TRACE_AND_INDENT();
     up = down = left = right = false;
     down                     = true;
-    thing_player_move_request(g, up, down, left, right);
-    game_tick_wait_to_finish(g, v, l);
-    if (! (result = level_expect(g, v, l, w, h, expect2.c_str()))) {
+
+    if (! (result = player_move_request(g, up, down, left, right))) {
+      TEST_FAILED(t);
+      goto exit;
+    }
+
+    game_wait_for_tick_to_finish(g, v, l);
+
+    if (! (result = level_match_contents(g, v, l, w, h, expect2.c_str()))) {
+      TEST_FAILED(t);
       goto exit;
     }
   }
@@ -107,13 +123,20 @@ static bool test_move_ok(Gamep g)
   // Move left
   //
   {
-    LOG("Sub-test: move left");
+    TEST_LOG(t, "move left");
     TRACE_AND_INDENT();
     up = down = left = right = false;
     left                     = true;
-    thing_player_move_request(g, up, down, left, right);
-    game_tick_wait_to_finish(g, v, l);
-    if (! (result = level_expect(g, v, l, w, h, expect3.c_str()))) {
+
+    if (! (result = player_move_request(g, up, down, left, right))) {
+      TEST_FAILED(t);
+      goto exit;
+    }
+
+    game_wait_for_tick_to_finish(g, v, l);
+
+    if (! (result = level_match_contents(g, v, l, w, h, expect3.c_str()))) {
+      TEST_FAILED(t);
       goto exit;
     }
   }
@@ -122,13 +145,20 @@ static bool test_move_ok(Gamep g)
   // Move up
   //
   {
-    LOG("Sub-test: move right");
+    TEST_LOG(t, "move up");
     TRACE_AND_INDENT();
     up = down = left = right = false;
     up                       = true;
-    thing_player_move_request(g, up, down, left, right);
-    game_tick_wait_to_finish(g, v, l);
-    if (! (result = level_expect(g, v, l, w, h, expect4.c_str()))) {
+
+    if (! (result = player_move_request(g, up, down, left, right))) {
+      TEST_FAILED(t);
+      goto exit;
+    }
+
+    game_wait_for_tick_to_finish(g, v, l);
+
+    if (! (result = level_match_contents(g, v, l, w, h, expect4.c_str()))) {
+      TEST_FAILED(t);
       goto exit;
     }
   }

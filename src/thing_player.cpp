@@ -28,7 +28,7 @@ Thingp thing_player(Gamep g)
   return thing_find(g, v, v->player_id);
 }
 
-void thing_player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
+void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
 {
   TRACE_NO_INDENT();
 
@@ -54,13 +54,13 @@ void thing_player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int d
     thing_move_to(g, v, l, t, to);
   }
 
-  thing_player_move_reset(g, v, l);
+  player_move_reset(g, v, l);
 }
 
 //
 // All keys have been released, forget any accumulation of events
 //
-void thing_player_move_reset(Gamep g, Levelsp v, Levelp l)
+void player_move_reset(Gamep g, Levelsp v, Levelp l)
 {
   v->requested_move_up    = false;
   v->requested_move_left  = false;
@@ -71,7 +71,7 @@ void thing_player_move_reset(Gamep g, Levelsp v, Levelp l)
 //
 // Allow moves to accumulate so we can do diagonal moves.
 //
-void thing_player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right)
+void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right)
 {
   if (up) {
     v->requested_move_up = up;
@@ -93,7 +93,7 @@ void thing_player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, b
 //
 // Attempt to move
 //
-bool thing_player_move_request(Gamep g, bool up, bool down, bool left, bool right)
+bool player_move_request(Gamep g, bool up, bool down, bool left, bool right)
 {
   auto v = game_levels_get(g);
   if (! v) {
@@ -105,7 +105,7 @@ bool thing_player_move_request(Gamep g, bool up, bool down, bool left, bool righ
     return false;
   }
 
-  thing_player_move_accum(g, v, l, up, down, left, right);
+  player_move_accum(g, v, l, up, down, left, right);
 
   //
   // If a move is in progress, do nothing
@@ -119,24 +119,24 @@ bool thing_player_move_request(Gamep g, bool up, bool down, bool left, bool righ
 
   if (v->requested_move_up) {
     if (v->requested_move_keft) {
-      thing_player_move_delta(g, v, l, -1, -1, 0);
+      player_move_delta(g, v, l, -1, -1, 0);
     } else if (v->requested_move_right) {
-      thing_player_move_delta(g, v, l, 1, -1, 0);
+      player_move_delta(g, v, l, 1, -1, 0);
     } else {
-      thing_player_move_delta(g, v, l, 0, -1, 0);
+      player_move_delta(g, v, l, 0, -1, 0);
     }
   } else if (v->requested_move_left) {
     if (v->requested_move_keft) {
-      thing_player_move_delta(g, v, l, -1, 1, 0);
+      player_move_delta(g, v, l, -1, 1, 0);
     } else if (v->requested_move_right) {
-      thing_player_move_delta(g, v, l, 1, 1, 0);
+      player_move_delta(g, v, l, 1, 1, 0);
     } else {
-      thing_player_move_delta(g, v, l, 0, 1, 0);
+      player_move_delta(g, v, l, 0, 1, 0);
     }
   } else if (v->requested_move_keft) {
-    thing_player_move_delta(g, v, l, -1, 0, 0);
+    player_move_delta(g, v, l, -1, 0, 0);
   } else if (v->requested_move_right) {
-    thing_player_move_delta(g, v, l, 1, 0, 0);
+    player_move_delta(g, v, l, 1, 0, 0);
   }
 
   return true;
@@ -145,7 +145,7 @@ bool thing_player_move_request(Gamep g, bool up, bool down, bool left, bool righ
 //
 // Handle common level exit interactions
 //
-static void thing_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -157,28 +157,28 @@ static void thing_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Handle level exit interactions
 //
-void thing_player_reached_exit(Gamep g, Levelsp v, Levelp l, Thingp t)
+void player_reached_exit(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   l->completed = true;
-  thing_player_level_leave(g, v, l, t);
+  player_level_leave(g, v, l, t);
 }
 
 //
 // Handle level entrance interactions
 //
-void thing_player_reached_entrance(Gamep g, Levelsp v, Levelp l, Thingp t)
+void player_reached_entrance(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  thing_player_level_leave(g, v, l, t);
+  player_level_leave(g, v, l, t);
 }
 
 //
 // Handle interactions for a thing at its location
 //
-void thing_player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
+void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -220,7 +220,7 @@ void thing_player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
           //
           // Descend
           //
-          thing_player_reached_exit(g, v, l, t);
+          player_reached_exit(g, v, l, t);
           return;
         }
 
@@ -228,7 +228,7 @@ void thing_player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
           //
           // Ascend
           //
-          thing_player_reached_entrance(g, v, l, t);
+          player_reached_entrance(g, v, l, t);
           return;
         }
       }

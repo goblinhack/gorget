@@ -389,7 +389,7 @@ void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, point, Tpp, Thingp);
 void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
-bool level_expect(Gamep, Levelsp, Levelp, int w, int h, const char *in);
+bool level_match_contents(Gamep, Levelsp, Levelp, int w, int h, const char *in);
 void level_debug(Gamep, Levelsp, Levelp);
 void level_init(Gamep, Levelsp, Levelp, LevelNum);
 

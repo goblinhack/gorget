@@ -53,7 +53,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Handle player specific actions first, like leaving levels
   //
   if (thing_is_player(me)) {
-    thing_player_collision_handle(g, v, l, me);
+    player_collision_handle(g, v, l, me);
     if (thing_is_dead(me)) {
       return;
     }

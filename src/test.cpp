@@ -130,6 +130,13 @@ Testp test_load(const char *name_in)
   return test;
 }
 
+const char *test_name(Testp test)
+{
+  TRACE_NO_INDENT();
+
+  return test->name.c_str();
+}
+
 void tests_run(Gamep g)
 {
   TRACE_NO_INDENT();
@@ -168,7 +175,7 @@ void tests_run(Gamep g)
     // Run the test
     //
     if (! skipped) {
-      result = t->callback(g);
+      result = t->callback(g, t);
     }
 
     //

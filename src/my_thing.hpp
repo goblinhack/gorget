@@ -214,14 +214,14 @@ void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
 Thingp       thing_player(Gamep);
 ThingPlayerp thing_player(Gamep, Thingp);
 
-void thing_player_map_center(Gamep, Levelsp, Levelp);
-void thing_player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right);
-void thing_player_move_delta(Gamep, Levelsp, Levelp, int dx, int dy, int dz);
-void thing_player_move_reset(Gamep, Levelsp, Levelp);
-void thing_player_reached_exit(Gamep, Levelsp, Levelp, Thingp);
-void thing_player_reached_entrance(Gamep, Levelsp, Levelp, Thingp);
-void thing_player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
-bool thing_player_move_request(Gamep, bool up, bool down, bool left, bool right);
+void player_map_center(Gamep, Levelsp, Levelp);
+void player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right);
+void player_move_delta(Gamep, Levelsp, Levelp, int dx, int dy, int dz);
+void player_move_reset(Gamep, Levelsp, Levelp);
+void player_reached_exit(Gamep, Levelsp, Levelp, Thingp);
+void player_reached_entrance(Gamep, Levelsp, Levelp, Thingp);
+void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
+bool player_move_request(Gamep, bool up, bool down, bool left, bool right);
 
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
 bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp t);

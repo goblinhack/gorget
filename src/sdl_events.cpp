@@ -589,7 +589,7 @@ void sdl_key_repeat_events(Gamep g)
   }
 
   if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_PLAYER, last_movement_keypress)) {
-    if (thing_player_move_request(g, up, down, left, right)) {
+    if (player_move_request(g, up, down, left, right)) {
       last_movement_keypress = time_ms();
 
       if (up_pressed > 0) {
