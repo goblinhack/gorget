@@ -353,12 +353,48 @@ void Game::init(void)
 }
 void game_init(Gamep g) { g->init(); }
 
+//
+// Create a level with the given contents and start the game into playing state
+//
+Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents)
+{
+  TRACE_NO_INDENT();
+  g->destroy_levels();
+
+  TRACE_NO_INDENT();
+  auto v = game_levels_set(g, levels_memory_alloc(g));
+
+  TRACE_NO_INDENT();
+  auto l = game_level_get(g, v, level_num);
+  *l_out = l;
+
+  TRACE_NO_INDENT();
+  level_init(g, v, l, level_num);
+
+  TRACE_NO_INDENT();
+  level_populate(g, v, l, w, h, contents);
+
+  TRACE_NO_INDENT();
+  game_state_reset(g, "new game");
+
+  TRACE_NO_INDENT();
+  game_start_playing(g);
+
+  TRACE_NO_INDENT();
+  game_state_change(g, STATE_PLAYING, "new game");
+
+  return v;
+}
+
 void Game::fini(void)
 {
   LOG("Game fini");
   TRACE_AND_INDENT();
 
+  TRACE_NO_INDENT();
   state_change(STATE_QUITTING, "quitting");
+
+  TRACE_NO_INDENT();
   destroy_levels();
 }
 void game_fini(Gamep g)
@@ -370,6 +406,8 @@ void game_fini(Gamep g)
   }
 
   g->fini();
+
+  TRACE_NO_INDENT();
   delete g;
   game = NULL;
 }
@@ -408,6 +446,7 @@ void Game::seed_set(const char *maybe_seed)
   //
   // If a number, use that as the seed, else convert the string to hash number
   //
+  TRACE_NO_INDENT();
   char *p;
   seed_num = strtol(seed_name.c_str(), &p, 10);
   if (*p) {
@@ -773,6 +812,18 @@ void game_tick(Gamep g)
     return;
   }
   g->tick();
+}
+
+//
+// Wait for completion of the tick
+//
+void game_tick_wait_to_finish(Gamep g, Levelsp v, Levelp l)
+{
+  auto next_tick = v->tick + 1;
+
+  while ((v->tick != next_tick) || level_tick_is_in_progress(g, v, l)) {
+    game_tick(g);
+  }
 }
 
 //

@@ -12,17 +12,11 @@ static bool test_move_ok(Gamep g)
   LOG("Test: move_ok");
   TRACE_AND_INDENT();
 
-  auto     level_num = 0;
-  auto     v         = game_levels_set(g, levels_memory_alloc(g));
-  auto     l         = game_level_get(g, v, level_num);
-  auto     w         = 7;
-  auto     h         = 7;
-  bool     result    = false;
-  uint32_t next_tick = 0;
-  bool     up        = false;
-  bool     down      = false;
-  bool     left      = false;
-  bool     right     = false;
+  LevelNum level_num = 0;
+  Levelsp  v;
+  Levelp   l;
+  auto     w = 7;
+  auto     h = 7;
 
   std::string start
       = "xxxxxxx"
@@ -68,15 +62,16 @@ static bool test_move_ok(Gamep g)
   //
   // Create the level and start playing
   //
-  level_init(g, v, l, level_num);
-  level_populate(g, v, l, w, h, start.c_str());
-  game_state_reset(g, "new game");
-  game_start_playing(g);
-  game_state_change(g, STATE_PLAYING, "new game");
+  v = game_test_init(g, &l, level_num, w, h, start.c_str());
 
   //
   // The guts of the test
   //
+  bool result = false;
+  bool up     = false;
+  bool down   = false;
+  bool left   = false;
+  bool right  = false;
 
   //
   // Move right
@@ -86,11 +81,8 @@ static bool test_move_ok(Gamep g)
     TRACE_AND_INDENT();
     up = down = left = right = false;
     right                    = true;
-    next_tick                = v->tick + 1;
     thing_player_move_request(g, up, down, left, right);
-    while ((v->tick != next_tick) || level_tick_is_in_progress(g, v, l)) {
-      game_tick(g);
-    }
+    game_tick_wait_to_finish(g, v, l);
     if (! (result = level_expect(g, v, l, w, h, expect1.c_str()))) {
       goto exit;
     }
@@ -104,11 +96,8 @@ static bool test_move_ok(Gamep g)
     TRACE_AND_INDENT();
     up = down = left = right = false;
     down                     = true;
-    next_tick                = v->tick + 1;
     thing_player_move_request(g, up, down, left, right);
-    while ((v->tick != next_tick) || level_tick_is_in_progress(g, v, l)) {
-      game_tick(g);
-    }
+    game_tick_wait_to_finish(g, v, l);
     if (! (result = level_expect(g, v, l, w, h, expect2.c_str()))) {
       goto exit;
     }
@@ -122,11 +111,8 @@ static bool test_move_ok(Gamep g)
     TRACE_AND_INDENT();
     up = down = left = right = false;
     left                     = true;
-    next_tick                = v->tick + 1;
     thing_player_move_request(g, up, down, left, right);
-    while ((v->tick != next_tick) || level_tick_is_in_progress(g, v, l)) {
-      game_tick(g);
-    }
+    game_tick_wait_to_finish(g, v, l);
     if (! (result = level_expect(g, v, l, w, h, expect3.c_str()))) {
       goto exit;
     }
@@ -138,13 +124,10 @@ static bool test_move_ok(Gamep g)
   {
     LOG("Sub-test: move right");
     TRACE_AND_INDENT();
-    next_tick = v->tick + 1;
     up = down = left = right = false;
     up                       = true;
     thing_player_move_request(g, up, down, left, right);
-    while ((v->tick != next_tick) || level_tick_is_in_progress(g, v, l)) {
-      game_tick(g);
-    }
+    game_tick_wait_to_finish(g, v, l);
     if (! (result = level_expect(g, v, l, w, h, expect4.c_str()))) {
       goto exit;
     }

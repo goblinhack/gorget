@@ -29,6 +29,11 @@ static bool wid_rightbar_create_window(Gamep g)
     return false;
   }
 
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
   auto x_at  = 1;
   auto y_at  = 4;
   auto width = UI_RIGHTBAR_WIDTH;
@@ -45,7 +50,6 @@ static bool wid_rightbar_create_window(Gamep g)
     wid_lower(g, wid_rightbar);
   }
 
-  auto l = game_level_get(g, v);
   if (l->level_num == LEVEL_SELECT_ID) {
     //
     // If in level select mode, we show different contents
