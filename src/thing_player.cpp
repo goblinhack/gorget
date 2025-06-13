@@ -51,7 +51,19 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
 
   point to(t->at.x + dx, t->at.y + dy);
   if (thing_can_move_to(g, v, l, t, to)) {
-    thing_move_to(g, v, l, t, to);
+    if (thing_move_to(g, v, l, t, to)) {
+      if (thing_is_player(t)) {
+        level_tick_begin_requested(g, v, l, "player moved ");
+      }
+    } else {
+      if (thing_is_player(t)) {
+        level_tick_begin_requested(g, v, l, "player failed to move ");
+      }
+    }
+  } else {
+    if (thing_is_player(t)) {
+      level_tick_begin_requested(g, v, l, "player bumped into obstacle");
+    }
   }
 
   player_move_reset(g, v, l);

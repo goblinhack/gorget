@@ -167,6 +167,8 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 {
   TRACE_NO_INDENT();
 
+  LOG("Tick requested: %s", why);
+
   v->tick_begin_requested = true;
 
   v->requested_move_up    = false;

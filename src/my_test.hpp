@@ -21,6 +21,7 @@ void test_callback_set(Testp, test_callback_t);
 void tests_run(Gamep);
 
 #define TEST_FAILED(test)   LOG("Test %s: failed at %s:%u", test_name(test), __FUNCTION__, __LINE__);
+#define TEST_PASSED(test)   LOG("Test %s: passed at %s:%u", test_name(test), __FUNCTION__, __LINE__);
 #define TEST_LOG(test, msg) LOG("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, msg);
 
 #endif // _MY_TEST_H_

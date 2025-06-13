@@ -9,7 +9,7 @@
 
 static bool test_move_ok(Gamep g, Testp t)
 {
-  LOG("Test: move_ok");
+  TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
 
   LevelNum level_num = 0;
@@ -163,6 +163,7 @@ static bool test_move_ok(Gamep g, Testp t)
     }
   }
 
+  TEST_PASSED(t);
 exit:
   TRACE_NO_INDENT();
   levels_destroy(g, v);

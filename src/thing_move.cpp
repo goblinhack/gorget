@@ -257,10 +257,6 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 
   thing_push(g, v, l, t);
 
-  if (thing_is_player(t)) {
-    level_tick_begin_requested(g, v, l, "player moved");
-  }
-
   return true;
 }
 
@@ -573,6 +569,15 @@ bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
 
-  thing_move_to(g, v, l, t, move_next);
+  if (thing_move_to(g, v, l, t, move_next)) {
+    if (thing_is_player(t)) {
+      level_tick_begin_requested(g, v, l, "player moved to next");
+    }
+  } else {
+    if (thing_is_player(t)) {
+      level_tick_begin_requested(g, v, l, "player faled moved to next location");
+    }
+  }
+
   return true;
 }
