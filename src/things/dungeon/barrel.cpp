@@ -27,6 +27,7 @@ bool tp_load_barrel(void)
   tp_description_set(tp, tp_barrel_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_barrel);
+  tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_square_outlined);
   tp_flag_set(tp, is_cursor_path_blocker);

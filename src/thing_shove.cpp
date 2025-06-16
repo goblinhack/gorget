@@ -22,14 +22,9 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp i
 
   bool ret = false;
 
-  //
-  // Is this a brazier that can be knocked over
-  //
-  if (thing_is_brazier(it) && (thing_weight(me) > 10)) {
-    if (thing_can_move_to(g, v, l, it, to)) {
-      if (thing_move_to(g, v, l, it, to)) {
-        ret = true;
-      }
+  if (thing_can_move_to(g, v, l, it, to)) {
+    if (thing_move_to(g, v, l, it, to)) {
+      ret = true;
     }
   }
 
@@ -49,8 +44,15 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
   //
   // Some items, like braziers need to be knocked over first before shoving.
   //
-  if (thing_is_dead_on_shoving(it) && (thing_weight(me) > 10)) {
+  if (thing_is_dead_on_shoving(it)) {
     thing_dead(g, v, l, it, me, "by shoving");
+    return true;
+  }
+
+  if (thing_can_move_to(g, v, l, it, to)) {
+    if (thing_move_to(g, v, l, it, to)) {
+      ret = true;
+    }
   }
 
   return ret;
@@ -70,15 +72,21 @@ bool thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp me, point at)
   point from      = at;
   point to        = at + direction;
 
+  if (thing_is_ethereal(me)) {
+    return false;
+  }
+
+  if (! thing_is_able_to_shove(me)) {
+    return false;
+  }
+
   //
   // Common shove handling for player and anything else
   //
   FOR_ALL_THINGS_AT(g, v, l, it, at)
   {
-    //
-    // If I'm ethereal, ignore it
-    //
-    if (thing_is_ethereal(me)) {
+
+    if (! thing_is_shovable(it)) {
       continue;
     }
 

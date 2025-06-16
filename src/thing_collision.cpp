@@ -40,16 +40,6 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
     //
     thing_dead(g, v, l, it, me, "by crushing");
   }
-
-  //
-  // Is this a brazier that can be knocked over
-  //
-  if (thing_is_brazier(it) && (thing_weight(me) > 10)) {
-    //
-    // Crush it
-    //
-    thing_dead(g, v, l, it, me, "by knocking over");
-  }
 }
 
 //
@@ -69,18 +59,15 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     }
   }
 
+  if (thing_is_ethereal(me)) {
+    return;
+  }
+
   //
   // Common collision handling for player and anything else
   //
   FOR_ALL_THINGS_AT(g, v, l, it, me->at)
   {
-    //
-    // If I'm ethereal, ignore it
-    //
-    if (thing_is_ethereal(me)) {
-      continue;
-    }
-
     if (thing_is_dead(it)) {
       //
       // Dead things
