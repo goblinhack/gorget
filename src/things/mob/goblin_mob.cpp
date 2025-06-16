@@ -26,10 +26,12 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob2);
+  tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_tickable);
   tp_short_name_set(tp, "goblin den");
   tp_speed_set(tp, 100);

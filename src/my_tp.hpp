@@ -127,7 +127,7 @@
       list_macro(is_unused51, "is_unused51"),                                     /* ............................ */ \
       list_macro(is_unused52, "is_unused52"),                                     /* ............................ */ \
       list_macro(is_unused53, "is_unused53"),                                     /* ............................ */ \
-      list_macro(is_dead_on_shoving, "is_dead_on_shoving"),                                     /* ............................ */ \
+      list_macro(is_dead_on_shoving, "is_dead_on_shoving"),                       /* ............................ */ \
       list_macro(is_able_to_shove, "is_able_to_shove"),                           /* ............................ */ \
       list_macro(is_shovable, "is_shovable"),                                     /* ............................ */ \
       list_macro(is_loggable, "is_loggable"),                                     /* ............................ */ \
@@ -163,6 +163,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_cursor_path_hazard(tp)         tp_flag(tp, is_cursor_path_hazard)
 #define tp_is_cursor_path(tp)                tp_flag(tp, is_cursor_path)
 #define tp_is_cursor(tp)                     tp_flag(tp, is_cursor)
+#define tp_is_dead_on_shoving(tp)            tp_flag(tp, is_dead_on_shoving)
 #define tp_is_deep_water(tp)                 tp_flag(tp, is_deep_water)
 #define tp_is_described_cursor(tp)           tp_flag(tp, is_described_cursor)
 #define tp_is_dirt(tp)                       tp_flag(tp, is_dirt)
@@ -259,7 +260,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused51(tp)                   tp_flag(tp, is_unused51)
 #define tp_is_unused52(tp)                   tp_flag(tp, is_unused52)
 #define tp_is_unused53(tp)                   tp_flag(tp, is_unused53)
-#define tp_is_dead_on_shoving(tp)                   tp_flag(tp, is_dead_on_shoving)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
@@ -291,6 +291,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_cursor_path_hazard(g, v, l, p)         level_flag(g, v, l, is_cursor_path_hazard, p)
 #define level_is_cursor_path(g, v, l, p)                level_flag(g, v, l, is_cursor_path, p)
 #define level_is_cursor(g, v, l, p)                     level_flag(g, v, l, is_cursor, p)
+#define level_is_dead_on_shoving(g, v, l, p)            level_flag(g, v, l, is_dead_on_shoving, p)
 #define level_is_deep_water(g, v, l, p)                 level_flag(g, v, l, is_deep_water, p)
 #define level_is_described_cursor(g, v, l, p)           level_flag(g, v, l, is_described_cursor, p)
 #define level_is_dirt(g, v, l, p)                       level_flag(g, v, l, is_dirt, p)
@@ -387,7 +388,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused51(g, v, l, p)                   level_flag(g, v, l, is_unused51, p)
 #define level_is_unused52(g, v, l, p)                   level_flag(g, v, l, is_unused52, p)
 #define level_is_unused53(g, v, l, p)                   level_flag(g, v, l, is_unused53, p)
-#define level_is_dead_on_shoving(g, v, l, p)                   level_flag(g, v, l, is_dead_on_shoving, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)

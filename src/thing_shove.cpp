@@ -47,10 +47,10 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
   bool ret = false;
 
   //
-  // Is this a brazier that can be knocked over. When it is dead, then we can shove it.
+  // Some items, like braziers need to be knocked over first before shoving.
   //
-  if (thing_is_brazier(it) && (thing_weight(me) > 10)) {
-    thing_dead(g, v, l, it, me, "by knocking over");
+  if (thing_is_dead_on_shoving(it) && (thing_weight(me) > 10)) {
+    thing_dead(g, v, l, it, me, "by shoving");
   }
 
   return ret;
