@@ -128,8 +128,8 @@
       list_macro(is_unused52, "is_unused52"),                                     /* ............................ */ \
       list_macro(is_unused53, "is_unused53"),                                     /* ............................ */ \
       list_macro(is_unused54, "is_unused54"),                                     /* ............................ */ \
-      list_macro(is_unused55, "is_unused55"),                                     /* ............................ */ \
-      list_macro(is_unused56, "is_unused56"),                                     /* ............................ */ \
+      list_macro(is_able_to_shove, "is_able_to_shove"),                           /* ............................ */ \
+      list_macro(is_shovable, "is_shovable"),                                     /* ............................ */ \
       list_macro(is_loggable, "is_loggable"),                                     /* ............................ */ \
       list_macro(is_unused6, "is_unused6"),                                       /* ............................ */ \
       list_macro(is_unused7, "is_unused7"),                                       /* ............................ */ \
@@ -142,6 +142,7 @@
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 
 // begin sort marker1 {
+#define tp_is_able_to_shove(tp)              tp_flag(tp, is_able_to_shove)
 #define tp_is_able_to_walk_through_walls(tp) tp_flag(tp, is_able_to_walk_through_walls)
 #define tp_is_animated_can_hflip(tp)         tp_flag(tp, is_animated_can_hflip)
 #define tp_is_animated_no_dir(tp)            tp_flag(tp, is_animated_no_dir)
@@ -200,6 +201,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_player(tp)                     tp_flag(tp, is_player)
 #define tp_is_rock(tp)                       tp_flag(tp, is_rock)
 #define tp_is_secret_door(tp)                tp_flag(tp, is_secret_door)
+#define tp_is_shovable(tp)                   tp_flag(tp, is_shovable)
 #define tp_is_slime(tp)                      tp_flag(tp, is_slime)
 #define tp_is_teleport(tp)                   tp_flag(tp, is_teleport)
 #define tp_is_tickable(tp)                   tp_flag(tp, is_tickable)
@@ -258,8 +260,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused52(tp)                   tp_flag(tp, is_unused52)
 #define tp_is_unused53(tp)                   tp_flag(tp, is_unused53)
 #define tp_is_unused54(tp)                   tp_flag(tp, is_unused54)
-#define tp_is_unused55(tp)                   tp_flag(tp, is_unused55)
-#define tp_is_unused56(tp)                   tp_flag(tp, is_unused56)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
@@ -270,6 +270,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 // end sort marker1 }
 
 // begin sort marker3 {
+#define level_is_able_to_shove(g, v, l, p)              level_flag(g, v, l, is_able_to_shove, p)
 #define level_is_able_to_walk_through_walls(g, v, l, p) level_flag(g, v, l, is_able_to_walk_through_walls, p)
 #define level_is_animated_can_hflip(g, v, l, p)         level_flag(g, v, l, is_animated_can_hflip, p)
 #define level_is_animated_no_dir(g, v, l, p)            level_flag(g, v, l, is_animated_no_dir, p)
@@ -328,6 +329,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_player(g, v, l, p)                     level_flag(g, v, l, is_player, p)
 #define level_is_rock(g, v, l, p)                       level_flag(g, v, l, is_rock, p)
 #define level_is_secret_door(g, v, l, p)                level_flag(g, v, l, is_secret_door, p)
+#define level_is_shovable(g, v, l, p)                   level_flag(g, v, l, is_shovable, p)
 #define level_is_slime(g, v, l, p)                      level_flag(g, v, l, is_slime, p)
 #define level_is_teleport(g, v, l, p)                   level_flag(g, v, l, is_teleport, p)
 #define level_is_tickable(g, v, l, p)                   level_flag(g, v, l, is_tickable, p)
@@ -386,8 +388,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused52(g, v, l, p)                   level_flag(g, v, l, is_unused52, p)
 #define level_is_unused53(g, v, l, p)                   level_flag(g, v, l, is_unused53, p)
 #define level_is_unused54(g, v, l, p)                   level_flag(g, v, l, is_unused54, p)
-#define level_is_unused55(g, v, l, p)                   level_flag(g, v, l, is_unused55, p)
-#define level_is_unused56(g, v, l, p)                   level_flag(g, v, l, is_unused56, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)

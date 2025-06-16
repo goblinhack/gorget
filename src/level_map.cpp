@@ -242,9 +242,9 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
         }
       }
 
-      if (0) {
+      if (1) {
         if (tp == tp_player) {
-          auto t = thing_init(g, v, l, tp_teleport, point(x, y) + point(2, 0));
+          auto t = thing_init(g, v, l, tp_brazier, point(x, y) + point(2, 0));
           if (t) {
             thing_push(g, v, l, t);
           }

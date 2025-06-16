@@ -261,6 +261,24 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 }
 
 //
+// Handles shoving to a location. We can't move there yet.
+//
+bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
+{
+  TRACE_NO_INDENT();
+
+  if (is_oob(to)) {
+    return false;
+  }
+
+  if (to == t->at) {
+    return false;
+  }
+
+  return thing_shove_handle(g, v, l, t, to);
+}
+
+//
 // Handles immediate moves even across levels.
 //
 bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, point to)
@@ -319,7 +337,7 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Returns true if the thing can move to this location
 //
-bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
+bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, point to)
 {
   TRACE_NO_INDENT();
 
@@ -327,17 +345,61 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
     return false;
   }
 
-  if (to == t->at) {
+  if (to == me->at) {
     return true;
   }
 
-  auto dx = to.x - t->at.x;
-  auto dy = to.y - t->at.y;
-  thing_set_dir_from_delta(t, dx, dy);
+  auto dx = to.x - me->at.x;
+  auto dy = to.y - me->at.y;
+  thing_set_dir_from_delta(me, dx, dy);
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
   {
+    //
+    // A wall or pillar or somesuch?
+    //
     if (thing_is_obstacle_block(it)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+//
+// Returns true if we can move to this location by shoving
+//
+bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, point to)
+{
+  TRACE_NO_INDENT();
+
+  if (is_oob(to)) {
+    return false;
+  }
+
+  if (to == me->at) {
+    return true;
+  }
+
+  auto dx = to.x - me->at.x;
+  auto dy = to.y - me->at.y;
+  thing_set_dir_from_delta(me, dx, dy);
+
+  FOR_ALL_THINGS_AT(g, v, l, it, to)
+  {
+    //
+    // A wall or pillar or somesuch?
+    //
+    if (thing_is_obstacle_block(it)) {
+      //
+      // But make exceptions for things like braziers
+      //
+      if (thing_is_able_to_shove(me)) {
+        if (thing_is_shovable(it)) {
+          continue;
+        }
+      }
+
       return false;
     }
   }

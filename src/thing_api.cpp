@@ -1274,24 +1274,24 @@ bool thing_is_unused54(Thingp t)
   return tp_flag(thing_tp(t), is_unused54);
 }
 
-bool thing_is_unused55(Thingp t)
+bool thing_is_able_to_shove(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused55);
+  return tp_flag(thing_tp(t), is_able_to_shove);
 }
 
-bool thing_is_unused56(Thingp t)
+bool thing_is_shovable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused56);
+  return tp_flag(thing_tp(t), is_shovable);
 }
 
 bool thing_is_loggable(Thingp t)
