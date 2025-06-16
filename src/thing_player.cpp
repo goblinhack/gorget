@@ -199,7 +199,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, t->at)
+  FOR_ALL_THINGS_AT(g, v, l, it, t->at)
   {
     if (thing_is_player(t)) {
       //

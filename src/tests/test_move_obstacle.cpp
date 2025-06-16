@@ -54,14 +54,14 @@ static bool test_move_obstacle(Gamep g, Testp t)
     right                    = true;
 
     if (! (result = player_move_request(g, up, down, left, right))) {
-      TEST_FAILED(t);
+      TEST_FAILED(t, "move failed");
       goto exit;
     }
 
     game_wait_for_tick_to_finish(g, v, l);
 
     if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
-      TEST_FAILED(t);
+      TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
   }
@@ -76,14 +76,14 @@ static bool test_move_obstacle(Gamep g, Testp t)
     down                     = true;
 
     if (! (result = player_move_request(g, up, down, left, right))) {
-      TEST_FAILED(t);
+      TEST_FAILED(t, "move failed");
       goto exit;
     }
 
     game_wait_for_tick_to_finish(g, v, l);
 
     if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
-      TEST_FAILED(t);
+      TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
   }
@@ -98,14 +98,14 @@ static bool test_move_obstacle(Gamep g, Testp t)
     left                     = true;
 
     if (! (result = player_move_request(g, up, down, left, right))) {
-      TEST_FAILED(t);
+      TEST_FAILED(t, "move failed");
       goto exit;
     }
 
     game_wait_for_tick_to_finish(g, v, l);
 
     if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
-      TEST_FAILED(t);
+      TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
   }
@@ -120,17 +120,19 @@ static bool test_move_obstacle(Gamep g, Testp t)
     up                       = true;
 
     if (! (result = player_move_request(g, up, down, left, right))) {
-      TEST_FAILED(t);
+      TEST_FAILED(t, "move failed");
       goto exit;
     }
 
     game_wait_for_tick_to_finish(g, v, l);
 
     if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
-      TEST_FAILED(t);
+      TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
   }
+
+  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick");
 
   TEST_PASSED(t);
 exit:

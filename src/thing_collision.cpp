@@ -62,7 +62,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   //
   // Common collision handling for player and anything else
   //
-  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, me->at)
+  FOR_ALL_THINGS_AT(g, v, l, it, me->at)
   {
     if (thing_is_dead(it)) {
       //

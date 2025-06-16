@@ -814,11 +814,31 @@ void game_tick(Gamep g)
   g->tick();
 }
 
+uint32_t game_tick_get(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 0;
+  }
+  if (unlikely(! v)) {
+    ERR("No levels pointer set");
+    return 0;
+  }
+  return v->tick;
+}
+
 //
 // Wait for completion of the tick
 //
 void game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 {
+  TRACE_NO_INDENT();
+  if (unlikely(! v)) {
+    ERR("No levels pointer set");
+    return;
+  }
+
   auto next_tick = v->tick + 1;
 
   while ((v->tick != next_tick) || level_tick_is_in_progress(g, v, l)) {

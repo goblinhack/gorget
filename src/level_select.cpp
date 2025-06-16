@@ -412,7 +412,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
     for (auto x = 0; x < MAP_WIDTH; x++) {
       auto  count = 0;
       point at(x, y);
-      FOR_ALL_THINGS_AND_TPS_AT(g, v, level_select, it, it_tp, at) { count++; }
+      FOR_ALL_THINGS_AT(g, v, level_select, it, at) { count++; }
       if (! count) {
         auto tp_rock = tp_random(is_dirt);
         auto t       = thing_init(g, v, level_select, tp_rock, at);
@@ -753,7 +753,7 @@ void level_select_rightbar_needs_update(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
+  FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
   {
     int x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
     int y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
@@ -793,7 +793,7 @@ void level_select_user_chose_a_level(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, v->cursor_at)
+  FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
   {
     int          x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
     int          y  = (v->cursor_at.y - 1) / LEVEL_SCALE;

@@ -26,6 +26,7 @@ std::initializer_list< std::string > tests = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
+    "crush_grass",
     "move_ok",
     "move_obstacle",
   /* end shell marker1 */

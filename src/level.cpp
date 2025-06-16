@@ -404,7 +404,7 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot)
 
 bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, point p)
 {
-  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, p)
+  FOR_ALL_TPS_AT(g, v, l, it_tp, p)
   {
     if (tp_flag(it_tp, f)) {
       return true;

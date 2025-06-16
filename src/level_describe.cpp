@@ -29,9 +29,9 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   std::string all_things_description;
   auto        at = v->cursor_at;
 
-  FOR_ALL_THINGS_AND_TPS_AT(g, v, l, it, it_tp, at)
+  FOR_ALL_THINGS_AT(g, v, l, it, at)
   {
-    if (! tp_is_described_cursor(it_tp)) {
+    if (! thing_is_described_cursor(it)) {
       continue;
     }
 

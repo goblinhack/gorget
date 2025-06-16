@@ -326,7 +326,7 @@ typedef struct Levels_ {
     for (auto _slot_ = 0; _t_ = thing_get(_g_, _v_, _l_, _p_, _slot_), _slot_ < MAP_SLOTS; _slot_++)                 \
       if (_t_)
 
-#define FOR_ALL_THINGS_AND_TPS_AT(_g_, _v_, _l_, _t_, _tp_, _p_)                                                     \
+#define FOR_ALL_TPS_AT(_g_, _v_, _l_, _tp_, _p_)                                                                     \
   Thingp _t_;                                                                                                        \
   Tpp    _tp_;                                                                                                       \
   if (_g_ && _v_ && _l_)                                                                                             \

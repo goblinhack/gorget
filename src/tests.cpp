@@ -14,6 +14,9 @@ bool tests_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
+  if (! test_load_crush_grass()) {
+    return false;
+  }
   if (! test_load_move_ok()) {
     return false;
   }
