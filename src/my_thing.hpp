@@ -133,6 +133,10 @@ typedef struct Thing_ {
   //
   int16_t _weight;
   //
+  // Temperature in celsius.
+  //
+  int16_t _temp;
+  //
   // Template ID
   //
   uint16_t tp_id;
@@ -260,6 +264,9 @@ void thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int  thing_weight(Thingp);
 void thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
+int  thing_temp(Thingp);
+void thing_temp_set(Gamep, Levelsp, Levelp, Thingp, int val);
+
 // begin sort marker1 {
 bool thing_is_able_to_shove(Thingp);
 bool thing_is_able_to_walk_through_walls(Thingp);
@@ -274,6 +281,7 @@ bool thing_is_blit_outlined(Thingp);
 bool thing_is_blit_square_outlined(Thingp);
 bool thing_is_brazier(Thingp);
 bool thing_is_bridge(Thingp);
+bool thing_is_burnable(Thingp);
 bool thing_is_chasm(Thingp);
 bool thing_is_corridor(Thingp);
 bool thing_is_crushable_underfoot(Thingp);
@@ -378,7 +386,6 @@ bool thing_is_unused5(Thingp);
 bool thing_is_unused50(Thingp);
 bool thing_is_unused51(Thingp);
 bool thing_is_unused52(Thingp);
-bool thing_is_unused53(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);
 bool thing_is_unused8(Thingp);

@@ -101,6 +101,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
 
   thing_speed_set(g, v, l, t, tp_speed_get(tp));
   thing_weight_set(g, v, l, t, tp_weight_get(tp));
+  thing_temp_set(g, v, l, t, tp_temp_initial_get(tp));
 
   //
   // Need to update with the new pixel position

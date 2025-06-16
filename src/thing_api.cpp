@@ -48,6 +48,26 @@ void thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   t->_weight = val;
 }
 
+int thing_temp(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_temp;
+}
+
+void thing_temp_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+  t->_temp = val;
+}
+
 bool thing_is_dead(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -1254,14 +1274,14 @@ bool thing_is_unused52(Thingp t)
   return tp_flag(thing_tp(t), is_unused52);
 }
 
-bool thing_is_unused53(Thingp t)
+bool thing_is_burnable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused53);
+  return tp_flag(thing_tp(t), is_burnable);
 }
 
 bool thing_is_dead_on_shoving(Thingp t)

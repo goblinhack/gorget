@@ -29,13 +29,17 @@ bool tp_load_secret_door(void)
   // begin sort marker1 {
   tp_description_set(tp, tp_secret_door_description_get);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_burnable);
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_door);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_secret_door);
-  tp_weight_set(tp, 1000); // pounds
+  tp_temp_burns_at_set(tp, 300);  // celsius
+  tp_temp_damage_at_set(tp, 300); // celsius
+  tp_temp_initial_set(tp, 20);    // celsius
+  tp_weight_set(tp, 1000);        // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

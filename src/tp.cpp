@@ -124,6 +124,21 @@ public:
   int weight {0};
 
   //
+  // Temperature in celsius
+  //
+  int temp_initial {0};
+
+  //
+  // When the thing catches fire
+  //
+  int temp_burns_at {0};
+
+  //
+  // When the thing takes damage from heat
+  //
+  int temp_damage_at {0};
+
+  //
   // Internal name
   //
   std::string name;
@@ -659,6 +674,66 @@ int tp_weight_get(Tpp tp)
     return 0;
   }
   return tp->weight;
+};
+
+void tp_temp_initial_set(Tpp tp, int val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->temp_initial = val;
+};
+
+int tp_temp_initial_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+  return tp->temp_initial;
+};
+
+void tp_temp_burns_at_set(Tpp tp, int val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->temp_burns_at = val;
+};
+
+int tp_temp_burns_at_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+  return tp->temp_burns_at;
+};
+
+void tp_temp_damage_at_set(Tpp tp, int val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->temp_damage_at = val;
+};
+
+int tp_temp_damage_at_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+  return tp->temp_damage_at;
 };
 
 //

@@ -126,7 +126,7 @@
       list_macro(is_unused50, "is_unused50"),                                     /* ............................ */ \
       list_macro(is_unused51, "is_unused51"),                                     /* ............................ */ \
       list_macro(is_unused52, "is_unused52"),                                     /* ............................ */ \
-      list_macro(is_unused53, "is_unused53"),                                     /* ............................ */ \
+      list_macro(is_burnable, "is_burnable"),                                     /* ............................ */ \
       list_macro(is_dead_on_shoving, "is_dead_on_shoving"),                       /* ............................ */ \
       list_macro(is_able_to_shove, "is_able_to_shove"),                           /* ............................ */ \
       list_macro(is_shovable, "is_shovable"),                                     /* ............................ */ \
@@ -155,6 +155,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_blit_square_outlined(tp)       tp_flag(tp, is_blit_square_outlined)
 #define tp_is_brazier(tp)                    tp_flag(tp, is_brazier)
 #define tp_is_bridge(tp)                     tp_flag(tp, is_bridge)
+#define tp_is_burnable(tp)                   tp_flag(tp, is_burnable)
 #define tp_is_chasm(tp)                      tp_flag(tp, is_chasm)
 #define tp_is_corridor(tp)                   tp_flag(tp, is_corridor)
 #define tp_is_crushable_underfoot(tp)        tp_flag(tp, is_crushable_underfoot)
@@ -259,7 +260,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused50(tp)                   tp_flag(tp, is_unused50)
 #define tp_is_unused51(tp)                   tp_flag(tp, is_unused51)
 #define tp_is_unused52(tp)                   tp_flag(tp, is_unused52)
-#define tp_is_unused53(tp)                   tp_flag(tp, is_unused53)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
@@ -283,6 +283,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_blit_square_outlined(g, v, l, p)       level_flag(g, v, l, is_blit_square_outlined, p)
 #define level_is_brazier(g, v, l, p)                    level_flag(g, v, l, is_brazier, p)
 #define level_is_bridge(g, v, l, p)                     level_flag(g, v, l, is_bridge, p)
+#define level_is_burnable(g, v, l, p)                   level_flag(g, v, l, is_burnable, p)
 #define level_is_chasm(g, v, l, p)                      level_flag(g, v, l, is_chasm, p)
 #define level_is_corridor(g, v, l, p)                   level_flag(g, v, l, is_corridor, p)
 #define level_is_crushable_underfoot(g, v, l, p)        level_flag(g, v, l, is_crushable_underfoot, p)
@@ -387,7 +388,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused50(g, v, l, p)                   level_flag(g, v, l, is_unused50, p)
 #define level_is_unused51(g, v, l, p)                   level_flag(g, v, l, is_unused51, p)
 #define level_is_unused52(g, v, l, p)                   level_flag(g, v, l, is_unused52, p)
-#define level_is_unused53(g, v, l, p)                   level_flag(g, v, l, is_unused53, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)
@@ -538,5 +538,14 @@ int  tp_speed_get(Tpp tp);
 
 void tp_weight_set(Tpp tp, int val);
 int  tp_weight_get(Tpp tp);
+
+void tp_temp_initial_set(Tpp tp, int val);
+int  tp_temp_initial_get(Tpp tp);
+
+void tp_temp_burns_at_set(Tpp tp, int val);
+int  tp_temp_burns_at_get(Tpp tp);
+
+void tp_temp_damage_at_set(Tpp tp, int val);
+int  tp_temp_damage_at_get(Tpp tp);
 
 #endif // _MY_THING_TEMPLATE_H_

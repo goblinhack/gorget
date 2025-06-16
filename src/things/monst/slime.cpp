@@ -30,6 +30,7 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_burnable);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
@@ -38,7 +39,10 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_slime);
   tp_flag_set(tp, is_tickable);
   tp_speed_set(tp, 100);
-  tp_weight_set(tp, 200); // pounds
+  tp_temp_burns_at_set(tp, 30);  // celsius
+  tp_temp_damage_at_set(tp, 30); // celsius
+  tp_temp_initial_set(tp, 20);   // celsius
+  tp_weight_set(tp, 200);        // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

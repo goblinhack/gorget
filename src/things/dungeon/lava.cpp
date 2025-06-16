@@ -31,7 +31,8 @@ bool tp_load_lava(void)
   tp_flag_set(tp, is_lava);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_tiled);
-  tp_weight_set(tp, 2000); // pounds
+  tp_temp_initial_set(tp, 1000); // celsius
+  tp_weight_set(tp, 2000);       // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

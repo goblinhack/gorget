@@ -36,7 +36,8 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_tickable);
   tp_speed_set(tp, 100);
-  tp_weight_set(tp, 0); // pounds
+  tp_temp_initial_set(tp, -10); // celsius
+  tp_weight_set(tp, 0);         // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
