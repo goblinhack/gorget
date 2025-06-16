@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_crush_grass(Gamep g, Testp t)
+static bool test_collision_grass(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -109,14 +109,14 @@ exit:
   return result;
 }
 
-bool test_load_crush_grass(void)
+bool test_load_collision_grass(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("crush_grass");
+  Testp test = test_load("collision_grass");
 
   // begin sort marker1 {
-  test_callback_set(test, test_crush_grass);
+  test_callback_set(test, test_collision_grass);
   // end sort marker1 }
 
   return true;

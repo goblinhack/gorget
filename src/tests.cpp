@@ -14,13 +14,16 @@ bool tests_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
-  if (! test_load_crush_grass()) {
+  if (! test_load_collision_brazier()) {
+    return false;
+  }
+  if (! test_load_collision_wall()) {
+    return false;
+  }
+  if (! test_load_collision_grass()) {
     return false;
   }
   if (! test_load_move_ok()) {
-    return false;
-  }
-  if (! test_load_move_obstacle()) {
     return false;
   }
   /* end shell marker1 */
