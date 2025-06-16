@@ -181,8 +181,7 @@ bool game_event_wait(Gamep g)
     return false;
   }
 
-  TOPCON("TODO Waiting");
-  // g->player_tick(left, right, up, down, attack, wait, jump);
+  level_tick_begin_requested(g, v, l, "player waiting");
 
   return true;
 }

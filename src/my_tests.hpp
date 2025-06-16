@@ -13,6 +13,7 @@ bool test_load_collision_brazier();
 bool test_load_collision_mob();
 bool test_load_collision_barrel();
 bool test_load_collision_wall();
+bool test_load_collision_mob_lava();
 bool test_load_collision_grass();
 bool test_load_move_ok();
 /* end shell marker1 */

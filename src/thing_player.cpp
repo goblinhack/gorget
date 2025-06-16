@@ -53,21 +53,21 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
   if (thing_can_move_to(g, v, l, t, to)) {
     if (thing_move_to(g, v, l, t, to)) {
       if (thing_is_player(t)) {
-        level_tick_begin_requested(g, v, l, "player moved ");
+        level_tick_begin_requested(g, v, l, "player moved");
       }
     } else {
       if (thing_is_player(t)) {
-        level_tick_begin_requested(g, v, l, "player failed to move ");
+        level_tick_begin_requested(g, v, l, "player failed to move");
       }
     }
   } else if (thing_can_move_to_by_shoving(g, v, l, t, to)) {
     if (thing_shove_to(g, v, l, t, to)) {
       if (thing_is_player(t)) {
-        level_tick_begin_requested(g, v, l, "player shoved ");
+        level_tick_begin_requested(g, v, l, "player shoved");
       }
     } else {
       if (thing_is_player(t)) {
-        level_tick_begin_requested(g, v, l, "player failed to shoved ");
+        level_tick_begin_requested(g, v, l, "player failed to shoved");
       }
     }
   } else {

@@ -26,6 +26,9 @@ bool tests_init(void)
   if (! test_load_collision_wall()) {
     return false;
   }
+  if (! test_load_collision_mob_lava()) {
+    return false;
+  }
   if (! test_load_collision_grass()) {
     return false;
   }

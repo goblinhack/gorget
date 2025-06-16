@@ -30,6 +30,7 @@ std::initializer_list< std::string > tests = {
     "collision_mob",
     "collision_barrel",
     "collision_wall",
+    "collision_mob_lava",
     "collision_grass",
     "move_ok",
   /* end shell marker1 */
