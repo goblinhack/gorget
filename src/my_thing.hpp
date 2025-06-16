@@ -378,7 +378,7 @@ bool thing_is_unused50(Thingp);
 bool thing_is_unused51(Thingp);
 bool thing_is_unused52(Thingp);
 bool thing_is_unused53(Thingp);
-bool thing_is_unused54(Thingp);
+bool thing_is_dead_on_shoving(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);
 bool thing_is_unused8(Thingp);

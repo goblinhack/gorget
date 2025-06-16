@@ -22,6 +22,17 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp i
 
   bool ret = false;
 
+  //
+  // Is this a brazier that can be knocked over
+  //
+  if (thing_is_brazier(it) && (thing_weight(me) > 10)) {
+    if (thing_can_move_to(g, v, l, it, to)) {
+      if (thing_move_to(g, v, l, it, to)) {
+        ret = true;
+      }
+    }
+  }
+
   return ret;
 }
 
@@ -36,15 +47,10 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
   bool ret = false;
 
   //
-  // Is this a brazier that can be knocked over
+  // Is this a brazier that can be knocked over. When it is dead, then we can shove it.
   //
   if (thing_is_brazier(it) && (thing_weight(me) > 10)) {
-    if (thing_can_move_to(g, v, l, it, to)) {
-      if (thing_move_to(g, v, l, it, to)) {
-        thing_dead(g, v, l, it, me, "by knocking over");
-        ret = true;
-      }
-    }
+    thing_dead(g, v, l, it, me, "by knocking over");
   }
 
   return ret;

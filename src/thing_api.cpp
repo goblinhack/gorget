@@ -1264,14 +1264,14 @@ bool thing_is_unused53(Thingp t)
   return tp_flag(thing_tp(t), is_unused53);
 }
 
-bool thing_is_unused54(Thingp t)
+bool thing_is_dead_on_shoving(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused54);
+  return tp_flag(thing_tp(t), is_dead_on_shoving);
 }
 
 bool thing_is_able_to_shove(Thingp t)

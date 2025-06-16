@@ -27,7 +27,22 @@ static bool test_collision_brazier(Gamep g, Testp t)
         "......."
         "......."
         ".......";
-  std::string expect = start;
+  std::string expect1
+      = "......."
+        "......."
+        "......."
+        "..@B..."
+        "......."
+        "......."
+        ".......";
+  std::string expect2
+      = "......."
+        "......."
+        "......."
+        "..@.B.."
+        "......."
+        "......."
+        ".......";
 
   //
   // Create the level and start playing
@@ -60,7 +75,7 @@ static bool test_collision_brazier(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -92,7 +107,35 @@ static bool test_collision_brazier(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick");
+  //
+  // Second shove, we should be able to move the dead brazier
+  //
+  {
+    TEST_LOG(t, "move right");
+    TRACE_AND_INDENT();
+    up = down = left = right = false;
+    right                    = true;
+
+    if (! (result = player_move_request(g, up, down, left, right))) {
+      TEST_FAILED(t, "move failed");
+      goto exit;
+    }
+
+    game_wait_for_tick_to_finish(g, v, l);
+
+    if (! (result = level_match_contents(g, v, l, w, h, expect2.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+
+    auto player = thing_player(g);
+    if (! player) {
+      TEST_FAILED(t, "no player");
+      goto exit;
+    }
+  }
+
+  TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick");
 
   TEST_PASSED(t);
 exit:

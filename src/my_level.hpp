@@ -298,41 +298,42 @@ typedef struct Levels_ {
 // Walk all things, all levels
 //
 #define FOR_ALL_THINGS_ALL_LEVELS(_g_, _v_, _t_)                                                                     \
-  Thingp t;                                                                                                          \
-  if (_g_ && _v_)                                                                                                    \
-    for (auto _id_ = 0; _id_ < 1 << THING_COMMON_ID_BITS; _id_++)                                                    \
-      if (_l_->thing_body[ _id_ ].id)                                                                                \
-        if ((_t_ = thing_find_optional(_l_, _l_->thing_body[ _id_ ].id)))
+  for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                            \
+    if (_g_ && _v_)                                                                                                  \
+      for (auto _id_ = 0; _id_ < 1 << THING_COMMON_ID_BITS; _id_++)                                                  \
+        if (_l_->thing_body[ _id_ ].id)                                                                              \
+          if ((_t_ = thing_find_optional(_l_, _l_->thing_body[ _id_ ].id)))
 
 //
 // For all things at this Z depth
 //
-#define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                  \
-  Thingp _t_;                                                                                                        \
-  Tpp    _tp_;                                                                                                       \
-  if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                      \
-      for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                     \
-        for (auto _slot_ = 0;                                                                                        \
-             _t_ = thing_and_tp_get_at(_g_, _v_, _l_, point(_x_, _y_), _slot_, &_tp_), _slot_ < MAP_SLOTS; _slot_++) \
-          if (_t_)
+#define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                    \
+  if (_g_ && _v_ && _l_)                                                                                               \
+    for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                        \
+      for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                       \
+        for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                   \
+          for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                      \
+            for (auto _slot_ = 0;                                                                                      \
+                 _t_         = thing_and_tp_get_at(_g_, _v_, _l_, point(_x_, _y_), _slot_, &_tp_), _slot_ < MAP_SLOTS; \
+                 _slot_++)                                                                                             \
+              if (_t_)
 
 //
 // For all things at a specific location
 //
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                   \
-  Thingp _t_;                                                                                                        \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _slot_ = 0; _t_ = thing_get(_g_, _v_, _l_, _p_, _slot_), _slot_ < MAP_SLOTS; _slot_++)                 \
-      if (_t_)
+    for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                          \
+      for (auto _slot_ = 0; _t_ = thing_get(_g_, _v_, _l_, _p_, _slot_), _slot_ < MAP_SLOTS; _slot_++)               \
+        if (_t_)
 
 #define FOR_ALL_TPS_AT(_g_, _v_, _l_, _tp_, _p_)                                                                     \
-  Thingp _t_;                                                                                                        \
-  Tpp    _tp_;                                                                                                       \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _slot_ = 0; _t_ = thing_and_tp_get_at(_g_, _v_, _l_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS;          \
-         _slot_++)                                                                                                   \
-      if (_t_)
+    for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                     \
+      for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                        \
+        for (auto _slot_ = 0; _t_ = thing_and_tp_get_at(_g_, _v_, _l_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS;      \
+             _slot_++)                                                                                               \
+          if (_t_)
 
 enum {
   CHANCE_VVV_UNLIKELY = 1,
