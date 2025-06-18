@@ -461,6 +461,22 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
+void tp_damage_set(Tpp tp, ThingDamageType damage_type, const char *val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+
+  if (damage_type >= THING_DAMAGE_MAX) {
+    ERR("bad value in tp for %s", __FUNCTION__);
+    return;
+  }
+
+  tp->damage[ damage_type ] = Dice(std::string(val));
+}
+
 Tilep tp_tiles_get(Tpp tp, ThingAnimType anim_type, int index)
 {
   TRACE_NO_INDENT();
@@ -472,18 +488,6 @@ Tilep tp_tiles_get(Tpp tp, ThingAnimType anim_type, int index)
   return tp->tiles[ anim_type ][ index ];
 }
 
-#if 0
-void tp_damage_type_set(Tpp tp, int damage_type, Tilep val)
-{
-  TRACE_NO_INDENT();
-  if (! tp) {
-    ERR("no tp for %s", __FUNCTION__);
-    return;
-  }
-  tp->tiles[ anim_type ].push_back(val);
-}
-#endif
-
 void tp_tiles_push_back(Tpp tp, ThingAnimType anim_type, Tilep val)
 {
   TRACE_NO_INDENT();
@@ -491,6 +495,12 @@ void tp_tiles_push_back(Tpp tp, ThingAnimType anim_type, Tilep val)
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
+
+  if (anim_type >= THING_ANIM_MAX) {
+    ERR("bad value in tp for %s", __FUNCTION__);
+    return;
+  }
+
   tp->tiles[ anim_type ].push_back(val);
 }
 

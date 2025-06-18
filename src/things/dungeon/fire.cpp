@@ -37,6 +37,7 @@ bool tp_load_fire(void)
   tp_temp_initial_set(tp, 500); // celsius
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+  tp_damage_set(tp, THING_DAMAGE_FIRE, "1d6");
   // end sort marker1 }
 
   if (g_opt_tests) {

@@ -496,10 +496,12 @@ void        tp_real_name_set(Tpp, const char *);
 void tp_light_color_set(Tpp, const char *);
 void tp_light_color_apply(Tpp);
 
-int   tp_tiles_size(Tpp tp, ThingAnimType anim_type);
-Tilep tp_first_tile(class Tp *, ThingAnimType anim_type);
+int   tp_tiles_size(Tpp tp, ThingAnimType);
+Tilep tp_first_tile(class Tp *, ThingAnimType);
 Tilep tp_tiles_get(Tpp tp, ThingAnimType anim_type, int index);
-void  tp_tiles_push_back(Tpp tp, ThingAnimType amim_class, Tilep val);
+void  tp_tiles_push_back(Tpp, ThingAnimType, Tilep val);
+
+void tp_damage_set(Tpp, ThingDamageType, const char *);
 
 TpId tp_id_get(Tpp tp);
 Tpp  tp_find(TpId id);
