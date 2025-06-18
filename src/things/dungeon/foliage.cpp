@@ -31,7 +31,8 @@ bool tp_load_foliage(void)
   tp_temp_burns_at_set(tp, 50);  // celsius
   tp_temp_damage_at_set(tp, 50); // celsius
   tp_temp_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, 10);         // pounds
+  tp_health_initial_set(tp, 5);
+  tp_weight_set(tp, 10); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_INFRONT);
   // end sort marker1 }

@@ -48,6 +48,26 @@ void thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   t->_weight = val;
 }
 
+int thing_health(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_health;
+}
+
+void thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+  t->_health = val;
+}
+
 int thing_temp(Thingp t)
 {
   TRACE_NO_INDENT();

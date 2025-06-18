@@ -37,6 +37,7 @@ bool tp_load_grass(void)
   tp_temp_burns_at_set(tp, 50);  // celsius
   tp_temp_damage_at_set(tp, 50); // celsius
   tp_temp_initial_set(tp, 20);   // celsius
+  tp_health_initial_set(tp, 1);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

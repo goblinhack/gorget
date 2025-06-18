@@ -127,6 +127,11 @@ public:
   int weight {0};
 
   //
+  // Starting health.
+  //
+  int health_initial {0};
+
+  //
   // Temperature in celsius
   //
   int temp_initial {0};
@@ -677,6 +682,26 @@ int tp_weight_get(Tpp tp)
     return 0;
   }
   return tp->weight;
+};
+
+void tp_health_initial_set(Tpp tp, int val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->health_initial = val;
+};
+
+int tp_health_initial_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+  return tp->health_initial;
 };
 
 void tp_temp_initial_set(Tpp tp, int val)

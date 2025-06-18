@@ -137,6 +137,10 @@ typedef struct Thing_ {
   //
   int16_t _temp;
   //
+  // Health of the item.
+  //
+  uint16_t _health;
+  //
   // Template ID
   //
   uint16_t tp_id;
@@ -266,6 +270,9 @@ void thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 int  thing_temp(Thingp);
 void thing_temp_set(Gamep, Levelsp, Levelp, Thingp, int val);
+
+int  thing_health(Thingp);
+void thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 // begin sort marker1 {
 bool thing_is_able_to_shove(Thingp);

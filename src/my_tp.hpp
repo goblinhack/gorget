@@ -539,6 +539,9 @@ int  tp_speed_get(Tpp tp);
 void tp_weight_set(Tpp tp, int val);
 int  tp_weight_get(Tpp tp);
 
+void tp_health_initial_set(Tpp tp, int val);
+int  tp_health_initial_get(Tpp tp);
+
 void tp_temp_initial_set(Tpp tp, int val);
 int  tp_temp_initial_get(Tpp tp);
 
