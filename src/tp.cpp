@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_dice.hpp"
+#include "my_dice_roll.hpp"
 #include "my_gl.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
@@ -165,6 +166,11 @@ public:
   // Longer name for attacks text
   //
   std::string long_name;
+
+  //
+  // Damage types, in dice
+  //
+  Dice damage[ THING_DAMAGE_MAX ];
 
   //
   // For braziers and more

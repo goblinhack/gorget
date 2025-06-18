@@ -6,28 +6,28 @@
 #ifndef _MY_DICE_HPP_
 #define _MY_DICE_HPP_
 
-extern int d10000(void);
-extern int d1000(void);
-extern int d100(void);
-extern int d10(void);
-extern int d11(void);
-extern int d12(void);
-extern int d13(void);
-extern int d14(void);
-extern int d15(void);
-extern int d16(void);
-extern int d17(void);
-extern int d18(void);
-extern int d19(void);
-extern int d20(void);
-extern int d2(void);
-extern int d3(void);
-extern int d4(void);
-extern int d50(void);
-extern int d5(void);
-extern int d6(void);
-extern int d7(void);
-extern int d8(void);
-extern int d9(void);
+int d10000(void);
+int d1000(void);
+int d100(void);
+int d10(void);
+int d11(void);
+int d12(void);
+int d13(void);
+int d14(void);
+int d15(void);
+int d16(void);
+int d17(void);
+int d18(void);
+int d19(void);
+int d20(void);
+int d2(void);
+int d3(void);
+int d4(void);
+int d50(void);
+int d5(void);
+int d6(void);
+int d7(void);
+int d8(void);
+int d9(void);
 
 #endif

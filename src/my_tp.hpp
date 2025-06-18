@@ -472,6 +472,12 @@ enum {
   THING_ANIM_MAX
 };
 
+enum {
+  THING_DAMAGE_MELEE, /* ... */
+  THING_DAMAGE_FIRE,  /* ... */
+  THING_DAMAGE_MAX
+};
+
 class Tp;
 
 bool tp_init(void);
