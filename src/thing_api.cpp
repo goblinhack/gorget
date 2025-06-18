@@ -1244,34 +1244,34 @@ bool thing_is_unused5(Thingp t)
   return tp_flag(thing_tp(t), is_unused5);
 }
 
-bool thing_is_unused50(Thingp t)
+bool thing_is_smoke(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused50);
+  return tp_flag(thing_tp(t), is_smoke);
 }
 
-bool thing_is_unused51(Thingp t)
+bool thing_is_steam(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused51);
+  return tp_flag(thing_tp(t), is_steam);
 }
 
-bool thing_is_unused52(Thingp t)
+bool thing_is_fire(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused52);
+  return tp_flag(thing_tp(t), is_fire);
 }
 
 bool thing_is_burnable(Thingp t)

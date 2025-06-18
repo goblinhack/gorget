@@ -41,6 +41,9 @@ bool templates_init(void)
   if (! tp_load_foliage()) {
     return false;
   }
+  if (! tp_load_smoke()) {
+    return false;
+  }
   if (! tp_load_wall()) {
     return false;
   }
@@ -53,6 +56,9 @@ bool templates_init(void)
   if (! tp_load_bridge()) {
     return false;
   }
+  if (! tp_load_steam()) {
+    return false;
+  }
   if (! tp_load_entrance()) {
     return false;
   }
@@ -60,6 +66,9 @@ bool templates_init(void)
     return false;
   }
   if (! tp_load_lava()) {
+    return false;
+  }
+  if (! tp_load_fire()) {
     return false;
   }
   if (! tp_load_key()) {

@@ -123,9 +123,9 @@
       list_macro(is_unused48, "is_unused48"),                                     /* ............................ */ \
       list_macro(is_unused49, "is_unused49"),                                     /* ............................ */ \
       list_macro(is_unused5, "is_unused5"),                                       /* ............................ */ \
-      list_macro(is_unused50, "is_unused50"),                                     /* ............................ */ \
-      list_macro(is_unused51, "is_unused51"),                                     /* ............................ */ \
-      list_macro(is_unused52, "is_unused52"),                                     /* ............................ */ \
+      list_macro(is_smoke, "is_smoke"),                                           /* ............................ */ \
+      list_macro(is_steam, "is_steam"),                                           /* ............................ */ \
+      list_macro(is_fire, "is_fire"),                                             /* ............................ */ \
       list_macro(is_burnable, "is_burnable"),                                     /* ............................ */ \
       list_macro(is_dead_on_shoving, "is_dead_on_shoving"),                       /* ............................ */ \
       list_macro(is_able_to_shove, "is_able_to_shove"),                           /* ............................ */ \
@@ -173,6 +173,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_entrance(tp)                   tp_flag(tp, is_entrance)
 #define tp_is_ethereal(tp)                   tp_flag(tp, is_ethereal)
 #define tp_is_exit(tp)                       tp_flag(tp, is_exit)
+#define tp_is_fire(tp)                       tp_flag(tp, is_fire)
 #define tp_is_floor(tp)                      tp_flag(tp, is_floor)
 #define tp_is_foliage(tp)                    tp_flag(tp, is_foliage)
 #define tp_is_ghost(tp)                      tp_flag(tp, is_ghost)
@@ -205,6 +206,8 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_secret_door(tp)                tp_flag(tp, is_secret_door)
 #define tp_is_shovable(tp)                   tp_flag(tp, is_shovable)
 #define tp_is_slime(tp)                      tp_flag(tp, is_slime)
+#define tp_is_smoke(tp)                      tp_flag(tp, is_smoke)
+#define tp_is_steam(tp)                      tp_flag(tp, is_steam)
 #define tp_is_teleport(tp)                   tp_flag(tp, is_teleport)
 #define tp_is_tickable(tp)                   tp_flag(tp, is_tickable)
 #define tp_is_tiled(tp)                      tp_flag(tp, is_tiled)
@@ -257,9 +260,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused48(tp)                   tp_flag(tp, is_unused48)
 #define tp_is_unused49(tp)                   tp_flag(tp, is_unused49)
 #define tp_is_unused5(tp)                    tp_flag(tp, is_unused5)
-#define tp_is_unused50(tp)                   tp_flag(tp, is_unused50)
-#define tp_is_unused51(tp)                   tp_flag(tp, is_unused51)
-#define tp_is_unused52(tp)                   tp_flag(tp, is_unused52)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
@@ -301,6 +301,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_entrance(g, v, l, p)                   level_flag(g, v, l, is_entrance, p)
 #define level_is_ethereal(g, v, l, p)                   level_flag(g, v, l, is_ethereal, p)
 #define level_is_exit(g, v, l, p)                       level_flag(g, v, l, is_exit, p)
+#define level_is_fire(g, v, l, p)                       level_flag(g, v, l, is_fire, p)
 #define level_is_floor(g, v, l, p)                      level_flag(g, v, l, is_floor, p)
 #define level_is_foliage(g, v, l, p)                    level_flag(g, v, l, is_foliage, p)
 #define level_is_ghost(g, v, l, p)                      level_flag(g, v, l, is_ghost, p)
@@ -333,6 +334,8 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_secret_door(g, v, l, p)                level_flag(g, v, l, is_secret_door, p)
 #define level_is_shovable(g, v, l, p)                   level_flag(g, v, l, is_shovable, p)
 #define level_is_slime(g, v, l, p)                      level_flag(g, v, l, is_slime, p)
+#define level_is_smoke(g, v, l, p)                      level_flag(g, v, l, is_smoke, p)
+#define level_is_steam(g, v, l, p)                      level_flag(g, v, l, is_steam, p)
 #define level_is_teleport(g, v, l, p)                   level_flag(g, v, l, is_teleport, p)
 #define level_is_tickable(g, v, l, p)                   level_flag(g, v, l, is_tickable, p)
 #define level_is_tiled(g, v, l, p)                      level_flag(g, v, l, is_tiled, p)
@@ -385,9 +388,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused48(g, v, l, p)                   level_flag(g, v, l, is_unused48, p)
 #define level_is_unused49(g, v, l, p)                   level_flag(g, v, l, is_unused49, p)
 #define level_is_unused5(g, v, l, p)                    level_flag(g, v, l, is_unused5, p)
-#define level_is_unused50(g, v, l, p)                   level_flag(g, v, l, is_unused50, p)
-#define level_is_unused51(g, v, l, p)                   level_flag(g, v, l, is_unused51, p)
-#define level_is_unused52(g, v, l, p)                   level_flag(g, v, l, is_unused52, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)

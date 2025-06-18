@@ -14,7 +14,7 @@ enum {
   CHARMAP_CHASM       = 'C',
   CHARMAP_CHASM_50    = 'c',
   CHARMAP_CORRIDOR    = '#',
-  CHARMAP_DEEP_WATER  = '\"',
+  CHARMAP_DEEP_WATER  = 'W',
   CHARMAP_DIRT        = ',',
   CHARMAP_DOOR        = 'D',
   CHARMAP_EMPTY       = ' ',
@@ -41,6 +41,7 @@ enum {
   CHARMAP_WALL        = 'x',
   CHARMAP_WATER       = '~',
   CHARMAP_WILDCARD    = '?',
+  CHARMAP_FIRE        = '\"',
   // end sort marker1 }
 };
 
