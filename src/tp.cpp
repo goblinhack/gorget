@@ -357,7 +357,7 @@ Tpp tp_load(const char *name_in)
   return tp;
 }
 
-Tilep tp_first_tile(Tpp tp, int anim_class)
+Tilep tp_first_tile(Tpp tp, ThingAnimType anim_type)
 {
   TRACE_NO_INDENT();
 
@@ -365,16 +365,16 @@ Tilep tp_first_tile(Tpp tp, int anim_class)
     return nullptr;
   }
 
-  auto tiles = &tp->tiles[ anim_class ];
+  auto tiles = &tp->tiles[ anim_type ];
 
   if (! tiles || tiles->empty()) {
-    ERR("tp %s class %d has no tiles", tp->name.c_str(), anim_class);
+    ERR("tp %s class %d has no tiles", tp->name.c_str(), anim_type);
   }
 
   //
   // Get the first anim tile.
   //
-  return tp->tiles[ anim_class ][ 0 ];
+  return tp->tiles[ anim_type ][ 0 ];
 }
 
 void tp_random_dungeon_init(void)
@@ -461,35 +461,47 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
-Tilep tp_tiles_get(Tpp tp, int anim_class, int index)
+Tilep tp_tiles_get(Tpp tp, ThingAnimType anim_type, int index)
 {
   TRACE_NO_INDENT();
 
-  if (index >= (int) tp->tiles[ anim_class ].size()) {
-    DIE("tile overflow tp %s class %d index %d", tp->name.c_str(), anim_class, index);
+  if (index >= (int) tp->tiles[ anim_type ].size()) {
+    DIE("tile overflow tp %s class %d index %d", tp->name.c_str(), anim_type, index);
   }
 
-  return tp->tiles[ anim_class ][ index ];
+  return tp->tiles[ anim_type ][ index ];
 }
 
-void tp_tiles_push_back(Tpp tp, int anim_class, Tilep val)
+#if 0
+void tp_damage_type_set(Tpp tp, int damage_type, Tilep val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->tiles[ anim_class ].push_back(val);
+  tp->tiles[ anim_type ].push_back(val);
+}
+#endif
+
+void tp_tiles_push_back(Tpp tp, ThingAnimType anim_type, Tilep val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->tiles[ anim_type ].push_back(val);
 }
 
-int tp_tiles_size(Tpp tp, int anim_class)
+int tp_tiles_size(Tpp tp, ThingAnimType anim_type)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return 0;
   }
-  return (int) tp->tiles[ anim_class ].size();
+  return (int) tp->tiles[ anim_type ].size();
 }
 
 const char *tp_name(Tpp tp)

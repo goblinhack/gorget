@@ -50,16 +50,16 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
   t->at          = at;
   t->old_at      = at;
   t->moving_from = at;
-  t->anim_class  = THING_ANIM_IDLE;
+  t->anim_type  = THING_ANIM_IDLE;
   t->level_num   = l->level_num;
 
   //
   // Assign an initial tile
   //
-  auto ntiles = tp_tiles_size(tp, t->anim_class);
+  auto ntiles = tp_tiles_size(tp, t->anim_type);
   if (ntiles) {
     auto index = pcg_rand() % ntiles;
-    auto tile  = tp_tiles_get(tp, t->anim_class, index);
+    auto tile  = tp_tiles_get(tp, t->anim_type, index);
     if (tile) {
       t->tile_index = tile_global_index(tile);
 

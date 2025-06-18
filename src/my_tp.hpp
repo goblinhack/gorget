@@ -416,7 +416,7 @@ enum { MAP_Z_PRIO_BEHIND, MAP_Z_PRIO_NORMAL, MAP_Z_PRIO_INFRONT, MAP_Z_PRIO_LAST
 
 enum { MONST_CLASS_A, MONST_CLASS_MAX };
 
-enum {
+typedef enum {
   THING_ANIM_JOIN_BL,     /* alias for IS_JOIN_BL,   */
   THING_ANIM_JOIN_BL2,    /* alias for IS_JOIN_BL2,  */
   THING_ANIM_JOIN_BLOCK,  /* alias for IS_JOIN_BLOCK */
@@ -470,13 +470,13 @@ enum {
   THING_ANIM_OPEN,
   THING_ANIM_DEAD,
   THING_ANIM_MAX
-};
+} __attribute__((__packed__)) ThingAnimType;
 
-enum {
+typedef enum {
   THING_DAMAGE_MELEE, /* ... */
   THING_DAMAGE_FIRE,  /* ... */
   THING_DAMAGE_MAX
-};
+} __attribute__((__packed__)) ThingDamageType;
 
 class Tp;
 
@@ -496,10 +496,10 @@ void        tp_real_name_set(Tpp, const char *);
 void tp_light_color_set(Tpp, const char *);
 void tp_light_color_apply(Tpp);
 
-int   tp_tiles_size(Tpp tp, int anim_class);
-Tilep tp_first_tile(class Tp *, int anim_class);
-Tilep tp_tiles_get(Tpp tp, int anim_class, int index);
-void  tp_tiles_push_back(Tpp tp, int amim_class, Tilep val);
+int   tp_tiles_size(Tpp tp, ThingAnimType anim_type);
+Tilep tp_first_tile(class Tp *, ThingAnimType anim_type);
+Tilep tp_tiles_get(Tpp tp, ThingAnimType anim_type, int index);
+void  tp_tiles_push_back(Tpp tp, ThingAnimType amim_class, Tilep val);
 
 TpId tp_id_get(Tpp tp);
 Tpp  tp_find(TpId id);

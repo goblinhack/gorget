@@ -18,10 +18,10 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   Tpp tp = thing_tp(t);
 
-  auto ntiles = tp_tiles_size(tp, t->anim_class);
+  auto ntiles = tp_tiles_size(tp, t->anim_type);
   if (ntiles) {
     auto index = pcg_rand() % ntiles;
-    auto tile  = tp_tiles_get(tp, t->anim_class, index);
+    auto tile  = tp_tiles_get(tp, t->anim_type, index);
     if (tile) {
       t->tile_index = tile_global_index(tile);
 
@@ -79,11 +79,11 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   }
 
   t->anim_index++;
-  if (t->anim_index >= tp_tiles_size(tp, t->anim_class)) {
+  if (t->anim_index >= tp_tiles_size(tp, t->anim_type)) {
     t->anim_index = 0;
   }
 
-  tile          = tp_tiles_get(tp, t->anim_class, t->anim_index);
+  tile          = tp_tiles_get(tp, t->anim_type, t->anim_index);
   t->tile_index = tile_global_index(tile);
 
   t->anim_ms_remaining += tile_delay_ms(tile);

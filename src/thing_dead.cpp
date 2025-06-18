@@ -46,7 +46,7 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Update the animation, for example, flattened grass
   //
-  t->anim_class = THING_ANIM_DEAD;
+  t->anim_type = THING_ANIM_DEAD;
   thing_anim_init(g, v, l, t);
 
   //
