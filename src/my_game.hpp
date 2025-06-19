@@ -127,7 +127,8 @@ Levelp game_level_populate(Gamep g, Levelsp, LevelNum level_num);
 const char *game_seed_name_get(Gamep);
 SeedSource  game_seed_source_get(Gamep);
 uint32_t    game_seed_num_get(Gamep);
-void        game_seed_name_set(Gamep, const char *);
+void        game_seed_set(Gamep, const char *);
+void        game_seed_set(Gamep, uint32_t);
 
 SDL_Keysym game_key_wait_get(Gamep);
 void       game_key_wait_set(Gamep, SDL_Keysym);

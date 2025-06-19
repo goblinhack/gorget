@@ -3399,7 +3399,8 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
   //
   // Place an additional teleport
   //
-  while (true) {
+  auto tries = 100;
+  while (tries-- > 0) {
     auto cand = cands[ pcg_rand() % cands.size() ];
     auto x    = cand.x;
     auto y    = cand.y;
@@ -3430,7 +3431,8 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
   //
   // Find a random room.
   //
-  while (true) {
+  auto tries = 100;
+  while (tries-- > 0) {
     auto border = 4;
     auto x      = pcg_random_range(border, MAP_WIDTH - border);
     auto y      = pcg_random_range(border, MAP_HEIGHT - border);
@@ -3774,7 +3776,8 @@ void level_gen_create_levels(Gamep g, Levelsp v)
     }
   }
 
-  LOG("Level generation completed, took %u ms", time_ms() - start);
+  s->create_time = time_ms() - start;
+  LOG("Level generation completed, took %u ms", s->create_time);
 
   level_gen_stats_dump(g);
 }
@@ -3783,8 +3786,32 @@ void level_gen_test(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  auto v = levels_memory_alloc(g);
-  game_levels_set(g, v);
+  for (auto seed = 0U; seed < 1000U; seed++) {
+    game_seed_set(g, seed);
 
-  level_gen_create_levels(g, v);
+    //
+    // Allocate space for the levels
+    //
+    auto v = levels_memory_alloc(g);
+    game_levels_set(g, v);
+
+    //
+    // Generate the maximum number of levels
+    //
+    LevelSelect *s = &v->level_select;
+    s->level_count = MAX_LEVELS;
+
+    //
+    // Create the levels
+    //
+    level_gen_create_levels(g, v);
+
+    CON("Created %u levels for dungeon seed %u (took %u ms)", s->level_count, seed, s->create_time);
+    LOG("------------------------------------------------------");
+
+    //
+    // Free the levels memory
+    //
+    levels_destroy(g, v);
+  }
 }

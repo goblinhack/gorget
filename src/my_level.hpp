@@ -161,6 +161,11 @@ typedef struct LevelSelect_ {
   LevelNum level_count;
 
   //
+  // How many ms to create all the lvels
+  //
+  uint32_t create_time;
+
+  //
   // Level tiles and grid info
   //
   LevelSelectCell data[ LEVELS_ACROSS ][ LEVELS_DOWN ];

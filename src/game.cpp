@@ -460,7 +460,7 @@ void Game::seed_set(const char *maybe_seed)
   pcg_srand(seed_num);
 }
 
-void game_seed_name_set(Gamep g, const char *maybe_seed)
+void game_seed_set(Gamep g, const char *maybe_seed)
 {
   TRACE_NO_INDENT();
 
@@ -470,6 +470,19 @@ void game_seed_name_set(Gamep g, const char *maybe_seed)
   }
 
   g->seed_set(maybe_seed);
+}
+
+void game_seed_set(Gamep g, uint32_t seed)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return;
+  }
+
+  std::string seed_name = std::to_string(seed);
+  game_seed_set(g, seed_name.c_str());
 }
 
 const char *game_seed_name_get(Gamep g)

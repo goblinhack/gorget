@@ -540,7 +540,6 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--test") || ! strcasecmp(argv[ i ], "-test")) {
       g_opt_test_name    = argv[ i + 1 ];
       g_opt_tests        = true;
-      g_opt_debug1       = true;
       skip_gfx_and_audio = true;
       i++;
       continue;
@@ -548,7 +547,6 @@ static void parse_args(int argc, char *argv[])
 
     if (! strcasecmp(argv[ i ], "--tests") || ! strcasecmp(argv[ i ], "-tests")) {
       g_opt_tests        = true;
-      g_opt_debug1       = true;
       skip_gfx_and_audio = true;
       continue;
     }
@@ -556,21 +554,18 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--do-room-gen") || ! strcasecmp(argv[ i ], "-do-room-gen")) {
       g_opt_do_room_gen  = true;
       skip_gfx_and_audio = true;
-      g_opt_debug1       = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-level-select-gen") || ! strcasecmp(argv[ i ], "-do-level-select-gen")) {
       g_opt_do_level_select_gen = true;
       skip_gfx_and_audio        = true;
-      g_opt_debug1              = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-level-gen") || ! strcasecmp(argv[ i ], "-do-level-gen")) {
       g_opt_do_level_gen = true;
       skip_gfx_and_audio = true;
-      g_opt_debug1       = true;
       continue;
     }
 
@@ -1020,7 +1015,7 @@ int main(int argc, char *argv[])
     }
 
     if (g_opt_do_level_gen) {
-      CON("Creating some levels. Look in the log file for output.");
+      CON("Creating many levels. Look in the log file for output.");
       CON("------------------------------------------------------");
       level_gen_test(g);
       DIE_CLEAN("done");
