@@ -208,7 +208,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
       //
       // Default
       //
-      Tpp tp = tp = tp_is_level_not_visited;
+      Tpp tp = tp_is_level_not_visited;
 
       //
       // Completed levels

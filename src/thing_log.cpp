@@ -124,12 +124,9 @@ static void thing_err_(Thingp t, const char *fmt, va_list args)
   len = (int) strlen(buf);
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(t).c_str());
   len = (int) strlen(buf);
+  snprintf(buf + len, MAXLONGSTR - len, "ERROR: ");
+  len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
-
-  if (snprintf(buf + len, MAXLONGSTR - len, "ERROR: " UI_IMPORTANT_FMT_STR "%s" UI_RESET_FMT "", buf) < 0) {
-    ERR("truncation");
-    return;
-  }
 
   error_handler(buf);
 

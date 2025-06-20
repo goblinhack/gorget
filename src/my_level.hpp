@@ -16,6 +16,12 @@ enum {
   CURSOR_AT,
 };
 
+typedef struct my_spoint {
+public:
+  short x;
+  short y;
+} spoint;
+
 typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
@@ -32,12 +38,12 @@ typedef struct LevelInfo_ {
   //
   // Where the player start is
   //
-  point entrance;
+  spoint entrance;
 
   //
   // Where the exit is
   //
-  point exit;
+  spoint exit;
 
   //
   // Is this tile on the main flood fill path from start to exit

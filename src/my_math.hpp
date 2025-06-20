@@ -36,6 +36,6 @@ double gaussrand(double mean, double stddev);
 #define RAD_360 (2.0f * 3.14159265358979323846f) // 2pi
 #define RAD_270 (RAD_180 + RAD_90)
 
-uint32_t nextpoweroftwo(uint32_t val);
+unsigned int nextpoweroftwo(unsigned int val);
 
 #endif

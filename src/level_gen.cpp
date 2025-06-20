@@ -141,6 +141,7 @@ public:
         data[ x ][ y ].room = nullptr;
       }
     }
+    memset(&info.entrance, 0, sizeof(info.entrance));
     memset(&info, 0, sizeof(info));
   }
   ~LevelGen(void) {}
@@ -944,10 +945,12 @@ static void room_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
       point p(rx + at.x, ry + at.y);
 
       if (room_c == CHARMAP_ENTRANCE) {
-        l->info.entrance = p;
+        l->info.entrance.x = p.x;
+        l->info.entrance.y = p.y;
       }
       if (room_c == CHARMAP_EXIT) {
-        l->info.exit = p;
+        l->info.exit.x = p.x;
+        l->info.exit.y = p.y;
       }
 
       class Cell *cell = &l->data[ p.x ][ p.y ];
@@ -1941,7 +1944,8 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
   // If this door is too close, then switch to a normal room
   //
   if (room_type == ROOM_TYPE_EXIT) {
-    if (distance(door_other, l->info.entrance) < MIN_LEVEL_EXIT_DISTANCE) {
+    point entrance(l->info.entrance.x, l->info.entrance.y);
+    if (distance(door_other, entrance) < MIN_LEVEL_EXIT_DISTANCE) {
       room_type = ROOM_TYPE_NORMAL;
     }
   }

@@ -59,7 +59,9 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     all_things_description += one_desc;
   }
 
+#pragma GCC diagnostic ignored "-Wformat-zero-length"
   BOTCON("");
+#pragma GCC diagnostic warning "-Wformat-zero-length"
 
   if ((int) all_things_description.empty()) {
     return;
