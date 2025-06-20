@@ -18,14 +18,14 @@ int thing_speed(Thingp t)
   return t->_speed;
 }
 
-void thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_speed_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
-    return;
+    return 0;
   }
-  t->_speed = val;
+  return t->_speed = val;
 }
 
 int thing_weight(Thingp t)
@@ -38,14 +38,14 @@ int thing_weight(Thingp t)
   return t->_weight;
 }
 
-void thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_weight_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
-    return;
+    return 0;
   }
-  t->_weight = val;
+  return t->_weight = val;
 }
 
 int thing_health(Thingp t)
@@ -58,34 +58,74 @@ int thing_health(Thingp t)
   return t->_health;
 }
 
-void thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return;
-  }
-  t->_health = val;
-}
-
-int thing_temp(Thingp t)
+int thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
-  return t->_temp;
+  return t->_health = val;
 }
 
-void thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
-    return;
+    return 0;
   }
-  t->_temp = val;
+  return t->_health += val;
+}
+
+int thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_health -= val;
+}
+
+int thing_temperature(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_temperature;
+}
+
+int thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_temperature = val;
+}
+
+int thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_temperature += val;
+}
+
+int thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_temperature -= val;
 }
 
 bool thing_is_dead(Thingp t)

@@ -52,6 +52,28 @@ enum {
 };
 
 //
+// Some kind of event that befalls a thing. Usually an attack
+//
+typedef struct ThingEvent_ {
+  //
+  // What happened?
+  //
+  std::string reason;
+  //
+  // What type of attack?
+  //
+  ThingDamage damage_type = THING_DAMAGE_NONE;
+  //
+  // How much damage?
+  //
+  int damage = 0;
+  //
+  // Whodunnit?
+  //
+  Thingp attacker = nullptr;
+} ThingEvent;
+
+//
 // Per thing AI memory
 //
 typedef struct ThingAi_ {
@@ -135,7 +157,7 @@ typedef struct Thing_ {
   //
   // Temperature in celsius.
   //
-  int16_t _temp;
+  int16_t _temperature;
   //
   // Health of the item.
   //
@@ -216,7 +238,8 @@ void thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, point at);
 void thing_update_pos(Gamep, Thingp);
-void thing_dead(Gamep, Levelsp, Levelp, Thingp it, Thingp me, std::string reason);
+void thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
+void thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void thing_anim_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
@@ -263,17 +286,21 @@ void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 bool thing_is_moving(Thingp);
 void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
-int  thing_speed(Thingp);
-void thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_speed(Thingp);
+int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
-int  thing_weight(Thingp);
-void thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_weight(Thingp);
+int thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
-int  thing_temp(Thingp);
-void thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_temperature(Thingp);
+int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_temperature_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_temperature_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int  thing_health(Thingp);
-void thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_health(Thingp);
+int thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_health_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 // begin sort marker1 {
 bool thing_is_able_to_change_temperature(Thingp);

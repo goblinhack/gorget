@@ -473,10 +473,12 @@ typedef enum {
 } __attribute__((__packed__)) ThingAnimType;
 
 typedef enum {
+  THING_DAMAGE_NONE,  /* ... */
   THING_DAMAGE_MELEE, /* ... */
+  THING_DAMAGE_HEAT,  /* ... */
   THING_DAMAGE_FIRE,  /* ... */
   THING_DAMAGE_MAX
-} __attribute__((__packed__)) ThingDamageType;
+} __attribute__((__packed__)) ThingDamage;
 
 class Tp;
 
@@ -501,7 +503,8 @@ Tilep tp_first_tile(class Tp *, ThingAnimType);
 Tilep tp_tiles_get(Tpp tp, ThingAnimType anim_type, int index);
 void  tp_tiles_push_back(Tpp, ThingAnimType, Tilep val);
 
-void tp_damage_set(Tpp, ThingDamageType, const char *);
+void tp_damage_set(Tpp, ThingDamage, const char *);
+int  tp_damage(Tpp, ThingDamage);
 
 TpId tp_id_get(Tpp tp);
 Tpp  tp_find(TpId id);

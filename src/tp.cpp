@@ -461,7 +461,7 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
-void tp_damage_set(Tpp tp, ThingDamageType damage_type, const char *val)
+void tp_damage_set(Tpp tp, ThingDamage damage_type, const char *val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -475,6 +475,25 @@ void tp_damage_set(Tpp tp, ThingDamageType damage_type, const char *val)
   }
 
   tp->damage[ damage_type ] = Dice(std::string(val));
+}
+
+//
+// Roll for damage
+//
+int tp_damage(Tpp tp, ThingDamage damage_type)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+
+  if (damage_type >= THING_DAMAGE_MAX) {
+    ERR("bad value in tp for %s", __FUNCTION__);
+    return 0;
+  }
+
+  return tp->damage[ damage_type ].roll();
 }
 
 Tilep tp_tiles_get(Tpp tp, ThingAnimType anim_type, int index)

@@ -14,26 +14,26 @@
 //
 // Initiate the death process
 //
-void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me, std::string reason)
+void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_dead(me)) {
+  if (thing_is_dead(t)) {
     return;
   }
 
   //
   // Log the reason of demise?
   //
-  if (thing_is_loggable(me)) {
-    if (reason.empty()) {
-      THING_LOG(me, "dead");
+  if (thing_is_loggable(t)) {
+    if (e.reason.empty()) {
+      THING_LOG(t, "dead");
     } else {
-      THING_LOG(me, "dead, reason: %s", reason.c_str());
+      THING_LOG(t, "dead, reason: %s", e.reason.c_str());
     }
   }
 
-  thing_is_dead_set(g, v, l, me);
+  thing_is_dead_set(g, v, l, t);
 }
 
 //

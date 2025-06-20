@@ -58,9 +58,9 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
     for (auto pair : pairs) {
       auto  a  = pair.first;
       auto  b  = pair.second;
-      float Ta = thing_temp(a);
+      float Ta = thing_temperature(a);
       float Wa = thing_weight(a);
-      float Tb = thing_temp(b);
+      float Tb = thing_temperature(b);
       float Wb = thing_weight(b);
       int   Na = std::round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
       int   Nb = std::round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);

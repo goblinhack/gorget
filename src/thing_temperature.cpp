@@ -10,7 +10,7 @@
 #include "my_main.hpp"
 #include "my_tp.hpp"
 
-void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me, int n)
+void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp me, int n)
 {
   TRACE_NO_INDENT();
 
@@ -18,7 +18,8 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me
 
   if (n > tp_temperature_damage_at_get(tp)) {
     // TODO damage
-    thing_dead(g, v, l, it, me, "by burning");
+    ThingEvent e {.reason = "by burning", .attacker = source};
+    thing_dead(g, v, l, me, e);
   }
 
   if (n > tp_temperature_burns_at_get(tp)) {

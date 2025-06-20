@@ -45,7 +45,8 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
   // Some items, like braziers need to be knocked over first before shoving.
   //
   if (thing_is_dead_on_shoving(it)) {
-    thing_dead(g, v, l, it, me, "by shoving");
+    ThingEvent e {.reason = "by shoving", .attacker = me};
+    thing_dead(g, v, l, it, e);
     return true;
   }
 
