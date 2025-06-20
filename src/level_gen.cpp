@@ -3786,7 +3786,7 @@ void level_gen_test(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto seed = 0U; seed < 1000U; seed++) {
+  for (auto seed = 0U; seed < MAX_TESTED_LEVELS; seed++) {
     game_seed_set(g, seed);
 
     //

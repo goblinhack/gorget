@@ -457,7 +457,11 @@ void Game::seed_set(const char *maybe_seed)
   }
 
   LOG("Set seed, name '%s', seed %u", seed_name.c_str(), seed_num);
-  pcg_srand(seed_num);
+
+  //
+  // Limit to tested levels
+  //
+  pcg_srand(seed_num % MAX_TESTED_LEVELS);
 }
 
 void game_seed_set(Gamep g, const char *maybe_seed)

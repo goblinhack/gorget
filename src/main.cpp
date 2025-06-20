@@ -813,7 +813,12 @@ int main(int argc, char *argv[])
   //
   // Random number
   //
-  pcg_srand((unsigned int) std::time(nullptr));
+  if (0) {
+    //
+    // Do we want this? We want a deterministic seed.
+    //
+    pcg_srand((unsigned int) std::time(nullptr));
+  }
 
   //
   // Colors
