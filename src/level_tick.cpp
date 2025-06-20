@@ -199,6 +199,11 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
   }
 
   //
+  // Handle temperature interactions
+  //
+  level_tick_temperature(g, v, l);
+
+  //
   // This can pop the next player move
   //
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)

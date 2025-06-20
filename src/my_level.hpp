@@ -310,6 +310,14 @@ typedef struct Levels_ {
           if ((_t_ = thing_find_optional(_l_, _l_->thing_body[ _id_ ].id)))
 
 //
+// For all things on the map
+//
+#define FOR_ALL_MAP_POINTS(_g_, _v_, _l_, _x_, _y_)                                                                  \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (_y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                           \
+      for (_x_ = 0; _x_ < MAP_WIDTH; _x_++)
+
+//
 // For all things at this Z depth
 //
 #define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                    \
@@ -392,6 +400,7 @@ void level_cursor_path_reset(Gamep, Levelsp, Levelp);
 void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
+void level_tick_temperature(Gamep, Levelsp, Levelp);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, point, Tpp, Thingp);
 void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);

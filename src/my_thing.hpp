@@ -213,9 +213,10 @@ void thing_push(Gamep, Levelsp, Levelp, Thingp);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
 void thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
 void thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
+void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, point at);
 void thing_update_pos(Gamep, Thingp);
-void thing_dead(Gamep, Levelsp, Levelp, Thingp, Thingp maybe_killer, std::string reason);
+void thing_dead(Gamep, Levelsp, Levelp, Thingp it, Thingp me, std::string reason);
 void thing_anim_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
@@ -269,12 +270,13 @@ int  thing_weight(Thingp);
 void thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 int  thing_temp(Thingp);
-void thing_temp_set(Gamep, Levelsp, Levelp, Thingp, int val);
+void thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 int  thing_health(Thingp);
 void thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 // begin sort marker1 {
+bool thing_is_able_to_change_temperature(Thingp);
 bool thing_is_able_to_shove(Thingp);
 bool thing_is_able_to_walk_through_walls(Thingp);
 bool thing_is_animated_can_hflip(Thingp);
@@ -391,7 +393,6 @@ bool thing_is_unused45(Thingp);
 bool thing_is_unused46(Thingp);
 bool thing_is_unused47(Thingp);
 bool thing_is_unused48(Thingp);
-bool thing_is_unused49(Thingp);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);

@@ -35,11 +35,11 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_shovable);
-  tp_temp_burns_at_set(tp, 50);  // celsius
-  tp_temp_damage_at_set(tp, 50); // celsius
-  tp_temp_initial_set(tp, 20);   // celsius
   tp_health_initial_set(tp, 6);
-  tp_weight_set(tp, 200); // pounds
+  tp_temperature_burns_at_set(tp, 50);  // celsius
+  tp_temperature_damage_at_set(tp, 50); // celsius
+  tp_temperature_initial_set(tp, 20);   // celsius
+  tp_weight_set(tp, 200);        // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

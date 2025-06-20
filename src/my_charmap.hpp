@@ -20,6 +20,7 @@ enum {
   CHARMAP_EMPTY       = ' ',
   CHARMAP_ENTRANCE    = '@',
   CHARMAP_EXIT        = 'E',
+  CHARMAP_FIRE        = '\"',
   CHARMAP_FLOOR       = '.',
   CHARMAP_FLOOR_50    = '5',
   CHARMAP_FOLIAGE     = '`',
@@ -41,7 +42,6 @@ enum {
   CHARMAP_WALL        = 'x',
   CHARMAP_WATER       = '~',
   CHARMAP_WILDCARD    = '?',
-  CHARMAP_FIRE        = '\"',
   // end sort marker1 }
 };
 

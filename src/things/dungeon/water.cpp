@@ -31,9 +31,9 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_tiled);
   tp_flag_set(tp, is_water);
   tp_short_name_set(tp, "shallow water");
-  tp_temp_burns_at_set(tp, 100);  // celsius
-  tp_temp_damage_at_set(tp, 100); // celsius
-  tp_temp_initial_set(tp, 10);    // celsius
+  tp_temperature_burns_at_set(tp, 100);  // celsius
+  tp_temperature_damage_at_set(tp, 100); // celsius
+  tp_temperature_initial_set(tp, 10);    // celsius
   tp_weight_set(tp, 100);         // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

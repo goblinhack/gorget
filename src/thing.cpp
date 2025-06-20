@@ -50,7 +50,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
   t->at          = at;
   t->old_at      = at;
   t->moving_from = at;
-  t->anim_type  = THING_ANIM_IDLE;
+  t->anim_type   = THING_ANIM_IDLE;
   t->level_num   = l->level_num;
 
   //
@@ -101,7 +101,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
 
   thing_speed_set(g, v, l, t, tp_speed_get(tp));
   thing_weight_set(g, v, l, t, tp_weight_get(tp));
-  thing_temp_set(g, v, l, t, tp_temp_initial_get(tp));
+  thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
   thing_health_set(g, v, l, t, tp_health_initial_get(tp));
 
   //

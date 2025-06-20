@@ -36,12 +36,12 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_tickable);
-  tp_speed_set(tp, 100);
-  tp_temp_burns_at_set(tp, 100); // celsius
-  tp_temp_damage_at_set(tp, 50); // celsius
-  tp_temp_initial_set(tp, 20);   // celsius
   tp_health_initial_set(tp, 8);
-  tp_weight_set(tp, 100); // pounds
+  tp_speed_set(tp, 100);
+  tp_temperature_burns_at_set(tp, 100); // celsius
+  tp_temperature_damage_at_set(tp, 50); // celsius
+  tp_temperature_initial_set(tp, 20);   // celsius
+  tp_weight_set(tp, 100);        // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

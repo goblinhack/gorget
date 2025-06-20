@@ -78,7 +78,7 @@ int thing_temp(Thingp t)
   return t->_temp;
 }
 
-void thing_temp_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+void thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -1244,14 +1244,14 @@ bool thing_is_unused48(Thingp t)
   return tp_flag(thing_tp(t), is_unused48);
 }
 
-bool thing_is_unused49(Thingp t)
+bool thing_is_able_to_change_temperature(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused49);
+  return tp_flag(thing_tp(t), is_able_to_change_temperature);
 }
 
 bool thing_is_unused5(Thingp t)

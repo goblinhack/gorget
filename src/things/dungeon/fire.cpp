@@ -25,6 +25,7 @@ bool tp_load_fire(void)
   auto tp   = tp_load("fire");
 
   // begin sort marker1 {
+  tp_damage_set(tp, THING_DAMAGE_FIRE, "1d6");
   tp_description_set(tp, tp_fire_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -34,10 +35,9 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
   tp_light_color_set(tp, "orange");
-  tp_temp_initial_set(tp, 500); // celsius
+  tp_temperature_initial_set(tp, 500); // celsius
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
-  tp_damage_set(tp, THING_DAMAGE_FIRE, "1d6");
   // end sort marker1 }
 
   if (g_opt_tests) {

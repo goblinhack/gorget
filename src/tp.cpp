@@ -135,17 +135,17 @@ public:
   //
   // Temperature in celsius
   //
-  int temp_initial {0};
+  int temperature_initial {0};
 
   //
   // When the thing catches fire
   //
-  int temp_burns_at {0};
+  int temperature_burns_at {0};
 
   //
   // When the thing takes damage from heat
   //
-  int temp_damage_at {0};
+  int temperature_damage_at {0};
 
   //
   // Internal name
@@ -732,64 +732,65 @@ int tp_health_initial_get(Tpp tp)
   return tp->health_initial;
 };
 
-void tp_temp_initial_set(Tpp tp, int val)
+void tp_temperature_initial_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->temp_initial = val;
+  tp->temperature_initial = val;
+  tp_flag_set(tp, is_able_to_change_temperature);
 };
 
-int tp_temp_initial_get(Tpp tp)
+int tp_temperature_initial_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return 0;
   }
-  return tp->temp_initial;
+  return tp->temperature_initial;
 };
 
-void tp_temp_burns_at_set(Tpp tp, int val)
+void tp_temperature_burns_at_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->temp_burns_at = val;
+  tp->temperature_burns_at = val;
 };
 
-int tp_temp_burns_at_get(Tpp tp)
+int tp_temperature_burns_at_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return 0;
   }
-  return tp->temp_burns_at;
+  return tp->temperature_burns_at;
 };
 
-void tp_temp_damage_at_set(Tpp tp, int val)
+void tp_temperature_damage_at_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->temp_damage_at = val;
+  tp->temperature_damage_at = val;
 };
 
-int tp_temp_damage_at_get(Tpp tp)
+int tp_temperature_damage_at_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return 0;
   }
-  return tp->temp_damage_at;
+  return tp->temperature_damage_at;
 };
 
 //

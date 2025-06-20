@@ -121,7 +121,7 @@
       list_macro(is_unused46, "is_unused46"),                                     /* ............................ */ \
       list_macro(is_unused47, "is_unused47"),                                     /* ............................ */ \
       list_macro(is_unused48, "is_unused48"),                                     /* ............................ */ \
-      list_macro(is_unused49, "is_unused49"),                                     /* ............................ */ \
+      list_macro(is_able_to_change_temperature, "is_able_to_change_temperature"), /* ............................ */ \
       list_macro(is_unused5, "is_unused5"),                                       /* ............................ */ \
       list_macro(is_smoke, "is_smoke"),                                           /* ............................ */ \
       list_macro(is_steam, "is_steam"),                                           /* ............................ */ \
@@ -142,6 +142,7 @@
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 
 // begin sort marker1 {
+#define tp_is_able_to_change_temperature(tp) tp_flag(tp, is_able_to_change_temperature)
 #define tp_is_able_to_shove(tp)              tp_flag(tp, is_able_to_shove)
 #define tp_is_able_to_walk_through_walls(tp) tp_flag(tp, is_able_to_walk_through_walls)
 #define tp_is_animated_can_hflip(tp)         tp_flag(tp, is_animated_can_hflip)
@@ -258,7 +259,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define tp_is_unused46(tp)                   tp_flag(tp, is_unused46)
 #define tp_is_unused47(tp)                   tp_flag(tp, is_unused47)
 #define tp_is_unused48(tp)                   tp_flag(tp, is_unused48)
-#define tp_is_unused49(tp)                   tp_flag(tp, is_unused49)
 #define tp_is_unused5(tp)                    tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
@@ -270,6 +270,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 // end sort marker1 }
 
 // begin sort marker3 {
+#define level_is_able_to_change_temperature(g, v, l, p) level_flag(g, v, l, is_able_to_change_temperature, p)
 #define level_is_able_to_shove(g, v, l, p)              level_flag(g, v, l, is_able_to_shove, p)
 #define level_is_able_to_walk_through_walls(g, v, l, p) level_flag(g, v, l, is_able_to_walk_through_walls, p)
 #define level_is_animated_can_hflip(g, v, l, p)         level_flag(g, v, l, is_animated_can_hflip, p)
@@ -386,7 +387,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 #define level_is_unused46(g, v, l, p)                   level_flag(g, v, l, is_unused46, p)
 #define level_is_unused47(g, v, l, p)                   level_flag(g, v, l, is_unused47, p)
 #define level_is_unused48(g, v, l, p)                   level_flag(g, v, l, is_unused48, p)
-#define level_is_unused49(g, v, l, p)                   level_flag(g, v, l, is_unused49, p)
 #define level_is_unused5(g, v, l, p)                    level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
@@ -550,13 +550,13 @@ int  tp_weight_get(Tpp tp);
 void tp_health_initial_set(Tpp tp, int val);
 int  tp_health_initial_get(Tpp tp);
 
-void tp_temp_initial_set(Tpp tp, int val);
-int  tp_temp_initial_get(Tpp tp);
+void tp_temperature_initial_set(Tpp tp, int val);
+int  tp_temperature_initial_get(Tpp tp);
 
-void tp_temp_burns_at_set(Tpp tp, int val);
-int  tp_temp_burns_at_get(Tpp tp);
+void tp_temperature_burns_at_set(Tpp tp, int val);
+int  tp_temperature_burns_at_get(Tpp tp);
 
-void tp_temp_damage_at_set(Tpp tp, int val);
-int  tp_temp_damage_at_get(Tpp tp);
+void tp_temperature_damage_at_set(Tpp tp, int val);
+int  tp_temperature_damage_at_get(Tpp tp);
 
 #endif // _MY_THING_TEMPLATE_H_
