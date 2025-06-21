@@ -7,9 +7,9 @@
 
 #include "my_point.hpp"
 
-std::vector< point > line(const point s, const point e, size_t max_elems)
+std::vector< spoint > line(const spoint s, const spoint e, size_t max_elems)
 {
-  std::vector< point > out;
+  std::vector< spoint > out;
 
   int x0 = s.x;
   int y0 = s.y;
@@ -21,7 +21,7 @@ std::vector< point > line(const point s, const point e, size_t max_elems)
   int err = dx + dy, e2; /* error value e_xy */
 
   for (;;) { /* loop */
-    out.push_back(point(x0, y0));
+    out.push_back(spoint(x0, y0));
 
     if (max_elems) {
       if (out.size() >= max_elems) {

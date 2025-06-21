@@ -7,7 +7,7 @@
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 
-void dmap_print(const Dmap *D, point at, point tl, point br)
+void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
 {
   int x;
   int y;
@@ -92,7 +92,7 @@ void dmap_print(const Dmap *D, point at, point tl, point br)
     std::string debug;
     for (x = minx; x <= maxx; x++) {
       uint8_t e = D->val[ x ][ y ];
-      if (point(x, y) == at) {
+      if (spoint(x, y) == at) {
         debug += ("  @");
         continue;
       }
@@ -145,7 +145,7 @@ void dmap_print(const Dmap *D)
   }
 }
 
-void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
+void dmap_process_no_diagonals(Dmap *D, spoint tl, spoint br, bool place_border)
 {
   uint8_t                                                           x;
   uint8_t                                                           y;
@@ -400,7 +400,7 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
 // 2 2 2 2 2
 // 3 3 3 3 3
 //
-void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border)
+void dmap_process_allow_diagonals(Dmap *D, spoint tl, spoint br, bool place_border)
 {
   uint8_t                                                           x;
   uint8_t                                                           y;
@@ -630,7 +630,7 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
 // 0 1 1 1 0
 // 0 0 0 0 0
 //
-void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool place_border)
+void dmap_process_reverse_allow_diagonals(Dmap *D, spoint tl, spoint br, bool place_border)
 {
   uint8_t                                                           x;
   uint8_t                                                           y;
@@ -880,7 +880,7 @@ static bool is_obstacle_at(const Dmap *D, int x, int y)
 //
 // Given 3 points, can we do a shortcut diagonal move?
 //
-bool dmap_can_i_move_diagonally(const Dmap *D, point a, point b, point c)
+bool dmap_can_i_move_diagonally(const Dmap *D, spoint a, spoint b, spoint c)
 {
   auto px = a.x;
   auto py = a.y;
@@ -925,11 +925,11 @@ bool dmap_can_i_move_diagonally(const Dmap *D, point a, point b, point c)
   return false;
 }
 
-static std::vector< point > dmap_solve_(const Dmap *D, const point start, const std::vector< point > &all_deltas,
-                                        bool allow_diagonals)
+static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas,
+                                         bool allow_diagonals)
 {
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > walked = {};
-  std::vector< point >                                    out    = {};
+  std::vector< spoint >                                   out    = {};
   auto                                                    at     = start;
 
   for (; /*ever*/;) {
@@ -942,7 +942,7 @@ static std::vector< point > dmap_solve_(const Dmap *D, const point start, const 
 
     uint8_t lowest = D->val[ x ][ y ];
     bool    got    = false;
-    point   best;
+    spoint  best;
 
     if (D->val[ x ][ y ] == DMAP_IS_WALL) {
       return out;
@@ -1012,21 +1012,22 @@ static std::vector< point > dmap_solve_(const Dmap *D, const point start, const 
   return out;
 }
 
-std::vector< point > dmap_solve_allow_diagonal(const Dmap *D, const point start)
+std::vector< spoint > dmap_solve_allow_diagonal(const Dmap *D, const spoint start)
 {
-  static const std::vector< point > all_deltas = {
-      point(-1, -1), point(1, -1), point(-1, 1), point(1, 1), point(0, -1), point(-1, 0), point(1, 0), point(0, 1),
+  static const std::vector< spoint > all_deltas = {
+      spoint(-1, -1), spoint(1, -1), spoint(-1, 1), spoint(1, 1),
+      spoint(0, -1),  spoint(-1, 0), spoint(1, 0),  spoint(0, 1),
   };
   return (dmap_solve_(D, start, all_deltas, true));
 }
 
-std::vector< point > dmap_solve_manhattan(const Dmap *D, const point start)
+std::vector< spoint > dmap_solve_manhattan(const Dmap *D, const spoint start)
 {
-  static const std::vector< point > all_deltas = {
-      point(0, -1),
-      point(-1, 0),
-      point(1, 0),
-      point(0, 1),
+  static const std::vector< spoint > all_deltas = {
+      spoint(0, -1),
+      spoint(-1, 0),
+      spoint(1, 0),
+      spoint(0, 1),
   };
   return (dmap_solve_(D, start, all_deltas, false));
 }
@@ -1034,7 +1035,7 @@ std::vector< point > dmap_solve_manhattan(const Dmap *D, const point start)
 //
 // Try to solve diagonally first. Then fallback to manhattan if we cannot.
 //
-std::vector< point > dmap_solve(const Dmap *D, const point start)
+std::vector< spoint > dmap_solve(const Dmap *D, const spoint start)
 {
   //
   // No path? Intentionally not allowing diagonal moves here as that allows the
@@ -1051,7 +1052,7 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
   auto p         = dmap_solve_allow_diagonal(D, start);
   auto path_size = p.size();
   if (! path_size) {
-    std::vector< point > empty_path;
+    std::vector< spoint > empty_path;
     return empty_path;
   }
 
@@ -1079,7 +1080,7 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
   // ......**...
   //
   p.insert(p.begin(), start);
-  std::vector< point > out;
+  std::vector< spoint > out;
   path_size = p.size();
 
   for (int i = 0; i < (int) path_size; i++) {
@@ -1104,14 +1105,14 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
-        out.push_back(point(hop0.x, hop0.y + 1));
+        out.push_back(spoint(hop0.x, hop0.y + 1));
         continue;
       } else if (is_obstacle_at(D, hop0.x, hop0.y + 1)) {
         //
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
-        out.push_back(point(hop0.x + 1, hop0.y));
+        out.push_back(spoint(hop0.x + 1, hop0.y));
         continue;
       }
     }
@@ -1128,14 +1129,14 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
-        out.push_back(point(hop0.x, hop0.y + 1));
+        out.push_back(spoint(hop0.x, hop0.y + 1));
         continue;
       } else if (is_obstacle_at(D, hop0.x, hop0.y + 1)) {
         //
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
-        out.push_back(point(hop0.x - 1, hop0.y));
+        out.push_back(spoint(hop0.x - 1, hop0.y));
         continue;
       }
     }
@@ -1152,14 +1153,14 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
-        out.push_back(point(hop0.x, hop0.y - 1));
+        out.push_back(spoint(hop0.x, hop0.y - 1));
         continue;
       } else if (is_obstacle_at(D, hop0.x, hop0.y - 1)) {
         //
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
-        out.push_back(point(hop0.x + 1, hop0.y));
+        out.push_back(spoint(hop0.x + 1, hop0.y));
         continue;
       }
     }
@@ -1176,14 +1177,14 @@ std::vector< point > dmap_solve(const Dmap *D, const point start)
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
-        out.push_back(point(hop0.x, hop0.y - 1));
+        out.push_back(spoint(hop0.x, hop0.y - 1));
         continue;
       } else if (is_obstacle_at(D, hop0.x, hop0.y - 1)) {
         //
         // Try to make a path around the obstacle
         //
         out.push_back(hop0);
-        out.push_back(point(hop0.x - 1, hop0.y));
+        out.push_back(spoint(hop0.x - 1, hop0.y));
         continue;
       }
     }

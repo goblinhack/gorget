@@ -23,7 +23,7 @@ ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 
 static std::mutex thing_mutex;
 
-static Thingp thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, point);
+static Thingp thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, spoint);
 static void   thing_free(Gamep, Levelsp, Levelp, Thingp t);
 
 static ThingAip thing_ai_alloc(Gamep, Levelsp, Levelp, Thingp t);
@@ -38,7 +38,7 @@ Tpp thing_tp(Thingp t)
   return nullptr;
 }
 
-Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, point at)
+Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
 {
   TRACE_NO_INDENT();
 
@@ -119,7 +119,7 @@ void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_free(g, v, l, t);
 }
 
-static Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, point)
+static Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
 {
   TRACE_NO_INDENT();
 
@@ -321,7 +321,7 @@ ThingPlayerp thing_player(Gamep g, Thingp t)
   return &v->thing_player;
 }
 
-Thingp thing_get(Gamep g, Levelsp v, Levelp l, point p, int slot)
+Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 {
   TRACE_NO_INDENT();
 
@@ -343,7 +343,7 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, point p, int slot)
   return t;
 }
 
-Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, point p, int slot, Tpp *out)
+Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 

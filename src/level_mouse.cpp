@@ -50,19 +50,19 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   int map_pix_height = visible_map_br_y - visible_map_tl_y;
 
   if (map_mouse_x < 0) {
-    level_cursor_set(g, v, point(-1, -1));
+    level_cursor_set(g, v, spoint(-1, -1));
     return;
   }
   if (map_mouse_y < 0) {
-    level_cursor_set(g, v, point(-1, -1));
+    level_cursor_set(g, v, spoint(-1, -1));
     return;
   }
   if (map_mouse_x >= map_pix_width) {
-    level_cursor_set(g, v, point(-1, -1));
+    level_cursor_set(g, v, spoint(-1, -1));
     return;
   }
   if (map_mouse_y >= map_pix_height) {
-    level_cursor_set(g, v, point(-1, -1));
+    level_cursor_set(g, v, spoint(-1, -1));
     return;
   }
 
@@ -84,6 +84,6 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   //
   // Update the cursor
   //
-  point p(map_mouse_x, map_mouse_y);
+  spoint p(map_mouse_x, map_mouse_y);
   level_cursor_set(g, v, p);
 }

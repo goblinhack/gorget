@@ -34,8 +34,8 @@ static bool wid_leftbar_create_window(Gamep g)
 
   {
     TRACE_NO_INDENT();
-    point tl(0, 0);
-    point br(width - 1, TERM_HEIGHT - 1);
+    spoint tl(0, 0);
+    spoint br(width - 1, TERM_HEIGHT - 1);
 
     wid_leftbar = wid_new_square_window(g, "wid leftbar");
     wid_set_ignore_scroll_events(wid_leftbar, true);
@@ -47,9 +47,9 @@ static bool wid_leftbar_create_window(Gamep g)
   y_at = 4;
   {
     TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(g, wid_leftbar, "todo");
-    point tl(0, y_at);
-    point br(width - 1, y_at);
+    auto   w = wid_new_square_button(g, wid_leftbar, "todo");
+    spoint tl(0, y_at);
+    spoint br(width - 1, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "TODO");
     wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -59,9 +59,9 @@ static bool wid_leftbar_create_window(Gamep g)
   if (0) {
     y_at++;
     TRACE_NO_INDENT();
-    auto  w = wid_new_plain(g, wid_leftbar, "Seed");
-    point tl(0, y_at);
-    point br(width - 1, y_at);
+    auto   w = wid_new_plain(g, wid_leftbar, "Seed");
+    spoint tl(0, y_at);
+    spoint br(width - 1, y_at);
 
     auto s = dynprintf("Seed: %%fg=gray$%s", game_seed_name_get(g));
     wid_set_pos(w, tl, br);
@@ -75,8 +75,8 @@ static bool wid_leftbar_create_window(Gamep g)
   {
     TRACE_NO_INDENT();
     auto  w = wid_new_square_button(wid_leftbar, "player");
-    point tl(0, y_at);
-    point br(width - 1, y_at);
+    spoint tl(0, y_at);
+    spoint br(width - 1, y_at);
     auto  s = dynprintf("%04u %04u", 0, 100);
     wid_set_pos( w, tl, br);
     wid_set_text( w, s);
@@ -90,8 +90,8 @@ static bool wid_leftbar_create_window(Gamep g)
   {
     TRACE_NO_INDENT();
     auto  w = wid_new_square_button(wid_leftbar, "player2");
-    point tl(0, y_at);
-    point br(width - 1, y_at);
+    spoint tl(0, y_at);
+    spoint br(width - 1, y_at);
     auto  s = dynprintf("%4u %4u", 0, 100);
     wid_set_pos( w, tl, br);
     wid_set_text( w, s);
@@ -105,8 +105,8 @@ static bool wid_leftbar_create_window(Gamep g)
   {
     TRACE_NO_INDENT();
     auto  w = wid_new_square_button(wid_leftbar, "player2");
-    point tl(0, y_at);
-    point br(width - 1, y_at);
+    spoint tl(0, y_at);
+    spoint br(width - 1, y_at);
     auto  s = dynprintf("%4u %4u", 0, 100);
     wid_set_pos( w, tl, br);
     wid_set_text( w, s);
@@ -120,8 +120,8 @@ static bool wid_leftbar_create_window(Gamep g)
   {
     TRACE_NO_INDENT();
     auto  w = wid_new_square_button(wid_leftbar, "player2");
-    point tl(0, y_at);
-    point br(width - 1, y_at);
+    spoint tl(0, y_at);
+    spoint br(width - 1, y_at);
     auto  s = dynprintf("%4u %4u", 0, 100);
     wid_set_pos( w, tl, br);
     wid_set_text( w, s);

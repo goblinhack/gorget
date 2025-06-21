@@ -8,14 +8,9 @@
 
 #include "c_plus_plus_serializer.hpp"
 #include "my_hiscore.hpp"
-#include "my_point.hpp"
 
 #include <SDL.h>
 
-std::istream &operator>>(std::istream &in, Bits< point & > my);
-std::ostream &operator<<(std::ostream &out, Bits< const point & > const my);
-std::istream &operator>>(std::istream &in, Bits< fpoint & > my);
-std::ostream &operator<<(std::ostream &out, Bits< const fpoint & > const my);
 std::ostream &operator<<(std::ostream &out, Bits< const HiScore & > const my);  // save
 std::istream &operator>>(std::istream &in, Bits< HiScore & > my);               // load
 std::ostream &operator<<(std::ostream &out, Bits< const HiScores & > const my); // save

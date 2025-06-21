@@ -825,7 +825,7 @@ void tp_description_set(Tpp tp, tp_description_get_t callback)
   tp->description_get = callback;
 }
 
-std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, point at)
+std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);

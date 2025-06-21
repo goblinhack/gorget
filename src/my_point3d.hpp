@@ -29,6 +29,4 @@ template < typename T > my_apoint3d< T > operator/(my_apoint3d< T > const &, T);
 
 using point3d = my_apoint3d< short >;
 
-extern point make_point(const point3d &);
-
 #endif // _MY_POINT3D_HPP_

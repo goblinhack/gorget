@@ -16,12 +16,6 @@ enum {
   CURSOR_AT,
 };
 
-typedef struct my_spoint {
-public:
-  short x;
-  short y;
-} spoint;
-
 typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
@@ -102,15 +96,15 @@ typedef struct Level_ {
   //
   // Where on the level select grid is this level
   //
-  point level_select_at;
+  spoint level_select_at;
   //
   // Where to being this level
   //
-  point entrance;
+  spoint entrance;
   //
   // Where to exit this level
   //
-  point exit;
+  spoint exit;
   //
   // Flags
   //
@@ -240,15 +234,15 @@ typedef struct Levels_ {
   //
   // What the player is currently highlighting.
   //
-  point cursor_at;
+  spoint cursor_at;
   //
   // Previous cursor. Used to detect changes.
   //
-  point old_cursor_at;
+  spoint old_cursor_at;
   //
   // Map scroll offset.
   //
-  point pixel_map_at;
+  spoint pixel_map_at;
   //
   // Levels display bounds
   //
@@ -326,15 +320,15 @@ typedef struct Levels_ {
 //
 // For all things at this Z depth
 //
-#define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                    \
-  if (_g_ && _v_ && _l_)                                                                                               \
-    for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                        \
-      for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                       \
-        for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                   \
-          for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                      \
-            for (auto _slot_ = 0;                                                                                      \
-                 _t_         = thing_and_tp_get_at(_g_, _v_, _l_, point(_x_, _y_), _slot_, &_tp_), _slot_ < MAP_SLOTS; \
-                 _slot_++)                                                                                             \
+#define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                  \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                      \
+      for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                     \
+        for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                 \
+          for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                    \
+            for (auto _slot_ = 0;                                                                                    \
+                 _t_ = thing_and_tp_get_at(_g_, _v_, _l_, spoint(_x_, _y_), _slot_, &_tp_), _slot_ < MAP_SLOTS;      \
+                 _slot_++)                                                                                           \
               if (_t_)
 
 //
@@ -380,19 +374,19 @@ void   level_entered(Gamep, Levelsp, Levelp);
 void   level_completed(Gamep, Levelsp, Levelp);
 void   level_destroy(Gamep, Levelsp, Levelp);
 
-ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot);
+ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);
 
-bool is_oob(point);
+bool is_oob(spoint);
 
-bool level_flag(Gamep, Levelsp, Levelp, ThingFlag, point p);
-bool level_is_same_obj_type_at(Gamep, Levelsp, Levelp, point p, Tpp);
-bool level_populate_thing_id_at(Gamep, Levelsp, Levelp, point p, int slot, ThingId);
+bool level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
+bool level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint p, Tpp);
+bool level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot, ThingId);
 bool level_tick_is_in_progress(Gamep, Levelsp, Levelp);
 
 void level_anim(Gamep, Levelsp, Levelp);
 void level_assign_tiles(Gamep, Levelsp, Levelp);
 void level_bounds_set(Gamep, Levelsp, Levelp);
-void level_cursor_set(Gamep, Levelsp, point);
+void level_cursor_set(Gamep, Levelsp, spoint);
 bool level_cursor_is_valid(Gamep, Levelsp);
 void level_cursor_path_recreate(Gamep, Levelsp, Levelp);
 void level_cursor_path_apply(Gamep, Levelsp, Levelp);
@@ -401,14 +395,14 @@ void level_display(Gamep, Levelsp, Levelp);
 void level_populate(Gamep, Levelsp, Levelp, const char *);
 void level_populate(Gamep, Levelsp, Levelp, int w, int h, const char *);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);
-void level_scroll_delta(Gamep, Levelsp, Levelp, point);
+void level_scroll_delta(Gamep, Levelsp, Levelp, spoint);
 void level_cursor_path_reset(Gamep, Levelsp, Levelp);
 void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick_temperature(Gamep, Levelsp, Levelp);
 void level_tick(Gamep, Levelsp, Levelp);
-void level_display_obj(Gamep, Levelsp, Levelp, point, Tpp, Thingp);
+void level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);
 void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
 bool level_match_contents(Gamep, Levelsp, Levelp, int w, int h, const char *in);
 void level_debug(Gamep, Levelsp, Levelp);
@@ -438,8 +432,7 @@ bool fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
 
 void level_water_update(Gamep, Levelsp, Levelp);
 void level_water_tick(Gamep, Levelsp, Levelp);
-void level_water_display(Gamep, Levelsp, Levelp, point, int fbo, int16_t minx, int16_t miny, int16_t maxx,
-                         int16_t maxy);
+void level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, int16_t, int16_t);
 
 void level_gen_test(Gamep);
 void level_gen_create_levels(Gamep, Levelsp);

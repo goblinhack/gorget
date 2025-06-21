@@ -51,8 +51,8 @@ public:
   //
   // Top left and bottom right bounds
   //
-  point tl;
-  point br;
+  spoint tl = spoint();
+  spoint br = spoint();
 
   int room_width {};
   int room_height {};
@@ -158,8 +158,8 @@ static bool room_gen_get_bounds(Gamep g, class RoomGen *grid)
 {
   int x, y;
 
-  point tl(999, 999);
-  point br(-1, -1);
+  spoint tl(999, 999);
+  spoint br(-1, -1);
 
   //
   // Get the top left and bottom right bounds
@@ -234,7 +234,7 @@ static void room_gen_draw_rectangle(Gamep g, RoomGen *grid, int x, int y, int wi
 
   for (auto i = x; i < x + width; i++) {
     for (auto j = y; j < y + height; j++) {
-      point p(i, j);
+      spoint p(i, j);
       if (is_oob(p)) {
         continue;
       }
@@ -252,7 +252,7 @@ static void room_gen_draw_circle(Gamep g, RoomGen *grid, int x, int y, int radiu
   for (i = std::max(0, x - radius - 1); i < std::max(MAP_WIDTH, x + radius); i++) {
     for (j = std::max(0, y - radius - 1); j < std::max(MAP_HEIGHT, y + radius); j++) {
       if ((i - x) * (i - x) + (j - y) * (j - y) < radius * radius + radius) {
-        point p(i, j);
+        spoint p(i, j);
         if (is_oob(p)) {
           continue;
         }

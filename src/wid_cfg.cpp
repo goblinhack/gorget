@@ -120,10 +120,10 @@ void wid_cfg_top_menu(Gamep g)
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  int   menu_height = 20;
-  int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
-  point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  int    menu_height = 20;
+  int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
+  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_cfg_top_window = new WidPopup(g, "Config menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -141,8 +141,8 @@ void wid_cfg_top_menu(Gamep g)
     auto p = wid_cfg_top_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "gfx");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -157,8 +157,8 @@ void wid_cfg_top_menu(Gamep g)
     auto p = wid_cfg_top_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "mouse");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -173,8 +173,8 @@ void wid_cfg_top_menu(Gamep g)
     auto p = wid_cfg_top_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "sound");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -189,8 +189,8 @@ void wid_cfg_top_menu(Gamep g)
     auto p = wid_cfg_top_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "keyboard");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -205,8 +205,8 @@ void wid_cfg_top_menu(Gamep g)
     auto p = wid_cfg_top_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Back");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);

@@ -524,10 +524,10 @@ void Game::load_select(void)
 
   game_load_error = "";
 
-  int   menu_height = UI_WID_SAVE_SLOTS + 8;
-  int   menu_width  = UI_WID_POPUP_WIDTH_WIDE;
-  point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  int    menu_height = UI_WID_SAVE_SLOTS + 8;
+  int    menu_width  = UI_WID_POPUP_WIDTH_WIDE;
+  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_load = new WidPopup(game, "Game load", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(game, wid_load->wid_popup_container, wid_load_key_up);
@@ -538,8 +538,8 @@ void Game::load_select(void)
     auto p = wid_load->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(game, p, "back");
 
-    point tl(menu_width / 2 - 4, menu_height - 4);
-    point br(menu_width / 2 + 3, menu_height - 2);
+    spoint tl(menu_width / 2 - 4, menu_height - 4);
+    spoint br(menu_width / 2 + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(game, w, wid_load_cancel);
@@ -561,10 +561,10 @@ void Game::load_select(void)
       tmp_file = saved_dir + "saved-snapshot-info";
     }
 
-    auto  p = wid_load->wid_text_area->wid_text_area;
-    auto  w = wid_new_square_button(game, p, "load slot");
-    point tl(0, y_at);
-    point br(menu_width - 2, y_at);
+    auto   p = wid_load->wid_text_area->wid_text_area;
+    auto   w = wid_new_square_button(game, p, "load slot");
+    spoint tl(0, y_at);
+    spoint br(menu_width - 2, y_at);
 
     std::string s = std::to_string(slot) + ": ";
     if (! load(tmp_file, tmp)) {

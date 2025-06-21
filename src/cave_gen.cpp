@@ -251,8 +251,8 @@ void cave_generation_center_blob(Gamep g, Cave *c)
 {
   int x, y;
 
-  point tl(999, 999);
-  point br(-1, -1);
+  spoint tl(999, 999);
+  spoint br(-1, -1);
 
   //
   // Get the top left and bottom right bounds

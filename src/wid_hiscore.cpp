@@ -84,10 +84,10 @@ void wid_hiscores_show(Gamep g)
     wid_hiscore_destroy(g);
   }
 
-  int   menu_height = 26;
-  int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  int    menu_height = 26;
+  int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
+  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_hiscore_window = new WidPopup(g, "hiscores", outer_tl, outer_br, nullptr, "", false, false);
 
   {
@@ -154,8 +154,8 @@ void wid_hiscores_show(Gamep g)
     auto p = wid_hiscore_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "hiscore");
 
-    point tl(menu_width / 2 - 4, menu_height - 4);
-    point br(menu_width / 2 + 3, menu_height - 2);
+    spoint tl(menu_width / 2 - 4, menu_height - 4);
+    spoint br(menu_width / 2 + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_hiscore_mouse_up);

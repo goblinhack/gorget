@@ -172,10 +172,10 @@ static void wid_console_wid_create(Gamep g)
 {
   TRACE_AND_INDENT();
 
-  point outer_tl(0, 0);
-  point outer_br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
-  int   w = outer_br.x - outer_tl.x;
-  int   h = outer_br.y - outer_tl.y;
+  spoint outer_tl(0, 0);
+  spoint outer_br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
+  int    w = outer_br.x - outer_tl.x;
+  int    h = outer_br.y - outer_tl.y;
 
   wid_console_window = wid_new_square_window(g, "wid console");
   wid_set_pos(wid_console_window, outer_tl, outer_br);
@@ -183,8 +183,8 @@ static void wid_console_wid_create(Gamep g)
   wid_set_color(wid_console_window, WID_COLOR_TEXT_FG, WHITE);
 
   {
-    point tl(0, 0);
-    point br(w - 1, h);
+    spoint tl(0, 0);
+    spoint br(w - 1, h);
 
     wid_console_container = wid_new_container(g, wid_console_window, "wid console inner area");
     wid_set_pos(wid_console_container, tl, br);
@@ -201,8 +201,8 @@ static void wid_console_wid_create(Gamep g)
     for (row = 0; row < UI_CONSOLE_HEIGHT; row++) {
       row_bottom--;
 
-      point tl(0, row_bottom);
-      point br(UI_CONSOLE_WIDTH, row_bottom);
+      spoint tl(0, row_bottom);
+      spoint br(UI_CONSOLE_WIDTH, row_bottom);
 
       child = wid_new_container(g, wid_console_container, "console line");
 

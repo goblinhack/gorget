@@ -163,9 +163,9 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
 
       Widp b = ctx->buttons[ y ][ x ];
 
-      point tl;
-      point br;
-      color c;
+      spoint tl = spoint();
+      spoint br = spoint();
+      color  c;
 
       tl.x = x * width;
       tl.y = y * height;
@@ -744,8 +744,8 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
   int bot_half   = height - top_half;
 
   {
-    point tl(TERM_WIDTH / 2 - left_half, TERM_HEIGHT / 2 - top_half);
-    point br(TERM_WIDTH / 2 + right_half, TERM_HEIGHT / 2 + bot_half);
+    spoint tl(TERM_WIDTH / 2 - left_half, TERM_HEIGHT / 2 - top_half);
+    spoint br(TERM_WIDTH / 2 + right_half, TERM_HEIGHT / 2 + bot_half);
 
     wid_set_pos(window, tl, br);
     wid_set_style(window, UI_WID_STYLE_NORMAL);
@@ -761,8 +761,8 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
   {
     Widp w = wid_new_square_button(g, window, "wid keyboard title");
 
-    point tl = {5, 1};
-    point br = {width - 5, 1};
+    spoint tl = {5, 1};
+    spoint br = {width - 5, 1};
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, title);
@@ -778,8 +778,8 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
     ctx->input = w;
 
-    point tl = {10, 3};
-    point br = {width - 10, 5};
+    spoint tl = {10, 3};
+    spoint br = {width - 10, 5};
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, text);
@@ -811,8 +811,8 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     wid_set_shape_none(button_container);
     wid_set_on_tick(g, button_container, wid_keyboard_tick);
 
-    point tl = {1, 7};
-    point br = {width - 1, height - 2};
+    spoint tl = {1, 7};
+    spoint br = {width - 1, height - 2};
 
     wid_set_pos(button_container, tl, br);
     wid_set_void_context(button_container, ctx);

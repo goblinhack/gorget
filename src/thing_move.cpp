@@ -233,7 +233,7 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 //
 // Handles manual and mouse follow moves
 //
-bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
+bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -263,7 +263,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 //
 // Handles shoving to a location. We can't move there yet.
 //
-bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
+bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -281,7 +281,7 @@ bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp t, point to)
 //
 // Handles immediate moves even across levels.
 //
-bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, point to)
+bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -337,7 +337,7 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Returns true if the thing can move to this location
 //
-bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, point to)
+bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -369,7 +369,7 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, point to)
 //
 // Returns true if we can move to this location by shoving
 //
-bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, point to)
+bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -443,7 +443,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  point p = t->at;
+  spoint p = t->at;
   if (is_oob(p)) {
     return;
   }
@@ -546,7 +546,7 @@ void thing_pop(Gamep g, Levelsp v, Thingp t)
   if (! thing_is_on_map(t)) {
     return;
   }
-  point p = t->last_pushed_at;
+  spoint p = t->last_pushed_at;
 
   if (is_oob(p)) {
     return;
@@ -567,7 +567,7 @@ void thing_pop(Gamep g, Levelsp v, Thingp t)
 //
 // Return true if there is a move to pop.
 //
-static bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, point *out)
+static bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint *out)
 {
   TRACE_NO_INDENT();
 
@@ -614,7 +614,7 @@ bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Get the next tile to move to
   //
-  point move_next;
+  spoint move_next;
   if (! thing_move_path_pop(g, v, l, t, &move_next)) {
     //
     // If could not pop, then no path is left

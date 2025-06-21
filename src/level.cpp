@@ -55,7 +55,7 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
-      point p(x, y);
+      spoint p(x, y);
 
       tmp += l->debug[ x ][ y ];
     }
@@ -76,8 +76,8 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
 
   for (int y = 0; y < h; y++) {
     for (int x = 0; x < w; x++) {
-      char  c = CHARMAP_EMPTY;
-      point p(x, y);
+      char   c = CHARMAP_EMPTY;
+      spoint p(x, y);
 
       if (level_is_floor(g, v, l, p)) {
         c = CHARMAP_FLOOR;
@@ -389,7 +389,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   memset(l, 0, sizeof(*l));
 }
 
-bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot, ThingId id)
+bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id)
 {
   if (is_oob(p)) {
     return false;
@@ -398,7 +398,7 @@ bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot,
   return true;
 }
 
-ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot)
+ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 {
   if (is_oob(p)) {
     return 0;
@@ -406,7 +406,7 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, point p, int slot)
   return l->thing_id[ p.x ][ p.y ][ slot ];
 }
 
-bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, point p)
+bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_TPS_AT(g, v, l, it_tp, p)
   {
@@ -417,7 +417,7 @@ bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, point p)
   return false;
 }
 
-bool is_oob(point p)
+bool is_oob(spoint p)
 {
   if (p.x < 0) {
     return true;
@@ -434,7 +434,7 @@ bool is_oob(point p)
   return false;
 }
 
-bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, point p, Tpp tp)
+bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)
 {
   TRACE_NO_INDENT();
 

@@ -15,8 +15,8 @@
 //
 // Handle interactions for a thing at its location with a dead thing
 //
-static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me, point from, point to,
-                                          point direction)
+static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me, spoint from, spoint to,
+                                          spoint direction)
 {
   TRACE_NO_INDENT();
 
@@ -34,8 +34,8 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp i
 //
 // Handle interactions for a thing at its location with an alive thing
 //
-static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me, point from, point to,
-                                           point direction)
+static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me, spoint from, spoint to,
+                                           spoint direction)
 {
   TRACE_NO_INDENT();
 
@@ -64,14 +64,14 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
 //
 // Returns true on success at shoving something
 //
-bool thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp me, point at)
+bool thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp me, spoint at)
 {
   TRACE_NO_INDENT();
 
-  bool  ret       = false;
-  auto  direction = at - me->at;
-  point from      = at;
-  point to        = at + direction;
+  bool   ret       = false;
+  auto   direction = at - me->at;
+  spoint from      = at;
+  spoint to        = at + direction;
 
   if (thing_is_ethereal(me)) {
     return false;

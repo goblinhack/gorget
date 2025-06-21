@@ -751,7 +751,7 @@ void gl_blitquad(GLushort left, GLushort top, GLushort right, GLushort bottom)
   glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void gl_blitquad(const point tl, const point tr, const point bl, const point br)
+void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint br)
 {
   GLushort  xy[ 4 * 2 ];
   GLushort *xyp = xy;
@@ -1310,7 +1310,7 @@ void glcolorfast(color s) { gl_last_color = s; }
 // gl_push
 //
 void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
-             point tl, point tr, point bl, point br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
+             spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
              uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
              uint8_t g4, uint8_t b4, uint8_t a4)
 {
@@ -1368,10 +1368,10 @@ void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_t
              uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
              uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
 {
-  point tl(left, top);
-  point tr(right, top);
-  point bl(left, bottom);
-  point br(right, bottom);
+  spoint tl(left, top);
+  spoint tr(right, top);
+  spoint bl(left, bottom);
+  spoint br(right, bottom);
 
   gl_push(P, p_end, first, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2, b2, a2,
           r3, g3, b3, a3, r4, g4, b4, a4);
@@ -1404,7 +1404,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           a, r, g, b, a, r, g, b, a);
 }
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, point tl, point tr, point bl, point br)
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, spoint tl, spoint tr, spoint bl,
+          spoint br)
 {
   uint8_t first;
 
@@ -1457,7 +1458,7 @@ void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom)
   blit(tex, 0, 0, 1, 1, left, top, right, bottom);
 }
 
-void blit(int tex, point tl, point tr, point bl, point br) { blit(tex, 0, 0, 1, 1, tl, tr, bl, br); }
+void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br) { blit(tex, 0, 0, 1, 1, tl, tr, bl, br); }
 
 void blit_colored(int tex, GLushort left, GLushort top, GLushort right, float bottom, color color_bl, color color_br,
                   color color_tl, color color_tr)

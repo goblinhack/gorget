@@ -12,8 +12,8 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, uint16_t tile_index, point tl,
-                                     point br)
+static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, uint16_t tile_index, spoint tl,
+                                     spoint br)
 {
   TRACE_NO_INDENT();
 
@@ -41,7 +41,7 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, Thing
   }
 }
 
-void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
+void level_display_obj(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -49,8 +49,8 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
   int dw   = INNER_TILE_WIDTH * zoom;
   int dh   = INNER_TILE_HEIGHT * zoom;
 
-  point tl;
-  point br;
+  spoint tl = spoint();
+  spoint br = spoint();
 
   uint16_t tile_index;
 
@@ -126,7 +126,7 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, point p, Tpp tp, Thingp t)
   level_display_tile_index(g, v, l, tp, t, tile_index, tl, br);
 }
 
-static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)
+static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -169,7 +169,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, point p)
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, point p, int slot, int depth, int prio)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, int prio)
 {
   TRACE_NO_INDENT();
 
@@ -225,7 +225,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
       {
         for (auto x = v->minx; x < v->maxx; x++) {
           for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-            level_display_slot(g, v, l, point(x, y), slot, z_depth, z_prio);
+            level_display_slot(g, v, l, spoint(x, y), slot, z_depth, z_prio);
           }
         }
       }
@@ -237,7 +237,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   for (auto y = v->miny; y < v->maxy; y++) {
     for (auto x = v->minx; x < v->maxx; x++) {
-      point p(x, y);
+      spoint p(x, y);
       level_display_cursor(g, v, l, p);
     }
   }

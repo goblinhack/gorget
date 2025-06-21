@@ -147,8 +147,8 @@ static void game_display_title_bg(Gamep g)
 
   std::string t = "title_bg";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
@@ -161,8 +161,8 @@ static void game_display_title_fg1(Gamep g)
 
   std::string t = "title_fg1_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
@@ -193,8 +193,8 @@ static void game_display_title_fg2(Gamep g)
 
   std::string t = "title_fg2_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
@@ -273,8 +273,8 @@ static void game_display_title_fg3(Gamep g)
 
   std::string t = "title_fg3_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
@@ -298,8 +298,8 @@ static void game_display_title_fg4(Gamep g)
 
   std::string t = "title_fg4_" + std::to_string(frame);
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), point(0, 0),
-            point(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
   blit_flush();
 }
 
@@ -345,10 +345,10 @@ void wid_main_menu_select(Gamep g)
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  int   menu_height = 23;
-  int   menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
-  point outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  point outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  int    menu_height = 23;
+  int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
+  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_main_menu_window = new WidPopup(g, "Main menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -367,8 +367,8 @@ void wid_main_menu_select(Gamep g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "New Game");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height - 1);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height - 1);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -383,8 +383,8 @@ void wid_main_menu_select(Gamep g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Load Game");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height - 1);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height - 1);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -399,8 +399,8 @@ void wid_main_menu_select(Gamep g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Options");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height - 1);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height - 1);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -415,8 +415,8 @@ void wid_main_menu_select(Gamep g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Choose seed");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height - 1);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height - 1);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -431,8 +431,8 @@ void wid_main_menu_select(Gamep g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Credits");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height - 1);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height - 1);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -447,8 +447,8 @@ void wid_main_menu_select(Gamep g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Hiscores");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height - 1);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height - 1);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -463,8 +463,8 @@ void wid_main_menu_select(Gamep g)
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Quit Game");
 
-    point tl(0, y_at);
-    point br(button_width, y_at + box_height - 1);
+    spoint tl(0, y_at);
+    spoint br(button_width, y_at + box_height - 1);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);

@@ -84,7 +84,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
         }
 
         s->data[ x ][ y ].level_num = l->level_num;
-        l->level_select_at          = point(x, y);
+        l->level_select_at          = spoint(x, y);
 
         n++;
       }
@@ -111,11 +111,11 @@ static int level_select_count_levels(Gamep g, Levelsp v, LevelSelect *s)
   return s->level_count;
 }
 
-static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, point at, int dive_chance)
+static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, spoint at, int dive_chance)
 {
   TRACE_NO_INDENT();
 
-  point end(LEVELS_ACROSS - 1, LEVELS_DOWN - 1);
+  spoint end(LEVELS_ACROSS - 1, LEVELS_DOWN - 1);
 
   while (at != end) {
     //
@@ -157,7 +157,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
     auto y = pcg_random_range(0, LEVELS_DOWN);
 
     if (s->data[ x ][ y ].is_set) {
-      snake_dive(g, v, s, point(x, y), dive_chance);
+      snake_dive(g, v, s, spoint(x, y), dive_chance);
 
       return;
     }
@@ -318,7 +318,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
       }
 
       if (tp) {
-        point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 1);
+        spoint at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 1);
 
         //
         // Save debugging
@@ -368,7 +368,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
       }
 
       for (auto div = 0; div < LEVEL_SCALE - 1; div++) {
-        point at(x * LEVEL_SCALE + div + 2, y * LEVEL_SCALE + 1);
+        spoint at(x * LEVEL_SCALE + div + 2, y * LEVEL_SCALE + 1);
         level_select->debug[ at.x ][ at.y ] = '-';
 
         auto t = thing_init(g, v, level_select, tp_is_level_across, at);
@@ -394,7 +394,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
       }
 
       for (auto div = 0; div < LEVEL_SCALE - 1; div++) {
-        point at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + div + 2);
+        spoint at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + div + 2);
         level_select->debug[ at.x ][ at.y ] = '|';
 
         auto t = thing_init(g, v, level_select, tp_is_level_down, at);
@@ -410,8 +410,8 @@ static void level_select_map_set(Gamep g, Levelsp v)
   //
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      auto  count = 0;
-      point at(x, y);
+      auto   count = 0;
+      spoint at(x, y);
       FOR_ALL_THINGS_AT(g, v, level_select, it, at) { count++; }
       if (! count) {
         auto tp_rock = tp_random(is_dirt);
@@ -446,12 +446,12 @@ static void level_select_create(Gamep g, Levelsp v, LevelSelect *s)
   uint32_t seed_num = game_seed_num_get(g);
   pcg_srand(seed_num);
 
-  snake_dive(g, v, s, point(0, 0), 90);
+  snake_dive(g, v, s, spoint(0, 0), 90);
   snake_dive(g, v, s, 90);
-  snake_dive(g, v, s, point(0, 0), 50);
-  snake_dive(g, v, s, point(0, 0), 30);
-  snake_dive(g, v, s, point(0, 0), 30);
-  snake_dive(g, v, s, point(0, 0), 30);
+  snake_dive(g, v, s, spoint(0, 0), 50);
+  snake_dive(g, v, s, spoint(0, 0), 30);
+  snake_dive(g, v, s, spoint(0, 0), 30);
+  snake_dive(g, v, s, spoint(0, 0), 30);
   snake_dive(g, v, s, 30);
   snake_dive(g, v, s, 30);
   snake_dive(g, v, s, 30);
@@ -524,10 +524,10 @@ static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp pa
 
   {
     TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(g, parent, map_name);
-    point tl(x_at, y_at);
-    point br(width - 1, y_at);
-    auto  s1 = dynprintf(" %s:", map_name.c_str());
+    auto   w = wid_new_square_button(g, parent, map_name);
+    spoint tl(x_at, y_at);
+    spoint br(width - 1, y_at);
+    auto   s1 = dynprintf(" %s:", map_name.c_str());
     wid_set_color(w, WID_COLOR_TEXT_FG, YELLOW);
     wid_set_pos(w, tl, br);
     wid_set_text(w, s1);
@@ -552,9 +552,9 @@ static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp pa
 
     {
       TRACE_NO_INDENT();
-      auto  w = wid_new_square_button(g, parent, map_name);
-      point tl(x_at, y_at);
-      point br(width - 1, y_at);
+      auto   w = wid_new_square_button(g, parent, map_name);
+      spoint tl(x_at, y_at);
+      spoint br(width - 1, y_at);
 
       auto        tp   = tp_find_mand(highest.c_str());
       std::string name = tp_short_name(tp);
@@ -641,9 +641,9 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
 
   {
     TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(g, parent, "level");
-    point tl(x_at, y_at);
-    point br(width - 1, y_at);
+    auto   w = wid_new_square_button(g, parent, "level");
+    spoint tl(x_at, y_at);
+    spoint br(width - 1, y_at);
     wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
     wid_set_pos(w, tl, br);
     auto tmp = dynprintf("Level %u", level_over->level_num + 1);
@@ -658,9 +658,9 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
   if (level_over->next_level) {
     if (player_level->completed) {
       TRACE_NO_INDENT();
-      auto  w = wid_new_square_button(g, parent, "level");
-      point tl(x_at, y_at);
-      point br(width - 1, y_at);
+      auto   w = wid_new_square_button(g, parent, "level");
+      spoint tl(x_at, y_at);
+      spoint br(width - 1, y_at);
       wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
       wid_set_pos(w, tl, br);
       wid_set_text(w, " You can enter here");
@@ -670,9 +670,9 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
       y_at++;
     } else {
       TRACE_NO_INDENT();
-      auto  w = wid_new_square_button(g, parent, "level");
-      point tl(x_at, y_at);
-      point br(width - 1, y_at);
+      auto   w = wid_new_square_button(g, parent, "level");
+      spoint tl(x_at, y_at);
+      spoint br(width - 1, y_at);
       wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
       wid_set_pos(w, tl, br);
       wid_set_text(w, " You can go back here");
@@ -683,9 +683,9 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
     }
   } else if (level_over != player_level) {
     TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(g, parent, "level");
-    point tl(x_at, y_at);
-    point br(width - 1, y_at);
+    auto   w = wid_new_square_button(g, parent, "level");
+    spoint tl(x_at, y_at);
+    spoint br(width - 1, y_at);
     wid_set_color(w, WID_COLOR_TEXT_FG, RED);
     wid_set_pos(w, tl, br);
     wid_set_text(w, " You cannot enter here yet");
@@ -695,9 +695,9 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
     y_at++;
   } else {
     TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(g, parent, "level");
-    point tl(x_at, y_at);
-    point br(width - 1, y_at);
+    auto   w = wid_new_square_button(g, parent, "level");
+    spoint tl(x_at, y_at);
+    spoint br(width - 1, y_at);
     wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
     wid_set_pos(w, tl, br);
     wid_set_text(w, " You can re-enter here");
@@ -709,9 +709,9 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
 
   if (level_over->completed) {
     TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(g, parent, "level");
-    point tl(x_at, y_at);
-    point br(width - 1, y_at);
+    auto   w = wid_new_square_button(g, parent, "level");
+    spoint tl(x_at, y_at);
+    spoint br(width - 1, y_at);
     wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
     wid_set_pos(w, tl, br);
     wid_set_text(w, " You completed this level");
@@ -725,9 +725,9 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
 
   {
     TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(g, parent, "contents");
-    point tl(x_at, y_at);
-    point br(width - 1, y_at);
+    auto   w = wid_new_square_button(g, parent, "contents");
+    spoint tl(x_at, y_at);
+    spoint br(width - 1, y_at);
     wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Contents:");

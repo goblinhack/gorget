@@ -10,7 +10,7 @@
 #include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
 
-static std::string tp_slime_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, point at)
+static std::string tp_slime_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
 {
   TRACE_NO_INDENT();
 
@@ -43,7 +43,7 @@ bool tp_load_slime(void)
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, 200);        // pounds
+  tp_weight_set(tp, 200);               // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }

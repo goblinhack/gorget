@@ -85,11 +85,11 @@ void wid_warning(Gamep g, std::string warning)
     wid_warning_destroy();
   }
 
-  auto  m = TERM_WIDTH / 2;
-  auto  n = TERM_HEIGHT / 2;
-  point tl(m - UI_WID_POPUP_WIDTH_WIDE / 2, n - 5);
-  point br(m + UI_WID_POPUP_WIDTH_WIDE / 2, n + 5);
-  auto  width = br.x - tl.x;
+  auto   m = TERM_WIDTH / 2;
+  auto   n = TERM_HEIGHT / 2;
+  spoint tl(m - UI_WID_POPUP_WIDTH_WIDE / 2, n - 5);
+  spoint br(m + UI_WID_POPUP_WIDTH_WIDE / 2, n + 5);
+  auto   width = br.x - tl.x;
 
   wid_warning_window = new WidPopup(g, "Game warning", tl, br, nullptr, "", false, false);
   wid_set_on_key_up(g, wid_warning_window->wid_popup_container, wid_warning_key_up);
@@ -106,8 +106,8 @@ void wid_warning(Gamep g, std::string warning)
     auto p = wid_warning_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "No");
 
-    point tl1(width / 2 - 12, y_at + 2);
-    point br1(width / 2 - 2, y_at + 4);
+    spoint tl1(width / 2 - 12, y_at + 2);
+    spoint br1(width / 2 - 2, y_at + 4);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_down(g, w, wid_warning_no);
     wid_set_pos(w, tl1, br1);
@@ -119,8 +119,8 @@ void wid_warning(Gamep g, std::string warning)
     auto p = wid_warning_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Yes");
 
-    point tl2(width / 2 + 0, y_at + 2);
-    point br2(width / 2 + 10, y_at + 4);
+    spoint tl2(width / 2 + 0, y_at + 2);
+    spoint br2(width / 2 + 10, y_at + 4);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_down(g, w, wid_warning_yes);
     wid_set_pos(w, tl2, br2);

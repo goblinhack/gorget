@@ -313,8 +313,8 @@ void wid_cfg_gfx_select(Gamep g)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point outer_tl(m - 20, TERM_HEIGHT / 2 - 10);
-  point outer_br(m + 20, TERM_HEIGHT / 2 + 10);
+  spoint outer_tl(m - 20, TERM_HEIGHT / 2 - 10);
+  spoint outer_br(m + 20, TERM_HEIGHT / 2 + 10);
 
   auto width = outer_br.x - outer_tl.x - 2;
 
@@ -332,8 +332,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "configuration");
 
-    point tl(1, y_at);
-    point br(width, y_at + 2);
+    spoint tl(1, y_at);
+    spoint br(width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Configuration");
@@ -345,8 +345,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Back");
 
-    point tl(1, y_at);
-    point br(6, y_at + 2);
+    spoint tl(1, y_at);
+    spoint br(6, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_cfg_gfx_back);
     wid_set_pos(w, tl, br);
@@ -358,8 +358,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Apply");
 
-    point tl(10, y_at);
-    point br(16, y_at + 2);
+    spoint tl(10, y_at);
+    spoint br(16, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_cfg_gfx_resolution_apply);
     wid_set_pos(w, tl, br);
@@ -375,8 +375,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Resolution");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -387,8 +387,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Resolution value");
 
-    point tl(width / 2 + 4, y_at);
-    point br(width / 2 + 12, y_at);
+    spoint tl(width / 2 + 4, y_at);
+    spoint br(width / 2 + 12, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
@@ -407,8 +407,8 @@ void wid_cfg_gfx_select(Gamep g)
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto w = wid_new_square_button(g, p, "Resolution value +");
 
-      point tl(width / 2 + 13, y_at);
-      point br(width / 2 + 15, y_at);
+      spoint tl(width / 2 + 13, y_at);
+      spoint br(width / 2 + 15, y_at);
       wid_set_mode(g, w, WID_MODE_OVER);
       wid_set_style(w, box_highlight_style);
       wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -422,8 +422,8 @@ void wid_cfg_gfx_select(Gamep g)
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto w = wid_new_square_button(g, p, "Resolution value -");
 
-      point tl(width / 2 + 16, y_at);
-      point br(width / 2 + 18, y_at);
+      spoint tl(width / 2 + 16, y_at);
+      spoint br(width / 2 + 18, y_at);
       wid_set_mode(g, w, WID_MODE_OVER);
       wid_set_style(w, box_highlight_style);
       wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -443,8 +443,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Terminal");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -455,8 +455,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Terminal value");
 
-    point tl(width / 2 + 4, y_at);
-    point br(width / 2 + 12, y_at);
+    spoint tl(width / 2 + 4, y_at);
+    spoint br(width / 2 + 12, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
@@ -474,8 +474,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Font size");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -486,8 +486,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Font size value");
 
-    point tl(width / 2 + 4, y_at);
-    point br(width / 2 + 12, y_at);
+    spoint tl(width / 2 + 4, y_at);
+    spoint br(width / 2 + 12, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
@@ -508,8 +508,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Full desktop");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -520,8 +520,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Fullscreen value");
 
-    point tl(23, y_at);
-    point br(37, y_at);
+    spoint tl(23, y_at);
+    spoint br(37, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -543,8 +543,8 @@ void wid_cfg_gfx_select(Gamep g)
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto w = wid_new_square_button(g, p, "Notice");
 
-      point tl(1, y_at);
-      point br(width - 2, y_at);
+      spoint tl(1, y_at);
+      spoint br(width - 2, y_at);
       wid_set_shape_none(w);
       wid_set_pos(w, tl, br);
       wid_set_text(w, "^^ Disable to change resolution ^^");
@@ -562,8 +562,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Fullscreen");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -574,8 +574,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Fullscreen value");
 
-    point tl(23, y_at);
-    point br(37, y_at);
+    spoint tl(23, y_at);
+    spoint br(37, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -602,8 +602,8 @@ void wid_cfg_gfx_select(Gamep g)
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto w = wid_new_square_button(g, p, "High DPI res");
 
-      point tl(1, y_at);
-      point br(width / 2, y_at);
+      spoint tl(1, y_at);
+      spoint br(width / 2, y_at);
       wid_set_shape_none(w);
       wid_set_pos(w, tl, br);
       wid_set_text_lhs(w, true);
@@ -614,8 +614,8 @@ void wid_cfg_gfx_select(Gamep g)
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto w = wid_new_square_button(g, p, "High DPI value");
 
-      point tl(23, y_at);
-      point br(37, y_at);
+      spoint tl(23, y_at);
+      spoint br(37, y_at);
       wid_set_mode(g, w, WID_MODE_OVER);
       wid_set_style(w, box_highlight_style);
       wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -640,8 +640,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Borderless");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -652,8 +652,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Borderless");
 
-    point tl(23, y_at);
-    point br(37, y_at);
+    spoint tl(23, y_at);
+    spoint br(37, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -677,8 +677,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Vertical sync");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -689,8 +689,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Vertical sync value");
 
-    point tl(23, y_at);
-    point br(37, y_at);
+    spoint tl(23, y_at);
+    spoint br(37, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -714,8 +714,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "FPS counter");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -726,8 +726,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "FPS counter value");
 
-    point tl(23, y_at);
-    point br(37, y_at);
+    spoint tl(23, y_at);
+    spoint br(37, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);

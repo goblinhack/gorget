@@ -92,7 +92,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
 //
 // Scroll the map e.g. via mouse
 //
-void level_scroll_delta(Gamep g, Levelsp v, Levelp l, point delta)
+void level_scroll_delta(Gamep g, Levelsp v, Levelp l, spoint delta)
 {
   TRACE_NO_INDENT();
 

@@ -85,7 +85,7 @@ typedef struct ThingAi_ {
 //
 typedef struct ThingPlayer_ {
   struct {
-    point   points[ THING_MOVE_PATH_MAX ];
+    spoint  points[ THING_MOVE_PATH_MAX ];
     int16_t size;
   } move_path;
 } ThingPlayer;
@@ -108,7 +108,7 @@ typedef struct Thing_ {
   //
   // Map co-ords.
   //
-  point at;
+  spoint at;
   //
   // Which level am I on?
   //
@@ -116,16 +116,16 @@ typedef struct Thing_ {
   //
   // Previous map co-ords. Does not change when the move finishes.
   //
-  point old_at;
+  spoint old_at;
   //
   // Previous map co-ords used for interpolation when moving. Changes when
   // the move finishes.
   //
-  point moving_from;
+  spoint moving_from;
   //
   // Last location we were pushed onto the map.
   //
-  point last_pushed_at;
+  spoint last_pushed_at;
   //
   // Direction
   //
@@ -173,7 +173,7 @@ typedef struct Thing_ {
   //
   // Interpolated co-ords in pixels
   //
-  point pix_at;
+  spoint pix_at;
   //
   // Increases per tick and when it reaches 1, allows the thing to move
   //
@@ -206,11 +206,11 @@ typedef struct Thing_ {
 
 Tpp thing_tp(Thingp);
 
-Thingp thing_and_tp_get_at(Gamep, Levelsp, Levelp, point p, int slot, Tpp * = nullptr);
+Thingp thing_and_tp_get_at(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp * = nullptr);
 Thingp thing_find(Gamep, Levelsp, ThingId id);
 Thingp thing_find_optional(Gamep, Levelsp, ThingId id);
-Thingp thing_get(Gamep, Levelsp, Levelp, point p, int slot);
-Thingp thing_init(Gamep, Levelsp, Levelp, Tpp, point p);
+Thingp thing_get(Gamep, Levelsp, Levelp, spoint p, int slot);
+Thingp thing_init(Gamep, Levelsp, Levelp, Tpp, spoint p);
 Levelp thing_level(Gamep, Levelsp, Thingp);
 void   thing_stats_dump(Gamep, Levelsp);
 
@@ -236,7 +236,7 @@ void thing_set_dir_from_delta(Thingp, int dx, int dy);
 void thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
 void thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
-bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, point at);
+bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 void thing_update_pos(Gamep, Thingp);
 void thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
@@ -256,14 +256,14 @@ void player_reached_entrance(Gamep, Levelsp, Levelp, Thingp);
 void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 bool player_move_request(Gamep, bool up, bool down, bool left, bool right);
 
-bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
-bool thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, point to);
+bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp t);
 bool thing_is_dir_down(Thingp);
 bool thing_is_dir_tr(Thingp);
-bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, point to);
-bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, point to);
-bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, point to);
+bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_is_dir_tl(Thingp);
 bool thing_is_dir_br(Thingp);
 bool thing_is_dir_bl(Thingp);

@@ -39,7 +39,8 @@ class tree_wid_key
 public:
   tree_wid_key(void) = default;
 
-  tree_wid_key(int vpriority, point vtl, point vbr, uint64_t vkey) : priority(vpriority), tl(vtl), br(vbr), key(vkey)
+  tree_wid_key(int vpriority, spoint vtl, spoint vbr, uint64_t vkey)
+      : priority(vpriority), tl(vtl), br(vbr), key(vkey)
   {
   }
 
@@ -50,8 +51,8 @@ public:
   //
   // The real position on the screen initially.
   //
-  point tl {};
-  point br {};
+  spoint tl {};
+  spoint br {};
 
   //
   // Unique wid ID.
@@ -203,8 +204,8 @@ public:
   //
   // The real position after scrollbar adjustments.
   //
-  point abs_tl {};
-  point abs_br {};
+  spoint abs_tl {};
+  spoint abs_br {};
 
   //
   // Lots of layers of tiles for widgets.
@@ -223,7 +224,7 @@ public:
   //
   // Offset of child widgets in the parent window.
   //
-  point offset {};
+  spoint offset {};
 
   //
   // Config layers:
@@ -240,7 +241,7 @@ public:
   //
   // Text placement.
   //
-  point text_pos {};
+  spoint text_pos {};
 
   ts_t destroy_when {};
   ts_t ts_created {};
@@ -563,7 +564,7 @@ void wid_get_tl_x_tl_y_br_x_br_y(Widp w, int *tl_x, int *tl_y, int *br_x, int *b
 //
 // Set the wid new co-ords. Returns true if there is a change.
 //
-void wid_set_pos(Widp w, point tl, point br)
+void wid_set_pos(Widp w, spoint tl, spoint br)
 {
   TRACE_NO_INDENT();
 
@@ -837,7 +838,7 @@ static void wid_set_scissors(Gamep g, int tlx, int tly, int brx, int bry)
 {
   TRACE_NO_INDENT();
 
-  ascii_set_scissors(point(tlx, tly), point(brx, bry));
+  ascii_set_scissors(spoint(tlx, tly), spoint(brx, bry));
 }
 
 //
@@ -2402,8 +2403,8 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
     ERR("No parent");
   }
 
-  point vert_tl;
-  point vert_br;
+  spoint vert_tl;
+  spoint vert_br;
 
   int tlx;
   int tly;
@@ -2460,8 +2461,8 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
     ERR("No parent");
   }
 
-  point horiz_tl;
-  point horiz_br;
+  spoint horiz_tl;
+  spoint horiz_br;
 
   int tlx;
   int tly;
@@ -4947,8 +4948,8 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   auto wid_width  = wid_get_width(w);
   auto wid_height = wid_get_height(w);
 
-  point tl;
-  point br;
+  spoint tl = spoint();
+  spoint br = spoint();
 
   tl.x = otlx;
   tl.y = otly;

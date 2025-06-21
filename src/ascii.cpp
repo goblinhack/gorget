@@ -17,7 +17,7 @@ struct ascii_ {
   //
   // In ascii mode, where on the ASCII we are
   //
-  point mouse_at;
+  spoint mouse_at;
   //
   // UI triggers for ASCII co-ords.
   //
@@ -44,16 +44,19 @@ std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > *cells;
 
 void ascii_init(void) { ascii_clear_display(); }
 
+#ifdef ENABLE_UI_ASCII_MOUSE
 //
 // For drawing the mouse cursor.
 //
-static point mouse_tile_tl;
-static point mouse_tile_br;
-static int   mouse_found = false;
+static spoint mouse_tile_tl;
+static spoint mouse_tile_br;
+#endif
 
-static point scissors_tl;
-static point scissors_br;
-static bool  scissors_enabled = false;
+static int mouse_found = false;
+
+static spoint scissors_tl;
+static spoint scissors_br;
+static bool   scissors_enabled = false;
 
 int ascii_ok(int x, int y)
 {
@@ -104,7 +107,7 @@ int ascii_y_ok(int y)
 
 void ascii_clear_scissors(void) { scissors_enabled = false; }
 
-void ascii_set_scissors(point tl, point br)
+void ascii_set_scissors(spoint tl, spoint br)
 {
   scissors_enabled = true;
   scissors_tl      = tl;
@@ -708,13 +711,13 @@ void ascii_putf(int x, int y, color fg, color bg, const std::string fmt, ...)
 }
 
 #ifdef ENABLE_UI_ASCII_MOUSE
-static void ascii_display_mouse(point mouse_tile_tl, point mouse_tile_br, point mouse_at)
+static void ascii_display_mouse(spoint mouse_tile_tl, spoint mouse_tile_br, spoint mouse_at)
 {
   glcolor(WHITE);
 
   blit_init();
-  tile_blit(tile_find_mand(FONT_TILENAME_POINTER_STR), point(mouse_tile_tl.x, mouse_tile_tl.y),
-            point(mouse_tile_br.x, mouse_tile_br.y));
+  tile_blit(tile_find_mand(FONT_TILENAME_POINTER_STR), spoint(mouse_tile_tl.x, mouse_tile_tl.y),
+            spoint(mouse_tile_br.x, mouse_tile_br.y));
   blit_flush();
   //
   // Save where we are at
@@ -816,8 +819,8 @@ static void ascii_blit(Gamep g)
 
       const AsciiCell *cell = &(*cells)[ x ][ y ];
 
-      point tile_tl;
-      point tile_br;
+      spoint tile_tl = spoint();
+      spoint tile_br = spoint();
 
       tile_tl.x = tile_x;
       tile_tl.y = tile_y;
@@ -876,8 +879,8 @@ static void ascii_blit(Gamep g)
 
       const AsciiCell *cell = &(*cells)[ x ][ y ];
 
-      point tile_tl;
-      point tile_br;
+      spoint tile_tl = spoint();
+      spoint tile_br = spoint();
 
       tile_tl.x = tile_x;
       tile_tl.y = tile_y;
@@ -927,8 +930,8 @@ static void ascii_blit(Gamep g)
     for (x = 0; x < TERM_WIDTH; x++) {
       const AsciiCell *cell = &(*cells)[ x ][ y ];
 
-      point tile_tl;
-      point tile_br;
+      spoint tile_tl = spoint();
+      spoint tile_br = spoint();
 
       tile_tl.x = tile_x;
       tile_tl.y = tile_y;

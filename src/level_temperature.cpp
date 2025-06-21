@@ -11,6 +11,7 @@
 #include "my_tp.hpp"
 
 #include <set>
+#include <vector>
 
 void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
 {
@@ -25,7 +26,7 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
     //
     // Collect all things at this point into a vector
     //
-    point p(x, y);
+    spoint p(x, y);
     FOR_ALL_THINGS_AT(g, v, l, t, p)
     {
       if (thing_is_able_to_change_temperature(t)) {

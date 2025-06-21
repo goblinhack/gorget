@@ -40,8 +40,8 @@ static bool wid_rightbar_create_window(Gamep g)
 
   {
     TRACE_NO_INDENT();
-    point tl(TERM_WIDTH - width, 0);
-    point br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
+    spoint tl(TERM_WIDTH - width, 0);
+    spoint br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
 
     wid_rightbar = wid_new_square_window(g, "wid rightbar");
     wid_set_ignore_scroll_events(wid_rightbar, true);
@@ -61,9 +61,9 @@ static bool wid_rightbar_create_window(Gamep g)
     //
     {
       TRACE_NO_INDENT();
-      auto  w = wid_new_square_button(g, wid_rightbar, "level");
-      point tl(x_at, y_at);
-      point br(width - 1, y_at);
+      auto   w = wid_new_square_button(g, wid_rightbar, "level");
+      spoint tl(x_at, y_at);
+      spoint br(width - 1, y_at);
       wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
       wid_set_pos(w, tl, br);
       auto s = dynprintf("Level:%u Dungeon:%s", l->level_num + 1, game_seed_name_get(g));

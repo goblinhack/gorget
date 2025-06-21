@@ -51,10 +51,10 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
-      auto  offset = (w * y) + x;
-      auto  c      = in[ offset ];
-      Tpp   tp     = nullptr;
-      point at(x, y);
+      auto   offset = (w * y) + x;
+      auto   c      = in[ offset ];
+      Tpp    tp     = nullptr;
+      spoint at(x, y);
 
       l->debug[ x ][ y ] = c;
 
@@ -202,7 +202,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 
       if (need_floor) {
         auto tp_add = tp_floor;
-        auto t      = thing_init(g, v, l, tp_add, point(x, y));
+        auto t      = thing_init(g, v, l, tp_add, spoint(x, y));
         if (t) {
           thing_push(g, v, l, t);
         }
@@ -210,7 +210,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 
       if (need_corridor) {
         auto tp_add = tp_corridor;
-        auto t      = thing_init(g, v, l, tp_add, point(x, y));
+        auto t      = thing_init(g, v, l, tp_add, spoint(x, y));
         if (t) {
           thing_push(g, v, l, t);
         }
@@ -218,14 +218,14 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 
       if (need_dirt) {
         auto tp_add = tp_dirt;
-        auto t      = thing_init(g, v, l, tp_add, point(x, y));
+        auto t      = thing_init(g, v, l, tp_add, spoint(x, y));
         if (t) {
           thing_push(g, v, l, t);
         }
       }
 
       if (need_water) {
-        auto t = thing_init(g, v, l, tp_water, point(x, y));
+        auto t = thing_init(g, v, l, tp_water, spoint(x, y));
         if (t) {
           thing_push(g, v, l, t);
         }
@@ -233,14 +233,14 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 
       if (need_foliage) {
         auto tp_add = tp_foliage;
-        auto t      = thing_init(g, v, l, tp_add, point(x, y));
+        auto t      = thing_init(g, v, l, tp_add, spoint(x, y));
         if (t) {
           thing_push(g, v, l, t);
         }
       }
 
       if (tp) {
-        auto t = thing_init(g, v, l, tp, point(x, y));
+        auto t = thing_init(g, v, l, tp, spoint(x, y));
         if (t) {
           thing_push(g, v, l, t);
         }
@@ -248,7 +248,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 
       if (0) {
         if (tp == tp_player) {
-          auto t = thing_init(g, v, l, tp_random(is_steam), point(x, y) + point(2, 0));
+          auto t = thing_init(g, v, l, tp_random(is_steam), spoint(x, y) + spoint(2, 0));
           if (t) {
             thing_push(g, v, l, t);
           }

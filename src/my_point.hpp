@@ -6,44 +6,47 @@
 #ifndef _MY_POINT_HPP_
 #define _MY_POINT_HPP_
 
-template < typename T > struct my_apoint {
+typedef struct my_spoint {
 public:
-  T x {};
-  T y {};
+  short x;
+  short y;
 
-  my_apoint(T vx, T vy) : x(vx), y(vy) {}
-  my_apoint(void) : x(0), y(0) {};
-
-  void  operator+=(my_apoint< T > const &);
-  void  operator-=(my_apoint< T > const &);
-  void  operator*=(T);
-  void  operator/=(T);
+  void  operator+=(my_spoint const &);
+  void  operator-=(my_spoint const &);
+  void  operator*=(short);
+  void  operator/=(short);
   float length(void) const;
   void  unit(void);
-};
+} spoint;
 
-using point  = my_apoint< short >;
-using fpoint = my_apoint< float >;
+typedef struct my_fpoint {
+public:
+  float x;
+  float y;
 
-//
-// Needed for std::map
-//
-template < typename T > bool operator<(my_apoint< T > const &a, my_apoint< T > const &b)
-{
-  return (a.x < b.x) || (a.x == b.x && a.y < b.y);
-}
+  void  operator+=(my_fpoint const &);
+  void  operator-=(my_fpoint const &);
+  void  operator*=(float);
+  void  operator/=(float);
+  float length(void) const;
+  void  unit(void);
+} fpoint;
 
-template < typename T > bool           operator==(my_apoint< T > const &, my_apoint< T > const &);
-template < typename T > my_apoint< T > operator+(my_apoint< T > const &, my_apoint< T > const &);
-template < typename T > my_apoint< T > operator-(my_apoint< T > const &, my_apoint< T > const &);
-template < typename T > my_apoint< T > operator*(my_apoint< T > const &, T);
-template < typename T > my_apoint< T > operator/(my_apoint< T > const &, T);
+bool   operator<(spoint const &a, spoint const &b); // Needed for std::map
+bool   operator==(spoint const &, spoint const &);
+spoint operator+(spoint const &, spoint const &);
+spoint operator-(spoint const &, spoint const &);
+spoint operator*(spoint const &, short);
+spoint operator/(spoint const &, short);
 
-static inline point make_point(const int x, const int y) { return point(x, y); }
+bool   operator==(fpoint const &, fpoint const &);
+fpoint operator+(fpoint const &, fpoint const &);
+fpoint operator-(fpoint const &, fpoint const &);
+fpoint operator*(fpoint const &, float);
+fpoint operator/(fpoint const &, float);
 
-static inline point make_point(const fpoint &f) { return point(f.x, f.y); }
-
-static inline fpoint make_fpoint(const point f) { return fpoint(f.x, f.y); }
+static inline fpoint make_fpoint(const float x = 0, const float y = 0) { return fpoint(x, y); }
+static inline fpoint make_fpoint(const spoint &f) { return fpoint(f.x, f.y); }
 
 fpoint rotate_radians(float angle, const fpoint &p, const fpoint &origin);
 fpoint rotate_radians(const fpoint &p, float angle);
@@ -51,7 +54,7 @@ fpoint normal(const fpoint &p);
 fpoint unit(const fpoint &p);
 
 float distance(const fpoint &a, const fpoint &b);
-float distance(const point a, const point b);
+float distance(const spoint a, const spoint b);
 float angle_radians(const fpoint &p);
 
 #endif // _MY_POINT_HPP_

@@ -49,7 +49,7 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
     return;
   }
 
-  point to(t->at.x + dx, t->at.y + dy);
+  spoint to(t->at.x + dx, t->at.y + dy);
   if (thing_can_move_to(g, v, l, t, to)) {
     if (thing_move_to(g, v, l, t, to)) {
       if (thing_is_player(t)) {

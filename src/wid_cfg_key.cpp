@@ -929,9 +929,9 @@ void wid_cfg_keyboard_select(Gamep g)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point outer_tl(m - TERM_WIDTH / 4, 10);
-  point outer_br(m + TERM_WIDTH / 4, TERM_HEIGHT - 10);
-  auto  width = outer_br.x - outer_tl.x;
+  spoint outer_tl(m - TERM_WIDTH / 4, 10);
+  spoint outer_br(m + TERM_WIDTH / 4, TERM_HEIGHT - 10);
+  auto   width = outer_br.x - outer_tl.x;
 
   wid_cfg_keyboard_window = new WidPopup(g, "Keyboard select", outer_tl, outer_br, nullptr, "", false, true);
 
@@ -952,8 +952,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Keyboard");
 
-    point tl(0, y_at);
-    point br(width, y_at);
+    spoint tl(0, y_at);
+    spoint br(width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Keyboard");
@@ -965,8 +965,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Back");
 
-    point tl(1, y_at);
-    point br(8, y_at + 2);
+    spoint tl(1, y_at);
+    spoint br(8, y_at + 2);
     wid_set_shape_square(w);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_cfg_keyboard_back);
@@ -978,8 +978,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Save");
 
-    point tl(width - 17, y_at);
-    point br(width - 12, y_at + 2);
+    spoint tl(width - 17, y_at);
+    spoint br(width - 12, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(g, w, wid_cfg_keyboard_save);
     wid_set_pos(w, tl, br);
@@ -990,8 +990,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Cancel");
 
-    point tl(width - 10, y_at);
-    point br(width - 3, y_at + 2);
+    spoint tl(width - 10, y_at);
+    spoint br(width - 3, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(g, w, wid_cfg_keyboard_cancel);
     wid_set_pos(w, tl, br);
@@ -1008,8 +1008,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "");
 
-    point tl(1, y_at);
-    point br(width - 3, y_at);
+    spoint tl(1, y_at);
+    spoint br(width - 3, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1024,8 +1024,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "");
 
-    point tl(1, y_at);
-    point br(width - 3, y_at);
+    spoint tl(1, y_at);
+    spoint br(width - 3, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1045,8 +1045,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "save");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1057,8 +1057,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1076,8 +1076,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "load");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1088,8 +1088,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1108,8 +1108,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move up");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1124,8 +1124,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_color(w, WID_COLOR_BG, WHITE);
     wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
     wid_set_mode(g, w, WID_MODE_OVER);
@@ -1145,8 +1145,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move left");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1157,8 +1157,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1176,8 +1176,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move down");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1188,8 +1188,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1207,8 +1207,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move right");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1219,8 +1219,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1243,8 +1243,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Wait");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1255,8 +1255,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1275,8 +1275,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Ascend");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1287,8 +1287,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1307,8 +1307,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Descend");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1319,8 +1319,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1343,8 +1343,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Change zoom");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1355,8 +1355,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Change zoom");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1375,8 +1375,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Take a screenshot");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1387,8 +1387,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1411,8 +1411,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "quit");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1423,8 +1423,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1442,8 +1442,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "console");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1454,8 +1454,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "console");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1473,8 +1473,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "help");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1485,8 +1485,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1506,8 +1506,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused1");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1518,8 +1518,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1537,8 +1537,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused2");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1549,8 +1549,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1568,8 +1568,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused3");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1580,8 +1580,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1599,8 +1599,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused4");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1611,8 +1611,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1630,8 +1630,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused5");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1642,8 +1642,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1661,8 +1661,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused6");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1673,8 +1673,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1692,8 +1692,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused7");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1704,8 +1704,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1723,8 +1723,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused8");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1735,8 +1735,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1754,8 +1754,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused9");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1766,8 +1766,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1785,8 +1785,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused10");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1797,8 +1797,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1816,8 +1816,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused11");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1828,8 +1828,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1847,8 +1847,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused12");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1859,8 +1859,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1878,8 +1878,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused13");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1890,8 +1890,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1909,8 +1909,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused14");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1921,8 +1921,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1940,8 +1940,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused15");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1952,8 +1952,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -1971,8 +1971,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused16");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -1983,8 +1983,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -2002,8 +2002,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "unused17");
 
-    point tl(1, y_at);
-    point br(width / 2, y_at);
+    spoint tl(1, y_at);
+    spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
@@ -2014,8 +2014,8 @@ void wid_cfg_keyboard_select(Gamep g)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "value");
 
-    point tl(width / 2 + rhs_button_left, y_at);
-    point br(width / 2 + rhs_button_right, y_at);
+    spoint tl(width / 2 + rhs_button_left, y_at);
+    spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);

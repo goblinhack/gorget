@@ -139,7 +139,7 @@ void ascii_set(int depth, int x, int y, Texp, float tx, float ty, float dx, floa
 void ascii_set(int depth, int x, int y, Tilep);
 void ascii_set(int depth, int x, int y, Tilep, const char);
 void ascii_set(int depth, int x, int y, Tilep, float tx, float ty, float dx, float dy);
-void ascii_set_scissors(point tl, point br);
+void ascii_set_scissors(spoint tl, spoint br);
 void pixel_to_ascii(Gamep, int *x, int *y);
 
 extern float tile_pix_w;

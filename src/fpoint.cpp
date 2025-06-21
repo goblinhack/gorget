@@ -6,92 +6,48 @@
 #include "my_point.hpp"
 #include <math.h>
 
-template < typename T > my_apoint< T > operator+(my_apoint< T > const &a, my_apoint< T > const &b)
-{
-  return my_apoint< T >(a.x + b.x, a.y + b.y);
-}
-template my_apoint< short > operator+ < short >(my_apoint< short > const &, my_apoint< short > const &);
-template my_apoint< float > operator+ < float >(my_apoint< float > const &, my_apoint< float > const &);
+fpoint operator+(fpoint const &a, fpoint const &b) { return fpoint(a.x + b.x, a.y + b.y); }
+fpoint operator-(fpoint const &a, fpoint const &b) { return fpoint(a.x - b.x, a.y - b.y); }
+fpoint operator*(fpoint const &a, float b) { return fpoint(a.x * b, a.y * b); }
+fpoint operator/(fpoint const &a, float b) { return fpoint(a.x / b, a.y / b); }
+bool   operator==(fpoint const &a, fpoint const &b) { return (a.x == b.x) && (a.y == b.y); }
 
-template < typename T > my_apoint< T > operator-(my_apoint< T > const &a, my_apoint< T > const &b)
-{
-  return my_apoint< T >(a.x - b.x, a.y - b.y);
-}
-template my_apoint< short > operator- < short >(my_apoint< short > const &, my_apoint< short > const &);
-template my_apoint< float > operator- < float >(my_apoint< float > const &, my_apoint< float > const &);
-
-template < typename T > my_apoint< T > operator*(my_apoint< T > const &a, T b)
-{
-  return my_apoint< T >(a.x * b, a.y * b);
-}
-template my_apoint< short > operator* < short >(my_apoint< short > const &, short);
-template my_apoint< float > operator* < float >(my_apoint< float > const &, float);
-
-template < typename T > my_apoint< T > operator/(my_apoint< T > const &a, T b)
-{
-  return my_apoint< T >(a.x / b, a.y / b);
-}
-template my_apoint< short > operator/ < short >(my_apoint< short > const &, short);
-template my_apoint< float > operator/ < float >(my_apoint< float > const &, float);
-
-template < typename T > bool operator==(my_apoint< T > const &a, my_apoint< T > const &b)
-{
-  return (a.x == b.x) && (a.y == b.y);
-}
-template bool operator== < short >(my_apoint< short > const &, my_apoint< short > const &);
-template bool operator== < float >(my_apoint< float > const &, my_apoint< float > const &);
-
-template < typename T > void my_apoint< T >::operator+=(my_apoint< T > const &b)
+void fpoint::operator+=(fpoint const &b)
 {
   x += b.x;
   y += b.y;
 }
-template void my_apoint< short >::operator+=(my_apoint< short > const &);
-template void my_apoint< float >::operator+=(my_apoint< float > const &);
 
-template < typename T > void my_apoint< T >::operator-=(my_apoint< T > const &b)
+void fpoint::operator-=(fpoint const &b)
 {
   x -= b.x;
   y -= b.y;
 }
-template void my_apoint< short >::operator-=(my_apoint< short > const &);
-template void my_apoint< float >::operator-=(my_apoint< float > const &);
 
-template < typename T > void my_apoint< T >::operator*=(T b)
+void fpoint::operator*=(float b)
 {
   x *= b;
   y *= b;
 }
-template void my_apoint< short >::operator*=(short);
-template void my_apoint< float >::operator*=(float);
 
-template < typename T > void my_apoint< T >::operator/=(T b)
+void fpoint::operator/=(float b)
 {
   x /= b;
   y /= b;
 }
-template void my_apoint< short >::operator/=(short);
-template void my_apoint< float >::operator/=(float);
 
-template < typename T > float my_apoint< T >::length(void) const { return (sqrt(x * x + y * y)); }
-template float                my_apoint< short >::length(void) const;
-template float                my_apoint< float >::length(void) const;
+float fpoint::length(void) const { return (sqrt(x * x + y * y)); }
 
-template < typename T > void my_apoint< T >::unit(void)
+void fpoint::unit(void)
 {
-  T len = sqrt(x * x + y * y);
+  float len = sqrt(x * x + y * y);
   x /= len;
   y /= len;
 }
-template void my_apoint< short >::unit(void);
-template void my_apoint< float >::unit(void);
-
-// template class my_apoint< short >;
-// template class my_apoint< float >;
 
 float distance(const fpoint &a, const fpoint &b) { return (((float) DISTANCE(a.x, a.y, b.x, b.y))); }
 
-float distance(const point a, const point b)
+float distance(const fpoint a, const fpoint b)
 {
   return ((float) DISTANCE((float) a.x, (float) a.y, (float) b.x, (float) b.y));
 }
@@ -281,7 +237,7 @@ int distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *inter
   return 1;
 }
 
-float dot (const my_apoint b
+float dot (const fpoint b
 {
   return (x * b.x + y * b.y);
 }

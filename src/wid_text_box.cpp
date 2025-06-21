@@ -26,7 +26,7 @@ WidTextBox::~WidTextBox()
   wid_destroy(g, &wid_text_area);
 }
 
-WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool horiz_scroll, bool vert_scroll,
+WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz_scroll, bool vert_scroll,
                        int vscroll_height_in)
     : scroll_height(vscroll_height_in), tl(vtl), br(vbr), wid_parent(vparent)
 {
@@ -58,8 +58,8 @@ WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool horiz_s
   }
 
   {
-    point inner_tl(1, 1);
-    point inner_br(w - 1, h - 1);
+    spoint inner_tl(1, 1);
+    spoint inner_br(w - 1, h - 1);
 
     wid_text_area = wid_new_square_button(g, wid_text_box_container, "wid text inner area");
     wid_set_pos(wid_text_area, inner_tl, inner_br);
@@ -87,8 +87,8 @@ WidTextBox::WidTextBox(Gamep g, point vtl, point vbr, Widp vparent, bool horiz_s
 
     for (row = 0; row < lines_of_text; row++) {
       row_bottom--;
-      point text_tl(0, row_bottom);
-      point text_br(w, row_bottom);
+      spoint text_tl(0, row_bottom);
+      spoint text_br(w, row_bottom);
 
       child = wid_new_container(g, wid_text_area, "");
       children.push_back(child);

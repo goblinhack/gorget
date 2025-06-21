@@ -23,8 +23,8 @@ public:
   Widp        wid_title {};
   WidTextBox *wid_text_area {};
 
-  point       tl;
-  point       br;
+  spoint      tl;
+  spoint      br;
   Tilep       title_tile {};
   std::string background;
   std::string name;
@@ -35,7 +35,7 @@ public:
 
 public:
   ~WidPopup();
-  WidPopup(Gamep, const std::string name, point tl, point br, Tilep title_tile = nullptr,
+  WidPopup(Gamep, const std::string name, spoint tl, spoint br, Tilep title_tile = nullptr,
            const std::string background = "", bool horiz_scroll = true, bool vert_scoll = true,
            int vert_scroll_size = -1);
 

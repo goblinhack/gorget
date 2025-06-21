@@ -29,18 +29,18 @@ private:
   std::vector< Widp > children;
 
 public:
-  int   line_count {};
-  point tl;
-  point br;
-  Widp  wid_horiz_scroll {};
-  Widp  wid_parent {};
-  Widp  wid_text_area {};
-  Widp  wid_text_box_container {};
-  Widp  wid_text_last {};
-  Widp  wid_vert_scroll {};
+  int    line_count {};
+  spoint tl = spoint();
+  spoint br = spoint();
+  Widp   wid_horiz_scroll {};
+  Widp   wid_parent {};
+  Widp   wid_text_area {};
+  Widp   wid_text_box_container {};
+  Widp   wid_text_last {};
+  Widp   wid_vert_scroll {};
 
   ~WidTextBox();
-  WidTextBox(Gamep, point tl, point br, Widp, bool horiz_scroll = true, bool vert_scoll = true,
+  WidTextBox(Gamep, spoint tl, spoint br, Widp, bool horiz_scroll = true, bool vert_scoll = true,
              int scroll_height = -1);
 
 private:

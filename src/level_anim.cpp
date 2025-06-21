@@ -37,7 +37,7 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
     for (auto y = v->miny; y < v->maxy; y++) {
       for (auto x = v->minx; x < v->maxx; x++) {
         Tpp    tp;
-        point  p(x, y);
+        spoint p(x, y);
         Thingp t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
         if (! t) {
           continue;

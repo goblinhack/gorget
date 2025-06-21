@@ -18,7 +18,7 @@ WidPopup::~WidPopup()
   delete wid_text_area;
 }
 
-WidPopup::WidPopup(Gamep g, const std::string vname, point vtl, point vbr, Tilep vtitle_tile,
+WidPopup::WidPopup(Gamep g, const std::string vname, spoint vtl, spoint vbr, Tilep vtitle_tile,
                    const std::string vbackground, bool horiz_scroll, bool vert_scoll, int scroll_height)
     : tl(vtl), br(vbr), title_tile(vtitle_tile), background(vbackground)
 {
@@ -32,10 +32,10 @@ WidPopup::WidPopup(Gamep g, const std::string vname, point vtl, point vbr, Tilep
 
   this->name = vname;
 
-  point inner_tl = point(0, 0);
-  point inner_br = point(width, height);
-  inner_w        = inner_br.x - inner_tl.x;
-  inner_h        = inner_br.y - inner_tl.y;
+  spoint inner_tl = spoint(0, 0);
+  spoint inner_br = spoint(width, height);
+  inner_w         = inner_br.x - inner_tl.x;
+  inner_h         = inner_br.y - inner_tl.y;
 
   int tile_size;
   if (title_tile) {
@@ -64,15 +64,15 @@ WidPopup::WidPopup(Gamep g, const std::string vname, point vtl, point vbr, Tilep
     auto w       = wid_new_square_button(g, wid_popup_container, "wid title " + this->name);
     wid_title    = w;
     auto title_x = (outer_w - tile_size) / 2;
-    wid_set_pos(w, point(title_x + 0, 1), point(title_x + tile_size - 1, tile_size));
+    wid_set_pos(w, spoint(title_x + 0, 1), spoint(title_x + tile_size - 1, tile_size));
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_tile(TILE_LAYER_FG_0, w, title_tile);
   }
 
   {
-    point box_tl(0, tile_size);
-    point box_br(inner_w, inner_h + tile_size);
+    spoint box_tl(0, tile_size);
+    spoint box_br(inner_w, inner_h + tile_size);
     wid_text_area = new WidTextBox(g, box_tl, box_br, wid_popup_container, horiz_scroll, vert_scoll, scroll_height);
   }
 

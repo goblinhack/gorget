@@ -82,7 +82,7 @@ static bool test_collision_mob(Gamep g, Testp t)
     // Check the mob is alive
     //
     TEST_LOG(t, "check mob is alive");
-    auto p        = player->at + point(2, 0);
+    auto p        = player->at + spoint(2, 0);
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)

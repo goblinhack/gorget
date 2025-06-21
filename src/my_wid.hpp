@@ -85,7 +85,7 @@ typedef void (*on_mouse_focus_end_t)(Gamep, Widp);
 typedef void (*on_mouse_over_begin_t)(Gamep, Widp, int relx, int rely, int wheelx, int wheely);
 typedef void (*on_mouse_over_end_t)(Gamep, Widp);
 typedef void (*on_tick_t)(Gamep, Widp);
-typedef void (*on_display_t)(Gamep, Widp, point tl, point br);
+typedef void (*on_display_t)(Gamep, Widp, spoint tl, spoint br);
 
 int         wid_count(Widp w, int depth);
 int         wid_get_int_context(Widp);
@@ -216,7 +216,7 @@ void wid_set_on_mouse_over_end(Gamep, Widp, on_mouse_over_end_t fn);
 void wid_set_on_mouse_up(Gamep, Widp, on_mouse_up_t fn);
 void wid_set_on_tick(Gamep, Widp, on_tick_t fn);
 void wid_set_pos_pct(Widp, fpoint tl, fpoint br);
-void wid_set_pos(Widp, point tl, point br);
+void wid_set_pos(Widp, spoint tl, spoint br);
 void wid_set_prev(Gamep, Widp w, Widp);
 void wid_set_received_input(Widp, uint8_t val);
 void wid_set_shape_none(Widp);

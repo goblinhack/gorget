@@ -185,12 +185,12 @@ public:
   //
   // Which doors we expanded off of.
   //
-  std::map< point, bool > doors_walked;
+  std::map< spoint, bool > doors_walked;
 
   //
   // All level doors.
   //
-  std::vector< point > doors_not_explored;
+  std::vector< spoint > doors_not_explored;
 
   //
   // Rooms that can reach each other via a door.
@@ -272,14 +272,14 @@ public:
   //
   // These are room co-ordinates, not map co-ordinates
   //
-  std::vector< point > doors;
+  std::vector< spoint > doors;
 
   //
   // Points adjacent to doors
   //
   // These are room co-ordinates, not map co-ordinates
   //
-  std::vector< point > door_adjacent_tile;
+  std::vector< spoint > door_adjacent_tile;
 };
 
 static int                         room_no;
@@ -401,23 +401,23 @@ static void room_scan(Gamep g, class Room *r)
       auto c = room_char(g, r, x, y);
 
       if (c == CHARMAP_JOIN) {
-        point p(x, y);
+        spoint p(x, y);
         r->doors.push_back(p);
 
         //
         // Look for tiles next to the door. We will use these to check if room placement works
         //
         if (room_char(g, r, x - 1, y) != CHARMAP_EMPTY) {
-          r->door_adjacent_tile.push_back(point(x - 1, y));
+          r->door_adjacent_tile.push_back(spoint(x - 1, y));
         }
         if (room_char(g, r, x + 1, y) != CHARMAP_EMPTY) {
-          r->door_adjacent_tile.push_back(point(x + 1, y));
+          r->door_adjacent_tile.push_back(spoint(x + 1, y));
         }
         if (room_char(g, r, x, y - 1) != CHARMAP_EMPTY) {
-          r->door_adjacent_tile.push_back(point(x, y - 1));
+          r->door_adjacent_tile.push_back(spoint(x, y - 1));
         }
         if (room_char(g, r, x, y + 1) != CHARMAP_EMPTY) {
-          r->door_adjacent_tile.push_back(point(x, y + 1));
+          r->door_adjacent_tile.push_back(spoint(x, y + 1));
         }
       }
     }
@@ -785,7 +785,7 @@ void rooms_dump(Gamep g)
 //
 // Can we place a room here on the level?
 //
-static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point at, int rx, int ry)
+static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, spoint at, int rx, int ry)
 {
   //
   // Check we have something to place here.
@@ -798,7 +798,7 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
   //
   // Where we're placing tiles
   //
-  point p(rx + at.x, ry + at.y);
+  spoint p(rx + at.x, ry + at.y);
 
   //
   // We need one tile of edge around rooms.
@@ -866,7 +866,7 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
 //
 // Can we place a room here on the level?
 //
-static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
+static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, spoint at)
 {
   //
   // Optimization, check edge tiles first
@@ -899,7 +899,7 @@ static bool room_can_place_at(Gamep g, class LevelGen *l, class Room *r, point a
 //
 // Place a room on the level
 //
-static void room_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
+static void room_place_at(Gamep g, class LevelGen *l, class Room *r, spoint at)
 {
   //
   // The room should be clear to place at this point
@@ -942,7 +942,7 @@ static void room_place_at(Gamep g, class LevelGen *l, class Room *r, point at)
       //
       // Where we're placing tiles
       //
-      point p(rx + at.x, ry + at.y);
+      spoint p(rx + at.x, ry + at.y);
 
       if (room_c == CHARMAP_ENTRANCE) {
         l->info.entrance.x = p.x;
@@ -1563,7 +1563,7 @@ void fragments_dump(Gamep g)
 //
 // Can we match a fragment against the location
 //
-static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point at)
+static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, spoint at)
 {
   for (int ry = 0; ry < f->height; ry++) {
     for (int rx = 0; rx < f->width; rx++) {
@@ -1573,7 +1573,7 @@ static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point 
         continue;
       }
 
-      point p(rx + at.x, ry + at.y);
+      spoint p(rx + at.x, ry + at.y);
 
       if (unlikely(p.x <= 0)) {
         return false;
@@ -1602,7 +1602,7 @@ static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, point 
 //
 // Place the fragment
 //
-static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, point at)
+static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, spoint at)
 {
   TRACE_NO_INDENT();
 
@@ -1625,7 +1625,7 @@ static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, point at
         continue;
       }
 
-      point p(rx + at.x, ry + at.y);
+      spoint p(rx + at.x, ry + at.y);
 
       if (unlikely(p.x <= 0)) {
         continue;
@@ -1659,11 +1659,11 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
       return;
     }
 
-    std::vector< point > cands;
+    std::vector< spoint > cands;
 
     for (int y = 0; y < MAP_HEIGHT - f->height; y++) {
       for (int x = 0; x < MAP_WIDTH - f->width; x++) {
-        point at(x, y);
+        spoint at(x, y);
         if (fragment_match(g, l, f, at)) {
           cands.push_back(at);
         }
@@ -1718,7 +1718,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
-      point p(x, y);
+      spoint p(x, y);
 
       if (l->doors_walked.find(p) != l->doors_walked.end()) {
         if (l->debug) {
@@ -1774,7 +1774,7 @@ void level_gen_stats_dump(Gamep g)
 //
 // Update the list of all doors, and return a new unwalked door to use
 //
-static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_out, class Room **room_out)
+static bool level_gen_random_door_get(Gamep g, class LevelGen *l, spoint *door_out, class Room **room_out)
 {
   TRACE_NO_INDENT();
 
@@ -1792,7 +1792,7 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_ou
         continue;
       }
 
-      point p(x, y);
+      spoint p(x, y);
 
       //
       // If this door is walked already, ignore it
@@ -1804,7 +1804,7 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_ou
       //
       // Add to the candidates
       //
-      l->doors_not_explored.push_back(point(x, y));
+      l->doors_not_explored.push_back(spoint(x, y));
     }
   }
 
@@ -1839,7 +1839,7 @@ static bool level_gen_random_door_get(Gamep g, class LevelGen *l, point *door_ou
 //
 // Place a room of the given type at a specific door
 //
-static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, const point door_other,
+static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, const spoint door_other,
                                                       class Room *room_other, const RoomType room_type)
 {
   TRACE_NO_INDENT();
@@ -1888,7 +1888,7 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       // ....D....
       // ...   ...
       //
-      point door_intersection_at = door_other - d;
+      spoint door_intersection_at = door_other - d;
       if (! room_can_place_at(g, l, r, door_intersection_at)) {
         continue;
       }
@@ -1933,7 +1933,7 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
   //
   // Find a random door that we have not walked before
   //
-  point       door_other;
+  spoint      door_other;
   class Room *room_other = {};
   if (! level_gen_random_door_get(g, l, &door_other, &room_other)) {
     level_find_door_fail_count++;
@@ -1944,7 +1944,7 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
   // If this door is too close, then switch to a normal room
   //
   if (room_type == ROOM_TYPE_EXIT) {
-    point entrance(l->info.entrance.x, l->info.entrance.y);
+    spoint entrance(l->info.entrance.x, l->info.entrance.y);
     if (distance(door_other, entrance) < MIN_LEVEL_EXIT_DISTANCE) {
       room_type = ROOM_TYPE_NORMAL;
     }
@@ -2072,7 +2072,7 @@ static bool level_gen_create_first_room(Gamep g, LevelGen *l)
   x = pcg_random_range(border, MAP_WIDTH - border);
   y = pcg_random_range(border, MAP_HEIGHT - border);
 
-  point at(x, y);
+  spoint at(x, y);
 
   //
   // Choose a random first room and place it
@@ -2540,7 +2540,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
 {
   TRACE_NO_INDENT();
 
-  const std::initializer_list< point > directions = {point(-1, 0), point(1, 0), point(0, -1), point(0, 1)};
+  const std::initializer_list< spoint > directions = {spoint(-1, 0), spoint(1, 0), spoint(0, -1), spoint(0, 1)};
 
   for (int y = dist; y < MAP_HEIGHT - dist - 1; y++) {
     for (int x = dist; x < MAP_WIDTH - dist - 1; x++) {
@@ -2560,7 +2560,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
               //
               bool has_clear_path = true;
               for (auto d = 1; d < dist; d++) {
-                point adj(x + direction.x * d, y + direction.y * d);
+                spoint adj(x + direction.x * d, y + direction.y * d);
                 switch (l->data[ adj.x ][ adj.y ].c) {
                   case CHARMAP_WATER :
                   case CHARMAP_DEEP_WATER :
@@ -2578,7 +2578,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
               //
               // Check there is a room at the end of the blank space
               //
-              point dest(x + direction.x * dist, y + direction.y * dist);
+              spoint dest(x + direction.x * dist, y + direction.y * dist);
               if (l->data[ dest.x ][ dest.y ].c != CHARMAP_FLOOR) {
                 continue;
               }
@@ -2621,7 +2621,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
                 l->rooms_adj_connected++;
                 l->rooms_connected[ conn ] = true;
                 for (auto d = 1; d < dist; d++) {
-                  point adj(x + direction.x * d, y + direction.y * d);
+                  spoint adj(x + direction.x * d, y + direction.y * d);
 
                   if (dist >= MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
                     l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
@@ -3261,7 +3261,7 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
 {
   TRACE_NO_INDENT();
 
-  std::vector< point > cands;
+  std::vector< spoint > cands;
 
   //
   // Find floor tiles with floor space around them, candidates for placing items
@@ -3280,7 +3280,7 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
               /* right     */ l->data[ x + 1 ][ y ].c == CHARMAP_FLOOR &&
               /* top       */ l->data[ x ][ y - 1 ].c == CHARMAP_FLOOR &&
               /* bot       */ l->data[ x ][ y + 1 ].c == CHARMAP_FLOOR) {
-            cands.push_back(point(x, y));
+            cands.push_back(spoint(x, y));
           }
           break;
       }
@@ -3363,7 +3363,7 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
     return;
   }
 
-  std::vector< point > cands;
+  std::vector< spoint > cands;
 
   //
   // Find floor tiles with floor space around them, candidates for placing items
@@ -3389,7 +3389,7 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
               /* right     */ l->data[ x + 1 ][ y ].c == CHARMAP_FLOOR &&
               /* top       */ l->data[ x ][ y - 1 ].c == CHARMAP_FLOOR &&
               /* bot       */ l->data[ x ][ y + 1 ].c == CHARMAP_FLOOR) {
-            cands.push_back(point(x, y));
+            cands.push_back(spoint(x, y));
           }
           break;
       }

@@ -90,7 +90,7 @@ static bool test_collision_brazier(Gamep g, Testp t)
     // Check the brazier is dead
     //
     TEST_LOG(t, "check brazier is dead");
-    auto p        = player->at + point(1, 0);
+    auto p        = player->at + spoint(1, 0);
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)

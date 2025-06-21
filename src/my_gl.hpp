@@ -265,9 +265,9 @@ extern GLuint g_render_buf_id[ MAX_FBO ];
 void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
           GLushort right, GLushort bottom);
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, point tl, point tr, point bl,
-          point br);
-void blit(int tex, point tl, point tr, point bl, point br);
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, spoint tl, spoint tr, spoint bl,
+          spoint br);
+void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br);
 void blit_colored(int tex, GLushort left, GLushort top, GLushort right, float bottom, color color_bl, color color_br,
                   color color_tl, color color_tr);
 void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
@@ -290,7 +290,7 @@ void blit_init(void);
 void fbo_get_size(Gamep, int fbo, int &w, int &h);
 void gl_blitline(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
 void gl_blitquad(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
-void gl_blitquad(const point tl, const point tr, const point bl, const point br);
+void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint br);
 void gl_blitsquare(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
 void gl_enter_2_5d_mode(Gamep);
 void gl_enter_2d_mode(Gamep, int, int);
@@ -307,7 +307,7 @@ void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_t
              uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
              uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4);
 void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
-             point tl, point tr, point bl, point br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
+             spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
              uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
              uint8_t g4, uint8_t b4, uint8_t a4);
 void glcolor(color s);

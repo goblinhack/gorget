@@ -52,8 +52,8 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry -= 1;
   tly -= 0;
 
-  point tl(tlx, tly);
-  point br(brx, bry);
+  spoint tl(tlx, tly);
+  spoint br(brx, bry);
 
   wid_over_save = new WidPopup(g, "Save game", tl, br, nullptr, "", false, false);
   wid_over_save->log(g, UI_HIGHLIGHT_FMT_STR "Save game");
@@ -97,8 +97,8 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry -= 1;
   tly -= 0;
 
-  point tl(tlx, tly);
-  point br(brx, bry);
+  spoint tl(tlx, tly);
+  spoint br(brx, bry);
 
   wid_over_load = new WidPopup(g, "Load game", tl, br, nullptr, "", false, false);
   wid_over_load->log(g, UI_HIGHLIGHT_FMT_STR "Load game");
@@ -162,8 +162,8 @@ static void wid_actionbar_wait_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry -= 1;
   tly += 1;
 
-  point tl(tlx, tly);
-  point br(brx, bry);
+  spoint tl(tlx, tly);
+  spoint br(brx, bry);
 
   wid_over_wait = new WidPopup(g, "Wait/rest", tl, br, nullptr, "", false, false);
   wid_over_wait->log(g, UI_HIGHLIGHT_FMT_STR "Wait/rest");
@@ -210,8 +210,8 @@ static void wid_actionbar_ascend_over_begin(Gamep g, Widp w, int relx, int rely,
   bry -= 1;
   tly += 1;
 
-  point tl(tlx, tly);
-  point br(brx, bry);
+  spoint tl(tlx, tly);
+  spoint br(brx, bry);
 
   wid_over_ascend = new WidPopup(g, "Descend", tl, br, nullptr, "", false, false);
   wid_over_ascend->log(g, UI_HIGHLIGHT_FMT_STR "Ascend");
@@ -256,8 +256,8 @@ static void wid_actionbar_descend_over_begin(Gamep g, Widp w, int relx, int rely
   bry -= 1;
   tly += 1;
 
-  point tl(tlx, tly);
-  point br(brx, bry);
+  spoint tl(tlx, tly);
+  spoint br(brx, bry);
 
   wid_over_descend = new WidPopup(g, "Descend", tl, br, nullptr, "", false, false);
   wid_over_descend->log(g, UI_HIGHLIGHT_FMT_STR "Descend");
@@ -301,8 +301,8 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry -= 1;
   tly -= 0;
 
-  point tl(tlx, tly);
-  point br(brx, bry);
+  spoint tl(tlx, tly);
+  spoint br(brx, bry);
 
   wid_over_quit = new WidPopup(g, "Quit", tl, br, nullptr, "", false, false);
   wid_over_quit->log(g, UI_HIGHLIGHT_FMT_STR "Quit game");
@@ -346,8 +346,8 @@ static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, i
   bry -= 1;
   tly -= 0;
 
-  point tl(tlx, tly);
-  point br(brx, bry);
+  spoint tl(tlx, tly);
+  spoint br(brx, bry);
 
   wid_over_help = new WidPopup(g, "Help", tl, br, nullptr, "", false, false);
   wid_over_help->log(g, UI_HIGHLIGHT_FMT_STR "Help");
@@ -439,8 +439,8 @@ bool wid_actionbar_create_window(Gamep g)
   int right_half = width - left_half;
 
   {
-    point tl = make_point(TERM_WIDTH / 2 - left_half, TERM_HEIGHT - 2);
-    point br = make_point(TERM_WIDTH / 2 + right_half - 1, TERM_HEIGHT - 2);
+    spoint tl = spoint(TERM_WIDTH / 2 - left_half, TERM_HEIGHT - 2);
+    spoint br = spoint(TERM_WIDTH / 2 + right_half - 1, TERM_HEIGHT - 2);
 
     wid_actionbar = wid_new_square_window(g, "wid actionbar");
     wid_set_ignore_scroll_events(wid_actionbar, true);
@@ -453,9 +453,9 @@ bool wid_actionbar_create_window(Gamep g)
   int x_at = 0;
 
   if (opt_descend) {
-    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar descend");
-    point tl = make_point(x_at, 0);
-    point br = make_point(x_at + option_width - 1, 0);
+    auto   w  = wid_new_square_button(g, wid_actionbar, "wid actionbar descend");
+    spoint tl = spoint(x_at, 0);
+    spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(g, w, wid_actionbar_descend);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_descend_over_begin);
@@ -470,9 +470,9 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   if (opt_ascend) {
-    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar ascend");
-    point tl = make_point(x_at, 0);
-    point br = make_point(x_at + option_width - 1, 0);
+    auto   w  = wid_new_square_button(g, wid_actionbar, "wid actionbar ascend");
+    spoint tl = spoint(x_at, 0);
+    spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(g, w, wid_actionbar_ascend);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_ascend_over_begin);
@@ -487,9 +487,9 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   if (opt_wait) {
-    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar wait");
-    point tl = make_point(x_at, 0);
-    point br = make_point(x_at + option_width - 1, 0);
+    auto   w  = wid_new_square_button(g, wid_actionbar, "wid actionbar wait");
+    spoint tl = spoint(x_at, 0);
+    spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(g, w, wid_actionbar_wait);
     wid_set_on_mouse_held(g, w, wid_actionbar_repeat_wait);
@@ -504,9 +504,9 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   if (opt_load) {
-    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar load");
-    point tl = make_point(x_at, 0);
-    point br = make_point(x_at + option_width - 1, 0);
+    auto   w  = wid_new_square_button(g, wid_actionbar, "wid actionbar load");
+    spoint tl = spoint(x_at, 0);
+    spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(g, w, wid_actionbar_load);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_load_over_begin);
@@ -520,9 +520,9 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   if (opt_save) {
-    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar save");
-    point tl = make_point(x_at, 0);
-    point br = make_point(x_at + option_width - 1, 0);
+    auto   w  = wid_new_square_button(g, wid_actionbar, "wid actionbar save");
+    spoint tl = spoint(x_at, 0);
+    spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(g, w, wid_actionbar_save);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_save_over_begin);
@@ -536,9 +536,9 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   if (opt_help) {
-    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar help");
-    point tl = make_point(x_at, 0);
-    point br = make_point(x_at + option_width - 1, 0);
+    auto   w  = wid_new_square_button(g, wid_actionbar, "wid actionbar help");
+    spoint tl = spoint(x_at, 0);
+    spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(g, w, wid_actionbar_help);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_help_over_begin);
@@ -552,9 +552,9 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   if (opt_quit) {
-    auto  w  = wid_new_square_button(g, wid_actionbar, "wid actionbar quit");
-    point tl = make_point(x_at, 0);
-    point br = make_point(x_at + option_width - 1, 0);
+    auto   w  = wid_new_square_button(g, wid_actionbar, "wid actionbar quit");
+    spoint tl = spoint(x_at, 0);
+    spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_up(g, w, wid_actionbar_quit);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_quit_over_begin);

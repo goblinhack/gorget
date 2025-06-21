@@ -75,5 +75,3 @@ template < typename T > void my_apoint3d< T >::operator/=(T b)
 }
 template void my_apoint3d< short >::operator/=(short);
 template void my_apoint3d< float >::operator/=(float);
-
-point make_point(const point3d &f) { return point(f.x, f.y); }

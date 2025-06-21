@@ -268,18 +268,18 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
       if ((pixel_size.w <= TILE_WIDTH_MAX) && (pixel_size.h <= TILE_HEIGHT_MAX)) {
         SDL_Surface *s = tex_get_surface(tex);
 
-        point off(pixel_size.w * x, pixel_size.h * y);
+        spoint off(pixel_size.w * x, pixel_size.h * y);
 
-        point MAX(pixel_size.w * x, pixel_size.h * y);
+        spoint MAX(pixel_size.w * x, pixel_size.h * y);
 
-        point MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
+        spoint MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
 
         int x1, y1;
 
         for (y1 = pixel_size.h - 1; y1 >= 0; y1--) {
           for (x1 = 0; x1 < pixel_size.w; x1++) {
 
-            point at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
+            spoint at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
             getPixel(s, at.x, at.y, p);
@@ -425,18 +425,18 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
       if ((pixel_size.w <= TILE_WIDTH_MAX) && (pixel_size.h <= TILE_HEIGHT_MAX)) {
         SDL_Surface *s = tex_get_surface(tex);
 
-        point off(pixel_size.w * x, pixel_size.h * y);
+        spoint off(pixel_size.w * x, pixel_size.h * y);
 
-        point MAX(pixel_size.w * x, pixel_size.h * y);
+        spoint MAX(pixel_size.w * x, pixel_size.h * y);
 
-        point MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
+        spoint MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
 
         int x1, y1;
 
         for (y1 = pixel_size.h - 1; y1 >= 0; y1--) {
           for (x1 = 0; x1 < pixel_size.w; x1++) {
 
-            point at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
+            spoint at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
             getPixel(s, at.x, at.y, p);
@@ -575,18 +575,18 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
       if ((pixel_size.w <= TILE_WIDTH_MAX) && (pixel_size.h <= TILE_HEIGHT_MAX)) {
         SDL_Surface *s = tex_get_surface(tex);
 
-        point off(pixel_size.w * x, pixel_size.h * y);
+        spoint off(pixel_size.w * x, pixel_size.h * y);
 
-        point MAX(pixel_size.w * x, pixel_size.h * y);
+        spoint MAX(pixel_size.w * x, pixel_size.h * y);
 
-        point MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
+        spoint MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
 
         int x1, y1;
 
         for (y1 = pixel_size.h - 1; y1 >= 0; y1--) {
           for (x1 = 0; x1 < pixel_size.w; x1++) {
 
-            point at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
+            spoint at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
 
             color p;
             getPixel(s, at.x, at.y, p);
@@ -797,7 +797,7 @@ Tilep tile_index_to_tile(int i)
 //
 // Blits a whole tile.
 //
-void tile_blit_at(const Tilep &tile, point tl, point br)
+void tile_blit_at(const Tilep &tile, spoint tl, spoint br)
 {
   blit(tile->gl_binding(), tile->x1, tile->y2, tile->x2, tile->y1, tl.x, tl.y, br.x, br.y);
 }
@@ -805,7 +805,7 @@ void tile_blit_at(const Tilep &tile, point tl, point br)
 //
 // Blits a whole tile. Y co-ords are inverted.
 //
-void tile_blit_colored_fat(Tilep tile, point tl, point br, color color_tl, color color_tr, color color_bl,
+void tile_blit_colored_fat(Tilep tile, spoint tl, spoint br, color color_tl, color color_tr, color color_bl,
                            color color_br)
 {
   float x1 = tile->x1;
@@ -816,7 +816,8 @@ void tile_blit_colored_fat(Tilep tile, point tl, point br, color color_tl, color
   blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
 
-void tile_blit_colored(Tilep tile, point tl, point br, color color_tl, color color_tr, color color_bl, color color_br)
+void tile_blit_colored(Tilep tile, spoint tl, spoint br, color color_tl, color color_tr, color color_bl,
+                       color color_br)
 {
   float x1 = tile->x1;
   float x2 = tile->x2;
@@ -877,7 +878,7 @@ void Tile::set_gl_binding_mask(int v) { _gl_binding_mask = v; }
 //
 // Blits a whole tile. Y co-ords are inverted.
 //
-void tile_blit_outline(const Tilep &tile, const point tl, const point br, const color &c, int single_pix_size,
+void tile_blit_outline(const Tilep &tile, const spoint tl, const spoint br, const color &c, int single_pix_size,
                        bool square)
 {
   float x1, x2, y1, y2;
@@ -924,7 +925,7 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_outline(const Tilep &tile, const point tl, const point br, const color &c, const color &outline,
+void tile_blit_outline(const Tilep &tile, const spoint tl, const spoint br, const color &c, const color &outline,
                        int single_pix_size, bool square)
 {
   float x1, x2, y1, y2;
@@ -970,12 +971,12 @@ void tile_blit_outline(const Tilep &tile, const point tl, const point br, const 
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_outline(int index, const point tl, const point br, const color &c, int single_pix_size, bool square)
+void tile_blit_outline(int index, const spoint tl, const spoint br, const color &c, int single_pix_size, bool square)
 {
   tile_blit_outline(tile_index_to_tile(index), tl, br, c, square);
 }
 
-void tile_blit(const Tilep &tile, const point tl, const point br, const color &c)
+void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c)
 {
   float x1, x2, y1, y2;
 
@@ -993,7 +994,7 @@ void tile_blit(const Tilep &tile, const point tl, const point br, const color &c
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit(const Tilep &tile, const point tl, const point br)
+void tile_blit(const Tilep &tile, const spoint tl, const spoint br)
 {
   float x1, x2, y1, y2;
 
@@ -1013,7 +1014,7 @@ void tile_blit(const Tilep &tile, const point tl, const point br)
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_mask(const Tilep &tile, const point tl, const point br)
+void tile_blit_mask(const Tilep &tile, const spoint tl, const spoint br)
 {
   float x1, x2, y1, y2;
 
@@ -1033,7 +1034,7 @@ void tile_blit_mask(const Tilep &tile, const point tl, const point br)
   blit(tile->gl_binding_mask(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit(const Tilep &tile, const point tl, const point tr, const point bl, const point br)
+void tile_blit(const Tilep &tile, const spoint tl, const spoint tr, const spoint bl, const spoint br)
 {
   float x1, x2, y1, y2;
 
@@ -1053,9 +1054,10 @@ void tile_blit(const Tilep &tile, const point tl, const point tr, const point bl
   blit(tile->gl_binding(), x1, y2, x2, y1, tl, tr, bl, br);
 }
 
-void tile_blit(int index, const point tl, const point br) { tile_blit(tile_index_to_tile(index), tl, br); }
+void tile_blit(int index, const spoint tl, const spoint br) { tile_blit(tile_index_to_tile(index), tl, br); }
 
-void tile_blit_section(const Tilep &tile, const point tile_tl, const point tile_br, const point tl, const point br)
+void tile_blit_section(const Tilep &tile, const spoint tile_tl, const spoint tile_br, const spoint tl,
+                       const spoint br)
 {
   float x1, x2, y1, y2;
 
@@ -1078,13 +1080,13 @@ void tile_blit_section(const Tilep &tile, const point tile_tl, const point tile_
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_section(int index, const point tile_tl, const point tile_br, const point tl, const point br)
+void tile_blit_section(int index, const spoint tile_tl, const spoint tile_br, const spoint tl, const spoint br)
 {
   tile_blit_section(tile_index_to_tile(index), tile_tl, tile_br, tl, br);
 }
 
-void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
-                               const point br, color color_tl, color color_tr, color color_bl, color color_br)
+void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
+                               const spoint br, color color_tl, color color_tr, color color_bl, color color_br)
 {
   float x1, x2, y1, y2;
 
@@ -1107,8 +1109,8 @@ void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const f
   blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
 
-void tile_blit_section_colored(int index, const fpoint &tile_tl, const fpoint &tile_br, const point tl,
-                               const point br, color color_tl, color color_tr, color color_bl, color color_br)
+void tile_blit_section_colored(int index, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
+                               const spoint br, color color_tl, color color_tr, color color_bl, color color_br)
 {
   tile_blit_section_colored(tile_index_to_tile(index), tile_tl, tile_br, tl, br, color_tl, color_tr, color_bl,
                             color_br);
