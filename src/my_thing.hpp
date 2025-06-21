@@ -7,9 +7,9 @@
 #define _MY_THING_HPP_
 
 #include "my_game_defs.hpp"
-#include "my_types.hpp"
 #include "my_spoint.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 #include <string>
 

@@ -221,16 +221,14 @@ bool level_match_contents(Gamep g, Levelsp v, Levelp l, int w, int h, const char
       auto c      = found[ offset ];
       auto e      = expected[ offset ];
       if (c != e) {
-#pragma GCC diagnostic ignored "-Wformat-zero-length"
-        CON("");
+        CON_NEW_LINE();
         CON("Expected:");
         level_dump(g, v, l, w, h, expected);
-        CON("");
+        CON_NEW_LINE();
         CON("Found:");
         level_dump(g, v, l, w, h);
-        CON("");
+        CON_NEW_LINE();
         ERR("Level contents not as expected");
-#pragma GCC diagnostic warning "-Wformat-zero-length"
         return false;
       }
     }
@@ -337,22 +335,20 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   level_scroll_warp_to_focus(g, v, new_level);
   level_debug(g, v, new_level);
 
-#pragma GCC diagnostic ignored "-Wformat-zero-length"
   if (level_num == LEVEL_SELECT_ID) {
-    BOTCON("");
-    TOPCON("");
+    BOTCON_NEW_LINE();
+    TOPCON_NEW_LINE();
     TOPCON(UI_WARNING_FMT_STR "Choose your next level." UI_RESET_FMT);
     TOPCON("Mouse over levels for monster/treasure info.");
   } else if (new_level->completed) {
-    TOPCON("");
+    TOPCON_NEW_LINE();
     TOPCON(UI_WARNING_FMT_STR "You re-enter level %u of dungeon %s." UI_RESET_FMT "", new_level->level_num + 1,
            game_seed_name_get(g));
   } else if (level_num > 0) {
-    TOPCON("");
+    TOPCON_NEW_LINE();
     TOPCON(UI_WARNING_FMT_STR "You enter level %u of dungeon %s." UI_RESET_FMT "", new_level->level_num + 1,
            game_seed_name_get(g));
   }
-#pragma GCC diagnostic warning "-Wformat-zero-length"
 
   //
   // Enable/disable load and save buttons

@@ -9,8 +9,8 @@
 #include <SDL.h>
 #include <array>
 
-#include "my_types.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
 
 enum {
   SDL_JOY_BUTTON_A,                // 0

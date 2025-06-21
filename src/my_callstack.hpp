@@ -5,8 +5,8 @@
 #ifndef _MY_CALLSTACK_HPP_
 #define _MY_CALLSTACK_HPP_
 
-#include "my_types.hpp"
 #include "my_source_loc.hpp"
+#include "my_types.hpp"
 
 #define CAT(A, B)  A##B
 #define CAT2(A, B) CAT(A, B)

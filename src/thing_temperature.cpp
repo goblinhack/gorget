@@ -28,4 +28,3 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
 
   thing_temperature_set(g, v, l, me, n);
 }
-

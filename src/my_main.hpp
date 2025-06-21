@@ -69,11 +69,17 @@ void CROAK_CLEAN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #define ASSERT_EX(left, operator, right)
 #endif
 
-void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+
+void CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void CON_NEW_LINE(void);
+
 void TOPCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void TOPCON_NEW_LINE(void);
+
 void BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void BOTCON_NEW_LINE(void);
 
 void die(void);
 void quit(Gamep *);

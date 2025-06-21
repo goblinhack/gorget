@@ -6,8 +6,8 @@
 #ifndef _MY_COMMAND_HPP_
 #define _MY_COMMAND_HPP_
 
-#include "my_types.hpp"
 #include "my_token.hpp"
+#include "my_types.hpp"
 
 typedef uint8_t (*command_fn_t)(Gamep, class Tokens *, void *context);
 

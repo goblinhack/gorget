@@ -6,10 +6,10 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_types.hpp"
 #include "my_random.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_types.hpp"
 
 //
 // Apply a damage type to a thing

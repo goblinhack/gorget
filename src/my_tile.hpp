@@ -8,8 +8,8 @@
 
 #include "my_color.hpp"
 #include "my_fpoint.hpp"
-#include "my_types.hpp"
 #include "my_spoint.hpp"
+#include "my_types.hpp"
 
 class Tile;
 

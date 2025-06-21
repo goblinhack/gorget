@@ -7,8 +7,8 @@
 #define _MY_LEVEL_H_
 
 #include "my_game_defs.hpp"
-#include "my_types.hpp"
 #include "my_thing.hpp"
+#include "my_types.hpp"
 
 enum {
   CURSOR_NONE,

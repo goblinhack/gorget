@@ -3,12 +3,12 @@
 //
 
 #include "../../my_callstack.hpp"
-#include "../../my_types.hpp"
 #include "../../my_thing.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
 #include "../../my_tp_callbacks.hpp"
 #include "../../my_tps.hpp"
+#include "../../my_types.hpp"
 
 static std::string tp_door_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
 {
