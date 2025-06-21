@@ -31,26 +31,6 @@
 #define THING_AI_MAX        65535 /* The size of thing_ai */
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 4)
 
-enum {
-  THING_RARITY_COMMON,
-  THING_RARITY_UNCOMMON,
-  THING_RARITY_RARE,
-  THING_RARITY_VERY_RARE,
-  THING_RARITY_UNIQUE,
-};
-
-enum {
-  THING_DIR_NONE,
-  THING_DIR_DOWN,
-  THING_DIR_UP,
-  THING_DIR_LEFT,
-  THING_DIR_RIGHT,
-  THING_DIR_TL,
-  THING_DIR_BL,
-  THING_DIR_TR,
-  THING_DIR_BR,
-};
-
 //
 // Some kind of event that befalls a thing. Usually an attack
 //
@@ -70,7 +50,7 @@ typedef struct ThingEvent_ {
   //
   // Whodunnit?
   //
-  Thingp attacker = nullptr;
+  Thingp source = nullptr;
 } ThingEvent;
 
 //
@@ -133,7 +113,7 @@ typedef struct Thing_ {
   //
   // Idle etc...
   //
-  ThingAnimType anim_type;
+  ThingAnim anim_type;
   //
   // The current tiles[] index for this object
   //
@@ -181,7 +161,7 @@ typedef struct Thing_ {
   //
   // Keeps track of counters in the level this thing has modified.
   //
-  uint8_t count[ THING_FLAG_MAX ];
+  uint8_t count[ THING_FLAG_ENUM_MAX ];
   //
   // Snuffed it.
   //

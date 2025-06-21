@@ -63,8 +63,7 @@
     list_macro(IS_JOIN_X4_180, "IS_JOIN_X4_180"), \
     list_macro(IS_JOIN_X4_270, "IS_JOIN_X4_270"), \
     list_macro(IS_JOIN_X4_90,  "IS_JOIN_X4_90"),  \
-    list_macro(IS_JOIN_X4,     "IS_JOIN_X4"),     \
-    list_macro(IS_JOIN_MAX,    "IS_JOIN_MAX")
+    list_macro(IS_JOIN_X4,     "IS_JOIN_X4"),
 
 /* clang-format on */
 
@@ -182,7 +181,7 @@ void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
           auto tile = tile_find_mand(which.c_str());
           if (tile) {
             t->tile_index        = tile_global_index(tile);
-            t->anim_type         = (ThingAnimType) block_type;
+            t->anim_type         = (ThingAnim) block_type;
             t->anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp, t->anim_type) - 1);
             t->anim_ms_remaining = pcg_random_range_inclusive(0, tile_delay_ms(tile));
           }

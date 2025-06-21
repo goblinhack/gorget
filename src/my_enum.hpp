@@ -13,7 +13,7 @@
 
 #define ENUM_DEF_H(ENUM_NAME, enum_name)                                                                             \
                                                                                                                      \
-  typedef enum { ENUM_NAME(ENUM_LIST_MACRO_VALUE) } enum_name;                                                       \
+  typedef enum { ENUM_NAME(ENUM_LIST_MACRO_VALUE) ENUM_NAME##_MAX } __attribute__((__packed__)) enum_name;           \
                                                                                                                      \
   extern const char *enum_name##_val2str(enum_name val);                                                             \
   extern enum_name   enum_name##_str2val(const char *val);                                                           \

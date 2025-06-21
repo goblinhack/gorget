@@ -19,8 +19,6 @@
 #include <string.h>
 #include <string>
 
-ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
-
 static std::mutex thing_mutex;
 
 static Thingp thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, spoint);
