@@ -597,7 +597,7 @@ void wid_set_pos(Widp w, spoint tl, spoint br)
 //
 // Set the wid new co-ords. Returns true if there is a change.
 //
-void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
+static void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
 {
   TRACE_NO_INDENT();
 

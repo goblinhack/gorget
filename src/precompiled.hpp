@@ -14,7 +14,6 @@
 #include "my_ascii.hpp"
 #include "my_color.hpp"
 #include "my_color_defs.hpp"
-#include "my_minimal.hpp"
-#include "my_point.hpp"
+#include "my_types.hpp"
 #include "my_size.hpp"
 #include "my_wid.hpp"

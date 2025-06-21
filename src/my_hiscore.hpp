@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 
 class HiScore
 {

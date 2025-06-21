@@ -6,7 +6,7 @@
 #ifndef _MY_WID_TEXT_BOX_HPP_
 #define _MY_WID_TEXT_BOX_HPP_
 
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 #include "my_wid.hpp"
 
 #include <map>

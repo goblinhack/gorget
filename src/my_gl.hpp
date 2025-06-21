@@ -9,6 +9,7 @@
 #define GL_GLEXT_PROTOTYPES
 
 #include "my_game_defs.hpp"
+#include "my_spoint.hpp"
 
 /* Defined before OpenGL and GLUT includes to avoid deprecation messages */
 #define GL_SILENCE_DEPRECATION
@@ -51,7 +52,6 @@
 #endif
 
 #include "my_color.hpp"
-#include "my_point.hpp"
 
 //
 // Push elements onto the array buffer.

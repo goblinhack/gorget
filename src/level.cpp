@@ -25,12 +25,12 @@ void levels_stats_dump(Gamep g)
   }
 
   LOG("Level stats:");
-  LOG("- Total memory:       %lu Mb", sizeof(Levels) / (1024 * 1024));
-  LOG("- Per level memory:   %lu Kb", sizeof(Level) / (1024));
-  LOG("- Thing AI:           %lu Mb", sizeof(v->thing_ai) / (1024 * 1024));
-  LOG("- Thing structs:      %lu Mb", sizeof(v->thing_body) / (1024 * 1024));
-  LOG("- Levels:             %lu Mb", sizeof(v->level) / (1024 * 1024));
-  LOG("- Thing size:         %lu b", sizeof(Thing));
+  LOG("- Total memory:       %" PRI_SIZE_T " Mb", sizeof(Levels) / (1024 * 1024));
+  LOG("- Per level memory:   %" PRI_SIZE_T " Kb", sizeof(Level) / (1024));
+  LOG("- Thing AI:           %" PRI_SIZE_T " Mb", sizeof(v->thing_ai) / (1024 * 1024));
+  LOG("- Thing structs:      %" PRI_SIZE_T " Mb", sizeof(v->thing_body) / (1024 * 1024));
+  LOG("- Levels:             %" PRI_SIZE_T " Mb", sizeof(v->level) / (1024 * 1024));
+  LOG("- Thing size:         %" PRI_SIZE_T " b", sizeof(Thing));
   LOG("- Max things:         %u", THING_COMMON_ID_BASE - 1);
 
   thing_stats_dump(g, v);
@@ -55,8 +55,6 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
-      spoint p(x, y);
-
       tmp += l->debug[ x ][ y ];
     }
     LOG("[%s]", tmp.c_str());
@@ -245,7 +243,7 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
 {
   TRACE_NO_INDENT();
 
-  memset(l, 0, sizeof(*l));
+  memset(l, 0, SIZEOF(*l));
 
   l->initialized = true;
   l->level_num   = n;
@@ -267,7 +265,7 @@ Levelsp levels_memory_alloc(Gamep g)
   // NOTE: if we use "new" here, the initialization is visibly slower.
   // DO NOT USE C++ classes or types
   //
-  v = (Levelsp) myzalloc(sizeof(*v), "v");
+  v = (Levelsp) myzalloc(SIZEOF(*v), "v");
   if (! v) {
     return nullptr;
   }
@@ -386,7 +384,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     level_select_destroy(g, v, l);
   }
 
-  memset(l, 0, sizeof(*l));
+  memset(l, 0, SIZEOF(*l));
 }
 
 bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id)

@@ -7,7 +7,7 @@
 #define _MY_LEVEL_H_
 
 #include "my_game_defs.hpp"
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 #include "my_thing.hpp"
 
 enum {

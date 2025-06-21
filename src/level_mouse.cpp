@@ -7,7 +7,6 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_point.hpp"
 #include "my_sdl_event.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"

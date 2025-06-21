@@ -7,9 +7,9 @@
 #define _MY_THING_HPP_
 
 #include "my_game_defs.hpp"
-#include "my_minimal.hpp"
-#include "my_point.hpp" // does not seem to make the compile speed much worse
-#include "my_tp.hpp"    // does not seem to make the compile speed much worse
+#include "my_types.hpp"
+#include "my_spoint.hpp"
+#include "my_tp.hpp"
 
 #include <string>
 

@@ -10,7 +10,6 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 #include "my_string.hpp"
@@ -182,7 +181,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
     player_level = game_level_get(g, v, player->level_num);
   }
 
-  memset(level_select->debug, ' ', sizeof(level_select->debug));
+  memset(level_select->debug, ' ', SIZEOF(level_select->debug));
 
   auto tp_is_level_not_visited = tp_random(is_level_not_visited);
   auto tp_is_level_curr        = tp_random(is_level_curr);
@@ -506,7 +505,7 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
   }
 
   LevelSelect *s = &v->level_select;
-  memset(s, 0, sizeof(*s));
+  memset(s, 0, SIZEOF(*s));
 }
 
 //

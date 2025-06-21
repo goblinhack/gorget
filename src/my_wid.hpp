@@ -7,9 +7,9 @@
 #define _MY_WID_HPP_
 
 #include "my_color.hpp"
-#include "my_minimal.hpp"
-#include "my_point.hpp"
+#include "my_spoint.hpp"
 #include "my_time.hpp"
+#include "my_types.hpp"
 
 typedef enum {
   WID_COLOR_BG,
@@ -215,7 +215,6 @@ void wid_set_on_mouse_over_begin(Gamep, Widp, on_mouse_over_begin_t fn);
 void wid_set_on_mouse_over_end(Gamep, Widp, on_mouse_over_end_t fn);
 void wid_set_on_mouse_up(Gamep, Widp, on_mouse_up_t fn);
 void wid_set_on_tick(Gamep, Widp, on_tick_t fn);
-void wid_set_pos_pct(Widp, fpoint tl, fpoint br);
 void wid_set_pos(Widp, spoint tl, spoint br);
 void wid_set_prev(Gamep, Widp w, Widp);
 void wid_set_received_input(Widp, uint8_t val);

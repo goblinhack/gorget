@@ -9,7 +9,7 @@
 #include <SDL.h>
 #include <array>
 
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 #include "my_time.hpp"
 
 enum {

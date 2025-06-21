@@ -6,7 +6,7 @@
 #ifndef _MY_MAIN_HPP_
 #define _MY_MAIN_HPP_
 
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 
 #include <string>
 

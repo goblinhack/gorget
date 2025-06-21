@@ -9,7 +9,6 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 #include "my_time.hpp"
@@ -141,8 +140,8 @@ public:
         data[ x ][ y ].room = nullptr;
       }
     }
-    memset(&info.entrance, 0, sizeof(info.entrance));
-    memset(&info, 0, sizeof(info));
+    memset(&info.entrance, 0, SIZEOF(info.entrance));
+    memset(&info, 0, SIZEOF(info));
   }
   ~LevelGen(void) {}
 
@@ -3566,8 +3565,8 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
 //
 void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l)
 {
-  memset(l->walked, 0, sizeof(l->walked));
-  memset(l->info.on_path_entrance_to_exit, 0, sizeof(l->info.on_path_entrance_to_exit));
+  memset(l->walked, 0, SIZEOF(l->walked));
+  memset(l->info.on_path_entrance_to_exit, 0, SIZEOF(l->info.on_path_entrance_to_exit));
   level_gen_mark_tiles_on_path_entrance_to_exit(g, l, l->info.entrance.x, l->info.entrance.y);
 }
 

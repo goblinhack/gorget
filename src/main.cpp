@@ -179,7 +179,7 @@ void restart(Gamep g)
 
   if (use_system) {
     char tmp_cmd[ PATH_MAX ];
-    snprintf(tmp_cmd, sizeof(tmp_cmd), "%s &", executable);
+    snprintf(tmp_cmd, SIZEOF(tmp_cmd), "%s &", executable);
     system(tmp_cmd);
     exit(0);
   } else {

@@ -2,8 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_fpoint.hpp"
 #include "my_math.hpp"
-#include "my_point.hpp"
+
 #include <math.h>
 
 fpoint operator+(fpoint const &a, fpoint const &b) { return fpoint(a.x + b.x, a.y + b.y); }

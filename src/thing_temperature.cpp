@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"

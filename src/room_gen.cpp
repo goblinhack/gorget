@@ -9,7 +9,6 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 
@@ -108,7 +107,7 @@ static void room_gen_clear(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  memset(grid->data, CHARMAP_EMPTY, sizeof(grid->data));
+  memset(grid->data, CHARMAP_EMPTY, SIZEOF(grid->data));
 }
 
 //

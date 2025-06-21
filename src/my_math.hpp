@@ -9,8 +9,6 @@
 #ifndef _MY_MATH_UTIL_HPP_
 #define _MY_MATH_UTIL_HPP_
 
-double gaussrand(double mean, double stddev);
-
 #ifdef __APPLE__
 #define sincos(x, s, c)  __sincos(x, s, c)
 #define sincosf(x, s, c) __sincosf(x, s, c)

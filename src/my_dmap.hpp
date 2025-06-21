@@ -7,8 +7,7 @@
 #define _MY_DMAP_HPP_
 
 #include "my_game_defs.hpp"
-// REMOVED #include "my_minimal.hpp"
-#include "my_point.hpp"
+#include "my_spoint.hpp"
 
 #include <array>
 #include <vector>

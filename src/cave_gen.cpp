@@ -7,9 +7,9 @@
 #include "my_charmap.hpp"
 #include "my_game.hpp"
 #include "my_main.hpp"
-#include "my_point.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
+#include "my_spoint.hpp"
 
 static const int MAP_LEVEL_BLOB_CENTERING = MAP_WIDTH / 4;
 
@@ -56,7 +56,7 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
   // Reset the cave map on the first generation
   //
   if (! map_generations) {
-    memset(c->curr, 0, sizeof(c->curr));
+    memset(c->curr, 0, SIZEOF(c->curr));
 
     for (x = 0; x < MAP_WIDTH; x++) {
       for (y = 0; y < MAP_HEIGHT; y++) {
@@ -138,8 +138,8 @@ void cave_create(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2, int map_g
 {
   for (auto gen = 0; gen < map_generations; gen++) {
     cave_generation(g, c, fill_prob, r1, r2, gen);
-    memcpy(c->curr, c->prev, sizeof(c->prev));
-    memset(c->prev, 0, sizeof(c->prev));
+    memcpy(c->curr, c->prev, SIZEOF(c->prev));
+    memset(c->prev, 0, SIZEOF(c->prev));
   }
 }
 
@@ -195,7 +195,7 @@ void cave_generation_keep_largest_blob(Gamep g, Cave *c)
   //
   // Reset the set of walked tiles
   //
-  memset(c->blob.id, 0, sizeof(c->blob.id));
+  memset(c->blob.id, 0, SIZEOF(c->blob.id));
 
   //
   // Keep track of the largest blob
@@ -292,8 +292,8 @@ void cave_generation_center_blob(Gamep g, Cave *c)
   //
   // Save curr to preve so we can reposition it
   //
-  memcpy(c->prev, c->curr, sizeof(c->prev));
-  memset(c->curr, 0, sizeof(c->curr));
+  memcpy(c->prev, c->curr, SIZEOF(c->prev));
+  memset(c->curr, 0, SIZEOF(c->curr));
 
   //
   // Get the required offset to center this blob

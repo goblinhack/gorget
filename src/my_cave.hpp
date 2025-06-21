@@ -7,7 +7,7 @@
 #define _MY_CAVE_H_
 
 #include "my_game_defs.hpp"
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 
 //
 // Cellular automata helpers

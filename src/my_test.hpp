@@ -8,7 +8,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 #include <string>
 
 class Test;

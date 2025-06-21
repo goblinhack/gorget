@@ -316,7 +316,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
   }
 
   if (wid_main_menu_window) {
-    ascii_putf(TERM_WIDTH - sizeof(MYVER), TERM_HEIGHT - 1, GREEN, BLACK, "V" MYVER);
+    ascii_putf(TERM_WIDTH - SIZEOF(MYVER), TERM_HEIGHT - 1, GREEN, BLACK, "V" MYVER);
 
     std::string seed_name(game_seed_name_get(g));
     auto        seed_text = "Seed: '" + seed_name + "'";

@@ -2,10 +2,10 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_spoint.hpp"
+
 #include <math.h>
 #include <vector>
-
-#include "my_point.hpp"
 
 std::vector< spoint > line(const spoint s, const spoint e, size_t max_elems)
 {

@@ -6,7 +6,7 @@
 #ifndef _MY_COLOR_HPP_
 #define _MY_COLOR_HPP_
 
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 
 #include <string>
 

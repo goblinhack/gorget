@@ -3,14 +3,15 @@
 //
 
 #pragma once
-#ifndef _MY_MINIMAL_HPP_
-#define _MY_MINIMAL_HPP_
+#ifndef _MY_TYPES_HPP_
+#define _MY_TYPES_HPP_
 
 ////////////////////////////////////////////////////////////////////////
 // Bare minimal includes. Do not add any c++ includes here for speed.
 ////////////////////////////////////////////////////////////////////////
 
 #include "my_cfg.hpp"
+
 #include <stdint.h>
 
 #if __GNUC__ >= 8
@@ -60,15 +61,15 @@
 #ifdef _WIN32
 #ifdef _WIN64
 #ifdef __MINGW32__
-#define PRI_SIZET "llu"
+#define PRI_SIZE_T "llu"
 #else
-#define PRI_SIZET PRIu64
+#define PRI_SIZE_T PRIu64
 #endif
 #else
-#define PRI_SIZET PRIu32
+#define PRI_SIZE_T PRIu32
 #endif
 #else
-#define PRI_SIZET "zu"
+#define PRI_SIZE_T "zu"
 #endif
 
 ////////////////////////////////////////////////////////////////////////////
@@ -228,4 +229,4 @@ extern bool g_opt_debug1;                        // Normal debugs
 extern bool g_opt_debug2;                        // All debugs
 extern bool g_opt_tests;                         // Dungeon tests
                                                  //
-#endif
+#endif                                           // _MY_TYPES_HPP_

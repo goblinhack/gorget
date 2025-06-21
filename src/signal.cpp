@@ -79,7 +79,7 @@ static void debug_crash_handler(int sig)
 
 #if defined __APPLE__
   auto pid_num = getpid();
-  auto ret     = proc_pidpath(pid_num, prog_name, sizeof(prog_name));
+  auto ret     = proc_pidpath(pid_num, prog_name, SIZEOF(prog_name));
   if (ret <= 0) {
     fprintf(stderr, "PID %d: proc_pidpath ();\n", pid_num);
     fprintf(stderr, "    %s\n", strerror(errno));

@@ -5384,14 +5384,14 @@ static int stbi__compute_transparency16(stbi__png *z, stbi__uint16 tc[ 3 ], int 
 static int stbi__expand_png_palette(stbi__png *a, stbi_uc *palette, int len, int pal_img_n)
 {
   stbi__uint32 i, pixel_count = a->s->img_x * a->s->img_y;
-  stbi_uc     *p, *temperature_out, *orig = a->out;
+  stbi_uc     *p, *temp_out, *orig = a->out;
 
   p = (stbi_uc *) stbi__malloc_mad2(pixel_count, pal_img_n, 0);
   if (p == NULL)
     return stbi__err("outofmem", "Out of memory");
 
   // between here and free(out) below, exitting would leak
-  temperature_out = p;
+  temp_out = p;
 
   if (pal_img_n == 3) {
     for (i = 0; i < pixel_count; ++i) {
@@ -5412,7 +5412,7 @@ static int stbi__expand_png_palette(stbi__png *a, stbi_uc *palette, int len, int
     }
   }
   STBI_FREE(a->out);
-  a->out = temperature_out;
+  a->out = temp_out;
 
   STBI_NOTUSED(len);
 

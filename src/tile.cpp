@@ -7,7 +7,7 @@
 #include "my_color_defs.hpp"
 #include "my_cpp_template.hpp"
 #include "my_gl.hpp"
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
 #include "my_string.hpp"

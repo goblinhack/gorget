@@ -7,7 +7,7 @@
 #define _MY_THING_TEMPLATE_H_
 
 #include "my_enum.hpp"
-#include "my_minimal.hpp"
+#include "my_types.hpp"
 
 #include <stdarg.h>
 
