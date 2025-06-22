@@ -36,7 +36,7 @@ bool tp_load_goblin(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
-  tp_flag_set(tp, is_monst1);
+  tp_flag_set(tp, is_monst_rating_1);
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, 4);
   tp_speed_set(tp, 100);

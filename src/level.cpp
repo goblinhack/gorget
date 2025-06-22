@@ -125,10 +125,10 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_mob2(g, v, l, p)) {
         c = CHARMAP_MOB2;
       }
-      if (level_is_monst1(g, v, l, p)) {
+      if (level_is_monst_rating_1(g, v, l, p)) {
         c = CHARMAP_MONST1;
       }
-      if (level_is_monst2(g, v, l, p)) {
+      if (level_is_monst_rating_2(g, v, l, p)) {
         c = CHARMAP_MONST2;
       }
       if (level_is_pillar(g, v, l, p)) {

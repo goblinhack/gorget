@@ -22,9 +22,9 @@ static void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp
 
   ThingEvent e {
       .reason      = "by burning",      //
-      .source      = source,            //
       .damage_type = THING_DAMAGE_HEAT, //
       .damage      = damage,            //
+      .source      = source,            //
   };
   thing_damage(g, v, l, me, e);
 }

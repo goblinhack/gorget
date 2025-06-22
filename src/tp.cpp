@@ -25,9 +25,9 @@ ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)
 ENUM_DEF_C(THING_DIR_ENUM, ThingDir)
 ENUM_DEF_C(THING_RARITY_ENUM, ThingRarity)
+ENUM_DEF_C(THING_RATING_ENUM, ThingRating)
 ENUM_DEF_C(MAP_Z_DEPTH_ENUM, MapZDepth)
 ENUM_DEF_C(MAP_Z_PRIO_ENUM, MapZPrio)
-ENUM_DEF_C(MONST_LEVEL_ENUM, MonstLevel)
 
 //
 // Templates can be assigned dynamic IDs - however the levels are more reproducable it
@@ -113,7 +113,7 @@ public:
   //
   // Which classes does this monst belong too
   //
-  bool is_monst_level[ MONST_LEVEL_ENUM_MAX ] {};
+  bool is_rating[ THING_RATING_ENUM_MAX ] {};
 
   //
   // See ThingFlag
@@ -200,12 +200,15 @@ Tpidmap tp_id_map;
 
 // begin sort marker3 {
 static Tpidmap tp_flag_map[ THING_FLAG_ENUM_MAX ];
-static Tpidmap tp_monst_level[ MONST_LEVEL_ENUM_MAX ];
+static Tpidmap tp_rating[ THING_RATING_ENUM_MAX ];
 // end sort marker3 }
 
 static std::map< std::string, class Tp * > tp_name_map;
 
 static uint8_t tp_init_done;
+
+static void tp_rating_add(Tpp tp, int);
+static void tp_fixup(void);
 
 Tp::Tp(void) { newptr(MTYPE_TP, this, "Tp"); }
 
@@ -245,13 +248,13 @@ Tpp tp_find(TpId id)
   TRACE_NO_INDENT();
 
   if ((int) id - 1 >= (int) tp_id_map.size()) {
-    ERR("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_id_map", id);
+    DIE("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_id_map", id);
     return nullptr;
   }
 
   auto result = tp_id_map[ id - 1 ];
   if (! result) {
-    ERR("tp_find: thing template %" PRIx16 " not found", id);
+    DIE("tp_find: thing template %" PRIx16 " not found", id);
     return nullptr;
   }
 
@@ -272,7 +275,6 @@ bool tp_init(void)
   tp_init_done = true;
 
   templates_init();
-  tp_random_dungeon_init();
   tp_fixup();
 
   return true;
@@ -294,8 +296,8 @@ void tp_fini(void)
   tp_id_map.clear();
   tp_name_map.clear();
 
-  for (auto c = 0; c < MONST_LEVEL_ENUM_MAX; c++) {
-    tp_monst_level[ c ].clear();
+  for (auto c = 0; c < THING_RATING_ENUM_MAX; c++) {
+    tp_rating[ c ].clear();
   }
 
   for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
@@ -332,7 +334,7 @@ static void tp_assign_id(const std::string &tp_name, int *id_out)
   //
   if (tp_preferred_id.find(tp_name) == tp_preferred_id.end()) {
     tp_preferred_id[ tp_name ] = *id_out = ++id;
-    DIE("Thing template not found [%s] Please edit tp_ids.cpp and add it.", tp_name.c_str());
+    ERR("tp_assign_id: thing template not found [%s] Please edit tp_ids.cpp and add it.", tp_name.c_str());
     return;
   }
 
@@ -349,7 +351,7 @@ Tpp tp_load(const char *name_in)
   tp_assign_id(name_in, &id);
 
   if (tp_find_opt(name_in)) {
-    DIE("tp_load: thing template name [%s] already loaded", name_in);
+    ERR("tp_load: thing template name [%s] already loaded", name_in);
   }
 
   auto tp  = new Tp();
@@ -357,36 +359,20 @@ Tpp tp_load(const char *name_in)
 
   auto result = tp_name_map.insert(std::make_pair(name, tp));
   if (! result.second) {
-    DIE("Thing insert name [%s] failed", name_in);
+    ERR("tp_load: thing insert name [%s] failed", name_in);
   }
 
   tp_id_map.push_back(tp);
   tp->id = tp_id_map.size();
 
+  //
+  // Finalizing is done in tp_fixup
+  //
+
   return tp;
 }
 
-Tilep tp_first_tile(Tpp tp, ThingAnim anim_type)
-{
-  TRACE_NO_INDENT();
-
-  if (! tp) {
-    return nullptr;
-  }
-
-  auto tiles = &tp->tiles[ anim_type ];
-
-  if (! tiles || tiles->empty()) {
-    ERR("tp %s class %d has no tiles", tp->name.c_str(), anim_type);
-  }
-
-  //
-  // Get the first anim tile.
-  //
-  return tp->tiles[ anim_type ][ 0 ];
-}
-
-void tp_random_dungeon_init(void)
+static void tp_fixup(void)
 {
   TRACE_NO_INDENT();
 
@@ -395,18 +381,44 @@ void tp_random_dungeon_init(void)
     //
     // Monsters
     //
-    for (auto c = 0; c < MONST_LEVEL_ENUM_MAX; c++) {
-      if (tp->is_monst_level[ c ]) {
-        tp_monst_level[ c ].push_back(tp);
-      }
+    if (tp_is_monst_rating_1(tp)) {
+      tp_rating_add(tp, 1);
     }
 
+    if (tp_is_monst_rating_2(tp)) {
+      tp_rating_add(tp, 2);
+    }
+
+    //
+    // Populate the flag map for quick lookup of things that share a flag
+    //
     for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
       if (tp->flag[ f ]) {
         tp_flag_map[ f ].push_back(tp);
       }
     }
   }
+}
+
+Tilep tp_first_tile(Tpp tp, ThingAnim val)
+{
+  TRACE_NO_INDENT();
+
+  if (! tp) {
+    return nullptr;
+  }
+
+  auto tiles = &tp->tiles[ val ];
+
+  if (! tiles || tiles->empty()) {
+    ERR("tp %s class %d has no tiles", tp->name.c_str(), val);
+    return nullptr;
+  }
+
+  //
+  // Get the first anim tile.
+  //
+  return tp->tiles[ val ][ 0 ];
 }
 
 static Tpp tp_get_with_no_rarity_filter(Tpidmap &m)
@@ -447,16 +459,17 @@ Tpp tp_random_monst(int c)
 {
   TRACE_NO_INDENT();
 
-  if (c >= MONST_LEVEL_ENUM_MAX) {
-    DIE("monst bad class %d", c);
+  if (c >= THING_RATING_ENUM_MAX) {
+    ERR("tp_random_monst: monst bad rating %d", c);
     return nullptr;
   }
 
-  if (unlikely(! tp_monst_level[ c ].size())) {
-    DIE("No monst level %d found", c);
+  if (unlikely(! tp_rating[ c ].size())) {
+    ERR("tp_random_monst: no rating %d monsters found", c);
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_monst_level[ c ]);
+
+  return tp_get_with_no_rarity_filter(tp_rating[ c ]);
 }
 
 Tpp tp_random(ThingFlag f)
@@ -464,13 +477,13 @@ Tpp tp_random(ThingFlag f)
   TRACE_NO_INDENT();
 
   if (unlikely(! tp_flag_map[ f ].size())) {
-    DIE("No tp found for ThingFlag %d/%s", f, ThingFlag_val2str(f));
+    ERR("tp_random: no tp found for ThingFlag %d/%s", f, ThingFlag_val2str(f));
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
-void tp_damage_set(Tpp tp, ThingDamage damage_type, const char *val)
+void tp_damage_set(Tpp tp, ThingDamage val, const char *str)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -478,18 +491,18 @@ void tp_damage_set(Tpp tp, ThingDamage damage_type, const char *val)
     return;
   }
 
-  if (damage_type >= THING_DAMAGE_ENUM_MAX) {
-    ERR("bad value in tp for %s", __FUNCTION__);
+  if (val >= THING_DAMAGE_ENUM_MAX) {
+    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
 
-  tp->damage[ damage_type ] = Dice(std::string(val));
+  tp->damage[ val ] = Dice(std::string(str));
 }
 
 //
 // Roll for damage
 //
-int tp_damage(Tpp tp, ThingDamage damage_type)
+int tp_damage(Tpp tp, ThingDamage val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -497,26 +510,26 @@ int tp_damage(Tpp tp, ThingDamage damage_type)
     return 0;
   }
 
-  if (damage_type >= THING_DAMAGE_ENUM_MAX) {
-    ERR("bad value in tp for %s", __FUNCTION__);
+  if (val >= THING_DAMAGE_ENUM_MAX) {
+    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
     return 0;
   }
 
-  return tp->damage[ damage_type ].roll();
+  return tp->damage[ val ].roll();
 }
 
-Tilep tp_tiles_get(Tpp tp, ThingAnim anim_type, int index)
+Tilep tp_tiles_get(Tpp tp, ThingAnim val, int index)
 {
   TRACE_NO_INDENT();
 
-  if (index >= (int) tp->tiles[ anim_type ].size()) {
-    DIE("tile overflow tp %s class %d index %d", tp->name.c_str(), anim_type, index);
+  if (index >= (int) tp->tiles[ val ].size()) {
+    ERR("tp_tiles_get: tile overflow tp %s class %d index %d", tp->name.c_str(), val, index);
   }
 
-  return tp->tiles[ anim_type ][ index ];
+  return tp->tiles[ val ][ index ];
 }
 
-void tp_tiles_push_back(Tpp tp, ThingAnim anim_type, Tilep val)
+void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -524,22 +537,22 @@ void tp_tiles_push_back(Tpp tp, ThingAnim anim_type, Tilep val)
     return;
   }
 
-  if (anim_type >= THING_ANIM_ENUM_MAX) {
-    ERR("bad value in tp for %s", __FUNCTION__);
+  if (val >= THING_ANIM_ENUM_MAX) {
+    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
 
-  tp->tiles[ anim_type ].push_back(val);
+  tp->tiles[ val ].push_back(tile);
 }
 
-int tp_tiles_size(Tpp tp, ThingAnim anim_type)
+int tp_tiles_size(Tpp tp, ThingAnim val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return 0;
   }
-  return (int) tp->tiles[ anim_type ].size();
+  return (int) tp->tiles[ val ].size();
 }
 
 const char *tp_name(Tpp tp)
@@ -738,6 +751,27 @@ int tp_weight_get(Tpp tp)
     return 0;
   }
   return tp->weight;
+};
+
+static void tp_rating_add(Tpp tp, int val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (val >= THING_RATING_ENUM_MAX) {
+    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    return;
+  }
+
+  if (tp->is_rating[ val ]) {
+    return;
+  }
+
+  tp_rating[ val ].push_back(tp);
+
+  tp->is_rating[ val ] = true;
 };
 
 void tp_health_initial_set(Tpp tp, int val)

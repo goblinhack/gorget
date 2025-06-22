@@ -65,8 +65,8 @@
       list_macro(is_mob1, "is_mob1"),                                             /* newline */                      \
       list_macro(is_mob2, "is_mob2"),                                             /* newline */                      \
       list_macro(is_monst, "is_monst"),                                           /* newline */                      \
-      list_macro(is_monst1, "is_monst1"),                                         /* newline */                      \
-      list_macro(is_monst2, "is_monst2"),                                         /* newline */                      \
+      list_macro(is_monst_rating_1, "is_monst_rating_1"),                         /* newline */                      \
+      list_macro(is_monst_rating_2, "is_monst_rating_2"),                         /* newline */                      \
       list_macro(is_obstacle_block_or_door, "is_obstacle_block_or_door"),         /* newline */                      \
       list_macro(is_obstacle_block, "is_obstacle_block"),                         /* newline */                      \
       list_macro(is_pillar, "is_pillar"),                                         /* newline */                      \
@@ -177,11 +177,12 @@ ENUM_DEF_H(MAP_Z_PRIO_ENUM, MapZPrio)
 //
 // Monst challenge level
 //
-#define MONST_LEVEL_ENUM(list_macro)                                                                                 \
-  list_macro(MONST_LEVEL_A, "A"),     /* newline */                                                                  \
-      list_macro(MONST_LEVEL_B, "B"), /* newline */
+#define THING_RATING_ENUM(list_macro)                                                                                \
+  list_macro(THING_RATING_0, "0"),     /* newline */                                                                 \
+      list_macro(THING_RATING_1, "1"), /* newline */                                                                 \
+      list_macro(THING_RATING_2, "2"), /* newline */
 
-ENUM_DEF_H(MONST_LEVEL_ENUM, MonstLevel)
+ENUM_DEF_H(THING_RATING_ENUM, ThingRating)
 
 //
 // Thing anim enum
@@ -332,9 +333,7 @@ void err_(Tpp, const char *fmt, va_list args); // compile error without
 void log(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void log_(Tpp, const char *fmt, va_list args); // compile error without
 void tp_fini(void);
-void tp_fixup(void);
 void tp_get_id(const char *, int *id);
-void tp_random_dungeon_init(void);
 
 bool tp_flag(Tpp tp, ThingFlag);
 void tp_flag_set(Tpp tp, ThingFlag, bool val = true);
@@ -419,8 +418,8 @@ int  tp_temperature_damage_at_get(Tpp tp);
 #define tp_is_mob1(tp)                       tp_flag(tp, is_mob1)
 #define tp_is_mob2(tp)                       tp_flag(tp, is_mob2)
 #define tp_is_monst(tp)                      tp_flag(tp, is_monst)
-#define tp_is_monst1(tp)                     tp_flag(tp, is_monst1)
-#define tp_is_monst2(tp)                     tp_flag(tp, is_monst2)
+#define tp_is_monst_rating_1(tp)             tp_flag(tp, is_monst_rating_1)
+#define tp_is_monst_rating_2(tp)             tp_flag(tp, is_monst_rating_2)
 #define tp_is_obstacle_block_or_door(tp)     tp_flag(tp, is_obstacle_block_or_door)
 #define tp_is_obstacle_block(tp)             tp_flag(tp, is_obstacle_block)
 #define tp_is_pillar(tp)                     tp_flag(tp, is_pillar)
@@ -547,8 +546,8 @@ int  tp_temperature_damage_at_get(Tpp tp);
 #define level_is_mob1(g, v, l, p)                       level_flag(g, v, l, is_mob1, p)
 #define level_is_mob2(g, v, l, p)                       level_flag(g, v, l, is_mob2, p)
 #define level_is_monst(g, v, l, p)                      level_flag(g, v, l, is_monst, p)
-#define level_is_monst1(g, v, l, p)                     level_flag(g, v, l, is_monst1, p)
-#define level_is_monst2(g, v, l, p)                     level_flag(g, v, l, is_monst2, p)
+#define level_is_monst_rating_1(g, v, l, p)             level_flag(g, v, l, is_monst_rating_1, p)
+#define level_is_monst_rating_2(g, v, l, p)             level_flag(g, v, l, is_monst_rating_2, p)
 #define level_is_obstacle_block_or_door(g, v, l, p)     level_flag(g, v, l, is_obstacle_block_or_door, p)
 #define level_is_obstacle_block(g, v, l, p)             level_flag(g, v, l, is_obstacle_block, p)
 #define level_is_pillar(g, v, l, p)                     level_flag(g, v, l, is_pillar, p)

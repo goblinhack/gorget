@@ -694,24 +694,24 @@ bool thing_is_monst(Thingp t)
   return tp_flag(thing_tp(t), is_monst);
 }
 
-bool thing_is_monst1(Thingp t)
+bool thing_is_monst_rating_1(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst1);
+  return tp_flag(thing_tp(t), is_monst_rating_1);
 }
 
-bool thing_is_monst2(Thingp t)
+bool thing_is_monst_rating_2(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst2);
+  return tp_flag(thing_tp(t), is_monst_rating_2);
 }
 
 bool thing_is_obstacle_block_or_door(Thingp t)

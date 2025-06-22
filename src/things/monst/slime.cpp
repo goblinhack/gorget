@@ -35,7 +35,7 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
-  tp_flag_set(tp, is_monst2);
+  tp_flag_set(tp, is_monst_rating_2);
   tp_flag_set(tp, is_slime);
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, 10);

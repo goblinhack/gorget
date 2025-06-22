@@ -153,11 +153,11 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_MONST1 :
           need_floor = true;
-          tp         = tp_random(is_monst1);
+          tp         = tp_random_monst(1);
           break;
         case CHARMAP_MONST2 :
           need_floor = true;
-          tp         = tp_random(is_monst2);
+          tp         = tp_random_monst(2);
           break;
         case CHARMAP_MOB1 :
           need_floor = true;

@@ -625,7 +625,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
       mobs[ name ]++;
     }
 
-    if (thing_is_monst1(t)) {
+    if (thing_is_monst(t)) {
       monsts[ name ]++;
     }
 
