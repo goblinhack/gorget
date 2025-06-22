@@ -320,13 +320,17 @@ static void sdl_msgerr_(const char *fmt, va_list args)
   vsnprintf(buf, MAXLONGSTR, fmt, args);
 
 #if SDL_MAJOR_VERSION >= 2
+  SDL_Log("%s", buf);
+
   //
-  // The window is needed else the box appears behind the main window.
+  // Fullscreen sometimes hides the error, so create a temp window
   //
-  SDL_Log(buf);
   LOG("Show SDL message box");
-  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, sdl.window);
+  auto window
+      = SDL_CreateWindow("gorget error", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1, 1, SDL_WINDOW_SHOWN);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, window);
   LOG("Launched SDL message box");
+  SDL_DestroyWindow(window);
 #endif
 }
 
