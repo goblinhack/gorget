@@ -35,11 +35,13 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
 
   auto tp = thing_tp(me);
 
-  if (n > tp_temperature_damage_at_get(tp)) {
+  auto t1 = tp_temperature_damage_at_get(tp);
+  if (t1 && (n > t1)) {
     thing_temperature_damage_handle(g, v, l, source, me, n);
   }
 
-  if (n > tp_temperature_burns_at_get(tp)) {
+  auto t2 = tp_temperature_burns_at_get(tp);
+  if (t2 && (n > t2)) {
     // TODO damage
   }
 

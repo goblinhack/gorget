@@ -141,7 +141,7 @@ typedef struct Thing_ {
   //
   // Health of the item.
   //
-  uint16_t _health;
+  int16_t _health;
   //
   // Template ID
   //
@@ -281,6 +281,8 @@ int thing_health(Thingp);
 int thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_health_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+bool thing_is_immune_to(Thingp, ThingDamage);
 
 // begin sort marker1 {
 bool thing_is_able_to_change_temperature(Thingp);

@@ -19,6 +19,30 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &event)
   TRACE_AND_INDENT();
 
   if (thing_is_dead(t)) {
+    //
+    // Log the reason for attack?
+    //
+    if (thing_is_loggable(t)) {
+      if (event.reason.empty()) {
+        THING_LOG(t, "damage (already dead)");
+      } else {
+        THING_LOG(t, "damage, reason: %s (already dead)", event.reason.c_str());
+      }
+    }
+    return;
+  }
+
+  //
+  // Immune to this attack?
+  //
+  if (thing_is_immune_to(t, event.damage_type)) {
+    if (thing_is_loggable(t)) {
+      if (event.reason.empty()) {
+        THING_LOG(t, "damage (immune)");
+      } else {
+        THING_LOG(t, "damage, reason: %s (immune)", event.reason.c_str());
+      }
+    }
     return;
   }
 
@@ -39,4 +63,6 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &event)
   if (thing_health_decr(g, v, l, t, event.damage) <= 0) {
     thing_dead(g, v, l, t, event);
   }
+
+  THING_LOG(t, "post damage");
 }
