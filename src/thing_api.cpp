@@ -151,7 +151,70 @@ void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
 
   t->_is_dead = val;
+
+  if (val && thing_is_loggable(t)) {
+    THING_LOG(t, "is dead");
+  }
+
   thing_is_dead_handle(g, v, l, t);
+}
+
+bool thing_is_corpse(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_corpse;
+}
+
+void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+
+  if (t->_is_corpse == val) {
+    return;
+  }
+
+  t->_is_corpse = val;
+
+  if (val && thing_is_loggable(t)) {
+    THING_LOG(t, "is corpse");
+  }
+}
+
+bool thing_is_scheduled_for_cleanup(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_scheduled_for_cleanup;
+}
+
+void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+
+  if (t->_is_scheduled_for_cleanup == val) {
+    return;
+  }
+
+  t->_is_scheduled_for_cleanup = val;
+
+  if (val && thing_is_loggable(t)) {
+    THING_LOG(t, "is scheduled for cleanup");
+  }
 }
 
 bool thing_is_sleeping(Thingp t)
@@ -1254,24 +1317,14 @@ bool thing_is_unused45(Thingp t)
   return tp_flag(thing_tp(t), is_unused45);
 }
 
-bool thing_is_unused46(Thingp t)
+bool thing_is_corpse_on_death(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused46);
-}
-
-bool thing_is_unused47(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_unused47);
+  return tp_flag(thing_tp(t), is_corpse_on_death);
 }
 
 bool thing_is_monst_group_0(Thingp t)

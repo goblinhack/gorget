@@ -31,7 +31,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.g.."
+        "..@.L.."
         "......."
         "......."
         ".......";
@@ -51,55 +51,118 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   bool left   = false;
   bool right  = false;
 
+  spoint  p;
+  bool    found_it = false;
+  ThingId mob_id   = 0;
+  Thingp  player   = nullptr;
+
   //
   // Bump into a mob_lava. It should move and not be knocked over.
   //
+  TEST_LOG(t, "bump mob into lava right");
+  TRACE_AND_INDENT();
+  up = down = left = right = false;
+  right                    = true;
+
+  //
+  // Find the player
+  //
   {
-    TEST_LOG(t, "move right");
-    TRACE_AND_INDENT();
-    up = down = left = right = false;
-    right                    = true;
-
-    if (! (result = player_move_request(g, up, down, left, right))) {
-      TEST_FAILED(t, "move failed");
-      goto exit;
-    }
-
-    game_wait_for_tick_to_finish(g, v, l);
-
-    if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
-      TEST_FAILED(t, "unexpected contents");
-      goto exit;
-    }
-
-    auto player = thing_player(g);
+    TRACE_NO_INDENT();
+    player = thing_player(g);
     if (! player) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
+  }
 
-    //
-    // Check mob is dead when shoved into lava
-    //
+  //
+  // Find the mob before shoving it via the player
+  //
+  {
+    TRACE_NO_INDENT();
+    p        = player->at + spoint(1, 0);
+    found_it = false;
+    FOR_ALL_THINGS_AT(g, v, l, it, p)
+    {
+      if (thing_is_mob(it)) {
+        found_it = true;
+        mob_id   = it->id;
+        break;
+      }
+    }
+  }
+
+  //
+  // Move right, shoving the mob
+  //
+  {
+    TRACE_NO_INDENT();
+    if (! (result = player_move_request(g, up, down, left, right))) {
+      TEST_FAILED(t, "move failed");
+      goto exit;
+    }
+  }
+
+  //
+  // Wait for the end of tick
+  //
+  {
+    TRACE_NO_INDENT();
+    game_wait_for_tick_to_finish(g, v, l);
+  }
+
+  //
+  // Check the level contents
+  //
+  {
+    TRACE_NO_INDENT();
+    if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+  }
+
+  //
+  // Check mob is dead when shoved into lava. It should be popped off the level.
+  //
+  {
+    TRACE_NO_INDENT();
     TEST_LOG(t, "check mob is dead when shoved into lava");
-    auto p        = player->at + spoint(2, 0);
-    bool found_it = false;
+    p        = player->at + spoint(2, 0);
+    found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
-      if (thing_is_mob(it) && thing_is_dead(it)) {
+      if (thing_is_mob(it)) {
         found_it = true;
         break;
       }
     }
 
-    if (! found_it) {
-      TEST_FAILED(t, "no dead mob in lava");
+    if (found_it) {
+      TEST_FAILED(t, "found mob, but it should have been popped");
       goto exit;
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick");
+  //
+  // Check the mob has been cleaned up
+  //
+  {
+    TRACE_NO_INDENT();
+    if (thing_find_optional(g, v, mob_id)) {
+      TEST_FAILED(t, "found mob, but it should have been freed");
+      goto exit;
+    }
+  }
+
+  //
+  // Check the tick is as expected
+  //
+  {
+    TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick");
+  }
 
   TEST_PASSED(t);
 exit:

@@ -31,6 +31,7 @@ bool tp_load_goblin(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_goblin);
   tp_flag_set(tp, is_loggable);
@@ -58,6 +59,12 @@ bool tp_load_goblin(void)
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  for (auto frame = 0; frame < 1; frame++) {
+    auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    tile_delay_ms_set(tile, delay);
+    tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }
 
   return true;

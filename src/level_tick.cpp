@@ -129,6 +129,8 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 {
   v->tick++;
+  LOG("Tick %u begin", v->tick);
+
   v->tick_begin_requested  = false;
   v->frame_begin           = v->frame;
   v->time_step             = 0.0;
@@ -181,6 +183,8 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
+  LOG("Tick %u ending", v->tick);
+
   v->tick_in_progress   = false;
   v->tick_end_requested = false;
   v->time_step          = 0;
@@ -211,7 +215,14 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     if (thing_is_tickable(t)) {
       thing_tick_end(g, v, l, t);
     }
+
+    if (thing_is_scheduled_for_cleanup(t)) {
+      thing_fini(g, v, l, t);
+    }
   }
+
+  LOG("Tick %u end", v->tick);
+  LOG("-");
 }
 
 bool level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l)

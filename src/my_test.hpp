@@ -22,16 +22,20 @@ void tests_run(Gamep);
 
 #define TEST_FAILED(test, why)                                                                                       \
   {                                                                                                                  \
+    TRACE_NO_INDENT();                                                                                               \
     LOG("Test %s: failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);                       \
     result = false;                                                                                                  \
     goto exit;                                                                                                       \
   }
 
 #define TEST_ASSERT(test, what, why)                                                                                 \
-  if (! (what)) {                                                                                                    \
-    LOG("Test %s: assertion failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);             \
-    result = false;                                                                                                  \
-    goto exit;                                                                                                       \
+  {                                                                                                                  \
+    TRACE_NO_INDENT();                                                                                               \
+    if (! (what)) {                                                                                                  \
+      LOG("Test %s: assertion failed at %s:%u, reason: %s", test_name(test), __FUNCTION__, __LINE__, why);           \
+      result = false;                                                                                                \
+      goto exit;                                                                                                     \
+    }                                                                                                                \
   }
 
 #define TEST_PASSED(test) LOG("Test %s: passed at %s:%u", test_name(test), __FUNCTION__, __LINE__);

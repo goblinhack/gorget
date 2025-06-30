@@ -122,8 +122,7 @@
       list_macro(is_unused43, "is_unused43"),                                     /* newline */                      \
       list_macro(is_unused44, "is_unused44"),                                     /* newline */                      \
       list_macro(is_unused45, "is_unused45"),                                     /* newline */                      \
-      list_macro(is_unused46, "is_unused46"),                                     /* newline */                      \
-      list_macro(is_unused47, "is_unused47"),                                     /* newline */                      \
+      list_macro(is_corpse_on_death, "is_corpse_on_death"),                       /* newline */                      \
       list_macro(is_monst_group_0, "is_monst_group_0"),                           /* newline */                      \
       list_macro(is_able_to_change_temperature, "is_able_to_change_temperature"), /* newline */                      \
       list_macro(is_unused5, "is_unused5"),                                       /* newline */                      \
@@ -392,6 +391,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_bridge(tp)                     tp_flag(tp, is_bridge)
 #define tp_is_burnable(tp)                   tp_flag(tp, is_burnable)
 #define tp_is_chasm(tp)                      tp_flag(tp, is_chasm)
+#define tp_is_corpse_on_death(tp)            tp_flag(tp, is_corpse_on_death)
 #define tp_is_corridor(tp)                   tp_flag(tp, is_corridor)
 #define tp_is_crushable_underfoot(tp)        tp_flag(tp, is_crushable_underfoot)
 #define tp_is_cursor_hazard(tp)              tp_flag(tp, is_cursor_hazard)
@@ -491,8 +491,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused43(tp)                   tp_flag(tp, is_unused43)
 #define tp_is_unused44(tp)                   tp_flag(tp, is_unused44)
 #define tp_is_unused45(tp)                   tp_flag(tp, is_unused45)
-#define tp_is_unused46(tp)                   tp_flag(tp, is_unused46)
-#define tp_is_unused47(tp)                   tp_flag(tp, is_unused47)
 #define tp_is_unused5(tp)                    tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
@@ -520,6 +518,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_bridge(g, v, l, p)                     level_flag(g, v, l, is_bridge, p)
 #define level_is_burnable(g, v, l, p)                   level_flag(g, v, l, is_burnable, p)
 #define level_is_chasm(g, v, l, p)                      level_flag(g, v, l, is_chasm, p)
+#define level_is_corpse_on_death(g, v, l, p)            level_flag(g, v, l, is_corpse_on_death, p)
 #define level_is_corridor(g, v, l, p)                   level_flag(g, v, l, is_corridor, p)
 #define level_is_crushable_underfoot(g, v, l, p)        level_flag(g, v, l, is_crushable_underfoot, p)
 #define level_is_cursor_hazard(g, v, l, p)              level_flag(g, v, l, is_cursor_hazard, p)
@@ -619,8 +618,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused43(g, v, l, p)                   level_flag(g, v, l, is_unused43, p)
 #define level_is_unused44(g, v, l, p)                   level_flag(g, v, l, is_unused44, p)
 #define level_is_unused45(g, v, l, p)                   level_flag(g, v, l, is_unused45, p)
-#define level_is_unused46(g, v, l, p)                   level_flag(g, v, l, is_unused46, p)
-#define level_is_unused47(g, v, l, p)                   level_flag(g, v, l, is_unused47, p)
 #define level_is_unused5(g, v, l, p)                    level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)

@@ -34,6 +34,18 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   }
 
   thing_is_dead_set(g, v, l, t);
+
+  if (thing_is_corpse_on_death(t)) {
+    //
+    // Keep the thing on the map, but in dead state.
+    //
+    thing_is_corpse_set(g, v, l, t);
+  } else {
+    //
+    // Schedule for removal from the map and freeing
+    //
+    thing_is_scheduled_for_cleanup_set(g, v, l, t);
+  }
 }
 
 //

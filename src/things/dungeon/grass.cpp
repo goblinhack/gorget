@@ -31,6 +31,7 @@ bool tp_load_grass(void)
   tp_description_set(tp, tp_grass_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_crushable_underfoot);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_grass);

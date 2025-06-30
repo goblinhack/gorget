@@ -167,6 +167,14 @@ typedef struct Thing_ {
   //
   bool _is_dead : 1;
   //
+  // Snuffed it and is a corpse.
+  //
+  bool _is_corpse : 1;
+  //
+  // If a thing has died and leaves no corpse, schedule it to be removed from the game.
+  //
+  bool _is_scheduled_for_cleanup : 1;
+  //
   // Zzz
   //
   bool _is_sleeping : 1;
@@ -254,6 +262,12 @@ bool thing_is_dir_up(Thingp);
 bool thing_is_dead(Thingp);
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
+bool thing_is_scheduled_for_cleanup(Thingp);
+void thing_is_scheduled_for_cleanup_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+
+bool thing_is_corpse(Thingp);
+void thing_is_corpse_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+
 bool thing_is_sleeping(Thingp);
 void thing_is_sleeping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
@@ -301,6 +315,7 @@ bool thing_is_brazier(Thingp);
 bool thing_is_bridge(Thingp);
 bool thing_is_burnable(Thingp);
 bool thing_is_chasm(Thingp);
+bool thing_is_corpse_on_death(Thingp);
 bool thing_is_corridor(Thingp);
 bool thing_is_crushable_underfoot(Thingp);
 bool thing_is_cursor_hazard(Thingp);
@@ -400,8 +415,6 @@ bool thing_is_unused42(Thingp);
 bool thing_is_unused43(Thingp);
 bool thing_is_unused44(Thingp);
 bool thing_is_unused45(Thingp);
-bool thing_is_unused46(Thingp);
-bool thing_is_unused47(Thingp);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);
@@ -413,6 +426,7 @@ bool thing_is_water(Thingp);
 // end sort marker1 }
 
 void THING_CON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void THING_DBG(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_LOG(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_WARN(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_ERR(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);

@@ -33,9 +33,14 @@ Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
   ASSERT_EX(index, <, (1 << THING_COMMON_ID_BITS));
 
   auto t = &v->thing_body[ index ];
+  if (! t) {
+    return nullptr;
+  }
+
   if (t->id == thing_id) {
     return t;
   }
+
   return nullptr;
 }
 
