@@ -35,10 +35,10 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
-  tp_flag_set(tp, is_monst_rating_2);
   tp_flag_set(tp, is_slime);
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, 10);
+  tp_monst_group_add(tp, MONST_GROUP_2);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius

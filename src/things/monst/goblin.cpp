@@ -36,9 +36,9 @@ bool tp_load_goblin(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
-  tp_flag_set(tp, is_monst_rating_1);
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, 4);
+  tp_monst_group_add(tp, MONST_GROUP_1);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius

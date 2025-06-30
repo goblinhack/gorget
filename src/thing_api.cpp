@@ -694,24 +694,24 @@ bool thing_is_monst(Thingp t)
   return tp_flag(thing_tp(t), is_monst);
 }
 
-bool thing_is_monst_rating_1(Thingp t)
+bool thing_is_monst_group_1(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst_rating_1);
+  return tp_flag(thing_tp(t), is_monst_group_1);
 }
 
-bool thing_is_monst_rating_2(Thingp t)
+bool thing_is_monst_group_2(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst_rating_2);
+  return tp_flag(thing_tp(t), is_monst_group_2);
 }
 
 bool thing_is_obstacle_block_or_door(Thingp t)
@@ -1274,14 +1274,14 @@ bool thing_is_unused47(Thingp t)
   return tp_flag(thing_tp(t), is_unused47);
 }
 
-bool thing_is_unused48(Thingp t)
+bool thing_is_monst_group_0(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused48);
+  return tp_flag(thing_tp(t), is_monst_group_0);
 }
 
 bool thing_is_able_to_change_temperature(Thingp t)

@@ -37,6 +37,9 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_secret_door);
   tp_health_initial_set(tp, 200);
+  tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
+  tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
+  tp_is_immunity_add(tp, THING_DAMAGE_MELEE);
   tp_temperature_burns_at_set(tp, 300);  // celsius
   tp_temperature_damage_at_set(tp, 300); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius

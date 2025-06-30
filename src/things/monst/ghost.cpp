@@ -36,6 +36,9 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, 1);
+  tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
+  tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
+  tp_monst_group_add(tp, MONST_GROUP_0);
   tp_speed_set(tp, 100);
   tp_temperature_initial_set(tp, -10); // celsius
   tp_weight_set(tp, 0);                // pounds

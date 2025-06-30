@@ -66,11 +66,10 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
       int   Na = std::round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
       int   Nb = std::round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
 
-      THING_CON(a, "a temp %f -> %d", Ta, Na);
-      THING_CON(b, "b temp %f -> %d", Tb, Nb);
-      CON("-");
-
+      THING_LOG(a, "temperature change (a) %f -> %d degrees", Ta, Na);
       thing_temperature_handle(g, v, l, b, a, Na);
+
+      THING_LOG(b, "temperature change (b) %f -> %d degrees", Tb, Nb);
       thing_temperature_handle(g, v, l, a, b, Nb);
     }
   }

@@ -30,6 +30,9 @@ bool tp_load_teleport(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_teleport);
+  tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
+  tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
+  tp_is_immunity_add(tp, THING_DAMAGE_MELEE);
   tp_temperature_burns_at_set(tp, 300);  // celsius
   tp_temperature_damage_at_set(tp, 300); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius

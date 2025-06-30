@@ -86,4 +86,6 @@
 
 #define _EXAMPLE(list_macro) list_macro(_RED = 0, "red"), list_macro(_GREEN, "green"),
 
+#define clang_format_indent()
+
 #endif

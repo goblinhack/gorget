@@ -15,7 +15,8 @@
 // Thing flags enum
 //
 #define THING_FLAG_ENUM(list_macro)                                                                                  \
-  list_macro(is_walk_through_walls, "is_walk_through_walls"),                     /* newline */                      \
+  clang_format_indent()                                           /* dummy line for clang indentation fixup */       \
+      list_macro(is_walk_through_walls, "is_walk_through_walls"), /* newline */                                      \
       list_macro(is_able_to_walk_through_walls, "is_able_to_walk_through_walls"), /* newline */                      \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),                 /* newline */                      \
       list_macro(is_animated_no_dir, "is_animated_no_dir"),                       /* newline */                      \
@@ -65,8 +66,8 @@
       list_macro(is_mob1, "is_mob1"),                                             /* newline */                      \
       list_macro(is_mob2, "is_mob2"),                                             /* newline */                      \
       list_macro(is_monst, "is_monst"),                                           /* newline */                      \
-      list_macro(is_monst_rating_1, "is_monst_rating_1"),                         /* newline */                      \
-      list_macro(is_monst_rating_2, "is_monst_rating_2"),                         /* newline */                      \
+      list_macro(is_monst_group_1, "is_monst_group_1"),                           /* newline */                      \
+      list_macro(is_monst_group_2, "is_monst_group_2"),                           /* newline */                      \
       list_macro(is_obstacle_block_or_door, "is_obstacle_block_or_door"),         /* newline */                      \
       list_macro(is_obstacle_block, "is_obstacle_block"),                         /* newline */                      \
       list_macro(is_pillar, "is_pillar"),                                         /* newline */                      \
@@ -123,7 +124,7 @@
       list_macro(is_unused45, "is_unused45"),                                     /* newline */                      \
       list_macro(is_unused46, "is_unused46"),                                     /* newline */                      \
       list_macro(is_unused47, "is_unused47"),                                     /* newline */                      \
-      list_macro(is_unused48, "is_unused48"),                                     /* newline */                      \
+      list_macro(is_monst_group_0, "is_monst_group_0"),                           /* newline */                      \
       list_macro(is_able_to_change_temperature, "is_able_to_change_temperature"), /* newline */                      \
       list_macro(is_unused5, "is_unused5"),                                       /* newline */                      \
       list_macro(is_smoke, "is_smoke"),                                           /* newline */                      \
@@ -147,7 +148,8 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 // Map depth enum
 //
 #define MAP_Z_DEPTH_ENUM(list_macro)                                                                                 \
-  list_macro(MAP_Z_DEPTH_FLOOR, "floor"),                 /* newline */                                              \
+  clang_format_indent()                                   /* dummy line for clang indentation fixup */               \
+      list_macro(MAP_Z_DEPTH_FLOOR, "floor"),             /* newline */                                              \
       list_macro(MAP_Z_DEPTH_LIQUID, "e.g. water"),       /* newline */                                              \
       list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"), /* newline */                                              \
       list_macro(MAP_Z_DEPTH_OBJ, "e.g water"),           /* newline */
@@ -163,7 +165,8 @@ ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepth)
 // Z prio enum
 //
 #define MAP_Z_PRIO_ENUM(list_macro)                                                                                  \
-  list_macro(MAP_Z_PRIO_BEHIND, "behind"),       /* newline */                                                       \
+  clang_format_indent()                          /* dummy line for clang indentation fixup */                        \
+      list_macro(MAP_Z_PRIO_BEHIND, "behind"),   /* newline */                                                       \
       list_macro(MAP_Z_PRIO_NORMAL, "normal"),   /* newline */                                                       \
       list_macro(MAP_Z_PRIO_INFRONT, "infront"), /* newline */
 
@@ -177,18 +180,20 @@ ENUM_DEF_H(MAP_Z_PRIO_ENUM, MapZPrio)
 //
 // Monst challenge level
 //
-#define THING_RATING_ENUM(list_macro)                                                                                \
-  list_macro(THING_RATING_0, "0"),     /* newline */                                                                 \
-      list_macro(THING_RATING_1, "1"), /* newline */                                                                 \
-      list_macro(THING_RATING_2, "2"), /* newline */
+#define MONST_GROUP_ENUM(list_macro)                                                                                 \
+  clang_format_indent()               /* dummy line for clang indentation fixup */                                   \
+      list_macro(MONST_GROUP_0, "0"), /* Used for monsters that are only generated by mobs */                        \
+      list_macro(MONST_GROUP_1, "1"), /* newline */                                                                  \
+      list_macro(MONST_GROUP_2, "2"), /* newline */
 
-ENUM_DEF_H(THING_RATING_ENUM, ThingRating)
+ENUM_DEF_H(MONST_GROUP_ENUM, ThingMonstGroup)
 
 //
 // Thing anim enum
 //
 #define THING_ANIM_ENUM(list_macro)                                                                                  \
-  list_macro(THING_ANIM_JOIN_BL, "IS_JOIN_BL"),            /* newline */                                             \
+  clang_format_indent()                                    /* dummy line for clang indentation fixup */              \
+      list_macro(THING_ANIM_JOIN_BL, "IS_JOIN_BL"),        /* newline */                                             \
       list_macro(THING_ANIM_JOIN_BL2, "IS_JOIN_BL2"),      /* newline */                                             \
       list_macro(THING_ANIM_JOIN_BLOCK, "IS_JOIN_BLOCK"),  /* newline */                                             \
       list_macro(THING_ANIM_JOIN_BOT, "IS_JOIN_BOT"),      /* newline */                                             \
@@ -247,7 +252,8 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 // Thing damage enum
 //
 #define THING_DAMAGE_ENUM(list_macro)                                                                                \
-  list_macro(THING_DAMAGE_NONE, "none"),       /* newline */                                                         \
+  clang_format_indent()                        /* dummy line for clang indentation fixup */                          \
+      list_macro(THING_DAMAGE_NONE, "none"),   /* newline */                                                         \
       list_macro(THING_DAMAGE_MELEE, "melee"), /* newline */                                                         \
       list_macro(THING_DAMAGE_HEAT, "heat"),   /* newline */                                                         \
       list_macro(THING_DAMAGE_FIRE, "fire"),   /* newline */
@@ -258,7 +264,8 @@ ENUM_DEF_H(THING_DAMAGE_ENUM, ThingDamage)
 // Thing rarity enum
 //
 #define THING_RARITY_ENUM(list_macro)                                                                                \
-  list_macro(THING_RARITY_COMMON, "common"),           /* newline */                                                 \
+  clang_format_indent()                                /* dummy line for clang indentation fixup */                  \
+      list_macro(THING_RARITY_COMMON, "common"),       /* newline */                                                 \
       list_macro(THING_RARITY_UNCOMMON, "uncommon"),   /* newline */                                                 \
       list_macro(THING_RARITY_RARE, "rare"),           /* newline */                                                 \
       list_macro(THING_RARITY_VERY_RARE, "very_rare"), /* newline */                                                 \
@@ -270,7 +277,8 @@ ENUM_DEF_H(THING_RARITY_ENUM, ThingRarity)
 // Thing dir enum
 //
 #define THING_DIR_ENUM(list_macro)                                                                                   \
-  list_macro(THING_DIR_NONE, "THING_DIR_NONE"),       /* newline */                                                  \
+  clang_format_indent()                               /* dummy line for clang indentation fixup */                   \
+      list_macro(THING_DIR_NONE, "THING_DIR_NONE"),   /* newline */                                                  \
       list_macro(THING_DIR_DOWN, "THING_DIR_DOWN"),   /* newline */                                                  \
       list_macro(THING_DIR_UP, "THING_DIR_UP"),       /* newline */                                                  \
       list_macro(THING_DIR_LEFT, "THING_DIR_LEFT"),   /* newline */                                                  \
@@ -300,9 +308,9 @@ void        tp_real_name_set(Tpp, const char *);
 void tp_light_color_set(Tpp, const char *);
 void tp_light_color_apply(Tpp);
 
-int   tp_tiles_size(Tpp tp, ThingAnim);
+int   tp_tiles_size(Tpp, ThingAnim);
 Tilep tp_first_tile(class Tp *, ThingAnim);
-Tilep tp_tiles_get(Tpp tp, ThingAnim anim_type, int index);
+Tilep tp_tiles_get(Tpp, ThingAnim anim_type, int index);
 void  tp_tiles_push_back(Tpp, ThingAnim, Tilep val);
 
 void tp_damage_set(Tpp, ThingDamage, const char *);
@@ -335,32 +343,37 @@ void log_(Tpp, const char *fmt, va_list args); // compile error without
 void tp_fini(void);
 void tp_get_id(const char *, int *id);
 
-bool tp_flag(Tpp tp, ThingFlag);
-void tp_flag_set(Tpp tp, ThingFlag, bool val = true);
+bool tp_flag(Tpp, ThingFlag);
+void tp_flag_set(Tpp, ThingFlag, bool val = true);
 
-void    tp_z_depth_set(Tpp tp, uint8_t val);
+void    tp_z_depth_set(Tpp, uint8_t val);
 uint8_t tp_z_depth_get(Tpp tp);
 
-void    tp_z_prio_set(Tpp tp, uint8_t val);
+void    tp_z_prio_set(Tpp, uint8_t val);
 uint8_t tp_z_prio_get(Tpp tp);
 
-void tp_speed_set(Tpp tp, int val);
+void tp_speed_set(Tpp, int val);
 int  tp_speed_get(Tpp tp);
 
-void tp_weight_set(Tpp tp, int val);
+void tp_weight_set(Tpp, int val);
 int  tp_weight_get(Tpp tp);
 
-void tp_health_initial_set(Tpp tp, int val);
+void tp_health_initial_set(Tpp, int val);
 int  tp_health_initial_get(Tpp tp);
 
-void tp_temperature_initial_set(Tpp tp, int val);
+void tp_temperature_initial_set(Tpp, int val);
 int  tp_temperature_initial_get(Tpp tp);
 
-void tp_temperature_burns_at_set(Tpp tp, int val);
+void tp_temperature_burns_at_set(Tpp, int val);
 int  tp_temperature_burns_at_get(Tpp tp);
 
-void tp_temperature_damage_at_set(Tpp tp, int val);
+void tp_temperature_damage_at_set(Tpp, int val);
 int  tp_temperature_damage_at_get(Tpp tp);
+
+void tp_is_immunity_add(Tpp, ThingDamage);
+bool tp_is_immune_to(Tpp, ThingDamage);
+
+void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 
 // begin sort marker1 {
 #define tp_is_able_to_change_temperature(tp) tp_flag(tp, is_able_to_change_temperature)
@@ -417,9 +430,10 @@ int  tp_temperature_damage_at_get(Tpp tp);
 #define tp_is_mob(tp)                        tp_flag(tp, is_mob)
 #define tp_is_mob1(tp)                       tp_flag(tp, is_mob1)
 #define tp_is_mob2(tp)                       tp_flag(tp, is_mob2)
+#define tp_is_monst_group_0(tp)              tp_flag(tp, is_monst_group_0)
+#define tp_is_monst_group_1(tp)              tp_flag(tp, is_monst_group_1)
+#define tp_is_monst_group_2(tp)              tp_flag(tp, is_monst_group_2)
 #define tp_is_monst(tp)                      tp_flag(tp, is_monst)
-#define tp_is_monst_rating_1(tp)             tp_flag(tp, is_monst_rating_1)
-#define tp_is_monst_rating_2(tp)             tp_flag(tp, is_monst_rating_2)
 #define tp_is_obstacle_block_or_door(tp)     tp_flag(tp, is_obstacle_block_or_door)
 #define tp_is_obstacle_block(tp)             tp_flag(tp, is_obstacle_block)
 #define tp_is_pillar(tp)                     tp_flag(tp, is_pillar)
@@ -479,7 +493,6 @@ int  tp_temperature_damage_at_get(Tpp tp);
 #define tp_is_unused45(tp)                   tp_flag(tp, is_unused45)
 #define tp_is_unused46(tp)                   tp_flag(tp, is_unused46)
 #define tp_is_unused47(tp)                   tp_flag(tp, is_unused47)
-#define tp_is_unused48(tp)                   tp_flag(tp, is_unused48)
 #define tp_is_unused5(tp)                    tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
@@ -545,9 +558,10 @@ int  tp_temperature_damage_at_get(Tpp tp);
 #define level_is_mob(g, v, l, p)                        level_flag(g, v, l, is_mob, p)
 #define level_is_mob1(g, v, l, p)                       level_flag(g, v, l, is_mob1, p)
 #define level_is_mob2(g, v, l, p)                       level_flag(g, v, l, is_mob2, p)
+#define level_is_monst_group_0(g, v, l, p)              level_flag(g, v, l, is_monst_group_0, p)
+#define level_is_monst_group_1(g, v, l, p)              level_flag(g, v, l, is_monst_group_1, p)
+#define level_is_monst_group_2(g, v, l, p)              level_flag(g, v, l, is_monst_group_2, p)
 #define level_is_monst(g, v, l, p)                      level_flag(g, v, l, is_monst, p)
-#define level_is_monst_rating_1(g, v, l, p)             level_flag(g, v, l, is_monst_rating_1, p)
-#define level_is_monst_rating_2(g, v, l, p)             level_flag(g, v, l, is_monst_rating_2, p)
 #define level_is_obstacle_block_or_door(g, v, l, p)     level_flag(g, v, l, is_obstacle_block_or_door, p)
 #define level_is_obstacle_block(g, v, l, p)             level_flag(g, v, l, is_obstacle_block, p)
 #define level_is_pillar(g, v, l, p)                     level_flag(g, v, l, is_pillar, p)
@@ -607,7 +621,6 @@ int  tp_temperature_damage_at_get(Tpp tp);
 #define level_is_unused45(g, v, l, p)                   level_flag(g, v, l, is_unused45, p)
 #define level_is_unused46(g, v, l, p)                   level_flag(g, v, l, is_unused46, p)
 #define level_is_unused47(g, v, l, p)                   level_flag(g, v, l, is_unused47, p)
-#define level_is_unused48(g, v, l, p)                   level_flag(g, v, l, is_unused48, p)
 #define level_is_unused5(g, v, l, p)                    level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)

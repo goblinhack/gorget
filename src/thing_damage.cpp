@@ -16,7 +16,7 @@
 //
 void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &event)
 {
-  TRACE_NO_INDENT();
+  TRACE_AND_INDENT();
 
   if (thing_is_dead(t)) {
     return;

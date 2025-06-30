@@ -38,6 +38,8 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);
   tp_health_initial_set(tp, 100);
+  tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
+  tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
   tp_temperature_burns_at_set(tp, 300);  // celsius
   tp_temperature_damage_at_set(tp, 300); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
