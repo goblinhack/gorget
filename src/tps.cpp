@@ -17,6 +17,9 @@ bool templates_init(void)
   if (! tp_load_barrel()) {
     return false;
   }
+  if (! tp_load_explosion()) {
+    return false;
+  }
   if (! tp_load_pillar()) {
     return false;
   }

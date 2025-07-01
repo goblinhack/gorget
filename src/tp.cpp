@@ -47,6 +47,7 @@ std::initializer_list< std::string > tps = {
     /* shell echo "    \"$i\"", */
     /* shell done */
     "barrel",
+    "explosion",
     "pillar",
     "brazier",
     "grass",

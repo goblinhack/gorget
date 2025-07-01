@@ -121,7 +121,7 @@
       list_macro(is_unused42, "is_unused42"),                                     /* newline */                      \
       list_macro(is_unused43, "is_unused43"),                                     /* newline */                      \
       list_macro(is_unused44, "is_unused44"),                                     /* newline */                      \
-      list_macro(is_unused45, "is_unused45"),                                     /* newline */                      \
+      list_macro(is_explosion, "is_explosion"),                                   /* newline */                      \
       list_macro(is_corpse_on_death, "is_corpse_on_death"),                       /* newline */                      \
       list_macro(is_monst_group_0, "is_monst_group_0"),                           /* newline */                      \
       list_macro(is_able_to_change_temperature, "is_able_to_change_temperature"), /* newline */                      \
@@ -408,6 +408,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_entrance(tp)                   tp_flag(tp, is_entrance)
 #define tp_is_ethereal(tp)                   tp_flag(tp, is_ethereal)
 #define tp_is_exit(tp)                       tp_flag(tp, is_exit)
+#define tp_is_explosion(tp)                  tp_flag(tp, is_explosion)
 #define tp_is_fire(tp)                       tp_flag(tp, is_fire)
 #define tp_is_floor(tp)                      tp_flag(tp, is_floor)
 #define tp_is_foliage(tp)                    tp_flag(tp, is_foliage)
@@ -490,7 +491,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused42(tp)                   tp_flag(tp, is_unused42)
 #define tp_is_unused43(tp)                   tp_flag(tp, is_unused43)
 #define tp_is_unused44(tp)                   tp_flag(tp, is_unused44)
-#define tp_is_unused45(tp)                   tp_flag(tp, is_unused45)
 #define tp_is_unused5(tp)                    tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
@@ -535,6 +535,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_entrance(g, v, l, p)                   level_flag(g, v, l, is_entrance, p)
 #define level_is_ethereal(g, v, l, p)                   level_flag(g, v, l, is_ethereal, p)
 #define level_is_exit(g, v, l, p)                       level_flag(g, v, l, is_exit, p)
+#define level_is_explosion(g, v, l, p)                  level_flag(g, v, l, is_explosion, p)
 #define level_is_fire(g, v, l, p)                       level_flag(g, v, l, is_fire, p)
 #define level_is_floor(g, v, l, p)                      level_flag(g, v, l, is_floor, p)
 #define level_is_foliage(g, v, l, p)                    level_flag(g, v, l, is_foliage, p)
@@ -617,7 +618,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused42(g, v, l, p)                   level_flag(g, v, l, is_unused42, p)
 #define level_is_unused43(g, v, l, p)                   level_flag(g, v, l, is_unused43, p)
 #define level_is_unused44(g, v, l, p)                   level_flag(g, v, l, is_unused44, p)
-#define level_is_unused45(g, v, l, p)                   level_flag(g, v, l, is_unused45, p)
 #define level_is_unused5(g, v, l, p)                    level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)

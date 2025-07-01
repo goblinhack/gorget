@@ -1307,14 +1307,14 @@ bool thing_is_unused44(Thingp t)
   return tp_flag(thing_tp(t), is_unused44);
 }
 
-bool thing_is_unused45(Thingp t)
+bool thing_is_explosion(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused45);
+  return tp_flag(thing_tp(t), is_explosion);
 }
 
 bool thing_is_corpse_on_death(Thingp t)
