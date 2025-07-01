@@ -109,6 +109,14 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       t->thing_dt = 1.0;
     }
 
+    if (0) {
+      if (thing_is_mob(t)) {
+        THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
+      }
+      if (thing_is_player(t)) {
+        THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
+      }
+    }
     thing_interpolate(g, t, t->thing_dt);
 
     //
