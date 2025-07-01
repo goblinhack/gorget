@@ -54,27 +54,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   //
   // Assign an initial tile
   //
-  auto ntiles = tp_tiles_size(tp, t->anim_type);
-  if (ntiles) {
-    auto index = pcg_rand() % ntiles;
-    auto tile  = tp_tiles_get(tp, t->anim_type, index);
-    if (tile) {
-      t->tile_index = tile_global_index(tile);
-
-      if (tp_is_animated_same_first_tile(tp)) {
-        //
-        // Same first tile e.g. level select tiles, we want to flash in sync and not out of order
-        //
-        t->anim_index = 0;
-      } else if (tp_is_animated(tp)) {
-        //
-        // Choose a random first tile
-        //
-        auto i        = pcg_random_range_inclusive(0, ntiles - 1);
-        t->anim_index = i;
-      }
-    }
-  }
+  thing_anim_init(g, v, l, t);
 
   //
   // Assign the player
