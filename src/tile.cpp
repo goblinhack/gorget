@@ -88,16 +88,14 @@ public:
   uint8_t frame {};
   uint8_t dir {};
 
-  bool internal_has_dir_anim   : 1 {};
-  bool is_alive_on_end_of_anim : 1 {};
-  bool is_dead                 : 1 {};
-  bool is_dead_on_end_of_anim  : 1 {};
-  bool is_end_of_anim          : 1 {};
-  bool is_moving               : 1 {};
-  bool is_open                 : 1 {};
-  bool is_outline              : 1 {};
-  bool is_resurrecting         : 1 {};
-  bool is_loggable             : 1 {};
+  bool internal_has_dir_anim     : 1 {};
+  bool is_alive_on_end_of_anim   : 1 {};
+  bool is_cleanup_on_end_of_anim : 1 {};
+  bool is_end_of_anim            : 1 {};
+  bool is_moving                 : 1 {};
+  bool is_outline                : 1 {};
+  bool is_resurrecting           : 1 {};
+  bool is_loggable               : 1 {};
 
 private:
   int _gl_binding {};
@@ -177,16 +175,14 @@ Tile::Tile(const class Tile *tile)
 
   std::copy(mbegin(tile->pix), mend(tile->pix), mbegin(pix));
 
-  delay_ms                = tile->delay_ms;
-  dir                     = tile->dir;
-  is_moving               = tile->is_moving;
-  is_loggable             = tile->is_loggable;
-  is_open                 = tile->is_open;
-  is_dead                 = tile->is_dead;
-  is_end_of_anim          = tile->is_end_of_anim;
-  is_dead_on_end_of_anim  = tile->is_dead_on_end_of_anim;
-  is_alive_on_end_of_anim = tile->is_alive_on_end_of_anim;
-  internal_has_dir_anim   = tile->internal_has_dir_anim;
+  delay_ms                  = tile->delay_ms;
+  dir                       = tile->dir;
+  is_moving                 = tile->is_moving;
+  is_loggable               = tile->is_loggable;
+  is_end_of_anim            = tile->is_end_of_anim;
+  is_cleanup_on_end_of_anim = tile->is_cleanup_on_end_of_anim;
+  is_alive_on_end_of_anim   = tile->is_alive_on_end_of_anim;
+  internal_has_dir_anim     = tile->internal_has_dir_anim;
 
   index        = 0;
   global_index = all_tiles_array.size() + 1;
@@ -659,10 +655,6 @@ Tilep tile_find(std::string name)
 {
   TRACE_NO_INDENT();
 
-  if (g_opt_tests) {
-    return nullptr;
-  }
-
   if (name == "") {
     return nullptr;
   }
@@ -678,10 +670,6 @@ Tilep tile_find(std::string name)
 Tilep tile_find_mand(std::string name)
 {
   TRACE_NO_INDENT();
-
-  if (g_opt_tests) {
-    return nullptr;
-  }
 
   if (name == "") {
     ERR("No tile name given");
@@ -835,45 +823,119 @@ std::string tile_name(Tilep t)
 
 uint32_t tile_delay_ms(Tilep t)
 {
+  TRACE_NO_INDENT();
+
   if (! t->delay_ms) {
     return 5000;
   }
   return t->delay_ms;
 }
-void tile_delay_ms_set(Tilep t, uint32_t val) { t->delay_ms = val; }
+void tile_delay_ms_set(Tilep t, uint32_t val)
+{
+  TRACE_NO_INDENT();
+  t->delay_ms = val;
+}
 
-uint32_t tile_global_index(Tilep t) { return t->global_index; }
-void     tile_global_index_set(Tilep t, uint32_t val) { t->global_index = val; }
+uint32_t tile_global_index(Tilep t)
+{
+  TRACE_NO_INDENT();
+  return t->global_index;
+}
+void tile_global_index_set(Tilep t, uint32_t val)
+{
+  TRACE_NO_INDENT();
+  t->global_index = val;
+}
 
-bool tile_is_moving(Tilep t) { return t->is_moving ? true : false; }
+bool tile_is_moving(Tilep t)
+{
+  TRACE_NO_INDENT();
+  return t->is_moving ? true : false;
+}
 
-bool tile_is_loggable(Tilep t) { return t->is_loggable ? true : false; }
+bool tile_is_loggable(Tilep t)
+{
+  TRACE_NO_INDENT();
+  return t->is_loggable ? true : false;
+}
 
-bool tile_is_open(Tilep t) { return t->is_open ? true : false; }
+bool tile_is_end_of_anim(Tilep t)
+{
+  TRACE_NO_INDENT();
+  return t->is_end_of_anim ? true : false;
+}
 
-bool tile_is_dead(Tilep t) { return t->is_dead ? true : false; }
+bool tile_is_cleanup_on_end_of_anim(Tilep t)
+{
+  TRACE_NO_INDENT();
+  return t->is_cleanup_on_end_of_anim ? true : false;
+}
 
-bool tile_is_end_of_anim(Tilep t) { return t->is_end_of_anim ? true : false; }
+void tile_is_cleanup_on_end_of_anim_set(Tilep t)
+{
+  TRACE_NO_INDENT();
+  t->is_cleanup_on_end_of_anim = true;
+}
 
-bool tile_is_dead_on_end_of_anim(Tilep t) { return t->is_dead_on_end_of_anim ? true : false; }
+bool tile_is_alive_on_end_of_anim(Tilep t)
+{
+  TRACE_NO_INDENT();
+  return t->is_alive_on_end_of_anim ? true : false;
+}
 
-bool tile_is_alive_on_end_of_anim(Tilep t) { return t->is_alive_on_end_of_anim ? true : false; }
+void tile_is_alive_on_end_of_anim_set(Tilep t)
+{
+  TRACE_NO_INDENT();
+  t->is_alive_on_end_of_anim = true;
+}
 
-bool tile_is_resurrecting(Tilep t) { return t->is_resurrecting ? true : false; }
+bool tile_is_resurrecting(Tilep t)
+{
+  TRACE_NO_INDENT();
+  return t->is_resurrecting ? true : false;
+}
 
-int Tile::gl_binding(void) const { return _gl_binding; }
+int Tile::gl_binding(void) const
+{
+  TRACE_NO_INDENT();
+  return _gl_binding;
+}
 
-void Tile::set_gl_binding(int v) { _gl_binding = v; }
+void Tile::set_gl_binding(int v)
+{
+  TRACE_NO_INDENT();
+  _gl_binding = v;
+}
 
-int tile_gl_binding(Tilep t) { return t->gl_binding(); }
+int tile_gl_binding(Tilep t)
+{
+  TRACE_NO_INDENT();
+  return t->gl_binding();
+}
 
-int Tile::gl_binding_monochrome(void) const { return _gl_binding_monochrome; }
+int Tile::gl_binding_monochrome(void) const
+{
+  TRACE_NO_INDENT();
+  return _gl_binding_monochrome;
+}
 
-void Tile::set_gl_binding_monochrome(int v) { _gl_binding_monochrome = v; }
+void Tile::set_gl_binding_monochrome(int v)
+{
+  TRACE_NO_INDENT();
+  _gl_binding_monochrome = v;
+}
 
-int Tile::gl_binding_mask(void) const { return _gl_binding_mask; }
+int Tile::gl_binding_mask(void) const
+{
+  TRACE_NO_INDENT();
+  return _gl_binding_mask;
+}
 
-void Tile::set_gl_binding_mask(int v) { _gl_binding_mask = v; }
+void Tile::set_gl_binding_mask(int v)
+{
+  TRACE_NO_INDENT();
+  _gl_binding_mask = v;
+}
 
 //
 // Blits a whole tile. Y co-ords are inverted.

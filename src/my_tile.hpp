@@ -55,7 +55,9 @@ uint32_t tile_index(Tilep);
 uint32_t tile_move(Tilep);
 
 bool tile_is_alive_on_end_of_anim(Tilep);
-bool tile_is_dead_on_end_of_anim(Tilep);
+void tile_is_alive_on_end_of_anim_set(Tilep);
+bool tile_is_cleanup_on_end_of_anim(Tilep);
+void tile_is_cleanup_on_end_of_anim_set(Tilep);
 bool tile_is_dead(Tilep);
 bool tile_is_end_of_anim(Tilep);
 bool tile_is_moving(Tilep);

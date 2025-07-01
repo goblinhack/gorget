@@ -26,6 +26,7 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_burnable);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
@@ -46,16 +47,24 @@ bool tp_load_goblin_mob(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
-  if (g_opt_tests) {
-    return true;
-  }
-
   auto delay = 1000;
 
   for (auto frame = 0; frame < 2; frame++) {
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  delay = 100;
+
+  for (auto frame = 0; frame < 6; frame++) {
+    auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    tile_delay_ms_set(tile, delay);
+    tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
+
+    if (frame == 5) {
+      tile_is_cleanup_on_end_of_anim_set(tile);
+    }
   }
 
   return true;

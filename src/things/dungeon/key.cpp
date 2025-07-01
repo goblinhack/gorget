@@ -39,10 +39,6 @@ bool tp_load_key(void)
 
   auto delay = 1000;
 
-  if (g_opt_tests) {
-    return true;
-  }
-
   for (auto frame = 0; frame < 2; frame++) {
     auto tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);

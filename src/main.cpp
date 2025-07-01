@@ -792,7 +792,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  if (! g_opt_tests) {
+  {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load early gfx tiles, text, UI etc...");

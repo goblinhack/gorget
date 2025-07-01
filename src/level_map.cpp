@@ -246,18 +246,20 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
         }
       }
 
-      if (1) {
-        if (tp == tp_player) {
-          if (1) {
-            auto t = thing_init(g, v, l, tp_random(is_mob), spoint(x, y) + spoint(1, 0));
-            if (t) {
-              thing_push(g, v, l, t);
+      if (! g_opt_tests) {
+        if (1) {
+          if (tp == tp_player) {
+            if (1) {
+              auto t = thing_init(g, v, l, tp_random(is_mob), spoint(x, y) + spoint(1, 0));
+              if (t) {
+                thing_push(g, v, l, t);
+              }
             }
-          }
-          if (1) {
-            auto t = thing_init(g, v, l, tp_random(is_lava), spoint(x, y) + spoint(2, 0));
-            if (t) {
-              thing_push(g, v, l, t);
+            if (1) {
+              auto t = thing_init(g, v, l, tp_random(is_lava), spoint(x, y) + spoint(2, 0));
+              if (t) {
+                thing_push(g, v, l, t);
+              }
             }
           }
         }

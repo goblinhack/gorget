@@ -38,10 +38,6 @@ bool tp_load_trap(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
-  if (g_opt_tests) {
-    return true;
-  }
-
   for (auto frame = 0; frame < 1; frame++) {
     auto tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);

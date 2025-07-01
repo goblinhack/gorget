@@ -476,6 +476,7 @@ Texp tex_find(std::string file)
 Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, int mode)
 {
   TRACE_NO_INDENT();
+
   if (! surface) {
     ERR("Could not make surface from file, '%s'", file.c_str());
   }
@@ -519,35 +520,37 @@ Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, 
   //
   GLuint gl_surface_binding = 0;
 
-  glEnable(GL_TEXTURE_2D); // Apparently needed for ATI drivers
+  if (! g_opt_tests) {
+    glEnable(GL_TEXTURE_2D); // Apparently needed for ATI drivers
 
-  glGenTextures(1, &gl_surface_binding);
+    glGenTextures(1, &gl_surface_binding);
 
-  //
-  // Typical tex generation using data from the bitmap
-  //
-  glBindTexture(GL_TEXTURE_2D, gl_surface_binding);
+    //
+    // Typical tex generation using data from the bitmap
+    //
+    glBindTexture(GL_TEXTURE_2D, gl_surface_binding);
 
-  //
-  // Generate the tex
-  //
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE,
-               surface->pixels);
+    //
+    // Generate the tex
+    //
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE,
+                 surface->pixels);
 
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-  //
-  // Linear filtering is best for pixel art.
-  //
-  // Nearest is meant to be quicker but I didn't see that in reality.
-  //
-  if (mode == GL_NEAREST) {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  } else {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    //
+    // Linear filtering is best for pixel art.
+    //
+    // Nearest is meant to be quicker but I didn't see that in reality.
+    //
+    if (mode == GL_NEAREST) {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    } else {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    }
   }
 
   Texp t      = new Tex(name);

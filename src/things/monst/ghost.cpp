@@ -46,10 +46,6 @@ bool tp_load_ghost(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
-  if (g_opt_tests) {
-    return true;
-  }
-
   auto delay = 1000;
 
   for (auto frame = 0; frame < 2; frame++) {

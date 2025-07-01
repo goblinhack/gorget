@@ -69,6 +69,17 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   }
 
   //
+  // If this is the final tile in an animation, we may want to remove the thing
+  //
+  if (tile_is_cleanup_on_end_of_anim(tile)) {
+    //
+    // Schedule for removal from the map and freeing
+    //
+    thing_is_scheduled_for_cleanup_set(g, v, l, t);
+    return;
+  }
+
+  //
   // Decrement the remaining time
   //
   if (t->anim_ms_remaining > 0) {

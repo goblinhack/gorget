@@ -228,5 +228,5 @@ extern bool g_opt_restarted;                     // Post restart
 extern bool g_opt_debug1;                        // Normal debugs
 extern bool g_opt_debug2;                        // All debugs
 extern bool g_opt_tests;                         // Dungeon tests
-                                                 //
-#endif                                           // _MY_TYPES_HPP_
+
+#endif // _MY_TYPES_HPP_
