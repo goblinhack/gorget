@@ -20,6 +20,7 @@ bool tp_load_explosion(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_flag_set(tp, is_explosion);
   tp_flag_set(tp, is_loggable);
   tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
@@ -36,6 +37,10 @@ bool tp_load_explosion(void)
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+
+    if (frame == 5) {
+      tile_is_cleanup_on_end_of_anim_set(tile);
+    }
   }
 
   return true;

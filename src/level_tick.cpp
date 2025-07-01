@@ -46,10 +46,38 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_body(g, v, l, v->time_step - v->last_time_step);
   }
 
+  level_anim(g, v, l);
+
+  if (v->tick_in_progress) {
+    //
+    // Handle temperature interactions
+    //
+    level_tick_temperature(g, v, l);
+  }
+
+  //
+  // Check if something fell in lava and now needs to delay the end of the tick
+  //
+  v->tick_wait_on_anim = false;
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    //
+    // Some things like explosions, we want to wait for the explosion to finish before
+    // moving to the next tick.
+    //
+    if (thing_is_dead(t)) {
+      if (! thing_is_scheduled_for_cleanup(t)) {
+        if (thing_is_wait_on_anim_when_dead(t)) {
+          v->tick_wait_on_anim = true;
+        }
+      }
+    }
+  }
+
   //
   // End of tick?
   //
-  if (v->tick_end_requested) {
+  if (v->tick_end_requested && ! v->tick_wait_on_anim) {
     level_tick_end(g, v, l);
   }
 }
@@ -111,7 +139,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 
     if (0) {
       if (thing_is_mob(t)) {
-        THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
+        THING_CON(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
       }
       if (thing_is_player(t)) {
         THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
@@ -193,8 +221,8 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 
   LOG("Tick %u ending", v->tick);
 
-  v->tick_in_progress   = false;
   v->tick_end_requested = false;
+  v->tick_in_progress   = false;
   v->time_step          = 0;
 
   auto p = thing_player(g);
@@ -209,11 +237,6 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     game_request_to_save_game_set(g, false);
     wid_save_select(g);
   }
-
-  //
-  // Handle temperature interactions
-  //
-  level_tick_temperature(g, v, l);
 
   //
   // This can pop the next player move

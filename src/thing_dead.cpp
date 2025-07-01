@@ -65,4 +65,9 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Stop it moving
   //
   thing_move_finish(g, v, l, t);
+
+  //
+  // Restart the animation if we have dead frames
+  //
+  thing_anim_reset(g, v, l, t);
 }

@@ -29,6 +29,14 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
     spoint p(x, y);
     FOR_ALL_THINGS_AT(g, v, l, t, p)
     {
+      //
+      // If we shove a thing into lava, do not handle the interaction until the move
+      // interpolation is finished.
+      //
+      if (thing_is_moving(t)) {
+        continue;
+      }
+
       if (thing_is_able_to_change_temperature(t)) {
         things.push_back(t);
       }

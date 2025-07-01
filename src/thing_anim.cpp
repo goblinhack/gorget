@@ -42,6 +42,15 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t)
 }
 
 //
+// Reset back to the first frame
+//
+void thing_anim_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  t->anim_index        = 0;
+  t->anim_ms_remaining = 0;
+}
+
+//
 // Animation time step
 //
 void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
@@ -69,22 +78,30 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   }
 
   //
-  // If this is the final tile in an animation, we may want to remove the thing
-  //
-  if (tile_is_cleanup_on_end_of_anim(tile)) {
-    //
-    // Schedule for removal from the map and freeing
-    //
-    thing_is_scheduled_for_cleanup_set(g, v, l, t);
-    return;
-  }
-
-  //
   // Decrement the remaining time
   //
   if (t->anim_ms_remaining > 0) {
     t->anim_ms_remaining -= time_step;
     if (t->anim_ms_remaining > 0) {
+      return;
+    }
+  }
+
+  if (0) {
+    if (thing_is_mob(t)) {
+      THING_LOG(t, "anim %s", tile_name_get(tile).c_str());
+    }
+  }
+
+  //
+  // If this is the final tile in an animation, we may want to remove the thing
+  //
+  if (tile_is_cleanup_on_end_of_anim(tile)) {
+    if (! thing_is_scheduled_for_cleanup(t)) {
+      //
+      // Schedule for removal from the map and freeing
+      //
+      thing_is_scheduled_for_cleanup_set(g, v, l, t);
       return;
     }
   }

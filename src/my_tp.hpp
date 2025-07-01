@@ -120,7 +120,7 @@
       list_macro(is_unused41, "is_unused41"),                                     /* newline */                      \
       list_macro(is_unused42, "is_unused42"),                                     /* newline */                      \
       list_macro(is_unused43, "is_unused43"),                                     /* newline */                      \
-      list_macro(is_unused44, "is_unused44"),                                     /* newline */                      \
+      list_macro(is_wait_on_anim_when_dead, "is_wait_on_anim_when_dead"),         /* newline */                      \
       list_macro(is_explosion, "is_explosion"),                                   /* newline */                      \
       list_macro(is_corpse_on_death, "is_corpse_on_death"),                       /* newline */                      \
       list_macro(is_monst_group_0, "is_monst_group_0"),                           /* newline */                      \
@@ -490,12 +490,12 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused41(tp)                   tp_flag(tp, is_unused41)
 #define tp_is_unused42(tp)                   tp_flag(tp, is_unused42)
 #define tp_is_unused43(tp)                   tp_flag(tp, is_unused43)
-#define tp_is_unused44(tp)                   tp_flag(tp, is_unused44)
 #define tp_is_unused5(tp)                    tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
 #define tp_is_unused8(tp)                    tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                    tp_flag(tp, is_unused9)
+#define tp_is_wait_on_anim_when_dead(tp)     tp_flag(tp, is_wait_on_anim_when_dead)
 #define tp_is_walk_through_walls(tp)         tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                       tp_flag(tp, is_wall)
 #define tp_is_water(tp)                      tp_flag(tp, is_water)
@@ -617,12 +617,12 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused41(g, v, l, p)                   level_flag(g, v, l, is_unused41, p)
 #define level_is_unused42(g, v, l, p)                   level_flag(g, v, l, is_unused42, p)
 #define level_is_unused43(g, v, l, p)                   level_flag(g, v, l, is_unused43, p)
-#define level_is_unused44(g, v, l, p)                   level_flag(g, v, l, is_unused44, p)
 #define level_is_unused5(g, v, l, p)                    level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)
 #define level_is_unused8(g, v, l, p)                    level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                    level_flag(g, v, l, is_unused9, p)
+#define level_is_wait_on_anim_when_dead(g, v, l, p)     level_flag(g, v, l, is_wait_on_anim_when_dead, p)
 #define level_is_walk_through_walls(g, v, l, p)         level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                       level_flag(g, v, l, is_wall, p)
 #define level_is_water(g, v, l, p)                      level_flag(g, v, l, is_water, p)

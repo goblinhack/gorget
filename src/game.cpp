@@ -785,7 +785,6 @@ void Game::tick(void)
         auto l = game_level_get(g, v);
         if (l) {
           level_tick(g, v, l);
-          level_anim(g, v, l);
 
           if (game->request_to_remake_ui) {
             wid_leftbar_init(g);

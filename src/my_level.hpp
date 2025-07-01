@@ -263,6 +263,11 @@ typedef struct Levels_ {
   //
   uint8_t tick_in_progress : 1;
   //
+  // Some things like explosions, we want to wait for the explosion to finish before
+  // moving to the next tick.
+  //
+  uint8_t tick_wait_on_anim : 1;
+  //
   // Player has moved.
   //
   uint8_t tick_begin_requested : 1;

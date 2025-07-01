@@ -27,9 +27,10 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);
-  tp_flag_set(tp, is_cursor_path_hazard);
-  tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_corpse_on_death);
+  tp_flag_set(tp, is_cursor_path_hazard);
+  tp_flag_set(tp, is_wait_on_anim_when_dead);
+  tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob1);
