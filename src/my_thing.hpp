@@ -82,6 +82,10 @@ typedef struct Thing_ {
   //
   ThingId id;
   //
+  // If owned, by whom
+  //
+  ThingId owner_id;
+  //
   // For players and monsters
   //
   ThingAiId ai_id;
@@ -259,6 +263,9 @@ bool thing_is_dir_bl(Thingp);
 bool thing_is_dir_left(Thingp);
 bool thing_is_dir_right(Thingp);
 bool thing_is_dir_up(Thingp);
+
+Thingp top_owner(Gamep, Levelsp, Levelp, Thingp);
+Thingp immediate_owner(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_dead(Thingp);
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
