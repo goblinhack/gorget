@@ -26,11 +26,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Log the reason of demise?
   //
   if (thing_is_loggable(t)) {
-    if (e.reason.empty()) {
-      THING_LOG(t, "dead");
-    } else {
-      THING_LOG(t, "dead, reason: %s", e.reason.c_str());
-    }
+    THING_LOG(t, "%s: dead", to_string(e).c_str());
   }
 
   thing_is_dead_set(g, v, l, t);

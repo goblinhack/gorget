@@ -31,7 +31,7 @@ std::string to_string(Thingp t)
     return "<no tp>";
   }
 
-  return (string_sprintf("%" PRIX32
+  return (string_sprintf("%08" PRIX32
                          /* level num    */ " L%u"
                          /* thing_health */ " H%d"
                          /* tp_name      */ " %s"
@@ -53,26 +53,28 @@ std::string to_string(ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
-  std::string s = "event:";
+  std::string s = "ev:";
 
   if (e.reason != "") {
-    s += " reason: ";
+    s += " r:'";
     s += e.reason;
+    s += "'";
   }
 
   if (e.damage != THING_DAMAGE_NONE) {
-    s += " damage-type: ";
+    s += " t:";
     s += ThingDamage_to_string(e.damage_type);
   }
 
   if (e.damage) {
-    s += " damage: ";
+    s += " d:";
     s += std::to_string(e.damage);
   }
 
   if (e.source) {
-    s += " source: ";
+    s += " src:(";
     s += to_string(e.source);
+    s += ")";
   }
 
   return s;

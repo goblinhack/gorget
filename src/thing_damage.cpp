@@ -14,7 +14,7 @@
 //
 // Apply a damage type to a thing
 //
-void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &event)
+void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_AND_INDENT();
 
@@ -23,11 +23,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &event)
     // Log the reason for attack?
     //
     if (thing_is_loggable(t)) {
-      if (event.reason.empty()) {
-        THING_LOG(t, "damage (already dead)");
-      } else {
-        THING_LOG(t, "damage, reason: %s (already dead)", event.reason.c_str());
-      }
+      THING_LOG(t, "%s: no damage as already dead", to_string(e).c_str());
     }
     return;
   }
@@ -35,13 +31,9 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &event)
   //
   // Immune to this attack?
   //
-  if (thing_is_immune_to(t, event.damage_type)) {
+  if (thing_is_immune_to(t, e.damage_type)) {
     if (thing_is_loggable(t)) {
-      if (event.reason.empty()) {
-        THING_LOG(t, "damage (immune)");
-      } else {
-        THING_LOG(t, "damage, reason: %s (immune)", event.reason.c_str());
-      }
+      THING_LOG(t, "%s: no damage as immune", to_string(e).c_str());
     }
     return;
   }
@@ -50,18 +42,14 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &event)
   // Log the reason for attack?
   //
   if (thing_is_loggable(t)) {
-    if (event.reason.empty()) {
-      THING_LOG(t, "damage");
-    } else {
-      THING_LOG(t, "damage, reason: %s", event.reason.c_str());
-    }
+    THING_LOG(t, "%s: apply damage", to_string(e).c_str());
   }
 
   //
   // Change the health
   //
-  if (thing_health_decr(g, v, l, t, event.damage) <= 0) {
-    thing_dead(g, v, l, t, event);
+  if (thing_health_decr(g, v, l, t, e.damage) <= 0) {
+    thing_dead(g, v, l, t, e);
   }
 
   THING_LOG(t, "post damage");
