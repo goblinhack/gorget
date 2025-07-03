@@ -1288,14 +1288,14 @@ bool thing_is_unused42(Thingp t)
   return tp_flag(thing_tp(t), is_unused42);
 }
 
-bool thing_is_unused43(Thingp t)
+bool thing_is_undead(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused43);
+  return tp_flag(thing_tp(t), is_undead);
 }
 
 bool thing_is_wait_on_anim_when_dead(Thingp t)

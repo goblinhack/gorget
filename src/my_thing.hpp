@@ -384,6 +384,7 @@ bool thing_is_trap(Thingp);
 bool thing_is_treasure(Thingp);
 bool thing_is_treasure1(Thingp);
 bool thing_is_treasure2(Thingp);
+bool thing_is_undead(Thingp);
 bool thing_is_unused1(Thingp);
 bool thing_is_unused10(Thingp);
 bool thing_is_unused11(Thingp);
@@ -421,7 +422,6 @@ bool thing_is_unused4(Thingp);
 bool thing_is_unused40(Thingp);
 bool thing_is_unused41(Thingp);
 bool thing_is_unused42(Thingp);
-bool thing_is_unused43(Thingp);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);
@@ -443,5 +443,6 @@ void THING_BOTCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
 std::string to_string(Thingp);
 std::string to_string(ThingEvent &);
+std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, bool include_owner = false);
 
 #endif

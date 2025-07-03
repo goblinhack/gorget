@@ -120,7 +120,7 @@
       list_macro(is_unused40, "is_unused40"),                                     /* newline */                      \
       list_macro(is_unused41, "is_unused41"),                                     /* newline */                      \
       list_macro(is_unused42, "is_unused42"),                                     /* newline */                      \
-      list_macro(is_unused43, "is_unused43"),                                     /* newline */                      \
+      list_macro(is_undead, "is_undead"),                                         /* newline */                      \
       list_macro(is_wait_on_anim_when_dead, "is_wait_on_anim_when_dead"),         /* newline */                      \
       list_macro(is_explosion, "is_explosion"),                                   /* newline */                      \
       list_macro(is_corpse_on_death, "is_corpse_on_death"),                       /* newline */                      \
@@ -453,6 +453,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_treasure(tp)                   tp_flag(tp, is_treasure)
 #define tp_is_treasure1(tp)                  tp_flag(tp, is_treasure1)
 #define tp_is_treasure2(tp)                  tp_flag(tp, is_treasure2)
+#define tp_is_undead(tp)                     tp_flag(tp, is_undead)
 #define tp_is_unused1(tp)                    tp_flag(tp, is_unused1)
 #define tp_is_unused10(tp)                   tp_flag(tp, is_unused10)
 #define tp_is_unused11(tp)                   tp_flag(tp, is_unused11)
@@ -490,7 +491,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused40(tp)                   tp_flag(tp, is_unused40)
 #define tp_is_unused41(tp)                   tp_flag(tp, is_unused41)
 #define tp_is_unused42(tp)                   tp_flag(tp, is_unused42)
-#define tp_is_unused43(tp)                   tp_flag(tp, is_unused43)
 #define tp_is_unused5(tp)                    tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
@@ -580,6 +580,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_treasure(g, v, l, p)                   level_flag(g, v, l, is_treasure, p)
 #define level_is_treasure1(g, v, l, p)                  level_flag(g, v, l, is_treasure1, p)
 #define level_is_treasure2(g, v, l, p)                  level_flag(g, v, l, is_treasure2, p)
+#define level_is_undead(g, v, l, p)                     level_flag(g, v, l, is_undead, p)
 #define level_is_unused1(g, v, l, p)                    level_flag(g, v, l, is_unused1, p)
 #define level_is_unused10(g, v, l, p)                   level_flag(g, v, l, is_unused10, p)
 #define level_is_unused11(g, v, l, p)                   level_flag(g, v, l, is_unused11, p)
@@ -617,7 +618,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused40(g, v, l, p)                   level_flag(g, v, l, is_unused40, p)
 #define level_is_unused41(g, v, l, p)                   level_flag(g, v, l, is_unused41, p)
 #define level_is_unused42(g, v, l, p)                   level_flag(g, v, l, is_unused42, p)
-#define level_is_unused43(g, v, l, p)                   level_flag(g, v, l, is_unused43, p)
 #define level_is_unused5(g, v, l, p)                    level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)

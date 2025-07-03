@@ -7,9 +7,11 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
+#include "my_string.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 //
 // The player has been attacked
@@ -21,18 +23,18 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   auto it = e.source;
 
   if (it) {
-    auto it_tp = thing_tp(it);
+    auto by_the_thing = thing_the_long_name(g, v, l, it);
 
     switch (e.damage_type) {
       case THING_DAMAGE_NONE : break;
       case THING_DAMAGE_MELEE : // newline
-        TOPCON("You are hit by the %s.", tp_long_name(it_tp));
+        TOPCON(UI_WARNING_FMT_STR "You are hit by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_DAMAGE_HEAT : // newline
-        TOPCON("You suffer heat damage from the %s.", tp_long_name(it_tp));
+        TOPCON(UI_WARNING_FMT_STR "You suffer heat damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_DAMAGE_FIRE : // newline
-        TOPCON("You are burnt by the %s.", tp_long_name(it_tp));
+        TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_DAMAGE_ENUM_MAX : break;
     }
@@ -46,21 +48,21 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 {
   TRACE_AND_INDENT();
   auto it = e.source;
-  auto tp = thing_tp(t);
 
   if (it) {
-    auto it_tp = thing_tp(it);
+    auto the_thing    = capitalise_first(thing_the_long_name(g, v, l, t));
+    auto by_the_thing = thing_the_long_name(g, v, l, it);
 
     switch (e.damage_type) {
       case THING_DAMAGE_NONE : break;
       case THING_DAMAGE_MELEE : // newline
-        TOPCON("%s is hit by the %s.", tp_long_name(tp), tp_long_name(it_tp));
+        TOPCON("%s is hit by %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
       case THING_DAMAGE_HEAT : // newline
-        TOPCON("%s suffers heat damage from the %s.", tp_long_name(tp), tp_long_name(it_tp));
+        TOPCON("%s suffers heat damage from %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
       case THING_DAMAGE_FIRE : // newline
-        TOPCON("%s is burnt by the %s.", tp_long_name(tp), tp_long_name(it_tp));
+        TOPCON("%s is burnt by %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
       case THING_DAMAGE_ENUM_MAX : break;
     }

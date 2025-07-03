@@ -35,6 +35,7 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_tickable);
+  tp_flag_set(tp, is_undead);
   tp_health_initial_set(tp, 1);
   tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
   tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
