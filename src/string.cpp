@@ -317,10 +317,10 @@ void strnoescape(char *uncompressed)
     }
 
     switch (*s++) {
-      case 'n' : *t++ = '\n'; break;
-      case 't' : *t++ = '\t'; break;
-      case '%' : *t++ = '%'; break;
-      case '#' : *t++ = '@'; break;
+      case 'n' :  *t++ = '\n'; break;
+      case 't' :  *t++ = '\t'; break;
+      case '%' :  *t++ = '%'; break;
+      case '#' :  *t++ = '@'; break;
       case '\"' : *t++ = '\"'; break;
       case '\'' : *t++ = '\''; break;
       case '\\' : *t++ = '\\'; break;

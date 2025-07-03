@@ -74,7 +74,7 @@ static class Tokens *tokens_parse(const char *input, class Tokens *tokens)
               case '\r' : i = '\r'; break;
               case '\t' : i = '\t'; break;
               case '\\' : i = '\\'; break;
-              default : break;
+              default :   break;
             }
             break;
 
@@ -109,11 +109,11 @@ static class Tokens *tokens_parse(const char *input, class Tokens *tokens)
       switch (i) {
         case '\0' : *out++ = i; return tokens;
 
-        case ' ' : i = '\0'; break;
+        case ' ' :  i = '\0'; break;
 
         case '\t' : i = '\0'; break;
 
-        default : break;
+        default :   break;
       }
 
       *out++ = i;

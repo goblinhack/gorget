@@ -782,7 +782,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
       break;
     case MONST_GROUP_1 : tp_flag_set(tp, is_monst_group_1); break;
     case MONST_GROUP_2 : tp_flag_set(tp, is_monst_group_2); break;
-    default : ERR("bad value in tp for %s, %d", __FUNCTION__, val); return;
+    default :            ERR("bad value in tp for %s, %d", __FUNCTION__, val); return;
   }
 }
 

@@ -81,10 +81,10 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
             }
           }
           break;
-        case CHARMAP_CHASM : tp = tp_chasm; break;
-        case CHARMAP_JOIN : need_corridor = true; break;
+        case CHARMAP_CHASM :    tp = tp_chasm; break;
+        case CHARMAP_JOIN :     need_corridor = true; break;
         case CHARMAP_CORRIDOR : tp = tp_corridor; break;
-        case CHARMAP_BRIDGE : tp = tp_bridge; break;
+        case CHARMAP_BRIDGE :   tp = tp_bridge; break;
         case CHARMAP_WALL :
           need_floor = true;
           tp         = tp_wall;

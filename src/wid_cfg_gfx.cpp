@@ -277,9 +277,9 @@ static bool wid_cfg_gfx_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'c' :
-              case 'C' : wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0); return true;
+              case 'C' :         wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0); return true;
               case 's' :
-              case 'S' : wid_cfg_gfx_save(g, nullptr, 0, 0, 0); return true;
+              case 'S' :         wid_cfg_gfx_save(g, nullptr, 0, 0, 0); return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE : wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0); return true;

@@ -625,15 +625,15 @@ void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 std::string gama_state_to_string(int state)
 {
   switch (state) {
-    case STATE_MAIN_MENU : return "MAIN_MENU";
-    case STATE_PLAYING : return "PLAYING";
-    case STATE_LOAD_MENU : return "LOAD_MENU";
-    case STATE_LOADED : return "LOADED";
-    case STATE_SAVE_MENU : return "SAVE_MENU";
-    case STATE_QUIT_MENU : return "QUIT_MENU";
-    case STATE_QUITTING : return "QUITTING";
+    case STATE_MAIN_MENU :     return "MAIN_MENU";
+    case STATE_PLAYING :       return "PLAYING";
+    case STATE_LOAD_MENU :     return "LOAD_MENU";
+    case STATE_LOADED :        return "LOADED";
+    case STATE_SAVE_MENU :     return "SAVE_MENU";
+    case STATE_QUIT_MENU :     return "QUIT_MENU";
+    case STATE_QUITTING :      return "QUITTING";
     case STATE_KEYBOARD_MENU : return "KEYBOARD_MENU";
-    default : ERR("Unhandled game state"); return "?";
+    default :                  ERR("Unhandled game state"); return "?";
   }
 }
 
@@ -711,7 +711,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_LOAD_MENU :
     case STATE_LOADED :
     case STATE_SAVE_MENU :
-    case STATE_QUIT_MENU : wid_actionbar_fini(g); break;
+    case STATE_QUIT_MENU :     wid_actionbar_fini(g); break;
   }
 
   //
@@ -719,7 +719,7 @@ void Game::state_change(GameState new_state, const std::string &why)
   //
   switch (new_state) {
     case STATE_MAIN_MENU : wid_main_menu_select(g); break;
-    case STATE_QUITTING : break;
+    case STATE_QUITTING :  break;
     case STATE_PLAYING :
       switch (old_state) {
         case STATE_QUITTING : break;
@@ -749,7 +749,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_LOAD_MENU :
     case STATE_LOADED :
     case STATE_SAVE_MENU :
-    case STATE_QUIT_MENU : break;
+    case STATE_QUIT_MENU :     break;
   }
 
   //
@@ -779,7 +779,7 @@ void Game::tick(void)
 
   switch (state) {
     case STATE_MAIN_MENU : break;
-    case STATE_QUITTING : break;
+    case STATE_QUITTING :  break;
     case STATE_PLAYING :
       if (v) {
         auto l = game_level_get(g, v);
@@ -809,10 +809,10 @@ void Game::tick(void)
       }
       break;
     case STATE_KEYBOARD_MENU : break;
-    case STATE_LOAD_MENU : break;
-    case STATE_LOADED : break;
-    case STATE_SAVE_MENU : break;
-    case STATE_QUIT_MENU : break;
+    case STATE_LOAD_MENU :     break;
+    case STATE_LOADED :        break;
+    case STATE_SAVE_MENU :     break;
+    case STATE_QUIT_MENU :     break;
   }
 
   //
@@ -874,7 +874,7 @@ void Game::display(void)
 
   switch (state) {
     case STATE_MAIN_MENU : break;
-    case STATE_QUITTING : break;
+    case STATE_QUITTING :  break;
     case STATE_PLAYING :
       if (v) {
         auto l = game_level_get(g, v);
@@ -900,10 +900,10 @@ void Game::display(void)
       }
       break;
     case STATE_KEYBOARD_MENU : break;
-    case STATE_LOAD_MENU : break;
-    case STATE_LOADED : break;
-    case STATE_SAVE_MENU : break;
-    case STATE_QUIT_MENU : break;
+    case STATE_LOAD_MENU :     break;
+    case STATE_LOADED :        break;
+    case STATE_SAVE_MENU :     break;
+    case STATE_QUIT_MENU :     break;
   }
 }
 void game_display(Gamep g)

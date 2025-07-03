@@ -77,13 +77,13 @@ static bool wid_cfg_top_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'g' :
-              case 'G' : wid_cfg_top_gfx(g, nullptr, 0, 0, 0); return true;
+              case 'G' :         wid_cfg_top_gfx(g, nullptr, 0, 0, 0); return true;
               case 'm' :
-              case 'M' : wid_cfg_top_mouse(g, nullptr, 0, 0, 0); return true;
+              case 'M' :         wid_cfg_top_mouse(g, nullptr, 0, 0, 0); return true;
               case 's' :
-              case 'S' : wid_cfg_top_sound(g, nullptr, 0, 0, 0); return true;
+              case 'S' :         wid_cfg_top_sound(g, nullptr, 0, 0, 0); return true;
               case 'k' :
-              case 'K' : wid_cfg_top_keyboard(g, nullptr, 0, 0, 0); return true;
+              case 'K' :         wid_cfg_top_keyboard(g, nullptr, 0, 0, 0); return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE : wid_cfg_top_back(g, nullptr, 0, 0, 0); return true;

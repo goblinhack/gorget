@@ -104,19 +104,19 @@ static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
               case SDLK_RETURN :
               case ' ' :
               case 'n' :
-              case 'N' : game_menu_new_game(g, nullptr, 0, 0, 0); return true;
+              case 'N' :         game_menu_new_game(g, nullptr, 0, 0, 0); return true;
               case 'l' :
-              case 'L' : wid_main_menu_load(g, nullptr, 0, 0, 0); return true;
+              case 'L' :         wid_main_menu_load(g, nullptr, 0, 0, 0); return true;
               case 'o' :
-              case 'O' : wid_main_menu_config(g, nullptr, 0, 0, 0); return true;
+              case 'O' :         wid_main_menu_config(g, nullptr, 0, 0, 0); return true;
               case 's' :
-              case 'S' : wid_main_menu_seed(g, nullptr, 0, 0, 0); return true;
+              case 'S' :         wid_main_menu_seed(g, nullptr, 0, 0, 0); return true;
               case 'c' :
-              case 'C' : wid_main_menu_credits(g, nullptr, 0, 0, 0); return true;
+              case 'C' :         wid_main_menu_credits(g, nullptr, 0, 0, 0); return true;
               case 'h' :
-              case 'H' : wid_main_menu_hiscores(g, nullptr, 0, 0, 0); return true;
+              case 'H' :         wid_main_menu_hiscores(g, nullptr, 0, 0, 0); return true;
               case 'q' :
-              case 'Q' : wid_main_menu_quit(g, nullptr, 0, 0, 0); return true;
+              case 'Q' :         wid_main_menu_quit(g, nullptr, 0, 0, 0); return true;
             }
           }
       }
@@ -323,8 +323,8 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 
     switch (game_seed_source_get(g)) {
       case SEED_SOURCE_COMMAND_LINE : seed_text += " (set via cli)"; break;
-      case SEED_SOURCE_USER : seed_text += " (set via user)"; break;
-      case SEED_SOURCE_RANDOM : seed_text += " (randomly generated)"; break;
+      case SEED_SOURCE_USER :         seed_text += " (set via user)"; break;
+      case SEED_SOURCE_RANDOM :       seed_text += " (randomly generated)"; break;
     }
 
     ascii_putf(0, TERM_HEIGHT - 1, YELLOW, BLACK, seed_text);

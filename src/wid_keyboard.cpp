@@ -368,7 +368,7 @@ static bool wid_keyboard_parent_key_down(Gamep g, Widp w, const SDL_Keysym *key)
   }
 
   switch (key->sym) {
-    case '`' : return false;
+    case '`' :         return false;
 
     case SDLK_ESCAPE : (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input)); return true;
 
@@ -377,19 +377,19 @@ static bool wid_keyboard_parent_key_down(Gamep g, Widp w, const SDL_Keysym *key)
         (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
         return true;
 
-        case SDLK_LEFT : wid_keyboard_focus_left(g, ctx); break;
+        case SDLK_LEFT :  wid_keyboard_focus_left(g, ctx); break;
 
         case SDLK_RIGHT : wid_keyboard_focus_right(g, ctx); break;
 
-        case SDLK_UP : wid_keyboard_focus_up(g, ctx); break;
+        case SDLK_UP :    wid_keyboard_focus_up(g, ctx); break;
 
-        case SDLK_DOWN : wid_keyboard_focus_down(g, ctx); break;
+        case SDLK_DOWN :  wid_keyboard_focus_down(g, ctx); break;
 
-        case SDLK_HOME : wid_keyboard_first_focus(g, ctx); break;
+        case SDLK_HOME :  wid_keyboard_first_focus(g, ctx); break;
 
-        case SDLK_END : wid_keyboard_last_focus(g, ctx); break;
+        case SDLK_END :   wid_keyboard_last_focus(g, ctx); break;
 
-        default : wid_keyboard_event(g, ctx->w, -1, -1, key); return true;
+        default :         wid_keyboard_event(g, ctx->w, -1, -1, key); return true;
       }
   }
 
@@ -488,11 +488,11 @@ static bool wid_keyboard_button_key_event(Gamep g, Widp w, const SDL_Keysym *key
   }
 
   switch (key->sym) {
-    case '`' : return false;
+    case '`' :            return false;
 
-    case SDLK_ESCAPE : (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input)); return true;
+    case SDLK_ESCAPE :    (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input)); return true;
 
-    case SDLK_RETURN : (ctx->selected)(g, ctx->w, wid_get_text(ctx->input)); return true;
+    case SDLK_RETURN :    (ctx->selected)(g, ctx->w, wid_get_text(ctx->input)); return true;
 
     case SDLK_BACKSPACE :
     case SDLK_DELETE :
@@ -501,9 +501,9 @@ static bool wid_keyboard_button_key_event(Gamep g, Widp w, const SDL_Keysym *key
     case SDLK_UP :
     case SDLK_DOWN :
     case SDLK_HOME :
-    case SDLK_END : break;
+    case SDLK_END :       break;
 
-    default : wid_keyboard_event(g, w, -1, -1, key); return true;
+    default :             wid_keyboard_event(g, w, -1, -1, key); return true;
   }
 
   return false;
@@ -603,9 +603,9 @@ static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym 
   }
 
   switch (key->sym) {
-    case SDLK_ESCAPE : (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input)); return true;
+    case SDLK_ESCAPE :    (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input)); return true;
 
-    case SDLK_RETURN : (ctx->selected)(g, ctx->w, wid_get_text(ctx->input)); return true;
+    case SDLK_RETURN :    (ctx->selected)(g, ctx->w, wid_get_text(ctx->input)); return true;
 
     case SDLK_BACKSPACE :
     case SDLK_DELETE :
@@ -614,9 +614,9 @@ static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym 
     case SDLK_UP :
     case SDLK_DOWN :
     case SDLK_HOME :
-    case SDLK_END : wid_receive_input(g, ctx->input, key); return true;
+    case SDLK_END :       wid_receive_input(g, ctx->input, key); return true;
 
-    default : wid_keyboard_event(g, w, -1, -1, key); return true;
+    default :             wid_keyboard_event(g, w, -1, -1, key); return true;
   }
 
   return false;

@@ -20,9 +20,9 @@ bool tp_load_explosion(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_flag_set(tp, is_explosion);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
   tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
   tp_is_immunity_add(tp, THING_DAMAGE_MELEE);

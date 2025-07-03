@@ -74,9 +74,9 @@ static bool wid_quit_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'y' :
-              case 'Y' : wid_quit_yes(g, nullptr, 0, 0, 0); return true;
+              case 'Y' :         wid_quit_yes(g, nullptr, 0, 0, 0); return true;
               case 'n' :
-              case 'N' : wid_quit_no(g, nullptr, 0, 0, 0); return true;
+              case 'N' :         wid_quit_no(g, nullptr, 0, 0, 0); return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE : wid_quit_no(g, nullptr, 0, 0, 0); return true;

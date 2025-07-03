@@ -418,7 +418,7 @@ uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context)
     g_opt_debug1 = false;
     g_opt_debug2 = false;
     switch (strtol(s, nullptr, 10) ? 1 : 0) {
-      case 0 : break;
+      case 0 :  break;
       default : g_opt_debug1 = true; break;
     }
   }

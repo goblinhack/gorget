@@ -30,13 +30,13 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob2);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_tickable);
+  tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_health_initial_set(tp, 10);
   tp_short_name_set(tp, "goblin den");
   tp_speed_set(tp, 100);

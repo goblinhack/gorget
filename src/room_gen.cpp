@@ -524,12 +524,12 @@ static bool rooms_dump_one(Gamep g, FILE *out, int which)
   grid.out = out;
 
   switch (which) {
-    case ROOM_TYPE_CROSS : room_gen_design_cross_room(g, &grid); break;
+    case ROOM_TYPE_CROSS :     room_gen_design_cross_room(g, &grid); break;
     case ROOM_TYPE_CROSS_SYM : room_gen_design_cross_room_symmetrical(g, &grid); break;
-    case ROOM_TYPE_SMALL : room_gen_design_small_room(g, &grid); break;
-    case ROOM_TYPE_MEDIUM : room_gen_design_medium_room(g, &grid); break;
-    case ROOM_TYPE_CIRCULAR : room_gen_design_circular_room(g, &grid); break;
-    case ROOM_TYPE_CHUNKY : room_gen_design_chunky_room(g, &grid); break;
+    case ROOM_TYPE_SMALL :     room_gen_design_small_room(g, &grid); break;
+    case ROOM_TYPE_MEDIUM :    room_gen_design_medium_room(g, &grid); break;
+    case ROOM_TYPE_CIRCULAR :  room_gen_design_circular_room(g, &grid); break;
+    case ROOM_TYPE_CHUNKY :    room_gen_design_chunky_room(g, &grid); break;
     case ROOM_TYPE_BLEND1 :
       room_gen_design_cross_room(g, &grid);
       room_gen_design_chunky_room(g, &grid);
