@@ -10,6 +10,7 @@
 #include "my_types.hpp"
 
 #include <stdarg.h>
+#include <string>
 
 //
 // Thing flags enum

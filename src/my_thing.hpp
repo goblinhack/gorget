@@ -435,5 +435,6 @@ void THING_TOPCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_BOTCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
 std::string to_string(Thingp);
+std::string to_string(ThingEvent &);
 
 #endif

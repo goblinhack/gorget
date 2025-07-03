@@ -172,7 +172,7 @@ void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
             DIE("no block type found for %s", tile_name);
           }
 
-          auto which = std::string(tile_name) + "." + is_join_enum_val2str((is_join_enum) block_type);
+          auto which = std::string(tile_name) + "." + is_join_enum_to_string((is_join_enum) block_type);
 
           if (tp_is_animated(tp)) {
             which += ".0";

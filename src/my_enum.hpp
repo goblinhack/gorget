@@ -15,7 +15,8 @@
                                                                                                                      \
   typedef enum { ENUM_NAME(ENUM_LIST_MACRO_VALUE) ENUM_NAME##_MAX } __attribute__((__packed__)) enum_name;           \
                                                                                                                      \
-  extern const char *enum_name##_val2str(enum_name val);                                                             \
+  extern std::string enum_name##_to_string(enum_name val);                                                           \
+  extern const char *enum_name##_to_c_str(enum_name val);                                                            \
   extern enum_name   enum_name##_str2val(const char *val);                                                           \
   extern void        enum_name##_destroy(void);
 
@@ -29,7 +30,22 @@
  */
 #define ENUM_DEF_C(ENUM_NAME, enum_name)                                                                             \
                                                                                                                      \
-  const char *enum_name##_val2str(enum_name val)                                                                     \
+  std::string enum_name##_to_string(enum_name val)                                                                   \
+  {                                                                                                                  \
+    static const char *arr[] = {ENUM_NAME(ENUM_LIST_MACRO_STRING)};                                                  \
+                                                                                                                     \
+    if (val >= (__typeof__(val)) ARRAY_SIZE(arr)) {                                                                  \
+      return (std::string("[bad]"));                                                                                 \
+    }                                                                                                                \
+                                                                                                                     \
+    if (! arr[ val ]) {                                                                                              \
+      return (std::string("[undefined]"));                                                                           \
+    }                                                                                                                \
+                                                                                                                     \
+    return (std::string(arr[ val ]));                                                                                \
+  }                                                                                                                  \
+                                                                                                                     \
+  const char *enum_name##_to_c_str(enum_name val)                                                                    \
   {                                                                                                                  \
     static const char *arr[] = {ENUM_NAME(ENUM_LIST_MACRO_STRING)};                                                  \
                                                                                                                      \

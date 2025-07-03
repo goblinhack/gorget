@@ -153,7 +153,7 @@ void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_dead = val;
 
   if (val && thing_is_loggable(t)) {
-    THING_LOG(t, "is dead");
+    THING_DBG(t, "is dead");
   }
 
   thing_is_dead_handle(g, v, l, t);
@@ -184,7 +184,7 @@ void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_corpse = val;
 
   if (val && thing_is_loggable(t)) {
-    THING_LOG(t, "is corpse");
+    THING_DBG(t, "is corpse");
   }
 }
 
@@ -195,6 +195,7 @@ bool thing_is_scheduled_for_cleanup(Thingp t)
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
+
   return t->_is_scheduled_for_cleanup;
 }
 
@@ -213,7 +214,7 @@ void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, 
   t->_is_scheduled_for_cleanup = val;
 
   if (val && thing_is_loggable(t)) {
-    THING_LOG(t, "is scheduled for cleanup");
+    THING_DBG(t, "is scheduled for cleanup");
   }
 }
 

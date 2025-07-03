@@ -3770,7 +3770,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
     threads[ i ].join();
   }
 
-  if (g_opt_debug1) {
+  if (g_opt_debug2) {
     for (auto i = 0; i < max_threads; i++) {
       auto l = levels[ i ];
       if (l) {

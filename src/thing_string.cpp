@@ -48,3 +48,32 @@ std::string to_string(Thingp t)
                          /* newline */ thing_is_open(t) ? "/open" : "",
                          /* newline */ t->at.x, t->at.y));
 }
+
+std::string to_string(ThingEvent &e)
+{
+  TRACE_NO_INDENT();
+
+  std::string s = "event:";
+
+  if (e.reason != "") {
+    s += " reason: ";
+    s += e.reason;
+  }
+
+  if (e.damage != THING_DAMAGE_NONE) {
+    s += " damage-type: ";
+    s += ThingDamage_to_string(e.damage_type);
+  }
+
+  if (e.damage) {
+    s += " damage: ";
+    s += std::to_string(e.damage);
+  }
+
+  if (e.source) {
+    s += " source: ";
+    s += to_string(e.source);
+  }
+
+  return s;
+}

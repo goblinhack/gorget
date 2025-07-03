@@ -24,6 +24,7 @@
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)
 ENUM_DEF_C(THING_DIR_ENUM, ThingDir)
+ENUM_DEF_C(THING_DAMAGE_ENUM, ThingDamage)
 ENUM_DEF_C(THING_RARITY_ENUM, ThingRarity)
 ENUM_DEF_C(MONST_GROUP_ENUM, ThingMonstGroup)
 ENUM_DEF_C(MAP_Z_DEPTH_ENUM, MapZDepth)
@@ -469,7 +470,7 @@ Tpp tp_random(ThingFlag f)
   TRACE_NO_INDENT();
 
   if (unlikely(! tp_flag_map[ f ].size())) {
-    ERR("tp_random: no tp found for ThingFlag %d/%s", f, ThingFlag_val2str(f));
+    ERR("tp_random: no tp found for ThingFlag %d/%s", f, ThingFlag_to_c_str(f));
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
