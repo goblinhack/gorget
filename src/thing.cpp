@@ -186,6 +186,10 @@ static void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
     v->level_select_id = 0;
   }
 
+  if (0) {
+    THING_LOG(t, "free");
+  }
+
   thing_pop(g, v, t);
   thing_ai_free(g, v, l, t);
 

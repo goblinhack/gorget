@@ -33,9 +33,9 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
   auto time_step = ts - last_ts;
   last_ts        = ts;
 
-  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    for (auto y = v->miny; y < v->maxy; y++) {
-      for (auto x = v->minx; x < v->maxx; x++) {
+  for (auto y = 0; y < MAP_HEIGHT; y++) {
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      for (auto slot = 0; slot < MAP_SLOTS; slot++) {
         Tpp    tp;
         spoint p(x, y);
         Thingp t = thing_and_tp_get_at(g, v, l, p, slot, &tp);

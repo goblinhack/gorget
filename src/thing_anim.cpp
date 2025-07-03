@@ -73,6 +73,12 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
     return;
   }
 
+  if (0) {
+    if (thing_is_mob(t)) {
+      THING_LOG(t, "anim %s", tile_name_get(tile).c_str());
+    }
+  }
+
   if (! tile_delay_ms(tile)) {
     return;
   }
@@ -84,12 +90,6 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
     t->anim_ms_remaining -= time_step;
     if (t->anim_ms_remaining > 0) {
       return;
-    }
-  }
-
-  if (0) {
-    if (thing_is_mob(t)) {
-      THING_LOG(t, "anim %s", tile_name_get(tile).c_str());
     }
   }
 
