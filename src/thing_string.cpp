@@ -80,6 +80,40 @@ std::string to_string(ThingEvent &e)
   return s;
 }
 
+std::string to_death_reason(ThingEvent &e)
+{
+  TRACE_NO_INDENT();
+
+  std::string s;
+
+  switch (e.event_type) {
+    case THING_EVENT_NONE : break;
+    case THING_EVENT_SHOVE : // newline
+      s += "shoved to death";
+      break;
+    case THING_EVENT_CRUSH : // newline
+      s += "crushed to death";
+      break;
+    case THING_EVENT_MELEE : // newline
+      s += "hacked to death";
+      break;
+    case THING_EVENT_HEAT : // newline
+      s += "cooked to death";
+      break;
+    case THING_EVENT_FIRE : // newline
+      s += "burnt to death";
+      break;
+    case THING_EVENT_ENUM_MAX : break;
+  }
+
+  if (e.source) {
+    s += " by ";
+    s += capitalise(tp_long_name(thing_tp(e.source)));
+  }
+
+  return s;
+}
+
 std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool include_owner)
 {
   TRACE_NO_INDENT();

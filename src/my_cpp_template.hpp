@@ -43,7 +43,8 @@ void push_back_if_unique(C< T > &c, T d)
   c.push_back(d);
 }
 
-template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C > T one_of(C< T > &c)
+template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
+T pcg_rand_one_of(C< T > &c)
 {
   typename C< T >::iterator so = c.begin();
   typename C< T >::iterator eo = c.end();
@@ -54,6 +55,20 @@ template < class T, template < typename ELEM, typename ALLOC = std::allocator< E
   }
 
   return *(so + (pcg_rand() % sz));
+}
+
+template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
+T rand_one_of(C< T > &c)
+{
+  typename C< T >::iterator so = c.begin();
+  typename C< T >::iterator eo = c.end();
+
+  size_t sz = eo - so;
+  if (! sz) {
+    return *so;
+  }
+
+  return *(so + (rand() % sz));
 }
 
 // https://stackoverflow.com/questions/5056645/sorting-stdmap-using-value

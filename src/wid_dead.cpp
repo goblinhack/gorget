@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_cpp_template.hpp"
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
@@ -144,12 +145,90 @@ void wid_dead_select(Gamep g, std::string reason)
     grave_name += "|";
 
     wid_dead_window->log(g, grave_name);
-    CON("[%s]", grave_name.c_str());
-    CON("[%s]", game_player_name_get(g));
   }
 
   wid_dead_window->log(g, "|                  |");
-  wid_dead_window->log(g, "|      Killed      |");
+
+  const std::initializer_list< std::string > epitaphs = {
+      "A brave end.",
+      "A noble end.",
+      "A pointless end.",
+      "As lifeless as a Norweigian blue.",
+      "At rest, sort of.",
+      "Bade farewell to life.",
+      "Bit the dust.",
+      "Bought the farm.",
+      "Came to a sticky end.",
+      "Came. Tried. Failed.",
+      "Croaked it.",
+      "Crossed the great divide.",
+      "Dead, what? When?",
+      "Died horribly.",
+      "Fell off the perch.",
+      "Fought bravely...",
+      "Gave up the ghost.",
+      "Gave up too soon",
+      "Gone and dearly missed",
+      "Goodbye cruel world.",
+      "Had your final summons.",
+      "Has gone to a better place.",
+      "Had such high hopes",
+      "Is a better place.",
+      "Kicked the bucket.",
+      "Left this mortal coil.",
+      "Life was hard. Taking it easy now.",
+      "Me, dead? never",
+      "Not sure how that happened.",
+      "Off to the happy hunting ground.",
+      "Paid the piper.",
+      "Passed on.",
+      "Profoundly dead.",
+      "Pushing up the daisies now.",
+      "Sadly departed.",
+      "Six feet under.",
+      "Snuffed it.",
+      "Suddenly expired.",
+      "Well, could have gone a lot worse...",
+      "The Gods are disappointed in you...",
+      "Their number was up.",
+      "Try 3D Monster Maze instead.",
+      "Was a noble pursuit.",
+      "Was the G.O.A.T.",
+      "Welcomed to the afterlife!",
+      "Well, that could have been worse.",
+      "You tried.",
+  };
+
+  std::vector< std::string > epitaphs_arr(epitaphs);
+  auto                       epitaph = rand_one_of(epitaphs_arr);
+
+  //
+  // Center the death mockery
+  //
+  {
+    std::vector< std::string > d = split(capitalise(epitaph), grave_text_width);
+
+    for (const auto &text : d) {
+      int pad     = grave_text_width - text.size();
+      int lhs_pad = pad / 2;
+      int rhs_pad = pad - lhs_pad;
+
+      std::string death_reason = " |";
+      while (lhs_pad--) {
+        death_reason += " ";
+      }
+      death_reason += text;
+      while (rhs_pad--) {
+        death_reason += " ";
+      }
+      death_reason += "|";
+
+      wid_dead_window->log(g, death_reason);
+    }
+  }
+
+  wid_dead_window->log(g, "|                  |");
+  wid_dead_window->log(g, "|                  |");
 
   //
   // Center the death reason
@@ -176,9 +255,6 @@ void wid_dead_select(Gamep g, std::string reason)
     }
   }
 
-  wid_dead_window->log(g, "|                  |");
-  wid_dead_window->log(g, "|                  |");
-  wid_dead_window->log(g, "|                  |");
   wid_dead_window->log(g, "|                  |");
   wid_dead_window->log(g, "|     " UI_YELLOW_FMT_STR "*" UI_RESET_FMT "            |");
   wid_dead_window->log(g, "|     " UI_GREEN_FMT_STR "|" UI_RESET_FMT "        " UI_YELLOW_FMT_STR "*" UI_RESET_FMT

@@ -124,7 +124,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   }
 
   if (thing_is_player(t)) {
-    wid_dead_select(g, e.reason);
+    wid_dead_select(g, to_death_reason(e));
   }
 }
 

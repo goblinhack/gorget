@@ -444,5 +444,6 @@ void THING_BOTCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 std::string to_string(Thingp);
 std::string to_string(ThingEvent &);
 std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, bool include_owner = false);
+std::string to_death_reason(ThingEvent &);
 
 #endif
