@@ -204,7 +204,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto aip = thing_player(g, t);
+  auto aip = thing_player_ai(g, t);
   if (! aip) {
     return;
   }

@@ -32,6 +32,9 @@ bool tests_init(void)
   if (! test_load_collision_grass()) {
     return false;
   }
+  if (! test_load_collision_player_lava()) {
+    return false;
+  }
   if (! test_load_move_ok()) {
     return false;
   }

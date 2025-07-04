@@ -325,7 +325,7 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto aip = thing_player(g, t);
+  auto aip = thing_player_ai(g, t);
   if (! aip) {
     return;
   }
@@ -571,7 +571,7 @@ static bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint *
 {
   TRACE_NO_INDENT();
 
-  auto aip = thing_player(g, t);
+  auto aip = thing_player_ai(g, t);
   if (! aip) {
     return false;
   }

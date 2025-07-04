@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_mob_lava(Gamep g, Testp t)
+static bool test_collision_player_lava(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -23,7 +23,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@gL.."
+        "..@L..."
         "......."
         "......."
         ".......";
@@ -31,7 +31,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.L.."
+        "...L..."
         "......."
         "......."
         ".......";
@@ -52,14 +52,14 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   bool right  = false;
 
   spoint  p;
-  bool    found_it = false;
-  ThingId mob_id   = 0;
-  Thingp  player   = nullptr;
+  bool    found_it  = false;
+  ThingId player_id = 0;
+  Thingp  player    = nullptr;
 
   //
-  // Push the mob into lava
+  // Move into the lava. The player should die.
   //
-  TEST_LOG(t, "push mob into lava");
+  TEST_LOG(t, "move player into lava right");
   TRACE_AND_INDENT();
   up = down = left = right = false;
   right                    = true;
@@ -77,24 +77,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   }
 
   //
-  // Find the mob before shoving it via the player
-  //
-  {
-    TRACE_NO_INDENT();
-    p        = player->at + spoint(1, 0);
-    found_it = false;
-    FOR_ALL_THINGS_AT(g, v, l, it, p)
-    {
-      if (thing_is_mob(it)) {
-        found_it = true;
-        mob_id   = it->id;
-        break;
-      }
-    }
-  }
-
-  //
-  // Move right, shoving the mob
+  // Move right
   //
   {
     TRACE_NO_INDENT();
@@ -124,35 +107,42 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   }
 
   //
-  // Check mob is dead when shoved into lava. It should be popped off the level.
+  // Check the player id is freed
+  //
+  {
+    TEST_ASSERT(t, player->id == 0, "player is freed");
+  }
+
+  //
+  // Check player is dead when shoved into lava. It should be popped off the level.
   //
   {
     TRACE_NO_INDENT();
-    TEST_LOG(t, "check mob is dead when shoved into lava");
-    p        = player->at + spoint(2, 0);
+    TEST_LOG(t, "check player is dead when in lava");
+    p        = player->at;
     found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
-      if (thing_is_mob(it)) {
+      if (thing_is_player(it)) {
         found_it = true;
         break;
       }
     }
 
     if (found_it) {
-      TEST_FAILED(t, "found mob, but it should have been popped");
+      TEST_FAILED(t, "found player, but it should have been popped");
       goto exit;
     }
   }
 
   //
-  // Check the mob has been cleaned up
+  // Check the player has been cleaned up
   //
   {
     TRACE_NO_INDENT();
-    if (thing_find_optional(g, v, mob_id)) {
-      TEST_FAILED(t, "found mob, but it should have been freed");
+    if (thing_find_optional(g, v, player_id)) {
+      TEST_FAILED(t, "found player, but it should have been freed");
       goto exit;
     }
   }
@@ -172,14 +162,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_mob_lava(void)
+bool test_load_collision_player_lava(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_mob_lava");
+  Testp test = test_load("collision_player_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_mob_lava);
+  test_callback_set(test, test_collision_player_lava);
   // end sort marker1 }
 
   return true;

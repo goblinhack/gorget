@@ -63,12 +63,12 @@ typedef struct ThingAi_ {
 //
 // Player specific memory
 //
-typedef struct ThingPlayer_ {
+typedef struct ThingPlayerAi_ {
   struct {
     spoint  points[ THING_MOVE_PATH_MAX ];
     int16_t size;
   } move_path;
-} ThingPlayer;
+} ThingPlayerAi;
 
 typedef struct Thing_ {
   //////////////////////////////////////////////////////////////
@@ -237,8 +237,8 @@ void thing_anim_reset(Gamep, Levelsp, Levelp, Thingp);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
 
-Thingp       thing_player(Gamep);
-ThingPlayerp thing_player(Gamep, Thingp);
+Thingp         thing_player(Gamep);
+ThingPlayerAip thing_player_ai(Gamep, Thingp);
 
 void player_map_center(Gamep, Levelsp, Levelp);
 void player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right);

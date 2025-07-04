@@ -52,7 +52,7 @@ static bool test_collision_mob(Gamep g, Testp t)
   bool right  = false;
 
   //
-  // Bump into a mob. It should move and not be knocked over.
+  // Bump into a mob. It should move and not die.
   //
   {
     TEST_LOG(t, "move right");

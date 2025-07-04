@@ -28,19 +28,19 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
     switch (e.event_type) {
       case THING_EVENT_NONE : break;
       case THING_EVENT_SHOVE : // newline
-        TOPCON(UI_WARNING_FMT_STR "You are shoved to death by %s." UI_RESET_FMT, by_the_thing.c_str());
+        TOPCON(UI_IMPORTANT_FMT_STR "You are shoved to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_CRUSH : // newline
-        TOPCON(UI_WARNING_FMT_STR "You are crushed to death by %s." UI_RESET_FMT, by_the_thing.c_str());
+        TOPCON(UI_IMPORTANT_FMT_STR "You are crushed to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_MELEE : // newline
-        TOPCON(UI_WARNING_FMT_STR "You are killed by %s." UI_RESET_FMT, by_the_thing.c_str());
+        TOPCON(UI_IMPORTANT_FMT_STR "You are killed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_HEAT : // newline
-        TOPCON(UI_WARNING_FMT_STR "You die in the unsuffereble heat from %s." UI_RESET_FMT, by_the_thing.c_str());
+        TOPCON(UI_IMPORTANT_FMT_STR "You die in the unsuffereble heat from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_FIRE : // newline
-        TOPCON(UI_WARNING_FMT_STR "You are burnt to death by %s." UI_RESET_FMT, by_the_thing.c_str());
+        TOPCON(UI_IMPORTANT_FMT_STR "You are burnt to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;
     }

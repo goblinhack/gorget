@@ -296,7 +296,7 @@ ThingAip thing_ai(Gamep g, Thingp t)
   return &v->thing_ai[ ai_id ];
 }
 
-ThingPlayerp thing_player(Gamep g, Thingp t)
+ThingPlayerAip thing_player_ai(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 
