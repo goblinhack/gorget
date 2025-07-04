@@ -21,10 +21,10 @@ static void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp
   }
 
   ThingEvent e {
-      .reason      = "by heat damage",  //
-      .damage_type = THING_DAMAGE_HEAT, //
-      .damage      = damage,            //
-      .source      = source,            //
+      .reason     = "by heat damage", //
+      .event_type = THING_EVENT_HEAT, //
+      .damage     = damage,           //
+      .source     = source,           //
   };
   thing_damage(g, v, l, me, e);
 }

@@ -25,7 +25,7 @@ bool tp_load_fire(void)
   auto tp   = tp_load("fire");
 
   // begin sort marker1 {
-  tp_damage_set(tp, THING_DAMAGE_FIRE, "1d6");
+  tp_damage_set(tp, THING_EVENT_FIRE, "1d6");
   tp_description_set(tp, tp_fire_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -34,8 +34,8 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_fire);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
-  tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
-  tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
+  tp_is_immunity_add(tp, THING_EVENT_FIRE);
+  tp_is_immunity_add(tp, THING_EVENT_HEAT);
   tp_light_color_set(tp, "orange");
   tp_temperature_initial_set(tp, 500); // celsius
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

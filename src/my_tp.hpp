@@ -118,8 +118,8 @@
       list_macro(is_unused39, "is_unused39"),                                     /* newline */                      \
       list_macro(is_unused4, "is_unused4"),                                       /* newline */                      \
       list_macro(is_unused40, "is_unused40"),                                     /* newline */                      \
-      list_macro(is_unused41, "is_unused41"),                                     /* newline */                      \
-      list_macro(is_unused42, "is_unused42"),                                     /* newline */                      \
+      list_macro(is_extinguished_on_death, "is_extinguished_on_death"),           /* newline */                      \
+      list_macro(is_broken_on_death, "is_broken_on_death"),                       /* newline */                      \
       list_macro(is_undead, "is_undead"),                                         /* newline */                      \
       list_macro(is_wait_on_anim_when_dead, "is_wait_on_anim_when_dead"),         /* newline */                      \
       list_macro(is_explosion, "is_explosion"),                                   /* newline */                      \
@@ -251,14 +251,16 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 //
 // Thing damage enum
 //
-#define THING_DAMAGE_ENUM(list_macro)                                                                                \
-  clang_format_indent()                        /* dummy line for clang indentation fixup */                          \
-      list_macro(THING_DAMAGE_NONE, "none"),   /* newline */                                                         \
-      list_macro(THING_DAMAGE_MELEE, "melee"), /* newline */                                                         \
-      list_macro(THING_DAMAGE_HEAT, "heat"),   /* newline */                                                         \
-      list_macro(THING_DAMAGE_FIRE, "fire"),   /* newline */
+#define THING_EVENT_ENUM(list_macro)                                                                                 \
+  clang_format_indent()                       /* dummy line for clang indentation fixup */                           \
+      list_macro(THING_EVENT_NONE, "none"),   /* newline */                                                          \
+      list_macro(THING_EVENT_MELEE, "melee"), /* newline */                                                          \
+      list_macro(THING_EVENT_SHOVE, "shove"), /* newline */                                                          \
+      list_macro(THING_EVENT_CRUSH, "crush"), /* newline */                                                          \
+      list_macro(THING_EVENT_HEAT, "heat"),   /* newline */                                                          \
+      list_macro(THING_EVENT_FIRE, "fire"),   /* newline */
 
-ENUM_DEF_H(THING_DAMAGE_ENUM, ThingDamage)
+ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 
 //
 // Thing rarity enum
@@ -313,8 +315,8 @@ Tilep tp_first_tile(class Tp *, ThingAnim);
 Tilep tp_tiles_get(Tpp, ThingAnim anim_type, int index);
 void  tp_tiles_push_back(Tpp, ThingAnim, Tilep val);
 
-void tp_damage_set(Tpp, ThingDamage, const char *);
-int  tp_damage(Tpp, ThingDamage);
+void tp_damage_set(Tpp, ThingEventType, const char *);
+int  tp_damage(Tpp, ThingEventType);
 
 TpId tp_id_get(Tpp tp);
 Tpp  tp_find(TpId id);
@@ -370,8 +372,8 @@ int  tp_temperature_burns_at_get(Tpp tp);
 void tp_temperature_damage_at_set(Tpp, int val);
 int  tp_temperature_damage_at_get(Tpp tp);
 
-void tp_is_immunity_add(Tpp, ThingDamage);
-bool tp_is_immune_to(Tpp, ThingDamage);
+void tp_is_immunity_add(Tpp, ThingEventType);
+bool tp_is_immune_to(Tpp, ThingEventType);
 
 void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 
@@ -390,6 +392,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_blit_square_outlined(tp)       tp_flag(tp, is_blit_square_outlined)
 #define tp_is_brazier(tp)                    tp_flag(tp, is_brazier)
 #define tp_is_bridge(tp)                     tp_flag(tp, is_bridge)
+#define tp_is_broken_on_death(tp)            tp_flag(tp, is_broken_on_death)
 #define tp_is_burnable(tp)                   tp_flag(tp, is_burnable)
 #define tp_is_chasm(tp)                      tp_flag(tp, is_chasm)
 #define tp_is_corpse_on_death(tp)            tp_flag(tp, is_corpse_on_death)
@@ -410,6 +413,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_ethereal(tp)                   tp_flag(tp, is_ethereal)
 #define tp_is_exit(tp)                       tp_flag(tp, is_exit)
 #define tp_is_explosion(tp)                  tp_flag(tp, is_explosion)
+#define tp_is_extinguished_on_death(tp)      tp_flag(tp, is_extinguished_on_death)
 #define tp_is_fire(tp)                       tp_flag(tp, is_fire)
 #define tp_is_floor(tp)                      tp_flag(tp, is_floor)
 #define tp_is_foliage(tp)                    tp_flag(tp, is_foliage)
@@ -489,8 +493,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused39(tp)                   tp_flag(tp, is_unused39)
 #define tp_is_unused4(tp)                    tp_flag(tp, is_unused4)
 #define tp_is_unused40(tp)                   tp_flag(tp, is_unused40)
-#define tp_is_unused41(tp)                   tp_flag(tp, is_unused41)
-#define tp_is_unused42(tp)                   tp_flag(tp, is_unused42)
 #define tp_is_unused5(tp)                    tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                    tp_flag(tp, is_unused6)
 #define tp_is_unused7(tp)                    tp_flag(tp, is_unused7)
@@ -517,6 +519,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_blit_square_outlined(g, v, l, p)       level_flag(g, v, l, is_blit_square_outlined, p)
 #define level_is_brazier(g, v, l, p)                    level_flag(g, v, l, is_brazier, p)
 #define level_is_bridge(g, v, l, p)                     level_flag(g, v, l, is_bridge, p)
+#define level_is_broken_on_death(g, v, l, p)            level_flag(g, v, l, is_broken_on_death, p)
 #define level_is_burnable(g, v, l, p)                   level_flag(g, v, l, is_burnable, p)
 #define level_is_chasm(g, v, l, p)                      level_flag(g, v, l, is_chasm, p)
 #define level_is_corpse_on_death(g, v, l, p)            level_flag(g, v, l, is_corpse_on_death, p)
@@ -537,6 +540,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_ethereal(g, v, l, p)                   level_flag(g, v, l, is_ethereal, p)
 #define level_is_exit(g, v, l, p)                       level_flag(g, v, l, is_exit, p)
 #define level_is_explosion(g, v, l, p)                  level_flag(g, v, l, is_explosion, p)
+#define level_is_extinguished_on_death(g, v, l, p)      level_flag(g, v, l, is_extinguished_on_death, p)
 #define level_is_fire(g, v, l, p)                       level_flag(g, v, l, is_fire, p)
 #define level_is_floor(g, v, l, p)                      level_flag(g, v, l, is_floor, p)
 #define level_is_foliage(g, v, l, p)                    level_flag(g, v, l, is_foliage, p)
@@ -616,8 +620,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused39(g, v, l, p)                   level_flag(g, v, l, is_unused39, p)
 #define level_is_unused4(g, v, l, p)                    level_flag(g, v, l, is_unused4, p)
 #define level_is_unused40(g, v, l, p)                   level_flag(g, v, l, is_unused40, p)
-#define level_is_unused41(g, v, l, p)                   level_flag(g, v, l, is_unused41, p)
-#define level_is_unused42(g, v, l, p)                   level_flag(g, v, l, is_unused42, p)
 #define level_is_unused5(g, v, l, p)                    level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                    level_flag(g, v, l, is_unused6, p)
 #define level_is_unused7(g, v, l, p)                    level_flag(g, v, l, is_unused7, p)

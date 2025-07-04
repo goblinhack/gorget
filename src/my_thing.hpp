@@ -40,11 +40,11 @@ typedef struct ThingEvent_ {
   //
   std::string reason;
   //
-  // What type of attack?
+  // What type of event/attack?
   //
-  ThingDamage damage_type = THING_DAMAGE_NONE;
+  ThingEventType event_type = THING_EVENT_NONE;
   //
-  // How much damage?
+  // How much damage, if this is an attack?
   //
   int damage = 0;
   //
@@ -304,7 +304,7 @@ int thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_health_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-bool thing_is_immune_to(Thingp, ThingDamage);
+bool thing_is_immune_to(Thingp, ThingEventType);
 
 // begin sort marker1 {
 bool thing_is_able_to_change_temperature(Thingp);
@@ -321,6 +321,7 @@ bool thing_is_blit_outlined(Thingp);
 bool thing_is_blit_square_outlined(Thingp);
 bool thing_is_brazier(Thingp);
 bool thing_is_bridge(Thingp);
+bool thing_is_broken_on_death(Thingp);
 bool thing_is_burnable(Thingp);
 bool thing_is_chasm(Thingp);
 bool thing_is_corpse_on_death(Thingp);
@@ -341,6 +342,7 @@ bool thing_is_entrance(Thingp);
 bool thing_is_ethereal(Thingp);
 bool thing_is_exit(Thingp);
 bool thing_is_explosion(Thingp);
+bool thing_is_extinguished_on_death(Thingp);
 bool thing_is_fire(Thingp);
 bool thing_is_floor(Thingp);
 bool thing_is_foliage(Thingp);
@@ -420,8 +422,6 @@ bool thing_is_unused38(Thingp);
 bool thing_is_unused39(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused40(Thingp);
-bool thing_is_unused41(Thingp);
-bool thing_is_unused42(Thingp);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);

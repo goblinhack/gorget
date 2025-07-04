@@ -9,7 +9,7 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-bool thing_is_immune_to(Thingp t, ThingDamage val)
+bool thing_is_immune_to(Thingp t, ThingEventType val)
 {
   TRACE_NO_INDENT();
 

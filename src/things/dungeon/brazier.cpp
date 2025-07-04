@@ -38,6 +38,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_dead_on_shoving);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_extinguished_on_death);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);

@@ -25,18 +25,24 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   if (it) {
     auto by_the_thing = thing_the_long_name(g, v, l, it);
 
-    switch (e.damage_type) {
-      case THING_DAMAGE_NONE : break;
-      case THING_DAMAGE_MELEE : // newline
+    switch (e.event_type) {
+      case THING_EVENT_NONE : break;
+      case THING_EVENT_SHOVE : // newline
+        TOPCON(UI_WARNING_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
+      case THING_EVENT_CRUSH : // newline
+        TOPCON(UI_WARNING_FMT_STR "You are crushed by %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
+      case THING_EVENT_MELEE : // newline
         TOPCON(UI_WARNING_FMT_STR "You are hit by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_DAMAGE_HEAT : // newline
+      case THING_EVENT_HEAT : // newline
         TOPCON(UI_WARNING_FMT_STR "You suffer heat damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_DAMAGE_FIRE : // newline
+      case THING_EVENT_FIRE : // newline
         TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_DAMAGE_ENUM_MAX : break;
+      case THING_EVENT_ENUM_MAX : break;
     }
   }
 }
@@ -49,22 +55,28 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   TRACE_AND_INDENT();
   auto it = e.source;
 
-  if (it) {
+  if (it && thing_is_loggable(t)) {
     auto the_thing    = capitalise_first(thing_the_long_name(g, v, l, t));
     auto by_the_thing = thing_the_long_name(g, v, l, it);
 
-    switch (e.damage_type) {
-      case THING_DAMAGE_NONE : break;
-      case THING_DAMAGE_MELEE : // newline
+    switch (e.event_type) {
+      case THING_EVENT_NONE : break;
+      case THING_EVENT_SHOVE : // newline
+        TOPCON("%s is shoved by %s.", the_thing.c_str(), by_the_thing.c_str());
+        break;
+      case THING_EVENT_CRUSH : // newline
+        TOPCON("%s is crushed by %s.", the_thing.c_str(), by_the_thing.c_str());
+        break;
+      case THING_EVENT_MELEE : // newline
         TOPCON("%s is hit by %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
-      case THING_DAMAGE_HEAT : // newline
+      case THING_EVENT_HEAT : // newline
         TOPCON("%s suffers heat damage from %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
-      case THING_DAMAGE_FIRE : // newline
+      case THING_EVENT_FIRE : // newline
         TOPCON("%s is burnt by %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
-      case THING_DAMAGE_ENUM_MAX : break;
+      case THING_EVENT_ENUM_MAX : break;
     }
   }
 }
@@ -89,7 +101,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   // Immune to this attack?
   //
-  if (thing_is_immune_to(t, e.damage_type)) {
+  if (thing_is_immune_to(t, e.event_type)) {
     if (thing_is_loggable(t)) {
       THING_LOG(t, "%s: no damage as immune", to_string(e).c_str());
     }

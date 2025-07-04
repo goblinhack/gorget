@@ -61,9 +61,9 @@ std::string to_string(ThingEvent &e)
     s += "'";
   }
 
-  if (e.damage != THING_DAMAGE_NONE) {
-    s += " t:";
-    s += ThingDamage_to_string(e.damage_type);
+  if (e.damage != THING_EVENT_NONE) {
+    s += " e:";
+    s += ThingEventType_to_string(e.event_type);
   }
 
   if (e.damage) {
@@ -113,13 +113,19 @@ std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool inc
     }
   }
 
-  if (thing_is_player(t) || thing_is_monst(t)) {
-    if (thing_is_dead(t)) {
+  if (thing_is_dead(t)) {
+    if (thing_is_player(t) || thing_is_monst(t)) {
       if (thing_is_undead(t)) {
         out += "extra dead ";
       } else {
         out += "dead ";
       }
+    }
+    if (thing_is_broken_on_death(t)) {
+      out += "broken ";
+    }
+    if (thing_is_extinguished_on_death(t)) {
+      out += "extinguished ";
     }
   }
 

@@ -31,8 +31,8 @@ bool tp_load_steam(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_steam);
-  tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
-  tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
+  tp_is_immunity_add(tp, THING_EVENT_FIRE);
+  tp_is_immunity_add(tp, THING_EVENT_HEAT);
   tp_temperature_initial_set(tp, 100); // celsius
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

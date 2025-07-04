@@ -29,6 +29,7 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_barrel);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_square_outlined);
+  tp_flag_set(tp, is_broken_on_death);
   tp_flag_set(tp, is_burnable);
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);

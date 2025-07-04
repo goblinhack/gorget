@@ -31,9 +31,9 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_pillar);
-  tp_is_immunity_add(tp, THING_DAMAGE_FIRE);
-  tp_is_immunity_add(tp, THING_DAMAGE_HEAT);
-  tp_is_immunity_add(tp, THING_DAMAGE_MELEE);
+  tp_is_immunity_add(tp, THING_EVENT_FIRE);
+  tp_is_immunity_add(tp, THING_EVENT_HEAT);
+  tp_is_immunity_add(tp, THING_EVENT_MELEE);
   tp_weight_set(tp, 1000); // pounds
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);

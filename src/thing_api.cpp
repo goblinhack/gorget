@@ -1268,24 +1268,24 @@ bool thing_is_unused40(Thingp t)
   return tp_flag(thing_tp(t), is_unused40);
 }
 
-bool thing_is_unused41(Thingp t)
+bool thing_is_extinguished_on_death(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused41);
+  return tp_flag(thing_tp(t), is_extinguished_on_death);
 }
 
-bool thing_is_unused42(Thingp t)
+bool thing_is_broken_on_death(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused42);
+  return tp_flag(thing_tp(t), is_broken_on_death);
 }
 
 bool thing_is_undead(Thingp t)

@@ -24,7 +24,7 @@
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)
 ENUM_DEF_C(THING_DIR_ENUM, ThingDir)
-ENUM_DEF_C(THING_DAMAGE_ENUM, ThingDamage)
+ENUM_DEF_C(THING_EVENT_ENUM, ThingEventType)
 ENUM_DEF_C(THING_RARITY_ENUM, ThingRarity)
 ENUM_DEF_C(MONST_GROUP_ENUM, ThingMonstGroup)
 ENUM_DEF_C(MAP_Z_DEPTH_ENUM, MapZDepth)
@@ -125,7 +125,7 @@ public:
   //
   // Immunity to various damage types
   //
-  bool is_immune[ THING_DAMAGE_ENUM_MAX ] {};
+  bool is_immune[ THING_EVENT_ENUM_MAX ] {};
 
   //
   // Chance of this appearing on a level
@@ -185,7 +185,7 @@ public:
   //
   // Damage types, in dice
   //
-  Dice damage[ THING_DAMAGE_ENUM_MAX ];
+  Dice damage[ THING_EVENT_ENUM_MAX ];
 
   //
   // For braziers and more
@@ -476,7 +476,7 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
-void tp_damage_set(Tpp tp, ThingDamage val, const char *str)
+void tp_damage_set(Tpp tp, ThingEventType val, const char *str)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -484,7 +484,7 @@ void tp_damage_set(Tpp tp, ThingDamage val, const char *str)
     return;
   }
 
-  if (val >= THING_DAMAGE_ENUM_MAX) {
+  if (val >= THING_EVENT_ENUM_MAX) {
     ERR("bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
@@ -495,7 +495,7 @@ void tp_damage_set(Tpp tp, ThingDamage val, const char *str)
 //
 // Roll for damage
 //
-int tp_damage(Tpp tp, ThingDamage val)
+int tp_damage(Tpp tp, ThingEventType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -503,7 +503,7 @@ int tp_damage(Tpp tp, ThingDamage val)
     return 0;
   }
 
-  if (val >= THING_DAMAGE_ENUM_MAX) {
+  if (val >= THING_EVENT_ENUM_MAX) {
     ERR("bad value in tp for %s, %d", __FUNCTION__, val);
     return 0;
   }
@@ -786,7 +786,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
   }
 }
 
-void tp_is_immunity_add(Tpp tp, ThingDamage val)
+void tp_is_immunity_add(Tpp tp, ThingEventType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -794,7 +794,7 @@ void tp_is_immunity_add(Tpp tp, ThingDamage val)
     return;
   }
 
-  if ((int) val >= (int) THING_DAMAGE_ENUM_MAX) {
+  if ((int) val >= (int) THING_EVENT_ENUM_MAX) {
     ERR("bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
@@ -806,7 +806,7 @@ void tp_is_immunity_add(Tpp tp, ThingDamage val)
   tp->is_immune[ val ] = true;
 }
 
-bool tp_is_immune_to(Tpp tp, ThingDamage val)
+bool tp_is_immune_to(Tpp tp, ThingEventType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -814,7 +814,7 @@ bool tp_is_immune_to(Tpp tp, ThingDamage val)
     return false;
   }
 
-  if ((int) val >= (int) THING_DAMAGE_ENUM_MAX) {
+  if ((int) val >= (int) THING_EVENT_ENUM_MAX) {
     ERR("bad value in tp for %s, %d", __FUNCTION__, val);
     return false;
   }
