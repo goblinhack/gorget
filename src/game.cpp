@@ -180,6 +180,11 @@ public:
   SeedSource seed_source {SEED_SOURCE_RANDOM};
 
   //
+  // Player's name
+  //
+  std::string player_name {};
+
+  //
   // Current fram-erate
   //
   int fps_value = {};
@@ -251,6 +256,7 @@ public:
   void save_snapshot(void);
   void save(int slot);
   void seed_set(const char *seed = nullptr);
+  void player_name_set(const char *player_name);
   void state_change(GameState state, const std::string &);
   void tick(void);
   void state_reset(const std::string &);
@@ -350,6 +356,7 @@ void Game::init(void)
   LOG("Game init");
   TRACE_AND_INDENT();
   seed_set();
+  player_name_set(nullptr);
 }
 void game_init(Gamep g) { g->init(); }
 
@@ -525,6 +532,45 @@ uint32_t game_seed_num_get(Gamep g)
   return g->seed_num;
 }
 
+void Game::player_name_set(const char *maybe_player_name)
+{
+  TRACE_NO_INDENT();
+
+  if (maybe_player_name) {
+    LOG("Set player_name from ui");
+    player_name = std::string(maybe_player_name);
+  } else {
+    LOG("Set default name");
+    player_name = "Ser Deadalot";
+  }
+
+  LOG("Set player_name, name '%s'", player_name.c_str());
+}
+
+void game_player_name_set(Gamep g, const char *maybe_player_name)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return;
+  }
+
+  g->player_name_set(maybe_player_name);
+}
+
+const char *game_player_name_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return "";
+  }
+
+  return g->player_name.c_str();
+}
+
 void Game::create_levels(void)
 {
   LOG("Create levels");
@@ -629,12 +675,15 @@ std::string gama_state_to_string(int state)
     case STATE_PLAYING :       return "PLAYING";
     case STATE_LOAD_MENU :     return "LOAD_MENU";
     case STATE_LOADED :        return "LOADED";
+    case STATE_DEAD_MENU :     return "DEAD_MENU";
     case STATE_SAVE_MENU :     return "SAVE_MENU";
     case STATE_QUIT_MENU :     return "QUIT_MENU";
     case STATE_QUITTING :      return "QUITTING";
     case STATE_KEYBOARD_MENU : return "KEYBOARD_MENU";
-    default :                  ERR("Unhandled game state"); return "?";
   }
+
+  ERR("Unhandled game state");
+  return "?";
 }
 
 //
@@ -707,6 +756,7 @@ void Game::state_change(GameState new_state, const std::string &why)
       wid_quit_destroy(g);
       wid_save_destroy(g);
       break;
+    case STATE_DEAD_MENU :
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
     case STATE_LOADED :
@@ -736,6 +786,7 @@ void Game::state_change(GameState new_state, const std::string &why)
           wid_rightbar_init(g);
           wid_actionbar_init(g);
           break;
+        case STATE_DEAD_MENU :
         case STATE_KEYBOARD_MENU :
         case STATE_PLAYING :
         case STATE_LOAD_MENU :
@@ -745,6 +796,7 @@ void Game::state_change(GameState new_state, const std::string &why)
           wid_actionbar_init(g);
           break;
       }
+    case STATE_DEAD_MENU :
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
     case STATE_LOADED :
@@ -808,6 +860,7 @@ void Game::tick(void)
         }
       }
       break;
+    case STATE_DEAD_MENU :     break;
     case STATE_KEYBOARD_MENU : break;
     case STATE_LOAD_MENU :     break;
     case STATE_LOADED :        break;
@@ -899,6 +952,7 @@ void Game::display(void)
         }
       }
       break;
+    case STATE_DEAD_MENU :     break;
     case STATE_KEYBOARD_MENU : break;
     case STATE_LOAD_MENU :     break;
     case STATE_LOADED :        break;

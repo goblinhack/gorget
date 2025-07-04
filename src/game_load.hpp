@@ -196,6 +196,10 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   in >> bits(my.t.appdata);
   in >> bits(my.t.saved_dir);
   in >> bits(my.t.fps_value);
+  in >> bits(my.t.seed_name);
+  in >> bits(my.t.seed_num);
+  in >> bits(my.t.seed_source);
+  in >> bits(my.t.player_name);
 
   Levelsp tmp = (Levelsp) mymalloc(sizeof(Levels), "loaded level");
   in.read(reinterpret_cast< char * >(tmp), sizeof(Levels));

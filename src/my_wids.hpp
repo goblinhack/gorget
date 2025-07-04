@@ -9,6 +9,8 @@
 #include "my_wid.hpp"
 #include "my_wid_popup.hpp"
 
+#include <string>
+
 extern void wid_load_destroy(Gamep);
 extern void wid_save_destroy(Gamep);
 extern void wid_quit_destroy(Gamep);
@@ -32,5 +34,6 @@ extern void wid_actionbar_fini(Gamep);
 extern bool wid_actionbar_init(Gamep);
 extern void wid_leftbar_fini(Gamep);
 extern bool wid_leftbar_init(Gamep);
+extern void wid_dead_select(Gamep, std::string reason);
 
 #endif

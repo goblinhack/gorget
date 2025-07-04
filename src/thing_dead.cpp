@@ -12,6 +12,7 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
+#include "my_wids.hpp"
 
 //
 // The player has been attacked
@@ -120,6 +121,10 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
     // Schedule for removal from the map and freeing
     //
     thing_is_scheduled_for_cleanup_set(g, v, l, t);
+  }
+
+  if (thing_is_player(t)) {
+    wid_dead_select(g, e.reason);
   }
 }
 

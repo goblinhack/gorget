@@ -17,6 +17,7 @@ typedef enum {
   STATE_KEYBOARD_MENU, // Setting keys
   STATE_LOAD_MENU,     // Loading a game
   STATE_LOADED,        // Loaded an old game
+  STATE_DEAD_MENU,     // Player is dead
   STATE_SAVE_MENU,     // Saving a game
   STATE_QUIT_MENU,     // Pondering quitting
 } GameState;
@@ -129,6 +130,9 @@ SeedSource  game_seed_source_get(Gamep);
 uint32_t    game_seed_num_get(Gamep);
 void        game_seed_set(Gamep, const char *);
 void        game_seed_set(Gamep, uint32_t);
+
+const char *game_player_name_get(Gamep);
+void        game_player_name_set(Gamep, const char *player_name = nullptr);
 
 SDL_Keysym game_key_wait_get(Gamep);
 void       game_key_wait_set(Gamep, SDL_Keysym);

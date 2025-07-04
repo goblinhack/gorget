@@ -35,6 +35,11 @@
 #define UI_WARNING_FMT_STR            "%%fg=yellow$"
 #define UI_IMPORTANT_FMT_STR          "%%fg=red$"
 #define UI_RESET_FMT                  "%%fg=reset$"
+#define UI_GREEN_FMT_STR              "%%fg=green$"
+#define UI_WHITE_FMT_STR              "%%fg=white$"
+#define UI_ORANGE_FMT_STR             "%%fg=orange$"
+#define UI_YELLOW_FMT_STR             "%%fg=yellow$"
+#define UI_RED_FMT_STR                "%%fg=red$"
 #define UI_TILE_HEIGHT                8
 #define UI_TILE_WIDTH                 8
 #define UI_TOPCON_HEIGHT              4 // Scrollbar limit
