@@ -39,6 +39,10 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   uint32_t serialized_size = sizeof(Config);
   out << bits(serialized_size);
 
+  out << bits(my.t.seed_name);
+  out << bits(my.t.seed_num);
+  out << bits(my.t.seed_source);
+  out << bits(my.t.player_name);
   out << bits(my.t.config_pix_height);
   out << bits(my.t.config_pix_width);
   out << bits(my.t.debug_mode);
@@ -104,11 +108,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
   out << bits(my.t.save_file);
   out << bits(my.t.appdata);
   out << bits(my.t.saved_dir);
-  out << bits(my.t.fps_value);
-  out << bits(my.t.seed_name);
-  out << bits(my.t.seed_num);
-  out << bits(my.t.seed_source);
-  out << bits(my.t.player_name);
 
   if (! game_headers_only) {
     out.write(reinterpret_cast< const char * >(my.t.levels), sizeof(*my.t.levels));

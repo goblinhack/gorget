@@ -39,6 +39,7 @@ void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std
 
       hiscores.resize(HiScore::max);
 
+      CON("Save hiscore config");
       game_save_config(g);
       return;
     }

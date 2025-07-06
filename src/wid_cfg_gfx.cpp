@@ -27,6 +27,7 @@ static void wid_cfg_gfx_destroy(Gamep g)
 static bool wid_cfg_gfx_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
+
   CON("Save config");
   game_save_config(g);
 

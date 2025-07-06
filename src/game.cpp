@@ -29,6 +29,26 @@ public:
   int serialized_size = {};
 
   //
+  // Human readable version of the above seed.
+  //
+  std::string seed_name {};
+
+  //
+  // All randomness jumps off of this.
+  //
+  uint32_t seed_num {};
+
+  //
+  // The source of the seed
+  //
+  SeedSource seed_source {SEED_SOURCE_RANDOM};
+
+  //
+  // Player's name
+  //
+  std::string player_name {};
+
+  //
   // Keep flags int size so the header size will change on a new flag.
   // It does not always for new bools.
   //
@@ -164,36 +184,16 @@ public:
   //
   Config config;
 
-  //
-  // Human readable version of the above seed.
-  //
-  std::string seed_name {};
-
-  //
-  // All randomness jumps off of this.
-  //
-  uint32_t seed_num {};
-
-  //
-  // The source of the seed
-  //
-  SeedSource seed_source {SEED_SOURCE_RANDOM};
-
-  //
-  // Player's name
-  //
-  std::string player_name {};
-
-  //
-  // Current fram-erate
-  //
-  int fps_value = {};
-
   /////////////////////////////////////////////////////////////////////////
   // not worth saving
   // | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
   // v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v
   /////////////////////////////////////////////////////////////////////////
+
+  //
+  // Current frame-rate
+  //
+  int fps_value = {};
 
   //
   // Zoom gfx level. Not saved as is regenerated.
@@ -343,8 +343,8 @@ Game::Game(std::string vappdata)
   saved_dir = appdata + DIR_SEP + "gorget" + DIR_SEP;
   save_slot = 1;
 
-  if (seed_name != "") {
-    save_meta = "seed " + seed_name + ", ";
+  if (config.seed_name != "") {
+    save_meta = "seed " + config.seed_name + ", ";
   }
   save_meta += string_timestamp();
 
@@ -435,19 +435,29 @@ void Game::seed_set(const char *maybe_seed)
 {
   TRACE_NO_INDENT();
 
-  seed_source = SEED_SOURCE_RANDOM;
-
   if (maybe_seed) {
-    LOG("Set seed from ui");
-    seed_name   = std::string(maybe_seed);
-    seed_source = SEED_SOURCE_USER;
-  } else if (g_opt_seed_name != "") {
-    LOG("Set seed from command line");
-    seed_name   = g_opt_seed_name;
-    seed_source = SEED_SOURCE_COMMAND_LINE;
+    config.seed_name   = std::string(maybe_seed);
+    config.seed_source = SEED_SOURCE_USER;
+    CON("Set fixed seed '%s' from ui", config.seed_name.c_str());
   } else {
-    LOG("Set random seed, none manually set");
-    seed_name = random_name(SIZEOF("4294967295") - 1);
+    switch (config.seed_source) {
+      case SEED_SOURCE_COMMAND_LINE : // newline
+        CON("Set seed '%s' from previous save", config.seed_name.c_str());
+        break;
+      case SEED_SOURCE_USER : // newline
+        CON("Set seed '%s' from previous load", config.seed_name.c_str());
+        break;
+      case SEED_SOURCE_RANDOM :
+        if (g_opt_seed_name != "") {
+          config.seed_name   = g_opt_seed_name;
+          config.seed_source = SEED_SOURCE_COMMAND_LINE;
+          CON("Set fixed seed '%s' from command line", config.seed_name.c_str());
+        } else {
+          config.seed_name = random_name(SIZEOF("4294967295") - 1);
+          CON("Set random seed '%s', none manually set", config.seed_name.c_str());
+        }
+        break;
+    }
   }
 
   //
@@ -455,20 +465,20 @@ void Game::seed_set(const char *maybe_seed)
   //
   TRACE_NO_INDENT();
   char *p;
-  seed_num = strtol(seed_name.c_str(), &p, 10);
+  config.seed_num = strtol(config.seed_name.c_str(), &p, 10);
   if (*p) {
     //
     // Conversion failed, not a number
     //
-    seed_num = string_to_hash(seed_name);
+    config.seed_num = string_to_hash(config.seed_name);
   }
 
-  LOG("Set seed, name '%s', seed %u", seed_name.c_str(), seed_num);
+  LOG("Set seed, name '%s', seed %u", config.seed_name.c_str(), config.seed_num);
 
   //
   // Limit to tested levels
   //
-  pcg_srand(seed_num % MAX_TESTED_LEVELS);
+  pcg_srand(config.seed_num % MAX_TESTED_LEVELS);
 }
 
 void game_seed_set(Gamep g, const char *maybe_seed)
@@ -505,7 +515,7 @@ const char *game_seed_name_get(Gamep g)
     return "";
   }
 
-  return g->seed_name.c_str();
+  return g->config.seed_name.c_str();
 }
 
 SeedSource game_seed_source_get(Gamep g)
@@ -517,7 +527,7 @@ SeedSource game_seed_source_get(Gamep g)
     return SEED_SOURCE_RANDOM;
   }
 
-  return g->seed_source;
+  return g->config.seed_source;
 }
 
 uint32_t game_seed_num_get(Gamep g)
@@ -529,7 +539,7 @@ uint32_t game_seed_num_get(Gamep g)
     return 0;
   }
 
-  return g->seed_num;
+  return g->config.seed_num;
 }
 
 void Game::player_name_set(const char *maybe_player_name)
@@ -537,14 +547,14 @@ void Game::player_name_set(const char *maybe_player_name)
   TRACE_NO_INDENT();
 
   if (maybe_player_name) {
-    LOG("Set player_name from ui");
-    player_name = std::string(maybe_player_name);
+    config.player_name = std::string(maybe_player_name);
+    CON("Set player name '%s' from ui", config.player_name.c_str());
+  } else if (config.player_name != "") {
+    CON("Set player name '%s' from previous load", config.player_name.c_str());
   } else {
-    LOG("Set default name");
-    player_name = "Ser Deadalot";
+    config.player_name = "Ser Deadalot";
+    CON("Set default player name '%s'", config.player_name.c_str());
   }
-
-  LOG("Set player_name, name '%s'", player_name.c_str());
 }
 
 void game_player_name_set(Gamep g, const char *maybe_player_name)
@@ -568,7 +578,7 @@ const char *game_player_name_get(Gamep g)
     return "";
   }
 
-  return g->player_name.c_str();
+  return g->config.player_name.c_str();
 }
 
 void Game::create_levels(void)

@@ -19,4 +19,12 @@
 #define pcg_random_range(a, b)           (pcg32_boundedrand((b) - (a)) + (a))
 #define pcg_random_range_inclusive(a, b) (pcg32_boundedrand((b) - (a) + 1) + (a))
 
+//
+// For randomness that does not matter for reproducability.
+//
+#define non_pcg_rand()                       rand()
+#define non_pcg_srand(a)                     srand(a)
+#define non_pcg_random_range(a, b)           (rand() % ((b) - (a)) + (a))
+#define non_pcg_random_range_inclusive(a, b) (rand() % ((b) - (a) + 1) + (a))
+
 #endif

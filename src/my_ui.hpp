@@ -57,6 +57,8 @@
 #define UI_WID_POPUP_WIDTH_NORMAL     18
 #define UI_WID_POPUP_WIDTH_WIDE       60
 #define UI_WID_SAVE_SLOTS             10 // How many save game slots
+#define UI_MAX_SEED_NAME_LEN          10
+#define UI_MAX_PLAYER_NAME_LEN        12
 
 //
 // Do faster processing of events, like reading the keyboard and updating widgets.

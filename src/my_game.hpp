@@ -22,8 +22,6 @@ typedef enum {
   STATE_QUIT_MENU,     // Pondering quitting
 } GameState;
 
-#define MAX_SEED_NAME_LEN 32
-
 typedef enum {
   SEED_SOURCE_RANDOM,
   SEED_SOURCE_USER,

@@ -56,6 +56,10 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     return in;
   }
 
+  in >> bits(my.t.seed_name);
+  in >> bits(my.t.seed_num);
+  in >> bits(my.t.seed_source);
+  in >> bits(my.t.player_name);
   in >> bits(my.t.config_pix_height);
   in >> bits(my.t.config_pix_width);
   in >> bits(my.t.debug_mode);
@@ -195,11 +199,6 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   }
   in >> bits(my.t.appdata);
   in >> bits(my.t.saved_dir);
-  in >> bits(my.t.fps_value);
-  in >> bits(my.t.seed_name);
-  in >> bits(my.t.seed_num);
-  in >> bits(my.t.seed_source);
-  in >> bits(my.t.player_name);
 
   Levelsp tmp = (Levelsp) mymalloc(sizeof(Levels), "loaded level");
   in.read(reinterpret_cast< char * >(tmp), sizeof(Levels));
@@ -617,7 +616,7 @@ void game_load_last_config(const char *appdata)
 {
   TRACE_NO_INDENT();
 
-  LOG("Load config");
+  CON("Load config");
 
   game = new Game(std::string(appdata));
 
