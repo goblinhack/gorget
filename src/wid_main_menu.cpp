@@ -35,10 +35,18 @@ static bool wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button)
   return false;
 }
 
-static bool wid_main_menu_config(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_cfg_select(g);
+  wid_main_menu_hide(g);
+  return false;
+}
+
+static bool wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  wid_more_select(g);
   wid_main_menu_hide(g);
   return false;
 }
@@ -52,26 +60,11 @@ static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
   return false;
 }
 
-static bool wid_main_menu_credits(Gamep g, Widp w, int x, int y, uint32_t button)
-{
-  TRACE_NO_INDENT();
-  wid_credits_select(g);
-  wid_main_menu_destroy(g);
-  return false;
-}
-
 static bool wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_quit_select(g);
   wid_main_menu_destroy(g);
-  return false;
-}
-
-static bool wid_main_menu_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
-{
-  TRACE_NO_INDENT();
-  wid_hiscores_show(g);
   return false;
 }
 
@@ -100,11 +93,9 @@ static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
               case 'l' :
               case 'L' :         wid_main_menu_load(g, nullptr, 0, 0, 0); return true;
               case 'o' :
-              case 'O' :         wid_main_menu_config(g, nullptr, 0, 0, 0); return true;
-              case 'c' :
-              case 'C' :         wid_main_menu_credits(g, nullptr, 0, 0, 0); return true;
-              case 'h' :
-              case 'H' :         wid_main_menu_hiscores(g, nullptr, 0, 0, 0); return true;
+              case 'O' :         wid_main_menu_cfg(g, nullptr, 0, 0, 0); return true;
+              case 'm' :
+              case 'M' :         wid_main_menu_more(g, nullptr, 0, 0, 0); return true;
               case 'q' :
               case 'Q' :         wid_main_menu_quit(g, nullptr, 0, 0, 0); return true;
             }
@@ -321,7 +312,7 @@ void wid_main_menu_select(Gamep g)
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  int    menu_height = 20;
+  int    menu_height = 16;
   int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
   spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
@@ -380,7 +371,7 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(g, w, wid_main_menu_config);
+    wid_set_on_mouse_up(g, w, wid_main_menu_cfg);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "O" UI_FMT_STR "ptions");
   }
@@ -388,7 +379,7 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Credits");
+    auto w = wid_new_square_button(g, p, "More");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -396,25 +387,9 @@ void wid_main_menu_select(Gamep g)
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
-    wid_set_on_mouse_up(g, w, wid_main_menu_credits);
+    wid_set_on_mouse_up(g, w, wid_main_menu_more);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_FMT_STR "redits");
-  }
-  y_at += box_step;
-  {
-    TRACE_NO_INDENT();
-    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Hiscores");
-
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_on_mouse_up(g, w, wid_main_menu_hiscores);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "H" UI_FMT_STR "iscores");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "M" UI_FMT_STR "ore");
   }
   y_at += box_step;
   {
