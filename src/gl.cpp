@@ -1107,7 +1107,7 @@ static void gl_ext_load(void)
   }
 }
 
-static void setupPixelFormat(HDC hDC)
+static void setupPixelFormat(HDC this_hdc)
 {
   TRACE_AND_INDENT();
   PIXELFORMATDESCRIPTOR pfd = {
@@ -1140,27 +1140,27 @@ static void setupPixelFormat(HDC hDC)
   };
   int pixelFormat;
 
-  pixelFormat = ChoosePixelFormat(hDC, &pfd);
+  pixelFormat = ChoosePixelFormat(this_hdc, &pfd);
   if (pixelFormat == 0) {
-    MessageBox(WindowFromDC(hDC), "ChoosePixelFormat failed.", "Error", MB_ICONERROR | MB_OK);
+    MessageBox(WindowFromDC(this_hdc), "ChoosePixelFormat failed.", "Error", MB_ICONERROR | MB_OK);
     exit(1);
   }
 
-  if (SetPixelFormat(hDC, pixelFormat, &pfd) != TRUE) {
-    MessageBox(WindowFromDC(hDC), "SetPixelFormat failed.", "Error", MB_ICONERROR | MB_OK);
+  if (SetPixelFormat(this_hdc, pixelFormat, &pfd) != TRUE) {
+    MessageBox(WindowFromDC(this_hdc), "SetPixelFormat failed.", "Error", MB_ICONERROR | MB_OK);
     exit(1);
   }
 }
 
-static void setupPalette(HDC hDC)
+static void setupPalette(HDC this_hdc)
 {
   TRACE_AND_INDENT();
-  int                   pixelFormat = GetPixelFormat(hDC);
+  int                   pixelFormat = GetPixelFormat(this_hdc);
   PIXELFORMATDESCRIPTOR pfd;
   LOGPALETTE           *pPal;
   int                   paletteSize;
 
-  DescribePixelFormat(hDC, pixelFormat, SIZEOF(PIXELFORMATDESCRIPTOR), &pfd);
+  DescribePixelFormat(this_hdc, pixelFormat, SIZEOF(PIXELFORMATDESCRIPTOR), &pfd);
 
   if (pfd.dwFlags & PFD_NEED_PALETTE) {
     paletteSize = 1 << pfd.cColorBits;
@@ -1191,8 +1191,8 @@ static void setupPalette(HDC hDC)
   free(pPal);
 
   if (hPalette) {
-    SelectPalette(hDC, hPalette, FALSE);
-    RealizePalette(hDC);
+    SelectPalette(this_hdc, hPalette, FALSE);
+    RealizePalette(this_hdc);
   }
 }
 

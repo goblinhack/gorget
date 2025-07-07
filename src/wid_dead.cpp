@@ -20,7 +20,7 @@ static WidPopup *wid_dead_window;
 
 static void wid_dead_destroy(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   delete wid_dead_window;
   wid_dead_window = nullptr;
@@ -32,7 +32,7 @@ static void wid_dead_destroy(Gamep g)
 
 static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -45,13 +45,13 @@ static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       switch (key->sym) {
         default :
           {
-            TRACE_AND_INDENT();
+            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'q' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_AND_INDENT();
+                  TRACE_NO_INDENT();
                   wid_dead_destroy(g);
                   return true;
                 }
@@ -65,7 +65,7 @@ static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 static bool wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   wid_dead_destroy(g);
 
@@ -74,7 +74,7 @@ static bool wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 
 void wid_dead_select(Gamep g, std::string reason)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   LOG("Open dead select: %s", reason.c_str());
 

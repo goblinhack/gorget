@@ -2,6 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <ctime>
+#include <time.h>
+
 #include "my_ascii.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
@@ -256,6 +259,7 @@ public:
   void save_snapshot(void);
   void save(int slot);
   void seed_set(const char *seed = nullptr);
+  void seed_clear(void);
   void player_name_set(const char *player_name);
   void state_change(GameState state, const std::string &);
   void tick(void);
@@ -438,14 +442,24 @@ void game_save_config(Gamep g)
   g->save_config();
 }
 
+void Game::seed_clear(void)
+{
+  config.seed_name   = "";
+  config.seed_source = SEED_SOURCE_RANDOM;
+}
+
 void Game::seed_set(const char *maybe_seed)
 {
   TRACE_NO_INDENT();
 
-  if (maybe_seed) {
+  if (maybe_seed && *maybe_seed) {
     config.seed_name   = std::string(maybe_seed);
     config.seed_source = SEED_SOURCE_USER;
     CON("Set fixed seed '%s' from ui", config.seed_name.c_str());
+  } else if (config.seed_name == "") {
+    config.seed_name   = os_random_name(SIZEOF("4294967295") - 1);
+    config.seed_source = SEED_SOURCE_RANDOM;
+    CON("Set random seed '%s', as config file had empty seed", config.seed_name.c_str());
   } else {
     switch (config.seed_source) {
       case SEED_SOURCE_COMMAND_LINE : // newline
@@ -460,7 +474,8 @@ void Game::seed_set(const char *maybe_seed)
           config.seed_source = SEED_SOURCE_COMMAND_LINE;
           CON("Set fixed seed '%s' from command line", config.seed_name.c_str());
         } else {
-          config.seed_name = os_random_name(SIZEOF("4294967295") - 1);
+          config.seed_name   = os_random_name(SIZEOF("4294967295") - 1);
+          config.seed_source = SEED_SOURCE_RANDOM;
           CON("Set random seed '%s', as none manually set", config.seed_name.c_str());
         }
         break;
@@ -498,6 +513,18 @@ void game_seed_set(Gamep g, const char *maybe_seed)
   }
 
   g->seed_set(maybe_seed);
+}
+
+void game_seed_clear(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return;
+  }
+
+  g->seed_clear();
 }
 
 void game_seed_set(Gamep g, uint32_t seed)

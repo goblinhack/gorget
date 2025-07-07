@@ -147,7 +147,7 @@ static bool wid_keyboard_text_input_key_event(Gamep, Widp w, const SDL_Keysym *k
 
 static void wid_keyboard_update_buttons(Gamep g, Widp w)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
@@ -197,7 +197,7 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
 
 static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SDL_Keysym *key_in)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
@@ -266,7 +266,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
 
 static bool wid_keyboard_mouse_event(Gamep g, Widp w, int focusx, int focusy)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_event(g, w, focusx, focusy, 0 /* key */);
 
   return true;
@@ -274,7 +274,7 @@ static bool wid_keyboard_mouse_event(Gamep g, Widp w, int focusx, int focusy)
 
 static bool wid_keyboard_button_mouse_event(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   int focus  = wid_get_int_context(w);
   int focusx = (focus & 0xff);
   int focusy = (focus & 0xff00) >> 8;
@@ -284,7 +284,7 @@ static bool wid_keyboard_button_mouse_event(Gamep g, Widp w, int x, int y, uint3
 
 static void wid_keyboard_focus_right(Gamep g, wid_keyboard_ctx *ctx)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   ctx->focusx++;
   if (ctx->focusx > WID_KEYBOARD_ACROSS - 1) {
     ctx->focusx = 0;
@@ -295,7 +295,7 @@ static void wid_keyboard_focus_right(Gamep g, wid_keyboard_ctx *ctx)
 
 static void wid_keyboard_focus_left(Gamep g, wid_keyboard_ctx *ctx)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   ctx->focusx--;
   if (ctx->focusx < 0) {
     ctx->focusx = WID_KEYBOARD_ACROSS - 1;
@@ -306,7 +306,7 @@ static void wid_keyboard_focus_left(Gamep g, wid_keyboard_ctx *ctx)
 
 static void wid_keyboard_focus_down(Gamep g, wid_keyboard_ctx *ctx)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   ctx->focusy++;
   if (ctx->focusy > WID_KEYBOARD_DOWN - 1) {
     ctx->focusy = 0;
@@ -317,7 +317,7 @@ static void wid_keyboard_focus_down(Gamep g, wid_keyboard_ctx *ctx)
 
 static void wid_keyboard_focus_up(Gamep g, wid_keyboard_ctx *ctx)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   ctx->focusy--;
   if (ctx->focusy < 0) {
     ctx->focusy = WID_KEYBOARD_DOWN - 1;
@@ -328,7 +328,7 @@ static void wid_keyboard_focus_up(Gamep g, wid_keyboard_ctx *ctx)
 
 static void wid_keyboard_last_focus(Gamep g, wid_keyboard_ctx *ctx)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   ctx->focusx = WID_KEYBOARD_ACROSS - 1;
   ctx->focusy = WID_KEYBOARD_DOWN - 1;
 
@@ -337,7 +337,7 @@ static void wid_keyboard_last_focus(Gamep g, wid_keyboard_ctx *ctx)
 
 static void wid_keyboard_first_focus(Gamep g, wid_keyboard_ctx *ctx)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   ctx->focusx = 0;
   ctx->focusy = 0;
 
@@ -346,7 +346,7 @@ static void wid_keyboard_first_focus(Gamep g, wid_keyboard_ctx *ctx)
 
 static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, int focusy)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   ctx->focusx = focusx;
   ctx->focusy = focusy;
 
@@ -355,7 +355,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 
 static bool wid_keyboard_parent_key_down(Gamep g, Widp w, const SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
@@ -398,7 +398,7 @@ static bool wid_keyboard_parent_key_down(Gamep g, Widp w, const SDL_Keysym *key)
 
 static bool wid_keyboard_parent_joy_button(Gamep g, Widp w, int x, int y)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
   int ret = false;
@@ -475,7 +475,7 @@ static bool wid_keyboard_parent_joy_button(Gamep g, Widp w, int x, int y)
 
 static bool wid_keyboard_button_key_event(Gamep g, Widp w, const SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
@@ -511,7 +511,7 @@ static bool wid_keyboard_button_key_event(Gamep g, Widp w, const SDL_Keysym *key
 
 static bool wid_keyboard_button_joy_button_event(Gamep g, Widp w, int x, int y)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
   int ret = false;
@@ -590,7 +590,7 @@ static bool wid_keyboard_button_joy_button_event(Gamep g, Widp w, int x, int y)
 
 static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
@@ -624,7 +624,7 @@ static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym 
 
 static void wid_keyboard_mouse_over(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
@@ -650,7 +650,7 @@ static void wid_keyboard_mouse_over(Gamep g, Widp w, int relx, int rely, int whe
 
 static void wid_keyboard_destroy(Gamep g, Widp w)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
@@ -662,7 +662,7 @@ static void wid_keyboard_destroy(Gamep g, Widp w)
 
 static void wid_keyboard_tick(Gamep g, Widp w)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
@@ -714,7 +714,7 @@ static void wid_keyboard_tick(Gamep g, Widp w)
 Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wid_keyboard_event_t selected,
                   wid_keyboard_event_t cancelled, size_t max_len)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_keyboard_visible = true;
 
   /*

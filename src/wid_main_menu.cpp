@@ -310,7 +310,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 void wid_main_menu_select(Gamep g)
 {
   LOG("Main menu");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (wid_main_menu_window) {
     wid_main_menu_destroy(g);

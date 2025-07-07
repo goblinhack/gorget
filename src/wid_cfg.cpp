@@ -13,14 +13,14 @@ WidPopup *wid_cfg_window;
 
 static void wid_cfg_destroy(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   delete wid_cfg_window;
   wid_cfg_window = nullptr;
 }
 
 static bool wid_cfg_gfx(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_cfg_destroy(g);
   wid_cfg_gfx_select(g);
   return true;
@@ -44,7 +44,7 @@ static bool wid_cfg_player_name(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_mouse(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_cfg_destroy(g);
   wid_cfg_mouse_select(g);
   return true;
@@ -52,7 +52,7 @@ static bool wid_cfg_mouse(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_keyboard(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_cfg_destroy(g);
   wid_cfg_keyboard_select(g);
   return true;
@@ -60,7 +60,7 @@ static bool wid_cfg_keyboard(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_sound(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_cfg_destroy(g);
   wid_cfg_sound_select(g);
   return true;
@@ -68,7 +68,7 @@ static bool wid_cfg_sound(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_cfg_destroy(g);
   wid_main_menu_select(g);
   return true;
@@ -76,7 +76,7 @@ static bool wid_cfg_back(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -89,7 +89,7 @@ static bool wid_cfg_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       switch (key->sym) {
         default :
           {
-            TRACE_AND_INDENT();
+            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'g' :
@@ -117,7 +117,7 @@ static bool wid_cfg_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 void wid_cfg_select(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   CON("Config menu");
 
   if (wid_cfg_window) {
@@ -138,7 +138,7 @@ void wid_cfg_select(Gamep g)
   auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     Widp w = wid_cfg_window->wid_popup_container;
     wid_set_on_key_down(g, w, wid_cfg_key_down);
   }
@@ -177,7 +177,7 @@ void wid_cfg_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "gfx");
 
@@ -193,7 +193,7 @@ void wid_cfg_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "mouse");
 
@@ -209,7 +209,7 @@ void wid_cfg_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "sound");
 
@@ -225,7 +225,7 @@ void wid_cfg_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "keyboard");
 
@@ -241,7 +241,7 @@ void wid_cfg_select(Gamep g)
   }
   y_at += box_step;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Back");
 

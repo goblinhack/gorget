@@ -2,14 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <ctime>
 #include <iostream>
 #include <libgen.h> // dirname
 #include <signal.h> // dirname
 #include <string.h>
 #include <strings.h>
 #include <sys/stat.h>
-#include <time.h>
 #include <unistd.h>
 
 #include "my_ascii.hpp"

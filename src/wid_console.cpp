@@ -28,7 +28,7 @@ static std::map< unsigned int, std::string > wid_console_lines;
 
 void wid_console_fini(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_console_exiting = true;
 
   if (wid_console_inited) {
@@ -44,7 +44,7 @@ void wid_console_fini(Gamep g)
 
 bool wid_console_init(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (! wid_console_commands_inited) {
     command_add(g, config_debug_set, "set debug [0123]", "set debug level");
@@ -71,7 +71,7 @@ bool wid_console_init(Gamep g)
 //
 static void wid_console_reset_scroll(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (! wid_console_vert_scroll) {
     return;
   }
@@ -84,7 +84,7 @@ static void wid_console_reset_scroll(Gamep g)
 //
 static void wid_console_log_(Gamep g, std::string s)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   static int log_wid_console_buffered_lines;
 
   if (wid_console_exiting) {
@@ -124,7 +124,7 @@ static void wid_console_log_(Gamep g, std::string s)
 //
 void wid_console_log(std::string s)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   extern Gamep game;
   auto         g = game;
@@ -146,7 +146,7 @@ void wid_console_log(std::string s)
 //
 bool wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   wid_console_reset_scroll(g);
 
@@ -170,7 +170,7 @@ bool wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
 //
 static void wid_console_wid_create(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   spoint outer_tl(0, 0);
   spoint outer_br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
@@ -253,7 +253,7 @@ static void wid_console_wid_create(Gamep g)
 
 std::vector< std::string > wid_console_serialize(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   std::vector< std::string > r;
   auto                       tmp = wid_get_head(wid_console_input_line);
   while (tmp) {
@@ -269,7 +269,7 @@ std::vector< std::string > wid_console_serialize(void)
 
 void wid_console_deserialize(std::vector< std::string > r)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   DBG2("Start of replaying old logs");
   DBG2("Vvvvvvvvvvvvvvvvvvvvvvvvvvv");
   for (auto s : r) {

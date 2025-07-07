@@ -12,14 +12,14 @@ WidPopup *wid_warning_window;
 
 static void wid_warning_destroy(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   delete wid_warning_window;
   wid_warning_window = nullptr;
 }
 
 static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -32,7 +32,7 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       switch (key->sym) {
         default :
           {
-            TRACE_AND_INDENT();
+            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case '\n' :
@@ -40,7 +40,7 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_AND_INDENT();
+                  TRACE_NO_INDENT();
                   wid_warning_destroy();
                   return true;
                 }
@@ -68,7 +68,7 @@ static bool wid_warning_no(Gamep g, Widp w, int x, int y, uint32_t button)
 
 void wid_warning(Gamep g, std::string warning)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (wid_warning_window) {
     wid_warning_destroy();

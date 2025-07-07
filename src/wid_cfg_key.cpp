@@ -184,8 +184,10 @@ static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t butt
 static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  CON("Save config");
+
+  CON("Save config for keyboard");
   game_save_config(g);
+
   wid_cfg_keyboard_destroy(g);
 
   if (game_levels_get(g)) {

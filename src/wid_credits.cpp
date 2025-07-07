@@ -13,7 +13,7 @@ static WidPopup *wid_credits_window;
 
 static void wid_credits_destroy(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   delete wid_credits_window;
   wid_credits_window = nullptr;
   wid_main_menu_select(g);
@@ -21,7 +21,7 @@ static void wid_credits_destroy(Gamep g)
 
 static bool wid_credits_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -34,14 +34,14 @@ static bool wid_credits_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       switch (key->sym) {
         default :
           {
-            TRACE_AND_INDENT();
+            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_AND_INDENT();
+                  TRACE_NO_INDENT();
                   wid_credits_destroy(g);
                   return true;
                 }
@@ -55,14 +55,14 @@ static bool wid_credits_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 static bool wid_credits_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_credits_destroy(g);
   return true;
 }
 
 void wid_credits_select(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   CON("Credits");
 
   if (wid_credits_window) {
@@ -92,7 +92,7 @@ void wid_credits_select(Gamep g)
   wid_credits_window->log(g, "See README.md");
 
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_credits_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "credits");
 

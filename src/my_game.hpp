@@ -127,6 +127,7 @@ const char *game_seed_name_get(Gamep);
 SeedSource  game_seed_source_get(Gamep);
 uint32_t    game_seed_num_get(Gamep);
 void        game_seed_set(Gamep, const char *);
+void        game_seed_clear(Gamep);
 void        game_seed_set(Gamep, uint32_t);
 
 const char *game_player_name_get(Gamep);

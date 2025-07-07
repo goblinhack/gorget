@@ -14,7 +14,7 @@ static WidPopup *wid_hiscore_window;
 
 static void wid_hiscore_destroy(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   delete wid_hiscore_window;
   wid_hiscore_window = nullptr;
   wid_main_menu_select(g);
@@ -22,7 +22,7 @@ static void wid_hiscore_destroy(Gamep g)
 
 static bool wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -35,7 +35,7 @@ static bool wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       switch (key->sym) {
         default :
           {
-            TRACE_AND_INDENT();
+            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case '\n' :
@@ -43,7 +43,7 @@ static bool wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_AND_INDENT();
+                  TRACE_NO_INDENT();
                   wid_hiscore_destroy(g);
                   return true;
                 }
@@ -60,14 +60,14 @@ static bool wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 
 static bool wid_hiscore_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_hiscore_destroy(g);
   return true;
 }
 
 void wid_hiscores_show(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (wid_hiscore_window) {
     wid_hiscore_destroy(g);
@@ -80,7 +80,7 @@ void wid_hiscores_show(Gamep g)
   wid_hiscore_window = new WidPopup(g, "hiscores", outer_tl, outer_br, nullptr, "", false, false);
 
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     Widp w = wid_hiscore_window->wid_popup_container;
     wid_set_on_key_down(g, w, wid_hiscore_key_down);
   }
@@ -138,7 +138,7 @@ void wid_hiscores_show(Gamep g)
   }
 
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_hiscore_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "hiscore");
 

@@ -14,7 +14,7 @@ static bool      local_g_config_changed;
 
 static void wid_cfg_mouse_destroy(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   delete wid_cfg_mouse_window;
   wid_cfg_mouse_window   = nullptr;
   local_g_config_changed = false;
@@ -22,7 +22,7 @@ static void wid_cfg_mouse_destroy(Gamep g)
 
 static bool wid_cfg_mouse_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   CON("Reload config");
   if (local_g_config_changed) {
     local_g_config_changed = false;
@@ -36,9 +36,11 @@ static bool wid_cfg_mouse_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_mouse_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
-  CON("Save config");
+  TRACE_NO_INDENT();
+
+  CON("Save config for mouse");
   game_save_config(g);
+
   wid_cfg_mouse_destroy(g);
   wid_cfg_select(g);
   return true;
@@ -46,7 +48,7 @@ static bool wid_cfg_mouse_save(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_mouse_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   wid_cfg_mouse_destroy(g);
   wid_cfg_select(g);
   return true;
@@ -54,7 +56,7 @@ static bool wid_cfg_mouse_back(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_cfg_mouse_wheel_lr_negated(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   CON("Toggle wheel mouse lr");
   game_mouse_wheel_lr_negated_set(g, ! game_mouse_wheel_lr_negated_get(g));
@@ -64,7 +66,7 @@ static bool wid_cfg_mouse_wheel_lr_negated(Gamep g, Widp w, int x, int y, uint32
 
 static bool wid_cfg_mouse_wheel_ud_negated(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   local_g_config_changed = true;
   CON("Toggle wheel mouse ud");
   game_mouse_wheel_ud_negated_set(g, ! game_mouse_wheel_ud_negated_get(g));
@@ -74,7 +76,7 @@ static bool wid_cfg_mouse_wheel_ud_negated(Gamep g, Widp w, int x, int y, uint32
 
 static bool wid_cfg_mouse_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     return false;
@@ -87,7 +89,7 @@ static bool wid_cfg_mouse_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
       switch (key->sym) {
         default :
           {
-            TRACE_AND_INDENT();
+            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'c' :
@@ -107,7 +109,7 @@ static bool wid_cfg_mouse_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
 
 void wid_cfg_mouse_select(Gamep g)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (wid_cfg_mouse_window) {
     wid_cfg_mouse_destroy(g);
   }
@@ -124,14 +126,14 @@ void wid_cfg_mouse_select(Gamep g)
   auto button_width = outer_br.x - outer_tl.x - 2;
 
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     Widp w = wid_cfg_mouse_window->wid_popup_container;
     wid_set_on_key_down(g, w, wid_cfg_mouse_key_down);
   }
 
   int y_at = 0;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "configuration");
 
@@ -144,7 +146,7 @@ void wid_cfg_mouse_select(Gamep g)
 
   y_at = 3;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Back");
 
@@ -156,7 +158,7 @@ void wid_cfg_mouse_select(Gamep g)
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ack");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Save");
 
@@ -168,7 +170,7 @@ void wid_cfg_mouse_select(Gamep g)
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ave");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Cancel");
 
@@ -187,7 +189,7 @@ void wid_cfg_mouse_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Mouse scroll lr invert lr");
 
@@ -199,7 +201,7 @@ void wid_cfg_mouse_select(Gamep g)
     wid_set_text(w, "Mouse invert left/right");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Mouse scroll lr invert");
 
@@ -224,7 +226,7 @@ void wid_cfg_mouse_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   y_at++;
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Mouse scroll ud invert");
 
@@ -236,7 +238,7 @@ void wid_cfg_mouse_select(Gamep g)
     wid_set_text(w, "Mouse invert up/down");
   }
   {
-    TRACE_AND_INDENT();
+    TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Mouse scroll ud invert value");
 

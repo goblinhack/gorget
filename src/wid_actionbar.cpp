@@ -28,7 +28,7 @@ static ts_t wid_last_wait_repeat;
 static bool wid_actionbar_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar save");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   return game_event_save(g);
 }
 
@@ -73,7 +73,7 @@ static void wid_actionbar_save_over_end(Gamep g, Widp w)
 static bool wid_actionbar_load(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar load");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   return game_event_load(g);
 }
 
@@ -118,7 +118,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
 static bool wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar wait");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   wid_last_wait = time_ms_cached();
 
@@ -128,7 +128,7 @@ static bool wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_actionbar_repeat_wait(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar wait");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   if (! time_have_x_tenths_passed_since(1, wid_last_wait)) {
     return true;
@@ -185,7 +185,7 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
 static bool wid_actionbar_ascend(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar ascend");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   return game_event_ascend(g);
 }
@@ -231,7 +231,7 @@ static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
 static bool wid_actionbar_descend(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar descend");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   return game_event_descend(g);
 }
@@ -277,7 +277,7 @@ static void wid_actionbar_descend_over_end(Gamep g, Widp w)
 static bool wid_actionbar_quit(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar quit");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   return game_event_quit(g);
 }
@@ -322,7 +322,7 @@ static void wid_actionbar_quit_over_end(Gamep g, Widp w)
 static bool wid_actionbar_help(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar help");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   return game_event_help(g);
 }
