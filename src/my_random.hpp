@@ -22,9 +22,9 @@
 //
 // For randomness that does not matter for reproducability.
 //
-#define non_pcg_rand()                       rand()
-#define non_pcg_srand(a)                     srand(a)
-#define non_pcg_random_range(a, b)           (rand() % ((b) - (a)) + (a))
-#define non_pcg_random_range_inclusive(a, b) (rand() % ((b) - (a) + 1) + (a))
+#define os_rand()                       rand()
+#define os_srand(a)                     srand(a)
+#define os_random_range(a, b)           (rand() % ((b) - (a)) + (a))
+#define os_random_range_inclusive(a, b) (rand() % ((b) - (a) + 1) + (a))
 
 #endif

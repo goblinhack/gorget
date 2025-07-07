@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 
@@ -46,4 +47,8 @@ static const char *dict2_names[] = {
     "staff", "stake",    "star",     "steel", "swamp", "taste", "toll",  "tower",    "zoo",
 };
 
-const char *dict2_name(void) { return dict2_names[ non_pcg_random_range(0, ARRAY_SIZE(dict2_names)) ]; }
+const char *os_rand_dict2_name(void)
+{
+  TRACE_NO_INDENT();
+  return dict2_names[ os_random_range(0, ARRAY_SIZE(dict2_names)) ];
+}

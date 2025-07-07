@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 
@@ -29,4 +30,8 @@ static const char *dict1_names[] = {
     "vital",     "wail",    "wand",    "warlock", "weird",   "were",     "wicked",  "wild",    "wish",    "witch",
     "withering", "wizard",  "wolf",    "worry",   "worship", "xanadu",   "yeti",    "zar",     "dungeon"};
 
-const char *dict1_name(void) { return dict1_names[ non_pcg_random_range(0, ARRAY_SIZE(dict1_names)) ]; }
+const char *os_rand_dict1_name(void)
+{
+  TRACE_NO_INDENT();
+  return dict1_names[ os_random_range(0, ARRAY_SIZE(dict1_names)) ];
+}

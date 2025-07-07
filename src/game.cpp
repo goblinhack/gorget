@@ -353,9 +353,16 @@ Game::Game(std::string vappdata)
 
 void Game::init(void)
 {
-  LOG("Game init");
+  CON("Game init");
   TRACE_AND_INDENT();
+
+  //
+  // If no seed is specified, we do want to start from a different seed each time
+  //
+  os_srand((unsigned int) std::time(nullptr));
+
   seed_set();
+
   player_name_set(nullptr);
 }
 void game_init(Gamep g) { g->init(); }
@@ -453,8 +460,8 @@ void Game::seed_set(const char *maybe_seed)
           config.seed_source = SEED_SOURCE_COMMAND_LINE;
           CON("Set fixed seed '%s' from command line", config.seed_name.c_str());
         } else {
-          config.seed_name = random_name(SIZEOF("4294967295") - 1);
-          CON("Set random seed '%s', none manually set", config.seed_name.c_str());
+          config.seed_name = os_random_name(SIZEOF("4294967295") - 1);
+          CON("Set random seed '%s', as none manually set", config.seed_name.c_str());
         }
         break;
     }

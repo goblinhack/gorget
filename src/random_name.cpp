@@ -4,11 +4,11 @@
 
 #include "my_random_name.hpp"
 
-std::string random_name(int len)
+std::string os_random_name(int len)
 {
   for (;;) {
-    std::string d1(dict1_name());
-    std::string d2(dict2_name());
+    std::string d1(os_rand_dict1_name());
+    std::string d2(os_rand_dict2_name());
     if ((int) (d1.size() + d2.size()) > len) {
       continue;
     }
