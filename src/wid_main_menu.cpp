@@ -75,7 +75,7 @@ static bool wid_main_menu_hiscores(Gamep g, Widp w, int x, int y, uint32_t butto
   return false;
 }
 
-static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -112,20 +112,6 @@ static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
       }
   }
 
-  return false;
-}
-
-static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
-{
-  TRACE_NO_INDENT();
-
-  if (sdlk_eq(*key, game_key_console_get(g))) {
-    return false;
-  }
-
-  //
-  // So screenshots can work
-  //
   return false;
 }
 
@@ -346,7 +332,6 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_main_menu_window->wid_popup_container;
-    wid_set_on_key_up(g, w, wid_main_menu_key_up);
     wid_set_on_key_down(g, w, wid_main_menu_key_down);
     wid_set_on_tick(g, w, wid_main_menu_tick);
   }

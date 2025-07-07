@@ -17,7 +17,7 @@ static void wid_warning_destroy(void)
   wid_warning_window = nullptr;
 }
 
-static bool wid_warning_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -52,17 +52,6 @@ static bool wid_warning_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
-{
-  TRACE_AND_INDENT();
-
-  if (sdlk_eq(*key, game_key_console_get(g))) {
-    return false;
-  }
-
-  return true;
-}
-
 static bool wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
@@ -92,7 +81,6 @@ void wid_warning(Gamep g, std::string warning)
   auto   width = br.x - tl.x;
 
   wid_warning_window = new WidPopup(g, "Game warning", tl, br, nullptr, "", false, false);
-  wid_set_on_key_up(g, wid_warning_window->wid_popup_container, wid_warning_key_up);
   wid_set_on_key_down(g, wid_warning_window->wid_popup_container, wid_warning_key_down);
   wid_set_do_not_lower(wid_warning_window->wid_popup_container, true);
 

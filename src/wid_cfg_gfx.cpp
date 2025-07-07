@@ -259,7 +259,7 @@ static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t 
   return true;
 }
 
-static bool wid_cfg_gfx_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -292,17 +292,6 @@ static bool wid_cfg_gfx_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static bool wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
-{
-  TRACE_AND_INDENT();
-
-  if (sdlk_eq(*key, game_key_console_get(g))) {
-    return false;
-  }
-
-  return true;
-}
-
 void wid_cfg_gfx_select(Gamep g)
 {
   TRACE_AND_INDENT();
@@ -323,7 +312,6 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_AND_INDENT();
     Widp w = wid_cfg_gfx_window->wid_popup_container;
-    wid_set_on_key_up(g, w, wid_cfg_gfx_key_up);
     wid_set_on_key_down(g, w, wid_cfg_gfx_key_down);
   }
 

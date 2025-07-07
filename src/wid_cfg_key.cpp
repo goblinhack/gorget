@@ -876,7 +876,7 @@ static bool wid_cfg_key_screenshot(Gamep g, Widp w, int x, int y, uint32_t butto
   return true;
 }
 
-static bool wid_cfg_keyboard_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -905,17 +905,6 @@ static bool wid_cfg_keyboard_key_up(Gamep g, Widp w, const struct SDL_Keysym *ke
   return false;
 }
 
-static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
-{
-  TRACE_NO_INDENT();
-
-  if (sdlk_eq(*key, game_key_console_get(g))) {
-    return false;
-  }
-
-  return true;
-}
-
 void wid_cfg_keyboard_select(Gamep g)
 {
   TRACE_NO_INDENT();
@@ -938,7 +927,6 @@ void wid_cfg_keyboard_select(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_cfg_keyboard_window->wid_popup_container;
-    wid_set_on_key_up(g, w, wid_cfg_keyboard_key_up);
     wid_set_on_key_down(g, w, wid_cfg_keyboard_key_down);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
   }

@@ -30,7 +30,7 @@ static void wid_dead_destroy(Gamep g)
   game_state_reset(g, "close dead menu");
 }
 
-static bool wid_dead_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -63,17 +63,6 @@ static bool wid_dead_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
-{
-  TRACE_AND_INDENT();
-
-  if (sdlk_eq(*key, game_key_console_get(g))) {
-    return false;
-  }
-
-  return false;
-}
-
 static bool wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
@@ -102,7 +91,6 @@ void wid_dead_select(Gamep g, std::string reason)
 
   wid_dead_window = new WidPopup(g, "Game dead", tl, br, nullptr, "", false, false);
 
-  wid_set_on_key_up(g, wid_dead_window->wid_popup_container, wid_dead_key_up);
   wid_set_on_key_down(g, wid_dead_window->wid_popup_container, wid_dead_key_down);
   wid_raise(g, wid_dead_window->wid_popup_container);
 

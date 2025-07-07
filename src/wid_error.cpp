@@ -22,7 +22,7 @@ static void wid_error_destroy(Gamep g)
   CON("It all went dark briefly. What happened?");
 }
 
-static bool wid_error_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static bool wid_error_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_AND_INDENT();
 
@@ -57,17 +57,6 @@ static bool wid_error_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_error_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
-{
-  TRACE_AND_INDENT();
-
-  if (sdlk_eq(*key, game_key_console_get(g))) {
-    return false;
-  }
-
-  return true;
-}
-
 void wid_error(Gamep g, std::string error)
 {
   TRACE_AND_INDENT();
@@ -81,7 +70,6 @@ void wid_error(Gamep g, std::string error)
   spoint br(TERM_WIDTH - 5, TERM_HEIGHT - 5);
 
   wid_error_window = new WidPopup(g, "Game error", tl, br, nullptr, "");
-  wid_set_on_key_up(g, wid_error_window->wid_popup_container, wid_error_key_up);
   wid_set_on_key_down(g, wid_error_window->wid_popup_container, wid_error_key_down);
 
   wid_set_do_not_lower(wid_error_window->wid_popup_container, true);

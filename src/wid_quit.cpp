@@ -55,7 +55,7 @@ static bool wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_quit_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
+static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -88,17 +88,6 @@ static bool wid_quit_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
-{
-  TRACE_NO_INDENT();
-
-  if (sdlk_eq(*key, game_key_console_get(g))) {
-    return false;
-  }
-
-  return true;
-}
-
 void wid_quit_select(Gamep g)
 {
   TRACE_NO_INDENT();
@@ -123,7 +112,6 @@ void wid_quit_select(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_quit_window->wid_popup_container;
-    wid_set_on_key_up(g, w, wid_quit_key_up);
     wid_set_on_key_down(g, w, wid_quit_key_down);
   }
 
