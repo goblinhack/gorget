@@ -47,90 +47,14 @@ static bool wid_leftbar_create_window(Gamep g)
   y_at = 4;
   {
     TRACE_NO_INDENT();
-    auto   w = wid_new_square_button(g, wid_leftbar, "todo");
+    auto   w = wid_new_square_button(g, wid_leftbar, "player name");
     spoint tl(0, y_at);
     spoint br(width - 1, y_at);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "TODO");
+    wid_set_text(w, game_player_name_get(g));
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_shape_none(w);
   }
-
-  if (0) {
-    y_at++;
-    TRACE_NO_INDENT();
-    auto   w = wid_new_plain(g, wid_leftbar, "Seed");
-    spoint tl(0, y_at);
-    spoint br(width - 1, y_at);
-
-    auto s = dynprintf("Seed: %%fg=gray$%s", game_seed_name_get(g));
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, s);
-    wid_set_shape_none(w);
-    myfree(s);
-  }
-
-#if 0
-  y_at = 8;
-  {
-    TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(wid_leftbar, "player");
-    spoint tl(0, y_at);
-    spoint br(width - 1, y_at);
-    auto  s = dynprintf("%04u %04u", 0, 100);
-    wid_set_pos( w, tl, br);
-    wid_set_text( w, s);
-    wid_set_style( w, UI_WID_STYLE_NORMAL);
-    wid_set_color(g, w, WID_COLOR_TEXT_FG, RED);
-    wid_set_shape_none( w);
-    myfree(s);
-  }
-
-  y_at = 13;
-  {
-    TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(wid_leftbar, "player2");
-    spoint tl(0, y_at);
-    spoint br(width - 1, y_at);
-    auto  s = dynprintf("%4u %4u", 0, 100);
-    wid_set_pos( w, tl, br);
-    wid_set_text( w, s);
-    wid_set_style( w, UI_WID_STYLE_NORMAL);
-    wid_set_color(g, w, WID_COLOR_TEXT_FG, DODGERBLUE);
-    wid_set_shape_none( w);
-    myfree(s);
-  }
-
-  y_at = 18;
-  {
-    TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(wid_leftbar, "player2");
-    spoint tl(0, y_at);
-    spoint br(width - 1, y_at);
-    auto  s = dynprintf("%4u %4u", 0, 100);
-    wid_set_pos( w, tl, br);
-    wid_set_text( w, s);
-    wid_set_style( w, UI_WID_STYLE_NORMAL);
-    wid_set_color(g, w, WID_COLOR_TEXT_FG, YELLOW);
-    wid_set_shape_none( w);
-    myfree(s);
-  }
-
-  y_at = 23;
-  {
-    TRACE_NO_INDENT();
-    auto  w = wid_new_square_button(wid_leftbar, "player2");
-    spoint tl(0, y_at);
-    spoint br(width - 1, y_at);
-    auto  s = dynprintf("%4u %4u", 0, 100);
-    wid_set_pos( w, tl, br);
-    wid_set_text( w, s);
-    wid_set_style( w, UI_WID_STYLE_NORMAL);
-    wid_set_color(g, w, WID_COLOR_TEXT_FG, GREEN);
-    wid_set_shape_none( w);
-    myfree(s);
-  }
-#endif
 
   wid_update(g, wid_leftbar);
 
