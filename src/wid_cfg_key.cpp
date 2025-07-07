@@ -175,7 +175,7 @@ static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t butt
     // Back to the game
     //
   } else {
-    wid_cfg_top_menu(g);
+    wid_cfg_select(g);
   }
 
   return true;
@@ -193,7 +193,7 @@ static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button
     // Back to the game
     //
   } else {
-    wid_cfg_top_menu(g);
+    wid_cfg_select(g);
   }
 
   return true;
@@ -209,7 +209,7 @@ static bool wid_cfg_keyboard_back(Gamep g, Widp w, int x, int y, uint32_t button
     // Back to the game
     //
   } else {
-    wid_cfg_top_menu(g);
+    wid_cfg_select(g);
   }
 
   return true;

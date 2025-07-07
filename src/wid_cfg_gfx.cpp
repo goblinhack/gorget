@@ -44,7 +44,7 @@ static bool wid_cfg_gfx_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   CON("Reload config");
   wid_cfg_gfx_destroy(g);
-  wid_cfg_top_menu(g);
+  wid_cfg_select(g);
   return true;
 }
 
@@ -52,7 +52,7 @@ static bool wid_cfg_gfx_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_cfg_gfx_destroy(g);
-  wid_cfg_top_menu(g);
+  wid_cfg_select(g);
   return true;
 }
 

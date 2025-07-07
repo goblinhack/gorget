@@ -38,7 +38,7 @@ static bool wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_main_menu_config(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  wid_cfg_top_menu(g);
+  wid_cfg_select(g);
   wid_main_menu_hide(g);
   return false;
 }
@@ -56,22 +56,6 @@ static bool wid_main_menu_credits(Gamep g, Widp w, int x, int y, uint32_t button
 {
   TRACE_NO_INDENT();
   wid_credits_select(g);
-  wid_main_menu_destroy(g);
-  return false;
-}
-
-static bool wid_main_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button)
-{
-  TRACE_NO_INDENT();
-  wid_seed_select(g);
-  wid_main_menu_destroy(g);
-  return false;
-}
-
-static bool wid_main_menu_player_name(Gamep g, Widp w, int x, int y, uint32_t button)
-{
-  TRACE_NO_INDENT();
-  wid_player_name_select(g);
   wid_main_menu_destroy(g);
   return false;
 }
@@ -117,10 +101,6 @@ static bool wid_main_menu_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'L' :         wid_main_menu_load(g, nullptr, 0, 0, 0); return true;
               case 'o' :
               case 'O' :         wid_main_menu_config(g, nullptr, 0, 0, 0); return true;
-              case 's' :
-              case 'S' :         wid_main_menu_seed(g, nullptr, 0, 0, 0); return true;
-              case 'p' :
-              case 'P' :         wid_main_menu_player_name(g, nullptr, 0, 0, 0); return true;
               case 'c' :
               case 'C' :         wid_main_menu_credits(g, nullptr, 0, 0, 0); return true;
               case 'h' :
@@ -350,12 +330,12 @@ void wid_main_menu_select(Gamep g)
     wid_main_menu_destroy(g);
   }
 
-  auto box_height          = 3;
+  auto box_height          = 2;
   auto box_step            = 3;
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  int    menu_height = 26;
+  int    menu_height = 20;
   int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
   spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
@@ -378,7 +358,7 @@ void wid_main_menu_select(Gamep g)
     auto w = wid_new_square_button(g, p, "New Game");
 
     spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height - 1);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -394,7 +374,7 @@ void wid_main_menu_select(Gamep g)
     auto w = wid_new_square_button(g, p, "Load Game");
 
     spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height - 1);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -410,7 +390,7 @@ void wid_main_menu_select(Gamep g)
     auto w = wid_new_square_button(g, p, "Options");
 
     spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height - 1);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -423,42 +403,10 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Choose seed");
-
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height - 1);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_on_mouse_up(g, w, wid_main_menu_seed);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_FMT_STR "eed select");
-  }
-  y_at += box_step;
-  {
-    TRACE_NO_INDENT();
-    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Choose player name");
-
-    spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height - 1);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_on_mouse_up(g, w, wid_main_menu_player_name);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "P" UI_FMT_STR "layer name");
-  }
-  y_at += box_step;
-  {
-    TRACE_NO_INDENT();
-    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Credits");
 
     spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height - 1);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -474,7 +422,7 @@ void wid_main_menu_select(Gamep g)
     auto w = wid_new_square_button(g, p, "Hiscores");
 
     spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height - 1);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);
@@ -490,7 +438,7 @@ void wid_main_menu_select(Gamep g)
     auto w = wid_new_square_button(g, p, "Quit Game");
 
     spoint tl(0, y_at);
-    spoint br(button_width, y_at + box_height - 1);
+    spoint br(button_width, y_at + box_height);
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);

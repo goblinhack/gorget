@@ -20,7 +20,7 @@ extern void wid_player_name_select(Gamep);
 extern void wid_cfg_keyboard_select(Gamep);
 extern void wid_cfg_mouse_select(Gamep);
 extern void wid_cfg_sound_select(Gamep);
-extern void wid_cfg_top_menu(Gamep);
+extern void wid_cfg_select(Gamep);
 extern void wid_credits_select(Gamep);
 extern void wid_hiscores_show(Gamep);
 extern void wid_load_select(Gamep);

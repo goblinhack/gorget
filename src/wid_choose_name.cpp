@@ -20,7 +20,7 @@ static void selected(Gamep g, Widp w, const std::string &text)
   game_player_name_set(g, text.c_str());
   CON("Save config");
   game_save_config(g);
-  wid_main_menu_select(g);
+  wid_cfg_select(g);
 }
 
 static void cancelled(Gamep g, Widp w, const std::string &text)
@@ -28,7 +28,7 @@ static void cancelled(Gamep g, Widp w, const std::string &text)
   TRACE_NO_INDENT();
 
   wid_destroy(g, &wid_choose_player_name);
-  wid_main_menu_select(g);
+  wid_cfg_select(g);
 }
 
 void wid_player_name_select(Gamep g)

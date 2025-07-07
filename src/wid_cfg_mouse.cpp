@@ -30,7 +30,7 @@ static bool wid_cfg_mouse_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
     sdl_config_update_all(g);
   }
   wid_cfg_mouse_destroy(g);
-  wid_cfg_top_menu(g);
+  wid_cfg_select(g);
   return true;
 }
 
@@ -40,7 +40,7 @@ static bool wid_cfg_mouse_save(Gamep g, Widp w, int x, int y, uint32_t button)
   CON("Save config");
   game_save_config(g);
   wid_cfg_mouse_destroy(g);
-  wid_cfg_top_menu(g);
+  wid_cfg_select(g);
   return true;
 }
 
@@ -48,7 +48,7 @@ static bool wid_cfg_mouse_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
   wid_cfg_mouse_destroy(g);
-  wid_cfg_top_menu(g);
+  wid_cfg_select(g);
   return true;
 }
 
