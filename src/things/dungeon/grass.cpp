@@ -43,7 +43,7 @@ bool tp_load_grass(void)
   tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
   // end sort marker1 }
 
-  for (auto frame = 0; frame < 15; frame++) {
+  for (auto frame = 0; frame < 14; frame++) {
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
@@ -51,6 +51,11 @@ bool tp_load_grass(void)
   for (auto frame = 0; frame < 1; frame++) {
     auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
+  }
+
+  for (auto frame = 0; frame < 1; frame++) {
+    auto tile = tile_find_mand(name + std::string(".burnt.") + std::to_string(frame));
+    tp_tiles_push_back(tp, THING_ANIM_BURNT, tile);
   }
 
   return true;

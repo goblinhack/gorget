@@ -175,6 +175,10 @@ typedef struct Thing_ {
   //
   bool _is_dead : 1;
   //
+  // Was set fire to.
+  //
+  bool _is_burnt : 1;
+  //
   // Snuffed it and is a corpse.
   //
   bool _is_corpse : 1;
@@ -206,7 +210,8 @@ Thingp thing_and_tp_get_at(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp * = n
 Thingp thing_find(Gamep, Levelsp, ThingId id);
 Thingp thing_find_optional(Gamep, Levelsp, ThingId id);
 Thingp thing_get(Gamep, Levelsp, Levelp, spoint p, int slot);
-Thingp thing_init(Gamep, Levelsp, Levelp, Tpp, spoint p);
+Thingp thing_init(Gamep, Levelsp, Levelp, Tpp, spoint);
+Thingp thing_spawn(Gamep, Levelsp, Levelp, Tpp, spoint);
 Levelp thing_level(Gamep, Levelsp, Thingp);
 void   thing_stats_dump(Gamep, Levelsp);
 
@@ -240,6 +245,7 @@ void thing_anim_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_anim_reset(Gamep, Levelsp, Levelp, Thingp);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
+void thing_is_burnt_handle(Gamep, Levelsp, Levelp, Thingp);
 
 Thingp       thing_player(Gamep);
 ThingPlayerp thing_player_struct(Gamep);
@@ -273,6 +279,9 @@ Thingp immediate_owner(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_dead(Thingp);
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+
+bool thing_is_burnt(Thingp);
+void thing_is_burnt_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_scheduled_for_cleanup(Thingp);
 void thing_is_scheduled_for_cleanup_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);

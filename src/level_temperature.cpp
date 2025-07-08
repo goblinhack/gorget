@@ -71,8 +71,22 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
       float Wa = thing_weight(a);
       float Tb = thing_temperature(b);
       float Wb = thing_weight(b);
-      int   Na = std::round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
-      int   Nb = std::round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
+
+      //
+      // Fire has no weight, so give it some so the equations below average the temperatures.
+      //
+      if (! Wa) {
+        Wa = 1;
+      }
+      if (! Wb) {
+        Wb = 1;
+      }
+
+      //
+      // The new temperatures
+      //
+      int Na = std::round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
+      int Nb = std::round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
 
       if (Ta != Na) {
         THING_DBG(a, "temperature change (a) %f -> %d degrees", Ta, Na);

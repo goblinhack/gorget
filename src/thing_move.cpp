@@ -500,13 +500,13 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
         FOR_ALL_Z_PRIO(z_prio)
         {
           for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
-            auto    slotp = &l->thing_id[ p.x ][ p.y ][ slot_tmp ];
-            ThingId oid   = *slotp;
-            if (oid) {
-              Thingp o    = thing_find(g, v, oid);
+            auto    slotp   = &l->thing_id[ p.x ][ p.y ][ slot_tmp ];
+            ThingId cand_id = *slotp;
+            if (cand_id) {
+              Thingp o    = thing_find(g, v, cand_id);
               auto   o_tp = thing_tp(o);
               if (o && (tp_z_prio_get(o_tp) == z_prio)) {
-                slots_sorted[ slots_sorted_count++ ] = oid;
+                slots_sorted[ slots_sorted_count++ ] = cand_id;
                 *slotp                               = 0;
               }
             }
@@ -526,6 +526,14 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   ERR("out of thing slots");
+
+  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+    auto dump_id = l->thing_id[ p.x ][ p.y ][ slot ];
+    if (dump_id) {
+      auto it = thing_find(g, v, dump_id);
+      THING_LOG(it, "is using slot %u", slot);
+    }
+  }
 }
 
 //

@@ -159,6 +159,35 @@ void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   thing_is_dead_handle(g, v, l, t);
 }
 
+bool thing_is_burnt(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_burnt;
+}
+
+void thing_is_burnt_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+
+  if (t->_is_burnt == val) {
+    return;
+  }
+
+  t->_is_burnt = val;
+
+  if (val && thing_is_loggable(t)) {
+    THING_DBG(t, "is burnt");
+  }
+}
+
 bool thing_is_corpse(Thingp t)
 {
   TRACE_NO_INDENT();

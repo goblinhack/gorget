@@ -35,14 +35,23 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
 
   auto tp = thing_tp(me);
 
+  //
+  // Pre burning heat damage
+  //
   auto t1 = tp_temperature_damage_at_get(tp);
   if (t1 && (n > t1)) {
     thing_temperature_damage_handle(g, v, l, source, me, n);
   }
 
-  auto t2 = tp_temperature_burns_at_get(tp);
-  if (t2 && (n > t2)) {
-    // TODO damage
+  //
+  // If not burnt already, burn it!
+  //
+  if (! thing_is_burnt(me)) {
+    auto t2 = tp_temperature_burns_at_get(tp);
+    if (t2 && (n > t2)) {
+      thing_spawn(g, v, l, tp_random(is_fire), me->at);
+      thing_is_burnt_set(g, v, l, me);
+    }
   }
 
   thing_temperature_set(g, v, l, me, n);

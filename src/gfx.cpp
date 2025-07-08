@@ -1168,7 +1168,7 @@ static void gfx_init_tiles(void)
         "grass.idle.11",
         "grass.idle.12",
         "grass.idle.13",
-        "grass.idle.14",
+        "grass.burnt.0",
         "grass.dead.0",
         // ##############################################################################
         "barrel.idle.0",

@@ -90,6 +90,17 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   return t;
 }
 
+Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
+{
+  TRACE_NO_INDENT();
+
+  auto t = thing_init(g, v, l, tp, at);
+  if (t) {
+    thing_push(g, v, l, t);
+  }
+  return t;
+}
+
 void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();

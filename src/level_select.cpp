@@ -344,10 +344,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
           tp = tp_is_level_next;
         }
 
-        auto t = thing_init(g, v, level_select, tp, at);
-        if (t) {
-          thing_push(g, v, level_select, t);
-        }
+        thing_spawn(g, v, level_select, tp, at);
       }
     }
   }
@@ -370,10 +367,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
         spoint at(x * LEVEL_SCALE + div + 2, y * LEVEL_SCALE + 1);
         level_select->debug[ at.x ][ at.y ] = '-';
 
-        auto t = thing_init(g, v, level_select, tp_is_level_across, at);
-        if (t) {
-          thing_push(g, v, level_select, t);
-        }
+        thing_spawn(g, v, level_select, tp_is_level_across, at);
       }
     }
   }
@@ -396,10 +390,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
         spoint at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + div + 2);
         level_select->debug[ at.x ][ at.y ] = '|';
 
-        auto t = thing_init(g, v, level_select, tp_is_level_down, at);
-        if (t) {
-          thing_push(g, v, level_select, t);
-        }
+        thing_spawn(g, v, level_select, tp_is_level_down, at);
       }
     }
   }
@@ -414,10 +405,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
       FOR_ALL_THINGS_AT(g, v, level_select, it, at) { count++; }
       if (! count) {
         auto tp_rock = tp_random(is_dirt);
-        auto t       = thing_init(g, v, level_select, tp_rock, at);
-        if (t) {
-          thing_push(g, v, level_select, t);
-        }
+        thing_spawn(g, v, level_select, tp_rock, at);
       }
     }
   }

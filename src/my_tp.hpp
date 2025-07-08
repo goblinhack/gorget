@@ -244,7 +244,8 @@ ENUM_DEF_H(MONST_GROUP_ENUM, ThingMonstGroup)
       list_macro(THING_ANIM_JOIN_X4, "IS_JOIN_X4"),        /* newline */                                             \
       list_macro(THING_ANIM_IDLE, "idle"),                 /* newline */                                             \
       list_macro(THING_ANIM_OPEN, "open"),                 /* newline */                                             \
-      list_macro(THING_ANIM_DEAD, "dead"),                 /* newline */
+      list_macro(THING_ANIM_DEAD, "dead"),                 /* newline */                                             \
+      list_macro(THING_ANIM_BURNT, "burnt"),               /* newline */
 
 ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 
