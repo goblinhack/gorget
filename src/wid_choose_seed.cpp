@@ -18,6 +18,11 @@ static void selected(Gamep g, Widp w, const std::string &text)
 
   CON("Manually set seed to '%s'", text.c_str());
 
+  //
+  // If you set a seed manually, forget what the cli said
+  //
+  g_opt_seed_name = "";
+
   if (text == "") {
     game_seed_clear(g);
   }
