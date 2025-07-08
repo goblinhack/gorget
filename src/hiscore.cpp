@@ -10,24 +10,25 @@
 
 HiScores::HiScores(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if ((int) hiscores.size() > HiScore::max) {
     hiscores.resize(HiScore::max);
   } else {
     while ((int) hiscores.size() < HiScore::max) {
-      hiscores.push_back(HiScore("AAA", "",
+      hiscores.push_back(HiScore("AAA", "", "",
                                  0, // score
-                                 0  // level_reached
+                                 0  // levels_completed
                                  ));
     }
   }
 }
 
-HiScores::~HiScores(void) { TRACE_AND_INDENT(); }
+HiScores::~HiScores(void) { TRACE_NO_INDENT(); }
 
-void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std::string &name)
+void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std::string &name,
+                               const std::string &reason)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   auto        h = hiscores.begin();
   std::string hiscore_name;
 
@@ -35,11 +36,11 @@ void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std
 
   while (h != hiscores.end()) {
     if (score > h->score) {
-      hiscores.insert(h, HiScore(hiscore_name, current_date(), score, level_num));
+      hiscores.insert(h, HiScore(hiscore_name, reason, current_date(), score, level_num));
 
       hiscores.resize(HiScore::max);
 
-      CON("Save hiscore config");
+      DBG("Save hiscore config");
       game_save_config(g);
       return;
     }
@@ -50,7 +51,7 @@ void HiScores::add_new_hiscore(Gamep g, int score, LevelNum level_num, const std
 
 bool HiScores::is_new_hiscore(int score)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   auto h = hiscores.begin();
 
   if (! score) {
@@ -113,53 +114,55 @@ const char *HiScores::place_str(int score)
 
 std::istream &operator>>(std::istream &in, Bits< HiScore & > my)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   in >> bits(my.t.name);
+  in >> bits(my.t.reason);
   in >> bits(my.t.when);
   in >> bits(my.t.score);
-  in >> bits(my.t.level_reached);
+  in >> bits(my.t.levels_completed);
+  DBG("Read Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(),
+      my.t.when.c_str());
   return in;
 }
 
 std::ostream &operator<<(std::ostream &out, Bits< const HiScore & > const my)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   out << bits(my.t.name);
+  out << bits(my.t.reason);
   out << bits(my.t.when);
   out << bits(my.t.score);
-  out << bits(my.t.level_reached);
-  // CON("Saved Hiscore: %s, %d defeated  by %s, %s",
-  //     my.t.name.c_str(), my.t.score, my.t.when.c_str());
+  out << bits(my.t.levels_completed);
+  DBG("Saved Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(),
+      my.t.when.c_str());
   return out;
 }
 
 std::ostream &operator<<(std::ostream &out, Bits< HiScore & > const my)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   out << bits(my.t.name);
+  out << bits(my.t.reason);
   out << bits(my.t.when);
   out << bits(my.t.score);
-  out << bits(my.t.level_reached);
-  // CON("Read Hiscore: %s, %d defeated  by %s, %s",
-  //     my.t.name.c_str(), my.t.score, my.t.when.c_str());
+  out << bits(my.t.levels_completed);
+  DBG("Saved Hiscore: who:%s score:%d demise:%s when:%s", my.t.name.c_str(), my.t.score, my.t.reason.c_str(),
+      my.t.when.c_str());
   return out;
 }
 
 std::istream &operator>>(std::istream &in, Bits< HiScores & > my)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   my.t.hiscores.resize(0);
   in >> bits(my.t.hiscores);
-  for (auto h : my.t.hiscores) {
-    DBG2("Loaded Hiscore: %s, %d, %s", h.name.c_str(), h.score, h.when.c_str());
-  }
 
   return in;
 }
 
 std::ostream &operator<<(std::ostream &out, Bits< const HiScores & > const my)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   out << bits(my.t.hiscores);
   return out;
 }

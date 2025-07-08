@@ -281,4 +281,9 @@ void     game_unset_request_reset_state_change(Gamep);
 void     game_unset_request_to_save_snapshot(Gamep);
 void     game_unset_request_to_update_same_level(Gamep);
 
+void        game_add_new_hiscore(Gamep, int score, LevelNum, const char *name, const char *reason);
+bool        game_is_new_hiscore(Gamep, int score);
+bool        game_is_new_highest_hiscore(Gamep g, int score);
+const char *game_place_str(Gamep, int score);
+
 #endif

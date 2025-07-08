@@ -307,10 +307,19 @@ void level_entered(Gamep g, Levelsp v, Levelp l)
 
 void level_completed(Gamep g, Levelsp v, Levelp l)
 {
+  if (l->completed) {
+    return;
+  }
+
   LOG("Level completed: %u", l->level_num);
   TRACE_AND_INDENT();
 
   l->completed = true;
+
+  auto player_struct = thing_player_struct(g);
+  if (player_struct) {
+    player_struct->levels_completed++;
+  }
 }
 
 //

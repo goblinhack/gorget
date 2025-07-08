@@ -47,7 +47,8 @@ bool sound_init(void)
 void sound_fini(void)
 {
   LOG("Sound fini");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
+
   if (sound_init_done) {
     sound_init_done = false;
 

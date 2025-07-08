@@ -325,8 +325,8 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto aip = thing_player_ai(g, t);
-  if (! aip) {
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
     return;
   }
 
@@ -571,21 +571,21 @@ static bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint *
 {
   TRACE_NO_INDENT();
 
-  auto aip = thing_player_ai(g, t);
-  if (! aip) {
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
     return false;
   }
 
-  if (! aip->move_path.size) {
+  if (! player_struct->move_path.size) {
     return false;
   }
 
-  *out = aip->move_path.points[ 0 ];
+  *out = player_struct->move_path.points[ 0 ];
 
-  for (int index = 0; index < aip->move_path.size - 1; index++) {
-    aip->move_path.points[ index ] = aip->move_path.points[ index + 1 ];
+  for (int index = 0; index < player_struct->move_path.size - 1; index++) {
+    player_struct->move_path.points[ index ] = player_struct->move_path.points[ index + 1 ];
   }
-  aip->move_path.size--;
+  player_struct->move_path.size--;
 
   return true;
 }

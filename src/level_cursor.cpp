@@ -281,8 +281,8 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto aip = thing_player_ai(g, t);
-  if (! aip) {
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
     //
     // If no player, clear the cursor
     //
@@ -292,7 +292,7 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 
   v->player_pressed_button_and_waiting_for_a_path = false;
   v->player_currently_following_a_path            = false;
-  aip->move_path.size                             = 0;
+  player_struct->move_path.size                   = 0;
 }
 
 //
@@ -309,8 +309,8 @@ static void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< s
     return;
   }
 
-  auto aip = thing_player_ai(g, t);
-  if (! aip) {
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
     //
     // If no player, clear the cursor
     //
@@ -334,14 +334,14 @@ static void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< s
   //
   // Copy the latest mouse path to the player
   //
-  int index           = 0;
-  aip->move_path.size = 0;
+  int index                     = 0;
+  player_struct->move_path.size = 0;
 
   for (auto p : move_path) {
-    aip->move_path.points[ index ].x = p.x;
-    aip->move_path.points[ index ].y = p.y;
-    aip->move_path.size              = ++index;
-    if (index >= ARRAY_SIZE(aip->move_path.points)) {
+    player_struct->move_path.points[ index ].x = p.x;
+    player_struct->move_path.points[ index ].y = p.y;
+    player_struct->move_path.size              = ++index;
+    if (index >= ARRAY_SIZE(player_struct->move_path.points)) {
       break;
     }
   }

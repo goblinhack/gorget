@@ -34,6 +34,7 @@
 #define UI_SHORTCUT_FMT_STR           "%%fg=orange$"
 #define UI_WARNING_FMT_STR            "%%fg=yellow$"
 #define UI_IMPORTANT_FMT_STR          "%%fg=red$"
+#define UI_GOOD_FMT_STR               "%%fg=gold$"
 #define UI_RESET_FMT                  "%%fg=reset$"
 #define UI_GREEN_FMT_STR              "%%fg=green$"
 #define UI_WHITE_FMT_STR              "%%fg=white$"

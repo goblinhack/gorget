@@ -17,7 +17,7 @@
 
 void callstack_dump(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   fprintf(MY_STDERR, "code trace\n");
   fprintf(MY_STDERR, "==========\n");
@@ -131,7 +131,7 @@ static void debug_crash_handler(int sig)
 
 void common_error_handler(std::string &tech_support)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   extern Gamep game;
   auto         g = game;
@@ -162,7 +162,7 @@ void common_error_handler(std::string &tech_support)
 
 void segv_handler(int sig)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
 #if defined __linux__
   debug_crash_handler(sig);
@@ -173,7 +173,7 @@ void segv_handler(int sig)
 
 void error_handler(const std::string &error_msg)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   std::string tech_support = "Sorry, an error has occurred: ";
   tech_support += error_msg;
@@ -182,7 +182,7 @@ void error_handler(const std::string &error_msg)
 
 void ctrlc_handler(int sig)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   fprintf(MY_STDERR, "Interrupted!!!");
   backtrace_dump();

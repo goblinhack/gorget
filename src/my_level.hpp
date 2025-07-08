@@ -218,7 +218,7 @@ typedef struct Levels_ {
   //
   // Space for player AI
   //
-  ThingPlayerAi thing_player;
+  ThingPlayer thing_player;
   //
   // The current player.
   //

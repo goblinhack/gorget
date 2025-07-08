@@ -10,7 +10,7 @@
 
 void *myzalloc_(int size, const char *what, const char *file, const char *func, int line)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   void *ptr = calloc(1, size);
 
   if (! ptr) {
@@ -24,7 +24,7 @@ void *myzalloc_(int size, const char *what, const char *file, const char *func, 
 
 void *mymalloc_(int size, const char *what, const char *file, const char *func, int line)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   void *ptr = malloc(size);
 
   if (! ptr) {
@@ -38,7 +38,7 @@ void *mymalloc_(int size, const char *what, const char *file, const char *func, 
 
 void *myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   IF_DEBUG2 { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
 
   ptr = realloc(ptr, size);
@@ -53,7 +53,7 @@ void *myrealloc_(void *ptr, int size, const char *what, const char *file, const 
 
 void myfree_(void *ptr, const char *file, const char *func, int line)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   IF_DEBUG2 { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
 
   free(ptr);
@@ -61,7 +61,7 @@ void myfree_(void *ptr, const char *file, const char *func, int line)
 
 char *dupstr_(const char *in, const char *what, const char *file, const char *func, int line)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (! in) {
     ERR("No string to duplicate");
     return nullptr;

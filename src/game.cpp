@@ -456,10 +456,14 @@ void Game::seed_set(const char *maybe_seed)
     config.seed_name   = std::string(maybe_seed);
     config.seed_source = SEED_SOURCE_USER;
     CON("Set fixed seed '%s' from ui", config.seed_name.c_str());
+  } else if (g_opt_seed_name != "") {
+    config.seed_name   = g_opt_seed_name;
+    config.seed_source = SEED_SOURCE_COMMAND_LINE;
+    CON("Set fixed seed '%s' from command line", config.seed_name.c_str());
   } else if (config.seed_name == "") {
     config.seed_name   = os_random_name(SIZEOF("4294967295") - 1);
     config.seed_source = SEED_SOURCE_RANDOM;
-    CON("Set random seed '%s', as config file had empty seed", config.seed_name.c_str());
+    CON("Set random seed '%s', none set in config", config.seed_name.c_str());
   } else {
     switch (config.seed_source) {
       case SEED_SOURCE_COMMAND_LINE : // newline
@@ -469,15 +473,9 @@ void Game::seed_set(const char *maybe_seed)
         CON("Set seed '%s' from previous load", config.seed_name.c_str());
         break;
       case SEED_SOURCE_RANDOM :
-        if (g_opt_seed_name != "") {
-          config.seed_name   = g_opt_seed_name;
-          config.seed_source = SEED_SOURCE_COMMAND_LINE;
-          CON("Set fixed seed '%s' from command line", config.seed_name.c_str());
-        } else {
-          config.seed_name   = os_random_name(SIZEOF("4294967295") - 1);
-          config.seed_source = SEED_SOURCE_RANDOM;
-          CON("Set random seed '%s', as none manually set", config.seed_name.c_str());
-        }
+        config.seed_name   = os_random_name(SIZEOF("4294967295") - 1);
+        config.seed_source = SEED_SOURCE_RANDOM;
+        CON("Set random seed '%s', as none manually set", config.seed_name.c_str());
         break;
     }
   }
@@ -1032,6 +1030,46 @@ class HiScores *game_hiscores_get(Gamep g)
     return nullptr;
   }
   return &g->config.hiscores;
+}
+
+void game_add_new_hiscore(Gamep g, int score, LevelNum level_num, const char *name, const char *reason)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.hiscores.add_new_hiscore(g, score, level_num, name, reason);
+}
+
+bool game_is_new_hiscore(Gamep g, int score)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.hiscores.is_new_hiscore(score);
+}
+
+bool game_is_new_highest_hiscore(Gamep g, int score)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->config.hiscores.is_new_highest_hiscore(score);
+}
+
+const char *game_place_str(Gamep g, int score)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return "";
+  }
+  return g->config.hiscores.place_str(score);
 }
 
 void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,

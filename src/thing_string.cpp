@@ -108,7 +108,7 @@ std::string to_death_reason(ThingEvent &e)
 
   if (e.source) {
     s += " by ";
-    s += capitalise(tp_long_name(thing_tp(e.source)));
+    s += tp_long_name(thing_tp(e.source));
   }
 
   return s;

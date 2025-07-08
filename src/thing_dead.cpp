@@ -124,7 +124,15 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   }
 
   if (thing_is_player(t)) {
-    wid_dead_select(g, to_death_reason(e));
+    auto death_reason = to_death_reason(e);
+
+    auto score = 666;
+    if (game_is_new_hiscore(g, score)) {
+      TOPCON(UI_GOOD_FMT_STR "New high score, %s place!" UI_RESET_FMT, game_place_str(g, score));
+      game_add_new_hiscore(g, score, l->level_num, game_player_name_get(g), death_reason.c_str());
+    }
+
+    wid_dead_select(g, death_reason);
   }
 }
 

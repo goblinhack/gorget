@@ -182,7 +182,7 @@ struct Level_;
 struct Levels_;
 struct Thing_;
 struct ThingAi_;
-struct ThingPlayerAi_;
+struct ThingPlayer_;
 struct Dmap_;
 struct SDL_Surface;
 
@@ -197,7 +197,7 @@ using ThingId      = unsigned int;
 using ThingAiId    = unsigned short;
 using Thingp       = struct Thing_ *;
 using ThingAip     = struct ThingAi_ *;
-using ThingPlayerAip = struct ThingPlayerAi_ *;
+using ThingPlayerp = struct ThingPlayer_ *;
 using Tilep        = class Tile *;
 using TpId         = unsigned int;
 using Tpp          = class Tp *;

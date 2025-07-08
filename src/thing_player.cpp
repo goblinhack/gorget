@@ -204,8 +204,8 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto aip = thing_player_ai(g, t);
-  if (! aip) {
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
     return;
   }
 
@@ -215,7 +215,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
       //
       // At the end of the popped path or not?
       //
-      if (aip->move_path.size) {
+      if (player_struct->move_path.size) {
         //
         // If still more tiles to pop, do not descend automatically
         //

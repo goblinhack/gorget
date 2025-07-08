@@ -73,8 +73,21 @@ void wid_hiscores_show(Gamep g)
     wid_hiscore_destroy(g);
   }
 
-  int    menu_height = 26;
-  int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
+  int menu_height = 26;
+  int menu_width  = 100;
+
+  auto name           = "Name";
+  int  name_field_len = UI_MAX_PLAYER_NAME_LEN + 1;
+
+  auto when           = "Date of Demise";
+  int  when_field_len = 25;
+
+  auto completed           = "Completed";
+  int  completed_field_len = 9;
+
+  auto reason           = "Reason of Unfair Demise";
+  int  reason_field_len = 28;
+
   spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_hiscore_window = new WidPopup(g, "hiscores", outer_tl, outer_br, nullptr, "", false, false);
@@ -91,7 +104,7 @@ void wid_hiscores_show(Gamep g)
   auto index    = 0;
 
   const char *colors[ HiScore::max_displayed ] = {
-      "green", "yellow", "yellow", "yellow", "gold", "gold", "gold", "white", "white", "white",
+      "green", "yellow", "yellow", "yellow", "gray50", "gray50", "gray60", "gray60", "gray70", "gray70",
   };
 
   while (h != hiscores->hiscores.end()) {
@@ -102,35 +115,46 @@ void wid_hiscores_show(Gamep g)
 
     char tmp[ 200 ];
 
-    int name_field_len = 8;
-    int when_field_len = 10;
-
     if (first) {
       first = false;
 
       auto color = "red";
-      auto name  = "Name";
-      auto when  = "When";
 
-      snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%7s  %-*s %-*s %-5s", color, "Score", name_field_len,
-               capitalise(name).c_str(), when_field_len, when, "Lvl");
+      snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%7s %-*s %-*s %-*s %*s", // newline
+               color, "Score",                                           // newline
+               name_field_len, capitalise(name).c_str(),                 // newline
+               when_field_len, when,                                     // newline
+               completed_field_len, completed,                           // newline
+               reason_field_len, reason);
 
       wid_hiscore_window->log(g, tmp);
     }
 
-    std::string name = h->name.c_str();
-    if ((int) name.length() > name_field_len) {
-      name[ name_field_len ] = '\0';
+    std::string when_val = h->when.c_str();
+    if ((int) when_val.length() > when_field_len) {
+      when_val[ when_field_len ] = '\0';
     }
 
-    std::string when = h->when.c_str();
-    if ((int) when.length() > when_field_len) {
-      when[ when_field_len ] = '\0';
+    if (when_val == "") {
+      when_val = "-";
+    }
+
+    std::string reason_val = capitalise_first(h->reason).c_str();
+    if ((int) reason_val.length() > reason_field_len) {
+      reason_val[ reason_field_len ] = '\0';
+    }
+
+    if (reason_val == "") {
+      reason_val = "-";
     }
 
     auto color = colors[ index++ ];
-    snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u  %-*s %-*s %-5u", color, h->score, name_field_len, name.c_str(),
-             when_field_len, when.c_str(), h->level_reached);
+    snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u %-*s %-*s %-*u %*s", // newline
+             color, h->score,                                           // newline
+             name_field_len, h->name.c_str(),                           // newline
+             when_field_len, when_val.c_str(),                          // newline
+             completed_field_len, h->levels_completed,                  // newline
+             reason_field_len, reason_val.c_str());
 
     wid_hiscore_window->log_empty_line(g);
     wid_hiscore_window->log(g, tmp);
