@@ -13,6 +13,7 @@
 #include "my_tests.hpp"
 #include "my_thing.hpp"
 #include "my_time.hpp"
+#include "my_ui.hpp"
 
 #include <inttypes.h>
 #include <map>
@@ -149,6 +150,16 @@ void tests_run(Gamep g)
 
   int passed = 0;
   int failed = 0;
+
+  //
+  // For tests that create a widget, we need some defaults
+  //
+  if (! TERM_HEIGHT) {
+    TERM_HEIGHT = TERM_HEIGHT_DEF;
+  }
+  if (! TERM_WIDTH) {
+    TERM_WIDTH = TERM_WIDTH_DEF;
+  }
 
   for (auto &test : test_name_map) {
 
