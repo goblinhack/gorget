@@ -42,8 +42,8 @@ bool tp_load_player(void)
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_weight_set(tp, 100);               // pounds
-  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_PLAYER);
+  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   auto delay = 1000;

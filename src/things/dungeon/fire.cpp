@@ -39,8 +39,8 @@ bool tp_load_fire(void)
   tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
   tp_temperature_initial_set(tp, 500); // celsius
-  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
+  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   auto delay = 200;

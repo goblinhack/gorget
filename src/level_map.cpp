@@ -232,9 +232,13 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
         if (1) {
           if (tp == tp_player) {
             if (1) {
+              thing_spawn(g, v, l, tp_random(is_grass), spoint(x, y) + spoint(1, 0));
+              thing_spawn(g, v, l, tp_random(is_fire), spoint(x, y) + spoint(1, 0));
+            }
+            if (0) {
               thing_spawn(g, v, l, tp_random(is_mob), spoint(x, y) + spoint(1, 0));
             }
-            if (1) {
+            if (0) {
               thing_spawn(g, v, l, tp_random(is_lava), spoint(x, y) + spoint(2, 0));
             }
           }

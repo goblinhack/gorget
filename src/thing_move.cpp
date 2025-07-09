@@ -497,7 +497,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
         ThingId slots_sorted[ MAP_SLOTS ] = {};
         auto    slots_sorted_count        = 0;
 
-        FOR_ALL_Z_PRIO(z_prio)
+        FOR_ALL_Z_LAYER(z_layer)
         {
           for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
             auto    slotp   = &l->thing_id[ p.x ][ p.y ][ slot_tmp ];
@@ -505,7 +505,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
             if (cand_id) {
               Thingp o    = thing_find(g, v, cand_id);
               auto   o_tp = thing_tp(o);
-              if (o && (tp_z_prio_get(o_tp) == z_prio)) {
+              if (o && (tp_z_layer_get(o_tp) == z_layer)) {
                 slots_sorted[ slots_sorted_count++ ] = cand_id;
                 *slotp                               = 0;
               }

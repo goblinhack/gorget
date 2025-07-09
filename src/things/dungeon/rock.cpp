@@ -26,7 +26,7 @@ bool tp_load_rock(void)
     tp_is_immunity_add(tp, THING_EVENT_MELEE);
     tp_weight_set(tp, 2000); // pounds
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-    tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+    tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
     // end sort marker1 }
 
     tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile_find_mand(name + ".IS_JOIN_BL"));

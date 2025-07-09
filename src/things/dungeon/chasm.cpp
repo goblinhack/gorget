@@ -31,7 +31,7 @@ bool tp_load_chasm(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_tiled);
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
-  tp_z_prio_set(tp, MAP_Z_PRIO_NORMAL);
+  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile_find_mand(name + ".IS_JOIN_BL"));

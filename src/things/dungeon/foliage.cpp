@@ -33,8 +33,8 @@ bool tp_load_foliage(void)
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_weight_set(tp, 10);                // pounds
-  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_prio_set(tp, MAP_Z_PRIO_INFRONT);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_FOLIAGE);
+  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.1"));
