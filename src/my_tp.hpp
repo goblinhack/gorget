@@ -373,6 +373,96 @@ int  tp_temperature_burns_at_get(Tpp tp);
 void tp_temperature_damage_at_set(Tpp, int val);
 int  tp_temperature_damage_at_get(Tpp tp);
 
+void tp_value1_set(Tpp, int val);
+int  tp_value1_get(Tpp tp);
+
+void tp_value2_set(Tpp, int val);
+int  tp_value2_get(Tpp tp);
+
+void tp_value3_set(Tpp, int val);
+int  tp_value3_get(Tpp tp);
+
+void tp_value4_set(Tpp, int val);
+int  tp_value4_get(Tpp tp);
+
+void tp_value5_set(Tpp, int val);
+int  tp_value5_get(Tpp tp);
+
+void tp_value6_set(Tpp, int val);
+int  tp_value6_get(Tpp tp);
+
+void tp_value7_set(Tpp, int val);
+int  tp_value7_get(Tpp tp);
+
+void tp_value8_set(Tpp, int val);
+int  tp_value8_get(Tpp tp);
+
+void tp_value9_set(Tpp, int val);
+int  tp_value9_get(Tpp tp);
+
+void tp_value10_set(Tpp, int val);
+int  tp_value10_get(Tpp tp);
+
+void tp_value11_set(Tpp, int val);
+int  tp_value11_get(Tpp tp);
+
+void tp_value12_set(Tpp, int val);
+int  tp_value12_get(Tpp tp);
+
+void tp_value13_set(Tpp, int val);
+int  tp_value13_get(Tpp tp);
+
+void tp_value14_set(Tpp, int val);
+int  tp_value14_get(Tpp tp);
+
+void tp_value15_set(Tpp, int val);
+int  tp_value15_get(Tpp tp);
+
+void tp_value16_set(Tpp, int val);
+int  tp_value16_get(Tpp tp);
+
+void tp_value17_set(Tpp, int val);
+int  tp_value17_get(Tpp tp);
+
+void tp_value18_set(Tpp, int val);
+int  tp_value18_get(Tpp tp);
+
+void tp_value19_set(Tpp, int val);
+int  tp_value19_get(Tpp tp);
+
+void tp_value20_set(Tpp, int val);
+int  tp_value20_get(Tpp tp);
+
+void tp_value21_set(Tpp, int val);
+int  tp_value21_get(Tpp tp);
+
+void tp_value22_set(Tpp, int val);
+int  tp_value22_get(Tpp tp);
+
+void tp_value23_set(Tpp, int val);
+int  tp_value23_get(Tpp tp);
+
+void tp_value24_set(Tpp, int val);
+int  tp_value24_get(Tpp tp);
+
+void tp_value25_set(Tpp, int val);
+int  tp_value25_get(Tpp tp);
+
+void tp_value26_set(Tpp, int val);
+int  tp_value26_get(Tpp tp);
+
+void tp_value27_set(Tpp, int val);
+int  tp_value27_get(Tpp tp);
+
+void tp_value28_set(Tpp, int val);
+int  tp_value28_get(Tpp tp);
+
+void tp_value29_set(Tpp, int val);
+int  tp_value29_get(Tpp tp);
+
+void tp_lifespan_set(Tpp, const char *val);
+int  tp_lifespan_get(Tpp tp);
+
 void tp_is_immunity_add(Tpp, ThingEventType);
 bool tp_is_immune_to(Tpp, ThingEventType);
 

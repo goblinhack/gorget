@@ -1566,3 +1566,1174 @@ bool thing_is_water(Thingp t)
   }
   return tp_flag(thing_tp(t), is_water);
 }
+
+int thing_value1(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value1;
+}
+
+int thing_value1_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value1 = val;
+}
+
+int thing_value1_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value1 += val;
+}
+
+int thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value1 -= val;
+}
+int thing_value2(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value2;
+}
+
+int thing_value2_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value2 = val;
+}
+
+int thing_value2_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value2 += val;
+}
+
+int thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value2 -= val;
+}
+int thing_value3(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value3;
+}
+
+int thing_value3_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value3 = val;
+}
+
+int thing_value3_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value3 += val;
+}
+
+int thing_value3_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value3 -= val;
+}
+int thing_value4(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value4;
+}
+
+int thing_value4_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value4 = val;
+}
+
+int thing_value4_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value4 += val;
+}
+
+int thing_value4_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value4 -= val;
+}
+int thing_value5(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value5;
+}
+
+int thing_value5_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value5 = val;
+}
+
+int thing_value5_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value5 += val;
+}
+
+int thing_value5_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value5 -= val;
+}
+int thing_value6(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value6;
+}
+
+int thing_value6_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value6 = val;
+}
+
+int thing_value6_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value6 += val;
+}
+
+int thing_value6_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value6 -= val;
+}
+int thing_value7(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value7;
+}
+
+int thing_value7_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value7 = val;
+}
+
+int thing_value7_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value7 += val;
+}
+
+int thing_value7_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value7 -= val;
+}
+int thing_value8(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value8;
+}
+
+int thing_value8_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value8 = val;
+}
+
+int thing_value8_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value8 += val;
+}
+
+int thing_value8_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value8 -= val;
+}
+int thing_value9(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value9;
+}
+
+int thing_value9_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value9 = val;
+}
+
+int thing_value9_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value9 += val;
+}
+
+int thing_value9_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value9 -= val;
+}
+int thing_value10(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value10;
+}
+
+int thing_value10_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value10 = val;
+}
+
+int thing_value10_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value10 += val;
+}
+
+int thing_value10_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value10 -= val;
+}
+int thing_value11(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value11;
+}
+
+int thing_value11_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value11 = val;
+}
+
+int thing_value11_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value11 += val;
+}
+
+int thing_value11_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value11 -= val;
+}
+int thing_value12(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value12;
+}
+
+int thing_value12_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value12 = val;
+}
+
+int thing_value12_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value12 += val;
+}
+
+int thing_value12_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value12 -= val;
+}
+int thing_value13(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value13;
+}
+
+int thing_value13_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value13 = val;
+}
+
+int thing_value13_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value13 += val;
+}
+
+int thing_value13_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value13 -= val;
+}
+int thing_value14(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value14;
+}
+
+int thing_value14_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value14 = val;
+}
+
+int thing_value14_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value14 += val;
+}
+
+int thing_value14_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value14 -= val;
+}
+int thing_value15(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value15;
+}
+
+int thing_value15_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value15 = val;
+}
+
+int thing_value15_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value15 += val;
+}
+
+int thing_value15_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value15 -= val;
+}
+int thing_value16(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value16;
+}
+
+int thing_value16_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value16 = val;
+}
+
+int thing_value16_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value16 += val;
+}
+
+int thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value16 -= val;
+}
+int thing_value17(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value17;
+}
+
+int thing_value17_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value17 = val;
+}
+
+int thing_value17_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value17 += val;
+}
+
+int thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value17 -= val;
+}
+int thing_value18(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value18;
+}
+
+int thing_value18_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value18 = val;
+}
+
+int thing_value18_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value18 += val;
+}
+
+int thing_value18_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value18 -= val;
+}
+int thing_value19(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value19;
+}
+
+int thing_value19_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value19 = val;
+}
+
+int thing_value19_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value19 += val;
+}
+
+int thing_value19_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value19 -= val;
+}
+int thing_value20(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value20;
+}
+
+int thing_value20_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value20 = val;
+}
+
+int thing_value20_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value20 += val;
+}
+
+int thing_value20_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value20 -= val;
+}
+int thing_value21(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value21;
+}
+
+int thing_value21_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value21 = val;
+}
+
+int thing_value21_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value21 += val;
+}
+
+int thing_value21_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value21 -= val;
+}
+int thing_value22(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value22;
+}
+
+int thing_value22_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value22 = val;
+}
+
+int thing_value22_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value22 += val;
+}
+
+int thing_value22_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value22 -= val;
+}
+int thing_value23(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value23;
+}
+
+int thing_value23_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value23 = val;
+}
+
+int thing_value23_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value23 += val;
+}
+
+int thing_value23_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value23 -= val;
+}
+int thing_value24(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value24;
+}
+
+int thing_value24_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value24 = val;
+}
+
+int thing_value24_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value24 += val;
+}
+
+int thing_value24_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value24 -= val;
+}
+int thing_value25(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value25;
+}
+
+int thing_value25_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value25 = val;
+}
+
+int thing_value25_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value25 += val;
+}
+
+int thing_value25_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value25 -= val;
+}
+int thing_value26(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value26;
+}
+
+int thing_value26_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value26 = val;
+}
+
+int thing_value26_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value26 += val;
+}
+
+int thing_value26_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value26 -= val;
+}
+int thing_value27(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value27;
+}
+
+int thing_value27_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value27 = val;
+}
+
+int thing_value27_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value27 += val;
+}
+
+int thing_value27_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value27 -= val;
+}
+int thing_value28(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value28;
+}
+
+int thing_value28_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value28 = val;
+}
+
+int thing_value28_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value28 += val;
+}
+
+int thing_value28_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value28 -= val;
+}
+int thing_value29(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value29;
+}
+
+int thing_value29_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value29 = val;
+}
+
+int thing_value29_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value29 += val;
+}
+
+int thing_value29_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_value29 -= val;
+}
+int thing_lifespan(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_lifespan;
+}
+
+int thing_lifespan_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_lifespan = val;
+}
+
+int thing_lifespan_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_lifespan += val;
+}
+
+int thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_lifespan -= val;
+}

@@ -36,6 +36,7 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_loggable);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);
+  tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
   tp_temperature_initial_set(tp, 500); // celsius
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

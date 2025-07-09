@@ -17,10 +17,10 @@ public:
   HiScore(void) = default;
   HiScore(std::string vname, std::string vreason, std::string vwhen, int vscore, int vlevels_completed)
   {
-    this->name          = vname;
-    this->reason        = vreason;
-    this->when          = vwhen;
-    this->score         = vscore;
+    this->name             = vname;
+    this->reason           = vreason;
+    this->when             = vwhen;
+    this->score            = vscore;
     this->levels_completed = vlevels_completed;
   }
 

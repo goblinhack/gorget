@@ -146,6 +146,39 @@ typedef struct Thing_ {
   // Temperature in celsius.
   //
   int16_t _temperature;
+  int16_t _value1;
+  int16_t _value2;
+  int16_t _value3;
+  int16_t _value4;
+  int16_t _value5;
+  int16_t _value6;
+  int16_t _value7;
+  int16_t _value8;
+  int16_t _value9;
+  int16_t _value10;
+  int16_t _value11;
+  int16_t _value12;
+  int16_t _value13;
+  int16_t _value14;
+  int16_t _value15;
+  int16_t _value16;
+  int16_t _value17;
+  int16_t _value18;
+  int16_t _value19;
+  int16_t _value20;
+  int16_t _value21;
+  int16_t _value22;
+  int16_t _value23;
+  int16_t _value24;
+  int16_t _value25;
+  int16_t _value26;
+  int16_t _value27;
+  int16_t _value28;
+  int16_t _value29;
+  //
+  // Lifespan in ticks
+  //
+  int16_t _lifespan;
   //
   // Health of the item.
   //
@@ -311,6 +344,156 @@ int thing_temperature(Thingp);
 int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_temperature_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_temperature_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value1(Thingp);
+int thing_value1_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value1_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value1_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value2(Thingp);
+int thing_value2_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value2_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value2_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value3(Thingp);
+int thing_value3_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value3_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value3_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value4(Thingp);
+int thing_value4_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value4_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value4_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value5(Thingp);
+int thing_value5_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value5_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value5_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value6(Thingp);
+int thing_value6_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value6_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value6_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value7(Thingp);
+int thing_value7_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value7_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value7_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value8(Thingp);
+int thing_value8_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value8_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value8_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value9(Thingp);
+int thing_value9_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value9_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value9_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value10(Thingp);
+int thing_value10_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value10_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value10_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value11(Thingp);
+int thing_value11_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value11_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value11_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value12(Thingp);
+int thing_value12_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value12_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value12_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value13(Thingp);
+int thing_value13_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value13_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value13_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value14(Thingp);
+int thing_value14_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value14_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value14_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value15(Thingp);
+int thing_value15_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value15_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value15_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value16(Thingp);
+int thing_value16_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value16_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value16_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value17(Thingp);
+int thing_value17_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value17_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value17_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value18(Thingp);
+int thing_value18_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value18_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value18_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value19(Thingp);
+int thing_value19_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value19_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value19_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value20(Thingp);
+int thing_value20_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value20_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value20_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value21(Thingp);
+int thing_value21_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value21_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value21_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value22(Thingp);
+int thing_value22_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value22_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value22_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value23(Thingp);
+int thing_value23_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value23_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value23_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value24(Thingp);
+int thing_value24_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value24_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value24_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value25(Thingp);
+int thing_value25_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value25_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value25_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value26(Thingp);
+int thing_value26_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value26_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value26_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value27(Thingp);
+int thing_value27_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value27_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value27_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value28(Thingp);
+int thing_value28_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value28_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value28_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_value29(Thingp);
+int thing_value29_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_value29_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_value29_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_lifespan(Thingp);
+int thing_lifespan_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_lifespan_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_lifespan_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_health(Thingp);
 int thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
