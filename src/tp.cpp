@@ -230,7 +230,11 @@ public:
   //
   // Callbacks
   //
-  tp_description_get_t description_get;
+  tp_description_get_t description_get = {};
+  tp_tick_idle_t       tick_idle       = {};
+  tp_tick_begin_t      tick_begin      = {};
+  tp_tick_end_t        tick_end        = {};
+  tp_on_death_t        on_death        = {};
 
   Tp(void);
   ~Tp(void);
@@ -939,9 +943,6 @@ int tp_temperature_damage_at_get(Tpp tp)
   return tp->temperature_damage_at;
 }
 
-//
-// tp description callbacks
-//
 void tp_description_set(Tpp tp, tp_description_get_t callback)
 {
   TRACE_NO_INDENT();
@@ -958,12 +959,108 @@ std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
   auto tp = thing_tp(me);
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
-    return "<nodescription>";
+    return "<no description>";
   }
   if (! tp->description_get) {
     return "";
   }
   return tp->description_get(g, v, l, me, owner, at);
+}
+
+void tp_tick_idle_set(Tpp tp, tp_tick_idle_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->tick_idle = callback;
+}
+
+void tp_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->tick_idle) {
+    return;
+  }
+  return tp->tick_idle(g, v, l, me, owner, at);
+}
+
+void tp_tick_begin_set(Tpp tp, tp_tick_begin_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->tick_begin = callback;
+}
+
+void tp_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->tick_begin) {
+    return;
+  }
+  return tp->tick_begin(g, v, l, me, owner, at);
+}
+
+void tp_tick_end_set(Tpp tp, tp_tick_end_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->tick_end = callback;
+}
+
+void tp_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->tick_end) {
+    return;
+  }
+  return tp->tick_end(g, v, l, me, owner, at);
+}
+
+void tp_on_death_set(Tpp tp, tp_on_death_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->on_death = callback;
+}
+
+void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->on_death) {
+    return;
+  }
+  return tp->on_death(g, v, l, me, owner, at);
 }
 
 void tp_value1_set(Tpp tp, int val)

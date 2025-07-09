@@ -17,6 +17,18 @@ static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   return "brightly burning fire";
 }
 
+static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+{
+  TRACE_NO_INDENT();
+  THING_TOPCON(me, "tick");
+}
+
+static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+{
+  TRACE_NO_INDENT();
+  THING_TOPCON(me, "death");
+}
+
 bool tp_load_fire(void)
 {
   TRACE_NO_INDENT();
@@ -27,6 +39,8 @@ bool tp_load_fire(void)
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_FIRE, "1d6");
   tp_description_set(tp, tp_fire_description_get);
+  tp_tick_begin_set(tp, tp_fire_tick_begin);
+  tp_on_death_set(tp, tp_fire_on_death);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_hazard);

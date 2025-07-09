@@ -9,6 +9,7 @@
 #include "my_random.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_tp_callbacks.hpp"
 #include "my_types.hpp"
 
 #include <cinttypes>
@@ -25,6 +26,11 @@
 void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
+
+  //
+  // Per thing callback
+  //
+  tp_tick_begin(g, v, l, t, top_owner(g, v, l, t), t->at);
 
   //
   // Lifespan tick
@@ -48,6 +54,11 @@ void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   //
+  // Per thing callback
+  //
+  tp_tick_idle(g, v, l, t, top_owner(g, v, l, t), t->at);
+
+  //
   // If asked to follow the mouse path, start walking
   //
   if (thing_is_player(t)) {
@@ -61,6 +72,11 @@ void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
 void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
+
+  //
+  // Per thing callback
+  //
+  tp_tick_end(g, v, l, t, top_owner(g, v, l, t), t->at);
 
   //
   // Mark the tick as completed

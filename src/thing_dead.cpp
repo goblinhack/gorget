@@ -10,6 +10,7 @@
 #include "my_string.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_tp_callbacks.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
@@ -136,6 +137,11 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 
     wid_dead_select(g, death_reason);
   }
+
+  //
+  // Per thing callback
+  //
+  tp_on_death(g, v, l, t, top_owner(g, v, l, t), t->at);
 }
 
 //
@@ -149,7 +155,6 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Update the animation, for example, flattened grass
   //
   if (thing_is_burnt(t) && tp_tiles_size(thing_tp(t), THING_ANIM_BURNT)) {
-    THING_TOPCON(t, "burnt and has tiles");
     //
     // If it has burnt anim frames
     //
