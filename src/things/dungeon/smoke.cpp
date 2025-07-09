@@ -29,7 +29,7 @@ bool tp_load_smoke(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_smoke);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);

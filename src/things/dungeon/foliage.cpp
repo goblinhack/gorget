@@ -27,7 +27,6 @@ bool tp_load_foliage(void)
   tp_flag_set(tp, is_burnable);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_foliage);
-  tp_flag_set(tp, is_loggable);
   tp_health_initial_set(tp, 5);
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius

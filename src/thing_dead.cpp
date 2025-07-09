@@ -28,19 +28,20 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 
     switch (e.event_type) {
       case THING_EVENT_NONE : break;
-      case THING_EVENT_SHOVE : // newline
+      case THING_EVENT_LIFESPAN : //
+      case THING_EVENT_SHOVE :    //
         TOPCON(UI_IMPORTANT_FMT_STR "You are shoved to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_CRUSH : // newline
+      case THING_EVENT_CRUSH : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are crushed to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_MELEE : // newline
+      case THING_EVENT_MELEE : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are killed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_HEAT : // newline
+      case THING_EVENT_HEAT : //
         TOPCON(UI_IMPORTANT_FMT_STR "You die in the unsuffereble heat from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_FIRE : // newline
+      case THING_EVENT_FIRE : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are burnt to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;
@@ -62,19 +63,20 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 
     switch (e.event_type) {
       case THING_EVENT_NONE : break;
-      case THING_EVENT_SHOVE : // newline
+      case THING_EVENT_LIFESPAN : //
+      case THING_EVENT_SHOVE :    //
         TOPCON("%s is knocked over by %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
-      case THING_EVENT_CRUSH : // newline
+      case THING_EVENT_CRUSH : //
         TOPCON("%s is crushed by %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
-      case THING_EVENT_MELEE : // newline
+      case THING_EVENT_MELEE : //
         TOPCON("%s is killed by %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
-      case THING_EVENT_HEAT : // newline
+      case THING_EVENT_HEAT : //
         TOPCON("%s is killed by heat damage from %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
-      case THING_EVENT_FIRE : // newline
+      case THING_EVENT_FIRE : //
         TOPCON("%s is burnt to death by %s.", the_thing.c_str(), by_the_thing.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;
@@ -147,8 +149,15 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Update the animation, for example, flattened grass
   //
   if (thing_is_burnt(t) && tp_tiles_size(thing_tp(t), THING_ANIM_BURNT)) {
+    THING_TOPCON(t, "burnt and has tiles");
+    //
+    // If it has burnt anim frames
+    //
     t->anim_type = THING_ANIM_BURNT;
-  } else {
+  } else if (tp_tiles_size(thing_tp(t), THING_ANIM_DEAD)) {
+    //
+    // If it has dead anim frames
+    //
     t->anim_type = THING_ANIM_DEAD;
   }
   thing_anim_init(g, v, l, t);

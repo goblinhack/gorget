@@ -28,7 +28,6 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_bridge);
   tp_flag_set(tp, is_burnable);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_tiled);
   tp_health_initial_set(tp, 12);
   tp_temperature_burns_at_set(tp, 300);  // celsius

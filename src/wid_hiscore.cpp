@@ -120,11 +120,11 @@ void wid_hiscores_show(Gamep g)
 
       auto color = "red";
 
-      snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%7s %-*s %-*s %-*s %*s", // newline
-               color, "Score",                                           // newline
-               name_field_len, capitalise(name).c_str(),                 // newline
-               when_field_len, when,                                     // newline
-               completed_field_len, completed,                           // newline
+      snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%7s %-*s %-*s %-*s %*s", //
+               color, "Score",                                           //
+               name_field_len, capitalise(name).c_str(),                 //
+               when_field_len, when,                                     //
+               completed_field_len, completed,                           //
                reason_field_len, reason);
 
       wid_hiscore_window->log(g, tmp);
@@ -149,11 +149,11 @@ void wid_hiscores_show(Gamep g)
     }
 
     auto color = colors[ index++ ];
-    snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u %-*s %-*s %-*u %*s", // newline
-             color, h->score,                                           // newline
-             name_field_len, h->name.c_str(),                           // newline
-             when_field_len, when_val.c_str(),                          // newline
-             completed_field_len, h->levels_completed,                  // newline
+    snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u %-*s %-*s %-*u %*s", //
+             color, h->score,                                           //
+             name_field_len, h->name.c_str(),                           //
+             when_field_len, when_val.c_str(),                          //
+             completed_field_len, h->levels_completed,                  //
              reason_field_len, reason_val.c_str());
 
     wid_hiscore_window->log_empty_line(g);

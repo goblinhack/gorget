@@ -466,10 +466,10 @@ void Game::seed_set(const char *maybe_seed)
     CON("Set random seed '%s', none set in config", config.seed_name.c_str());
   } else {
     switch (config.seed_source) {
-      case SEED_SOURCE_COMMAND_LINE : // newline
+      case SEED_SOURCE_COMMAND_LINE : //
         CON("Set seed '%s' from previous save", config.seed_name.c_str());
         break;
-      case SEED_SOURCE_USER : // newline
+      case SEED_SOURCE_USER : //
         CON("Set seed '%s' from previous load", config.seed_name.c_str());
         break;
       case SEED_SOURCE_RANDOM :

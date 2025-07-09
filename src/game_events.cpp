@@ -181,6 +181,7 @@ bool game_event_wait(Gamep g)
     return false;
   }
 
+  TOPCON("You wait...");
   level_tick_begin_requested(g, v, l, "player waiting");
 
   return true;

@@ -551,7 +551,8 @@ Tilep tp_tiles_get(Tpp tp, ThingAnim val, int index)
   TRACE_NO_INDENT();
 
   if (index >= (int) tp->tiles[ val ].size()) {
-    ERR("tp_tiles_get: tile overflow tp %s class %d index %d", tp->name.c_str(), val, index);
+    ERR("tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnim_to_string(val).c_str(),
+        val, index);
   }
 
   return tp->tiles[ val ][ index ];

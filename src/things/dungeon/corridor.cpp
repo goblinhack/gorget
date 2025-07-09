@@ -16,7 +16,6 @@ bool tp_load_corridor(void)
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_corridor);
-  tp_flag_set(tp, is_loggable);
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   tp_z_layer_set(tp, MAP_Z_LAYER_BEHIND);
   // end sort marker1 }

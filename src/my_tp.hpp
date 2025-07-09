@@ -255,13 +255,14 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 // Thing damage enum
 //
 #define THING_EVENT_ENUM(list_macro)                                                                                 \
-  clang_format_indent()                       /* dummy line for clang indentation fixup */                           \
-      list_macro(THING_EVENT_NONE, "none"),   /* newline */                                                          \
-      list_macro(THING_EVENT_MELEE, "melee"), /* newline */                                                          \
-      list_macro(THING_EVENT_SHOVE, "shove"), /* newline */                                                          \
-      list_macro(THING_EVENT_CRUSH, "crush"), /* newline */                                                          \
-      list_macro(THING_EVENT_HEAT, "heat"),   /* newline */                                                          \
-      list_macro(THING_EVENT_FIRE, "fire"),   /* newline */
+  clang_format_indent()                             /* dummy line for clang indentation fixup */                     \
+      list_macro(THING_EVENT_NONE, "none"),         /* newline */                                                    \
+      list_macro(THING_EVENT_MELEE, "melee"),       /* newline */                                                    \
+      list_macro(THING_EVENT_LIFESPAN, "lifespan"), /* newline */                                                    \
+      list_macro(THING_EVENT_SHOVE, "shove"),       /* newline */                                                    \
+      list_macro(THING_EVENT_CRUSH, "crush"),       /* newline */                                                    \
+      list_macro(THING_EVENT_HEAT, "heat"),         /* newline */                                                    \
+      list_macro(THING_EVENT_FIRE, "fire"),         /* newline */
 
 ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 

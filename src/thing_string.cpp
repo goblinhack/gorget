@@ -88,19 +88,22 @@ std::string to_death_reason(ThingEvent &e)
 
   switch (e.event_type) {
     case THING_EVENT_NONE : break;
-    case THING_EVENT_SHOVE : // newline
+    case THING_EVENT_LIFESPAN : //
+      s += "ran out of life";
+      break;
+    case THING_EVENT_SHOVE : //
       s += "shoved to death";
       break;
-    case THING_EVENT_CRUSH : // newline
+    case THING_EVENT_CRUSH : //
       s += "crushed to death";
       break;
-    case THING_EVENT_MELEE : // newline
+    case THING_EVENT_MELEE : //
       s += "hacked to death";
       break;
-    case THING_EVENT_HEAT : // newline
+    case THING_EVENT_HEAT : //
       s += "cooked to death";
       break;
-    case THING_EVENT_FIRE : // newline
+    case THING_EVENT_FIRE : //
       s += "burnt to death";
       break;
     case THING_EVENT_ENUM_MAX : break;

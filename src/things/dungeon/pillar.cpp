@@ -28,7 +28,6 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_pillar);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);

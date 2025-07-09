@@ -22,10 +22,26 @@
 //
 // Called at the beginning of each tick
 //
-void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }
+void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Lifespan tick
+  //
+  if (thing_lifespan(t)) {
+    if (! thing_lifespan_decr(g, v, l, t)) {
+      ThingEvent e {
+          .reason     = "ran out of life",    //
+          .event_type = THING_EVENT_LIFESPAN, //
+      };
+      thing_dead(g, v, l, t, e);
+    }
+  }
+}
 
 //
-// Called when the level is idle
+// Called when the level is idle. i.e. multiple times per tick
 //
 void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {

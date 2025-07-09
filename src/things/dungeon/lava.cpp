@@ -29,7 +29,6 @@ bool tp_load_lava(void)
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_lava);
-  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_tiled);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);
