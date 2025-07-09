@@ -3,6 +3,7 @@
 //
 
 #include "../../my_callstack.hpp"
+#include "../../my_level.hpp"
 #include "../../my_thing.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
@@ -26,7 +27,10 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
 static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
 {
   TRACE_NO_INDENT();
-  THING_TOPCON(me, "death");
+
+  if (! level_is_smoke(g, v, l, me->at)) {
+    thing_spawn(g, v, l, tp_random(is_smoke), me->at);
+  }
 }
 
 bool tp_load_fire(void)
