@@ -44,6 +44,8 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
       thing_dead(g, v, l, t, e);
     }
   }
+
+  thing_age_incr(g, v, l, t);
 }
 
 //

@@ -176,9 +176,13 @@ typedef struct Thing_ {
   int16_t _value28;
   int16_t _value29;
   //
-  // Lifespan in ticks
+  // Lifespan remaining in ticks
   //
   int16_t _lifespan;
+  //
+  // How long this thing has lived
+  //
+  int16_t _age;
   //
   // Health of the item.
   //
@@ -494,6 +498,11 @@ int thing_lifespan(Thingp);
 int thing_lifespan_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_lifespan_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_lifespan_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_age(Thingp);
+int thing_age_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_age_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_age_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_health(Thingp);
 int thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);

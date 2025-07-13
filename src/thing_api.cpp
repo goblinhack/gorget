@@ -2698,6 +2698,7 @@ int thing_value29_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value29 -= val;
 }
+
 int thing_lifespan(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -2736,4 +2737,44 @@ int thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     return 0;
   }
   return t->_lifespan -= val;
+}
+
+int thing_age(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_age;
+}
+
+int thing_age_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_age = val;
+}
+
+int thing_age_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_age += val;
+}
+
+int thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_age -= val;
 }

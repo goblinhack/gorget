@@ -21,7 +21,34 @@ static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
 static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
 {
   TRACE_NO_INDENT();
-  THING_TOPCON(me, "tick");
+
+  //
+  // Don't spawn fire too soon after creation or we get a firestorm
+  //
+  if (thing_age(me) <= 1) {
+    return;
+  }
+
+  const std::initializer_list< spoint > points = {
+      spoint(-1, -1), spoint(0, -1), spoint(1, -1), spoint(-1, 0),
+      spoint(1, 0),   spoint(-1, 1), spoint(0, 1),  spoint(1, 1),
+  };
+
+  //
+  // Spawn adjacent fire
+  //
+  for (auto delta : points) {
+    auto p = at + delta;
+    if (level_is_fire(g, v, l, p)) {
+      continue;
+    }
+    if (! level_is_burnable(g, v, l, p)) {
+      continue;
+    }
+    thing_spawn(g, v, l, tp_random(is_fire), p);
+  }
+
+  THING_TOPCON(me, "tick age %u", thing_age(me));
 }
 
 static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)

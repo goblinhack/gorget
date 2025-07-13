@@ -874,6 +874,7 @@ void Game::tick(void)
   switch (state) {
     case STATE_MAIN_MENU : break;
     case STATE_QUITTING :  break;
+    case STATE_DEAD_MENU :
     case STATE_PLAYING :
       if (v) {
         auto l = game_level_get(g, v);
@@ -902,7 +903,6 @@ void Game::tick(void)
         }
       }
       break;
-    case STATE_DEAD_MENU :     break;
     case STATE_KEYBOARD_MENU : break;
     case STATE_LOAD_MENU :     break;
     case STATE_LOADED :        break;
@@ -994,7 +994,23 @@ void Game::display(void)
         }
       }
       break;
-    case STATE_DEAD_MENU :     break;
+    case STATE_DEAD_MENU :
+      if (v) {
+        auto l = game_level_get(g, v);
+        if (l) {
+          level_mouse_position_get(g, v, l);
+          level_display(g, v, l);
+
+          //
+          // If the cursor moved, update what we see
+          //
+          if (v->cursor_moved) {
+            level_cursor_path_recreate(g, v, l);
+            level_cursor_describe(g, v, l);
+          }
+        }
+      }
+      break;
     case STATE_KEYBOARD_MENU : break;
     case STATE_LOAD_MENU :     break;
     case STATE_LOADED :        break;

@@ -14,14 +14,6 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  //
-  // What level is the player on?
-  //
-  auto player = thing_player(g);
-  if (! player) {
-    return;
-  }
-
   auto            ts = time_ms();
   static uint32_t last_ts;
 

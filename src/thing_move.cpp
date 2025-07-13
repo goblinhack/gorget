@@ -414,6 +414,9 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
 {
   TRACE_NO_INDENT();
 
+  if (thing_is_player(t)) {
+    THING_TOPCON(t, "from %d,%d to %d,%d dt %f", t->moving_from.x, t->moving_from.y, t->at.x, t->at.y, dt);
+  }
   if (t->moving_from == t->at) {
     return;
   }
