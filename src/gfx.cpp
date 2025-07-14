@@ -1037,6 +1037,7 @@ static void gfx_init_tiles(void)
         // ##############################################################################
         "player.idle.0",
         "player.idle.1",
+        "player.dead.0",
         "cursor_path",
         "cursor_at",
         "exit.0",
@@ -1050,7 +1051,6 @@ static void gfx_init_tiles(void)
         "secret_door.idle.0",
         "secret_door.open.0",
         "trap.0",
-        "",
         // ##############################################################################
         "pillar.0",
         "pillar.1",

@@ -31,7 +31,7 @@ static bool test_collision_player_lava(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "...L..."
+        "...@..." // is a corpse
         "......."
         "......."
         ".......";
@@ -51,10 +51,9 @@ static bool test_collision_player_lava(Gamep g, Testp t)
   bool left   = false;
   bool right  = false;
 
-  spoint  p;
-  bool    found_it  = false;
-  ThingId player_id = 0;
-  Thingp  player    = nullptr;
+  spoint p;
+  bool   found_corpse = false;
+  Thingp player       = nullptr;
 
   //
   // Move into the lava. The player should die.
@@ -107,42 +106,24 @@ static bool test_collision_player_lava(Gamep g, Testp t)
   }
 
   //
-  // Check the player id is freed
-  //
-  {
-    TEST_ASSERT(t, player->id == 0, "player is freed");
-  }
-
-  //
   // Check player is dead when shoved into lava. It should be popped off the level.
   //
   {
     TRACE_NO_INDENT();
     TEST_LOG(t, "check player is dead when in lava");
-    p        = player->at;
-    found_it = false;
+    p            = player->at;
+    found_corpse = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
-      if (thing_is_player(it)) {
-        found_it = true;
+      if (thing_is_player(it) && thing_is_corpse(it)) {
+        found_corpse = true;
         break;
       }
     }
 
-    if (found_it) {
-      TEST_FAILED(t, "found player, but it should have been popped");
-      goto exit;
-    }
-  }
-
-  //
-  // Check the player has been cleaned up
-  //
-  {
-    TRACE_NO_INDENT();
-    if (thing_find_optional(g, v, player_id)) {
-      TEST_FAILED(t, "found player, but it should have been freed");
+    if (! found_corpse) {
+      TEST_FAILED(t, "did not find player as a corpse");
       goto exit;
     }
   }

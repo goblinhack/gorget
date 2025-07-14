@@ -48,13 +48,6 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
 
   level_anim(g, v, l);
 
-  if (v->tick_in_progress) {
-    //
-    // Handle temperature interactions
-    //
-    level_tick_temperature(g, v, l);
-  }
-
   //
   // Check if something fell in lava and now needs to delay the end of the tick
   //
@@ -78,6 +71,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   // End of tick?
   //
   if (v->tick_end_requested && ! v->tick_wait_on_anim) {
+    //
+    // Handle temperature interactions
+    //
+    level_tick_temperature(g, v, l);
+
     level_tick_end(g, v, l);
   }
 }

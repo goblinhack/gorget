@@ -3,6 +3,7 @@
 //
 
 #include "../../my_callstack.hpp"
+#include "../../my_dice.hpp"
 #include "../../my_level.hpp"
 #include "../../my_thing.hpp"
 #include "../../my_tile.hpp"
@@ -39,16 +40,35 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
   //
   for (auto delta : points) {
     auto p = at + delta;
+
+    //
+    // Fire is here already, don't spawn more
+    //
     if (level_is_fire(g, v, l, p)) {
       continue;
     }
+
+    //
+    // Give the fire a pause
+    //
+    if (level_is_smoke(g, v, l, p)) {
+      continue;
+    }
+
+    //
+    // Nothing to burn here?
+    //
     if (! level_is_burnable(g, v, l, p)) {
       continue;
     }
-    thing_spawn(g, v, l, tp_random(is_fire), p);
-  }
 
-  THING_TOPCON(me, "tick age %u", thing_age(me));
+    //
+    // Only spawn sometimes
+    //
+    if (d100() < 20 + (thing_age(me) * 10)) {
+      thing_spawn(g, v, l, tp_random(is_fire), p);
+    }
+  }
 }
 
 static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)

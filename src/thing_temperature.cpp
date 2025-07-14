@@ -16,8 +16,22 @@ static void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp
   TRACE_NO_INDENT();
 
   auto damage = n;
-  if (damage > 20) {
-    damage = 20;
+
+  //
+  // Give the thing a chance and don't kill it immediately
+  //
+  auto max_damage = thing_health(me) / 2;
+
+  if (max_damage < 1) {
+    max_damage = 1;
+  }
+
+  if (max_damage > 20) {
+    max_damage = 20;
+  }
+
+  if (damage > max_damage) {
+    damage = max_damage;
   }
 
   ThingEvent e {

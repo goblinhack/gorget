@@ -37,6 +37,13 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
+      //
+      // Ignore burnt grass for example
+      //
+      if (thing_is_dead(t)) {
+        continue;
+      }
+
       if (thing_is_able_to_change_temperature(t)) {
         things.push_back(t);
       }
@@ -65,8 +72,16 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
     }
 
     for (auto pair : pairs) {
-      auto  a  = pair.first;
-      auto  b  = pair.second;
+      auto a = pair.first;
+      auto b = pair.second;
+
+      //
+      // If could be dead now.
+      //
+      if (thing_is_dead(a) || thing_is_dead(b)) {
+        continue;
+      }
+
       float Ta = thing_temperature(a);
       float Wa = thing_weight(a);
       float Tb = thing_temperature(b);
@@ -76,10 +91,13 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
       // Fire has no weight, so give it some so the equations below average the temperatures.
       //
       if (! Wa) {
-        Wa = 1;
+        Wa = Wb;
       }
       if (! Wb) {
-        Wb = 1;
+        Wb = Wa;
+      }
+      if (! Wa || ! Wb) {
+        continue;
       }
 
       //
@@ -96,6 +114,32 @@ void level_tick_temperature(Gamep g, Levelsp v, Levelp l)
       if (Tb != Nb) {
         THING_DBG(b, "temperature change (b) %f -> %d degrees", Tb, Nb);
         thing_temperature_handle(g, v, l, a, b, Nb);
+      }
+    }
+
+    //
+    // Allow things to return to the initial temperature
+    //
+    for (auto i = 0; i < sz; i++) {
+      auto t = things[ i ];
+
+      //
+      // If could be dead now.
+      //
+      if (thing_is_dead(t)) {
+        continue;
+      }
+
+      float Ta = thing_temperature(t);
+      float To = tp_temperature_initial_get(thing_tp(t));
+      int   Tn = (Ta + To) / 2;
+
+      //
+      // No need to handle return to temperature
+      //
+      if (Tn != Ta) {
+        THING_DBG(t, "temperature return %f -> %d degrees", Ta, Tn);
+        thing_temperature_set(g, v, l, t, Tn);
       }
     }
   }

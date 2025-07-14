@@ -33,6 +33,7 @@ std::string to_string(Thingp t)
 
   return (string_sprintf("%08" PRIX32
                          /* level num    */ " L%u"
+                         /* level num    */ " T%u"
                          /* thing_health */ " H%d"
                          /* tp_name      */ " %s"
                          /* is_loggable  */ "%s"
@@ -41,6 +42,7 @@ std::string to_string(Thingp t)
                          /* at           */ " @%d,%d",
                          /* newline */ t->id,
                          /* newline */ t->level_num,
+                         /* newline */ t->tick,
                          /* newline */ thing_health(t),
                          /* newline */ tp_name(tp),
                          /* newline */ thing_is_dead(t) ? "/dead" : "",

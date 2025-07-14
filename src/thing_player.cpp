@@ -32,6 +32,11 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
 {
   TRACE_NO_INDENT();
 
+  if (game_state(g) != STATE_PLAYING) {
+    player_move_reset(g, v, l);
+    return;
+  }
+
   auto t = thing_player(g);
   if (! t) {
     return;
@@ -84,6 +89,8 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
 //
 void player_move_reset(Gamep g, Levelsp v, Levelp l)
 {
+  TRACE_NO_INDENT();
+
   v->requested_move_up    = false;
   v->requested_move_left  = false;
   v->requested_move_keft  = false;
@@ -95,6 +102,8 @@ void player_move_reset(Gamep g, Levelsp v, Levelp l)
 //
 void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right)
 {
+  TRACE_NO_INDENT();
+
   if (up) {
     v->requested_move_up = up;
   }
@@ -117,6 +126,8 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 //
 bool player_move_request(Gamep g, bool up, bool down, bool left, bool right)
 {
+  TRACE_NO_INDENT();
+
   auto v = game_levels_get(g);
   if (! v) {
     return false;
@@ -124,6 +135,11 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right)
 
   auto l = game_level_get(g, v);
   if (! l) {
+    return false;
+  }
+
+  if (game_state(g) != STATE_PLAYING) {
+    player_move_reset(g, v, l);
     return false;
   }
 
