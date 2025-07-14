@@ -15,19 +15,24 @@ static void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp
 {
   TRACE_NO_INDENT();
 
-  auto damage = n;
+  auto event_type = THING_EVENT_HEAT;
+  auto damage     = n;
+  auto max_damage = 0;
 
-  //
-  // Give the thing a chance and don't kill it immediately
-  //
-  auto max_damage = thing_health(me) / 2;
+  if (source) {
+    //
+    // Limit damage to the type of thing, e.g. lava/fire
+    //
+    max_damage = tp_damage(thing_tp(source), event_type);
+  } else {
+    //
+    // Give the thing a chance and don't kill it immediately
+    //
+    max_damage = thing_health(me) / 2;
+  }
 
   if (max_damage < 1) {
     max_damage = 1;
-  }
-
-  if (max_damage > 20) {
-    max_damage = 20;
   }
 
   if (damage > max_damage) {
@@ -36,7 +41,7 @@ static void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp
 
   ThingEvent e {
       .reason     = "by heat damage", //
-      .event_type = THING_EVENT_HEAT, //
+      .event_type = event_type,       //
       .damage     = damage,           //
       .source     = source,           //
   };

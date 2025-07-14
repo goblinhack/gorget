@@ -17,6 +17,44 @@ static void level_tick_end(Gamep, Levelsp, Levelp);
 static void level_tick_idle(Gamep, Levelsp, Levelp);
 static void level_tick_time_step(Gamep, Levelsp, Levelp);
 
+//
+// Check if it is ok to end the tick
+// e.g. something fell in lava and now needs to delay the end of the tick whilst its animation finishes
+//
+void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  v->tick_wait_on_moving_things = false;
+  v->tick_wait_on_anim          = false;
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    //
+    // We need to wait for things to complete moving into lava for example before we can
+    // run temperature checks. Else it looks odd that it catches fire before it reaches
+    // the lava.
+    //
+    if (thing_is_moving(t)) {
+      v->tick_wait_on_moving_things = true;
+    }
+
+    //
+    // Some things like explosions, we want to wait for the explosion to finish before
+    // moving to the next tick.
+    //
+    if (thing_is_dead(t)) {
+      if (! thing_is_scheduled_for_cleanup(t)) {
+        if (thing_is_wait_on_anim_when_dead(t)) {
+          v->tick_wait_on_anim = true;
+        }
+      }
+    }
+  }
+}
+
+//
+// Called per frame
+//
 void level_tick(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
@@ -28,6 +66,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     //
     level_tick_time_step(g, v, l);
   } else if (v->tick_begin_requested) {
+    //
+    // Allow temperatures to settle prior to starting
+    //
+    level_tick_begin_temperature(g, v, l);
+
     //
     // Start the tick
     //
@@ -51,31 +94,34 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   //
   // Check if something fell in lava and now needs to delay the end of the tick
   //
-  v->tick_wait_on_anim = false;
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
-  {
+  level_tick_ok_to_end_check(g, v, l);
+
+  //
+  // If things are no longer moving and we have requested the end of the tick, then we can check
+  // for temperature interactions.
+  //
+  if (v->tick_end_requested && (v->tick != v->tick_temperature) && ! v->tick_wait_on_moving_things) {
     //
-    // Some things like explosions, we want to wait for the explosion to finish before
-    // moving to the next tick.
+    // Only do this once per tick
     //
-    if (thing_is_dead(t)) {
-      if (! thing_is_scheduled_for_cleanup(t)) {
-        if (thing_is_wait_on_anim_when_dead(t)) {
-          v->tick_wait_on_anim = true;
-        }
-      }
-    }
+    v->tick_temperature = v->tick;
+
+    //
+    // Need to do the temperature checks after things have moved an also need to give time for death
+    // animations to end
+    //
+    level_tick_end_temperature(g, v, l);
+
+    //
+    // Check if something reacted with lava and is now needing to delay the end of tick
+    //
+    level_tick_ok_to_end_check(g, v, l);
   }
 
   //
-  // End of tick?
+  // Are we done with all checks and ok to end the tick which will trigger thing cleanup.
   //
-  if (v->tick_end_requested && ! v->tick_wait_on_anim) {
-    //
-    // Handle temperature interactions
-    //
-    level_tick_temperature(g, v, l);
-
+  if (v->tick_end_requested && ! v->tick_wait_on_moving_things && ! v->tick_wait_on_anim) {
     level_tick_end(g, v, l);
   }
 }
@@ -99,6 +145,10 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp l)
       //
       v->time_step          = 1.0;
       v->tick_end_requested = true;
+
+      if (! v->tick_end_requested) {
+        LOG("Tick %u end requested", v->tick);
+      }
     }
   }
 }

@@ -89,6 +89,7 @@ bool tp_load_fire(void)
 
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_FIRE, "1d6");
+  tp_damage_set(tp, THING_EVENT_HEAT, "1d6");
   tp_description_set(tp, tp_fire_description_get);
   tp_tick_begin_set(tp, tp_fire_tick_begin);
   tp_on_death_set(tp, tp_fire_on_death);

@@ -32,14 +32,15 @@ std::string to_string(Thingp t)
   }
 
   return (string_sprintf("%08" PRIX32
-                         /* level num    */ " L%u"
-                         /* level num    */ " T%u"
-                         /* thing_health */ " H%d"
-                         /* tp_name      */ " %s"
-                         /* is_loggable  */ "%s"
-                         /* is_dead      */ "%s"
-                         /* is_open      */ "%s"
-                         /* at           */ " @%d,%d",
+                         /* level num                     */ " L%u"
+                         /* level num                     */ " T%u"
+                         /* thing_health                  */ " H%d"
+                         /* tp_name                       */ " %s"
+                         /* is_loggable                   */ "%s"
+                         /* is_dead                       */ "%s"
+                         /* is_open                       */ "%s"
+                         /* is_scheduled_for_cleanup      */ "%s"
+                         /* at                            */ " @%d,%d",
                          /* newline */ t->id,
                          /* newline */ t->level_num,
                          /* newline */ t->tick,
@@ -48,6 +49,7 @@ std::string to_string(Thingp t)
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
                          /* newline */ thing_is_sleeping(t) ? "/sleeping" : "",
                          /* newline */ thing_is_open(t) ? "/open" : "",
+                         /* newline */ thing_is_scheduled_for_cleanup(t) ? "/cleanup" : "",
                          /* newline */ t->at.x, t->at.y));
 }
 

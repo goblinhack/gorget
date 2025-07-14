@@ -102,8 +102,8 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
       // Schedule for removal from the map and freeing
       //
       thing_is_scheduled_for_cleanup_set(g, v, l, t);
-      return;
     }
+    return;
   }
 
   t->anim_index++;

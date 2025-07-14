@@ -191,6 +191,10 @@ typedef struct Levels_ {
   //
   uint32_t tick;
   //
+  // Used to keep track if we have ran the temperature checks yet this tick.
+  //
+  uint32_t tick_temperature;
+  //
   // When the tick began in ms
   //
   uint32_t frame_begin;
@@ -267,6 +271,10 @@ typedef struct Levels_ {
   // moving to the next tick.
   //
   uint8_t tick_wait_on_anim : 1;
+  //
+  // Ensure things have finished their move before ending the tick
+  //
+  uint8_t tick_wait_on_moving_things : 1;
   //
   // Player has moved.
   //
@@ -405,7 +413,8 @@ void level_cursor_path_reset(Gamep, Levelsp, Levelp);
 void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
-void level_tick_temperature(Gamep, Levelsp, Levelp);
+void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
+void level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);
 void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
