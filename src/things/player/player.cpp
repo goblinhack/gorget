@@ -29,10 +29,10 @@ bool tp_load_player(void)
   tp_description_set(tp, tp_player_description_get);
   tp_flag_set(tp, is_able_to_shove);
   tp_flag_set(tp, is_animated_can_hflip);
-  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_player);

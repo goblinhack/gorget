@@ -91,21 +91,21 @@ bool tp_load_fire(void)
   tp_damage_set(tp, THING_EVENT_FIRE, "1d6");
   tp_damage_set(tp, THING_EVENT_HEAT, "1d6");
   tp_description_set(tp, tp_fire_description_get);
-  tp_tick_begin_set(tp, tp_fire_tick_begin);
-  tp_on_death_set(tp, tp_fire_on_death);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_fire);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_tickable);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);
   tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
+  tp_on_death_set(tp, tp_fire_on_death);
   tp_temperature_initial_set(tp, 500); // celsius
+  tp_tick_begin_set(tp, tp_fire_tick_begin);
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
