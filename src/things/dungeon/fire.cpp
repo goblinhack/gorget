@@ -75,6 +75,13 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp own
 {
   TRACE_NO_INDENT();
 
+  //
+  // Allow things to continue to burn if we still have some burnable material
+  //
+  if (level_is_alive_combustible(g, v, l, me->at)) {
+    thing_spawn(g, v, l, tp_random(is_fire), me->at);
+  }
+
   if (! level_is_smoke(g, v, l, me->at)) {
     thing_spawn(g, v, l, tp_random(is_smoke), me->at);
   }
@@ -96,8 +103,10 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_fire);
+  tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_temperature_physics);
   tp_flag_set(tp, is_tickable);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);
@@ -106,6 +115,7 @@ bool tp_load_fire(void)
   tp_on_death_set(tp, tp_fire_on_death);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_tick_begin_set(tp, tp_fire_tick_begin);
+  tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

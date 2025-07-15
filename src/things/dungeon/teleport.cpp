@@ -35,7 +35,7 @@ bool tp_load_teleport(void)
   tp_temperature_burns_at_set(tp, 300);  // celsius
   tp_temperature_damage_at_set(tp, 300); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
-  tp_weight_set(tp, 1000);               // pounds
+  tp_weight_set(tp, WEIGHT_VVHEAVY);     // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

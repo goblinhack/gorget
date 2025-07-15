@@ -29,6 +29,7 @@ bool tp_load_chasm(void)
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_tiled);
+  tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

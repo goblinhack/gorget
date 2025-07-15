@@ -83,12 +83,15 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   }
 
   //
-  // Move things
+  // Move things. Interpolated per frame.
   //
   if (v->tick_in_progress) {
     level_tick_body(g, v, l, v->time_step - v->last_time_step);
   }
 
+  //
+  // Animate things Per frame.
+  //
   level_anim(g, v, l);
 
   //

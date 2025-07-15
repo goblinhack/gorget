@@ -29,11 +29,14 @@ bool tp_load_smoke(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_smoke);
+  tp_flag_set(tp, is_temperature_physics);
   tp_flag_set(tp, is_tickable);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);
   tp_lifespan_set(tp, "1d6+3");
+  tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

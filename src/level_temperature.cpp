@@ -44,7 +44,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      if (thing_is_able_to_change_temperature(t)) {
+      if (thing_is_temperature_physics(t)) {
         things.push_back(t);
       }
     }
@@ -95,12 +95,18 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       //
       // Fire has no weight, so give it some so the equations below average the temperatures.
       //
-      if (! Wa) {
-        Wa = Wb;
+      if (thing_is_gaseous(a)) {
+        if (! Wa) {
+          Wa = Wb;
+        }
       }
-      if (! Wb) {
-        Wb = Wa;
+
+      if (thing_is_gaseous(b)) {
+        if (! Wb) {
+          Wb = Wa;
+        }
       }
+
       if (! Wa || ! Wb) {
         continue;
       }
@@ -162,7 +168,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      if (thing_is_able_to_change_temperature(t)) {
+      if (thing_is_temperature_physics(t)) {
         things.push_back(t);
       }
     }

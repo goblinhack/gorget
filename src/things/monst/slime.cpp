@@ -30,12 +30,14 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_burnable);
+  tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
+  tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_slime);
+  tp_flag_set(tp, is_temperature_physics);
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, 10);
   tp_monst_group_add(tp, MONST_GROUP_2);
@@ -43,7 +45,7 @@ bool tp_load_slime(void)
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, 200);               // pounds
+  tp_weight_set(tp, WEIGHT_VHEAVY);     // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

@@ -26,7 +26,8 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_burnable);
+  tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
+  tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
@@ -35,15 +36,16 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_mob1);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_shovable);
+  tp_flag_set(tp, is_temperature_physics);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_health_initial_set(tp, 3);
   tp_short_name_set(tp, "pile of bones");
   tp_speed_set(tp, 100);
-  tp_temperature_burns_at_set(tp, 300);  // celsius
-  tp_temperature_damage_at_set(tp, 300); // celsius
+  tp_temperature_burns_at_set(tp, 100);  // celsius
+  tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 0);     // celsius
-  tp_weight_set(tp, 200);                // pounds
+  tp_weight_set(tp, WEIGHT_HEAVY);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

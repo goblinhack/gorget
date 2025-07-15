@@ -44,7 +44,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_shovable);
   tp_light_color_set(tp, "orange");
-  tp_weight_set(tp, 20); // pounds
+  tp_weight_set(tp, WEIGHT_MEDIUM); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

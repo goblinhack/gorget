@@ -139,9 +139,9 @@ typedef struct Thing_ {
   //
   int16_t _speed;
   //
-  // Weight in pounds. Impacts things like grass being crushed.
+  // Weight in grams. Impacts things like grass being crushed.
   //
-  int16_t _weight;
+  int32_t _weight;
   //
   // Temperature in celsius.
   //
@@ -512,9 +512,7 @@ int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 bool thing_is_immune_to(Thingp, ThingEventType);
 
 // begin sort marker1 {
-bool thing_is_able_to_change_temperature(Thingp);
 bool thing_is_able_to_shove(Thingp);
-bool thing_is_able_to_walk_through_walls(Thingp);
 bool thing_is_animated_can_hflip(Thingp);
 bool thing_is_animated_no_dir(Thingp);
 bool thing_is_animated_same_first_tile(Thingp);
@@ -529,9 +527,10 @@ bool thing_is_bridge(Thingp);
 bool thing_is_broken_on_death(Thingp);
 bool thing_is_burnable(Thingp);
 bool thing_is_chasm(Thingp);
+bool thing_is_combustible(Thingp);
 bool thing_is_corpse_on_death(Thingp);
 bool thing_is_corridor(Thingp);
-bool thing_is_crushable_underfoot(Thingp);
+bool thing_is_crushable(Thingp);
 bool thing_is_cursor_hazard(Thingp);
 bool thing_is_cursor_path_blocker(Thingp);
 bool thing_is_cursor_path_hazard(Thingp);
@@ -551,6 +550,7 @@ bool thing_is_extinguished_on_death(Thingp);
 bool thing_is_fire(Thingp);
 bool thing_is_floor(Thingp);
 bool thing_is_foliage(Thingp);
+bool thing_is_gaseous(Thingp);
 bool thing_is_ghost(Thingp);
 bool thing_is_goblin(Thingp);
 bool thing_is_grass(Thingp);
@@ -585,6 +585,7 @@ bool thing_is_slime(Thingp);
 bool thing_is_smoke(Thingp);
 bool thing_is_steam(Thingp);
 bool thing_is_teleport(Thingp);
+bool thing_is_temperature_physics(Thingp);
 bool thing_is_tickable(Thingp);
 bool thing_is_tiled(Thingp);
 bool thing_is_trap(Thingp);
@@ -624,9 +625,7 @@ bool thing_is_unused35(Thingp);
 bool thing_is_unused36(Thingp);
 bool thing_is_unused37(Thingp);
 bool thing_is_unused38(Thingp);
-bool thing_is_unused39(Thingp);
 bool thing_is_unused4(Thingp);
-bool thing_is_unused40(Thingp);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);

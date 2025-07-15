@@ -24,7 +24,7 @@ bool tp_load_wall(void)
     tp_is_immunity_add(tp, THING_EVENT_FIRE);
     tp_is_immunity_add(tp, THING_EVENT_HEAT);
     tp_is_immunity_add(tp, THING_EVENT_MELEE);
-    tp_weight_set(tp, 1000); // pounds
+    tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
     tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
     // end sort marker1 }

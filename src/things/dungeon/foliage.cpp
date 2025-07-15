@@ -24,14 +24,16 @@ bool tp_load_foliage(void)
   // begin sort marker1 {
   tp_description_set(tp, tp_foliage_description_get);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_burnable);
+  tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
+  tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_foliage);
+  tp_flag_set(tp, is_temperature_physics);
   tp_health_initial_set(tp, 5);
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, 10);                // pounds
+  tp_weight_set(tp, WEIGHT_LIGHT);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_FOLIAGE);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

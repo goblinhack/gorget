@@ -23,7 +23,6 @@ bool tp_load_ghost(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_ghost_description_get);
-  tp_flag_set(tp, is_able_to_walk_through_walls);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -36,13 +35,14 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_undead);
+  tp_flag_set(tp, is_walk_through_walls);
   tp_health_initial_set(tp, 1);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);
   tp_monst_group_add(tp, MONST_GROUP_0);
   tp_speed_set(tp, 100);
   tp_temperature_initial_set(tp, -10); // celsius
-  tp_weight_set(tp, 0);                // pounds
+  tp_weight_set(tp, WEIGHT_FEATHER);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

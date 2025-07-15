@@ -34,7 +34,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
   //
   // Is this grass that needs to be flattened?
   //
-  if (thing_is_crushable_underfoot(it) && (thing_weight(me) > 10)) {
+  if (thing_is_crushable(it) && (thing_weight(me) > 10)) {
     //
     // Crush it
     //

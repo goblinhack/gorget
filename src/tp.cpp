@@ -138,7 +138,7 @@ public:
   int speed {100};
 
   //
-  // Weight in pounds
+  // Weight in grams
   //
   int weight {0};
 
@@ -890,7 +890,6 @@ void tp_temperature_initial_set(Tpp tp, int val)
     return;
   }
   tp->temperature_initial = val;
-  tp_flag_set(tp, is_able_to_change_temperature);
 }
 
 int tp_temperature_initial_get(Tpp tp)

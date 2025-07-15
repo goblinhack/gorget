@@ -173,7 +173,7 @@ std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool inc
 #if 0
   if (is_frozen) {
     out += "frozen ";
-  } else if (is_unused40) {
+  } else if (is_gaseous) {
     out += "burnt ";
   } else if (tpp->charge_count() && ! charge_count()) {
     out += "spent ";

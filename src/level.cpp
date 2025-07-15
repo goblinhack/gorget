@@ -411,9 +411,27 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 
 bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
-  FOR_ALL_TPS_AT(g, v, l, it_tp, p)
+  FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
-    if (tp_flag(it_tp, f)) {
+    if (tp_flag(thing_tp(it), f)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+//
+// Filter to only alive things
+//
+bool level_alive_and_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+{
+  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  {
+    if (thing_is_dead(it)) {
+      continue;
+    }
+
+    if (tp_flag(thing_tp(it), f)) {
       return true;
     }
   }

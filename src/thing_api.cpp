@@ -327,16 +327,6 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_moving = val;
 }
 
-bool thing_is_able_to_walk_through_walls(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_able_to_walk_through_walls);
-}
-
 bool thing_is_animated_can_hflip(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -1267,14 +1257,14 @@ bool thing_is_unused38(Thingp t)
   return tp_flag(thing_tp(t), is_unused38);
 }
 
-bool thing_is_unused39(Thingp t)
+bool thing_is_combustible(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused39);
+  return tp_flag(thing_tp(t), is_combustible);
 }
 
 bool thing_is_unused4(Thingp t)
@@ -1287,14 +1277,14 @@ bool thing_is_unused4(Thingp t)
   return tp_flag(thing_tp(t), is_unused4);
 }
 
-bool thing_is_unused40(Thingp t)
+bool thing_is_gaseous(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused40);
+  return tp_flag(thing_tp(t), is_gaseous);
 }
 
 bool thing_is_extinguished_on_death(Thingp t)
@@ -1367,14 +1357,14 @@ bool thing_is_monst_group_0(Thingp t)
   return tp_flag(thing_tp(t), is_monst_group_0);
 }
 
-bool thing_is_able_to_change_temperature(Thingp t)
+bool thing_is_temperature_physics(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_able_to_change_temperature);
+  return tp_flag(thing_tp(t), is_temperature_physics);
 }
 
 bool thing_is_unused5(Thingp t)
@@ -1467,14 +1457,14 @@ bool thing_is_loggable(Thingp t)
   return tp_flag(thing_tp(t), is_loggable);
 }
 
-bool thing_is_crushable_underfoot(Thingp t)
+bool thing_is_crushable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_crushable_underfoot);
+  return tp_flag(thing_tp(t), is_crushable);
 }
 
 bool thing_is_ethereal(Thingp t)
