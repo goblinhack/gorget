@@ -172,6 +172,15 @@ void get_timestamp(char *buf, int len)
 #endif
 }
 
+// avoid: warning: ‘%c’ yields only last 2 digits of year in some locales [-Wformat-y2k]
+static size_t
+my_strftime(char *s, size_t max, const char *fmt,
+            const struct tm *tm)
+{
+    return strftime(s, max, fmt, tm);
+}
+
+
 std::string current_date(void)
 {
   struct tm *timeinfo;
@@ -216,7 +225,8 @@ std::string current_date(void)
   //  %X  09/08/13    Locale’s appropriate date representation.
   //  %X  07:06:05    Locale’s appropriate time representation.
   //  %%  %   A literal '%' character.
-  strftime(buffer, sizeof(buffer), "%c", timeinfo);
+  //
+  my_strftime(buffer, sizeof(buffer), "%c", timeinfo);
   if (0) {
     strftime(buffer, SIZEOF(buffer), "%X", timeinfo);
   }
