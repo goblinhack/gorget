@@ -22,7 +22,7 @@
 #define UI_WID_MOUSE_WHEEL_SCALE      1.0 // How much the wheel mouse moves when over a wid
 #define UI_WID_MOUSE_WHEEL_SCALE_MAX  10
 #define UI_GAME_MOUSE_WHEEL_SCALE     2.0 // How much the wheel mouse moves
-#define UI_GAME_MOUSE_WHEEL_SCALE_MAX 20
+#define UI_GAME_MOUSE_WHEEL_SCALE_MAX 50
 #define UI_POPUP_TEXT_COLOR           UI_COLOR
 #define UI_SCROLL_JOY_SCALE           1.0
 #define UI_SCROLL_JOY_SCALE_MAX       1.5
