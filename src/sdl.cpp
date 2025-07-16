@@ -695,9 +695,11 @@ void config_game_gfx_update(Gamep g)
   //
   if (map_term_w > map_term_h) {
     int pad = (((map_term_w * w) - (map_term_h * h)) / w) / 2;
-
-    visible_map_tl_x += w * pad;
-    visible_map_br_x -= w * pad;
+    if (pad > 0) {
+      LOG("SDL: - map is over wide      : %dx%d (reduce by %d cells either side)", map_term_w, map_term_h, pad);
+      visible_map_tl_x += w * pad;
+      visible_map_br_x -= w * pad;
+    }
   }
 
   double map_w = visible_map_br_x - visible_map_tl_x;
