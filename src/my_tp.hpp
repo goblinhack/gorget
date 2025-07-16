@@ -861,4 +861,3 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 // end sort marker4 }
 
 #endif // _MY_THING_TEMPLATE_H_
-       // fprintf(stderr,"\nZZZ %s %s %d ",__FILE__,__FUNCTION__,__LINE__);

@@ -232,6 +232,9 @@ void game_request_to_remake_ui_set(Gamep, bool = true);
 bool game_request_to_save_game_get(Gamep);
 void game_request_to_save_game_set(Gamep, bool = true);
 
+bool game_request_to_cleanup_things_get(Gamep);
+void game_request_to_cleanup_things_set(Gamep, bool = true);
+
 bool     game_event_ascend(Gamep);
 bool     game_event_descend(Gamep);
 bool     game_event_help(Gamep);

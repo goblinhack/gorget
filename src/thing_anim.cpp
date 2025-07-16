@@ -73,9 +73,9 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
     return;
   }
 
-  if (0) {
+  if (1) {
     if (thing_is_mob(t)) {
-      THING_LOG(t, "anim %s", tile_name_get(tile).c_str());
+      THING_LOG(t, "anim %s index %d", tile_name_get(tile).c_str(), t->anim_index);
     }
   }
 
@@ -97,19 +97,10 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   // If this is the final tile in an animation, we may want to remove the thing
   //
   if (tile_is_cleanup_on_end_of_anim(tile)) {
-    if (! thing_is_scheduled_for_cleanup(t)) {
-      if (v->tick_in_progress) {
-        //
-        // Schedule for removal from the map and freeing
-        //
-        thing_is_scheduled_for_cleanup_set(g, v, l, t);
-      } else {
-        //
-        // Free it now
-        //
-        thing_fini(g, v, l, t);
-      }
-    }
+    //
+    // Schedule for removal from the map and freeing
+    //
+    thing_is_scheduled_for_cleanup_set(g, v, l, t);
     return;
   }
 

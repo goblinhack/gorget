@@ -18,10 +18,33 @@ static void level_tick_idle(Gamep, Levelsp, Levelp);
 static void level_tick_time_step(Gamep, Levelsp, Levelp);
 
 //
+// Called at the end of the tick and then whenever needed, like at the end of an animation.
+//
+static void level_cleanup_things(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  if (! game_request_to_cleanup_things_get(g)) {
+    return;
+  }
+  game_request_to_cleanup_things_set(g, false);
+
+  //
+  // This can pop the next player move
+  //
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    if (thing_is_scheduled_for_cleanup(t)) {
+      thing_fini(g, v, l, t);
+    }
+  }
+}
+
+//
 // Check if it is ok to end the tick
 // e.g. something fell in lava and now needs to delay the end of the tick whilst its animation finishes
 //
-void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
+static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -42,10 +65,12 @@ void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     // Some things like explosions, we want to wait for the explosion to finish before
     // moving to the next tick. Except it adds delays and is currently disabled.
     //
-    if (thing_is_dead(t)) {
-      if (! thing_is_scheduled_for_cleanup(t)) {
-        if (thing_is_wait_on_anim_when_dead(t)) {
-          v->tick_wait_on_anim = true;
+    if (g_opt_tests) {
+      if (thing_is_dead(t)) {
+        if (! thing_is_scheduled_for_cleanup(t)) {
+          if (thing_is_wait_on_anim_when_dead(t)) {
+            v->tick_wait_on_anim = true;
+          }
         }
       }
     }
@@ -127,6 +152,8 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   if (v->tick_end_requested && ! v->tick_wait_on_moving_things && ! v->tick_wait_on_anim) {
     level_tick_end(g, v, l);
   }
+
+  level_cleanup_things(g, v, l);
 }
 
 static void level_tick_time_step(Gamep g, Levelsp v, Levelp l)
@@ -296,10 +323,6 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
   {
     if (thing_is_tickable(t)) {
       thing_tick_end(g, v, l, t);
-    }
-
-    if (thing_is_scheduled_for_cleanup(t)) {
-      thing_fini(g, v, l, t);
     }
   }
 

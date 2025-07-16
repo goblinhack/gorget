@@ -219,6 +219,11 @@ public:
   bool request_to_save_game {};
 
   //
+  // Free up any things at end of life
+  //
+  bool request_to_cleanup_things {};
+
+  //
   // Temporary. Global states
   //
   GameState state {STATE_MAIN_MENU};
@@ -2377,4 +2382,24 @@ void game_request_to_save_game_set(Gamep g, bool val)
     return;
   }
   g->request_to_save_game = val;
+}
+
+bool game_request_to_cleanup_things_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 1;
+  }
+
+  return g->request_to_cleanup_things;
+}
+void game_request_to_cleanup_things_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_cleanup_things = val;
 }

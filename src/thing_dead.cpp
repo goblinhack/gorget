@@ -168,6 +168,13 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_anim_init(g, v, l, t);
 
   //
+  // No more following the cursor if dead...
+  //
+  if (thing_is_player(t)) {
+    level_cursor_path_reset(g, v, l);
+  }
+
+  //
   // Stop it moving
   //
   thing_move_finish(g, v, l, t);
