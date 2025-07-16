@@ -414,7 +414,7 @@ LDFLAGS=$LDFLAGS
 
 GOT_CC=
 
-g++ --version > /dev/null
+g++ --version > /dev/null 2>/dev/null
 if [ $? -eq 0 ]
 then
     echo "COMPILER_WARNINGS=\$(GCC_COMPILER_WARNINGS)" >> $MAKEFILE
@@ -426,7 +426,7 @@ fi
 # Prefer clang as its faster
 #
 if [[ $OPT_GCC = "" ]]; then
-  clang++ --version > /dev/null
+  clang++ --version > /dev/null 2>/dev/null
   if [ $? -eq 0 ]; then
       echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> $MAKEFILE
       echo "CC=clang++" >> $MAKEFILE
