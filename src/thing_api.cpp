@@ -347,14 +347,14 @@ bool thing_is_animated_no_dir(Thingp t)
   return tp_flag(thing_tp(t), is_animated_no_dir);
 }
 
-bool thing_is_animated_same_first_tile(Thingp t)
+bool thing_is_animated_sync_first(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_animated_same_first_tile);
+  return tp_flag(thing_tp(t), is_animated_sync_first);
 }
 
 bool thing_is_animated(Thingp t)

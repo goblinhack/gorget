@@ -40,7 +40,7 @@ void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 
     //
     // Some things like explosions, we want to wait for the explosion to finish before
-    // moving to the next tick.
+    // moving to the next tick. Except it adds delays and is currently disabled.
     //
     if (thing_is_dead(t)) {
       if (! thing_is_scheduled_for_cleanup(t)) {

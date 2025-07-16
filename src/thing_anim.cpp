@@ -25,7 +25,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t)
     if (tile) {
       t->tile_index = tile_global_index(tile);
 
-      if (tp_is_animated_same_first_tile(tp)) {
+      if (tp_is_animated_sync_first(tp)) {
         //
         // Same first tile e.g. level select tiles, we want to flash in sync and not out of order
         //
@@ -98,10 +98,17 @@ void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   //
   if (tile_is_cleanup_on_end_of_anim(tile)) {
     if (! thing_is_scheduled_for_cleanup(t)) {
-      //
-      // Schedule for removal from the map and freeing
-      //
-      thing_is_scheduled_for_cleanup_set(g, v, l, t);
+      if (v->tick_in_progress) {
+        //
+        // Schedule for removal from the map and freeing
+        //
+        thing_is_scheduled_for_cleanup_set(g, v, l, t);
+      } else {
+        //
+        // Free it now
+        //
+        thing_fini(g, v, l, t);
+      }
     }
     return;
   }

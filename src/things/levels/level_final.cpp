@@ -16,7 +16,7 @@ bool tp_load_level_final(void)
   auto tp   = tp_load("level_final");
 
   // begin sort marker1 {
-  tp_flag_set(tp, is_animated_same_first_tile);
+  tp_flag_set(tp, is_animated_sync_first);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_level_final);

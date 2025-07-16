@@ -515,7 +515,7 @@ bool thing_is_immune_to(Thingp, ThingEventType);
 bool thing_is_able_to_shove(Thingp);
 bool thing_is_animated_can_hflip(Thingp);
 bool thing_is_animated_no_dir(Thingp);
-bool thing_is_animated_same_first_tile(Thingp);
+bool thing_is_animated_sync_first(Thingp);
 bool thing_is_animated(Thingp);
 bool thing_is_barrel(Thingp);
 bool thing_is_blit_centered(Thingp);

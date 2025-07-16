@@ -38,7 +38,6 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_temperature_physics);
   tp_flag_set(tp, is_tickable);
-  tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_health_initial_set(tp, 3);
   tp_short_name_set(tp, "pile of bones");
   tp_speed_set(tp, 100);
