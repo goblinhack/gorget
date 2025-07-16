@@ -95,6 +95,7 @@ help_full()
                       libxext6 \
                       ssh \
                       vim \
+                      clang-format \
                       xutils-dev
       set +x
       echo "Now re-run RUNME"

@@ -679,14 +679,29 @@ void config_game_gfx_update(Gamep g)
 
   LOG("SDL: Map:");
 
-  auto   w                = game_ascii_pix_width_get(g);
-  auto   h                = game_ascii_pix_height_get(g);
-  int    visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
-  int    visible_map_tl_y = h * UI_TOPCON_HEIGHT;
-  int    visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
-  int    visible_map_br_y = (TERM_HEIGHT - 3) * h;
-  double map_w            = visible_map_br_x - visible_map_tl_x;
-  double map_h            = visible_map_br_y - visible_map_tl_y;
+  auto w          = game_ascii_pix_width_get(g);
+  auto h          = game_ascii_pix_height_get(g);
+  int  map_term_w = TERM_WIDTH - (UI_LEFTBAR_WIDTH + UI_RIGHTBAR_WIDTH);
+  int  map_term_h = (TERM_HEIGHT - 3) - UI_TOPCON_HEIGHT;
+
+  int visible_map_tl_x = w * UI_LEFTBAR_WIDTH;
+  int visible_map_br_x = (TERM_WIDTH - UI_RIGHTBAR_WIDTH) * w;
+
+  int visible_map_tl_y = h * UI_TOPCON_HEIGHT;
+  int visible_map_br_y = (TERM_HEIGHT - 3) * h;
+
+  //
+  // For screens that are very wide, unstretch the map
+  //
+  if (map_term_w > map_term_h) {
+    int pad = (((map_term_w * w) - (map_term_h * h)) / w) / 2;
+
+    visible_map_tl_x += w * pad;
+    visible_map_br_x -= w * pad;
+  }
+
+  double map_w = visible_map_br_x - visible_map_tl_x;
+  double map_h = visible_map_br_y - visible_map_tl_y;
 
   double max_fbo_w = INNER_TILE_WIDTH * MAP_WIDTH;
   double max_fbo_h = INNER_TILE_HEIGHT * MAP_HEIGHT;
