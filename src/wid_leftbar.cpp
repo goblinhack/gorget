@@ -56,6 +56,38 @@ static bool wid_leftbar_create_window(Gamep g)
     wid_set_shape_none(w);
   }
 
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  auto tp = thing_tp(player);
+
+  y_at += 2;
+
+  {
+    TRACE_AND_INDENT();
+    auto   w = wid_new_plain(g, wid_leftbar, "Health");
+    spoint tl(2, y_at);
+    spoint br(width - 2, y_at);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, "Health");
+    wid_set_shape_none(w);
+    wid_set_text_lhs(w, true);
+  }
+  {
+    TRACE_AND_INDENT();
+    auto   w = wid_new_plain(g, wid_leftbar, "health-value");
+    spoint tl(3, y_at);
+    spoint br(tl.x + width - 6, tl.y);
+    wid_set_pos(w, tl, br);
+    wid_set_shape_none(w);
+
+    std::string s = std::to_string(thing_health(player)) + "/" + std::to_string(tp_health_initial_get(tp));
+    wid_set_text(w, s);
+    wid_set_text_rhs(w, true);
+  }
+
   wid_update(g, wid_leftbar);
 
   DBG2("Remade leftbar");
