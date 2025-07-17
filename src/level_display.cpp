@@ -141,6 +141,15 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
     case CURSOR_PATH :
       {
         //
+        // If the player is dead, then don't show the move path, but do allow them to move
+        // the cursor around so they can still look at the level/cause of death.
+        //
+        auto player = thing_player(g);
+        if (player && thing_is_dead(player)) {
+          break;
+        }
+
+        //
         // Cursors do not use up slots on the map, to avoid them interacting with anything
         //
         static Tpp tp_once;

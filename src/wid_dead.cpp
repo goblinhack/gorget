@@ -60,7 +60,10 @@ static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       }
   }
 
-  return true;
+  //
+  // Allow fallback to the player game input, so they player can do things like change the zoom
+  //
+  return false;
 }
 
 static bool wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)

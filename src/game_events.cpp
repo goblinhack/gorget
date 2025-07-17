@@ -260,6 +260,15 @@ bool game_event_help(Gamep g)
   LOG("Help");
   TRACE_AND_INDENT();
 
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  if (thing_is_dead(player)) {
+    return false;
+  }
+
   wid_cfg_keyboard_select(g);
 
   return true;
@@ -295,6 +304,12 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   auto v = game_levels_get(g);
   if (! v) {
     DBG("Pressed a key; no levels");
+    return false;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    DBG("Pressed a key; no player");
     return false;
   }
 
@@ -355,17 +370,74 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     return true;
   }
 
-  if (sdlk_eq(*key, game_key_ascend_get(g))) {
-    LOG("Pressed ascend key");
-    game_event_ascend(g);
-    return true;
-  }
+  switch (key->mod) {
+    case KMOD_LCTRL :
+    case KMOD_RCTRL :
+    default :
+      switch (key->sym) {
+        default :
+          {
+            TRACE_NO_INDENT();
+            auto c = wid_event_to_char(key);
+            switch (c) {
+              case '0' :
+              case '1' :
+              case '2' :
+              case '3' :
+              case '4' :
+              case '5' :
+              case '6' :
+              case '7' :
+              case '8' :
+              case '9' :
+              case 'a' :
+              case 'b' :
+              case 'c' :
+              case 'd' :
+              case 'e' :
+              case 'f' :
+              case 'g' :
+              case 'h' :
+              case 'i' :
+              case 'j' :
+              case 'k' :
+              case 'l' :
+              case 'm' :
+              case 'n' :
+              case 'o' :
+              case 'p' :
+              case 'q' :
+              case 'r' :
+              case 's' :
+              case 't' :
+              case 'u' :
+              case 'v' :
+              case 'w' :
+              case 'x' :
+              case 'y' :
+              case 'z' :
+              case '?' :
+              case '-' :
+              case '+' :
+              case '=' :
 
-  if (sdlk_eq(*key, game_key_descend_get(g))) {
-    LOG("Pressed descend key");
-    game_event_descend(g);
-    return true;
-  }
+                if (sdlk_eq(*key, game_key_move_up_get(g))) {
+                  return false;
+                }
+                if (sdlk_eq(*key, game_key_move_down_get(g))) {
+                  return false;
+                }
+                if (sdlk_eq(*key, game_key_move_left_get(g))) {
+                  return false;
+                }
+                if (sdlk_eq(*key, game_key_move_right_get(g))) {
+                  return false;
+                }
 
+                game_event_help(g);
+            }
+          }
+      }
+  }
   return false;
 }
