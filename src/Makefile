@@ -3,9 +3,9 @@ include ../build/Makefile.template
 #
 # For incremental builds, this is a lot faster
 #
-ifeq ($(origin USE_PRECOMPILED),undefined)
-CFLAGS+=-O0
-endif
+#ifeq ($(origin USE_PRECOMPILED),undefined)
+#CFLAGS+=-O0
+#endif
 
 NAME=gorget
 BUILD_DIR=../.o

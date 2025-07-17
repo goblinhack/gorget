@@ -1098,6 +1098,10 @@ void game_visible_map_pix_get(Gamep g, int *visible_map_tl_x, int *visible_map_t
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
+    *visible_map_tl_x = 0;
+    *visible_map_tl_y = 0;
+    *visible_map_br_x = 0;
+    *visible_map_br_y = 0;
     ERR("No game pointer set");
     return;
   }
@@ -1112,6 +1116,10 @@ void game_visible_map_pix_set(Gamep g, int visible_map_tl_x, int visible_map_tl_
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
+    g->visible_map_tl_x = 0;
+    g->visible_map_tl_y = 0;
+    g->visible_map_br_x = 0;
+    g->visible_map_br_y = 0;
     ERR("No game pointer set");
     return;
   }
@@ -2232,10 +2240,10 @@ void game_map_zoom_set(Gamep g, int val)
 int game_map_zoom_def_get(Gamep g)
 {
   TRACE_NO_INDENT();
-  int visible_map_tl_x;
-  int visible_map_tl_y;
-  int visible_map_br_x;
-  int visible_map_br_y;
+  int visible_map_tl_x = 0;
+  int visible_map_tl_y = 0;
+  int visible_map_br_x = 0;
+  int visible_map_br_y = 0;
   game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
   float map_pix_width = visible_map_br_x - visible_map_tl_x;

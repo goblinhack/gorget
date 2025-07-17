@@ -10,6 +10,7 @@
 #include <stdio.h>  /* needed for vsnprintf */
 #include <stdlib.h> /* needed for malloc-free */
 
+#ifdef WIN32
 #ifndef _vscprintf
 /* For some reason, MSVC fails to honour this #ifndef. */
 /* Hence function renamed to _vscprintf_so(). */
@@ -51,6 +52,7 @@ int asprintf(char *strp[], const char *fmt, ...)
   return r;
 }
 #endif // asprintf
+#endif
 
 std::string string_sprintf(const char *format, ...)
 {

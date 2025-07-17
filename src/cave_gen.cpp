@@ -58,8 +58,8 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
   if (! map_generations) {
     memset(c->curr, 0, SIZEOF(c->curr));
 
-    for (x = 0; x < MAP_WIDTH; x++) {
-      for (y = 0; y < MAP_HEIGHT; y++) {
+    for (x = 1; x < MAP_WIDTH - 1; x++) {
+      for (y = 1; y < MAP_HEIGHT - 1; y++) {
         if (pcg_random_range(0, 10000) < fill_prob) {
           c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] = 1;
         }
@@ -72,8 +72,8 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
     cave_dump(g, c);
   }
 
-  for (x = 0; x < MAP_WIDTH; x++) {
-    for (y = 0; y < MAP_HEIGHT; y++) {
+  for (x = 1; x < MAP_WIDTH - 1; x++) {
+    for (y = 1; y < MAP_HEIGHT - 1; y++) {
 
       uint8_t adjcount = 0;
 
