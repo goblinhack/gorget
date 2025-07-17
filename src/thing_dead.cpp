@@ -165,7 +165,6 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     t->anim_type = THING_ANIM_DEAD;
   }
-  thing_anim_init(g, v, l, t);
 
   //
   // No more following the cursor if dead...
@@ -182,5 +181,5 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Restart the animation if we have dead frames
   //
-  thing_anim_reset(g, v, l, t);
+  thing_anim_init(g, v, l, t);
 }

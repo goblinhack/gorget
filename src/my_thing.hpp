@@ -279,7 +279,6 @@ void thing_update_pos(Gamep, Thingp);
 void thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void thing_anim_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
-void thing_anim_reset(Gamep, Levelsp, Levelp, Thingp);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_burnt_handle(Gamep, Levelsp, Levelp, Thingp);
