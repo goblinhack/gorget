@@ -95,6 +95,7 @@ help_full()
                       libxext6 \
                       ssh \
                       vim \
+                      clang \
                       clang-format \
                       xutils-dev
       set +x
