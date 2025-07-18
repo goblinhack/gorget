@@ -366,11 +366,19 @@ esac
 #
 # Better to leave off for production
 #
+# Windows builds also fail due to missing headers
+#
 WERROR=""
 if [[ $OPT_DEV1 != "" ]]; then
     WERROR="-Werror"
 fi
-WERROR="-Werror"
+
+#
+# Hard code on for me
+#
+if [[ $(grep goblinhack ~/.gitconfig) ]]; then
+  WERROR="-Werror"
+fi
 
 echo "#define MYVER \"$MYVER\"" >> $CONFIG_H
 
