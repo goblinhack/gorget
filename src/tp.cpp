@@ -235,6 +235,7 @@ public:
   tp_tick_begin_t      tick_begin      = {};
   tp_tick_end_t        tick_end        = {};
   tp_on_death_t        on_death        = {};
+  tp_on_shoved_t       on_shoved       = {};
 
   Tp(void);
   ~Tp(void);
@@ -1060,6 +1061,30 @@ void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint a
     return;
   }
   return tp->on_death(g, v, l, me, owner, at);
+}
+
+void tp_on_shoved_set(Tpp tp, tp_on_shoved_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->on_shoved = callback;
+}
+
+void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->on_shoved) {
+    return;
+  }
+  return tp->on_shoved(g, v, l, me, owner, at);
 }
 
 void tp_value1_set(Tpp tp, int val)

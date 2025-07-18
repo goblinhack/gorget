@@ -3,6 +3,7 @@
 //
 
 #include "../../my_callstack.hpp"
+#include "../../my_level.hpp"
 #include "../../my_thing.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
@@ -21,12 +22,66 @@ static std::string tp_brazier_description_get(Gamep g, Levelsp v, Levelp l, Thin
   return "brightly burning brazier";
 }
 
+static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover, spoint at)
+{
+  TRACE_NO_INDENT();
+
+  THING_TOPCON(shover, "shoved");
+  //
+  // Attempt to spawn fire in the direction of shoving
+  //
+  if (shover) {
+    auto direction = me->at - shover->at;
+    auto fire_at   = me->at + direction;
+
+    if (level_is_obstacle_block(g, v, l, fire_at)) {
+      //
+      // If we can't, then spawn over the brazier
+      //
+      if (! level_is_fire(g, v, l, me->at)) {
+        thing_spawn(g, v, l, tp_random(is_fire), me->at);
+      }
+    } else {
+      if (! level_is_fire(g, v, l, fire_at)) {
+        thing_spawn(g, v, l, tp_random(is_fire), fire_at);
+      }
+
+      if (! level_is_smoke(g, v, l, me->at)) {
+        thing_spawn(g, v, l, tp_random(is_smoke), me->at);
+      }
+    }
+  } else {
+    //
+    // Spawn over the brazier
+    //
+    if (! level_is_fire(g, v, l, me->at)) {
+      thing_spawn(g, v, l, tp_random(is_fire), me->at);
+    }
+  }
+}
+
+static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Allow things to continue to burn if we still have some burnable material
+  //
+  if (! level_is_fire(g, v, l, me->at)) {
+    thing_spawn(g, v, l, tp_random(is_fire), me->at);
+  }
+
+  if (! level_is_smoke(g, v, l, me->at)) {
+    thing_spawn(g, v, l, tp_random(is_smoke), me->at);
+  }
+}
+
 bool tp_load_brazier(void)
 {
   TRACE_NO_INDENT();
 
   std::string name = "brazier";
-  auto tp   = tp_load("brazier");
+  auto        tp   = tp_load("brazier");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_brazier_description_get);
@@ -37,6 +92,8 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_dead_on_shoving);
+  tp_on_shoved_set(tp, tp_brazier_on_shoved);
+  tp_on_death_set(tp, tp_brazier_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_extinguished_on_death);
   tp_flag_set(tp, is_light_source, 3);

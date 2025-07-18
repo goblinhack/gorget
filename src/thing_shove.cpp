@@ -9,6 +9,7 @@
 #include "my_string.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
+#include "my_tp_callbacks.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
@@ -54,7 +55,7 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t
 {
   TRACE_NO_INDENT();
 
-  bool ret = false;
+  bool shoved = false;
 
   ThingEvent e {
       .reason     = "by shoving",      //
@@ -64,17 +65,24 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t
 
   if (thing_can_move_to(g, v, l, t, to)) {
     if (thing_move_to(g, v, l, t, to)) {
-      ret = true;
+      shoved = true;
     }
   }
 
-  if (thing_is_player(t)) {
-    thing_shoved_player(g, v, l, t, e);
-  } else if (e.source && thing_is_player(e.source)) {
-    thing_shoved_by_player(g, v, l, t, e);
+  if (shoved) {
+    //
+    // Callback for shoving
+    //
+    tp_on_shoved(g, v, l, t, shover, t->at);
+
+    if (thing_is_player(t)) {
+      thing_shoved_player(g, v, l, t, e);
+    } else if (e.source && thing_is_player(e.source)) {
+      thing_shoved_by_player(g, v, l, t, e);
+    }
   }
 
-  return ret;
+  return shoved;
 }
 
 //
@@ -85,7 +93,7 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  bool ret = false;
+  bool shoved = false;
 
   ThingEvent e {
       .reason     = "by shoving",      //
@@ -103,17 +111,24 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
 
   if (thing_can_move_to(g, v, l, t, to)) {
     if (thing_move_to(g, v, l, t, to)) {
-      ret = true;
+      shoved = true;
     }
   }
 
-  if (thing_is_player(t)) {
-    thing_shoved_player(g, v, l, t, e);
-  } else if (e.source && thing_is_player(e.source)) {
-    thing_shoved_by_player(g, v, l, t, e);
+  if (shoved) {
+    //
+    // Callback for shoving
+    //
+    tp_on_shoved(g, v, l, t, shover, t->at);
+
+    if (thing_is_player(t)) {
+      thing_shoved_player(g, v, l, t, e);
+    } else if (e.source && thing_is_player(e.source)) {
+      thing_shoved_by_player(g, v, l, t, e);
+    }
   }
 
-  return ret;
+  return shoved;
 }
 
 //

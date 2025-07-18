@@ -92,7 +92,7 @@ bool tp_load_fire(void)
   TRACE_NO_INDENT();
 
   std::string name = "fire";
-  auto tp   = tp_load("fire");
+  auto        tp   = tp_load("fire");
 
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_FIRE, "1d6");
