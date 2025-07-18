@@ -25,7 +25,7 @@ bool tp_load_brazier(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "brazier";
+  std::string name = "brazier";
   auto tp   = tp_load("brazier");
 
   // begin sort marker1 {

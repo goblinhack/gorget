@@ -20,7 +20,7 @@ bool tp_load_lava(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = std::string("lava");
+  std::string name = std::string("lava");
   auto tp   = tp_load("lava");
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_FIRE, "1d20+20");

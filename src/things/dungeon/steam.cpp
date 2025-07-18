@@ -21,7 +21,7 @@ bool tp_load_steam(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "steam";
+  std::string name = "steam";
   auto tp   = tp_load("steam");
 
   // begin sort marker1 {

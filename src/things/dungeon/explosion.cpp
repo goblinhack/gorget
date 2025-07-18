@@ -13,8 +13,8 @@ bool tp_load_explosion(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "explosion";
-  auto tp   = tp_load("explosion");
+  std::string name = "explosion";
+  auto        tp   = tp_load("explosion");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated);

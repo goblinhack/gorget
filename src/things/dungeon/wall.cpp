@@ -13,7 +13,7 @@ bool tp_load_wall(void)
   TRACE_NO_INDENT();
 
   for (auto variant = 1; variant <= 1; variant++) {
-    auto name = "wall" + std::to_string(variant);
+    std::string name = "wall" + std::to_string(variant);
     auto tp   = tp_load(name.c_str());
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered);

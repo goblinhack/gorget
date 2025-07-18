@@ -20,7 +20,7 @@ bool tp_load_pillar(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "pillar";
+  std::string name = "pillar";
   auto tp   = tp_load("pillar");
 
   // begin sort marker1 {

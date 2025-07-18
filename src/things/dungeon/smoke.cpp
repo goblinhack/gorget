@@ -21,7 +21,7 @@ bool tp_load_smoke(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "smoke";
+  std::string name = "smoke";
   auto tp   = tp_load("smoke");
 
   // begin sort marker1 {

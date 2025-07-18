@@ -18,8 +18,8 @@ static std::string tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Th
 
 bool tp_load_ghost_mob(void)
 {
-  auto name = "ghost_mob";
-  auto tp   = tp_load("ghost_mob");
+  std::string name = "ghost_mob";
+  auto        tp   = tp_load("ghost_mob");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_ghost_mob_description_get);

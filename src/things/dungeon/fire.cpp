@@ -91,7 +91,7 @@ bool tp_load_fire(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "fire";
+  std::string name = "fire";
   auto tp   = tp_load("fire");
 
   // begin sort marker1 {

@@ -22,7 +22,7 @@ static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thing
 
 bool tp_load_player(void)
 {
-  auto name = "player";
+  std::string name = "player";
   auto tp   = tp_load("player");
 
   // begin sort marker1 {

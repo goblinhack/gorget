@@ -24,7 +24,7 @@ bool tp_load_grass(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "grass";
+  std::string name = "grass";
   auto tp   = tp_load("grass");
 
   // begin sort marker1 {

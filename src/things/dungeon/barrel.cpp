@@ -20,7 +20,7 @@ bool tp_load_barrel(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "barrel";
+  std::string name = "barrel";
   auto tp   = tp_load("barrel");
 
   // begin sort marker1 {

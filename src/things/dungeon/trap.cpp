@@ -25,7 +25,7 @@ bool tp_load_trap(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "trap";
+  std::string name = "trap";
   auto tp   = tp_load("trap");
 
   // begin sort marker1 {

@@ -20,7 +20,7 @@ bool tp_load_teleport(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "teleport";
+  std::string name = "teleport";
   auto tp   = tp_load("teleport");
 
   // begin sort marker1 {

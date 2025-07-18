@@ -22,7 +22,7 @@ static std::string tp_slime_description_get(Gamep g, Levelsp v, Levelp l, Thingp
 
 bool tp_load_slime(void)
 {
-  auto name = "slime";
+  std::string name = "slime";
   auto tp   = tp_load("slime");
 
   // begin sort marker1 {

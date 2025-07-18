@@ -12,7 +12,7 @@ bool tp_load_level_down(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "level_down";
+  std::string name = "level_down";
   auto tp   = tp_load("level_down");
 
   // begin sort marker1 {

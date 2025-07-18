@@ -20,7 +20,7 @@ bool tp_load_deep_water(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = std::string("deep_water");
+  std::string name = std::string("deep_water");
   auto tp   = tp_load("deep_water");
   // begin sort marker1 {
   tp_description_set(tp, tp_deep_water_description_get);

@@ -18,7 +18,7 @@ static std::string tp_goblin_mob_description_get(Gamep g, Levelsp v, Levelp l, T
 
 bool tp_load_goblin_mob(void)
 {
-  auto name = "goblin_mob";
+  std::string name = "goblin_mob";
   auto tp   = tp_load("goblin_mob");
 
   // begin sort marker1 {

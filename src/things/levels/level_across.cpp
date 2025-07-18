@@ -12,7 +12,7 @@ bool tp_load_level_across(void)
 {
   TRACE_NO_INDENT();
 
-  auto name = "level_across";
+  std::string name = "level_across";
   auto tp   = tp_load("level_across");
 
   // begin sort marker1 {

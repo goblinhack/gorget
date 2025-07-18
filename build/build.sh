@@ -370,6 +370,7 @@ WERROR=""
 if [[ $OPT_DEV1 != "" ]]; then
     WERROR="-Werror"
 fi
+WERROR="-Werror"
 
 echo "#define MYVER \"$MYVER\"" >> $CONFIG_H
 

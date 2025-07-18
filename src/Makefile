@@ -52,19 +52,19 @@ PRECOMPILED_H_OBJ := $(PRECOMPILED_H).gch
 # Precompiled headers are good for the initial build, but after that it
 # is faster to use dependancies
 #
-ifeq ($(origin USE_PRECOMPILED),undefined)
-
-$(foreach x,$(CPP_SOURCES),\
-$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
-  $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
-
-else
+#ifeq ($(origin USE_PRECOMPILED),undefined)
+#
+#$(foreach x,$(CPP_SOURCES),\
+#$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
+#  $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
+#
+#else
 
 $(foreach x,$(CPP_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x | $(PRECOMPILED_H_OBJ) ;\
   $(CC) -include $(PRECOMPILED_H) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
 
-endif
+#,ndif
 
 $(foreach x,$(CPP_3RD_PARTY_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
