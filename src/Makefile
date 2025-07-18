@@ -25,9 +25,10 @@ all: $(TARGET_GAME)
 obj_name = $(addsuffix .o,$(subst /,__,$(subst ../,,$(basename $1))))
 
 # recursively search all src/ subdirectories for cpp source files
-CPP_SOURCES := $(subst ./,,$(shell find $(SRC_DIR) -name \*.cpp))
+CPP_SOURCES := $(subst ./,,$(shell find $(SRC_DIR) -name \*.cpp -not -path "*3rdparty*"))
+CPP_3RD_PARTY_SOURCES := $(subst ./,,$(shell find $(SRC_DIR)/3rdparty -name \*.cpp))
 ASM_SOURCES := $(wildcard *.S)
-SOURCES := $(CPP_SOURCES) $(ASM_SOURCES)
+SOURCES := $(CPP_3RD_PARTY_SOURCES) $(CPP_SOURCES) $(ASM_SOURCES)
 
 OBJECTS := $(call obj_name,$(SOURCES))
 OBJ_FILES := $(addprefix $(BUILD_DIR)/,$(OBJECTS))
@@ -65,6 +66,10 @@ $(eval $(BUILD_DIR)/$(call obj_name,$x): $x | $(PRECOMPILED_H_OBJ) ;\
 
 endif
 
+$(foreach x,$(CPP_3RD_PARTY_SOURCES),\
+$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
+  $(CC) $(CFLAGS_3RD_PARTY) $(DEP_FLAGS) -c -o $$@ $$<))
+
 $(foreach x,$(ASM_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
   $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
@@ -75,7 +80,7 @@ $(TARGET_GAME): $(OBJ_FILES)
 	cd $(BUILD_DIR); $(CC) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $(TARGET_GAME)
 
 tidy:
-	for src in $(SOURCES) ; do \
+	for src in $(CPP_3RD_PARTY_SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
 		clang-tidy -fix -checks="-*,bugprone-sizeof-expression,cppcoreguidelines-no-malloc,misc-redundant-expression,modernize-loop-convert,modernize-use-auto,modernize-use-nullptr,modernize-use-default-member-init,modernize-use-equals-default,modernize-use-equals-delete,modernize-use-nullptr,readability-else-after-return,readability-else-after-return,readability-redundant-member-init,readability-redundant-member-init,readability-simplify-boolean-expr" -header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done

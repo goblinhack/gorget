@@ -2,7 +2,13 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "3rdparty/stb_image.hpp"
+extern "C" {
+extern unsigned char *stbi_load_from_memory(const unsigned char *buffer, int len, int *x, int *y, int *comp,
+                                            int req_comp);
+extern void           stbi_image_free(void *retval_from_stbi_load);
+};
+
+// #include "3rdparty/stb_image.hpp"
 #include "my_callstack.hpp"
 #include "my_file.hpp"
 #include "my_gl.hpp"

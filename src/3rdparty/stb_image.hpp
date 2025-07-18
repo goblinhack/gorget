@@ -124,8 +124,6 @@ RECENT REVISION HISTORY:
   of the credits.
 */
 
-#pragma GCC diagnostic ignored "-Wstringop-overflow="
-
 #ifndef STBI_INCLUDE_STB_IMAGE_H
 #define STBI_INCLUDE_STB_IMAGE_H
 
@@ -8645,5 +8643,3 @@ ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ------------------------------------------------------------------------------
 */
-
-#pragma GCC diagnostic pop
