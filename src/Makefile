@@ -73,11 +73,11 @@ endif
 
 $(foreach x,$(CPP_3RD_PARTY_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
-  $(CC) $(COMPILER_FLAGS) -c -o $$@ $$<))
+  $(CC) $(COMPILER_FLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
 
 $(foreach x,$(ASM_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
-  $(CC) $(COMPILER_FLAGS) -c -o $$@ $$<))
+  $(CC) $(COMPILER_FLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
 
 # use file list instead of wildcard for link command so we don't accidentally
 # link with old object files for removed source files
