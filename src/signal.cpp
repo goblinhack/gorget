@@ -86,7 +86,8 @@ static void debug_crash_handler(int sig)
   } else {
     printf("proc %d: %s\n", pid_num, prog_name);
   }
-#elif defined WIN32
+#elif defined(__WIN64__) || defined(_WIN64) || defined(WIN64) || defined(__WIN32__) || defined(_WIN32)               \
+    || defined(WIN32) || defined(__WINDOWS_386__) || defined(__CYGWIN__)
   HMODULE module = GetModuleHandleA(nullptr);
   GetModuleFileNameA(module, prog_name, max_path);
 #elif defined __linux__

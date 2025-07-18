@@ -10,7 +10,8 @@
 #include <stdio.h>  /* needed for vsnprintf */
 #include <stdlib.h> /* needed for malloc-free */
 
-#ifdef WIN32
+#if defined(__WIN64__) || defined(_WIN64) || defined(WIN64) || defined(__WIN32__) || defined(_WIN32)                 \
+    || defined(WIN32) || defined(__WINDOWS_386__) || defined(__CYGWIN__)
 #ifndef _vscprintf
 /* For some reason, MSVC fails to honour this #ifndef. */
 /* Hence function renamed to _vscprintf_so(). */
