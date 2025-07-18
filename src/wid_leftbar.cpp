@@ -67,19 +67,32 @@ static bool wid_leftbar_create_window(Gamep g)
 
   {
     TRACE_AND_INDENT();
-    auto   w = wid_new_plain(g, wid_leftbar, "Health");
-    spoint tl(2, y_at);
+    auto   w = wid_new_plain(g, wid_leftbar, "Health-bar");
+    spoint tl(1, y_at);
     spoint br(width - 2, y_at);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Health");
+
+    int i = ((float) thing_health(player) / (float) tp_health_initial_get(tp)) * ((float) UI_HEALTH_BAR_STEPS - 1);
+    i     = std::min(i, UI_HEALTH_BAR_STEPS - 1);
+    i     = std::max(i, 0);
+    auto icon = "health_bar." + std::to_string(i + 1);
+    wid_set_tilename(TILE_LAYER_FG_0, w, icon);
+  }
+  {
+    TRACE_AND_INDENT();
+    auto   w = wid_new_plain(g, wid_leftbar, "Health");
+    spoint tl(1, y_at);
+    spoint br(width - 2, y_at);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, " Health");
     wid_set_shape_none(w);
     wid_set_text_lhs(w, true);
   }
   {
     TRACE_AND_INDENT();
     auto   w = wid_new_plain(g, wid_leftbar, "health-value");
-    spoint tl(3, y_at);
-    spoint br(tl.x + width - 6, tl.y);
+    spoint tl(1, y_at);
+    spoint br(tl.x + width - 4, tl.y);
     wid_set_pos(w, tl, br);
     wid_set_shape_none(w);
 

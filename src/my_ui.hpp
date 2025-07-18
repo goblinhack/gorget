@@ -16,7 +16,8 @@
 #define UI_CURSOR_OTHER_COLOR         WHITE
 #define UI_FONT_HEIGHT                8
 #define UI_FONT_WIDTH                 6
-#define UI_LEFTBAR_WIDTH              34  // In characters
+#define UI_LEFTBAR_WIDTH              34 // In characters
+#define UI_HEALTH_BAR_STEPS           (UI_LEFTBAR_WIDTH - 2)
 #define UI_RIGHTBAR_WIDTH             34  // In characters
 #define UI_MOUSE_DOUBLE_CLICK         500 // Double click time
 #define UI_WID_MOUSE_WHEEL_SCALE      1.0 // How much the wheel mouse moves when over a wid

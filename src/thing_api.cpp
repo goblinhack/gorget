@@ -65,6 +65,7 @@ int thing_health_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
+  game_request_to_remake_ui_set(g);
   return t->_health = val;
 }
 
@@ -75,6 +76,7 @@ int thing_health_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
+  game_request_to_remake_ui_set(g);
   return t->_health += val;
 }
 
@@ -85,6 +87,7 @@ int thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
+  game_request_to_remake_ui_set(g);
   return t->_health -= val;
 }
 

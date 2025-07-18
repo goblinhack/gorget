@@ -23,7 +23,7 @@ static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thing
 bool tp_load_player(void)
 {
   std::string name = "player";
-  auto tp   = tp_load("player");
+  auto        tp   = tp_load("player");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_player_description_get);
@@ -38,7 +38,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_temperature_physics);
   tp_flag_set(tp, is_tickable);
-  tp_health_initial_set(tp, 8);
+  tp_health_initial_set(tp, 100);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
