@@ -27,8 +27,6 @@ fpoint operator-(fpoint const &, fpoint const &);
 fpoint operator*(fpoint const &, float);
 fpoint operator/(fpoint const &, float);
 
-static inline fpoint make_fpoint(const spoint &f) { return fpoint(f.x, f.y); }
-
 fpoint rotate_radians(float angle, const fpoint &p, const fpoint &origin);
 fpoint rotate_radians(const fpoint &p, float angle);
 fpoint normal(const fpoint &p);

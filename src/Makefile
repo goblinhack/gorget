@@ -4,7 +4,7 @@ include ../build/Makefile.template
 # For incremental builds, this is a lot faster
 #
 #ifeq ($(origin USE_PRECOMPILED),undefined)
-#CFLAGS+=-O0
+#COMPILER_FLAGS+=-O0
 #endif
 
 NAME=gorget
@@ -36,6 +36,8 @@ OBJ_FILES := $(addprefix $(BUILD_DIR)/,$(OBJECTS))
 DEP_FILES := $(OBJ_FILES:.o=.d)
 DEP_FLAGS = -MMD -MP
 
+CFLAGS := $(COMPILER_FLAGS) $(COMPILER_WARNINGS) $(DEP_FLAGS)
+
 $(BUILD_DIR): ; mkdir -p $(BUILD_DIR)
 $(OBJ_FILES): | $(BUILD_DIR)
 
@@ -45,6 +47,9 @@ $(OBJ_FILES): | $(BUILD_DIR)
 PRECOMPILED_H := precompiled.hpp
 PRECOMPILED_H_OBJ := $(PRECOMPILED_H).gch
 
+#
+# Must use the same flags as normal .cpp files for precompiled
+#
 %.hpp.gch: $(PRECOMPILED_H)
 		$(CC) $(CFLAGS) -c -o $@ $<
 
@@ -52,27 +57,27 @@ PRECOMPILED_H_OBJ := $(PRECOMPILED_H).gch
 # Precompiled headers are good for the initial build, but after that it
 # is faster to use dependancies
 #
-#ifeq ($(origin USE_PRECOMPILED),undefined)
-#
-#$(foreach x,$(CPP_SOURCES),\
-#$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
-#  $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
-#
-#else
+ifeq ($(origin USE_PRECOMPILED),undefined)
+
+$(foreach x,$(CPP_SOURCES),\
+$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
+  $(CC) $(CFLAGS) -c -o $$@ $$<))
+
+else
 
 $(foreach x,$(CPP_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x | $(PRECOMPILED_H_OBJ) ;\
-  $(CC) -include $(PRECOMPILED_H) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
+  $(CC) -include $(PRECOMPILED_H) $(CFLAGS) -c -o $$@ $$<))
 
-#,ndif
+endif
 
 $(foreach x,$(CPP_3RD_PARTY_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
-  $(CC) $(CFLAGS_3RD_PARTY) $(DEP_FLAGS) -c -o $$@ $$<))
+  $(CC) $(COMPILER_FLAGS) -c -o $$@ $$<))
 
 $(foreach x,$(ASM_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
-  $(CC) $(CFLAGS) $(DEP_FLAGS) -c -o $$@ $$<))
+  $(CC) $(COMPILER_FLAGS) -c -o $$@ $$<))
 
 # use file list instead of wildcard for link command so we don't accidentally
 # link with old object files for removed source files
