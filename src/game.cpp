@@ -384,6 +384,11 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
   TRACE_NO_INDENT();
   g->destroy_levels();
 
+  //
+  // We need a consistent seed for all tests, so damage doesn't vary
+  //
+  g->seed_set("test seed");
+
   TRACE_NO_INDENT();
   auto v = game_levels_set(g, levels_memory_alloc(g));
 
