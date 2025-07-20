@@ -1049,7 +1049,7 @@ void tp_on_death_set(Tpp tp, tp_on_death_t callback)
   tp->on_death = callback;
 }
 
-void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at, ThingEvent &e)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1060,7 +1060,7 @@ void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint a
   if (! tp->on_death) {
     return;
   }
-  return tp->on_death(g, v, l, me, owner, at);
+  return tp->on_death(g, v, l, me, owner, at, e);
 }
 
 void tp_on_shoved_set(Tpp tp, tp_on_shoved_t callback)

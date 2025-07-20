@@ -105,6 +105,7 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
   // Some items, like braziers need to be knocked over first before shoving.
   //
   if (thing_is_dead_on_shoving(t)) {
+    tp_on_shoved(g, v, l, t, shover, t->at);
     thing_dead(g, v, l, t, e);
     return true;
   }
@@ -158,7 +159,6 @@ bool thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, spoint at)
   //
   FOR_ALL_THINGS_AT(g, v, l, it, at)
   {
-
     if (! thing_is_shovable(it)) {
       continue;
     }

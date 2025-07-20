@@ -71,7 +71,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
   }
 }
 
-static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 

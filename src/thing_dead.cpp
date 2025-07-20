@@ -141,7 +141,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   // Per thing callback
   //
-  tp_on_death(g, v, l, t, top_owner(g, v, l, t), t->at);
+  tp_on_death(g, v, l, t, top_owner(g, v, l, t), t->at, e);
 }
 
 //

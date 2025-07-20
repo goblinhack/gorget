@@ -6,6 +6,7 @@
 #ifndef _MY_THING_TEMPLATE_CALLBACKS_H_
 #define _MY_THING_TEMPLATE_CALLBACKS_H_
 
+#include "my_thing.hpp"
 #include "my_tp.hpp"
 #include <string>
 
@@ -25,9 +26,9 @@ typedef void (*tp_tick_end_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, s
 void tp_tick_end_set(Tpp, tp_tick_end_t);
 void tp_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at);
 
-typedef void (*tp_on_death_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, spoint at);
+typedef void (*tp_on_death_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp owner, spoint at, ThingEvent &);
 void tp_on_death_set(Tpp, tp_on_death_t);
-void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at);
+void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at, ThingEvent &);
 
 typedef void (*tp_on_shoved_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp shover, spoint at);
 void tp_on_shoved_set(Tpp, tp_on_shoved_t);

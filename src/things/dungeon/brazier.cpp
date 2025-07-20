@@ -60,15 +60,17 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp
   }
 }
 
-static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
   //
   // Allow things to continue to burn if we still have some burnable material
   //
-  if (! level_is_fire(g, v, l, me->at)) {
-    thing_spawn(g, v, l, tp_random(is_fire), me->at);
+  if (e.event_type != THING_EVENT_SHOVE) {
+    if (! level_is_fire(g, v, l, me->at)) {
+      thing_spawn(g, v, l, tp_random(is_fire), me->at);
+    }
   }
 
   if (! level_is_smoke(g, v, l, me->at)) {
