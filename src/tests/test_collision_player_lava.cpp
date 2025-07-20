@@ -105,6 +105,12 @@ static bool test_collision_player_lava(Gamep g, Testp t)
     }
   }
 
+  for (auto tries = 0; tries < 2; tries++) {
+    TRACE_NO_INDENT();
+    game_event_wait(g);
+    game_wait_for_tick_to_finish(g, v, l);
+  }
+
   //
   // Check player is dead when shoved into lava. It should be popped off the level.
   //
@@ -132,7 +138,7 @@ static bool test_collision_player_lava(Gamep g, Testp t)
   // Check the tick is as expected
   //
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick");
+    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick");
   }
 
   TEST_PASSED(t);
