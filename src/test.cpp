@@ -225,7 +225,9 @@ void tests_run(Gamep g)
 
   if (failed) {
     CON("Results: %d passed, %d failed", passed, failed);
+    exit(1);
   } else {
     CON("All tests passed");
+    exit(0);
   }
 }

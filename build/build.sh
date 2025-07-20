@@ -574,4 +574,14 @@ else
     exit 1
 fi
 
+#
+# Execute unit tests?
+#
+if [[ $OPT_GITHUB != "" ]]; then
+    ./${TARGET} --tests
+    if [[ $? -ne 0 ]]; then
+        exit 1
+    fi
+fi
+
 exit 0

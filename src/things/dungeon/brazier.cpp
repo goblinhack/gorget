@@ -26,7 +26,6 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp
 {
   TRACE_NO_INDENT();
 
-  THING_TOPCON(shover, "shoved");
   //
   // Attempt to spawn fire in the direction of shoving
   //
