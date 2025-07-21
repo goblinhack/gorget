@@ -59,26 +59,26 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   auto it = e.source;
 
   if (it && thing_is_loggable(t)) {
-    auto the_thing    = capitalise_first(thing_the_long_name(g, v, l, t));
-    auto by_the_thing = thing_the_long_name(g, v, l, it);
+    auto the_thing = capitalise_first(thing_the_long_name(g, v, l, t));
+    auto by_thing  = thing_long_name(g, v, l, it);
 
     switch (e.event_type) {
       case THING_EVENT_NONE : break;
       case THING_EVENT_LIFESPAN : //
       case THING_EVENT_SHOVE :    //
-        TOPCON("%s is knocked over by %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is knocked over by %s.", the_thing.c_str(), by_thing.c_str());
         break;
       case THING_EVENT_CRUSH : //
-        TOPCON("%s is crushed by %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is crushed by %s.", the_thing.c_str(), by_thing.c_str());
         break;
       case THING_EVENT_MELEE : //
-        TOPCON("%s is killed by %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is killed by %s.", the_thing.c_str(), by_thing.c_str());
         break;
       case THING_EVENT_HEAT : //
-        TOPCON("%s is killed by heat damage from %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is killed by heat damage from %s.", the_thing.c_str(), by_thing.c_str());
         break;
       case THING_EVENT_FIRE : //
-        TOPCON("%s is burnt to death by %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is burnt to death by %s.", the_thing.c_str(), by_thing.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;
     }
@@ -100,7 +100,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Log the reason of demise?
   //
   if (thing_is_loggable(t)) {
-    THING_LOG(t, "%s: dead", to_string(e).c_str());
+    THING_LOG(t, "%s: dead", to_string(g, e).c_str());
   }
 
   //
@@ -127,7 +127,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   }
 
   if (thing_is_player(t)) {
-    auto death_reason = to_death_reason(e);
+    auto death_reason = to_death_reason(g, e);
 
     auto score = 666;
     if (game_is_new_hiscore(g, score)) {

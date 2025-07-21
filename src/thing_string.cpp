@@ -6,6 +6,7 @@
 #include "my_backtrace.hpp"
 #include "my_callstack.hpp"
 #include "my_console.hpp"
+#include "my_game.hpp"
 #include "my_log.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
@@ -16,7 +17,7 @@
 #include <stdarg.h>
 #include <string.h>
 
-std::string to_string(Thingp t)
+std::string to_string(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -31,11 +32,16 @@ std::string to_string(Thingp t)
     return "<no tp>";
   }
 
+  auto name = tp_name(tp);
+  if (g && thing_is_player(t)) {
+    name = game_player_name_get(g);
+  }
+
   return (string_sprintf("%08" PRIX32
                          /* level num                     */ " L%u"
                          /* level num                     */ " T%u"
                          /* thing_health                  */ " H%d"
-                         /* tp_name                       */ " %s"
+                         /* name                          */ " %s"
                          /* is_loggable                   */ "%s"
                          /* is_dead                       */ "%s"
                          /* is_open                       */ "%s"
@@ -45,7 +51,7 @@ std::string to_string(Thingp t)
                          /* newline */ t->level_num,
                          /* newline */ t->tick,
                          /* newline */ thing_health(t),
-                         /* newline */ tp_name(tp),
+                         /* newline */ name,
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
                          /* newline */ thing_is_sleeping(t) ? "/sleeping" : "",
                          /* newline */ thing_is_open(t) ? "/open" : "",
@@ -53,7 +59,7 @@ std::string to_string(Thingp t)
                          /* newline */ t->at.x, t->at.y));
 }
 
-std::string to_string(ThingEvent &e)
+std::string to_string(Gamep g, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
@@ -77,14 +83,14 @@ std::string to_string(ThingEvent &e)
 
   if (e.source) {
     s += " src:(";
-    s += to_string(e.source);
+    s += to_string(g, e.source);
     s += ")";
   }
 
   return s;
 }
 
-std::string to_death_reason(ThingEvent &e)
+std::string to_death_reason(Gamep g, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
@@ -115,13 +121,20 @@ std::string to_death_reason(ThingEvent &e)
 
   if (e.source) {
     s += " by ";
-    s += tp_long_name(thing_tp(e.source));
+
+    auto t    = e.source;
+    auto name = tp_long_name(thing_tp(t));
+    if (g && thing_is_player(t)) {
+      name = game_player_name_get(g);
+    }
+
+    s += name;
   }
 
   return s;
 }
 
-std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool include_owner)
+std::string thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool include_owner)
 {
   TRACE_NO_INDENT();
 
@@ -131,7 +144,7 @@ std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool inc
 
   auto tp = thing_tp(t);
 
-  std::string out = "the ";
+  std::string out;
 
 #if 0
   //
@@ -149,6 +162,7 @@ std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool inc
   auto t_o = top_owner(g, v, l, t);
   if (include_owner) {
     if (t_o && ! thing_is_player(t_o)) {
+
       out += tp_long_name(thing_tp(t_o));
       out += "'s ";
     }
@@ -193,7 +207,14 @@ std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool inc
   }
 #endif
 
-  out += tp_long_name(tp);
+  {
+    auto name = tp_long_name(tp);
+    if (g && thing_is_player(t)) {
+      name = game_player_name_get(g);
+    }
+
+    out += name;
+  }
 
 #if 0
   if (tpp->is_spell()) {
@@ -206,4 +227,11 @@ std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool inc
 #endif
 
   return out;
+}
+
+std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool include_owner)
+{
+  TRACE_NO_INDENT();
+
+  return "the " + thing_long_name(g, v, l, t, include_owner);
 }

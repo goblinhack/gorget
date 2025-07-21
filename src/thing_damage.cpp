@@ -95,7 +95,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
     // Log the reason for attack?
     //
     if (thing_is_loggable(t)) {
-      THING_LOG(t, "%s: no damage as already dead", to_string(e).c_str());
+      THING_LOG(t, "%s: no damage as already dead", to_string(g, e).c_str());
     }
     return;
   }
@@ -105,7 +105,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   if (thing_is_immune_to(t, e.event_type)) {
     if (thing_is_loggable(t)) {
-      THING_LOG(t, "%s: no damage as immune", to_string(e).c_str());
+      THING_LOG(t, "%s: no damage as immune", to_string(g, e).c_str());
     }
     return;
   }
@@ -114,7 +114,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Log the reason for attack?
   //
   if (thing_is_loggable(t)) {
-    THING_LOG(t, "%s: apply damage", to_string(e).c_str());
+    THING_LOG(t, "%s: apply damage", to_string(g, e).c_str());
   }
 
   if (thing_is_player(t)) {
