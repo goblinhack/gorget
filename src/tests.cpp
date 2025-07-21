@@ -14,9 +14,6 @@ bool tests_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
-  if (! test_load_collision_brazier()) {
-    return false;
-  }
   if (! test_load_collision_mob()) {
     return false;
   }
@@ -29,6 +26,9 @@ bool tests_init(void)
   if (! test_load_collision_mob_lava()) {
     return false;
   }
+  if (! test_load_collision_brazier_shove_ok()) {
+    return false;
+  }
   if (! test_load_collision_grass()) {
     return false;
   }
@@ -36,6 +36,9 @@ bool tests_init(void)
     return false;
   }
   if (! test_load_move_ok()) {
+    return false;
+  }
+  if (! test_load_collision_brazier_shove_fail()) {
     return false;
   }
   /* end shell marker1 */

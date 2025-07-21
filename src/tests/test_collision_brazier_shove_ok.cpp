@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_brazier(Gamep g, Testp t)
+static bool test_collision_brazier_shove_ok(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -27,7 +27,7 @@ static bool test_collision_brazier(Gamep g, Testp t)
         "......."
         "......."
         ".......";
-  std::string expect1
+  std::string expect1 // first shove
       = "......."
         "......."
         "......."
@@ -35,7 +35,7 @@ static bool test_collision_brazier(Gamep g, Testp t)
         "......."
         "......."
         ".......";
-  std::string expect2
+  std::string expect2 // second shove
       = "......."
         "......."
         "......."
@@ -145,14 +145,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_brazier(void)
+bool test_load_collision_brazier_shove_ok(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_brazier");
+  Testp test = test_load("collision_brazier_shove_ok");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_brazier);
+  test_callback_set(test, test_collision_brazier_shove_ok);
   // end sort marker1 }
 
   return true;

@@ -27,14 +27,15 @@ std::initializer_list< std::string > tests = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
-    "collision_brazier",
     "collision_mob",
     "collision_barrel",
     "collision_wall",
     "collision_mob_lava",
+    "collision_brazier_shove_ok",
     "collision_grass",
     "collision_player_lava",
     "move_ok",
+    "collision_brazier_shove_fail",
   /* end shell marker1 */
 };
 /* clang-format on */
