@@ -22,7 +22,7 @@ bool tp_load_steam(void)
   TRACE_NO_INDENT();
 
   std::string name = "steam";
-  auto tp   = tp_load("steam");
+  auto        tp   = tp_load("steam");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_steam_description_get);

@@ -28,7 +28,7 @@ bool tp_load_treasure(void)
   TRACE_NO_INDENT();
 
   std::string name = "chest";
-  auto tp   = tp_load("chest");
+  auto        tp   = tp_load("chest");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_chest_description_get);

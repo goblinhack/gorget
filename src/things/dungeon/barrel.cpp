@@ -21,7 +21,7 @@ bool tp_load_barrel(void)
   TRACE_NO_INDENT();
 
   std::string name = "barrel";
-  auto tp   = tp_load("barrel");
+  auto        tp   = tp_load("barrel");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_barrel_description_get);

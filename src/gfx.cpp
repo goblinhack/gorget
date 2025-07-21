@@ -1301,8 +1301,8 @@ void gfx_init(void)
   gfx_ui_init_7();
   gfx_ui_init_8();
   gfx_ui_init_9();
-  gfx_ui_init_progress_bar();
   gfx_ui_init_health_bar();
+  gfx_ui_init_progress_bar();
   // end sort marker1 }
 }
 

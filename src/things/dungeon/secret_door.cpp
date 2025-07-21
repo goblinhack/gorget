@@ -29,7 +29,6 @@ bool tp_load_secret_door(void)
   // begin sort marker1 {
   tp_description_set(tp, tp_secret_door_description_get);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_door);
@@ -41,10 +40,7 @@ bool tp_load_secret_door(void)
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);
   tp_is_immunity_add(tp, THING_EVENT_MELEE);
-  tp_temperature_burns_at_set(tp, 200);  // celsius
-  tp_temperature_damage_at_set(tp, 200); // celsius
-  tp_temperature_initial_set(tp, 20);    // celsius
-  tp_weight_set(tp, WEIGHT_VHEAVY);      // grams
+  tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }

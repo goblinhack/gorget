@@ -21,7 +21,7 @@ bool tp_load_chasm(void)
   TRACE_NO_INDENT();
 
   std::string name = std::string("chasm");
-  auto tp   = tp_load("chasm");
+  auto        tp   = tp_load("chasm");
   // begin sort marker1 {
   tp_description_set(tp, tp_chasm_description_get);
   tp_flag_set(tp, is_blit_centered);

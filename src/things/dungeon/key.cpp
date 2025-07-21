@@ -21,7 +21,7 @@ bool tp_load_key(void)
   TRACE_NO_INDENT();
 
   std::string name = "key";
-  auto tp   = tp_load("key");
+  auto        tp   = tp_load("key");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_key_description_get);

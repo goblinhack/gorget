@@ -21,7 +21,7 @@ bool tp_load_pillar(void)
   TRACE_NO_INDENT();
 
   std::string name = "pillar";
-  auto tp   = tp_load("pillar");
+  auto        tp   = tp_load("pillar");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_pillar_description_get);
@@ -30,6 +30,7 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_obstacle_block);
   tp_flag_set(tp, is_pillar);
+  tp_health_initial_set(tp, 500);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT);
   tp_is_immunity_add(tp, THING_EVENT_MELEE);

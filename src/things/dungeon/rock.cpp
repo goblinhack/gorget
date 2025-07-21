@@ -14,13 +14,14 @@ bool tp_load_rock(void)
 
   for (auto variant = 1; variant <= 1; variant++) {
     std::string name = "rock" + std::to_string(variant);
-    auto tp   = tp_load(name.c_str());
+    auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_cursor_path_blocker);
     tp_flag_set(tp, is_obstacle_block);
     tp_flag_set(tp, is_rock);
     tp_flag_set(tp, is_tiled);
+    tp_health_initial_set(tp, 500);
     tp_is_immunity_add(tp, THING_EVENT_FIRE);
     tp_is_immunity_add(tp, THING_EVENT_HEAT);
     tp_is_immunity_add(tp, THING_EVENT_MELEE);

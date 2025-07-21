@@ -23,7 +23,7 @@ static std::string tp_goblin_description_get(Gamep g, Levelsp v, Levelp l, Thing
 bool tp_load_goblin(void)
 {
   std::string name = "goblin";
-  auto tp   = tp_load("goblin");
+  auto        tp   = tp_load("goblin");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_goblin_description_get);

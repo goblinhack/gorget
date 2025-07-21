@@ -21,7 +21,7 @@ bool tp_load_potion(void)
   TRACE_NO_INDENT();
 
   std::string name = "potion";
-  auto tp   = tp_load("potion");
+  auto        tp   = tp_load("potion");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_potion_description_get);

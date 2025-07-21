@@ -13,7 +13,7 @@ bool tp_load_level_next(void)
   TRACE_NO_INDENT();
 
   std::string name = "level_next";
-  auto tp   = tp_load("level_next");
+  auto        tp   = tp_load("level_next");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_sync_first);

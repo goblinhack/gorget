@@ -21,7 +21,7 @@ bool tp_load_bridge(void)
   TRACE_NO_INDENT();
 
   std::string name = std::string("bridge");
-  auto tp   = tp_load("bridge");
+  auto        tp   = tp_load("bridge");
   // begin sort marker1 {
   tp_description_set(tp, tp_bridge_description_get);
   tp_flag_set(tp, is_blit_centered);

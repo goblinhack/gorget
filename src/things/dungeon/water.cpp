@@ -22,7 +22,7 @@ bool tp_load_water(void)
   TRACE_NO_INDENT();
 
   std::string name = std::string("water");
-  auto tp   = tp_load("water");
+  auto        tp   = tp_load("water");
   // begin sort marker1 {
   tp_description_set(tp, tp_water_description_get);
   tp_flag_set(tp, is_animated);

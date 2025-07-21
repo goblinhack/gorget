@@ -19,7 +19,7 @@ static std::string tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp
 bool tp_load_ghost(void)
 {
   std::string name = "ghost";
-  auto tp   = tp_load("ghost");
+  auto        tp   = tp_load("ghost");
 
   // begin sort marker1 {
   tp_description_set(tp, tp_ghost_description_get);

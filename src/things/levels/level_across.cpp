@@ -13,7 +13,7 @@ bool tp_load_level_across(void)
   TRACE_NO_INDENT();
 
   std::string name = "level_across";
-  auto tp   = tp_load("level_across");
+  auto        tp   = tp_load("level_across");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_sync_first);

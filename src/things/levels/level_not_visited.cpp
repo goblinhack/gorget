@@ -13,7 +13,7 @@ bool tp_load_level_not_visited(void)
   TRACE_NO_INDENT();
 
   std::string name = "level_not_visited";
-  auto tp   = tp_load("level_not_visited");
+  auto        tp   = tp_load("level_not_visited");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_sync_first);
