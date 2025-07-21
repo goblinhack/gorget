@@ -18,7 +18,8 @@ bool tp_load_wall(void)
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_cursor_path_blocker);
-    tp_flag_set(tp, is_obstacle_block);
+    tp_flag_set(tp, is_obstacle_to_fire);
+    tp_flag_set(tp, is_obstacle_to_movement);
     tp_flag_set(tp, is_tiled);
     tp_flag_set(tp, is_wall);
     tp_health_initial_set(tp, 200);

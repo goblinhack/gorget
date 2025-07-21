@@ -37,7 +37,7 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_door);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obstacle_block);
+  tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_temperature_physics);
   tp_health_initial_set(tp, 100);
   tp_is_immunity_add(tp, THING_EVENT_FIRE);

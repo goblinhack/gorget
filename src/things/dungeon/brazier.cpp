@@ -27,13 +27,23 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp
   TRACE_NO_INDENT();
 
   //
+  // If extinguished, do not generate more smoke
+  //
+  if (thing_is_dead(me)) {
+    if (! level_is_smoke(g, v, l, me->at)) {
+      thing_spawn(g, v, l, tp_random(is_smoke), me->at);
+    }
+    return;
+  }
+
+  //
   // Attempt to spawn fire in the direction of shoving
   //
   if (shover) {
     auto direction = me->at - shover->at;
     auto fire_at   = me->at + direction;
 
-    if (level_is_obstacle_block(g, v, l, fire_at)) {
+    if (level_is_obstacle_to_fire(g, v, l, fire_at)) {
       //
       // If we can't, then spawn over the brazier
       //
@@ -97,7 +107,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_extinguished_on_death);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obstacle_block);
+  tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_shovable);
   tp_light_color_set(tp, "orange");
   tp_on_death_set(tp, tp_brazier_on_death);

@@ -57,26 +57,26 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   auto it = e.source;
 
   if (it && thing_is_loggable(t)) {
-    auto the_thing    = capitalise_first(thing_the_long_name(g, v, l, t));
-    auto by_the_thing = thing_the_long_name(g, v, l, it);
+    auto the_thing = capitalise_first(thing_the_long_name(g, v, l, t));
+    auto by_player = thing_long_name(g, v, l, it);
 
     switch (e.event_type) {
       case THING_EVENT_NONE :     break;
       case THING_EVENT_LIFESPAN : break;
       case THING_EVENT_SHOVE : //
-        TOPCON("%s is shoved by %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is shoved by %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_CRUSH : //
-        TOPCON("%s is crushed by %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is crushed by %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_MELEE : //
-        TOPCON("%s is hit by %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is hit by %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_HEAT : //
-        TOPCON("%s suffers heat damage from %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s suffers heat damage from %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_FIRE : //
-        TOPCON("%s is burnt by %s.", the_thing.c_str(), by_the_thing.c_str());
+        TOPCON("%s is burnt by %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;
     }

@@ -802,24 +802,14 @@ bool thing_is_monst_group_2(Thingp t)
   return tp_flag(thing_tp(t), is_monst_group_2);
 }
 
-bool thing_is_obstacle_block_or_door(Thingp t)
+bool thing_is_obstacle_to_movement(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_block_or_door);
-}
-
-bool thing_is_obstacle_block(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_obstacle_block);
+  return tp_flag(thing_tp(t), is_obstacle_to_movement);
 }
 
 bool thing_is_pillar(Thingp t)
@@ -1252,14 +1242,14 @@ bool thing_is_unused37(Thingp t)
   return tp_flag(thing_tp(t), is_unused37);
 }
 
-bool thing_is_unused38(Thingp t)
+bool thing_is_obstacle_to_fire(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused38);
+  return tp_flag(thing_tp(t), is_obstacle_to_fire);
 }
 
 bool thing_is_combustible(Thingp t)

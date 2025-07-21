@@ -388,6 +388,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
   // We need a consistent seed for all tests, so damage doesn't vary
   //
   g->seed_set("test seed");
+  g->player_name_set("Ser Testalot");
 
   TRACE_NO_INDENT();
   auto v = game_levels_set(g, levels_memory_alloc(g));
@@ -465,7 +466,9 @@ void Game::seed_set(const char *maybe_seed)
   if (maybe_seed && *maybe_seed) {
     config.seed_name   = std::string(maybe_seed);
     config.seed_source = SEED_SOURCE_USER;
-    CON("Set fixed seed '%s' from ui", config.seed_name.c_str());
+    if (! g_opt_tests) {
+      CON("Set fixed seed '%s' from ui", config.seed_name.c_str());
+    }
   } else if (g_opt_seed_name != "") {
     config.seed_name   = g_opt_seed_name;
     config.seed_source = SEED_SOURCE_COMMAND_LINE;
@@ -590,7 +593,9 @@ void Game::player_name_set(const char *maybe_player_name)
 
   if (maybe_player_name) {
     config.player_name = std::string(maybe_player_name);
-    CON("Set player name '%s' from ui", config.player_name.c_str());
+    if (! g_opt_tests) {
+      CON("Set player name '%s' from ui", config.player_name.c_str());
+    }
   } else if (config.player_name != "") {
     CON("Set player name '%s' from previous load", config.player_name.c_str());
   } else {

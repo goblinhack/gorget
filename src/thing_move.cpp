@@ -358,7 +358,7 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
     //
     // A wall or pillar or somesuch?
     //
-    if (thing_is_obstacle_block(it)) {
+    if (thing_is_obstacle_to_movement(it)) {
       return false;
     }
   }
@@ -390,7 +390,7 @@ bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoin
     //
     // A wall or pillar or somesuch?
     //
-    if (thing_is_obstacle_block(it)) {
+    if (thing_is_obstacle_to_movement(it)) {
       //
       // But make exceptions for things like braziers
       //

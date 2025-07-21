@@ -42,6 +42,13 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
     auto p = at + delta;
 
     //
+    // Rock, for example?
+    //
+    if (level_is_obstacle_to_fire(g, v, l, p)) {
+      continue;
+    }
+
+    //
     // Fire is here already, don't spawn more
     //
     if (level_is_fire(g, v, l, p)) {

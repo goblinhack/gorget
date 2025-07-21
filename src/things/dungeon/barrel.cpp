@@ -35,7 +35,7 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obstacle_block);
+  tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_temperature_physics);
   tp_health_initial_set(tp, 6);
