@@ -38,6 +38,9 @@ bool tests_init(void)
   if (! test_load_move_ok()) {
     return false;
   }
+  if (! test_load_collision_brazier_shove_into_mob()) {
+    return false;
+  }
   if (! test_load_collision_brazier_shove_fail()) {
     return false;
   }

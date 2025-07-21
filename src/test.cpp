@@ -35,6 +35,7 @@ std::initializer_list< std::string > tests = {
     "collision_grass",
     "collision_player_lava",
     "move_ok",
+    "collision_brazier_shove_into_mob",
     "collision_brazier_shove_fail",
   /* end shell marker1 */
 };
@@ -172,7 +173,7 @@ void tests_run(Gamep g)
     //
     auto name = test.first;
     auto t    = test.second;
-    auto pre  = string_sprintf("Test %-30s", name.c_str());
+    auto pre  = string_sprintf("Test %-70s", name.c_str());
 
     //
     // Preamble
