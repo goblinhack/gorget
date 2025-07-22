@@ -107,13 +107,16 @@ std::string to_death_reason(Gamep g, ThingEvent &e)
     case THING_EVENT_CRUSH : //
       s += "crushed to death";
       break;
-    case THING_EVENT_MELEE : //
+    case THING_EVENT_MELEE_DAMAGE : //
       s += "hacked to death";
       break;
-    case THING_EVENT_HEAT : //
+    case THING_EVENT_HEAT_DAMAGE : //
       s += "cooked to death";
       break;
-    case THING_EVENT_FIRE : //
+    case THING_EVENT_WATER_DAMAGE : //
+      s += "drowned";
+      break;
+    case THING_EVENT_FIRE_DAMAGE : //
       s += "burnt to death";
       break;
     case THING_EVENT_ENUM_MAX : break;

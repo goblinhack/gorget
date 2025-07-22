@@ -33,6 +33,7 @@ bool tp_load_trap(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_trap);
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

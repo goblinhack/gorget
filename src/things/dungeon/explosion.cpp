@@ -23,9 +23,6 @@ bool tp_load_explosion(void)
   tp_flag_set(tp, is_explosion);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_wait_on_anim_when_dead);
-  tp_is_immunity_add(tp, THING_EVENT_FIRE);
-  tp_is_immunity_add(tp, THING_EVENT_HEAT);
-  tp_is_immunity_add(tp, THING_EVENT_MELEE);
   tp_temperature_initial_set(tp, 1000); // celsius
   tp_weight_set(tp, WEIGHT_NONE);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

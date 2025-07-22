@@ -35,8 +35,10 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob2);
   tp_flag_set(tp, is_obstacle_to_movement);
+  tp_flag_set(tp, is_physics_gravity);
+  tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_shovable);
-  tp_flag_set(tp, is_temperature_physics);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_health_initial_set(tp, 10);

@@ -15,7 +15,7 @@ static void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp
 {
   TRACE_NO_INDENT();
 
-  auto event_type = THING_EVENT_HEAT;
+  auto event_type = THING_EVENT_HEAT_DAMAGE;
   auto damage     = n;
   auto max_damage = 0;
 

@@ -23,9 +23,10 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_rock);
     tp_flag_set(tp, is_tiled);
     tp_health_initial_set(tp, 500);
-    tp_is_immunity_add(tp, THING_EVENT_FIRE);
-    tp_is_immunity_add(tp, THING_EVENT_HEAT);
-    tp_is_immunity_add(tp, THING_EVENT_MELEE);
+    tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
+    tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
+    tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
+    tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
     tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
     tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);

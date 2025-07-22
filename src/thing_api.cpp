@@ -1202,44 +1202,44 @@ bool thing_is_unused33(Thingp t)
   return tp_flag(thing_tp(t), is_unused33);
 }
 
-bool thing_is_unused34(Thingp t)
+bool thing_is_physics_gravity(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused34);
+  return tp_flag(thing_tp(t), is_physics_gravity);
 }
 
-bool thing_is_unused35(Thingp t)
+bool thing_is_physics_water(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused35);
+  return tp_flag(thing_tp(t), is_physics_water);
 }
 
-bool thing_is_unused36(Thingp t)
+bool thing_is_indestructible(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused36);
+  return tp_flag(thing_tp(t), is_indestructible);
 }
 
-bool thing_is_unused37(Thingp t)
+bool thing_is_floating(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused37);
+  return tp_flag(thing_tp(t), is_floating);
 }
 
 bool thing_is_obstacle_to_fire(Thingp t)
@@ -1352,14 +1352,14 @@ bool thing_is_monst_group_0(Thingp t)
   return tp_flag(thing_tp(t), is_monst_group_0);
 }
 
-bool thing_is_temperature_physics(Thingp t)
+bool thing_is_physics_temperature(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_temperature_physics);
+  return tp_flag(thing_tp(t), is_physics_temperature);
 }
 
 bool thing_is_unused5(Thingp t)

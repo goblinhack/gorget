@@ -36,13 +36,16 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
       case THING_EVENT_CRUSH : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are crushed to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_MELEE : //
+      case THING_EVENT_MELEE_DAMAGE : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are killed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_HEAT : //
+      case THING_EVENT_HEAT_DAMAGE : //
         TOPCON(UI_IMPORTANT_FMT_STR "You die in the unsuffereble heat from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_FIRE : //
+      case THING_EVENT_WATER_DAMAGE : //
+        TOPCON(UI_IMPORTANT_FMT_STR "You die in the undrinkable depths from %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
+      case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are burnt to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;
@@ -71,13 +74,16 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_CRUSH : //
         TOPCON("%s is crushed by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_MELEE : //
+      case THING_EVENT_MELEE_DAMAGE : //
         TOPCON("%s is killed by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_HEAT : //
+      case THING_EVENT_HEAT_DAMAGE : //
         TOPCON("%s is killed by heat damage from %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_FIRE : //
+      case THING_EVENT_WATER_DAMAGE : //
+        TOPCON("%s is killed by water damage from %s.", the_thing.c_str(), by_player.c_str());
+        break;
+      case THING_EVENT_FIRE_DAMAGE : //
         TOPCON("%s is burnt to death by %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;

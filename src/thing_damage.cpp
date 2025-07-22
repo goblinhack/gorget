@@ -34,13 +34,16 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_CRUSH : //
         TOPCON(UI_WARNING_FMT_STR "You are crushed by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_MELEE : //
+      case THING_EVENT_MELEE_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You are hit by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_HEAT : //
+      case THING_EVENT_HEAT_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You suffer heat damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_FIRE : //
+      case THING_EVENT_WATER_DAMAGE : //
+        TOPCON(UI_WARNING_FMT_STR "You suffer water damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
+      case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;
@@ -69,13 +72,16 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_CRUSH : //
         TOPCON("%s is crushed by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_MELEE : //
+      case THING_EVENT_MELEE_DAMAGE : //
         TOPCON("%s is hit by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_HEAT : //
+      case THING_EVENT_HEAT_DAMAGE : //
         TOPCON("%s suffers heat damage from %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_FIRE : //
+      case THING_EVENT_WATER_DAMAGE : //
+        TOPCON("%s suffers water damage from %s.", the_thing.c_str(), by_player.c_str());
+        break;
+      case THING_EVENT_FIRE_DAMAGE : //
         TOPCON("%s is burnt by %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_ENUM_MAX : break;
@@ -89,6 +95,16 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_AND_INDENT();
+
+  if (thing_is_indestructible(t)) {
+    //
+    // Log the reason for attack?
+    //
+    if (thing_is_loggable(t)) {
+      THING_LOG(t, "%s: no damage as indestructible", to_string(g, e).c_str());
+    }
+    return;
+  }
 
   if (thing_is_dead(t)) {
     //
@@ -137,19 +153,24 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         break;
       case THING_EVENT_CRUSH : //
         break;
-      case THING_EVENT_MELEE : //
+      case THING_EVENT_MELEE_DAMAGE : //
         break;
-      case THING_EVENT_HEAT : //
+      case THING_EVENT_HEAT_DAMAGE : //
         if (! level_is_fire(g, v, l, t->at)) {
           thing_spawn(g, v, l, tp_random(is_fire), t->at);
         }
         thing_is_burnt_set(g, v, l, t);
         break;
-      case THING_EVENT_FIRE : //
+      case THING_EVENT_FIRE_DAMAGE : //
         if (! level_is_fire(g, v, l, t->at)) {
           thing_spawn(g, v, l, tp_random(is_fire), t->at);
         }
         thing_is_burnt_set(g, v, l, t);
+        break;
+      case THING_EVENT_WATER_DAMAGE : //
+        if (! level_is_steam(g, v, l, t->at)) {
+          thing_spawn(g, v, l, tp_random(is_steam), t->at);
+        }
         break;
       case THING_EVENT_ENUM_MAX : break;
     }

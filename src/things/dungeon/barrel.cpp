@@ -36,8 +36,9 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_to_movement);
+  tp_flag_set(tp, is_physics_gravity);
+  tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_shovable);
-  tp_flag_set(tp, is_temperature_physics);
   tp_health_initial_set(tp, 6);
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius

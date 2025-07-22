@@ -391,11 +391,12 @@ ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);
 
 bool is_oob(spoint);
 
-bool level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-bool level_alive_and_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-bool level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint p, Tpp);
-bool level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot, ThingId);
-bool level_tick_is_in_progress(Gamep, Levelsp, Levelp);
+bool   level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
+Thingp level_first_with_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
+bool   level_alive_and_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
+bool   level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint p, Tpp);
+bool   level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot, ThingId);
+bool   level_tick_is_in_progress(Gamep, Levelsp, Levelp);
 
 void level_anim(Gamep, Levelsp, Levelp);
 void level_assign_tiles(Gamep, Levelsp, Levelp);
@@ -415,6 +416,7 @@ void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
+void level_tick_begin_water(Gamep, Levelsp, Levelp);
 void level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);

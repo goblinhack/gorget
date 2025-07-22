@@ -29,7 +29,8 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_temperature_physics);
+  tp_flag_set(tp, is_physics_gravity);
+  tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_tiled);
   tp_health_initial_set(tp, 12);
   tp_temperature_burns_at_set(tp, 100);  // celsius

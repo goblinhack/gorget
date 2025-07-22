@@ -30,21 +30,13 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     FOR_ALL_THINGS_AT(g, v, l, t, p)
     {
       //
-      // If we shove a thing into lava, do not handle the interaction until the move
-      // interpolation is finished.
-      //
-      if (thing_is_moving(t)) {
-        continue;
-      }
-
-      //
       // Ignore burnt grass for example
       //
       if (thing_is_dead(t)) {
         continue;
       }
 
-      if (thing_is_temperature_physics(t)) {
+      if (thing_is_physics_temperature(t)) {
         things.push_back(t);
       }
     }
@@ -154,21 +146,13 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
     FOR_ALL_THINGS_AT(g, v, l, t, p)
     {
       //
-      // If we shove a thing into lava, do not handle the interaction until the move
-      // interpolation is finished.
-      //
-      if (thing_is_moving(t)) {
-        continue;
-      }
-
-      //
       // Ignore burnt grass for example
       //
       if (thing_is_dead(t)) {
         continue;
       }
 
-      if (thing_is_temperature_physics(t)) {
+      if (thing_is_physics_temperature(t)) {
         things.push_back(t);
       }
     }

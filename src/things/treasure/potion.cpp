@@ -31,7 +31,8 @@ bool tp_load_potion(void)
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_temperature_physics);
+  tp_flag_set(tp, is_physics_gravity);
+  tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_treasure1);
   tp_temperature_burns_at_set(tp, 30);  // celsius

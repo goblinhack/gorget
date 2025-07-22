@@ -97,6 +97,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_begin_temperature(g, v, l);
 
     //
+    // Handle things interacting with water
+    //
+    level_tick_begin_water(g, v, l);
+
+    //
     // Start the tick
     //
     level_tick_begin(g, v, l);

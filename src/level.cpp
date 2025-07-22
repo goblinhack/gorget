@@ -420,6 +420,17 @@ bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return false;
 }
 
+Thingp level_first_with_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+{
+  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  {
+    if (tp_flag(thing_tp(it), f)) {
+      return it;
+    }
+  }
+  return nullptr;
+}
+
 //
 // Filter to only alive things
 //

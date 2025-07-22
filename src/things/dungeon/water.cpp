@@ -24,11 +24,12 @@ bool tp_load_water(void)
   std::string name = std::string("water");
   auto        tp   = tp_load("water");
   // begin sort marker1 {
+  tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
   tp_description_set(tp, tp_water_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_temperature_physics);
+  tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_tiled);
   tp_flag_set(tp, is_water);
   tp_short_name_set(tp, "shallow water");

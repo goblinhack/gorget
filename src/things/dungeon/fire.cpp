@@ -102,8 +102,8 @@ bool tp_load_fire(void)
   auto        tp   = tp_load("fire");
 
   // begin sort marker1 {
-  tp_damage_set(tp, THING_EVENT_FIRE, "1d6");
-  tp_damage_set(tp, THING_EVENT_HEAT, "1d6");
+  tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d6");
+  tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d6");
   tp_description_set(tp, tp_fire_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -113,10 +113,13 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_temperature_physics);
+  tp_flag_set(tp, is_physics_gravity);
+  tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_tickable);
-  tp_is_immunity_add(tp, THING_EVENT_FIRE);
-  tp_is_immunity_add(tp, THING_EVENT_HEAT);
+  tp_health_initial_set(tp, 6); // to allow it to be damaged by water
+  tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
+  tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
   tp_on_death_set(tp, tp_fire_on_death);
