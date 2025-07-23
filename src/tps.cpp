@@ -17,16 +17,10 @@ bool templates_init(void)
   if (! tp_load_barrel()) {
     return false;
   }
-  if (! tp_load_explosion()) {
-    return false;
-  }
   if (! tp_load_pillar()) {
     return false;
   }
   if (! tp_load_brazier()) {
-    return false;
-  }
-  if (! tp_load_grass()) {
     return false;
   }
   if (! tp_load_exit()) {
@@ -41,37 +35,19 @@ bool templates_init(void)
   if (! tp_load_secret_door()) {
     return false;
   }
-  if (! tp_load_foliage()) {
-    return false;
-  }
-  if (! tp_load_smoke()) {
-    return false;
-  }
   if (! tp_load_wall()) {
     return false;
   }
   if (! tp_load_door()) {
     return false;
   }
-  if (! tp_load_water()) {
-    return false;
-  }
   if (! tp_load_bridge()) {
-    return false;
-  }
-  if (! tp_load_steam()) {
     return false;
   }
   if (! tp_load_entrance()) {
     return false;
   }
   if (! tp_load_rock()) {
-    return false;
-  }
-  if (! tp_load_lava()) {
-    return false;
-  }
-  if (! tp_load_fire()) {
     return false;
   }
   if (! tp_load_key()) {
@@ -81,9 +57,6 @@ bool templates_init(void)
     return false;
   }
   if (! tp_load_dirt()) {
-    return false;
-  }
-  if (! tp_load_deep_water()) {
     return false;
   }
   if (! tp_load_trap()) {
@@ -105,6 +78,33 @@ bool templates_init(void)
     return false;
   }
   if (! tp_load_ghost()) {
+    return false;
+  }
+  if (! tp_load_explosion()) {
+    return false;
+  }
+  if (! tp_load_grass()) {
+    return false;
+  }
+  if (! tp_load_foliage()) {
+    return false;
+  }
+  if (! tp_load_smoke()) {
+    return false;
+  }
+  if (! tp_load_water()) {
+    return false;
+  }
+  if (! tp_load_steam()) {
+    return false;
+  }
+  if (! tp_load_lava()) {
+    return false;
+  }
+  if (! tp_load_fire()) {
+    return false;
+  }
+  if (! tp_load_deep_water()) {
     return false;
   }
   if (! tp_load_level_curr()) {

@@ -8,6 +8,7 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things \
 	    src/things/player \
 	    src/things/dungeon \
+	    src/things/environ \
 	    src/things/monst \
 	    src/things/mob \
 	    src/things/levels \
