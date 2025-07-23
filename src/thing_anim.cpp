@@ -84,9 +84,10 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t)
             // Same first tile e.g. level select tiles, we want to flash in sync and not out of order
             //
             t->anim_index = 0;
-          } else if (tp_is_animated(tp)) {
+          } else {
             //
-            // Choose a random first tile
+            // Choose a random first tile. Cannot use animated check here, as things like grass
+            // want different tiles, but are not animated.
             //
             auto i        = pcg_random_range_inclusive(0, ntiles - 1);
             t->anim_index = i;
