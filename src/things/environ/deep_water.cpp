@@ -28,6 +28,7 @@ bool tp_load_deep_water(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_hazard);
+  tp_health_initial_set(tp, 40); // to allow it to be damaged by fire
   tp_flag_set(tp, is_deep_water);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_physics_temperature);

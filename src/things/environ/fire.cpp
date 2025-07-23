@@ -86,7 +86,9 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp own
   // Allow things to continue to burn if we still have some burnable material
   //
   if (level_is_alive_combustible(g, v, l, me->at)) {
-    thing_spawn(g, v, l, tp_random(is_fire), me->at);
+    if (! level_is_fire(g, v, l, me->at)) {
+      thing_spawn(g, v, l, tp_random(is_fire), me->at);
+    }
   }
 
   if (! level_is_smoke(g, v, l, me->at)) {
@@ -117,7 +119,7 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_tickable);
-  tp_health_initial_set(tp, 6); // to allow it to be damaged by water
+  tp_health_initial_set(tp, 3); // to allow it to be damaged by water
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_lifespan_set(tp, "1d6+3");

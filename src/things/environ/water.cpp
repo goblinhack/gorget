@@ -30,6 +30,7 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_physics_temperature);
+  tp_health_initial_set(tp, 20); // to allow it to be damaged by fire
   tp_flag_set(tp, is_tiled);
   tp_flag_set(tp, is_water);
   tp_short_name_set(tp, "shallow water");
