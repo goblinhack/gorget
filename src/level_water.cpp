@@ -35,7 +35,7 @@ void level_tick_begin_water(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      if (! thing_is_physics_temperature(t)) {
+      if (! thing_is_physics_water(t)) {
         continue;
       }
 
