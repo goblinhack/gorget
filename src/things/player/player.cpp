@@ -39,7 +39,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_tickable);
-  tp_health_initial_set(tp, 100);
+  tp_health_initial_set(tp, "100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius

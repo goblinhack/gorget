@@ -42,7 +42,7 @@ bool tp_load_treasure(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_treasure);
   tp_flag_set(tp, is_treasure2);
-  tp_health_initial_set(tp, 20);
+  tp_health_initial_set(tp, "1d20");
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius

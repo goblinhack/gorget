@@ -36,7 +36,7 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_undead);
   tp_flag_set(tp, is_walk_through_walls);
-  tp_health_initial_set(tp, 1);
+  tp_health_initial_set(tp, "1");
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);

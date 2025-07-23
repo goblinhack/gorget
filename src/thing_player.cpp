@@ -72,7 +72,7 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
       }
     } else {
       if (thing_is_player(t)) {
-        level_tick_begin_requested(g, v, l, "player failed to shoved");
+        level_tick_begin_requested(g, v, l, "player failed to shove");
       }
     }
   } else {

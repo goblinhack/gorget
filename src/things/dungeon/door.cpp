@@ -39,7 +39,7 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_physics_temperature);
-  tp_health_initial_set(tp, 100);
+  tp_health_initial_set(tp, "1d100");
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);

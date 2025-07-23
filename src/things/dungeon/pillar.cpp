@@ -32,7 +32,7 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_pillar);
-  tp_health_initial_set(tp, 500);
+  tp_health_initial_set(tp, "1d500");
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);

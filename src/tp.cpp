@@ -145,7 +145,7 @@ public:
   //
   // Starting health.
   //
-  int health_initial {0};
+  Dice health_initial;
 
   //
   // Temperature in celsius
@@ -863,14 +863,14 @@ bool tp_is_immune_to(Tpp tp, ThingEventType val)
   return tp->is_immune[ val ];
 }
 
-void tp_health_initial_set(Tpp tp, int val)
+void tp_health_initial_set(Tpp tp, const char *val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->health_initial = val;
+  tp->health_initial = Dice(std::string(val));
 }
 
 int tp_health_initial_get(Tpp tp)
@@ -880,7 +880,7 @@ int tp_health_initial_get(Tpp tp)
     ERR("no tp for %s", __FUNCTION__);
     return 0;
   }
-  return tp->health_initial;
+  return tp->health_initial.roll();
 }
 
 void tp_temperature_initial_set(Tpp tp, int val)
