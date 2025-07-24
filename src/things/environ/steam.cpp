@@ -25,16 +25,16 @@ bool tp_load_steam(void)
   auto        tp   = tp_load("steam");
 
   // begin sort marker1 {
+  tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   tp_description_set(tp, tp_steam_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_indestructible);
-  tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
-  tp_flag_set(tp, is_steam);
-  tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_steam);
   tp_flag_set(tp, is_tickable);
   tp_lifespan_set(tp, "1d6+3");
   tp_temperature_initial_set(tp, 100); // celsius

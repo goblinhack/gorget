@@ -31,7 +31,7 @@ static bool test_collision_brazier_shove_ok(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@B..."
+        "..@;..."
         "......."
         "......."
         ".......";
@@ -120,9 +120,16 @@ static bool test_collision_brazier_shove_ok(Gamep g, Testp t)
       TEST_FAILED(t, "move failed");
       goto exit;
     }
+  }
 
+  for (auto tries = 0; tries < 10; tries++) {
+    TRACE_NO_INDENT();
+    // level_dump(g, v, l, w, h);
+    game_event_wait(g);
     game_wait_for_tick_to_finish(g, v, l);
+  }
 
+  {
     if (! (result = level_match_contents(g, v, l, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
@@ -135,7 +142,7 @@ static bool test_collision_brazier_shove_ok(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick");
+  TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
 
   TEST_PASSED(t);
 exit:

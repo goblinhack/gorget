@@ -161,7 +161,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   // Check the tick is as expected
   //
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick");
+    TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
   }
 
   TEST_PASSED(t);

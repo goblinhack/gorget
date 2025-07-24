@@ -163,7 +163,7 @@ static bool test_move_ok(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick");
+  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
 
   TEST_PASSED(t);
 exit:

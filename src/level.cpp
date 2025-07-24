@@ -164,6 +164,12 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_player(g, v, l, p)) {
         c = CHARMAP_PLAYER;
       }
+      if (level_is_steam(g, v, l, p)) {
+        c = CHARMAP_STEAM;
+      }
+      if (level_is_smoke(g, v, l, p)) {
+        c = CHARMAP_SMOKE;
+      }
 
       out += c;
     }

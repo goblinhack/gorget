@@ -14,6 +14,12 @@ bool tests_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
+  if (! test_load_collision_large_fire_water()) {
+    return false;
+  }
+  if (! test_load_collision_fire_water()) {
+    return false;
+  }
   if (! test_load_collision_mob()) {
     return false;
   }

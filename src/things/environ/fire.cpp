@@ -92,7 +92,9 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp own
   }
 
   if (! level_is_smoke(g, v, l, me->at)) {
-    thing_spawn(g, v, l, tp_random(is_smoke), me->at);
+    if (level_is_combustible(g, v, l, me->at)) {
+      thing_spawn(g, v, l, tp_random(is_smoke), me->at);
+    }
   }
 }
 

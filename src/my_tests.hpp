@@ -9,6 +9,8 @@ bool tests_init(void);
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
+bool test_load_collision_large_fire_water();
+bool test_load_collision_fire_water();
 bool test_load_collision_mob();
 bool test_load_collision_barrel();
 bool test_load_collision_wall();

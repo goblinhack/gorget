@@ -35,6 +35,8 @@ enum {
   CHARMAP_PILLAR      = '|',
   CHARMAP_PLAYER      = '@',
   CHARMAP_SECRET_DOOR = 's',
+  CHARMAP_SMOKE       = ';',
+  CHARMAP_STEAM       = ':',
   CHARMAP_TELEPORT    = 'T',
   CHARMAP_TRAP        = 't',
   CHARMAP_TREASURE1   = '$',

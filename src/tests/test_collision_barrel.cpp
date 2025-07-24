@@ -99,7 +99,7 @@ static bool test_collision_barrel(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick");
+  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
