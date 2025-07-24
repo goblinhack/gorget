@@ -122,6 +122,14 @@ typedef struct Level_ {
   //
   uint8_t next_level : 1;
   //
+  // Level needs tiles updated
+  //
+  uint8_t tile_update_required : 1;
+  //
+  // When a tile is destroyed, we need to update adjacent tiles. This limits the update to only changed tiles.
+  //
+  uint8_t tiles_for_update[ MAP_WIDTH ][ MAP_HEIGHT ];
+  //
   // What things are where? Each Id points to a thing structure.
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
@@ -390,6 +398,7 @@ void   level_destroy(Gamep, Levelsp, Levelp);
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);
 
 bool is_oob(spoint);
+bool is_oob(int, int);
 
 bool   level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
 Thingp level_first_with_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
@@ -424,6 +433,8 @@ void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
 bool level_match_contents(Gamep, Levelsp, Levelp, int w, int h, const char *in);
 void level_debug(Gamep, Levelsp, Levelp);
 void level_init(Gamep, Levelsp, Levelp, LevelNum);
+void level_tile_update_set(Gamep, Levelsp, Levelp, spoint);
+void level_tile_update(Gamep, Levelsp, Levelp);
 
 void rooms_test(Gamep);
 void rooms_init(Gamep);

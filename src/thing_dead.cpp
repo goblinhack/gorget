@@ -188,4 +188,11 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Restart the animation if we have dead frames
   //
   thing_anim_init(g, v, l, t);
+
+  //
+  // Do adjacent tiles need updating due to the destruction of this tiled thing?
+  //
+  if (thing_is_tiled(t)) {
+    level_tile_update_set(g, v, l, t->at);
+  }
 }

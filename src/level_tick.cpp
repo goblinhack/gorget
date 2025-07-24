@@ -38,6 +38,11 @@ static void level_cleanup_things(Gamep g, Levelsp v, Levelp l)
       thing_fini(g, v, l, t);
     }
   }
+
+  //
+  // Update any tiles that are needed
+  //
+  level_tile_update(g, v, l);
 }
 
 //

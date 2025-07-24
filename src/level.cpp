@@ -466,6 +466,23 @@ bool is_oob(spoint p)
   return false;
 }
 
+bool is_oob(int x, int y)
+{
+  if (x < 0) {
+    return true;
+  }
+  if (y < 0) {
+    return true;
+  }
+  if (x >= MAP_WIDTH) {
+    return true;
+  }
+  if (y >= MAP_HEIGHT) {
+    return true;
+  }
+  return false;
+}
+
 bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)
 {
   TRACE_NO_INDENT();
