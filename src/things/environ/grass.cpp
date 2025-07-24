@@ -40,7 +40,7 @@ bool tp_load_grass(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_health_initial_set(tp, "1");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_temperature_burns_at_set(tp, 50);  // celsius
+  tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_weight_set(tp, WEIGHT_FEATHER);    // grams

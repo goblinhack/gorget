@@ -96,6 +96,8 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_AND_INDENT();
 
+  auto tp = thing_tp(t);
+
   if (thing_is_indestructible(t)) {
     //
     // Log the reason for attack?
@@ -156,10 +158,15 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
       case THING_EVENT_MELEE_DAMAGE : //
         break;
       case THING_EVENT_HEAT_DAMAGE : //
-        if (! level_is_fire(g, v, l, t->at)) {
-          thing_spawn(g, v, l, tp_random(is_fire), t->at);
+        {
+          auto temp_burn = tp_temperature_burns_at_get(tp);
+          if (temp_burn && (thing_temperature(t) > temp_burn)) {
+            if (! level_is_fire(g, v, l, t->at)) {
+              thing_spawn(g, v, l, tp_random(is_fire), t->at);
+            }
+            thing_is_burnt_set(g, v, l, t);
+          }
         }
-        thing_is_burnt_set(g, v, l, t);
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         if (! level_is_fire(g, v, l, t->at)) {

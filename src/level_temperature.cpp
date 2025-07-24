@@ -79,11 +79,6 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       float Tb = thing_temperature(b);
       float Wb = thing_weight(b);
 
-      if (0) {
-        THING_CON(a, "Ta %f Wa %f", Ta, Wa);
-        THING_CON(b, "Tb %f Wb %f", Tb, Wb);
-      }
-
       //
       // Fire has no weight, so give it some so the equations below average the temperatures.
       //
@@ -108,6 +103,11 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       //
       int Na = std::round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
       int Nb = std::round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
+
+      if (0) {
+        THING_CON(a, "Ta %f Wa %f Na %d", Ta, Wa, Na);
+        THING_CON(b, "Tb %f Wb %f Nb %d", Tb, Wb, Nb);
+      }
 
       if (Ta != Na) {
         if (thing_is_loggable(a)) {

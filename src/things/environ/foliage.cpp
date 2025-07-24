@@ -20,19 +20,22 @@ bool tp_load_foliage(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp = tp_load("foliage");
+  std::string name = "foliage";
+  auto        tp   = tp_load("foliage");
+
   // begin sort marker1 {
   tp_description_set(tp, tp_foliage_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_foliage);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_health_initial_set(tp, "1d5");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_temperature_burns_at_set(tp, 50);  // celsius
+  tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_weight_set(tp, WEIGHT_LIGHT);      // grams
@@ -40,22 +43,20 @@ bool tp_load_foliage(void)
   tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.1"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.2"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.3"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.4"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.5"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.6"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.7"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.8"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.9"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.10"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.11"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.12"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.13"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.14"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.15"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("foliage.16"));
+  for (auto frame = 0; frame < 14; frame++) {
+    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  for (auto frame = 0; frame < 1; frame++) {
+    auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
+  }
+
+  for (auto frame = 0; frame < 1; frame++) {
+    auto tile = tile_find_mand(name + std::string(".burnt.") + std::to_string(frame));
+    tp_tiles_push_back(tp, THING_ANIM_BURNT, tile);
+  }
 
   return true;
 }
