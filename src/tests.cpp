@@ -26,6 +26,9 @@ bool tests_init(void)
   if (! test_load_collision_barrel()) {
     return false;
   }
+  if (! test_load_collision_mob_water()) {
+    return false;
+  }
   if (! test_load_collision_wall()) {
     return false;
   }

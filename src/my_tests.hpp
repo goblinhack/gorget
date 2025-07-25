@@ -13,6 +13,7 @@ bool test_load_collision_large_fire_water();
 bool test_load_collision_fire_water();
 bool test_load_collision_mob();
 bool test_load_collision_barrel();
+bool test_load_collision_mob_water();
 bool test_load_collision_wall();
 bool test_load_collision_mob_lava();
 bool test_load_collision_brazier_shove_ok();

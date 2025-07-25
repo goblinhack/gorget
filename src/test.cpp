@@ -31,6 +31,7 @@ std::initializer_list< std::string > tests = {
     "collision_fire_water",
     "collision_mob",
     "collision_barrel",
+    "collision_mob_water",
     "collision_wall",
     "collision_mob_lava",
     "collision_brazier_shove_ok",
