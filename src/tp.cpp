@@ -708,7 +708,7 @@ void tp_flag_set(Tpp tp, ThingFlag f, bool val)
   tp->flag[ f ] = val;
 }
 
-void tp_z_depth_set(Tpp tp, uint8_t val)
+void tp_z_depth_set(Tpp tp, MapZDepth val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -727,7 +727,7 @@ uint8_t tp_z_depth_get(Tpp tp)
   return tp->z_depth;
 }
 
-void tp_z_layer_set(Tpp tp, uint8_t val)
+void tp_z_layer_set(Tpp tp, MapZLayer val)
 {
   TRACE_NO_INDENT();
   if (! tp) {

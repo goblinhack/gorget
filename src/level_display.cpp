@@ -236,7 +236,11 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
     return;
   }
 
-  if (tp_z_depth_get(tp) != depth) {
+  if (thing_is_falling(t)) {
+    if (depth != MAP_Z_DEPTH_FLOOR) {
+      return;
+    }
+  } else if (tp_z_depth_get(tp) != depth) {
     return;
   }
 
@@ -273,12 +277,9 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_Z_DEPTH(z_depth)
   {
     for (auto y = v->miny; y < v->maxy; y++) {
-      FOR_ALL_Z_LAYER(z_layer)
-      {
-        for (auto x = v->minx; x < v->maxx; x++) {
-          for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-            level_display_slot(g, v, l, spoint(x, y), slot, z_depth);
-          }
+      for (auto x = v->minx; x < v->maxx; x++) {
+        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+          level_display_slot(g, v, l, spoint(x, y), slot, z_depth);
         }
       }
     }

@@ -496,6 +496,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
         LOG("l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp), p.x, p.y);
       }
 
+#if 0
       if (0) {
         //
         // Sort the map slots by z prio for display order.
@@ -526,6 +527,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
           l->thing_id[ p.x ][ p.y ][ slot_tmp ] = slots_sorted[ slot_tmp ];
         }
       }
+#endif
 
       return;
     }

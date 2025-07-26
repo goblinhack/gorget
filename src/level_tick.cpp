@@ -62,7 +62,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     // run temperature checks. Else it looks odd that it catches fire before it reaches
     // the lava.
     //
-    if (thing_is_moving(t)) {
+    if (thing_is_moving(t) || thing_is_falling(t)) {
       v->tick_wait_on_moving_things = true;
     }
 
