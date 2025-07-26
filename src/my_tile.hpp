@@ -110,6 +110,6 @@ void tile_load_arr_sprites(const char *file, const char *tex_name, uint32_t widt
 void tile_blit_frozen(const Tilep &tile, const spoint tl, const spoint br);
 void tile_blit_burnt(const Tilep &tile, const spoint tl, const spoint br);
 int  tile_gl_binding(Tilep);
-void tile_submerge_pct(spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent);
+void tile_submerge_pct(Gamep, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent);
 
 #endif

@@ -6,6 +6,7 @@
 #include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_cpp_template.hpp"
+#include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
@@ -1166,7 +1167,7 @@ void tile_blit_section_colored(int index, const fpoint &tile_tl, const fpoint &t
 // Shift the coordinates of a tile by a given percentage, so the bottom is
 // trimmed and looks submerged.
 //
-void tile_submerge_pct(spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent)
+void tile_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent)
 {
   float h1 = br.y - tl.y;
   float h2 = y2 - y1;
@@ -1179,4 +1180,12 @@ void tile_submerge_pct(spoint &tl, spoint &br, float &x1, float &x2, float &y1, 
 
   tl.y -= off1 / 2;
   br.y -= off1 / 2;
+
+  //
+  // Round back to the nearest pixel size
+  //
+  float pix = game_map_single_pix_size_get(g);
+  auto  h   = br.y - tl.y;
+  tl.y      = (int) (floor((float) tl.y / pix) * pix);
+  br.y      = tl.y + h;
 }

@@ -49,7 +49,7 @@ static void level_display_tile(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, u
   if (t) {
     auto submerged_pct = thing_submerged_pct(t);
     if (submerged_pct) {
-      tile_submerge_pct(tl, br, x1, x2, y1, y2, thing_submerged_pct(t));
+      tile_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t));
     }
   }
 
