@@ -581,8 +581,7 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
           break;
         case CHARMAP_TELEPORT :   break;
         case CHARMAP_TRAP :       break;
-        case CHARMAP_TREASURE1 :  break;
-        case CHARMAP_TREASURE2 :  break;
+        case CHARMAP_TREASURE :   break;
         case CHARMAP_WALL :       break;
         case CHARMAP_WATER :      break;
         case CHARMAP_DEEP_WATER : break;
@@ -1126,8 +1125,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_ENTRANCE :    break;
         case CHARMAP_TELEPORT :    break;
         case CHARMAP_TRAP :        break;
-        case CHARMAP_TREASURE1 :   break;
-        case CHARMAP_TREASURE2 :   break;
+        case CHARMAP_TREASURE :    break;
         case CHARMAP_WALL :        break;
         case CHARMAP_WATER :       break;
         case CHARMAP_DEEP_WATER :  break;
@@ -1427,8 +1425,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_ENTRANCE :    break;
         case CHARMAP_TELEPORT :    break;
         case CHARMAP_TRAP :        break;
-        case CHARMAP_TREASURE1 :   break;
-        case CHARMAP_TREASURE2 :   break;
+        case CHARMAP_TREASURE :    break;
         case CHARMAP_WALL :        break;
         case CHARMAP_WATER :       break;
         case CHARMAP_DEEP_WATER :  break;
@@ -1710,8 +1707,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   LOG("Seed          : %u", l->info.seed_num);
   LOG("Room count    : %d", l->info.room_count);
   LOG("Fragment count: %d", l->info.fragment_count);
-  LOG("Treasure count: %d (normal:%d enhanced:%d)", l->info.treasure_count, l->info.treasure1_count,
-      l->info.treasure2_count);
+  LOG("Treasure count: %d", l->info.treasure_count);
   LOG("Monst count   : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count, l->info.monst2_count);
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
@@ -2183,8 +2179,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
           case CHARMAP_ENTRANCE :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
-          case CHARMAP_TREASURE1 :
-          case CHARMAP_TREASURE2 :
+          case CHARMAP_TREASURE :
           case CHARMAP_WALL :
             //
             // No water
@@ -2252,8 +2247,7 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
           case CHARMAP_SECRET_DOOR :
           case CHARMAP_TELEPORT :
           case CHARMAP_TRAP :
-          case CHARMAP_TREASURE1 :
-          case CHARMAP_TREASURE2 :
+          case CHARMAP_TREASURE :
           case CHARMAP_WALL :
           case CHARMAP_WILDCARD :
           case CHARMAP_EMPTY :
@@ -2413,8 +2407,7 @@ static bool level_gen_tile_is_traversable(Gamep g, class LevelGen *l, int x, int
     case CHARMAP_SECRET_DOOR : return true;
     case CHARMAP_ENTRANCE :    return true;
     case CHARMAP_TRAP :        return true;
-    case CHARMAP_TREASURE1 :   return true;
-    case CHARMAP_TREASURE2 :   return true;
+    case CHARMAP_TREASURE :    return true;
     case CHARMAP_WATER :       return true;
     case CHARMAP_DEEP_WATER :  return true;
     default :                  return false;
@@ -2963,8 +2956,7 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_ENTRANCE :
         case CHARMAP_TELEPORT :
         case CHARMAP_TRAP :
-        case CHARMAP_TREASURE1 :
-        case CHARMAP_TREASURE2 :
+        case CHARMAP_TREASURE :
           if (l->data[ x - 1 ][ y - 1 ].c == CHARMAP_EMPTY) {
             l->data[ x - 1 ][ y - 1 ].c = CHARMAP_WALL;
           }
@@ -3214,12 +3206,10 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  l->info.monst_count     = 0;
-  l->info.monst1_count    = 0;
-  l->info.monst2_count    = 0;
-  l->info.treasure_count  = 0;
-  l->info.treasure1_count = 0;
-  l->info.treasure2_count = 0;
+  l->info.monst_count    = 0;
+  l->info.monst1_count   = 0;
+  l->info.monst2_count   = 0;
+  l->info.treasure_count = 0;
 
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
@@ -3234,13 +3224,9 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
           l->info.monst_count++;
           l->info.monst2_count++;
           break;
-        case CHARMAP_TREASURE1 :
+        case CHARMAP_TREASURE :
           l->info.treasure_count++;
-          l->info.treasure1_count++;
-          break;
-        case CHARMAP_TREASURE2 :
           l->info.treasure_count++;
-          l->info.treasure2_count++;
           break;
         case CHARMAP_TELEPORT :
           //
@@ -3319,19 +3305,19 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
     auto r    = l->data[ x ][ y ].room;
 
     if (r && (l->room_entrance == r)) {
-      l->data[ x ][ y ].c = CHARMAP_TREASURE1;
+      l->data[ x ][ y ].c = CHARMAP_TREASURE;
       continue;
     }
 
     if (r && (l->room_exit == r)) {
-      l->data[ x ][ y ].c = CHARMAP_TREASURE2;
+      l->data[ x ][ y ].c = CHARMAP_TREASURE;
       continue;
     }
 
     if (d100() < 90) {
-      l->data[ x ][ y ].c = CHARMAP_TREASURE1;
+      l->data[ x ][ y ].c = CHARMAP_TREASURE;
     } else {
-      l->data[ x ][ y ].c = CHARMAP_TREASURE2;
+      l->data[ x ][ y ].c = CHARMAP_TREASURE;
     }
   }
 }

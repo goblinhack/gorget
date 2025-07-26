@@ -912,26 +912,6 @@ bool thing_is_treasure(Thingp t)
   return tp_flag(thing_tp(t), is_treasure);
 }
 
-bool thing_is_treasure1(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_treasure1);
-}
-
-bool thing_is_treasure2(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_treasure2);
-}
-
 bool thing_is_unused1(Thingp t)
 {
   TRACE_NO_INDENT();

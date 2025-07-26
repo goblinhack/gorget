@@ -46,8 +46,7 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
   if (l->info.room_count) {
     LOG("Room count    : %d", l->info.room_count);
     LOG("Fragment count: %d", l->info.fragment_count);
-    LOG("Treasure count: %d (normal:%d enhanced:%d)", l->info.treasure_count, l->info.treasure1_count,
-        l->info.treasure2_count);
+    LOG("Treasure count: %d", l->info.treasure_count);
     LOG("Monst count   : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count,
         l->info.monst2_count);
   }
@@ -119,6 +118,9 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_lava(g, v, l, p)) {
         c = CHARMAP_LAVA;
       }
+      if (level_is_water(g, v, l, p)) {
+        c = CHARMAP_WATER;
+      }
       if (level_is_mob1(g, v, l, p)) {
         c = CHARMAP_MOB1;
       }
@@ -143,23 +145,20 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_trap(g, v, l, p)) {
         c = CHARMAP_TRAP;
       }
-      if (level_is_treasure1(g, v, l, p)) {
-        c = CHARMAP_TREASURE1;
-      }
-      if (level_is_treasure2(g, v, l, p)) {
-        c = CHARMAP_TREASURE2;
+      if (level_is_treasure(g, v, l, p)) {
+        c = CHARMAP_TREASURE;
       }
       if (level_is_wall(g, v, l, p)) {
         c = CHARMAP_WALL;
-      }
-      if (level_is_water(g, v, l, p)) {
-        c = CHARMAP_WATER;
       }
       if (level_is_entrance(g, v, l, p)) {
         c = CHARMAP_ENTRANCE;
       }
       if (level_is_exit(g, v, l, p)) {
         c = CHARMAP_EXIT;
+      }
+      if (level_is_fire(g, v, l, p)) {
+        c = CHARMAP_FIRE;
       }
       if (level_is_player(g, v, l, p)) {
         c = CHARMAP_PLAYER;

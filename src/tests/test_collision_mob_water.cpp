@@ -69,7 +69,7 @@ static bool test_collision_mob_water(Gamep g, Testp t)
   //
   // Spawn mob twice. This should be enough to evaporate the water.
   //
-  thing_spawn(g, v, l, tp_random(is_mob), player->at + spoint(2, 0));
+  thing_spawn(g, v, l, tp_random(is_mob1), player->at + spoint(2, 0));
 
   for (auto tries = 0; tries < 3; tries++) {
     TRACE_NO_INDENT();

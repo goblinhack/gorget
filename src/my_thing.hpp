@@ -594,8 +594,6 @@ bool thing_is_tickable(Thingp);
 bool thing_is_tiled(Thingp);
 bool thing_is_trap(Thingp);
 bool thing_is_treasure(Thingp);
-bool thing_is_treasure1(Thingp);
-bool thing_is_treasure2(Thingp);
 bool thing_is_undead(Thingp);
 bool thing_is_unused1(Thingp);
 bool thing_is_unused10(Thingp);

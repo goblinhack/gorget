@@ -31,7 +31,7 @@ static bool test_collision_brazier_shove_ok(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@;..."
+        "..@;!.."
         "......."
         "......."
         ".......";

@@ -94,8 +94,6 @@
       list_macro(is_tiled, "is_tiled"),                                 /* newline */                                \
       list_macro(is_trap, "is_trap"),                                   /* newline */                                \
       list_macro(is_treasure, "is_treasure"),                           /* newline */                                \
-      list_macro(is_treasure1, "is_treasure1"),                         /* newline */                                \
-      list_macro(is_treasure2, "is_treasure2"),                         /* newline */                                \
       list_macro(is_undead, "is_undead"),                               /* newline */                                \
       list_macro(is_unused1, "is_unused1"),                             /* newline */                                \
       list_macro(is_unused10, "is_unused10"),                           /* newline */                                \
@@ -565,8 +563,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_tiled(tp)                  tp_flag(tp, is_tiled)
 #define tp_is_trap(tp)                   tp_flag(tp, is_trap)
 #define tp_is_treasure(tp)               tp_flag(tp, is_treasure)
-#define tp_is_treasure1(tp)              tp_flag(tp, is_treasure1)
-#define tp_is_treasure2(tp)              tp_flag(tp, is_treasure2)
 #define tp_is_undead(tp)                 tp_flag(tp, is_undead)
 #define tp_is_unused1(tp)                tp_flag(tp, is_unused1)
 #define tp_is_unused10(tp)               tp_flag(tp, is_unused10)
@@ -690,8 +686,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_tiled(g, v, l, p)                  level_flag(g, v, l, is_tiled, p)
 #define level_is_trap(g, v, l, p)                   level_flag(g, v, l, is_trap, p)
 #define level_is_treasure(g, v, l, p)               level_flag(g, v, l, is_treasure, p)
-#define level_is_treasure1(g, v, l, p)              level_flag(g, v, l, is_treasure1, p)
-#define level_is_treasure2(g, v, l, p)              level_flag(g, v, l, is_treasure2, p)
 #define level_is_undead(g, v, l, p)                 level_flag(g, v, l, is_undead, p)
 #define level_is_unused1(g, v, l, p)                level_flag(g, v, l, is_unused1, p)
 #define level_is_unused10(g, v, l, p)               level_flag(g, v, l, is_unused10, p)
@@ -810,8 +804,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_alive_tiled(g, v, l, p)                  level_alive_and_flag(g, v, l, is_tiled, p)
 #define level_is_alive_trap(g, v, l, p)                   level_alive_and_flag(g, v, l, is_trap, p)
 #define level_is_alive_treasure(g, v, l, p)               level_alive_and_flag(g, v, l, is_treasure, p)
-#define level_is_alive_treasure1(g, v, l, p)              level_alive_and_flag(g, v, l, is_treasure1, p)
-#define level_is_alive_treasure2(g, v, l, p)              level_alive_and_flag(g, v, l, is_treasure2, p)
 #define level_is_alive_undead(g, v, l, p)                 level_alive_and_flag(g, v, l, is_undead, p)
 #define level_is_alive_unused1(g, v, l, p)                level_alive_and_flag(g, v, l, is_unused1, p)
 #define level_is_alive_unused10(g, v, l, p)               level_alive_and_flag(g, v, l, is_unused10, p)
@@ -935,8 +927,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_tiled(g, v, l, p)                  level_first_with_flag(g, v, l, is_tiled, p)
 #define level_first_trap(g, v, l, p)                   level_first_with_flag(g, v, l, is_trap, p)
 #define level_first_treasure(g, v, l, p)               level_first_with_flag(g, v, l, is_treasure, p)
-#define level_first_treasure1(g, v, l, p)              level_first_with_flag(g, v, l, is_treasure1, p)
-#define level_first_treasure2(g, v, l, p)              level_first_with_flag(g, v, l, is_treasure2, p)
 #define level_first_undead(g, v, l, p)                 level_first_with_flag(g, v, l, is_undead, p)
 #define level_first_unused1(g, v, l, p)                level_first_with_flag(g, v, l, is_unused1, p)
 #define level_first_unused10(g, v, l, p)               level_first_with_flag(g, v, l, is_unused10, p)

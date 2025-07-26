@@ -34,8 +34,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
   auto tp_pillar      = tp_random(is_pillar);
   auto tp_barrel      = tp_random(is_barrel);
   auto tp_teleport    = tp_random(is_teleport);
-  auto tp_treasure1   = tp_random(is_treasure1);
-  auto tp_treasure2   = tp_random(is_treasure2);
+  auto tp_treasure    = tp_random(is_treasure);
   auto tp_key         = tp_random(is_key);
   auto tp_foliage     = tp_random(is_foliage);
   auto tp_corridor    = tp_random(is_corridor);
@@ -89,13 +88,9 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           need_floor = true;
           tp         = tp_wall;
           break;
-        case CHARMAP_TREASURE1 :
+        case CHARMAP_TREASURE :
           need_floor = true;
-          tp         = tp_treasure1;
-          break;
-        case CHARMAP_TREASURE2 :
-          need_floor = true;
-          tp         = tp_treasure2;
+          tp         = tp_treasure;
           break;
         case CHARMAP_TELEPORT :
           need_floor = true;

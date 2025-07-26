@@ -31,7 +31,7 @@ static bool test_collision_brazier_shove_into_mob(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@;g.."
+        "..@;!.."
         "......."
         "......."
         ".......";

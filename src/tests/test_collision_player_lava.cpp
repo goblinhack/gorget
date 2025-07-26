@@ -105,7 +105,7 @@ static bool test_collision_player_lava(Gamep g, Testp t)
     }
   }
 
-  for (auto tries = 0; tries < 2; tries++) {
+  for (auto tries = 0; tries < 3; tries++) {
     TRACE_NO_INDENT();
     game_event_wait(g);
     game_wait_for_tick_to_finish(g, v, l);
@@ -138,7 +138,7 @@ static bool test_collision_player_lava(Gamep g, Testp t)
   // Check the tick is as expected
   //
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
   }
 
   TEST_PASSED(t);

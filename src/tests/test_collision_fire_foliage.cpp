@@ -30,9 +30,9 @@ static bool test_collision_fire_foliage(Gamep g, Testp t)
   std::string expect1
       = "......."
         "......."
-        "......."
-        "..@..;."
-        "...;;.."
+        "...!!!."
+        "..@!.;."
+        "...!;!."
         "......."
         ".......";
 
@@ -73,7 +73,7 @@ static bool test_collision_fire_foliage(Gamep g, Testp t)
 
   for (auto tries = 0; tries < 10; tries++) {
     TRACE_NO_INDENT();
-    level_dump(g, v, l, w, h);
+    // level_dump(g, v, l, w, h);
     game_event_wait(g);
     game_wait_for_tick_to_finish(g, v, l);
   }

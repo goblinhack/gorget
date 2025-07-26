@@ -34,7 +34,6 @@ bool tp_load_potion(void)
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_treasure);
-  tp_flag_set(tp, is_treasure1);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

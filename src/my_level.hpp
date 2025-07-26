@@ -60,8 +60,6 @@ typedef struct LevelInfo_ {
   // How much treasure?
   //
   int treasure_count;
-  int treasure1_count;
-  int treasure2_count;
 
   //
   // How many teleports. Needs to be > 1
