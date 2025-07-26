@@ -65,7 +65,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
     //
     // Nothing to burn here?
     //
-    if (! level_is_burnable(g, v, l, p)) {
+    if (! level_is_alive_burnable(g, v, l, p)) {
       continue;
     }
 

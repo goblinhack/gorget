@@ -164,8 +164,8 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
             if (! level_is_fire(g, v, l, t->at)) {
               thing_spawn(g, v, l, tp_random(is_fire), t->at);
             }
-            thing_is_burnt_set(g, v, l, t);
           }
+          thing_is_burnt_set(g, v, l, t);
         }
         break;
       case THING_EVENT_FIRE_DAMAGE : //
