@@ -111,6 +111,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_shovable);
+  tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_light_color_set(tp, "orange");
   tp_on_death_set(tp, tp_brazier_on_death);
   tp_on_shoved_set(tp, tp_brazier_on_shoved);

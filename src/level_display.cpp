@@ -12,8 +12,8 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, uint16_t tile_index, spoint tl,
-                                     spoint br)
+static void level_display_tile(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, uint16_t tile_index, spoint tl,
+                               spoint br)
 {
   TRACE_NO_INDENT();
 
@@ -22,6 +22,17 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, Thing
     return;
   }
 
+  color fg      = WHITE;
+  color outline = BLACK;
+  float x1;
+  float x2;
+  float y1;
+  float y2;
+  tile_coords(tile, &x1, &y1, &x2, &y2);
+
+  //
+  // Outlined?
+  //
   auto single_pix_size = game_map_single_pix_size_get(g);
 
   //
@@ -32,12 +43,22 @@ static void level_display_tile_index(Gamep g, Levelsp v, Levelp l, Tpp tp, Thing
     single_pix_size = 0;
   }
 
+  //
+  // Submerge the tile if it is over some kind of liquid.
+  //
+  if (t) {
+    auto submerged_pct = thing_submerged_pct(t);
+    if (submerged_pct) {
+      tile_submerge_pct(tl, br, x1, x2, y1, y2, thing_submerged_pct(t));
+    }
+  }
+
   if (tp_is_blit_outlined(tp)) {
-    tile_blit_outline(tile, tl, br, WHITE, BLACK, single_pix_size, false);
+    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);
   } else if (tp_is_blit_square_outlined(tp)) {
-    tile_blit_outline(tile, tl, br, WHITE, BLACK, single_pix_size, true);
+    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, true);
   } else {
-    tile_blit(tile, tl, br);
+    tile_blit(tile, x1, x2, y1, y2, tl, br);
   }
 }
 
@@ -123,7 +144,21 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t)
     }
   }
 
-  level_display_tile_index(g, v, l, tp, t, tile_index, tl, br);
+  //
+  // Update submerged status
+  //
+  if (tp_is_submergible(tp)) {
+    thing_submerged_pct_set(g, v, l, t, 0);
+    if (level_is_deep_water(g, v, l, p)) {
+      thing_submerged_pct_set(g, v, l, t, 80);
+    } else if (level_is_water(g, v, l, p)) {
+      thing_submerged_pct_set(g, v, l, t, 50);
+    } else if (level_is_lava(g, v, l, p)) {
+      thing_submerged_pct_set(g, v, l, t, 80);
+    }
+  }
+
+  level_display_tile(g, v, l, tp, t, tile_index, tl, br);
 }
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)

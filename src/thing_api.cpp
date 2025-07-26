@@ -1172,14 +1172,14 @@ bool thing_is_unused32(Thingp t)
   return tp_flag(thing_tp(t), is_unused32);
 }
 
-bool thing_is_unused33(Thingp t)
+bool thing_is_submergible(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused33);
+  return tp_flag(thing_tp(t), is_submergible);
 }
 
 bool thing_is_physics_gravity(Thingp t)
@@ -2702,6 +2702,54 @@ int thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     return 0;
   }
   return t->_lifespan -= val;
+}
+
+int thing_submerged_pct(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+
+  //
+  // Floating when dead?
+  //
+  if (thing_is_dead(t)) {
+    return t->_submerged_pct / 2;
+  }
+
+  return t->_submerged_pct;
+}
+
+int thing_submerged_pct_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_submerged_pct = val;
+}
+
+int thing_submerged_pct_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_submerged_pct += val;
+}
+
+int thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_submerged_pct -= val;
 }
 
 int thing_age(Thingp t)

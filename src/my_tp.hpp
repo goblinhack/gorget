@@ -121,7 +121,7 @@
       list_macro(is_unused30, "is_unused30"),                           /* newline */                                \
       list_macro(is_unused31, "is_unused31"),                           /* newline */                                \
       list_macro(is_unused32, "is_unused32"),                           /* newline */                                \
-      list_macro(is_unused33, "is_unused33"),                           /* newline */                                \
+      list_macro(is_submergible, "is_submergible"),                     /* newline */                                \
       list_macro(is_physics_gravity, "is_physics_gravity"),             /* newline */                                \
       list_macro(is_physics_water, "is_physics_water"),                 /* newline */                                \
       list_macro(is_indestructible, "is_indestructible"),               /* newline */                                \
@@ -558,6 +558,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_slime(tp)                  tp_flag(tp, is_slime)
 #define tp_is_smoke(tp)                  tp_flag(tp, is_smoke)
 #define tp_is_steam(tp)                  tp_flag(tp, is_steam)
+#define tp_is_submergible(tp)            tp_flag(tp, is_submergible)
 #define tp_is_teleport(tp)               tp_flag(tp, is_teleport)
 #define tp_is_tickable(tp)               tp_flag(tp, is_tickable)
 #define tp_is_tiled(tp)                  tp_flag(tp, is_tiled)
@@ -590,7 +591,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused30(tp)               tp_flag(tp, is_unused30)
 #define tp_is_unused31(tp)               tp_flag(tp, is_unused31)
 #define tp_is_unused32(tp)               tp_flag(tp, is_unused32)
-#define tp_is_unused33(tp)               tp_flag(tp, is_unused33)
 #define tp_is_unused4(tp)                tp_flag(tp, is_unused4)
 #define tp_is_unused5(tp)                tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                tp_flag(tp, is_unused6)
@@ -681,6 +681,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_slime(g, v, l, p)                  level_flag(g, v, l, is_slime, p)
 #define level_is_smoke(g, v, l, p)                  level_flag(g, v, l, is_smoke, p)
 #define level_is_steam(g, v, l, p)                  level_flag(g, v, l, is_steam, p)
+#define level_is_submergible(g, v, l, p)            level_flag(g, v, l, is_submergible, p)
 #define level_is_teleport(g, v, l, p)               level_flag(g, v, l, is_teleport, p)
 #define level_is_tickable(g, v, l, p)               level_flag(g, v, l, is_tickable, p)
 #define level_is_tiled(g, v, l, p)                  level_flag(g, v, l, is_tiled, p)
@@ -713,7 +714,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused30(g, v, l, p)               level_flag(g, v, l, is_unused30, p)
 #define level_is_unused31(g, v, l, p)               level_flag(g, v, l, is_unused31, p)
 #define level_is_unused32(g, v, l, p)               level_flag(g, v, l, is_unused32, p)
-#define level_is_unused33(g, v, l, p)               level_flag(g, v, l, is_unused33, p)
 #define level_is_unused4(g, v, l, p)                level_flag(g, v, l, is_unused4, p)
 #define level_is_unused5(g, v, l, p)                level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                level_flag(g, v, l, is_unused6, p)
@@ -831,7 +831,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_alive_unused30(g, v, l, p)               level_alive_and_flag(g, v, l, is_unused30, p)
 #define level_is_alive_unused31(g, v, l, p)               level_alive_and_flag(g, v, l, is_unused31, p)
 #define level_is_alive_unused32(g, v, l, p)               level_alive_and_flag(g, v, l, is_unused32, p)
-#define level_is_alive_unused33(g, v, l, p)               level_alive_and_flag(g, v, l, is_unused33, p)
+#define level_is_alive_unused33(g, v, l, p)               level_alive_and_flag(g, v, l, is_submergible, p)
 #define level_is_alive_unused34(g, v, l, p)               level_alive_and_flag(g, v, l, is_physics_gravity, p)
 #define level_is_alive_unused35(g, v, l, p)               level_alive_and_flag(g, v, l, is_physics_water, p)
 #define level_is_alive_unused36(g, v, l, p)               level_alive_and_flag(g, v, l, is_indestructible, p)
@@ -954,7 +954,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_unused30(g, v, l, p)               level_first_with_flag(g, v, l, is_unused30, p)
 #define level_first_unused31(g, v, l, p)               level_first_with_flag(g, v, l, is_unused31, p)
 #define level_first_unused32(g, v, l, p)               level_first_with_flag(g, v, l, is_unused32, p)
-#define level_first_unused33(g, v, l, p)               level_first_with_flag(g, v, l, is_unused33, p)
+#define level_first_unused33(g, v, l, p)               level_first_with_flag(g, v, l, is_submergible, p)
 #define level_first_unused34(g, v, l, p)               level_first_with_flag(g, v, l, is_physics_gravity, p)
 #define level_first_unused35(g, v, l, p)               level_first_with_flag(g, v, l, is_physics_water, p)
 #define level_first_unused36(g, v, l, p)               level_first_with_flag(g, v, l, is_indestructible, p)

@@ -698,9 +698,9 @@ uint32_t tile_index(Tilep tile) { return tile->index; }
 void tile_coords(Tilep tile, float *x1, float *y1, float *x2, float *y2)
 {
   *x1 = tile->x1;
-  *y1 = tile->x1;
+  *y1 = tile->y1;
   *x2 = tile->x2;
-  *x2 = tile->x2;
+  *y2 = tile->y2;
 }
 
 Tilep string2tile(const char **s, int *len)
@@ -940,20 +940,9 @@ void Tile::set_gl_binding_mask(int v)
 //
 // Blits a whole tile. Y co-ords are inverted.
 //
-void tile_blit_outline(const Tilep &tile, const spoint tl, const spoint br, const color &c, int single_pix_size,
-                       bool square)
+void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                       const color &c, int single_pix_size, bool square)
 {
-  float x1, x2, y1, y2;
-
-  if (unlikely(! tile)) {
-    return;
-  }
-
-  x1 = tile->x1;
-  x2 = tile->x2;
-  y1 = tile->y1;
-  y2 = tile->y2;
-
   color outline = {10, 10, 10, 255};
   glcolor(outline);
 
@@ -987,20 +976,9 @@ void tile_blit_outline(const Tilep &tile, const spoint tl, const spoint br, cons
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_outline(const Tilep &tile, const spoint tl, const spoint br, const color &c, const color &outline,
-                       int single_pix_size, bool square)
+void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                       const color &c, const color &outline, int single_pix_size, bool square)
 {
-  float x1, x2, y1, y2;
-
-  if (unlikely(! tile)) {
-    return;
-  }
-
-  x1 = tile->x1;
-  x2 = tile->x2;
-  y1 = tile->y1;
-  y2 = tile->y2;
-
   glcolor(outline);
 
   auto binding = tile->gl_binding_mask();
@@ -1033,9 +1011,10 @@ void tile_blit_outline(const Tilep &tile, const spoint tl, const spoint br, cons
   blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
-void tile_blit_outline(int index, const spoint tl, const spoint br, const color &c, int single_pix_size, bool square)
+void tile_blit_outline(int index, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                       const color &c, int single_pix_size, bool square)
 {
-  tile_blit_outline(tile_index_to_tile(index), tl, br, c, square);
+  tile_blit_outline(tile_index_to_tile(index), x1, x2, y1, y2, tl, br, c, square);
 }
 
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c)
@@ -1073,6 +1052,11 @@ void tile_blit(const Tilep &tile, const spoint tl, const spoint br)
   y1 = tile->y1;
   y2 = tile->y2;
 
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+}
+
+void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br)
+{
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
 }
 
@@ -1176,4 +1160,23 @@ void tile_blit_section_colored(int index, const fpoint &tile_tl, const fpoint &t
 {
   tile_blit_section_colored(tile_index_to_tile(index), tile_tl, tile_br, tl, br, color_tl, color_tr, color_bl,
                             color_br);
+}
+
+//
+// Shift the coordinates of a tile by a given percentage, so the bottom is
+// trimmed and looks submerged.
+//
+void tile_submerge_pct(spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent)
+{
+  float h1 = br.y - tl.y;
+  float h2 = y2 - y1;
+
+  float off1 = (h1 / 100) * percent;
+  float off2 = (h2 / 100) * percent;
+
+  tl.y += off1;
+  y2 -= off2;
+
+  tl.y -= off1 / 2;
+  br.y -= off1 / 2;
 }

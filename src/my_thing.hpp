@@ -184,6 +184,10 @@ typedef struct Thing_ {
   //
   int16_t _age;
   //
+  // Used in lava, water etc...
+  //
+  int16_t _submerged_pct;
+  //
   // Health of the item.
   //
   int16_t _health;
@@ -499,6 +503,11 @@ int thing_lifespan_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_lifespan_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_lifespan_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
+int thing_submerged_pct(Thingp);
+int thing_submerged_pct_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_submerged_pct_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_submerged_pct_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
 int thing_age(Thingp);
 int thing_age_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_age_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
@@ -589,6 +598,7 @@ bool thing_is_shovable(Thingp);
 bool thing_is_slime(Thingp);
 bool thing_is_smoke(Thingp);
 bool thing_is_steam(Thingp);
+bool thing_is_submergible(Thingp);
 bool thing_is_teleport(Thingp);
 bool thing_is_tickable(Thingp);
 bool thing_is_tiled(Thingp);
@@ -621,7 +631,6 @@ bool thing_is_unused3(Thingp);
 bool thing_is_unused30(Thingp);
 bool thing_is_unused31(Thingp);
 bool thing_is_unused32(Thingp);
-bool thing_is_unused33(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);

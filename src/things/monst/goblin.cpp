@@ -39,6 +39,7 @@ bool tp_load_goblin(void)
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, "1d4");
   tp_monst_group_add(tp, MONST_GROUP_1);

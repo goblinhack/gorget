@@ -66,6 +66,7 @@ bool tile_is_resurrecting(Tilep);
 bool tile_is_loggable(Tilep);
 
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br);
+void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br);
 void tile_blit_mask(const Tilep &tile, const spoint tl, const spoint br);
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c);
 void tile_blit(const Tilep &tile, const spoint tl, const spoint tr, const spoint bl, const spoint br);
@@ -80,12 +81,12 @@ void tile_blit_colored(Tilep tile, spoint tl, spoint br, color color_tl, color c
                        color color_br);
 void tile_blit_colored_fat(Tilep tile, spoint tl, spoint br, color color_tl, color color_tr, color color_bl,
                            color color_br);
-void tile_blit_outline(const Tilep &tile, const spoint tl, const spoint br, const color &c, int single_pix_size,
-                       bool square = false);
-void tile_blit_outline(const Tilep &tile, const spoint tl, const spoint br, const color &c, const color &o,
-                       int single_pix_size, bool square = false);
-void tile_blit_outline(uint16_t index, const spoint tl, const spoint br, const color &c, int single_pix_size,
-                       bool square = false);
+void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                       const color &c, int single_pix_size, bool square = false);
+void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                       const color &c, const color &o, int single_pix_size, bool square = false);
+void tile_blit_outline(uint16_t index, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                       const color &c, int single_pix_size, bool square = false);
 void tile_blit_section(const Tilep &tile, const spoint tile_tl, const spoint tile_br, const spoint tl,
                        const spoint br);
 void tile_blit_section(uint16_t index, const spoint tile_tl, const spoint tile_br, const spoint tl, const spoint br);
@@ -109,5 +110,6 @@ void tile_load_arr_sprites(const char *file, const char *tex_name, uint32_t widt
 void tile_blit_frozen(const Tilep &tile, const spoint tl, const spoint br);
 void tile_blit_burnt(const Tilep &tile, const spoint tl, const spoint br);
 int  tile_gl_binding(Tilep);
+void tile_submerge_pct(spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent);
 
 #endif

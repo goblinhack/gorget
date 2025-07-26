@@ -40,6 +40,7 @@ bool tp_load_treasure(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_treasure);
   tp_health_initial_set(tp, "1d20");
   tp_temperature_burns_at_set(tp, 100);  // celsius

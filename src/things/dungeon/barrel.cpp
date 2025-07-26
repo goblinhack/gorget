@@ -39,6 +39,7 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_shovable);
+  tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_health_initial_set(tp, "1d6");
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
