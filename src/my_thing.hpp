@@ -192,6 +192,10 @@ typedef struct Thing_ {
   //
   int16_t _health;
   //
+  // Accumulates and holds the amount of time we've been falling.
+  //
+  int16_t _is_falling;
+  //
   // Template ID
   //
   uint16_t tp_id;
@@ -279,11 +283,13 @@ void thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
 void thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
+void thing_chasm_handle(Gamep, Levelsp, Levelp, Thingp me);
 bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 void thing_update_pos(Gamep, Thingp);
 void thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
-void thing_anim_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
+void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
+void thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_burnt_handle(Gamep, Levelsp, Levelp, Thingp);
@@ -352,6 +358,11 @@ int thing_temperature(Thingp);
 int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_temperature_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_temperature_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_is_falling(Thingp);
+int thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_is_falling_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_is_falling_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_value1(Thingp);
 int thing_value1_set(Gamep, Levelsp, Levelp, Thingp, int val);

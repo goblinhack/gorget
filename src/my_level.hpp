@@ -424,6 +424,7 @@ void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
 void level_tick_begin_water(Gamep, Levelsp, Levelp);
+void level_tick_begin_chasm(Gamep, Levelsp, Levelp);
 void level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);

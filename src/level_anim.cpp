@@ -35,7 +35,11 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
           continue;
         }
 
-        thing_anim_step(g, v, l, t, time_step);
+        thing_anim_time_step(g, v, l, t, time_step);
+
+        if (thing_is_falling(t)) {
+          thing_fall_time_step(g, v, l, t, time_step);
+        }
       }
     }
   }

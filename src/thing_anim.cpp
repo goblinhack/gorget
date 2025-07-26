@@ -113,7 +113,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Animation time step
 //
-void thing_anim_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
+void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 {
   TRACE_NO_INDENT();
 

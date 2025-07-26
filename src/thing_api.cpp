@@ -91,6 +91,49 @@ int thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_health -= val;
 }
 
+int thing_is_falling(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_is_falling;
+}
+
+int thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  game_request_to_remake_ui_set(g);
+  return t->_is_falling = val;
+}
+
+int thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  game_request_to_remake_ui_set(g);
+  return t->_is_falling += val;
+}
+
+int thing_is_falling_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  game_request_to_remake_ui_set(g);
+  return t->_is_falling -= val;
+}
+
 int thing_temperature(Thingp t)
 {
   TRACE_NO_INDENT();

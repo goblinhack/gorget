@@ -97,6 +97,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_time_step(g, v, l);
   } else if (v->tick_begin_requested) {
     //
+    // Handle things interacting with chasms
+    //
+    level_tick_begin_chasm(g, v, l);
+
+    //
     // Allow temperatures to settle prior to starting
     //
     level_tick_begin_temperature(g, v, l);

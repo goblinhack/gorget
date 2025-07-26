@@ -10,6 +10,8 @@
 #define LEVELS_ACROSS        (MAP_WIDTH / LEVEL_SCALE)
 #define LEVELS_DOWN          (MAP_HEIGHT / LEVEL_SCALE)
 #define MAX_LEVELS           101
+#define MAX_FALL_TIME_MS     250
+#define MAX_FALL_TILE_HEIGHT 4
 #define MAX_TESTED_LEVELS    1000
 #define LEVEL_SELECT_ID      (MAX_LEVELS - 1)
 #define MAP_WIDTH            48

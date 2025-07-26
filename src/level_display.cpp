@@ -43,13 +43,26 @@ static void level_display_tile(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, u
     single_pix_size = 0;
   }
 
-  //
-  // Submerge the tile if it is over some kind of liquid.
-  //
   if (t) {
-    auto submerged_pct = thing_submerged_pct(t);
-    if (submerged_pct) {
-      tile_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t));
+    //
+    // Handle various effects
+    //
+    int fall_height;
+    int submerged_pct;
+    if ((fall_height = thing_is_falling(t))) {
+      //
+      // Falling
+      //
+      int dh = (int) (((MAX_FALL_TILE_HEIGHT * ((float) (br.y - tl.y))) / MAX_FALL_TIME_MS) * fall_height);
+      tl.y += dh;
+      br.y += dh;
+    } else if ((submerged_pct = thing_submerged_pct(t))) {
+      //
+      // Submerge the tile if it is over some kind of liquid.
+      //
+      if (submerged_pct) {
+        tile_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t));
+      }
     }
   }
 
