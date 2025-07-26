@@ -154,7 +154,7 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t)
     } else if (level_is_water(g, v, l, p)) {
       thing_submerged_pct_set(g, v, l, t, 50);
     } else if (level_is_lava(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t, 80);
+      thing_submerged_pct_set(g, v, l, t, 40);
     }
   }
 
