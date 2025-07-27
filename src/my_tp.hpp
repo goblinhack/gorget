@@ -163,20 +163,6 @@ ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepth)
   for (uint8_t _z_depth_ = MAP_Z_DEPTH_ENUM_FIRST; _z_depth_ < MAP_Z_DEPTH_ENUM_MAX; _z_depth_++)
 
 //
-// Things at the same layer that must be drawn in y sorted order
-//
-#define MAP_Z_LAYER_ENUM(list_macro)                                                                                 \
-  clang_format_indent()                         /* dummy line for clang indentation fixup */                         \
-      list_macro(MAP_Z_LAYER_NORMAL, "normal"), /* newline */
-
-ENUM_DEF_H(MAP_Z_LAYER_ENUM, MapZLayer)
-
-#define MAP_Z_LAYER_ENUM_FIRST MAP_Z_LAYER_CHASM
-
-#define FOR_ALL_Z_LAYER(_z_layer_)                                                                                   \
-  for (uint8_t _z_layer_ = MAP_Z_LAYER_ENUM_FIRST; _z_layer_ < MAP_Z_LAYER_ENUM_MAX; _z_layer_++)
-
-//
 // Monst challenge level
 //
 #define MONST_GROUP_ENUM(list_macro)                                                                                 \
@@ -352,9 +338,6 @@ void tp_flag_set(Tpp, ThingFlag, bool val = true);
 
 void    tp_z_depth_set(Tpp, MapZDepth val);
 uint8_t tp_z_depth_get(Tpp tp);
-
-void    tp_z_layer_set(Tpp, MapZLayer val);
-uint8_t tp_z_layer_get(Tpp tp);
 
 void tp_speed_set(Tpp, int val);
 int  tp_speed_get(Tpp tp);

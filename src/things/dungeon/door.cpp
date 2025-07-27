@@ -48,7 +48,6 @@ bool tp_load_door(void)
   tp_temperature_initial_set(tp, 20);    // celsius
   tp_weight_set(tp, WEIGHT_HEAVY);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("door.idle.0"));

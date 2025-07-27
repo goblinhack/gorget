@@ -28,7 +28,6 @@ ENUM_DEF_C(THING_EVENT_ENUM, ThingEventType)
 ENUM_DEF_C(THING_RARITY_ENUM, ThingRarity)
 ENUM_DEF_C(MONST_GROUP_ENUM, ThingMonstGroup)
 ENUM_DEF_C(MAP_Z_DEPTH_ENUM, MapZDepth)
-ENUM_DEF_C(MAP_Z_LAYER_ENUM, MapZLayer)
 
 //
 // Templates can be assigned dynamic IDs - however the levels are more reproducable it
@@ -725,26 +724,6 @@ uint8_t tp_z_depth_get(Tpp tp)
     return 0;
   }
   return tp->z_depth;
-}
-
-void tp_z_layer_set(Tpp tp, MapZLayer val)
-{
-  TRACE_NO_INDENT();
-  if (! tp) {
-    ERR("no tp for %s", __FUNCTION__);
-    return;
-  }
-  tp->z_layer = val;
-}
-
-uint8_t tp_z_layer_get(Tpp tp)
-{
-  TRACE_NO_INDENT();
-  if (! tp) {
-    ERR("no tp for %s", __FUNCTION__);
-    return 0;
-  }
-  return tp->z_layer;
 }
 
 void tp_speed_set(Tpp tp, int val)

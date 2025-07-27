@@ -40,7 +40,6 @@ bool tp_load_steam(void)
   tp_temperature_initial_set(tp, 100); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
-  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   auto delay = 200;

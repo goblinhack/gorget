@@ -21,7 +21,6 @@ bool tp_load_level_not_visited(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_level_not_visited);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 2; frame++) {

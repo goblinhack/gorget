@@ -40,7 +40,6 @@ bool tp_load_pillar(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   for (auto frame = 0; frame < 16; frame++) {

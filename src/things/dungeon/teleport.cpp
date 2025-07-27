@@ -32,7 +32,6 @@ bool tp_load_teleport(void)
   tp_flag_set(tp, is_teleport);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   auto delay = 100;

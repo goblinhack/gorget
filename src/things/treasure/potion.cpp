@@ -40,7 +40,6 @@ bool tp_load_potion(void)
   tp_temperature_initial_set(tp, 20);   // celsius
   tp_weight_set(tp, WEIGHT_FEATHER);    // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   auto delay = 1000;

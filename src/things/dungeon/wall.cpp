@@ -29,7 +29,6 @@ bool tp_load_wall(void)
     tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
     tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-    tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
     // end sort marker1 }
 
     tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile_find_mand(name + ".IS_JOIN_BL"));

@@ -131,7 +131,6 @@ bool tp_load_fire(void)
   tp_tick_begin_set(tp, tp_fire_tick_begin);
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
-  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   auto delay = 200;

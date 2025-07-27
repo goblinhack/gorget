@@ -44,7 +44,6 @@ bool tp_load_secret_door(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  tp_z_layer_set(tp, MAP_Z_LAYER_NORMAL);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("secret_door.idle.0"));
