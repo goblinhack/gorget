@@ -21,6 +21,112 @@
 #include <map>
 #include <stdlib.h>
 
+bool level_select_is_oob(spoint p)
+{
+  TRACE_NO_INDENT();
+
+  if (p.x < 0) {
+    return true;
+  }
+  if (p.y < 0) {
+    return true;
+  }
+  if (p.x >= LEVELS_ACROSS) {
+    return true;
+  }
+  if (p.y >= LEVELS_DOWN) {
+    return true;
+  }
+  return false;
+}
+
+bool level_select_is_oob(int x, int y)
+{
+  TRACE_NO_INDENT();
+
+  if (x < 0) {
+    return true;
+  }
+  if (y < 0) {
+    return true;
+  }
+  if (x >= LEVELS_ACROSS) {
+    return true;
+  }
+  if (y >= LEVELS_DOWN) {
+    return true;
+  }
+  return false;
+}
+
+//
+// Given a point in the level select grid, return the corresponding level,
+// if one exists there.
+//
+Levelp level_select_get_level(Gamep g, Levelsp v, Levelp l, spoint p)
+{
+  TRACE_NO_INDENT();
+
+  if (! v) {
+    return nullptr;
+  }
+
+  if (level_select_is_oob(p)) {
+    return nullptr;
+  }
+
+  auto s = &v->level_select.data[ p.x ][ p.y ];
+  if (! s->is_set) {
+    return nullptr;
+  }
+
+  auto level_num = s->level_num;
+  if (level_num < 0) {
+    return nullptr;
+  }
+
+  if (level_num >= LEVEL_SELECT_ID) {
+    return nullptr;
+  }
+
+  return &v->level[ level_num ];
+}
+
+//
+// Attempt to find the next level for this thing to fall into
+//
+Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  auto p     = l->level_select_at;
+  int  tries = 0;
+
+  while (tries++ < LEVELS_DOWN * 2) {
+    p.y++;
+    if (p.y >= LEVELS_DOWN) {
+      p.y = 0;
+    }
+
+    auto cand = level_select_get_level(g, v, l, p);
+    if (cand && (cand != l)) {
+      return cand;
+    }
+  }
+
+  //
+  // Nothing to fall onto. Try a random level.
+  //
+  for (;;) {
+    spoint random_p(pcg_random_range(0, LEVELS_ACROSS), pcg_random_range(0, LEVELS_DOWN));
+
+    auto cand = level_select_get_level(g, v, l, random_p);
+    if (cand && (cand != l)) {
+      return cand;
+    }
+  }
+}
+
 //
 // This is the thing that is used to represent the current level. We focus the mouse zoom on this.
 //

@@ -386,7 +386,7 @@ enum {
 
 Levelsp levels_memory_alloc(Gamep);
 void    levels_destroy(Gamep, Levelsp);
-void    levels_stats_dump(Gamep g);
+void    levels_stats_dump(Gamep);
 
 Levelp level_change(Gamep, Levelsp, LevelNum);
 void   level_entered(Gamep, Levelsp, Levelp);
@@ -465,14 +465,18 @@ void level_gen_test(Gamep);
 void level_gen_create_levels(Gamep, Levelsp);
 void level_gen_stats_dump(Gamep);
 
+bool   level_select_is_oob(int x, int y);
+bool   level_select_is_oob(spoint);
+Levelp level_select_get_level(Gamep, Levelsp, Levelp, spoint);
+Levelp level_select_get_next_level_down(Gamep, Levelsp, Levelp);
 Thingp thing_level_select(Gamep);
-void   level_select_assign_levels_to_grid(Gamep g, Levelsp);
+void   level_select_assign_levels_to_grid(Gamep, Levelsp);
 void   level_select_destroy(Gamep, Levelsp, Levelp);
 void   level_select_grid_of_empty_levels(Gamep);
 void   level_select_rightbar_needs_update(Gamep, Levelsp, Levelp);
 void   level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, Widp);
 void   level_select_test(Gamep);
-void   level_select_update_grid_tiles(Gamep g, Levelsp);
+void   level_select_update_grid_tiles(Gamep, Levelsp);
 void   level_select_user_chose_a_level(Gamep, Levelsp, Levelp);
 
 #endif // _MY_LEVEL_H_
