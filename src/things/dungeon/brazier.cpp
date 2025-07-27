@@ -107,6 +107,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_extinguished_on_death);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_obstacle_to_landing);
   tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_water);

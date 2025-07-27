@@ -1205,14 +1205,14 @@ bool thing_is_unused31(Thingp t)
   return tp_flag(thing_tp(t), is_unused31);
 }
 
-bool thing_is_unused32(Thingp t)
+bool thing_is_obstacle_to_landing(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused32);
+  return tp_flag(thing_tp(t), is_obstacle_to_landing);
 }
 
 bool thing_is_submergible(Thingp t)

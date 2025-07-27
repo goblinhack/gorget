@@ -28,6 +28,7 @@ bool tp_load_chasm(void)
   tp_flag_set(tp, is_chasm);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_obstacle_to_landing);
   tp_flag_set(tp, is_tiled);
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_CHASM);

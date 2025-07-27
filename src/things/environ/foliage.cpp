@@ -32,6 +32,7 @@ bool tp_load_foliage(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_foliage);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_obstacle_to_landing);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_health_initial_set(tp, "1d5");

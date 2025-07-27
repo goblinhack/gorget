@@ -19,6 +19,7 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_cursor_path_blocker);
     tp_flag_set(tp, is_obstacle_to_fire);
+    tp_flag_set(tp, is_obstacle_to_landing);
     tp_flag_set(tp, is_obstacle_to_movement);
     tp_flag_set(tp, is_rock);
     tp_flag_set(tp, is_tiled);

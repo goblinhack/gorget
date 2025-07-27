@@ -11,6 +11,60 @@
 #include "my_tp.hpp"
 #include "my_ui.hpp"
 
+//
+// Ok to land on this spot?
+//
+static bool thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
+{
+  TRACE_NO_INDENT();
+
+  if (is_oob(p)) {
+    return false;
+  }
+
+  if (level_is_obstacle_to_landing(g, v, l, p)) {
+    return false;
+  }
+
+  return true;
+}
+
+//
+// Try to find a spot clost to where we landed that is ok to exist in.
+// i.e. no landing inside walls.
+//
+static spoint thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  spoint p    = t->at;
+  int    dist = 1;
+
+  for (;;) {
+    if (thing_ok_landing_spot(g, v, l, t, p)) {
+      return p;
+    }
+
+    for (auto dx = -dist; dx <= dist; dx++) {
+      for (auto dy = -dist; dy <= dist; dy++) {
+        p.x = t->at.x + dx;
+        p.y = t->at.y + dy;
+
+        if (thing_ok_landing_spot(g, v, l, t, p)) {
+          return p;
+        }
+      }
+    }
+
+    dist++;
+  }
+
+  return t->at;
+}
+
+//
+// Complete the fall to the next level. If this is the player we also change level.
+//
 static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -31,7 +85,8 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
   }
 
-  thing_warp_to(g, v, next_level, t, t->at);
+  auto new_location = thing_choose_landing_spot(g, v, next_level, t);
+  thing_warp_to(g, v, next_level, t, new_location);
   if (thing_is_player(t)) {
     level_scroll_warp_to_focus(g, v, l);
   }

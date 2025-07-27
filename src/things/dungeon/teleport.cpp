@@ -29,6 +29,7 @@ bool tp_load_teleport(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_indestructible);
+  tp_flag_set(tp, is_obstacle_to_landing);
   tp_flag_set(tp, is_teleport);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

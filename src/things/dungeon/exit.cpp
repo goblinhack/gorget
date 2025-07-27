@@ -30,6 +30,7 @@ bool tp_load_exit(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_exit);
   tp_flag_set(tp, is_indestructible);
+  tp_flag_set(tp, is_obstacle_to_landing);
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
