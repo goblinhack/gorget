@@ -10,11 +10,11 @@
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 
-// REMOVED #include <algorithm>
-// REMOVED #include <iostream>
+#include <algorithm>
+#include <iostream>
 #include <libgen.h>
 #include <sstream>
-// REMOVED #include <string>
+#include <string>
 
 /*
  * Replace chars in replace_set with replace_with.
