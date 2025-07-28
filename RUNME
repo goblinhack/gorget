@@ -191,7 +191,6 @@ export OPT_GCC
 
 read_opts "$@"
 
-ls -la
 make pre
 run build/build.sh $LOG
 

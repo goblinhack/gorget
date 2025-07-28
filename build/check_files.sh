@@ -1,8 +1,7 @@
 #!/bin/bash
 
 untar() {
-    echo tar -zxvf $*
-    tar -zxvf $*
+    tar -zxf $*
     if [[ $? -ne 0 ]]; then
         echo $0: Failed to extract archive $*
         exit 1
@@ -11,10 +10,8 @@ untar() {
 
 make_tar() {
     # https://stackoverflow.com/questions/51655657/tar-ignoring-unknown-extended-header-keyword-libarchive-xattr-security-selinux
-    echo COPYFILE_DISABLE=1 tar --no-xattrs -zcvf $*
     COPYFILE_DISABLE=1 tar --no-xattrs -zcvf $*
     if [[ $? -ne 0 ]]; then
-        echo tar zcvf $*
         tar zcvf $*
         if [[ $? -ne 0 ]]; then
             echo $0: Failed to create archive $*
@@ -56,18 +53,6 @@ if [[ $COUNT -gt 0 ]];
 then
     echo $0: Need to retar sounds tarball due to updates
     make_tar data/sounds.tgz data/sounds
-fi
-
-if [[ ! -d data/gfx ]];
-then
-    echo $0: Unzip graphics
-    untar data/gfx.tgz
-fi
-
-if [[ ! -d data/sounds ]];
-then
-    echo $0: Unzip sounds
-    untar data/sounds.tgz
 fi
 
 #
