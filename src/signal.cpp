@@ -50,14 +50,14 @@ std::string callstack_string(void)
   return std::string(tmp);
 }
 
-// REMOVED #include <assert.h>
+#include <assert.h>
 #ifndef _WIN32
-// REMOVED #include <sys/wait.h>
+#include <sys/wait.h>
 #endif
 #include <unistd.h>
 
 #if defined(__linux__)
-// REMOVED #include <sys/prctl.h>
+#include <sys/prctl.h>
 #endif
 
 #ifndef PATH_MAX
