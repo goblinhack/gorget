@@ -2,8 +2,16 @@
 
 # https://stackoverflow.com/questions/51655657/tar-ignoring-unknown-extended-header-keyword-libarchive-xattr-security-selinux
 untar() {
+  set -x
     TAR_FLAGS="--no-same-owner --no-same-permissions --warning=no-unknown-keyword --warning=no-timestamp --delay-directory-restore"
     tar $TAR_FLAGS zxvf $*
+
+    TAR_FLAGS="--no-same-owner --no-same-permissions --warning=no-unknown-keyword "
+    tar $TAR_FLAGS zxvf $*
+
+    TAR_FLAGS="--warning=no-unknown-keyword"
+    tar $TAR_FLAGS zxvf $*
+  set +x
     if [[ $? -eq 0 ]]; then
         return
     fi
