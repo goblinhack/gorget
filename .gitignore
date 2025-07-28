@@ -50,4 +50,4 @@ src/ramdisk_data_8.S
 src/ramdisk_data_9.S
 src/ramdisk_data.cpp
 build/Makefile.template
-Makefile
+build/Makefile
