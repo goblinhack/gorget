@@ -4,9 +4,9 @@
 
 #include <iostream>
 #include <libgen.h> // dirname
-// REMOVED #include <signal.h> // dirname
-// REMOVED #include <string.h>
-// REMOVED #include <strings.h>
+#include <signal.h> // dirname
+#include <string.h>
+#include <strings.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
