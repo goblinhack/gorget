@@ -191,10 +191,9 @@ export OPT_GCC
 
 read_opts "$@"
 
-set -x
-make -f Makefile pre
+ls -la
+make pre
 run build/build.sh $LOG
-set +x
 
 if [ $? -ne 0 ]; then
     log_err "Build failed."

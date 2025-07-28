@@ -409,9 +409,8 @@ fi
 #
 # LLD is faster
 #
-which -s lld
-if [ $? -eq 0 ]
-then
+which -s lld 2>/dev/null
+if [ $? -eq 0 ]; then
   LDFLAGS+=" -fuse-ld=lld"
 fi
 
