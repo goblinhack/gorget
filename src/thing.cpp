@@ -14,7 +14,7 @@
 // REMOVED #include <cinttypes>
 #include <iostream>
 // REMOVED #include <map>
-// REMOVED #include <mutex>
+#include <mutex>
 // REMOVED #include <sstream>
 // REMOVED #include <string.h>
 // REMOVED #include <string>
