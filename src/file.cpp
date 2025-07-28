@@ -15,7 +15,7 @@
 // REMOVED #include <string.h>
 // REMOVED #include <strings.h>
 #include <sys/stat.h>
-// REMOVED #include <time.h>
+#include <time.h>
 #include <unistd.h>
 
 static unsigned char *file_io_read_if_exists(const char *filename, int *out_len);
