@@ -11,8 +11,8 @@ untar() {
 
 make_tar() {
     # https://stackoverflow.com/questions/51655657/tar-ignoring-unknown-extended-header-keyword-libarchive-xattr-security-selinux
-    echo tar --no-xattrs -zcvf $*
-    tar --no-xattrs -zcvf $*
+    echo COPYFILE_DISABLE=1 tar --no-xattrs -zcvf $*
+    COPYFILE_DISABLE=1 tar --no-xattrs -zcvf $*
     if [[ $? -ne 0 ]]; then
         echo tar zcvf $*
         tar zcvf $*
