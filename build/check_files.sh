@@ -4,13 +4,13 @@
 untar() {
   set -x
     TAR_FLAGS="--no-same-owner --no-same-permissions --warning=no-unknown-keyword --warning=no-timestamp --delay-directory-restore"
-    tar zxvf $TAR_FLAGS $*
+    tar -zxvf $TAR_FLAGS $*
 
     TAR_FLAGS="--no-same-owner --no-same-permissions --warning=no-unknown-keyword "
-    tar zxvf $TAR_FLAGS $*
+    tar -zxvf $TAR_FLAGS $*
 
     TAR_FLAGS="--warning=no-unknown-keyword"
-    tar zxvf $TAR_FLAGS $*
+    tar -zxvf $TAR_FLAGS $*
   set +x
     if [[ $? -eq 0 ]]; then
         return
