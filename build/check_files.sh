@@ -2,7 +2,7 @@
 
 if [[ ! -d data/gfx ]]; then
     echo $0: Need to extract graphics archive
-    tar zxvf data/gfx.tgz
+    tar zxvf --no-xattrs data/gfx.tgz
     if [[ $? -ne 0 ]];
     then
         echo $0: Failed to extract data/gfx.tgz
@@ -13,7 +13,7 @@ fi
 
 if [[ ! -d data/sounds ]]; then
     echo $0: Need to extract sounds archive
-    tar zxvf data/sounds.tgz
+    tar zxvf --no-xattrs data/sounds.tgz
     if [[ $? -ne 0 ]];
     then
         echo $0: Failed to extract data/sounds.tgz
