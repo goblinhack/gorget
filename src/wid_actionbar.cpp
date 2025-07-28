@@ -393,7 +393,7 @@ bool wid_actionbar_create_window(Gamep g)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
 
   int  option_width = 10;
-  int  options      = 1;
+  int  options      = 0;
   bool opt_wait     = true;
   bool opt_quit     = true;
   bool opt_help     = true;
@@ -445,7 +445,7 @@ bool wid_actionbar_create_window(Gamep g)
     wid_actionbar = wid_new_square_window(g, "wid actionbar");
     wid_set_ignore_scroll_events(wid_actionbar, true);
     wid_set_pos(wid_actionbar, tl, br);
-    wid_set_shape_none(wid_actionbar);
+    wid_set_style(wid_actionbar, box_highlight_style);
     wid_set_shape_none(wid_actionbar);
     wid_lower(g, wid_actionbar);
   }
