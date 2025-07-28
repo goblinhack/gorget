@@ -7,13 +7,13 @@
 #include "my_game.hpp"
 #include "my_string.hpp"
 
-// REMOVED #include <errno.h>
-// REMOVED #include <stdio.h>
-// REMOVED #include <stdlib.h>
-// REMOVED #include <string.h>
-// REMOVED #include <strings.h>
-// REMOVED #include <time.h>
-// REMOVED // REMOVED #include <unistd.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <time.h>
+#include <unistd.h>
 
 void callstack_dump(void)
 {
