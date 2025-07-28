@@ -1,8 +1,18 @@
 #!/bin/bash
 
+# https://stackoverflow.com/questions/51655657/tar-ignoring-unknown-extended-header-keyword-libarchive-xattr-security-selinux
+untar() {
+    TAR_FLAGS="--no-same-owner --no-same-permissions --warning=no-unknown-keyword --warning=no-timestamp --delay-directory-restore"
+    tar $TAR_FLAGS zxvf $*
+    if [[ $? -eq 0 ]]; then
+        return
+    fi
+    tar zxvf $*
+}
+
 if [[ ! -d data/gfx ]]; then
     echo $0: Need to extract graphics archive
-    tar zxvf --no-xattrs data/gfx.tgz
+    untar data/gfx.tgz
     if [[ $? -ne 0 ]];
     then
         echo $0: Failed to extract data/gfx.tgz
@@ -13,7 +23,7 @@ fi
 
 if [[ ! -d data/sounds ]]; then
     echo $0: Need to extract sounds archive
-    tar zxvf --no-xattrs data/sounds.tgz
+    untar data/sounds.tgz
     if [[ $? -ne 0 ]];
     then
         echo $0: Failed to extract data/sounds.tgz
