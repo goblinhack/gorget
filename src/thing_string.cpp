@@ -2,20 +2,20 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_ascii.hpp"
-#include "my_backtrace.hpp"
+// REMOVED #include "my_ascii.hpp"
+// REMOVED #include "my_backtrace.hpp"
 #include "my_callstack.hpp"
-#include "my_console.hpp"
+// REMOVED #include "my_console.hpp"
 #include "my_game.hpp"
-#include "my_log.hpp"
-#include "my_sdl_event.hpp"
-#include "my_sdl_proto.hpp"
+// REMOVED #include "my_log.hpp"
+// REMOVED #include "my_sdl_event.hpp"
+// REMOVED #include "my_sdl_proto.hpp"
 #include "my_sprintf.hpp"
-#include "my_string.hpp"
+// REMOVED #include "my_string.hpp"
 #include "my_thing.hpp"
 
-#include <stdarg.h>
-#include <string.h>
+// REMOVED #include <stdarg.h>
+// REMOVED #include <string.h>
 
 std::string to_string(Gamep g, Thingp t)
 {

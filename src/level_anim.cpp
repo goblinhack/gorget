@@ -3,12 +3,12 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_game.hpp"
+// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_tile.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_tile.hpp"
 #include "my_time.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_tp.hpp"
 
 void level_anim(Gamep g, Levelsp v, Levelp l)
 {

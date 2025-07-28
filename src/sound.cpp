@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <SDL.h>
+// REMOVED #include <SDL.h>
 #include <SDL_mixer.h>
 #include <map>
 

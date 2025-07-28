@@ -10,7 +10,7 @@
 #include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_ui.hpp"
+// REMOVED #include "my_ui.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_cfg_sound_window;

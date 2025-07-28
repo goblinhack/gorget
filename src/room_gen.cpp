@@ -9,10 +9,10 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_ptrcheck.hpp"
+// REMOVED #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 
-#include <stdlib.h>
+// REMOVED #include <stdlib.h>
 
 static const int MAX_ROOM_CORRIDOR = 3;
 static const int ROOM_BORDER       = 2;

@@ -7,7 +7,7 @@
 #include "my_console.hpp"
 #include "my_main.hpp"
 
-#include <string.h>
+// REMOVED #include <string.h>
 
 static inline void term_puts_fg(unsigned char a)
 {

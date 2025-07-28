@@ -8,8 +8,8 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_thing.hpp"
-#include "my_ui.hpp"
+// REMOVED #include "my_thing.hpp"
+// REMOVED #include "my_ui.hpp"
 #include "my_wids.hpp"
 
 static Widp      wid_actionbar {};

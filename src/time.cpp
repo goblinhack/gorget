@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <ctime>
+// REMOVED #include <ctime>
 
 #include "my_game.hpp"
 #include "my_string.hpp"

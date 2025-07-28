@@ -2,12 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
-#include "my_game.hpp"
+// REMOVED #include "my_callstack.hpp"
+// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
+// REMOVED #include "my_main.hpp"
 #include "my_string.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
 #include "my_ui.hpp"
 #include "my_wid_botcon.hpp"

@@ -2,9 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <string.h>
-#include <string>
-#include <strings.h>
+// REMOVED #include <string.h>
+// REMOVED #include <string>
+// REMOVED #include <strings.h>
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <unistd.h>

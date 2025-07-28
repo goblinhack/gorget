@@ -2,14 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_types.hpp"
+// REMOVED #include "my_types.hpp"
 
 #include "my_callstack.hpp"
-#include "my_dice.hpp"
-#include "my_game.hpp"
+// REMOVED #include "my_dice.hpp"
+// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_tp.hpp"
 
 void thing_chasm_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {

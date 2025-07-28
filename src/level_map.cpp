@@ -5,13 +5,13 @@
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
 #include "my_dice.hpp"
-#include "my_game.hpp"
-#include "my_game_defs.hpp"
+// REMOVED #include "my_game.hpp"
+// REMOVED #include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_ptrcheck.hpp"
-#include "my_tile.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_ptrcheck.hpp"
+// REMOVED #include "my_tile.hpp"
+// REMOVED #include "my_tp.hpp"
 
 void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 {

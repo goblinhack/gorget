@@ -7,10 +7,10 @@
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_tex.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_tex.hpp"
 #include "my_tile.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_tp.hpp"
 
 static void level_display_tile(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, uint16_t tile_index, spoint tl,
                                spoint br)

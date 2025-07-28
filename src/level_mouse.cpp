@@ -3,16 +3,16 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_dmap.hpp"
+// REMOVED #include "my_dmap.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
+// REMOVED #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_tile.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_tp.hpp"
 
-#include <string.h>
-#include <vector>
+// REMOVED #include <string.h>
+// REMOVED #include <vector>
 
 //
 // Get the mouse position, so when displaying tiles we can work out where the cursor is now.

@@ -4,18 +4,18 @@
 
 #include "my_callstack.hpp"
 #include "my_file.hpp"
-#include "my_log.hpp"
+// REMOVED #include "my_log.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
-#include "my_time.hpp"
+// REMOVED #include "my_time.hpp"
 
-#include <cstring>
-#include <stdarg.h>
-#include <string.h>
-#include <strings.h>
+// REMOVED #include <cstring>
+// REMOVED #include <stdarg.h>
+// REMOVED #include <string.h>
+// REMOVED #include <strings.h>
 #include <sys/stat.h>
-#include <time.h>
+// REMOVED #include <time.h>
 #include <unistd.h>
 
 static unsigned char *file_io_read_if_exists(const char *filename, int *out_len);

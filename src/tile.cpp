@@ -3,8 +3,8 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_color.hpp"
-#include "my_color_defs.hpp"
+// REMOVED #include "my_color.hpp"
+// REMOVED #include "my_color_defs.hpp"
 #include "my_cpp_template.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
@@ -13,10 +13,10 @@
 #include "my_string.hpp"
 #include "my_tex.hpp"
 #include "my_tile.hpp"
-#include "my_types.hpp"
+// REMOVED #include "my_types.hpp"
 
-#include <array>
-#include <map>
+// REMOVED #include <array>
+// REMOVED #include <map>
 
 std::map< std::string, class Tile * > all_tiles;
 std::vector< class Tile * >           all_tiles_array;

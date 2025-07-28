@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
+// REMOVED #include <algorithm>
 #include <map>
 
 #include "my_ascii.hpp"

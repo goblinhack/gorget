@@ -6,7 +6,7 @@
 #include "my_callstack.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_ui.hpp"
+// REMOVED #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
 
 static int progress_steps = 32;

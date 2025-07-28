@@ -30,7 +30,7 @@
 
 #include "my_main.hpp"
 
-#include <stdint.h>
+// REMOVED #include <stdint.h>
 
 struct pcg_state_setseq_64 { // Internals are *Private*.
   uint64_t state;            // RNG state.  All values are possible.

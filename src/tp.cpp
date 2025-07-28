@@ -6,20 +6,20 @@
 #include "my_color_defs.hpp"
 #include "my_dice.hpp"
 #include "my_dice_roll.hpp"
-#include "my_enum.hpp"
+// REMOVED #include "my_enum.hpp"
 #include "my_gl.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
-#include "my_thing.hpp"
-#include "my_tile.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_thing.hpp"
+// REMOVED #include "my_tile.hpp"
+// REMOVED #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
 #include "my_tps.hpp"
 
-#include <inttypes.h>
+// REMOVED #include <inttypes.h>
 #include <map>
-#include <vector>
+// REMOVED #include <vector>
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)

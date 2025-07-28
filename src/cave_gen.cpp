@@ -2,12 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
+// REMOVED #include "my_callstack.hpp"
 #include "my_cave.hpp"
-#include "my_charmap.hpp"
+// REMOVED #include "my_charmap.hpp"
 #include "my_game.hpp"
-#include "my_main.hpp"
-#include "my_ptrcheck.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 #include "my_spoint.hpp"
 

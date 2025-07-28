@@ -2,22 +2,22 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
+// REMOVED #include "my_callstack.hpp"
 #include "my_console.hpp"
-#include "my_log.hpp"
-#include "my_main.hpp"
+// REMOVED #include "my_log.hpp"
+// REMOVED #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
 #include "my_test.hpp"
 #include "my_tests.hpp"
-#include "my_thing.hpp"
+// REMOVED #include "my_thing.hpp"
 #include "my_time.hpp"
 #include "my_ui.hpp"
 
-#include <inttypes.h>
+// REMOVED #include <inttypes.h>
 #include <map>
-#include <vector>
+// REMOVED #include <vector>
 
 /* clang-format off */
 std::initializer_list< std::string > tests = {

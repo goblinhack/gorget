@@ -2,8 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <ctime>
-#include <time.h>
+// REMOVED #include <ctime>
+// REMOVED #include <time.h>
 
 #include "my_ascii.hpp"
 #include "my_game.hpp"

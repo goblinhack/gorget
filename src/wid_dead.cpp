@@ -7,14 +7,14 @@
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
-#include "my_thing.hpp"
+// REMOVED #include "my_thing.hpp"
 #include "my_ui.hpp"
-#include "my_wid_botcon.hpp"
+// REMOVED #include "my_wid_botcon.hpp"
 #include "my_wid_popup.hpp"
-#include "my_wid_topcon.hpp"
-#include "my_wids.hpp"
+// REMOVED #include "my_wid_topcon.hpp"
+// REMOVED #include "my_wids.hpp"
 
-#include <vector>
+// REMOVED #include <vector>
 
 static WidPopup *wid_dead_window;
 

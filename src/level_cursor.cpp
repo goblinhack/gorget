@@ -6,12 +6,12 @@
 #include "my_dmap.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_sdl_event.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_sdl_event.hpp"
+// REMOVED #include "my_tp.hpp"
 
-#include <string.h>
-#include <vector>
+// REMOVED #include <string.h>
+// REMOVED #include <vector>
 
 static std::vector< spoint > cursor_path;
 

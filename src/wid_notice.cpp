@@ -4,8 +4,8 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
-#include "my_game.hpp"
-#include "my_sdl_proto.hpp"
+// REMOVED #include "my_game.hpp"
+// REMOVED #include "my_sdl_proto.hpp"
 #include "my_wid_popup.hpp"
 
 static WidPopup *wid_notice_window;

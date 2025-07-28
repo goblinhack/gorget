@@ -7,13 +7,13 @@
 #include "my_game.hpp"
 #include "my_string.hpp"
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
-#include <time.h>
-#include <unistd.h>
+// REMOVED #include <errno.h>
+// REMOVED #include <stdio.h>
+// REMOVED #include <stdlib.h>
+// REMOVED #include <string.h>
+// REMOVED #include <strings.h>
+// REMOVED #include <time.h>
+// REMOVED // REMOVED #include <unistd.h>
 
 void callstack_dump(void)
 {
@@ -50,14 +50,14 @@ std::string callstack_string(void)
   return std::string(tmp);
 }
 
-#include <assert.h>
+// REMOVED #include <assert.h>
 #ifndef _WIN32
-#include <sys/wait.h>
+// REMOVED #include <sys/wait.h>
 #endif
 #include <unistd.h>
 
 #if defined(__linux__)
-#include <sys/prctl.h>
+// REMOVED #include <sys/prctl.h>
 #endif
 
 #ifndef PATH_MAX

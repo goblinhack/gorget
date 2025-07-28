@@ -9,7 +9,7 @@
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
 
-#include <array>
+// REMOVED #include <array>
 
 static bool in_2d_mode;
 

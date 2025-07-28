@@ -3,23 +3,23 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_cave.hpp"
+// REMOVED #include "my_cave.hpp"
 #include "my_charmap.hpp"
 #include "my_color_defs.hpp"
 #include "my_dice.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
+// REMOVED #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 #include "my_string.hpp"
-#include "my_tp.hpp"
+// REMOVED #include "my_tp.hpp"
 #include "my_ui.hpp"
-#include "my_wid.hpp"
+// REMOVED #include "my_wid.hpp"
 #include "my_wids.hpp"
 
-#include <map>
-#include <stdlib.h>
+// REMOVED #include <map>
+// REMOVED #include <stdlib.h>
 
 bool level_select_is_oob(spoint p)
 {
