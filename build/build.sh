@@ -376,7 +376,7 @@ fi
 #
 # Hard code on for me
 #
-if [[ $(grep goblinhack ~/.gitconfig) ]]; then
+if [[ $(grep -q goblinhack ~/.gitconfig 2>/dev/null) ]]; then
   WERROR="-Werror"
 fi
 
