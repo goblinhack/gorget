@@ -229,6 +229,7 @@ public:
   tp_tick_end_t        tick_end        = {};
   tp_on_death_t        on_death        = {};
   tp_on_shoved_t       on_shoved       = {};
+  tp_on_over_chasm_t   on_over_chasm   = {};
 
   Tp(void);
   ~Tp(void);
@@ -926,7 +927,7 @@ void tp_description_set(Tpp tp, tp_description_get_t callback)
   tp->description_get = callback;
 }
 
-std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -937,7 +938,7 @@ std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
   if (! tp->description_get) {
     return "";
   }
-  return tp->description_get(g, v, l, me, owner, at);
+  return tp->description_get(g, v, l, me);
 }
 
 void tp_tick_idle_set(Tpp tp, tp_tick_idle_t callback)
@@ -950,7 +951,7 @@ void tp_tick_idle_set(Tpp tp, tp_tick_idle_t callback)
   tp->tick_idle = callback;
 }
 
-void tp_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+void tp_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -961,7 +962,7 @@ void tp_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint 
   if (! tp->tick_idle) {
     return;
   }
-  return tp->tick_idle(g, v, l, me, owner, at);
+  return tp->tick_idle(g, v, l, me);
 }
 
 void tp_tick_begin_set(Tpp tp, tp_tick_begin_t callback)
@@ -974,7 +975,7 @@ void tp_tick_begin_set(Tpp tp, tp_tick_begin_t callback)
   tp->tick_begin = callback;
 }
 
-void tp_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+void tp_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -985,7 +986,7 @@ void tp_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint
   if (! tp->tick_begin) {
     return;
   }
-  return tp->tick_begin(g, v, l, me, owner, at);
+  return tp->tick_begin(g, v, l, me);
 }
 
 void tp_tick_end_set(Tpp tp, tp_tick_end_t callback)
@@ -998,7 +999,7 @@ void tp_tick_end_set(Tpp tp, tp_tick_end_t callback)
   tp->tick_end = callback;
 }
 
-void tp_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+void tp_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1009,7 +1010,7 @@ void tp_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint a
   if (! tp->tick_end) {
     return;
   }
-  return tp->tick_end(g, v, l, me, owner, at);
+  return tp->tick_end(g, v, l, me);
 }
 
 void tp_on_death_set(Tpp tp, tp_on_death_t callback)
@@ -1022,7 +1023,7 @@ void tp_on_death_set(Tpp tp, tp_on_death_t callback)
   tp->on_death = callback;
 }
 
-void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at, ThingEvent &e)
+void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1033,7 +1034,7 @@ void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint a
   if (! tp->on_death) {
     return;
   }
-  return tp->on_death(g, v, l, me, owner, at, e);
+  return tp->on_death(g, v, l, me, e);
 }
 
 void tp_on_shoved_set(Tpp tp, tp_on_shoved_t callback)
@@ -1046,7 +1047,7 @@ void tp_on_shoved_set(Tpp tp, tp_on_shoved_t callback)
   tp->on_shoved = callback;
 }
 
-void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1057,7 +1058,31 @@ void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint 
   if (! tp->on_shoved) {
     return;
   }
-  return tp->on_shoved(g, v, l, me, owner, at);
+  return tp->on_shoved(g, v, l, me, shover);
+}
+
+void tp_on_over_chasm_set(Tpp tp, tp_on_over_chasm_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->on_over_chasm = callback;
+}
+
+void tp_on_over_chasm(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->on_over_chasm) {
+    return;
+  }
+  return tp->on_over_chasm(g, v, l, me);
 }
 
 void tp_value1_set(Tpp tp, int val)

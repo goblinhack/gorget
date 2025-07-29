@@ -12,14 +12,14 @@
 #include "../../my_tps.hpp"
 #include "../../my_types.hpp"
 
-static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
   return "brightly burning fire";
 }
 
-static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
@@ -39,7 +39,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
   // Spawn adjacent fire
   //
   for (auto delta : points) {
-    auto p = at + delta;
+    auto p = me->at + delta;
 
     //
     // Rock, for example?
@@ -78,7 +78,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp o
   }
 }
 
-static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at, ThingEvent &e)
+static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
@@ -95,6 +95,22 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp own
     if (level_is_combustible(g, v, l, me->at)) {
       thing_spawn(g, v, l, tp_random(is_smoke), me->at);
     }
+  }
+}
+
+static void tp_fire_on_over_chasm(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+
+  ThingEvent e {
+      .reason     = "by falling",     //
+      .event_type = THING_EVENT_FALL, //
+  };
+
+  thing_dead(g, v, l, me, e);
+
+  if (! level_is_smoke(g, v, l, me->at)) {
+    thing_spawn(g, v, l, tp_random(is_smoke), me->at);
   }
 }
 
@@ -127,6 +143,7 @@ bool tp_load_fire(void)
   tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
   tp_on_death_set(tp, tp_fire_on_death);
+  tp_on_over_chasm_set(tp, tp_fire_on_over_chasm);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_tick_begin_set(tp, tp_fire_tick_begin);
   tp_weight_set(tp, WEIGHT_NONE); // grams

@@ -6,7 +6,6 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 
-
 void *myzalloc_(int size, const char *what, const char *file, const char *func, int line)
 {
   TRACE_NO_INDENT();

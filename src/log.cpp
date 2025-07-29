@@ -12,7 +12,6 @@
 #include "my_wid_console.hpp"
 #include "my_wid_topcon.hpp"
 
-
 void log_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();

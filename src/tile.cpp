@@ -12,7 +12,6 @@
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 
-
 std::map< std::string, class Tile * > all_tiles;
 std::vector< class Tile * >           all_tiles_array;
 

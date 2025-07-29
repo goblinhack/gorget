@@ -11,7 +11,6 @@
 #include "my_main.hpp"
 #include "my_random.hpp"
 
-
 static const int MAX_ROOM_CORRIDOR = 3;
 static const int ROOM_BORDER       = 2;
 

@@ -8,7 +8,6 @@
 #include "my_sdl_event.hpp"
 #include "my_tile.hpp"
 
-
 //
 // Get the mouse position, so when displaying tiles we can work out where the cursor is now.
 //

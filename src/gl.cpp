@@ -9,7 +9,6 @@
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
 
-
 static bool in_2d_mode;
 
 float    glapi_last_tex_right;

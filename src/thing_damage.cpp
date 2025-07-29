@@ -20,9 +20,18 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     auto by_the_thing = thing_the_long_name(g, v, l, it);
 
     switch (e.event_type) {
-      case THING_EVENT_NONE :     break;
-      case THING_EVENT_LIFESPAN : break;
-      case THING_EVENT_SHOVE : //
+      case THING_EVENT_NONE : break;
+      case THING_EVENT_LIFESPAN_EXPIRED :
+        {
+          ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
+        }
+        break;
+      case THING_EVENT_FALL : //
+        {
+          ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
+        }
+        break;
+      case THING_EVENT_SHOVED : //
         TOPCON(UI_WARNING_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_CRUSH : //
@@ -42,6 +51,35 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
         break;
       case THING_EVENT_ENUM_MAX : break;
     }
+  } else {
+    switch (e.event_type) {
+      case THING_EVENT_NONE : break;
+      case THING_EVENT_LIFESPAN_EXPIRED : //
+        TOPCON(UI_WARNING_FMT_STR "You suffer from old age." UI_RESET_FMT);
+        break;
+      case THING_EVENT_FALL : //
+        TOPCON(UI_WARNING_FMT_STR "You fall." UI_RESET_FMT);
+        break;
+      case THING_EVENT_SHOVED : //
+        TOPCON(UI_WARNING_FMT_STR "You are shoved." UI_RESET_FMT);
+        break;
+      case THING_EVENT_CRUSH : //
+        TOPCON(UI_WARNING_FMT_STR "You are crushed." UI_RESET_FMT);
+        break;
+      case THING_EVENT_MELEE_DAMAGE : //
+        TOPCON(UI_WARNING_FMT_STR "You are hit." UI_RESET_FMT);
+        break;
+      case THING_EVENT_HEAT_DAMAGE : //
+        TOPCON(UI_WARNING_FMT_STR "You suffer heat damage." UI_RESET_FMT);
+        break;
+      case THING_EVENT_WATER_DAMAGE : //
+        TOPCON(UI_WARNING_FMT_STR "You suffer water damage." UI_RESET_FMT);
+        break;
+      case THING_EVENT_FIRE_DAMAGE : //
+        TOPCON(UI_WARNING_FMT_STR "You are burnt." UI_RESET_FMT);
+        break;
+      case THING_EVENT_ENUM_MAX : break;
+    }
   }
 }
 
@@ -58,9 +96,10 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     auto by_player = thing_long_name(g, v, l, it);
 
     switch (e.event_type) {
-      case THING_EVENT_NONE :     break;
-      case THING_EVENT_LIFESPAN : break;
-      case THING_EVENT_SHOVE : //
+      case THING_EVENT_NONE :             break;
+      case THING_EVENT_LIFESPAN_EXPIRED : break;
+      case THING_EVENT_FALL :             break;
+      case THING_EVENT_SHOVED : //
         TOPCON("%s is shoved by %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_CRUSH : //
@@ -143,9 +182,13 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
     // Damage type specifics
     //
     switch (e.event_type) {
-      case THING_EVENT_NONE :     break;
-      case THING_EVENT_LIFESPAN : break;
-      case THING_EVENT_SHOVE : //
+      case THING_EVENT_NONE : //
+        break;
+      case THING_EVENT_LIFESPAN_EXPIRED : //
+        break;
+      case THING_EVENT_FALL : //
+        break;
+      case THING_EVENT_SHOVED : //
         break;
       case THING_EVENT_CRUSH : //
         break;

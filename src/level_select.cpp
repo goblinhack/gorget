@@ -14,7 +14,6 @@
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 
-
 bool level_select_is_oob(spoint p)
 {
   TRACE_NO_INDENT();

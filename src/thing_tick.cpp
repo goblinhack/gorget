@@ -6,7 +6,6 @@
 #include "my_level.hpp"
 #include "my_tp_callbacks.hpp"
 
-
 //
 // Called at the beginning of each tick
 //
@@ -17,7 +16,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_tick_begin(g, v, l, t, top_owner(g, v, l, t), t->at);
+  tp_tick_begin(g, v, l, t);
 
   //
   // Lifespan tick
@@ -25,8 +24,8 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (thing_lifespan(t)) {
     if (! thing_lifespan_decr(g, v, l, t)) {
       ThingEvent e {
-          .reason     = "ran out of life",    //
-          .event_type = THING_EVENT_LIFESPAN, //
+          .reason     = "ran out of life",            //
+          .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
       };
       thing_dead(g, v, l, t, e);
     }
@@ -45,7 +44,7 @@ void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_tick_idle(g, v, l, t, top_owner(g, v, l, t), t->at);
+  tp_tick_idle(g, v, l, t);
 
   //
   // If asked to follow the mouse path, start walking
@@ -65,7 +64,7 @@ void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_tick_end(g, v, l, t, top_owner(g, v, l, t), t->at);
+  tp_tick_end(g, v, l, t);
 
   //
   // Mark the tick as completed

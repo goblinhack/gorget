@@ -10,7 +10,7 @@
 #include "../../my_tps.hpp"
 #include "../../my_types.hpp"
 
-static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 

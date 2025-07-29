@@ -11,7 +11,7 @@
 #include "../../my_tps.hpp"
 #include "../../my_types.hpp"
 
-static std::string tp_brazier_description_get(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at)
+static std::string tp_brazier_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
@@ -22,7 +22,7 @@ static std::string tp_brazier_description_get(Gamep g, Levelsp v, Levelp l, Thin
   return "brightly burning brazier";
 }
 
-static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover, spoint at)
+static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover)
 {
   TRACE_NO_INDENT();
 
@@ -69,14 +69,14 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp
   }
 }
 
-static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp owner, spoint at, ThingEvent &e)
+static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
   //
   // Allow things to continue to burn if we still have some burnable material
   //
-  if (e.event_type != THING_EVENT_SHOVE) {
+  if (e.event_type != THING_EVENT_SHOVED) {
     if (! level_is_fire(g, v, l, me->at)) {
       thing_spawn(g, v, l, tp_random(is_fire), me->at);
     }

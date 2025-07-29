@@ -7,7 +7,6 @@
 #include "my_main.hpp"
 #include "my_tile.hpp"
 
-
 //
 // Get thing direction
 //

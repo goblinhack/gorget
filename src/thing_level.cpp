@@ -6,7 +6,6 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 
-
 //
 // Move the thing immediately to the new level entrance
 //

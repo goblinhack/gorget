@@ -30,7 +30,6 @@
 
 #include "my_main.hpp"
 
-
 struct pcg_state_setseq_64 { // Internals are *Private*.
   uint64_t state;            // RNG state.  All values are possible.
   uint64_t inc;              // Controls which RNG sequence (stream) is

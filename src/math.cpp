@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-
 unsigned int nextpoweroftwo(unsigned int val)
 {
   val--;

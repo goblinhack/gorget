@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_token.hpp"
 
-
 static class Tokens *tokens_parse(const char *input, class Tokens *tokens)
 {
   TRACE_NO_INDENT();

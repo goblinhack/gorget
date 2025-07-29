@@ -7,7 +7,6 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 
-
 static std::vector< spoint > cursor_path;
 
 void level_cursor_set(Gamep g, Levelsp v, spoint p)

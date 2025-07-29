@@ -7,7 +7,6 @@
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
 
-
 std::string to_string(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -91,10 +90,13 @@ std::string to_death_reason(Gamep g, ThingEvent &e)
 
   switch (e.event_type) {
     case THING_EVENT_NONE : break;
-    case THING_EVENT_LIFESPAN : //
+    case THING_EVENT_FALL : //
+      s += "fell to their death";
+      break;
+    case THING_EVENT_LIFESPAN_EXPIRED : //
       s += "ran out of life";
       break;
-    case THING_EVENT_SHOVE : //
+    case THING_EVENT_SHOVED : //
       s += "shoved to death";
       break;
     case THING_EVENT_CRUSH : //

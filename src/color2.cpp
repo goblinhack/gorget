@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 
-
 // begin sort marker1 {
 color GRAY;
 color GRAY1;

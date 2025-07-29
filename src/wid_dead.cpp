@@ -10,7 +10,6 @@
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
 
-
 static WidPopup *wid_dead_window;
 
 static void wid_dead_destroy(Gamep g)

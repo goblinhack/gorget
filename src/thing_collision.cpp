@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 
-
 //
 // Handle interactions for a thing at its location with a dead thing
 //

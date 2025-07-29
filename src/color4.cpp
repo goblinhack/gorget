@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 
-
 color INK;
 color LIGHTSTEELBLUE;
 color LIGHTSTEELBLUE1;

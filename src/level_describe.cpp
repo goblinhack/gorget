@@ -20,7 +20,6 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  Thingp      owner = nullptr;
   std::string all_things_description;
   auto        at = v->cursor_at;
 
@@ -30,7 +29,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
-    auto one_desc = tp_description_get(g, v, l, it, owner, it->at);
+    auto one_desc = tp_description_get(g, v, l, it);
 
     if (one_desc.empty()) {
       continue;

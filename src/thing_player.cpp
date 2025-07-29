@@ -7,7 +7,6 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 
-
 Thingp thing_player(Gamep g)
 {
   TRACE_NO_INDENT();

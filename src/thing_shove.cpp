@@ -8,7 +8,6 @@
 #include "my_tp_callbacks.hpp"
 #include "my_ui.hpp"
 
-
 //
 // The player has been attacked
 //
@@ -52,9 +51,9 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t
   bool shoved = false;
 
   ThingEvent e {
-      .reason     = "by shoving",      //
-      .event_type = THING_EVENT_SHOVE, //
-      .source     = shover             //
+      .reason     = "by shoving",       //
+      .event_type = THING_EVENT_SHOVED, //
+      .source     = shover              //
   };
 
   if (thing_can_move_to(g, v, l, t, to)) {
@@ -67,7 +66,7 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t
     //
     // Callback for shoving
     //
-    tp_on_shoved(g, v, l, t, shover, t->at);
+    tp_on_shoved(g, v, l, t, shover);
 
     if (thing_is_player(t)) {
       thing_shoved_player(g, v, l, t, e);
@@ -90,16 +89,16 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
   bool shoved = false;
 
   ThingEvent e {
-      .reason     = "by shoving",      //
-      .event_type = THING_EVENT_SHOVE, //
-      .source     = shover             //
+      .reason     = "by shoving",       //
+      .event_type = THING_EVENT_SHOVED, //
+      .source     = shover              //
   };
 
   //
   // Some items, like braziers need to be knocked over first before shoving.
   //
   if (thing_is_dead_on_shoving(t)) {
-    tp_on_shoved(g, v, l, t, shover, t->at);
+    tp_on_shoved(g, v, l, t, shover);
     thing_dead(g, v, l, t, e);
     return true;
   }
@@ -114,7 +113,7 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
     //
     // Callback for shoving
     //
-    tp_on_shoved(g, v, l, t, shover, t->at);
+    tp_on_shoved(g, v, l, t, shover);
 
     if (thing_is_player(t)) {
       thing_shoved_player(g, v, l, t, e);
