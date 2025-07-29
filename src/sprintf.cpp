@@ -3,12 +3,8 @@
 //
 
 #include "my_sprintf.hpp"
-// REMOVED #include <stdarg.h>
 
 // https://stackoverflow.com/questions/40159892/using-asprintf-on-windows
-// REMOVED #include <stdarg.h> /* needed for va_list */
-// REMOVED #include <stdio.h>  /* needed for vsnprintf */
-// REMOVED #include <stdlib.h> /* needed for malloc-free */
 
 #if defined(__WIN64__) || defined(_WIN64) || defined(WIN64) || defined(__WIN32__) || defined(_WIN32)                 \
     || defined(WIN32) || defined(__WINDOWS_386__) || defined(__CYGWIN__)

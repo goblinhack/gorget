@@ -3,7 +3,6 @@
 //
 
 #include "my_tile.hpp"
-// REMOVED #include "my_ui.hpp"
 
 void gfx_init_water(void)
 {

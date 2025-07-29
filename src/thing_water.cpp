@@ -2,14 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
-// REMOVED #include "my_types.hpp"
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_dice.hpp"
-// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_tp.hpp"
 
 void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {

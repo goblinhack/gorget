@@ -5,12 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
-// REMOVED #include "my_game.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
-// REMOVED #include "my_thing.hpp"
-// REMOVED #include "my_ui.hpp"
 #include "my_wid_botcon.hpp"
 
 #include <map>

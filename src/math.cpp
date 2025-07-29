@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-// REMOVED #include "my_math.hpp"
 
 unsigned int nextpoweroftwo(unsigned int val)
 {

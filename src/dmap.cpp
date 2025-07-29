@@ -2,9 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-// REMOVED #include "my_callstack.hpp"
 #include "my_dmap.hpp"
-// REMOVED #include "my_main.hpp"
 #include "my_sprintf.hpp"
 
 void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)

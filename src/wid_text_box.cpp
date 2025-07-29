@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-// REMOVED #include "my_backtrace.hpp"
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_string.hpp"

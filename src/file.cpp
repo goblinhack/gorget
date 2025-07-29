@@ -4,16 +4,10 @@
 
 #include "my_callstack.hpp"
 #include "my_file.hpp"
-// REMOVED #include "my_log.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
-// REMOVED #include "my_time.hpp"
 
-// REMOVED #include <cstring>
-// REMOVED #include <stdarg.h>
-// REMOVED #include <string.h>
-// REMOVED #include <strings.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>

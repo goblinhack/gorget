@@ -5,9 +5,6 @@
 #include "my_string.hpp"
 #include <iomanip>
 #include <iostream>
-// REMOVED #include <string.h>
-// REMOVED #include <strings.h>
-// REMOVED #include <unistd.h>
 
 #define HEX_DUMP_WIDTH (16)
 

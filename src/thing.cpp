@@ -6,18 +6,9 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-// REMOVED #include "my_random.hpp"
-// REMOVED #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
-// REMOVED #include "my_types.hpp"
 
-// REMOVED #include <cinttypes>
 #include <iostream>
-// REMOVED #include <map>
 #include <mutex>
-// REMOVED #include <sstream>
-// REMOVED #include <string.h>
-// REMOVED #include <string>
 
 static std::mutex thing_mutex;
 

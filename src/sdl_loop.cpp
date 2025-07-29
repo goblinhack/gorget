@@ -4,16 +4,11 @@
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
-// REMOVED #include "my_font.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_gfx.hpp"
 #include "my_gl.hpp"
-// REMOVED #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
-// REMOVED #include "my_tex.hpp"
-// REMOVED #include "my_tile.hpp"
 #include "my_ui.hpp"
 #include "my_wid_console.hpp"
 

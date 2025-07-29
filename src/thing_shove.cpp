@@ -3,17 +3,11 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
 #include "my_string.hpp"
-// REMOVED #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
-// REMOVED #include "my_types.hpp"
 #include "my_ui.hpp"
 
-// REMOVED #include <string.h>
 
 //
 // The player has been attacked

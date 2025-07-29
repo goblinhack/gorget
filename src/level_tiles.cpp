@@ -4,12 +4,10 @@
 
 #include "my_bits.hpp"
 #include "my_callstack.hpp"
-// REMOVED #include "my_enum.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
 
 #include <map>
 

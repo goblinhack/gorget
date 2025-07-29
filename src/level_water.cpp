@@ -2,13 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
-// REMOVED #include "my_types.hpp"
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_tp.hpp"
 
 //
 // Handle things interacting with water

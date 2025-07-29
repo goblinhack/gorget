@@ -6,8 +6,6 @@
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_tile.hpp"
 
 //
 // We focus on the current level if on the level select screen.

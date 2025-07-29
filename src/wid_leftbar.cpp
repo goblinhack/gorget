@@ -4,13 +4,9 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
-// REMOVED #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-// REMOVED #include "my_ptrcheck.hpp"
-// REMOVED #include "my_sdl_event.hpp"
-// REMOVED #include "my_string.hpp"
 #include "my_wids.hpp"
 
 static Widp wid_leftbar {};

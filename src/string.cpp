@@ -3,7 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_color.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"

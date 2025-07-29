@@ -4,10 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
-// REMOVED #include "my_main.hpp"
 
-// REMOVED #include <string.h>
-// REMOVED #include <strings.h>
 
 color INK;
 color LIGHTSTEELBLUE;

@@ -5,13 +5,8 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_random.hpp"
 #include "my_string.hpp"
-// REMOVED #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
-// REMOVED #include "my_types.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 

@@ -6,7 +6,6 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-// REMOVED #include "my_thing.hpp"
 
 int thing_speed(Thingp t)
 {

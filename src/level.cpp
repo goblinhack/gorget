@@ -4,14 +4,10 @@
 
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
-// REMOVED #include "my_dice.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_game_defs.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
-// REMOVED #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 

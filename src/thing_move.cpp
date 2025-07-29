@@ -3,14 +3,10 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
-// REMOVED #include "my_types.hpp"
 
-// REMOVED #include <string.h>
 
 //
 // Get thing direction

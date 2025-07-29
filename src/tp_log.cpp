@@ -6,13 +6,11 @@
 #include "my_callstack.hpp"
 #include "my_console.hpp"
 #include "my_log.hpp"
-// REMOVED #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tp.hpp"
 #include "my_wid_console.hpp"
 
-// REMOVED #include <string.h>
 
 void log_(Tpp tp, const char *fmt, va_list args)
 {

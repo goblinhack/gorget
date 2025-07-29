@@ -3,7 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_charmap.hpp"
 #include "my_level.hpp"
 
 //

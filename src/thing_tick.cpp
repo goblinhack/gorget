@@ -3,22 +3,9 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_random.hpp"
-// REMOVED #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
-// REMOVED #include "my_types.hpp"
 
-// REMOVED #include <cinttypes>
-// REMOVED #include <iostream>
-// REMOVED #include <map>
-// REMOVED #include <mutex>
-// REMOVED #include <sstream>
-// REMOVED #include <string.h>
-// REMOVED #include <string>
 
 //
 // Called at the beginning of each tick

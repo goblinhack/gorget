@@ -7,15 +7,11 @@
 #include "my_callstack.hpp"
 #include "my_console.hpp"
 #include "my_log.hpp"
-// REMOVED #include "my_sdl_event.hpp"
-// REMOVED #include "my_sdl_proto.hpp"
 #include "my_string.hpp"
 #include "my_wid_botcon.hpp"
 #include "my_wid_console.hpp"
 #include "my_wid_topcon.hpp"
 
-// REMOVED #include <stdarg.h>
-// REMOVED #include <string.h>
 
 void log_(const char *fmt, va_list args)
 {

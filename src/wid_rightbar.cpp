@@ -7,9 +7,7 @@
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
-// REMOVED #include "my_sdl_event.hpp"
 #include "my_string.hpp"
 #include "my_wids.hpp"
 

@@ -3,13 +3,6 @@
 //
 
 #include <iostream>
-// REMOVED #include <locale.h>
-// REMOVED #include <stdint.h>
-// REMOVED #include <stdio.h>
-// REMOVED #include <string.h>
-// REMOVED #include <strings.h>
-// REMOVED #include <time.h>
-// REMOVED #include <unistd.h>
 
 #include "my_backtrace.hpp"
 #include "my_callstack.hpp"

@@ -6,11 +6,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-// REMOVED #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
-// REMOVED #include "my_types.hpp"
 
-// REMOVED #include <string.h>
 
 Thingp thing_player(Gamep g)
 {

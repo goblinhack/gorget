@@ -2,12 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
-// REMOVED #include "my_dice.hpp"
 #include "my_dice_roll.hpp"
-// REMOVED #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_string.hpp"
-// REMOVED #include "my_thing.hpp"
 
 // Roll -30 -> bonus -20
 // Roll -29 -> bonus -19

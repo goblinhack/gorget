@@ -5,12 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_tile.hpp"
-// REMOVED #include "my_tp.hpp"
-// REMOVED #include "my_types.hpp"
 
-// REMOVED #include <string.h>
 
 //
 // Move the thing immediately to the new level entrance

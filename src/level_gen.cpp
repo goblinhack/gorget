@@ -13,12 +13,9 @@
 #include "my_random.hpp"
 #include "my_time.hpp"
 
-// REMOVED #include <array>
 #include <map>
-// REMOVED #include <stdarg.h>
 #include <thread>
 #include <unordered_map>
-// REMOVED #include <vector>
 
 //
 // How many times to try creating a single level

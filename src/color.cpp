@@ -9,8 +9,6 @@
 #include "my_ui.hpp"
 
 #include <map>
-// REMOVED #include <string.h>
-// REMOVED #include <strings.h>
 
 using colors = std::map< std::string, color >;
 

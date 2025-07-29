@@ -6,9 +6,7 @@
 #include "my_command.hpp"
 #include "my_ui.hpp"
 
-// REMOVED #include <array>
 #include <map>
-// REMOVED #include <string.h>
 
 /*
  * Simple console expanding code, takes a command input and expands it as
