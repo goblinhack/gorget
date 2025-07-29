@@ -572,18 +572,25 @@ static void parse_args(int argc, char *argv[])
     //
     if (argv[ i ][ 0 ] == '-') {
       usage();
-
       //
       // Win32 puts spaces in argv when we restart the process. I'm not sure
       // how to handle that, so don't fail the program. Warn and continue.
       //
       CON("Unknown format argument, %s", argv[ i ]);
+#ifdef _WIN32
+      return;
+#else
       exit(1);
+#endif
     }
 
     usage();
     CON("Unknown format argument, %s", argv[ i ]);
+#ifdef _WIN32
+    return;
+#else
     exit(1);
+#endif
   }
 }
 
