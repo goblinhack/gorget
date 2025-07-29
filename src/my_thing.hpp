@@ -303,6 +303,7 @@ void player_move_delta(Gamep, Levelsp, Levelp, int dx, int dy, int dz);
 void player_move_reset(Gamep, Levelsp, Levelp);
 void player_reached_exit(Gamep, Levelsp, Levelp, Thingp);
 void player_reached_entrance(Gamep, Levelsp, Levelp, Thingp);
+void player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
 void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 bool player_move_request(Gamep, bool up, bool down, bool left, bool right);
 

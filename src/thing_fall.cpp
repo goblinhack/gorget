@@ -75,14 +75,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (thing_is_player(t)) {
-    TOPCON_NEW_LINE();
-    TOPCON(UI_IMPORTANT_FMT_STR "You tumble into the void." UI_RESET_FMT);
-
-    l = level_change(g, v, next_level->level_num);
-    if (next_level != l) {
-      ERR("unexpected level found");
-      return;
-    }
+    player_fell(g, v, l, next_level, t);
   }
 
   auto new_location = thing_choose_landing_spot(g, v, next_level, t);

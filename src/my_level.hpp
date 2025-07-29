@@ -112,9 +112,10 @@ typedef struct Level_ {
   //
   uint8_t entered : 1;
   //
-  // Player has completed level
+  // Player has completed level on way or another
   //
-  uint8_t completed : 1;
+  uint8_t player_completed_level_via_exit : 1;
+  uint8_t player_fell_out_of_level        : 1;
   //
   // Player can enter this level
   //
@@ -390,7 +391,8 @@ void    levels_stats_dump(Gamep);
 
 Levelp level_change(Gamep, Levelsp, LevelNum);
 void   level_entered(Gamep, Levelsp, Levelp);
-void   level_completed(Gamep, Levelsp, Levelp);
+void   level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
+void   level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
 void   level_destroy(Gamep, Levelsp, Levelp);
 
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);

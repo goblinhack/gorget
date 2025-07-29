@@ -318,7 +318,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
       //
       // Completed levels
       //
-      if (l->completed) {
+      if (l->player_completed_level_via_exit || l->player_fell_out_of_level) {
         tp = tp_is_level_visited;
       }
 
@@ -330,7 +330,8 @@ static void level_select_map_set(Gamep g, Levelsp v)
       //
       // If not visited, is it a next level for the current level?
       //
-      if (player_level && (player_level->completed) && (tp == tp_is_level_not_visited)) {
+      if (player_level && (player_level->player_completed_level_via_exit || player_level->player_fell_out_of_level)
+          && (tp == tp_is_level_not_visited)) {
         if (y > 0) {
           LevelSelectCell *o = &s->data[ x ][ y - 1 ];
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
@@ -365,7 +366,8 @@ static void level_select_map_set(Gamep g, Levelsp v)
       //
       // Allow backwards moves to completed levels
       //
-      if (player_level && l->completed && (tp == tp_is_level_visited)) {
+      if (player_level && (l->player_completed_level_via_exit || l->player_fell_out_of_level)
+          && (tp == tp_is_level_visited)) {
         if (y > 0) {
           LevelSelectCell *o = &s->data[ x ][ y - 1 ];
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
@@ -749,7 +751,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
   }
 
   if (level_over->next_level) {
-    if (player_level->completed) {
+    if (player_level->player_completed_level_via_exit) {
       TRACE_NO_INDENT();
       auto   w = wid_new_square_button(g, parent, "level");
       spoint tl(x_at, y_at);
@@ -757,6 +759,18 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
       wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
       wid_set_pos(w, tl, br);
       wid_set_text(w, " You can enter here");
+      wid_set_style(w, UI_WID_STYLE_NORMAL);
+      wid_set_shape_none(w);
+      wid_set_text_lhs(w, true);
+      y_at++;
+    } else if (player_level->player_fell_out_of_level) {
+      TRACE_NO_INDENT();
+      auto   w = wid_new_square_button(g, parent, "level");
+      spoint tl(x_at, y_at);
+      spoint br(width - 1, y_at);
+      wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, " You can climb back here");
       wid_set_style(w, UI_WID_STYLE_NORMAL);
       wid_set_shape_none(w);
       wid_set_text_lhs(w, true);
@@ -800,7 +814,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
     y_at++;
   }
 
-  if (level_over->completed) {
+  if (level_over->player_completed_level_via_exit) {
     TRACE_NO_INDENT();
     auto   w = wid_new_square_button(g, parent, "level");
     spoint tl(x_at, y_at);
@@ -808,6 +822,18 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
     wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
     wid_set_pos(w, tl, br);
     wid_set_text(w, " You completed this level");
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_shape_none(w);
+    wid_set_text_lhs(w, true);
+    y_at++;
+  } else if (level_over->player_fell_out_of_level) {
+    TRACE_NO_INDENT();
+    auto   w = wid_new_square_button(g, parent, "level");
+    spoint tl(x_at, y_at);
+    spoint br(width - 1, y_at);
+    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, " You fell out of this level");
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_shape_none(w);
     wid_set_text_lhs(w, true);

@@ -310,21 +310,33 @@ void level_entered(Gamep g, Levelsp v, Levelp l)
   l->entered = true;
 }
 
-void level_completed(Gamep g, Levelsp v, Levelp l)
+void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)
 {
-  if (l->completed) {
+  //
+  // Clear signs of previous failure
+  //
+  l->player_fell_out_of_level = false;
+
+  if (l->player_completed_level_via_exit) {
     return;
   }
+  l->player_completed_level_via_exit = true;
 
   LOG("Level completed: %u", l->level_num);
   TRACE_AND_INDENT();
-
-  l->completed = true;
 
   auto player_struct = thing_player_struct(g);
   if (player_struct) {
     player_struct->levels_completed++;
   }
+}
+
+void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
+{
+  l->player_fell_out_of_level = true;
+
+  TOPCON_NEW_LINE();
+  TOPCON(UI_IMPORTANT_FMT_STR "You tumble into the void." UI_RESET_FMT);
 }
 
 //
@@ -354,10 +366,14 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
     TOPCON_NEW_LINE();
     TOPCON(UI_WARNING_FMT_STR "Choose your next level." UI_RESET_FMT);
     TOPCON("Mouse over levels for monster/treasure info.");
-  } else if (new_level->completed) {
+  } else if (new_level->player_completed_level_via_exit) {
     TOPCON_NEW_LINE();
     TOPCON(UI_WARNING_FMT_STR "You re-enter level %u of dungeon %s." UI_RESET_FMT "", new_level->level_num + 1,
            game_seed_name_get(g));
+  } else if (new_level->player_fell_out_of_level) {
+    TOPCON_NEW_LINE();
+    TOPCON(UI_WARNING_FMT_STR "You stumble back into level %u of dungeon %s." UI_RESET_FMT "",
+           new_level->level_num + 1, game_seed_name_get(g));
   } else if (level_num > 0) {
     TOPCON_NEW_LINE();
     TOPCON(UI_WARNING_FMT_STR "You enter level %u of dungeon %s." UI_RESET_FMT "", new_level->level_num + 1,

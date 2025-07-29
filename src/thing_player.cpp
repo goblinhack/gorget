@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
+#include "my_main.hpp"
 // REMOVED #include "my_tile.hpp"
 // REMOVED #include "my_tp.hpp"
 // REMOVED #include "my_types.hpp"
@@ -199,7 +199,7 @@ void player_reached_exit(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  l->completed = true;
+  level_is_completed_by_player_exiting(g, v, l);
   player_level_leave(g, v, l, t);
 }
 
@@ -211,6 +211,22 @@ void player_reached_entrance(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   player_level_leave(g, v, l, t);
+}
+
+//
+// Handle the player falling out of the level
+//
+void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  level_cursor_path_reset(g, v, l);
+  level_is_completed_by_player_falling(g, v, l);
+
+  if (next_level != level_change(g, v, next_level->level_num)) {
+    ERR("unexpected level found");
+    return;
+  }
 }
 
 //
