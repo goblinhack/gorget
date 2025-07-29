@@ -41,6 +41,9 @@ bool tests_init(void)
   if (! test_load_collision_brazier_shove_ok()) {
     return false;
   }
+  if (! test_load_collision_brazier_shove_chasm()) {
+    return false;
+  }
   if (! test_load_collision_grass()) {
     return false;
   }

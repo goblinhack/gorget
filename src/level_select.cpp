@@ -110,7 +110,8 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
   //
   // Nothing to fall onto. Try a random level.
   //
-  for (;;) {
+  tries = 0;
+  while (tries++ < LEVELS_DOWN * LEVELS_ACROSS * 2) {
     spoint random_p(pcg_random_range(0, LEVELS_ACROSS), pcg_random_range(0, LEVELS_DOWN));
 
     auto cand = level_select_get_level(g, v, l, random_p);
@@ -118,6 +119,9 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
       return cand;
     }
   }
+
+  DIE("failed to find a next level down");
+  return nullptr;
 }
 
 //

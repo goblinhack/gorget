@@ -246,6 +246,7 @@ int      game_map_single_pix_size_get(Gamep g);
 int      game_map_zoom_def_get(Gamep g);
 int      game_map_zoom_get(Gamep g);
 Levelsp  game_test_init(Gamep, Levelp *, LevelNum, int w, int h, const char *contents);
+void     game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, int w, int h, const char *contents);
 uint8_t  game_input(Gamep, const SDL_Keysym *key);
 uint8_t  game_mouse_down(Gamep, int x, int y, uint32_t button);
 uint8_t  game_mouse_motion(Gamep, int x, int y, int relx, int rely, int wheelx, int wheely);

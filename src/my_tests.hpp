@@ -18,6 +18,7 @@ bool test_load_collision_mob_water();
 bool test_load_collision_wall();
 bool test_load_collision_mob_lava();
 bool test_load_collision_brazier_shove_ok();
+bool test_load_collision_brazier_shove_chasm();
 bool test_load_collision_grass();
 bool test_load_collision_player_lava();
 bool test_load_move_ok();

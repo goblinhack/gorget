@@ -394,14 +394,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
   auto v = game_levels_set(g, levels_memory_alloc(g));
 
   TRACE_NO_INDENT();
-  auto l = game_level_get(g, v, level_num);
-  *l_out = l;
-
-  TRACE_NO_INDENT();
-  level_init(g, v, l, level_num);
-
-  TRACE_NO_INDENT();
-  level_populate(g, v, l, w, h, contents);
+  game_test_init_level(g, v, l_out, level_num, w, h, contents);
 
   TRACE_NO_INDENT();
   game_state_reset(g, "new game");
@@ -413,6 +406,39 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
   game_state_change(g, STATE_PLAYING, "new game");
 
   return v;
+}
+
+//
+// Create an additional level with the given contents and start the game into playing state
+//
+void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h,
+                                const char *contents)
+{
+  TRACE_NO_INDENT();
+  auto l = game_level_get(g, v, level_num);
+  if (l_out) {
+    *l_out = l;
+  }
+
+  TRACE_NO_INDENT();
+  level_init(g, v, l, level_num);
+
+  TRACE_NO_INDENT();
+  level_populate(g, v, l, w, h, contents);
+
+  if (level_num >= LEVELS_DOWN) {
+    DIE("too many levels deep");
+  }
+
+  //
+  // Assign the level into the level select grid
+  //
+  spoint p(0, level_num);
+  l->level_select_at = p;
+  auto s             = &v->level_select.data[ p.x ][ p.y ];
+  s->level_num       = l->level_num;
+  s->is_set          = true;
+  l->level_select_at = p;
 }
 
 void Game::fini(void)
