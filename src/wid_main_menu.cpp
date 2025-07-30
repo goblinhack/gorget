@@ -218,17 +218,17 @@ static void game_display_title_fg3(Gamep g)
   }
 
   float bright = 1.01;
-  int   r      = ((float) fg.r) * bright;
+  int   r      = (int) (((float) fg.r) * bright);
   if (r > 255) {
     r = 255;
   }
   fg.r      = r;
-  int green = ((float) fg.g) * bright;
+  int green = (int) (((float) fg.g) * bright);
   if (green > 255) {
     green = 255;
   }
   fg.g  = green;
-  int b = ((float) fg.b) * bright;
+  int b = (int) (((float) fg.b) * bright);
   if (b > 255) {
     b = 255;
   }

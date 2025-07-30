@@ -1458,8 +1458,8 @@ void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom)
 
 void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br) { blit(tex, 0, 0, 1, 1, tl, tr, bl, br); }
 
-void blit_colored(int tex, GLushort left, GLushort top, GLushort right, float bottom, color color_bl, color color_br,
-                  color color_tl, color color_tr)
+void blit_colored(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, color color_bl,
+                  color color_br, color color_tl, color color_tr)
 {
   blit_colored(tex, 0, 0, 1, 1, left, top, right, bottom, color_bl, color_br, color_tl, color_tr);
 }

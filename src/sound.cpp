@@ -161,7 +161,7 @@ bool sound_play(Gamep g, const std::string &alias)
     return false;
   }
 
-  Mix_VolumeChunk(sound->second->chunk, volume);
+  Mix_VolumeChunk(sound->second->chunk, (int) volume);
 
   if (Mix_PlayChannel(-1 /* first free channel */, sound->second->chunk, 0 /* loops */) == -1) {
     DBG2("Cannot play sound %s on any channel", alias.c_str());
@@ -198,7 +198,7 @@ bool sound_play_channel(Gamep g, int channel, const std::string &alias)
 
   volume *= MIX_MAX_VOLUME;
 
-  Mix_VolumeChunk(sound->second->chunk, volume);
+  Mix_VolumeChunk(sound->second->chunk, (int) volume);
 
   if (Mix_Playing(channel)) {
     if (Mix_PlayChannel(-1, sound->second->chunk, 0 /* loops */) == -1) {

@@ -276,9 +276,9 @@ color color_to_mono(color a)
   TRACE_NO_INDENT();
   float avg = (a.r + a.g + a.b) / 3.0;
 
-  a.r = avg;
-  a.g = avg;
-  a.b = avg;
+  a.r = (int) avg;
+  a.g = (int) avg;
+  a.b = (int) avg;
 
   return a;
 }

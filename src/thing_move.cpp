@@ -422,8 +422,8 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
   float pix_x = (float) t->moving_from.x + (((float) (t->at.x - t->moving_from.x)) * dt);
   float pix_y = (float) t->moving_from.y + (((float) (t->at.y - t->moving_from.y)) * dt);
 
-  t->pix_at.x = pix_x * INNER_TILE_WIDTH;
-  t->pix_at.y = pix_y * INNER_TILE_HEIGHT;
+  t->pix_at.x = (int) (pix_x * INNER_TILE_WIDTH);
+  t->pix_at.y = (int) (pix_y * INNER_TILE_HEIGHT);
 }
 
 //

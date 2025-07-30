@@ -268,8 +268,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, spoint tl, spoint tr, spoint bl,
           spoint br);
 void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br);
-void blit_colored(int tex, GLushort left, GLushort top, GLushort right, float bottom, color color_bl, color color_br,
-                  color color_tl, color color_tr);
+void blit_colored(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, color color_bl,
+                  color color_br, color color_tl, color color_tr);
 void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
                   GLushort right, GLushort bottom, color color_bl, color color_br, color color_tl, color color_tr);
 void blit_fbo(Gamep, int fbo);

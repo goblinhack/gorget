@@ -42,7 +42,7 @@ float spoint::length(void) const { return (sqrt(x * x + y * y)); }
 
 void spoint::unit(void)
 {
-  short len = sqrt(x * x + y * y);
+  short len = (int) sqrt(x * x + y * y);
   x /= len;
   y /= len;
 }

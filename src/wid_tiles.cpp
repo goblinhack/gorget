@@ -36,7 +36,7 @@ void wid_tiles_fini(void)
   }
 }
 
-wid_tilesp wid_tiles_load(std::string name, double scale)
+wid_tilesp wid_tiles_load(std::string name, float scale)
 {
   TRACE_NO_INDENT();
   auto t = wid_tiles_find(name);
@@ -68,15 +68,15 @@ wid_tilesp wid_tiles_load(std::string name, double scale)
 
   Texp tex = tile_tex(a_tile);
 
-  double tile_w = tile_width(a_tile);
-  double tile_h = tile_height(a_tile);
-  double tex_w  = tex_get_width(tex);
-  double tex_h  = tex_get_height(tex);
+  float tile_w = tile_width(a_tile);
+  float tile_h = tile_height(a_tile);
+  float tex_w  = tex_get_width(tex);
+  float tex_h  = tex_get_height(tex);
 
-  t->across = tex_w / tile_w;
-  t->down   = tex_h / tile_h;
-  t->tile_w = tile_w;
-  t->tile_h = tile_h;
+  t->across = (int) (tex_w / tile_w);
+  t->down   = (int) (tex_h / tile_h);
+  t->tile_w = (int) tile_w;
+  t->tile_h = (int) tile_h;
   t->scale  = scale;
 
   int i, j, c;

@@ -318,8 +318,8 @@ void sdl_tick(Gamep g)
     my          = -1;
   }
 
-  static double accel = 1.0;
-  static ts_t   ts;
+  static float accel = 1.0;
+  static ts_t  ts;
 
   if (time_have_x_tenths_passed_since(5, ts)) {
     accel = 1.0;
@@ -334,8 +334,8 @@ void sdl_tick(Gamep g)
       accel = UI_SCROLL_JOY_SCALE_MAX;
     }
 
-    double x = sdl.mouse_x + ((double) mx * accel);
-    double y = sdl.mouse_y + ((double) my * accel);
+    int x = (int) (sdl.mouse_x + ((float) mx * accel));
+    int y = (int) (sdl.mouse_y + ((float) my * accel));
 
     if (x < 0) {
       x = 0;
@@ -699,15 +699,15 @@ void config_game_gfx_update(Gamep g)
     }
   }
 
-  double map_w = visible_map_br_x - visible_map_tl_x;
-  double map_h = visible_map_br_y - visible_map_tl_y;
+  int map_w = visible_map_br_x - visible_map_tl_x;
+  int map_h = visible_map_br_y - visible_map_tl_y;
 
-  double max_fbo_w = INNER_TILE_WIDTH * MAP_WIDTH;
-  double max_fbo_h = INNER_TILE_HEIGHT * MAP_HEIGHT;
+  int max_fbo_w = INNER_TILE_WIDTH * MAP_WIDTH;
+  int max_fbo_h = INNER_TILE_HEIGHT * MAP_HEIGHT;
 
   double map_w_h_ratio = map_w / map_h;
-  double fbo_w         = (double) INNER_TILE_WIDTH * game_tiles_visible_across_get(g);
-  double fbo_h         = ceil(fbo_w / map_w_h_ratio);
+  int    fbo_w         = INNER_TILE_WIDTH * game_tiles_visible_across_get(g);
+  int    fbo_h         = (int) ceil(fbo_w / map_w_h_ratio);
 
   if (fbo_w > max_fbo_w) {
     fbo_w = max_fbo_w;
@@ -721,10 +721,10 @@ void config_game_gfx_update(Gamep g)
 
   LOG("SDL: - map location          : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
       visible_map_br_y);
-  LOG("SDL: - map onscreen sz       : %gx%g", map_w, map_h);
+  LOG("SDL: - map onscreen sz       : %dx%d", map_w, map_h);
   LOG("SDL: - map w to h ratio      : %g", map_w_h_ratio);
-  LOG("SDL: - map pix sz            : %gx%g", fbo_w, fbo_h);
-  LOG("SDL: - map max pix sz        : %gx%g", max_fbo_w, max_fbo_h);
+  LOG("SDL: - map pix sz            : %dx%d", fbo_w, fbo_h);
+  LOG("SDL: - map max pix sz        : %dx%d", max_fbo_w, max_fbo_h);
 
   int zoom = game_map_zoom_get(g);
   if (zoom == 0) {
@@ -753,14 +753,14 @@ void config_game_gfx_update(Gamep g)
     //
     // Used in outlines.
     //
-    game_map_single_pix_size_set(g, ceil(map_w / fbo_w));
+    game_map_single_pix_size_set(g, (int) (ceil(map_w / fbo_w)));
   }
 
   //
   // The map within the game fbo. Use the height of the screen so the width is pixel perfect.
   //
-  float tiles_across = game_map_fbo_width_get(g) / (INNER_TILE_WIDTH * zoom);
-  float tiles_down   = game_map_fbo_height_get(g) / (INNER_TILE_HEIGHT * zoom);
+  int tiles_across = (int) ceil(game_map_fbo_width_get(g) / (INNER_TILE_WIDTH * zoom));
+  int tiles_down   = (int) ceil(game_map_fbo_height_get(g) / (INNER_TILE_HEIGHT * zoom));
 
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);

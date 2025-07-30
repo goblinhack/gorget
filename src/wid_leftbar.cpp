@@ -68,9 +68,10 @@ static bool wid_leftbar_create_window(Gamep g)
     spoint br(width - 2, y_at);
     wid_set_pos(w, tl, br);
 
-    int i = ((float) thing_health(player) / (float) tp_health_initial_get(tp)) * ((float) UI_HEALTH_BAR_STEPS - 1);
-    i     = std::min(i, UI_HEALTH_BAR_STEPS - 1);
-    i     = std::max(i, 0);
+    int i     = (int) (((float) thing_health(player) / (float) tp_health_initial_get(tp))
+                   * ((float) UI_HEALTH_BAR_STEPS - 1));
+    i         = std::min(i, UI_HEALTH_BAR_STEPS - 1);
+    i         = std::max(i, 0);
     auto icon = "health_bar." + std::to_string(i + 1);
     wid_set_tilename(TILE_LAYER_FG_0, w, icon);
   }

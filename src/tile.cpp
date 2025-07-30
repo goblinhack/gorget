@@ -1166,8 +1166,8 @@ void tile_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, float &x2, fl
   float h1 = br.y - tl.y;
   float h2 = y2 - y1;
 
-  float off1 = (h1 / 100) * percent;
-  float off2 = (h2 / 100) * percent;
+  int off1 = (int) ceil((h1 / 100) * percent);
+  int off2 = (int) ceil((h2 / 100) * percent);
 
   tl.y += off1;
   y2 -= off2;

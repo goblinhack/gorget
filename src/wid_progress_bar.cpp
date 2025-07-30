@@ -28,8 +28,7 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
     wid_progress_bar_destroy(g);
   }
 
-  int tile_num;
-  tile_num = progress_steps * pct;
+  int tile_num = (int) ((float) progress_steps * pct);
   if (tile_num > progress_steps) {
     tile_num = progress_steps;
   }

@@ -500,7 +500,7 @@ int wid_get_tl_x(Widp w)
 {
   TRACE_NO_INDENT();
 
-  int cx = (w->key.tl.x + w->key.br.x) / 2.0;
+  int cx = (w->key.tl.x + w->key.br.x) / 2;
 
   return (cx - (cx - w->key.tl.x));
 }
@@ -509,7 +509,7 @@ int wid_get_tl_y(Widp w)
 {
   TRACE_NO_INDENT();
 
-  int cy = (w->key.tl.y + w->key.br.y) / 2.0;
+  int cy = (w->key.tl.y + w->key.br.y) / 2;
 
   return (cy - (cy - w->key.tl.y));
 }
@@ -518,7 +518,7 @@ int wid_get_br_x(Widp w)
 {
   TRACE_NO_INDENT();
 
-  int cx = (w->key.tl.x + w->key.br.x) / 2.0;
+  int cx = (w->key.tl.x + w->key.br.x) / 2;
 
   return (cx + (w->key.br.x - cx));
 }
@@ -527,7 +527,7 @@ int wid_get_br_y(Widp w)
 {
   TRACE_NO_INDENT();
 
-  int cy = (w->key.tl.y + w->key.br.y) / 2.0;
+  int cy = (w->key.tl.y + w->key.br.y) / 2;
 
   return (cy + (w->key.br.y - cy));
 }
@@ -550,8 +550,8 @@ void wid_get_tl_x_tl_y_br_x_br_y(Widp w, int *tl_x, int *tl_y, int *br_x, int *b
   const int brx = w->key.br.x;
   const int bry = w->key.br.y;
 
-  const int cx = (tlx + brx) / 2.0;
-  const int cy = (tly + bry) / 2.0;
+  const int cx = (tlx + brx) / 2;
+  const int cy = (tly + bry) / 2;
 
   *tl_x = cx - (cx - tlx);
   *tl_y = cy - (cy - tly);
@@ -628,10 +628,10 @@ static void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
     br.y = wid_get_height(w->parent) - 1;
   }
 
-  int key_tl_x = tl.x;
-  int key_tl_y = tl.y;
-  int key_br_x = br.x;
-  int key_br_y = br.y;
+  int key_tl_x = (int) tl.x;
+  int key_tl_y = (int) tl.y;
+  int key_br_x = (int) br.x;
+  int key_br_y = (int) br.y;
 
   //
   // Child postion is relative from the parent.
@@ -3026,19 +3026,19 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
 {
   TRACE_NO_INDENT();
 
-  double  height       = wid_get_height(owner);
-  double  width        = wid_get_width(owner);
-  double  child_height = 0;
-  double  child_width  = 0;
-  double  scrollbar_width;
-  double  scrollbar_height;
-  double  trough_height;
-  double  trough_width;
-  double  miny = 0;
-  double  maxy = 0;
-  double  minx = 0;
-  double  maxx = 0;
-  double  pct;
+  float   height       = wid_get_height(owner);
+  float   width        = wid_get_width(owner);
+  float   child_height = 0;
+  float   child_width  = 0;
+  float   scrollbar_width;
+  float   scrollbar_height;
+  float   trough_height;
+  float   trough_width;
+  float   miny = 0;
+  float   maxy = 0;
+  float   minx = 0;
+  float   maxx = 0;
+  float   pct;
   uint8_t first = true;
 
   //
@@ -3113,14 +3113,14 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
             / ((float) (trough_height - scrollbar_height));
       }
 
-      owner->offset.y = -miny;
-      owner->offset.y -= (pct * (child_height - height));
+      owner->offset.y = (int) -miny;
+      owner->offset.y -= (int) ((pct * (child_height - height)));
 
       float n = ((float) wid_get_tl_y(scrollbar->parent)) + pct * ((float) (trough_height - scrollbar_height));
       scrollbar->key.tl.y = (int) ceil(n);
 
       wid_tree_detach(scrollbar);
-      scrollbar->key.br.y = wid_get_tl_y(scrollbar) + scrollbar_height - 1;
+      scrollbar->key.br.y = wid_get_tl_y(scrollbar) + (int) scrollbar_height - 1;
       wid_tree_attach(scrollbar);
 
       wid_set_mode(g, scrollbar, WID_MODE_ACTIVE);
@@ -3138,14 +3138,14 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
         pct = (wid_get_tl_x(scrollbar) - wid_get_tl_x(scrollbar->parent)) / (trough_width - scrollbar_width);
       }
 
-      owner->offset.x = -minx;
-      owner->offset.x -= (pct * (child_width - width));
+      owner->offset.x = (int) -minx;
+      owner->offset.x -= (int) (pct * (child_width - width));
 
       float n = ((float) wid_get_tl_x(scrollbar->parent)) + pct * ((float) (trough_width - scrollbar_width));
       scrollbar->key.tl.x = (int) ceil(n);
 
       wid_tree_detach(scrollbar);
-      scrollbar->key.br.x = wid_get_tl_x(scrollbar) + scrollbar_width - 1;
+      scrollbar->key.br.x = wid_get_tl_x(scrollbar) + (int) scrollbar_width - 1;
       wid_tree_attach(scrollbar);
 
       wid_set_mode(g, scrollbar, WID_MODE_ACTIVE);
@@ -3157,14 +3157,14 @@ void wid_get_children_size(Widp owner, int *w, int *h)
 {
   TRACE_NO_INDENT();
 
-  double  height       = wid_get_height(owner);
-  double  width        = wid_get_width(owner);
-  double  child_height = 0;
-  double  child_width  = 0;
-  double  miny         = 0;
-  double  maxy         = 0;
-  double  minx         = 0;
-  double  maxx         = 0;
+  float   height       = wid_get_height(owner);
+  float   width        = wid_get_width(owner);
+  float   child_height = 0;
+  float   child_width  = 0;
+  float   miny         = 0;
+  float   maxy         = 0;
+  float   minx         = 0;
+  float   maxx         = 0;
   uint8_t first        = true;
 
   //
@@ -3220,11 +3220,11 @@ void wid_get_children_size(Widp owner, int *w, int *h)
   }
 
   if (w) {
-    *w = child_width;
+    *w = (int) child_width;
   }
 
   if (h) {
-    *h = child_height;
+    *h = (int) child_height;
   }
 }
 
@@ -4015,19 +4015,19 @@ void wid_resize(Gamep g, Widp w, int width, int height)
   wid_tree_attach(w);
 }
 
-void wid_move_delta_pct(Gamep g, Widp w, double dx, double dy)
+void wid_move_delta_pct(Gamep g, Widp w, float dx, float dy)
 {
   TRACE_NO_INDENT();
 
   if (! w->parent) {
-    dx *= (double) TERM_WIDTH;
-    dy *= (double) TERM_HEIGHT;
+    dx *= (float) TERM_WIDTH;
+    dy *= (float) TERM_HEIGHT;
   } else {
     dx *= wid_get_width(w->parent);
     dy *= wid_get_height(w->parent);
   }
 
-  wid_move_delta_internal(g, w, dx, dy);
+  wid_move_delta_internal(g, w, (int) dx, (int) dy);
 
   wid_update_internal(g, w);
 }
@@ -4078,26 +4078,26 @@ void wid_move_to_right(Gamep g, Widp w)
   }
 }
 
-void wid_move_to_vert_pct(Gamep g, Widp w, double pct)
+void wid_move_to_vert_pct(Gamep g, Widp w, float pct)
 {
   TRACE_NO_INDENT();
 
-  double pheight = wid_get_br_y(w->parent) - wid_get_tl_y(w->parent);
-  double at      = (wid_get_tl_y(w) - wid_get_tl_y(w->parent)) / pheight;
-  double delta   = (pct - at) * pheight;
+  float pheight = wid_get_br_y(w->parent) - wid_get_tl_y(w->parent);
+  float at      = (wid_get_tl_y(w) - wid_get_tl_y(w->parent)) / pheight;
+  float delta   = (pct - at) * pheight;
 
-  wid_move_delta(g, w, 0, delta);
+  wid_move_delta(g, w, 0, (int) delta);
 }
 
-void wid_move_to_horiz_pct(Gamep g, Widp w, double pct)
+void wid_move_to_horiz_pct(Gamep g, Widp w, float pct)
 {
   TRACE_NO_INDENT();
 
-  double pwidth = wid_get_br_x(w->parent) - wid_get_tl_x(w->parent);
-  double at     = (wid_get_tl_x(w) - wid_get_tl_x(w->parent)) / pwidth;
-  double delta  = (pct - at) * pwidth;
+  float pwidth = wid_get_br_x(w->parent) - wid_get_tl_x(w->parent);
+  float at     = (wid_get_tl_x(w) - wid_get_tl_x(w->parent)) / pwidth;
+  float delta  = (pct - at) * pwidth;
 
-  wid_move_delta(g, w, delta, 0);
+  wid_move_delta(g, w, (int) delta, 0);
 }
 
 void wid_move_to_top(Gamep g, Widp w)
@@ -4731,7 +4731,7 @@ void wid_get_abs(Widp w, int *x, int *y)
   *y = (tly + bry) / 2;
 }
 
-void wid_get_pct(Widp w, double *px, double *py)
+void wid_get_pct(Widp w, float *px, float *py)
 {
   TRACE_NO_INDENT();
 
@@ -4740,8 +4740,8 @@ void wid_get_pct(Widp w, double *px, double *py)
 
   wid_get_abs(w, &x, &y);
 
-  *px = (double) x / (double) TERM_WIDTH;
-  *py = (double) y / (double) TERM_HEIGHT;
+  *px = (float) x / (float) TERM_WIDTH;
+  *py = (float) y / (float) TERM_HEIGHT;
 }
 
 //
@@ -5035,7 +5035,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
         //
         x = ((owidth - (int) width) / 2) + otlx;
 
-        uint32_t c_width = (width / (double) text.length());
+        uint32_t c_width = (int) (width / (float) text.length());
 
         x -= (w->cursor - (text.length() / 2)) * c_width;
       } else if (wid_get_text_lhs(w)) {
@@ -5279,22 +5279,22 @@ bool wid_is_always_hidden(const Widp w)
   return false;
 }
 
-void wid_move_to_pct(Gamep g, Widp w, double x, double y)
+void wid_move_to_pct(Gamep g, Widp w, float x, float y)
 {
   TRACE_NO_INDENT();
 
   if (! w->parent) {
-    x *= (double) TERM_WIDTH;
-    y *= (double) TERM_HEIGHT;
+    x *= (float) TERM_WIDTH;
+    y *= (float) TERM_HEIGHT;
   } else {
     x *= wid_get_width(w->parent);
     y *= wid_get_height(w->parent);
   }
 
-  double dx = x - wid_get_tl_x(w);
-  double dy = y - wid_get_tl_y(w);
+  float dx = x - wid_get_tl_x(w);
+  float dy = y - wid_get_tl_y(w);
 
-  wid_move_delta(g, w, dx, dy);
+  wid_move_delta(g, w, (int) dx, (int) dy);
 }
 
 void wid_move_to_abs(Gamep g, Widp w, int x, int y)
@@ -5307,28 +5307,28 @@ void wid_move_to_abs(Gamep g, Widp w, int x, int y)
   wid_move_delta(g, w, dx, dy);
 }
 
-void wid_move_to_pct_centered(Gamep g, Widp w, double ox, double oy)
+void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy)
 {
   TRACE_NO_INDENT();
 
-  double x = ox;
-  double y = oy;
+  float x = ox;
+  float y = oy;
 
   if (! w->parent) {
-    x *= (double) TERM_WIDTH;
-    y *= (double) TERM_HEIGHT;
+    x *= (float) TERM_WIDTH;
+    y *= (float) TERM_HEIGHT;
   } else {
     x *= wid_get_width(w->parent);
     y *= wid_get_height(w->parent);
   }
 
-  double dx = x - wid_get_tl_x(w);
-  double dy = y - wid_get_tl_y(w);
+  float dx = x - wid_get_tl_x(w);
+  float dy = y - wid_get_tl_y(w);
 
   dx -= ceil(wid_get_br_x(w) - wid_get_tl_x(w)) / 2;
   dy -= ceil(wid_get_br_y(w) - wid_get_tl_y(w)) / 2;
 
-  wid_move_delta(g, w, dx, dy);
+  wid_move_delta(g, w, (int) dx, (int) dy);
 
   //
   // Account for rounding errors if we can fit the window in the screen and it is
@@ -5363,8 +5363,8 @@ void wid_move_to_abs_centered(Gamep g, Widp w, int x, int y)
   int dx = x - wid_get_tl_x(w);
   int dy = y - wid_get_tl_y(w);
 
-  dx -= ceil((wid_get_br_x(w) - wid_get_tl_x(w)) / 2);
-  dy -= ceil((wid_get_br_y(w) - wid_get_tl_y(w)) / 2);
+  dx -= (int) ceil((wid_get_br_x(w) - wid_get_tl_x(w)) / 2);
+  dy -= (int) ceil((wid_get_br_y(w) - wid_get_tl_y(w)) / 2);
 
   wid_move_delta(g, w, dx, dy);
 }

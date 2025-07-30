@@ -795,10 +795,10 @@ void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, const char *tile
 //
 static void ascii_blit(Gamep g)
 {
-  int   x;
-  int   y;
-  float tile_x;
-  float tile_y;
+  int x;
+  int y;
+  int tile_x;
+  int tile_y;
 
   glcolor(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

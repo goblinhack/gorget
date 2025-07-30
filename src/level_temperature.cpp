@@ -77,26 +77,26 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       // Fire has no weight, so give it some so the equations below average the temperatures.
       //
       if (thing_is_gaseous(a)) {
-        if (! Wa) {
+        if (! (int) Wa) {
           Wa = Wb;
         }
       }
 
       if (thing_is_gaseous(b)) {
-        if (! Wb) {
+        if (! (int) Wb) {
           Wb = Wa;
         }
       }
 
-      if (! Wa || ! Wb) {
+      if (! (int) Wa || ! (int) Wb) {
         continue;
       }
 
       //
       // The new temperatures
       //
-      int Na = std::round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
-      int Nb = std::round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
+      int Na = (int) std::round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
+      int Nb = (int) std::round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
 
       if (0) {
         THING_CON(a, "Ta %f Wa %f Na %d", Ta, Wa, Na);
@@ -163,7 +163,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
 
       float Ta = thing_temperature(t);
       float To = tp_temperature_initial_get(thing_tp(t));
-      int   Tn = (Ta + To) / 2;
+      int   Tn = (int) ((Ta + To) / 2.0);
 
       //
       // No need to handle return to temperature
