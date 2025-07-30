@@ -319,8 +319,8 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
           sdl.wheel_y = -sdl.wheel_y;
         }
 
-        sdl.wheel_x *= accel;
-        sdl.wheel_y *= accel;
+        sdl.wheel_x = (int) ((float) sdl.wheel_x * accel);
+        sdl.wheel_y = (int) ((float) sdl.wheel_y * accel);
 
         wid_mouse_visible = 1;
         sdl.mouse_tick++;

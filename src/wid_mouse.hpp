@@ -1103,8 +1103,8 @@ void wid_mouse_warp(Gamep g, Widp w)
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int x = (tlx + brx) / 2.0;
-  int y = (tly + bry) / 2.0;
+  int x = (tlx + brx) / 2;
+  int y = (tly + bry) / 2;
 
   sdl_mouse_warp(g, x, y);
 }
@@ -1117,8 +1117,8 @@ void wid_mouse_move(Gamep g, Widp w)
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  int x = (tlx + brx) / 2.0;
-  int y = (tly + bry) / 2.0;
+  int x = (tlx + brx) / 2;
+  int y = (tly + bry) / 2;
 
   saved_mouse_x = sdl.mouse_x;
   saved_mouse_y = sdl.mouse_y;

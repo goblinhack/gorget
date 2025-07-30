@@ -72,16 +72,16 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   // If too close to the edges, scroll.
   //
   if (x > 1.0 - scroll_border) {
-    v->pixel_map_at.x += (x - scroll_border) * scroll_speed;
+    v->pixel_map_at.x += (int) ((x - scroll_border) * scroll_speed);
   }
   if (x < scroll_border) {
-    v->pixel_map_at.x -= (scroll_border - x) * scroll_speed;
+    v->pixel_map_at.x -= (int) ((scroll_border - x) * scroll_speed);
   }
   if (y > 1.0 - scroll_border) {
-    v->pixel_map_at.y += (y - scroll_border) * scroll_speed;
+    v->pixel_map_at.y += (int) ((y - scroll_border) * scroll_speed);
   }
   if (y < scroll_border) {
-    v->pixel_map_at.y -= (scroll_border - y) * scroll_speed;
+    v->pixel_map_at.y -= (int) ((scroll_border - y) * scroll_speed);
   }
 
   level_bounds_set(g, v, l);
