@@ -30,9 +30,9 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
   std::string level2
       = "......."
         "......."
-        "......."
-        "......."
-        "......."
+        "....x.."
+        "....x.."
+        "....x.."
         "......."
         ".......";
   std::string expect1 // first shove
@@ -54,9 +54,9 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
   std::string expect3 // second level
       = "......."
         "......."
-        "......."
-        "....B.."
-        "......."
+        "...Bx.."
+        "....x.."
+        "....x.."
         "......."
         ".......";
 
