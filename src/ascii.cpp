@@ -385,9 +385,9 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     //
     // If not found print a ? tile
     //
-    if (unlikely(! tile)) {
+    if (! tile) {
       tile = font_ui->font_get_tile(ch);
-      if (tile == nullptr) {
+      if (! tile) {
         tile = tile_find_mand(FONT_TILENAME_UNKNOWN_STR);
       }
     }

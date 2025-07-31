@@ -459,13 +459,13 @@ char *strcasestr_(const char *s, const char *find)
 std::vector< std::string > split(const std::string &text, int max_line_len)
 {
   TRACE_NO_INDENT();
-  uint8_t found_format_string;
-  int     line_len;
-  char    c;
-  auto    text_start = text.begin();
-  auto    text_iter  = text_start;
-  auto    line_start = text_start;
-  auto    line_end   = text_start;
+  bool found_format_string = false;
+  int  line_len;
+  char c;
+  auto text_start = text.begin();
+  auto text_iter  = text_start;
+  auto line_start = text_start;
+  auto line_end   = text_start;
 
   if (max_line_len < 0) {
     DIE("bad max line len");
@@ -500,8 +500,6 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
     /*
      * Read in as much of the line we can up to the line length.
      */
-    found_format_string = false;
-
     while (line_len < max_line_len) {
       c = *text_iter;
       if ((c == '\n') || (c == '\0')) {
@@ -650,13 +648,11 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
 int length_without_format(const std::string &text)
 {
   TRACE_NO_INDENT();
-  uint8_t found_format_string;
-  char    c;
-  auto    text_start = text.begin();
-  auto    text_iter  = text_start;
-  int     line_len   = 0;
-
-  found_format_string = false;
+  bool found_format_string = false;
+  char c;
+  auto text_start = text.begin();
+  auto text_iter  = text_start;
+  int  line_len   = 0;
 
   for (;;) {
     c = *text_iter;

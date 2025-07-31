@@ -532,6 +532,8 @@ int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 bool thing_is_immune_to(Thingp, ThingEventType);
 
+void thing_display(Gamep, Levelsp, Levelp, Tpp, Thingp, uint16_t tile_index, spoint tl, spoint br);
+
 // begin sort marker1 {
 bool thing_is_able_to_shove(Thingp);
 bool thing_is_animated_can_hflip(Thingp);

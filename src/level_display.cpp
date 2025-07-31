@@ -9,69 +9,6 @@
 #include "my_level.hpp"
 #include "my_tile.hpp"
 
-static void level_display_tile(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, uint16_t tile_index, spoint tl,
-                               spoint br)
-{
-  TRACE_NO_INDENT();
-
-  auto tile = tile_index_to_tile(tile_index);
-  if (! tile) {
-    return;
-  }
-
-  color fg      = WHITE;
-  color outline = BLACK;
-  float x1;
-  float x2;
-  float y1;
-  float y2;
-  tile_coords(tile, &x1, &y1, &x2, &y2);
-
-  //
-  // Outlined?
-  //
-  auto single_pix_size = game_map_single_pix_size_get(g);
-
-  //
-  // Disable outlines when zoomed out
-  //
-  int zoom = game_map_zoom_get(g);
-  if (zoom == 1) {
-    single_pix_size = 0;
-  }
-
-  if (t) {
-    //
-    // Handle various effects
-    //
-    int fall_height;
-    int submerged_pct;
-    if ((fall_height = thing_is_falling(t))) {
-      //
-      // Falling
-      //
-      int dh = (int) (((MAX_FALL_TILE_HEIGHT * ((float) (br.y - tl.y))) / MAX_FALL_TIME_MS) * fall_height);
-      tl.y += dh;
-      br.y += dh;
-    } else if ((submerged_pct = thing_submerged_pct(t))) {
-      //
-      // Submerge the tile if it is over some kind of liquid.
-      //
-      if (submerged_pct) {
-        tile_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t));
-      }
-    }
-  }
-
-  if (tp_is_blit_outlined(tp)) {
-    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);
-  } else if (tp_is_blit_square_outlined(tp)) {
-    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, true);
-  } else {
-    tile_blit(tile, x1, x2, y1, y2, tl, br);
-  }
-}
-
 void level_display_obj(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -168,7 +105,7 @@ void level_display_obj(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t)
     }
   }
 
-  level_display_tile(g, v, l, tp, t, tile_index, tl, br);
+  thing_display(g, v, l, tp, t, tile_index, tl, br);
 }
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
