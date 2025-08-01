@@ -119,9 +119,9 @@ void game_sound_volume_set(Gamep, int);
 Levelsp game_levels_get(Gamep);
 Levelsp game_levels_set(Gamep, Levelsp);
 
-Levelp game_level_get(Gamep g, Levelsp);
-Levelp game_level_get(Gamep g, Levelsp, LevelNum level_num);
-Levelp game_level_populate(Gamep g, Levelsp, LevelNum level_num);
+Levelp game_level_get(Gamep, Levelsp);
+Levelp game_level_get(Gamep, Levelsp, LevelNum level_num);
+Levelp game_level_populate(Gamep, Levelsp, LevelNum level_num);
 
 const char *game_seed_name_get(Gamep);
 SeedSource  game_seed_source_get(Gamep);
@@ -242,9 +242,9 @@ bool     game_event_load(Gamep);
 bool     game_event_quit(Gamep);
 bool     game_event_save(Gamep);
 bool     game_event_wait(Gamep);
-int      game_map_single_pix_size_get(Gamep g);
-int      game_map_zoom_def_get(Gamep g);
-int      game_map_zoom_get(Gamep g);
+int      game_map_single_pix_size_get(Gamep);
+int      game_map_zoom_def_get(Gamep);
+int      game_map_zoom_get(Gamep);
 Levelsp  game_test_init(Gamep, Levelp *, LevelNum, int w, int h, const char *contents);
 void     game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, int w, int h, const char *contents);
 uint8_t  game_input(Gamep, const SDL_Keysym *key);
@@ -287,7 +287,7 @@ void     game_unset_request_to_update_same_level(Gamep);
 
 void        game_add_new_hiscore(Gamep, int score, LevelNum, const char *name, const char *reason);
 bool        game_is_new_hiscore(Gamep, int score);
-bool        game_is_new_highest_hiscore(Gamep g, int score);
+bool        game_is_new_highest_hiscore(Gamep, int score);
 const char *game_place_str(Gamep, int score);
 
 #endif

@@ -7,17 +7,20 @@
 
 #include "my_ascii.hpp"
 #include "my_game.hpp"
+#include "my_game_popups.hpp"
 #include "my_gl.hpp"
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
+#include "my_time.hpp"
 #include "my_wid_botcon.hpp"
 #include "my_wid_topcon.hpp"
 #include "my_wids.hpp"
 
 #include <SDL_mixer.h>
+#include <list>
 
 static SDL_Keysym no_key;
 
@@ -241,6 +244,11 @@ public:
   int visible_map_br_x;
   int visible_map_br_y;
 
+  //
+  // Temporary popup text that is overlaid over the map
+  //
+  std::array< std::array< GamePopups, MAP_HEIGHT >, MAP_WIDTH > popups;
+
   /////////////////////////////////////////////////////////////////////////
   // not worth saving
   // ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
@@ -271,6 +279,8 @@ public:
   void state_reset(const std::string &);
   bool load(std::string save_file, class Game &target);
   bool save(std::string save_file);
+  void popup_text_add(spoint p, const std::string &);
+  void popup_cleanup(void);
 
   std::string load_config(void);
 };
@@ -411,8 +421,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
 //
 // Create an additional level with the given contents and start the game into playing state
 //
-void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h,
-                                const char *contents)
+void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents)
 {
   TRACE_NO_INDENT();
   auto l = game_level_get(g, v, level_num);
@@ -1067,6 +1076,85 @@ void game_display(Gamep g)
     return;
   }
   g->display();
+}
+
+void Game::popup_text_add(spoint p, const std::string &text)
+{
+  TRACE_NO_INDENT();
+
+  GamePopup popup;
+  popup.text    = text;
+  popup.created = time_ms_cached();
+  popups[ p.x ][ p.y ].all.push_back(popup);
+}
+
+void game_popup_text_add(Gamep g, int x, int y, const char *text)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  if (is_oob(x, y)) {
+    ERR("Text is oob");
+    return;
+  }
+  g->popup_text_add(spoint(x, y), text);
+}
+
+void Game::popup_cleanup(void)
+{
+  TRACE_NO_INDENT();
+
+  for (auto y = 0; y < MAP_HEIGHT; y++) {
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      if (popups[ x ][ y ].all.empty()) {
+        continue;
+      }
+
+      //
+      // Age out popups
+      //
+      std::list< GamePopup > out;
+      for (auto &i : popups[ x ][ y ].all) {
+        if (time_get_elapsed_tenths(POPUP_DURATION_MS / 100, i.created)) {
+          out.push_back(i);
+        }
+      }
+      popups[ x ][ y ].all = out;
+    }
+  }
+}
+
+void game_popup_cleanup(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->popup_cleanup();
+}
+
+bool game_popups_present(Gamep g, int x, int y)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  if (is_oob(x, y)) {
+    ERR("Text is oob");
+    return false;
+  }
+
+  return g->popups[ x ][ y ].all.empty() ? false : true;
+}
+
+std::list< GamePopup > &game_popups_get(Gamep g, int x, int y)
+{
+  TRACE_NO_INDENT();
+  return g->popups[ x ][ y ].all;
 }
 
 void game_load_config(Gamep g)

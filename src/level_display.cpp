@@ -9,105 +9,6 @@
 #include "my_level.hpp"
 #include "my_tile.hpp"
 
-void level_display_obj(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  int zoom = game_map_zoom_get(g);
-  int dw   = INNER_TILE_WIDTH * zoom;
-  int dh   = INNER_TILE_HEIGHT * zoom;
-
-  spoint tl = spoint();
-  spoint br = spoint();
-
-  uint16_t tile_index;
-
-  if (t) {
-    //
-    // Things
-    //
-    tile_index = t->tile_index;
-  } else {
-    //
-    // Cursor
-    //
-    Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
-    tile_index = tile_global_index(tile);
-  }
-
-  if (! tile_index) {
-    return;
-  }
-
-  auto tile = tile_index_to_tile(tile_index);
-  if (! tile) {
-    return;
-  }
-
-  auto pix_height = tile_height(tile) * zoom;
-  auto pix_width  = tile_width(tile) * zoom;
-
-  if (t) {
-    //
-    // All things
-    //
-    tl = t->pix_at;
-    tl.x *= zoom;
-    tl.y *= zoom;
-  } else {
-    //
-    // Cursor
-    //
-    tl.x = p.x * dw;
-    tl.y = p.y * dh;
-  }
-
-  tl -= v->pixel_map_at;
-
-  if (tp_is_blit_on_ground(tp)) {
-    //
-    // On the ground
-    //
-  } else if (tp_is_blit_centered(tp)) {
-    //
-    // Centered
-    //
-    tl.x -= (pix_width - dw) / 2;
-    tl.y -= (pix_height - dh) / 2;
-  }
-
-  //
-  // Update the br coords if we changed the position
-  //
-  br.x = tl.x + pix_width;
-  br.y = tl.y + pix_height;
-
-  //
-  // Flippable?
-  //
-  if (tp_is_animated_can_hflip(tp)) {
-    if (thing_is_dir_left(t) || thing_is_dir_tl(t) || thing_is_dir_bl(t)) {
-      std::swap(tl.x, br.x);
-    }
-  }
-
-  //
-  // Update submerged status
-  //
-  if (tp_is_submergible(tp)) {
-    thing_submerged_pct_set(g, v, l, t, 0);
-    if (level_is_deep_water(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t, 80);
-    } else if (level_is_water(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t, 50);
-    } else if (level_is_lava(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t, 40);
-    }
-  }
-
-  thing_display(g, v, l, tp, t, tile_index, tl, br);
-}
-
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
 {
   TRACE_NO_INDENT();
@@ -156,7 +57,10 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
   }
 
   if (tp) {
-    level_display_obj(g, v, l, p, tp, NULL_THING);
+    spoint   tl, br;
+    uint16_t tile_index;
+    thing_get_coords(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
+    thing_display(g, v, l, tp, NULL_THING, tl, br, tile_index);
   }
 }
 
@@ -178,7 +82,10 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
     return;
   }
 
-  level_display_obj(g, v, l, p, tp, t);
+  spoint   tl, br;
+  uint16_t tile_index;
+  thing_get_coords(g, v, l, p, tp, t, &tl, &br, &tile_index);
+  thing_display(g, v, l, tp, t, tl, br, tile_index);
 }
 
 void level_display(Gamep g, Levelsp v, Levelp l)
@@ -228,6 +135,15 @@ void level_display(Gamep g, Levelsp v, Levelp l)
       level_display_cursor(g, v, l, p);
     }
   }
+
+#if 0
+  for (auto y = v->miny; y < v->maxy; y++) {
+    for (auto x = v->minx; x < v->maxx; x++) {
+      spoint p(x, y);
+      level_display_text(g, v, l, p);
+    }
+  }
+#endif
 
   blit_flush();
 }

@@ -13,141 +13,104 @@
 #include "my_tp.hpp"
 #include "my_ui.hpp"
 
-static void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text,
-                            color fg = WHITE)
+void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint *tl, spoint *br,
+                      uint16_t *tile_index)
 {
   TRACE_NO_INDENT();
 
-  int len = length_without_format(text);
+  int zoom = game_map_zoom_get(g);
+  int dw   = INNER_TILE_WIDTH * zoom;
+  int dh   = INNER_TILE_HEIGHT * zoom;
 
-  if (br.x < tl.x) {
-    std::swap(tl, br);
-    std::swap(tl.y, br.y);
-  }
-  auto w = br.x - tl.x;
-
-  br.x -= (len - 1) * w;
-  tl.x -= (len - 1) * w;
-
-  br.x += (len / 2) * w;
-  tl.x += (len / 2) * w;
-
-  bool found_format_string = false;
-  char c;
-  auto text_start = text.begin();
-  auto text_iter  = text_start;
-
-  for (;;) {
-    Tilep tile = nullptr;
-
-    c = *text_iter;
-    if (! c) {
-      break;
-    }
-
-    if (! found_format_string) {
-      if (c == '%') {
-        found_format_string = true;
-        continue;
-      }
-    } else if (found_format_string) {
-      if (std::string(text_iter, text_iter + 3) == "fg=") {
-        text_iter += 3;
-        auto tmp = std::string(text_iter, text.end());
-
-        int tmplen = 0;
-        fg         = string2color(tmp, &tmplen);
-        text_iter += tmplen + 1;
-
-        found_format_string = false;
-        continue;
-      }
-      if (std::string(text_iter, text_iter + 3) == "bg=") {
-        text_iter += 3;
-        auto tmp = std::string(text_iter, text.end());
-
-        int tmp_len = 0;
-        (void) string2color(tmp, &tmp_len);
-        text_iter += tmp_len + 1;
-
-        found_format_string = false;
-        continue;
-      }
-      if (std::string(text_iter, text_iter + 4) == "tex=") {
-        text_iter += 4;
-        auto tmp = std::string(text_iter, text.end());
-
-        int tmp_len = 0;
-        (void) string2tex(tmp, &tmp_len);
-        text_iter += tmp_len + 1;
-
-        found_format_string = false;
-        continue;
-      }
-      if (std::string(text_iter, text_iter + 3) == "tp=") {
-        text_iter += 3;
-        auto tmp = std::string(text_iter, text.end());
-
-        int         tmp_len = 0;
-        const char *tmpc    = tmp.c_str();
-        auto        tp      = string2tp(&tmpc, &tmp_len);
-        text_iter += tmp_len + 1;
-
-        tile                = tp_first_tile(tp, THING_ANIM_IDLE);
-        found_format_string = false;
-        continue;
-      }
-      if (std::string(text_iter, text_iter + 5) == "tile=") {
-        text_iter += 5;
-        auto tmp = std::string(text_iter, text.end());
-
-        int tmp_len = 0;
-        tile        = string2tile(tmp, &tmp_len);
-        text_iter += tmp_len + 1;
-
-        found_format_string = false;
-        continue;
-      }
-      if (c == '%') {
-        // line_len -= 1;
-      } else {
-        found_format_string = false;
-        text_iter--;
-      }
-
-      text_iter++;
-      continue;
-    }
-
-    text_iter++;
-
+  if (t) {
+    //
+    // Things
+    //
+    *tile_index = t->tile_index;
+  } else if (tp) {
+    //
+    // Cursor
+    //
+    Tilep tile  = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
+    *tile_index = tile_global_index(tile);
+  } else {
+    static Tilep tile;
     if (! tile) {
-      tile = font_ui->font_get_tile(c);
-      if (! tile) {
-        tile = tile_find_mand(FONT_TILENAME_UNKNOWN_STR);
-      }
+      tile = tile_find_mand("none");
     }
-
-    tile_blit(tile, tl, br, fg);
-    tl.x += w;
-    br.x += w;
+    *tile_index = tile_global_index(tile);
   }
-  glcolor(WHITE);
+
+  auto tile       = tile_index_to_tile(*tile_index);
+  auto pix_height = tile_height(tile) * zoom;
+  auto pix_width  = tile_width(tile) * zoom;
+
+  if (t) {
+    //
+    // All things
+    //
+    *tl = t->pix_at;
+    tl->x *= zoom;
+    tl->y *= zoom;
+  } else {
+    //
+    // Cursor
+    //
+    tl->x = p.x * dw;
+    tl->y = p.y * dh;
+  }
+
+  *tl -= v->pixel_map_at;
+
+  if (tp && tp_is_blit_on_ground(tp)) {
+    //
+    // On the ground
+    //
+  } else if (tp && tp_is_blit_centered(tp)) {
+    //
+    // Centered
+    //
+    tl->x -= (pix_width - dw) / 2;
+    tl->y -= (pix_height - dh) / 2;
+  }
+
+  //
+  // Update the br coords if we changed the position
+  //
+  br->x = tl->x + pix_width;
+  br->y = tl->y + pix_height;
+
+  //
+  // Flippable?
+  //
+  if (tp && tp_is_animated_can_hflip(tp)) {
+    if (thing_is_dir_left(t) || thing_is_dir_tl(t) || thing_is_dir_bl(t)) {
+      std::swap(tl->x, br->x);
+    }
+  }
+
+  //
+  // Update submerged status
+  //
+  if (tp && tp_is_submergible(tp)) {
+    thing_submerged_pct_set(g, v, l, t, 0);
+    if (level_is_deep_water(g, v, l, p)) {
+      thing_submerged_pct_set(g, v, l, t, 80);
+    } else if (level_is_water(g, v, l, p)) {
+      thing_submerged_pct_set(g, v, l, t, 50);
+    } else if (level_is_lava(g, v, l, p)) {
+      thing_submerged_pct_set(g, v, l, t, 40);
+    }
+  }
 }
 
-void thing_display(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, uint16_t tile_index, spoint tl, spoint br)
+void thing_display(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, uint16_t tile_index)
 {
   TRACE_NO_INDENT();
 
   auto tile = tile_index_to_tile(tile_index);
   if (! tile) {
     return;
-  }
-
-  if (0) {
-    if (t && thing_is_player(t)) {
-      thing_blit_text(g, v, l, tl, br, "123", RED);
-    }
   }
 
   color fg      = WHITE;

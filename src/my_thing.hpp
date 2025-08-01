@@ -6,6 +6,7 @@
 #ifndef _MY_THING_HPP_
 #define _MY_THING_HPP_
 
+#include "my_color.hpp"
 #include "my_game_defs.hpp"
 #include "my_spoint.hpp"
 #include "my_tp.hpp"
@@ -532,7 +533,9 @@ int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 bool thing_is_immune_to(Thingp, ThingEventType);
 
-void thing_display(Gamep, Levelsp, Levelp, Tpp, Thingp, uint16_t tile_index, spoint tl, spoint br);
+void thing_display(Gamep, Levelsp, Levelp, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index);
+void thing_get_coords(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spoint *, uint16_t *tile_index);
+void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg);
 
 // begin sort marker1 {
 bool thing_is_able_to_shove(Thingp);
