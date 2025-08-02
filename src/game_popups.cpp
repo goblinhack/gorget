@@ -29,7 +29,7 @@ void game_popup_text_add(Gamep g, int x, int y, std::string &text, color c)
   popup.text    = text;
   popup.created = time_ms_cached();
   popup.fg      = c;
-  l->push_back(popup);
+  l->push_front(popup);
 }
 
 void game_popups_age(Gamep g)
@@ -77,11 +77,14 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      std::list< GamePopup > out;
+      spoint last_tl;
+      spoint last_br;
+
       for (auto i : *game_popups_get(g, x, y)) {
-        spoint   tl, br;
         uint16_t tile_index;
         spoint   p(x, y);
+        spoint   tl;
+        spoint   br;
 
         //
         // Get the coords of the tile on the map this text would be over
@@ -120,12 +123,22 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         tl.y -= tile_height;
         br.y -= tile_height;
 
+        //
+        // Avoid overlapping popups
+        while ((tl.y >= last_tl.y) && (tl.y <= last_br.y)) {
+          tl.y -= tile_height / 2;
+          br.y -= tile_height / 2;
+        }
+
         blit_init();
         thing_blit_text(g, v, l, tl, br, i.text, bg, true /* outline */);
         blit_flush();
         blit_init();
         thing_blit_text(g, v, l, tl, br, i.text, fg, false /* outline */);
         blit_flush();
+
+        last_tl = tl;
+        last_br = br;
       }
     }
   }
