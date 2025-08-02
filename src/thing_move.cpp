@@ -3,7 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_tile.hpp"
@@ -328,10 +327,6 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   t->moving_from = t->at;
   thing_is_moving_set(g, v, l, t, false);
-
-  if (thing_is_player(t)) {
-    game_popup_text_add(g, t->at.x, t->at.y, "player");
-  }
 }
 
 //

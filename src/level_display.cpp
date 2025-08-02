@@ -25,6 +25,13 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
     case CURSOR_PATH :
       {
         //
+        // No cursor path during level selection
+        //
+        if (l->level_num == LEVEL_SELECT_ID) {
+          return;
+        }
+
+        //
         // If the player is dead, then don't show the move path, but do allow them to move
         // the cursor around so they can still look at the level/cause of death.
         //

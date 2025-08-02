@@ -26,23 +26,23 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
     std::swap(tl.y, br.y);
   }
 
-  auto w = br.x - tl.x;
-  auto h = br.y - tl.y;
+  auto w  = br.x - tl.x;
+  auto ow = w;
+  auto h  = br.y - tl.y;
+  auto oh = h;
 
-  w /= 4;
-  h /= 4;
+  w /= POPUP_TEXT_SCALE;
+  h /= POPUP_TEXT_SCALE;
 
-  tl.y = br.y - h;
+  auto pix_w = w * len;
+  tl.x -= pix_w / 2;
+  tl.x += ow / 2;
+
   br.x = tl.x + w;
+  br.y = tl.y + h;
 
-  w = br.x - tl.x;
-  h = br.y - tl.y;
-
-  br.x -= (len - 1) * w;
-  tl.x -= (len - 1) * w;
-
-  br.x += (len / 2) * w;
-  tl.x += (len / 2) * w;
+  tl.y += oh / 2;
+  br.y = tl.y + h;
 
   bool found_format_string = false;
   char c;

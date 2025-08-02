@@ -10,7 +10,7 @@
 #include "my_main.hpp"
 #include "my_time.hpp"
 
-void game_popup_text_add(Gamep g, int x, int y, const char *text, color c)
+void game_popup_text_add(Gamep g, int x, int y, std::string &text, color c)
 {
   TRACE_NO_INDENT();
 
@@ -71,8 +71,6 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  blit_init();
-
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
       if (! game_popups_present(g, x, y)) {
@@ -88,7 +86,11 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         //
         // Get the coords of the tile on the map this text would be over
         //
-        thing_get_coords(g, v, l, p, NULL_TP, NULL_THING, &tl, &br, &tile_index);
+        static Tpp tp_once;
+        if (! tp_once) {
+          tp_once = tp_find_mand("cursor_path");
+        }
+        thing_get_coords(g, v, l, p, tp_once, NULL_THING, &tl, &br, &tile_index);
 
         //
         // Fade out and raise the text up with a percentage
@@ -99,7 +101,10 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         // Fade out
         //
         color fg = i.fg;
-        fg.a     = 255 - (int) (255.0 * pct);
+        color bg = BLACK;
+
+        fg.a = 255 - (int) (255.0 * pct / 2);
+        bg.a = 255 - (int) (255.0 * pct);
 
         //
         // Rise up
@@ -115,12 +120,15 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         tl.y -= tile_height;
         br.y -= tile_height;
 
-        thing_blit_text(g, v, l, tl, br, i.text, BLACK, true /* outline */);
-        thing_blit_text(g, v, l, tl, br, i.text, RED, false /* outline */);
+        blit_init();
+        thing_blit_text(g, v, l, tl, br, i.text, bg, true /* outline */);
+        blit_flush();
+        blit_init();
+        thing_blit_text(g, v, l, tl, br, i.text, fg, false /* outline */);
+        blit_flush();
       }
     }
   }
-  blit_flush();
 }
 
 void game_popups_clear(Gamep g)

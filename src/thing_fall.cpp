@@ -3,8 +3,10 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_random.hpp"
 #include "my_ui.hpp"
 
 //
@@ -59,6 +61,63 @@ static spoint thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t)
 }
 
 //
+// How much damage does the thing take on falling.
+//
+static int thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  int fall_dmg = 0;
+
+  if (thing_is_player(t)) {
+    fall_dmg = pcg_random_range(6, 30);
+  } else if (thing_is_mob(t) || thing_is_monst(t)) {
+    fall_dmg = pcg_random_range(6, thing_health(t) / 2);
+  } else {
+    fall_dmg = d4();
+  }
+
+  //
+  // Landing in lava is bad
+  //
+  if (level_is_lava(g, v, l, t->at)) {
+    if (! thing_is_immune_to(t, THING_EVENT_HEAT_DAMAGE)) {
+      fall_dmg *= 4;
+    }
+  }
+
+  //
+  // Water dampens the fall
+  //
+  if (level_is_water(g, v, l, t->at)) {
+    if (thing_is_immune_to(t, THING_EVENT_WATER_DAMAGE)) {
+      fall_dmg /= 2;
+    }
+  }
+
+  //
+  // Deep water dampens it further
+  //
+  if (level_is_deep_water(g, v, l, t->at)) {
+    if (thing_is_immune_to(t, THING_EVENT_WATER_DAMAGE)) {
+      fall_dmg /= 2;
+    }
+  }
+
+  //
+  // Amplify or nullify due to weight
+  //
+  auto w = thing_weight(t);
+  if (w <= WEIGHT_FEATHER) {
+    fall_dmg = 0;
+  } else if (w >= WEIGHT_HEAVY) {
+    fall_dmg *= 2;
+  }
+
+  return fall_dmg;
+}
+
+//
 // Complete the fall to the next level. If this is the player we also change level.
 //
 static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -74,11 +133,27 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     player_fell(g, v, l, next_level, t);
   }
 
+  //
+  // Choose a new landing spot for the thing
+  //
   auto new_location = thing_choose_landing_spot(g, v, next_level, t);
+
+  //
+  // Move the thing there
+  //
   thing_warp_to(g, v, next_level, t, new_location);
+
   if (thing_is_player(t)) {
     level_scroll_warp_to_focus(g, v, l);
   }
+
+  ThingEvent e {
+      .reason     = "by falling",                  //
+      .event_type = THING_EVENT_FALL,              //
+      .damage     = thing_fall_damage(g, v, l, t), //
+  };
+
+  thing_damage(g, v, l, t, e);
 }
 
 //

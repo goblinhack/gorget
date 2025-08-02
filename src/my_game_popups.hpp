@@ -10,6 +10,7 @@
 #include "my_color_defs.hpp"
 
 #include <list>
+#include <string>
 
 class GamePopup
 {
@@ -31,7 +32,7 @@ public:
   std::list< GamePopup > all;
 };
 
-void game_popup_text_add(Gamep, int, int, const char *, color c = WHITE);
+void game_popup_text_add(Gamep, int, int, std::string &, color c = WHITE);
 bool game_popups_present(Gamep, int, int);
 void game_popups_age(Gamep);
 void game_popups_clear(Gamep);

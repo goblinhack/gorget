@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"
@@ -15,6 +16,9 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   TRACE_AND_INDENT();
 
   auto it = e.source;
+
+  std::string msg = "-" + std::to_string(e.damage);
+  game_popup_text_add(g, t->at.x, t->at.y, msg, RED);
 
   if (it) {
     auto by_the_thing = thing_the_long_name(g, v, l, it);
@@ -90,6 +94,9 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 {
   TRACE_AND_INDENT();
   auto it = e.source;
+
+  std::string msg = "-" + std::to_string(e.damage);
+  game_popup_text_add(g, t->at.x, t->at.y, msg, WHITE);
 
   if (it && thing_is_loggable(t)) {
     auto the_thing = capitalise_first(thing_the_long_name(g, v, l, t));
