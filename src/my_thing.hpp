@@ -535,7 +535,7 @@ bool thing_is_immune_to(Thingp, ThingEventType);
 
 void thing_display(Gamep, Levelsp, Levelp, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index);
 void thing_get_coords(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spoint *, uint16_t *tile_index);
-void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg);
+void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);
 
 // begin sort marker1 {
 bool thing_is_able_to_shove(Thingp);

@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_wids.hpp"
@@ -165,7 +166,15 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_end(g, v, l);
   }
 
+  //
+  // Remove things scheduled for cleanup
+  //
   level_cleanup_things(g, v, l);
+
+  //
+  // Remove old popups
+  //
+  game_popups_age(g);
 }
 
 static void level_tick_time_step(Gamep g, Levelsp v, Levelp l)

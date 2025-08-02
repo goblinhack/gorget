@@ -580,7 +580,7 @@ int      buf_tex;
 
 void blit_init(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   buf_tex = 0;
 
   if (gl_array_buf) {
@@ -612,7 +612,7 @@ void blit_init(void)
 
 void blit_fini(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (gl_array_buf) {
     myfree(gl_array_buf);
     gl_array_buf = nullptr;
@@ -621,7 +621,7 @@ void blit_fini(void)
 
 void blit_flush(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   if (gl_array_buf == bufp) {
     return;
   }
@@ -667,19 +667,19 @@ void blit_flush(void)
 
 void blit_flush_triangle_fan(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   blit_flush_triangle_fan(gl_array_buf, bufp);
 }
 
 void blit_flush_colored_triangle_fan(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   blit_flush_colored_triangle_fan(gl_array_buf, bufp);
 }
 
 void blit_flush_colored_triangle_fan(float *b, float *e)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
 
@@ -710,7 +710,7 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
 
 void blit_flush_triangle_fan(float *b, float *e)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   glEnableClientState(GL_VERTEX_ARRAY);
 
   static long nvertices;
@@ -850,7 +850,7 @@ PFNGLDELETEBUFFERSARBPROC        glDeleteBuffersARB_EXT;
 
 static void gl_ext_load(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   glDebugMessageCallback_EXT = (__typeof__(glDebugMessageCallback_EXT)) wglGetProcAddress("glDebugMessageCallback");
   if (! glDebugMessageCallback_EXT) {
     LOG("OpenGl: - glDebugMessageCallback_EXT - NOT present");
@@ -863,7 +863,7 @@ static void gl_ext_load(void)
     glDebugMessageCallback_EXT(MessageCallback, 0);
   }
 
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   glCreateProgram_EXT = (__typeof__(glCreateProgram_EXT)) wglGetProcAddress("glCreateProgram");
   if (! glCreateProgram_EXT) {
     LOG("OpenGl: - glCreateProgram_EXT - NOT present");
@@ -1107,7 +1107,7 @@ static void gl_ext_load(void)
 
 static void setupPixelFormat(HDC this_hdc)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   PIXELFORMATDESCRIPTOR pfd = {
       SIZEOF(PIXELFORMATDESCRIPTOR),                              // size
       1,                                                          // version
@@ -1152,7 +1152,7 @@ static void setupPixelFormat(HDC this_hdc)
 
 static void setupPalette(HDC this_hdc)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   int                   pixelFormat = GetPixelFormat(this_hdc);
   PIXELFORMATDESCRIPTOR pfd;
   LOGPALETTE           *pPal;
@@ -1196,13 +1196,13 @@ static void setupPalette(HDC this_hdc)
 
 static LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 void gl_ext_init(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
   WNDCLASSEX wc;
   HWND       hwnd;
 
@@ -1265,7 +1265,7 @@ void gl_ext_init(void)
   ReleaseDC(hwnd, hDC);
 }
 #else
-void gl_ext_init(void) { TRACE_AND_INDENT(); }
+void gl_ext_init(void) { TRACE_NO_INDENT(); }
 #endif
 
 void gl_error(GLenum errCode)

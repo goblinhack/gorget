@@ -13,17 +13,30 @@
 #include "my_tp.hpp"
 #include "my_ui.hpp"
 
-void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg)
+void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg,
+                     bool outline)
 {
   TRACE_NO_INDENT();
 
-  int len = length_without_format(text);
+  auto single_pix_size = game_map_single_pix_size_get(g);
+  int  len             = length_without_format(text);
 
   if (br.x < tl.x) {
     std::swap(tl, br);
     std::swap(tl.y, br.y);
   }
+
   auto w = br.x - tl.x;
+  auto h = br.y - tl.y;
+
+  w /= 4;
+  h /= 4;
+
+  tl.y = br.y - h;
+  br.x = tl.x + w;
+
+  w = br.x - tl.x;
+  h = br.y - tl.y;
 
   br.x -= (len - 1) * w;
   tl.x -= (len - 1) * w;
@@ -127,7 +140,17 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
       }
     }
 
-    tile_blit(tile, tl, br, fg);
+    if (outline) {
+      float x1;
+      float x2;
+      float y1;
+      float y2;
+      tile_coords(tile, &x1, &y1, &x2, &y2);
+      tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, BLACK, single_pix_size, true);
+    } else {
+      tile_blit(tile, tl, br, fg);
+    }
+
     tl.x += w;
     br.x += w;
   }

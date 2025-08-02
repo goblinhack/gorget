@@ -23,9 +23,6 @@ bool time_have_x_tenths_passed_since(ts_t tenths, ts_t since);
 const char *time2str(ts_t ms, char *buf, int len);
 const char *timestamp(char *buf, int len);
 
-ts_t time_get_elapsed_secs(ts_t val, ts_t since);
-ts_t time_get_elapsed_tenths(ts_t val, ts_t since);
-
 ts_t time_game_ms(void);
 ts_t time_game_ms_cached(void);
 

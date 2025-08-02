@@ -7,8 +7,10 @@
 #include <array>
 #include <cinttypes>
 #include <cstdint>
+#include <list>
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "my_ascii.hpp"

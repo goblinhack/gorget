@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_game_popups.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_tile.hpp"
@@ -136,14 +137,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
     }
   }
 
-#if 0
-  for (auto y = v->miny; y < v->maxy; y++) {
-    for (auto x = v->minx; x < v->maxx; x++) {
-      spoint p(x, y);
-      level_display_text(g, v, l, p);
-    }
-  }
-#endif
-
   blit_flush();
+
+  game_popups_display(g, v, l);
 }

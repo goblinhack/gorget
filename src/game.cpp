@@ -20,7 +20,6 @@
 #include "my_wids.hpp"
 
 #include <SDL_mixer.h>
-#include <list>
 
 static SDL_Keysym no_key;
 
@@ -488,6 +487,24 @@ void game_save_config(Gamep g)
   g->save_config();
 }
 
+std::list< GamePopup > *game_popups_get(Gamep g, int x, int y)
+{
+  TRACE_NO_INDENT();
+  return &g->popups[ x ][ y ].all;
+}
+
+void game_popups_set(Gamep g, int x, int y, std::list< GamePopup > &l)
+{
+  TRACE_NO_INDENT();
+  g->popups[ x ][ y ].all = l;
+}
+
+bool game_popups_present(Gamep g, int x, int y)
+{
+  TRACE_NO_INDENT();
+  return g->popups[ x ][ y ].all.empty() ? false : true;
+}
+
 void Game::seed_clear(void)
 {
   config.seed_name   = "";
@@ -757,6 +774,11 @@ void Game::destroy_levels(void)
   // Create a new seed for the next run
   //
   seed_set();
+
+  //
+  // Remove all popups
+  //
+  game_popups_clear(g);
 }
 void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
@@ -1076,85 +1098,6 @@ void game_display(Gamep g)
     return;
   }
   g->display();
-}
-
-void Game::popup_text_add(spoint p, const std::string &text)
-{
-  TRACE_NO_INDENT();
-
-  GamePopup popup;
-  popup.text    = text;
-  popup.created = time_ms_cached();
-  popups[ p.x ][ p.y ].all.push_back(popup);
-}
-
-void game_popup_text_add(Gamep g, int x, int y, const char *text)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  if (is_oob(x, y)) {
-    ERR("Text is oob");
-    return;
-  }
-  g->popup_text_add(spoint(x, y), text);
-}
-
-void Game::popup_cleanup(void)
-{
-  TRACE_NO_INDENT();
-
-  for (auto y = 0; y < MAP_HEIGHT; y++) {
-    for (auto x = 0; x < MAP_WIDTH; x++) {
-      if (popups[ x ][ y ].all.empty()) {
-        continue;
-      }
-
-      //
-      // Age out popups
-      //
-      std::list< GamePopup > out;
-      for (auto &i : popups[ x ][ y ].all) {
-        if (time_get_elapsed_tenths(POPUP_DURATION_MS / 100, i.created)) {
-          out.push_back(i);
-        }
-      }
-      popups[ x ][ y ].all = out;
-    }
-  }
-}
-
-void game_popup_cleanup(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  g->popup_cleanup();
-}
-
-bool game_popups_present(Gamep g, int x, int y)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return false;
-  }
-  if (is_oob(x, y)) {
-    ERR("Text is oob");
-    return false;
-  }
-
-  return g->popups[ x ][ y ].all.empty() ? false : true;
-}
-
-std::list< GamePopup > &game_popups_get(Gamep g, int x, int y)
-{
-  TRACE_NO_INDENT();
-  return g->popups[ x ][ y ].all;
 }
 
 void game_load_config(Gamep g)
