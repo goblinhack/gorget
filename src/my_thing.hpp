@@ -223,7 +223,7 @@ typedef struct Thing_ {
   //
   // Was set fire to.
   //
-  bool _is_burnt : 1;
+  bool _is_burning : 1;
   //
   // Snuffed it and is a corpse.
   //
@@ -283,6 +283,7 @@ void thing_set_dir_from_delta(Thingp, int dx, int dy);
 void thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
 void thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
+void thing_temperature_damage_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
 void thing_chasm_handle(Gamep, Levelsp, Levelp, Thingp me);
 bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
@@ -293,7 +294,7 @@ void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
-void thing_is_burnt_handle(Gamep, Levelsp, Levelp, Thingp);
+void thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
 
 Thingp       thing_player(Gamep);
 ThingPlayerp thing_player_struct(Gamep);
@@ -329,8 +330,8 @@ Thingp immediate_owner(Gamep, Levelsp, Levelp, Thingp);
 bool thing_is_dead(Thingp);
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
-bool thing_is_burnt(Thingp);
-void thing_is_burnt_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+bool thing_is_burning(Thingp);
+void thing_is_burning_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_scheduled_for_cleanup(Thingp);
 void thing_is_scheduled_for_cleanup_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);

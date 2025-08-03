@@ -103,6 +103,9 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
         THING_CON(b, "Tb %f Wb %f Nb %d", Tb, Wb, Nb);
       }
 
+      //
+      // First step is to mark things as burning and change temperatures
+      //
       if (Ta != Na) {
         if (thing_is_loggable(a)) {
           THING_DBG(a, "temperature change (a) %f -> %d degrees", Ta, Na);
@@ -115,6 +118,17 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
           THING_DBG(b, "temperature change (b) %f -> %d degrees", Tb, Nb);
         }
         thing_temperature_handle(g, v, l, a, b, Nb);
+      }
+
+      //
+      // Next step is to apply burning damage
+      //
+      if (Ta != Na) {
+        thing_temperature_damage_handle(g, v, l, b, a, Na);
+      }
+
+      if (Tb != Nb) {
+        thing_temperature_damage_handle(g, v, l, a, b, Nb);
       }
     }
   }

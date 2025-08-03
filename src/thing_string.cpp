@@ -35,7 +35,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* is_loggable                   */ "%s"
                          /* is_dead                       */ "%s"
                          /* is_open                       */ "%s"
-                         /* is_burnt                      */ "%s"
+                         /* is_burning                      */ "%s"
                          /* is_scheduled_for_cleanup      */ "%s"
                          /* at                            */ " @%d,%d",
                          /* newline */ t->id,
@@ -46,7 +46,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
                          /* newline */ thing_is_sleeping(t) ? "/sleeping" : "",
                          /* newline */ thing_is_open(t) ? "/open" : "",
-                         /* newline */ thing_is_burnt(t) ? "/burnt" : "",
+                         /* newline */ thing_is_burning(t) ? "/burnt" : "",
                          /* newline */ thing_is_scheduled_for_cleanup(t) ? "/cleanup" : "",
                          /* newline */ t->at.x, t->at.y));
 }
@@ -164,6 +164,10 @@ std::string thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool include
       out += tp_long_name(thing_tp(t_o));
       out += "'s ";
     }
+  }
+
+  if (thing_is_burning(t)) {
+    out += "burning ";
   }
 
   if (thing_is_dead(t)) {

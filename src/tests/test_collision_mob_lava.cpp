@@ -31,7 +31,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.L.."
+        "..@.!.."
         "......."
         "......."
         ".......";

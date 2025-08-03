@@ -200,7 +200,7 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Update the animation, for example, flattened grass
   //
-  if (thing_is_burnt(t) && tp_tiles_size(thing_tp(t), THING_ANIM_BURNT)) {
+  if (thing_is_burning(t) && tp_tiles_size(thing_tp(t), THING_ANIM_BURNT)) {
     //
     // If it has burnt anim frames
     //
