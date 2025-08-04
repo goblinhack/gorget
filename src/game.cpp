@@ -782,7 +782,7 @@ void Game::destroy_levels(void)
 }
 void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 
-std::string gama_state_to_string(int state)
+std::string gama_state_to_string(GameState state)
 {
   switch (state) {
     case STATE_MAIN_MENU :     return "MAIN_MENU";
@@ -790,6 +790,7 @@ std::string gama_state_to_string(int state)
     case STATE_LOAD_MENU :     return "LOAD_MENU";
     case STATE_LOADED :        return "LOADED";
     case STATE_DEAD_MENU :     return "DEAD_MENU";
+    case STATE_MOVE_WARNING_MENU :  return "WARNING_MENU";
     case STATE_SAVE_MENU :     return "SAVE_MENU";
     case STATE_QUIT_MENU :     return "QUIT_MENU";
     case STATE_QUITTING :      return "QUITTING";
@@ -871,6 +872,7 @@ void Game::state_change(GameState new_state, const std::string &why)
       wid_save_destroy(g);
       break;
     case STATE_DEAD_MENU :
+    case STATE_MOVE_WARNING_MENU :
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
     case STATE_LOADED :
@@ -909,8 +911,10 @@ void Game::state_change(GameState new_state, const std::string &why)
           if (0) {} /* clang format */
           wid_actionbar_init(g);
           break;
+        case STATE_MOVE_WARNING_MENU : break;
       }
     case STATE_DEAD_MENU :
+    case STATE_MOVE_WARNING_MENU :
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
     case STATE_LOADED :
@@ -975,6 +979,7 @@ void Game::tick(void)
         }
       }
       break;
+    case STATE_MOVE_WARNING_MENU :  break;
     case STATE_KEYBOARD_MENU : break;
     case STATE_LOAD_MENU :     break;
     case STATE_LOADED :        break;
@@ -1083,6 +1088,7 @@ void Game::display(void)
         }
       }
       break;
+    case STATE_MOVE_WARNING_MENU :  break;
     case STATE_KEYBOARD_MENU : break;
     case STATE_LOAD_MENU :     break;
     case STATE_LOADED :        break;

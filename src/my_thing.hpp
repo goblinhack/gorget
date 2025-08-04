@@ -649,7 +649,7 @@ bool thing_is_unused27(Thingp);
 bool thing_is_unused28(Thingp);
 bool thing_is_unused29(Thingp);
 bool thing_is_unused3(Thingp);
-bool thing_is_unused30(Thingp);
+bool thing_is_flying(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);

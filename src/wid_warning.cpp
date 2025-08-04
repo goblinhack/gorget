@@ -7,6 +7,7 @@
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_wid_popup.hpp"
+#include "my_wid_warning.hpp"
 
 WidPopup *wid_warning_window;
 
@@ -25,6 +26,8 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
     return false;
   }
 
+  wid_warning_callback_t callback = (wid_warning_callback_t) wid_get_void_context(w);
+
   switch (key->mod) {
     case KMOD_LCTRL :
     case KMOD_RCTRL :
@@ -35,12 +38,27 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
             TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
+              case 'y' :
+              case 'Y' :
+                if (callback) {
+                  (callback)(g, true);
+                }
+                break;
+              case 'n' :
+              case 'N' :
+                if (callback) {
+                  (callback)(g, true);
+                }
+                break;
               case '\n' :
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 {
                   TRACE_NO_INDENT();
+                  if (callback) {
+                    (callback)(g, false);
+                  }
                   wid_warning_destroy();
                   return true;
                 }
@@ -49,12 +67,20 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       }
   }
 
+  if (callback) {
+    (callback)(g, false);
+  }
+
   return true;
 }
 
 static bool wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
+  wid_warning_callback_t callback = (wid_warning_callback_t) wid_get_void_context(w);
+  if (callback) {
+    (callback)(g, true);
+  }
   wid_warning_destroy();
   return true;
 }
@@ -62,11 +88,15 @@ static bool wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 static bool wid_warning_no(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
+  wid_warning_callback_t callback = (wid_warning_callback_t) wid_get_void_context(w);
+  if (callback) {
+    (callback)(g, false);
+  }
   wid_warning_destroy();
   return true;
 }
 
-void wid_warning(Gamep g, std::string warning)
+void wid_warning(Gamep g, std::string warning, wid_warning_callback_t callback)
 {
   TRACE_NO_INDENT();
 
@@ -83,6 +113,7 @@ void wid_warning(Gamep g, std::string warning)
   wid_warning_window = new WidPopup(g, "Game warning", tl, br, nullptr, "", false, false);
   wid_set_on_key_down(g, wid_warning_window->wid_popup_container, wid_warning_key_down);
   wid_set_do_not_lower(wid_warning_window->wid_popup_container, true);
+  wid_set_void_context(wid_warning_window->wid_popup_container, (void *) callback);
 
   wid_warning_window->log_empty_line(g);
   wid_warning_window->log(g, warning);
@@ -98,6 +129,7 @@ void wid_warning(Gamep g, std::string warning)
     spoint br1(width / 2 - 2, y_at + 4);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_down(g, w, wid_warning_no);
+    wid_set_void_context(w, (void *) callback);
     wid_set_pos(w, tl1, br1);
     wid_set_text(w, "No");
   }
@@ -111,6 +143,7 @@ void wid_warning(Gamep g, std::string warning)
     spoint br2(width / 2 + 10, y_at + 4);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_down(g, w, wid_warning_yes);
+    wid_set_void_context(w, (void *) callback);
     wid_set_pos(w, tl2, br2);
     wid_set_text(w, "Yes");
   }

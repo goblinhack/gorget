@@ -303,6 +303,10 @@ typedef struct Levels_ {
   //
   uint8_t player_pressed_button_and_waiting_for_a_path : 1;
   //
+  // The user has pressed the mouse but we need to wait for an ok before moving.
+  //
+  uint8_t player_pressed_button_and_waiting_for_confirmation : 1;
+  //
   // set when the player starts following the mouse path.
   //
   uint8_t player_currently_following_a_path : 1;

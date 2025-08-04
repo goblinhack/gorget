@@ -1186,14 +1186,14 @@ bool thing_is_unused3(Thingp t)
   return tp_flag(thing_tp(t), is_unused3);
 }
 
-bool thing_is_unused30(Thingp t)
+bool thing_is_flying(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused30);
+  return tp_flag(thing_tp(t), is_flying);
 }
 
 bool thing_is_needs_move_confirm(Thingp t)

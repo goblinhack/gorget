@@ -8,7 +8,31 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
+#include "my_wid_warning.hpp"
 #include "my_wids.hpp"
+
+//
+// Return true on the event being consumed
+//
+static void wid_warning_callback(Gamep g, bool val)
+{
+  game_state_change(g, STATE_PLAYING, "got warning confirmation");
+
+  //
+  // Bit of a hack, but avoids needing a callback
+  //
+  auto v = game_levels_get(g);
+  if (v) {
+    if (v->player_pressed_button_and_waiting_for_confirmation) {
+      v->player_pressed_button_and_waiting_for_confirmation = false;
+
+      //
+      // Else start following the cursor path
+      //
+      v->player_pressed_button_and_waiting_for_a_path = val;
+    }
+  }
+}
 
 //
 // Return true on the event being consumed
@@ -46,6 +70,11 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
     return false;
   }
 
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
   //
   // Over the map?
   //
@@ -59,6 +88,30 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
   if (l->level_num == LEVEL_SELECT_ID) {
     level_select_user_chose_a_level(g, v, l);
     return true;
+  }
+
+  //
+  // Double check before jumping in chasms or lava
+  //
+  if (level_is_needs_move_confirm(g, v, l, v->cursor_at)) {
+    if (! thing_is_ethereal(player) && ! thing_is_floating(player) && ! thing_is_flying(player)) {
+      if (level_is_chasm(g, v, l, v->cursor_at)) {
+        std::string msg                                       = "Do you really want to leap into a chasm.";
+        v->player_pressed_button_and_waiting_for_confirmation = true;
+        game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
+        wid_warning(g, msg, wid_warning_callback);
+        return true;
+      }
+    } else if (level_is_lava(g, v, l, v->cursor_at)) {
+      if (! thing_is_immune_to(player, THING_EVENT_HEAT_DAMAGE)
+          && ! thing_is_immune_to(player, THING_EVENT_FIRE_DAMAGE)) {
+        std::string msg                                       = "Do you really want to leap into lava.";
+        v->player_pressed_button_and_waiting_for_confirmation = true;
+        game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
+        wid_warning(g, msg, wid_warning_callback);
+        return true;
+      }
+    }
   }
 
   //

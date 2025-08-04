@@ -126,7 +126,7 @@
       list_macro(is_unused28, "is_unused28"),                           /* newline */                                \
       list_macro(is_unused29, "is_unused29"),                           /* newline */                                \
       list_macro(is_unused3, "is_unused3"),                             /* newline */                                \
-      list_macro(is_unused30, "is_unused30"),                           /* newline */                                \
+      list_macro(is_flying, "is_flying"),                           /* newline */                                \
       list_macro(is_unused4, "is_unused4"),                             /* newline */                                \
       list_macro(is_unused5, "is_unused5"),                             /* newline */                                \
       list_macro(is_unused6, "is_unused6"),                             /* newline */                                \
@@ -588,7 +588,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused28(tp)               tp_flag(tp, is_unused28)
 #define tp_is_unused29(tp)               tp_flag(tp, is_unused29)
 #define tp_is_unused3(tp)                tp_flag(tp, is_unused3)
-#define tp_is_unused30(tp)               tp_flag(tp, is_unused30)
+#define tp_is_flying(tp)               tp_flag(tp, is_flying)
 #define tp_is_unused4(tp)                tp_flag(tp, is_unused4)
 #define tp_is_unused5(tp)                tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                tp_flag(tp, is_unused6)
@@ -711,7 +711,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused28(g, v, l, p)               level_flag(g, v, l, is_unused28, p)
 #define level_is_unused29(g, v, l, p)               level_flag(g, v, l, is_unused29, p)
 #define level_is_unused3(g, v, l, p)                level_flag(g, v, l, is_unused3, p)
-#define level_is_unused30(g, v, l, p)               level_flag(g, v, l, is_unused30, p)
+#define level_is_flying(g, v, l, p)               level_flag(g, v, l, is_flying, p)
 #define level_is_unused4(g, v, l, p)                level_flag(g, v, l, is_unused4, p)
 #define level_is_unused5(g, v, l, p)                level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                level_flag(g, v, l, is_unused6, p)
@@ -827,7 +827,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused28(g, v, l, p)               level_alive_flag(g, v, l, is_unused28, p)
 #define level_alive_is_unused29(g, v, l, p)               level_alive_flag(g, v, l, is_unused29, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
-#define level_alive_is_unused30(g, v, l, p)               level_alive_flag(g, v, l, is_unused30, p)
+#define level_alive_is_flying(g, v, l, p)               level_alive_flag(g, v, l, is_flying, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_physics_gravity, p)
 #define level_alive_is_unused35(g, v, l, p)               level_alive_flag(g, v, l, is_physics_water, p)
 #define level_alive_is_unused36(g, v, l, p)               level_alive_flag(g, v, l, is_indestructible, p)
@@ -948,7 +948,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused28(g, v, l, p)               level_first_flag(g, v, l, is_unused28, p)
 #define level_first_is_unused29(g, v, l, p)               level_first_flag(g, v, l, is_unused29, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
-#define level_first_is_unused30(g, v, l, p)               level_first_flag(g, v, l, is_unused30, p)
+#define level_first_is_flying(g, v, l, p)               level_first_flag(g, v, l, is_flying, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_physics_gravity, p)
 #define level_first_is_unused35(g, v, l, p)               level_first_flag(g, v, l, is_physics_water, p)
 #define level_first_is_unused36(g, v, l, p)               level_first_flag(g, v, l, is_indestructible, p)
@@ -1069,7 +1069,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused28(g, v, l, p)               level_count_flag(g, v, l, is_unused28, p)
 #define level_count_is_unused29(g, v, l, p)               level_count_flag(g, v, l, is_unused29, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
-#define level_count_is_unused30(g, v, l, p)               level_count_flag(g, v, l, is_unused30, p)
+#define level_count_is_flying(g, v, l, p)               level_count_flag(g, v, l, is_flying, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_physics_gravity, p)
 #define level_count_is_unused35(g, v, l, p)               level_count_flag(g, v, l, is_physics_water, p)
 #define level_count_is_unused36(g, v, l, p)               level_count_flag(g, v, l, is_indestructible, p)

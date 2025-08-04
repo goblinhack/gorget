@@ -13,6 +13,7 @@
 typedef enum {
   STATE_MAIN_MENU,     // Main menu
   STATE_PLAYING,       // Actively playing in a level
+  STATE_MOVE_WARNING_MENU,  // Waiting for confirmation on a move
   STATE_QUITTING,      // Shutting down
   STATE_KEYBOARD_MENU, // Setting keys
   STATE_LOAD_MENU,     // Loading a game
