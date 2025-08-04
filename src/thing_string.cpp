@@ -35,7 +35,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* is_loggable                   */ "%s"
                          /* is_dead                       */ "%s"
                          /* is_open                       */ "%s"
-                         /* is_burning                      */ "%s"
+                         /* is_burning                    */ "%s"
                          /* is_scheduled_for_cleanup      */ "%s"
                          /* at                            */ " @%d,%d",
                          /* newline */ t->id,
@@ -46,7 +46,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
                          /* newline */ thing_is_sleeping(t) ? "/sleeping" : "",
                          /* newline */ thing_is_open(t) ? "/open" : "",
-                         /* newline */ thing_is_burning(t) ? "/burnt" : "",
+                         /* newline */ thing_is_burning(t) ? "/burning" : "",
                          /* newline */ thing_is_scheduled_for_cleanup(t) ? "/cleanup" : "",
                          /* newline */ t->at.x, t->at.y));
 }

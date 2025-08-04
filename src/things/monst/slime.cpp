@@ -26,6 +26,7 @@ bool tp_load_slime(void)
   auto        tp   = tp_load("slime");
 
   // begin sort marker1 {
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
   tp_description_set(tp, tp_slime_description_get);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);

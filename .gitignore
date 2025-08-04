@@ -36,7 +36,7 @@ build.log
 gorget
 data/gfx/
 data/sounds/
-src/.o/
+.o/
 src/cfg.hpp
 src/ramdisk_data_0.S
 src/ramdisk_data_1.S

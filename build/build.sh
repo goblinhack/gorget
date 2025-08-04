@@ -270,8 +270,6 @@ fi
 LDLIBS="$SDL_LIBS"
 LDLIBS="$LDLIBS -lSDL2_mixer"
 
-/bin/rm -f data/gorget-hiscore.txt data/gorget-config.txt
-
 #
 # Common config file
 #

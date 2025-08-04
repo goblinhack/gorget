@@ -11,9 +11,9 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things/environ \
 	    src/things/monst \
 	    src/things/mob \
-	    src/things/levels \
 	    src/things/treasure \
-	    src/things/internal \
+	    src/things/internal/levels \
+	    src/things/internal/cursor \
 	    src/tests
 
 all: pre

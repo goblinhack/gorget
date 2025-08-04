@@ -2,24 +2,24 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "../../my_callstack.hpp"
-#include "../../my_tile.hpp"
-#include "../../my_tp.hpp"
-#include "../../my_tps.hpp"
-#include "../../my_types.hpp"
+#include "../../../my_callstack.hpp"
+#include "../../../my_tile.hpp"
+#include "../../../my_tp.hpp"
+#include "../../../my_tps.hpp"
+#include "../../../my_types.hpp"
 
-bool tp_load_level_final(void)
+bool tp_load_level_down(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "level_final";
-  auto        tp   = tp_load("level_final");
+  std::string name = "level_down";
+  auto        tp   = tp_load("level_down");
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_sync_first);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_level_final);
+  tp_flag_set(tp, is_level_down);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 

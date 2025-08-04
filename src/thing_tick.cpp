@@ -32,6 +32,8 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   thing_age_incr(g, v, l, t);
+
+  thing_continue_to_burn_check(g, v, l, t);
 }
 
 //

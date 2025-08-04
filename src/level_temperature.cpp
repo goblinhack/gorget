@@ -61,8 +61,11 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       auto a = pair.first;
       auto b = pair.second;
 
+      // THING_CON(a, "A");
+      // THING_CON(b, "B");
+
       //
-      // If could be dead now.
+      // It could be dead now.
       //
       if (thing_is_dead(a) || thing_is_dead(b)) {
         continue;
@@ -169,7 +172,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
       auto t = things[ i ];
 
       //
-      // If could be dead now.
+      // It could be dead now.
       //
       if (thing_is_dead(t)) {
         continue;

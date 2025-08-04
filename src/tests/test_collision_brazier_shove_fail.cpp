@@ -39,7 +39,7 @@ static bool test_collision_brazier_shove_fail(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@Bx.."
+        "..;Bx.."
         "......."
         "......."
         ".......";

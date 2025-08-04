@@ -295,6 +295,7 @@ void thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
+void thing_continue_to_burn_check(Gamep, Levelsp, Levelp, Thingp);
 
 Thingp       thing_player(Gamep);
 ThingPlayerp thing_player_struct(Gamep);

@@ -29,6 +29,7 @@ bool tp_load_door(void)
 
   auto tp = tp_load("door");
   // begin sort marker1 {
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
   tp_description_set(tp, tp_door_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire

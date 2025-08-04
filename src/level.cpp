@@ -466,6 +466,26 @@ bool level_alive_and_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return false;
 }
 
+//
+// Count things
+//
+int level_count_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+{
+  int count = 0;
+
+  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  {
+    if (thing_is_dead(it)) {
+      continue;
+    }
+
+    if (tp_flag(thing_tp(it), f)) {
+      count++;
+    }
+  }
+  return count;
+}
+
 bool is_oob(spoint p)
 {
   if (p.x < 0) {

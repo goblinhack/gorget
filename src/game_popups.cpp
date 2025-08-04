@@ -163,4 +163,3 @@ void game_popups_clear(Gamep g)
     }
   }
 }
-

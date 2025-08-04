@@ -57,6 +57,13 @@ std::initializer_list< std::string > tps = {
     "teleport",
     "cursor_path",
     "cursor_at",
+    "level_curr",
+    "level_visited",
+    "level_across",
+    "level_next",
+    "level_not_visited",
+    "level_final",
+    "level_down",
     "goblin",
     "slime",
     "ghost",
@@ -69,13 +76,6 @@ std::initializer_list< std::string > tps = {
     "lava",
     "fire",
     "deep_water",
-    "level_curr",
-    "level_visited",
-    "level_across",
-    "level_next",
-    "level_not_visited",
-    "level_final",
-    "level_down",
     "chest",
     "potion",
     "ghost_mob",
@@ -214,6 +214,11 @@ public:
   // Damage types, in dice
   //
   Dice damage[ THING_EVENT_ENUM_MAX ];
+
+  //
+  // Chance types, in dice
+  //
+  Dice chance[ THING_EVENT_ENUM_MAX ];
 
   //
   // For braziers and more
@@ -543,6 +548,79 @@ int tp_damage(Tpp tp, ThingEventType val)
   }
 
   return tp->damage[ val ].roll();
+}
+
+void tp_chance_set(Tpp tp, ThingChanceType ev, const char *val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+
+  if (ev >= THING_CHANCE_ENUM_MAX) {
+    ERR("bad value in tp for %s, %d", __FUNCTION__, ev);
+    return;
+  }
+
+  tp->chance[ ev ] = Dice(std::string(val));
+}
+
+//
+// Roll for chance
+//
+int tp_chance(Tpp tp, ThingChanceType val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+
+  if (val >= THING_CHANCE_ENUM_MAX) {
+    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    return 0;
+  }
+
+  return tp->chance[ val ].roll();
+}
+
+//
+// Roll for chance of success
+//
+bool tp_chance_success(Tpp tp, ThingChanceType val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return false;
+  }
+
+  if (val >= THING_CHANCE_ENUM_MAX) {
+    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    return false;
+  }
+
+  return tp->chance[ val ].roll() == tp->chance[ val ].max_roll();
+}
+
+//
+// Roll for chance of success
+//
+bool tp_chance_fail(Tpp tp, ThingChanceType val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return false;
+  }
+
+  if (val >= THING_CHANCE_ENUM_MAX) {
+    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    return false;
+  }
+
+  return tp->chance[ val ].roll() == 1;
 }
 
 Tilep tp_tiles_get(Tpp tp, ThingAnim val, int index)

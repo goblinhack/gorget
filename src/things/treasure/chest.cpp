@@ -31,6 +31,7 @@ bool tp_load_treasure(void)
   auto        tp   = tp_load("chest");
 
   // begin sort marker1 {
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
   tp_description_set(tp, tp_chest_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

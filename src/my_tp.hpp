@@ -252,6 +252,15 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 
 //
+// Thing chance enum
+//
+#define THING_CHANCE_ENUM(list_macro)                                                                                \
+  clang_format_indent()                                  /* dummy line for clang indentation fixup */                \
+      list_macro(THING_CHANCE_CONTINUE_TO_BURN, "burn"), /* newline */
+
+ENUM_DEF_H(THING_CHANCE_ENUM, ThingChanceType)
+
+//
 // Thing rarity enum
 //
 #define THING_RARITY_ENUM(list_macro)                                                                                \
@@ -306,6 +315,11 @@ void  tp_tiles_push_back(Tpp, ThingAnim, Tilep val);
 
 void tp_damage_set(Tpp, ThingEventType, const char *);
 int  tp_damage(Tpp, ThingEventType);
+
+void tp_chance_set(Tpp, ThingChanceType, const char *);
+int  tp_chance(Tpp, ThingChanceType);
+bool tp_chance_success(Tpp, ThingChanceType);
+bool tp_chance_fail(Tpp, ThingChanceType);
 
 TpId tp_id_get(Tpp tp);
 Tpp  tp_find(TpId id);
@@ -955,5 +969,128 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_wall(g, v, l, p)                   level_first_with_flag(g, v, l, is_wall, p)
 #define level_first_water(g, v, l, p)                  level_first_with_flag(g, v, l, is_water, p)
 // end sort marker5 }
+
+// begin sort marker6 {
+#define level_count_is_able_to_shove(g, v, l, p)          level_count_flag(g, v, l, is_able_to_shove, p)
+#define level_count_is_animated_can_hflip(g, v, l, p)     level_count_flag(g, v, l, is_animated_can_hflip, p)
+#define level_count_is_animated_no_dir(g, v, l, p)        level_count_flag(g, v, l, is_animated_no_dir, p)
+#define level_count_is_animated_sync_count(g, v, l, p)    level_count_flag(g, v, l, is_animated_sync_count, p)
+#define level_count_is_animated(g, v, l, p)               level_count_flag(g, v, l, is_animated, p)
+#define level_count_is_barrel(g, v, l, p)                 level_count_flag(g, v, l, is_barrel, p)
+#define level_count_is_blit_centered(g, v, l, p)          level_count_flag(g, v, l, is_blit_centered, p)
+#define level_count_is_blit_on_ground(g, v, l, p)         level_count_flag(g, v, l, is_blit_on_ground, p)
+#define level_count_is_blit_outlined(g, v, l, p)          level_count_flag(g, v, l, is_blit_outlined, p)
+#define level_count_is_blit_square_outlined(g, v, l, p)   level_count_flag(g, v, l, is_blit_square_outlined, p)
+#define level_count_is_brazier(g, v, l, p)                level_count_flag(g, v, l, is_brazier, p)
+#define level_count_is_bridge(g, v, l, p)                 level_count_flag(g, v, l, is_bridge, p)
+#define level_count_is_broken_on_death(g, v, l, p)        level_count_flag(g, v, l, is_broken_on_death, p)
+#define level_count_is_burnable(g, v, l, p)               level_count_flag(g, v, l, is_burnable, p)
+#define level_count_is_chasm(g, v, l, p)                  level_count_flag(g, v, l, is_chasm, p)
+#define level_count_is_combustible(g, v, l, p)            level_count_flag(g, v, l, is_combustible, p)
+#define level_count_is_corpse_on_death(g, v, l, p)        level_count_flag(g, v, l, is_corpse_on_death, p)
+#define level_count_is_corridor(g, v, l, p)               level_count_flag(g, v, l, is_corridor, p)
+#define level_count_is_crushable_underfoot(g, v, l, p)    level_count_flag(g, v, l, is_crushable, p)
+#define level_count_is_cursor_hazard(g, v, l, p)          level_count_flag(g, v, l, is_cursor_hazard, p)
+#define level_count_is_cursor_path_blocker(g, v, l, p)    level_count_flag(g, v, l, is_cursor_path_blocker, p)
+#define level_count_is_cursor_path_hazard(g, v, l, p)     level_count_flag(g, v, l, is_cursor_path_hazard, p)
+#define level_count_is_cursor_path(g, v, l, p)            level_count_flag(g, v, l, is_cursor_path, p)
+#define level_count_is_cursor(g, v, l, p)                 level_count_flag(g, v, l, is_cursor, p)
+#define level_count_is_dead_on_shoving(g, v, l, p)        level_count_flag(g, v, l, is_dead_on_shoving, p)
+#define level_count_is_deep_water(g, v, l, p)             level_count_flag(g, v, l, is_deep_water, p)
+#define level_count_is_described_cursor(g, v, l, p)       level_count_flag(g, v, l, is_described_cursor, p)
+#define level_count_is_dirt(g, v, l, p)                   level_count_flag(g, v, l, is_dirt, p)
+#define level_count_is_door(g, v, l, p)                   level_count_flag(g, v, l, is_door, p)
+#define level_count_is_dungeon_entrance(g, v, l, p)       level_count_flag(g, v, l, is_dungeon_entrance, p)
+#define level_count_is_entrance(g, v, l, p)               level_count_flag(g, v, l, is_entrance, p)
+#define level_count_is_ethereal(g, v, l, p)               level_count_flag(g, v, l, is_ethereal, p)
+#define level_count_is_exit(g, v, l, p)                   level_count_flag(g, v, l, is_exit, p)
+#define level_count_is_explosion(g, v, l, p)              level_count_flag(g, v, l, is_explosion, p)
+#define level_count_is_extinguished_on_death(g, v, l, p)  level_count_flag(g, v, l, is_extinguished_on_death, p)
+#define level_count_is_fire(g, v, l, p)                   level_count_flag(g, v, l, is_fire, p)
+#define level_count_is_floor(g, v, l, p)                  level_count_flag(g, v, l, is_floor, p)
+#define level_count_is_foliage(g, v, l, p)                level_count_flag(g, v, l, is_foliage, p)
+#define level_count_is_gaseous(g, v, l, p)                level_count_flag(g, v, l, is_gaseous, p)
+#define level_count_is_ghost(g, v, l, p)                  level_count_flag(g, v, l, is_ghost, p)
+#define level_count_is_goblin(g, v, l, p)                 level_count_flag(g, v, l, is_goblin, p)
+#define level_count_is_grass(g, v, l, p)                  level_count_flag(g, v, l, is_grass, p)
+#define level_count_is_key(g, v, l, p)                    level_count_flag(g, v, l, is_key, p)
+#define level_count_is_lava(g, v, l, p)                   level_count_flag(g, v, l, is_lava, p)
+#define level_count_is_level_across(g, v, l, p)           level_count_flag(g, v, l, is_level_across, p)
+#define level_count_is_level_curr(g, v, l, p)             level_count_flag(g, v, l, is_level_curr, p)
+#define level_count_is_level_down(g, v, l, p)             level_count_flag(g, v, l, is_level_down, p)
+#define level_count_is_level_final(g, v, l, p)            level_count_flag(g, v, l, is_level_final, p)
+#define level_count_is_level_next(g, v, l, p)             level_count_flag(g, v, l, is_level_next, p)
+#define level_count_is_level_not_visited(g, v, l, p)      level_count_flag(g, v, l, is_level_not_visited, p)
+#define level_count_is_level_visited(g, v, l, p)          level_count_flag(g, v, l, is_level_visited, p)
+#define level_count_is_levitating(g, v, l, p)             level_count_flag(g, v, l, is_levitating, p)
+#define level_count_is_light_source(g, v, l, p)           level_count_flag(g, v, l, is_light_source, p)
+#define level_count_is_loggable(g, v, l, p)               level_count_flag(g, v, l, is_loggable, p)
+#define level_count_is_minion(g, v, l, p)                 level_count_flag(g, v, l, is_minion, p)
+#define level_count_is_mob(g, v, l, p)                    level_count_flag(g, v, l, is_mob, p)
+#define level_count_is_mob1(g, v, l, p)                   level_count_flag(g, v, l, is_mob1, p)
+#define level_count_is_mob2(g, v, l, p)                   level_count_flag(g, v, l, is_mob2, p)
+#define level_count_is_monst_group_0(g, v, l, p)          level_count_flag(g, v, l, is_monst_group_0, p)
+#define level_count_is_monst_group_1(g, v, l, p)          level_count_flag(g, v, l, is_monst_group_1, p)
+#define level_count_is_monst_group_2(g, v, l, p)          level_count_flag(g, v, l, is_monst_group_2, p)
+#define level_count_is_monst(g, v, l, p)                  level_count_flag(g, v, l, is_monst, p)
+#define level_count_is_obstacle_block(g, v, l, p)         level_count_flag(g, v, l, is_obstacle_to_movement, p)
+#define level_count_is_physics_temperature(g, v, l, p)    level_count_flag(g, v, l, is_physics_temperature, p)
+#define level_count_is_pillar(g, v, l, p)                 level_count_flag(g, v, l, is_pillar, p)
+#define level_count_is_player(g, v, l, p)                 level_count_flag(g, v, l, is_player, p)
+#define level_count_is_rock(g, v, l, p)                   level_count_flag(g, v, l, is_rock, p)
+#define level_count_is_secret_door(g, v, l, p)            level_count_flag(g, v, l, is_secret_door, p)
+#define level_count_is_shovable(g, v, l, p)               level_count_flag(g, v, l, is_shovable, p)
+#define level_count_is_slime(g, v, l, p)                  level_count_flag(g, v, l, is_slime, p)
+#define level_count_is_smoke(g, v, l, p)                  level_count_flag(g, v, l, is_smoke, p)
+#define level_count_is_steam(g, v, l, p)                  level_count_flag(g, v, l, is_steam, p)
+#define level_count_is_teleport(g, v, l, p)               level_count_flag(g, v, l, is_teleport, p)
+#define level_count_is_tickable(g, v, l, p)               level_count_flag(g, v, l, is_tickable, p)
+#define level_count_is_tiled(g, v, l, p)                  level_count_flag(g, v, l, is_tiled, p)
+#define level_count_is_trap(g, v, l, p)                   level_count_flag(g, v, l, is_trap, p)
+#define level_count_is_treasure(g, v, l, p)               level_count_flag(g, v, l, is_treasure, p)
+#define level_count_is_undead(g, v, l, p)                 level_count_flag(g, v, l, is_undead, p)
+#define level_count_is_unused1(g, v, l, p)                level_count_flag(g, v, l, is_unused1, p)
+#define level_count_is_unused10(g, v, l, p)               level_count_flag(g, v, l, is_unused10, p)
+#define level_count_is_unused11(g, v, l, p)               level_count_flag(g, v, l, is_unused11, p)
+#define level_count_is_unused12(g, v, l, p)               level_count_flag(g, v, l, is_unused12, p)
+#define level_count_is_unused13(g, v, l, p)               level_count_flag(g, v, l, is_unused13, p)
+#define level_count_is_unused14(g, v, l, p)               level_count_flag(g, v, l, is_unused14, p)
+#define level_count_is_unused15(g, v, l, p)               level_count_flag(g, v, l, is_unused15, p)
+#define level_count_is_unused16(g, v, l, p)               level_count_flag(g, v, l, is_unused16, p)
+#define level_count_is_unused17(g, v, l, p)               level_count_flag(g, v, l, is_unused17, p)
+#define level_count_is_unused18(g, v, l, p)               level_count_flag(g, v, l, is_unused18, p)
+#define level_count_is_unused19(g, v, l, p)               level_count_flag(g, v, l, is_unused19, p)
+#define level_count_is_unused2(g, v, l, p)                level_count_flag(g, v, l, is_unused2, p)
+#define level_count_is_unused20(g, v, l, p)               level_count_flag(g, v, l, is_unused20, p)
+#define level_count_is_unused21(g, v, l, p)               level_count_flag(g, v, l, is_unused21, p)
+#define level_count_is_unused22(g, v, l, p)               level_count_flag(g, v, l, is_unused22, p)
+#define level_count_is_unused23(g, v, l, p)               level_count_flag(g, v, l, is_unused23, p)
+#define level_count_is_unused24(g, v, l, p)               level_count_flag(g, v, l, is_unused24, p)
+#define level_count_is_unused25(g, v, l, p)               level_count_flag(g, v, l, is_unused25, p)
+#define level_count_is_unused26(g, v, l, p)               level_count_flag(g, v, l, is_unused26, p)
+#define level_count_is_unused27(g, v, l, p)               level_count_flag(g, v, l, is_unused27, p)
+#define level_count_is_unused28(g, v, l, p)               level_count_flag(g, v, l, is_unused28, p)
+#define level_count_is_unused29(g, v, l, p)               level_count_flag(g, v, l, is_unused29, p)
+#define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
+#define level_count_is_unused30(g, v, l, p)               level_count_flag(g, v, l, is_unused30, p)
+#define level_count_is_unused31(g, v, l, p)               level_count_flag(g, v, l, is_unused31, p)
+#define level_count_is_unused32(g, v, l, p)               level_count_flag(g, v, l, is_obstacle_to_landing, p)
+#define level_count_is_unused33(g, v, l, p)               level_count_flag(g, v, l, is_submergible, p)
+#define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_physics_gravity, p)
+#define level_count_is_unused35(g, v, l, p)               level_count_flag(g, v, l, is_physics_water, p)
+#define level_count_is_unused36(g, v, l, p)               level_count_flag(g, v, l, is_indestructible, p)
+#define level_count_is_unused37(g, v, l, p)               level_count_flag(g, v, l, is_floating, p)
+#define level_count_is_unused38(g, v, l, p)               level_count_flag(g, v, l, is_obstacle_to_fire, p)
+#define level_count_is_unused4(g, v, l, p)                level_count_flag(g, v, l, is_unused4, p)
+#define level_count_is_unused5(g, v, l, p)                level_count_flag(g, v, l, is_unused5, p)
+#define level_count_is_unused6(g, v, l, p)                level_count_flag(g, v, l, is_unused6, p)
+#define level_count_is_unused7(g, v, l, p)                level_count_flag(g, v, l, is_unused7, p)
+#define level_count_is_unused8(g, v, l, p)                level_count_flag(g, v, l, is_unused8, p)
+#define level_count_is_unused9(g, v, l, p)                level_count_flag(g, v, l, is_unused9, p)
+#define level_count_is_wait_on_anim_when_dead(g, v, l, p) level_count_flag(g, v, l, is_wait_on_anim_when_dead, p)
+#define level_count_is_walk_through_walls(g, v, l, p)     level_count_flag(g, v, l, is_walk_through_walls, p)
+#define level_count_is_wall(g, v, l, p)                   level_count_flag(g, v, l, is_wall, p)
+#define level_count_is_water(g, v, l, p)                  level_count_flag(g, v, l, is_water, p)
+// end sort marker6 }
 
 #endif // _MY_THING_TEMPLATE_H_
