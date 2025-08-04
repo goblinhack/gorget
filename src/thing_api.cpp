@@ -1196,14 +1196,14 @@ bool thing_is_unused30(Thingp t)
   return tp_flag(thing_tp(t), is_unused30);
 }
 
-bool thing_is_unused31(Thingp t)
+bool thing_is_needs_move_confirm(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused31);
+  return tp_flag(thing_tp(t), is_needs_move_confirm);
 }
 
 bool thing_is_obstacle_to_landing(Thingp t)

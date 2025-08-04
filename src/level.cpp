@@ -102,10 +102,10 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_door(g, v, l, p)) {
         c = CHARMAP_DOOR;
       }
-      if (level_is_alive_foliage(g, v, l, p)) {
+      if (level_alive_is_foliage(g, v, l, p)) {
         c = CHARMAP_FOLIAGE;
       }
-      if (level_is_alive_grass(g, v, l, p)) {
+      if (level_alive_is_grass(g, v, l, p)) {
         c = CHARMAP_GRASS;
       }
       if (level_is_key(g, v, l, p)) {
@@ -437,7 +437,7 @@ bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return false;
 }
 
-Thingp level_first_with_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
@@ -451,7 +451,7 @@ Thingp level_first_with_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p
 //
 // Filter to only alive things
 //
-bool level_alive_and_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+bool level_alive_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {

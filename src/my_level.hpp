@@ -401,8 +401,8 @@ bool is_oob(spoint);
 bool is_oob(int, int);
 
 bool   level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-Thingp level_first_with_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-bool   level_alive_and_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
+Thingp level_first_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
+bool   level_alive_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
 int    level_count_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
 bool   level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint p, Tpp);
 bool   level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot, ThingId);

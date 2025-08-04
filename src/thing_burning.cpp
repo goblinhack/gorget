@@ -95,4 +95,3 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     thing_spawn(g, v, l, tp_random(is_smoke), t->at);
   }
 }
-

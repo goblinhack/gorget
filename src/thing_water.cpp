@@ -12,9 +12,9 @@ void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto   p = me->at;
   Thingp source;
   if (level_is_deep_water(g, v, l, p)) {
-    source = level_first_deep_water(g, v, l, p);
+    source = level_first_is_deep_water(g, v, l, p);
   } else {
-    source = level_first_water(g, v, l, p);
+    source = level_first_is_water(g, v, l, p);
   }
 
   auto event_type = THING_EVENT_WATER_DAMAGE;
