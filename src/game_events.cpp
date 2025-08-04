@@ -102,14 +102,21 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
         wid_warning(g, msg, wid_warning_callback);
         return true;
       }
-    } else if (level_is_lava(g, v, l, v->cursor_at)) {
-      if (! thing_is_immune_to(player, THING_EVENT_HEAT_DAMAGE)
-          && ! thing_is_immune_to(player, THING_EVENT_FIRE_DAMAGE)) {
-        std::string msg                                       = "Do you really want to leap into lava.";
-        v->player_pressed_button_and_waiting_for_confirmation = true;
-        game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
-        wid_warning(g, msg, wid_warning_callback);
-        return true;
+
+      //
+      // If not already in lava, warn about moving into it
+      //
+      if (! level_is_lava(g, v, l, player->at)) {
+        if (level_is_lava(g, v, l, v->cursor_at)) {
+          if (! thing_is_immune_to(player, THING_EVENT_HEAT_DAMAGE)
+              && ! thing_is_immune_to(player, THING_EVENT_FIRE_DAMAGE)) {
+            std::string msg                                       = "Do you really want to leap into lava.";
+            v->player_pressed_button_and_waiting_for_confirmation = true;
+            game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
+            wid_warning(g, msg, wid_warning_callback);
+            return true;
+          }
+        }
       }
     }
   }
