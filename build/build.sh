@@ -421,7 +421,7 @@ WARNING_FLAGS+=-Wno-unknown-warning-option
 #
 # Additional warnings for uninitialized variables; seem to be gcc only
 #
-#WARNING_FLAGS+=-Wmaybe-uninitialized
+WARNING_FLAGS+=-Wmaybe-uninitialized
 #WARNING_FLAGS+=-Wuninitialized=verbose
 #WARNING_FLAGS+=-Wunsafe-buffer-usage -fsafe-buffer-usage-suggestions
 #
