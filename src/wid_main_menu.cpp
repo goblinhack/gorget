@@ -217,7 +217,7 @@ static void game_display_title_fg3(Gamep g)
     fg = RED;
   }
 
-  float bright = 1.01;
+  float bright = (float) 1.01;
   int   r      = (int) (((float) fg.r) * bright);
   if (r > 255) {
     r = 255;

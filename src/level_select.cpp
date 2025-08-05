@@ -74,9 +74,6 @@ Levelp level_select_get_level(Gamep g, Levelsp v, Levelp l, spoint p)
   }
 
   auto level_num = s->level_num;
-  if (level_num < 0) {
-    return nullptr;
-  }
 
   if (level_num >= LEVEL_SELECT_ID) {
     return nullptr;

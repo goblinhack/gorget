@@ -77,8 +77,8 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      spoint last_tl;
-      spoint last_br;
+      spoint last_tl = {};
+      spoint last_br = {};
 
       for (auto i : *game_popups_get(g, x, y)) {
         uint16_t tile_index;

@@ -4,6 +4,8 @@
 
 #include "my_sprintf.hpp"
 
+#include <stdarg.h>
+
 // https://stackoverflow.com/questions/40159892/using-asprintf-on-windows
 
 #if defined(__WIN64__) || defined(_WIN64) || defined(WIN64) || defined(__WIN32__) || defined(_WIN32)                 \

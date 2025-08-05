@@ -5,7 +5,10 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 
+#include "math.h"
+
 #include <set>
+#include <vector>
 
 void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
 {
@@ -98,8 +101,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       //
       // The new temperatures
       //
-      int Na = (int) std::round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
-      int Nb = (int) std::round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
+      int Na = (int) round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
+      int Nb = (int) round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
 
       if (0) {
         THING_CON(a, "Ta %f Wa %f Na %d", Ta, Wa, Na);

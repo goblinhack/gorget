@@ -1038,8 +1038,8 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
   }
 
   {
-    float dx = 1.0 / (((float) x2) - ((float) x1) + 1);
-    float dy = 1.0 / (((float) y2) - ((float) y1) + 1);
+    float dx = (float) 1.0 / (((float) x2) - ((float) x1) + 1);
+    float dy = (float) 1.0 / (((float) y2) - ((float) y1) + 1);
 
     for (auto x = x1; x <= x2; x++) {
       for (auto y = y1; y <= y2; y++) {

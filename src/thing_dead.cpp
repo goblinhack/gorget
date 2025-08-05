@@ -104,10 +104,12 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
         {
           ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         }
+        break;
       case THING_EVENT_LIFESPAN_EXPIRED : //
         {
           ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         }
+        break;
       case THING_EVENT_SHOVED : //
         TOPCON("%s is knocked over by %s.", the_thing.c_str(), by_player.c_str());
         break;

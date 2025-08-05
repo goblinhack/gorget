@@ -13,7 +13,7 @@
 #include <vector>
 
 using Dmap = struct Dmap_ {
-  std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > val {};
+  std::array< std::array< unsigned char, MAP_HEIGHT >, MAP_WIDTH > val {};
 };
 
 extern void dmap_process_no_diagonals(Dmap *D, spoint tl, spoint br, bool place_border);
@@ -28,10 +28,10 @@ extern std::vector< spoint > dmap_solve(const Dmap *d, const spoint start);
 extern std::vector< spoint > dmap_solve_manhattan(const Dmap *d, const spoint start);
 extern std::vector< spoint > dmap_solve_allow_diagonal(const Dmap *d, const spoint start);
 
-#define DMAP_IS_WALL                    ((uint8_t) 255)
-#define DMAP_IS_PASSABLE                ((uint8_t) 254)
-#define DMAP_LESS_PREFERRED_TERRAIN     ((uint8_t) 100)
-#define DMAP_MAX_LESS_PREFERRED_TERRAIN ((uint8_t) 253)
-#define DMAP_IS_GOAL                    ((uint8_t) 0)
+#define DMAP_IS_WALL                    ((unsigned char) 255)
+#define DMAP_IS_PASSABLE                ((unsigned char) 254)
+#define DMAP_LESS_PREFERRED_TERRAIN     ((unsigned char) 100)
+#define DMAP_MAX_LESS_PREFERRED_TERRAIN ((unsigned char) 253)
+#define DMAP_IS_GOAL                    ((unsigned char) 0)
 
 #endif

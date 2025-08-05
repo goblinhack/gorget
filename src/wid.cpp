@@ -5325,8 +5325,8 @@ void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy)
   float dx = x - wid_get_tl_x(w);
   float dy = y - wid_get_tl_y(w);
 
-  dx -= ceil(wid_get_br_x(w) - wid_get_tl_x(w)) / 2;
-  dy -= ceil(wid_get_br_y(w) - wid_get_tl_y(w)) / 2;
+  dx -= (float) ceil(wid_get_br_x(w) - wid_get_tl_x(w)) / 2;
+  dy -= (float) ceil(wid_get_br_y(w) - wid_get_tl_y(w)) / 2;
 
   wid_move_delta(g, w, (int) dx, (int) dy);
 

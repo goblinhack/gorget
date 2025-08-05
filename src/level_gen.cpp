@@ -13,9 +13,11 @@
 #include "my_random.hpp"
 #include "my_time.hpp"
 
+#include <array>
 #include <map>
 #include <thread>
 #include <unordered_map>
+#include <vector>
 
 //
 // How many times to try creating a single level

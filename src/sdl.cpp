@@ -328,10 +328,10 @@ void sdl_tick(Gamep g)
   if ((mx != 0) || (my != 0)) {
     ts = time_ms();
 
-    accel *= UI_SCROLL_JOY_SCALE;
+    accel *= (float) UI_SCROLL_JOY_SCALE;
 
-    if (accel > UI_SCROLL_JOY_SCALE_MAX) {
-      accel = UI_SCROLL_JOY_SCALE_MAX;
+    if (accel > (float) UI_SCROLL_JOY_SCALE_MAX) {
+      accel = (float) UI_SCROLL_JOY_SCALE_MAX;
     }
 
     int x = (int) (sdl.mouse_x + ((float) mx * accel));
@@ -512,7 +512,7 @@ void config_game_gfx_update(Gamep g)
   //
   // Display ratio
   //
-  game_aspect_ratio_set(g, (double) game_window_pix_width_get(g) / (double) game_window_pix_height_get(g));
+  game_aspect_ratio_set(g, (float) game_window_pix_width_get(g) / (float) game_window_pix_height_get(g));
 
   TERM_WIDTH  = game_ui_term_width_get(g);
   TERM_HEIGHT = game_ui_term_height_get(g);

@@ -274,7 +274,7 @@ color color_find(const char *s)
 color color_to_mono(color a)
 {
   TRACE_NO_INDENT();
-  float avg = (a.r + a.g + a.b) / 3.0;
+  float avg = (float) (a.r + a.g + a.b) / (float) 3.0;
 
   a.r = (int) avg;
   a.g = (int) avg;

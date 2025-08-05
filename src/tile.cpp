@@ -12,6 +12,9 @@
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 
+#include <array>
+#include <vector>
+
 std::map< std::string, class Tile * > all_tiles;
 std::vector< class Tile * >           all_tiles_array;
 
@@ -197,8 +200,8 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
 
   Texp tex = tex_load(file, alias, GL_NEAREST);
 
-  float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
-  float fh = 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
+  float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
+  float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
 
   int x   = 0;
   int y   = 0;
@@ -346,8 +349,8 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
 
   tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, gl_mode);
 
-  float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
-  float fh = 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
+  float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
+  float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
 
   int x   = 0;
   int y   = 0;
@@ -503,8 +506,8 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
 
   tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, gl_mode);
 
-  float fw = 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
-  float fh = 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
+  float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
+  float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
 
   int x   = 0;
   int y   = 0;

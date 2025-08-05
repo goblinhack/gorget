@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <string.h>
 
 #include "my_backtrace.hpp"
 #include "my_callstack.hpp"

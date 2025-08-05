@@ -14,6 +14,7 @@
 #include "my_tps.hpp"
 
 #include <map>
+#include <vector>
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)
