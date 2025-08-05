@@ -185,6 +185,30 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       for (auto x = minx; x < maxx; x++) {
         spoint p(x, y);
 
+        //
+        // If the tile is really close then just use the shortest path else we can
+        // get things like:
+        //
+        // original path to X:
+        //
+        //     ..@
+        //   ..
+        //  X
+        //
+        // and the return path then looks odd, not taking the shortest path:
+        //
+        //   .
+        //  @ X
+        //
+        //
+        // when we really want:
+        //
+        //  @.X
+        //
+        if (distance(p, player->at) <= 2) {
+          continue;
+        }
+
         if (! l->is_walked[ x ][ y ]) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
         }
