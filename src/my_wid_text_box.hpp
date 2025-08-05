@@ -30,8 +30,8 @@ private:
 
 public:
   int    line_count {};
-  spoint tl = spoint();
-  spoint br = spoint();
+  spoint tl  = {};
+  spoint br  = {};
   Widp   wid_horiz_scroll {};
   Widp   wid_parent {};
   Widp   wid_text_area {};

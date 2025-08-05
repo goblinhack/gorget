@@ -1927,7 +1927,7 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
   //
   // Find a random door that we have not walked before
   //
-  spoint      door_other;
+  spoint      door_other = {};
   class Room *room_other = {};
   if (! level_gen_random_door_get(g, l, &door_other, &room_other)) {
     level_find_door_fail_count++;

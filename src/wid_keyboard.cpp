@@ -161,8 +161,8 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
 
       Widp b = ctx->buttons[ y ][ x ];
 
-      spoint tl = spoint();
-      spoint br = spoint();
+      spoint tl  = {};
+      spoint br  = {};
       color  c;
 
       tl.x = x * width;

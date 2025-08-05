@@ -2401,8 +2401,8 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
     ERR("No parent");
   }
 
-  spoint vert_tl;
-  spoint vert_br;
+  spoint vert_tl = {};
+  spoint vert_br = {};
 
   int tlx;
   int tly;
@@ -2459,8 +2459,8 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
     ERR("No parent");
   }
 
-  spoint horiz_tl;
-  spoint horiz_br;
+  spoint horiz_tl = {};
+  spoint horiz_br = {};
 
   int tlx;
   int tly;
@@ -4946,8 +4946,8 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   auto wid_width  = wid_get_width(w);
   auto wid_height = wid_get_height(w);
 
-  spoint tl = spoint();
-  spoint br = spoint();
+  spoint tl = {};
+  spoint br = {};
 
   tl.x = otlx;
   tl.y = otly;

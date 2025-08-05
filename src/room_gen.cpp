@@ -47,8 +47,8 @@ public:
   //
   // Top left and bottom right bounds
   //
-  spoint tl = spoint();
-  spoint br = spoint();
+  spoint tl  = {};
+  spoint br  = {};
 
   int room_width {};
   int room_height {};

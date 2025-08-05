@@ -83,8 +83,8 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
       for (auto i : *game_popups_get(g, x, y)) {
         uint16_t tile_index;
         spoint   p(x, y);
-        spoint   tl;
-        spoint   br;
+        spoint   tl = {};
+        spoint   br = {};
 
         //
         // Get the coords of the tile on the map this text would be over

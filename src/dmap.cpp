@@ -940,7 +940,7 @@ static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, cons
 
     uint8_t lowest = D->val[ x ][ y ];
     bool    got    = false;
-    spoint  best;
+    spoint  best   = {};
 
     if (D->val[ x ][ y ] == DMAP_IS_WALL) {
       return out;

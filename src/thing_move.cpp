@@ -637,7 +637,7 @@ bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Get the next tile to move to
   //
-  spoint move_next;
+  spoint move_next = {};
   if (! thing_move_path_pop(g, v, l, t, &move_next)) {
     //
     // If could not pop, then no path is left

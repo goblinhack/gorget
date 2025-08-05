@@ -818,8 +818,8 @@ static void ascii_blit(Gamep g)
 
       const AsciiCell *cell = &(*cells)[ x ][ y ];
 
-      spoint tile_tl = spoint();
-      spoint tile_br = spoint();
+      spoint tile_tl = {};
+      spoint tile_br = {};
 
       tile_tl.x = tile_x;
       tile_tl.y = tile_y;
@@ -878,8 +878,8 @@ static void ascii_blit(Gamep g)
 
       const AsciiCell *cell = &(*cells)[ x ][ y ];
 
-      spoint tile_tl = spoint();
-      spoint tile_br = spoint();
+      spoint tile_tl = {};
+      spoint tile_br = {};
 
       tile_tl.x = tile_x;
       tile_tl.y = tile_y;
@@ -929,8 +929,8 @@ static void ascii_blit(Gamep g)
     for (x = 0; x < TERM_WIDTH; x++) {
       const AsciiCell *cell = &(*cells)[ x ][ y ];
 
-      spoint tile_tl = spoint();
-      spoint tile_br = spoint();
+      spoint tile_tl = {};
+      spoint tile_br = {};
 
       tile_tl.x = tile_x;
       tile_tl.y = tile_y;
