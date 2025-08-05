@@ -421,9 +421,9 @@ WARNING_FLAGS+=-Wno-unknown-warning-option
 #
 # Additional warnings for uninitialized variables; seem to be gcc only
 #
+WARNING_FLAGS+=-Wuninitialized
 WARNING_FLAGS+=-Wmaybe-uninitialized
-#WARNING_FLAGS+=-Wuninitialized=verbose
-#WARNING_FLAGS+=-Wunsafe-buffer-usage -fsafe-buffer-usage-suggestions
+WARNING_FLAGS+=-Wuninitialized=verbose
 #
 # When compiling C, give string constants the type const char[length] so that copying the address of
 # one into a non-const char * pointer produces a warning. These warnings help you find at compile time
