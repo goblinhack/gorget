@@ -392,7 +392,7 @@ fi
 MAKEFILE=../build/Makefile.template
 
 if [[ $OPT_REL != "" ]]; then
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 -g" > $MAKEFILE
+    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 -ffast-math -g" > $MAKEFILE
 else
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O0 -g" > $MAKEFILE
 fi

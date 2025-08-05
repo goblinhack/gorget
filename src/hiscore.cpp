@@ -138,6 +138,17 @@ std::ostream &operator<<(std::ostream &out, Bits< const HiScore & > const my)
   return out;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
+//
+// It looks almost identical to the above. However const is missing here. The compiler
+// will if it does not find a functon matching this non const, will use some other
+// means of writing the HiScore and hence loading will fail.
+//
+// DO NOT REMOVE THIS FUNCTION.
+//
+// vvvvvvvvvvvvvvvvvvvvvvvvvvvv
+//
+//////////////////////////////////////////////////////////////////////////////////////
 std::ostream &operator<<(std::ostream &out, Bits< HiScore & > const my)
 {
   TRACE_NO_INDENT();
@@ -150,6 +161,17 @@ std::ostream &operator<<(std::ostream &out, Bits< HiScore & > const my)
       my.t.when.c_str());
   return out;
 }
+//////////////////////////////////////////////////////////////////////////////////////
+//
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//
+// DO NOT REMOVE THIS FUNCTION.
+//
+// It looks almost identical to the above. However const is missing here. The compiler
+// will if it does not find a functon matching this non const, will use some other
+// means of writing the HiScore and hence loading will fail.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 
 std::istream &operator>>(std::istream &in, Bits< HiScores & > my)
 {
