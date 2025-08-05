@@ -125,6 +125,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
 
         //
         // Avoid overlapping popups
+        //
         while ((tl.y >= last_tl.y) && (tl.y <= last_br.y)) {
           tl.y -= tile_height / 2;
           br.y -= tile_height / 2;

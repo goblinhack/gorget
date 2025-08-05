@@ -415,6 +415,20 @@ fi
 cat >>$MAKEFILE <<%%
 WARNING_FLAGS=-Wall -Wextra -Wpedantic
 #
+# Don't fail if a compiler option is unknown
+#
+WARNING_FLAGS+=-Wno-unknown-warning-option
+#
+# Additional warnings for uninitialized variables; seem to be gcc only
+#
+#WARNING_FLAGS+=-Wmaybe-uninitialized
+#WARNING_FLAGS+=-Wuninitialized=verbose
+#WARNING_FLAGS+=-Wunsafe-buffer-usage -fsafe-buffer-usage-suggestions
+#
+# Clang specific
+#
+WARNING_FLAGS+=-Wconditional-uninitialized 
+#
 # When compiling C, give string constants the type const char[length] so that copying the address of
 # one into a non-const char * pointer produces a warning. These warnings help you find at compile time
 # code that can try to write into a string constant, but only if you have been very careful about using
