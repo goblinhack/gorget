@@ -114,7 +114,7 @@ void wid_dead_select(Gamep g, std::string reason)
   // Center the player name
   //
   {
-    std::string text    = capitalise(game_player_name_get(g));
+    std::string text    = capitalize(game_player_name_get(g));
     int         pad     = grave_text_width - text.size();
     int         lhs_pad = pad / 2;
     int         rhs_pad = pad - lhs_pad;
@@ -191,7 +191,7 @@ void wid_dead_select(Gamep g, std::string reason)
   // Center the death mockery
   //
   {
-    std::vector< std::string > d = split(capitalise(epitaph), grave_text_width);
+    std::vector< std::string > d = split(capitalize(epitaph), grave_text_width);
 
     for (const auto &text : d) {
       int pad     = grave_text_width - text.size();
@@ -219,7 +219,7 @@ void wid_dead_select(Gamep g, std::string reason)
   // Center the death reason
   //
   {
-    std::vector< std::string > d = split(capitalise(reason), grave_text_width);
+    std::vector< std::string > d = split(capitalize(reason), grave_text_width);
 
     for (const auto &text : d) {
       int pad     = grave_text_width - text.size();

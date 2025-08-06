@@ -908,7 +908,7 @@ std::string strerror_to_string(const int err)
 //
 // foo bar -> Foo Bar
 //
-std::string capitalise(std::string in)
+std::string capitalize(std::string in)
 {
   TRACE_NO_INDENT();
   std::string out = in;
@@ -936,7 +936,7 @@ std::string capitalise(std::string in)
 //
 // foo bar -> Foo bar
 //
-std::string capitalise_first(std::string in)
+std::string capitalize_first(std::string in)
 {
   TRACE_NO_INDENT();
   std::string out = in;

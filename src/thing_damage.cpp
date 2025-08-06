@@ -99,7 +99,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   game_popup_text_add(g, t->at.x, t->at.y, msg, WHITE);
 
   if (it && thing_is_loggable(t)) {
-    auto the_thing = capitalise_first(thing_the_long_name(g, v, l, t));
+    auto the_thing = capitalize_first(thing_the_long_name(g, v, l, t));
     auto by_player = thing_long_name(g, v, l, it);
 
     switch (e.event_type) {

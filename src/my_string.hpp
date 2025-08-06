@@ -33,8 +33,8 @@ int strisregexp(const char *in);
 
 std::vector< std::string > split(const std::string &, int max_line_len);
 
-std::string  capitalise(std::string in);
-std::string  capitalise_first(std::string in);
+std::string  capitalize(std::string in);
+std::string  capitalize_first(std::string in);
 std::string &ltrim(std::string &s);
 std::string  ltrim_ws(const std::string &s);
 std::string  mybasename(const char *in, const char *who);

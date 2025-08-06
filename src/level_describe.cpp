@@ -42,7 +42,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
-    one_desc = capitalise_first(one_desc);
+    one_desc = capitalize_first(one_desc);
 
     if (all_things_description.empty()) {
       all_things_description = one_desc;
