@@ -47,8 +47,8 @@ public:
   //
   // Top left and bottom right bounds
   //
-  spoint tl  = {};
-  spoint br  = {};
+  spoint tl = {};
+  spoint br = {};
 
   int room_width {};
   int room_height {};
@@ -385,61 +385,73 @@ static void room_gen_add_corridor(Gamep g, RoomGen *grid)
 }
 
 //
-// Borrowed from Brogue; makes a crossbar room
+// Inspired by brogue desing
 //
 static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  int roomWidth, roomHeight, roomWidth2, roomHeight2, roomX, roomY, roomX2, roomY2;
+  int room_width;
+  int room_height;
+  int room_width2;
+  int room_height2;
+  int roomX;
+  int roomY;
+  int roomX2;
+  int roomY2;
 
-  roomWidth  = pcg_random_range(3, 12);
-  roomX      = pcg_random_range(std::max(0, MAP_WIDTH / 2 - (roomWidth - 1)), std::min(MAP_WIDTH, MAP_WIDTH / 2));
-  roomWidth2 = pcg_random_range(4, 20);
-  roomX2     = (roomX + (roomWidth / 2) + pcg_random_range(0, 2) + pcg_random_range(0, 2) - 3) - (roomWidth2 / 2);
+  room_width  = pcg_random_range(3, 12);
+  roomX       = pcg_random_range(std::max(0, MAP_WIDTH / 2 - (room_width - 1)), std::min(MAP_WIDTH, MAP_WIDTH / 2));
+  room_width2 = pcg_random_range(4, 20);
+  roomX2      = (roomX + (room_width / 2) + pcg_random_range(0, 2) + pcg_random_range(0, 2) - 3) - (room_width2 / 2);
 
-  roomHeight = pcg_random_range(3, 7);
-  roomY      = (MAP_HEIGHT / 2 - roomHeight);
+  room_height = pcg_random_range(3, 7);
+  roomY       = (MAP_HEIGHT / 2 - room_height);
 
-  roomHeight2 = pcg_random_range(2, 5);
-  roomY2      = (MAP_HEIGHT / 2 - roomHeight2 - (pcg_random_range(0, 2) + pcg_random_range(0, 1)));
+  room_height2 = pcg_random_range(2, 5);
+  roomY2       = (MAP_HEIGHT / 2 - room_height2 - (pcg_random_range(0, 2) + pcg_random_range(0, 1)));
 
-  room_gen_draw_rectangle(g, grid, roomX - 5, roomY + 5, roomWidth, roomHeight, CHARMAP_FLOOR);
-  room_gen_draw_rectangle(g, grid, roomX2 - 5, roomY2 + 5, roomWidth2, roomHeight2, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, roomX - 5, roomY + 5, room_width, room_height, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, roomX2 - 5, roomY2 + 5, room_width2, room_height2, CHARMAP_FLOOR);
 }
 
 //
-// Borrowed from Brogue; makes a symmetrical cross room
+// Inspired by brogue desing
 //
 static void room_gen_design_cross_room_symmetrical(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  int majorWidth, majorHeight, minorWidth, minorHeight;
+  int major_width;
+  int major_height;
+  int minor_width;
+  int minor_height;
 
-  majorWidth  = pcg_random_range(4, 8);
-  majorHeight = pcg_random_range(4, 5);
+  major_width  = pcg_random_range(4, 8);
+  major_height = pcg_random_range(4, 5);
 
-  minorWidth = pcg_random_range(3, 4);
-  if (majorHeight % 2 == 0) {
-    minorWidth -= 1;
+  minor_width = pcg_random_range(3, 4);
+  if (major_height % 2 == 0) {
+    minor_width -= 1;
   }
-  minorHeight = 3; // pcg_random_range(2, 3);
-  if (majorWidth % 2 == 0) {
-    minorHeight -= 1;
+
+  minor_height = 3; // pcg_random_range(2, 3);
+  if (major_width % 2 == 0) {
+    minor_height -= 1;
   }
 
-  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - majorWidth) / 2, (MAP_HEIGHT - minorHeight) / 2, majorWidth,
-                          minorHeight, CHARMAP_FLOOR);
-  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - minorWidth) / 2, (MAP_HEIGHT - majorHeight) / 2, minorWidth,
-                          majorHeight, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - major_width) / 2, (MAP_HEIGHT - minor_height) / 2, major_width,
+                          minor_height, CHARMAP_FLOOR);
+  room_gen_draw_rectangle(g, grid, (MAP_WIDTH - minor_width) / 2, (MAP_HEIGHT - major_height) / 2, minor_width,
+                          major_height, CHARMAP_FLOOR);
 }
 
 static void room_gen_design_small_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  int width, height;
+  int width;
+  int height;
 
   width  = pcg_random_range(3, 6);
   height = pcg_random_range(3, 6);
@@ -451,7 +463,8 @@ static void room_gen_design_medium_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  int width, height;
+  int width;
+  int height;
 
   width  = pcg_random_range(6, 10);
   height = pcg_random_range(4, 10);
