@@ -42,7 +42,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ t->level_num,
                          /* newline */ t->tick,
                          /* newline */ thing_health(t),
-                         /* newline */ name,
+                         /* newline */ name.c_str(),
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
                          /* newline */ thing_is_sleeping(t) ? "/sleeping" : "",
                          /* newline */ thing_is_open(t) ? "/open" : "",
@@ -82,7 +82,7 @@ std::string to_string(Gamep g, ThingEvent &e)
   return s;
 }
 
-std::string to_death_reason(Gamep g, ThingEvent &e)
+std::string to_death_reason_string(Gamep g, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
@@ -130,110 +130,4 @@ std::string to_death_reason(Gamep g, ThingEvent &e)
   }
 
   return s;
-}
-
-std::string thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool include_owner)
-{
-  TRACE_NO_INDENT();
-
-  if (unlikely(! t)) {
-    return ("<no name>");
-  }
-
-  auto tp = thing_tp(t);
-
-  std::string out;
-
-#if 0
-  //
-  // Tamed?
-  //
-  auto l = leader();
-  if (l && (l == level->player)) {
-    out = "your ";
-  }
-
-#endif
-  //
-  // "the goblin's short sword" for example
-  //
-  auto t_o = top_owner(g, v, l, t);
-  if (include_owner) {
-    if (t_o && ! thing_is_player(t_o)) {
-
-      out += tp_long_name(thing_tp(t_o));
-      out += "'s ";
-    }
-  }
-
-  if (thing_is_burning(t)) {
-    out += "burning ";
-  }
-
-  if (thing_is_dead(t)) {
-    if (thing_is_player(t) || thing_is_monst(t)) {
-      if (thing_is_undead(t)) {
-        out += "extra dead ";
-      } else {
-        out += "dead ";
-      }
-    }
-    if (thing_is_broken_on_death(t)) {
-      out += "broken ";
-    }
-    if (thing_is_extinguished_on_death(t)) {
-      out += "extinguished ";
-    }
-  }
-
-#if 0
-  if (is_frozen) {
-    out += "frozen ";
-  } else if (is_gaseous) {
-    out += "burnt ";
-  } else if (tpp->charge_count() && ! charge_count()) {
-    out += "spent ";
-  }
-
-  //
-  // Tamed?
-  //
-  if (l && (l == level->player)) {
-    if (is_not_shown_as_a_pet()) {
-      //
-      // Not really a pet
-      //
-    } else {
-      out += "pet ";
-    }
-  }
-#endif
-
-  {
-    auto name = tp_long_name(tp);
-    if (g && thing_is_player(t)) {
-      name = game_player_name_get(g);
-    }
-
-    out += name;
-  }
-
-#if 0
-  if (tpp->is_spell()) {
-    out += " spell";
-  }
-
-  if (tpp->is_skill()) {
-    out += " skill";
-  }
-#endif
-
-  return out;
-}
-
-std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, bool include_owner)
-{
-  TRACE_NO_INDENT();
-
-  return "the " + thing_long_name(g, v, l, t, include_owner);
 }

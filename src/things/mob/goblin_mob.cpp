@@ -23,6 +23,9 @@ bool tp_load_goblin_mob(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_goblin_mob_description_get);
+  tp_long_name_set(tp, "goblin mob");
+  tp_apostrophize_name_set(tp, "goblins mob's");
+  tp_pluralize_name_set(tp, "gobliny mobs");
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

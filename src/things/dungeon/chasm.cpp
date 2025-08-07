@@ -24,6 +24,7 @@ bool tp_load_chasm(void)
   auto        tp   = tp_load("chasm");
   // begin sort marker1 {
   tp_description_set(tp, tp_chasm_description_get);
+  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_chasm);
   tp_flag_set(tp, is_cursor_path_hazard);

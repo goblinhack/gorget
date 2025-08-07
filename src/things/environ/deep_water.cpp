@@ -25,6 +25,7 @@ bool tp_load_deep_water(void)
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
   tp_description_set(tp, tp_deep_water_description_get);
+  tp_long_name_set(tp, "deep water");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_hazard);

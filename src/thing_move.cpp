@@ -500,7 +500,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       l->thing_id[ p.x ][ p.y ][ slot ] = t->id;
 
       if (0) {
-        LOG("l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp), p.x, p.y);
+        LOG("l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp).c_str(), p.x, p.y);
       }
 
 #if 0

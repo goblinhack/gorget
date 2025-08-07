@@ -212,6 +212,16 @@ public:
   std::string long_name;
 
   //
+  // monster's
+  //
+  std::string apostrophize_name;
+
+  //
+  // monsters
+  //
+  std::string pluralize_name;
+
+  //
   // Damage types, in dice
   //
   Dice damage[ THING_EVENT_ENUM_MAX ];
@@ -259,26 +269,26 @@ Tp::Tp(void) { newptr(MTYPE_TP, this, "Tp"); }
 
 Tp::~Tp(void) { oldptr(MTYPE_TP, this); }
 
-Tpp tp_find_mand(const char *name_in)
+Tpp tp_find_mand(const std::string &val)
 {
   TRACE_NO_INDENT();
 
-  std::string name(name_in);
+  std::string name(val);
   auto        result = tp_name_map.find(name);
 
   if (unlikely(result != tp_name_map.end())) {
     return result->second;
   }
 
-  DIE("tp_find_mand: thing template %s not found", name_in);
+  DIE("tp_find_mand: thing template %s not found", val.c_str());
   return nullptr;
 }
 
-Tpp tp_find_opt(const char *name_in)
+Tpp tp_find_opt(const std::string &val)
 {
   TRACE_NO_INDENT();
 
-  std::string name(name_in);
+  std::string name(val);
   auto        result = tp_name_map.find(name);
 
   if (unlikely(result != tp_name_map.end())) {
@@ -386,17 +396,17 @@ static void tp_assign_id(const std::string &tp_name, int *id_out)
   *id_out = tp_preferred_id[ tp_name ];
 }
 
-Tpp tp_load(const char *name_in)
+Tpp tp_load(const std::string &val)
 {
   TRACE_NO_INDENT();
 
-  std::string name(name_in);
+  std::string name(val);
 
   int id;
-  tp_assign_id(name_in, &id);
+  tp_assign_id(val, &id);
 
-  if (tp_find_opt(name_in)) {
-    ERR("tp_load: thing template name [%s] already loaded", name_in);
+  if (tp_find_opt(val)) {
+    ERR("tp_load: thing template name [%s] already loaded", val.c_str());
   }
 
   auto tp  = new Tp();
@@ -404,7 +414,7 @@ Tpp tp_load(const char *name_in)
 
   auto result = tp_name_map.insert(std::make_pair(name, tp));
   if (! result.second) {
-    ERR("tp_load: thing insert name [%s] failed", name_in);
+    ERR("tp_load: thing insert name [%s] failed", val.c_str());
   }
 
   tp_id_map.push_back(tp);
@@ -516,7 +526,7 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
 }
 
-void tp_damage_set(Tpp tp, ThingEventType ev, const char *val)
+void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -551,7 +561,7 @@ int tp_damage(Tpp tp, ThingEventType val)
   return tp->damage[ val ].roll();
 }
 
-void tp_chance_set(Tpp tp, ThingChanceType ev, const char *val)
+void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -662,7 +672,7 @@ int tp_tiles_size(Tpp tp, ThingAnim val)
   return (int) tp->tiles[ val ].size();
 }
 
-const char *tp_name(Tpp tp)
+std::string tp_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -672,17 +682,17 @@ const char *tp_name(Tpp tp)
   return tp->name.c_str();
 }
 
-void tp_short_name_set(Tpp tp, const char *name_in)
+void tp_short_name_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->short_name = std::string(name_in);
+  tp->short_name = std::string(val);
 }
 
-const char *tp_short_name(Tpp tp)
+std::string tp_short_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -695,17 +705,17 @@ const char *tp_short_name(Tpp tp)
   return tp->short_name.c_str();
 }
 
-void tp_long_name_set(Tpp tp, const char *name_in)
+void tp_long_name_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->long_name = std::string(name_in);
+  tp->long_name = std::string(val);
 }
 
-const char *tp_long_name(Tpp tp)
+std::string tp_long_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -718,17 +728,63 @@ const char *tp_long_name(Tpp tp)
   return tp->long_name.c_str();
 }
 
-void tp_real_name_set(Tpp tp, const char *name_in)
+void tp_apostrophize_name_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->real_name = std::string(name_in);
+  tp->apostrophize_name = std::string(val);
 }
 
-const char *tp_real_name(Tpp tp)
+std::string tp_apostrophize_name(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return "<noapostrophizename>";
+  }
+  if (tp->apostrophize_name.empty()) {
+    return tp_short_name(tp);
+  }
+  return tp->apostrophize_name.c_str();
+}
+
+void tp_pluralize_name_set(Tpp tp, const std::string &val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->pluralize_name = std::string(val);
+}
+
+std::string tp_pluralize_name(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return "<nopluralizename>";
+  }
+  if (tp->pluralize_name.empty()) {
+    return tp_short_name(tp);
+  }
+  return tp->pluralize_name.c_str();
+}
+
+void tp_real_name_set(Tpp tp, const std::string &val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->real_name = std::string(val);
+}
+
+std::string tp_real_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -741,14 +797,14 @@ const char *tp_real_name(Tpp tp)
   return tp->real_name.c_str();
 }
 
-void tp_light_color_set(Tpp tp, const char *name_in)
+void tp_light_color_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->light_color = color_find(name_in);
+  tp->light_color = color_find(val.c_str());
 }
 
 void tp_light_color_apply(Tpp tp)
@@ -916,7 +972,7 @@ bool tp_is_immune_to(Tpp tp, ThingEventType val)
   return tp->is_immune[ val ];
 }
 
-void tp_health_initial_set(Tpp tp, const char *val)
+void tp_health_initial_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -1717,7 +1773,7 @@ int tp_value29_get(Tpp tp)
   return tp->value29;
 }
 
-void tp_lifespan_set(Tpp tp, const char *val)
+void tp_lifespan_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {

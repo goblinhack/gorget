@@ -22,9 +22,11 @@ bool tp_load_exit(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp = tp_load("exit");
+  std::string name = "exit";
+  auto tp   = tp_load(name);
   // begin sort marker1 {
   tp_description_set(tp, tp_exit_description_get);
+  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);

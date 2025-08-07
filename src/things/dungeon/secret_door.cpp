@@ -28,6 +28,7 @@ bool tp_load_secret_door(void)
   auto tp = tp_load("secret_door");
   // begin sort marker1 {
   tp_description_set(tp, tp_secret_door_description_get);
+  tp_long_name_set(tp, "secret door");
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);

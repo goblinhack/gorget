@@ -167,10 +167,10 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, spoint p)
       BLOCK(1, 1, 0, 1, 1, 1, 1, 1, 1, IS_JOIN_X4_90)
 
       if (block_type == -1) {
-        DIE("no block type found for %s", tile_name);
+        DIE("no block type found for %s", tile_name.c_str());
       }
 
-      auto which = std::string(tile_name) + "." + is_join_enum_to_string((is_join_enum) block_type);
+      auto which = tile_name + "." + is_join_enum_to_string((is_join_enum) block_type);
 
       if (tp_is_animated(tp)) {
         which += ".0";

@@ -126,7 +126,7 @@
       list_macro(is_unused28, "is_unused28"),                           /* newline */                                \
       list_macro(is_unused29, "is_unused29"),                           /* newline */                                \
       list_macro(is_unused3, "is_unused3"),                             /* newline */                                \
-      list_macro(is_flying, "is_flying"),                           /* newline */                                \
+      list_macro(is_flying, "is_flying"),                               /* newline */                                \
       list_macro(is_unused4, "is_unused4"),                             /* newline */                                \
       list_macro(is_unused5, "is_unused5"),                             /* newline */                                \
       list_macro(is_unused6, "is_unused6"),                             /* newline */                                \
@@ -294,18 +294,24 @@ class Tp;
 
 bool tp_init(void);
 
-const char *tp_name(Tpp);
+std::string tp_name(Tpp);
 
-const char *tp_short_name(Tpp);
-void        tp_short_name_set(Tpp, const char *);
+std::string tp_short_name(Tpp);
+void        tp_short_name_set(Tpp, const std::string &);
 
-const char *tp_long_name(Tpp);
-void        tp_long_name_set(Tpp, const char *);
+std::string tp_long_name(Tpp);
+void        tp_long_name_set(Tpp, const std::string &);
 
-const char *tp_real_name(Tpp);
-void        tp_real_name_set(Tpp, const char *);
+std::string tp_pluralize_name(Tpp);
+void        tp_pluralize_name_set(Tpp, const std::string &);
 
-void tp_light_color_set(Tpp, const char *);
+std::string tp_apostrophize_name(Tpp);
+void        tp_apostrophize_name_set(Tpp, const std::string &);
+
+std::string tp_real_name(Tpp);
+void        tp_real_name_set(Tpp, const std::string &);
+
+void tp_light_color_set(Tpp, const std::string &);
 void tp_light_color_apply(Tpp);
 
 int   tp_tiles_size(Tpp, ThingAnim);
@@ -313,21 +319,21 @@ Tilep tp_first_tile(class Tp *, ThingAnim);
 Tilep tp_tiles_get(Tpp, ThingAnim anim_type, int index);
 void  tp_tiles_push_back(Tpp, ThingAnim, Tilep val);
 
-void tp_damage_set(Tpp, ThingEventType, const char *);
+void tp_damage_set(Tpp, ThingEventType, const std::string &);
 int  tp_damage(Tpp, ThingEventType);
 
-void tp_chance_set(Tpp, ThingChanceType, const char *);
+void tp_chance_set(Tpp, ThingChanceType, const std::string &);
 int  tp_chance(Tpp, ThingChanceType);
 bool tp_chance_success(Tpp, ThingChanceType);
 bool tp_chance_fail(Tpp, ThingChanceType);
 
 TpId tp_id_get(Tpp tp);
 Tpp  tp_find(TpId id);
-Tpp  tp_find_mand(const char *);
-Tpp  tp_find_opt(const char *);
+Tpp  tp_find_mand(const std::string &);
+Tpp  tp_find_opt(const std::string &);
 
 Tpp string2tp(const char **s, int *len = nullptr);
-Tpp tp_load(const char *);
+Tpp tp_load(const std::string &);
 Tpp tp_random(ThingFlag);
 Tpp tp_random_dungeon_entrance(void);
 Tpp tp_random_exit(void);
@@ -371,7 +377,7 @@ int  tp_speed_get(Tpp tp);
 void tp_weight_set(Tpp, int val);
 int  tp_weight_get(Tpp tp);
 
-void tp_health_initial_set(Tpp, const char *val);
+void tp_health_initial_set(Tpp, const std::string &val);
 int  tp_health_initial_get(Tpp tp);
 
 void tp_temperature_initial_set(Tpp, int val);
@@ -470,7 +476,7 @@ int  tp_value28_get(Tpp tp);
 void tp_value29_set(Tpp, int val);
 int  tp_value29_get(Tpp tp);
 
-void tp_lifespan_set(Tpp, const char *val);
+void tp_lifespan_set(Tpp, const std::string &val);
 int  tp_lifespan_get(Tpp tp);
 
 void tp_is_immunity_add(Tpp, ThingEventType);
@@ -588,7 +594,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused28(tp)               tp_flag(tp, is_unused28)
 #define tp_is_unused29(tp)               tp_flag(tp, is_unused29)
 #define tp_is_unused3(tp)                tp_flag(tp, is_unused3)
-#define tp_is_flying(tp)               tp_flag(tp, is_flying)
+#define tp_is_flying(tp)                 tp_flag(tp, is_flying)
 #define tp_is_unused4(tp)                tp_flag(tp, is_unused4)
 #define tp_is_unused5(tp)                tp_flag(tp, is_unused5)
 #define tp_is_unused6(tp)                tp_flag(tp, is_unused6)
@@ -711,7 +717,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused28(g, v, l, p)               level_flag(g, v, l, is_unused28, p)
 #define level_is_unused29(g, v, l, p)               level_flag(g, v, l, is_unused29, p)
 #define level_is_unused3(g, v, l, p)                level_flag(g, v, l, is_unused3, p)
-#define level_is_flying(g, v, l, p)               level_flag(g, v, l, is_flying, p)
+#define level_is_flying(g, v, l, p)                 level_flag(g, v, l, is_flying, p)
 #define level_is_unused4(g, v, l, p)                level_flag(g, v, l, is_unused4, p)
 #define level_is_unused5(g, v, l, p)                level_flag(g, v, l, is_unused5, p)
 #define level_is_unused6(g, v, l, p)                level_flag(g, v, l, is_unused6, p)
@@ -827,7 +833,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused28(g, v, l, p)               level_alive_flag(g, v, l, is_unused28, p)
 #define level_alive_is_unused29(g, v, l, p)               level_alive_flag(g, v, l, is_unused29, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
-#define level_alive_is_flying(g, v, l, p)               level_alive_flag(g, v, l, is_flying, p)
+#define level_alive_is_flying(g, v, l, p)                 level_alive_flag(g, v, l, is_flying, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_physics_gravity, p)
 #define level_alive_is_unused35(g, v, l, p)               level_alive_flag(g, v, l, is_physics_water, p)
 #define level_alive_is_unused36(g, v, l, p)               level_alive_flag(g, v, l, is_indestructible, p)
@@ -948,7 +954,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused28(g, v, l, p)               level_first_flag(g, v, l, is_unused28, p)
 #define level_first_is_unused29(g, v, l, p)               level_first_flag(g, v, l, is_unused29, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
-#define level_first_is_flying(g, v, l, p)               level_first_flag(g, v, l, is_flying, p)
+#define level_first_is_flying(g, v, l, p)                 level_first_flag(g, v, l, is_flying, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_physics_gravity, p)
 #define level_first_is_unused35(g, v, l, p)               level_first_flag(g, v, l, is_physics_water, p)
 #define level_first_is_unused36(g, v, l, p)               level_first_flag(g, v, l, is_indestructible, p)
@@ -1069,7 +1075,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused28(g, v, l, p)               level_count_flag(g, v, l, is_unused28, p)
 #define level_count_is_unused29(g, v, l, p)               level_count_flag(g, v, l, is_unused29, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
-#define level_count_is_flying(g, v, l, p)               level_count_flag(g, v, l, is_flying, p)
+#define level_count_is_flying(g, v, l, p)                 level_count_flag(g, v, l, is_flying, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_physics_gravity, p)
 #define level_count_is_unused35(g, v, l, p)               level_count_flag(g, v, l, is_physics_water, p)
 #define level_count_is_unused36(g, v, l, p)               level_count_flag(g, v, l, is_indestructible, p)

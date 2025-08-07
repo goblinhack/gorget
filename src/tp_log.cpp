@@ -21,7 +21,7 @@ void log_(Tpp tp, const char *fmt, va_list args)
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
 
-  snprintf(buf + len, MAXLONGSTR - len, "%100s: %*s", tp_name(tp), g_callframes_indent, "");
+  snprintf(buf + len, MAXLONGSTR - len, "%100s: %*s", tp_name(tp).c_str(), g_callframes_indent, "");
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -60,7 +60,7 @@ void die_(Tpp tp, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", tp_name(tp));
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", tp_name(tp).c_str());
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -89,7 +89,7 @@ void con_(Tpp tp, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", tp_name(tp));
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", tp_name(tp).c_str());
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
@@ -130,7 +130,7 @@ void err_(Tpp tp, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "ERROR: Thing %s: ", tp_name(tp));
+  snprintf(buf + len, MAXLONGSTR - len, "ERROR: Thing %s: ", tp_name(tp).c_str());
 
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);

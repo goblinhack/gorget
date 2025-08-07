@@ -30,6 +30,7 @@ bool tp_load_trap(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_trap_description_get);
+  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);

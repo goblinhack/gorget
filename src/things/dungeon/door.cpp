@@ -27,10 +27,12 @@ bool tp_load_door(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp = tp_load("door");
+  std::string name = "door";
+  auto tp   = tp_load(name);
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
   tp_description_set(tp, tp_door_description_get);
+  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire

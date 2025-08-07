@@ -27,6 +27,7 @@ bool tp_load_steam(void)
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   tp_description_set(tp, tp_steam_description_get);
+  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);

@@ -670,10 +670,21 @@ void THING_ERR(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_TOPCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_BOTCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
+enum {
+  TEXT_INCLUDE_OWNER = 1,
+  TEXT_EXCLUDE_DEATH = 2,
+  TEXT_APOSTROPHIZE  = 4,
+  TEXT_PLURALIZE     = 8,
+};
+
+typedef uint8_t ThingTextFlags;
+
 std::string to_string(Gamep, Thingp);
 std::string to_string(Gamep, ThingEvent &);
-std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, bool include_owner = false);
-std::string thing_long_name(Gamep, Levelsp, Levelp, Thingp, bool include_owner = false);
-std::string to_death_reason(Gamep, ThingEvent &);
+std::string thing_apostrophize_name(Thingp, ThingTextFlags);
+std::string thing_pluralize_name(Thingp, ThingTextFlags);
+std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
+std::string thing_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
+std::string to_death_reason_string(Gamep, ThingEvent &);
 
 #endif

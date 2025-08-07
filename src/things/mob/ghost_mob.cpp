@@ -23,6 +23,9 @@ bool tp_load_ghost_mob(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_ghost_mob_description_get);
+  tp_long_name_set(tp, "ghost mob");
+  tp_apostrophize_name_set(tp, "ghosts mob's");
+  tp_pluralize_name_set(tp, "ghostly mobs");
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
