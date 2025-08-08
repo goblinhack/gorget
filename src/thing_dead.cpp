@@ -175,7 +175,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   }
 
   if (thing_is_player(t)) {
-    auto death_reason = to_death_reason_string(g, e);
+    auto death_reason = to_death_reason_string(g, v, l, t, e);
 
     auto score = 666;
     if (game_is_new_hiscore(g, score)) {

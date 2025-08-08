@@ -221,8 +221,8 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
       if (! g_opt_tests) {
         if (1) {
           if (tp == tp_player) {
+            thing_spawn(g, v, l, tp_random(is_lava), spoint(x, y) + spoint(1, 0));
             if (0) {
-              thing_spawn(g, v, l, tp_random(is_fire), spoint(x, y) + spoint(1, 0));
               thing_spawn(g, v, l, tp_random(is_water), spoint(x, y) + spoint(2, 0));
               thing_spawn(g, v, l, tp_random(is_water), spoint(x, y) + spoint(2, 1));
               thing_spawn(g, v, l, tp_random(is_water), spoint(x, y) + spoint(2, 2));

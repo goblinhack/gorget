@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_level.hpp"
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
 
@@ -82,11 +83,12 @@ std::string to_string(Gamep g, ThingEvent &e)
   return s;
 }
 
-std::string to_death_reason_string(Gamep g, ThingEvent &e)
+std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
   std::string s;
+  auto        source = e.source;
 
   switch (e.event_type) {
     case THING_EVENT_NONE : break;
@@ -97,32 +99,52 @@ std::string to_death_reason_string(Gamep g, ThingEvent &e)
       s += "ran out of life";
       break;
     case THING_EVENT_SHOVED : //
-      s += "shoved to death";
+      s += "shoved and died";
       break;
     case THING_EVENT_CRUSH : //
-      s += "crushed to death";
+      s += "crushed";
       break;
     case THING_EVENT_MELEE_DAMAGE : //
-      s += "hacked to death";
+      s += "hacked to bits";
       break;
     case THING_EVENT_HEAT_DAMAGE : //
-      s += "cooked to death";
+      s += "cooked";
       break;
     case THING_EVENT_WATER_DAMAGE : //
       s += "drowned";
       break;
     case THING_EVENT_FIRE_DAMAGE : //
-      s += "burnt to death";
+      s += "burned";
       break;
     case THING_EVENT_ENUM_MAX : break;
   }
 
-  if (e.source) {
-    s += " by ";
+  //
+  // Add some more spice to the message
+  //
+  if (level_is_lava(g, v, l, t->at)) {
+    if (! (source && thing_is_lava(source))) {
+      s += " in lava";
+    }
+  } else if (level_is_deep_water(g, v, l, t->at)) {
+    if (! (source && thing_is_water(source))) {
+      s += " in the depths";
+    }
+  } else if (level_is_water(g, v, l, t->at)) {
+    if (! (source && thing_is_water(source))) {
+      s += " in a puddle";
+    }
+  }
 
-    auto t    = e.source;
-    auto name = tp_long_name(thing_tp(t));
-    if (g && thing_is_player(t)) {
+  if (source) {
+    if (thing_is_lava(source) || thing_is_water(source)) {
+      s += " in ";
+    } else {
+      s += " by ";
+    }
+
+    auto name = tp_long_name(thing_tp(source));
+    if (g && thing_is_player(source)) {
       name = game_player_name_get(g);
     }
 
