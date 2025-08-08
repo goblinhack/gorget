@@ -8,6 +8,8 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 
+#include <string.h>
+
 void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 {
   TRACE_NO_INDENT();

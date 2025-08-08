@@ -20,6 +20,7 @@
 #include "my_wids.hpp"
 
 #include <SDL_mixer.h>
+#include <array>
 
 static SDL_Keysym no_key;
 

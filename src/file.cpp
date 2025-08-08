@@ -8,6 +8,8 @@
 #include "my_ramdisk.hpp"
 #include "my_string.hpp"
 
+#include <stdarg.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>

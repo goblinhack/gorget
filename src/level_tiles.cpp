@@ -10,6 +10,7 @@
 #include "my_tile.hpp"
 
 #include <map>
+#include <string.h>
 
 /* clang-format off */
 #define IS_JOIN_ENUM(list_macro)                  \

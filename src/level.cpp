@@ -278,6 +278,7 @@ Levelsp levels_memory_alloc(Gamep g)
   if (! v) {
     return nullptr;
   }
+  newptr(MTYPE_LEVEL, v, "levels");
 
   return v;
 }
@@ -287,7 +288,9 @@ static void levels_memory_free(Gamep g, Levelsp v)
   LOG("Levels free memory");
   TRACE_NO_INDENT();
 
+  verify(MTYPE_LEVEL, v);
   myfree(v);
+  oldptr(MTYPE_LEVEL, v);
 
   game_levels_set(g, nullptr);
 }
