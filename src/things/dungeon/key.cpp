@@ -20,19 +20,19 @@ bool tp_load_key(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "key";
-  auto        tp   = tp_load("key");
+  auto tp   = tp_load("key"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_description_set(tp, tp_key_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_key);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_gravity);
-  tp_flag_set(tp, is_submergible);   // is seen submerged when in water
+  tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

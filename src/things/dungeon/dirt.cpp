@@ -12,7 +12,8 @@ bool tp_load_dirt(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp = tp_load("dirt");
+  auto tp   = tp_load("dirt"); // keep as string for scripts
+  auto name = tp_name(tp);
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_dirt);

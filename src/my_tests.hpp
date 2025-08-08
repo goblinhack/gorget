@@ -14,6 +14,7 @@ bool test_load_collision_fire_chasm();
 bool test_load_collision_fire_water();
 bool test_load_collision_mob();
 bool test_load_collision_barrel();
+bool test_load_player_fall_chasm();
 bool test_load_collision_mob_water();
 bool test_load_collision_wall();
 bool test_load_collision_mob_lava();

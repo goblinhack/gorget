@@ -20,12 +20,11 @@ bool tp_load_pillar(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "pillar";
-  auto        tp   = tp_load("pillar");
+  auto tp   = tp_load("pillar"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_description_set(tp, tp_pillar_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
@@ -40,6 +39,7 @@ bool tp_load_pillar(void)
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

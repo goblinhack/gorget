@@ -50,9 +50,15 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
-      tmp += l->debug[ x ][ y ];
+      auto c = l->debug[ x ][ y ];
+      if (c) {
+        tmp += l->debug[ x ][ y ];
+      }
     }
-    LOG("[%s]", tmp.c_str());
+
+    if (! tmp.empty()) {
+      LOG("[%s]", tmp.c_str());
+    }
   }
 
   LOG("-");
@@ -186,10 +192,14 @@ static void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h, std::string s
     for (int x = 0; x < w; x++) {
       auto offset = (w * y) + x;
       auto c      = s[ offset ];
-
-      line += c;
+      if (c) {
+        line += c;
+      }
     }
-    CON("[%s]", line.c_str());
+
+    if (! line.empty()) {
+      CON("[%s]", line.c_str());
+    }
   }
 }
 

@@ -25,10 +25,10 @@ bool tp_load_secret_door(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp = tp_load("secret_door");
+  auto tp   = tp_load("secret_door"); // keep as string for scripts
+  auto name = tp_name(tp);
   // begin sort marker1 {
   tp_description_set(tp, tp_secret_door_description_get);
-  tp_long_name_set(tp, "secret door");
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
@@ -44,6 +44,7 @@ bool tp_load_secret_door(void)
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_long_name_set(tp, "secret door");
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

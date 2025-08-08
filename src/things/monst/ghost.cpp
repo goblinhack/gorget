@@ -18,13 +18,12 @@ static std::string tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp
 
 bool tp_load_ghost(void)
 {
-  std::string name = "ghost";
-  auto        tp   = tp_load("ghost");
+  auto tp   = tp_load("ghost"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
   tp_description_set(tp, tp_ghost_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -42,6 +41,7 @@ bool tp_load_ghost(void)
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_long_name_set(tp, name);
   tp_monst_group_add(tp, MONST_GROUP_0);
   tp_speed_set(tp, 100);
   tp_temperature_initial_set(tp, -10); // celsius

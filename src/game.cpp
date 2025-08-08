@@ -785,16 +785,16 @@ void game_destroy_levels(Gamep g) { g->destroy_levels(); }
 std::string gama_state_to_string(GameState state)
 {
   switch (state) {
-    case STATE_MAIN_MENU :     return "MAIN_MENU";
-    case STATE_PLAYING :       return "PLAYING";
-    case STATE_LOAD_MENU :     return "LOAD_MENU";
-    case STATE_LOADED :        return "LOADED";
-    case STATE_DEAD_MENU :     return "DEAD_MENU";
-    case STATE_MOVE_WARNING_MENU :  return "WARNING_MENU";
-    case STATE_SAVE_MENU :     return "SAVE_MENU";
-    case STATE_QUIT_MENU :     return "QUIT_MENU";
-    case STATE_QUITTING :      return "QUITTING";
-    case STATE_KEYBOARD_MENU : return "KEYBOARD_MENU";
+    case STATE_MAIN_MENU :         return "MAIN_MENU";
+    case STATE_PLAYING :           return "PLAYING";
+    case STATE_LOAD_MENU :         return "LOAD_MENU";
+    case STATE_LOADED :            return "LOADED";
+    case STATE_DEAD_MENU :         return "DEAD_MENU";
+    case STATE_MOVE_WARNING_MENU : return "WARNING_MENU";
+    case STATE_SAVE_MENU :         return "SAVE_MENU";
+    case STATE_QUIT_MENU :         return "QUIT_MENU";
+    case STATE_QUITTING :          return "QUITTING";
+    case STATE_KEYBOARD_MENU :     return "KEYBOARD_MENU";
   }
 
   ERR("Unhandled game state");
@@ -877,7 +877,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_LOAD_MENU :
     case STATE_LOADED :
     case STATE_SAVE_MENU :
-    case STATE_QUIT_MENU :     wid_actionbar_fini(g); break;
+    case STATE_QUIT_MENU :         wid_actionbar_fini(g); break;
   }
 
   //
@@ -919,7 +919,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_LOAD_MENU :
     case STATE_LOADED :
     case STATE_SAVE_MENU :
-    case STATE_QUIT_MENU :     break;
+    case STATE_QUIT_MENU :         break;
   }
 
   //
@@ -979,12 +979,12 @@ void Game::tick(void)
         }
       }
       break;
-    case STATE_MOVE_WARNING_MENU :  break;
-    case STATE_KEYBOARD_MENU : break;
-    case STATE_LOAD_MENU :     break;
-    case STATE_LOADED :        break;
-    case STATE_SAVE_MENU :     break;
-    case STATE_QUIT_MENU :     break;
+    case STATE_MOVE_WARNING_MENU : break;
+    case STATE_KEYBOARD_MENU :     break;
+    case STATE_LOAD_MENU :         break;
+    case STATE_LOADED :            break;
+    case STATE_SAVE_MENU :         break;
+    case STATE_QUIT_MENU :         break;
   }
 
   //
@@ -1088,12 +1088,12 @@ void Game::display(void)
         }
       }
       break;
-    case STATE_MOVE_WARNING_MENU :  break;
-    case STATE_KEYBOARD_MENU : break;
-    case STATE_LOAD_MENU :     break;
-    case STATE_LOADED :        break;
-    case STATE_SAVE_MENU :     break;
-    case STATE_QUIT_MENU :     break;
+    case STATE_MOVE_WARNING_MENU : break;
+    case STATE_KEYBOARD_MENU :     break;
+    case STATE_LOAD_MENU :         break;
+    case STATE_LOADED :            break;
+    case STATE_SAVE_MENU :         break;
+    case STATE_QUIT_MENU :         break;
   }
 }
 void game_display(Gamep g)

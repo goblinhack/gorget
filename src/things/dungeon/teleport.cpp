@@ -20,18 +20,18 @@ bool tp_load_teleport(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "teleport";
-  auto        tp   = tp_load("teleport");
+  auto tp   = tp_load("teleport"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_description_set(tp, tp_teleport_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_obstacle_to_landing);
   tp_flag_set(tp, is_teleport);
+  tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

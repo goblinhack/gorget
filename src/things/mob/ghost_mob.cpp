@@ -18,14 +18,12 @@ static std::string tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Th
 
 bool tp_load_ghost_mob(void)
 {
-  std::string name = "ghost_mob";
-  auto        tp   = tp_load("ghost_mob");
+  auto tp   = tp_load("ghost_mob"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_description_set(tp, tp_ghost_mob_description_get);
-  tp_long_name_set(tp, "ghost mob");
   tp_apostrophize_name_set(tp, "ghosts mob's");
-  tp_pluralize_name_set(tp, "ghostly mobs");
+  tp_description_set(tp, tp_ghost_mob_description_get);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -47,6 +45,8 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wait_on_anim_when_dead);
   tp_health_initial_set(tp, "1d3+2");
+  tp_long_name_set(tp, "ghost mob");
+  tp_pluralize_name_set(tp, "ghostly mobs");
   tp_short_name_set(tp, "pile of bones");
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius

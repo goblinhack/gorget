@@ -10,7 +10,8 @@
 
 bool tp_load_cursor_at(void)
 {
-  auto tp = tp_load("cursor_at");
+  auto tp   = tp_load("cursor_at"); // keep as string for scripts
+  auto name = tp_name(tp);
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor);

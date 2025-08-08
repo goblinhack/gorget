@@ -21,12 +21,11 @@ bool tp_load_smoke(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "smoke";
-  auto        tp   = tp_load("smoke");
+  auto tp   = tp_load("smoke"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_description_set(tp, tp_smoke_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
@@ -36,6 +35,7 @@ bool tp_load_smoke(void)
   tp_flag_set(tp, is_smoke);
   tp_flag_set(tp, is_tickable);
   tp_lifespan_set(tp, "1d6+3");
+  tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
   // end sort marker1 }

@@ -22,8 +22,8 @@ static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thing
 
 bool tp_load_player(void)
 {
-  std::string name = "player";
-  auto        tp   = tp_load("player");
+  auto tp   = tp_load("player"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning

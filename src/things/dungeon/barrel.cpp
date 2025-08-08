@@ -20,13 +20,12 @@ bool tp_load_barrel(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "barrel";
-  auto        tp   = tp_load("barrel");
+  auto tp   = tp_load("barrel"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
   tp_description_set(tp, tp_barrel_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_barrel);
   tp_flag_set(tp, is_blit_centered);
@@ -44,6 +43,7 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_health_initial_set(tp, "1d6");
+  tp_long_name_set(tp, name);
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

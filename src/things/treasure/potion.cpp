@@ -20,13 +20,12 @@ bool tp_load_potion(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "potion";
-  auto        tp   = tp_load("potion");
+  auto tp   = tp_load("potion"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
   tp_description_set(tp, tp_potion_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
@@ -38,6 +37,7 @@ bool tp_load_potion(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_treasure);
+  tp_long_name_set(tp, name);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

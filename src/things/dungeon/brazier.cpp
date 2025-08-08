@@ -91,12 +91,11 @@ bool tp_load_brazier(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "brazier";
-  auto        tp   = tp_load("brazier");
+  auto tp   = tp_load("brazier"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_description_set(tp, tp_brazier_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_square_outlined);
@@ -115,6 +114,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_light_color_set(tp, "orange");
+  tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_brazier_on_death);
   tp_on_shoved_set(tp, tp_brazier_on_shoved);
   tp_weight_set(tp, WEIGHT_MEDIUM); // grams

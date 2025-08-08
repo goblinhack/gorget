@@ -21,13 +21,12 @@ bool tp_load_steam(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "steam";
-  auto        tp   = tp_load("steam");
+  auto tp   = tp_load("steam"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   tp_description_set(tp, tp_steam_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
@@ -38,6 +37,7 @@ bool tp_load_steam(void)
   tp_flag_set(tp, is_steam);
   tp_flag_set(tp, is_tickable);
   tp_lifespan_set(tp, "1d6+3");
+  tp_long_name_set(tp, name);
   tp_temperature_initial_set(tp, 100); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);

@@ -20,25 +20,25 @@ bool tp_load_lava(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = std::string("lava");
-  auto        tp   = tp_load("lava");
+  auto tp   = tp_load("lava"); // keep as string for scripts
+  auto name = tp_name(tp);
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d20+20");
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d20+20");
   tp_description_set(tp, tp_lava_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_lava);
+  tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_tiled);
-  tp_flag_set(tp, is_needs_move_confirm);
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
+  tp_long_name_set(tp, name);
   tp_temperature_initial_set(tp, 1000); // celsius
   tp_weight_set(tp, WEIGHT_VVVHEAVY);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);

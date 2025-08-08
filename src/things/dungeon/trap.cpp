@@ -25,18 +25,18 @@ bool tp_load_trap(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "trap";
-  auto        tp   = tp_load("trap");
+  auto tp   = tp_load("trap"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_description_set(tp, tp_trap_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_to_landing);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_trap);
+  tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

@@ -118,14 +118,13 @@ bool tp_load_fire(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = "fire";
-  auto        tp   = tp_load("fire");
+  auto tp   = tp_load("fire"); // keep as string for scripts
+  auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d6");
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d6");
   tp_description_set(tp, tp_fire_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_hazard);
@@ -143,6 +142,7 @@ bool tp_load_fire(void)
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
+  tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_fire_on_death);
   tp_on_over_chasm_set(tp, tp_fire_on_over_chasm);
   tp_temperature_initial_set(tp, 500); // celsius

@@ -20,18 +20,18 @@ bool tp_load_chasm(void)
 {
   TRACE_NO_INDENT();
 
-  std::string name = std::string("chasm");
-  auto        tp   = tp_load("chasm");
+  auto tp   = tp_load("chasm"); // keep as string for scripts
+  auto name = tp_name(tp);
   // begin sort marker1 {
   tp_description_set(tp, tp_chasm_description_get);
-  tp_long_name_set(tp, name);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_chasm);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_obstacle_to_landing);
   tp_flag_set(tp, is_tiled);
-  tp_flag_set(tp, is_needs_move_confirm);
+  tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_CHASM);
   // end sort marker1 }

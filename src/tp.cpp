@@ -389,7 +389,7 @@ static void tp_assign_id(const std::string &tp_name, int *id_out)
   //
   if (tp_preferred_id.find(tp_name) == tp_preferred_id.end()) {
     tp_preferred_id[ tp_name ] = *id_out = ++id;
-    ERR("tp_assign_id: thing template not found [%s] Please edit tp_ids.cpp and add it.", tp_name.c_str());
+    ERR("tp_assign_id: thing template not found [%s] Please edit tp.cpp and add it.", tp_name.c_str());
     return;
   }
 
@@ -746,7 +746,7 @@ std::string tp_apostrophize_name(Tpp tp)
     return "<noapostrophizename>";
   }
   if (tp->apostrophize_name.empty()) {
-    return tp_short_name(tp);
+    return tp_long_name(tp);
   }
   return tp->apostrophize_name.c_str();
 }
@@ -769,7 +769,7 @@ std::string tp_pluralize_name(Tpp tp)
     return "<nopluralizename>";
   }
   if (tp->pluralize_name.empty()) {
-    return tp_short_name(tp);
+    return tp_long_name(tp);
   }
   return tp->pluralize_name.c_str();
 }
@@ -792,7 +792,7 @@ std::string tp_real_name(Tpp tp)
     return "<norealname>";
   }
   if (tp->real_name.empty()) {
-    return tp_short_name(tp);
+    return tp_long_name(tp);
   }
   return tp->real_name.c_str();
 }
