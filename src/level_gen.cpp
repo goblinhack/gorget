@@ -3559,7 +3559,12 @@ static void level_gen_create(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  auto v            = game_levels_get(g);
+  auto v = game_levels_get(g);
+  if (! v) {
+    ERR("No levels created");
+    return;
+  }
+
   auto level_string = level_gen_string(g, l);
   auto level        = game_level_get(g, v, l->level_num);
 

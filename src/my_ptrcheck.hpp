@@ -39,11 +39,28 @@ void  ptrcheck_leak_print(int mtype);
 void  ptrcheck_leak_print(void);
 
 #define newptr(__mtype__, __ptr__, __what__)                                                                         \
-  ptrcheck_alloc(__mtype__, __ptr__, __what__, sizeof(*(__ptr__)), PTRCHECK_AT)
+  {                                                                                                                  \
+    if (DEBUG) {                                                                                                     \
+      TRACE_AND_INDENT();                                                                                            \
+      ptrcheck_alloc(__mtype__, __ptr__, __what__, sizeof(*(__ptr__)), PTRCHECK_AT);                                 \
+    }                                                                                                                \
+  }
 
-#define oldptr(__mtype__, __ptr__) ptrcheck_free(__mtype__, __ptr__, PTRCHECK_AT)
+#define oldptr(__mtype__, __ptr__)                                                                                   \
+  {                                                                                                                  \
+    if (DEBUG) {                                                                                                     \
+      TRACE_AND_INDENT();                                                                                            \
+      ptrcheck_free(__mtype__, __ptr__, PTRCHECK_AT);                                                                \
+    }                                                                                                                \
+  }
 
-#define verify(__mtype__, __ptr__) ptrcheck_verify(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM)
+#define verify(__mtype__, __ptr__)                                                                                   \
+  {                                                                                                                  \
+    if (DEBUG) {                                                                                                     \
+      TRACE_AND_INDENT();                                                                                            \
+      ptrcheck_verify(__mtype__, __ptr__, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                               \
+    }                                                                                                                \
+  }
 
 enum {
   MTYPE_BLOCK,
@@ -58,7 +75,7 @@ enum {
   MTYPE_TILE,
   MTYPE_TP,
   MTYPE_WID,
-  MTYPE_LEVEL,
+  MTYPE_LEVELS,
   MTYPE_MAX,
 };
 

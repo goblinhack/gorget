@@ -53,6 +53,15 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 
   v->tick_wait_on_moving_things = false;
   v->tick_wait_on_anim          = false;
+
+  //
+  // The player has died and the dead menu has been closed
+  //
+  if (game_request_to_end_game_get(g)) {
+    v->tick_end_requested = true;
+    return;
+  }
+
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     //
@@ -86,6 +95,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 void level_tick(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
+  verify(MTYPE_LEVELS, game_levels_get(g));
 
   v->last_time_step = v->time_step;
   if (v->tick_in_progress) {

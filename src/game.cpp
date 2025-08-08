@@ -222,6 +222,12 @@ public:
   bool request_to_save_game {};
 
   //
+  // Player is dead
+  //
+  bool        request_to_end_game {};
+  std::string request_to_end_game_reason {};
+
+  //
   // Free up any things at end of life
   //
   bool request_to_cleanup_things {};
@@ -263,6 +269,7 @@ public:
   void destroy_levels(void);
   void display(void);
   void fini(void);
+  void cleanup(void);
   void init(void);
   void load_select(void);
   void save_select(void);
@@ -456,10 +463,7 @@ void Game::fini(void)
   TRACE_AND_INDENT();
 
   TRACE_NO_INDENT();
-  state_change(STATE_QUITTING, "quitting");
-
-  TRACE_NO_INDENT();
-  destroy_levels();
+  cleanup();
 }
 void game_fini(Gamep g)
 {
@@ -474,6 +478,28 @@ void game_fini(Gamep g)
   TRACE_NO_INDENT();
   delete g;
   game = NULL;
+}
+
+void Game::cleanup(void)
+{
+  LOG("Game cleanup");
+  TRACE_AND_INDENT();
+
+  TRACE_NO_INDENT();
+  state_change(STATE_QUITTING, "quitting");
+
+  TRACE_NO_INDENT();
+  destroy_levels();
+}
+void game_cleanup(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    return;
+  }
+
+  g->cleanup();
 }
 
 void game_save_config(Gamep g)
@@ -865,6 +891,7 @@ void Game::state_change(GameState new_state, const std::string &why)
       wid_actionbar_fini(g);
       wid_topcon_fini(g);
       wid_botcon_fini(g);
+      wid_dead_fini(g);
       break;
     case STATE_PLAYING :
       wid_load_destroy(g);
@@ -992,7 +1019,16 @@ void Game::tick(void)
   // Common to all states
   //
   game_request_to_remake_ui_set(g, false);
+
+  //
+  // Create the dead widget?
+  //
+  if (game_request_to_end_game_get(g)) {
+    game_request_to_end_game_set(g, false);
+    wid_dead_select(g, game_request_to_end_game_reason_get(g));
+  }
 }
+
 void game_tick(Gamep g)
 {
   TRACE_NO_INDENT();
@@ -1028,10 +1064,17 @@ void game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  verify(MTYPE_LEVELS, v);
+
   auto next_tick = v->tick + 1;
 
   while ((v->tick != next_tick) || level_tick_is_in_progress(g, v, l)) {
     game_tick(g);
+
+    v = game_levels_get(g);
+    if (! v) {
+      return;
+    }
   }
 }
 
@@ -1724,6 +1767,9 @@ Levelsp game_levels_get(Gamep g)
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return nullptr;
+  }
+  if (g->levels) {
+    verify(MTYPE_LEVELS, g->levels);
   }
   return g->levels;
 }
@@ -2464,6 +2510,45 @@ void game_request_to_save_game_set(Gamep g, bool val)
     return;
   }
   g->request_to_save_game = val;
+}
+
+bool game_request_to_end_game_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 1;
+  }
+
+  return g->request_to_end_game;
+}
+void game_request_to_end_game_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_end_game = val;
+}
+std::string game_request_to_end_game_reason_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return "";
+  }
+
+  return g->request_to_end_game_reason;
+}
+void game_request_to_end_game_reason_set(Gamep g, std::string val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_end_game_reason = val;
 }
 
 bool game_request_to_cleanup_things_get(Gamep g)

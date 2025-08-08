@@ -183,7 +183,11 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
       game_add_new_hiscore(g, score, l->level_num, game_player_name_get(g), death_reason.c_str());
     }
 
-    wid_dead_select(g, death_reason);
+    //
+    // Request the dead menu at end of tick
+    //
+    game_request_to_end_game_set(g);
+    game_request_to_end_game_reason_set(g, death_reason);
   }
 
   //

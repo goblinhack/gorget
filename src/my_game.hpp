@@ -9,6 +9,7 @@
 #include "my_types.hpp"
 
 #include <SDL.h>
+#include <string>
 
 typedef enum {
   STATE_MAIN_MENU,         // Main menu
@@ -233,6 +234,12 @@ void game_request_to_remake_ui_set(Gamep, bool = true);
 bool game_request_to_save_game_get(Gamep);
 void game_request_to_save_game_set(Gamep, bool = true);
 
+bool game_request_to_end_game_get(Gamep);
+void game_request_to_end_game_set(Gamep, bool = true);
+
+std::string game_request_to_end_game_reason_get(Gamep);
+void        game_request_to_end_game_reason_set(Gamep, std::string);
+
 bool game_request_to_cleanup_things_get(Gamep);
 void game_request_to_cleanup_things_set(Gamep, bool = true);
 
@@ -258,6 +265,7 @@ void     game_create_levels(Gamep);
 void     game_destroy_levels(Gamep);
 void     game_display(Gamep);
 void     game_fini(Gamep);
+void     game_cleanup(Gamep);
 void     game_init(Gamep);
 void     game_load_config(Gamep game);
 void     game_load_last_config(const char *appdata);

@@ -443,9 +443,11 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
     pc = e->pc;
 
     if (dont_store) {
+#if 0
 #ifdef ENABLE_DEBUG_PTRCHECK
       std::cerr << string_sprintf("PTRCHECK: %p verified at \"%s\" (%u bytes) at %s:%s line %u (do not store)\n", ptr,
                                   pc->what, pc->size, file, func, line);
+#endif
 #endif
       return pc;
     }
@@ -455,7 +457,7 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
     // point in time.
     //
 #ifdef ENABLE_PTRCHECK_HISTORY
-    IF_DEBUG2
+    IF_DEBUG
     {
       auto l = pc->last_seen[ pc->last_seen_at ];
       if (! l) {
