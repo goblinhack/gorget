@@ -41,17 +41,29 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
 
   out << bits(my.t.seed_name);
   out << bits(my.t.seed_num);
+
+  WRITE_MAGIC(CONFIG_MAGIC_1);
+
   out << bits(my.t.seed_source);
   out << bits(my.t.player_name);
+
+  WRITE_MAGIC(CONFIG_MAGIC_2);
+
   out << bits(my.t.config_pix_height);
   out << bits(my.t.config_pix_width);
   out << bits(my.t.debug_mode);
   out << bits(my.t.fps_counter);
+
+  WRITE_MAGIC(CONFIG_MAGIC_3);
+
   out << bits(my.t.gfx_allow_highdpi);
   out << bits(my.t.gfx_borderless);
   out << bits(my.t.gfx_fullscreen);
   out << bits(my.t.gfx_fullscreen_desktop);
   out << bits(my.t.gfx_vsync_enable);
+
+  WRITE_MAGIC(CONFIG_MAGIC_4);
+
   out << bits(my.t.key_wait);
   out << bits(my.t.key_console);
   out << bits(my.t.key_help);
@@ -63,6 +75,9 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.key_quit);
   out << bits(my.t.key_save);
   out << bits(my.t.key_screenshot);
+
+  WRITE_MAGIC(CONFIG_MAGIC_5);
+
   out << bits(my.t.key_unused1);
   out << bits(my.t.key_unused2);
   out << bits(my.t.key_unused3);
@@ -83,6 +98,9 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.key_ascend);
   out << bits(my.t.key_descend);
   out << bits(my.t.key_zoom);
+
+  WRITE_MAGIC(CONFIG_MAGIC_6);
+
   out << bits(my.t.mouse_wheel_lr_negated);
   out << bits(my.t.mouse_wheel_ud_negated);
   out << bits(my.t.music_volume);

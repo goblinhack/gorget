@@ -30,6 +30,13 @@ typedef enum {
   SEED_SOURCE_COMMAND_LINE,
 } SeedSource;
 
+#define CONFIG_MAGIC_1 0xaabbccdd
+#define CONFIG_MAGIC_2 0xddccbbaa
+#define CONFIG_MAGIC_3 0x11223344
+#define CONFIG_MAGIC_4 0x44332211
+#define CONFIG_MAGIC_5 0xcafecafe
+#define CONFIG_MAGIC_6 0xfeedface
+
 class HiScores *game_hiscores_get(Gamep);
 
 void game_visible_map_pix_get(Gamep, int *visible_map_tl_x, int *visible_map_tl_y, int *visible_map_br_x,
