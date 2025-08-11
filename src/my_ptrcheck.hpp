@@ -3,6 +3,7 @@
 #ifndef _MY__PTRCHECK_HPP__
 #define _MY__PTRCHECK_HPP__
 
+#include "my_main.hpp"
 #include "my_source_loc.hpp"
 
 //

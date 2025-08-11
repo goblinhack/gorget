@@ -628,7 +628,8 @@ fi
 # Execute unit tests?
 #
 if [[ $OPT_GITHUB != "" ]]; then
-    ./${TARGET} --tests
+    log_info "Running tests:"
+    ./${TARGET} --tests --debug2
     if [[ $? -ne 0 ]]; then
         exit 1
     fi

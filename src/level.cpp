@@ -356,9 +356,13 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   LOG("Level change to %u", level_num);
   TRACE_AND_INDENT();
 
+  verify(MTYPE_LEVELS, v);
+
   Level *old_level = game_level_get(g, v);
   game_level_populate(g, v, level_num);
   Level *new_level = game_level_get(g, v);
+
+  verify(MTYPE_LEVELS, v);
 
   if (old_level == new_level) {
     if (new_level->level_num == 0) {
@@ -562,6 +566,8 @@ bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)
 void level_bounds_set(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
+
+  verify(MTYPE_LEVELS, v);
 
   int  zoom = game_map_zoom_get(g);
   auto dw   = INNER_TILE_WIDTH * zoom;
