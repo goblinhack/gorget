@@ -231,6 +231,6 @@ void tests_run(Gamep g)
     exit(1);
   } else {
     CON("All tests passed");
-    exit(0);
+    DIE_CLEAN("done");
   }
 }
