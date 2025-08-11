@@ -204,7 +204,7 @@ public:
   //
   // Zoom gfx level. Not saved as is regenerated.
   //
-  int zoom = {};
+  int zoom = {MAP_ZOOM_DEF};
 
   //
   // If the fbo is smaller than the screen, a single map pixel takes up N on screen pixels
@@ -2343,6 +2343,9 @@ int game_map_zoom_get(Gamep g)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
+    return MAP_ZOOM_DEF;
+  }
+  if (! g->zoom) {
     return MAP_ZOOM_DEF;
   }
   return g->zoom;
