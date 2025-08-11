@@ -152,7 +152,7 @@ static bool test_player_fall_chasm(Gamep g, Testp t)
   TEST_PASSED(t);
 exit:
   TRACE_NO_INDENT();
-  levels_destroy(g, v);
+  game_cleanup(g);
 
   return result;
 }

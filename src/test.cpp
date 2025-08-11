@@ -3,6 +3,7 @@
 //
 
 #include "my_console.hpp"
+#include "my_game.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
@@ -224,6 +225,10 @@ void tests_run(Gamep g)
       LOG("Failed");
     }
     LOG("-");
+  }
+
+  for (auto &test : test_name_map) {
+    delete test.second;
   }
 
   if (failed) {
