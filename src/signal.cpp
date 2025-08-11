@@ -120,6 +120,7 @@ static void debug_crash_handler(int sig)
     execl("/usr/bin/gdb", "gdb", "--batch", "-n", "-ex", "thread apply all bt", prog_name, pid_str.c_str(), nullptr);
 #endif
     system("which gdb");
+    ERR("Debugger failed to exec");
     assert(false && "Debugger failed to exec");
   } else {
     //
