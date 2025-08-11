@@ -119,6 +119,7 @@ static void debug_crash_handler(int sig)
 #else
     execl("/usr/bin/gdb", "gdb", "--batch", "-n", "-ex", "thread apply all bt", prog_name, pid_str.c_str(), nullptr);
 #endif
+    system("which gdb");
     assert(false && "Debugger failed to exec");
   } else {
     //
@@ -164,6 +165,11 @@ void common_error_handler(std::string &tech_support)
 void segv_handler(int sig)
 {
   TRACE_NO_INDENT();
+
+  signal(SIGSEGV, nullptr);
+  signal(SIGABRT, nullptr);
+  signal(SIGFPE, nullptr);
+  signal(SIGILL, nullptr);
 
 #if defined __linux__
   debug_crash_handler(sig);
