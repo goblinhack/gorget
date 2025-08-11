@@ -13,6 +13,7 @@
 #include "my_wid_progress_bar.hpp"
 
 #include <array>
+#include <format>
 
 static WidPopup *wid_load;
 
