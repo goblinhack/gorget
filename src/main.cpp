@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include <libgen.h> // dirname
-#include <signal.h> // dirname
+#include <libgen.h>
+#include <signal.h>
 #include <string.h>
 #include <strings.h>
 #include <sys/stat.h>
