@@ -28,9 +28,6 @@ static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
   TRACE_NO_INDENT();
   LOG("Quit, yes");
 
-  sound_play(g, "click");
-  SDL_Delay(50); // To allow the sound out
-
   if (game_levels_get(g)) {
     LOG("Continue game");
 
