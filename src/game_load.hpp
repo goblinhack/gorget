@@ -8,6 +8,7 @@
 #include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
+#include "my_sound.hpp"
 #include "my_wid_error.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_progress_bar.hpp"
@@ -501,9 +502,11 @@ static bool wid_load_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game->config.key_console)) {
+    sound_play(g, "keypress");
     return false;
   }
 
+  sound_play(g, "keypress");
   return true;
 }
 

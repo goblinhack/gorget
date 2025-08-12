@@ -10,6 +10,7 @@
 #include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_cfg_sound_window;
@@ -33,7 +34,7 @@ static bool wid_cfg_sound_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
     sdl_config_update_all(g);
   }
   wid_cfg_sound_destroy(g);
-  wid_cfg_select(g);
+  wid_options_menu_select(g);
   return true;
 }
 
@@ -45,7 +46,7 @@ static bool wid_cfg_sound_save(Gamep g, Widp w, int x, int y, uint32_t button)
   game_save_config(g);
 
   wid_cfg_sound_destroy(g);
-  wid_cfg_select(g);
+  wid_options_menu_select(g);
   return true;
 }
 
@@ -53,7 +54,7 @@ static bool wid_cfg_sound_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_cfg_sound_destroy(g);
-  wid_cfg_select(g);
+  wid_options_menu_select(g);
   return true;
 }
 
@@ -120,6 +121,7 @@ static bool wid_cfg_sound_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
 
@@ -134,12 +136,21 @@ static bool wid_cfg_sound_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'c' :
-              case 'C' :         wid_cfg_sound_cancel(g, nullptr, 0, 0, 0); return true;
+              case 'C' :
+                sound_play(g, "keypress");
+                wid_cfg_sound_cancel(g, nullptr, 0, 0, 0);
+                return true;
               case 's' :
-              case 'S' :         wid_cfg_sound_save(g, nullptr, 0, 0, 0); return true;
+              case 'S' :
+                sound_play(g, "keypress");
+                wid_cfg_sound_save(g, nullptr, 0, 0, 0);
+                return true;
               case 'b' :
               case 'B' :
-              case SDLK_ESCAPE : wid_cfg_sound_cancel(g, nullptr, 0, 0, 0); return true;
+              case SDLK_ESCAPE :
+                sound_play(g, "keypress");
+                wid_cfg_sound_cancel(g, nullptr, 0, 0, 0);
+                return true;
             }
           }
       }

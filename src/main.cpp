@@ -942,6 +942,7 @@ int main(int argc, char *argv[])
     }
     sound_load(0.5, "data/sounds/interface/click2.wav", "click");
     sound_load(0.5, "data/sounds/interface/error.wav", "error");
+    sound_load(0.5, "data/sounds/interface/keypress.wav", "keypress");
     flush_the_console(g);
   }
 

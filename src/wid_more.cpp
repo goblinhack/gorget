@@ -7,9 +7,10 @@
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_wids.hpp"
 
-WidPopup *wid_more_window;
+static WidPopup *wid_more_window;
 
 static void wid_more_destroy(Gamep g)
 {
@@ -23,7 +24,7 @@ static bool wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button)
   TRACE_NO_INDENT();
   wid_more_destroy(g);
   wid_credits_select(g);
-  return false;
+  return true;
 }
 
 static bool wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
@@ -31,7 +32,7 @@ static bool wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
   TRACE_NO_INDENT();
   wid_more_destroy(g);
   wid_hiscores_show(g);
-  return false;
+  return true;
 }
 
 static bool wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button)
@@ -47,6 +48,7 @@ static bool wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
 
@@ -61,12 +63,21 @@ static bool wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'c' :
-              case 'C' :         wid_more_credits(g, nullptr, 0, 0, 0); return true;
+              case 'C' :
+                sound_play(g, "keypress");
+                wid_more_credits(g, nullptr, 0, 0, 0);
+                return true;
               case 'h' :
-              case 'H' :         wid_more_hiscores(g, nullptr, 0, 0, 0); return true;
+              case 'H' :
+                sound_play(g, "keypress");
+                wid_more_hiscores(g, nullptr, 0, 0, 0);
+                return true;
               case 'b' :
               case 'B' :
-              case SDLK_ESCAPE : wid_more_back(g, nullptr, 0, 0, 0); return true;
+              case SDLK_ESCAPE :
+                sound_play(g, "keypress");
+                wid_more_back(g, nullptr, 0, 0, 0);
+                return true;
             }
           }
       }

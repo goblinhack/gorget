@@ -22,7 +22,7 @@ static void selected(Gamep g, Widp w, const std::string &text)
   }
 
   wid_destroy(g, &wid_choose_player_name);
-  wid_cfg_select(g);
+  wid_options_menu_select(g);
 }
 
 void wid_player_name_select(Gamep g)

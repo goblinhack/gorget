@@ -47,7 +47,7 @@ bool wid_console_init(Gamep g)
   TRACE_NO_INDENT();
 
   if (! wid_console_commands_inited) {
-    command_add(g, config_debug_set, "set debug [0123]", "set debug level");
+    command_add(g, config_debug_set, "set debug [012]", "set debug level");
     command_add(g, config_fps_counter_set, "set fps [01]", "enable frames per sec counter");
     command_add(g, config_gfx_vsync_enable, "set vsync [01]", "enable vertical sync enable");
     command_add(g, config_errored, "clear errored", "used to clear a previous error");

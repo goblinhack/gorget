@@ -10,6 +10,7 @@
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_wids.hpp"
 
 WidPopup *wid_main_menu_window;
@@ -32,15 +33,15 @@ static bool wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_load_select(g);
-  return false;
+  return true;
 }
 
 static bool wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  wid_cfg_select(g);
+  wid_options_menu_select(g);
   wid_main_menu_hide(g);
-  return false;
+  return true;
 }
 
 static bool wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button)
@@ -48,7 +49,7 @@ static bool wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button)
   TRACE_NO_INDENT();
   wid_more_select(g);
   wid_main_menu_hide(g);
-  return false;
+  return true;
 }
 
 static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
@@ -57,7 +58,7 @@ static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
   wid_main_menu_hide(g);
   wid_main_menu_destroy(g);
   wid_new_game(g);
-  return false;
+  return false; // suppress mouse click
 }
 
 static bool wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button)
@@ -65,7 +66,7 @@ static bool wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button)
   TRACE_NO_INDENT();
   wid_quit_select(g);
   wid_main_menu_destroy(g);
-  return false;
+  return true;
 }
 
 static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
@@ -73,6 +74,7 @@ static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
 
@@ -89,15 +91,30 @@ static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
               case SDLK_RETURN :
               case ' ' :
               case 'n' :
-              case 'N' :         game_menu_new_game(g, nullptr, 0, 0, 0); return true;
+              case 'N' :
+                sound_play(g, "keypress");
+                game_menu_new_game(g, nullptr, 0, 0, 0);
+                return true;
               case 'l' :
-              case 'L' :         wid_main_menu_load(g, nullptr, 0, 0, 0); return true;
+              case 'L' :
+                sound_play(g, "keypress");
+                wid_main_menu_load(g, nullptr, 0, 0, 0);
+                return true;
               case 'o' :
-              case 'O' :         wid_main_menu_cfg(g, nullptr, 0, 0, 0); return true;
+              case 'O' :
+                sound_play(g, "keypress");
+                wid_main_menu_cfg(g, nullptr, 0, 0, 0);
+                return true;
               case 'm' :
-              case 'M' :         wid_main_menu_more(g, nullptr, 0, 0, 0); return true;
+              case 'M' :
+                sound_play(g, "keypress");
+                wid_main_menu_more(g, nullptr, 0, 0, 0);
+                return true;
               case 'q' :
-              case 'Q' :         wid_main_menu_quit(g, nullptr, 0, 0, 0); return true;
+              case 'Q' :
+                sound_play(g, "keypress");
+                wid_main_menu_quit(g, nullptr, 0, 0, 0);
+                return true;
             }
           }
       }

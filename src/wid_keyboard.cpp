@@ -8,6 +8,7 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
+#include "my_sound.hpp"
 #include "my_wid.hpp"
 #include "my_wid_keyboard.hpp"
 
@@ -365,6 +366,8 @@ static bool wid_keyboard_parent_key_down(Gamep g, Widp w, const SDL_Keysym *key)
     return false;
   }
 
+  sound_play(g, "keypress");
+
   switch (key->sym) {
     case '`' :         return false;
 
@@ -485,6 +488,8 @@ static bool wid_keyboard_button_key_event(Gamep g, Widp w, const SDL_Keysym *key
     return false;
   }
 
+  sound_play(g, "keypress");
+
   switch (key->sym) {
     case '`' :            return false;
 
@@ -599,6 +604,8 @@ static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym 
   if (time_ms() - ctx->created < 100) {
     return false;
   }
+
+  sound_play(g, "keypress");
 
   switch (key->sym) {
     case SDLK_ESCAPE :    (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input)); return true;

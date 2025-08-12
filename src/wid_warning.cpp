@@ -6,6 +6,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_warning.hpp"
 
@@ -23,6 +24,7 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
 
@@ -41,12 +43,14 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'y' :
               case 'Y' :
                 if (callback) {
+                  sound_play(g, "keypress");
                   (callback)(g, true);
                 }
                 break;
               case 'n' :
               case 'N' :
                 if (callback) {
+                  sound_play(g, "keypress");
                   (callback)(g, true);
                 }
                 break;
@@ -57,6 +61,7 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
                 {
                   TRACE_NO_INDENT();
                   if (callback) {
+                    sound_play(g, "keypress");
                     (callback)(g, false);
                   }
                   wid_warning_destroy();

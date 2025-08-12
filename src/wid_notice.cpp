@@ -19,7 +19,7 @@ static bool wid_notice_ok(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_notice_destroy();
-  return false;
+  return true;
 }
 
 static bool wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)

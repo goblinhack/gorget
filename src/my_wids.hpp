@@ -18,7 +18,7 @@ extern void wid_actionbar_fini(Gamep);
 extern void wid_cfg_gfx_select(Gamep);
 extern void wid_cfg_keyboard_select(Gamep);
 extern void wid_cfg_mouse_select(Gamep);
-extern void wid_cfg_select(Gamep);
+extern void wid_options_menu_select(Gamep);
 extern void wid_cfg_sound_select(Gamep);
 extern void wid_credits_select(Gamep);
 extern void wid_dead_fini(Gamep);

@@ -8,6 +8,7 @@
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_error_window;
@@ -27,6 +28,7 @@ static bool wid_error_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
 
@@ -46,6 +48,7 @@ static bool wid_error_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
               case SDLK_ESCAPE :
                 {
                   TRACE_NO_INDENT();
+                  sound_play(g, "keypress");
                   wid_error_destroy(g);
                   return true;
                 }

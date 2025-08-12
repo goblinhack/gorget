@@ -7,6 +7,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_ui.hpp"
 #include "my_wid_warning.hpp"
 #include "my_wids.hpp"
@@ -375,12 +376,14 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     DBG("Pressed a key; over console, ignore");
+    sound_play(g, "keypress");
     return false;
   }
 
   if (sdlk_eq(*key, game_key_zoom_get(g))) {
     DBG("Zoom alt");
     game_map_zoom_toggle(g);
+    sound_play(g, "keypress");
     return false; // To avoid click noise
   }
 
@@ -392,18 +395,21 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
 
   if (sdlk_eq(*key, game_key_ascend_get(g))) {
     LOG("Pressed ascend key");
+    sound_play(g, "keypress");
     game_event_ascend(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_descend_get(g))) {
     LOG("Pressed descend key");
+    sound_play(g, "keypress");
     game_event_descend(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_quit_get(g))) {
     LOG("Pressed quit key");
+    sound_play(g, "keypress");
     game_event_quit(g);
     return true;
   }
@@ -411,6 +417,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   if (sdlk_eq(*key, game_key_help_get(g))) {
     LOG("Pressed help key");
     TRACE_AND_INDENT();
+    sound_play(g, "keypress");
     game_event_help(g);
     return true;
   }
@@ -419,6 +426,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     LOG("Pressed load key");
     TRACE_AND_INDENT();
     LOG("Loading game");
+    sound_play(g, "keypress");
     game_event_load(g);
     return true;
   }
@@ -426,6 +434,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
   if (sdlk_eq(*key, game_key_save_get(g))) {
     LOG("Pressed save key");
     TRACE_AND_INDENT();
+    sound_play(g, "keypress");
     game_event_save(g);
     return true;
   }

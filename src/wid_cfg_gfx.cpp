@@ -44,7 +44,7 @@ static bool wid_cfg_gfx_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
   TRACE_NO_INDENT();
   CON("Reload config");
   wid_cfg_gfx_destroy(g);
-  wid_cfg_select(g);
+  wid_options_menu_select(g);
   return true;
 }
 
@@ -52,7 +52,7 @@ static bool wid_cfg_gfx_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_cfg_gfx_destroy(g);
-  wid_cfg_select(g);
+  wid_options_menu_select(g);
   return true;
 }
 
@@ -264,6 +264,7 @@ static bool wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
 
@@ -278,12 +279,21 @@ static bool wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'c' :
-              case 'C' :         wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0); return true;
+              case 'C' :
+                sound_play(g, "keypress");
+                wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0);
+                return true;
               case 's' :
-              case 'S' :         wid_cfg_gfx_save(g, nullptr, 0, 0, 0); return true;
+              case 'S' :
+                sound_play(g, "keypress");
+                wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+                return true;
               case 'b' :
               case 'B' :
-              case SDLK_ESCAPE : wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0); return true;
+              case SDLK_ESCAPE :
+                sound_play(g, "keypress");
+                wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0);
+                return true;
             }
           }
       }

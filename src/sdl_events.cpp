@@ -9,6 +9,7 @@
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_ui.hpp"
 #include "my_wid_console.hpp"
 
@@ -142,6 +143,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
     g_grab_next_key = false;
     sdl.grabbed_key = sdlk_normalize(event->key.keysym);
     if (sdl.on_sdl_key_grab) {
+      sound_play(g, "keypress");
       (*sdl.on_sdl_key_grab)(g, sdl.grabbed_key);
     }
     return;

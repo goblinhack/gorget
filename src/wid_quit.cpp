@@ -7,6 +7,7 @@
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_quit_window;
@@ -26,6 +27,9 @@ static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   LOG("Quit, yes");
+
+  sound_play(g, "click");
+  SDL_Delay(50); // To allow the sound out
 
   if (game_levels_get(g)) {
     LOG("Continue game");
@@ -60,6 +64,7 @@ static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
 
@@ -74,12 +79,21 @@ static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'y' :
-              case 'Y' :         wid_quit_yes(g, nullptr, 0, 0, 0); return true;
+              case 'Y' :
+                sound_play(g, "keypress");
+                wid_quit_yes(g, nullptr, 0, 0, 0);
+                return true;
               case 'n' :
-              case 'N' :         wid_quit_no(g, nullptr, 0, 0, 0); return true;
+              case 'N' :
+                sound_play(g, "keypress");
+                wid_quit_no(g, nullptr, 0, 0, 0);
+                return true;
               case 'b' :
               case 'B' :
-              case SDLK_ESCAPE : wid_quit_no(g, nullptr, 0, 0, 0); return true;
+              case SDLK_ESCAPE :
+                sound_play(g, "keypress");
+                wid_quit_no(g, nullptr, 0, 0, 0);
+                return true;
             }
           }
       }

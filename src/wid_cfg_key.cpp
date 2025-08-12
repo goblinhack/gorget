@@ -9,12 +9,13 @@
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_sound.hpp"
 #include "my_wid_notice.hpp"
 #include "my_wids.hpp"
 
-static int  last_vert_scroll_offset = -1;
-WidPopup   *wid_cfg_keyboard_window;
-static bool local_g_config_changed;
+static int       last_vert_scroll_offset = -1;
+static WidPopup *wid_cfg_keyboard_window;
+static bool      local_g_config_changed;
 
 static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
 {
@@ -175,7 +176,7 @@ static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t butt
     // Back to the game
     //
   } else {
-    wid_cfg_select(g);
+    wid_options_menu_select(g);
   }
 
   return true;
@@ -195,7 +196,7 @@ static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button
     // Back to the game
     //
   } else {
-    wid_cfg_select(g);
+    wid_options_menu_select(g);
   }
 
   return true;
@@ -211,7 +212,7 @@ static bool wid_cfg_keyboard_back(Gamep g, Widp w, int x, int y, uint32_t button
     // Back to the game
     //
   } else {
-    wid_cfg_select(g);
+    wid_options_menu_select(g);
   }
 
   return true;
@@ -883,6 +884,7 @@ static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *
   TRACE_NO_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
 
@@ -898,7 +900,10 @@ static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *
             switch (c) {
               case 'b' :
               case 'B' :
-              case SDLK_ESCAPE : wid_cfg_keyboard_cancel(g, nullptr, 0, 0, 0); return true;
+              case SDLK_ESCAPE :
+                sound_play(g, "keypress");
+                wid_cfg_keyboard_cancel(g, nullptr, 0, 0, 0);
+                return true;
             }
           }
       }

@@ -14,6 +14,7 @@
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_size.hpp"
+#include "my_sound.hpp"
 #include "my_sprintf.hpp"
 #include "my_wid_console.hpp"
 #include "my_wid_tiles.hpp"
@@ -30,7 +31,7 @@ typedef struct {
   std::array< uint8_t, WID_COLOR_MAX > color_set;
   int                                  style;
   uint8_t                              style_set;
-} wid_cfg;
+} wid_options_menu;
 
 class tree_wid_key
 {
@@ -227,7 +228,7 @@ public:
   //
   // Config layers:
   //
-  std::array< wid_cfg, WID_MODE_LAST > cfg {};
+  std::array< wid_options_menu, WID_MODE_LAST > cfg {};
 
   //
   // Client context
@@ -1462,8 +1463,8 @@ color wid_get_color(Widp w, wid_color which)
 {
   TRACE_NO_INDENT();
 
-  uint32_t mode = (__typeof__(mode)) wid_get_mode(w); // for c++, no enum walk
-  wid_cfg *cfg  = &w->cfg[ mode ];
+  uint32_t          mode = (__typeof__(mode)) wid_get_mode(w); // for c++, no enum walk
+  wid_options_menu *cfg  = &w->cfg[ mode ];
 
   if (cfg->color_set[ which ]) {
     return (cfg->colors[ which ]);
@@ -1490,8 +1491,8 @@ int wid_get_style(Widp w)
 {
   TRACE_NO_INDENT();
 
-  uint32_t mode = (__typeof__(mode)) wid_get_mode(w); // for c++, no enum walk
-  wid_cfg *cfg  = &w->cfg[ mode ];
+  uint32_t          mode = (__typeof__(mode)) wid_get_mode(w); // for c++, no enum walk
+  wid_options_menu *cfg  = &w->cfg[ mode ];
 
   if (cfg->style_set) {
     return (cfg->style);
@@ -3391,8 +3392,11 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
   uint32_t    cnt;
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     return false;
   }
+
+  sound_play(g, "keypress");
 
   newchar += wid_event_to_char(key);
   origtext = wid_get_text(w);
@@ -3617,6 +3621,7 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
   w = wid_get_top_parent(wid_console_input_line);
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
+    sound_play(g, "keypress");
     wid_toggle_hidden(g, wid_console_window);
     wid_raise(g, wid_console_window);
 
