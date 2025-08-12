@@ -629,7 +629,7 @@ fi
 #
 if [[ $OPT_GITHUB != "" ]]; then
     log_info "Running tests:"
-    ./${TARGET} --tests --debug2
+    ./${TARGET} --tests --debug
     if [[ $? -ne 0 ]]; then
         exit 1
     fi
