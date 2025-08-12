@@ -35,13 +35,10 @@ static std::string original_program_name;
 
 static bool skip_gfx_and_audio; // For tests
 
-void quit(Gamep *g_in)
+void cleanup(void)
 {
-  LOG("Exiting, quit callded");
+  LOG("Exiting, cleanup callded");
   TRACE_AND_INDENT();
-
-  Gamep g = *g_in;
-  *g_in   = nullptr;
 
   if (g_quitting) {
     LOG("Quitting, nested");
@@ -49,6 +46,9 @@ void quit(Gamep *g_in)
   }
 
   g_quitting = true;
+
+  extern Gamep game;
+  auto         g = game;
 
 #ifdef ENABLE_CRASH_HANDLER
   signal(SIGSEGV, nullptr); // uninstall our handler
@@ -168,7 +168,7 @@ void restart(Gamep g)
   }
 
   CON("Quit");
-  quit(&g);
+  cleanup();
 
   if (use_system) {
     char tmp_cmd[ PATH_MAX ];
@@ -180,22 +180,6 @@ void restart(Gamep g)
     execve(executable, (char *const *) args, nullptr);
     DIE("Failed to restart");
   }
-}
-
-void die(void)
-{
-  LOG("Exiting, die called");
-  TRACE_AND_INDENT();
-
-  extern Gamep game;
-  auto         g = game;
-
-  quit(&g);
-
-  LOG("Bye, error exit");
-  fprintf(MY_STDERR, "exit(1) error\n");
-
-  exit(1);
 }
 
 //
@@ -1079,7 +1063,7 @@ int main(int argc, char *argv[])
   }
 
   CON("Quit");
-  quit(&g);
+  cleanup();
 
   CON("Goodbye my friend and take care until next time!");
   return 0;

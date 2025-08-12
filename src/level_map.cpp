@@ -188,7 +188,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         default :
           if (! g_opt_do_level_gen) {
-            //            DIE("unexpected map char '%c'", c);
+            DIE("unexpected map char '%c'", c);
           }
       }
 

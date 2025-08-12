@@ -113,6 +113,74 @@ void CON_NEW_LINE(void)
   con_(nullptr, args);
 }
 
+static void cleanup_err_wrapper_(const char *fmt, va_list args)
+{
+  TRACE_NO_INDENT();
+
+  if (g_die_occurred) {
+    fprintf(stderr, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
+    exit(1);
+  }
+  g_die_occurred = true;
+
+  char buf[ MAXLONGSTR ];
+  buf[ 0 ]  = '\0';
+  int len   = 0;
+  int tslen = 0;
+
+  get_timestamp(buf, MAXLONGSTR);
+  tslen = len = (int) strlen(buf);
+
+  snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
+
+  len = (int) strlen(buf);
+  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
+
+  fprintf(stderr, "%s\n", buf);
+
+  ERR("%s", buf + tslen);
+  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
+
+  cleanup();
+}
+
+void CLEANUP_ERR(const char *fmt, ...)
+{
+  TRACE_NO_INDENT();
+
+  va_list args;
+
+  va_start(args, fmt);
+  cleanup_err_wrapper_(fmt, args);
+  va_end(args);
+}
+
+static void cleanup_ok_wrapper_(const char *fmt, va_list args)
+{
+  TRACE_NO_INDENT();
+
+  if (g_die_occurred) {
+    fprintf(stderr, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
+    exit(1);
+  }
+  g_die_occurred = true;
+
+  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
+
+  cleanup();
+}
+
+void CLEANUP_OK(const char *fmt, ...)
+{
+  TRACE_NO_INDENT();
+
+  va_list args;
+
+  va_start(args, fmt);
+  cleanup_ok_wrapper_(fmt, args);
+  va_end(args);
+}
+
 static void dying_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
@@ -131,6 +199,17 @@ static void dying_(const char *fmt, va_list args)
   putf(MY_STDOUT, buf);
 
   FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
+}
+
+void DYING(const char *fmt, ...)
+{
+  TRACE_NO_INDENT();
+
+  va_list args;
+
+  va_start(args, fmt);
+  dying_(fmt, args);
+  va_end(args);
 }
 
 static void err_(const char *fmt, va_list args)
@@ -188,86 +267,7 @@ static void err_(const char *fmt, va_list args)
   nested_error = false;
 }
 
-static void croak_(const char *fmt, va_list args)
-{
-  TRACE_NO_INDENT();
-
-  if (g_die_occurred) {
-    fprintf(stderr, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
-    exit(1);
-  }
-  g_die_occurred = true;
-
-  char buf[ MAXLONGSTR ];
-  buf[ 0 ]  = '\0';
-  int len   = 0;
-  int tslen = 0;
-
-  get_timestamp(buf, MAXLONGSTR);
-  tslen = len = (int) strlen(buf);
-
-  snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
-
-  len = (int) strlen(buf);
-  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
-
-  fprintf(stderr, "%s\n", buf);
-
-  ERR("%s", buf + tslen);
-  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
-
-  die();
-}
-
-void CROAK(const char *fmt, ...)
-{
-  TRACE_NO_INDENT();
-
-  va_list args;
-
-  va_start(args, fmt);
-  croak_(fmt, args);
-  va_end(args);
-}
-
-static void croak_clean_(const char *fmt, va_list args)
-{
-  TRACE_NO_INDENT();
-
-  if (g_die_occurred) {
-    fprintf(stderr, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
-    exit(1);
-  }
-  g_die_occurred = true;
-
-  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
-
-  die();
-}
-
-void CROAK_CLEAN(const char *fmt, ...)
-{
-  TRACE_NO_INDENT();
-
-  va_list args;
-
-  va_start(args, fmt);
-  croak_clean_(fmt, args);
-  va_end(args);
-}
-
-void DYING(const char *fmt, ...)
-{
-  TRACE_NO_INDENT();
-
-  va_list args;
-
-  va_start(args, fmt);
-  dying_(fmt, args);
-  va_end(args);
-}
-
-void raise_error(const char *fmt, ...)
+void err_wrapper(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 

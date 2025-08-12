@@ -82,7 +82,7 @@ static void die(void)
   exit(1);
 }
 
-static void croak_(const char *fmt, va_list args)
+static void cleanup_wrapper_(const char *fmt, va_list args)
 {
   static int g_die_occurred;
   if (g_die_occurred) {
@@ -99,11 +99,11 @@ static void croak_(const char *fmt, va_list args)
   die();
 }
 
-void CROAK(const char *fmt, ...)
+void CLEANUP(const char *fmt, ...)
 {
   va_list args;
   va_start(args, fmt);
-  croak_(fmt, args);
+  cleanup_wrapper_(fmt, args);
   va_end(args);
 }
 
@@ -126,7 +126,7 @@ void ERROR(const char *fmt, ...)
 
 #define DIE(args...)                                                                                                 \
   std::cerr << string_sprintf("Died at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                  \
-  CROAK(args);
+  CLEANUP(args);
 
 #define ERR(args...)                                                                                                 \
   std::cerr << string_sprintf("Error at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                 \

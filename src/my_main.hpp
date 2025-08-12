@@ -27,17 +27,17 @@ extern FILE *g_log_stdout;
 extern FILE *g_log_stderr;
 
 void DYING(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void CROAK(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void CROAK_CLEAN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void CLEANUP_ERR(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void CLEANUP_OK(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
 #define DIE(...)                                                                                                     \
   DYING("Died at %s:%s():%u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                           \
-  CROAK(__VA_ARGS__);                                                                                                \
+  CLEANUP_ERR(__VA_ARGS__);                                                                                          \
   exit(1);
 
 #define DIE_CLEAN(...)                                                                                               \
   DYING("Exiting at %s:%s():%u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                        \
-  CROAK_CLEAN(__VA_ARGS__);                                                                                          \
+  CLEANUP_OK(__VA_ARGS__);                                                                                           \
   exit(0);
 
 #ifdef DEBUG
@@ -81,8 +81,7 @@ void TOPCON_NEW_LINE(void);
 void BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void BOTCON_NEW_LINE(void);
 
-void die(void);
-void quit(Gamep *);
+void cleanup(void);
 void restart(Gamep);
 
 void reset_globals(void);
@@ -94,7 +93,7 @@ void ctrlc_handler(int sig);
 void error_handler(const std::string &error);
 void segv_handler(int sig);
 
-void raise_error(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
+void err_wrapper(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
 #define DEBUG  (unlikely(g_opt_debug1))
@@ -118,7 +117,7 @@ void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
 #define ERR                                                                                                          \
   TRACE_NO_INDENT();                                                                                                 \
-  raise_error
+  err_wrapper
 
 #define MY_STDERR (g_log_stderr ? g_log_stderr : stderr)
 #define MY_STDOUT (g_log_stdout ? g_log_stdout : stdout)
