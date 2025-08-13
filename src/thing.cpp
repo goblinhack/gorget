@@ -126,9 +126,10 @@ void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  IF_DEBUG
-  if (thing_is_loggable(t)) {
-    THING_DBG(t, "fini");
+  if (0) {
+    if (thing_is_loggable(t)) {
+      THING_DBG(t, "fini");
+    }
   }
 
   thing_free(g, v, l, t);

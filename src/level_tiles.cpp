@@ -234,5 +234,5 @@ void level_tile_update(Gamep g, Levelsp v, Levelp l)
     }
   }
 
-  memset(l->tiles_for_update, 0, sizeof(l->tiles_for_update));
+  memset(l->tiles_for_update, 0, SIZEOF(l->tiles_for_update));
 }

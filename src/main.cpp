@@ -1069,3 +1069,9 @@ int main(int argc, char *argv[])
   CON("Goodbye my friend and take care until next time!");
   return 0;
 }
+
+int testxxx(void)
+{
+  TRACE_NO_INDENT();
+  return 0;
+}

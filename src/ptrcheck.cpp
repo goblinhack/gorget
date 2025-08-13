@@ -11,6 +11,10 @@
 #include "my_sprintf.hpp"
 #include "my_time.hpp"
 
+#include <mutex>
+
+static std::mutex ptrcheck_mutex;
+
 //
 // A single event in the life of a pointer.
 //
@@ -507,8 +511,8 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
 //
 // Record this pointer.
 //
-void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file,
-                     int line)
+static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int size, const char *func,
+                             const char *file, int line)
 {
   Ptrcheck *pc;
 
@@ -583,11 +587,22 @@ void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, con
   return ((void *) ptr);
 }
 
+void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file,
+                     int line)
+{
+  ptrcheck_mutex.lock();
+  TRACE_NO_INDENT();
+  auto ret = ptrcheck_alloc_(mtype, ptr, what, size, func, file, line);
+  ptrcheck_mutex.unlock();
+
+  return ret;
+}
+
 //
 // Check a pointer is valid and if so add it to the ring buffer. If not,
 // return false and avert the myfree(), just in case.
 //
-int ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line)
+static int ptrcheck_free_(int mtype, void *ptr, const char *func, const char *file, int line)
 {
   Ptrcheck *pc;
 
@@ -649,16 +664,33 @@ int ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int 
   return true;
 }
 
+int ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line)
+{
+  ptrcheck_mutex.lock();
+  TRACE_NO_INDENT();
+  auto ret = ptrcheck_free_(mtype, ptr, func, file, line);
+  ptrcheck_mutex.unlock();
+
+  return ret;
+}
+
 //
 // Check a pointer for validity with no recording of history.
 //
 int ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *file, int line)
 {
+  ptrcheck_mutex.lock();
+  TRACE_NO_INDENT();
+
   //
   // Handy if things get too slow, to see what is firing most
   //
   // fprintf(stderr, "PTRCHECK %s %s %d\n", file, func, line);
-  return (ptrcheck_verify_pointer(mtype, ptr, file, func, line, false /* don't store */) != nullptr);
+  auto ret = ptrcheck_verify_pointer(mtype, ptr, file, func, line, false /* don't store */) != nullptr;
+
+  ptrcheck_mutex.unlock();
+
+  return ret;
 }
 
 //

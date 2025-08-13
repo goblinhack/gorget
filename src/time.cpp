@@ -205,7 +205,7 @@ std::string current_date(void)
   //  %X  07:06:05    Locale’s appropriate time representation.
   //  %%  %   A literal '%' character.
   //
-  my_strftime(buffer, sizeof(buffer), "%c", timeinfo);
+  my_strftime(buffer, SIZEOF(buffer), "%c", timeinfo);
   if (0) {
     strftime(buffer, SIZEOF(buffer), "%X", timeinfo);
   }

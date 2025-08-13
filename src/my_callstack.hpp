@@ -29,7 +29,10 @@ struct callframe {
 // this was unreliable for tracing classes as they are destroyed after
 // the callstack vector
 //
-#define MAXCALLFRAME 255
+// No needs for bounds checking if we use unsigned char as the size, as
+// the index will wrap around to 0 if we hit some endless recursion.
+//
+#define MAXCALLFRAME 256
 
 #define USE_THREADS
 
@@ -63,24 +66,18 @@ struct tracer_t {
 // useful for code tracing in real time
 // fprintf(stderr, "%s %s() line %d\n", file, func, line);
 #ifdef ENABLE_DEBUG_TRACE
-    if (unlikely(g_callframes_depth < MAXCALLFRAME)) {
-      g_callframes_indent++;
-      callframe *c = &callframes[ g_callframes_depth++ ];
-      c->func      = func;
-      c->line      = line;
-    }
+    g_callframes_indent++;
+    callframe *c = &callframes[ g_callframes_depth++ ];
+    c->func      = func;
+    c->line      = line;
 #endif
   }
 
   inline ~tracer_t()
   {
 #ifdef ENABLE_DEBUG_TRACE
-    if (likely(g_callframes_indent > 0)) {
-      g_callframes_indent--;
-    }
-    if (likely(g_callframes_depth > 0)) {
-      g_callframes_depth--;
-    }
+    g_callframes_indent--;
+    g_callframes_depth--;
 #endif
   }
 };
@@ -91,20 +88,16 @@ struct tracer_no_indent_t {
 // useful for code tracing in real time
 // fprintf(stderr, "%s %s() line %d\n", file, func, line);
 #ifdef ENABLE_DEBUG_TRACE
-    if (unlikely(g_callframes_depth < MAXCALLFRAME)) {
-      callframe *c = &callframes[ g_callframes_depth++ ];
-      c->func      = func;
-      c->line      = line;
-    }
+    callframe *c = &callframes[ g_callframes_depth++ ];
+    c->func      = func;
+    c->line      = line;
 #endif
   }
 
   inline ~tracer_no_indent_t()
   {
 #ifdef ENABLE_DEBUG_TRACE
-    if (likely(g_callframes_depth > 0)) {
-      g_callframes_depth--;
-    }
+    g_callframes_depth--;
 #endif
   }
 };

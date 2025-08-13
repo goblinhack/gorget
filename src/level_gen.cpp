@@ -19,6 +19,10 @@
 #include <unordered_map>
 #include <vector>
 
+#include <mutex>
+
+static std::mutex level_gen_mutex;
+
 //
 // How many times to try creating a single level
 //
@@ -752,6 +756,7 @@ static void room_dump(Gamep g, class Room *r)
 {
   TRACE_NO_INDENT();
 
+  level_gen_mutex.lock();
   LOG("Room %d %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
@@ -763,6 +768,7 @@ static void room_dump(Gamep g, class Room *r)
   }
 
   LOG("-");
+  level_gen_mutex.unlock();
 }
 
 //
@@ -1237,6 +1243,7 @@ static void fragment_alt_dump(Gamep g, class FragmentAlt *r)
 {
   TRACE_NO_INDENT();
 
+  level_gen_mutex.lock();
   LOG("FragmentAlt %d %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
@@ -1248,6 +1255,7 @@ static void fragment_alt_dump(Gamep g, class FragmentAlt *r)
   }
 
   LOG("-");
+  level_gen_mutex.unlock();
 }
 
 //
@@ -1530,6 +1538,7 @@ static void fragment_dump(Gamep g, class Fragment *r)
 {
   TRACE_NO_INDENT();
 
+  level_gen_mutex.lock();
   LOG("Fragment %d %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
@@ -1541,6 +1550,7 @@ static void fragment_dump(Gamep g, class Fragment *r)
   }
 
   LOG("-");
+  level_gen_mutex.unlock();
 }
 
 //
@@ -1697,6 +1707,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
 {
   TRACE_NO_INDENT();
 
+  level_gen_mutex.lock();
   if (msg) {
     LOG("Level: %u (%s)", l->level_num, msg);
   } else {
@@ -1728,6 +1739,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   }
 
   LOG("-");
+  level_gen_mutex.unlock();
 }
 
 //
