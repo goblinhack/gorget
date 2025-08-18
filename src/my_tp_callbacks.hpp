@@ -30,6 +30,10 @@ typedef void (*tp_on_death_t)(Gamep, Levelsp, Levelp, Thingp me, ThingEvent &);
 void tp_on_death_set(Tpp, tp_on_death_t);
 void tp_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &);
 
+typedef void (*tp_on_moved_t)(Gamep, Levelsp, Levelp, Thingp me);
+void tp_on_moved_set(Tpp, tp_on_moved_t);
+void tp_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me);
+
 typedef void (*tp_on_shoved_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp shover);
 void tp_on_shoved_set(Tpp, tp_on_shoved_t);
 void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover);

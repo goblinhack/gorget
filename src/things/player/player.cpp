@@ -3,6 +3,8 @@
 //
 
 #include "../../my_callstack.hpp"
+#include "../../my_level.hpp"
+#include "../../my_sound.hpp"
 #include "../../my_thing.hpp"
 #include "../../my_tile.hpp"
 #include "../../my_tp.hpp"
@@ -18,6 +20,17 @@ static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thing
     return "dead you";
   }
   return "You";
+}
+
+static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+
+  if (level_is_water(g, v, l, me->at)) {
+    sound_play(g, "splash1");
+  } else {
+    sound_play(g, "footstep");
+  }
 }
 
 bool tp_load_player(void)
@@ -43,6 +56,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, "100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_on_moved_set(tp, tp_player_on_moved);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius

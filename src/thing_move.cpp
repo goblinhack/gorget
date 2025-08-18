@@ -9,6 +9,7 @@
 #include "my_ptrcheck.hpp"
 #include "my_sound.hpp"
 #include "my_tile.hpp"
+#include "my_tp_callbacks.hpp"
 
 //
 // Get thing direction
@@ -254,6 +255,8 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   thing_is_moving_set(g, v, l, t);
 
   thing_push(g, v, l, t);
+
+  tp_on_moved(g, v, l, t);
 
   return true;
 }
