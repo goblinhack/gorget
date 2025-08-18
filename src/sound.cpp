@@ -33,10 +33,20 @@ static std::unordered_map< std::string, class sound * > all_sound;
 
 static bool sound_init_done;
 
+static std::unordered_map< int, std::string > playing;
+
+static void sound_finished(int channel)
+{
+  if (channel != -1) {
+    playing[ channel ] = "";
+  }
+}
+
 bool sound_init(void)
 {
   TRACE_NO_INDENT();
   Mix_AllocateChannels(16);
+  Mix_ChannelFinished(sound_finished);
 
   sound_init_done = true;
 
@@ -135,6 +145,28 @@ bool sound_find(const std::string &alias)
   return result != all_sound.end();
 }
 
+static int sound_play_internal(Game *g, int channel, class sound *s)
+{
+  TRACE_NO_INDENT();
+
+  if (! s->chunk) {
+    ERR("Cannot find sound chunk %s", s->alias.c_str());
+    return -1;
+  }
+
+  float volume = s->volume * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
+  volume *= MIX_MAX_VOLUME;
+  Mix_VolumeChunk(s->chunk, (int) volume);
+
+  auto chan = Mix_PlayChannel(-1, s->chunk, 0 /* loops */);
+  if (chan == -1) {
+    return chan;
+  }
+
+  playing[ chan ] = s->alias;
+  return chan;
+}
+
 bool sound_play(Gamep g, const std::string &alias)
 {
   TRACE_NO_INDENT();
@@ -152,107 +184,18 @@ bool sound_play(Gamep g, const std::string &alias)
     return false;
   }
 
-  float volume = sound->second->volume * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
-
-  volume *= MIX_MAX_VOLUME;
-
-  if (! sound->second->chunk) {
-    ERR("Cannot find sound chunk %s", alias.c_str());
-    return false;
+  //
+  // Playing already?
+  //
+  for (auto p : playing) {
+    if (p.second == alias) {
+      return false;
+    }
   }
 
-  Mix_VolumeChunk(sound->second->chunk, (int) volume);
-
-  if (Mix_PlayChannel(-1 /* first free channel */, sound->second->chunk, 0 /* loops */) == -1) {
+  if (sound_play_internal(g, -1 /* first free channel */, sound->second) == -1) {
     DBG2("Cannot play sound %s on any channel", alias.c_str());
-    Mix_HaltChannel(0);
     SDL_ClearError();
-
-    if (Mix_PlayChannel(-1 /* first free channel */, sound->second->chunk, 0 /* loops */) == -1) {
-      ERR("Cannot play sound %s: %s", alias.c_str(), Mix_GetError());
-      SDL_ClearError();
-    }
-  }
-
-  return true;
-}
-
-bool sound_play_optional(Gamep g, const std::string &alias)
-{
-  TRACE_NO_INDENT();
-
-  DBG2("Play sound %s", alias.c_str());
-
-  auto sound = all_sound.find(alias);
-  if (sound == all_sound.end()) {
-    ERR("Cannot find sound %s", alias.c_str());
-    return false;
-  }
-
-  if (! sound->second) {
-    ERR("Cannot find sound data %s", alias.c_str());
-    return false;
-  }
-
-  float volume = sound->second->volume * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
-
-  volume *= MIX_MAX_VOLUME;
-
-  if (! sound->second->chunk) {
-    ERR("Cannot find sound chunk %s", alias.c_str());
-    return false;
-  }
-
-  Mix_VolumeChunk(sound->second->chunk, (int) volume);
-
-  if (Mix_PlayChannel(-1 /* first free channel */, sound->second->chunk, 0 /* loops */) == -1) {
-    DBG2("Cannot play sound %s on any channel", alias.c_str());
-  }
-
-  return true;
-}
-
-bool sound_play_channel(Gamep g, int channel, const std::string &alias)
-{
-  TRACE_NO_INDENT();
-
-  DBG2("Play sound %s on channel %d", alias.c_str(), channel);
-
-  auto sound = all_sound.find(alias);
-  if (sound == all_sound.end()) {
-    ERR("Cannot find sound %s", alias.c_str());
-    return false;
-  }
-
-  if (! sound->second) {
-    ERR("Cannot find sound data %s", alias.c_str());
-    return false;
-  }
-
-  float volume = sound->second->volume * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
-
-  volume *= MIX_MAX_VOLUME;
-
-  Mix_VolumeChunk(sound->second->chunk, (int) volume);
-
-  if (Mix_Playing(channel)) {
-    if (Mix_PlayChannel(-1, sound->second->chunk, 0 /* loops */) == -1) {
-      DBG2("Cannot play sound %s on channel %d", alias.c_str(), channel);
-      return false;
-    }
-    return true;
-  }
-
-  if (! sound->second->chunk) {
-    ERR("Cannot find sound chunk %s", alias.c_str());
-    return false;
-  }
-
-  if (Mix_PlayChannel(channel, sound->second->chunk, 0 /* loops */) == -1) {
-    if (Mix_PlayChannel(-1, sound->second->chunk, 0 /* loops */) == -1) {
-      DBG2("Cannot play sound %s on channel %d", alias.c_str(), channel);
-      return false;
-    }
   }
 
   return true;

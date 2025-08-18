@@ -19,7 +19,6 @@ void sound_fini(void);
 bool sound_load(float volume, const std::string &file, const std::string &alias);
 bool sound_find(const std::string &alias);
 bool sound_play(Gamep, const std::string &alias);
-bool sound_play_channel(Gamep, int chan, const std::string &alias);
 void sound_halt(void);
 void sounds_init(void);
 
