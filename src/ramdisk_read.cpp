@@ -9,7 +9,7 @@
 
 #include "string.h"
 
-std::map< std::string, ramdisk_t_ > ramdisk_data;
+std::unordered_map< std::string, ramdisk_t_ > ramdisk_data;
 
 unsigned char *ramdisk_load(const char *filename, int *outlen)
 {

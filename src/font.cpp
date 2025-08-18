@@ -10,7 +10,7 @@
 
 Fontp font_ui;
 
-static std::map< std::string, Fontp > fonts;
+static std::unordered_map< std::string, Fontp > fonts;
 
 void font_fini(void) { TRACE_NO_INDENT(); }
 

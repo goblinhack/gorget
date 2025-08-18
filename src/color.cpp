@@ -10,7 +10,7 @@
 
 #include <map>
 
-using colors = std::map< std::string, color >;
+using colors = std::unordered_map< std::string, color >;
 
 colors      color_map;
 static bool color_init_done;

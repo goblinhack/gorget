@@ -7,6 +7,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_sound.hpp"
 #include "my_tile.hpp"
 
 //
@@ -664,6 +665,8 @@ bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
       level_tick_begin_requested(g, v, l, "player faled moved to next location");
     }
   }
+
+  sound_play(g, "footstep");
 
   return true;
 }

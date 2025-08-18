@@ -193,7 +193,7 @@ void wid_cfg_sound_select(Gamep g)
     spoint br(width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Configuration");
+    wid_set_text(w, "Volume (max " + std::to_string(MIX_MAX_VOLUME) + ")");
   }
 
   y_at = 3;

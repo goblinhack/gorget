@@ -346,9 +346,9 @@ void Config::reset(void)
   key_console.sym    = SDLK_BACKQUOTE;
   key_ascend.sym     = SDLK_LESS;
   key_descend.sym    = SDLK_GREATER;
-  music_volume       = {MIX_MAX_VOLUME / 3};
+  music_volume       = {MIX_MAX_VOLUME / 2};
   sdl_delay          = 1;
-  sound_volume       = {MIX_MAX_VOLUME / 2};
+  sound_volume       = {MIX_MAX_VOLUME};
 
   key_unused1.sym = SDLK_TAB;
 }

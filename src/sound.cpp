@@ -29,9 +29,9 @@ public:
   float          volume {};
 };
 
-std::map< std::string, class sound * > all_sound;
+static std::unordered_map< std::string, class sound * > all_sound;
 
-bool sound_init_done;
+static bool sound_init_done;
 
 bool sound_init(void)
 {
@@ -172,6 +172,41 @@ bool sound_play(Gamep g, const std::string &alias)
       ERR("Cannot play sound %s: %s", alias.c_str(), Mix_GetError());
       SDL_ClearError();
     }
+  }
+
+  return true;
+}
+
+bool sound_play_optional(Gamep g, const std::string &alias)
+{
+  TRACE_NO_INDENT();
+
+  DBG2("Play sound %s", alias.c_str());
+
+  auto sound = all_sound.find(alias);
+  if (sound == all_sound.end()) {
+    ERR("Cannot find sound %s", alias.c_str());
+    return false;
+  }
+
+  if (! sound->second) {
+    ERR("Cannot find sound data %s", alias.c_str());
+    return false;
+  }
+
+  float volume = sound->second->volume * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
+
+  volume *= MIX_MAX_VOLUME;
+
+  if (! sound->second->chunk) {
+    ERR("Cannot find sound chunk %s", alias.c_str());
+    return false;
+  }
+
+  Mix_VolumeChunk(sound->second->chunk, (int) volume);
+
+  if (Mix_PlayChannel(-1 /* first free channel */, sound->second->chunk, 0 /* loops */) == -1) {
+    DBG2("Cannot play sound %s on any channel", alias.c_str());
   }
 
   return true;

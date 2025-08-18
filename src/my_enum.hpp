@@ -60,7 +60,7 @@
     return (arr[ val ]);                                                                                             \
   }                                                                                                                  \
                                                                                                                      \
-  static std::map< std::string, uint32_t > enum_name##_tree;                                                         \
+  static std::unordered_map< std::string, uint32_t > enum_name##_tree;                                               \
                                                                                                                      \
   /*                                                                                                                 \
    * String to enum.                                                                                                 \

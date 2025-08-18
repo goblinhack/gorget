@@ -59,7 +59,7 @@ public:
 
 using Testidmap = std::vector< class Test * >;
 
-static std::map< std::string, class Test * > test_name_map;
+static std::unordered_map< std::string, class Test * > test_name_map;
 
 static uint8_t test_init_done;
 

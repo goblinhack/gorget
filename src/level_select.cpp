@@ -602,7 +602,7 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 // Show a sorted list of vales
 //
 static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp parent,
-                                           std::map< std::string, int > map_in, std::string map_name, int width,
+                                           std::map< std::string, int > &map_in, std::string map_name, int width,
                                            int x_at, int y_at)
 {
   TRACE_NO_INDENT();

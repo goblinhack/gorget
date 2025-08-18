@@ -633,16 +633,9 @@ void flush_the_console(Gamep g)
   // Easier to see progress on windows where there is no console
   //
   if (g_opt_debug1) {
-    TRACE_NO_INDENT();
     wid_visible(g, wid_console_window);
-
-    TRACE_NO_INDENT();
     wid_raise(g, wid_console_window);
-
-    TRACE_NO_INDENT();
     wid_update(g, wid_console_window);
-
-    TRACE_NO_INDENT();
     sdl_flush_display(g, true);
   }
 }
@@ -939,18 +932,15 @@ int main(int argc, char *argv[])
     }
     if (! sound_init()) {
       ERR("Sound init");
+    } else {
+      sounds_init();
     }
-    sound_load(0.5, "data/sounds/interface/click2.wav", "click");
-    sound_load(0.5, "data/sounds/interface/error.wav", "error");
-    sound_load(0.5, "data/sounds/interface/keypress.wav", "keypress");
     flush_the_console(g);
   }
 
   {
     TRACE_NO_INDENT();
     find_file_locations();
-
-    TRACE_NO_INDENT();
     flush_the_console(g);
   }
 
@@ -1067,11 +1057,5 @@ int main(int argc, char *argv[])
   cleanup();
 
   CON("Goodbye my friend and take care until next time!");
-  return 0;
-}
-
-int testxxx(void)
-{
-  TRACE_NO_INDENT();
   return 0;
 }

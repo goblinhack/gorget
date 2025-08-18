@@ -6,6 +6,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_sound.hpp"
 
 Thingp thing_player(Gamep g)
 {
@@ -75,6 +76,8 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
       level_tick_begin_requested(g, v, l, "player bumped into obstacle");
     }
   }
+
+  sound_play(g, "footstep");
 
   player_move_reset(g, v, l);
 }
