@@ -51,3 +51,4 @@ src/ramdisk_data_9.S
 src/ramdisk_data.cpp
 build/Makefile.template
 build/Makefile
+gorget.dSYM/
