@@ -27,7 +27,7 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE_NO_INDENT();
 
   if (level_is_water(g, v, l, me->at)) {
-    sound_play(g, "splash1");
+    sound_play(g, "splash");
   } else {
     sound_play(g, "footstep");
   }

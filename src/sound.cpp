@@ -35,6 +35,13 @@ static bool sound_init_done;
 
 static std::unordered_map< int, std::string > already_playing;
 
+static void sound_finished(int channel)
+{
+  if (channel != -1) {
+    already_playing[ channel ] = "";
+  }
+}
+
 bool sound_init(void)
 {
   TRACE_NO_INDENT();
@@ -136,13 +143,6 @@ bool sound_find(const std::string &alias)
   TRACE_NO_INDENT();
   auto result = all_sound.find(alias);
   return result != all_sound.end();
-}
-
-static void sound_finished(int channel)
-{
-  if (channel != -1) {
-    already_playing[ channel ] = "";
-  }
 }
 
 static int sound_play_internal(Game *g, int channel, class sound *s)
