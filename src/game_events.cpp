@@ -355,7 +355,7 @@ bool game_event_quit(Gamep g)
 uint8_t game_input(Gamep g, const SDL_Keysym *key)
 {
   LOG("Pressed a key");
-  TRACE_NO_INDENT();
+  TRACE_AND_INDENT();
 
   if (! g) {
     DBG("Pressed a key; no game");
@@ -439,6 +439,19 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     return true;
   }
 
+  if (sdlk_eq(*key, game_key_move_up_get(g))) {
+    return false;
+  }
+  if (sdlk_eq(*key, game_key_move_down_get(g))) {
+    return false;
+  }
+  if (sdlk_eq(*key, game_key_move_left_get(g))) {
+    return false;
+  }
+  if (sdlk_eq(*key, game_key_move_right_get(g))) {
+    return false;
+  }
+
   switch (key->mod) {
     case KMOD_LCTRL :
     case KMOD_RCTRL :
@@ -446,7 +459,6 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case '0' :
@@ -488,22 +500,7 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
               case '?' :
               case '-' :
               case '+' :
-              case '=' :
-
-                if (sdlk_eq(*key, game_key_move_up_get(g))) {
-                  return false;
-                }
-                if (sdlk_eq(*key, game_key_move_down_get(g))) {
-                  return false;
-                }
-                if (sdlk_eq(*key, game_key_move_left_get(g))) {
-                  return false;
-                }
-                if (sdlk_eq(*key, game_key_move_right_get(g))) {
-                  return false;
-                }
-
-                game_event_help(g);
+              case '=' : game_event_help(g);
             }
           }
       }

@@ -5,6 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_wid_popup.hpp"
@@ -21,7 +22,8 @@ static void wid_warning_destroy(void)
 
 static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
-  TRACE_NO_INDENT();
+  DBG("Key press for wid warning");
+  TRACE_AND_INDENT();
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
     sound_play(g, "keypress");
@@ -37,11 +39,11 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       switch (key->sym) {
         default :
           {
-            TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
               case 'y' :
               case 'Y' :
+                DBG("Wid warning: yes");
                 if (callback) {
                   sound_play(g, "keypress");
                   (callback)(g, true);
@@ -49,18 +51,20 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
                 break;
               case 'n' :
               case 'N' :
+                DBG("Wid warning: no");
                 if (callback) {
                   sound_play(g, "keypress");
                   (callback)(g, true);
                 }
+                wid_warning_destroy();
                 break;
               case '\n' :
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 {
-                  TRACE_NO_INDENT();
                   if (callback) {
+                    DBG("Wid warning: default, no");
                     sound_play(g, "keypress");
                     (callback)(g, false);
                   }
@@ -72,16 +76,14 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
       }
   }
 
-  if (callback) {
-    (callback)(g, false);
-  }
-
   return true;
 }
 
 static bool wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_NO_INDENT();
+  DBG("Wid warning: yes");
+  TRACE_AND_INDENT();
+
   wid_warning_callback_t callback = (wid_warning_callback_t) wid_get_void_context(w);
   if (callback) {
     (callback)(g, true);
@@ -92,7 +94,9 @@ static bool wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 
 static bool wid_warning_no(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  TRACE_NO_INDENT();
+  DBG("Wid warning: no");
+  TRACE_AND_INDENT();
+
   wid_warning_callback_t callback = (wid_warning_callback_t) wid_get_void_context(w);
   if (callback) {
     (callback)(g, false);
