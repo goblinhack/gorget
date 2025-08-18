@@ -104,6 +104,9 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
     //
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
+        //
+        // But we still can't walk through walls to get out of the hazard
+        //
         if (level_is_cursor_path_blocker(g, v, l, spoint(x, y))) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
         } else {
@@ -130,6 +133,14 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           for (auto x = minx; x < maxx; x++) {
             spoint p(x, y);
 
+            //
+            // But we still can't walk through walls to get to the hazard
+            //
+            if (level_is_cursor_path_blocker(g, v, l, p)) {
+              d.val[ x ][ y ] = DMAP_IS_WALL;
+              continue;
+            }
+
             if (level_is_cursor_path_hazard(g, v, l, p)) {
               if (! level_flag(g, v, l, i, p)) {
                 d.val[ x ][ y ] = DMAP_IS_WALL;
@@ -144,10 +155,11 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       }
     }
 
+    //
+    // There is a hazard on the cursor path. Default to the normal path to play safe
+    // and avoid more hazards.
+    //
     if (! got_one) {
-      //
-      // Plough through all hazards? This is probably not good. Let's play safe.
-      //
       for (auto y = miny; y < maxy; y++) {
         for (auto x = minx; x < maxx; x++) {
           spoint p(x, y);
@@ -206,18 +218,32 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         //  @.X
         //
         if (distance(p, player->at) <= 2) {
+
+          //
+          // Shortcuts cannot go through walls
+          //
+          if (level_is_cursor_path_blocker(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+            d.val[ x ][ y ] = DMAP_IS_WALL;
+            continue;
+          }
+
+          //
+          // Probably best to not use tiles where there is a monster for a shortcut
+          //
+          if (level_is_monst(g, v, l, p)) {
+            d.val[ x ][ y ] = DMAP_IS_WALL;
+            continue;
+          }
+
+          //
+          // Allow the shortcut
+          //
           continue;
         }
 
         if (! l->is_walked[ x ][ y ]) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
-        }
-
-        //
-        // Probably best to not use tiles where there is a monster
-        //
-        if (level_is_monst(g, v, l, p)) {
-          d.val[ x ][ y ] = DMAP_IS_WALL;
+          continue;
         }
       }
     }
