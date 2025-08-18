@@ -33,14 +33,7 @@ static std::unordered_map< std::string, class sound * > all_sound;
 
 static bool sound_init_done;
 
-static std::unordered_map< int, std::string > playing;
-
-static void sound_finished(int channel)
-{
-  if (channel != -1) {
-    playing[ channel ] = "";
-  }
-}
+static std::unordered_map< int, std::string > already_playing;
 
 bool sound_init(void)
 {
@@ -145,6 +138,13 @@ bool sound_find(const std::string &alias)
   return result != all_sound.end();
 }
 
+static void sound_finished(int channel)
+{
+  if (channel != -1) {
+    already_playing[ channel ] = "";
+  }
+}
+
 static int sound_play_internal(Game *g, int channel, class sound *s)
 {
   TRACE_NO_INDENT();
@@ -163,7 +163,7 @@ static int sound_play_internal(Game *g, int channel, class sound *s)
     return chan;
   }
 
-  playing[ chan ] = s->alias;
+  already_playing[ chan ] = s->alias;
   return chan;
 }
 
@@ -187,7 +187,7 @@ bool sound_play(Gamep g, const std::string &alias)
   //
   // Playing already?
   //
-  for (auto p : playing) {
+  for (auto p : already_playing) {
     if (p.second == alias) {
       return false;
     }
