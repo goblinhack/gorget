@@ -376,6 +376,26 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_moving = val;
 }
 
+bool thing_is_jumping(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_jumping;
+}
+
+void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+  t->_is_jumping = val;
+}
+
 bool thing_is_animated_can_hflip(Thingp t)
 {
   TRACE_NO_INDENT();

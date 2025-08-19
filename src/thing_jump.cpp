@@ -38,7 +38,7 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   t->old_at      = t->at;
   t->moving_from = t->at;
   t->at          = to;
-  thing_is_moving_set(g, v, l, t);
+  thing_is_jumping_set(g, v, l, t);
 
   thing_push(g, v, l, t);
 

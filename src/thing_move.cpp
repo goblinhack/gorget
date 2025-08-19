@@ -333,6 +333,7 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   t->moving_from = t->at;
   thing_is_moving_set(g, v, l, t, false);
+  thing_is_jumping_set(g, v, l, t, false);
 }
 
 //
@@ -406,30 +407,6 @@ bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoin
   }
 
   return true;
-}
-
-//
-// For things moving between tiles, calculate the pixel they are at based on the timestep
-//
-void thing_interpolate(Gamep g, Thingp t, float dt)
-{
-  TRACE_NO_INDENT();
-
-  if (0) {
-    if (thing_is_player(t)) {
-      THING_TOPCON(t, "from %d,%d to %d,%d dt %f", t->moving_from.x, t->moving_from.y, t->at.x, t->at.y, dt);
-    }
-  }
-
-  if (t->moving_from == t->at) {
-    return;
-  }
-
-  float pix_x = (float) t->moving_from.x + (((float) (t->at.x - t->moving_from.x)) * dt);
-  float pix_y = (float) t->moving_from.y + (((float) (t->at.y - t->moving_from.y)) * dt);
-
-  t->pix_at.x = (int) (pix_x * INNER_TILE_WIDTH);
-  t->pix_at.y = (int) (pix_y * INNER_TILE_HEIGHT);
 }
 
 //

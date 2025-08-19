@@ -282,7 +282,7 @@ typedef struct Levels_ {
   //
   // Ensure things have finished their move before ending the tick
   //
-  uint8_t tick_wait_on_moving_things : 1;
+  uint8_t tick_wait_on_things : 1;
   //
   // Player has moved.
   //

@@ -60,9 +60,7 @@ bool tile_is_cleanup_on_end_of_anim(Tilep);
 void tile_is_cleanup_on_end_of_anim_set(Tilep);
 bool tile_is_dead(Tilep);
 bool tile_is_end_of_anim(Tilep);
-bool tile_is_moving(Tilep);
 bool tile_is_open(Tilep);
-bool tile_is_resurrecting(Tilep);
 bool tile_is_loggable(Tilep);
 
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br);

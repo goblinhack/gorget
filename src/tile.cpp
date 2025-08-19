@@ -90,9 +90,7 @@ public:
   bool is_alive_on_end_of_anim   : 1 {};
   bool is_cleanup_on_end_of_anim : 1 {};
   bool is_end_of_anim            : 1 {};
-  bool is_moving                 : 1 {};
   bool is_outline                : 1 {};
-  bool is_resurrecting           : 1 {};
   bool is_loggable               : 1 {};
 
 private:
@@ -175,7 +173,6 @@ Tile::Tile(const class Tile *tile)
 
   delay_ms                  = tile->delay_ms;
   dir                       = tile->dir;
-  is_moving                 = tile->is_moving;
   is_loggable               = tile->is_loggable;
   is_end_of_anim            = tile->is_end_of_anim;
   is_cleanup_on_end_of_anim = tile->is_cleanup_on_end_of_anim;
@@ -845,12 +842,6 @@ void tile_global_index_set(Tilep t, uint32_t val)
   t->global_index = val;
 }
 
-bool tile_is_moving(Tilep t)
-{
-  TRACE_NO_INDENT();
-  return t->is_moving ? true : false;
-}
-
 bool tile_is_loggable(Tilep t)
 {
   TRACE_NO_INDENT();
@@ -885,12 +876,6 @@ void tile_is_alive_on_end_of_anim_set(Tilep t)
 {
   TRACE_NO_INDENT();
   t->is_alive_on_end_of_anim = true;
-}
-
-bool tile_is_resurrecting(Tilep t)
-{
-  TRACE_NO_INDENT();
-  return t->is_resurrecting ? true : false;
 }
 
 int Tile::gl_binding(void) const

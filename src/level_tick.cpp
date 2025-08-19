@@ -51,8 +51,8 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  v->tick_wait_on_moving_things = false;
-  v->tick_wait_on_anim          = false;
+  v->tick_wait_on_things = false;
+  v->tick_wait_on_anim   = false;
 
   //
   // The player has died and the dead menu has been closed
@@ -69,8 +69,8 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     // run temperature checks. Else it looks odd that it catches fire before it reaches
     // the lava.
     //
-    if (thing_is_moving(t) || thing_is_falling(t)) {
-      v->tick_wait_on_moving_things = true;
+    if (thing_is_moving(t) || thing_is_jumping(t) || thing_is_falling(t)) {
+      v->tick_wait_on_things = true;
     }
 
     //
@@ -151,7 +151,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   // If things are no longer moving and we have requested the end of the tick, then we can check
   // for temperature interactions.
   //
-  if (v->tick_end_requested && (v->tick != v->tick_temperature) && ! v->tick_wait_on_moving_things) {
+  if (v->tick_end_requested && (v->tick != v->tick_temperature) && ! v->tick_wait_on_things) {
     //
     // Only do this once per tick
     //
@@ -172,7 +172,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   //
   // Are we done with all checks and ok to end the tick which will trigger thing cleanup.
   //
-  if (v->tick_end_requested && ! v->tick_wait_on_moving_things && ! v->tick_wait_on_anim) {
+  if (v->tick_end_requested && ! v->tick_wait_on_things && ! v->tick_wait_on_anim) {
     level_tick_end(g, v, l);
   }
 
@@ -236,24 +236,24 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     // speed 100  tick           tick
     // speed 50   tick
     //
-    if (! thing_is_moving(t)) {
+    if (! thing_is_moving(t) && ! thing_is_jumping(t)) {
       continue;
     }
 
-    t->thing_dt += dt * ((float) thing_speed(t) / (float) player_speed);
+    float t_speed = thing_speed(t);
+
+    t->thing_dt += dt * (t_speed / (float) player_speed);
 
     if (t->thing_dt >= 1.0) {
       t->thing_dt = 1.0;
     }
 
     if (0) {
-      if (thing_is_mob(t)) {
-        THING_CON(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
-      }
       if (thing_is_player(t)) {
         THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
       }
     }
+
     thing_interpolate(g, t, t->thing_dt);
 
     //

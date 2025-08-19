@@ -20,7 +20,7 @@
 #define MAP_ZOOM_DEF               2
 #define MAP_SCROLL_BORDER          0.5
 #define MAP_SCROLL_SPEED           50
-#define TICK_DURATION_MS           50
+#define TICK_DURATION_MS           100
 #define POPUP_DURATION_MS          2000
 #define POPUP_TEXT_SCALE           3
 #define POPUP_DURATION_TILE_HEIGHT 5

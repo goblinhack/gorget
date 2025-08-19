@@ -248,6 +248,10 @@ typedef struct Thing_ {
   // Currently moving between tiles. The thing is already at the destination.
   //
   bool _is_moving : 1;
+  //
+  // Currently jumping between tiles. The thing is already at the destination.
+  //
+  bool _is_jumping : 1;
 } Thing;
 
 Tpp thing_tp(Thingp);
@@ -353,6 +357,9 @@ void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_moving(Thingp);
 void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+
+bool thing_is_jumping(Thingp);
+void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 int thing_speed(Thingp);
 int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);

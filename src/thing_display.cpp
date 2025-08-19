@@ -74,6 +74,12 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
     tl->y -= (pix_height - dh) / 2;
   }
 
+  if (t && thing_is_jumping(t)) {
+    auto jump_height = (int) ((sin(M_PI * t->thing_dt)) * (float) dh);
+    tl->y -= jump_height;
+    br->y -= jump_height;
+  }
+
   //
   // Update the br coords if we changed the position
   //
