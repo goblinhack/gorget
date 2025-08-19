@@ -175,7 +175,9 @@ bool sound_play(Gamep g, const std::string &alias)
 
   auto sound = all_sound.find(alias);
   if (sound == all_sound.end()) {
-    ERR("Cannot find sound %s", alias.c_str());
+    if (! g_opt_tests) {
+      ERR("Cannot find sound %s", alias.c_str());
+    }
     return false;
   }
 
