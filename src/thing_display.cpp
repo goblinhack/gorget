@@ -8,6 +8,7 @@
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
+#include "my_math.hpp"
 #include "my_string.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
@@ -75,7 +76,7 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
   }
 
   if (t && thing_is_jumping(t)) {
-    auto jump_height = (int) ((sin(M_PI * t->thing_dt)) * (float) dh);
+    auto jump_height = (int) ((sin(PI * t->thing_dt)) * (float) dh);
     tl->y -= jump_height;
     br->y -= jump_height;
   }
