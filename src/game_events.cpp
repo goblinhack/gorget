@@ -340,7 +340,7 @@ bool game_event_jump(Gamep g)
     return false;
   }
 
-  // TODO
+  player_jump(g, v, l, player);
   return true;
 }
 

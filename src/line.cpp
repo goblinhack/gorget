@@ -2,12 +2,13 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_line.hpp"
 #include "my_spoint.hpp"
 
 #include <math.h>
 #include <vector>
 
-std::vector< spoint > line(const spoint s, const spoint e, size_t max_elems)
+std::vector< spoint > draw_line(const spoint s, const spoint e, size_t max_elems)
 {
   std::vector< spoint > out;
 

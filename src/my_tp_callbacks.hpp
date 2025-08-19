@@ -34,6 +34,10 @@ typedef void (*tp_on_moved_t)(Gamep, Levelsp, Levelp, Thingp me);
 void tp_on_moved_set(Tpp, tp_on_moved_t);
 void tp_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me);
 
+typedef void (*tp_on_jumped_t)(Gamep, Levelsp, Levelp, Thingp me);
+void tp_on_jumped_set(Tpp, tp_on_jumped_t);
+void tp_on_jumped(Gamep g, Levelsp v, Levelp l, Thingp me);
+
 typedef void (*tp_on_shoved_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp shover);
 void tp_on_shoved_set(Tpp, tp_on_shoved_t);
 void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover);

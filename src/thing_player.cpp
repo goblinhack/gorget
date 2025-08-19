@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_line.hpp"
 #include "my_main.hpp"
 
 Thingp thing_player(Gamep g)
@@ -281,6 +282,29 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
           return;
         }
       }
+    }
+  }
+}
+
+//
+// Handle player jumping
+//
+void player_jump(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
+    return;
+  }
+
+  auto jump_path = draw_line(t->at, v->cursor_at, thing_jump_distance(t) + 1);
+
+  for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {
+    spoint to = *i;
+    if (thing_jump_to(g, v, l, t, to)) {
+      level_tick_begin_requested(g, v, l, "player jumped");
+      return;
     }
   }
 }

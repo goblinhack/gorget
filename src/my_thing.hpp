@@ -308,14 +308,16 @@ void player_reached_exit(Gamep, Levelsp, Levelp, Thingp);
 void player_reached_entrance(Gamep, Levelsp, Levelp, Thingp);
 void player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
 void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
+void player_jump(Gamep, Levelsp, Levelp, Thingp);
 bool player_move_request(Gamep, bool up, bool down, bool left, bool right);
 
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
-bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp t);
+bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 bool thing_is_dir_down(Thingp);
 bool thing_is_dir_tr(Thingp);
 bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_is_dir_tl(Thingp);
