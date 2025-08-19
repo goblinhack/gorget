@@ -2,15 +2,16 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "../../my_callstack.hpp"
-#include "../../my_level.hpp"
-#include "../../my_sound.hpp"
-#include "../../my_thing.hpp"
-#include "../../my_tile.hpp"
-#include "../../my_tp.hpp"
-#include "../../my_tp_callbacks.hpp"
-#include "../../my_tps.hpp"
-#include "../../my_types.hpp"
+#include "my_callstack.hpp"
+#include "my_game_popups.hpp"
+#include "my_level.hpp"
+#include "my_sound.hpp"
+#include "my_thing.hpp"
+#include "my_tile.hpp"
+#include "my_tp.hpp"
+#include "my_tp_callbacks.hpp"
+#include "my_tps.hpp"
+#include "my_types.hpp"
 
 static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
@@ -31,6 +32,19 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   } else {
     sound_play(g, "footstep");
   }
+}
+
+static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+
+  if (level_is_water(g, v, l, me->at)) {
+    sound_play(g, "splash");
+  } else {
+    sound_play(g, "footstep");
+  }
+
+  game_popup_text_add(g, me->at.x, me->at.y, std::string("Oof!"));
 }
 
 bool tp_load_player(void)
@@ -59,6 +73,7 @@ bool tp_load_player(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
   tp_on_moved_set(tp, tp_player_on_moved);
+  tp_on_jump_end_set(tp, tp_player_on_jump_end);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius

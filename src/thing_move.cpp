@@ -3,7 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
@@ -333,10 +332,8 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   t->moving_from = t->at;
 
-  if (thing_is_player(t)) {
-    if (thing_is_jumping(t)) {
-      game_popup_text_add(g, t->at.x, t->at.y, std::string("Oof!"));
-    }
+  if (thing_is_jumping(t)) {
+    tp_on_jump_end(g, v, l, t);
   }
 
   thing_is_moving_set(g, v, l, t, false);

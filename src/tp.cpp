@@ -245,7 +245,8 @@ public:
   tp_tick_end_t        tick_end        = {};
   tp_on_death_t        on_death        = {};
   tp_on_moved_t        on_moved        = {};
-  tp_on_jumped_t       on_jumped       = {};
+  tp_on_jump_end_t     on_jump_end     = {};
+  tp_on_jump_begin_t   on_jump_begin   = {};
   tp_on_shoved_t       on_shoved       = {};
   tp_on_over_chasm_t   on_over_chasm   = {};
 
@@ -1198,17 +1199,17 @@ void tp_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->on_moved(g, v, l, me);
 }
 
-void tp_on_jumped_set(Tpp tp, tp_on_jumped_t callback)
+void tp_on_jump_begin_set(Tpp tp, tp_on_jump_begin_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->on_jumped = callback;
+  tp->on_jump_begin = callback;
 }
 
-void tp_on_jumped(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_on_jump_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1216,10 +1217,34 @@ void tp_on_jumped(Gamep g, Levelsp v, Levelp l, Thingp me)
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  if (! tp->on_jumped) {
+  if (! tp->on_jump_begin) {
     return;
   }
-  return tp->on_jumped(g, v, l, me);
+  return tp->on_jump_begin(g, v, l, me);
+}
+
+void tp_on_jump_end_set(Tpp tp, tp_on_jump_end_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->on_jump_end = callback;
+}
+
+void tp_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->on_jump_end) {
+    return;
+  }
+  return tp->on_jump_end(g, v, l, me);
 }
 
 void tp_on_shoved_set(Tpp tp, tp_on_shoved_t callback)

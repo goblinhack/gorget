@@ -42,7 +42,7 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 
   thing_push(g, v, l, t);
 
-  tp_on_jumped(g, v, l, t);
+  tp_on_jump_begin(g, v, l, t);
 
   return true;
 }

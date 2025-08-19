@@ -2,12 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "../../my_callstack.hpp"
-#include "../../my_tile.hpp"
-#include "../../my_tp.hpp"
-#include "../../my_tp_callbacks.hpp"
-#include "../../my_tps.hpp"
-#include "../../my_types.hpp"
+#include "my_callstack.hpp"
+#include "my_tile.hpp"
+#include "my_tp.hpp"
+#include "my_tp_callbacks.hpp"
+#include "my_tps.hpp"
+#include "my_types.hpp"
 
 bool tp_load_explosion(void)
 {
