@@ -729,10 +729,10 @@ void config_game_gfx_update(Gamep g)
   int zoom = game_map_zoom_get(g);
   if (zoom == 0) {
     game_map_zoom_set(g, game_map_zoom_def_get(g));
+    zoom = game_map_zoom_get(g);
   }
 
-  zoom = game_map_zoom_get(g);
-  if (zoom == 1) {
+  if (game_map_zoom_is_full_map_visible(g)) {
     //
     // Zoomed out to see the entire map
     //

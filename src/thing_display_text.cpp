@@ -149,6 +149,13 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
       tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, BLACK, single_pix_size, true);
     } else {
       tile_blit(tile, tl, br, fg);
+
+      //
+      // Text seems a bit skinny
+      //
+      if (single_pix_size > 1) {
+        tile_blit(tile, tl + spoint(1, 0), br + spoint(1, 0), fg);
+      }
     }
 
     tl.x += w;

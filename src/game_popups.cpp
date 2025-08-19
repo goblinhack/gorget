@@ -10,7 +10,7 @@
 #include "my_main.hpp"
 #include "my_time.hpp"
 
-void game_popup_text_add(Gamep g, int x, int y, std::string &text, color c)
+void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c)
 {
   TRACE_NO_INDENT();
 
@@ -131,9 +131,15 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
           br.y -= tile_height / 2;
         }
 
-        blit_init();
-        thing_blit_text(g, v, l, tl, br, i.text, bg, true /* outline */);
-        blit_flush();
+        //
+        // Disable outlines when zoomed out
+        //
+        if (! game_map_zoom_is_full_map_visible(g)) {
+          blit_init();
+          thing_blit_text(g, v, l, tl, br, i.text, bg, true /* outline */);
+          blit_flush();
+        }
+
         blit_init();
         thing_blit_text(g, v, l, tl, br, i.text, fg, false /* outline */);
         blit_flush();

@@ -332,6 +332,13 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   t->moving_from = t->at;
+
+  if (thing_is_player(t)) {
+    if (thing_is_jumping(t)) {
+      game_popup_text_add(g, t->at.x, t->at.y, std::string("Oof!"));
+    }
+  }
+
   thing_is_moving_set(g, v, l, t, false);
   thing_is_jumping_set(g, v, l, t, false);
 }

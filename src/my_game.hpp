@@ -260,6 +260,7 @@ bool     game_event_wait(Gamep);
 int      game_map_single_pix_size_get(Gamep);
 int      game_map_zoom_def_get(Gamep);
 int      game_map_zoom_get(Gamep);
+bool     game_map_zoom_is_full_map_visible(Gamep);
 Levelsp  game_test_init(Gamep, Levelp *, LevelNum, int w, int h, const char *contents);
 void     game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, int w, int h, const char *contents);
 uint8_t  game_input(Gamep, const SDL_Keysym *key);

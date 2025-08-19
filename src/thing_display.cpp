@@ -135,8 +135,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, sp
   //
   // Disable outlines when zoomed out
   //
-  int zoom = game_map_zoom_get(g);
-  if (zoom == 1) {
+  if (game_map_zoom_is_full_map_visible(g)) {
     single_pix_size = 0;
   }
 

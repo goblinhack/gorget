@@ -2360,6 +2360,15 @@ void game_map_zoom_set(Gamep g, int val)
   }
   g->zoom = val;
 }
+bool game_map_zoom_is_full_map_visible(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return false;
+  }
+  return g->zoom == 1;
+}
 
 int game_map_zoom_def_get(Gamep g)
 {
