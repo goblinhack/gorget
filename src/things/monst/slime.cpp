@@ -28,6 +28,7 @@ bool tp_load_slime(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
   tp_description_set(tp, tp_slime_description_get);
+  tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -44,6 +45,7 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, "1d10+4");
+  tp_jump_distance_set(tp, 3);
   tp_long_name_set(tp, name);
   tp_monst_group_add(tp, MONST_GROUP_2);
   tp_speed_set(tp, 100);

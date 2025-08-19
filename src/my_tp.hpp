@@ -17,6 +17,7 @@
 //
 #define THING_FLAG_ENUM(list_macro)                                                                                  \
   clang_format_indent()                                                 /* dummy line for clang indentation fixup */ \
+      list_macro(is_able_to_jump, "is_able_to_jump"),                   /* newline */                                \
       list_macro(is_able_to_shove, "is_able_to_shove"),                 /* newline */                                \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),       /* newline */                                \
       list_macro(is_animated_no_dir, "is_animated_no_dir"),             /* newline */                                \
@@ -55,6 +56,7 @@
       list_macro(is_fire, "is_fire"),                                   /* newline */                                \
       list_macro(is_floating, "is_floating"),                           /* newline */                                \
       list_macro(is_floor, "is_floor"),                                 /* newline */                                \
+      list_macro(is_flying, "is_flying"),                               /* newline */                                \
       list_macro(is_foliage, "is_foliage"),                             /* newline */                                \
       list_macro(is_gaseous, "is_gaseous"),                             /* newline */                                \
       list_macro(is_ghost, "is_ghost"),                                 /* newline */                                \
@@ -123,10 +125,8 @@
       list_macro(is_unused25, "is_unused25"),                           /* newline */                                \
       list_macro(is_unused26, "is_unused26"),                           /* newline */                                \
       list_macro(is_unused27, "is_unused27"),                           /* newline */                                \
-      list_macro(is_unused28, "is_unused28"),                           /* newline */                                \
-      list_macro(is_unused29, "is_unused29"),                           /* newline */                                \
+      list_macro(is_cursor_path_none, "is_cursor_path_none"),                           /* newline */                                \
       list_macro(is_unused3, "is_unused3"),                             /* newline */                                \
-      list_macro(is_flying, "is_flying"),                               /* newline */                                \
       list_macro(is_unused4, "is_unused4"),                             /* newline */                                \
       list_macro(is_unused5, "is_unused5"),                             /* newline */                                \
       list_macro(is_unused6, "is_unused6"),                             /* newline */                                \
@@ -473,8 +473,8 @@ int  tp_value27_get(Tpp tp);
 void tp_value28_set(Tpp, int val);
 int  tp_value28_get(Tpp tp);
 
-void tp_value29_set(Tpp, int val);
-int  tp_value29_get(Tpp tp);
+void tp_jump_distance_set(Tpp, int val);
+int  tp_jump_distance_get(Tpp tp);
 
 void tp_lifespan_set(Tpp, const std::string &val);
 int  tp_lifespan_get(Tpp tp);
@@ -485,6 +485,7 @@ bool tp_is_immune_to(Tpp, ThingEventType);
 void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 
 // begin sort marker1 {
+#define tp_is_able_to_jump(tp)           tp_flag(tp, is_able_to_jump)
 #define tp_is_able_to_shove(tp)          tp_flag(tp, is_able_to_shove)
 #define tp_is_animated_can_hflip(tp)     tp_flag(tp, is_animated_can_hflip)
 #define tp_is_animated_no_dir(tp)        tp_flag(tp, is_animated_no_dir)
@@ -592,8 +593,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused25(tp)               tp_flag(tp, is_unused25)
 #define tp_is_unused26(tp)               tp_flag(tp, is_unused26)
 #define tp_is_unused27(tp)               tp_flag(tp, is_unused27)
-#define tp_is_unused28(tp)               tp_flag(tp, is_unused28)
-#define tp_is_unused29(tp)               tp_flag(tp, is_unused29)
+#define tp_is_cursor_path_none(tp)               tp_flag(tp, is_cursor_path_none)
 #define tp_is_unused3(tp)                tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)                tp_flag(tp, is_unused4)
 #define tp_is_unused5(tp)                tp_flag(tp, is_unused5)
@@ -608,6 +608,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 // end sort marker1 }
 
 // begin sort marker3 {
+#define level_is_able_to_jump(g, v, l, p)           level_flag(g, v, l, is_able_to_jump, p)
 #define level_is_able_to_shove(g, v, l, p)          level_flag(g, v, l, is_able_to_shove, p)
 #define level_is_animated_can_hflip(g, v, l, p)     level_flag(g, v, l, is_animated_can_hflip, p)
 #define level_is_animated_no_dir(g, v, l, p)        level_flag(g, v, l, is_animated_no_dir, p)
@@ -715,8 +716,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused25(g, v, l, p)               level_flag(g, v, l, is_unused25, p)
 #define level_is_unused26(g, v, l, p)               level_flag(g, v, l, is_unused26, p)
 #define level_is_unused27(g, v, l, p)               level_flag(g, v, l, is_unused27, p)
-#define level_is_unused28(g, v, l, p)               level_flag(g, v, l, is_unused28, p)
-#define level_is_unused29(g, v, l, p)               level_flag(g, v, l, is_unused29, p)
+#define level_is_cursor_path_none(g, v, l, p)               level_flag(g, v, l, is_cursor_path_none, p)
 #define level_is_unused3(g, v, l, p)                level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)                level_flag(g, v, l, is_unused4, p)
 #define level_is_unused5(g, v, l, p)                level_flag(g, v, l, is_unused5, p)
@@ -731,6 +731,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 // end sort marker3 }
 
 // begin sort marker4 {
+#define level_alive_is_able_to_jump(g, v, l, p)           level_alive_flag(g, v, l, is_able_to_jump, p)
 #define level_alive_is_able_to_shove(g, v, l, p)          level_alive_flag(g, v, l, is_able_to_shove, p)
 #define level_alive_is_animated_can_hflip(g, v, l, p)     level_alive_flag(g, v, l, is_animated_can_hflip, p)
 #define level_alive_is_animated_no_dir(g, v, l, p)        level_alive_flag(g, v, l, is_animated_no_dir, p)
@@ -831,8 +832,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused25(g, v, l, p)               level_alive_flag(g, v, l, is_unused25, p)
 #define level_alive_is_unused26(g, v, l, p)               level_alive_flag(g, v, l, is_unused26, p)
 #define level_alive_is_unused27(g, v, l, p)               level_alive_flag(g, v, l, is_unused27, p)
-#define level_alive_is_unused28(g, v, l, p)               level_alive_flag(g, v, l, is_unused28, p)
-#define level_alive_is_unused29(g, v, l, p)               level_alive_flag(g, v, l, is_unused29, p)
+#define level_alive_is_cursor_path_none(g, v, l, p)               level_alive_flag(g, v, l, is_cursor_path_none, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_physics_gravity, p)
 #define level_alive_is_unused35(g, v, l, p)               level_alive_flag(g, v, l, is_physics_water, p)
@@ -852,6 +852,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 // end sort marker4 }
 
 // begin sort marker5 {
+#define level_first_is_able_to_jump(g, v, l, p)           level_first_flag(g, v, l, is_able_to_jump, p)
 #define level_first_is_able_to_shove(g, v, l, p)          level_first_flag(g, v, l, is_able_to_shove, p)
 #define level_first_is_animated_can_hflip(g, v, l, p)     level_first_flag(g, v, l, is_animated_can_hflip, p)
 #define level_first_is_animated_no_dir(g, v, l, p)        level_first_flag(g, v, l, is_animated_no_dir, p)
@@ -952,8 +953,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused25(g, v, l, p)               level_first_flag(g, v, l, is_unused25, p)
 #define level_first_is_unused26(g, v, l, p)               level_first_flag(g, v, l, is_unused26, p)
 #define level_first_is_unused27(g, v, l, p)               level_first_flag(g, v, l, is_unused27, p)
-#define level_first_is_unused28(g, v, l, p)               level_first_flag(g, v, l, is_unused28, p)
-#define level_first_is_unused29(g, v, l, p)               level_first_flag(g, v, l, is_unused29, p)
+#define level_first_is_cursor_path_none(g, v, l, p)               level_first_flag(g, v, l, is_cursor_path_none, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_physics_gravity, p)
 #define level_first_is_unused35(g, v, l, p)               level_first_flag(g, v, l, is_physics_water, p)
@@ -973,6 +973,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 // end sort marker5 }
 
 // begin sort marker6 {
+#define level_count_is_able_to_jump(g, v, l, p)           level_count_flag(g, v, l, is_able_to_jump, p)
 #define level_count_is_able_to_shove(g, v, l, p)          level_count_flag(g, v, l, is_able_to_shove, p)
 #define level_count_is_animated_can_hflip(g, v, l, p)     level_count_flag(g, v, l, is_animated_can_hflip, p)
 #define level_count_is_animated_no_dir(g, v, l, p)        level_count_flag(g, v, l, is_animated_no_dir, p)
@@ -1073,8 +1074,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused25(g, v, l, p)               level_count_flag(g, v, l, is_unused25, p)
 #define level_count_is_unused26(g, v, l, p)               level_count_flag(g, v, l, is_unused26, p)
 #define level_count_is_unused27(g, v, l, p)               level_count_flag(g, v, l, is_unused27, p)
-#define level_count_is_unused28(g, v, l, p)               level_count_flag(g, v, l, is_unused28, p)
-#define level_count_is_unused29(g, v, l, p)               level_count_flag(g, v, l, is_unused29, p)
+#define level_count_is_cursor_path_none(g, v, l, p)               level_count_flag(g, v, l, is_cursor_path_none, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_physics_gravity, p)
 #define level_count_is_unused35(g, v, l, p)               level_count_flag(g, v, l, is_physics_water, p)

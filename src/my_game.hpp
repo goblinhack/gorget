@@ -223,8 +223,8 @@ void       game_key_unused15_set(Gamep, SDL_Keysym);
 SDL_Keysym game_key_unused16_get(Gamep);
 void       game_key_unused16_set(Gamep, SDL_Keysym);
 
-SDL_Keysym game_key_unused17_get(Gamep);
-void       game_key_unused17_set(Gamep, SDL_Keysym);
+SDL_Keysym game_key_jump_get(Gamep);
+void       game_key_jump_set(Gamep, SDL_Keysym);
 
 SDL_Keysym game_key_ascend_get(Gamep);
 void       game_key_ascend_set(Gamep, SDL_Keysym);

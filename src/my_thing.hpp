@@ -175,7 +175,7 @@ typedef struct Thing_ {
   int16_t _value26;
   int16_t _value27;
   int16_t _value28;
-  int16_t _value29;
+  int16_t _jump_distance;
   //
   // Lifespan remaining in ticks
   //
@@ -508,10 +508,10 @@ int thing_value28_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_value28_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_value28_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value29(Thingp);
-int thing_value29_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value29_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value29_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_jump_distance(Thingp);
+int thing_jump_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_jump_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_jump_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_lifespan(Thingp);
 int thing_lifespan_set(Gamep, Levelsp, Levelp, Thingp, int val);
@@ -540,6 +540,7 @@ void thing_get_coords(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spo
 void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);
 
 // begin sort marker1 {
+bool thing_is_able_to_jump(Thingp);
 bool thing_is_able_to_shove(Thingp);
 bool thing_is_animated_can_hflip(Thingp);
 bool thing_is_animated_no_dir(Thingp);
@@ -647,8 +648,7 @@ bool thing_is_unused24(Thingp);
 bool thing_is_unused25(Thingp);
 bool thing_is_unused26(Thingp);
 bool thing_is_unused27(Thingp);
-bool thing_is_unused28(Thingp);
-bool thing_is_unused29(Thingp);
+bool thing_is_cursor_path_none(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused5(Thingp);

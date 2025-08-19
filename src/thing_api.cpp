@@ -1156,24 +1156,24 @@ bool thing_is_unused27(Thingp t)
   return tp_flag(thing_tp(t), is_unused27);
 }
 
-bool thing_is_unused28(Thingp t)
+bool thing_is_cursor_path_none(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused28);
+  return tp_flag(thing_tp(t), is_cursor_path_none);
 }
 
-bool thing_is_unused29(Thingp t)
+bool thing_is_able_to_jump(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused29);
+  return tp_flag(thing_tp(t), is_able_to_jump);
 }
 
 bool thing_is_unused3(Thingp t)
@@ -2668,44 +2668,44 @@ int thing_value28_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value28 -= val;
 }
-int thing_value29(Thingp t)
+int thing_jump_distance(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
-  return t->_value29;
+  return t->_jump_distance;
 }
 
-int thing_value29_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_jump_distance_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
-  return t->_value29 = val;
+  return t->_jump_distance = val;
 }
 
-int thing_value29_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_jump_distance_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
-  return t->_value29 += val;
+  return t->_jump_distance += val;
 }
 
-int thing_value29_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_jump_distance_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
-  return t->_value29 -= val;
+  return t->_jump_distance -= val;
 }
 
 int thing_lifespan(Thingp t)

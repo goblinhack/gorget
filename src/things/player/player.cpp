@@ -41,6 +41,7 @@ bool tp_load_player(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
   tp_description_set(tp, tp_player_description_get);
+  tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_able_to_shove);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
@@ -56,6 +57,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, "100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_jump_distance_set(tp, 3);
   tp_on_moved_set(tp, tp_player_on_moved);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius

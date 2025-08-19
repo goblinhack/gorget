@@ -99,7 +99,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   thing_value26_set(g, v, l, t, tp_value26_get(tp));
   thing_value27_set(g, v, l, t, tp_value27_get(tp));
   thing_value28_set(g, v, l, t, tp_value28_get(tp));
-  thing_value29_set(g, v, l, t, tp_value29_get(tp));
+  thing_jump_distance_set(g, v, l, t, tp_jump_distance_get(tp));
   thing_lifespan_set(g, v, l, t, tp_lifespan_get(tp));
   thing_health_set(g, v, l, t, tp_health_initial_get(tp));
 

@@ -316,6 +316,34 @@ bool game_event_ascend(Gamep g)
   return true;
 }
 
+bool game_event_jump(Gamep g)
+{
+  LOG("Jump");
+  TRACE_AND_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  if (thing_is_dead(player)) {
+    return false;
+  }
+
+  // TODO
+  return true;
+}
+
 bool game_event_help(Gamep g)
 {
   LOG("Help");
@@ -359,6 +387,10 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
 
   if (! g) {
     DBG("Pressed a key; no game");
+    return false;
+  }
+
+  if (game_state(g) != STATE_PLAYING) {
     return false;
   }
 
@@ -436,6 +468,13 @@ uint8_t game_input(Gamep g, const SDL_Keysym *key)
     TRACE_AND_INDENT();
     sound_play(g, "keypress");
     game_event_save(g);
+    return true;
+  }
+
+  if (sdlk_eq(*key, game_key_jump_get(g))) {
+    LOG("Pressed jump key");
+    TRACE_AND_INDENT();
+    game_event_jump(g);
     return true;
   }
 

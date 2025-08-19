@@ -184,7 +184,7 @@ public:
   int value26 {0};
   int value27 {0};
   int value28 {0};
-  int value29 {0};
+  int jump_distance {0};
 
   //
   // Lifespan in ticks. -1 is forever.
@@ -1778,24 +1778,24 @@ int tp_value28_get(Tpp tp)
   }
   return tp->value28;
 }
-void tp_value29_set(Tpp tp, int val)
+void tp_jump_distance_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->value29 = val;
+  tp->jump_distance = val;
 }
 
-int tp_value29_get(Tpp tp)
+int tp_jump_distance_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return 0;
   }
-  return tp->value29;
+  return tp->jump_distance;
 }
 
 void tp_lifespan_set(Tpp tp, const std::string &val)

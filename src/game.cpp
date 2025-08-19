@@ -128,7 +128,7 @@ public:
   SDL_Keysym key_unused14   = {};
   SDL_Keysym key_unused15   = {};
   SDL_Keysym key_unused16   = {};
-  SDL_Keysym key_unused17   = {};
+  SDL_Keysym key_jump       = {};
   SDL_Keysym key_ascend     = {};
   SDL_Keysym key_descend    = {};
   SDL_Keysym key_zoom       = {};
@@ -346,6 +346,7 @@ void Config::reset(void)
   key_console.sym    = SDLK_BACKQUOTE;
   key_ascend.sym     = SDLK_LESS;
   key_descend.sym    = SDLK_GREATER;
+  key_jump.sym       = SDLK_j;
   music_volume       = {MIX_MAX_VOLUME / 2};
   sdl_delay          = 1;
   sound_volume       = {MIX_MAX_VOLUME};
@@ -2270,21 +2271,21 @@ void game_key_unused16_set(Gamep g, SDL_Keysym key)
   g->config.key_unused16 = key;
 }
 
-SDL_Keysym game_key_unused17_get(Gamep g)
+SDL_Keysym game_key_jump_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (! g)
     return no_key;
-  return g->config.key_unused17;
+  return g->config.key_jump;
 }
-void game_key_unused17_set(Gamep g, SDL_Keysym key)
+void game_key_jump_set(Gamep g, SDL_Keysym key)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.key_unused17 = key;
+  g->config.key_jump = key;
 }
 
 SDL_Keysym game_key_ascend_get(Gamep g)
