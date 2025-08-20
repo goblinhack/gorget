@@ -11,7 +11,7 @@
 
 #include <string>
 
-static std::string tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
+static std::string tp_exit_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 

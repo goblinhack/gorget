@@ -146,7 +146,17 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
       float y1;
       float y2;
       tile_coords(tile, &x1, &y1, &x2, &y2);
-      tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, BLACK, single_pix_size, true);
+      if (single_pix_size > 1) {
+        tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, BLACK, single_pix_size, true);
+        tile_blit_outline(tile, x1, x2, y1, y2, tl + spoint(1, 0), br + spoint(1, 0), fg, BLACK, single_pix_size,
+                          true);
+        tile_blit_outline(tile, x1, x2, y1, y2, tl - spoint(1, 0), br - spoint(1, 0), fg, BLACK, single_pix_size,
+                          true);
+        tile_blit_outline(tile, x1, x2, y1, y2, tl + spoint(0, 1), br + spoint(0, 1), fg, BLACK, single_pix_size,
+                          true);
+        tile_blit_outline(tile, x1, x2, y1, y2, tl - spoint(0, 1), br - spoint(0, 1), fg, BLACK, single_pix_size,
+                          true);
+      }
     } else {
       tile_blit(tile, tl, br, fg);
 

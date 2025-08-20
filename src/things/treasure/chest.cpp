@@ -10,14 +10,14 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
+static std::string tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_open(me)) {
+  if (thing_is_open(t)) {
     return "open chest";
   }
-  if (thing_is_dead(me)) {
+  if (thing_is_dead(t)) {
     return "broken chest";
   }
   return "closed chest";

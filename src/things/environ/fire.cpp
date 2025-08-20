@@ -12,21 +12,21 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
+static std::string tp_fire_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   return "brightly burning fire";
 }
 
-static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
+static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   //
   // Don't spawn fire too soon after creation or we get a firestorm
   //
-  if (thing_age(me) <= 1) {
+  if (thing_age(t) <= 1) {
     return;
   }
 
@@ -39,7 +39,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   // Spawn adjacent fire
   //
   for (auto delta : points) {
-    auto p = me->at + delta;
+    auto p = t->at + delta;
 
     //
     // Rock, for example?
@@ -72,33 +72,33 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // Only spawn sometimes
     //
-    if (d100() < 20 + (thing_age(me) * 10)) {
+    if (d100() < 20 + (thing_age(t) * 10)) {
       thing_spawn(g, v, l, tp_random(is_fire), p);
     }
   }
 }
 
-static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
+static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
   //
   // Allow things to continue to burn if we still have some burnable material
   //
-  if (level_alive_is_combustible(g, v, l, me->at)) {
-    if (! level_is_fire(g, v, l, me->at)) {
-      thing_spawn(g, v, l, tp_random(is_fire), me->at);
+  if (level_alive_is_combustible(g, v, l, t->at)) {
+    if (! level_is_fire(g, v, l, t->at)) {
+      thing_spawn(g, v, l, tp_random(is_fire), t->at);
     }
   }
 
-  if (! level_is_smoke(g, v, l, me->at)) {
-    if (level_is_combustible(g, v, l, me->at)) {
-      thing_spawn(g, v, l, tp_random(is_smoke), me->at);
+  if (! level_is_smoke(g, v, l, t->at)) {
+    if (level_is_combustible(g, v, l, t->at)) {
+      thing_spawn(g, v, l, tp_random(is_smoke), t->at);
     }
   }
 }
 
-static void tp_fire_on_over_chasm(Gamep g, Levelsp v, Levelp l, Thingp me)
+static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -107,10 +107,10 @@ static void tp_fire_on_over_chasm(Gamep g, Levelsp v, Levelp l, Thingp me)
       .event_type = THING_EVENT_FALL, //
   };
 
-  thing_dead(g, v, l, me, e);
+  thing_dead(g, v, l, t, e);
 
-  if (! level_is_smoke(g, v, l, me->at)) {
-    thing_spawn(g, v, l, tp_random(is_smoke), me->at);
+  if (! level_is_smoke(g, v, l, t->at)) {
+    thing_spawn(g, v, l, tp_random(is_smoke), t->at);
   }
 }
 
@@ -144,7 +144,7 @@ bool tp_load_fire(void)
   tp_light_color_set(tp, "orange");
   tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_fire_on_death);
-  tp_on_over_chasm_set(tp, tp_fire_on_over_chasm);
+  tp_on_fall_begin_set(tp, tp_fire_on_fall_begin);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_tick_begin_set(tp, tp_fire_tick_begin);
   tp_weight_set(tp, WEIGHT_NONE); // grams

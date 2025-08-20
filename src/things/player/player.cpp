@@ -13,38 +13,56 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
+static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_dead(me)) {
+  if (thing_is_dead(t)) {
     return "dead you";
   }
   return "You";
 }
 
-static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
+static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (level_is_water(g, v, l, me->at)) {
+  if (level_is_water(g, v, l, t->at)) {
     sound_play(g, "splash");
   } else {
     sound_play(g, "footstep");
   }
 }
 
-static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (level_is_water(g, v, l, me->at)) {
+  if (level_is_water(g, v, l, t->at)) {
     sound_play(g, "splash");
-  } else {
-    sound_play(g, "footstep");
   }
 
-  game_popup_text_add(g, me->at.x, me->at.y, std::string("Oof!"));
+  game_popup_text_add(g, t->at.x, t->at.y, std::string("Oof!"));
+}
+
+static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  sound_play(g, "fall");
+
+  game_popup_text_add(g, t->at.x, t->at.y, std::string("Aargh!"));
+}
+
+static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (level_is_water(g, v, l, t->at)) {
+    sound_play(g, "splash");
+  } else {
+    sound_play(g, "oof");
+  }
 }
 
 bool tp_load_player(void)
@@ -74,6 +92,8 @@ bool tp_load_player(void)
   tp_jump_distance_set(tp, 3);
   tp_on_moved_set(tp, tp_player_on_moved);
   tp_on_jump_end_set(tp, tp_player_on_jump_end);
+  tp_on_fall_begin_set(tp, tp_player_on_fall_begin);
+  tp_on_fall_end_set(tp, tp_player_on_fall_end);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius

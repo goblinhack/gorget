@@ -10,11 +10,11 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_goblin_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
+static std::string tp_goblin_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_dead(me)) {
+  if (thing_is_dead(t)) {
     return "dead goblin";
   }
   return "starter pack goblin";

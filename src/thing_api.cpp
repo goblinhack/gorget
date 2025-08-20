@@ -6,6 +6,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_tp_callbacks.hpp"
 
 int thing_speed(Thingp t)
 {
@@ -100,15 +101,23 @@ int thing_is_falling(Thingp t)
   return t->_is_falling;
 }
 
-int thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
-    return 0;
+    return;
+  }
+  if (t->_is_falling == val) {
+    return;
+  }
+  if (val) {
+    tp_on_fall_begin(g, v, l, t);
+  } else {
+    tp_on_fall_end(g, v, l, t);
   }
   game_request_to_remake_ui_set(g);
-  return t->_is_falling = val;
+  t->_is_falling = val;
 }
 
 int thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
@@ -373,6 +382,13 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     ERR("no thing for %s", __FUNCTION__);
     return;
   }
+  if (t->_is_moving == val) {
+    return;
+  }
+  if (val) {
+    tp_on_moved(g, v, l, t);
+  }
+  game_request_to_remake_ui_set(g);
   t->_is_moving = val;
 }
 
@@ -393,6 +409,15 @@ void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     ERR("no thing for %s", __FUNCTION__);
     return;
   }
+  if (t->_is_jumping == val) {
+    return;
+  }
+  if (val) {
+    tp_on_jump_begin(g, v, l, t);
+  } else {
+    tp_on_jump_end(g, v, l, t);
+  }
+  game_request_to_remake_ui_set(g);
   t->_is_jumping = val;
 }
 

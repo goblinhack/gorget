@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
@@ -251,11 +252,12 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   t->old_at      = t->at;
   t->moving_from = t->at;
   t->at          = to;
-  thing_is_moving_set(g, v, l, t);
 
   thing_push(g, v, l, t);
 
-  tp_on_moved(g, v, l, t);
+  thing_is_moving_set(g, v, l, t);
+
+  game_popup_text_add(g, t->at.x, t->at.y, std::string("Oof!"));
 
   return true;
 }
@@ -331,10 +333,6 @@ void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   t->moving_from = t->at;
-
-  if (thing_is_jumping(t)) {
-    tp_on_jump_end(g, v, l, t);
-  }
 
   thing_is_moving_set(g, v, l, t, false);
   thing_is_jumping_set(g, v, l, t, false);

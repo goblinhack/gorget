@@ -361,6 +361,11 @@ void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 bool thing_is_jumping(Thingp);
 void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
+int  thing_is_falling(Thingp);
+void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int  thing_is_falling_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int  thing_is_falling_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
 int thing_speed(Thingp);
 int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
@@ -371,11 +376,6 @@ int thing_temperature(Thingp);
 int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_temperature_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_temperature_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-
-int thing_is_falling(Thingp);
-int thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_is_falling_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_is_falling_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_value1(Thingp);
 int thing_value1_set(Gamep, Levelsp, Levelp, Thingp, int val);
