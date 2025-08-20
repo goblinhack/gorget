@@ -35,6 +35,7 @@ bool tp_load_trap(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obstacle_to_falling);
   tp_flag_set(tp, is_physics_gravity);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_trap);
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_FEATHER); // grams

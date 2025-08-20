@@ -245,6 +245,7 @@ public:
   tp_on_tick_end_t     tick_end        = {};
   tp_on_death_t        on_death        = {};
   tp_on_moved_t        on_moved        = {};
+  tp_on_teleported_t   on_teleported   = {};
   tp_on_shoved_t       on_shoved       = {};
   tp_on_jump_end_t     on_jump_end     = {};
   tp_on_jump_begin_t   on_jump_begin   = {};
@@ -1198,6 +1199,30 @@ void tp_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
   return tp->on_moved(g, v, l, me);
+}
+
+void tp_on_teleported_set(Tpp tp, tp_on_teleported_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->on_teleported = callback;
+}
+
+void tp_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->on_teleported) {
+    return;
+  }
+  return tp->on_teleported(g, v, l, me);
 }
 
 void tp_on_jump_begin_set(Tpp tp, tp_on_jump_begin_t callback)

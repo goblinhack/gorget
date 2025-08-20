@@ -33,6 +33,7 @@ bool tp_load_smoke(void)
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_smoke);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_lifespan_set(tp, "1d6+3");
   tp_long_name_set(tp, name);

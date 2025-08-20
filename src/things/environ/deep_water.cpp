@@ -31,6 +31,7 @@ bool tp_load_deep_water(void)
   tp_flag_set(tp, is_deep_water);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);
   tp_health_initial_set(tp, "40"); // to allow it to be damaged by fire
   tp_long_name_set(tp, "deep water");

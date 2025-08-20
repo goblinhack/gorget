@@ -31,6 +31,7 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_obstacle_to_fire);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);
   tp_flag_set(tp, is_water);
   tp_health_initial_set(tp, "1d10"); // to allow it to be damaged by fire

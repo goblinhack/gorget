@@ -40,6 +40,7 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_secret_door);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_health_initial_set(tp, "1d200");
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);

@@ -392,6 +392,33 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_moving = val;
 }
 
+bool thing_is_teleporting(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_teleporting;
+}
+
+void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+  if (t->_is_teleporting == val) {
+    return;
+  }
+  if (val) {
+    tp_on_teleported(g, v, l, t);
+  }
+  game_request_to_remake_ui_set(g);
+  t->_is_teleporting = val;
+}
+
 bool thing_is_jumping(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -1191,14 +1218,14 @@ bool thing_is_unused26(Thingp t)
   return tp_flag(thing_tp(t), is_unused26);
 }
 
-bool thing_is_unused27(Thingp t)
+bool thing_is_teleport_blocked(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused27);
+  return tp_flag(thing_tp(t), is_teleport_blocked);
 }
 
 bool thing_is_cursor_path_none(Thingp t)

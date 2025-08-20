@@ -31,6 +31,7 @@ bool tp_load_chasm(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_obstacle_to_falling);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_NONE); // grams

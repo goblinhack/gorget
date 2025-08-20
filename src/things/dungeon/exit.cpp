@@ -32,6 +32,7 @@ bool tp_load_exit(void)
   tp_flag_set(tp, is_exit);
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_obstacle_to_falling);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

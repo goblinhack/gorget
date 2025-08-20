@@ -164,6 +164,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_end_temperature(g, v, l);
 
     //
+    // Handle things interacting with chasms
+    //
+    level_tick_end_teleport(g, v, l);
+
+    //
     // Check if something reacted with lava and is now needing to delay the end of tick
     //
     level_tick_ok_to_end_check(g, v, l);
@@ -248,7 +253,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       t->thing_dt = 1.0;
     }
 
-    if (0) {
+    if (1) {
       if (thing_is_player(t)) {
         THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
       }

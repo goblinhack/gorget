@@ -34,6 +34,7 @@ bool tp_load_lava(void)
   tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);

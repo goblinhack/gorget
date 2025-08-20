@@ -163,6 +163,13 @@ void thing_display(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, sp
     }
   }
 
+  //
+  // Show the player as faded when teleporting
+  //
+  if (t && thing_is_teleporting(t)) {
+    fg.a = 100;
+  }
+
   if (tp_is_blit_outlined(tp)) {
     tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);
   } else if (tp_is_blit_square_outlined(tp)) {

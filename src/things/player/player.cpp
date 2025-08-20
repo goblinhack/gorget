@@ -34,6 +34,15 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
+static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  // TODO
+
+  game_popup_text_add(g, t->at.x, t->at.y, std::string("Urgh"));
+}
+
 static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -118,6 +127,7 @@ bool tp_load_player(void)
   tp_on_fall_end_set(tp, tp_player_on_fall_end);
   tp_on_jump_end_set(tp, tp_player_on_jump_end);
   tp_on_moved_set(tp, tp_player_on_moved);
+  tp_on_teleported_set(tp, tp_player_on_teleported);
   tp_on_tick_end_set(tp, tp_player_tick_end);
   tp_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_speed_set(tp, 100);

@@ -330,6 +330,7 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   t->moving_from = t->at;
 
+  thing_is_teleporting_set(g, v, l, t, false);
   thing_is_moving_set(g, v, l, t, false);
   thing_is_jumping_set(g, v, l, t, false);
 }

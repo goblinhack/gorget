@@ -37,6 +37,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
         .source     = me                 //
     };
     thing_dead(g, v, l, it, e);
+    return;
   }
 }
 

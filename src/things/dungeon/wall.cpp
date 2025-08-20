@@ -22,6 +22,7 @@ bool tp_load_wall(void)
     tp_flag_set(tp, is_obstacle_to_fire);
     tp_flag_set(tp, is_obstacle_to_jumping);
     tp_flag_set(tp, is_obstacle_to_movement);
+    tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tiled);
     tp_flag_set(tp, is_wall);
     tp_health_initial_set(tp, "1d200");

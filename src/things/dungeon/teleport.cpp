@@ -30,6 +30,7 @@ bool tp_load_teleport(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_obstacle_to_falling);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_teleport);
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams

@@ -252,6 +252,10 @@ typedef struct Thing_ {
   //
   bool _is_moving : 1;
   //
+  // Currently teleporting between tiles. The thing is already at the destination.
+  //
+  bool _is_teleporting : 1;
+  //
   // Currently jumping between tiles. The thing is already at the destination.
   //
   bool _is_jumping : 1;
@@ -326,6 +330,7 @@ bool thing_is_dir_down(Thingp);
 bool thing_is_dir_tr(Thingp);
 bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_teleport(Gamep, Levelsp, Levelp, Thingp);
 bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_is_dir_tl(Thingp);
@@ -361,6 +366,9 @@ void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_moving(Thingp);
 void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+
+bool thing_is_teleporting(Thingp);
+void thing_is_teleporting_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 
 bool thing_is_jumping(Thingp);
 void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
@@ -637,6 +645,7 @@ bool thing_is_slime(Thingp);
 bool thing_is_smoke(Thingp);
 bool thing_is_steam(Thingp);
 bool thing_is_submergible(Thingp);
+bool thing_is_teleport_blocked(Thingp);
 bool thing_is_teleport(Thingp);
 bool thing_is_tickable(Thingp);
 bool thing_is_tiled(Thingp);
@@ -662,7 +671,6 @@ bool thing_is_unused23(Thingp);
 bool thing_is_unused24(Thingp);
 bool thing_is_unused25(Thingp);
 bool thing_is_unused26(Thingp);
-bool thing_is_unused27(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused5(Thingp);

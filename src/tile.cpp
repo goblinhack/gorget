@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_cpp_template.hpp"
+#include "my_fpoint.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_ptrcheck.hpp"

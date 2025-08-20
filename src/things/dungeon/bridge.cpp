@@ -31,6 +31,7 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);
   tp_health_initial_set(tp, "1d12");
   tp_long_name_set(tp, name);

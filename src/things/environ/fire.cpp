@@ -136,6 +136,7 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
+  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, "1d5"); // to allow it to be damaged by water
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
