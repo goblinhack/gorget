@@ -240,9 +240,9 @@ public:
   // Callbacks
   //
   tp_description_get_t description_get = {};
-  tp_tick_idle_t       tick_idle       = {};
-  tp_tick_begin_t      tick_begin      = {};
-  tp_tick_end_t        tick_end        = {};
+  tp_on_tick_idle_t    tick_idle       = {};
+  tp_on_tick_begin_t   tick_begin      = {};
+  tp_on_tick_end_t     tick_end        = {};
   tp_on_death_t        on_death        = {};
   tp_on_moved_t        on_moved        = {};
   tp_on_shoved_t       on_shoved       = {};
@@ -1080,7 +1080,7 @@ std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->description_get(g, v, l, me);
 }
 
-void tp_tick_idle_set(Tpp tp, tp_tick_idle_t callback)
+void tp_on_tick_idle_set(Tpp tp, tp_on_tick_idle_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -1090,7 +1090,7 @@ void tp_tick_idle_set(Tpp tp, tp_tick_idle_t callback)
   tp->tick_idle = callback;
 }
 
-void tp_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_on_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1104,7 +1104,7 @@ void tp_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->tick_idle(g, v, l, me);
 }
 
-void tp_tick_begin_set(Tpp tp, tp_tick_begin_t callback)
+void tp_on_tick_begin_set(Tpp tp, tp_on_tick_begin_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -1114,7 +1114,7 @@ void tp_tick_begin_set(Tpp tp, tp_tick_begin_t callback)
   tp->tick_begin = callback;
 }
 
-void tp_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_on_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1128,7 +1128,7 @@ void tp_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->tick_begin(g, v, l, me);
 }
 
-void tp_tick_end_set(Tpp tp, tp_tick_end_t callback)
+void tp_on_tick_end_set(Tpp tp, tp_on_tick_end_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -1138,7 +1138,7 @@ void tp_tick_end_set(Tpp tp, tp_tick_end_t callback)
   tp->tick_end = callback;
 }
 
-void tp_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_on_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);

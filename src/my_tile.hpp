@@ -7,7 +7,6 @@
 #define _MY_TILE_HPP_
 
 #include "my_color.hpp"
-#include "my_fpoint.hpp"
 #include "my_spoint.hpp"
 #include "my_types.hpp"
 
@@ -88,10 +87,6 @@ void tile_blit_outline(uint16_t index, float x1, float x2, float y1, float y2, c
 void tile_blit_section(const Tilep &tile, const spoint tile_tl, const spoint tile_br, const spoint tl,
                        const spoint br);
 void tile_blit_section(uint16_t index, const spoint tile_tl, const spoint tile_br, const spoint tl, const spoint br);
-void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
-                               const spoint br, color color_tl, color color_tr, color color_bl, color color_br);
-void tile_blit_section_colored(uint16_t index, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
-                               const spoint br, color color_tl, color color_tr, color color_bl, color color_br);
 void tile_blit_shadow(const class Tp *&tp, const Tilep &tile, const spoint tl, const spoint br);
 void tile_blit_shadow(const class Tp *&tp, uint16_t index, const spoint tl, const spoint br);
 void tile_blit_shadow_section(const class Tp *&tp, const Tilep &tile, const spoint tile_tl, const spoint tile_br,

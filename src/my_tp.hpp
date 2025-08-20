@@ -85,7 +85,8 @@
       list_macro(is_monst, "is_monst"),                                 /* newline */                                \
       list_macro(is_needs_move_confirm, "is_needs_move_confirm"),       /* newline */                                \
       list_macro(is_obstacle_to_fire, "is_obstacle_to_fire"),           /* newline */                                \
-      list_macro(is_obstacle_to_landing, "is_obstacle_to_landing"),     /* newline */                                \
+      list_macro(is_obstacle_to_falling, "is_obstacle_to_falling"),     /* newline */                                \
+      list_macro(is_obstacle_to_jumping, "is_obstacle_to_jumping"),     /* newline */                                \
       list_macro(is_obstacle_to_movement, "is_obstacle_to_movement"),   /* newline */                                \
       list_macro(is_physics_gravity, "is_physics_gravity"),             /* newline */                                \
       list_macro(is_physics_temperature, "is_physics_temperature"),     /* newline */                                \
@@ -125,7 +126,7 @@
       list_macro(is_unused25, "is_unused25"),                           /* newline */                                \
       list_macro(is_unused26, "is_unused26"),                           /* newline */                                \
       list_macro(is_unused27, "is_unused27"),                           /* newline */                                \
-      list_macro(is_cursor_path_none, "is_cursor_path_none"),                           /* newline */                                \
+      list_macro(is_cursor_path_none, "is_cursor_path_none"),           /* newline */                                \
       list_macro(is_unused3, "is_unused3"),                             /* newline */                                \
       list_macro(is_unused4, "is_unused4"),                             /* newline */                                \
       list_macro(is_unused5, "is_unused5"),                             /* newline */                                \
@@ -508,6 +509,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_cursor_hazard(tp)          tp_flag(tp, is_cursor_hazard)
 #define tp_is_cursor_path_blocker(tp)    tp_flag(tp, is_cursor_path_blocker)
 #define tp_is_cursor_path_hazard(tp)     tp_flag(tp, is_cursor_path_hazard)
+#define tp_is_cursor_path_none(tp)       tp_flag(tp, is_cursor_path_none)
 #define tp_is_cursor_path(tp)            tp_flag(tp, is_cursor_path)
 #define tp_is_cursor(tp)                 tp_flag(tp, is_cursor)
 #define tp_is_dead_on_shoving(tp)        tp_flag(tp, is_dead_on_shoving)
@@ -552,8 +554,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_monst_group_2(tp)          tp_flag(tp, is_monst_group_2)
 #define tp_is_monst(tp)                  tp_flag(tp, is_monst)
 #define tp_is_needs_move_confirm(tp)     tp_flag(tp, is_needs_move_confirm)
+#define tp_is_obstacle_to_falling(tp)    tp_flag(tp, is_obstacle_to_falling)
 #define tp_is_obstacle_to_fire(tp)       tp_flag(tp, is_obstacle_to_fire)
-#define tp_is_obstacle_to_landing(tp)    tp_flag(tp, is_obstacle_to_landing)
+#define tp_is_obstacle_to_jumping(tp)    tp_flag(tp, is_obstacle_to_jumping)
 #define tp_is_obstacle_to_movement(tp)   tp_flag(tp, is_obstacle_to_movement)
 #define tp_is_physics_gravity(tp)        tp_flag(tp, is_physics_gravity)
 #define tp_is_physics_temperature(tp)    tp_flag(tp, is_physics_temperature)
@@ -593,7 +596,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused25(tp)               tp_flag(tp, is_unused25)
 #define tp_is_unused26(tp)               tp_flag(tp, is_unused26)
 #define tp_is_unused27(tp)               tp_flag(tp, is_unused27)
-#define tp_is_cursor_path_none(tp)               tp_flag(tp, is_cursor_path_none)
 #define tp_is_unused3(tp)                tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)                tp_flag(tp, is_unused4)
 #define tp_is_unused5(tp)                tp_flag(tp, is_unused5)
@@ -631,6 +633,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_cursor_hazard(g, v, l, p)          level_flag(g, v, l, is_cursor_hazard, p)
 #define level_is_cursor_path_blocker(g, v, l, p)    level_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_is_cursor_path_hazard(g, v, l, p)     level_flag(g, v, l, is_cursor_path_hazard, p)
+#define level_is_cursor_path_none(g, v, l, p)       level_flag(g, v, l, is_cursor_path_none, p)
 #define level_is_cursor_path(g, v, l, p)            level_flag(g, v, l, is_cursor_path, p)
 #define level_is_cursor(g, v, l, p)                 level_flag(g, v, l, is_cursor, p)
 #define level_is_dead_on_shoving(g, v, l, p)        level_flag(g, v, l, is_dead_on_shoving, p)
@@ -675,8 +678,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_monst_group_2(g, v, l, p)          level_flag(g, v, l, is_monst_group_2, p)
 #define level_is_monst(g, v, l, p)                  level_flag(g, v, l, is_monst, p)
 #define level_is_needs_move_confirm(g, v, l, p)     level_flag(g, v, l, is_needs_move_confirm, p)
+#define level_is_obstacle_to_falling(g, v, l, p)    level_flag(g, v, l, is_obstacle_to_falling, p)
 #define level_is_obstacle_to_fire(g, v, l, p)       level_flag(g, v, l, is_obstacle_to_fire, p)
-#define level_is_obstacle_to_landing(g, v, l, p)    level_flag(g, v, l, is_obstacle_to_landing, p)
+#define level_is_obstacle_to_jumping(g, v, l, p)    level_flag(g, v, l, is_obstacle_to_jumping, p)
 #define level_is_obstacle_to_movement(g, v, l, p)   level_flag(g, v, l, is_obstacle_to_movement, p)
 #define level_is_physics_gravity(g, v, l, p)        level_flag(g, v, l, is_physics_gravity, p)
 #define level_is_physics_temperature(g, v, l, p)    level_flag(g, v, l, is_physics_temperature, p)
@@ -716,7 +720,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused25(g, v, l, p)               level_flag(g, v, l, is_unused25, p)
 #define level_is_unused26(g, v, l, p)               level_flag(g, v, l, is_unused26, p)
 #define level_is_unused27(g, v, l, p)               level_flag(g, v, l, is_unused27, p)
-#define level_is_cursor_path_none(g, v, l, p)               level_flag(g, v, l, is_cursor_path_none, p)
 #define level_is_unused3(g, v, l, p)                level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)                level_flag(g, v, l, is_unused4, p)
 #define level_is_unused5(g, v, l, p)                level_flag(g, v, l, is_unused5, p)
@@ -754,6 +757,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_cursor_hazard(g, v, l, p)          level_alive_flag(g, v, l, is_cursor_hazard, p)
 #define level_alive_is_cursor_path_blocker(g, v, l, p)    level_alive_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_alive_is_cursor_path_hazard(g, v, l, p)     level_alive_flag(g, v, l, is_cursor_path_hazard, p)
+#define level_alive_is_cursor_path_none(g, v, l, p)       level_alive_flag(g, v, l, is_cursor_path_none, p)
 #define level_alive_is_cursor_path(g, v, l, p)            level_alive_flag(g, v, l, is_cursor_path, p)
 #define level_alive_is_cursor(g, v, l, p)                 level_alive_flag(g, v, l, is_cursor, p)
 #define level_alive_is_dead_on_shoving(g, v, l, p)        level_alive_flag(g, v, l, is_dead_on_shoving, p)
@@ -832,7 +836,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused25(g, v, l, p)               level_alive_flag(g, v, l, is_unused25, p)
 #define level_alive_is_unused26(g, v, l, p)               level_alive_flag(g, v, l, is_unused26, p)
 #define level_alive_is_unused27(g, v, l, p)               level_alive_flag(g, v, l, is_unused27, p)
-#define level_alive_is_cursor_path_none(g, v, l, p)               level_alive_flag(g, v, l, is_cursor_path_none, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_physics_gravity, p)
 #define level_alive_is_unused35(g, v, l, p)               level_alive_flag(g, v, l, is_physics_water, p)
@@ -875,6 +878,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_cursor_hazard(g, v, l, p)          level_first_flag(g, v, l, is_cursor_hazard, p)
 #define level_first_is_cursor_path_blocker(g, v, l, p)    level_first_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_first_is_cursor_path_hazard(g, v, l, p)     level_first_flag(g, v, l, is_cursor_path_hazard, p)
+#define level_first_is_cursor_path_none(g, v, l, p)       level_first_flag(g, v, l, is_cursor_path_none, p)
 #define level_first_is_cursor_path(g, v, l, p)            level_first_flag(g, v, l, is_cursor_path, p)
 #define level_first_is_cursor(g, v, l, p)                 level_first_flag(g, v, l, is_cursor, p)
 #define level_first_is_dead_on_shoving(g, v, l, p)        level_first_flag(g, v, l, is_dead_on_shoving, p)
@@ -953,7 +957,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused25(g, v, l, p)               level_first_flag(g, v, l, is_unused25, p)
 #define level_first_is_unused26(g, v, l, p)               level_first_flag(g, v, l, is_unused26, p)
 #define level_first_is_unused27(g, v, l, p)               level_first_flag(g, v, l, is_unused27, p)
-#define level_first_is_cursor_path_none(g, v, l, p)               level_first_flag(g, v, l, is_cursor_path_none, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_physics_gravity, p)
 #define level_first_is_unused35(g, v, l, p)               level_first_flag(g, v, l, is_physics_water, p)
@@ -996,6 +999,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_cursor_hazard(g, v, l, p)          level_count_flag(g, v, l, is_cursor_hazard, p)
 #define level_count_is_cursor_path_blocker(g, v, l, p)    level_count_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_count_is_cursor_path_hazard(g, v, l, p)     level_count_flag(g, v, l, is_cursor_path_hazard, p)
+#define level_count_is_cursor_path_none(g, v, l, p)       level_count_flag(g, v, l, is_cursor_path_none, p)
 #define level_count_is_cursor_path(g, v, l, p)            level_count_flag(g, v, l, is_cursor_path, p)
 #define level_count_is_cursor(g, v, l, p)                 level_count_flag(g, v, l, is_cursor, p)
 #define level_count_is_dead_on_shoving(g, v, l, p)        level_count_flag(g, v, l, is_dead_on_shoving, p)
@@ -1074,7 +1078,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused25(g, v, l, p)               level_count_flag(g, v, l, is_unused25, p)
 #define level_count_is_unused26(g, v, l, p)               level_count_flag(g, v, l, is_unused26, p)
 #define level_count_is_unused27(g, v, l, p)               level_count_flag(g, v, l, is_unused27, p)
-#define level_count_is_cursor_path_none(g, v, l, p)               level_count_flag(g, v, l, is_cursor_path_none, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_physics_gravity, p)
 #define level_count_is_unused35(g, v, l, p)               level_count_flag(g, v, l, is_physics_water, p)

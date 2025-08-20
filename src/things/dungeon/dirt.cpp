@@ -17,7 +17,7 @@ bool tp_load_dirt(void)
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_dirt);
-  tp_flag_set(tp, is_obstacle_to_landing);
+  tp_flag_set(tp, is_obstacle_to_falling);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   // end sort marker1 }

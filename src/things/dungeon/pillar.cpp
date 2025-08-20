@@ -28,8 +28,9 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_obstacle_to_falling);
   tp_flag_set(tp, is_obstacle_to_fire);
-  tp_flag_set(tp, is_obstacle_to_landing);
+  tp_flag_set(tp, is_obstacle_to_jumping);
   tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_pillar);

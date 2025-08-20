@@ -16,7 +16,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_tick_begin(g, v, l, t);
+  tp_on_tick_begin(g, v, l, t);
 
   //
   // Lifespan tick
@@ -46,14 +46,7 @@ void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_tick_idle(g, v, l, t);
-
-  //
-  // If asked to follow the mouse path, start walking
-  //
-  if (thing_is_player(t)) {
-    thing_move_to_next(g, v, l, t);
-  }
+  tp_on_tick_idle(g, v, l, t);
 }
 
 //
@@ -66,7 +59,7 @@ void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_tick_end(g, v, l, t);
+  tp_on_tick_end(g, v, l, t);
 
   //
   // Mark the tick as completed
@@ -80,6 +73,6 @@ void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   // If following the mouse path, keep going
   //
   if (thing_is_player(t)) {
-    thing_move_to_next(g, v, l, t);
+    player_move_to_next(g, v, l, t);
   }
 }

@@ -3,11 +3,9 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
-#include "my_sound.hpp"
 #include "my_tile.hpp"
 #include "my_tp_callbacks.hpp"
 
@@ -257,8 +255,6 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 
   thing_is_moving_set(g, v, l, t);
 
-  game_popup_text_add(g, t->at.x, t->at.y, std::string("Oof!"));
-
   return true;
 }
 
@@ -323,7 +319,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
 // Move to the next tile is completed. Need to stop interpolating.
 // There could be more tiles to pop.
 //
-void thing_move_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -558,86 +554,4 @@ void thing_pop(Gamep g, Levelsp v, Thingp t)
   }
 
   ERR("could not pop thing that is on the map");
-}
-
-//
-// Return true if there is a move to pop.
-//
-static bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint *out)
-{
-  TRACE_NO_INDENT();
-
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
-    return false;
-  }
-
-  if (! player_struct->move_path.size) {
-    return false;
-  }
-
-  *out = player_struct->move_path.points[ 0 ];
-
-  for (int index = 0; index < player_struct->move_path.size - 1; index++) {
-    player_struct->move_path.points[ index ] = player_struct->move_path.points[ index + 1 ];
-  }
-  player_struct->move_path.size--;
-
-  return true;
-}
-
-//
-// Move to the next path on the popped path if it exits.
-//
-bool thing_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  //
-  // If already moving, do not pop the next path tile
-  //
-  if (thing_is_moving(t)) {
-    return false;
-  }
-
-  //
-  // If not following a path, then nothing to pop
-  //
-  if (! v->player_currently_following_a_path) {
-    return false;
-  }
-
-  //
-  // Get the next tile to move to
-  //
-  spoint move_next = {};
-  if (! thing_move_path_pop(g, v, l, t, &move_next)) {
-    //
-    // If could not pop, then no path is left
-    //
-    v->player_currently_following_a_path = false;
-    return false;
-  }
-
-  if (! thing_can_move_to(g, v, l, t, move_next)) {
-    //
-    // If could not move, then abort the path walk
-    //
-    v->player_currently_following_a_path = false;
-    return false;
-  }
-
-  if (thing_move_to(g, v, l, t, move_next)) {
-    if (thing_is_player(t)) {
-      level_tick_begin_requested(g, v, l, "player moved to next");
-    }
-  } else {
-    if (thing_is_player(t)) {
-      level_tick_begin_requested(g, v, l, "player faled moved to next location");
-    }
-  }
-
-  sound_play(g, "footstep");
-
-  return true;
 }

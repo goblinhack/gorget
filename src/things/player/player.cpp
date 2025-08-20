@@ -42,6 +42,10 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     sound_play(g, "splash");
   }
 
+  if (thing_is_falling(t)) {
+    return;
+  }
+
   game_popup_text_add(g, t->at.x, t->at.y, std::string("Oof!"));
 }
 
@@ -63,6 +67,26 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   } else {
     sound_play(g, "oof");
   }
+}
+
+static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // If asked to follow the mouse path, start walking
+  //
+  player_move_to_next(g, v, l, t);
+}
+
+static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // If asked to follow the mouse path, start walking
+  //
+  player_move_to_next(g, v, l, t);
 }
 
 bool tp_load_player(void)
@@ -90,10 +114,12 @@ bool tp_load_player(void)
   tp_health_initial_set(tp, "100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
-  tp_on_moved_set(tp, tp_player_on_moved);
-  tp_on_jump_end_set(tp, tp_player_on_jump_end);
   tp_on_fall_begin_set(tp, tp_player_on_fall_begin);
   tp_on_fall_end_set(tp, tp_player_on_fall_end);
+  tp_on_jump_end_set(tp, tp_player_on_jump_end);
+  tp_on_moved_set(tp, tp_player_on_moved);
+  tp_on_tick_end_set(tp, tp_player_tick_end);
+  tp_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 35); // celsius

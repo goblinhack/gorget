@@ -69,6 +69,9 @@ typedef struct ThingPlayer_ {
   // For hiscores
   //
   int16_t levels_completed;
+  //
+  // Holds the cursor path as we walk it
+  //
   struct {
     spoint  points[ THING_MOVE_PATH_MAX ];
     int16_t size;
@@ -277,7 +280,7 @@ void thing_dir_tr_set(Thingp, uint8_t);
 void thing_dir_up_set(Thingp, uint8_t);
 void thing_fini(Gamep, Levelsp, Levelp, Thingp);
 void thing_interpolate(Gamep, Thingp, float dt);
-void thing_move_finish(Gamep, Levelsp, Levelp, Thingp);
+void thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
@@ -314,6 +317,7 @@ void player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
 void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void player_jump(Gamep, Levelsp, Levelp, Thingp);
 bool player_move_request(Gamep, bool up, bool down, bool left, bool right);
+bool player_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
@@ -572,6 +576,7 @@ bool thing_is_crushable(Thingp);
 bool thing_is_cursor_hazard(Thingp);
 bool thing_is_cursor_path_blocker(Thingp);
 bool thing_is_cursor_path_hazard(Thingp);
+bool thing_is_cursor_path_none(Thingp);
 bool thing_is_cursor_path(Thingp);
 bool thing_is_cursor(Thingp);
 bool thing_is_dead_on_shoving(Thingp);
@@ -616,8 +621,9 @@ bool thing_is_monst_group_1(Thingp);
 bool thing_is_monst_group_2(Thingp);
 bool thing_is_monst(Thingp);
 bool thing_is_needs_move_confirm(Thingp);
+bool thing_is_obstacle_to_falling(Thingp);
 bool thing_is_obstacle_to_fire(Thingp);
-bool thing_is_obstacle_to_landing(Thingp);
+bool thing_is_obstacle_to_jumping(Thingp);
 bool thing_is_obstacle_to_movement(Thingp);
 bool thing_is_physics_gravity(Thingp);
 bool thing_is_physics_temperature(Thingp);
@@ -657,7 +663,6 @@ bool thing_is_unused24(Thingp);
 bool thing_is_unused25(Thingp);
 bool thing_is_unused26(Thingp);
 bool thing_is_unused27(Thingp);
-bool thing_is_cursor_path_none(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused5(Thingp);

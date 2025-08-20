@@ -145,9 +145,9 @@ bool tp_load_fire(void)
   tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_fire_on_death);
   tp_on_fall_begin_set(tp, tp_fire_on_fall_begin);
+  tp_on_tick_begin_set(tp, tp_fire_tick_begin);
   tp_temperature_initial_set(tp, 500); // celsius
-  tp_tick_begin_set(tp, tp_fire_tick_begin);
-  tp_weight_set(tp, WEIGHT_NONE); // grams
+  tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
   // end sort marker1 }
 

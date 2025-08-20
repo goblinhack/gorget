@@ -7,6 +7,7 @@
 #include "my_level.hpp"
 #include "my_line.hpp"
 #include "my_main.hpp"
+#include "my_sound.hpp"
 
 Thingp thing_player(Gamep g)
 {
@@ -307,4 +308,121 @@ void player_jump(Gamep g, Levelsp v, Levelp l, Thingp t)
       return;
     }
   }
+}
+
+//
+// Return true if there is a move to pop.
+//
+static bool player_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint *out)
+{
+  TRACE_NO_INDENT();
+
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
+    return false;
+  }
+
+  if (! player_struct->move_path.size) {
+    return false;
+  }
+
+  *out = player_struct->move_path.points[ 0 ];
+
+  for (int index = 0; index < player_struct->move_path.size - 1; index++) {
+    player_struct->move_path.points[ index ] = player_struct->move_path.points[ index + 1 ];
+  }
+  player_struct->move_path.size--;
+
+  return true;
+}
+
+//
+// Return true if there is a move to pop.
+//
+static bool player_move_path_destination(Gamep g, Levelsp v, Levelp l, Thingp t, spoint *out)
+{
+  TRACE_NO_INDENT();
+
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
+    return false;
+  }
+
+  if (! player_struct->move_path.size) {
+    return false;
+  }
+
+  *out = player_struct->move_path.points[ player_struct->move_path.size - 1 ];
+
+  return true;
+}
+
+//
+// Move to the next path on the popped path if it exits.
+//
+bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // If already moving, do not pop the next path tile
+  //
+  if (thing_is_moving(t)) {
+    return false;
+  }
+
+  //
+  // If not following a path, then nothing to pop
+  //
+  if (! v->player_currently_following_a_path) {
+    return false;
+  }
+
+  //
+  // Get the next tile to move to
+  //
+  spoint move_next = {};
+  if (! player_move_path_pop(g, v, l, t, &move_next)) {
+    //
+    // If could not pop, then no path is left
+    //
+    v->player_currently_following_a_path = false;
+    return false;
+  }
+
+  spoint move_destination = {};
+  if (player_move_path_destination(g, v, l, t, &move_destination)) {
+    if (level_is_cursor_path_hazard(g, v, l, move_next)) {
+      if (thing_jump_to(g, v, l, t, move_destination)) {
+        //
+        // If could jump, then abort the path walk
+        //
+        level_tick_begin_requested(g, v, l, "player to avoid a hazard");
+        v->player_currently_following_a_path = false;
+        return false;
+      }
+    }
+  }
+
+  if (! thing_can_move_to(g, v, l, t, move_next)) {
+    //
+    // If could not move, then abort the path walk
+    //
+    v->player_currently_following_a_path = false;
+    return false;
+  }
+
+  if (thing_move_to(g, v, l, t, move_next)) {
+    if (thing_is_player(t)) {
+      level_tick_begin_requested(g, v, l, "player moved to next");
+    }
+  } else {
+    if (thing_is_player(t)) {
+      level_tick_begin_requested(g, v, l, "player faled moved to next location");
+    }
+  }
+
+  sound_play(g, "footstep");
+
+  return true;
 }

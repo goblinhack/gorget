@@ -38,7 +38,8 @@ bool level_cursor_is_valid(Gamep g, Levelsp v)
 // Create the cursor path, avoiding things like lava
 //
 // For the first pass, restrict to tiles we have walked on
-// For the first pass, any tiles will do
+// For the first pass, any tiles will do, but no hazards
+// For the last pass, any tiles will do
 //
 static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player,
                                                                  spoint start, spoint end, int attempt)
@@ -115,6 +116,10 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       }
     }
   } else if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
+    //
+    // Here the cursor is over a hazard. Plot a course that allows travel via other
+    // hazards.
+    //
     bool                               got_one = false;
     std::initializer_list< ThingFlag > init    = {is_lava, is_chasm};
 
@@ -180,10 +185,18 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       for (auto x = minx; x < maxx; x++) {
         spoint p(x, y);
 
-        if (level_is_cursor_path_blocker(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
-          d.val[ x ][ y ] = DMAP_IS_WALL;
+        if (attempt == 3) {
+          if (level_is_cursor_path_blocker(g, v, l, p)) {
+            d.val[ x ][ y ] = DMAP_IS_WALL;
+          } else {
+            d.val[ x ][ y ] = DMAP_IS_PASSABLE;
+          }
         } else {
-          d.val[ x ][ y ] = DMAP_IS_PASSABLE;
+          if (level_is_cursor_path_blocker(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+            d.val[ x ][ y ] = DMAP_IS_WALL;
+          } else {
+            d.val[ x ][ y ] = DMAP_IS_PASSABLE;
+          }
         }
       }
     }
@@ -306,6 +319,10 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
     best = attempt2;
   } else if (attempt2.size() && (attempt2.size() < best.size())) {
     best = attempt2;
+  }
+
+  if (! best.size()) {
+    best = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 3);
   }
 
   return best;
