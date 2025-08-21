@@ -20,7 +20,8 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_cursor_path_blocker);
     tp_flag_set(tp, is_obstacle_to_falling);
     tp_flag_set(tp, is_obstacle_to_fire);
-    tp_flag_set(tp, is_obstacle_to_jumping);
+    tp_flag_set(tp, is_obstacle_to_jump_landing);
+    tp_flag_set(tp, is_obstacle_to_jump_over);
     tp_flag_set(tp, is_obstacle_to_movement);
     tp_flag_set(tp, is_rock);
     tp_flag_set(tp, is_teleport_blocked);

@@ -36,7 +36,7 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob2);
   tp_flag_set(tp, is_obstacle_to_falling);
-  tp_flag_set(tp, is_obstacle_to_jumping);
+  tp_flag_set(tp, is_obstacle_to_jump_landing);
   tp_flag_set(tp, is_obstacle_to_movement);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);

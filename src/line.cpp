@@ -24,7 +24,7 @@ std::vector< spoint > draw_line(const spoint s, const spoint e, size_t max_elems
   for (;;) { /* loop */
     out.push_back(spoint(x0, y0));
 
-    if (max_elems) {
+    if (max_elems > 0) {
       if (out.size() >= max_elems) {
         return out;
       }

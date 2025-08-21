@@ -6,6 +6,7 @@
 #include "my_fpoint.hpp"
 #include "my_game_popups.hpp"
 #include "my_level.hpp"
+#include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sound.hpp"
@@ -31,7 +32,7 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &
     //
     // Yep. Trying to jump too far.
     //
-    fpoint u = (make_fpoint(to) - make_fpoint(curr_at));
+    fpoint u = make_fpoint(to) - make_fpoint(curr_at);
     u.unit();
     u *= d;
 
@@ -39,6 +40,22 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &
 
     to = make_spoint(fto);
   }
+}
+
+//
+// Check if jumping over something we cannot
+//
+static bool thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
+{
+  auto jump_path = draw_line(t->at, to);
+
+  for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {
+    spoint intermediate = *i;
+    if (level_is_obstacle_to_jump_over(g, v, l, intermediate)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 //
@@ -66,9 +83,19 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   thing_jump_truncate(g, v, l, t, to);
 
   //
+  // Check if jumping over something we cannot
+  //
+  if (thing_jump_something_in_the_way(g, v, l, t, to)) {
+    if (thing_is_player(t)) {
+      TOPCON("You cannot jump over that.");
+    }
+    return false;
+  }
+
+  //
   // No landing in solid obstacles
   //
-  if (level_is_obstacle_to_jumping(g, v, l, to)) {
+  if (level_is_obstacle_to_jump_landing(g, v, l, to)) {
     if (thing_is_player(t)) {
       TOPCON("There is something in the way of jumping there.");
     }

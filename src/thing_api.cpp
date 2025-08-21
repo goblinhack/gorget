@@ -1208,14 +1208,14 @@ bool thing_is_unused25(Thingp t)
   return tp_flag(thing_tp(t), is_unused25);
 }
 
-bool thing_is_unused26(Thingp t)
+bool thing_is_obstacle_to_jump_over(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused26);
+  return tp_flag(thing_tp(t), is_obstacle_to_jump_over);
 }
 
 bool thing_is_teleport_blocked(Thingp t)
@@ -1288,14 +1288,14 @@ bool thing_is_obstacle_to_falling(Thingp t)
   return tp_flag(thing_tp(t), is_obstacle_to_falling);
 }
 
-bool thing_is_obstacle_to_jumping(Thingp t)
+bool thing_is_obstacle_to_jump_landing(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_to_jumping);
+  return tp_flag(thing_tp(t), is_obstacle_to_jump_landing);
 }
 
 bool thing_is_submergible(Thingp t)
