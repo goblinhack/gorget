@@ -164,7 +164,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_end_temperature(g, v, l);
 
     //
-    // Handle things interacting with chasms
+    // Handle things interacting with teleports
     //
     level_tick_end_teleport(g, v, l);
 

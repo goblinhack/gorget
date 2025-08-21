@@ -38,7 +38,7 @@ static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  // TODO
+  sound_play(g, "teleport");
 
   game_popup_text_add(g, t->at.x, t->at.y, std::string("Urgh"));
 }
