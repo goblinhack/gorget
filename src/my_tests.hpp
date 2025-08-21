@@ -10,6 +10,7 @@ bool tests_init(void);
 /* shell echo "bool $i();" */
 /* shell done */
 bool test_load_collision_large_fire_water();
+bool test_load_jump_ok();
 bool test_load_collision_fire_chasm();
 bool test_load_collision_fire_water();
 bool test_load_collision_mob();

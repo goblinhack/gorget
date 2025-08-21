@@ -290,24 +290,26 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Handle player jumping
 //
-void player_jump(Gamep g, Levelsp v, Levelp l, Thingp t)
+bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 {
   TRACE_NO_INDENT();
 
   auto player_struct = thing_player_struct(g);
   if (! player_struct) {
-    return;
+    return false;
   }
 
-  auto jump_path = draw_line(t->at, v->cursor_at, thing_jump_distance(t) + 1);
+  auto jump_path = draw_line(t->at, to, thing_jump_distance(t) + 1);
 
   for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {
-    spoint to = *i;
-    if (thing_jump_to(g, v, l, t, to)) {
+    spoint intermediate = *i;
+    if (thing_jump_to(g, v, l, t, intermediate)) {
       level_tick_begin_requested(g, v, l, "player jumped");
-      return;
+      return true;
     }
   }
+
+  return false;
 }
 
 //

@@ -340,8 +340,7 @@ bool game_event_jump(Gamep g)
     return false;
   }
 
-  player_jump(g, v, l, player);
-  return true;
+  return player_jump(g, v, l, player, v->cursor_at);
 }
 
 bool game_event_help(Gamep g)

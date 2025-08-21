@@ -17,6 +17,9 @@ bool tests_init(void)
   if (! test_load_collision_large_fire_water()) {
     return false;
   }
+  if (! test_load_jump_ok()) {
+    return false;
+  }
   if (! test_load_collision_fire_chasm()) {
     return false;
   }
