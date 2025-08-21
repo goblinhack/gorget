@@ -770,8 +770,6 @@ Tilep string2tile(std::string &s, int *len)
 
 Tilep tile_index_to_tile(int i)
 {
-  extern std::vector< class Tile * > all_tiles_array;
-
   if (unlikely(! i)) {
     return nullptr;
   }
