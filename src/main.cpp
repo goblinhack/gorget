@@ -900,9 +900,9 @@ int main(int argc, char *argv[])
   if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("Load audio");
+      CON("Init audio");
     } else {
-      LOG("Load audio");
+      LOG("Init audio");
     }
     if (! audio_init()) {
       ERR("Audio init");
@@ -913,9 +913,9 @@ int main(int argc, char *argv[])
   if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("Load music");
+      CON("Init music");
     } else {
-      LOG("Load music");
+      LOG("Init music");
     }
     if (! music_init()) {
       ERR("Music init");
@@ -926,9 +926,9 @@ int main(int argc, char *argv[])
   if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
-      CON("Load sound");
+      CON("Load sounds");
     } else {
-      LOG("Load sound");
+      LOG("Load sounds");
     }
     if (! sound_init()) {
       ERR("Sound init");

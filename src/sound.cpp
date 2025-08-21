@@ -45,7 +45,7 @@ static void sound_finished(int channel)
 bool sound_init(void)
 {
   TRACE_NO_INDENT();
-  Mix_AllocateChannels(16);
+  Mix_AllocateChannels(8);
   Mix_ChannelFinished(sound_finished);
 
   sound_init_done = true;
