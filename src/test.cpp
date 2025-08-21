@@ -16,31 +16,31 @@
 
 /* clang-format off */
 std::initializer_list< std::string > tests = {
-    // clang-format off
     /* begin shell marker1 */
-    /* shell for i in $(find . -name "*.cpp" | xargs grep -h "test_load(\"" | awk '{print $4}' | cut -d\" -f2) */
+    /* shell for i in $(find . -name "*.cpp" | xargs grep -h "test_load(\"" | sort | awk '{print $4}' | cut -d\" -f2) */
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
-    "collision_large_fire_water",
-    "jump_ok",
-    "collision_fire_chasm",
-    "collision_fire_water",
-    "collision_mob",
     "collision_barrel",
-    "player_fall_chasm",
-    "collision_mob_water",
-    "collision_wall",
-    "collision_mob_lava",
-    "collision_brazier_shove_ok",
     "collision_brazier_shove_chasm",
-    "collision_grass",
-    "collision_player_lava",
-    "move_ok",
-    "collision_brazier_shove_into_mob",
-    "jump_truncated",
-    "collision_fire_foliage",
     "collision_brazier_shove_fail",
+    "collision_brazier_shove_into_mob",
+    "collision_brazier_shove_ok",
+    "collision_fire_chasm",
+    "collision_fire_foliage",
+    "collision_fire_water",
+    "collision_grass",
+    "collision_large_fire_water",
+    "collision_mob_lava",
+    "collision_mob_water",
+    "collision_mob",
+    "collision_player_lava",
+    "collision_wall",
+    "jump_ok",
+    "jump_truncated",
+    "move_ok",
+    "player_fall_chasm",
+    "teleport",
   /* end shell marker1 */
 };
 /* clang-format on */
@@ -61,7 +61,10 @@ public:
 
 using Testidmap = std::vector< class Test * >;
 
-static std::unordered_map< std::string, class Test * > test_name_map;
+//
+// Use std::map so the test names are sorted
+//
+static std::map< std::string, class Test * > test_name_map;
 
 static uint8_t test_init_done;
 

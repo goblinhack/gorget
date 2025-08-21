@@ -4,28 +4,30 @@
 
 bool tests_init(void);
 
+// clang-format off
 /* begin shell marker1 */
-/* shell for i in $(find . -name "*.cpp" | xargs grep -h "^bool test_load" | awk '{print $2}' | cut -d'(' -f1 ) */
+/* shell for i in $(find . -name "*.cpp" | xargs grep -h "^bool test_load" | sort | awk '{print $2}' | cut -d'(' -f1 ) */
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
-bool test_load_collision_large_fire_water();
-bool test_load_jump_ok();
-bool test_load_collision_fire_chasm();
-bool test_load_collision_fire_water();
-bool test_load_collision_mob();
 bool test_load_collision_barrel();
-bool test_load_player_fall_chasm();
-bool test_load_collision_mob_water();
-bool test_load_collision_wall();
-bool test_load_collision_mob_lava();
-bool test_load_collision_brazier_shove_ok();
 bool test_load_collision_brazier_shove_chasm();
-bool test_load_collision_grass();
-bool test_load_collision_player_lava();
-bool test_load_move_ok();
-bool test_load_collision_brazier_shove_into_mob();
-bool test_load_jump_truncated();
-bool test_load_collision_fire_foliage();
 bool test_load_collision_brazier_shove_fail();
-/* end shell marker1 */
+bool test_load_collision_brazier_shove_into_mob();
+bool test_load_collision_brazier_shove_ok();
+bool test_load_collision_fire_chasm();
+bool test_load_collision_fire_foliage();
+bool test_load_collision_fire_water();
+bool test_load_collision_grass();
+bool test_load_collision_large_fire_water();
+bool test_load_collision_mob_lava();
+bool test_load_collision_mob_water();
+bool test_load_collision_mob();
+bool test_load_collision_player_lava();
+bool test_load_collision_wall();
+bool test_load_jump_ok();
+bool test_load_jump_truncated();
+bool test_load_move_ok();
+bool test_load_player_fall_chasm();
+bool test_load_teleport();
+  /* end shell marker1 */
