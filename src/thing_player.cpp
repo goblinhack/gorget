@@ -300,13 +300,16 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   }
 
   auto jump_path = draw_line(t->at, to, thing_jump_distance(t) + 1);
+  bool warn      = true;
 
   for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {
     spoint intermediate = *i;
-    if (thing_jump_to(g, v, l, t, intermediate)) {
+    if (thing_jump_to(g, v, l, t, intermediate, warn)) {
       level_tick_begin_requested(g, v, l, "player jumped");
+      v->player_currently_following_a_path = false;
       return true;
     }
+    warn = false;
   }
 
   return false;

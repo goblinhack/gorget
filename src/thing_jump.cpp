@@ -61,7 +61,7 @@ static bool thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp
 //
 // Handles player and monster jumps
 //
-bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
+bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
 {
   TRACE_NO_INDENT();
 
@@ -87,7 +87,9 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   //
   if (thing_jump_something_in_the_way(g, v, l, t, to)) {
     if (thing_is_player(t)) {
-      TOPCON("You cannot jump over that.");
+      if (warn) {
+        TOPCON("You cannot jump over that.");
+      }
     }
     return false;
   }
@@ -97,7 +99,9 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   //
   if (level_is_obstacle_to_jump_landing(g, v, l, to)) {
     if (thing_is_player(t)) {
-      TOPCON("There is something in the way of jumping there.");
+      if (warn) {
+        TOPCON("There is something in the way of jumping there.");
+      }
     }
     return false;
   }

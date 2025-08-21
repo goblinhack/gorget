@@ -329,7 +329,7 @@ bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 bool thing_is_dir_down(Thingp);
 bool thing_is_dir_tr(Thingp);
 bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-bool thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to, bool warn = true);
 bool thing_teleport(Gamep, Levelsp, Levelp, Thingp);
 bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
