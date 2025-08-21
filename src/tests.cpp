@@ -62,6 +62,9 @@ bool tests_init(void)
   if (! test_load_collision_brazier_shove_into_mob()) {
     return false;
   }
+  if (! test_load_jump_truncated()) {
+    return false;
+  }
   if (! test_load_collision_fire_foliage()) {
     return false;
   }

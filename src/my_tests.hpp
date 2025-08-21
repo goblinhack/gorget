@@ -25,6 +25,7 @@ bool test_load_collision_grass();
 bool test_load_collision_player_lava();
 bool test_load_move_ok();
 bool test_load_collision_brazier_shove_into_mob();
+bool test_load_jump_truncated();
 bool test_load_collision_fire_foliage();
 bool test_load_collision_brazier_shove_fail();
 /* end shell marker1 */
