@@ -147,6 +147,8 @@ static void level_select_dump(Gamep g, Levelsp v, LevelSelect *s)
 {
   TRACE_NO_INDENT();
 
+  IF_NODEBUG { return; }
+
   LOG("LevelSelect, level count %d", s->level_count);
 
   for (int y = 0; y < LEVELS_DOWN; y++) {
