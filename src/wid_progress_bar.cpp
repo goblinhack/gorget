@@ -5,6 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_main.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_wid_popup.hpp"
 
@@ -21,6 +22,7 @@ void wid_progress_bar_destroy(Gamep g)
 
 void wid_progress_bar(Gamep g, const std::string &title, float pct)
 {
+  verify(MTYPE_GAME, g);
   LOG("Progress bar: %s, %f pct", title.c_str(), pct);
   TRACE_NO_INDENT();
 

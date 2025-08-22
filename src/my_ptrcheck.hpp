@@ -64,19 +64,14 @@ void  ptrcheck_leak_print(void);
   }
 
 enum {
-  MTYPE_BLOCK,
-  MTYPE_LIGHT,
-  MTYPE_MISC,
-  MTYPE_TILEMAP,
-  MTYPE_OBST,
-  MTYPE_ROOM,
   MTYPE_SDL,
-  MTYPE_STRING,
+  MTYPE_MISC,
   MTYPE_TEX,
   MTYPE_TILE,
   MTYPE_TP,
   MTYPE_WID,
   MTYPE_LEVELS,
+  MTYPE_GAME,
   MTYPE_MAX,
 };
 

@@ -223,6 +223,7 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   in >> bits(my.t.saved_dir);
 
   Levelsp tmp = (Levelsp) mymalloc(sizeof(Levels), "loaded level");
+  newptr(MTYPE_LEVELS, tmp, "loaded levels");
   in.read(reinterpret_cast< char * >(tmp), sizeof(Levels));
   my.t.levels = tmp;
 
@@ -278,6 +279,8 @@ bool Game::load(std::string file_to_load, class Game &target)
   LOG("Load: %s", file_to_load.c_str());
   TRACE_AND_INDENT();
 
+  TRACE_NO_INDENT();
+  verify(MTYPE_GAME, this);
   game_load_error = "";
 
   //
@@ -285,20 +288,26 @@ bool Game::load(std::string file_to_load, class Game &target)
   //
   lzo_uint uncompressed_len;
 
+  TRACE_NO_INDENT();
   if (! game_headers_only) {
+    verify(MTYPE_GAME, this);
     wid_progress_bar(this, "Loading...", 0.0);
   }
 
+  TRACE_NO_INDENT();
   auto vec = read_lzo_file(file_to_load, &uncompressed_len);
 
+  TRACE_NO_INDENT();
   if (vec.size() <= 0) {
     if (! game_headers_only) {
       wid_error(game, "load error, empty file [" + file_to_load + "] ?");
     }
+    verify(MTYPE_GAME, this);
     wid_progress_bar_destroy(this);
     return false;
   }
 
+  TRACE_NO_INDENT();
   auto     data           = vec.data();
   lzo_uint compressed_len = vec.size();
 
@@ -306,10 +315,13 @@ bool Game::load(std::string file_to_load, class Game &target)
   HEAP_ALLOC(uncompressed, uncompressed_len);
   memcpy(compressed, data, compressed_len);
 
+  TRACE_NO_INDENT();
   if (! game_headers_only) {
+    verify(MTYPE_GAME, this);
     wid_progress_bar(this, "Decompressing...", 0.5);
   }
 
+  TRACE_NO_INDENT();
   lzo_uint new_len = 0;
   int      r = lzo1x_decompress((lzo_bytep) compressed, compressed_len, (lzo_bytep) uncompressed, &new_len, nullptr);
   if (r == LZO_E_OK && new_len == uncompressed_len) {
@@ -320,11 +332,14 @@ bool Game::load(std::string file_to_load, class Game &target)
   } else {
     /* this should NEVER happen */
     ERR("LZO internal error - decompression failed: %d", r);
+    verify(MTYPE_GAME, this);
     wid_progress_bar_destroy(this);
     return false;
   }
 
+  TRACE_NO_INDENT();
   if (! game_headers_only) {
+    verify(MTYPE_GAME, this);
     wid_progress_bar(this, "Reading...", 0.75);
   }
 
@@ -338,8 +353,10 @@ bool Game::load(std::string file_to_load, class Game &target)
   std::string        s((const char *) uncompressed, (size_t) uncompressed_len);
   std::istringstream in(s);
 
+  TRACE_NO_INDENT();
   game_load_error = "";
   in >> bits(target);
+  TRACE_NO_INDENT();
   if (! game_load_error.empty()) {
     if (! game_headers_only) {
       wid_error(game, "load error, " + game_load_error);
@@ -351,6 +368,7 @@ bool Game::load(std::string file_to_load, class Game &target)
   free(compressed);
 
   if (! game_headers_only) {
+    verify(MTYPE_GAME, this);
     wid_progress_bar(this, "Loaded", 1.0);
   }
 
@@ -643,6 +661,7 @@ void game_load_last_config(const char *appdata)
   CON("Load config");
 
   game = new Game(std::string(appdata));
+  newptr(MTYPE_GAME, game, "game");
 
   auto config_error = game->load_config();
 
@@ -651,17 +670,21 @@ void game_load_last_config(const char *appdata)
   if (game->config.version != version) {
     sdl_msg_box("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
                 game->config.version.c_str(), version.c_str());
+    oldptr(MTYPE_GAME, game);
     delete game;
     game = new Game(std::string(appdata));
+    newptr(MTYPE_GAME, game, "game (1)");
     reset_globals();
     game_save_config(game);
     g_errored = false;
   } else if (! config_error.empty()) {
     sdl_msg_box("Config error: %s. Will need to reset config.", config_error.c_str());
+    oldptr(MTYPE_GAME, game);
     delete game;
     game = nullptr;
     reset_globals();
     game = new Game(std::string(appdata));
+    newptr(MTYPE_GAME, game, "game (2)");
     game_save_config(game);
     g_errored = false;
   }
