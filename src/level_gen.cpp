@@ -93,8 +93,8 @@ static const int LEVEL_DOOR_PROB  = 10;
 //
 // Chances of creating, tested in the following order, with the default being water
 //
-static const int LEVEL_BLOB_LAVA_GEN_PROB  = 5;
-static const int LEVEL_BLOB_CHASM_GEN_PROB = 10;
+static const int LEVEL_BLOB_LAVA_GEN_PROB  = 0;
+static const int LEVEL_BLOB_CHASM_GEN_PROB = 50;
 
 class Cell;
 class Room;
@@ -2324,7 +2324,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
       auto chance    = d100();
       char blob_type = CHARMAP_WATER;
 
-      if (chance < LEVEL_BLOB_LAVA_GEN_PROB) {
+      if (chance < LEVEL_BLOB_LAVA_GEN_PROB + level_num) {
         blob_type = CHARMAP_LAVA;
       } else if (chance < LEVEL_BLOB_CHASM_GEN_PROB) {
         blob_type = CHARMAP_CHASM;
@@ -2687,27 +2687,6 @@ static void level_gen_add_chasms_around_bridges(Gamep g, class LevelGen *l)
 
   char bridge_type = CHARMAP_CHASM;
 
-  //
-  // If adjacent to water, make the bridge over water
-  //
-  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
-    for (int x = 1; x < MAP_WIDTH - 1; x++) {
-      for (int dy = -1; dy <= 1; dy++) {
-        for (int dx = -1; dx <= 1; dx++) {
-          if (l->data[ x + dx ][ y + dy ].c == CHARMAP_WATER) {
-            bridge_type = CHARMAP_WATER;
-            goto add_bridge;
-          }
-          if (l->data[ x + dx ][ y + dy ].c == CHARMAP_LAVA) {
-            bridge_type = CHARMAP_LAVA;
-            goto add_bridge;
-          }
-        }
-      }
-    }
-  }
-
-add_bridge:
   //
   // Create the bridge
   //
