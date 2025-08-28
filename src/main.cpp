@@ -517,6 +517,7 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--test") || ! strcasecmp(argv[ i ], "-test")) {
       g_opt_test_name    = argv[ i + 1 ];
       g_opt_tests        = true;
+      g_opt_debug2       = true;
       skip_gfx_and_audio = true;
       i++;
       continue;
@@ -524,6 +525,7 @@ static void parse_args(int argc, char *argv[])
 
     if (! strcasecmp(argv[ i ], "--tests") || ! strcasecmp(argv[ i ], "-tests")) {
       g_opt_tests        = true;
+      g_opt_debug2       = true;
       skip_gfx_and_audio = true;
       continue;
     }

@@ -5438,9 +5438,13 @@ void WID_DBG(Widp w, const char *fmt, ...)
 {
   va_list args;
 
+  verify(MTYPE_WID, w);
+
   IF_NODEBUG2 { return; }
 
-  verify(MTYPE_WID, w);
+#ifndef ENABLE_DEBUG_UI
+  return;
+#endif
 
   va_start(args, fmt);
   wid_log_(w, fmt, args);

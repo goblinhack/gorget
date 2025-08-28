@@ -7,6 +7,8 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
+extern Gamep game;
+
 static bool test_save_load(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
@@ -74,8 +76,14 @@ static bool test_save_load(Gamep g, Testp t)
   }
 
   TEST_ASSERT(t, game_save(g, "test"), "game save");
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 1, "post save tick counter value");
+
+  game_cleanup(g);
+
   TEST_ASSERT(t, game_load(g, "test"), "game load");
+  g = game;
+  v = game_levels_get(g);
+
   TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
   TEST_PASSED(t);

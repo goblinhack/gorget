@@ -49,7 +49,7 @@ void CLEANUP_OK(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #ifdef ENABLE_ASSERT
 #undef ASSERT
 #define ASSERT(x)                                                                                                    \
-  if (! (x)) {                                                                                                       \
+  if (unlikely(! (x))) {                                                                                             \
     DIE("Assert '%s' failed at %s:%s():%u", #x, SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                         \
   }
 #else
