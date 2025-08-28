@@ -135,7 +135,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
   return out;
 }
 
-bool Game::save(std::string file_to_save)
+bool Game::save(const std::string &file_to_save)
 {
   LOG("Save: %s", file_to_save.c_str());
   TRACE_AND_INDENT();
@@ -259,17 +259,24 @@ bool Game::save(std::string file_to_save)
   return true;
 }
 
-void Game::save(int slot)
+bool game_save(Gamep g, const std::string &file_to_save)
+{
+  LOG("Save: %s", file_to_save.c_str());
+
+  return g->save(file_to_save);
+}
+
+bool Game::save(int slot)
 {
   LOG("Save slot: %d", slot);
   TRACE_AND_INDENT();
 
   if (slot < 0) {
-    return;
+    return false;
   }
 
   if (slot >= UI_WID_SAVE_SLOTS) {
-    return;
+    return false;
   }
 
   auto this_save_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
@@ -282,12 +289,14 @@ void Game::save(int slot)
   this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
 
   LOG("Saving: %s", this_save_file.c_str());
-  save(this_save_file);
+  auto ret = save(this_save_file);
 
   CON("Saved the game to %s.", this_save_file.c_str());
+
+  return ret;
 }
 
-void Game::save_snapshot(void)
+bool Game::save_snapshot(void)
 {
   LOG("Save snapshot");
   TRACE_AND_INDENT();
@@ -302,23 +311,25 @@ void Game::save_snapshot(void)
   this_save_file = saved_dir + "saved-snapshot";
 
   LOG("Saving: %s", this_save_file.c_str());
-  save(this_save_file);
+  auto ret = save(this_save_file);
 
   CON("%%fg=green$Autosaved.%%fg=reset$");
+  return ret;
 }
 
-void Game::save_config(void)
+bool Game::save_config(void)
 {
   TRACE_NO_INDENT();
   auto          filename = saved_dir + "config";
   std::ofstream out(filename, std::ios::binary);
   if (! out) {
     ERR("Failed to open %s for writing: %s", filename.c_str(), strerror(errno));
-    return;
+    return false;
   }
   LOG("Opened [%s] for writing", filename.c_str());
   const Config &c = game->config;
   out << bits(c);
+  return true;
 }
 
 void wid_save_destroy(Gamep g)
@@ -416,13 +427,13 @@ static bool wid_save_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-void Game::save_select(void)
+bool Game::save_select(void)
 {
   LOG("Save menu");
   TRACE_AND_INDENT();
 
   if (wid_save) {
-    return;
+    return false;
   }
 
   int    menu_height = UI_WID_SAVE_SLOTS + 8;
@@ -502,6 +513,8 @@ void Game::save_select(void)
   wid_update(game, wid_save->wid_text_area->wid_text_area);
 
   state_change(STATE_SAVE_MENU, "save select");
+
+  return true;
 }
 
 void wid_save_select(Gamep g) { g->save_select(); }

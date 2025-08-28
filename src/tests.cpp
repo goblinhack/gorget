@@ -34,6 +34,7 @@ bool tests_init(void)
   if (!test_load_jump_truncated()) { return false; }
   if (!test_load_move_ok()) { return false; }
   if (!test_load_player_fall_chasm()) { return false; }
+  if (!test_load_save_load()) { return false; }
   if (!test_load_teleport()) { return false; }
   /* end shell marker1 */
   // clang-format on

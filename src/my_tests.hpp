@@ -29,5 +29,6 @@ bool test_load_jump_ok();
 bool test_load_jump_truncated();
 bool test_load_move_ok();
 bool test_load_player_fall_chasm();
+bool test_load_save_load();
 bool test_load_teleport();
   /* end shell marker1 */

@@ -274,7 +274,7 @@ static std::vector< char > read_lzo_file(const std::string filename, lzo_uint *u
   return bytes;
 }
 
-bool Game::load(std::string file_to_load, class Game &target)
+bool Game::load(const std::string &file_to_load, class Game &target)
 {
   LOG("Load: %s", file_to_load.c_str());
   TRACE_AND_INDENT();
@@ -377,6 +377,13 @@ bool Game::load(std::string file_to_load, class Game &target)
   return true;
 }
 
+bool game_load(Gamep g, const std::string &file_to_load)
+{
+  TRACE_NO_INDENT();
+
+  return g->load(file_to_load, *g);
+}
+
 std::string Game::load_config(void)
 {
   TRACE_NO_INDENT();
@@ -391,22 +398,22 @@ std::string Game::load_config(void)
   return game_load_error;
 }
 
-void Game::load(int slot)
+bool Game::load(int slot)
 {
   LOG("Load slot: %d", slot);
   TRACE_AND_INDENT();
 
   if (slot < 0) {
-    return;
+    return false;
   }
 
   if (slot >= UI_WID_SAVE_SLOTS) {
-    return;
+    return false;
   }
 
   if (! slot_valid[ slot ]) {
     LOG("No game at that slot.");
-    return;
+    return false;
   }
 
   LOG("Clean up current game");
@@ -427,9 +434,11 @@ void Game::load(int slot)
   state_change(STATE_PLAYING, "loaded game");
 
   TOPCON("Loaded the game from %s", this_save_file.c_str());
+
+  return game_load_error == "";
 }
 
-void Game::load_snapshot(void)
+bool Game::load_snapshot(void)
 {
   LOG("Load snapshot");
   TRACE_AND_INDENT();
@@ -446,6 +455,8 @@ void Game::load_snapshot(void)
   state_change(STATE_PLAYING, "loaded snapshot");
 
   TOPCON("Loaded the game from %s", this_save_file.c_str());
+
+  return game_load_error == "";
 }
 
 void wid_load_destroy(Gamep g)
@@ -654,7 +665,7 @@ void Game::load_select(void)
 
 void wid_load_select(Gamep g) { g->load_select(); }
 
-void game_load_last_config(const char *appdata)
+bool game_load_last_config(const char *appdata)
 {
   TRACE_NO_INDENT();
 
@@ -688,4 +699,6 @@ void game_load_last_config(const char *appdata)
     game_save_config(game);
     g_errored = false;
   }
+
+  return game_load_error == "";
 }

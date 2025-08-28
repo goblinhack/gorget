@@ -264,30 +264,31 @@ public:
   Game(std::string appdata);
   Game(void) = default;
 
+  bool load_snapshot(void);
+  bool load(int slot);
+  bool load(const std::string &, class Game &target);
+  bool save_config(void);
+  bool save_select(void);
+  bool save_snapshot(void);
+  bool save(int slot);
+  bool save(const std::string &);
+
+  void cleanup(void);
   void create_levels(void);
-  void start_playing(void);
   void destroy_levels(void);
   void display(void);
   void fini(void);
-  void cleanup(void);
   void init(void);
   void load_select(void);
-  void save_select(void);
-  void load_snapshot(void);
-  void load(int slot);
-  void save_config(void);
-  void save_snapshot(void);
-  void save(int slot);
-  void seed_set(const char *seed = nullptr);
-  void seed_clear(void);
   void player_name_set(const char *player_name);
-  void state_change(GameState state, const std::string &);
-  void tick(void);
-  void state_reset(const std::string &);
-  bool load(std::string save_file, class Game &target);
-  bool save(std::string save_file);
-  void popup_text_add(spoint p, const std::string &);
   void popup_cleanup(void);
+  void popup_text_add(spoint p, const std::string &);
+  void seed_clear(void);
+  void seed_set(const char *seed = nullptr);
+  void start_playing(void);
+  void state_change(GameState state, const std::string &);
+  void state_reset(const std::string &);
+  void tick(void);
 
   std::string load_config(void);
 };
@@ -1151,14 +1152,14 @@ void game_display(Gamep g)
   g->display();
 }
 
-void game_load_config(Gamep g)
+bool game_load_config(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
-    return;
+    return false;
   }
-  g->load_config();
+  return g->load_config() == "" /* no error */;
 }
 
 class HiScores *game_hiscores_get(Gamep g)
@@ -2554,7 +2555,7 @@ std::string game_request_to_end_game_reason_get(Gamep g)
 
   return g->request_to_end_game_reason;
 }
-void game_request_to_end_game_reason_set(Gamep g, std::string val)
+void game_request_to_end_game_reason_set(Gamep g, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {

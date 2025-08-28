@@ -40,6 +40,7 @@ std::initializer_list< std::string > tests = {
     "jump_truncated",
     "move_ok",
     "player_fall_chasm",
+    "save_load",
     "teleport",
   /* end shell marker1 */
 };
