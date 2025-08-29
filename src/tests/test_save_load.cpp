@@ -18,6 +18,8 @@ static bool test_save_load(Gamep g, Testp t)
   auto     w         = 7;
   auto     h         = 7;
 
+  std::string file_to_save = ".test-tmp-file";
+
   //
   // How the dungeon starts out, and how we expect it to change
   //
@@ -75,12 +77,12 @@ static bool test_save_load(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_save(g, "test"), "game save");
+  TEST_ASSERT(t, game_save(g, file_to_save), "game save");
   TEST_ASSERT(t, game_tick_get(g, v) == 1, "post save tick counter value");
 
   game_cleanup(g);
 
-  TEST_ASSERT(t, game_load(g, "test"), "game load");
+  TEST_ASSERT(t, game_load(g, file_to_save), "game load");
   g = game;
   v = game_levels_get(g);
 
