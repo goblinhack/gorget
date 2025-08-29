@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_level.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
@@ -16,6 +17,29 @@ static std::string tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "rickety bridge";
 }
 
+static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE_NO_INDENT();
+
+  const std::initializer_list< spoint > points = {
+      spoint(0, -1),
+      spoint(-1, 0),
+      spoint(1, 0),
+      spoint(0, 1),
+  };
+
+  //
+  // Destroy adjacent bridge tiles
+  //
+  for (auto delta : points) {
+    auto p = t->at + delta;
+    auto b = level_alive_first_is_bridge(g, v, l, p);
+    if (b) {
+      thing_dead(g, v, l, b, e);
+    }
+  }
+}
+
 bool tp_load_bridge(void)
 {
   TRACE_NO_INDENT();
@@ -27,9 +51,11 @@ bool tp_load_bridge(void)
   tp_description_set(tp, tp_bridge_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_bridge);
+  tp_on_death_set(tp, tp_bridge_on_death);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);

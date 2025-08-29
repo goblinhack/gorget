@@ -415,11 +415,12 @@ bool is_oob(spoint);
 bool is_oob(int, int);
 
 bool   level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-Thingp level_first_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-bool   level_alive_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-int    level_count_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-bool   level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint p, Tpp);
-bool   level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot, ThingId);
+Thingp level_first_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+Thingp level_alive_first_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+bool   level_alive_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+int    level_count_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+bool   level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint, Tpp);
+bool   level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint, int slot, ThingId);
 bool   level_tick_is_in_progress(Gamep, Levelsp, Levelp);
 
 void level_anim(Gamep, Levelsp, Levelp);
