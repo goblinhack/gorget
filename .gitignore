@@ -52,4 +52,4 @@ src/ramdisk_data.cpp
 build/Makefile.template
 build/Makefile
 gorget.dSYM/
-.test-tmp-file
+.o/test-tmp-file

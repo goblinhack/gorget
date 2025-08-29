@@ -18,7 +18,7 @@ static bool test_save_load(Gamep g, Testp t)
   auto     w         = 7;
   auto     h         = 7;
 
-  std::string file_to_save = ".test-tmp-file";
+  std::string file_to_save = ".o/test-tmp-file";
 
   //
   // How the dungeon starts out, and how we expect it to change
