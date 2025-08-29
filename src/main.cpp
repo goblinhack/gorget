@@ -74,6 +74,7 @@ void cleanup(void)
   sound_fini();
   sdl_fini(g);
   rooms_fini(g);
+  levels_fini(g);
   fragments_fini(g);
   fragment_alts_fini(g);
 
@@ -445,6 +446,7 @@ static void usage(void)
   CON("Testing options:");
   CON(" --tests                           -- Run all tests.");
   CON(" --test foo                        -- Run test foo only.");
+  CON(" --level foo                       -- Start in this level only.");
   CON("Quickstart options:");
   CON(" --quick-start                     -- Quick start inside level.");
   CON(" --quick-start-level-select-menu   -- Quick start in the level select menu.");
@@ -511,6 +513,13 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--quick-start-level-select-menu")
         || ! strcasecmp(argv[ i ], "-quick-start-level-select-menu")) {
       g_opt_quick_start_level_select_menu = true;
+      continue;
+    }
+
+    if (! strcasecmp(argv[ i ], "--level") || ! strcasecmp(argv[ i ], "-level")) {
+      g_opt_level_name  = argv[ i + 1 ];
+      g_opt_quick_start = true;
+      i++;
       continue;
     }
 
@@ -968,6 +977,7 @@ int main(int argc, char *argv[])
 
   {
     rooms_init(g);
+    levels_init(g);
     fragments_init(g);
 
     if (g_opt_tests) {

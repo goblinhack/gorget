@@ -98,6 +98,7 @@ static const int LEVEL_BLOB_CHASM_GEN_PROB = 50;
 
 class Cell;
 class Room;
+class LevelFixed;
 class LevelGen;
 
 //
@@ -285,7 +286,56 @@ public:
 };
 
 static int                         room_no;
-static std::vector< class Room * > rooms_all[ ROOM_TYPE_MAX ];
+static std::vector< class Room * > room_all[ ROOM_TYPE_MAX ];
+
+class LevelFixed
+{
+private:
+public:
+  LevelFixed(void) {}
+  ~LevelFixed(void) { myfree(data); }
+
+  //
+  // Globally unique
+  //
+  int id = {};
+
+  //
+  // Chance of appearing
+  //
+  int chance = {CHANCE_NORMAL};
+
+  //
+  // Level size before creation
+  //
+  int width  = {};
+  int height = {};
+
+  //
+  // Boss level etc...
+  //
+  LevelType level_type {LEVEL_TYPE_NORMAL};
+
+  //
+  // Level data
+  //
+  char *data = {};
+
+  //
+  // For keeping track of source location
+  //
+  const char *file = {};
+  int         line = {};
+
+  //
+  // User alias for level. Must be unique.
+  //
+  std::string alias;
+};
+
+static int                                                   level_fixed_no;
+static std::vector< class LevelFixed * >                     level_fixed_all[ LEVEL_TYPE_MAX ];
+static std::unordered_map< std::string, class LevelFixed * > level_alias_all;
 
 class FragmentAlt
 {
@@ -434,7 +484,7 @@ static class Room *room_rotate(Gamep g, class Room *r)
   TRACE_NO_INDENT();
 
   auto n = new Room();
-  rooms_all[ r->room_type ].push_back(n);
+  room_all[ r->room_type ].push_back(n);
 
   n->id        = room_no++;
   n->chance    = r->chance;
@@ -466,7 +516,7 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
   TRACE_NO_INDENT();
 
   auto n = new Room();
-  rooms_all[ r->room_type ].push_back(n);
+  room_all[ r->room_type ].push_back(n);
 
   n->id        = room_no++;
   n->chance    = r->chance;
@@ -493,7 +543,7 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
 //
 // Add a room and copies with all possible rotations
 //
-void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, ...)
+void room_add(Gamep g, int chance, int room_flags, const char *file, int line, ...)
 {
   TRACE_NO_INDENT();
 
@@ -536,7 +586,7 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
       // Check width is constant
       //
       if (room_width != this_line_width) {
-        DIE("room has inconsistent width in room %s:%d", file, line);
+        DIE("room has inconsistent width in room @ %s:%d", file, line);
         return;
       }
     }
@@ -557,7 +607,7 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
         case CHARMAP_EMPTY :    break;
         case CHARMAP_EXIT :
           if (exit_count++) {
-            DIE("room has too many exits in room %s:%d", file, line);
+            DIE("room has too many exits in room @ %s:%d", file, line);
             return;
           }
           room_type = ROOM_TYPE_EXIT;
@@ -576,7 +626,7 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
         case CHARMAP_SECRET_DOOR : break;
         case CHARMAP_ENTRANCE :
           if (entrance_count++) {
-            DIE("room has too many entrances in room %s:%d", file, line);
+            DIE("room has too many entrances in room @ %s:%d", file, line);
             return;
           }
           room_type = ROOM_TYPE_START;
@@ -588,7 +638,7 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
         case CHARMAP_WALL :       break;
         case CHARMAP_WATER :      break;
         case CHARMAP_DEEP_WATER : break;
-        default :                 DIE("room has unknown char [%c] in room %s:%d", room_line[ i ], file, line); return;
+        default :                 DIE("room has unknown char [%c] in room @ %s:%d", room_line[ i ], file, line); return;
       }
     }
 
@@ -601,19 +651,19 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
   // Check the room sizes
   //
   if (! room_width) {
-    DIE("room has no width in room %s:%d", file, line);
+    DIE("room has no width in room @ %s:%d", file, line);
     return;
   }
   if (! room_height) {
-    DIE("room has no height in room %s:%d", file, line);
+    DIE("room has no height in room @ %s:%d", file, line);
     return;
   }
-  if (room_width >= MAP_WIDTH) {
-    DIE("room is too wide in room %s:%d", file, line);
+  if (room_width > MAP_WIDTH) {
+    DIE("room is too wide in room @ %s:%d", file, line);
     return;
   }
-  if (room_height >= MAP_HEIGHT) {
-    DIE("room is too tall in room %s:%d", file, line);
+  if (room_height > MAP_HEIGHT) {
+    DIE("room is too tall in room @ %s:%d", file, line);
     return;
   }
 
@@ -621,7 +671,7 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
   // Allocate space for the room
   //
   class Room *r = new Room();
-  rooms_all[ room_type ].push_back(r);
+  room_all[ room_type ].push_back(r);
 
   r->id        = room_no++;
   r->chance    = chance;
@@ -675,7 +725,7 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
   va_end(ap);
 
   if (! has_exit_up && ! has_exit_down && ! has_exit_left && ! has_exit_right) {
-    DIE("room has no exits %s:%d", file, line);
+    DIE("room has no exits @ %s:%d", file, line);
     return;
   }
 
@@ -706,19 +756,19 @@ void room_add(Gamep g, int chance, bool room_flags, const char *file, int line, 
           }
 
           if ((y == 0) && has_exit_up) {
-            DIE("room has exit up and tiles in same row %s:%d", file, line);
+            DIE("room has exit up and tiles in same row @ %s:%d", file, line);
             return;
           }
           if ((y == r->height - 1) && has_exit_down) {
-            DIE("room has exit down and tiles in same row %s:%d", file, line);
+            DIE("room has exit down and tiles in same row @ %s:%d", file, line);
             return;
           }
           if ((x == 0) && has_exit_left) {
-            DIE("room has exit left and tiles in same column %s:%d", file, line);
+            DIE("room has exit left and tiles in same column @ %s:%d", file, line);
             return;
           }
           if ((x == r->width - 1) && has_exit_right) {
-            DIE("room has exit right and tiles in same column %s:%d", file, line);
+            DIE("room has exit right and tiles in same column @ %s:%d", file, line);
             return;
           }
         }
@@ -742,11 +792,11 @@ static class Room *room_random_get(Gamep g, class LevelGen *l, RoomType room_typ
 {
   TRACE_NO_INDENT();
 
-  if (! rooms_all[ room_type ].size()) {
+  if (! room_all[ room_type ].size()) {
     DIE("no rooms of type %d", room_type);
   }
 
-  return rooms_all[ room_type ][ pcg_random_range(0, rooms_all[ room_type ].size()) ];
+  return room_all[ room_type ][ pcg_random_range(0, room_all[ room_type ].size()) ];
 }
 
 //
@@ -757,7 +807,7 @@ static void room_dump(Gamep g, class Room *r)
   TRACE_NO_INDENT();
 
   level_gen_mutex.lock();
-  LOG("Room %d %s:%d", r->id, r->file, r->line);
+  LOG("Room %d @ %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
     std::string tmp;
@@ -779,7 +829,7 @@ void rooms_dump(Gamep g)
   TRACE_NO_INDENT();
 
   for (auto room_type = (int) ROOM_TYPE_FIRST; room_type < (int) ROOM_TYPE_MAX; room_type++) {
-    for (auto r : rooms_all[ room_type ]) {
+    for (auto r : room_all[ room_type ]) {
       room_dump(g, r);
     }
   }
@@ -974,7 +1024,7 @@ void rooms_fini(Gamep g)
   TRACE_NO_INDENT();
 
   for (auto room_type = (int) ROOM_TYPE_FIRST; room_type < (int) ROOM_TYPE_MAX; room_type++) {
-    for (auto r : rooms_all[ room_type ]) {
+    for (auto r : room_all[ room_type ]) {
       delete r;
     }
   }
@@ -1095,7 +1145,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
       // Check width is constant
       //
       if (fragment_alt_width != this_line_width) {
-        DIE("fragment_alt has inconsistent width in fragment_alt %s:%d", file, line);
+        DIE("fragment_alt has inconsistent width in fragment_alt @ %s:%d", file, line);
         return false;
       }
     }
@@ -1135,7 +1185,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_WATER :       break;
         case CHARMAP_DEEP_WATER :  break;
         default :
-          DIE("fragment_alt has unknown char [%c] in fragment_alt %s:%d", fragment_alt_line[ i ], file, line);
+          DIE("fragment_alt has unknown char [%c] in fragment_alt @ %s:%d", fragment_alt_line[ i ], file, line);
           return false;
       }
     }
@@ -1149,19 +1199,19 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
   // Check the fragment_alt sizes
   //
   if (! fragment_alt_width) {
-    DIE("fragment_alt has no width in fragment_alt %s:%d", file, line);
+    DIE("fragment_alt has no width in fragment_alt @ %s:%d", file, line);
     return false;
   }
   if (! fragment_alt_height) {
-    DIE("fragment_alt has no height in fragment_alt %s:%d", file, line);
+    DIE("fragment_alt has no height in fragment_alt @ %s:%d", file, line);
     return false;
   }
-  if (fragment_alt_width >= MAP_WIDTH) {
-    DIE("fragment_alt is too wide in fragment_alt %s:%d", file, line);
+  if (fragment_alt_width > MAP_WIDTH) {
+    DIE("fragment_alt is too wide in fragment_alt @ %s:%d", file, line);
     return false;
   }
-  if (fragment_alt_height >= MAP_HEIGHT) {
-    DIE("fragment_alt is too tall in fragment_alt %s:%d", file, line);
+  if (fragment_alt_height > MAP_HEIGHT) {
+    DIE("fragment_alt is too tall in fragment_alt @ %s:%d", file, line);
     return false;
   }
 
@@ -1244,7 +1294,7 @@ static void fragment_alt_dump(Gamep g, class FragmentAlt *r)
   TRACE_NO_INDENT();
 
   level_gen_mutex.lock();
-  LOG("FragmentAlt %d %s:%d", r->id, r->file, r->line);
+  LOG("FragmentAlt %d @ %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
     std::string tmp;
@@ -1397,7 +1447,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
       // Check width is constant
       //
       if (fragment_width != this_line_width) {
-        DIE("fragment has inconsistent width in fragment %s:%d", file, line);
+        DIE("fragment has inconsistent width in fragment @ %s:%d", file, line);
         return false;
       }
     }
@@ -1438,7 +1488,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_DEEP_WATER :  break;
         case CHARMAP_WILDCARD :    break;
         default :
-          DIE("fragment has unknown char [%c] in fragment %s:%d", fragment_line[ i ], file, line);
+          DIE("fragment has unknown char [%c] in fragment @ %s:%d", fragment_line[ i ], file, line);
           return false;
       }
     }
@@ -1452,19 +1502,19 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
   // Check the fragment sizes
   //
   if (! fragment_width) {
-    DIE("fragment has no width in fragment %s:%d", file, line);
+    DIE("fragment has no width in fragment @ %s:%d", file, line);
     return false;
   }
   if (! fragment_height) {
-    DIE("fragment has no height in fragment %s:%d", file, line);
+    DIE("fragment has no height in fragment @ %s:%d", file, line);
     return false;
   }
-  if (fragment_width >= MAP_WIDTH) {
-    DIE("fragment is too wide in fragment %s:%d", file, line);
+  if (fragment_width > MAP_WIDTH) {
+    DIE("fragment is too wide in fragment @ %s:%d", file, line);
     return false;
   }
-  if (fragment_height >= MAP_HEIGHT) {
-    DIE("fragment is too tall in fragment %s:%d", file, line);
+  if (fragment_height > MAP_HEIGHT) {
+    DIE("fragment is too tall in fragment @ %s:%d", file, line);
     return false;
   }
 
@@ -1539,7 +1589,7 @@ static void fragment_dump(Gamep g, class Fragment *r)
   TRACE_NO_INDENT();
 
   level_gen_mutex.lock();
-  LOG("Fragment %d %s:%d", r->id, r->file, r->line);
+  LOG("Fragment %d @ %s:%d", r->id, r->file, r->line);
 
   for (int y = 0; y < r->height; y++) {
     std::string tmp;
@@ -1698,6 +1748,246 @@ void fragments_fini(Gamep g)
   for (auto r : fragments_all) {
     delete r;
   }
+}
+
+//
+// Add a level and copies with all possible rotations
+//
+void level_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line, ...)
+{
+  TRACE_NO_INDENT();
+
+  va_list ap;
+
+  int level_width  = 0;
+  int level_height = 0;
+
+  //
+  // Ensure not too many of certain tiles
+  //
+  int exit_count     = 0;
+  int entrance_count = 0;
+
+  //
+  // First scan, get width and height
+  //
+  va_start(ap, line);
+
+  for (;;) {
+    const char *level_line = va_arg(ap, const char *);
+    if (! level_line) {
+      break;
+    }
+
+    int this_line_width = (int) strlen(level_line);
+
+    if (! level_width) {
+      //
+      // Get the level width
+      //
+      level_width = this_line_width;
+    } else {
+      //
+      // Check width is constant
+      //
+      if (level_width != this_line_width) {
+        DIE("level has inconsistent width in level @ %s:%d", file, line);
+        return;
+      }
+    }
+
+    //
+    // Check the level contents are known characters
+    //
+    for (auto i = 0; i < level_width; i++) {
+      switch (level_line[ i ]) {
+        case CHARMAP_BARREL :   break;
+        case CHARMAP_BRAZIER :  break;
+        case CHARMAP_BRIDGE :   break;
+        case CHARMAP_CHASM :    break;
+        case CHARMAP_CHASM_50 : break;
+        case CHARMAP_CORRIDOR : break;
+        case CHARMAP_DOOR :     break;
+        case CHARMAP_GRASS :    break;
+        case CHARMAP_EMPTY :    break;
+        case CHARMAP_EXIT :
+          if (exit_count++) {
+            DIE("level has too many exits in level @ %s:%d", file, line);
+            return;
+          }
+          break;
+        case CHARMAP_FLOOR :       break;
+        case CHARMAP_FLOOR_50 :    break;
+        case CHARMAP_FOLIAGE :     break;
+        case CHARMAP_JOIN :        break;
+        case CHARMAP_KEY :         break;
+        case CHARMAP_LAVA :        break;
+        case CHARMAP_MOB1 :        break;
+        case CHARMAP_MOB2 :        break;
+        case CHARMAP_MONST1 :      break;
+        case CHARMAP_MONST2 :      break;
+        case CHARMAP_PILLAR :      break;
+        case CHARMAP_SECRET_DOOR : break;
+        case CHARMAP_ENTRANCE :
+          if (entrance_count++) {
+            DIE("level has too many entrances in level @ %s:%d", file, line);
+            return;
+          }
+          break;
+        case CHARMAP_TELEPORT :   break;
+        case CHARMAP_TRAP :       break;
+        case CHARMAP_TREASURE :   break;
+        case CHARMAP_WALL :       break;
+        case CHARMAP_WATER :      break;
+        case CHARMAP_DEEP_WATER : break;
+        default :                 DIE("level has unknown char [%c] in level @ %s:%d", level_line[ i ], file, line); return;
+      }
+    }
+
+    level_height++;
+  }
+
+  va_end(ap);
+
+  //
+  // Check the level sizes
+  //
+  if (! level_width) {
+    DIE("level has no width in level @ %s:%d", file, line);
+    return;
+  }
+  if (! level_height) {
+    DIE("level has no height in level @ %s:%d", file, line);
+    return;
+  }
+  if (level_width > MAP_WIDTH) {
+    DIE("level is too wide in level @ %s:%d", file, line);
+    return;
+  }
+  if (level_height > MAP_HEIGHT) {
+    DIE("level is too tall in level @ %s:%d", file, line);
+    return;
+  }
+
+  //
+  // Allocate space for the level
+  //
+  class LevelFixed *l = new LevelFixed();
+  level_fixed_all[ level_type ].push_back(l);
+
+  if (level_alias_all.find(alias) != level_alias_all.end()) {
+    DIE("level alias \"%s\" is in use already @ %s:%d", alias.c_str(), file, line);
+    return;
+  }
+
+  level_alias_all[ alias ] = l;
+
+  l->id         = level_fixed_no++;
+  l->chance     = chance;
+  l->level_type = level_type;
+  l->alias      = alias;
+  l->file       = file;
+  l->line       = line;
+  l->width      = level_width;
+  l->height     = level_height;
+  l->data       = (char *) myzalloc(MAP_WIDTH * MAP_HEIGHT, "level data");
+
+  //
+  // Center the level if smaller
+  //
+  auto pad_w = (int) (floor((MAP_WIDTH - level_width) / 2));
+  auto pad_h = (int) (floor((MAP_HEIGHT - level_height) / 2));
+
+  //
+  // Now read the level again
+  //
+  va_start(ap, line);
+
+  for (int y = 0; y < l->height; y++) {
+    const char *level_line = va_arg(ap, char *);
+    for (int x = 0; x < l->width; x++) {
+      auto c = level_line[ x ];
+
+      auto X = x + pad_w;
+      auto Y = y + pad_h;
+
+      l->data[ (Y * MAP_WIDTH) + X ] = c;
+    }
+  }
+
+  va_end(ap);
+
+  if (! exit_count) {
+    if (level_type != LEVEL_TYPE_TEST) {
+      DIE("level has no exits @ %s:%d", file, line);
+    }
+    return;
+  }
+}
+
+//
+// Clean up levels
+//
+void levels_fini(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  for (auto level_type = (int) LEVEL_TYPE_FIRST; level_type < (int) LEVEL_TYPE_MAX; level_type++) {
+    for (auto l : level_fixed_all[ level_type ]) {
+      delete l;
+    }
+  }
+}
+
+//
+// Get a random level.
+//
+static class LevelFixed *level_random_get(Gamep g, LevelType level_type)
+{
+  TRACE_NO_INDENT();
+
+  if (! level_fixed_all[ level_type ].size()) {
+    DIE("no levels of type %d", level_type);
+  }
+
+  return level_fixed_all[ level_type ][ pcg_random_range(0, level_fixed_all[ level_type ].size()) ];
+}
+
+//
+// Get a random level.
+//
+static class LevelFixed *level_fixed_get(Gamep g, const std::string &alias)
+{
+  TRACE_NO_INDENT();
+
+  if (level_alias_all.find(alias) == level_alias_all.end()) {
+    DIE("level alias \"%s\" not found", alias.c_str());
+    return nullptr;
+  }
+
+  return level_alias_all[ alias ];
+}
+
+//
+// Convert a level into a single string
+//
+static std::string level_gen_string(Gamep g, class LevelFixed *l)
+{
+  TRACE_NO_INDENT();
+
+  std::string out;
+
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      auto c = l->data[ (y * MAP_WIDTH) + x ];
+      if (! c) {
+        c = CHARMAP_CHASM;
+      }
+      out += c;
+    }
+  }
+
+  return out;
 }
 
 //
@@ -3561,6 +3851,32 @@ static void level_gen_create(Gamep g, class LevelGen *l)
 
   level->initialized = true;
   level->level_num   = l->level_num;
+
+  if (g_opt_level_name != "") {
+    //
+    // Test level
+    //
+    auto fixed_level = level_fixed_get(g, g_opt_level_name);
+    if (! fixed_level) {
+      ERR("No fixed level \"%s\" created", g_opt_level_name.c_str());
+      return;
+    }
+
+    level_string = level_gen_string(g, fixed_level);
+  } else {
+    //
+    // Boss level
+    //
+    LevelSelect *s = &v->level_select;
+    if (l->level_num == s->level_count - 1) {
+      auto fixed_level = level_random_get(g, LEVEL_TYPE_BOSS);
+      if (! fixed_level) {
+        ERR("No fixed level \"%s\" created", g_opt_level_name.c_str());
+        return;
+      }
+      level_string = level_gen_string(g, fixed_level);
+    }
+  }
 
   //
   // Create things

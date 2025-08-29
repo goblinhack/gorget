@@ -38,6 +38,7 @@ bool g_opt_tests;                         // Run tests.
 
 std::string g_opt_seed_name;
 std::string g_opt_test_name;
+std::string g_opt_level_name;
 
 void reset_globals(void)
 {

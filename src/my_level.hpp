@@ -392,6 +392,13 @@ enum {
   ROOM_CHECK_EXIT_FLAG = 1,
 };
 
+enum {
+  //
+  // A test level
+  //
+  LEVEL_TEST_FLAG = 1,
+};
+
 Levelsp levels_memory_alloc(Gamep);
 void    levels_destroy(Gamep, Levelsp);
 void    levels_stats_dump(Gamep);
@@ -446,10 +453,24 @@ void level_init(Gamep, Levelsp, Levelp, LevelNum);
 void level_tile_update_set(Gamep, Levelsp, Levelp, spoint);
 void level_tile_update(Gamep, Levelsp, Levelp);
 
+typedef enum {
+  LEVEL_TYPE_NORMAL,
+  LEVEL_TYPE_TEST,
+  LEVEL_TYPE_BOSS,
+#define LEVEL_TYPE_FIRST LEVEL_TYPE_NORMAL
+  LEVEL_TYPE_MAX
+} LevelType;
+
+void level_add(Gamep, int chance, LevelType, const std::string &alias, const char *file, int line, ...);
+void levels_init(Gamep);
+void levels_fini(Gamep);
+void levels_test(Gamep);
+void levels_fixed(Gamep);
+
 void rooms_test(Gamep);
 void rooms_init(Gamep);
 void rooms_fini(Gamep);
-void room_add(Gamep, int chance, bool check, const char *file, int line, ...);
+void room_add(Gamep, int chance, int flags, const char *file, int line, ...);
 void rooms_blend1(Gamep);
 void rooms_blend2(Gamep);
 void rooms_chunky(Gamep);

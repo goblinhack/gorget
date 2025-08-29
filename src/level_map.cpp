@@ -17,7 +17,8 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
   auto expected_len = w * h;
 
   if ((int) strlen(in) != expected_len) {
-    DIE("bad map size, expected %d, got %d for map %dx%d", (int) strlen(in), (int) expected_len, w, h);
+    DIE("bad map size, expected %d chars, got %d chars for map of expected size %dx%d", (int) expected_len,
+        (int) strlen(in), w, h);
   }
 
   auto tp_wall        = tp_random(is_wall);
