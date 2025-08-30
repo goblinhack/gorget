@@ -108,6 +108,13 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   //
   thing_update_pos(g, t);
 
+  //
+  // Do adjacent tiles need updating due to the destruction of this tiled thing?
+  //
+  if (thing_is_tiled(t)) {
+    level_tile_update_set(g, v, l, t->at);
+  }
+
   return t;
 }
 
