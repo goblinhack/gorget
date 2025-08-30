@@ -164,7 +164,21 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   TRACE_NO_INDENT();
 
   if (thing_is_falling_incr(g, v, l, t, time_step) > MAX_FALL_TIME_MS) {
-    thing_is_falling_set(g, v, l, t, 0);
     thing_fall_end(g, v, l, t);
+    thing_is_falling_set(g, v, l, t, false);
+  }
+}
+
+//
+// Begin falling
+//
+void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  thing_is_falling_set(g, v, l, t, true);
+
+  if (! level_is_chasm(g, v, l, t->at)) {
+    thing_spawn(g, v, l, tp_random(is_chasm), t->at);
   }
 }

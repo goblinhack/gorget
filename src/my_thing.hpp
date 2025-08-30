@@ -300,6 +300,7 @@ void thing_chasm_handle(Gamep, Levelsp, Levelp, Thingp me);
 bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 void thing_update_pos(Gamep, Thingp);
 void thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
+void thing_fall(Gamep, Levelsp, Levelp, Thingp);
 void thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);

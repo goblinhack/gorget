@@ -17,7 +17,7 @@ static std::string tp_bridge_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "rickety bridge";
 }
 
-static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -35,9 +35,38 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
     auto p = t->at + delta;
     auto b = level_alive_first_is_bridge(g, v, l, p);
     if (b) {
-      thing_dead(g, v, l, b, e);
+      thing_fall(g, v, l, b);
     }
   }
+
+  if (! level_is_chasm(g, v, l, t->at)) {
+    thing_spawn(g, v, l, tp_random(is_chasm), t->at);
+  }
+}
+
+static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE_NO_INDENT();
+
+  tp_bridge_destroy_adj(g, v, l, t);
+}
+
+static void tp_bridge_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  tp_bridge_destroy_adj(g, v, l, t);
+}
+
+static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  ThingEvent e {
+      .reason     = "by bridge break", //
+      .event_type = THING_EVENT_FALL,  //
+  };
+  thing_dead(g, v, l, t, e);
 }
 
 bool tp_load_bridge(void)
@@ -48,6 +77,8 @@ bool tp_load_bridge(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
+  tp_on_fall_begin_set(tp, tp_bridge_on_fall_begin);
+  tp_on_fall_end_set(tp, tp_bridge_on_fall_end);
   tp_description_set(tp, tp_bridge_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_bridge);

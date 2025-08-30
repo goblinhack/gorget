@@ -29,12 +29,13 @@ std::string to_string(Gamep g, Thingp t)
   }
 
   return (string_sprintf("%08" PRIX32
-                         /* level num                     */ " L%u"
-                         /* level num                     */ " T%u"
-                         /* thing_health                  */ " H%d"
+                         /* level num                     */ " l%u"
+                         /* tick                          */ " t%u"
+                         /* thing_health                  */ " h%d"
                          /* name                          */ " %s"
-                         /* is_loggable                   */ "%s"
                          /* is_dead                       */ "%s"
+                         /* is_sleeping                   */ "%s"
+                         /* is_falling                    */ "%s"
                          /* is_open                       */ "%s"
                          /* is_burning                    */ "%s"
                          /* is_scheduled_for_cleanup      */ "%s"
@@ -46,6 +47,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ name.c_str(),
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
                          /* newline */ thing_is_sleeping(t) ? "/sleeping" : "",
+                         /* newline */ thing_is_falling(t) ? "/falling" : "",
                          /* newline */ thing_is_open(t) ? "/open" : "",
                          /* newline */ thing_is_burning(t) ? "/burning" : "",
                          /* newline */ thing_is_scheduled_for_cleanup(t) ? "/cleanup" : "",
