@@ -19,6 +19,13 @@ enum {
   CURSOR_AT,
 };
 
+typedef enum {
+  PLAYER_STATE_NORMAL,
+  PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH,
+  PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION,
+  PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH,
+} PlayerPath;
+
 typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
@@ -269,6 +276,10 @@ typedef struct Levels_ {
   int maxx;
   int maxy;
   //
+  // Player movement state
+  //
+  PlayerPath player_state;
+  //
   // Is the cursor over the map?
   //
   uint8_t cursor_at_valid : 1;
@@ -305,18 +316,6 @@ typedef struct Levels_ {
   uint8_t requested_move_keft  : 1;
   uint8_t requested_move_right : 1;
   uint8_t requested_move_up    : 1;
-  //
-  // The user has pressed the mouse and wants to follow the mouse path.
-  //
-  uint8_t player_pressed_button_and_waiting_for_a_path : 1;
-  //
-  // The user has pressed the mouse but we need to wait for an ok before moving.
-  //
-  uint8_t player_pressed_button_and_waiting_for_confirmation : 1;
-  //
-  // set when the player starts following the mouse path.
-  //
-  uint8_t player_currently_following_a_path : 1;
   //
   // Set when something modifies the map and we need to update caches.
   //

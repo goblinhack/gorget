@@ -42,13 +42,32 @@ static void player_move_to_target_callback(Gamep g, bool val)
     level_cursor_path_reset(g, v);
   }
 
-  if (v->player_pressed_button_and_waiting_for_confirmation) {
-    v->player_pressed_button_and_waiting_for_confirmation = false;
-
-    //
-    // Else start following the cursor path
-    //
-    v->player_pressed_button_and_waiting_for_a_path = val;
+  switch (v->player_state) {
+    case PLAYER_STATE_NORMAL :
+      //
+      // Replace the mouse path
+      //
+      break;
+    case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH :
+      //
+      // Player wants to start following or replace the current path.
+      //
+      break;
+    case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION :
+      //
+      // Wait for confirmation.
+      //
+      if (val) {
+        v->player_state = PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH;
+      } else {
+        v->player_state = PLAYER_STATE_NORMAL;
+      }
+      break;
+    case PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH :
+      //
+      // Already following a path, stick to it until completion.
+      //
+      break;
   }
 }
 
@@ -71,8 +90,8 @@ bool player_move_to_target(Gamep g, Levelsp v, Levelp l, spoint to)
   if (level_is_needs_move_confirm(g, v, l, to)) {
     if (! thing_is_ethereal(player) && ! thing_is_floating(player) && ! thing_is_flying(player)) {
       if (level_is_chasm(g, v, l, to)) {
-        std::string msg                                       = "Do you really want to leap into a chasm.";
-        v->player_pressed_button_and_waiting_for_confirmation = true;
+        std::string msg = "Do you really want to leap into a chasm.";
+        v->player_state = PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION;
         game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
         wid_warning(g, msg, player_move_to_target_callback);
         return false;
@@ -85,8 +104,8 @@ bool player_move_to_target(Gamep g, Levelsp v, Levelp l, spoint to)
         if (level_is_lava(g, v, l, to)) {
           if (! thing_is_immune_to(player, THING_EVENT_HEAT_DAMAGE)
               && ! thing_is_immune_to(player, THING_EVENT_FIRE_DAMAGE)) {
-            std::string msg                                       = "Do you really want to leap into lava.";
-            v->player_pressed_button_and_waiting_for_confirmation = true;
+            std::string msg = "Do you really want to leap into lava.";
+            v->player_state = PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION;
             game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
             wid_warning(g, msg, player_move_to_target_callback);
             return false;
@@ -133,7 +152,7 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
     //
     std::vector< spoint > move_path;
     move_path.push_back(to);
-    v->player_pressed_button_and_waiting_for_a_path = true;
+    v->player_state = PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH;
     level_cursor_path_apply(g, v, l, move_path);
     player_move_to_target(g, v, l, to);
   } else if (thing_can_move_to_by_shoving(g, v, l, t, to)) {
@@ -374,7 +393,7 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
     spoint intermediate = *i;
     if (thing_jump_to(g, v, l, t, intermediate, warn)) {
       level_tick_begin_requested(g, v, l, "player jumped");
-      v->player_currently_following_a_path = false;
+      v->player_state = PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH;
       return true;
     }
     warn = false;
@@ -447,8 +466,27 @@ bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If not following a path, then nothing to pop
   //
-  if (! v->player_currently_following_a_path) {
-    return false;
+  switch (v->player_state) {
+    case PLAYER_STATE_NORMAL :
+      //
+      // Replace the mouse path
+      //
+      return false;
+    case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH :
+      //
+      // Player wants to start following or replace the current path.
+      //
+      return false;
+    case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION :
+      //
+      // Wait for confirmation.
+      //
+      return false;
+    case PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH :
+      //
+      // Already following a path, stick to it until completion.
+      //
+      break;
   }
 
   //
@@ -459,7 +497,7 @@ bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // If could not pop, then no path is left
     //
-    v->player_currently_following_a_path = false;
+    v->player_state = PLAYER_STATE_NORMAL;
     return false;
   }
 
@@ -471,7 +509,7 @@ bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
         // If could jump, then abort the path walk
         //
         level_tick_begin_requested(g, v, l, "player to avoid a hazard");
-        v->player_currently_following_a_path = false;
+        v->player_state = PLAYER_STATE_NORMAL;
         return false;
       }
     }
@@ -481,7 +519,7 @@ bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // If could not move, then abort the path walk
     //
-    v->player_currently_following_a_path = false;
+    v->player_state = PLAYER_STATE_NORMAL;
     return false;
   }
 

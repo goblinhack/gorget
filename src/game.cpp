@@ -1111,8 +1111,28 @@ void Game::display(void)
           //
           // If the player pressed the mouse, we need to apply the current cursor path and start moving.
           //
-          if (v->player_pressed_button_and_waiting_for_a_path) {
-            level_cursor_path_apply(g, v, l);
+          switch (v->player_state) {
+            case PLAYER_STATE_NORMAL :
+              //
+              // Replace the mouse path
+              //
+              break;
+            case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH :
+              //
+              // Player wants to start following or replace the current path.
+              //
+              level_cursor_path_apply(g, v, l);
+              break;
+            case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION :
+              //
+              // Wait for confirmation.
+              //
+              break;
+            case PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH :
+              //
+              // Already following a path, stick to it until completion.
+              //
+              break;
           }
         }
       }

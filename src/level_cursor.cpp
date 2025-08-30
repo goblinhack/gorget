@@ -351,9 +351,9 @@ void level_cursor_path_reset(Gamep g, Levelsp v)
     return;
   }
 
-  v->player_pressed_button_and_waiting_for_a_path = false;
-  v->player_currently_following_a_path            = false;
-  player_struct->move_path.size                   = 0;
+  v->player_state               = PLAYER_STATE_NORMAL;
+  player_struct->move_path.size = 0;
+  memset(v->cursor, 0, SIZEOF(v->cursor));
 }
 
 //
@@ -379,17 +379,28 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
     return;
   }
 
-  if (v->player_pressed_button_and_waiting_for_a_path) {
-    //
-    // Player wants to start following or replace the current path.
-    //
-    v->player_pressed_button_and_waiting_for_a_path = false;
-    v->player_currently_following_a_path            = true;
-  } else if (v->player_currently_following_a_path) {
-    //
-    // Already following a path, stick to it until completion.
-    //
-    return;
+  switch (v->player_state) {
+    case PLAYER_STATE_NORMAL :
+      //
+      // Replace the mouse path
+      //
+      break;
+    case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH :
+      //
+      // Player wants to start following or replace the current path.
+      //
+      v->player_state = PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH;
+      break;
+    case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION :
+      //
+      // Wait for confirmation.
+      //
+      return;
+    case PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH :
+      //
+      // Already following a path, stick to it until completion.
+      //
+      return;
   }
 
   //
