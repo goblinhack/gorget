@@ -48,13 +48,14 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
                   sound_play(g, "keypress");
                   (callback)(g, true);
                 }
+                wid_warning_destroy();
                 break;
               case 'n' :
               case 'N' :
                 DBG("Wid warning: no");
                 if (callback) {
                   sound_play(g, "keypress");
-                  (callback)(g, true);
+                  (callback)(g, false);
                 }
                 wid_warning_destroy();
                 break;
