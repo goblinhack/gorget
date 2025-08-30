@@ -68,11 +68,4 @@ void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
   t->tick = v->tick;
-
-  //
-  // If following the mouse path, keep going
-  //
-  if (thing_is_player(t)) {
-    player_move_to_next(g, v, l, t);
-  }
 }

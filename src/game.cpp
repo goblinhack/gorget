@@ -406,7 +406,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
   //
   // We need a consistent seed for all tests, so damage doesn't vary
   //
-  g->seed_set("test seed");
+  g->seed_set("test-seed");
   g->player_name_set("Ser Testalot");
 
   TRACE_NO_INDENT();
@@ -853,7 +853,7 @@ void Game::state_reset(const std::string &why)
 }
 void game_state_reset(Gamep g, const char *why) { g->state_reset(why); }
 
-uint8_t game_state(Gamep g) { return g->state; }
+bool game_state(Gamep g) { return g->state; }
 
 void Game::state_change(GameState new_state, const std::string &why)
 {

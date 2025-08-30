@@ -313,6 +313,7 @@ Thingp       thing_player(Gamep);
 ThingPlayerp thing_player_struct(Gamep);
 
 void player_map_center(Gamep, Levelsp, Levelp);
+bool player_move_to_target(Gamep, Levelsp, Levelp, spoint);
 void player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right);
 void player_move_delta(Gamep, Levelsp, Levelp, int dx, int dy, int dz);
 void player_move_reset(Gamep, Levelsp, Levelp);

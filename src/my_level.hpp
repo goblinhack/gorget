@@ -11,6 +11,8 @@
 #include "my_thing.hpp"
 #include "my_types.hpp"
 
+#include <vector>
+
 enum {
   CURSOR_NONE,
   CURSOR_PATH,
@@ -434,13 +436,14 @@ void level_cursor_set(Gamep, Levelsp, spoint);
 bool level_cursor_is_valid(Gamep, Levelsp);
 void level_cursor_path_recreate(Gamep, Levelsp, Levelp);
 void level_cursor_path_apply(Gamep, Levelsp, Levelp);
+void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path);
 void level_cursor_describe(Gamep, Levelsp, Levelp);
 void level_display(Gamep, Levelsp, Levelp);
 void level_populate(Gamep, Levelsp, Levelp, const char *);
 void level_populate(Gamep, Levelsp, Levelp, int w, int h, const char *);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);
 void level_scroll_delta(Gamep, Levelsp, Levelp, spoint);
-void level_cursor_path_reset(Gamep, Levelsp, Levelp);
+void level_cursor_path_reset(Gamep, Levelsp);
 void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);

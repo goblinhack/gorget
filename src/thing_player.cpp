@@ -8,6 +8,7 @@
 #include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_sound.hpp"
+#include "my_wid_warning.hpp"
 
 Thingp thing_player(Gamep g)
 {
@@ -23,6 +24,79 @@ Thingp thing_player(Gamep g)
   }
 
   return thing_find(g, v, v->player_id);
+}
+
+//
+// Return true on the event being consumed
+//
+static void player_move_to_target_callback(Gamep g, bool val)
+{
+  game_state_change(g, STATE_PLAYING, "got warning confirmation");
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
+
+  if (! val) {
+    level_cursor_path_reset(g, v);
+  }
+
+  if (v->player_pressed_button_and_waiting_for_confirmation) {
+    v->player_pressed_button_and_waiting_for_confirmation = false;
+
+    //
+    // Else start following the cursor path
+    //
+    v->player_pressed_button_and_waiting_for_a_path = val;
+  }
+}
+
+//
+// Return true on the event being consumed
+//
+bool player_move_to_target(Gamep g, Levelsp v, Levelp l, spoint to)
+{
+  LOG("Player move");
+  TRACE_AND_INDENT();
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  //
+  // Double check before jumping in chasms or lava
+  //
+  if (level_is_needs_move_confirm(g, v, l, to)) {
+    if (! thing_is_ethereal(player) && ! thing_is_floating(player) && ! thing_is_flying(player)) {
+      if (level_is_chasm(g, v, l, to)) {
+        std::string msg                                       = "Do you really want to leap into a chasm.";
+        v->player_pressed_button_and_waiting_for_confirmation = true;
+        game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
+        wid_warning(g, msg, player_move_to_target_callback);
+        return false;
+      }
+
+      //
+      // If not already in lava, warn about moving into it
+      //
+      if (! level_is_lava(g, v, l, player->at)) {
+        if (level_is_lava(g, v, l, to)) {
+          if (! thing_is_immune_to(player, THING_EVENT_HEAT_DAMAGE)
+              && ! thing_is_immune_to(player, THING_EVENT_FIRE_DAMAGE)) {
+            std::string msg                                       = "Do you really want to leap into lava.";
+            v->player_pressed_button_and_waiting_for_confirmation = true;
+            game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
+            wid_warning(g, msg, player_move_to_target_callback);
+            return false;
+          }
+        }
+      }
+    }
+  }
+
+  return true;
 }
 
 void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
@@ -42,7 +116,7 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
   //
   // Override any mouse request with the key move.
   //
-  level_cursor_path_reset(g, v, l);
+  level_cursor_path_reset(g, v);
 
   //
   // Wait until the end of the tick
@@ -52,30 +126,31 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
   }
 
   spoint to(t->at.x + dx, t->at.y + dy);
+
   if (thing_can_move_to(g, v, l, t, to)) {
-    if (thing_move_to(g, v, l, t, to)) {
-      if (thing_is_player(t)) {
+    if (1) {
+      std::vector< spoint > move_path;
+      move_path.push_back(to);
+      level_cursor_path_apply(g, v, l, move_path);
+      v->player_currently_following_a_path            = true;
+      v->player_pressed_button_and_waiting_for_a_path = false;
+      if (player_move_to_target(g, v, l, to)) {
         level_tick_begin_requested(g, v, l, "player moved");
       }
     } else {
-      if (thing_is_player(t)) {
+      if (thing_move_to(g, v, l, t, to)) {
+      } else {
         level_tick_begin_requested(g, v, l, "player failed to move");
       }
     }
   } else if (thing_can_move_to_by_shoving(g, v, l, t, to)) {
     if (thing_shove_to(g, v, l, t, to)) {
-      if (thing_is_player(t)) {
-        level_tick_begin_requested(g, v, l, "player shoved");
-      }
+      level_tick_begin_requested(g, v, l, "player shoved");
     } else {
-      if (thing_is_player(t)) {
-        level_tick_begin_requested(g, v, l, "player failed to shove");
-      }
+      level_tick_begin_requested(g, v, l, "player failed to shove");
     }
   } else {
-    if (thing_is_player(t)) {
-      level_tick_begin_requested(g, v, l, "player bumped into obstacle");
-    }
+    level_tick_begin_requested(g, v, l, "player bumped into obstacle");
   }
 
   player_move_reset(g, v, l);
@@ -185,7 +260,7 @@ static void player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   level_select_update_grid_tiles(g, v);
-  level_cursor_path_reset(g, v, l);
+  level_cursor_path_reset(g, v);
   level_change(g, v, LEVEL_SELECT_ID);
 }
 
@@ -217,7 +292,7 @@ void player_fell(Gamep g, Levelsp v, Levelp l, Levelp next_level, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  level_cursor_path_reset(g, v, l);
+  level_cursor_path_reset(g, v);
   level_is_completed_by_player_falling(g, v, l);
 
   if (next_level != level_change(g, v, next_level->level_num)) {

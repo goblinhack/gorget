@@ -331,7 +331,7 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
 //
 // Stop following the current path
 //
-void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
+void level_cursor_path_reset(Gamep g, Levelsp v)
 {
   auto t = thing_player(g);
   if (! t) {
@@ -359,7 +359,7 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 //
 // Copy the mouse path to the thing
 //
-static void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
+void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
 {
   auto t = thing_player(g);
   if (! t) {

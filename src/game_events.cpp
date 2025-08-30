@@ -9,36 +9,12 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_ui.hpp"
-#include "my_wid_warning.hpp"
 #include "my_wids.hpp"
 
 //
 // Return true on the event being consumed
 //
-static void wid_warning_callback(Gamep g, bool val)
-{
-  game_state_change(g, STATE_PLAYING, "got warning confirmation");
-
-  //
-  // Bit of a hack, but avoids needing a callback
-  //
-  auto v = game_levels_get(g);
-  if (v) {
-    if (v->player_pressed_button_and_waiting_for_confirmation) {
-      v->player_pressed_button_and_waiting_for_confirmation = false;
-
-      //
-      // Else start following the cursor path
-      //
-      v->player_pressed_button_and_waiting_for_a_path = val;
-    }
-  }
-}
-
-//
-// Return true on the event being consumed
-//
-uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
+bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
 {
   LOG("Game mouse down");
   TRACE_AND_INDENT();
@@ -71,11 +47,6 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
-    return false;
-  }
-
   //
   // Over the map?
   //
@@ -91,47 +62,19 @@ uint8_t game_mouse_down(Gamep g, int x, int y, uint32_t button)
     return true;
   }
 
-  //
-  // Double check before jumping in chasms or lava
-  //
-  if (level_is_needs_move_confirm(g, v, l, v->cursor_at)) {
-    if (! thing_is_ethereal(player) && ! thing_is_floating(player) && ! thing_is_flying(player)) {
-      if (level_is_chasm(g, v, l, v->cursor_at)) {
-        std::string msg                                       = "Do you really want to leap into a chasm.";
-        v->player_pressed_button_and_waiting_for_confirmation = true;
-        game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
-        wid_warning(g, msg, wid_warning_callback);
-        return true;
-      }
-
-      //
-      // If not already in lava, warn about moving into it
-      //
-      if (! level_is_lava(g, v, l, player->at)) {
-        if (level_is_lava(g, v, l, v->cursor_at)) {
-          if (! thing_is_immune_to(player, THING_EVENT_HEAT_DAMAGE)
-              && ! thing_is_immune_to(player, THING_EVENT_FIRE_DAMAGE)) {
-            std::string msg                                       = "Do you really want to leap into lava.";
-            v->player_pressed_button_and_waiting_for_confirmation = true;
-            game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
-            wid_warning(g, msg, wid_warning_callback);
-            return true;
-          }
-        }
-      }
-    }
-  }
+  auto ret = player_move_to_target(g, v, l, v->cursor_at);
 
   //
   // Else start following the cursor path
   //
   v->player_pressed_button_and_waiting_for_a_path = true;
-  return false;
+
+  return ret;
 }
 
-uint8_t game_mouse_up(Gamep g, int x, int y, uint32_t button) { return false; }
+bool game_mouse_up(Gamep g, int x, int y, uint32_t button) { return false; }
 
-uint8_t game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely)
+bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int wheely)
 {
   DBG2("Game mouse motion");
   TRACE_NO_INDENT();
@@ -379,7 +322,7 @@ bool game_event_quit(Gamep g)
   return true;
 }
 
-uint8_t game_input(Gamep g, const SDL_Keysym *key)
+bool game_input(Gamep g, const SDL_Keysym *key)
 {
   LOG("Pressed a key");
   TRACE_AND_INDENT();
