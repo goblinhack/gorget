@@ -128,21 +128,14 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
   spoint to(t->at.x + dx, t->at.y + dy);
 
   if (thing_can_move_to(g, v, l, t, to)) {
-    if (1) {
-      std::vector< spoint > move_path;
-      move_path.push_back(to);
-      level_cursor_path_apply(g, v, l, move_path);
-      v->player_currently_following_a_path            = true;
-      v->player_pressed_button_and_waiting_for_a_path = false;
-      if (player_move_to_target(g, v, l, to)) {
-        level_tick_begin_requested(g, v, l, "player moved");
-      }
-    } else {
-      if (thing_move_to(g, v, l, t, to)) {
-      } else {
-        level_tick_begin_requested(g, v, l, "player failed to move");
-      }
-    }
+    //
+    // Fake a mouse path for movement
+    //
+    std::vector< spoint > move_path;
+    move_path.push_back(to);
+    v->player_pressed_button_and_waiting_for_a_path = true;
+    level_cursor_path_apply(g, v, l, move_path);
+    player_move_to_target(g, v, l, to);
   } else if (thing_can_move_to_by_shoving(g, v, l, t, to)) {
     if (thing_shove_to(g, v, l, t, to)) {
       level_tick_begin_requested(g, v, l, "player shoved");
