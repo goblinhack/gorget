@@ -54,6 +54,7 @@ static bool test_collision_barrel(Gamep g, Testp t)
   //
   // Bump into a barrel. It should move and not be knocked over.
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();

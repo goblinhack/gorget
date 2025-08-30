@@ -54,6 +54,7 @@ static bool test_collision_mob(Gamep g, Testp t)
   //
   // Bump into a mob. It should move and not die.
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();

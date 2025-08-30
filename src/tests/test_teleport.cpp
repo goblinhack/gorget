@@ -54,6 +54,7 @@ static bool test_teleport(Gamep g, Testp t)
   //
   // Move right and teleport
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();

@@ -76,6 +76,7 @@ static bool test_player_fall_chasm(Gamep g, Testp t)
   //
   // Find the player
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     player = thing_player(g);
@@ -88,6 +89,7 @@ static bool test_player_fall_chasm(Gamep g, Testp t)
   //
   // Move right
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();
@@ -105,11 +107,13 @@ static bool test_player_fall_chasm(Gamep g, Testp t)
   //
   // Player should have fallen now
   //
+  TEST_PROGRESS(t);
   if (! (result = level_match_contents(g, v, l1, w, h, expect1.c_str()))) {
     TEST_FAILED(t, "unexpected contents");
     goto exit;
   }
 
+  TEST_PROGRESS(t);
   {
     if (! (result = level_match_contents(g, v, l2, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
@@ -117,18 +121,21 @@ static bool test_player_fall_chasm(Gamep g, Testp t)
     }
   }
 
-  for (auto tries = 0; tries < 2; tries++) {
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 3; tries++) {
+    TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
     game_wait_for_tick_to_finish(g, v, l2);
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
 
   //
   // Check player is dead when shoved into lava. It should be popped off the level.
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     TEST_LOG(t, "check player is dead when in lava");

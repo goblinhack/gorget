@@ -1,4 +1,6 @@
+only one bridge tile ever per tile
 bridge burning, falling and being replaced
+no fall check for keypresses
 show moves
 secret doors
 doors and keys

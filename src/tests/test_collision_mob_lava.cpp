@@ -67,6 +67,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   // Find the player
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     player = thing_player(g);
@@ -79,6 +80,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   // Find the mob before shoving it via the player
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     p        = player->at + spoint(1, 0);
@@ -96,6 +98,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   // Move right, shoving the mob
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     if (! (result = player_move_request(g, up, down, left, right))) {
@@ -107,6 +110,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   // Wait for the end of tick
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     game_wait_for_tick_to_finish(g, v, l);
@@ -115,6 +119,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   // Check the level contents
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
@@ -126,6 +131,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   // Check mob is dead when shoved into lava. It should be popped off the level.
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     TEST_LOG(t, "check mob is dead when shoved into lava");
@@ -149,6 +155,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   // Check the mob has been cleaned up
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     if (thing_find_optional(g, v, mob_id)) {
@@ -160,6 +167,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   // Check the tick is as expected
   //
+  TEST_PROGRESS(t);
   {
     TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
   }

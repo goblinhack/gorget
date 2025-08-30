@@ -50,6 +50,7 @@ static bool test_jump_truncated(Gamep g, Testp t)
   //
   // Jump
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "jump");
     TRACE_AND_INDENT();

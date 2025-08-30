@@ -8,7 +8,9 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_string.hpp"
 #include "my_types.hpp"
+
 #include <string>
 
 class Test;
@@ -40,6 +42,23 @@ void tests_run(Gamep);
 
 #define TEST_PASSED(test) LOG("Test %s: passed at %s:%u", test_name(test), __FUNCTION__, __LINE__);
 
-#define TEST_LOG(test, msg) LOG("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, msg);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wvariadic-macros"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+
+#define TEST_LOG(test, msg, ...)                                                                                     \
+  {                                                                                                                  \
+    char tmp[ MAXSTR ];                                                                                              \
+    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                  \
+    LOG("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                         \
+  }
+
+#pragma clang diagnostic pop
+
+#pragma GCC diagnostic pop
+
+#define TEST_PROGRESS(test) LOG("Test %s: %s:%u: progress", test_name(test), __FUNCTION__, __LINE__);
 
 #endif // _MY_TEST_H_

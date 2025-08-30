@@ -58,6 +58,7 @@ static bool test_save_load(Gamep g, Testp t)
   //
   // Move right
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();

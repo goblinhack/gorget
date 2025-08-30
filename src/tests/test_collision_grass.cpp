@@ -54,6 +54,7 @@ static bool test_collision_grass(Gamep g, Testp t)
   //
   // Walk over grass and then check it is crushed/dead
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();

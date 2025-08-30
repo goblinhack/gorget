@@ -42,7 +42,10 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
     *tile_index = tile_global_index(tile);
   }
 
-  auto tile       = tile_index_to_tile(*tile_index);
+  auto tile = tile_index_to_tile(*tile_index);
+  if (! tile) {
+    tile = tile_find_mand("none");
+  }
   auto pix_height = tile_height(tile) * zoom;
   auto pix_width  = tile_width(tile) * zoom;
 

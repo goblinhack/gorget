@@ -80,6 +80,7 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
   //
   // Bump into a brazier. It should be knocked over.
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();
@@ -128,6 +129,7 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
   //
   // Second shove, we should be able to move the dead brazier
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();
@@ -140,13 +142,16 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
     }
   }
 
+  TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
+    TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
     game_wait_for_tick_to_finish(g, v, l1);
   }
 
+  TEST_PROGRESS(t);
   {
     if (! (result = level_match_contents(g, v, l1, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
@@ -162,6 +167,7 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
 
   TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
 
+  TEST_PROGRESS(t);
   {
     if (! (result = level_match_contents(g, v, l2, w, h, expect3.c_str()))) {
       TEST_FAILED(t, "unexpected contents");

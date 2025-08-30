@@ -65,6 +65,7 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
   //
   // Find the player
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     player = thing_player(g);
@@ -79,7 +80,9 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
   //
   thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(2, 0));
 
+  TEST_PROGRESS(t);
   for (auto tries = 0; tries < 3; tries++) {
+    TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
@@ -89,6 +92,7 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
   //
   // Check the level contents
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
@@ -97,7 +101,9 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
     }
   }
 
+  TEST_PROGRESS(t);
   for (auto tries = 0; tries < 10; tries++) {
+    TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
@@ -107,6 +113,7 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
   //
   // Check the level contents
   //
+  TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
     if (! (result = level_match_contents(g, v, l, w, h, expect2.c_str()))) {
@@ -118,6 +125,7 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
   //
   // Check the tick is as expected
   //
+  TEST_PROGRESS(t);
   {
     TEST_ASSERT(t, game_tick_get(g, v) == 13, "final tick counter value");
   }

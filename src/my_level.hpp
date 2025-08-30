@@ -130,6 +130,10 @@ typedef struct Level_ {
   //
   uint8_t tiles_for_update[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
+  // Handles cases where a chasm will appear and needs handled immediately
+  //
+  uint8_t tile_is_modified[ MAP_WIDTH ][ MAP_HEIGHT ];
+  //
   // What things are where? Each Id points to a thing structure.
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];

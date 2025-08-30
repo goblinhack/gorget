@@ -36,11 +36,6 @@ static void level_cleanup_things(Gamep g, Levelsp v, Levelp l)
       thing_fini(g, v, l, t);
     }
   }
-
-  //
-  // Update any tiles that are needed
-  //
-  level_tile_update(g, v, l);
 }
 
 //
@@ -98,6 +93,17 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   verify(MTYPE_LEVELS, game_levels_get(g));
 
   v->last_time_step = v->time_step;
+
+  //
+  // Handle things interacting with chasms
+  //
+  level_tick_begin_chasm(g, v, l);
+
+  //
+  // Handle things interacting with water
+  //
+  level_tick_begin_water(g, v, l);
+
   if (v->tick_in_progress) {
     //
     // A tick is running
@@ -105,19 +111,9 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_time_step(g, v, l);
   } else if (v->tick_begin_requested) {
     //
-    // Handle things interacting with chasms
-    //
-    level_tick_begin_chasm(g, v, l);
-
-    //
     // Allow temperatures to settle prior to starting
     //
     level_tick_begin_temperature(g, v, l);
-
-    //
-    // Handle things interacting with water
-    //
-    level_tick_begin_water(g, v, l);
 
     //
     // Start the tick
@@ -129,6 +125,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     //
     level_tick_idle(g, v, l);
   }
+
+  //
+  // Update any tiles that are needed
+  //
+  level_tile_update(g, v, l);
 
   //
   // Move things. Interpolated per frame.

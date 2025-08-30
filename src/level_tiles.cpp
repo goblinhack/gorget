@@ -212,6 +212,7 @@ void level_tile_update_set(Gamep g, Levelsp v, Levelp l, spoint p)
       auto y = p.y + dy;
       if (! is_oob(x, y)) {
         l->tiles_for_update[ x ][ y ] = true;
+        l->tile_is_modified[ x ][ y ] = true;
       }
     }
   }
@@ -235,4 +236,5 @@ void level_tile_update(Gamep g, Levelsp v, Levelp l)
   }
 
   memset(l->tiles_for_update, 0, SIZEOF(l->tiles_for_update));
+  memset(l->tile_is_modified, 0, SIZEOF(l->tile_is_modified));
 }

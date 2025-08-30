@@ -78,6 +78,7 @@ static bool test_move_ok(Gamep g, Testp t)
   //
   // Move right
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move right");
     TRACE_AND_INDENT();
@@ -100,6 +101,7 @@ static bool test_move_ok(Gamep g, Testp t)
   //
   // Move down
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move down");
     TRACE_AND_INDENT();
@@ -122,6 +124,7 @@ static bool test_move_ok(Gamep g, Testp t)
   //
   // Move left
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move left");
     TRACE_AND_INDENT();
@@ -144,6 +147,7 @@ static bool test_move_ok(Gamep g, Testp t)
   //
   // Move up
   //
+  TEST_PROGRESS(t);
   {
     TEST_LOG(t, "move up");
     TRACE_AND_INDENT();
