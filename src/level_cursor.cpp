@@ -385,13 +385,13 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
       // Replace the mouse path
       //
       break;
-    case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH :
+    case PLAYER_STATE_PATH_REQUESTED :
       //
       // Player wants to start following or replace the current path.
       //
       v->player_state = PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH;
       break;
-    case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION :
+    case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
       //
       // Wait for confirmation.
       //

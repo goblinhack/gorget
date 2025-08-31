@@ -21,8 +21,8 @@ enum {
 
 typedef enum {
   PLAYER_STATE_NORMAL,
-  PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH,
-  PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION,
+  PLAYER_STATE_PATH_REQUESTED,
+  PLAYER_STATE_MOVE_CONFIRM_REQUESTED,
   PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH,
 } PlayerPath;
 
@@ -447,8 +447,8 @@ void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
-void level_tick_begin_water(Gamep, Levelsp, Levelp);
-void level_tick_begin_chasm(Gamep, Levelsp, Levelp);
+void level_tick_water(Gamep, Levelsp, Levelp);
+void level_tick_chasm(Gamep, Levelsp, Levelp);
 void level_tick_end_teleport(Gamep, Levelsp, Levelp);
 void level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void level_tick(Gamep, Levelsp, Levelp);

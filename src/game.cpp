@@ -1117,13 +1117,13 @@ void Game::display(void)
               // Replace the mouse path
               //
               break;
-            case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH :
+            case PLAYER_STATE_PATH_REQUESTED :
               //
               // Player wants to start following or replace the current path.
               //
               level_cursor_path_apply(g, v, l);
               break;
-            case PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_CONFIRMATION :
+            case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
               //
               // Wait for confirmation.
               //

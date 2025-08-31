@@ -8,7 +8,7 @@
 //
 // Handle things interacting with water
 //
-void level_tick_begin_water(Gamep g, Levelsp v, Levelp l)
+void level_tick_water(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 

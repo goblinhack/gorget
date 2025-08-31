@@ -67,7 +67,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   // Else start following the cursor path
   //
-  v->player_state = PLAYER_STATE_PRESSED_BUTTON_AND_WAITING_FOR_A_PATH;
+  v->player_state = PLAYER_STATE_PATH_REQUESTED;
 
   return ret;
 }

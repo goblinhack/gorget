@@ -30,9 +30,9 @@ static bool test_collision_fire_foliage(Gamep g, Testp t)
   std::string expect1
       = "......."
         "......."
-        "...!!!."
-        "..;!.;."
-        "...!;!."
+        "...!;;."
+        "..;;.;."
+        "...;!!."
         "......."
         ".......";
 

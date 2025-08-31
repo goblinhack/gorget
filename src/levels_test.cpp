@@ -39,4 +39,18 @@ void levels_test(Gamep g)
             /* line */ (const char *) " xxxxxxxxx ",
             /* line */ (const char *) "           ",
             /* end */ nullptr);
+
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "shove1", __FUNCTION__, __LINE__,
+            /* line */ (const char *) "           ",
+            /* line */ (const char *) " xxxxxxxxx ",
+            /* line */ (const char *) " x.......x ",
+            /* line */ (const char *) " x.......x ",
+            /* line */ (const char *) " x....C..x ",
+            /* line */ (const char *) " x.@BGC..x ",
+            /* line */ (const char *) " x....C..x ",
+            /* line */ (const char *) " x.......x ",
+            /* line */ (const char *) " x.......x ",
+            /* line */ (const char *) " xxxxxxxxx ",
+            /* line */ (const char *) "           ",
+            /* end */ nullptr);
 }

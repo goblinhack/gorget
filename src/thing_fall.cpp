@@ -176,6 +176,14 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
+  //
+  // Fall at the end of the move, or it just looks odd with things falling
+  // through the floor before they get to the chasm
+  //
+  if (thing_is_moving(t)) {
+    return;
+  }
+
   thing_is_falling_set(g, v, l, t, true);
 
   if (! level_is_chasm(g, v, l, t->at)) {

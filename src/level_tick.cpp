@@ -95,14 +95,9 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   v->last_time_step = v->time_step;
 
   //
-  // Handle things interacting with chasms
-  //
-  level_tick_begin_chasm(g, v, l);
-
-  //
   // Handle things interacting with water
   //
-  level_tick_begin_water(g, v, l);
+  level_tick_water(g, v, l);
 
   if (v->tick_in_progress) {
     //
@@ -137,6 +132,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   if (v->tick_in_progress) {
     level_tick_body(g, v, l, v->time_step - v->last_time_step);
   }
+
+  //
+  // Handle things interacting with chasms
+  //
+  level_tick_chasm(g, v, l);
 
   //
   // Animate things Per frame.

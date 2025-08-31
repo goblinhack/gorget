@@ -8,7 +8,7 @@
 //
 // Handle things interacting with chasms
 //
-void level_tick_begin_chasm(Gamep g, Levelsp v, Levelp l)
+void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -16,7 +16,7 @@ void level_tick_begin_chasm(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
-    if (! v->tick_begin_requested && ! l->tile_is_modified[ x ][ y ]) {
+    if (! v->tick_end_requested && ! l->tile_is_modified[ x ][ y ]) {
       continue;
     }
 

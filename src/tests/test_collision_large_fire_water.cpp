@@ -39,7 +39,7 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
       = "......."
         "......."
         "...~~~."
-        "..@~,~."
+        "..@~~~."
         "...~~~."
         "......."
         ".......";
