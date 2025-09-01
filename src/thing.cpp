@@ -125,6 +125,10 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   auto t = thing_init(g, v, l, tp, at);
   if (t) {
     thing_push(g, v, l, t);
+
+    if (thing_is_loggable(t)) {
+      THING_DBG(t, "spawned");
+    }
   }
   return t;
 }

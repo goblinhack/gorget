@@ -14,12 +14,9 @@ void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
 
   int x, y;
 
+  LOG("tick chasm");
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
-    if (! v->tick_end_requested && ! l->tile_is_modified[ x ][ y ]) {
-      continue;
-    }
-
     spoint p(x, y);
     if (level_is_chasm(g, v, l, p)) {
       FOR_ALL_THINGS_AT(g, v, l, t, p)

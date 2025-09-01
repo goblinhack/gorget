@@ -211,8 +211,7 @@ void level_tile_update_set(Gamep g, Levelsp v, Levelp l, spoint p)
       auto x = p.x + dx;
       auto y = p.y + dy;
       if (! is_oob(x, y)) {
-        l->tiles_for_update[ x ][ y ] = true;
-        l->tile_is_modified[ x ][ y ] = true;
+        l->_tile_update_required[ x ][ y ] = true;
       }
     }
   }
@@ -229,12 +228,11 @@ void level_tile_update(Gamep g, Levelsp v, Levelp l)
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      if (l->tiles_for_update[ x ][ y ]) {
+      if (l->_tile_update_required[ x ][ y ]) {
         level_assign_tiles_at(g, v, l, spoint(x, y));
       }
     }
   }
 
-  memset(l->tiles_for_update, 0, SIZEOF(l->tiles_for_update));
-  memset(l->tile_is_modified, 0, SIZEOF(l->tile_is_modified));
+  memset(l->_tile_update_required, 0, SIZEOF(l->_tile_update_required));
 }

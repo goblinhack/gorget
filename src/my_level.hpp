@@ -137,11 +137,7 @@ typedef struct Level_ {
   //
   // When a tile is destroyed, we need to update adjacent tiles. This limits the update to only changed tiles.
   //
-  uint8_t tiles_for_update[ MAP_WIDTH ][ MAP_HEIGHT ];
-  //
-  // Handles cases where a chasm will appear and needs handled immediately
-  //
-  uint8_t tile_is_modified[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t _tile_update_required[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
   // What things are where? Each Id points to a thing structure.
   //
@@ -449,12 +445,12 @@ void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
 void level_tick_water(Gamep, Levelsp, Levelp);
 void level_tick_chasm(Gamep, Levelsp, Levelp);
-void level_tick_end_teleport(Gamep, Levelsp, Levelp);
+void level_tick_teleport(Gamep, Levelsp, Levelp);
 void level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void level_tick(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);
 void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
-bool level_match_contents(Gamep, Levelsp, Levelp, int w, int h, const char *in);
+bool level_match_contents(Gamep, Levelsp, Levelp, Testp, int w, int h, const char *in);
 void level_debug(Gamep, Levelsp, Levelp);
 void level_init(Gamep, Levelsp, Levelp, LevelNum);
 void level_tile_update_set(Gamep, Levelsp, Levelp, spoint);

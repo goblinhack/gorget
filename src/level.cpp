@@ -8,6 +8,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_test.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 
@@ -218,7 +219,7 @@ void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h)
 //
 // Compare level contents
 //
-bool level_match_contents(Gamep g, Levelsp v, Levelp l, int w, int h, const char *expected)
+bool level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, const char *expected)
 {
   TRACE_NO_INDENT();
 
@@ -239,7 +240,7 @@ bool level_match_contents(Gamep g, Levelsp v, Levelp l, int w, int h, const char
         CON("Found:");
         level_dump(g, v, l, w, h);
         CON_NEW_LINE();
-        ERR("Level contents not as expected");
+        TEST_CON(t, "Level contents not as expected");
         return false;
       }
     }

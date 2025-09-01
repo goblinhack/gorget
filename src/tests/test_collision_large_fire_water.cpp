@@ -39,7 +39,7 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
       = "......."
         "......."
         "...~~~."
-        "..@~~~."
+        "..@~,~."
         "...~~~."
         "......."
         ".......";
@@ -95,7 +95,7 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
   TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
-    if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -116,7 +116,7 @@ static bool test_collision_large_fire_water(Gamep g, Testp t)
   TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
-    if (! (result = level_match_contents(g, v, l, w, h, expect2.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }

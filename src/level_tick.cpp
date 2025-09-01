@@ -94,11 +94,6 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
 
   v->last_time_step = v->time_step;
 
-  //
-  // Handle things interacting with water
-  //
-  level_tick_water(g, v, l);
-
   if (v->tick_in_progress) {
     //
     // A tick is running
@@ -134,11 +129,6 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   }
 
   //
-  // Handle things interacting with chasms
-  //
-  level_tick_chasm(g, v, l);
-
-  //
   // Animate things Per frame.
   //
   level_anim(g, v, l);
@@ -165,9 +155,19 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_end_temperature(g, v, l);
 
     //
+    // Handle things interacting with water
+    //
+    level_tick_water(g, v, l);
+
+    //
     // Handle things interacting with teleports
     //
-    level_tick_end_teleport(g, v, l);
+    level_tick_teleport(g, v, l);
+
+    //
+    // Handle things interacting with chasms
+    //
+    level_tick_chasm(g, v, l);
 
     //
     // Check if something reacted with lava and is now needing to delay the end of tick
@@ -210,12 +210,13 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp l)
       //
       // Tick has surpassed its time
       //
-      v->time_step          = 1.0;
-      v->tick_end_requested = true;
+      v->time_step = 1.0;
 
       if (! v->tick_end_requested) {
         LOG("Tick %u end requested", v->tick);
       }
+
+      v->tick_end_requested = true;
     }
   }
 }

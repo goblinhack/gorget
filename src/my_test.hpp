@@ -55,6 +55,13 @@ void tests_run(Gamep);
     LOG("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                         \
   }
 
+#define TEST_CON(test, msg, ...)                                                                                     \
+  {                                                                                                                  \
+    char tmp[ MAXSTR ];                                                                                              \
+    snprintf(tmp, sizeof(tmp), msg, ##__VA_ARGS__);                                                                  \
+    CON("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                         \
+  }
+
 #pragma clang diagnostic pop
 
 #pragma GCC diagnostic pop

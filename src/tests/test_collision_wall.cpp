@@ -61,7 +61,7 @@ static bool test_collision_wall(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -84,7 +84,7 @@ static bool test_collision_wall(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -107,7 +107,7 @@ static bool test_collision_wall(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -130,7 +130,7 @@ static bool test_collision_wall(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }

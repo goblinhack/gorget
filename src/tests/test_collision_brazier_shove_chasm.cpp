@@ -94,7 +94,7 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l1);
 
-    if (! (result = level_match_contents(g, v, l1, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l1, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -153,7 +153,7 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
 
   TEST_PROGRESS(t);
   {
-    if (! (result = level_match_contents(g, v, l1, w, h, expect2.c_str()))) {
+    if (! (result = level_match_contents(g, v, l1, t, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -169,7 +169,7 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
 
   TEST_PROGRESS(t);
   {
-    if (! (result = level_match_contents(g, v, l2, w, h, expect3.c_str()))) {
+    if (! (result = level_match_contents(g, v, l2, t, w, h, expect3.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }

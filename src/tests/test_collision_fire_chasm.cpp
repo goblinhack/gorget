@@ -87,7 +87,7 @@ static bool test_collision_fire_chasm(Gamep g, Testp t)
   TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
-    if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }

@@ -11,7 +11,7 @@
 //
 // Handle things interacting with chasms
 //
-void level_tick_end_teleport(Gamep g, Levelsp v, Levelp l)
+void level_tick_teleport(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 

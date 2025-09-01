@@ -92,7 +92,7 @@ static bool test_move_ok(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -115,7 +115,7 @@ static bool test_move_ok(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect2.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -138,7 +138,7 @@ static bool test_move_ok(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect3.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect3.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -161,7 +161,7 @@ static bool test_move_ok(Gamep g, Testp t)
 
     game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l, w, h, expect4.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect4.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
