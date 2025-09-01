@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_mob_water(Gamep g, Testp t)
+static bool test_fire_over_chasm(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -22,17 +22,17 @@ static bool test_collision_mob_water(Gamep g, Testp t)
   std::string start
       = "......."
         "......."
-        "...~~~."
-        "..@~~~."
-        "...~~~."
+        "...CCC."
+        "..@CCC."
+        "...CCC."
         "......."
         ".......";
   std::string expect1
       = "......."
         "......."
-        "...~~~."
-        "..@~:~."
-        "...~~~."
+        "...CCC."
+        "..@C;C."
+        "...CCC."
         "......."
         ".......";
 
@@ -51,7 +51,7 @@ static bool test_collision_mob_water(Gamep g, Testp t)
   //
   // Push the mob into lava
   //
-  TEST_LOG(t, "spawn mob over water");
+  TEST_LOG(t, "spawn fire over chasm");
   TRACE_AND_INDENT();
 
   //
@@ -68,9 +68,9 @@ static bool test_collision_mob_water(Gamep g, Testp t)
   }
 
   //
-  // Spawn mob twice. This should be enough to evaporate the water.
+  // Spawn fire twice. This should be enough to evaporate the chasm.
   //
-  thing_spawn(g, v, l, tp_random(is_mob1), player->at + spoint(2, 0));
+  thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(2, 0));
 
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 3; tries++) {
@@ -109,14 +109,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_mob_water(void)
+bool test_load_fire_over_chasm(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_mob_water");
+  Testp test = test_load("fire_over_chasm");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_mob_water);
+  test_callback_set(test, test_fire_over_chasm);
   // end sort marker1 }
 
   return true;

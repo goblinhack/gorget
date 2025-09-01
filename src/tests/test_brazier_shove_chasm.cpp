@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_brazier_shove_into_mob(Gamep g, Testp t)
+static bool test_brazier_shove_chasm(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -19,36 +19,54 @@ static bool test_collision_brazier_shove_into_mob(Gamep g, Testp t)
   //
   // How the dungeon starts out, and how we expect it to change
   //
-  std::string start
+  std::string level1
       = "......."
         "......."
+        "....C.."
+        "..@BC.."
+        "....C.."
         "......."
-        "..@Bg.."
+        ".......";
+  std::string level2
+      = "......."
         "......."
+        "....x.."
+        "....x.."
+        "....x.."
         "......."
         ".......";
   std::string expect1 // first shove
       = "......."
         "......."
-        "......."
-        "..@;!.."
-        "......."
+        "....C.."
+        "..@;;.."
+        "....C.."
         "......."
         ".......";
-  std::string expect2 // second shove, mob should be dead by now
+  std::string expect2 // second shove
       = "......."
         "......."
+        "....C.."
+        "..@.C.."
+        "....C.."
         "......."
-        "..@.B.."
+        ".......";
+  std::string expect3 // second level
+      = "......."
         "......."
+        "...!x.." // barrel is on fire
+        "....x.."
+        "....x.."
         "......."
         ".......";
 
   //
   // Create the level and start playing
   //
-  Levelp  l;
-  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
+  Levelp  l1;
+  Levelp  l2;
+  Levelsp v = game_test_init(g, &l1, level_num, w, h, level1.c_str());
+  game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
 
   //
   // The guts of the test
@@ -74,9 +92,9 @@ static bool test_collision_brazier_shove_into_mob(Gamep g, Testp t)
       goto exit;
     }
 
-    game_wait_for_tick_to_finish(g, v, l);
+    game_wait_for_tick_to_finish(g, v, l1);
 
-    if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l1, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -94,7 +112,7 @@ static bool test_collision_brazier_shove_into_mob(Gamep g, Testp t)
     auto p        = player->at + spoint(1, 0);
     bool found_it = false;
 
-    FOR_ALL_THINGS_AT(g, v, l, it, p)
+    FOR_ALL_THINGS_AT(g, v, l1, it, p)
     {
       if (thing_is_brazier(it) && thing_is_dead(it)) {
         found_it = true;
@@ -130,12 +148,12 @@ static bool test_collision_brazier_shove_into_mob(Gamep g, Testp t)
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l);
+    game_wait_for_tick_to_finish(g, v, l1);
   }
 
   TEST_PROGRESS(t);
   {
-    if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
+    if (! (result = level_match_contents(g, v, l1, t, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -149,6 +167,14 @@ static bool test_collision_brazier_shove_into_mob(Gamep g, Testp t)
 
   TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
 
+  TEST_PROGRESS(t);
+  {
+    if (! (result = level_match_contents(g, v, l2, t, w, h, expect3.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+  }
+
   TEST_PASSED(t);
 exit:
   TRACE_NO_INDENT();
@@ -157,14 +183,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_brazier_shove_into_mob(void)
+bool test_load_brazier_shove_chasm(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_brazier_shove_into_mob");
+  Testp test = test_load("brazier_shove_chasm");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_brazier_shove_into_mob);
+  test_callback_set(test, test_brazier_shove_chasm);
   // end sort marker1 }
 
   return true;

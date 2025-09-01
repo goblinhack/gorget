@@ -117,7 +117,13 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
     }
   }
 
-  DIE("failed to find a next level down");
+  //
+  // Some tests have only 1 level
+  //
+  if (! g_opt_tests) {
+    DIE("failed to find a next level down");
+  }
+
   return nullptr;
 }
 

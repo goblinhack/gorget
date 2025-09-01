@@ -76,8 +76,6 @@ static bool wid_rightbar_create_window(Gamep g)
 
   wid_update(g, wid_rightbar);
 
-  DBG2("Remade rightbar");
-
   return true;
 }
 

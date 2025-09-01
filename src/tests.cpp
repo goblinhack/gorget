@@ -15,27 +15,27 @@ bool tests_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
-  if (!test_load_collision_barrel()) { return false; }
-  if (!test_load_collision_brazier_shove_chasm()) { return false; }
-  if (!test_load_collision_brazier_shove_fail()) { return false; }
-  if (!test_load_collision_brazier_shove_into_mob()) { return false; }
-  if (!test_load_collision_brazier_shove_ok()) { return false; }
-  if (!test_load_collision_fire_chasm()) { return false; }
-  if (!test_load_collision_fire_foliage()) { return false; }
-  if (!test_load_collision_fire_water()) { return false; }
-  if (!test_load_collision_grass()) { return false; }
-  if (!test_load_collision_large_fire_water()) { return false; }
-  if (!test_load_collision_mob_lava()) { return false; }
-  if (!test_load_collision_mob_water()) { return false; }
-  if (!test_load_collision_mob()) { return false; }
-  if (!test_load_collision_player_lava()) { return false; }
-  if (!test_load_collision_wall()) { return false; }
+  if (!test_load_barrel()) { return false; }
+  if (!test_load_brazier_shove_chasm()) { return false; }
+  if (!test_load_brazier_shove_fail()) { return false; }
+  if (!test_load_brazier_shove_into_mob()) { return false; }
+  if (!test_load_brazier_shove_ok()) { return false; }
+  if (!test_load_fire_on_water()) { return false; }
+  if (!test_load_fire_over_chasm()) { return false; }
+  if (!test_load_foliage_on_fire()) { return false; }
   if (!test_load_jump_ok()) { return false; }
   if (!test_load_jump_truncated()) { return false; }
+  if (!test_load_large_fire_water()) { return false; }
+  if (!test_load_mob_lava()) { return false; }
+  if (!test_load_mob_water()) { return false; }
+  if (!test_load_mob()) { return false; }
   if (!test_load_move_ok()) { return false; }
   if (!test_load_player_fall_chasm()) { return false; }
+  if (!test_load_player_lava()) { return false; }
   if (!test_load_save_load()) { return false; }
   if (!test_load_teleport()) { return false; }
+  if (!test_load_trampled_grass()) { return false; }
+  if (!test_load_wall()) { return false; }
   /* end shell marker1 */
   // clang-format on
 

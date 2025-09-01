@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_fire_foliage(Gamep g, Testp t)
+static bool test_mob_water(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -22,17 +22,17 @@ static bool test_collision_fire_foliage(Gamep g, Testp t)
   std::string start
       = "......."
         "......."
-        "...```."
-        "..@```."
-        "...```."
+        "...~~~."
+        "..@~~~."
+        "...~~~."
         "......."
         ".......";
   std::string expect1
       = "......."
         "......."
-        "...!;;."
-        "..;;.;."
-        "...;!!."
+        "...~~~."
+        "..@~:~."
+        "...~~~."
         "......."
         ".......";
 
@@ -51,7 +51,7 @@ static bool test_collision_fire_foliage(Gamep g, Testp t)
   //
   // Push the mob into lava
   //
-  TEST_LOG(t, "spawn fire over foliage");
+  TEST_LOG(t, "spawn mob over water");
   TRACE_AND_INDENT();
 
   //
@@ -68,12 +68,12 @@ static bool test_collision_fire_foliage(Gamep g, Testp t)
   }
 
   //
-  // Spawn fire twice. This should be enough to evaporate the foliage.
+  // Spawn mob twice. This should be enough to evaporate the water.
   //
-  thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(2, 0));
+  thing_spawn(g, v, l, tp_random(is_mob1), player->at + spoint(2, 0));
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
+  for (auto tries = 0; tries < 3; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
@@ -98,7 +98,7 @@ static bool test_collision_fire_foliage(Gamep g, Testp t)
   //
   TEST_PROGRESS(t);
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 10, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
   }
 
   TEST_PASSED(t);
@@ -109,14 +109,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_fire_foliage(void)
+bool test_load_mob_water(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_fire_foliage");
+  Testp test = test_load("mob_water");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_fire_foliage);
+  test_callback_set(test, test_mob_water);
   // end sort marker1 }
 
   return true;

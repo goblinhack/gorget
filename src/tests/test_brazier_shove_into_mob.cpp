@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_brazier_shove_fail(Gamep g, Testp t)
+static bool test_brazier_shove_into_mob(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -23,7 +23,7 @@ static bool test_collision_brazier_shove_fail(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@Bx.."
+        "..@Bg.."
         "......."
         "......."
         ".......";
@@ -31,15 +31,15 @@ static bool test_collision_brazier_shove_fail(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@;x.."
+        "..@;!.."
         "......."
         "......."
         ".......";
-  std::string expect2 // second shove
+  std::string expect2 // second shove, mob should be dead by now
       = "......."
         "......."
         "......."
-        "..@Bx.."
+        "..@.B.."
         "......."
         "......."
         ".......";
@@ -109,7 +109,7 @@ static bool test_collision_brazier_shove_fail(Gamep g, Testp t)
   }
 
   //
-  // Second shove, we should be able to move the dead brazier; except we can't as there is a wall in the way
+  // Second shove, we should be able to move the dead brazier
   //
   TEST_PROGRESS(t);
   {
@@ -157,14 +157,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_brazier_shove_fail(void)
+bool test_load_brazier_shove_into_mob(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_brazier_shove_fail");
+  Testp test = test_load("brazier_shove_into_mob");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_brazier_shove_fail);
+  test_callback_set(test, test_brazier_shove_into_mob);
   // end sort marker1 }
 
   return true;

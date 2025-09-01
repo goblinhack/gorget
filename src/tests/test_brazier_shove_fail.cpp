@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
+static bool test_brazier_shove_fail(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -19,54 +19,36 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
   //
   // How the dungeon starts out, and how we expect it to change
   //
-  std::string level1
+  std::string start
       = "......."
         "......."
-        "....C.."
-        "..@BC.."
-        "....C.."
         "......."
-        ".......";
-  std::string level2
-      = "......."
+        "..@Bx.."
         "......."
-        "....x.."
-        "....x.."
-        "....x.."
         "......."
         ".......";
   std::string expect1 // first shove
       = "......."
         "......."
-        "....C.."
-        "..@;;.."
-        "....C.."
+        "......."
+        "..@;x.."
+        "......."
         "......."
         ".......";
   std::string expect2 // second shove
       = "......."
         "......."
-        "....C.."
-        "..@.C.."
-        "....C.."
         "......."
-        ".......";
-  std::string expect3 // second level
-      = "......."
+        "..@Bx.."
         "......."
-        "...Bx.."
-        "....x.."
-        "....x.."
         "......."
         ".......";
 
   //
   // Create the level and start playing
   //
-  Levelp  l1;
-  Levelp  l2;
-  Levelsp v = game_test_init(g, &l1, level_num, w, h, level1.c_str());
-  game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
+  Levelp  l;
+  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
 
   //
   // The guts of the test
@@ -92,9 +74,9 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
       goto exit;
     }
 
-    game_wait_for_tick_to_finish(g, v, l1);
+    game_wait_for_tick_to_finish(g, v, l);
 
-    if (! (result = level_match_contents(g, v, l1, t, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -112,7 +94,7 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
     auto p        = player->at + spoint(1, 0);
     bool found_it = false;
 
-    FOR_ALL_THINGS_AT(g, v, l1, it, p)
+    FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
       if (thing_is_brazier(it) && thing_is_dead(it)) {
         found_it = true;
@@ -127,7 +109,7 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
   }
 
   //
-  // Second shove, we should be able to move the dead brazier
+  // Second shove, we should be able to move the dead brazier; except we can't as there is a wall in the way
   //
   TEST_PROGRESS(t);
   {
@@ -148,12 +130,12 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l1);
+    game_wait_for_tick_to_finish(g, v, l);
   }
 
   TEST_PROGRESS(t);
   {
-    if (! (result = level_match_contents(g, v, l1, t, w, h, expect2.c_str()))) {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }
@@ -167,14 +149,6 @@ static bool test_collision_brazier_shove_chasm(Gamep g, Testp t)
 
   TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
 
-  TEST_PROGRESS(t);
-  {
-    if (! (result = level_match_contents(g, v, l2, t, w, h, expect3.c_str()))) {
-      TEST_FAILED(t, "unexpected contents");
-      goto exit;
-    }
-  }
-
   TEST_PASSED(t);
 exit:
   TRACE_NO_INDENT();
@@ -183,14 +157,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_brazier_shove_chasm(void)
+bool test_load_brazier_shove_fail(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_brazier_shove_chasm");
+  Testp test = test_load("brazier_shove_fail");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_brazier_shove_chasm);
+  test_callback_set(test, test_brazier_shove_fail);
   // end sort marker1 }
 
   return true;

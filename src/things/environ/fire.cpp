@@ -102,12 +102,17 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  ThingEvent e {
-      .reason     = "by falling",     //
-      .event_type = THING_EVENT_FALL, //
-  };
+  //
+  // I quite like the idea of fire falling to the level below
+  //
+  if (0) {
+    ThingEvent e {
+        .reason     = "by falling",     //
+        .event_type = THING_EVENT_FALL, //
+    };
 
-  thing_dead(g, v, l, t, e);
+    thing_dead(g, v, l, t, e);
+  }
 
   if (! level_is_smoke(g, v, l, t->at)) {
     thing_spawn(g, v, l, tp_random(is_smoke), t->at);

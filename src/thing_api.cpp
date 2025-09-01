@@ -134,7 +134,6 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   } else {
     tp_on_fall_end(g, v, l, t);
   }
-  game_request_to_remake_ui_set(g);
 }
 
 int thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
@@ -144,7 +143,6 @@ int thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
-  game_request_to_remake_ui_set(g);
   return t->_is_falling += val;
 }
 
@@ -155,7 +153,6 @@ int thing_is_falling_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("no thing for %s", __FUNCTION__);
     return 0;
   }
-  game_request_to_remake_ui_set(g);
   return t->_is_falling -= val;
 }
 
@@ -404,7 +401,6 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   if (val) {
     tp_on_moved(g, v, l, t);
   }
-  game_request_to_remake_ui_set(g);
 }
 
 bool thing_is_teleporting(Thingp t)
@@ -433,7 +429,6 @@ void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   if (val) {
     tp_on_teleported(g, v, l, t);
   }
-  game_request_to_remake_ui_set(g);
 }
 
 bool thing_is_jumping(Thingp t)
@@ -464,7 +459,6 @@ void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   } else {
     tp_on_jump_end(g, v, l, t);
   }
-  game_request_to_remake_ui_set(g);
 }
 
 bool thing_is_animated_can_hflip(Thingp t)

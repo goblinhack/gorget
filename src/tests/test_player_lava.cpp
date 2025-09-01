@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_mob_lava(Gamep g, Testp t)
+static bool test_player_lava(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -23,7 +23,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@gL.."
+        "..@L..."
         "......."
         "......."
         ".......";
@@ -31,7 +31,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.!.."
+        "...@..." // is a corpse
         "......."
         "......."
         ".......";
@@ -51,15 +51,14 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   bool left   = false;
   bool right  = false;
 
-  spoint  p;
-  bool    found_it = false;
-  ThingId mob_id   = 0;
-  Thingp  player   = nullptr;
+  spoint p;
+  bool   found_corpse = false;
+  Thingp player       = nullptr;
 
   //
-  // Push the mob into lava
+  // Move into the lava. The player should die.
   //
-  TEST_LOG(t, "push mob into lava");
+  TEST_LOG(t, "move player into lava right");
   TRACE_AND_INDENT();
   up = down = left = right = false;
   right                    = true;
@@ -78,25 +77,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   }
 
   //
-  // Find the mob before shoving it via the player
-  //
-  TEST_PROGRESS(t);
-  {
-    TRACE_NO_INDENT();
-    p        = player->at + spoint(1, 0);
-    found_it = false;
-    FOR_ALL_THINGS_AT(g, v, l, it, p)
-    {
-      if (thing_is_mob(it)) {
-        found_it = true;
-        mob_id   = it->id;
-        break;
-      }
-    }
-  }
-
-  //
-  // Move right, shoving the mob
+  // Move right
   //
   TEST_PROGRESS(t);
   {
@@ -128,38 +109,34 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
     }
   }
 
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 2; tries++) {
+    TEST_LOG(t, "try: %d", tries);
+    TRACE_NO_INDENT();
+    game_event_wait(g);
+    game_wait_for_tick_to_finish(g, v, l);
+  }
+
   //
-  // Check mob is dead when shoved into lava. It should be popped off the level.
+  // Check player is dead when shoved into lava. It should be popped off the level.
   //
   TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
-    TEST_LOG(t, "check mob is dead when shoved into lava");
-    p        = player->at + spoint(2, 0);
-    found_it = false;
+    TEST_LOG(t, "check player is dead when in lava");
+    p            = player->at;
+    found_corpse = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
-      if (thing_is_mob(it)) {
-        found_it = true;
+      if (thing_is_player(it) && thing_is_corpse(it)) {
+        found_corpse = true;
         break;
       }
     }
 
-    if (found_it) {
-      TEST_FAILED(t, "found mob, but it should have been popped");
-      goto exit;
-    }
-  }
-
-  //
-  // Check the mob has been cleaned up
-  //
-  TEST_PROGRESS(t);
-  {
-    TRACE_NO_INDENT();
-    if (thing_find_optional(g, v, mob_id)) {
-      TEST_FAILED(t, "found mob, but it should have been freed");
+    if (! found_corpse) {
+      TEST_FAILED(t, "did not find player as a corpse");
       goto exit;
     }
   }
@@ -169,7 +146,7 @@ static bool test_collision_mob_lava(Gamep g, Testp t)
   //
   TEST_PROGRESS(t);
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
   }
 
   TEST_PASSED(t);
@@ -180,14 +157,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_mob_lava(void)
+bool test_load_player_lava(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_mob_lava");
+  Testp test = test_load("player_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_mob_lava);
+  test_callback_set(test, test_player_lava);
   // end sort marker1 }
 
   return true;

@@ -439,21 +439,22 @@ static void usage(void)
   CON("Commonly used options:");
   CON(" --seed <name/number>              -- Set the random seed.");
   CON(" ");
-  CON("Debugging options:");
+  CON("Debugging:");
   CON(" --debug                           -- Basic debug.");
   CON(" --debug2                          -- All debugs. Slow.");
-  CON(" --no-debug                        -- Disable debugs.");
-  CON("Testing options:");
+  CON(" ");
+  CON("Testing:");
   CON(" --tests                           -- Run all tests.");
   CON(" --test foo                        -- Run test foo only.");
   CON(" --level foo                       -- Start in this level only.");
-  CON("Quickstart options:");
+  CON(" ");
+  CON("Debugging:");
   CON(" --quick-start                     -- Quick start inside level.");
   CON(" --quick-start-level-select-menu   -- Quick start in the level select menu.");
-  CON("Internal testing:");
+  CON(" ");
+  CON("Code generation:");
   CON(" --do-level-gen                    -- Do level gen only.");
   CON(" --do-level-select-gen             -- Do level select gen only.");
-  CON("Code generation:");
   CON(" --do-room-gen                     -- Generate room files only.");
   CON(" ");
   CON("Written by goblinhack@gmail.com");
@@ -480,14 +481,6 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--seed") || ! strcasecmp(argv[ i ], "-seed")) {
       g_opt_seed_name = argv[ i + 1 ];
       i++;
-      continue;
-    }
-
-    if (! strcasecmp(argv[ i ], "--no-debug") || ! strcasecmp(argv[ i ], "-no-debug")
-        || ! strcasecmp(argv[ i ], "--nodebug") || ! strcasecmp(argv[ i ], "-nodebug")) {
-      g_opt_debug1               = false;
-      g_opt_debug2               = false;
-      g_opt_override_debug_level = true;
       continue;
     }
 

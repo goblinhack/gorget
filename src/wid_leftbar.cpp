@@ -100,8 +100,6 @@ static bool wid_leftbar_create_window(Gamep g)
 
   wid_update(g, wid_leftbar);
 
-  DBG2("Remade leftbar");
-
   return true;
 }
 

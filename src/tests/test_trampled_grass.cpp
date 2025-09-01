@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_barrel(Gamep g, Testp t)
+static bool test_trampled_grass(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -20,21 +20,21 @@ static bool test_collision_barrel(Gamep g, Testp t)
   // How the dungeon starts out, and how we expect it to change
   //
   std::string start
-      = "......."
-        "......."
-        "......."
-        "..@b..."
-        "......."
-        "......."
-        ".......";
+      = "xxxxxxx"
+        "x.....x"
+        "x.....x"
+        "x.@'..x"
+        "x.....x"
+        "x.....x"
+        "xxxxxxx";
   std::string expect1
-      = "......."
-        "......."
-        "......."
-        "..@.b.."
-        "......."
-        "......."
-        ".......";
+      = "xxxxxxx"
+        "x.....x"
+        "x.....x"
+        "x..@..x"
+        "x.....x"
+        "x.....x"
+        "xxxxxxx";
 
   //
   // Create the level and start playing
@@ -52,7 +52,7 @@ static bool test_collision_barrel(Gamep g, Testp t)
   bool right  = false;
 
   //
-  // Bump into a barrel. It should move and not be knocked over.
+  // Walk over grass and then check it is crushed/dead
   //
   TEST_PROGRESS(t);
   {
@@ -80,22 +80,22 @@ static bool test_collision_barrel(Gamep g, Testp t)
     }
 
     //
-    // Check the barrel is alive
+    // Check the grass is dead
     //
-    TEST_LOG(t, "check barrel is alive");
-    auto p        = player->at + spoint(2, 0);
+    TEST_LOG(t, "check grass is dead");
+    auto p        = player->at;
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
-      if (thing_is_barrel(it) && ! thing_is_dead(it)) {
+      if (thing_is_grass(it) && thing_is_dead(it)) {
         found_it = true;
         break;
       }
     }
 
     if (! found_it) {
-      TEST_FAILED(t, "no alive barrel");
+      TEST_FAILED(t, "no dead grass");
       goto exit;
     }
   }
@@ -110,14 +110,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_barrel(void)
+bool test_load_trampled_grass(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_barrel");
+  Testp test = test_load("trampled_grass");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_barrel);
+  test_callback_set(test, test_trampled_grass);
   // end sort marker1 }
 
   return true;

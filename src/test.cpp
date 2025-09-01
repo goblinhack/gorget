@@ -21,27 +21,27 @@ std::initializer_list< std::string > tests = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
-    "collision_barrel",
-    "collision_brazier_shove_chasm",
-    "collision_brazier_shove_fail",
-    "collision_brazier_shove_into_mob",
-    "collision_brazier_shove_ok",
-    "collision_fire_chasm",
-    "collision_fire_foliage",
-    "collision_fire_water",
-    "collision_grass",
-    "collision_large_fire_water",
-    "collision_mob_lava",
-    "collision_mob_water",
-    "collision_mob",
-    "collision_player_lava",
-    "collision_wall",
+    "barrel",
+    "brazier_shove_chasm",
+    "brazier_shove_fail",
+    "brazier_shove_into_mob",
+    "brazier_shove_ok",
+    "fire_on_water",
+    "fire_over_chasm",
+    "foliage_on_fire",
     "jump_ok",
     "jump_truncated",
+    "large_fire_water",
+    "mob_lava",
+    "mob_water",
+    "mob",
     "move_ok",
     "player_fall_chasm",
+    "player_lava",
     "save_load",
     "teleport",
+    "trampled_grass",
+    "wall",
   /* end shell marker1 */
 };
 /* clang-format on */
@@ -184,18 +184,20 @@ void tests_run(Gamep g)
     auto pre  = string_sprintf("Test %-70s", name.c_str());
 
     //
-    // Preamble
-    //
-    LOG("Running test: %s", name.c_str());
-    LOG("------------------------------");
-
-    //
     // Skip the test if needed
     //
     if (g_opt_test_name != "") {
       if (name != g_opt_test_name) {
         skipped = true;
       }
+    }
+
+    //
+    // Preamble
+    //
+    if (! skipped) {
+      LOG("Running test: %s", name.c_str());
+      LOG("-------------------------------------------");
     }
 
     //
@@ -220,7 +222,6 @@ void tests_run(Gamep g)
 
     if (skipped) {
       term_log("%%fg=yellow$skipped%%fg=reset$\n");
-      LOG("Skipped");
     } else if (result) {
       passed++;
       term_log("%%fg=green$OK%%fg=reset$\n");
@@ -230,7 +231,10 @@ void tests_run(Gamep g)
       term_log("%%fg=red$FAILED%%fg=reset$\n");
       LOG("Failed");
     }
-    LOG("-");
+
+    if (! skipped) {
+      LOG("-");
+    }
   }
 
   for (auto &test : test_name_map) {

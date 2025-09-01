@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_fire_chasm(Gamep g, Testp t)
+static bool test_foliage_on_fire(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -22,17 +22,17 @@ static bool test_collision_fire_chasm(Gamep g, Testp t)
   std::string start
       = "......."
         "......."
-        "...CCC."
-        "..@CCC."
-        "...CCC."
+        "...```."
+        "..@```."
+        "...```."
         "......."
         ".......";
   std::string expect1
       = "......."
         "......."
-        "...CCC."
-        "..@C;C."
-        "...CCC."
+        "...!;;."
+        "..;;.;."
+        "...;!!."
         "......."
         ".......";
 
@@ -51,7 +51,7 @@ static bool test_collision_fire_chasm(Gamep g, Testp t)
   //
   // Push the mob into lava
   //
-  TEST_LOG(t, "spawn fire over chasm");
+  TEST_LOG(t, "spawn fire over foliage");
   TRACE_AND_INDENT();
 
   //
@@ -68,12 +68,12 @@ static bool test_collision_fire_chasm(Gamep g, Testp t)
   }
 
   //
-  // Spawn fire twice. This should be enough to evaporate the chasm.
+  // Spawn fire twice. This should be enough to evaporate the foliage.
   //
   thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(2, 0));
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 3; tries++) {
+  for (auto tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
@@ -98,7 +98,7 @@ static bool test_collision_fire_chasm(Gamep g, Testp t)
   //
   TEST_PROGRESS(t);
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 10, "final tick counter value");
   }
 
   TEST_PASSED(t);
@@ -109,14 +109,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_fire_chasm(void)
+bool test_load_foliage_on_fire(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_fire_chasm");
+  Testp test = test_load("foliage_on_fire");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_fire_chasm);
+  test_callback_set(test, test_foliage_on_fire);
   // end sort marker1 }
 
   return true;

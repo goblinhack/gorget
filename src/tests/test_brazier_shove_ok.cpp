@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_collision_mob(Gamep g, Testp t)
+static bool test_brazier_shove_ok(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -23,15 +23,23 @@ static bool test_collision_mob(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@g..."
+        "..@B..."
         "......."
         "......."
         ".......";
-  std::string expect1
+  std::string expect1 // first shove
       = "......."
         "......."
         "......."
-        "..@.g.."
+        "..@;!.."
+        "......."
+        "......."
+        ".......";
+  std::string expect2 // second shove
+      = "......."
+        "......."
+        "......."
+        "..@.B.."
         "......."
         "......."
         ".......";
@@ -52,7 +60,7 @@ static bool test_collision_mob(Gamep g, Testp t)
   bool right  = false;
 
   //
-  // Bump into a mob. It should move and not die.
+  // Bump into a brazier. It should be knocked over.
   //
   TEST_PROGRESS(t);
   {
@@ -80,27 +88,66 @@ static bool test_collision_mob(Gamep g, Testp t)
     }
 
     //
-    // Check the mob is alive
+    // Check the brazier is dead
     //
-    TEST_LOG(t, "check mob is alive");
-    auto p        = player->at + spoint(2, 0);
+    TEST_LOG(t, "check brazier is dead");
+    auto p        = player->at + spoint(1, 0);
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
-      if (thing_is_mob(it) && ! thing_is_dead(it)) {
+      if (thing_is_brazier(it) && thing_is_dead(it)) {
         found_it = true;
         break;
       }
     }
 
     if (! found_it) {
-      TEST_FAILED(t, "no alive mob");
+      TEST_FAILED(t, "no dead brazier");
       goto exit;
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  //
+  // Second shove, we should be able to move the dead brazier
+  //
+  TEST_PROGRESS(t);
+  {
+    TEST_LOG(t, "move right");
+    TRACE_AND_INDENT();
+    up = down = left = right = false;
+    right                    = true;
+
+    if (! (result = player_move_request(g, up, down, left, right))) {
+      TEST_FAILED(t, "move failed");
+      goto exit;
+    }
+  }
+
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 10; tries++) {
+    TEST_LOG(t, "try: %d", tries);
+    TRACE_NO_INDENT();
+    // level_dump(g, v, l, w, h);
+    game_event_wait(g);
+    game_wait_for_tick_to_finish(g, v, l);
+  }
+
+  TEST_PROGRESS(t);
+  {
+    if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+
+    auto player = thing_player(g);
+    if (! player) {
+      TEST_FAILED(t, "no player");
+      goto exit;
+    }
+  }
+
+  TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
@@ -110,14 +157,14 @@ exit:
   return result;
 }
 
-bool test_load_collision_mob(void)
+bool test_load_brazier_shove_ok(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("collision_mob");
+  Testp test = test_load("brazier_shove_ok");
 
   // begin sort marker1 {
-  test_callback_set(test, test_collision_mob);
+  test_callback_set(test, test_brazier_shove_ok);
   // end sort marker1 }
 
   return true;
