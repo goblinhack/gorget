@@ -351,7 +351,7 @@ void level_cursor_path_reset(Gamep g, Levelsp v)
     return;
   }
 
-  v->player_state               = PLAYER_STATE_NORMAL;
+  player_state_change(g, v, PLAYER_STATE_NORMAL);
   player_struct->move_path.size = 0;
   memset(v->cursor, 0, SIZEOF(v->cursor));
 }
@@ -379,7 +379,7 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
     return;
   }
 
-  switch (v->player_state) {
+  switch (player_state(g, v)) {
     case PLAYER_STATE_NORMAL :
       //
       // Replace the mouse path
@@ -389,18 +389,19 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
       //
       // Player wants to start following or replace the current path.
       //
-      v->player_state = PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH;
+      player_state_change(g, v, PLAYER_STATE_FOLLOWING_A_PATH);
       break;
     case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
       //
       // Wait for confirmation.
       //
       return;
-    case PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH :
+    case PLAYER_STATE_FOLLOWING_A_PATH :
       //
       // Already following a path, stick to it until completion.
       //
       return;
+    case PLAYER_STATE_ENUM_MAX : return;
   }
 
   //

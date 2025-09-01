@@ -6,6 +6,8 @@
 #ifndef _MY_ENUM_HPP__
 #define _MY_ENUM_HPP__
 
+#include <unordered_map>
+
 /*
  * Enum list macros .h definitions
  */

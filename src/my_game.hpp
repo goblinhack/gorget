@@ -6,23 +6,26 @@
 #ifndef _MY_GAME_HPP_
 #define _MY_GAME_HPP_
 
+#include "my_enum.hpp"
 #include "my_types.hpp"
 
 #include <SDL.h>
 #include <string>
 
-typedef enum {
-  STATE_MAIN_MENU,         // Main menu
-  STATE_PLAYING,           // Actively playing in a level
-  STATE_MOVE_WARNING_MENU, // Waiting for confirmation on a move
-  STATE_QUITTING,          // Shutting down
-  STATE_KEYBOARD_MENU,     // Setting keys
-  STATE_LOAD_MENU,         // Loading a game
-  STATE_LOADED,            // Loaded an old game
-  STATE_DEAD_MENU,         // Player is dead
-  STATE_SAVE_MENU,         // Saving a game
-  STATE_QUIT_MENU,         // Pondering quitting
-} GameState;
+#define GAME_STATE_ENUM(list_macro)                                                                                  \
+  clang_format_indent()                                    /* dummy line for clang indentation fixup */              \
+      list_macro(STATE_MAIN_MENU, "MAIN-MENU"),            /* newline */                                             \
+      list_macro(STATE_PLAYING, "PLAYING"),                /* newline */                                             \
+      list_macro(STATE_MOVE_WARNING_MENU, "MOVE-WARNING"), /* newline */                                             \
+      list_macro(STATE_QUITTING, "QUITTING"),              /* newline */                                             \
+      list_macro(STATE_KEYBOARD_MENU, "KEYBOARD-MENU"),    /* newline */                                             \
+      list_macro(STATE_LOAD_MENU, "LOAD-MENU"),            /* newline */                                             \
+      list_macro(STATE_LOADED, "LOADED"),                  /* newline */                                             \
+      list_macro(STATE_DEAD_MENU, "DEAD-MENU"),            /* newline */                                             \
+      list_macro(STATE_SAVE_MENU, "SAVE-MENU"),            /* newline */                                             \
+      list_macro(STATE_QUIT_MENU, "QUIT-MENU"),            /* newline */
+
+ENUM_DEF_H(GAME_STATE_ENUM, GameState)
 
 typedef enum {
   SEED_SOURCE_RANDOM,

@@ -19,12 +19,17 @@ enum {
   CURSOR_AT,
 };
 
-typedef enum {
-  PLAYER_STATE_NORMAL,
-  PLAYER_STATE_PATH_REQUESTED,
-  PLAYER_STATE_MOVE_CONFIRM_REQUESTED,
-  PLAYER_STATE_CURRENTLY_FOLLOWING_A_PATH,
-} PlayerPath;
+//
+// Player state
+//
+#define PLAYER_STATE_ENUM(list_macro)                                                                                \
+  clang_format_indent()                                                /* dummy line for clang indentation fixup */  \
+      list_macro(PLAYER_STATE_NORMAL, "NORMAL"),                       /* newline */                                 \
+      list_macro(PLAYER_STATE_PATH_REQUESTED, "PATH-REQUESTED"),       /* newline */                                 \
+      list_macro(PLAYER_STATE_MOVE_CONFIRM_REQUESTED, "MOVE-CONFIRM"), /* newline */                                 \
+      list_macro(PLAYER_STATE_FOLLOWING_A_PATH, "FOLLOW-PATH"),        /* newline */
+
+ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
 
 typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
@@ -274,7 +279,7 @@ typedef struct Levels_ {
   //
   // Player movement state
   //
-  PlayerPath player_state;
+  PlayerState _player_state;
   //
   // Is the cursor over the map?
   //
@@ -513,5 +518,9 @@ void   level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, Widp);
 void   level_select_test(Gamep);
 void   level_select_update_grid_tiles(Gamep, Levelsp);
 void   level_select_user_chose_a_level(Gamep, Levelsp, Levelp);
+
+std::string player_state_to_string(PlayerState);
+PlayerState player_state(Gamep, Levelsp);
+void        player_state_change(Gamep, Levelsp, PlayerState new_state);
 
 #endif // _MY_LEVEL_H_
