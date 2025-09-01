@@ -45,8 +45,10 @@ void tests_run(Gamep);
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wvariadic-macros"
 
+#if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#endif
 
 #define TEST_LOG(test, msg, ...)                                                                                     \
   {                                                                                                                  \
@@ -62,7 +64,9 @@ void tests_run(Gamep);
     CON("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                         \
   }
 
+#if defined(__clang__)
 #pragma clang diagnostic pop
+#endif
 
 #pragma GCC diagnostic pop
 
