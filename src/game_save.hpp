@@ -212,6 +212,9 @@ bool Game::save(const std::string &file_to_save)
       wid_progress_bar_destroy(this);
       return false;
     }
+
+    free(tmp_uncompressed);
+    free(tmp_compressed);
   }
 
   //
