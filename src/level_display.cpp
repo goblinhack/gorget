@@ -16,13 +16,6 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
 
   Tpp tp = nullptr;
 
-  //
-  // No paths over a chasm
-  //
-  if (level_is_cursor_path_none(g, v, l, p)) {
-    return;
-  }
-
   switch (v->cursor[ p.x ][ p.y ]) {
     case CURSOR_NONE :
       //
@@ -31,6 +24,13 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
       return;
     case CURSOR_PATH :
       {
+        //
+        // No paths over a chasm
+        //
+        if (level_is_cursor_path_none(g, v, l, p)) {
+          return;
+        }
+
         //
         // No cursor path during level selection
         //
