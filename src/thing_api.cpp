@@ -312,7 +312,7 @@ void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, 
     THING_DBG(t, "is scheduled for cleanup");
   }
 
-  game_request_to_cleanup_things_set(g, true);
+  game_request_to_cleanup_things_set(g);
 }
 
 bool thing_is_sleeping(Thingp t)

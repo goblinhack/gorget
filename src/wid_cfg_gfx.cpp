@@ -60,7 +60,11 @@ static bool wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp w, int x, int y, uint3
 {
   TRACE_NO_INDENT();
   CON("Toggle vsync");
-  game_gfx_vsync_enable_set(g, ! game_gfx_vsync_enable_get(g));
+  if (game_gfx_vsync_enable_get(g)) {
+    game_gfx_vsync_enable_unset(g);
+  } else {
+    game_gfx_vsync_enable_set(g);
+  }
   config_gfx_vsync_update(g);
 
   wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
@@ -71,10 +75,14 @@ static bool wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_
 {
   TRACE_NO_INDENT();
   CON("Toggle gfx fullscreen");
-  game_gfx_fullscreen_set(g, ! game_gfx_fullscreen_get(g));
+  if (game_gfx_fullscreen_get(g)) {
+    game_gfx_fullscreen_unset(g);
+  } else {
+    game_gfx_fullscreen_set(g);
+  }
 
   if (game_gfx_fullscreen_get(g)) {
-    game_gfx_fullscreen_desktop_set(g, false);
+    game_gfx_fullscreen_desktop_unset(g);
   }
 
   if (game_gfx_fullscreen_get(g)) {
@@ -93,10 +101,15 @@ static bool wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y,
 {
   TRACE_NO_INDENT();
   CON("Toggle gfx fullscreen desktop");
-  game_gfx_fullscreen_desktop_set(g, ! game_gfx_fullscreen_desktop_get(g));
 
   if (game_gfx_fullscreen_desktop_get(g)) {
-    game_gfx_fullscreen_set(g, false);
+    game_gfx_fullscreen_desktop_unset(g);
+  } else {
+    game_gfx_fullscreen_desktop_set(g);
+  }
+
+  if (game_gfx_fullscreen_desktop_get(g)) {
+    game_gfx_fullscreen_unset(g);
   }
 
   if (game_gfx_fullscreen_get(g)) {
@@ -115,7 +128,12 @@ static bool wid_cfg_gfx_allow_highdpi_toggle(Gamep g, Widp w, int x, int y, uint
 {
   TRACE_NO_INDENT();
   CON("Toggle gfx allow highdpi");
-  game_gfx_allow_highdpi_set(g, ! game_gfx_allow_highdpi_get(g));
+
+  if (game_gfx_allow_highdpi_get(g)) {
+    game_gfx_allow_highdpi_unset(g);
+  } else {
+    game_gfx_allow_highdpi_set(g);
+  }
 
   wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   return true;
@@ -125,7 +143,13 @@ static bool wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_
 {
   TRACE_NO_INDENT();
   CON("Toggle gfx borderless");
-  game_gfx_borderless_set(g, ! game_gfx_borderless_get(g));
+
+  if (game_gfx_borderless_get(g)) {
+    game_gfx_borderless_unset(g);
+  } else {
+    game_gfx_borderless_set(g);
+  }
+
   SDL_SetWindowBordered(sdl.window, game_gfx_borderless_get(g) ? SDL_TRUE : SDL_FALSE);
 
   wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
@@ -136,7 +160,13 @@ static bool wid_cfg_other_fps_counter_toggle(Gamep g, Widp w, int x, int y, uint
 {
   TRACE_NO_INDENT();
   CON("Toggle fps counter");
-  game_fps_counter_set(g, ! game_fps_counter_get(g));
+
+  if (game_fps_counter_get(g)) {
+    game_fps_counter_unset(g);
+
+  } else {
+    game_fps_counter_set(g);
+  }
 
   wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   return true;

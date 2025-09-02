@@ -385,10 +385,14 @@ uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context)
   char *s = tokens->args[ 2 ];
 
   if (! s || (*s == '\0')) {
-    game_fps_counter_set(g, true);
+    game_fps_counter_set(g);
     CON("FPS counter enabled (default).");
   } else {
-    game_fps_counter_set(g, strtol(s, nullptr, 10) ? true : false);
+    if (strtol(s, nullptr, 10)) {
+      game_fps_counter_set(g);
+    } else {
+      game_fps_counter_unset(g);
+    }
     if (game_fps_counter_get(g)) {
       CON("FPS counter enabled.");
     } else {
@@ -439,9 +443,13 @@ uint8_t config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context)
   char *s = tokens->args[ 2 ];
 
   if (! s || (*s == '\0')) {
-    game_gfx_vsync_enable_set(g, true);
+    game_gfx_vsync_enable_set(g);
   } else {
-    game_gfx_vsync_enable_set(g, strtol(s, nullptr, 10) ? 1 : 0);
+    if (strtol(s, nullptr, 10)) {
+      game_gfx_vsync_enable_set(g);
+    } else {
+      game_gfx_vsync_enable_unset(g);
+    }
   }
 
   if (game_gfx_vsync_enable_get(g)) {

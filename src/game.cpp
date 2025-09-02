@@ -1016,13 +1016,13 @@ void Game::tick(void)
   //
   // Common to all states
   //
-  game_request_to_remake_ui_set(g, false);
+  game_request_to_remake_ui_unset(g);
 
   //
   // Create the dead widget?
   //
   if (game_request_to_end_game_get(g)) {
-    game_request_to_end_game_set(g, false);
+    game_request_to_end_game_unset(g);
     wid_dead_select(g, game_request_to_end_game_reason_get(g));
   }
 }
@@ -1099,13 +1099,11 @@ void Game::display(void)
           //
           // If the cursor moved, update what we see
           //
-          // if (v->cursor_moved) {
           if (game_request_to_update_cursor_get(g)) {
             level_cursor_path_recreate(g, v, l);
             level_cursor_describe(g, v, l);
-            game_request_to_update_cursor_set(g, false);
+            game_request_to_update_cursor_unset(g);
           }
-          // }
 
           //
           // If the player pressed the mouse, we need to apply the current cursor path and start moving.
@@ -1147,9 +1145,10 @@ void Game::display(void)
           //
           // If the cursor moved, update what we see
           //
-          if (v->cursor_moved) {
+          if (game_request_to_update_cursor_get(g)) {
             level_cursor_path_recreate(g, v, l);
             level_cursor_describe(g, v, l);
+            game_request_to_update_cursor_unset(g);
           }
         }
       }
@@ -1411,14 +1410,23 @@ bool game_fps_counter_get(Gamep g)
   }
   return g->config.fps_counter;
 }
-void game_fps_counter_set(Gamep g, bool val)
+void game_fps_counter_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.fps_counter = val;
+  g->config.fps_counter = true;
+}
+void game_fps_counter_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.fps_counter = false;
 }
 
 int game_fps_value_get(Gamep g)
@@ -1468,14 +1476,23 @@ bool game_gfx_borderless_get(Gamep g)
   }
   return g->config.gfx_borderless;
 }
-void game_gfx_borderless_set(Gamep g, bool val)
+void game_gfx_borderless_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.gfx_borderless = val;
+  g->config.gfx_borderless = true;
+}
+void game_gfx_borderless_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_borderless = false;
 }
 
 bool game_gfx_fullscreen_get(Gamep g)
@@ -1487,14 +1504,23 @@ bool game_gfx_fullscreen_get(Gamep g)
   }
   return g->config.gfx_fullscreen;
 }
-void game_gfx_fullscreen_set(Gamep g, bool val)
+void game_gfx_fullscreen_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.gfx_fullscreen = val;
+  g->config.gfx_fullscreen = true;
+}
+void game_gfx_fullscreen_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_fullscreen = false;
 }
 
 bool game_gfx_fullscreen_desktop_get(Gamep g)
@@ -1506,14 +1532,23 @@ bool game_gfx_fullscreen_desktop_get(Gamep g)
   }
   return g->config.gfx_fullscreen_desktop;
 }
-void game_gfx_fullscreen_desktop_set(Gamep g, bool val)
+void game_gfx_fullscreen_desktop_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.gfx_fullscreen_desktop = val;
+  g->config.gfx_fullscreen_desktop = true;
+}
+void game_gfx_fullscreen_desktop_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_fullscreen_desktop = false;
 }
 
 bool game_gfx_vsync_enable_get(Gamep g)
@@ -1525,14 +1560,23 @@ bool game_gfx_vsync_enable_get(Gamep g)
   }
   return g->config.gfx_vsync_enable;
 }
-void game_gfx_vsync_enable_set(Gamep g, bool val)
+void game_gfx_vsync_enable_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.gfx_vsync_enable = val;
+  g->config.gfx_vsync_enable = true;
+}
+void game_gfx_vsync_enable_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.gfx_vsync_enable = false;
 }
 
 bool game_mouse_wheel_lr_negated_get(Gamep g)
@@ -1544,14 +1588,23 @@ bool game_mouse_wheel_lr_negated_get(Gamep g)
   }
   return g->config.mouse_wheel_lr_negated;
 }
-void game_mouse_wheel_lr_negated_set(Gamep g, bool val)
+void game_mouse_wheel_lr_negated_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.mouse_wheel_lr_negated = val;
+  g->config.mouse_wheel_lr_negated = true;
+}
+void game_mouse_wheel_lr_negated_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.mouse_wheel_lr_negated = false;
 }
 
 bool game_mouse_wheel_ud_negated_get(Gamep g)
@@ -1563,14 +1616,23 @@ bool game_mouse_wheel_ud_negated_get(Gamep g)
   }
   return g->config.mouse_wheel_ud_negated;
 }
-void game_mouse_wheel_ud_negated_set(Gamep g, bool val)
+void game_mouse_wheel_ud_negated_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.mouse_wheel_ud_negated = val;
+  g->config.mouse_wheel_ud_negated = true;
+}
+void game_mouse_wheel_ud_negated_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->config.mouse_wheel_ud_negated = false;
 }
 
 int game_config_pix_height_get(Gamep g)
@@ -2517,14 +2579,23 @@ bool game_request_to_remake_ui_get(Gamep g)
 
   return g->request_to_remake_ui;
 }
-void game_request_to_remake_ui_set(Gamep g, bool val)
+void game_request_to_remake_ui_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->request_to_remake_ui = val;
+  g->request_to_remake_ui = true;
+}
+void game_request_to_remake_ui_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_remake_ui = false;
 }
 
 bool game_request_to_save_game_get(Gamep g)
@@ -2537,14 +2608,23 @@ bool game_request_to_save_game_get(Gamep g)
 
   return g->request_to_save_game;
 }
-void game_request_to_save_game_set(Gamep g, bool val)
+void game_request_to_save_game_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->request_to_save_game = val;
+  g->request_to_save_game = true;
+}
+void game_request_to_save_game_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_save_game = false;
 }
 
 bool game_request_to_update_cursor_get(Gamep g)
@@ -2557,14 +2637,23 @@ bool game_request_to_update_cursor_get(Gamep g)
 
   return g->request_to_update_cursor;
 }
-void game_request_to_update_cursor_set(Gamep g, bool val)
+void game_request_to_update_cursor_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->request_to_update_cursor = val;
+  g->request_to_update_cursor = true;
+}
+void game_request_to_update_cursor_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_update_cursor = false;
 }
 
 bool game_request_to_end_game_get(Gamep g)
@@ -2577,15 +2666,25 @@ bool game_request_to_end_game_get(Gamep g)
 
   return g->request_to_end_game;
 }
-void game_request_to_end_game_set(Gamep g, bool val)
+void game_request_to_end_game_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->request_to_end_game = val;
+  g->request_to_end_game = true;
 }
+void game_request_to_end_game_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_end_game = false;
+}
+
 std::string game_request_to_end_game_reason_get(Gamep g)
 {
   TRACE_NO_INDENT();
@@ -2616,12 +2715,21 @@ bool game_request_to_cleanup_things_get(Gamep g)
 
   return g->request_to_cleanup_things;
 }
-void game_request_to_cleanup_things_set(Gamep g, bool val)
+void game_request_to_cleanup_things_set(Gamep g)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->request_to_cleanup_things = val;
+  g->request_to_cleanup_things = true;
+}
+void game_request_to_cleanup_things_unset(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_cleanup_things = false;
 }

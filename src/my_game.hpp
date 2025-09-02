@@ -69,31 +69,39 @@ bool game_debug_mode_get(Gamep);
 void game_debug_mode_set(Gamep, bool);
 
 bool game_fps_counter_get(Gamep);
-void game_fps_counter_set(Gamep, bool);
+void game_fps_counter_set(Gamep);
+void game_fps_counter_unset(Gamep);
 
 int  game_fps_value_get(Gamep);
 void game_fps_value_set(Gamep, int);
 
 bool game_gfx_allow_highdpi_get(Gamep);
-void game_gfx_allow_highdpi_set(Gamep, bool);
+void game_gfx_allow_highdpi_set(Gamep);
+void game_gfx_allow_highdpi_unset(Gamep);
 
 bool game_gfx_borderless_get(Gamep);
-void game_gfx_borderless_set(Gamep, bool);
+void game_gfx_borderless_set(Gamep);
+void game_gfx_borderless_unset(Gamep);
 
 bool game_gfx_fullscreen_get(Gamep);
-void game_gfx_fullscreen_set(Gamep, bool);
+void game_gfx_fullscreen_set(Gamep);
+void game_gfx_fullscreen_unset(Gamep);
 
 bool game_gfx_fullscreen_desktop_get(Gamep);
-void game_gfx_fullscreen_desktop_set(Gamep, bool);
+void game_gfx_fullscreen_desktop_set(Gamep);
+void game_gfx_fullscreen_desktop_unset(Gamep);
 
 bool game_gfx_vsync_enable_get(Gamep);
-void game_gfx_vsync_enable_set(Gamep, bool);
+void game_gfx_vsync_enable_set(Gamep);
+void game_gfx_vsync_enable_unset(Gamep);
 
 bool game_mouse_wheel_lr_negated_get(Gamep);
-void game_mouse_wheel_lr_negated_set(Gamep, bool);
+void game_mouse_wheel_lr_negated_set(Gamep);
+void game_mouse_wheel_lr_negated_unset(Gamep);
 
 bool game_mouse_wheel_ud_negated_get(Gamep);
-void game_mouse_wheel_ud_negated_set(Gamep, bool);
+void game_mouse_wheel_ud_negated_set(Gamep);
+void game_mouse_wheel_ud_negated_unset(Gamep);
 
 int  game_config_pix_height_get(Gamep);
 void game_config_pix_height_set(Gamep, int);
@@ -239,22 +247,27 @@ SDL_Keysym game_key_zoom_get(Gamep);
 void       game_key_zoom_set(Gamep, SDL_Keysym);
 
 bool game_request_to_remake_ui_get(Gamep);
-void game_request_to_remake_ui_set(Gamep, bool = true);
+void game_request_to_remake_ui_set(Gamep);
+void game_request_to_remake_ui_unset(Gamep);
 
 bool game_request_to_save_game_get(Gamep);
-void game_request_to_save_game_set(Gamep, bool = true);
+void game_request_to_save_game_set(Gamep);
+void game_request_to_save_game_unset(Gamep);
 
 bool game_request_to_update_cursor_get(Gamep);
-void game_request_to_update_cursor_set(Gamep, bool = true);
+void game_request_to_update_cursor_set(Gamep);
+void game_request_to_update_cursor_unset(Gamep);
 
 bool game_request_to_end_game_get(Gamep);
-void game_request_to_end_game_set(Gamep, bool = true);
+void game_request_to_end_game_set(Gamep);
+void game_request_to_end_game_unset(Gamep);
+
+bool game_request_to_cleanup_things_get(Gamep);
+void game_request_to_cleanup_things_set(Gamep);
+void game_request_to_cleanup_things_unset(Gamep);
 
 std::string game_request_to_end_game_reason_get(Gamep);
 void        game_request_to_end_game_reason_set(Gamep, const std::string &);
-
-bool game_request_to_cleanup_things_get(Gamep);
-void game_request_to_cleanup_things_set(Gamep, bool = true);
 
 bool game_event_ascend(Gamep);
 bool game_event_descend(Gamep);

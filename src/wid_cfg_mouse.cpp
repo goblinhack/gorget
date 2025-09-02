@@ -59,7 +59,13 @@ static bool wid_cfg_mouse_wheel_lr_negated(Gamep g, Widp w, int x, int y, uint32
   TRACE_NO_INDENT();
   local_g_config_changed = true;
   CON("Toggle wheel mouse lr");
-  game_mouse_wheel_lr_negated_set(g, ! game_mouse_wheel_lr_negated_get(g));
+
+  if (game_mouse_wheel_lr_negated_get(g)) {
+    game_mouse_wheel_lr_negated_unset(g);
+  } else {
+    game_mouse_wheel_lr_negated_set(g);
+  }
+
   wid_cfg_mouse_select(g);
   return true;
 }
@@ -69,7 +75,13 @@ static bool wid_cfg_mouse_wheel_ud_negated(Gamep g, Widp w, int x, int y, uint32
   TRACE_NO_INDENT();
   local_g_config_changed = true;
   CON("Toggle wheel mouse ud");
-  game_mouse_wheel_ud_negated_set(g, ! game_mouse_wheel_ud_negated_get(g));
+
+  if (game_mouse_wheel_ud_negated_get(g)) {
+    game_mouse_wheel_ud_negated_unset(g);
+  } else {
+    game_mouse_wheel_ud_negated_set(g);
+  }
+
   wid_cfg_mouse_select(g);
   return true;
 }

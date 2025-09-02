@@ -25,7 +25,7 @@ static void level_cleanup_things(Gamep g, Levelsp v, Levelp l)
   if (! game_request_to_cleanup_things_get(g)) {
     return;
   }
-  game_request_to_cleanup_things_set(g, false);
+  game_request_to_cleanup_things_unset(g);
 
   //
   // This can pop the next player move
@@ -350,7 +350,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
   // Only save once a tick is complete and before the next move is popped below
   //
   if (game_request_to_save_game_get(g)) {
-    game_request_to_save_game_set(g, false);
+    game_request_to_save_game_unset(g);
     wid_save_select(g);
   }
 
