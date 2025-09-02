@@ -1097,15 +1097,6 @@ void Game::display(void)
           level_display(g, v, l);
 
           //
-          // If the cursor moved, update what we see
-          //
-          if (game_request_to_update_cursor_get(g)) {
-            level_cursor_path_recreate(g, v, l);
-            level_cursor_describe(g, v, l);
-            game_request_to_update_cursor_unset(g);
-          }
-
-          //
           // If the player pressed the mouse, we need to apply the current cursor path and start moving.
           //
           switch (player_state(g, v)) {
@@ -1113,6 +1104,14 @@ void Game::display(void)
               //
               // Replace the mouse path
               //
+              //
+              // If the cursor moved, update what we see
+              //
+              if (game_request_to_update_cursor_get(g)) {
+                level_cursor_path_recreate(g, v, l);
+                level_cursor_describe(g, v, l);
+                game_request_to_update_cursor_unset(g);
+              }
               break;
             case PLAYER_STATE_PATH_REQUESTED :
               //

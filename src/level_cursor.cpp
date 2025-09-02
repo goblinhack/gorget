@@ -460,8 +460,11 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   // Draw the path
   //
   cursor_path = level_cursor_path_draw_line(g, v, l, player->at, v->cursor_at);
+
+  DBG("Cursor path size: %d", (int) cursor_path.size());
   for (auto p : cursor_path) {
     v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
+    DBG(" - cursor path: %d,%d", p.x, p.y);
   }
   v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;
 }

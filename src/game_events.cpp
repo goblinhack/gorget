@@ -62,14 +62,38 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
     return true;
   }
 
-  auto ret = player_move_to_target(g, v, l, v->cursor_at);
+  switch (player_state(g, v)) {
+    case PLAYER_STATE_NORMAL :
+      //
+      // Replace the mouse path
+      //
+      {
+        auto ret = player_move_to_target(g, v, l, v->cursor_at);
 
-  //
-  // Else start following the cursor path
-  //
-  player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
+        player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
 
-  return ret;
+        return ret;
+      }
+      break;
+    case PLAYER_STATE_PATH_REQUESTED :
+      //
+      // Player wants to start following or replace the current path.
+      //
+      break;
+    case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
+      //
+      // Wait for confirmation.
+      //
+      break;
+    case PLAYER_STATE_FOLLOWING_A_PATH :
+      //
+      // Already following a path, stick to it until completion.
+      //
+      break;
+    case PLAYER_STATE_ENUM_MAX : break;
+  }
+
+  return false;
 }
 
 bool game_mouse_up(Gamep g, int x, int y, uint32_t button) { return false; }

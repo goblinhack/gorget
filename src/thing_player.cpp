@@ -52,7 +52,6 @@ void player_state_change(Gamep g, Levelsp v, PlayerState new_state)
   }
 
   auto old_state = v->_player_state;
-  ;
 
   //
   // Set here to stop recursion.
@@ -98,8 +97,10 @@ static void player_move_to_target_callback(Gamep g, bool val)
       // Wait for confirmation.
       //
       if (val) {
+        LOG("Player confirmed move");
         player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
       } else {
+        LOG("Player declined move");
         player_state_change(g, v, PLAYER_STATE_NORMAL);
       }
       break;
