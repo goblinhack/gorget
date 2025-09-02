@@ -222,6 +222,11 @@ public:
   bool request_to_save_game {};
 
   //
+  // Set when the mouse is moved
+  //
+  bool request_to_update_cursor {};
+
+  //
   // Player is dead
   //
   bool        request_to_end_game {};
@@ -1094,10 +1099,13 @@ void Game::display(void)
           //
           // If the cursor moved, update what we see
           //
-          if (v->cursor_moved) {
+          // if (v->cursor_moved) {
+          if (game_request_to_update_cursor_get(g)) {
             level_cursor_path_recreate(g, v, l);
             level_cursor_describe(g, v, l);
+            game_request_to_update_cursor_set(g, false);
           }
+          // }
 
           //
           // If the player pressed the mouse, we need to apply the current cursor path and start moving.
@@ -2537,6 +2545,26 @@ void game_request_to_save_game_set(Gamep g, bool val)
     return;
   }
   g->request_to_save_game = val;
+}
+
+bool game_request_to_update_cursor_get(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return 1;
+  }
+
+  return g->request_to_update_cursor;
+}
+void game_request_to_update_cursor_set(Gamep g, bool val)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! g)) {
+    ERR("No game pointer set");
+    return;
+  }
+  g->request_to_update_cursor = val;
 }
 
 bool game_request_to_end_game_get(Gamep g)

@@ -244,6 +244,9 @@ void game_request_to_remake_ui_set(Gamep, bool = true);
 bool game_request_to_save_game_get(Gamep);
 void game_request_to_save_game_set(Gamep, bool = true);
 
+bool game_request_to_update_cursor_get(Gamep);
+void game_request_to_update_cursor_set(Gamep, bool = true);
+
 bool game_request_to_end_game_get(Gamep);
 void game_request_to_end_game_set(Gamep, bool = true);
 

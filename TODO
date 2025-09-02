@@ -1,5 +1,3 @@
-n warning leads to moving to cursor tile
-do not update cursor path until mouse moves
 only one bridge tile ever per tile
 bridge next to lava
 exploding barrel

@@ -103,6 +103,13 @@ bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
     return false;
   }
 
+  //
+  // Update the cursor path
+  //
+  if (! wheelx && ! wheely) {
+    game_request_to_update_cursor_set(g, true);
+  }
+
   level_scroll_delta(g, v, l, spoint(wheelx, -wheely));
 
   return true;
