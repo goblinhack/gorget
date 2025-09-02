@@ -347,33 +347,43 @@ Thingp immediate_owner(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_dead(Thingp);
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_dead_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_burning(Thingp);
 void thing_is_burning_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_burning_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_scheduled_for_cleanup(Thingp);
 void thing_is_scheduled_for_cleanup_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_scheduled_for_cleanup_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_corpse(Thingp);
 void thing_is_corpse_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_corpse_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_sleeping(Thingp);
 void thing_is_sleeping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_sleeping_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_open(Thingp);
 void thing_is_open_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_open_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_on_map(Thingp);
 void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_on_map_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_moving(Thingp);
 void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_moving_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_teleporting(Thingp);
 void thing_is_teleporting_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_teleporting_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_jumping(Thingp);
 void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_jumping_unset(Gamep, Levelsp, Levelp, Thingp);
 
 int  thing_is_falling(Thingp);
 void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, int val);

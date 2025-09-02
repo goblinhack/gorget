@@ -37,7 +37,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Over water?
   //
   if (level_is_water(g, v, l, t->at)) {
-    thing_is_burning_set(g, v, l, t, false);
+    thing_is_burning_unset(g, v, l, t);
 
     if (thing_is_player(t)) {
       TOPCON(UI_GOOD_FMT_STR "You extinbuish the flames!" UI_RESET_FMT);
@@ -56,7 +56,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Poor thing
     //
-    thing_is_burning_set(g, v, l, t, false);
+    thing_is_burning_unset(g, v, l, t);
 
     if (thing_is_player(t)) {
       TOPCON(UI_GOOD_FMT_STR "You stop burning!" UI_RESET_FMT);

@@ -226,6 +226,12 @@ void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   thing_is_dead_handle(g, v, l, t);
 }
 
+void thing_is_dead_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_dead_set(g, v, l, t, false);
+}
+
 bool thing_is_burning(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -256,6 +262,12 @@ void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   thing_is_burning_handle(g, v, l, t);
 }
 
+void thing_is_burning_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_burning_set(g, v, l, t, false);
+}
+
 bool thing_is_corpse(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -282,6 +294,12 @@ void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   if (val && thing_is_loggable(t)) {
     THING_DBG(t, "is corpse");
   }
+}
+
+void thing_is_corpse_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_corpse_set(g, v, l, t, false);
 }
 
 bool thing_is_scheduled_for_cleanup(Thingp t)
@@ -315,6 +333,12 @@ void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, 
   game_request_to_cleanup_things_set(g);
 }
 
+void thing_is_scheduled_for_cleanup_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_scheduled_for_cleanup_set(g, v, l, t, false);
+}
+
 bool thing_is_sleeping(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -333,6 +357,12 @@ void thing_is_sleeping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
   t->_is_sleeping = val;
+}
+
+void thing_is_sleeping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_sleeping_set(g, v, l, t, false);
 }
 
 bool thing_is_open(Thingp t)
@@ -355,6 +385,12 @@ void thing_is_open_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_open = val;
 }
 
+void thing_is_open_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_open_set(g, v, l, t, false);
+}
+
 bool thing_is_on_map(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -373,6 +409,12 @@ void thing_is_on_map_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
   t->_is_on_map = val;
+}
+
+void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_on_map_set(g, v, l, t, false);
 }
 
 bool thing_is_moving(Thingp t)
@@ -403,6 +445,12 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
 }
 
+void thing_is_moving_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_moving_set(g, v, l, t, false);
+}
+
 bool thing_is_teleporting(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -429,6 +477,12 @@ void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   if (val) {
     tp_on_teleported(g, v, l, t);
   }
+}
+
+void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_teleporting_set(g, v, l, t, false);
 }
 
 bool thing_is_jumping(Thingp t)
@@ -459,6 +513,12 @@ void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   } else {
     tp_on_jump_end(g, v, l, t);
   }
+}
+
+void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_jumping_set(g, v, l, t, false);
 }
 
 bool thing_is_animated_can_hflip(Thingp t)

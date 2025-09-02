@@ -330,9 +330,9 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   t->moving_from = t->at;
 
-  thing_is_teleporting_set(g, v, l, t, false);
-  thing_is_moving_set(g, v, l, t, false);
-  thing_is_jumping_set(g, v, l, t, false);
+  thing_is_teleporting_unset(g, v, l, t);
+  thing_is_moving_unset(g, v, l, t);
+  thing_is_jumping_unset(g, v, l, t);
 }
 
 //
@@ -549,7 +549,7 @@ void thing_pop(Gamep g, Levelsp v, Thingp t)
     auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
     if (o_id == t->id) {
       l->thing_id[ p.x ][ p.y ][ slot ] = 0;
-      thing_is_on_map_set(g, v, l, t, false);
+      thing_is_on_map_unset(g, v, l, t);
       return;
     }
   }
