@@ -69,9 +69,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
       //
       {
         auto ret = player_move_to_target(g, v, l, v->cursor_at);
-
         player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
-
         return ret;
       }
       break;

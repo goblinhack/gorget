@@ -410,6 +410,11 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
   int index                     = 0;
   player_struct->move_path.size = 0;
 
+  THING_DBG(t, "Apply cursor path size: %d", (int) move_path.size());
+  for (auto p : move_path) {
+    THING_DBG(t, " - cursor path: %d,%d", p.x, p.y);
+  }
+
   for (auto p : move_path) {
     player_struct->move_path.points[ index ].x = p.x;
     player_struct->move_path.points[ index ].y = p.y;

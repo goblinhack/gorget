@@ -98,7 +98,7 @@ static void player_move_to_target_callback(Gamep g, bool val)
       //
       if (val) {
         LOG("Player confirmed move");
-        player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
+        player_state_change(g, v, PLAYER_STATE_FOLLOWING_A_PATH);
       } else {
         LOG("Player declined move");
         player_state_change(g, v, PLAYER_STATE_NORMAL);
