@@ -68,7 +68,7 @@ void player_state_change(Gamep g, Levelsp v, PlayerState new_state)
 //
 // Return true on the event being consumed
 //
-static void player_move_to_target_callback(Gamep g, bool val)
+static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val)
 {
   game_state_change(g, STATE_PLAYING, "got warning confirmation");
 
@@ -116,7 +116,7 @@ static void player_move_to_target_callback(Gamep g, bool val)
 //
 // Return true on the event being consumed
 //
-bool player_move_to_target(Gamep g, Levelsp v, Levelp l, spoint to)
+bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spoint to)
 {
   LOG("Player move");
   TRACE_AND_INDENT();
@@ -136,7 +136,7 @@ bool player_move_to_target(Gamep g, Levelsp v, Levelp l, spoint to)
           std::string msg = "Do you really want to leap into a chasm.";
           player_state_change(g, v, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
           game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
-          wid_warning(g, msg, player_move_to_target_callback);
+          wid_warning(g, msg, player_check_if_target_needs_move_confirm_callback);
           return false;
         }
 
@@ -150,7 +150,7 @@ bool player_move_to_target(Gamep g, Levelsp v, Levelp l, spoint to)
               std::string msg = "Do you really want to leap into lava.";
               player_state_change(g, v, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
               game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
-              wid_warning(g, msg, player_move_to_target_callback);
+              wid_warning(g, msg, player_check_if_target_needs_move_confirm_callback);
               return false;
             }
           }
@@ -198,7 +198,7 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
     move_path.push_back(to);
     player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
     level_cursor_path_apply(g, v, l, move_path);
-    player_move_to_target(g, v, l, to);
+    player_check_if_target_needs_move_confirm(g, v, l, to);
   } else if (thing_can_move_to_by_shoving(g, v, l, t, to)) {
     if (thing_shove_to(g, v, l, t, to)) {
       level_tick_begin_requested(g, v, l, "player shoved");

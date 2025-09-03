@@ -67,12 +67,9 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
       //
       // Replace the mouse path
       //
-      {
-        auto ret = player_move_to_target(g, v, l, v->cursor_at);
-        player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
-        return ret;
-      }
-      break;
+      player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
+      level_cursor_path_apply(g, v, l);
+      return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
     case PLAYER_STATE_PATH_REQUESTED :
       //
       // Player wants to start following or replace the current path.
@@ -312,7 +309,13 @@ bool game_event_jump(Gamep g)
     return false;
   }
 
-  return player_jump(g, v, l, player, v->cursor_at);
+  if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
+    player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
+    level_cursor_path_apply(g, v, l);
+    return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
+  } else {
+    return player_jump(g, v, l, player, v->cursor_at);
+  }
 }
 
 bool game_event_help(Gamep g)
