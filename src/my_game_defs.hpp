@@ -22,8 +22,9 @@
 #define MAP_SCROLL_SPEED           50
 #define TICK_DURATION_MS           100
 #define POPUP_DURATION_MS          2000
-#define POPUP_TEXT_SCALE           3
-#define POPUP_DURATION_TILE_HEIGHT 5
+#define POPUP_TEXT_SCALE_ACROSS    3
+#define POPUP_TEXT_SCALE_DOWN      1.5
+#define POPUP_DURATION_TILE_HEIGHT 6
 #define MAP_TILES_ACROSS_DEF       16
 #define MAP_TILES_DOWN_DEF         16
 

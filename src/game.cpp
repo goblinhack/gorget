@@ -521,13 +521,13 @@ void game_save_config(Gamep g)
   g->save_config();
 }
 
-std::list< GamePopup > *game_popups_get(Gamep g, int x, int y)
+std::list< GamePopup * > *game_popups_get(Gamep g, int x, int y)
 {
   TRACE_NO_INDENT();
   return &g->popups[ x ][ y ].all;
 }
 
-void game_popups_set(Gamep g, int x, int y, std::list< GamePopup > &l)
+void game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > &l)
 {
   TRACE_NO_INDENT();
   g->popups[ x ][ y ].all = l;

@@ -21,6 +21,10 @@ public:
   //
   uint32_t created {};
   //
+  // To avoid overlapping text
+  //
+  uint32_t y_offset {};
+  //
   // Text color
   //
   color fg;
@@ -29,7 +33,7 @@ public:
 class GamePopups
 {
 public:
-  std::list< GamePopup > all;
+  std::list< GamePopup * > all;
 };
 
 void game_popup_text_add(Gamep, int, int, const std::string &, color c = WHITE);
@@ -38,7 +42,7 @@ void game_popups_age(Gamep);
 void game_popups_clear(Gamep);
 void game_popups_display(Gamep, Levelsp, Levelp);
 
-std::list< GamePopup > *game_popups_get(Gamep, int, int);
-void                    game_popups_set(Gamep, int, int, std::list< GamePopup > &);
+std::list< GamePopup * > *game_popups_get(Gamep, int, int);
+void                      game_popups_set(Gamep, int, int, std::list< GamePopup * > &);
 
 #endif /* _MY_GAME_POPUP_HPP_ */
