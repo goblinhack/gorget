@@ -410,7 +410,7 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
   int index                     = 0;
   player_struct->move_path.size = 0;
 
-  THING_DBG(t, "Apply cursor path size: %d", (int) move_path.size());
+  THING_DBG(t, "apply cursor path size: %d", (int) move_path.size());
   for (auto p : move_path) {
     THING_DBG(t, " - cursor path: %d,%d", p.x, p.y);
   }
@@ -430,8 +430,8 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
 //
 static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
 {
-  auto player = thing_player(g);
-  if (! player) {
+  auto t = thing_player(g);
+  if (! t) {
     //
     // If no player, clear the cursor
     //
@@ -443,7 +443,7 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   // Only create the cursor path if the player is on this level. The level
   // select level for example, has no player.
   //
-  if (player->level_num != l->level_num) {
+  if (t->level_num != l->level_num) {
     memset(v->cursor, 0, SIZEOF(v->cursor));
 
     //
@@ -464,12 +464,12 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   //
   // Draw the path
   //
-  cursor_path = level_cursor_path_draw_line(g, v, l, player->at, v->cursor_at);
+  cursor_path = level_cursor_path_draw_line(g, v, l, t->at, v->cursor_at);
 
-  DBG("Cursor path size: %d", (int) cursor_path.size());
+  THING_DBG(t, "cursor path size: %d", (int) cursor_path.size());
   for (auto p : cursor_path) {
     v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
-    DBG(" - cursor path: %d,%d", p.x, p.y);
+    THING_DBG(t, " - cursor path: %d,%d", p.x, p.y);
   }
   v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;
 }

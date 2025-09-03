@@ -310,10 +310,19 @@ bool game_event_jump(Gamep g)
   }
 
   if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
+    //
+    // If there is a hazard at the target, then go through the normal mouse
+    // code which will walk up to the edge of the chasm and then jump, and
+    // can offer a confirm box.
+    //
     player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
     level_cursor_path_apply(g, v, l);
     return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
   } else {
+    //
+    // Else, just jump, which cannot be done by mouse means unless it is
+    // obvious and the target is a chasm.
+    //
     return player_jump(g, v, l, player, v->cursor_at);
   }
 }
