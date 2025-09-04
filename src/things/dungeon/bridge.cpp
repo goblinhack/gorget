@@ -21,26 +21,62 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  const std::initializer_list< spoint > points = {
-      spoint(0, -1),
-      spoint(-1, 0),
-      spoint(1, 0),
-      spoint(0, 1),
-  };
-
   //
   // Destroy adjacent bridge tiles
   //
-  for (auto delta : points) {
-    auto p = t->at + delta;
-    auto b = level_alive_first_is_bridge(g, v, l, p);
-    if (b) {
-      thing_fall(g, v, l, b);
+  {
+    const std::initializer_list< spoint > points = {
+        spoint(0, -1),
+        spoint(-1, 0),
+        spoint(1, 0),
+        spoint(0, 1),
+    };
+
+    for (auto delta : points) {
+      auto p = t->at + delta;
+      auto b = level_alive_first_is_bridge(g, v, l, p);
+      if (b) {
+        thing_fall(g, v, l, b);
+      }
     }
   }
 
-  if (! level_is_chasm(g, v, l, t->at)) {
-    thing_spawn(g, v, l, tp_random(is_chasm), t->at);
+  //
+  // Replace the bridge with the most populous surrounding hazard
+  //
+  {
+    const std::initializer_list< spoint > points = {
+        spoint(-1, -1), spoint(1, -1), spoint(0, -1), spoint(-1, 0), spoint(1, 0),
+        spoint(0, 0),   spoint(-1, 1), spoint(1, 1),  spoint(0, 1),
+    };
+
+    auto lava_count  = 0;
+    auto water_count = 0;
+    auto chasm_count = 0;
+
+    for (auto delta : points) {
+      auto p = t->at + delta;
+      lava_count += level_is_lava(g, v, l, p) ? 1 : 0;
+      water_count += level_is_water(g, v, l, p) ? 1 : 0;
+      chasm_count += level_is_chasm(g, v, l, p) ? 1 : 0;
+    }
+
+    auto max_count = std::max(std::max(lava_count, water_count), chasm_count);
+    if (max_count) {
+      if (max_count == chasm_count) {
+        if (! level_is_chasm(g, v, l, t->at)) {
+          thing_spawn(g, v, l, tp_random(is_chasm), t->at);
+        }
+      } else if (max_count == water_count) {
+        if (! level_is_water(g, v, l, t->at)) {
+          thing_spawn(g, v, l, tp_random(is_water), t->at);
+        }
+      } else if (max_count == lava_count) {
+        if (! level_is_lava(g, v, l, t->at)) {
+          thing_spawn(g, v, l, tp_random(is_lava), t->at);
+        }
+      }
+    }
   }
 }
 

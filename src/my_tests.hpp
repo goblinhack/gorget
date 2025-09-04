@@ -15,6 +15,7 @@ bool test_load_brazier_shove_chasm();
 bool test_load_brazier_shove_fail();
 bool test_load_brazier_shove_into_mob();
 bool test_load_brazier_shove_ok();
+bool test_load_bridge_on_fire();
 bool test_load_fire_on_water();
 bool test_load_fire_over_chasm();
 bool test_load_foliage_on_fire();
