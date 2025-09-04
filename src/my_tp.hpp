@@ -16,129 +16,129 @@
 //
 // Thing flags enum
 //
-#define THING_FLAG_ENUM(list_macro)                                                                                  \
-  clang_format_indent()                                                 /* dummy line for clang indentation fixup */ \
-      list_macro(is_able_to_jump, "is_able_to_jump"),                   /* newline */                                \
-      list_macro(is_able_to_shove, "is_able_to_shove"),                 /* newline */                                \
-      list_macro(is_animated_can_hflip, "is_animated_can_hflip"),       /* newline */                                \
-      list_macro(is_animated_no_dir, "is_animated_no_dir"),             /* newline */                                \
-      list_macro(is_animated_sync_first, "is_animated_sync_first"),     /* newline */                                \
-      list_macro(is_animated, "is_animated"),                           /* newline */                                \
-      list_macro(is_barrel, "is_barrel"),                               /* newline */                                \
-      list_macro(is_blit_centered, "is_blit_centered"),                 /* newline */                                \
-      list_macro(is_blit_on_ground, "is_blit_on_ground"),               /* newline */                                \
-      list_macro(is_blit_outlined, "is_blit_outlined"),                 /* newline */                                \
-      list_macro(is_blit_square_outlined, "is_blit_square_outlined"),   /* newline */                                \
-      list_macro(is_brazier, "is_brazier"),                             /* newline */                                \
-      list_macro(is_bridge, "is_bridge"),                               /* newline */                                \
-      list_macro(is_broken_on_death, "is_broken_on_death"),             /* newline */                                \
-      list_macro(is_burnable, "is_burnable"),                           /* newline */                                \
-      list_macro(is_chasm, "is_chasm"),                                 /* newline */                                \
-      list_macro(is_combustible, "is_combustible"),                     /* newline */                                \
-      list_macro(is_corpse_on_death, "is_corpse_on_death"),             /* newline */                                \
-      list_macro(is_corridor, "is_corridor"),                           /* newline */                                \
-      list_macro(is_crushable, "is_crushable"),                         /* newline */                                \
-      list_macro(is_cursor_hazard, "is_cursor_hazard"),                 /* newline */                                \
-      list_macro(is_cursor_path_blocker, "is_cursor_path_blocker"),     /* newline */                                \
-      list_macro(is_cursor_path_hazard, "is_cursor_path_hazard"),       /* newline */                                \
-      list_macro(is_cursor_path, "is_cursor_path"),                     /* newline */                                \
-      list_macro(is_cursor, "is_cursor"),                               /* newline */                                \
-      list_macro(is_dead_on_shoving, "is_dead_on_shoving"),             /* newline */                                \
-      list_macro(is_deep_water, "is_deep_water"),                       /* newline */                                \
-      list_macro(is_described_cursor, "is_described_cursor"),           /* newline */                                \
-      list_macro(is_dirt, "is_dirt"),                                   /* newline */                                \
-      list_macro(is_door, "is_door"),                                   /* newline */                                \
-      list_macro(is_dungeon_entrance, "is_dungeon_entrance"),           /* newline */                                \
-      list_macro(is_entrance, "is_entrance"),                           /* newline */                                \
-      list_macro(is_ethereal, "is_ethereal"),                           /* newline */                                \
-      list_macro(is_exit, "is_exit"),                                   /* newline */                                \
-      list_macro(is_explosion, "is_explosion"),                         /* newline */                                \
-      list_macro(is_extinguished_on_death, "is_extinguished_on_death"), /* newline */                                \
-      list_macro(is_fire, "is_fire"),                                   /* newline */                                \
-      list_macro(is_floating, "is_floating"),                           /* newline */                                \
-      list_macro(is_floor, "is_floor"),                                 /* newline */                                \
-      list_macro(is_flying, "is_flying"),                               /* newline */                                \
-      list_macro(is_foliage, "is_foliage"),                             /* newline */                                \
-      list_macro(is_gaseous, "is_gaseous"),                             /* newline */                                \
-      list_macro(is_ghost, "is_ghost"),                                 /* newline */                                \
-      list_macro(is_goblin, "is_goblin"),                               /* newline */                                \
-      list_macro(is_grass, "is_grass"),                                 /* newline */                                \
-      list_macro(is_indestructible, "is_indestructible"),               /* newline */                                \
-      list_macro(is_key, "is_key"),                                     /* newline */                                \
-      list_macro(is_lava, "is_lava"),                                   /* newline */                                \
-      list_macro(is_level_across, "is_level_across"),                   /* newline */                                \
-      list_macro(is_level_curr, "is_level_curr"),                       /* newline */                                \
-      list_macro(is_level_down, "is_level_down"),                       /* newline */                                \
-      list_macro(is_level_final, "is_level_final"),                     /* newline */                                \
-      list_macro(is_level_next, "is_level_next"),                       /* newline */                                \
-      list_macro(is_level_not_visited, "is_level_not_visited"),         /* newline */                                \
-      list_macro(is_level_visited, "is_level_visited"),                 /* newline */                                \
-      list_macro(is_levitating, "is_levitating"),                       /* newline */                                \
-      list_macro(is_light_source, "is_light_source"),                   /* newline */                                \
-      list_macro(is_loggable, "is_loggable"),                           /* newline */                                \
-      list_macro(is_minion, "is_minion"),                               /* newline */                                \
-      list_macro(is_mob, "is_mob"),                                     /* newline */                                \
-      list_macro(is_mob1, "is_mob1"),                                   /* newline */                                \
-      list_macro(is_mob2, "is_mob2"),                                   /* newline */                                \
-      list_macro(is_monst_group_0, "is_monst_group_0"),                 /* newline */                                \
-      list_macro(is_monst_group_1, "is_monst_group_1"),                 /* newline */                                \
-      list_macro(is_monst_group_2, "is_monst_group_2"),                 /* newline */                                \
-      list_macro(is_monst, "is_monst"),                                 /* newline */                                \
-      list_macro(is_needs_move_confirm, "is_needs_move_confirm"),       /* newline */                                \
-      list_macro(is_obstacle_to_fire, "is_obstacle_to_fire"),           /* newline */                                \
-      list_macro(is_obstacle_to_falling, "is_obstacle_to_falling"),     /* newline */                                \
-      list_macro(is_obstacle_to_jump_landing, "is_obstacle_to_jump_landing"), /* newline */                          \
-      list_macro(is_obstacle_to_movement, "is_obstacle_to_movement"),         /* newline */                          \
-      list_macro(is_physics_gravity, "is_physics_gravity"),                   /* newline */                          \
-      list_macro(is_physics_temperature, "is_physics_temperature"),           /* newline */                          \
-      list_macro(is_physics_water, "is_physics_water"),                       /* newline */                          \
-      list_macro(is_pillar, "is_pillar"),                                     /* newline */                          \
-      list_macro(is_player, "is_player"),                                     /* newline */                          \
-      list_macro(is_rock, "is_rock"),                                         /* newline */                          \
-      list_macro(is_secret_door, "is_secret_door"),                           /* newline */                          \
-      list_macro(is_shovable, "is_shovable"),                                 /* newline */                          \
-      list_macro(is_slime, "is_slime"),                                       /* newline */                          \
-      list_macro(is_smoke, "is_smoke"),                                       /* newline */                          \
-      list_macro(is_steam, "is_steam"),                                       /* newline */                          \
-      list_macro(is_submergible, "is_submergible"),                           /* newline */                          \
-      list_macro(is_teleport, "is_teleport"),                                 /* newline */                          \
-      list_macro(is_tickable, "is_tickable"),                                 /* newline */                          \
-      list_macro(is_tiled, "is_tiled"),                                       /* newline */                          \
-      list_macro(is_trap, "is_trap"),                                         /* newline */                          \
-      list_macro(is_treasure, "is_treasure"),                                 /* newline */                          \
-      list_macro(is_undead, "is_undead"),                                     /* newline */                          \
-      list_macro(is_unused1, "is_unused1"),                                   /* newline */                          \
-      list_macro(is_unused10, "is_unused10"),                                 /* newline */                          \
-      list_macro(is_unused11, "is_unused11"),                                 /* newline */                          \
-      list_macro(is_unused12, "is_unused12"),                                 /* newline */                          \
-      list_macro(is_unused13, "is_unused13"),                                 /* newline */                          \
-      list_macro(is_unused14, "is_unused14"),                                 /* newline */                          \
-      list_macro(is_unused15, "is_unused15"),                                 /* newline */                          \
-      list_macro(is_unused16, "is_unused16"),                                 /* newline */                          \
-      list_macro(is_unused17, "is_unused17"),                                 /* newline */                          \
-      list_macro(is_unused18, "is_unused18"),                                 /* newline */                          \
-      list_macro(is_unused19, "is_unused19"),                                 /* newline */                          \
-      list_macro(is_unused2, "is_unused2"),                                   /* newline */                          \
-      list_macro(is_unused20, "is_unused20"),                                 /* newline */                          \
-      list_macro(is_unused21, "is_unused21"),                                 /* newline */                          \
-      list_macro(is_unused22, "is_unused22"),                                 /* newline */                          \
-      list_macro(is_unused23, "is_unused23"),                                 /* newline */                          \
-      list_macro(is_unused24, "is_unused24"),                                 /* newline */                          \
-      list_macro(is_unused25, "is_unused25"),                                 /* newline */                          \
-      list_macro(is_obstacle_to_jump_over, "is_obstacle_to_jump_over"),       /* newline */                          \
-      list_macro(is_teleport_blocked, "is_teleport_blocked"),                 /* newline */                          \
-      list_macro(is_cursor_path_none, "is_cursor_path_none"),                 /* newline */                          \
-      list_macro(is_unused3, "is_unused3"),                                   /* newline */                          \
-      list_macro(is_unused4, "is_unused4"),                                   /* newline */                          \
-      list_macro(is_unused5, "is_unused5"),                                   /* newline */                          \
-      list_macro(is_unused6, "is_unused6"),                                   /* newline */                          \
-      list_macro(is_unused7, "is_unused7"),                                   /* newline */                          \
-      list_macro(is_unused8, "is_unused8"),                                   /* newline */                          \
-      list_macro(is_unused9, "is_unused9"),                                   /* newline */                          \
-      list_macro(is_wait_on_anim_when_dead, "is_wait_on_anim_when_dead"),     /* newline */                          \
-      list_macro(is_walk_through_walls, "is_walk_through_walls"),             /* newline */                          \
-      list_macro(is_wall, "is_wall"),                                         /* newline */                          \
-      list_macro(is_water, "is_water"),                                       /* newline */
+#define THING_FLAG_ENUM(list_macro)                                                                                          \
+  clang_format_indent()                                                         /* dummy line for clang indentation fixup */ \
+      list_macro(is_able_to_jump, "is_able_to_jump"),                           /* newline */                                \
+      list_macro(is_able_to_shove, "is_able_to_shove"),                         /* newline */                                \
+      list_macro(is_animated_can_hflip, "is_animated_can_hflip"),               /* newline */                                \
+      list_macro(is_animated_no_dir, "is_animated_no_dir"),                     /* newline */                                \
+      list_macro(is_animated_sync_first, "is_animated_sync_first"),             /* newline */                                \
+      list_macro(is_animated, "is_animated"),                                   /* newline */                                \
+      list_macro(is_barrel, "is_barrel"),                                       /* newline */                                \
+      list_macro(is_blit_centered, "is_blit_centered"),                         /* newline */                                \
+      list_macro(is_blit_on_ground, "is_blit_on_ground"),                       /* newline */                                \
+      list_macro(is_blit_outlined, "is_blit_outlined"),                         /* newline */                                \
+      list_macro(is_blit_square_outlined, "is_blit_square_outlined"),           /* newline */                                \
+      list_macro(is_brazier, "is_brazier"),                                     /* newline */                                \
+      list_macro(is_bridge, "is_bridge"),                                       /* newline */                                \
+      list_macro(is_broken_on_death, "is_broken_on_death"),                     /* newline */                                \
+      list_macro(is_burnable, "is_burnable"),                                   /* newline */                                \
+      list_macro(is_chasm, "is_chasm"),                                         /* newline */                                \
+      list_macro(is_combustible, "is_combustible"),                             /* newline */                                \
+      list_macro(is_corpse_on_death, "is_corpse_on_death"),                     /* newline */                                \
+      list_macro(is_corridor, "is_corridor"),                                   /* newline */                                \
+      list_macro(is_crushable, "is_crushable"),                                 /* newline */                                \
+      list_macro(is_cursor_hazard, "is_cursor_hazard"),                         /* newline */                                \
+      list_macro(is_cursor_path_hazard, "is_cursor_path_hazard"),               /* newline */                                \
+      list_macro(is_cursor_path_none, "is_cursor_path_none"),                   /* newline */                          \
+      list_macro(is_cursor_path, "is_cursor_path"),                             /* newline */                                \
+      list_macro(is_cursor, "is_cursor"),                                       /* newline */                                \
+      list_macro(is_dead_on_shoving, "is_dead_on_shoving"),                     /* newline */                                \
+      list_macro(is_deep_water, "is_deep_water"),                               /* newline */                                \
+      list_macro(is_described_cursor, "is_described_cursor"),                   /* newline */                                \
+      list_macro(is_dirt, "is_dirt"),                                           /* newline */                                \
+      list_macro(is_door, "is_door"),                                           /* newline */                                \
+      list_macro(is_dungeon_entrance, "is_dungeon_entrance"),                   /* newline */                                \
+      list_macro(is_entrance, "is_entrance"),                                   /* newline */                                \
+      list_macro(is_ethereal, "is_ethereal"),                                   /* newline */                                \
+      list_macro(is_exit, "is_exit"),                                           /* newline */                                \
+      list_macro(is_explosion, "is_explosion"),                                 /* newline */                                \
+      list_macro(is_extinguished_on_death, "is_extinguished_on_death"),         /* newline */                                \
+      list_macro(is_fire, "is_fire"),                                           /* newline */                                \
+      list_macro(is_floating, "is_floating"),                                   /* newline */                                \
+      list_macro(is_floor, "is_floor"),                                         /* newline */                                \
+      list_macro(is_flying, "is_flying"),                                       /* newline */                                \
+      list_macro(is_foliage, "is_foliage"),                                     /* newline */                                \
+      list_macro(is_gaseous, "is_gaseous"),                                     /* newline */                                \
+      list_macro(is_ghost, "is_ghost"),                                         /* newline */                                \
+      list_macro(is_goblin, "is_goblin"),                                       /* newline */                                \
+      list_macro(is_grass, "is_grass"),                                         /* newline */                                \
+      list_macro(is_indestructible, "is_indestructible"),                       /* newline */                                \
+      list_macro(is_key, "is_key"),                                             /* newline */                                \
+      list_macro(is_lava, "is_lava"),                                           /* newline */                                \
+      list_macro(is_level_across, "is_level_across"),                           /* newline */                                \
+      list_macro(is_level_curr, "is_level_curr"),                               /* newline */                                \
+      list_macro(is_level_down, "is_level_down"),                               /* newline */                                \
+      list_macro(is_level_final, "is_level_final"),                             /* newline */                                \
+      list_macro(is_level_next, "is_level_next"),                               /* newline */                                \
+      list_macro(is_level_not_visited, "is_level_not_visited"),                 /* newline */                                \
+      list_macro(is_level_visited, "is_level_visited"),                         /* newline */                                \
+      list_macro(is_levitating, "is_levitating"),                               /* newline */                                \
+      list_macro(is_light_source, "is_light_source"),                           /* newline */                                \
+      list_macro(is_loggable, "is_loggable"),                                   /* newline */                                \
+      list_macro(is_minion, "is_minion"),                                       /* newline */                                \
+      list_macro(is_mob, "is_mob"),                                             /* newline */                                \
+      list_macro(is_mob1, "is_mob1"),                                           /* newline */                                \
+      list_macro(is_mob2, "is_mob2"),                                           /* newline */                                \
+      list_macro(is_monst_group_0, "is_monst_group_0"),                         /* newline */                                \
+      list_macro(is_monst_group_1, "is_monst_group_1"),                         /* newline */                                \
+      list_macro(is_monst_group_2, "is_monst_group_2"),                         /* newline */                                \
+      list_macro(is_monst, "is_monst"),                                         /* newline */                                \
+      list_macro(is_needs_move_confirm, "is_needs_move_confirm"),               /* newline */                                \
+      list_macro(is_obstacle_to_cursor_path, "is_obstacle_to_cursor_path"),     /* newline */                                \
+      list_macro(is_obstacle_to_explosion, "is_obstacle_to_explosion"),         /* newline */                          \
+      list_macro(is_obstacle_to_falling, "is_obstacle_to_falling"),             /* newline */                                \
+      list_macro(is_obstacle_to_fire, "is_obstacle_to_fire"),                   /* newline */                                \
+      list_macro(is_obstacle_to_jump_landing, "is_obstacle_to_jump_landing"),   /* newline */                          \
+      list_macro(is_obstacle_to_jump_over, "is_obstacle_to_jump_over"),         /* newline */                          \
+      list_macro(is_obstacle_to_movement, "is_obstacle_to_movement"),           /* newline */                          \
+      list_macro(is_physics_gravity, "is_physics_gravity"),                     /* newline */                          \
+      list_macro(is_physics_temperature, "is_physics_temperature"),             /* newline */                          \
+      list_macro(is_physics_water, "is_physics_water"),                         /* newline */                          \
+      list_macro(is_pillar, "is_pillar"),                                       /* newline */                          \
+      list_macro(is_player, "is_player"),                                       /* newline */                          \
+      list_macro(is_rock, "is_rock"),                                           /* newline */                          \
+      list_macro(is_secret_door, "is_secret_door"),                             /* newline */                          \
+      list_macro(is_shovable, "is_shovable"),                                   /* newline */                          \
+      list_macro(is_slime, "is_slime"),                                         /* newline */                          \
+      list_macro(is_smoke, "is_smoke"),                                         /* newline */                          \
+      list_macro(is_steam, "is_steam"),                                         /* newline */                          \
+      list_macro(is_submergible, "is_submergible"),                             /* newline */                          \
+      list_macro(is_teleport_blocked, "is_teleport_blocked"),                   /* newline */                          \
+      list_macro(is_teleport, "is_teleport"),                                   /* newline */                          \
+      list_macro(is_tickable, "is_tickable"),                                   /* newline */                          \
+      list_macro(is_tiled, "is_tiled"),                                         /* newline */                          \
+      list_macro(is_trap, "is_trap"),                                           /* newline */                          \
+      list_macro(is_treasure, "is_treasure"),                                   /* newline */                          \
+      list_macro(is_undead, "is_undead"),                                       /* newline */                          \
+      list_macro(is_unused1, "is_unused1"),                                     /* newline */                          \
+      list_macro(is_unused10, "is_unused10"),                                   /* newline */                          \
+      list_macro(is_unused11, "is_unused11"),                                   /* newline */                          \
+      list_macro(is_unused12, "is_unused12"),                                   /* newline */                          \
+      list_macro(is_unused13, "is_unused13"),                                   /* newline */                          \
+      list_macro(is_unused14, "is_unused14"),                                   /* newline */                          \
+      list_macro(is_unused15, "is_unused15"),                                   /* newline */                          \
+      list_macro(is_unused16, "is_unused16"),                                   /* newline */                          \
+      list_macro(is_unused17, "is_unused17"),                                   /* newline */                          \
+      list_macro(is_unused18, "is_unused18"),                                   /* newline */                          \
+      list_macro(is_unused19, "is_unused19"),                                   /* newline */                          \
+      list_macro(is_unused2, "is_unused2"),                                     /* newline */                          \
+      list_macro(is_unused20, "is_unused20"),                                   /* newline */                          \
+      list_macro(is_unused21, "is_unused21"),                                   /* newline */                          \
+      list_macro(is_unused22, "is_unused22"),                                   /* newline */                          \
+      list_macro(is_unused23, "is_unused23"),                                   /* newline */                          \
+      list_macro(is_unused24, "is_unused24"),                                   /* newline */                          \
+      list_macro(is_unused3, "is_unused3"),                                     /* newline */                          \
+      list_macro(is_unused4, "is_unused4"),                                     /* newline */                          \
+      list_macro(is_unused5, "is_unused5"),                                     /* newline */                          \
+      list_macro(is_unused6, "is_unused6"),                                     /* newline */                          \
+      list_macro(is_unused7, "is_unused7"),                                     /* newline */                          \
+      list_macro(is_unused8, "is_unused8"),                                     /* newline */                          \
+      list_macro(is_unused9, "is_unused9"),                                     /* newline */                          \
+      list_macro(is_wait_on_anim_when_dead, "is_wait_on_anim_when_dead"),       /* newline */                          \
+      list_macro(is_walk_through_walls, "is_walk_through_walls"),               /* newline */                          \
+      list_macro(is_wall, "is_wall"),                                           /* newline */                          \
+      list_macro(is_water, "is_water"),                                         /* newline */
 
 ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 
@@ -508,7 +508,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_corridor(tp)                 tp_flag(tp, is_corridor)
 #define tp_is_crushable(tp)                tp_flag(tp, is_crushable)
 #define tp_is_cursor_hazard(tp)            tp_flag(tp, is_cursor_hazard)
-#define tp_is_cursor_path_blocker(tp)      tp_flag(tp, is_cursor_path_blocker)
 #define tp_is_cursor_path_hazard(tp)       tp_flag(tp, is_cursor_path_hazard)
 #define tp_is_cursor_path_none(tp)         tp_flag(tp, is_cursor_path_none)
 #define tp_is_cursor_path(tp)              tp_flag(tp, is_cursor_path)
@@ -555,6 +554,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_monst_group_2(tp)            tp_flag(tp, is_monst_group_2)
 #define tp_is_monst(tp)                    tp_flag(tp, is_monst)
 #define tp_is_needs_move_confirm(tp)       tp_flag(tp, is_needs_move_confirm)
+#define tp_is_obstacle_to_cursor_path(tp)      tp_flag(tp, is_obstacle_to_cursor_path)
+#define tp_is_obstacle_to_explosion(tp)                 tp_flag(tp, is_obstacle_to_explosion)
 #define tp_is_obstacle_to_falling(tp)      tp_flag(tp, is_obstacle_to_falling)
 #define tp_is_obstacle_to_fire(tp)         tp_flag(tp, is_obstacle_to_fire)
 #define tp_is_obstacle_to_jump_landing(tp) tp_flag(tp, is_obstacle_to_jump_landing)
@@ -596,7 +597,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused22(tp)                 tp_flag(tp, is_unused22)
 #define tp_is_unused23(tp)                 tp_flag(tp, is_unused23)
 #define tp_is_unused24(tp)                 tp_flag(tp, is_unused24)
-#define tp_is_unused25(tp)                 tp_flag(tp, is_unused25)
 #define tp_is_unused3(tp)                  tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)                  tp_flag(tp, is_unused4)
 #define tp_is_unused5(tp)                  tp_flag(tp, is_unused5)
@@ -632,7 +632,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_corridor(g, v, l, p)                 level_flag(g, v, l, is_corridor, p)
 #define level_is_crushable(g, v, l, p)                level_flag(g, v, l, is_crushable, p)
 #define level_is_cursor_hazard(g, v, l, p)            level_flag(g, v, l, is_cursor_hazard, p)
-#define level_is_cursor_path_blocker(g, v, l, p)      level_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_is_cursor_path_hazard(g, v, l, p)       level_flag(g, v, l, is_cursor_path_hazard, p)
 #define level_is_cursor_path_none(g, v, l, p)         level_flag(g, v, l, is_cursor_path_none, p)
 #define level_is_cursor_path(g, v, l, p)              level_flag(g, v, l, is_cursor_path, p)
@@ -679,6 +678,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_monst_group_2(g, v, l, p)            level_flag(g, v, l, is_monst_group_2, p)
 #define level_is_monst(g, v, l, p)                    level_flag(g, v, l, is_monst, p)
 #define level_is_needs_move_confirm(g, v, l, p)       level_flag(g, v, l, is_needs_move_confirm, p)
+#define level_is_obstacle_to_cursor_path(g, v, l, p)      level_flag(g, v, l, is_obstacle_to_cursor_path, p)
+#define level_is_obstacle_to_explosion(g, v, l, p)                 level_flag(g, v, l, is_obstacle_to_explosion, p)
 #define level_is_obstacle_to_falling(g, v, l, p)      level_flag(g, v, l, is_obstacle_to_falling, p)
 #define level_is_obstacle_to_fire(g, v, l, p)         level_flag(g, v, l, is_obstacle_to_fire, p)
 #define level_is_obstacle_to_jump_landing(g, v, l, p) level_flag(g, v, l, is_obstacle_to_jump_landing, p)
@@ -720,7 +721,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused22(g, v, l, p)                 level_flag(g, v, l, is_unused22, p)
 #define level_is_unused23(g, v, l, p)                 level_flag(g, v, l, is_unused23, p)
 #define level_is_unused24(g, v, l, p)                 level_flag(g, v, l, is_unused24, p)
-#define level_is_unused25(g, v, l, p)                 level_flag(g, v, l, is_unused25, p)
 #define level_is_unused3(g, v, l, p)                  level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)                  level_flag(g, v, l, is_unused4, p)
 #define level_is_unused5(g, v, l, p)                  level_flag(g, v, l, is_unused5, p)
@@ -756,7 +756,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_corridor(g, v, l, p)               level_alive_flag(g, v, l, is_corridor, p)
 #define level_alive_is_crushable_underfoot(g, v, l, p)    level_alive_flag(g, v, l, is_crushable, p)
 #define level_alive_is_cursor_hazard(g, v, l, p)          level_alive_flag(g, v, l, is_cursor_hazard, p)
-#define level_alive_is_cursor_path_blocker(g, v, l, p)    level_alive_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_alive_is_cursor_path_hazard(g, v, l, p)     level_alive_flag(g, v, l, is_cursor_path_hazard, p)
 #define level_alive_is_cursor_path_none(g, v, l, p)       level_alive_flag(g, v, l, is_cursor_path_none, p)
 #define level_alive_is_cursor_path(g, v, l, p)            level_alive_flag(g, v, l, is_cursor_path, p)
@@ -802,6 +801,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_monst(g, v, l, p)                  level_alive_flag(g, v, l, is_monst, p)
 #define level_alive_is_needs_move_confirm(g, v, l, p)     level_alive_flag(g, v, l, is_needs_move_confirm, p)
 #define level_alive_is_obstacle_block(g, v, l, p)         level_alive_flag(g, v, l, is_obstacle_to_movement, p)
+#define level_alive_is_obstacle_to_cursor_path(g, v, l, p)    level_alive_flag(g, v, l, is_obstacle_to_cursor_path, p)
+#define level_alive_is_obstacle_to_explosion(g, v, l, p)               level_alive_flag(g, v, l, is_obstacle_to_explosion, p)
 #define level_alive_is_obstacle_to_jump_over(g, v, l, p)  level_alive_flag(g, v, l, is_obstacle_to_jump_over, p)
 #define level_alive_is_physics_temperature(g, v, l, p)    level_alive_flag(g, v, l, is_physics_temperature, p)
 #define level_alive_is_pillar(g, v, l, p)                 level_alive_flag(g, v, l, is_pillar, p)
@@ -836,7 +837,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused22(g, v, l, p)               level_alive_flag(g, v, l, is_unused22, p)
 #define level_alive_is_unused23(g, v, l, p)               level_alive_flag(g, v, l, is_unused23, p)
 #define level_alive_is_unused24(g, v, l, p)               level_alive_flag(g, v, l, is_unused24, p)
-#define level_alive_is_unused25(g, v, l, p)               level_alive_flag(g, v, l, is_unused25, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_physics_gravity, p)
 #define level_alive_is_unused35(g, v, l, p)               level_alive_flag(g, v, l, is_physics_water, p)
@@ -877,7 +877,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_corridor(g, v, l, p)               level_first_flag(g, v, l, is_corridor, p)
 #define level_first_is_crushable_underfoot(g, v, l, p)    level_first_flag(g, v, l, is_crushable, p)
 #define level_first_is_cursor_hazard(g, v, l, p)          level_first_flag(g, v, l, is_cursor_hazard, p)
-#define level_first_is_cursor_path_blocker(g, v, l, p)    level_first_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_first_is_cursor_path_hazard(g, v, l, p)     level_first_flag(g, v, l, is_cursor_path_hazard, p)
 #define level_first_is_cursor_path_none(g, v, l, p)       level_first_flag(g, v, l, is_cursor_path_none, p)
 #define level_first_is_cursor_path(g, v, l, p)            level_first_flag(g, v, l, is_cursor_path, p)
@@ -923,6 +922,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_monst(g, v, l, p)                  level_first_flag(g, v, l, is_monst, p)
 #define level_first_is_needs_move_confirm(g, v, l, p)     level_first_flag(g, v, l, is_submergible, p)
 #define level_first_is_obstacle_block(g, v, l, p)         level_first_flag(g, v, l, is_obstacle_to_movement, p)
+#define level_first_is_obstacle_to_cursor_path(g, v, l, p)    level_first_flag(g, v, l, is_obstacle_to_cursor_path, p)
+#define level_first_is_obstacle_to_explosion(g, v, l, p)               level_first_flag(g, v, l, is_obstacle_to_explosion, p)
 #define level_first_is_obstacle_to_jump_over(g, v, l, p)  level_first_flag(g, v, l, is_obstacle_to_jump_over, p)
 #define level_first_is_physics_temperature(g, v, l, p)    level_first_flag(g, v, l, is_physics_temperature, p)
 #define level_first_is_pillar(g, v, l, p)                 level_first_flag(g, v, l, is_pillar, p)
@@ -957,7 +958,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused22(g, v, l, p)               level_first_flag(g, v, l, is_unused22, p)
 #define level_first_is_unused23(g, v, l, p)               level_first_flag(g, v, l, is_unused23, p)
 #define level_first_is_unused24(g, v, l, p)               level_first_flag(g, v, l, is_unused24, p)
-#define level_first_is_unused25(g, v, l, p)               level_first_flag(g, v, l, is_unused25, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_physics_gravity, p)
 #define level_first_is_unused35(g, v, l, p)               level_first_flag(g, v, l, is_physics_water, p)
@@ -997,7 +997,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_first_is_corridor(g, v, l, p)               level_alive_first_flag(g, v, l, is_corridor, p)
 #define level_alive_first_is_crushable_underfoot(g, v, l, p)    level_alive_first_flag(g, v, l, is_crushable, p)
 #define level_alive_first_is_cursor_hazard(g, v, l, p)          level_alive_first_flag(g, v, l, is_cursor_hazard, p)
-#define level_alive_first_is_cursor_path_blocker(g, v, l, p)    level_alive_first_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_alive_first_is_cursor_path_hazard(g, v, l, p)     level_alive_first_flag(g, v, l, is_cursor_path_hazard, p)
 #define level_alive_first_is_cursor_path_none(g, v, l, p)       level_alive_first_flag(g, v, l, is_cursor_path_none, p)
 #define level_alive_first_is_cursor_path(g, v, l, p)            level_alive_first_flag(g, v, l, is_cursor_path, p)
@@ -1043,6 +1042,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_first_is_monst(g, v, l, p)                  level_alive_first_flag(g, v, l, is_monst, p)
 #define level_alive_first_is_needs_move_confirm(g, v, l, p)     level_alive_first_flag(g, v, l, is_submergible, p)
 #define level_alive_first_is_obstacle_block(g, v, l, p)         level_alive_first_flag(g, v, l, is_obstacle_to_movement, p)
+#define level_alive_first_is_obstacle_to_cursor_path(g, v, l, p)    level_alive_first_flag(g, v, l, is_obstacle_to_cursor_path, p)
+#define level_alive_first_is_obstacle_to_explosion(g, v, l, p)               level_alive_first_flag(g, v, l, is_obstacle_to_explosion, p)
 #define level_alive_first_is_obstacle_to_jump_over(g, v, l, p)  level_alive_first_flag(g, v, l, is_obstacle_to_jump_over, p)
 #define level_alive_first_is_physics_temperature(g, v, l, p)    level_alive_first_flag(g, v, l, is_physics_temperature, p)
 #define level_alive_first_is_pillar(g, v, l, p)                 level_alive_first_flag(g, v, l, is_pillar, p)
@@ -1077,7 +1078,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_first_is_unused22(g, v, l, p)               level_alive_first_flag(g, v, l, is_unused22, p)
 #define level_alive_first_is_unused23(g, v, l, p)               level_alive_first_flag(g, v, l, is_unused23, p)
 #define level_alive_first_is_unused24(g, v, l, p)               level_alive_first_flag(g, v, l, is_unused24, p)
-#define level_alive_first_is_unused25(g, v, l, p)               level_alive_first_flag(g, v, l, is_unused25, p)
 #define level_alive_first_is_unused3(g, v, l, p)                level_alive_first_flag(g, v, l, is_unused3, p)
 #define level_alive_first_is_unused34(g, v, l, p)               level_alive_first_flag(g, v, l, is_physics_gravity, p)
 #define level_alive_first_is_unused35(g, v, l, p)               level_alive_first_flag(g, v, l, is_physics_water, p)
@@ -1118,7 +1118,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_corridor(g, v, l, p)               level_count_flag(g, v, l, is_corridor, p)
 #define level_count_is_crushable_underfoot(g, v, l, p)    level_count_flag(g, v, l, is_crushable, p)
 #define level_count_is_cursor_hazard(g, v, l, p)          level_count_flag(g, v, l, is_cursor_hazard, p)
-#define level_count_is_cursor_path_blocker(g, v, l, p)    level_count_flag(g, v, l, is_cursor_path_blocker, p)
 #define level_count_is_cursor_path_hazard(g, v, l, p)     level_count_flag(g, v, l, is_cursor_path_hazard, p)
 #define level_count_is_cursor_path_none(g, v, l, p)       level_count_flag(g, v, l, is_cursor_path_none, p)
 #define level_count_is_cursor_path(g, v, l, p)            level_count_flag(g, v, l, is_cursor_path, p)
@@ -1164,6 +1163,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_monst(g, v, l, p)                  level_count_flag(g, v, l, is_monst, p)
 #define level_count_is_needs_move_confirm(g, v, l, p)     level_count_flag(g, v, l, is_submergible, p)
 #define level_count_is_obstacle_block(g, v, l, p)         level_count_flag(g, v, l, is_obstacle_to_movement, p)
+#define level_count_is_obstacle_to_cursor_path(g, v, l, p)    level_count_flag(g, v, l, is_obstacle_to_cursor_path, p)
+#define level_count_is_obstacle_to_explosion(g, v, l, p)               level_count_flag(g, v, l, is_obstacle_to_explosion, p)
 #define level_count_is_obstacle_to_jump_over(g, v, l, p)  level_count_flag(g, v, l, is_obstacle_to_jump_over, p)
 #define level_count_is_physics_temperature(g, v, l, p)    level_count_flag(g, v, l, is_physics_temperature, p)
 #define level_count_is_pillar(g, v, l, p)                 level_count_flag(g, v, l, is_pillar, p)
@@ -1198,7 +1199,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused22(g, v, l, p)               level_count_flag(g, v, l, is_unused22, p)
 #define level_count_is_unused23(g, v, l, p)               level_count_flag(g, v, l, is_unused23, p)
 #define level_count_is_unused24(g, v, l, p)               level_count_flag(g, v, l, is_unused24, p)
-#define level_count_is_unused25(g, v, l, p)               level_count_flag(g, v, l, is_unused25, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_physics_gravity, p)
 #define level_count_is_unused35(g, v, l, p)               level_count_flag(g, v, l, is_physics_water, p)

@@ -35,10 +35,10 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
-  tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_door);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_obstacle_to_cursor_path);
   tp_flag_set(tp, is_obstacle_to_falling);
   tp_flag_set(tp, is_obstacle_to_jump_landing);
   tp_flag_set(tp, is_obstacle_to_jump_over);

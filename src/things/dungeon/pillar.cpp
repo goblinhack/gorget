@@ -26,8 +26,8 @@ bool tp_load_pillar(void)
   // begin sort marker1 {
   tp_description_set(tp, tp_pillar_description_get);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_cursor_path_blocker);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_obstacle_to_cursor_path);
   tp_flag_set(tp, is_obstacle_to_falling);
   tp_flag_set(tp, is_obstacle_to_fire);
   tp_flag_set(tp, is_obstacle_to_jump_landing);

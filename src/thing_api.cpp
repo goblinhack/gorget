@@ -661,14 +661,14 @@ bool thing_is_cursor_hazard(Thingp t)
   return tp_flag(thing_tp(t), is_cursor_hazard);
 }
 
-bool thing_is_cursor_path_blocker(Thingp t)
+bool thing_is_obstacle_to_cursor_path(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_cursor_path_blocker);
+  return tp_flag(thing_tp(t), is_obstacle_to_cursor_path);
 }
 
 bool thing_is_cursor_path_hazard(Thingp t)
@@ -1271,14 +1271,14 @@ bool thing_is_unused24(Thingp t)
   return tp_flag(thing_tp(t), is_unused24);
 }
 
-bool thing_is_unused25(Thingp t)
+bool thing_is_obstacle_to_explosion(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused25);
+  return tp_flag(thing_tp(t), is_obstacle_to_explosion);
 }
 
 bool thing_is_obstacle_to_jump_over(Thingp t)
