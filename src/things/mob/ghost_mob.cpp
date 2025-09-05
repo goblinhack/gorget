@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_sound.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
@@ -14,6 +15,13 @@ static std::string tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Th
   TRACE_NO_INDENT();
 
   return "pile of bones";
+}
+
+static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE_NO_INDENT();
+
+  sound_play(g, "explosion");
 }
 
 bool tp_load_ghost_mob(void)
@@ -48,6 +56,7 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_health_initial_set(tp, "1d3+2");
   tp_long_name_set(tp, "ghost mob");
+  tp_on_death_set(tp, tp_ghost_mob_on_death);
   tp_pluralize_name_set(tp, "ghostly mobs");
   tp_short_name_set(tp, "pile of bones");
   tp_speed_set(tp, 100);

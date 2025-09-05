@@ -52,6 +52,9 @@ static bool test_barrel_explosion(Gamep g, Testp t)
   TEST_PROGRESS(t);
   thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(1, 0));
 
+  //
+  // Wait for the fire to ignite a barrel
+  //
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 4; tries++) {
     TEST_LOG(t, "try: %d", tries);

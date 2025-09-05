@@ -232,7 +232,7 @@ public:
   // Callbacks
   //
   tp_description_get_t description_get = {};
-  tp_on_spawn_t     on_spawn        = {};
+  tp_on_spawn_t        on_spawn        = {};
   tp_on_tick_idle_t    tick_idle       = {};
   tp_on_tick_begin_t   tick_begin      = {};
   tp_on_tick_end_t     tick_end        = {};
