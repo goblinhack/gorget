@@ -232,6 +232,7 @@ public:
   // Callbacks
   //
   tp_description_get_t description_get = {};
+  tp_on_spawn_t     on_spawn        = {};
   tp_on_tick_idle_t    tick_idle       = {};
   tp_on_tick_begin_t   tick_begin      = {};
   tp_on_tick_end_t     tick_end        = {};
@@ -1143,6 +1144,30 @@ void tp_on_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
   return tp->tick_end(g, v, l, me);
+}
+
+void tp_on_spawn_set(Tpp tp, tp_on_spawn_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->on_spawn = callback;
+}
+
+void tp_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  if (! tp->on_spawn) {
+    return;
+  }
+  return tp->on_spawn(g, v, l, me);
 }
 
 void tp_on_death_set(Tpp tp, tp_on_death_t callback)

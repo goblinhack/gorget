@@ -3,11 +3,19 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_sound.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tp_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+
+static void tp_explosion_spawn(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  sound_play(g, "explosion");
+}
 
 bool tp_load_explosion(void)
 {
@@ -21,6 +29,7 @@ bool tp_load_explosion(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
+  tp_on_spawn_set(tp, tp_explosion_spawn);
   tp_flag_set(tp, is_explosion);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_light_source, 5);

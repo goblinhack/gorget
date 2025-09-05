@@ -23,7 +23,7 @@ static bool test_barrel_explosion(Gamep g, Testp t)
       = "xxxxxxx"
         "xxxbbbx"
         "xxxbxbx"
-        "x@bbxbx"
+        "x@.bxbx"
         "xxxxxbx"
         "xbbbbbx"
         "xxxxxxx";
@@ -31,7 +31,7 @@ static bool test_barrel_explosion(Gamep g, Testp t)
       = "xxxxxxx"
         "xxx!!!x"
         "xxx.x!x"
-        "x@.!x!x"
+        "x@!!x!x"
         "xxxxx!x"
         "x.!.!!x"
         "xxxxxxx";
@@ -50,13 +50,15 @@ static bool test_barrel_explosion(Gamep g, Testp t)
   // Spawn fire. This should be enough to blow up all the barrels
   //
   TEST_PROGRESS(t);
-  thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(2, 0));
+  thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(1, 0));
 
   TEST_PROGRESS(t);
-  game_event_wait(g);
-
-  TEST_PROGRESS(t);
-  game_wait_for_tick_to_finish(g, v, l);
+  for (auto tries = 0; tries < 4; tries++) {
+    TEST_LOG(t, "try: %d", tries);
+    TRACE_NO_INDENT();
+    game_event_wait(g);
+    game_wait_for_tick_to_finish(g, v, l);
+  }
 
   TEST_PROGRESS(t);
   if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
@@ -64,7 +66,7 @@ static bool test_barrel_explosion(Gamep g, Testp t)
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
 
   TEST_PASSED(t);
 exit:

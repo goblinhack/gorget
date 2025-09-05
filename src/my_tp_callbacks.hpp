@@ -14,6 +14,10 @@ typedef std::string (*tp_description_get_t)(Gamep, Levelsp, Levelp, Thingp me);
 void        tp_description_set(Tpp, tp_description_get_t);
 std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me);
 
+typedef void (*tp_on_spawn_t)(Gamep, Levelsp, Levelp, Thingp me);
+void tp_on_spawn_set(Tpp, tp_on_spawn_t);
+void tp_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me);
+
 typedef void (*tp_on_tick_idle_t)(Gamep, Levelsp, Levelp, Thingp me);
 void tp_on_tick_idle_set(Tpp, tp_on_tick_idle_t);
 void tp_on_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me);
