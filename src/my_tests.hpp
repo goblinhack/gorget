@@ -10,6 +10,7 @@ bool tests_init(void);
 /* shell do */
 /* shell echo "bool $i();" */
 /* shell done */
+bool test_load_barrel_explosion();
 bool test_load_barrel();
 bool test_load_brazier_shove_chasm();
 bool test_load_brazier_shove_fail();

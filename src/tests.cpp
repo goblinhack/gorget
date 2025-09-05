@@ -15,6 +15,7 @@ bool tests_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
+  if (!test_load_barrel_explosion()) { return false; }
   if (!test_load_barrel()) { return false; }
   if (!test_load_brazier_shove_chasm()) { return false; }
   if (!test_load_brazier_shove_fail()) { return false; }
