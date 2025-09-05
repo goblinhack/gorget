@@ -302,6 +302,7 @@ bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 void thing_update_pos(Gamep, Thingp);
 void thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void thing_fall(Gamep, Levelsp, Levelp, Thingp);
+void thing_open(Gamep, Levelsp, Levelp, Thingp);
 void thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
@@ -366,10 +367,6 @@ bool thing_is_sleeping(Thingp);
 void thing_is_sleeping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_sleeping_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_open(Thingp);
-void thing_is_open_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_open_unset(Gamep, Levelsp, Levelp, Thingp);
-
 bool thing_is_on_map(Thingp);
 void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_on_map_unset(Gamep, Levelsp, Levelp, Thingp);
@@ -385,6 +382,10 @@ void thing_is_teleporting_unset(Gamep, Levelsp, Levelp, Thingp);
 bool thing_is_jumping(Thingp);
 void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_jumping_unset(Gamep, Levelsp, Levelp, Thingp);
+
+bool thing_is_open(Thingp);
+void thing_is_open_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_open_unset(Gamep, Levelsp, Levelp, Thingp);
 
 int  thing_is_falling(Thingp);
 void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, int val);
@@ -682,7 +683,7 @@ bool thing_is_unused17(Thingp);
 bool thing_is_unused18(Thingp);
 bool thing_is_unused19(Thingp);
 bool thing_is_unused2(Thingp);
-bool thing_is_unused20(Thingp);
+bool thing_is_openable(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused5(Thingp);

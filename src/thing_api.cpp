@@ -365,32 +365,6 @@ void thing_is_sleeping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return thing_is_sleeping_set(g, v, l, t, false);
 }
 
-bool thing_is_open(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return false;
-  }
-  return t->_is_open;
-}
-
-void thing_is_open_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return;
-  }
-  t->_is_open = val;
-}
-
-void thing_is_open_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-  return thing_is_open_set(g, v, l, t, false);
-}
-
 bool thing_is_on_map(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -519,6 +493,42 @@ void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
   return thing_is_jumping_set(g, v, l, t, false);
+}
+
+bool thing_is_open(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_open;
+}
+
+void thing_is_open_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+
+  if (t->_is_open == val) {
+    return;
+  }
+  t->_is_open = val;
+
+  if (val) {
+    tp_on_open(g, v, l, t);
+  } else {
+    tp_on_closed(g, v, l, t);
+  }
+}
+
+void thing_is_open_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_open_set(g, v, l, t, false);
 }
 
 bool thing_is_animated_can_hflip(Thingp t)
@@ -1221,14 +1231,14 @@ bool thing_is_unused2(Thingp t)
   return tp_flag(thing_tp(t), is_unused2);
 }
 
-bool thing_is_unused20(Thingp t)
+bool thing_is_openable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused20);
+  return tp_flag(thing_tp(t), is_openable);
 }
 
 bool thing_is_tick_delay_on_spawn(Thingp t)

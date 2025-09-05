@@ -371,48 +371,56 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   FOR_ALL_THINGS_AT(g, v, l, it, t->at)
   {
-    if (thing_is_player(t)) {
-      //
-      // At the end of the popped path or not?
-      //
-      if (player_struct->move_path.size) {
-        //
-        // If still more tiles to pop, do not descend automatically
-        //
-        if (thing_is_exit(it)) {
-          //
-          // To enabled the descend shortcut
-          //
-          game_request_to_remake_ui_set(g);
-          return;
-        }
+    //
+    // Open secret doors automatically
+    //
+    if (thing_is_secret_door(it)) {
+      thing_open(g, v, l, it);
+      if (thing_is_dead(it)) {
+        continue;
+      }
+    }
 
-        if (thing_is_entrance(it)) {
-          //
-          // To enabled the ascent shortcut
-          //
-          game_request_to_remake_ui_set(g);
-          return;
-        }
-      } else {
+    //
+    // At the end of the popped path or not?
+    //
+    if (player_struct->move_path.size) {
+      //
+      // If still more tiles to pop, do not descend automatically
+      //
+      if (thing_is_exit(it)) {
         //
-        // If at the end of the move path then we can enter or leave when we get to that final tile.
+        // To enabled the descend shortcut
         //
-        if (thing_is_exit(it)) {
-          //
-          // Descend
-          //
-          player_reached_exit(g, v, l, t);
-          return;
-        }
+        game_request_to_remake_ui_set(g);
+        return;
+      }
 
-        if (thing_is_entrance(it)) {
-          //
-          // Ascend
-          //
-          player_reached_entrance(g, v, l, t);
-          return;
-        }
+      if (thing_is_entrance(it)) {
+        //
+        // To enabled the ascent shortcut
+        //
+        game_request_to_remake_ui_set(g);
+        return;
+      }
+    } else {
+      //
+      // If at the end of the move path then we can enter or leave when we get to that final tile.
+      //
+      if (thing_is_exit(it)) {
+        //
+        // Descend
+        //
+        player_reached_exit(g, v, l, t);
+        return;
+      }
+
+      if (thing_is_entrance(it)) {
+        //
+        // Ascend
+        //
+        player_reached_entrance(g, v, l, t);
+        return;
       }
     }
   }

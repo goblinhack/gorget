@@ -56,6 +56,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
+      case THING_EVENT_OPEN :     break;
       case THING_EVENT_ENUM_MAX : break;
     }
   } else {
@@ -88,6 +89,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You are burnt." UI_RESET_FMT);
         break;
+      case THING_EVENT_OPEN :     break;
       case THING_EVENT_ENUM_MAX : break;
     }
   }
@@ -133,6 +135,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON("%s is burnt by %s.", the_thing.c_str(), by_player.c_str());
         break;
+      case THING_EVENT_OPEN :     break;
       case THING_EVENT_ENUM_MAX : break;
     }
   }
@@ -241,6 +244,8 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         }
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
+        break;
+      case THING_EVENT_OPEN : //
         break;
       case THING_EVENT_ENUM_MAX : break;
     }

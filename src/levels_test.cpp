@@ -59,12 +59,26 @@ void levels_test(Gamep g)
             /* line */ (const char *) " xxxxxxxxx ",
             /* line */ (const char *) " x.......x ",
             /* line */ (const char *) " xbbbbbb.x ",
-            /* line */ (const char *) " xb...bb.x ",
-            /* line */ (const char *) " xb.@b.b.x ",
+            /* line */ (const char *) " xb....b.x ",
+            /* line */ (const char *) " xb.@..b.x ",
             /* line */ (const char *) " xb....b.x ",
             /* line */ (const char *) " xbbbbbb.x ",
             /* line */ (const char *) " x.......x ",
             /* line */ (const char *) " xxxxxxxxx ",
+            /* line */ (const char *) "           ",
+            /* end */ nullptr);
+
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "secret1", __FUNCTION__, __LINE__,
+            /* line */ (const char *) "           ",
+            /* line */ (const char *) " xxxxx     ",
+            /* line */ (const char *) " x...x     ",
+            /* line */ (const char *) " x...xxxxx ",
+            /* line */ (const char *) " x...x...x ",
+            /* line */ (const char *) " x..@s...x ",
+            /* line */ (const char *) " x...x...x ",
+            /* line */ (const char *) " x...xxxxx ",
+            /* line */ (const char *) " x...x     ",
+            /* line */ (const char *) " xxxxx     ",
             /* line */ (const char *) "           ",
             /* end */ nullptr);
 }

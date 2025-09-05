@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
@@ -19,6 +20,20 @@ static std::string tp_secret_door_description_get(Gamep g, Levelsp v, Levelp l, 
   }
 
   return "odd looking rock";
+}
+
+static void tp_secret_door_on_open(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  ThingEvent e {
+      .reason     = "by opening",     //
+      .event_type = THING_EVENT_OPEN, //
+  };
+
+  TOPCON("A secret door creaks open!");
+
+  thing_dead(g, v, l, t, e);
 }
 
 bool tp_load_secret_door(void)
@@ -38,11 +53,12 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_obs_to_falling);
   tp_flag_set(tp, is_obs_to_fire);
   tp_flag_set(tp, is_obs_to_jump_landing);
-  tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_secret_door);
   tp_flag_set(tp, is_teleport_blocked);
+  tp_on_open_set(tp, tp_secret_door_on_open);
+  tp_flag_set(tp, is_openable);
   tp_health_initial_set(tp, "1d200");
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
