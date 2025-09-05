@@ -37,6 +37,7 @@ bool tp_load_grass(void)
   tp_flag_set(tp, is_crushable);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_grass);
+  tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);

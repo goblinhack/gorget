@@ -39,7 +39,7 @@ static bool test_brazier_shove_fail(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..;Bx.."
+        "..;!x.."
         "......."
         "......."
         ".......";
@@ -125,7 +125,7 @@ static bool test_brazier_shove_fail(Gamep g, Testp t)
   }
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
+  for (auto tries = 0; tries < 4; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
@@ -147,7 +147,7 @@ static bool test_brazier_shove_fail(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
 
   TEST_PASSED(t);
 exit:

@@ -127,6 +127,11 @@ typedef struct Level_ {
   //
   uint8_t entered : 1;
   //
+  // Booleans that are set whenever something of this type is created on the level
+  // and then cleared at end of tick.
+  //
+  uint8_t is_tick_delay_on_spawn : 1;
+  //
   // Player has completed level on way or another
   //
   uint8_t player_completed_level_via_exit : 1;
@@ -422,7 +427,7 @@ bool is_oob(int, int);
 
 bool   level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
 Thingp level_first_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
-Thingp level_alive_first_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+Thingp level_afirst_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 bool   level_alive_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 int    level_count_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 bool   level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint, Tpp);
@@ -449,6 +454,7 @@ void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
 void level_tick_water(Gamep, Levelsp, Levelp);
+void level_tick_explosion(Gamep, Levelsp, Levelp);
 void level_tick_chasm(Gamep, Levelsp, Levelp);
 void level_tick_teleport(Gamep, Levelsp, Levelp);
 void level_tick_end_temperature(Gamep, Levelsp, Levelp);

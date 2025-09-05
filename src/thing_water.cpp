@@ -5,11 +5,11 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 
-void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
+void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto   p = me->at;
+  auto   p = t->at;
   Thingp source;
   if (level_is_deep_water(g, v, l, p)) {
     source = level_first_is_deep_water(g, v, l, p);
@@ -20,19 +20,6 @@ void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto event_type = THING_EVENT_WATER_DAMAGE;
   auto damage     = tp_damage(thing_tp(source), event_type);
 
-  //
-  // Give the thing a chance and don't kill it immediately
-  //
-  auto max_damage = thing_health(me) / 2;
-
-  if (max_damage < 1) {
-    max_damage = 1;
-  }
-
-  if (damage > max_damage) {
-    damage = max_damage;
-  }
-
   ThingEvent e {
       .reason     = "by water damage", //
       .event_type = event_type,        //
@@ -40,5 +27,5 @@ void thing_water_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
       .source     = source,            //
   };
 
-  thing_damage(g, v, l, me, e);
+  thing_damage(g, v, l, t, e);
 }

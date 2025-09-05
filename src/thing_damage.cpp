@@ -50,6 +50,9 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_WATER_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You suffer water damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
+      case THING_EVENT_EXPLOSION_DAMAGE : //
+        TOPCON(UI_WARNING_FMT_STR "You suffer blast damage from %s." UI_RESET_FMT, by_the_thing.c_str());
+        break;
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
@@ -78,6 +81,9 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
         break;
       case THING_EVENT_WATER_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You suffer water damage." UI_RESET_FMT);
+        break;
+      case THING_EVENT_EXPLOSION_DAMAGE : //
+        TOPCON(UI_WARNING_FMT_STR "You suffer blast damage." UI_RESET_FMT);
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You are burnt." UI_RESET_FMT);
@@ -121,6 +127,9 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_WATER_DAMAGE : //
         TOPCON("%s suffers water damage from %s.", the_thing.c_str(), by_player.c_str());
         break;
+      case THING_EVENT_EXPLOSION_DAMAGE : //
+        TOPCON("%s suffers blast damage from %s.", the_thing.c_str(), by_player.c_str());
+        break;
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON("%s is burnt by %s.", the_thing.c_str(), by_player.c_str());
         break;
@@ -138,23 +147,19 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 
   auto tp = thing_tp(t);
 
+  //
+  // Indestructible?
+  //
   if (thing_is_indestructible(t)) {
-    //
-    // Log the reason for attack?
-    //
-    if (thing_is_loggable(t)) {
-      THING_LOG(t, "%s: no damage as indestructible", to_string(g, e).c_str());
-    }
+    THING_LOG(t, "%s: no damage as indestructible", to_string(g, e).c_str());
     return;
   }
 
+  //
+  // Already dead?
+  //
   if (thing_is_dead(t)) {
-    //
-    // Log the reason for attack?
-    //
-    if (thing_is_loggable(t)) {
-      THING_LOG(t, "%s: no damage as already dead", to_string(g, e).c_str());
-    }
+    THING_LOG(t, "%s: no damage as already dead", to_string(g, e).c_str());
     return;
   }
 
@@ -162,18 +167,30 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Immune to this attack?
   //
   if (thing_is_immune_to(t, e.event_type)) {
-    if (thing_is_loggable(t)) {
-      THING_LOG(t, "%s: no damage as immune", to_string(g, e).c_str());
-    }
+    THING_LOG(t, "%s: no damage as immune", to_string(g, e).c_str());
     return;
+  }
+
+  //
+  // Limit damage?
+  //
+  if (thing_is_damage_capped(t)) {
+    auto max_damage = tp_health_initial_get(tp) / 4;
+
+    if (max_damage < 1) {
+      max_damage = 1;
+    }
+
+    if (e.damage > max_damage) {
+      THING_LOG(t, "%s: limit damage %d -> %d", to_string(g, e).c_str(), e.damage, max_damage);
+      e.damage = max_damage;
+    }
   }
 
   //
   // Log the reason for attack?
   //
-  if (thing_is_loggable(t)) {
-    THING_LOG(t, "%s: apply damage", to_string(g, e).c_str());
-  }
+  THING_LOG(t, "%s: apply damage", to_string(g, e).c_str());
 
   if (thing_is_player(t)) {
     thing_damage_to_player(g, v, l, t, e);
@@ -222,6 +239,8 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         if (! level_is_steam(g, v, l, t->at)) {
           thing_spawn(g, v, l, tp_random(is_steam), t->at);
         }
+        break;
+      case THING_EVENT_EXPLOSION_DAMAGE : //
         break;
       case THING_EVENT_ENUM_MAX : break;
     }

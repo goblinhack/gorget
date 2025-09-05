@@ -30,9 +30,7 @@ void level_tick_teleport(Gamep g, Levelsp v, Levelp l)
         }
         processed[ t->id ] = true;
 
-        if (thing_is_loggable(t)) {
-          THING_DBG(t, "over teleport");
-        }
+        THING_DBG(t, "over teleport");
 
         thing_teleport(g, v, l, t);
       }

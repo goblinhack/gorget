@@ -36,6 +36,7 @@ bool tp_load_steam(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_steam);
   tp_flag_set(tp, is_teleport_blocked);
+  tp_flag_set(tp, is_tick_delay_on_spawn);
   tp_flag_set(tp, is_tickable);
   tp_lifespan_set(tp, "1d6+3");
   tp_long_name_set(tp, name);

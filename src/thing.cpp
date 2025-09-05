@@ -126,10 +126,16 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   if (t) {
     thing_push(g, v, l, t);
 
-    if (thing_is_loggable(t)) {
-      THING_DBG(t, "spawned");
-    }
+    THING_DBG(t, "spawned");
   }
+
+  //
+  // This is reset each tick
+  //
+  if (thing_is_tick_delay_on_spawn(t)) {
+    l->is_tick_delay_on_spawn = true;
+  }
+
   return t;
 }
 
@@ -138,9 +144,7 @@ void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   if (0) {
-    if (thing_is_loggable(t)) {
-      THING_DBG(t, "fini");
-    }
+    THING_DBG(t, "fini");
   }
 
   thing_free(g, v, l, t);

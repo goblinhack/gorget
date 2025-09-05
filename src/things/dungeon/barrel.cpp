@@ -28,7 +28,7 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   for (auto delta : points) {
     auto p = t->at + delta;
-    if (! level_is_obstacle_to_explosion(g, v, l, p)) {
+    if (! level_is_obs_to_explosion(g, v, l, p)) {
       if (! level_is_explosion(g, v, l, p)) {
         thing_spawn(g, v, l, tp_random(is_explosion), p);
       }
@@ -73,10 +73,11 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obstacle_to_cursor_path);
-  tp_flag_set(tp, is_obstacle_to_falling);
-  tp_flag_set(tp, is_obstacle_to_jump_landing);
-  tp_flag_set(tp, is_obstacle_to_movement);
+  tp_flag_set(tp, is_obs_to_cursor_path);
+  tp_flag_set(tp, is_obs_to_falling);
+  tp_flag_set(tp, is_obs_to_jump_landing);
+  tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_shovable);

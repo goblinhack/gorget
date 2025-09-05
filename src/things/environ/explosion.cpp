@@ -17,13 +17,19 @@ bool tp_load_explosion(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
+  tp_damage_set(tp, THING_EVENT_EXPLOSION_DAMAGE, "20+1d20");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_explosion);
+  tp_flag_set(tp, is_gaseous);
+  tp_flag_set(tp, is_light_source, 5);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_flag_set(tp, is_wait_on_anim_when_dead);
+  tp_flag_set(tp, is_tick_delay_on_spawn);
+  tp_flag_set(tp, is_wait_on_dead_anim);
+  tp_light_color_set(tp, "white");
   tp_temperature_initial_set(tp, 1000); // celsius
   tp_weight_set(tp, WEIGHT_NONE);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

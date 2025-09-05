@@ -338,7 +338,7 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Returns true if the thing can move to this location
 //
-bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -346,20 +346,20 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
     return false;
   }
 
-  if (to == me->at) {
+  if (to == t->at) {
     return true;
   }
 
-  auto dx = to.x - me->at.x;
-  auto dy = to.y - me->at.y;
-  thing_set_dir_from_delta(me, dx, dy);
+  auto dx = to.x - t->at.x;
+  auto dy = to.y - t->at.y;
+  thing_set_dir_from_delta(t, dx, dy);
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
   {
     //
     // A wall or pillar or somesuch?
     //
-    if (thing_is_obstacle_to_movement(it)) {
+    if (thing_is_obs_to_movement(it)) {
       return false;
     }
   }
@@ -370,7 +370,7 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 //
 // Returns true if we can move to this location by shoving
 //
-bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -378,24 +378,24 @@ bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoin
     return false;
   }
 
-  if (to == me->at) {
+  if (to == t->at) {
     return true;
   }
 
-  auto dx = to.x - me->at.x;
-  auto dy = to.y - me->at.y;
-  thing_set_dir_from_delta(me, dx, dy);
+  auto dx = to.x - t->at.x;
+  auto dy = to.y - t->at.y;
+  thing_set_dir_from_delta(t, dx, dy);
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
   {
     //
     // A wall or pillar or somesuch?
     //
-    if (thing_is_obstacle_to_movement(it)) {
+    if (thing_is_obs_to_movement(it)) {
       //
       // But make exceptions for things like braziers
       //
-      if (thing_is_able_to_shove(me)) {
+      if (thing_is_able_to_shove(t)) {
         if (thing_is_shovable(it)) {
           continue;
         }

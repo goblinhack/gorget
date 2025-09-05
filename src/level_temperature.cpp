@@ -113,16 +113,12 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       // First step is to mark things as burning and change temperatures
       //
       if (Ta != Na) {
-        if (thing_is_loggable(a)) {
-          THING_DBG(a, "temperature change (a) %f -> %d degrees", Ta, Na);
-        }
+        THING_DBG(a, "temperature change (a) %f -> %d degrees", Ta, Na);
         thing_temperature_handle(g, v, l, b, a, Na);
       }
 
       if (Tb != Nb) {
-        if (thing_is_loggable(b)) {
-          THING_DBG(b, "temperature change (b) %f -> %d degrees", Tb, Nb);
-        }
+        THING_DBG(b, "temperature change (b) %f -> %d degrees", Tb, Nb);
         thing_temperature_handle(g, v, l, a, b, Nb);
       }
 
@@ -189,9 +185,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
       // No need to handle return to temperature
       //
       if (Tn != Ta) {
-        if (thing_is_loggable(t)) {
-          THING_DBG(t, "temperature return %f -> %d degrees", Ta, Tn);
-        }
+        THING_DBG(t, "temperature return %f -> %d degrees", Ta, Tn);
         thing_temperature_set(g, v, l, t, Tn);
       }
     }

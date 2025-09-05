@@ -113,8 +113,10 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_corpse_on_death);
+  tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_player);

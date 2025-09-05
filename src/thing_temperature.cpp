@@ -8,53 +8,32 @@
 //
 // First step is to mark things as burning and change temperatures
 //
-void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp me, int n)
+void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)
 {
   TRACE_NO_INDENT();
 
-  auto tp = thing_tp(me);
+  auto tp = thing_tp(t);
 
   //
   // If not burnt already, burn it if over the threshold temperature.
   //
   auto T = tp_temperature_burns_at_get(tp);
   if (T && (n > T)) {
-    if (! level_is_fire(g, v, l, me->at)) {
-      thing_spawn(g, v, l, tp_random(is_fire), me->at);
+    if (! level_is_fire(g, v, l, t->at)) {
+      thing_spawn(g, v, l, tp_random(is_fire), t->at);
     }
-    thing_is_burning_set(g, v, l, me);
+    thing_is_burning_set(g, v, l, t);
   }
 
-  thing_temperature_set(g, v, l, me, n);
+  thing_temperature_set(g, v, l, t, n);
 }
 
-static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp me, int n)
+static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)
 {
   TRACE_NO_INDENT();
 
   auto event_type = THING_EVENT_HEAT_DAMAGE;
   auto damage     = n;
-  auto max_damage = 0;
-
-  if (source) {
-    //
-    // Limit damage to the type of thing, e.g. lava/fire
-    //
-    max_damage = tp_damage(thing_tp(source), event_type);
-  } else {
-    //
-    // Give the thing a chance and don't kill it immediately
-    //
-    max_damage = thing_health(me) / 2;
-  }
-
-  if (max_damage < 1) {
-    max_damage = 1;
-  }
-
-  if (damage > max_damage) {
-    damage = max_damage;
-  }
 
   ThingEvent e {
       .reason     = "by heat damage", //
@@ -63,25 +42,25 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
       .source     = source,           //
   };
 
-  thing_damage(g, v, l, me, e);
+  thing_damage(g, v, l, t, e);
 }
 
 //
 // Next step is to apply burning damage
 //
-void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp me, int n)
+void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)
 {
   TRACE_NO_INDENT();
 
-  auto tp = thing_tp(me);
+  auto tp = thing_tp(t);
 
   //
   // Pre burning heat damage
   //
   auto T = tp_temperature_damage_at_get(tp);
   if (T && (n > T)) {
-    thing_temperature_damage_apply(g, v, l, source, me, n);
-    if (thing_is_dead(me)) {
+    thing_temperature_damage_apply(g, v, l, source, t, n);
+    if (thing_is_dead(t)) {
       return;
     }
   }

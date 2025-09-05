@@ -38,7 +38,7 @@ std::initializer_list< std::string > tests = {
     "mob_water",
     "mob",
     "move_ok",
-    "player_fall_chasm",
+    "player_fall_chasm_into_lava",
     "player_lava",
     "save_load",
     "teleport",

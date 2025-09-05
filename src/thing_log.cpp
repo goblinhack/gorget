@@ -33,6 +33,10 @@ void THING_LOG(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
+  if (! thing_is_loggable(t)) {
+    return;
+  }
+
   va_list args;
   va_start(args, fmt);
   thing_log_(t, fmt, args);
@@ -44,6 +48,10 @@ void THING_DBG(Thingp t, const char *fmt, ...)
   TRACE_NO_INDENT();
 
   IF_NODEBUG return;
+
+  if (! thing_is_loggable(t)) {
+    return;
+  }
 
   va_list args;
   va_start(args, fmt);

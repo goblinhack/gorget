@@ -27,7 +27,7 @@ bool test_load_mob_lava();
 bool test_load_mob_water();
 bool test_load_mob();
 bool test_load_move_ok();
-bool test_load_player_fall_chasm();
+bool test_load_player_fall_chasm_into_lava();
 bool test_load_player_lava();
 bool test_load_save_load();
 bool test_load_teleport();

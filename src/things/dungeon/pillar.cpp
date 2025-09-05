@@ -27,12 +27,13 @@ bool tp_load_pillar(void)
   tp_description_set(tp, tp_pillar_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_obstacle_to_cursor_path);
-  tp_flag_set(tp, is_obstacle_to_falling);
-  tp_flag_set(tp, is_obstacle_to_fire);
-  tp_flag_set(tp, is_obstacle_to_jump_landing);
-  tp_flag_set(tp, is_obstacle_to_jump_over);
-  tp_flag_set(tp, is_obstacle_to_movement);
+  tp_flag_set(tp, is_obs_to_cursor_path);
+  tp_flag_set(tp, is_obs_to_falling);
+  tp_flag_set(tp, is_obs_to_fire);
+  tp_flag_set(tp, is_obs_to_jump_landing);
+  tp_flag_set(tp, is_obs_to_jump_over);
+  tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_pillar);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water

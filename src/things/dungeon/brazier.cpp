@@ -43,7 +43,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
     auto direction = t->at - shover->at;
     auto fire_at   = t->at + direction;
 
-    if (level_is_obstacle_to_fire(g, v, l, fire_at)) {
+    if (level_is_obs_to_fire(g, v, l, fire_at)) {
       //
       // If we can't, then spawn over the brazier
       //
@@ -107,9 +107,10 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_extinguished_on_death);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obstacle_to_falling);
-  tp_flag_set(tp, is_obstacle_to_jump_landing);
-  tp_flag_set(tp, is_obstacle_to_movement);
+  tp_flag_set(tp, is_obs_to_falling);
+  tp_flag_set(tp, is_obs_to_jump_landing);
+  tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_shovable);

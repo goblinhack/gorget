@@ -108,7 +108,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         //
         // But we still can't walk through walls to get out of the hazard
         //
-        if (level_is_obstacle_to_cursor_path(g, v, l, spoint(x, y))) {
+        if (level_is_obs_to_cursor_path(g, v, l, spoint(x, y))) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
         } else {
           d.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -141,7 +141,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
             //
             // But we still can't walk through walls to get to the hazard
             //
-            if (level_is_obstacle_to_cursor_path(g, v, l, p)) {
+            if (level_is_obs_to_cursor_path(g, v, l, p)) {
               d.val[ x ][ y ] = DMAP_IS_WALL;
               continue;
             }
@@ -169,7 +169,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         for (auto x = minx; x < maxx; x++) {
           spoint p(x, y);
 
-          if (level_is_obstacle_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+          if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
             d.val[ x ][ y ] = DMAP_IS_WALL;
           } else {
             d.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -186,13 +186,13 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         spoint p(x, y);
 
         if (attempt == 3) {
-          if (level_is_obstacle_to_cursor_path(g, v, l, p)) {
+          if (level_is_obs_to_cursor_path(g, v, l, p)) {
             d.val[ x ][ y ] = DMAP_IS_WALL;
           } else {
             d.val[ x ][ y ] = DMAP_IS_PASSABLE;
           }
         } else {
-          if (level_is_obstacle_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+          if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
             d.val[ x ][ y ] = DMAP_IS_WALL;
           } else {
             d.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -235,7 +235,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           //
           // Shortcuts cannot go through walls
           //
-          if (level_is_obstacle_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+          if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
             d.val[ x ][ y ] = DMAP_IS_WALL;
             continue;
           }

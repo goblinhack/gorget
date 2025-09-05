@@ -34,7 +34,7 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 
     for (auto delta : points) {
       auto p = t->at + delta;
-      auto b = level_alive_first_is_bridge(g, v, l, p);
+      auto b = level_afirst_is_bridge(g, v, l, p);
       if (b) {
         thing_fall(g, v, l, b);
       }
@@ -119,6 +119,7 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);

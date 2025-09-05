@@ -44,7 +44,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Rock, for example?
     //
-    if (level_is_obstacle_to_fire(g, v, l, p)) {
+    if (level_is_obs_to_fire(g, v, l, p)) {
       continue;
     }
 
@@ -142,6 +142,7 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_teleport_blocked);
+  tp_flag_set(tp, is_tick_delay_on_spawn);
   tp_flag_set(tp, is_tickable);
   tp_health_initial_set(tp, "1d5"); // to allow it to be damaged by water
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);

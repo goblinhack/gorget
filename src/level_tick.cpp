@@ -75,7 +75,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     if (g_opt_tests) {
       if (thing_is_dead(t)) {
         if (! thing_is_scheduled_for_cleanup(t)) {
-          if (thing_is_wait_on_anim_when_dead(t)) {
+          if (thing_is_wait_on_dead_anim(t)) {
             v->tick_wait_on_anim = true;
           }
         }
@@ -148,31 +148,45 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     //
     v->tick_temperature = v->tick;
 
-    //
-    // Need to do the temperature checks after things have moved an also need to give time for death
-    // animations to end
-    //
-    level_tick_end_temperature(g, v, l);
+    do {
+      l->is_tick_delay_on_spawn = false;
 
-    //
-    // Handle things interacting with water
-    //
-    level_tick_water(g, v, l);
+      //
+      // Need to do the temperature checks after things have moved an also need to give time for death
+      // animations to end
+      //
+      level_tick_end_temperature(g, v, l);
 
-    //
-    // Handle things interacting with teleports
-    //
-    level_tick_teleport(g, v, l);
+      //
+      // Handle things interacting with explosions
+      //
+      level_tick_explosion(g, v, l);
 
-    //
-    // Handle things interacting with chasms
-    //
-    level_tick_chasm(g, v, l);
+      //
+      // Handle things interacting with water
+      //
+      level_tick_water(g, v, l);
 
-    //
-    // Check if something reacted with lava and is now needing to delay the end of tick
-    //
-    level_tick_ok_to_end_check(g, v, l);
+      //
+      // Handle things interacting with teleports
+      //
+      level_tick_teleport(g, v, l);
+
+      //
+      // Handle things interacting with chasms
+      //
+      level_tick_chasm(g, v, l);
+
+      //
+      // Check if something reacted with lava and is now needing to delay the end of tick
+      //
+      level_tick_ok_to_end_check(g, v, l);
+
+      //
+      // A chasm or explosion or some other event has occurred that we need to handle immediately
+      // and delay ending the tick
+      //
+    } while (l->is_tick_delay_on_spawn);
   }
 
   //

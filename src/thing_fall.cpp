@@ -20,7 +20,7 @@ static bool thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
     return false;
   }
 
-  if (level_is_obstacle_to_falling(g, v, l, p)) {
+  if (level_is_obs_to_falling(g, v, l, p)) {
     return false;
   }
 

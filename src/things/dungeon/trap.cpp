@@ -33,7 +33,7 @@ bool tp_load_trap(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obstacle_to_falling);
+  tp_flag_set(tp, is_obs_to_falling);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_trap);

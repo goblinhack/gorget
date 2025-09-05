@@ -219,7 +219,7 @@ void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
   t->_is_dead = val;
 
-  if (val && thing_is_loggable(t)) {
+  if (val) {
     THING_DBG(t, "is dead");
   }
 
@@ -255,7 +255,7 @@ void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
   t->_is_burning = val;
 
-  if (val && thing_is_loggable(t)) {
+  if (val) {
     THING_DBG(t, "is burning");
   }
 
@@ -291,7 +291,7 @@ void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   }
   t->_is_corpse = val;
 
-  if (val && thing_is_loggable(t)) {
+  if (val) {
     THING_DBG(t, "is corpse");
   }
 }
@@ -326,7 +326,7 @@ void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, 
   }
   t->_is_scheduled_for_cleanup = val;
 
-  if (val && thing_is_loggable(t)) {
+  if (val) {
     THING_DBG(t, "is scheduled for cleanup");
   }
 
@@ -661,14 +661,14 @@ bool thing_is_cursor_hazard(Thingp t)
   return tp_flag(thing_tp(t), is_cursor_hazard);
 }
 
-bool thing_is_obstacle_to_cursor_path(Thingp t)
+bool thing_is_obs_to_cursor_path(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_to_cursor_path);
+  return tp_flag(thing_tp(t), is_obs_to_cursor_path);
 }
 
 bool thing_is_cursor_path_hazard(Thingp t)
@@ -991,14 +991,14 @@ bool thing_is_monst_group_2(Thingp t)
   return tp_flag(thing_tp(t), is_monst_group_2);
 }
 
-bool thing_is_obstacle_to_movement(Thingp t)
+bool thing_is_obs_to_movement(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_to_movement);
+  return tp_flag(thing_tp(t), is_obs_to_movement);
 }
 
 bool thing_is_pillar(Thingp t)
@@ -1231,64 +1231,64 @@ bool thing_is_unused20(Thingp t)
   return tp_flag(thing_tp(t), is_unused20);
 }
 
-bool thing_is_unused21(Thingp t)
+bool thing_is_tick_delay_on_spawn(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused21);
+  return tp_flag(thing_tp(t), is_tick_delay_on_spawn);
 }
 
-bool thing_is_unused22(Thingp t)
+bool thing_is_damage_capped(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused22);
+  return tp_flag(thing_tp(t), is_damage_capped);
 }
 
-bool thing_is_unused23(Thingp t)
+bool thing_is_physics_explosion(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused23);
+  return tp_flag(thing_tp(t), is_physics_explosion);
 }
 
-bool thing_is_unused24(Thingp t)
+bool thing_is_explosion(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused24);
+  return tp_flag(thing_tp(t), is_explosion);
 }
 
-bool thing_is_obstacle_to_explosion(Thingp t)
+bool thing_is_obs_to_explosion(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_to_explosion);
+  return tp_flag(thing_tp(t), is_obs_to_explosion);
 }
 
-bool thing_is_obstacle_to_jump_over(Thingp t)
+bool thing_is_obs_to_jump_over(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_to_jump_over);
+  return tp_flag(thing_tp(t), is_obs_to_jump_over);
 }
 
 bool thing_is_teleport_blocked(Thingp t)
@@ -1351,24 +1351,24 @@ bool thing_is_needs_move_confirm(Thingp t)
   return tp_flag(thing_tp(t), is_needs_move_confirm);
 }
 
-bool thing_is_obstacle_to_falling(Thingp t)
+bool thing_is_obs_to_falling(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_to_falling);
+  return tp_flag(thing_tp(t), is_obs_to_falling);
 }
 
-bool thing_is_obstacle_to_jump_landing(Thingp t)
+bool thing_is_obs_to_jump_landing(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_to_jump_landing);
+  return tp_flag(thing_tp(t), is_obs_to_jump_landing);
 }
 
 bool thing_is_submergible(Thingp t)
@@ -1421,14 +1421,14 @@ bool thing_is_floating(Thingp t)
   return tp_flag(thing_tp(t), is_floating);
 }
 
-bool thing_is_obstacle_to_fire(Thingp t)
+bool thing_is_obs_to_fire(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obstacle_to_fire);
+  return tp_flag(thing_tp(t), is_obs_to_fire);
 }
 
 bool thing_is_combustible(Thingp t)
@@ -1491,24 +1491,14 @@ bool thing_is_undead(Thingp t)
   return tp_flag(thing_tp(t), is_undead);
 }
 
-bool thing_is_wait_on_anim_when_dead(Thingp t)
+bool thing_is_wait_on_dead_anim(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_wait_on_anim_when_dead);
-}
-
-bool thing_is_explosion(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_explosion);
+  return tp_flag(thing_tp(t), is_wait_on_dead_anim);
 }
 
 bool thing_is_corpse_on_death(Thingp t)

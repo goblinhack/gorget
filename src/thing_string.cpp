@@ -46,11 +46,11 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ thing_health(t),
                          /* newline */ name.c_str(),
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
-                         /* newline */ thing_is_sleeping(t) ? "/sleeping" : "",
-                         /* newline */ thing_is_falling(t) ? "/falling" : "",
-                         /* newline */ thing_is_open(t) ? "/open" : "",
-                         /* newline */ thing_is_burning(t) ? "/burning" : "",
-                         /* newline */ thing_is_scheduled_for_cleanup(t) ? "/cleanup" : "",
+                         /* newline */ thing_is_sleeping(t) ? "/slp" : "",
+                         /* newline */ thing_is_falling(t) ? "/fal" : "",
+                         /* newline */ thing_is_open(t) ? "/opn" : "",
+                         /* newline */ thing_is_burning(t) ? "/brn" : "",
+                         /* newline */ thing_is_scheduled_for_cleanup(t) ? "/free" : "",
                          /* newline */ t->at.x, t->at.y));
 }
 
@@ -114,6 +114,9 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       break;
     case THING_EVENT_WATER_DAMAGE : //
       s += "drowned";
+      break;
+    case THING_EVENT_EXPLOSION_DAMAGE : //
+      s += "blown up";
       break;
     case THING_EVENT_FIRE_DAMAGE : //
       s += "burned";

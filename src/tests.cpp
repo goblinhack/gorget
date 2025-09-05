@@ -32,7 +32,7 @@ bool tests_init(void)
   if (!test_load_mob_water()) { return false; }
   if (!test_load_mob()) { return false; }
   if (!test_load_move_ok()) { return false; }
-  if (!test_load_player_fall_chasm()) { return false; }
+  if (!test_load_player_fall_chasm_into_lava()) { return false; }
   if (!test_load_player_lava()) { return false; }
   if (!test_load_save_load()) { return false; }
   if (!test_load_teleport()) { return false; }

@@ -14,7 +14,6 @@ void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
 
   int x, y;
 
-  LOG("tick chasm");
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
     spoint p(x, y);
@@ -25,9 +24,7 @@ void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
           continue;
         }
 
-        if (thing_is_loggable(t)) {
-          THING_DBG(t, "over chasm");
-        }
+        THING_DBG(t, "over chasm");
 
         thing_chasm_handle(g, v, l, t);
       }

@@ -35,16 +35,17 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob2);
-  tp_flag_set(tp, is_obstacle_to_falling);
-  tp_flag_set(tp, is_obstacle_to_jump_landing);
-  tp_flag_set(tp, is_obstacle_to_movement);
+  tp_flag_set(tp, is_obs_to_falling);
+  tp_flag_set(tp, is_obs_to_jump_landing);
+  tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
-  tp_flag_set(tp, is_wait_on_anim_when_dead);
+  tp_flag_set(tp, is_wait_on_dead_anim);
   tp_health_initial_set(tp, "1d3+3");
   tp_long_name_set(tp, "goblin mob");
   tp_pluralize_name_set(tp, "gobliny mobs");

@@ -466,7 +466,7 @@ Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return nullptr;
 }
 
-Thingp level_alive_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+Thingp level_afirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
