@@ -237,7 +237,7 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   // No more following the cursor if dead...
   //
   if (thing_is_player(t)) {
-    level_cursor_path_reset(g, v);
+    player_state_change(g, v, PLAYER_STATE_DEAD);
   }
 
   //

@@ -845,7 +845,7 @@ void Game::state_reset(const std::string &why)
 }
 void game_state_reset(Gamep g, const char *why) { g->state_reset(why); }
 
-bool game_state(Gamep g) { return g->state; }
+GameState game_state(Gamep g) { return g->state; }
 
 void Game::state_change(GameState new_state, const std::string &why)
 {
@@ -1084,73 +1084,28 @@ void Game::display(void)
   TRACE_NO_INDENT();
 
   auto g = this;
+
   auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return;
+  }
 
   switch (state) {
     case STATE_MAIN_MENU : break;
     case STATE_QUITTING :  break;
     case STATE_PLAYING :
-      if (v) {
-        auto l = game_level_get(g, v);
-        if (l) {
-          level_mouse_position_get(g, v, l);
-          level_display(g, v, l);
-
-          //
-          // If the player pressed the mouse, we need to apply the current cursor path and start moving.
-          //
-          switch (player_state(g, v)) {
-            case PLAYER_STATE_NORMAL :
-              //
-              // Replace the mouse path
-              //
-              //
-              // If the cursor moved, update what we see
-              //
-              if (game_request_to_update_cursor_get(g)) {
-                level_cursor_path_recreate(g, v, l);
-                level_cursor_describe(g, v, l);
-                game_request_to_update_cursor_unset(g);
-              }
-              break;
-            case PLAYER_STATE_PATH_REQUESTED :
-              //
-              // Player wants to start following or replace the current path.
-              //
-              level_cursor_path_apply(g, v, l);
-              break;
-            case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
-              //
-              // Wait for confirmation.
-              //
-              break;
-            case PLAYER_STATE_FOLLOWING_A_PATH :
-              //
-              // Already following a path, stick to it until completion.
-              //
-              break;
-            case PLAYER_STATE_ENUM_MAX : break;
-          }
-        }
-      }
-      break;
+      //
+      // Fallthrough
+      //
     case STATE_DEAD_MENU :
-      if (v) {
-        auto l = game_level_get(g, v);
-        if (l) {
-          level_mouse_position_get(g, v, l);
-          level_display(g, v, l);
-
-          //
-          // If the cursor moved, update what we see
-          //
-          if (game_request_to_update_cursor_get(g)) {
-            level_cursor_path_recreate(g, v, l);
-            level_cursor_describe(g, v, l);
-            game_request_to_update_cursor_unset(g);
-          }
-        }
-      }
+      level_mouse_position_get(g, v, l);
+      level_display(g, v, l);
+      thing_player_event_loop(g, v, l);
       break;
     case STATE_MOVE_WARNING_MENU : break;
     case STATE_KEYBOARD_MENU :     break;
@@ -1161,6 +1116,7 @@ void Game::display(void)
     case GAME_STATE_ENUM_MAX :     break;
   }
 }
+
 void game_display(Gamep g)
 {
   TRACE_NO_INDENT();

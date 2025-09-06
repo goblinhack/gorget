@@ -291,11 +291,11 @@ Levelsp game_test_init(Gamep, Levelp *, LevelNum, int w, int h, const char *cont
 
 uint32_t game_tick_get(Gamep, Levelsp);
 
-bool game_input(Gamep, const SDL_Keysym *key);
-bool game_mouse_down(Gamep, int x, int y, uint32_t button);
-bool game_mouse_motion(Gamep, int x, int y, int relx, int rely, int wheelx, int wheely);
-bool game_mouse_up(Gamep, int x, int y, uint32_t button);
-bool game_state(Gamep);
+bool      game_input(Gamep, const SDL_Keysym *key);
+bool      game_mouse_down(Gamep, int x, int y, uint32_t button);
+bool      game_mouse_motion(Gamep, int x, int y, int relx, int rely, int wheelx, int wheely);
+bool      game_mouse_up(Gamep, int x, int y, uint32_t button);
+GameState game_state(Gamep);
 
 void game_cleanup(Gamep);
 void game_config_reset(Gamep);

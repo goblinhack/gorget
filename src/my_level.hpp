@@ -24,6 +24,8 @@ enum {
 //
 #define PLAYER_STATE_ENUM(list_macro)                                                                                \
   clang_format_indent()                                                /* dummy line for clang indentation fixup */  \
+      list_macro(PLAYER_STATE_INIT, "INIT"),                           /* newline */                                 \
+      list_macro(PLAYER_STATE_DEAD, "DEAD"),                           /* newline */                                 \
       list_macro(PLAYER_STATE_NORMAL, "NORMAL"),                       /* newline */                                 \
       list_macro(PLAYER_STATE_PATH_REQUESTED, "PATH-REQUESTED"),       /* newline */                                 \
       list_macro(PLAYER_STATE_MOVE_CONFIRM_REQUESTED, "MOVE-CONFIRM"), /* newline */                                 \

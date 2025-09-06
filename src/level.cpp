@@ -367,7 +367,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 
   if (old_level == new_level) {
     if (new_level->level_num == 0) {
-      TOPCON("Welcome to bla bla bla..., " UI_IMPORTANT_FMT_STR "Gorget" UI_RESET_FMT ".");
+      TOPCON("Welcome to " UI_IMPORTANT_FMT_STR "Gorget" UI_RESET_FMT ". A literal work in progress...");
     }
     return new_level;
   }

@@ -380,6 +380,17 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
   }
 
   switch (player_state(g, v)) {
+    case PLAYER_STATE_INIT :
+      //
+      // Player not initialized yet
+      //
+      break;
+    case PLAYER_STATE_DEAD :
+      //
+      // Player is dead.
+      // Ok to replace the path so the player can look around when dead.
+      //
+      break;
     case PLAYER_STATE_NORMAL :
       //
       // Replace the mouse path

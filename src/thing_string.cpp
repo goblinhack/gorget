@@ -121,6 +121,9 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     case THING_EVENT_FIRE_DAMAGE : //
       s += "burned";
       break;
+    case THING_EVENT_OPEN : //
+      s += "opened";
+      break;
     case THING_EVENT_ENUM_MAX : break;
   }
 

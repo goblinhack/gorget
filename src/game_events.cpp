@@ -63,6 +63,16 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   }
 
   switch (player_state(g, v)) {
+    case PLAYER_STATE_INIT :
+      //
+      // Player not initialized yet
+      //
+      break;
+    case PLAYER_STATE_DEAD :
+      //
+      // No player mouse events when dead
+      //
+      break;
     case PLAYER_STATE_NORMAL :
       //
       // Replace the mouse path

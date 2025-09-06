@@ -7,6 +7,21 @@
 #include "my_level.hpp"
 
 //
+// Return the level of the thing
+//
+Levelp thing_level(Gamep g, Levelsp v, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto o = thing_find(g, v, t->id);
+  if (t != o) {
+    DIE("Thing mismatch found for id, %" PRIx32 "", t->id);
+  }
+
+  return game_level_get(g, v, t->level_num);
+}
+
+//
 // Move the thing immediately to the new level entrance
 //
 void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t)
