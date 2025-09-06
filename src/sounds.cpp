@@ -10,6 +10,7 @@ void sounds_init(void)
   TRACE_NO_INDENT();
 
   sound_load(0.1f, "data/sounds/impacts/oof.wav", "oof");
+  sound_load(0.5f, "data/sounds/impacts/ouch.wav", "ouch");
   sound_load(0.1f, "data/sounds/interface/keypress.wav", "keypress");
   sound_load(0.2f, "data/sounds/interface/click2.wav", "click");
   sound_load(0.2f, "data/sounds/misc/fall.wav", "fall");

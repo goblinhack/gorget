@@ -96,6 +96,10 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   // If asked to follow the mouse path, start walking
   //
   player_move_to_next(g, v, l, t);
+
+  if (thing_is_burning(t)) {
+    sound_play(g, "ouch");
+  }
 }
 
 bool tp_load_player(void)
