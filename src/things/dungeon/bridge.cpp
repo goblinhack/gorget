@@ -22,26 +22,6 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   //
-  // Destroy adjacent bridge tiles
-  //
-  {
-    const std::initializer_list< spoint > points = {
-        spoint(0, -1),
-        spoint(-1, 0),
-        spoint(1, 0),
-        spoint(0, 1),
-    };
-
-    for (auto delta : points) {
-      auto p = t->at + delta;
-      auto b = level_afirst_is_bridge(g, v, l, p);
-      if (b) {
-        thing_fall(g, v, l, b);
-      }
-    }
-  }
-
-  //
   // Replace the bridge with the most populous surrounding hazard
   //
   {
@@ -74,6 +54,28 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
       } else if (max_count == lava_count) {
         if (! level_is_lava(g, v, l, t->at)) {
           thing_spawn(g, v, l, tp_random(is_lava), t->at);
+        }
+      }
+    }
+  }
+
+  //
+  // Destroy adjacent bridge tiles
+  //
+  {
+    const std::initializer_list< spoint > points = {
+        spoint(0, -1),
+        spoint(-1, 0),
+        spoint(1, 0),
+        spoint(0, 1),
+    };
+
+    for (auto delta : points) {
+      auto p = t->at + delta;
+      auto b = level_afirst_is_bridge(g, v, l, p);
+      if (b) {
+        if (level_is_chasm(g, v, l, t->at)) {
+          thing_fall(g, v, l, b);
         }
       }
     }
