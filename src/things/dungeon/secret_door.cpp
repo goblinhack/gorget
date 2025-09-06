@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_main.hpp"
+#include "my_sound.hpp"
 #include "my_thing.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
@@ -32,6 +33,8 @@ static void tp_secret_door_on_open(Gamep g, Levelsp v, Levelp l, Thingp t)
   };
 
   TOPCON("A secret door creaks open!");
+
+  sound_play(g, "secret_door");
 
   thing_dead(g, v, l, t, e);
 }
