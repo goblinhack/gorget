@@ -12,6 +12,7 @@
 #include "my_tp_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -63,6 +64,14 @@ static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   sound_play(g, "fall");
+
+  //
+  // Falling can be good
+  //
+  if (thing_is_burning(t)) {
+    thing_is_burning_unset(g, v, l, t);
+    TOPCON(UI_GOOD_FMT_STR "You extinguish the flames as you fall!" UI_RESET_FMT);
+  }
 
   game_popup_text_add(g, t->at.x, t->at.y, std::string("Aargh!"));
 }
