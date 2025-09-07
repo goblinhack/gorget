@@ -22,7 +22,6 @@ bool tp_load_ghost(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
   tp_description_set(tp, tp_ghost_description_get);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);

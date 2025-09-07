@@ -35,6 +35,7 @@ bool tp_load_chasm(void)
   tp_flag_set(tp, is_obs_to_falling);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_delay_on_spawn);
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_tiled);
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_NONE); // grams

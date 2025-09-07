@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice.hpp"
 #include "my_level.hpp"
 
 //
@@ -20,6 +21,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   auto T = tp_temperature_burns_at_get(tp);
   if (T && (n > T)) {
     if (! level_is_fire(g, v, l, t->at)) {
+      THING_DBG(t, "set on fire");
       thing_spawn(g, v, l, tp_random(is_fire), t->at);
     }
     thing_is_burning_set(g, v, l, t);
@@ -32,17 +34,45 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  auto event_type = THING_EVENT_HEAT_DAMAGE;
-  auto damage     = n;
+  auto tp        = thing_tp(t);
+  int  damage    = d6();
+  int  damage_at = tp_temperature_damage_at_get(tp);
 
-  ThingEvent e {
-      .reason     = "by heat damage", //
-      .event_type = event_type,       //
-      .damage     = damage,           //
-      .source     = source,           //
-  };
+  if (n > damage_at * 2) {
+    damage *= 2;
+  }
 
-  thing_damage(g, v, l, t, e);
+  if (thing_is_combustible(t)) {
+    damage *= 2;
+  }
+
+  if (level_is_lava(g, v, l, t->at)) {
+    damage *= 2;
+  }
+
+  if (level_is_fire(g, v, l, t->at)) {
+    auto event_type = THING_EVENT_FIRE_DAMAGE;
+
+    ThingEvent e {
+        .reason     = "by fire damage", //
+        .event_type = event_type,       //
+        .damage     = damage,           //
+        .source     = source,           //
+    };
+
+    thing_damage(g, v, l, t, e);
+  } else {
+    auto event_type = THING_EVENT_HEAT_DAMAGE;
+
+    ThingEvent e {
+        .reason     = "by heat damage", //
+        .event_type = event_type,       //
+        .damage     = damage,           //
+        .source     = source,           //
+    };
+
+    thing_damage(g, v, l, t, e);
+  }
 }
 
 //

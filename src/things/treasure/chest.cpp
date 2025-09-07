@@ -31,7 +31,7 @@ bool tp_load_treasure(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_description_set(tp, tp_chest_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -40,6 +40,7 @@ bool tp_load_treasure(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_falling);
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);

@@ -55,6 +55,7 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_obs_to_explosion);
   tp_flag_set(tp, is_obs_to_falling);
   tp_flag_set(tp, is_obs_to_fire);
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_obs_to_jump_landing);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

@@ -30,8 +30,9 @@ bool tp_load_door(void)
   auto tp   = tp_load("door"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_description_set(tp, tp_door_description_get);
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
@@ -47,8 +48,6 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
   tp_health_initial_set(tp, "1d100");
-  tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
   tp_temperature_burns_at_set(tp, 100);  // celsius

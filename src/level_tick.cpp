@@ -186,6 +186,9 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
       // A chasm or explosion or some other event has occurred that we need to handle immediately
       // and delay ending the tick
       //
+      if (l->is_tick_delay_on_spawn) {
+        CON("is_tick_delay_on_spawn %d", l->is_tick_delay_on_spawn);
+      }
     } while (l->is_tick_delay_on_spawn);
   }
 

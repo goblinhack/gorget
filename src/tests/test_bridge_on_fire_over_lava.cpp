@@ -31,7 +31,7 @@ static bool test_bridge_on_fire_over_lava(Gamep g, Testp t)
       = "......."
         "......."
         "...LLL."
-        "..@!!=."
+        "..@!!!."
         "...LLL."
         "......."
         ".......";

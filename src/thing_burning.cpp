@@ -69,17 +69,27 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   if (tp_chance_fail(tp, THING_CHANCE_CONTINUE_TO_BURN)) {
     //
-    // Even more poor thing
+    // Spawn more flames?
     //
-    if (level_count_is_fire(g, v, l, t->at) < 2) {
-      THING_LOG(t, "spawn additional flames");
-      thing_spawn(g, v, l, tp_random(is_fire), t->at);
+    if (thing_is_combustible(t)) {
+      if (level_count_is_fire(g, v, l, t->at) < 2) {
+        THING_LOG(t, "spawn additional flames");
+        thing_spawn(g, v, l, tp_random(is_fire), t->at);
 
-      if (thing_is_player(t)) {
-        TOPCON(UI_IMPORTANT_FMT_STR "The flames intensify!" UI_RESET_FMT);
+        if (thing_is_player(t)) {
+          TOPCON(UI_IMPORTANT_FMT_STR "The flames intensify!" UI_RESET_FMT);
+        }
       }
     }
-    return;
+
+    //
+    // Don't let the fire age out.
+    //
+    auto f = level_first_is_fire(g, v, l, t->at);
+    if (f) {
+      THING_DBG(t, "keep the fire burning");
+      thing_lifespan_incr(g, v, l, f, 2);
+    }
   }
 
   //

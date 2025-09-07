@@ -1,10 +1,13 @@
-secret door noise
-can move when dead!
+can be burnt by fire twice if is_tick_delay_on_spawn is set
+cap damage per tick
 doors and keys
+inventory
+mobs generating monsters
+monst AI
+ghosts and walls
 line of sight
 lighting
 score is hard coded to 666
-monst AI
 line of sight burning monsts should be notified on topcon
 
 ideas

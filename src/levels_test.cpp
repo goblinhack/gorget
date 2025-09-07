@@ -12,7 +12,7 @@ void levels_test(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "chasm1", __FUNCTION__, __LINE__,
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "bridge1", __FUNCTION__, __LINE__,
             /* line */ (const char *) "           ",
             /* line */ (const char *) " xxxxxxxxx ",
             /* line */ (const char *) " x.......x ",
@@ -26,7 +26,7 @@ void levels_test(Gamep g)
             /* line */ (const char *) "           ",
             /* end */ nullptr);
 
-  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "lava1", __FUNCTION__, __LINE__,
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "bridge2", __FUNCTION__, __LINE__,
             /* line */ (const char *) "           ",
             /* line */ (const char *) " xxxxxxxxx ",
             /* line */ (const char *) " x.......x ",
@@ -75,6 +75,20 @@ void levels_test(Gamep g)
             /* line */ (const char *) " x...xxxxx ",
             /* line */ (const char *) " x...x...x ",
             /* line */ (const char *) " x..@s...x ",
+            /* line */ (const char *) " x...x...x ",
+            /* line */ (const char *) " x...xxxxx ",
+            /* line */ (const char *) " x...x     ",
+            /* line */ (const char *) " xxxxx     ",
+            /* line */ (const char *) "           ",
+            /* end */ nullptr);
+
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "door1", __FUNCTION__, __LINE__,
+            /* line */ (const char *) "           ",
+            /* line */ (const char *) " xxxxx     ",
+            /* line */ (const char *) " x...x     ",
+            /* line */ (const char *) " x...xxxxx ",
+            /* line */ (const char *) " x...x...x ",
+            /* line */ (const char *) " x@.kD...x ",
             /* line */ (const char *) " x...x...x ",
             /* line */ (const char *) " x...xxxxx ",
             /* line */ (const char *) " x...x     ",

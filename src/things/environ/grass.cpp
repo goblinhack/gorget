@@ -28,7 +28,7 @@ bool tp_load_grass(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6");
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_description_set(tp, tp_grass_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
@@ -36,6 +36,7 @@ bool tp_load_grass(void)
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_crushable);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_grass);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);

@@ -62,9 +62,10 @@ bool tp_load_barrel(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to stop burning
   tp_description_set(tp, tp_barrel_description_get);
   tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_barrel);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_square_outlined);
