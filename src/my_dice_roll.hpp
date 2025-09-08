@@ -11,11 +11,12 @@
 class Dice
 {
 private:
-  int ndice {};    // 1d6+2 (1)
-  int sides {};    // 1d6+2 (6)
-  int modifier {}; // 1d6+2 (6)
+  int ndice {1};    // 1d6+2 (1)
+  int sides {6};    // 1d6+2 (6)
+  int modifier {0}; // 1d6+2 (2)
 
   std::string hitdice;
+  bool        initialized {};
 
 public:
   std::string to_string(void) const;

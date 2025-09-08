@@ -65,7 +65,6 @@ bool tp_load_barrel(void)
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to stop burning
   tp_description_set(tp, tp_barrel_description_get);
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_barrel);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_square_outlined);
@@ -83,7 +82,8 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
-  tp_health_initial_set(tp, "1d6");
+  tp_flag_set(tp, is_tickable);
+  tp_health_set(tp, "1d6");
   tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_barrel_on_death);
   tp_on_fall_end_set(tp, tp_barrel_on_fall_end);

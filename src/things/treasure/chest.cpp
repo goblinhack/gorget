@@ -40,13 +40,13 @@ bool tp_load_treasure(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_falling);
-  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
-  tp_health_initial_set(tp, "1d20");
+  tp_health_set(tp, "1d20");
   tp_long_name_set(tp, name);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius

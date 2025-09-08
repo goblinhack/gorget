@@ -14,6 +14,7 @@
 
 #define GAME_STATE_ENUM(list_macro)                                                                                  \
   clang_format_indent()                                    /* dummy line for clang indentation fixup */              \
+      list_macro(STATE_INIT, "INIT"),                      /* newline */                                             \
       list_macro(STATE_MAIN_MENU, "MAIN-MENU"),            /* newline */                                             \
       list_macro(STATE_PLAYING, "PLAYING"),                /* newline */                                             \
       list_macro(STATE_MOVE_WARNING_MENU, "MOVE-WARNING"), /* newline */                                             \

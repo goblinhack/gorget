@@ -126,11 +126,11 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       // Next step is to apply burning damage
       //
       if (Ta != Na) {
-        thing_temperature_damage_handle(g, v, l, b, a, Na);
+        thing_temperature_damage_handle(g, v, l, b /* source */, a, Na);
       }
 
       if (Tb != Nb) {
-        thing_temperature_damage_handle(g, v, l, a, b, Nb);
+        thing_temperature_damage_handle(g, v, l, a /* source */, b, Nb);
       }
     }
   }

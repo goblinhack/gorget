@@ -124,10 +124,10 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_teleport_blocked);
+  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_tiled);
-  tp_health_initial_set(tp, "1d12");
+  tp_health_set(tp, "1d12");
   tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_bridge_on_death);
   tp_on_fall_begin_set(tp, tp_bridge_on_fall_begin);

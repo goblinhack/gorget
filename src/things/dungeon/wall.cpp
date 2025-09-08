@@ -28,7 +28,7 @@ bool tp_load_wall(void)
     tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tiled);
     tp_flag_set(tp, is_wall);
-    tp_health_initial_set(tp, "1d200");
+    tp_health_set(tp, "1d200");
     tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);

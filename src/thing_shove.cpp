@@ -73,6 +73,10 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t
     } else if (e.source && thing_is_player(e.source)) {
       thing_shoved_by_player(g, v, l, t, e);
     }
+
+    THING_DBG(shover, "shove success of %s", to_string(g, t).c_str());
+  } else {
+    THING_DBG(shover, "shove fail of %s", to_string(g, t).c_str());
   }
 
   return shoved;

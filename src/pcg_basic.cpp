@@ -47,6 +47,7 @@ uint32_t pcg32_random_r(pcg32_random_t *rng)
   uint32_t xorshifted = ((oldstate >> 18u) ^ oldstate) >> 27u;
   uint32_t rot        = oldstate >> 59u;
   uint32_t r          = (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
+  // LOG("r %d", r);
   return r;
 }
 
@@ -60,7 +61,11 @@ void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq)
   pcg32_random_r(rng);
 }
 
-void pcg32_srandom(uint64_t seed, uint64_t seq) { pcg32_srandom_r(&pcg32_global, seed, seq); }
+void pcg32_srandom(uint64_t seed, uint64_t seq)
+{
+  // LOG("seed %d", (int) seed);
+  pcg32_srandom_r(&pcg32_global, seed, seq);
+}
 
 // pcg32_random()
 // pcg32_random_r(rng)

@@ -246,7 +246,12 @@ std::string Dice::to_string(void) const { return hitdice; }
 
 Dice::Dice(std::string s)
 {
-  hitdice = s;
+  if (s == "") {
+    return;
+  }
+
+  initialized = true;
+  hitdice     = s;
 
   //
   // 1d6+1
@@ -275,6 +280,10 @@ Dice::Dice(std::string s)
 
 int Dice::roll(void) const
 {
+  if (! initialized) {
+    return 0;
+  }
+
   int n   = ndice;
   int tot = 0;
   // CON("roll %dd%d+%d", ndice, sides, modifier);
@@ -286,12 +295,30 @@ int Dice::roll(void) const
   return tot;
 }
 
-int Dice::max_roll(void) const { return ndice * sides + modifier; }
+int Dice::max_roll(void) const
+{
+  if (! initialized) {
+    return 0;
+  }
 
-int Dice::min_roll(void) const { return ndice * 1 + modifier; }
+  return ndice * sides + modifier;
+}
+
+int Dice::min_roll(void) const
+{
+  if (! initialized) {
+    return 0;
+  }
+
+  return ndice * 1 + modifier;
+}
 
 bool Dice::crit_roll(void) const
 {
+  if (! initialized) {
+    return false;
+  }
+
   auto r = roll();
   return r >= (ndice * sides);
 }

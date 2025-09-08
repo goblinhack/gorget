@@ -379,8 +379,9 @@ int  tp_speed_get(Tpp tp);
 void tp_weight_set(Tpp, int val);
 int  tp_weight_get(Tpp tp);
 
-void tp_health_initial_set(Tpp, const std::string &val);
-int  tp_health_initial_get(Tpp tp);
+void tp_health_set(Tpp, const std::string &val);
+int  tp_health_get(Tpp tp);
+int  tp_health_max_get(Tpp tp);
 
 void tp_temperature_initial_set(Tpp, int val);
 int  tp_temperature_initial_get(Tpp tp);
@@ -480,6 +481,7 @@ int  tp_jump_distance_get(Tpp tp);
 
 void tp_lifespan_set(Tpp, const std::string &val);
 int  tp_lifespan_get(Tpp tp);
+int  tp_lifespan_max_get(Tpp tp);
 
 void tp_is_immunity_add(Tpp, ThingEventType);
 bool tp_is_immune_to(Tpp, ThingEventType);
@@ -562,6 +564,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_obs_to_jump_landing(tp)   tp_flag(tp, is_obs_to_jump_landing)
 #define tp_is_obs_to_jump_over(tp)      tp_flag(tp, is_obs_to_jump_over)
 #define tp_is_obs_to_movement(tp)       tp_flag(tp, is_obs_to_movement)
+#define tp_is_openable(tp)              tp_flag(tp, is_openable)
 #define tp_is_physics_explosion(tp)     tp_flag(tp, is_physics_explosion)
 #define tp_is_physics_gravity(tp)       tp_flag(tp, is_physics_gravity)
 #define tp_is_physics_temperature(tp)   tp_flag(tp, is_physics_temperature)
@@ -595,7 +598,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused18(tp)              tp_flag(tp, is_unused18)
 #define tp_is_unused19(tp)              tp_flag(tp, is_unused19)
 #define tp_is_unused2(tp)               tp_flag(tp, is_unused2)
-#define tp_is_openable(tp)              tp_flag(tp, is_openable)
 #define tp_is_unused3(tp)               tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)               tp_flag(tp, is_unused4)
 #define tp_is_unused5(tp)               tp_flag(tp, is_unused5)
@@ -685,6 +687,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_obs_to_jump_landing(g, v, l, p)   level_flag(g, v, l, is_obs_to_jump_landing, p)
 #define level_is_obs_to_jump_over(g, v, l, p)      level_flag(g, v, l, is_obs_to_jump_over, p)
 #define level_is_obs_to_movement(g, v, l, p)       level_flag(g, v, l, is_obs_to_movement, p)
+#define level_is_openable(g, v, l, p)              level_flag(g, v, l, is_openable, p)
 #define level_is_physics_explosion(g, v, l, p)     level_flag(g, v, l, is_physics_explosion, p)
 #define level_is_physics_gravity(g, v, l, p)       level_flag(g, v, l, is_physics_gravity, p)
 #define level_is_physics_temperature(g, v, l, p)   level_flag(g, v, l, is_physics_temperature, p)
@@ -718,7 +721,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused18(g, v, l, p)              level_flag(g, v, l, is_unused18, p)
 #define level_is_unused19(g, v, l, p)              level_flag(g, v, l, is_unused19, p)
 #define level_is_unused2(g, v, l, p)               level_flag(g, v, l, is_unused2, p)
-#define level_is_openable(g, v, l, p)              level_flag(g, v, l, is_openable, p)
 #define level_is_unused3(g, v, l, p)               level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)               level_flag(g, v, l, is_unused4, p)
 #define level_is_unused5(g, v, l, p)               level_flag(g, v, l, is_unused5, p)
@@ -799,6 +801,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_obs_to_cursor_path(g, v, l, p)    level_alive_flag(g, v, l, is_obs_to_cursor_path, p)
 #define level_alive_is_obs_to_explosion(g, v, l, p)      level_alive_flag(g, v, l, is_obs_to_explosion, p)
 #define level_alive_is_obs_to_jump_over(g, v, l, p)      level_alive_flag(g, v, l, is_obs_to_jump_over, p)
+#define level_alive_is_openable(g, v, l, p)              level_alive_flag(g, v, l, is_openable, p)
 #define level_alive_is_physics_explosion(g, v, l, p)     level_alive_flag(g, v, l, is_physics_explosion, p)
 #define level_alive_is_physics_temperature(g, v, l, p)   level_alive_flag(g, v, l, is_physics_temperature, p)
 #define level_alive_is_pillar(g, v, l, p)                level_alive_flag(g, v, l, is_pillar, p)
@@ -829,7 +832,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused18(g, v, l, p)              level_alive_flag(g, v, l, is_unused18, p)
 #define level_alive_is_unused19(g, v, l, p)              level_alive_flag(g, v, l, is_unused19, p)
 #define level_alive_is_unused2(g, v, l, p)               level_alive_flag(g, v, l, is_unused2, p)
-#define level_alive_is_openable(g, v, l, p)              level_alive_flag(g, v, l, is_openable, p)
 #define level_alive_is_unused3(g, v, l, p)               level_alive_flag(g, v, l, is_unused3, p)
 #define level_alive_is_unused34(g, v, l, p)              level_alive_flag(g, v, l, is_physics_gravity, p)
 #define level_alive_is_unused35(g, v, l, p)              level_alive_flag(g, v, l, is_physics_water, p)
@@ -915,6 +917,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_obs_to_cursor_path(g, v, l, p)     level_first_flag(g, v, l, is_obs_to_cursor_path, p)
 #define level_first_is_obs_to_explosion(g, v, l, p)       level_first_flag(g, v, l, is_obs_to_explosion, p)
 #define level_first_is_obs_to_jump_over(g, v, l, p)       level_first_flag(g, v, l, is_obs_to_jump_over, p)
+#define level_first_is_openable(g, v, l, p)               level_first_flag(g, v, l, is_openable, p)
 #define level_first_is_physics_explosion(g, v, l, p)      level_first_flag(g, v, l, is_physics_explosion, p)
 #define level_first_is_physics_temperature(g, v, l, p)    level_first_flag(g, v, l, is_physics_temperature, p)
 #define level_first_is_pillar(g, v, l, p)                 level_first_flag(g, v, l, is_pillar, p)
@@ -945,7 +948,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused18(g, v, l, p)               level_first_flag(g, v, l, is_unused18, p)
 #define level_first_is_unused19(g, v, l, p)               level_first_flag(g, v, l, is_unused19, p)
 #define level_first_is_unused2(g, v, l, p)                level_first_flag(g, v, l, is_unused2, p)
-#define level_first_is_openable(g, v, l, p)               level_first_flag(g, v, l, is_openable, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_physics_gravity, p)
 #define level_first_is_unused35(g, v, l, p)               level_first_flag(g, v, l, is_physics_water, p)
@@ -1030,6 +1032,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_obs_to_cursor_path(g, v, l, p)    level_afirst_flag(g, v, l, is_obs_to_cursor_path, p)
 #define level_afirst_is_obs_to_explosion(g, v, l, p)      level_afirst_flag(g, v, l, is_obs_to_explosion, p)
 #define level_afirst_is_obs_to_jump_over(g, v, l, p)      level_afirst_flag(g, v, l, is_obs_to_jump_over, p)
+#define level_afirst_is_openable(g, v, l, p)              level_afirst_flag(g, v, l, is_openable, p)
 #define level_afirst_is_physics_explosion(g, v, l, p)     level_afirst_flag(g, v, l, is_physics_explosion, p)
 #define level_afirst_is_physics_temperature(g, v, l, p)   level_afirst_flag(g, v, l, is_physics_temperature, p)
 #define level_afirst_is_pillar(g, v, l, p)                level_afirst_flag(g, v, l, is_pillar, p)
@@ -1060,7 +1063,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_unused18(g, v, l, p)              level_afirst_flag(g, v, l, is_unused18, p)
 #define level_afirst_is_unused19(g, v, l, p)              level_afirst_flag(g, v, l, is_unused19, p)
 #define level_afirst_is_unused2(g, v, l, p)               level_afirst_flag(g, v, l, is_unused2, p)
-#define level_afirst_is_openable(g, v, l, p)              level_afirst_flag(g, v, l, is_openable, p)
 #define level_afirst_is_unused3(g, v, l, p)               level_afirst_flag(g, v, l, is_unused3, p)
 #define level_afirst_is_unused34(g, v, l, p)              level_afirst_flag(g, v, l, is_physics_gravity, p)
 #define level_afirst_is_unused35(g, v, l, p)              level_afirst_flag(g, v, l, is_physics_water, p)
@@ -1146,6 +1148,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_obs_to_cursor_path(g, v, l, p)    level_count_flag(g, v, l, is_obs_to_cursor_path, p)
 #define level_count_is_obs_to_explosion(g, v, l, p)      level_count_flag(g, v, l, is_obs_to_explosion, p)
 #define level_count_is_obs_to_jump_over(g, v, l, p)      level_count_flag(g, v, l, is_obs_to_jump_over, p)
+#define level_count_is_openable(g, v, l, p)              level_count_flag(g, v, l, is_openable, p)
 #define level_count_is_physics_explosion(g, v, l, p)     level_count_flag(g, v, l, is_physics_explosion, p)
 #define level_count_is_physics_temperature(g, v, l, p)   level_count_flag(g, v, l, is_physics_temperature, p)
 #define level_count_is_pillar(g, v, l, p)                level_count_flag(g, v, l, is_pillar, p)
@@ -1176,7 +1179,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused18(g, v, l, p)              level_count_flag(g, v, l, is_unused18, p)
 #define level_count_is_unused19(g, v, l, p)              level_count_flag(g, v, l, is_unused19, p)
 #define level_count_is_unused2(g, v, l, p)               level_count_flag(g, v, l, is_unused2, p)
-#define level_count_is_openable(g, v, l, p)              level_count_flag(g, v, l, is_openable, p)
 #define level_count_is_unused3(g, v, l, p)               level_count_flag(g, v, l, is_unused3, p)
 #define level_count_is_unused34(g, v, l, p)              level_count_flag(g, v, l, is_physics_gravity, p)
 #define level_count_is_unused35(g, v, l, p)              level_count_flag(g, v, l, is_physics_water, p)

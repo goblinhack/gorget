@@ -34,7 +34,7 @@ bool tp_load_deep_water(void)
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_delay_on_spawn);
   tp_flag_set(tp, is_tiled);
-  tp_health_initial_set(tp, "40"); // to allow it to be damaged by fire
+  tp_health_set(tp, "40"); // to allow it to be damaged by fire
   tp_long_name_set(tp, "deep water");
   tp_short_name_set(tp, "deep water");
   tp_temperature_burns_at_set(tp, 100);  // celsius

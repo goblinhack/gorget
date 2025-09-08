@@ -39,7 +39,7 @@ static bool test_brazier_shove_into_mob(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.B.."
+        "..@.;.."
         "......."
         "......."
         ".......";
@@ -108,6 +108,15 @@ static bool test_brazier_shove_into_mob(Gamep g, Testp t)
     }
   }
 
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 10; tries++) {
+    TEST_LOG(t, "try: %d", tries);
+    TRACE_NO_INDENT();
+    // level_dump(g, v, l, w, h);
+    game_event_wait(g);
+    game_wait_for_tick_to_finish(g, v, l);
+  }
+
   //
   // Second shove, we should be able to move the dead brazier
   //
@@ -122,15 +131,6 @@ static bool test_brazier_shove_into_mob(Gamep g, Testp t)
       TEST_FAILED(t, "move failed");
       goto exit;
     }
-  }
-
-  TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
-    TEST_LOG(t, "try: %d", tries);
-    TRACE_NO_INDENT();
-    // level_dump(g, v, l, w, h);
-    game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l);
   }
 
   TEST_PROGRESS(t);

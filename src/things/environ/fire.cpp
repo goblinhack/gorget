@@ -73,6 +73,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     // Only spawn sometimes
     //
     if (d100() < 20 + (thing_age(t) * 10)) {
+      THING_DBG(t, "spawn spreading fire");
       thing_spawn(g, v, l, tp_random(is_fire), p);
     }
   }
@@ -87,12 +88,14 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent 
   //
   if (level_alive_is_combustible(g, v, l, t->at)) {
     if (! level_is_fire(g, v, l, t->at)) {
+      THING_DBG(t, "spawn fire to continue to burn");
       thing_spawn(g, v, l, tp_random(is_fire), t->at);
     }
   }
 
   if (! level_is_smoke(g, v, l, t->at)) {
     if (level_is_combustible(g, v, l, t->at)) {
+      THING_DBG(t, "spawn smoke over dying fire");
       thing_spawn(g, v, l, tp_random(is_smoke), t->at);
     }
   }
@@ -115,6 +118,7 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (! level_is_smoke(g, v, l, t->at)) {
+    THING_DBG(t, "spawn smoke over falling fire");
     thing_spawn(g, v, l, tp_random(is_smoke), t->at);
   }
 }
@@ -144,7 +148,7 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_delay_on_spawn);
   tp_flag_set(tp, is_tickable);
-  tp_health_initial_set(tp, "1d5"); // to allow it to be damaged by water
+  tp_health_set(tp, "1d5"); // to allow it to be damaged by water
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_lifespan_set(tp, "1d6+3");

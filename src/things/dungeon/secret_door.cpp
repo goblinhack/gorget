@@ -55,20 +55,20 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_obs_to_explosion);
   tp_flag_set(tp, is_obs_to_falling);
   tp_flag_set(tp, is_obs_to_fire);
-  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_obs_to_jump_landing);
+  tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_secret_door);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_on_open_set(tp, tp_secret_door_on_open);
-  tp_flag_set(tp, is_openable);
-  tp_health_initial_set(tp, "1d200");
+  tp_flag_set(tp, is_tickable);
+  tp_health_set(tp, "1d200");
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, "secret door");
+  tp_on_open_set(tp, tp_secret_door_on_open);
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

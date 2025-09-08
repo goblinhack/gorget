@@ -171,8 +171,6 @@ bool sound_play(Gamep g, const std::string &alias)
 {
   TRACE_NO_INDENT();
 
-  DBG2("Play sound %s", alias.c_str());
-
   auto sound = all_sound.find(alias);
   if (sound == all_sound.end()) {
     if (! g_opt_tests) {
@@ -185,6 +183,8 @@ bool sound_play(Gamep g, const std::string &alias)
     ERR("Cannot find sound data %s", alias.c_str());
     return false;
   }
+
+  DBG2("Play sound %s", alias.c_str());
 
   //
   // Playing already?

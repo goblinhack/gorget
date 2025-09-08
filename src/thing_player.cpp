@@ -51,6 +51,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   switch (game_state(g)) {
+    case STATE_INIT :      break;
     case STATE_MAIN_MENU : break;
     case STATE_QUITTING :  break;
     case STATE_PLAYING :

@@ -23,7 +23,7 @@ static bool test_bridge_on_fire_over_lava(Gamep g, Testp t)
       = "......."
         "......."
         "...LLL."
-        "..@===."
+        ".@.===."
         "...LLL."
         "......."
         ".......";
@@ -31,7 +31,7 @@ static bool test_bridge_on_fire_over_lava(Gamep g, Testp t)
       = "......."
         "......."
         "...LLL."
-        "..@!!!."
+        ".@.LLL."
         "...LLL."
         "......."
         ".......";
@@ -73,7 +73,7 @@ static bool test_bridge_on_fire_over_lava(Gamep g, Testp t)
   thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(2, 0));
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 3; tries++) {
+  for (auto tries = 0; tries < 20; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
@@ -98,7 +98,7 @@ static bool test_bridge_on_fire_over_lava(Gamep g, Testp t)
   //
   TEST_PROGRESS(t);
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 20, "final tick counter value");
   }
 
   TEST_PASSED(t);

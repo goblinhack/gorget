@@ -96,12 +96,12 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Continue to burn
   //
   if (! level_is_fire(g, v, l, t->at)) {
-    THING_LOG(t, "spawn flames");
+    THING_DBG(t, "spawn flames");
     thing_spawn(g, v, l, tp_random(is_fire), t->at);
   }
 
   if (! level_is_smoke(g, v, l, t->at)) {
-    THING_LOG(t, "spawn smoke");
+    THING_DBG(t, "spawn smoke");
     thing_spawn(g, v, l, tp_random(is_smoke), t->at);
   }
 }

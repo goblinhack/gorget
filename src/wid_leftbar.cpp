@@ -58,6 +58,15 @@ static bool wid_leftbar_create_window(Gamep g)
   }
 
   auto tp = thing_tp(player);
+  if (! tp) {
+    return false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Careful here. If we invoked the random number generator in here it can throw
+  // off tests.
+  ////////////////////////////////////////////////////////////////////////////////
+  auto health_max = tp_health_max_get(tp);
 
   y_at += 2;
 
@@ -68,8 +77,7 @@ static bool wid_leftbar_create_window(Gamep g)
     spoint br(width - 2, y_at);
     wid_set_pos(w, tl, br);
 
-    int i     = (int) (((float) thing_health(player) / (float) tp_health_initial_get(tp))
-                   * ((float) UI_HEALTH_BAR_STEPS - 1));
+    int i     = (int) (((float) thing_health(player) / (float) health_max) * ((float) UI_HEALTH_BAR_STEPS - 1));
     i         = std::min(i, UI_HEALTH_BAR_STEPS - 1);
     i         = std::max(i, 0);
     auto icon = "health_bar." + std::to_string(i + 1);
@@ -93,7 +101,7 @@ static bool wid_leftbar_create_window(Gamep g)
     wid_set_pos(w, tl, br);
     wid_set_shape_none(w);
 
-    std::string s = std::to_string(thing_health(player)) + "/" + std::to_string(tp_health_initial_get(tp));
+    std::string s = std::to_string(thing_health(player)) + "/" + std::to_string(health_max);
     wid_set_text(w, s);
     wid_set_text_rhs(w, true);
   }

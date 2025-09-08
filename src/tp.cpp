@@ -972,7 +972,7 @@ bool tp_is_immune_to(Tpp tp, ThingEventType val)
   return tp->is_immune[ val ];
 }
 
-void tp_health_initial_set(Tpp tp, const std::string &val)
+void tp_health_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -982,7 +982,7 @@ void tp_health_initial_set(Tpp tp, const std::string &val)
   tp->health_initial = Dice(std::string(val));
 }
 
-int tp_health_initial_get(Tpp tp)
+int tp_health_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -990,6 +990,16 @@ int tp_health_initial_get(Tpp tp)
     return 0;
   }
   return tp->health_initial.roll();
+}
+
+int tp_health_max_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+  return tp->health_initial.max_roll();
 }
 
 void tp_temperature_initial_set(Tpp tp, int val)
@@ -1983,4 +1993,14 @@ int tp_lifespan_get(Tpp tp)
     return 0;
   }
   return tp->lifespan.roll();
+}
+
+int tp_lifespan_max_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return 0;
+  }
+  return tp->lifespan.max_roll();
 }

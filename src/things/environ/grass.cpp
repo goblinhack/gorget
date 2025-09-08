@@ -36,13 +36,13 @@ bool tp_load_grass(void)
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_crushable);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_grass);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_health_initial_set(tp, "1");
+  tp_flag_set(tp, is_tickable);
+  tp_health_set(tp, "1");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
   tp_temperature_burns_at_set(tp, 100); // celsius

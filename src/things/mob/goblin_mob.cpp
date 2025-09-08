@@ -54,7 +54,7 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wait_on_dead_anim);
-  tp_health_initial_set(tp, "1d3+3");
+  tp_health_set(tp, "1d3+3");
   tp_long_name_set(tp, "goblin mob");
   tp_on_death_set(tp, tp_goblin_mob_on_death);
   tp_pluralize_name_set(tp, "gobliny mobs");

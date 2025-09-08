@@ -148,14 +148,14 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     //
     v->tick_temperature = v->tick;
 
+    //
+    // Need to do the temperature checks after things have moved an also need to give time for death
+    // animations to end
+    //
+    level_tick_end_temperature(g, v, l);
+
     do {
       l->is_tick_delay_on_spawn = false;
-
-      //
-      // Need to do the temperature checks after things have moved an also need to give time for death
-      // animations to end
-      //
-      level_tick_end_temperature(g, v, l);
 
       //
       // Handle things interacting with explosions

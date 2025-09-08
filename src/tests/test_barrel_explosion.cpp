@@ -33,7 +33,7 @@ static bool test_barrel_explosion(Gamep g, Testp t)
         "xxx!x.x"
         "x;!!x.x"
         "xxxxx.x"
-        "x!.!..x"
+        "x.....x"
         "xxxxxxx";
   Levelp  l;
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());

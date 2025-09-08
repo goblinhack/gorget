@@ -240,7 +240,7 @@ public:
   //
   // Temporary. Global states
   //
-  GameState state {STATE_MAIN_MENU};
+  GameState state {STATE_INIT};
 
   //
   // Temporary. Dampens mouse clicks
@@ -406,12 +406,18 @@ void game_init(Gamep g) { g->init(); }
 Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents)
 {
   TRACE_NO_INDENT();
-  g->destroy_levels();
+  game_cleanup(g);
+
+  TRACE_NO_INDENT();
+  game_state_change(g, STATE_INIT, "init test");
 
   //
   // We need a consistent seed for all tests, so damage doesn't vary
   //
+  TRACE_NO_INDENT();
   g->seed_set("test-seed");
+
+  TRACE_NO_INDENT();
   g->player_name_set("Ser Testalot");
 
   TRACE_NO_INDENT();
@@ -497,6 +503,8 @@ void Game::cleanup(void)
 
   TRACE_NO_INDENT();
   destroy_levels();
+
+  state_change(STATE_INIT, "init");
 }
 void game_cleanup(Gamep g)
 {
@@ -874,6 +882,7 @@ void Game::state_change(GameState new_state, const std::string &why)
   // Cleanup actions for the new state
   //
   switch (new_state) {
+    case STATE_INIT :
     case STATE_MAIN_MENU :
     case STATE_QUITTING :
       wid_load_destroy(g);
@@ -886,6 +895,11 @@ void Game::state_change(GameState new_state, const std::string &why)
       wid_topcon_fini(g);
       wid_botcon_fini(g);
       wid_dead_fini(g);
+
+      game_request_to_remake_ui_unset(g);
+      game_request_to_save_game_unset(g);
+      game_request_to_update_cursor_unset(g);
+      game_request_to_cleanup_things_unset(g);
       break;
     case STATE_PLAYING :
       wid_load_destroy(g);
@@ -907,10 +921,12 @@ void Game::state_change(GameState new_state, const std::string &why)
   // Enter the new state
   //
   switch (new_state) {
+    case STATE_INIT :      break;
     case STATE_MAIN_MENU : wid_main_menu_select(g); break;
     case STATE_QUITTING :  break;
     case STATE_PLAYING :
       switch (old_state) {
+        case STATE_INIT :     break;
         case STATE_QUITTING : break;
         case STATE_LOADED :
           wid_leftbar_init(g);
@@ -973,6 +989,7 @@ void Game::tick(void)
   auto v = game_levels_get(g);
 
   switch (state) {
+    case STATE_INIT :      break;
     case STATE_MAIN_MENU : break;
     case STATE_QUITTING :  break;
     case STATE_DEAD_MENU :
@@ -982,7 +999,7 @@ void Game::tick(void)
         if (l) {
           level_tick(g, v, l);
 
-          if (game->request_to_remake_ui) {
+          if (game_request_to_remake_ui_get(game)) {
             wid_leftbar_init(g);
             wid_rightbar_init(g);
             wid_actionbar_init(g);
@@ -1096,6 +1113,7 @@ void Game::display(void)
   }
 
   switch (state) {
+    case STATE_INIT :      break;
     case STATE_MAIN_MENU : break;
     case STATE_QUITTING :  break;
     case STATE_PLAYING :
@@ -2529,7 +2547,7 @@ bool game_request_to_remake_ui_get(Gamep g)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
-    return 1;
+    return false;
   }
 
   return g->request_to_remake_ui;
