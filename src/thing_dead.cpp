@@ -23,17 +23,6 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
     auto by_the_thing = thing_the_long_name(g, v, l, it);
 
     switch (e.event_type) {
-      case THING_EVENT_NONE : break;
-      case THING_EVENT_FALL : //
-        {
-          ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
-        }
-        break;
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-        {
-          ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
-        }
-        break;
       case THING_EVENT_SHOVED : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
@@ -55,9 +44,14 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are burnt to death by %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_OPEN : //
+      case THING_EVENT_OPEN :             //
+      case THING_EVENT_NONE :             //
+      case THING_EVENT_FALL :             //
+      case THING_EVENT_LIFESPAN_EXPIRED : //
+      case THING_EVENT_COLLECTED :        //
+      case THING_EVENT_ENUM_MAX :         //
+        ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
-      case THING_EVENT_ENUM_MAX : break;
     }
   } else {
     switch (e.event_type) {
@@ -89,9 +83,11 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are burnt to death." UI_RESET_FMT);
         break;
-      case THING_EVENT_OPEN : //
+      case THING_EVENT_OPEN :      //
+      case THING_EVENT_COLLECTED : //
+      case THING_EVENT_ENUM_MAX :  //
+        ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
-      case THING_EVENT_ENUM_MAX : break;
     }
   }
 }
@@ -109,17 +105,6 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     auto by_player = thing_long_name(g, v, l, it);
 
     switch (e.event_type) {
-      case THING_EVENT_NONE : break;
-      case THING_EVENT_FALL : //
-        {
-          ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
-        }
-        break;
-      case THING_EVENT_LIFESPAN_EXPIRED : //
-        {
-          ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
-        }
-        break;
       case THING_EVENT_SHOVED : //
         TOPCON("%s is knocked over by %s.", the_thing.c_str(), by_player.c_str());
         break;
@@ -141,9 +126,16 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON("%s is burnt to death by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_OPEN : //
+      case THING_EVENT_COLLECTED : //
+        TOPCON("%s is collected by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_ENUM_MAX : break;
+      case THING_EVENT_OPEN :             //
+      case THING_EVENT_NONE :             //
+      case THING_EVENT_FALL :             //
+      case THING_EVENT_LIFESPAN_EXPIRED : //
+      case THING_EVENT_ENUM_MAX :         //
+        ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
+        break;
     }
   }
 }

@@ -1,12 +1,13 @@
 doors and keys
 inventory
+line of sight
+"is collected" should be line of sight
+"is burning" should be line of sight
 mobs generating monsters
 monst AI
 ghosts and walls
-line of sight
 lighting
 score is hard coded to 666
-line of sight burning monsts should be notified on topcon
 
 ideas
 -----

@@ -8,7 +8,7 @@
 //
 // Handle interactions for a thing at its location with a dead thing
 //
-static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me)
+static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it)
 {
   TRACE_NO_INDENT();
 
@@ -20,23 +20,21 @@ static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thin
 //
 // Handle interactions for a thing at its location with an alive thing
 //
-static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me)
+static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it)
 {
   TRACE_NO_INDENT();
 
   //
-  // Is this grass that needs to be flattened?
+  // Crush it
   //
-  if (thing_is_crushable(it) && (thing_weight(me) > 10)) {
-    //
-    // Crush it
-    //
-    ThingEvent e {
-        .reason     = "by crushing",     //
-        .event_type = THING_EVENT_CRUSH, //
-        .source     = me                 //
-    };
-    thing_dead(g, v, l, it, e);
+  if (thing_crush(g, v, l, me, it)) {
+    return;
+  }
+
+  //
+  // Collect keys?
+  //
+  if (thing_collect_key(g, v, l, me, it)) {
     return;
   }
 }
@@ -71,12 +69,12 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
       //
       // Dead things
       //
-      thing_collision_handle_dead_thing(g, v, l, it, me);
+      thing_collision_handle_dead_thing(g, v, l, me, it);
     } else {
       //
       // Alive things
       //
-      thing_collision_handle_alive_thing(g, v, l, it, me);
+      thing_collision_handle_alive_thing(g, v, l, me, it);
     }
   }
 }

@@ -28,10 +28,11 @@ bool tp_load_potion(void)
   tp_description_set(tp, tp_potion_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
-  tp_flag_set(tp, is_combustible); // will continue to burn once on fire
+  tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collectable);
+  tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_physics_explosion);

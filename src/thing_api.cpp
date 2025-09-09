@@ -1251,44 +1251,44 @@ bool thing_is_unused14(Thingp t)
   return tp_flag(thing_tp(t), is_unused14);
 }
 
-bool thing_is_unused15(Thingp t)
+bool thing_is_item(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused15);
+  return tp_flag(thing_tp(t), is_item);
 }
 
-bool thing_is_unused16(Thingp t)
+bool thing_is_able_to_crush_grass(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused16);
+  return tp_flag(thing_tp(t), is_able_to_crush_grass);
 }
 
-bool thing_is_unused17(Thingp t)
+bool thing_is_able_to_collect_keys(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused17);
+  return tp_flag(thing_tp(t), is_able_to_collect_keys);
 }
 
-bool thing_is_unused18(Thingp t)
+bool thing_is_able_to_collect_items(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused18);
+  return tp_flag(thing_tp(t), is_able_to_collect_items);
 }
 
 bool thing_is_collectable(Thingp t)

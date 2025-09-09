@@ -119,6 +119,9 @@ bool tp_load_player(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
   tp_description_set(tp, tp_player_description_get);
+  tp_flag_set(tp, is_able_to_collect_items);
+  tp_flag_set(tp, is_able_to_collect_keys);
+  tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_able_to_shove);
   tp_flag_set(tp, is_animated_can_hflip);

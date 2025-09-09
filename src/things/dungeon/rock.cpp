@@ -21,8 +21,8 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_obs_to_explosion);
     tp_flag_set(tp, is_obs_to_falling_onto);
     tp_flag_set(tp, is_obs_to_fire);
-    tp_flag_set(tp, is_obs_to_jumping_onto);
     tp_flag_set(tp, is_obs_to_jump_over);
+    tp_flag_set(tp, is_obs_to_jumping_onto);
     tp_flag_set(tp, is_obs_to_movement);
     tp_flag_set(tp, is_physics_explosion);
     tp_flag_set(tp, is_rock);
