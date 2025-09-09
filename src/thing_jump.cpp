@@ -99,7 +99,7 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   //
   // No landing in solid obstacles
   //
-  if (level_is_obs_to_jump_landing(g, v, l, to)) {
+  if (level_is_obs_to_jumping_onto(g, v, l, to)) {
     if (thing_is_player(t)) {
       if (warn) {
         TOPCON("There is something in the way of jumping there.");

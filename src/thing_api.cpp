@@ -236,6 +236,46 @@ int thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_damage_this_tick -= val;
 }
 
+int thing_keys_carried(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_keys_carried;
+}
+
+int thing_keys_carried_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_keys_carried = val;
+}
+
+int thing_keys_carried_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_keys_carried += val;
+}
+
+int thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_keys_carried -= val;
+}
+
 bool thing_is_dead(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -1251,14 +1291,14 @@ bool thing_is_unused18(Thingp t)
   return tp_flag(thing_tp(t), is_unused18);
 }
 
-bool thing_is_unused19(Thingp t)
+bool thing_is_collectable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused19);
+  return tp_flag(thing_tp(t), is_collectable);
 }
 
 bool thing_is_unused2(Thingp t)
@@ -1401,24 +1441,24 @@ bool thing_is_needs_move_confirm(Thingp t)
   return tp_flag(thing_tp(t), is_needs_move_confirm);
 }
 
-bool thing_is_obs_to_falling(Thingp t)
+bool thing_is_obs_to_falling_onto(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obs_to_falling);
+  return tp_flag(thing_tp(t), is_obs_to_falling_onto);
 }
 
-bool thing_is_obs_to_jump_landing(Thingp t)
+bool thing_is_obs_to_jumping_onto(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_obs_to_jump_landing);
+  return tp_flag(thing_tp(t), is_obs_to_jumping_onto);
 }
 
 bool thing_is_submergible(Thingp t)

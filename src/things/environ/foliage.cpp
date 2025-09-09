@@ -33,7 +33,7 @@ bool tp_load_foliage(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_foliage);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obs_to_falling);
+  tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);

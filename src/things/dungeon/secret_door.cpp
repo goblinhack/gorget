@@ -53,9 +53,9 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_explosion);
-  tp_flag_set(tp, is_obs_to_falling);
+  tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_fire);
-  tp_flag_set(tp, is_obs_to_jump_landing);
+  tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

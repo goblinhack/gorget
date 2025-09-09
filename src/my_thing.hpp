@@ -154,6 +154,10 @@ typedef struct Thing_ {
   // Damage can be capped per tick to a limit so we don't kill a player in one go
   //
   int16_t _damage_this_tick;
+  //
+  // How many keys are carried
+  //
+  int16_t _keys_carried;
   int16_t _value1;
   int16_t _value2;
   int16_t _value3;
@@ -413,6 +417,11 @@ int thing_damage_this_tick_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_damage_this_tick_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_damage_this_tick_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
+int thing_keys_carried(Thingp);
+int thing_keys_carried_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_keys_carried_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_keys_carried_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
 int thing_value1(Thingp);
 int thing_value1_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_value1_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
@@ -601,6 +610,7 @@ bool thing_is_bridge(Thingp);
 bool thing_is_broken_on_death(Thingp);
 bool thing_is_burnable(Thingp);
 bool thing_is_chasm(Thingp);
+bool thing_is_collectable(Thingp);
 bool thing_is_combustible(Thingp);
 bool thing_is_corpse_on_death(Thingp);
 bool thing_is_corridor(Thingp);
@@ -655,9 +665,9 @@ bool thing_is_monst(Thingp);
 bool thing_is_needs_move_confirm(Thingp);
 bool thing_is_obs_to_cursor_path(Thingp);
 bool thing_is_obs_to_explosion(Thingp);
-bool thing_is_obs_to_falling(Thingp);
+bool thing_is_obs_to_falling_onto(Thingp);
 bool thing_is_obs_to_fire(Thingp);
-bool thing_is_obs_to_jump_landing(Thingp);
+bool thing_is_obs_to_jumping_onto(Thingp);
 bool thing_is_obs_to_jump_over(Thingp);
 bool thing_is_obs_to_movement(Thingp);
 bool thing_is_openable(Thingp);
@@ -692,7 +702,6 @@ bool thing_is_unused15(Thingp);
 bool thing_is_unused16(Thingp);
 bool thing_is_unused17(Thingp);
 bool thing_is_unused18(Thingp);
-bool thing_is_unused19(Thingp);
 bool thing_is_unused2(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);

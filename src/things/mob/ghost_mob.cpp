@@ -43,8 +43,8 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob1);
-  tp_flag_set(tp, is_obs_to_falling);
-  tp_flag_set(tp, is_obs_to_jump_landing);
+  tp_flag_set(tp, is_obs_to_falling_onto);
+  tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);

@@ -31,7 +31,7 @@ bool tp_load_chasm(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_obs_to_explosion);
-  tp_flag_set(tp, is_obs_to_falling);
+  tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_delay_on_spawn);

@@ -107,8 +107,8 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_extinguished_on_death);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obs_to_falling);
-  tp_flag_set(tp, is_obs_to_jump_landing);
+  tp_flag_set(tp, is_obs_to_falling_onto);
+  tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);
