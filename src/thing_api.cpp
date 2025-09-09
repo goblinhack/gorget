@@ -196,6 +196,46 @@ int thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_temperature -= val;
 }
 
+int thing_damage_this_tick(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_damage_this_tick;
+}
+
+int thing_damage_this_tick_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_damage_this_tick = val;
+}
+
+int thing_damage_this_tick_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_damage_this_tick += val;
+}
+
+int thing_damage_this_tick_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return 0;
+  }
+  return t->_damage_this_tick -= val;
+}
+
 bool thing_is_dead(Thingp t)
 {
   TRACE_NO_INDENT();

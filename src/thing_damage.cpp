@@ -53,8 +53,14 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_EXPLOSION_DAMAGE : //
         TOPCON(UI_WARNING_FMT_STR "You suffer blast damage from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
-      case THING_EVENT_FIRE_DAMAGE : //
-        TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
+      case THING_EVENT_FIRE_DAMAGE :
+        if (thing_is_lava(it)) {
+          TOPCON(UI_WARNING_FMT_STR "You are burning in lava!" UI_RESET_FMT);
+        } else if (thing_is_fire(it)) {
+          TOPCON(UI_WARNING_FMT_STR "The flames wrap around you!" UI_RESET_FMT);
+        } else {
+          TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
+        }
         break;
       case THING_EVENT_OPEN :     break;
       case THING_EVENT_ENUM_MAX : break;
@@ -142,6 +148,66 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 }
 
 //
+// Do not apply too much for one event
+//
+static void thing_damage_cap_for_this_event(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  auto       tp = thing_tp(t);
+  const auto h  = tp_health_max_get(tp);
+
+  //
+  // Limit the damage that can occur this event.
+  //
+  auto max_damage_this_time = h / 4;
+  if (max_damage_this_time < 1) {
+    max_damage_this_time = 1;
+  }
+
+  if (e.damage > max_damage_this_time) {
+    auto old_d = e.damage;
+    e.damage   = max_damage_this_time;
+    THING_LOG(t, "%s: limit damage %d -> %d", to_string(g, e).c_str(), old_d, e.damage);
+  }
+}
+
+//
+// Do not apply too much damage per tick
+//
+static void thing_damage_cap_for_this_tick(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  auto       tp = thing_tp(t);
+  const auto h  = tp_health_max_get(tp);
+
+  //
+  // Limit the total damage that can occur per tick.
+  //
+  auto max_damage_per_tick = h / 3;
+  if (max_damage_per_tick < 1) {
+    max_damage_per_tick = 1;
+  }
+
+  auto d_total = thing_damage_this_tick_incr(g, v, l, t, e.damage);
+  if (d_total > max_damage_per_tick) {
+    auto old_d = e.damage;
+    e.damage -= d_total - max_damage_per_tick;
+    THING_LOG(t, "%s: limit per tick damage %d -> %d", to_string(g, e).c_str(), old_d, e.damage);
+  }
+}
+
+//
+// Do not apply too much damage per tick
+//
+static void thing_damage_cap(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  if (! thing_is_damage_capped(t)) {
+    return;
+  }
+
+  thing_damage_cap_for_this_event(g, v, l, t, e);
+  thing_damage_cap_for_this_tick(g, v, l, t, e);
+}
+
+//
 // Apply a damage type to a thing
 //
 void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
@@ -177,17 +243,14 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   // Limit damage?
   //
-  if (thing_is_damage_capped(t)) {
-    auto max_damage = tp_health_get(tp) / 4;
+  thing_damage_cap(g, v, l, t, e);
 
-    if (max_damage < 1) {
-      max_damage = 1;
-    }
-
-    if (e.damage > max_damage) {
-      THING_LOG(t, "%s: limit damage %d -> %d", to_string(g, e).c_str(), e.damage, max_damage);
-      e.damage = max_damage;
-    }
+  //
+  // No damage?
+  //
+  if (e.damage <= 0) {
+    THING_LOG(t, "%s: no damage to apply", to_string(g, e).c_str());
+    return;
   }
 
   //

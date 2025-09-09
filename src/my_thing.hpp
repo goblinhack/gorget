@@ -150,6 +150,10 @@ typedef struct Thing_ {
   // Temperature in celsius.
   //
   int16_t _temperature;
+  //
+  // Damage can be capped per tick to a limit so we don't kill a player in one go
+  //
+  int16_t _damage_this_tick;
   int16_t _value1;
   int16_t _value2;
   int16_t _value3;
@@ -403,6 +407,11 @@ int thing_temperature(Thingp);
 int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_temperature_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_temperature_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+int thing_damage_this_tick(Thingp);
+int thing_damage_this_tick_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_damage_this_tick_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_damage_this_tick_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_value1(Thingp);
 int thing_value1_set(Gamep, Levelsp, Levelp, Thingp, int val);

@@ -14,6 +14,11 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   //
+  // Reset damage counts.
+  //
+  thing_damage_this_tick_set(g, v, l, t, 0);
+
+  //
   // Per thing callback
   //
   tp_on_tick_begin(g, v, l, t);
