@@ -48,7 +48,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
                          /* newline */ thing_is_sleeping(t) ? "/slp" : "",
                          /* newline */ thing_is_falling(t) ? "/fal" : "",
-                         /* newline */ thing_is_open(t) ? "/opn" : "",
+                         /* newline */ thing_is_open_try(t) ? "/opn" : "",
                          /* newline */ thing_is_burning(t) ? "/brn" : "",
                          /* newline */ thing_is_scheduled_for_cleanup(t) ? "/free" : "",
                          /* newline */ t->at.x, t->at.y));

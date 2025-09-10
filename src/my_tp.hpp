@@ -17,6 +17,9 @@
 //
 #define THING_FLAG_ENUM(list_macro)                                                                                  \
   clang_format_indent()                                                 /* dummy line for clang indentation fixup */ \
+      list_macro(is_able_to_collect_items, "is_able_to_collect_items"), /* newline */                                \
+      list_macro(is_able_to_collect_keys, "is_able_to_collect_keys"),   /* newline */                                \
+      list_macro(is_able_to_crush_grass, "is_able_to_crush_grass"),     /* newline */                                \
       list_macro(is_able_to_jump, "is_able_to_jump"),                   /* newline */                                \
       list_macro(is_able_to_shove, "is_able_to_shove"),                 /* newline */                                \
       list_macro(is_animated_can_hflip, "is_animated_can_hflip"),       /* newline */                                \
@@ -33,6 +36,7 @@
       list_macro(is_broken_on_death, "is_broken_on_death"),             /* newline */                                \
       list_macro(is_burnable, "is_burnable"),                           /* newline */                                \
       list_macro(is_chasm, "is_chasm"),                                 /* newline */                                \
+      list_macro(is_collectable, "is_collectable"),                     /* newline */                                \
       list_macro(is_combustible, "is_combustible"),                     /* newline */                                \
       list_macro(is_corpse_on_death, "is_corpse_on_death"),             /* newline */                                \
       list_macro(is_corridor, "is_corridor"),                           /* newline */                                \
@@ -64,6 +68,7 @@
       list_macro(is_goblin, "is_goblin"),                               /* newline */                                \
       list_macro(is_grass, "is_grass"),                                 /* newline */                                \
       list_macro(is_indestructible, "is_indestructible"),               /* newline */                                \
+      list_macro(is_item, "is_item"),                                   /* newline */                                \
       list_macro(is_key, "is_key"),                                     /* newline */                                \
       list_macro(is_lava, "is_lava"),                                   /* newline */                                \
       list_macro(is_level_across, "is_level_across"),                   /* newline */                                \
@@ -89,9 +94,10 @@
       list_macro(is_obs_to_explosion, "is_obs_to_explosion"),           /* newline */                                \
       list_macro(is_obs_to_falling_onto, "is_obs_to_falling_onto"),     /* newline */                                \
       list_macro(is_obs_to_fire, "is_obs_to_fire"),                     /* newline */                                \
-      list_macro(is_obs_to_jumping_onto, "is_obs_to_jumping_onto"),     /* newline */                                \
       list_macro(is_obs_to_jump_over, "is_obs_to_jump_over"),           /* newline */                                \
+      list_macro(is_obs_to_jumping_onto, "is_obs_to_jumping_onto"),     /* newline */                                \
       list_macro(is_obs_to_movement, "is_obs_to_movement"),             /* newline */                                \
+      list_macro(is_openable, "is_openable"),                           /* newline */                                \
       list_macro(is_physics_explosion, "is_physics_explosion"),         /* newline */                                \
       list_macro(is_physics_gravity, "is_physics_gravity"),             /* newline */                                \
       list_macro(is_physics_temperature, "is_physics_temperature"),     /* newline */                                \
@@ -119,13 +125,7 @@
       list_macro(is_unused12, "is_unused12"),                           /* newline */                                \
       list_macro(is_unused13, "is_unused13"),                           /* newline */                                \
       list_macro(is_unused14, "is_unused14"),                           /* newline */                                \
-      list_macro(is_item, "is_item"),                                   /* newline */                                \
-      list_macro(is_able_to_crush_grass, "is_able_to_crush_grass"),     /* newline */                                \
-      list_macro(is_able_to_collect_keys, "is_able_to_collect_keys"),   /* newline */                                \
-      list_macro(is_able_to_collect_items, "is_able_to_collect_items"), /* newline */                                \
-      list_macro(is_collectable, "is_collectable"),                     /* newline */                                \
       list_macro(is_unused2, "is_unused2"),                             /* newline */                                \
-      list_macro(is_openable, "is_openable"),                           /* newline */                                \
       list_macro(is_unused3, "is_unused3"),                             /* newline */                                \
       list_macro(is_unused4, "is_unused4"),                             /* newline */                                \
       list_macro(is_unused5, "is_unused5"),                             /* newline */                                \

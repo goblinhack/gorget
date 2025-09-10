@@ -14,7 +14,7 @@ static std::string tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_open(t)) {
+  if (thing_is_open_try(t)) {
     return "open chest";
   }
   if (thing_is_dead(t)) {
@@ -39,6 +39,7 @@ bool tp_load_treasure(void)
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_gravity);

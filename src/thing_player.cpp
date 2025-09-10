@@ -537,10 +537,11 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Open secret doors automatically
     //
-    if (thing_is_secret_door(it)) {
-      thing_open(g, v, l, it);
-      if (thing_is_dead(it)) {
-        continue;
+    if (thing_is_open_tryable(it)) {
+      if (thing_open(g, v, l, it, t /* opener */)) {
+        if (thing_is_dead(it)) {
+          continue;
+        }
       }
     }
 

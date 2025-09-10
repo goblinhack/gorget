@@ -18,13 +18,13 @@ typedef void (*tp_on_spawn_t)(Gamep, Levelsp, Levelp, Thingp me);
 void tp_on_spawn_set(Tpp, tp_on_spawn_t);
 void tp_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-typedef void (*tp_on_open_t)(Gamep, Levelsp, Levelp, Thingp me);
-void tp_on_open_set(Tpp, tp_on_open_t);
-void tp_on_open(Gamep g, Levelsp v, Levelp l, Thingp me);
+typedef bool (*tp_on_open_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
+void tp_on_open_request_set(Tpp, tp_on_open_request_t);
+bool tp_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener);
 
-typedef void (*tp_on_closed_t)(Gamep, Levelsp, Levelp, Thingp me);
-void tp_on_closed_set(Tpp, tp_on_closed_t);
-void tp_on_closed(Gamep g, Levelsp v, Levelp l, Thingp me);
+typedef bool (*tp_on_close_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
+void tp_on_close_request_set(Tpp, tp_on_close_request_t);
+bool tp_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener);
 
 typedef void (*tp_on_tick_idle_t)(Gamep, Levelsp, Levelp, Thingp me);
 void tp_on_tick_idle_set(Tpp, tp_on_tick_idle_t);

@@ -16,14 +16,14 @@ static std::string tp_secret_door_description_get(Gamep g, Levelsp v, Levelp l, 
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_open(t)) {
+  if (thing_is_open_try(t)) {
     return "secret door";
   }
 
   return "odd looking rock";
 }
 
-static void tp_secret_door_on_open(Gamep g, Levelsp v, Levelp l, Thingp t)
+static bool tp_secret_door_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 
@@ -32,11 +32,15 @@ static void tp_secret_door_on_open(Gamep g, Levelsp v, Levelp l, Thingp t)
       .event_type = THING_EVENT_OPEN, //
   };
 
-  TOPCON("A secret door creaks open!");
+  if (thing_is_player(opener)) {
+    TOPCON("A secret door creaks open!");
+  }
 
   sound_play(g, "secret_door");
 
   thing_dead(g, v, l, t, e);
+
+  return true;
 }
 
 bool tp_load_secret_door(void)
@@ -68,7 +72,7 @@ bool tp_load_secret_door(void)
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, "secret door");
-  tp_on_open_set(tp, tp_secret_door_on_open);
+  tp_on_open_request_set(tp, tp_secret_door_on_open_request);
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

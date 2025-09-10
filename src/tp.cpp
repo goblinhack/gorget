@@ -231,21 +231,21 @@ public:
   //
   // Callbacks
   //
-  tp_description_get_t description_get = {};
-  tp_on_spawn_t        on_spawn        = {};
-  tp_on_open_t         on_open         = {};
-  tp_on_closed_t       on_closed       = {};
-  tp_on_tick_idle_t    tick_idle       = {};
-  tp_on_tick_begin_t   tick_begin      = {};
-  tp_on_tick_end_t     tick_end        = {};
-  tp_on_death_t        on_death        = {};
-  tp_on_moved_t        on_moved        = {};
-  tp_on_teleported_t   on_teleported   = {};
-  tp_on_shoved_t       on_shoved       = {};
-  tp_on_jump_end_t     on_jump_end     = {};
-  tp_on_jump_begin_t   on_jump_begin   = {};
-  tp_on_fall_begin_t   on_fall_begin   = {};
-  tp_on_fall_end_t     on_fall_end     = {};
+  tp_description_get_t  description_get  = {};
+  tp_on_spawn_t         on_spawn         = {};
+  tp_on_open_request_t  on_open_request  = {};
+  tp_on_close_request_t on_close_request = {};
+  tp_on_tick_idle_t     tick_idle        = {};
+  tp_on_tick_begin_t    tick_begin       = {};
+  tp_on_tick_end_t      tick_end         = {};
+  tp_on_death_t         on_death         = {};
+  tp_on_moved_t         on_moved         = {};
+  tp_on_teleported_t    on_teleported    = {};
+  tp_on_shoved_t        on_shoved        = {};
+  tp_on_jump_end_t      on_jump_end      = {};
+  tp_on_jump_begin_t    on_jump_begin    = {};
+  tp_on_fall_begin_t    on_fall_begin    = {};
+  tp_on_fall_end_t      on_fall_end      = {};
 
   Tp(void);
   ~Tp(void);
@@ -1182,52 +1182,58 @@ void tp_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->on_spawn(g, v, l, me);
 }
 
-void tp_on_open_set(Tpp tp, tp_on_open_t callback)
+void tp_on_open_request_set(Tpp tp, tp_on_open_request_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->on_open = callback;
+  tp->on_open_request = callback;
 }
 
-void tp_on_open(Gamep g, Levelsp v, Levelp l, Thingp me)
+bool tp_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
-    return;
+    return false;
   }
-  if (! tp->on_open) {
-    return;
+  if (! tp->on_open_request) {
+    //
+    // Assume success
+    //
+    return true;
   }
-  return tp->on_open(g, v, l, me);
+  return tp->on_open_request(g, v, l, me, opener);
 }
 
-void tp_on_closed_set(Tpp tp, tp_on_closed_t callback)
+void tp_on_close_request_set(Tpp tp, tp_on_close_request_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
     return;
   }
-  tp->on_closed = callback;
+  tp->on_close_request = callback;
 }
 
-void tp_on_closed(Gamep g, Levelsp v, Levelp l, Thingp me)
+bool tp_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
   if (! tp) {
     ERR("no tp for %s", __FUNCTION__);
-    return;
+    return false;
   }
-  if (! tp->on_closed) {
-    return;
+  if (! tp->on_close_request) {
+    //
+    // Assume success
+    //
+    return true;
   }
-  return tp->on_closed(g, v, l, me);
+  return tp->on_close_request(g, v, l, me, opener);
 }
 
 void tp_on_death_set(Tpp tp, tp_on_death_t callback)

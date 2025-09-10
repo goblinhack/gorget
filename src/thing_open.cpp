@@ -12,9 +12,13 @@
 //
 // Open doors
 //
-void thing_open(Gamep g, Levelsp v, Levelp l, Thingp t)
+bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 
-  thing_is_open_set(g, v, l, t);
+  if (! thing_is_open_tryable(t)) {
+    return false;
+  }
+
+  return thing_is_open_try_set(g, v, l, t, opener);
 }

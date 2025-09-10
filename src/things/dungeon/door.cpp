@@ -3,6 +3,8 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_main.hpp"
+#include "my_sound.hpp"
 #include "my_thing.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
@@ -14,13 +16,44 @@ static std::string tp_door_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_open(t)) {
+  if (thing_is_open_try(t)) {
     return "open door";
   }
   if (thing_is_dead(t)) {
     return "broken door";
   }
   return "closed door";
+}
+
+static bool tp_door_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Doors need keys
+  //
+  if (! thing_keys_carried(opener)) {
+    if (thing_is_player(opener)) {
+      TOPCON("You need a key!");
+    }
+    return false;
+  }
+  thing_keys_carried_decr(g, v, l, opener, 1);
+
+  if (thing_is_player(opener)) {
+    TOPCON("The door opens.");
+  }
+
+  sound_play(g, "door");
+
+  ThingEvent e {
+      .reason     = "by opening",     //
+      .event_type = THING_EVENT_OPEN, //
+  };
+
+  thing_dead(g, v, l, t, e);
+
+  return true;
 }
 
 bool tp_load_door(void)
@@ -43,6 +76,7 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_obs_to_jump_over);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
@@ -50,6 +84,7 @@ bool tp_load_door(void)
   tp_health_set(tp, "1d100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
+  tp_on_open_request_set(tp, tp_door_on_open_request);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius

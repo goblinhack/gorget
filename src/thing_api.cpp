@@ -575,7 +575,7 @@ void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return thing_is_jumping_set(g, v, l, t, false);
 }
 
-bool thing_is_open(Thingp t)
+bool thing_is_open_try(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -585,30 +585,56 @@ bool thing_is_open(Thingp t)
   return t->_is_open;
 }
 
-void thing_is_open_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+//
+// Returns true/false on success/fail
+//
+bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener, bool val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
-    return;
+    return false;
   }
 
   if (t->_is_open == val) {
-    return;
+    return true;
   }
   t->_is_open = val;
 
+  //
+  // Attempt the open/close. It can fail.
+  //
   if (val) {
-    tp_on_open(g, v, l, t);
+    //
+    // Try to open
+    //
+    if (! tp_on_open_request(g, v, l, t, opener)) {
+      //
+      // Open failed
+      //
+      t->_is_open = false;
+      return false;
+    }
   } else {
-    tp_on_closed(g, v, l, t);
+    //
+    // Try to close
+    //
+    if (! tp_on_close_request(g, v, l, t, opener)) {
+      //
+      // Close failed
+      //
+      t->_is_open = true;
+      return false;
+    }
   }
+
+  return true;
 }
 
-void thing_is_open_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+bool thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
-  return thing_is_open_set(g, v, l, t, false);
+  return thing_is_open_try_set(g, v, l, t, opener, false);
 }
 
 bool thing_is_animated_can_hflip(Thingp t)
@@ -1311,7 +1337,7 @@ bool thing_is_unused2(Thingp t)
   return tp_flag(thing_tp(t), is_unused2);
 }
 
-bool thing_is_openable(Thingp t)
+bool thing_is_open_tryable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
