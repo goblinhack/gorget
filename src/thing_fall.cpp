@@ -184,6 +184,10 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
+  if (! thing_is_able_to_fall(t)) {
+    return;
+  }
+
   thing_is_falling_set(g, v, l, t, true);
 
   if (! level_is_chasm(g, v, l, t->at)) {

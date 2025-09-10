@@ -1567,14 +1567,14 @@ bool thing_is_submergible(Thingp t)
   return tp_flag(thing_tp(t), is_submergible);
 }
 
-bool thing_is_physics_gravity(Thingp t)
+bool thing_is_able_to_fall(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_physics_gravity);
+  return tp_flag(thing_tp(t), is_able_to_fall);
 }
 
 bool thing_is_physics_water(Thingp t)

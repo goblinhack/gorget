@@ -96,6 +96,7 @@ bool tp_load_brazier(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_brazier_description_get);
+  tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_square_outlined);
@@ -111,7 +112,6 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
-  tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_shovable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water

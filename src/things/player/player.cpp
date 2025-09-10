@@ -122,9 +122,10 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
+  tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_jump);
-  tp_flag_set(tp, is_able_to_shove);
   tp_flag_set(tp, is_able_to_open);
+  tp_flag_set(tp, is_able_to_shove);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -134,7 +135,6 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
-  tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water

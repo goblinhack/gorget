@@ -134,6 +134,7 @@ bool tp_load_fire(void)
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d6");
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d6");
   tp_description_set(tp, tp_fire_description_get);
+  tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_cursor_path_hazard);
@@ -142,7 +143,6 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_teleport_blocked);

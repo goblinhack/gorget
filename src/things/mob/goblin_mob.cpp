@@ -32,6 +32,7 @@ bool tp_load_goblin_mob(void)
   // begin sort marker1 {
   tp_apostrophize_name_set(tp, "goblins mob's");
   tp_description_set(tp, tp_goblin_mob_description_get);
+  tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -47,7 +48,6 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
-  tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_shovable);

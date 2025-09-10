@@ -25,13 +25,13 @@ bool tp_load_key(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_key_description_get);
+  tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_collectable);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_key);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_FEATHER); // grams

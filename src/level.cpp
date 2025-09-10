@@ -444,10 +444,42 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   return l->thing_id[ p.x ][ p.y ][ slot ];
 }
 
+//
+// Additional level flag filters e.g. open doors are not obstacles
+//
+static bool level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp it)
+{
+  switch (f) {
+    case is_obs_to_cursor_path :
+    case is_obs_to_explosion :
+    case is_obs_to_falling_onto :
+    case is_obs_to_fire :
+    case is_obs_to_jump_over :
+    case is_obs_to_jumping_onto :
+    case is_obs_to_movement :
+      if (thing_is_open(it)) {
+        return true; // filter out
+      }
+      break;
+    case is_able_to_fall :
+      if (thing_is_falling(it)) {
+        return true; // filter out
+      }
+      break;
+    default : break;
+  }
+
+  return false;
+}
+
 bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
     if (tp_flag(thing_tp(it), f)) {
       return true;
     }
@@ -459,6 +491,10 @@ Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
     if (tp_flag(thing_tp(it), f)) {
       return it;
     }
@@ -470,6 +506,10 @@ Thingp level_afirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
     if (thing_is_dead(it)) {
       continue;
     }
@@ -488,6 +528,10 @@ bool level_alive_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
     if (thing_is_dead(it)) {
       continue;
     }
@@ -508,6 +552,10 @@ int level_count_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
     if (thing_is_dead(it)) {
       continue;
     }

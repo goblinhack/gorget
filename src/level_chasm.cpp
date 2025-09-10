@@ -20,7 +20,7 @@ void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
     if (level_is_chasm(g, v, l, p)) {
       FOR_ALL_THINGS_AT(g, v, l, t, p)
       {
-        if (! thing_is_physics_gravity(t)) {
+        if (! thing_is_able_to_fall(t)) {
           continue;
         }
 

@@ -25,6 +25,7 @@ bool tp_load_pillar(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_pillar_description_get);
+  tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_obs_to_cursor_path);
@@ -34,7 +35,6 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
-  tp_flag_set(tp, is_physics_gravity);
   tp_flag_set(tp, is_pillar);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_teleport_blocked);

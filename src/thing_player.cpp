@@ -325,6 +325,46 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
   return true;
 }
 
+static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool need_path)
+{
+  if (thing_can_move_to(g, v, l, t, to)) {
+    //
+    // Fake a mouse path for movement
+    //
+    if (need_path) {
+      std::vector< spoint > move_path;
+      move_path.push_back(to);
+      player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
+      level_cursor_path_apply(g, v, l, move_path);
+      player_check_if_target_needs_move_confirm(g, v, l, to);
+    }
+    return true;
+  } else if (thing_can_move_to_by_shoving(g, v, l, t, to)) {
+    //
+    // Can we shove it out of the way to move?
+    //
+    if (thing_shove_to(g, v, l, t, to)) {
+      level_tick_begin_requested(g, v, l, "player shoved");
+      return true;
+    } else {
+      level_tick_begin_requested(g, v, l, "player failed to shove");
+    }
+  } else if (thing_can_move_to_by_opening(g, v, l, t, to)) {
+    //
+    // Can we open it allow movement?
+    //
+    if (thing_move_to(g, v, l, t, to)) {
+      level_tick_begin_requested(g, v, l, "player opened a door to move");
+      return true;
+    } else {
+      level_tick_begin_requested(g, v, l, "player failed to open something in the way");
+    }
+  } else {
+    level_tick_begin_requested(g, v, l, "player bumped into obstacle");
+  }
+  return false;
+}
+
 void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
 {
   TRACE_NO_INDENT();
@@ -353,36 +393,7 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
 
   spoint to(t->at.x + dx, t->at.y + dy);
 
-  if (thing_can_move_to(g, v, l, t, to)) {
-    //
-    // Fake a mouse path for movement
-    //
-    std::vector< spoint > move_path;
-    move_path.push_back(to);
-    player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
-    level_cursor_path_apply(g, v, l, move_path);
-    player_check_if_target_needs_move_confirm(g, v, l, to);
-  } else if (thing_can_move_to_by_shoving(g, v, l, t, to)) {
-    //
-    // Can we shove it out of the way to move?
-    //
-    if (thing_shove_to(g, v, l, t, to)) {
-      level_tick_begin_requested(g, v, l, "player shoved");
-    } else {
-      level_tick_begin_requested(g, v, l, "player failed to shove");
-    }
-  } else if (thing_can_move_to_by_opening(g, v, l, t, to)) {
-    //
-    // Can we open it allow movement?
-    //
-    if (thing_move_to(g, v, l, t, to)) {
-      level_tick_begin_requested(g, v, l, "player opened a door to move");
-    } else {
-      level_tick_begin_requested(g, v, l, "player failed to open something in the way");
-    }
-  } else {
-    level_tick_begin_requested(g, v, l, "player bumped into obstacle");
-  }
+  player_move_try(g, v, l, t, to, true);
 
   player_move_reset(g, v, l);
 }
@@ -754,7 +765,7 @@ bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
   }
 
-  if (! thing_can_move_to(g, v, l, t, move_next)) {
+  if (! player_move_try(g, v, l, t, move_next, false)) {
     //
     // If could not move, then abort the path walk
     //
