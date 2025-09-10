@@ -14,7 +14,7 @@ static std::string tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_open_try(t)) {
+  if (thing_is_open(t)) {
     return "open chest";
   }
   if (thing_is_dead(t)) {

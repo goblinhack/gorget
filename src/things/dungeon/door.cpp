@@ -16,7 +16,7 @@ static std::string tp_door_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_open_try(t)) {
+  if (thing_is_open(t)) {
     return "open door";
   }
   if (thing_is_dead(t)) {
@@ -45,13 +45,6 @@ static bool tp_door_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thin
   }
 
   sound_play(g, "door");
-
-  ThingEvent e {
-      .reason     = "by opening",     //
-      .event_type = THING_EVENT_OPEN, //
-  };
-
-  thing_dead(g, v, l, t, e);
 
   return true;
 }

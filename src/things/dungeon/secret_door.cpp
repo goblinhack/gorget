@@ -16,7 +16,7 @@ static std::string tp_secret_door_description_get(Gamep g, Levelsp v, Levelp l, 
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_open_try(t)) {
+  if (thing_is_open(t)) {
     return "secret door";
   }
 

@@ -20,13 +20,12 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   t->at          = at;
   t->old_at      = at;
   t->moving_from = at;
-  t->anim_type   = THING_ANIM_IDLE;
   t->level_num   = l->level_num;
 
   //
   // Assign an initial tile
   //
-  thing_anim_init(g, v, l, t);
+  thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
 
   //
   // Assign the player

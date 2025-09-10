@@ -13,12 +13,13 @@
 //
 // Or reset back to the first frame
 //
-void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type)
 {
   Tpp tp = thing_tp(t);
 
   t->anim_index        = 0;
   t->anim_ms_remaining = 0;
+  t->anim_type         = anim_type;
 
   auto ntiles = tp_tiles_size(tp, t->anim_type);
   if (ntiles) {

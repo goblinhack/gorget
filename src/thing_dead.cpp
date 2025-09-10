@@ -218,11 +218,15 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
     // If it has burnt anim frames
     //
     t->anim_type = THING_ANIM_BURNT;
+    //
+    // Restart the animation if we have burnt frames
+    //
+    thing_anim_init(g, v, l, t, THING_ANIM_BURNT);
   } else if (tp_tiles_size(thing_tp(t), THING_ANIM_DEAD)) {
     //
-    // If it has dead anim frames
+    // Restart the animation if we have dead frames
     //
-    t->anim_type = THING_ANIM_DEAD;
+    thing_anim_init(g, v, l, t, THING_ANIM_DEAD);
   }
 
   //
@@ -236,11 +240,6 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Stop it moving
   //
   thing_move_or_jump_finish(g, v, l, t);
-
-  //
-  // Restart the animation if we have dead frames
-  //
-  thing_anim_init(g, v, l, t);
 
   //
   // Do adjacent tiles need updating due to the destruction of this tiled thing?

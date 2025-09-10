@@ -575,7 +575,7 @@ void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return thing_is_jumping_set(g, v, l, t, false);
 }
 
-bool thing_is_open_try(Thingp t)
+bool thing_is_open(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -615,6 +615,11 @@ bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
       t->_is_open = false;
       return false;
     }
+
+    //
+    // Reset animation
+    //
+    thing_anim_init(g, v, l, t, THING_ANIM_OPEN);
   } else {
     //
     // Try to close
@@ -626,6 +631,11 @@ bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
       t->_is_open = true;
       return false;
     }
+
+    //
+    // Reset animation
+    //
+    thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
   }
 
   return true;
@@ -784,6 +794,16 @@ bool thing_is_obs_to_cursor_path(Thingp t)
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
   return tp_flag(thing_tp(t), is_obs_to_cursor_path);
 }
 
@@ -1114,6 +1134,16 @@ bool thing_is_obs_to_movement(Thingp t)
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
   return tp_flag(thing_tp(t), is_obs_to_movement);
 }
 
@@ -1267,14 +1297,14 @@ bool thing_is_unused13(Thingp t)
   return tp_flag(thing_tp(t), is_unused13);
 }
 
-bool thing_is_unused14(Thingp t)
+bool thing_is_able_to_open(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused14);
+  return tp_flag(thing_tp(t), is_able_to_open);
 }
 
 bool thing_is_item(Thingp t)
@@ -1337,7 +1367,7 @@ bool thing_is_unused2(Thingp t)
   return tp_flag(thing_tp(t), is_unused2);
 }
 
-bool thing_is_open_tryable(Thingp t)
+bool thing_is_openable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -1394,6 +1424,16 @@ bool thing_is_obs_to_explosion(Thingp t)
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
   return tp_flag(thing_tp(t), is_obs_to_explosion);
 }
 
@@ -1404,6 +1444,16 @@ bool thing_is_obs_to_jump_over(Thingp t)
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
   return tp_flag(thing_tp(t), is_obs_to_jump_over);
 }
 
@@ -1474,6 +1524,16 @@ bool thing_is_obs_to_falling_onto(Thingp t)
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
   return tp_flag(thing_tp(t), is_obs_to_falling_onto);
 }
 
@@ -1484,6 +1544,16 @@ bool thing_is_obs_to_jumping_onto(Thingp t)
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
   return tp_flag(thing_tp(t), is_obs_to_jumping_onto);
 }
 
@@ -1544,6 +1614,16 @@ bool thing_is_obs_to_fire(Thingp t)
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
   return tp_flag(thing_tp(t), is_obs_to_fire);
 }
 

@@ -290,6 +290,7 @@ void         thing_stats_dump(Gamep, Levelsp);
 
 // begin sort marker1 {
 bool thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_can_move_to_by_opening(Gamep, Levelsp, Levelp, Thingp, spoint);
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp);
 bool thing_crush(Gamep, Levelsp, Levelp, Thingp, Thingp);
@@ -381,7 +382,7 @@ bool thing_is_obs_to_fire(Thingp);
 bool thing_is_obs_to_jump_over(Thingp);
 bool thing_is_obs_to_jumping_onto(Thingp);
 bool thing_is_obs_to_movement(Thingp);
-bool thing_is_open_tryable(Thingp);
+bool thing_is_openable(Thingp);
 bool thing_is_physics_explosion(Thingp);
 bool thing_is_physics_gravity(Thingp);
 bool thing_is_physics_temperature(Thingp);
@@ -408,7 +409,7 @@ bool thing_is_unused10(Thingp);
 bool thing_is_unused11(Thingp);
 bool thing_is_unused12(Thingp);
 bool thing_is_unused13(Thingp);
-bool thing_is_unused14(Thingp);
+bool thing_is_able_to_open(Thingp);
 bool thing_is_unused2(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
@@ -429,7 +430,7 @@ bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_teleport(Gamep, Levelsp, Levelp, Thingp);
 bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-void thing_anim_init(Gamep, Levelsp, Levelp, Thingp);
+void thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
 void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_chasm_handle(Gamep, Levelsp, Levelp, Thingp me);
 void thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
@@ -515,7 +516,7 @@ bool thing_is_jumping(Thingp);
 void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_jumping_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_open_try(Thingp);
+bool thing_is_open(Thingp);
 bool thing_is_open_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp opener, bool val = true);
 bool thing_is_open_try_unset(Gamep, Levelsp, Levelp, Thingp);
 
