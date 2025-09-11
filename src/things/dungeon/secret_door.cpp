@@ -53,7 +53,6 @@ bool tp_load_secret_door(void)
   tp_description_set(tp, tp_secret_door_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_door);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_explosion);

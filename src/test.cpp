@@ -43,6 +43,7 @@ std::initializer_list< std::string > tests = {
     "player_fall_chasm_into_lava",
     "player_lava",
     "save_load",
+    "secret_door",
     "teleport",
     "trampled_grass",
     "wall",

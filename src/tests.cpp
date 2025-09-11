@@ -37,6 +37,7 @@ bool tests_init(void)
   if (!test_load_player_fall_chasm_into_lava()) { return false; }
   if (!test_load_player_lava()) { return false; }
   if (!test_load_save_load()) { return false; }
+  if (!test_load_secret_door()) { return false; }
   if (!test_load_teleport()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }

@@ -32,6 +32,7 @@ bool test_load_open_door();
 bool test_load_player_fall_chasm_into_lava();
 bool test_load_player_lava();
 bool test_load_save_load();
+bool test_load_secret_door();
 bool test_load_teleport();
 bool test_load_trampled_grass();
 bool test_load_wall();
