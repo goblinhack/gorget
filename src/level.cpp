@@ -107,7 +107,11 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
         c = CHARMAP_DIRT;
       }
       if (level_is_door(g, v, l, p)) {
-        c = CHARMAP_DOOR;
+        if (level_open_is_door(g, v, l, p)) {
+          c = CHARMAP_FLOOR;
+        } else {
+          c = CHARMAP_DOOR;
+        }
       }
       if (level_alive_is_foliage(g, v, l, p)) {
         c = CHARMAP_FOLIAGE;
@@ -502,6 +506,9 @@ Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return nullptr;
 }
 
+//
+// Flag + is alive
+//
 Thingp level_afirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   FOR_ALL_THINGS_AT(g, v, l, it, p)
@@ -511,6 +518,28 @@ Thingp level_afirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
     }
 
     if (thing_is_dead(it)) {
+      continue;
+    }
+
+    if (tp_flag(thing_tp(it), f)) {
+      return it;
+    }
+  }
+  return nullptr;
+}
+
+//
+// Flag + is open
+//
+Thingp level_ofirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+{
+  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
+    if (! thing_is_open(it)) {
       continue;
     }
 
@@ -533,6 +562,28 @@ bool level_alive_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
     }
 
     if (thing_is_dead(it)) {
+      continue;
+    }
+
+    if (tp_flag(thing_tp(it), f)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+//
+// Filter to only open things
+//
+bool level_open_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+{
+  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
+    if (! thing_is_open(it)) {
       continue;
     }
 
