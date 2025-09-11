@@ -75,6 +75,16 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
       break;
     case PLAYER_STATE_NORMAL :
       //
+      // Give a chance to open/close doors first/
+      //
+      if (player_mouse_down(g, v, l, x, y, button)) {
+        //
+        // Processed an event, like door closing
+        //
+        return true;
+      }
+
+      //
       // Replace the mouse path
       //
       player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);

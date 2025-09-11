@@ -248,6 +248,10 @@ typedef struct Thing_ {
   //
   bool _is_sleeping : 1;
   //
+  // For doors, so we do not need keys forever
+  //
+  bool _is_unlocked : 1;
+  //
   // For doors, chests etc...
   //
   bool _is_open : 1;
@@ -413,6 +417,7 @@ bool thing_is_unused13(Thingp);
 bool thing_is_unused2(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
+bool player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);
@@ -426,6 +431,7 @@ bool thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to, bool warn = true);
 bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_open(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
+bool thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
 bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_teleport(Gamep, Levelsp, Levelp, Thingp);
@@ -500,6 +506,10 @@ bool thing_is_sleeping(Thingp);
 void thing_is_sleeping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_sleeping_unset(Gamep, Levelsp, Levelp, Thingp);
 
+bool thing_is_unlocked(Thingp);
+void thing_is_unlocked_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_unlocked_unset(Gamep, Levelsp, Levelp, Thingp);
+
 bool thing_is_on_map(Thingp);
 void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_on_map_unset(Gamep, Levelsp, Levelp, Thingp);
@@ -518,7 +528,7 @@ void thing_is_jumping_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_open(Thingp);
 bool thing_is_open_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp opener, bool val = true);
-bool thing_is_open_try_unset(Gamep, Levelsp, Levelp, Thingp);
+bool thing_is_open_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp closer);
 
 int  thing_is_falling(Thingp);
 void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, int val);

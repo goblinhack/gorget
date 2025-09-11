@@ -445,6 +445,32 @@ void thing_is_sleeping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return thing_is_sleeping_set(g, v, l, t, false);
 }
 
+bool thing_is_unlocked(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_unlocked;
+}
+
+void thing_is_unlocked_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return;
+  }
+  t->_is_unlocked = val;
+}
+
+void thing_is_unlocked_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_unlocked_set(g, v, l, t, false);
+}
+
 bool thing_is_on_map(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -641,10 +667,10 @@ bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
   return true;
 }
 
-bool thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+bool thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer)
 {
   TRACE_NO_INDENT();
-  return thing_is_open_try_set(g, v, l, t, opener, false);
+  return thing_is_open_try_set(g, v, l, t, closer, false);
 }
 
 bool thing_is_animated_can_hflip(Thingp t)

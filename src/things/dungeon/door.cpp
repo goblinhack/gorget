@@ -25,6 +25,37 @@ static std::string tp_door_description_get(Gamep g, Levelsp v, Levelp l, Thingp 
   return "closed door";
 }
 
+static bool tp_door_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button)
+{
+  TRACE_NO_INDENT();
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  if (thing_is_dead(player)) {
+    return false;
+  }
+
+  if (distance(t->at, player->at) <= 1) {
+    if (thing_is_open(t)) {
+      thing_close(g, v, l, t, player /* opener */);
+      //
+      // Processed the mouse event
+      //
+      return true;
+    } else {
+      thing_open(g, v, l, t, player /* opener */);
+      //
+      // Processed the mouse event
+      //
+      return true;
+    }
+  }
+  return false;
+}
+
 static bool tp_door_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
@@ -33,15 +64,40 @@ static bool tp_door_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thin
   // Doors need keys
   //
   if (! thing_keys_carried(opener)) {
-    if (thing_is_player(opener)) {
-      TOPCON("You need a key!");
+    if (thing_is_unlocked(t)) {
+      //
+      // Door was unlocked already
+      //
+    } else {
+      //
+      // Need a key
+      //
+      if (thing_is_player(opener)) {
+        TOPCON("You need a key!");
+      }
+
+      return false;
     }
-    return false;
   }
   thing_keys_carried_decr(g, v, l, opener, 1);
 
   if (thing_is_player(opener)) {
     TOPCON("The door opens.");
+
+    thing_is_unlocked_set(g, v, l, t);
+  }
+
+  sound_play(g, "door");
+
+  return true;
+}
+
+static bool tp_door_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+{
+  TRACE_NO_INDENT();
+
+  if (thing_is_player(opener)) {
+    TOPCON("The door closes.");
   }
 
   sound_play(g, "door");
@@ -67,6 +123,7 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_jump_over);
+  tp_mouse_down_set(tp, tp_door_mouse_down);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_openable);
@@ -78,6 +135,7 @@ bool tp_load_door(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
   tp_on_open_request_set(tp, tp_door_on_open_request);
+  tp_on_close_request_set(tp, tp_door_on_close_request);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius

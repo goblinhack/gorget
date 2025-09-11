@@ -8,6 +8,7 @@
 #include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_sound.hpp"
+#include "my_tp_callbacks.hpp"
 #include "my_wid_warning.hpp"
 
 Thingp thing_player(Gamep g)
@@ -274,6 +275,55 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
       break;
     case PLAYER_STATE_ENUM_MAX : break;
   }
+}
+
+bool player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+
+  switch (player_state(g, v)) {
+    case PLAYER_STATE_INIT :
+      //
+      // Player not initialized yet
+      //
+      break;
+    case PLAYER_STATE_DEAD :
+      //
+      // No player mouse events when dead
+      //
+      break;
+    case PLAYER_STATE_NORMAL :
+      //
+      // Pass the event to things
+      //
+      FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
+      {
+        TRACE_NO_INDENT();
+
+        if (tp_mouse_down(g, v, l, it, x, y, button)) {
+          return true;
+        }
+      }
+      break;
+    case PLAYER_STATE_PATH_REQUESTED :
+      //
+      // Player wants to start following or replace the current path.
+      //
+      break;
+    case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
+      //
+      // Wait for confirmation.
+      //
+      break;
+    case PLAYER_STATE_FOLLOWING_A_PATH :
+      //
+      // Already following a path, stick to it until completion.
+      //
+      break;
+    case PLAYER_STATE_ENUM_MAX : break;
+  }
+
+  return false;
 }
 
 //

@@ -24,6 +24,20 @@ bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 }
 
 //
+// Close doors
+//
+bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer)
+{
+  TRACE_NO_INDENT();
+
+  if (! thing_is_openable(t)) {
+    return false;
+  }
+
+  return thing_is_open_try_unset(g, v, l, t, closer);
+}
+
+//
 // Returns true if we can move to this location by opening a door
 //
 bool thing_can_move_to_by_opening(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)

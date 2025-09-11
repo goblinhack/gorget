@@ -232,6 +232,7 @@ public:
   // Callbacks
   //
   tp_description_get_t  description_get  = {};
+  tp_mouse_down_t       mouse_down       = {};
   tp_on_spawn_t         on_spawn         = {};
   tp_on_open_request_t  on_open_request  = {};
   tp_on_close_request_t on_close_request = {};
@@ -1084,6 +1085,30 @@ std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
     return "";
   }
   return tp->description_get(g, v, l, me);
+}
+
+void tp_mouse_down_set(Tpp tp, tp_mouse_down_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->mouse_down = callback;
+}
+
+bool tp_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return false;
+  }
+  if (! tp->mouse_down) {
+    return false;
+  }
+  return tp->mouse_down(g, v, l, me, x, y, button);
 }
 
 void tp_on_tick_idle_set(Tpp tp, tp_on_tick_idle_t callback)
