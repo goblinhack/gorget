@@ -58,10 +58,16 @@ bool tp_load_treasure(void)
 
   auto delay = 1000;
 
-  for (auto frame = 0; frame < 2; frame++) {
-    auto tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
+  for (auto frame = 0; frame < 1; frame++) {
+    auto tile = tile_find_mand(name + std::string(".closed.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  for (auto frame = 0; frame < 1; frame++) {
+    auto tile = tile_find_mand(name + std::string(".open.") + std::to_string(frame));
+    tile_delay_ms_set(tile, delay);
+    tp_tiles_push_back(tp, THING_ANIM_OPEN, tile);
   }
 
   return true;

@@ -124,8 +124,8 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     case THING_EVENT_OPEN : //
       s += "opened";
       break;
-    case THING_EVENT_COLLECTED : //
-      s += "collected";
+    case THING_EVENT_CARRIED : //
+      s += "carried";
       break;
     case THING_EVENT_ENUM_MAX : break;
   }

@@ -235,6 +235,8 @@ public:
   tp_mouse_down_t       mouse_down       = {};
   tp_on_spawn_t         on_spawn         = {};
   tp_on_open_request_t  on_open_request  = {};
+  tp_on_carry_request_t on_carry_request = {};
+  tp_on_drop_request_t  on_drop_request  = {};
   tp_on_close_request_t on_close_request = {};
   tp_on_tick_idle_t     tick_idle        = {};
   tp_on_tick_begin_t    tick_begin       = {};
@@ -1259,6 +1261,60 @@ bool tp_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener)
     return true;
   }
   return tp->on_close_request(g, v, l, me, opener);
+}
+
+void tp_on_carry_request_set(Tpp tp, tp_on_carry_request_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->on_carry_request = callback;
+}
+
+bool tp_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collecter)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return false;
+  }
+  if (! tp->on_carry_request) {
+    //
+    // Assume success
+    //
+    return true;
+  }
+  return tp->on_carry_request(g, v, l, me, collecter);
+}
+
+void tp_on_drop_request_set(Tpp tp, tp_on_drop_request_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return;
+  }
+  tp->on_drop_request = callback;
+}
+
+bool tp_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("no tp for %s", __FUNCTION__);
+    return false;
+  }
+  if (! tp->on_drop_request) {
+    //
+    // Assume success
+    //
+    return true;
+  }
+  return tp->on_drop_request(g, v, l, me, dropper);
 }
 
 void tp_on_death_set(Tpp tp, tp_on_death_t callback)

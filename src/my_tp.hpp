@@ -124,7 +124,7 @@
       list_macro(is_unused10, "is_unused10"),                           /* newline */                                \
       list_macro(is_unused11, "is_unused11"),                           /* newline */                                \
       list_macro(is_unused12, "is_unused12"),                           /* newline */                                \
-      list_macro(is_unused13, "is_unused13"),                           /* newline */                                \
+      list_macro(is_inventory_item, "is_inventory_item"),               /* newline */                                \
       list_macro(is_unused2, "is_unused2"),                             /* newline */                                \
       list_macro(is_unused3, "is_unused3"),                             /* newline */                                \
       list_macro(is_unused4, "is_unused4"),                             /* newline */                                \
@@ -250,7 +250,7 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
       list_macro(THING_EVENT_SHOVED, "shove"),               /* newline */                                           \
       list_macro(THING_EVENT_WATER_DAMAGE, "water"),         /* newline */                                           \
       list_macro(THING_EVENT_EXPLOSION_DAMAGE, "explosion"), /* newline */                                           \
-      list_macro(THING_EVENT_COLLECTED, "collected"),        /* newline */
+      list_macro(THING_EVENT_CARRIED, "carried"),            /* newline */
 
 ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 
@@ -543,6 +543,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_goblin(tp)                tp_flag(tp, is_goblin)
 #define tp_is_grass(tp)                 tp_flag(tp, is_grass)
 #define tp_is_indestructible(tp)        tp_flag(tp, is_indestructible)
+#define tp_is_inventory_item(tp)        tp_flag(tp, is_inventory_item)
 #define tp_is_item(tp)                  tp_flag(tp, is_item)
 #define tp_is_key(tp)                   tp_flag(tp, is_key)
 #define tp_is_lava(tp)                  tp_flag(tp, is_lava)
@@ -597,7 +598,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused10(tp)              tp_flag(tp, is_unused10)
 #define tp_is_unused11(tp)              tp_flag(tp, is_unused11)
 #define tp_is_unused12(tp)              tp_flag(tp, is_unused12)
-#define tp_is_unused13(tp)              tp_flag(tp, is_unused13)
 #define tp_is_unused2(tp)               tp_flag(tp, is_unused2)
 #define tp_is_unused3(tp)               tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)               tp_flag(tp, is_unused4)
@@ -658,6 +658,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_ghost(g, v, l, p)                 level_afirst_flag(g, v, l, is_ghost, p)
 #define level_afirst_is_goblin(g, v, l, p)                level_afirst_flag(g, v, l, is_goblin, p)
 #define level_afirst_is_grass(g, v, l, p)                 level_afirst_flag(g, v, l, is_grass, p)
+#define level_afirst_is_inventory_item(g, v, l, p)        level_afirst_flag(g, v, l, is_inventory_item, p)
 #define level_afirst_is_item(g, v, l, p)                  level_afirst_flag(g, v, l, is_item, p)
 #define level_afirst_is_key(g, v, l, p)                   level_afirst_flag(g, v, l, is_key, p)
 #define level_afirst_is_lava(g, v, l, p)                  level_afirst_flag(g, v, l, is_lava, p)
@@ -707,7 +708,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_unused10(g, v, l, p)              level_afirst_flag(g, v, l, is_unused10, p)
 #define level_afirst_is_unused11(g, v, l, p)              level_afirst_flag(g, v, l, is_unused11, p)
 #define level_afirst_is_unused12(g, v, l, p)              level_afirst_flag(g, v, l, is_unused12, p)
-#define level_afirst_is_unused13(g, v, l, p)              level_afirst_flag(g, v, l, is_unused13, p)
 #define level_afirst_is_unused2(g, v, l, p)               level_afirst_flag(g, v, l, is_unused2, p)
 #define level_afirst_is_unused3(g, v, l, p)               level_afirst_flag(g, v, l, is_unused3, p)
 #define level_afirst_is_unused34(g, v, l, p)              level_afirst_flag(g, v, l, is_able_to_fall, p)
@@ -771,6 +771,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_ghost(g, v, l, p)                  level_alive_flag(g, v, l, is_ghost, p)
 #define level_alive_is_goblin(g, v, l, p)                 level_alive_flag(g, v, l, is_goblin, p)
 #define level_alive_is_grass(g, v, l, p)                  level_alive_flag(g, v, l, is_grass, p)
+#define level_alive_is_inventory_item(g, v, l, p)         level_alive_flag(g, v, l, is_inventory_item, p)
 #define level_alive_is_item(g, v, l, p)                   level_alive_flag(g, v, l, is_item, p)
 #define level_alive_is_key(g, v, l, p)                    level_alive_flag(g, v, l, is_key, p)
 #define level_alive_is_lava(g, v, l, p)                   level_alive_flag(g, v, l, is_lava, p)
@@ -820,7 +821,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused10(g, v, l, p)               level_alive_flag(g, v, l, is_unused10, p)
 #define level_alive_is_unused11(g, v, l, p)               level_alive_flag(g, v, l, is_unused11, p)
 #define level_alive_is_unused12(g, v, l, p)               level_alive_flag(g, v, l, is_unused12, p)
-#define level_alive_is_unused13(g, v, l, p)               level_alive_flag(g, v, l, is_unused13, p)
 #define level_alive_is_unused2(g, v, l, p)                level_alive_flag(g, v, l, is_unused2, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_able_to_fall, p)
@@ -884,6 +884,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_ghost(g, v, l, p)                  level_count_flag(g, v, l, is_ghost, p)
 #define level_count_is_goblin(g, v, l, p)                 level_count_flag(g, v, l, is_goblin, p)
 #define level_count_is_grass(g, v, l, p)                  level_count_flag(g, v, l, is_grass, p)
+#define level_count_is_inventory_item(g, v, l, p)         level_count_flag(g, v, l, is_inventory_item, p)
 #define level_count_is_item(g, v, l, p)                   level_count_flag(g, v, l, is_item, p)
 #define level_count_is_key(g, v, l, p)                    level_count_flag(g, v, l, is_key, p)
 #define level_count_is_lava(g, v, l, p)                   level_count_flag(g, v, l, is_lava, p)
@@ -933,7 +934,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused10(g, v, l, p)               level_count_flag(g, v, l, is_unused10, p)
 #define level_count_is_unused11(g, v, l, p)               level_count_flag(g, v, l, is_unused11, p)
 #define level_count_is_unused12(g, v, l, p)               level_count_flag(g, v, l, is_unused12, p)
-#define level_count_is_unused13(g, v, l, p)               level_count_flag(g, v, l, is_unused13, p)
 #define level_count_is_unused2(g, v, l, p)                level_count_flag(g, v, l, is_unused2, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_able_to_fall, p)
@@ -997,6 +997,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_ghost(g, v, l, p)                  level_first_flag(g, v, l, is_ghost, p)
 #define level_first_is_goblin(g, v, l, p)                 level_first_flag(g, v, l, is_goblin, p)
 #define level_first_is_grass(g, v, l, p)                  level_first_flag(g, v, l, is_grass, p)
+#define level_first_is_inventory_item(g, v, l, p)         level_first_flag(g, v, l, is_inventory_item, p)
 #define level_first_is_item(g, v, l, p)                   level_first_flag(g, v, l, is_item, p)
 #define level_first_is_key(g, v, l, p)                    level_first_flag(g, v, l, is_key, p)
 #define level_first_is_lava(g, v, l, p)                   level_first_flag(g, v, l, is_lava, p)
@@ -1046,7 +1047,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused10(g, v, l, p)               level_first_flag(g, v, l, is_unused10, p)
 #define level_first_is_unused11(g, v, l, p)               level_first_flag(g, v, l, is_unused11, p)
 #define level_first_is_unused12(g, v, l, p)               level_first_flag(g, v, l, is_unused12, p)
-#define level_first_is_unused13(g, v, l, p)               level_first_flag(g, v, l, is_unused13, p)
 #define level_first_is_unused2(g, v, l, p)                level_first_flag(g, v, l, is_unused2, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_able_to_fall, p)
@@ -1117,6 +1117,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_goblin(g, v, l, p)                       level_flag(g, v, l, is_goblin, p)
 #define level_is_grass(g, v, l, p)                        level_flag(g, v, l, is_grass, p)
 #define level_is_indestructible(g, v, l, p)               level_flag(g, v, l, is_indestructible, p)
+#define level_is_inventory_item(g, v, l, p)               level_flag(g, v, l, is_inventory_item, p)
 #define level_is_item(g, v, l, p)                         level_flag(g, v, l, is_item, p)
 #define level_is_key(g, v, l, p)                          level_flag(g, v, l, is_key, p)
 #define level_is_lava(g, v, l, p)                         level_flag(g, v, l, is_lava, p)
@@ -1171,7 +1172,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused10(g, v, l, p)                     level_flag(g, v, l, is_unused10, p)
 #define level_is_unused11(g, v, l, p)                     level_flag(g, v, l, is_unused11, p)
 #define level_is_unused12(g, v, l, p)                     level_flag(g, v, l, is_unused12, p)
-#define level_is_unused13(g, v, l, p)                     level_flag(g, v, l, is_unused13, p)
 #define level_is_unused2(g, v, l, p)                      level_flag(g, v, l, is_unused2, p)
 #define level_is_unused3(g, v, l, p)                      level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)                      level_flag(g, v, l, is_unused4, p)
@@ -1230,6 +1230,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_ghost(g, v, l, p)                   level_open_flag(g, v, l, is_ghost, p)
 #define level_open_is_goblin(g, v, l, p)                  level_open_flag(g, v, l, is_goblin, p)
 #define level_open_is_grass(g, v, l, p)                   level_open_flag(g, v, l, is_grass, p)
+#define level_open_is_inventory_item(g, v, l, p)          level_open_flag(g, v, l, is_inventory_item, p)
 #define level_open_is_item(g, v, l, p)                    level_open_flag(g, v, l, is_item, p)
 #define level_open_is_key(g, v, l, p)                     level_open_flag(g, v, l, is_key, p)
 #define level_open_is_lava(g, v, l, p)                    level_open_flag(g, v, l, is_lava, p)
@@ -1279,7 +1280,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_unused10(g, v, l, p)                level_open_flag(g, v, l, is_unused10, p)
 #define level_open_is_unused11(g, v, l, p)                level_open_flag(g, v, l, is_unused11, p)
 #define level_open_is_unused12(g, v, l, p)                level_open_flag(g, v, l, is_unused12, p)
-#define level_open_is_unused13(g, v, l, p)                level_open_flag(g, v, l, is_unused13, p)
 #define level_open_is_unused2(g, v, l, p)                 level_open_flag(g, v, l, is_unused2, p)
 #define level_open_is_unused3(g, v, l, p)                 level_open_flag(g, v, l, is_unused3, p)
 #define level_open_is_unused34(g, v, l, p)                level_open_flag(g, v, l, is_able_to_fall, p)

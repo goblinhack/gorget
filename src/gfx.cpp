@@ -1196,8 +1196,8 @@ static void gfx_init_tiles(void)
         "",
         "",
         "",
-        "chest.0",
-        "chest.1",
+        "chest.closed.0",
+        "chest.open.0",
         "potion.0",
         "potion.1",
         // ##############################################################################

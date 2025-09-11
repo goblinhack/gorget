@@ -31,6 +31,7 @@
 //
 #define THING_AI_MAX        65535 /* The size of thing_ai */
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 4)
+#define THING_INVENTORY_MAX 26
 
 //
 // Some kind of event that befalls a thing. Usually an attack
@@ -55,10 +56,21 @@ typedef struct ThingEvent_ {
 } ThingEvent;
 
 //
+// Inventory items
+//
+typedef struct ThingItem_ {
+  ThingId item;
+} ThingItem;
+
+//
 // Per thing AI memory
 //
 typedef struct ThingAi_ {
   uint8_t in_use : 1;
+  //
+  // This is the max any player or monster can carry
+  //
+  ThingItem items[ THING_INVENTORY_MAX ];
 } ThingAi;
 
 //
@@ -256,6 +268,10 @@ typedef struct Thing_ {
   //
   bool _is_open : 1;
   //
+  // Is being carried
+  //
+  bool _is_carried : 1;
+  //
   // Pushed onto the map?
   //
   bool _is_on_map : 1;
@@ -361,6 +377,7 @@ bool thing_is_ghost(Thingp);
 bool thing_is_goblin(Thingp);
 bool thing_is_grass(Thingp);
 bool thing_is_indestructible(Thingp);
+bool thing_is_inventory_item(Thingp);
 bool thing_is_item(Thingp);
 bool thing_is_key(Thingp);
 bool thing_is_lava(Thingp);
@@ -415,7 +432,6 @@ bool thing_is_unused1(Thingp);
 bool thing_is_unused10(Thingp);
 bool thing_is_unused11(Thingp);
 bool thing_is_unused12(Thingp);
-bool thing_is_unused13(Thingp);
 bool thing_is_unused2(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);

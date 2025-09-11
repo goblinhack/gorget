@@ -21,30 +21,25 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
         (int) strlen(in), w, h);
   }
 
-  auto tp_wall        = tp_random(is_wall);
-  auto tp_rock        = tp_random(is_rock);
-  auto tp_water       = tp_random(is_water);
-  auto tp_lava        = tp_random(is_lava);
-  auto tp_bridge      = tp_random(is_bridge);
-  auto tp_chasm       = tp_random(is_chasm);
-  auto tp_deep_water  = tp_random(is_deep_water);
-  auto tp_brazier     = tp_random(is_brazier);
-  auto tp_pillar      = tp_random(is_pillar);
-  auto tp_barrel      = tp_random(is_barrel);
-  auto tp_teleport    = tp_random(is_teleport);
-  auto tp_treasure    = tp_random(is_treasure);
-  auto tp_key         = tp_random(is_key);
-  auto tp_foliage     = tp_random(is_foliage);
-  auto tp_corridor    = tp_random(is_corridor);
-  auto tp_grass       = tp_random(is_grass);
-  auto tp_door        = tp_find_mand("door");
-  auto tp_secret_door = tp_find_mand("secret_door");
-  auto tp_trap        = tp_find_mand("trap");
-  auto tp_floor       = tp_find_mand("floor");
-  auto tp_dirt        = tp_find_mand("dirt");
-  auto tp_exit        = tp_find_mand("exit");
-  auto tp_player      = tp_find_mand("player");
-  auto tp_entrance    = tp_find_mand("entrance");
+  auto tp_wall       = tp_random(is_wall);
+  auto tp_rock       = tp_random(is_rock);
+  auto tp_water      = tp_random(is_water);
+  auto tp_lava       = tp_random(is_lava);
+  auto tp_bridge     = tp_random(is_bridge);
+  auto tp_chasm      = tp_random(is_chasm);
+  auto tp_deep_water = tp_random(is_deep_water);
+  auto tp_brazier    = tp_random(is_brazier);
+  auto tp_pillar     = tp_random(is_pillar);
+  auto tp_barrel     = tp_random(is_barrel);
+  auto tp_teleport   = tp_random(is_teleport);
+  auto tp_foliage    = tp_random(is_foliage);
+  auto tp_corridor   = tp_random(is_corridor);
+  auto tp_grass      = tp_random(is_grass);
+  auto tp_floor      = tp_find_mand("floor");
+  auto tp_dirt       = tp_find_mand("dirt");
+  auto tp_exit       = tp_find_mand("exit");
+  auto tp_player     = tp_find_mand("player");
+  auto tp_entrance   = tp_find_mand("entrance");
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
@@ -88,7 +83,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_TREASURE :
           need_floor = true;
-          tp         = tp_treasure;
+          tp         = tp_random(is_treasure);
           break;
         case CHARMAP_TELEPORT :
           need_floor = true;
@@ -122,7 +117,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_TRAP :
           need_floor = true;
-          tp         = tp_trap;
+          tp         = tp_random(is_trap);
           break;
         case CHARMAP_LAVA :
           need_floor = true;
@@ -134,11 +129,11 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_DOOR :
           need_floor = true;
-          tp         = tp_door;
+          tp         = tp_random(is_door);
           break;
         case CHARMAP_SECRET_DOOR :
           need_floor = true;
-          tp         = tp_secret_door;
+          tp         = tp_random(is_secret_door);
           break;
         case CHARMAP_GRASS :
           need_floor = true;
@@ -181,7 +176,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_KEY :
           need_floor = true;
-          tp         = tp_key;
+          tp         = tp_random(is_key);
           break;
         case CHARMAP_EMPTY :
           need_dirt = true;

@@ -48,7 +48,7 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
       case THING_EVENT_NONE :             //
       case THING_EVENT_FALL :             //
       case THING_EVENT_LIFESPAN_EXPIRED : //
-      case THING_EVENT_COLLECTED :        //
+      case THING_EVENT_CARRIED :          //
       case THING_EVENT_ENUM_MAX :         //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -83,9 +83,9 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON(UI_IMPORTANT_FMT_STR "You are burnt to death." UI_RESET_FMT);
         break;
-      case THING_EVENT_OPEN :      //
-      case THING_EVENT_COLLECTED : //
-      case THING_EVENT_ENUM_MAX :  //
+      case THING_EVENT_OPEN :     //
+      case THING_EVENT_CARRIED :  //
+      case THING_EVENT_ENUM_MAX : //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
     }
@@ -126,8 +126,8 @@ static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_FIRE_DAMAGE : //
         TOPCON("%s is burnt to death by %s.", the_thing.c_str(), by_player.c_str());
         break;
-      case THING_EVENT_COLLECTED : //
-        TOPCON("%s is collected by %s.", the_thing.c_str(), by_player.c_str());
+      case THING_EVENT_CARRIED : //
+        TOPCON("%s is carried by %s.", the_thing.c_str(), by_player.c_str());
         break;
       case THING_EVENT_OPEN :             //
       case THING_EVENT_NONE :             //

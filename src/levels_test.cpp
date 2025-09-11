@@ -40,7 +40,7 @@ void levels_test(Gamep g)
             /* line */ (const char *) "           ",
             /* end */ nullptr);
 
-  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "shove1", __FUNCTION__, __LINE__,
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "shove", __FUNCTION__, __LINE__,
             /* line */ (const char *) "           ",
             /* line */ (const char *) " xxxxxxxxx ",
             /* line */ (const char *) " x.......x ",
@@ -54,7 +54,7 @@ void levels_test(Gamep g)
             /* line */ (const char *) "           ",
             /* end */ nullptr);
 
-  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "barrel1", __FUNCTION__, __LINE__,
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "barrel", __FUNCTION__, __LINE__,
             /* line */ (const char *) "           ",
             /* line */ (const char *) " xxxxxxxxx ",
             /* line */ (const char *) " x.......x ",
@@ -68,7 +68,7 @@ void levels_test(Gamep g)
             /* line */ (const char *) "           ",
             /* end */ nullptr);
 
-  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "secret1", __FUNCTION__, __LINE__,
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "secret_door", __FUNCTION__, __LINE__,
             /* line */ (const char *) "           ",
             /* line */ (const char *) " xxxxx     ",
             /* line */ (const char *) " x...x     ",
@@ -82,7 +82,7 @@ void levels_test(Gamep g)
             /* line */ (const char *) "           ",
             /* end */ nullptr);
 
-  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "door1", __FUNCTION__, __LINE__,
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "door", __FUNCTION__, __LINE__,
             /* line */ (const char *) "           ",
             /* line */ (const char *) " xxxxx     ",
             /* line */ (const char *) " x...x     ",
@@ -93,6 +93,20 @@ void levels_test(Gamep g)
             /* line */ (const char *) " x...xxxxx ",
             /* line */ (const char *) " x...x     ",
             /* line */ (const char *) " xxxxx     ",
+            /* line */ (const char *) "           ",
+            /* end */ nullptr);
+
+  level_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "item", __FUNCTION__, __LINE__,
+            /* line */ (const char *) "           ",
+            /* line */ (const char *) " xxxxxxxxx ",
+            /* line */ (const char *) " x...$$$$x ",
+            /* line */ (const char *) " x...$$$$x ",
+            /* line */ (const char *) " x...$$$$x ",
+            /* line */ (const char *) " x..@$$$$x ",
+            /* line */ (const char *) " x...$$$$x ",
+            /* line */ (const char *) " x...$$$$x ",
+            /* line */ (const char *) " x...$$$$x ",
+            /* line */ (const char *) " xxxxxxxxx ",
             /* line */ (const char *) "           ",
             /* end */ nullptr);
 }

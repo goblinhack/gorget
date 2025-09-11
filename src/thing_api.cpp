@@ -673,6 +673,73 @@ bool thing_is_open_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp clos
   return thing_is_open_try_set(g, v, l, t, closer, false);
 }
 
+bool thing_is_carried(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+  return t->_is_carried;
+}
+
+//
+// Returns true/false on success/fail
+//
+bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp carrieder, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("no thing for %s", __FUNCTION__);
+    return false;
+  }
+
+  if (t->_is_carried == val) {
+    return true;
+  }
+  t->_is_carried = val;
+
+  //
+  // Attempt the collect/drop. It can fail.
+  //
+  if (val) {
+    //
+    // Try to collect
+    //
+    if (! tp_on_carry_request(g, v, l, t, carrieder)) {
+      //
+      // Collect failed
+      //
+      t->_is_carried = false;
+      return false;
+    }
+  } else {
+    //
+    // Try to drop
+    //
+    if (! tp_on_drop_request(g, v, l, t, carrieder)) {
+      //
+      // Drop failed
+      //
+      t->_is_carried = true;
+      return false;
+    }
+  }
+
+  //
+  // Reset animation
+  //
+  thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
+
+  return true;
+}
+
+bool thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropr)
+{
+  TRACE_NO_INDENT();
+  return thing_is_carried_try_set(g, v, l, t, dropr, false);
+}
+
 bool thing_is_animated_can_hflip(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -1313,14 +1380,14 @@ bool thing_is_unused12(Thingp t)
   return tp_flag(thing_tp(t), is_unused12);
 }
 
-bool thing_is_unused13(Thingp t)
+bool thing_is_inventory_item(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused13);
+  return tp_flag(thing_tp(t), is_inventory_item);
 }
 
 bool thing_is_able_to_open(Thingp t)

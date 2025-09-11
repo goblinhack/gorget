@@ -26,9 +26,9 @@ bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it)
   }
 
   ThingEvent e {
-      .reason     = "by collecting",       //
-      .event_type = THING_EVENT_COLLECTED, //
-      .source     = me                     //
+      .reason     = "by carrying",       //
+      .event_type = THING_EVENT_CARRIED, //
+      .source     = me                   //
   };
 
   thing_dead(g, v, l, it, e);
