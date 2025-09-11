@@ -123,7 +123,6 @@ bool tp_load_door(void)
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_jump_over);
-  tp_mouse_down_set(tp, tp_door_mouse_down);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_openable);
@@ -134,8 +133,9 @@ bool tp_load_door(void)
   tp_health_set(tp, "1d100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
-  tp_on_open_request_set(tp, tp_door_on_open_request);
+  tp_mouse_down_set(tp, tp_door_mouse_down);
   tp_on_close_request_set(tp, tp_door_on_close_request);
+  tp_on_open_request_set(tp, tp_door_on_open_request);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius

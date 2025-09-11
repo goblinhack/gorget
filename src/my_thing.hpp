@@ -293,9 +293,11 @@ void         thing_free(Gamep, Levelsp, Levelp, Thingp t);
 void         thing_stats_dump(Gamep, Levelsp);
 
 // begin sort marker1 {
+bool player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
 bool thing_can_move_to_by_opening(Gamep, Levelsp, Levelp, Thingp, spoint);
 bool thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
 bool thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp);
 bool thing_crush(Gamep, Levelsp, Levelp, Thingp, Thingp);
 bool thing_is_able_to_collect_items(Thingp);
@@ -417,7 +419,6 @@ bool thing_is_unused13(Thingp);
 bool thing_is_unused2(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
-bool player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);
 bool thing_is_unused7(Thingp);
@@ -431,7 +432,6 @@ bool thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to, bool warn = true);
 bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_open(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
-bool thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
 bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_teleport(Gamep, Levelsp, Levelp, Thingp);
