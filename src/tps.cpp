@@ -24,7 +24,9 @@ bool templates_init(void)
   if (!tp_load_cursor_path()) { return false; }
   if (!tp_load_deep_water()) { return false; }
   if (!tp_load_dirt()) { return false; }
-  if (!tp_load_door()) { return false; }
+  if (!tp_load_door_type_locked()) { return false; }
+  if (!tp_load_door_type_secret()) { return false; }
+  if (!tp_load_door_type_unlocked()) { return false; }
   if (!tp_load_entrance()) { return false; }
   if (!tp_load_exit()) { return false; }
   if (!tp_load_explosion()) { return false; }
@@ -49,7 +51,6 @@ bool templates_init(void)
   if (!tp_load_player()) { return false; }
   if (!tp_load_potion()) { return false; }
   if (!tp_load_rock()) { return false; }
-  if (!tp_load_secret_door()) { return false; }
   if (!tp_load_slime()) { return false; }
   if (!tp_load_smoke()) { return false; }
   if (!tp_load_steam()) { return false; }

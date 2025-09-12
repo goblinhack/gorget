@@ -686,7 +686,7 @@ bool thing_is_carried(Thingp t)
 //
 // Returns true/false on success/fail
 //
-bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp carrieder, bool val)
+bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp carrier, bool val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -706,7 +706,7 @@ bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp car
     //
     // Try to collect
     //
-    if (! tp_on_carry_request(g, v, l, t, carrieder)) {
+    if (! tp_on_carry_request(g, v, l, t, carrier)) {
       //
       // Collect failed
       //
@@ -717,7 +717,7 @@ bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp car
     //
     // Try to drop
     //
-    if (! tp_on_drop_request(g, v, l, t, carrieder)) {
+    if (! tp_on_drop_request(g, v, l, t, carrier)) {
       //
       // Drop failed
       //
@@ -960,14 +960,14 @@ bool thing_is_dirt(Thingp t)
   return tp_flag(thing_tp(t), is_dirt);
 }
 
-bool thing_is_door(Thingp t)
+bool thing_is_door_type_unlocked(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_door);
+  return tp_flag(thing_tp(t), is_door_type_unlocked);
 }
 
 bool thing_is_dungeon_entrance(Thingp t)
@@ -1270,14 +1270,14 @@ bool thing_is_rock(Thingp t)
   return tp_flag(thing_tp(t), is_rock);
 }
 
-bool thing_is_secret_door(Thingp t)
+bool thing_is_door_type_secret(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_secret_door);
+  return tp_flag(thing_tp(t), is_door_type_secret);
 }
 
 bool thing_is_slime(Thingp t)
@@ -1370,14 +1370,14 @@ bool thing_is_unused11(Thingp t)
   return tp_flag(thing_tp(t), is_unused11);
 }
 
-bool thing_is_unused12(Thingp t)
+bool thing_is_door_type_locked(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused12);
+  return tp_flag(thing_tp(t), is_door_type_locked);
 }
 
 bool thing_is_inventory_item(Thingp t)

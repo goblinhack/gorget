@@ -12,7 +12,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_secret_door_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_door_type_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -23,7 +23,7 @@ static std::string tp_secret_door_description_get(Gamep g, Levelsp v, Levelp l, 
   return "odd looking rock";
 }
 
-static bool tp_secret_door_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+static bool tp_door_type_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 
@@ -36,23 +36,24 @@ static bool tp_secret_door_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp 
     TOPCON("A secret door creaks open!");
   }
 
-  sound_play(g, "secret_door");
+  sound_play(g, "door_secret");
 
   thing_dead(g, v, l, t, e);
 
   return true;
 }
 
-bool tp_load_secret_door(void)
+bool tp_load_door_type_secret(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("secret_door"); // keep as string for scripts
+  auto tp   = tp_load("door_type_secret"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
-  tp_description_set(tp, tp_secret_door_description_get);
+  tp_description_set(tp, tp_door_type_secret_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_door_type_secret);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_explosion);
@@ -62,22 +63,21 @@ bool tp_load_secret_door(void)
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_secret_door);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
-  tp_health_set(tp, "1d200");
+  tp_health_set(tp, "200");
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, "secret door");
-  tp_on_open_request_set(tp, tp_secret_door_on_open_request);
+  tp_on_open_request_set(tp, tp_door_type_secret_on_open_request);
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("secret_door.idle.0"));
-  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("secret_door.open.0"));
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("door_type_secret.idle.0"));
+  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("door_type_secret.open.0"));
 
   return true;
 }

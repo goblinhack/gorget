@@ -53,7 +53,7 @@
       list_macro(is_deep_water, "is_deep_water"),                       /* newline */                                \
       list_macro(is_described_cursor, "is_described_cursor"),           /* newline */                                \
       list_macro(is_dirt, "is_dirt"),                                   /* newline */                                \
-      list_macro(is_door, "is_door"),                                   /* newline */                                \
+      list_macro(is_door_type_unlocked, "is_door_type_unlocked"),       /* newline */                                \
       list_macro(is_dungeon_entrance, "is_dungeon_entrance"),           /* newline */                                \
       list_macro(is_entrance, "is_entrance"),                           /* newline */                                \
       list_macro(is_ethereal, "is_ethereal"),                           /* newline */                                \
@@ -106,7 +106,7 @@
       list_macro(is_pillar, "is_pillar"),                               /* newline */                                \
       list_macro(is_player, "is_player"),                               /* newline */                                \
       list_macro(is_rock, "is_rock"),                                   /* newline */                                \
-      list_macro(is_secret_door, "is_secret_door"),                     /* newline */                                \
+      list_macro(is_door_type_secret, "is_door_type_secret"),           /* newline */                                \
       list_macro(is_shovable, "is_shovable"),                           /* newline */                                \
       list_macro(is_slime, "is_slime"),                                 /* newline */                                \
       list_macro(is_smoke, "is_smoke"),                                 /* newline */                                \
@@ -123,7 +123,7 @@
       list_macro(is_unused1, "is_unused1"),                             /* newline */                                \
       list_macro(is_unused10, "is_unused10"),                           /* newline */                                \
       list_macro(is_unused11, "is_unused11"),                           /* newline */                                \
-      list_macro(is_unused12, "is_unused12"),                           /* newline */                                \
+      list_macro(is_door_type_locked, "is_door_type_locked"),           /* newline */                                \
       list_macro(is_inventory_item, "is_inventory_item"),               /* newline */                                \
       list_macro(is_unused2, "is_unused2"),                             /* newline */                                \
       list_macro(is_unused3, "is_unused3"),                             /* newline */                                \
@@ -526,7 +526,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_deep_water(tp)            tp_flag(tp, is_deep_water)
 #define tp_is_described_cursor(tp)      tp_flag(tp, is_described_cursor)
 #define tp_is_dirt(tp)                  tp_flag(tp, is_dirt)
-#define tp_is_door(tp)                  tp_flag(tp, is_door)
+#define tp_is_door_type_locked(tp)      tp_flag(tp, is_door_type_locked)
+#define tp_is_door_type_secret(tp)      tp_flag(tp, is_door_type_secret)
+#define tp_is_door_type_unlocked(tp)    tp_flag(tp, is_door_type_unlocked)
 #define tp_is_dungeon_entrance(tp)      tp_flag(tp, is_dungeon_entrance)
 #define tp_is_entrance(tp)              tp_flag(tp, is_entrance)
 #define tp_is_ethereal(tp)              tp_flag(tp, is_ethereal)
@@ -580,7 +582,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_pillar(tp)                tp_flag(tp, is_pillar)
 #define tp_is_player(tp)                tp_flag(tp, is_player)
 #define tp_is_rock(tp)                  tp_flag(tp, is_rock)
-#define tp_is_secret_door(tp)           tp_flag(tp, is_secret_door)
 #define tp_is_shovable(tp)              tp_flag(tp, is_shovable)
 #define tp_is_slime(tp)                 tp_flag(tp, is_slime)
 #define tp_is_smoke(tp)                 tp_flag(tp, is_smoke)
@@ -597,7 +598,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused1(tp)               tp_flag(tp, is_unused1)
 #define tp_is_unused10(tp)              tp_flag(tp, is_unused10)
 #define tp_is_unused11(tp)              tp_flag(tp, is_unused11)
-#define tp_is_unused12(tp)              tp_flag(tp, is_unused12)
 #define tp_is_unused2(tp)               tp_flag(tp, is_unused2)
 #define tp_is_unused3(tp)               tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)               tp_flag(tp, is_unused4)
@@ -643,7 +643,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_deep_water(g, v, l, p)            level_afirst_flag(g, v, l, is_deep_water, p)
 #define level_afirst_is_described_cursor(g, v, l, p)      level_afirst_flag(g, v, l, is_described_cursor, p)
 #define level_afirst_is_dirt(g, v, l, p)                  level_afirst_flag(g, v, l, is_dirt, p)
-#define level_afirst_is_door(g, v, l, p)                  level_afirst_flag(g, v, l, is_door, p)
+#define level_afirst_is_door_type_locked(g, v, l, p)      level_afirst_flag(g, v, l, is_door_type_locked, p)
+#define level_afirst_is_door_type_secret(g, v, l, p)      level_afirst_flag(g, v, l, is_door_type_secret, p)
+#define level_afirst_is_door_type_unlocked(g, v, l, p)    level_afirst_flag(g, v, l, is_door_type_unlocked, p)
 #define level_afirst_is_dungeon_entrance(g, v, l, p)      level_afirst_flag(g, v, l, is_dungeon_entrance, p)
 #define level_afirst_is_entrance(g, v, l, p)              level_afirst_flag(g, v, l, is_entrance, p)
 #define level_afirst_is_ethereal(g, v, l, p)              level_afirst_flag(g, v, l, is_ethereal, p)
@@ -691,7 +693,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_pillar(g, v, l, p)                level_afirst_flag(g, v, l, is_pillar, p)
 #define level_afirst_is_player(g, v, l, p)                level_afirst_flag(g, v, l, is_player, p)
 #define level_afirst_is_rock(g, v, l, p)                  level_afirst_flag(g, v, l, is_rock, p)
-#define level_afirst_is_secret_door(g, v, l, p)           level_afirst_flag(g, v, l, is_secret_door, p)
 #define level_afirst_is_shovable(g, v, l, p)              level_afirst_flag(g, v, l, is_shovable, p)
 #define level_afirst_is_slime(g, v, l, p)                 level_afirst_flag(g, v, l, is_slime, p)
 #define level_afirst_is_smoke(g, v, l, p)                 level_afirst_flag(g, v, l, is_smoke, p)
@@ -707,7 +708,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_unused1(g, v, l, p)               level_afirst_flag(g, v, l, is_unused1, p)
 #define level_afirst_is_unused10(g, v, l, p)              level_afirst_flag(g, v, l, is_unused10, p)
 #define level_afirst_is_unused11(g, v, l, p)              level_afirst_flag(g, v, l, is_unused11, p)
-#define level_afirst_is_unused12(g, v, l, p)              level_afirst_flag(g, v, l, is_unused12, p)
 #define level_afirst_is_unused2(g, v, l, p)               level_afirst_flag(g, v, l, is_unused2, p)
 #define level_afirst_is_unused3(g, v, l, p)               level_afirst_flag(g, v, l, is_unused3, p)
 #define level_afirst_is_unused34(g, v, l, p)              level_afirst_flag(g, v, l, is_able_to_fall, p)
@@ -756,7 +756,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_deep_water(g, v, l, p)             level_alive_flag(g, v, l, is_deep_water, p)
 #define level_alive_is_described_cursor(g, v, l, p)       level_alive_flag(g, v, l, is_described_cursor, p)
 #define level_alive_is_dirt(g, v, l, p)                   level_alive_flag(g, v, l, is_dirt, p)
-#define level_alive_is_door(g, v, l, p)                   level_alive_flag(g, v, l, is_door, p)
+#define level_alive_is_door_type_locked(g, v, l, p)       level_alive_flag(g, v, l, is_door_type_locked, p)
+#define level_alive_is_door_type_secret(g, v, l, p)       level_alive_flag(g, v, l, is_door_type_secret, p)
+#define level_alive_is_door_type_unlocked(g, v, l, p)     level_alive_flag(g, v, l, is_door_type_unlocked, p)
 #define level_alive_is_dungeon_entrance(g, v, l, p)       level_alive_flag(g, v, l, is_dungeon_entrance, p)
 #define level_alive_is_entrance(g, v, l, p)               level_alive_flag(g, v, l, is_entrance, p)
 #define level_alive_is_ethereal(g, v, l, p)               level_alive_flag(g, v, l, is_ethereal, p)
@@ -804,7 +806,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_pillar(g, v, l, p)                 level_alive_flag(g, v, l, is_pillar, p)
 #define level_alive_is_player(g, v, l, p)                 level_alive_flag(g, v, l, is_player, p)
 #define level_alive_is_rock(g, v, l, p)                   level_alive_flag(g, v, l, is_rock, p)
-#define level_alive_is_secret_door(g, v, l, p)            level_alive_flag(g, v, l, is_secret_door, p)
 #define level_alive_is_shovable(g, v, l, p)               level_alive_flag(g, v, l, is_shovable, p)
 #define level_alive_is_slime(g, v, l, p)                  level_alive_flag(g, v, l, is_slime, p)
 #define level_alive_is_smoke(g, v, l, p)                  level_alive_flag(g, v, l, is_smoke, p)
@@ -820,7 +821,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused1(g, v, l, p)                level_alive_flag(g, v, l, is_unused1, p)
 #define level_alive_is_unused10(g, v, l, p)               level_alive_flag(g, v, l, is_unused10, p)
 #define level_alive_is_unused11(g, v, l, p)               level_alive_flag(g, v, l, is_unused11, p)
-#define level_alive_is_unused12(g, v, l, p)               level_alive_flag(g, v, l, is_unused12, p)
 #define level_alive_is_unused2(g, v, l, p)                level_alive_flag(g, v, l, is_unused2, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_able_to_fall, p)
@@ -869,7 +869,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_deep_water(g, v, l, p)             level_count_flag(g, v, l, is_deep_water, p)
 #define level_count_is_described_cursor(g, v, l, p)       level_count_flag(g, v, l, is_described_cursor, p)
 #define level_count_is_dirt(g, v, l, p)                   level_count_flag(g, v, l, is_dirt, p)
-#define level_count_is_door(g, v, l, p)                   level_count_flag(g, v, l, is_door, p)
+#define level_count_is_door_type_locked(g, v, l, p)       level_count_flag(g, v, l, is_door_type_locked, p)
+#define level_count_is_door_type_secret(g, v, l, p)       level_count_flag(g, v, l, is_door_type_secret, p)
+#define level_count_is_door_type_unlocked(g, v, l, p)     level_count_flag(g, v, l, is_door_type_unlocked, p)
 #define level_count_is_dungeon_entrance(g, v, l, p)       level_count_flag(g, v, l, is_dungeon_entrance, p)
 #define level_count_is_entrance(g, v, l, p)               level_count_flag(g, v, l, is_entrance, p)
 #define level_count_is_ethereal(g, v, l, p)               level_count_flag(g, v, l, is_ethereal, p)
@@ -917,7 +919,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_pillar(g, v, l, p)                 level_count_flag(g, v, l, is_pillar, p)
 #define level_count_is_player(g, v, l, p)                 level_count_flag(g, v, l, is_player, p)
 #define level_count_is_rock(g, v, l, p)                   level_count_flag(g, v, l, is_rock, p)
-#define level_count_is_secret_door(g, v, l, p)            level_count_flag(g, v, l, is_secret_door, p)
 #define level_count_is_shovable(g, v, l, p)               level_count_flag(g, v, l, is_shovable, p)
 #define level_count_is_slime(g, v, l, p)                  level_count_flag(g, v, l, is_slime, p)
 #define level_count_is_smoke(g, v, l, p)                  level_count_flag(g, v, l, is_smoke, p)
@@ -933,7 +934,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused1(g, v, l, p)                level_count_flag(g, v, l, is_unused1, p)
 #define level_count_is_unused10(g, v, l, p)               level_count_flag(g, v, l, is_unused10, p)
 #define level_count_is_unused11(g, v, l, p)               level_count_flag(g, v, l, is_unused11, p)
-#define level_count_is_unused12(g, v, l, p)               level_count_flag(g, v, l, is_unused12, p)
 #define level_count_is_unused2(g, v, l, p)                level_count_flag(g, v, l, is_unused2, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_able_to_fall, p)
@@ -982,7 +982,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_deep_water(g, v, l, p)             level_first_flag(g, v, l, is_deep_water, p)
 #define level_first_is_described_cursor(g, v, l, p)       level_first_flag(g, v, l, is_described_cursor, p)
 #define level_first_is_dirt(g, v, l, p)                   level_first_flag(g, v, l, is_dirt, p)
-#define level_first_is_door(g, v, l, p)                   level_first_flag(g, v, l, is_door, p)
+#define level_first_is_door_type_locked(g, v, l, p)       level_first_flag(g, v, l, is_door_type_locked, p)
+#define level_first_is_door_type_secret(g, v, l, p)       level_first_flag(g, v, l, is_door_type_secret, p)
+#define level_first_is_door_type_unlocked(g, v, l, p)     level_first_flag(g, v, l, is_door_type_unlocked, p)
 #define level_first_is_dungeon_entrance(g, v, l, p)       level_first_flag(g, v, l, is_dungeon_entrance, p)
 #define level_first_is_entrance(g, v, l, p)               level_first_flag(g, v, l, is_entrance, p)
 #define level_first_is_ethereal(g, v, l, p)               level_first_flag(g, v, l, is_ethereal, p)
@@ -1030,7 +1032,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_pillar(g, v, l, p)                 level_first_flag(g, v, l, is_pillar, p)
 #define level_first_is_player(g, v, l, p)                 level_first_flag(g, v, l, is_player, p)
 #define level_first_is_rock(g, v, l, p)                   level_first_flag(g, v, l, is_rock, p)
-#define level_first_is_secret_door(g, v, l, p)            level_first_flag(g, v, l, is_secret_door, p)
 #define level_first_is_shovable(g, v, l, p)               level_first_flag(g, v, l, is_shovable, p)
 #define level_first_is_slime(g, v, l, p)                  level_first_flag(g, v, l, is_slime, p)
 #define level_first_is_smoke(g, v, l, p)                  level_first_flag(g, v, l, is_smoke, p)
@@ -1046,7 +1047,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused1(g, v, l, p)                level_first_flag(g, v, l, is_unused1, p)
 #define level_first_is_unused10(g, v, l, p)               level_first_flag(g, v, l, is_unused10, p)
 #define level_first_is_unused11(g, v, l, p)               level_first_flag(g, v, l, is_unused11, p)
-#define level_first_is_unused12(g, v, l, p)               level_first_flag(g, v, l, is_unused12, p)
 #define level_first_is_unused2(g, v, l, p)                level_first_flag(g, v, l, is_unused2, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_able_to_fall, p)
@@ -1100,7 +1100,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_deep_water(g, v, l, p)                   level_flag(g, v, l, is_deep_water, p)
 #define level_is_described_cursor(g, v, l, p)             level_flag(g, v, l, is_described_cursor, p)
 #define level_is_dirt(g, v, l, p)                         level_flag(g, v, l, is_dirt, p)
-#define level_is_door(g, v, l, p)                         level_flag(g, v, l, is_door, p)
+#define level_is_door_type_locked(g, v, l, p)             level_flag(g, v, l, is_door_type_locked, p)
+#define level_is_door_type_secret(g, v, l, p)             level_flag(g, v, l, is_door_type_secret, p)
+#define level_is_door_type_unlocked(g, v, l, p)           level_flag(g, v, l, is_door_type_unlocked, p)
 #define level_is_dungeon_entrance(g, v, l, p)             level_flag(g, v, l, is_dungeon_entrance, p)
 #define level_is_entrance(g, v, l, p)                     level_flag(g, v, l, is_entrance, p)
 #define level_is_ethereal(g, v, l, p)                     level_flag(g, v, l, is_ethereal, p)
@@ -1154,7 +1156,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_pillar(g, v, l, p)                       level_flag(g, v, l, is_pillar, p)
 #define level_is_player(g, v, l, p)                       level_flag(g, v, l, is_player, p)
 #define level_is_rock(g, v, l, p)                         level_flag(g, v, l, is_rock, p)
-#define level_is_secret_door(g, v, l, p)                  level_flag(g, v, l, is_secret_door, p)
 #define level_is_shovable(g, v, l, p)                     level_flag(g, v, l, is_shovable, p)
 #define level_is_slime(g, v, l, p)                        level_flag(g, v, l, is_slime, p)
 #define level_is_smoke(g, v, l, p)                        level_flag(g, v, l, is_smoke, p)
@@ -1171,7 +1172,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused1(g, v, l, p)                      level_flag(g, v, l, is_unused1, p)
 #define level_is_unused10(g, v, l, p)                     level_flag(g, v, l, is_unused10, p)
 #define level_is_unused11(g, v, l, p)                     level_flag(g, v, l, is_unused11, p)
-#define level_is_unused12(g, v, l, p)                     level_flag(g, v, l, is_unused12, p)
 #define level_is_unused2(g, v, l, p)                      level_flag(g, v, l, is_unused2, p)
 #define level_is_unused3(g, v, l, p)                      level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)                      level_flag(g, v, l, is_unused4, p)
@@ -1215,7 +1215,9 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_deep_water(g, v, l, p)              level_open_flag(g, v, l, is_deep_water, p)
 #define level_open_is_described_cursor(g, v, l, p)        level_open_flag(g, v, l, is_described_cursor, p)
 #define level_open_is_dirt(g, v, l, p)                    level_open_flag(g, v, l, is_dirt, p)
-#define level_open_is_door(g, v, l, p)                    level_open_flag(g, v, l, is_door, p)
+#define level_open_is_door_type_locked(g, v, l, p)        level_open_flag(g, v, l, is_door_type_locked, p)
+#define level_open_is_door_type_secret(g, v, l, p)        level_open_flag(g, v, l, is_door_type_secret, p)
+#define level_open_is_door_type_unlocked(g, v, l, p)      level_open_flag(g, v, l, is_door_type_unlocked, p)
 #define level_open_is_dungeon_entrance(g, v, l, p)        level_open_flag(g, v, l, is_dungeon_entrance, p)
 #define level_open_is_entrance(g, v, l, p)                level_open_flag(g, v, l, is_entrance, p)
 #define level_open_is_ethereal(g, v, l, p)                level_open_flag(g, v, l, is_ethereal, p)
@@ -1263,7 +1265,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_pillar(g, v, l, p)                  level_open_flag(g, v, l, is_pillar, p)
 #define level_open_is_player(g, v, l, p)                  level_open_flag(g, v, l, is_player, p)
 #define level_open_is_rock(g, v, l, p)                    level_open_flag(g, v, l, is_rock, p)
-#define level_open_is_secret_door(g, v, l, p)             level_open_flag(g, v, l, is_secret_door, p)
 #define level_open_is_shovable(g, v, l, p)                level_open_flag(g, v, l, is_shovable, p)
 #define level_open_is_slime(g, v, l, p)                   level_open_flag(g, v, l, is_slime, p)
 #define level_open_is_smoke(g, v, l, p)                   level_open_flag(g, v, l, is_smoke, p)
@@ -1279,7 +1280,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_unused1(g, v, l, p)                 level_open_flag(g, v, l, is_unused1, p)
 #define level_open_is_unused10(g, v, l, p)                level_open_flag(g, v, l, is_unused10, p)
 #define level_open_is_unused11(g, v, l, p)                level_open_flag(g, v, l, is_unused11, p)
-#define level_open_is_unused12(g, v, l, p)                level_open_flag(g, v, l, is_unused12, p)
 #define level_open_is_unused2(g, v, l, p)                 level_open_flag(g, v, l, is_unused2, p)
 #define level_open_is_unused3(g, v, l, p)                 level_open_flag(g, v, l, is_unused3, p)
 #define level_open_is_unused34(g, v, l, p)                level_open_flag(g, v, l, is_able_to_fall, p)

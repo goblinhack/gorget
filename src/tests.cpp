@@ -23,6 +23,7 @@ bool tests_init(void)
   if (!test_load_brazier_shove_ok()) { return false; }
   if (!test_load_bridge_on_fire_over_lava()) { return false; }
   if (!test_load_bridge_on_fire()) { return false; }
+  if (!test_load_door_type_secret()) { return false; }
   if (!test_load_fire_on_water()) { return false; }
   if (!test_load_fire_over_chasm()) { return false; }
   if (!test_load_foliage_on_fire()) { return false; }
@@ -37,7 +38,6 @@ bool tests_init(void)
   if (!test_load_player_fall_chasm_into_lava()) { return false; }
   if (!test_load_player_lava()) { return false; }
   if (!test_load_save_load()) { return false; }
-  if (!test_load_secret_door()) { return false; }
   if (!test_load_teleport()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }

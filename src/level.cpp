@@ -106,11 +106,25 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_dirt(g, v, l, p)) {
         c = CHARMAP_DIRT;
       }
-      if (level_is_door(g, v, l, p)) {
-        if (level_open_is_door(g, v, l, p)) {
+      if (level_is_door_type_unlocked(g, v, l, p)) {
+        if (level_open_is_door_type_unlocked(g, v, l, p)) {
           c = CHARMAP_FLOOR;
         } else {
-          c = CHARMAP_DOOR;
+          c = CHARMAP_DOOR_TYPE_UNLOCKED;
+        }
+      }
+      if (level_is_door_type_locked(g, v, l, p)) {
+        if (level_open_is_door_type_locked(g, v, l, p)) {
+          c = CHARMAP_FLOOR;
+        } else {
+          c = CHARMAP_DOOR_TYPE_LOCKED;
+        }
+      }
+      if (level_is_door_type_secret(g, v, l, p)) {
+        if (level_open_is_door_type_secret(g, v, l, p)) {
+          c = CHARMAP_FLOOR;
+        } else {
+          c = CHARMAP_DOOR_TYPE_SECRET;
         }
       }
       if (level_alive_is_foliage(g, v, l, p)) {
@@ -142,9 +156,6 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       }
       if (level_is_pillar(g, v, l, p)) {
         c = CHARMAP_PILLAR;
-      }
-      if (level_is_secret_door(g, v, l, p)) {
-        c = CHARMAP_SECRET_DOOR;
       }
       if (level_is_teleport(g, v, l, p)) {
         c = CHARMAP_TELEPORT;

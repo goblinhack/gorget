@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_secret_door(Gamep g, Testp t)
+static bool test_door_type_secret(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -142,14 +142,14 @@ exit:
   return result;
 }
 
-bool test_load_secret_door(void)
+bool test_load_door_type_secret(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("secret_door");
+  Testp test = test_load("door_type_secret");
 
   // begin sort marker1 {
-  test_callback_set(test, test_secret_door);
+  test_callback_set(test, test_door_type_secret);
   // end sort marker1 }
 
   return true;

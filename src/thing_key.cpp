@@ -13,7 +13,7 @@
 //
 // Add a key to the things inventory
 //
-bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it)
+bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst, Thingp it)
 {
   TRACE_NO_INDENT();
 
@@ -21,19 +21,19 @@ bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp it)
     return false;
   }
 
-  if (! thing_is_able_to_collect_keys(me)) {
+  if (! thing_is_able_to_collect_keys(player_or_monst)) {
     return false;
   }
 
   ThingEvent e {
       .reason     = "by carrying",       //
       .event_type = THING_EVENT_CARRIED, //
-      .source     = me                   //
+      .source     = player_or_monst      //
   };
 
   thing_dead(g, v, l, it, e);
 
-  thing_keys_carried_incr(g, v, l, me, 1);
+  thing_keys_carried_incr(g, v, l, player_or_monst, 1);
 
   return true;
 }
