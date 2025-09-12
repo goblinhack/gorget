@@ -133,7 +133,12 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_DOOR_TYPE_LOCKED :
           need_floor = true;
-          tp         = tp_random(is_door_type_locked);
+          if (d100() < 50) {
+            tp = tp_random(is_door_type_secret);
+          } else {
+            tp = tp_random(is_door_type_locked);
+          }
+          tp = tp_random(is_door_type_locked);
           break;
         case CHARMAP_DOOR_TYPE_SECRET :
           need_floor = true;

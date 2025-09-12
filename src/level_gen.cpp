@@ -2670,8 +2670,8 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
     //
     // Add grass or other blobby features
     //
-    if (1)
-      level_gen_blob(g, l, CHARMAP_GRASS);
+    level_gen_blob(g, l, CHARMAP_GRASS);
+    level_gen_blob(g, l, CHARMAP_FOLIAGE);
 
     //
     // Success
@@ -3269,6 +3269,63 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
           }
           if (l->data[ x ][ y + 1 ].c == CHARMAP_EMPTY) {
             l->data[ x ][ y + 1 ].c = CHARMAP_WALL;
+          }
+          break;
+      }
+    }
+  }
+}
+
+//
+// Hide secret doors
+//
+static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  for (int y = 2; y < MAP_HEIGHT - 2; y++) {
+    for (int x = 2; x < MAP_WIDTH - 2; x++) {
+      auto c = l->data[ x ][ y ].c;
+      switch (c) {
+        case CHARMAP_WATER :
+        case CHARMAP_DEEP_WATER :
+        case CHARMAP_LAVA :
+        case CHARMAP_CHASM :
+        case CHARMAP_CHASM_50 :
+        case CHARMAP_EMPTY :
+        case CHARMAP_WALL :
+        case CHARMAP_BARREL :
+        case CHARMAP_BRAZIER :
+        case CHARMAP_BRIDGE :
+        case CHARMAP_CORRIDOR :
+        case CHARMAP_ENTRANCE :
+        case CHARMAP_EXIT :
+        case CHARMAP_FLOOR :
+        case CHARMAP_FLOOR_50 :
+        case CHARMAP_FOLIAGE :
+        case CHARMAP_GRASS :
+        case CHARMAP_JOIN :
+        case CHARMAP_MOB1 :
+        case CHARMAP_MOB2 :
+        case CHARMAP_MONST1 :
+        case CHARMAP_MONST2 :     break;
+        case CHARMAP_KEY :
+        case CHARMAP_TELEPORT :
+        case CHARMAP_TRAP :
+        case CHARMAP_PILLAR :
+        case CHARMAP_TREASURE :
+        case CHARMAP_DOOR_TYPE_LOCKED :
+        case CHARMAP_DOOR_TYPE_SECRET :
+        case CHARMAP_DOOR_TYPE_UNLOCKED :
+          for (int dy = -2; dy <= 2; dy++) {
+            for (int dx = -2; dx <= 2; dx++) {
+              auto d = l->data[ x - dx ][ y - dy ].c;
+              if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
+                if (d100() < 25) {
+                  l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
+                }
+              }
+            }
           }
           break;
       }
@@ -4021,6 +4078,11 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   // If not enough teleports
   //
   level_gen_add_missing_teleports(g, l);
+
+  //
+  // Hide doors
+  //
+  level_gen_add_foliage_around_secret_doors(g, l);
 
   //
   // Final count

@@ -1,4 +1,3 @@
-add keys
 inventory
 line of sight
 "is collected" should be line of sight
@@ -11,6 +10,7 @@ score is hard coded to 666
 
 ideas
 -----
+boulders that can crush
 items hiding in bushes
 door mimic
 sacrifice a leg / soul to progress
