@@ -154,6 +154,12 @@ void fragments_init(Gamep g)
                      /* alt  */ (const char *) "x....", nullptr);
     fragment_alt_add(g, CHANCE_UNLIKELY, __FUNCTION__, __LINE__,
                      /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "xTCC.",
+                     /* alt  */ (const char *) "xCCC.",
+                     /* alt  */ (const char *) "xCCC.",
+                     /* alt  */ (const char *) "x....", nullptr);
+    fragment_alt_add(g, CHANCE_UNLIKELY, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
                      /* alt  */ (const char *) "x$.C.",
                      /* alt  */ (const char *) "x.C..",
                      /* alt  */ (const char *) "xC...",

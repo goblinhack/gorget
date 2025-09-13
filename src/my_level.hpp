@@ -500,6 +500,7 @@ void rooms_medium(Gamep);
 void rooms_start(Gamep);
 void rooms_exit(Gamep);
 void rooms_prefab(Gamep);
+void rooms_prefab_secret(Gamep);
 
 void fragments_init(Gamep);
 void fragments_fini(Gamep);

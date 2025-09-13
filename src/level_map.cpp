@@ -138,6 +138,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           } else {
             tp = tp_random(is_door_type_locked);
           }
+          CON("TODO");
           tp = tp_random(is_door_type_locked);
           break;
         case CHARMAP_DOOR_TYPE_SECRET :

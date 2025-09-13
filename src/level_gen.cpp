@@ -3290,7 +3290,6 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_WATER :
         case CHARMAP_DEEP_WATER :
         case CHARMAP_LAVA :
-        case CHARMAP_CHASM :
         case CHARMAP_CHASM_50 :
         case CHARMAP_EMPTY :
         case CHARMAP_WALL :
@@ -3317,6 +3316,7 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_DOOR_TYPE_LOCKED :
         case CHARMAP_DOOR_TYPE_SECRET :
         case CHARMAP_DOOR_TYPE_UNLOCKED :
+        case CHARMAP_CHASM :
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
