@@ -52,7 +52,8 @@ static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN = 6;
 // Per level minimums
 //
 static const int MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL = 6;
-static const int MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL    = 6;
+static const int MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL    = 10;
+static const int MAX_LEVEL_GEN_MIN_MONST_PLACE_TRY    = 100;
 
 //
 // How many times to try to replace part of the dungeon
@@ -93,6 +94,11 @@ static const int LEVEL_BLOB_GEN_FILL_PROB = 1200;
 // Chance of creating a pool on a level
 //
 static const int LEVEL_BLOB_GEN_PROB = 80;
+
+//
+// Skip tiles near the edges
+//
+static const int LEVEL_GEN_BORDER_FOR_ITEM_PLACEMENT = 4;
 
 //
 // Chance of creating some doors for a room. We always add some doors, and then a chance of more.
@@ -3669,8 +3675,7 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
           l->info.monst_count++;
           l->info.monst2_count++;
           break;
-        case CHARMAP_TREASURE :
-          l->info.treasure_count++;
+        case CHARMAP_TREASURE : //
           l->info.treasure_count++;
           break;
         case CHARMAP_TELEPORT :
@@ -3703,52 +3708,29 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
 {
   TRACE_NO_INDENT();
 
-  std::vector< spoint > cands;
-
-  //
-  // Find floor tiles with floor space around them, candidates for placing items
-  //
-  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
-    for (int x = 1; x < MAP_WIDTH - 1; x++) {
-      auto c = l->data[ x ][ y ].c;
-
-      switch (c) {
-        case CHARMAP_FLOOR :
-          if (/* top left  */ l->data[ x - 1 ][ y - 1 ].c == CHARMAP_FLOOR &&
-              /* bot right */ l->data[ x - 1 ][ y + 1 ].c == CHARMAP_FLOOR &&
-              /* top right */ l->data[ x + 1 ][ y - 1 ].c == CHARMAP_FLOOR &&
-              /* bot right */ l->data[ x + 1 ][ y + 1 ].c == CHARMAP_FLOOR &&
-              /* left      */ l->data[ x - 1 ][ y ].c == CHARMAP_FLOOR &&
-              /* right     */ l->data[ x + 1 ][ y ].c == CHARMAP_FLOOR &&
-              /* top       */ l->data[ x ][ y - 1 ].c == CHARMAP_FLOOR &&
-              /* bot       */ l->data[ x ][ y + 1 ].c == CHARMAP_FLOOR) {
-            cands.push_back(spoint(x, y));
-          }
-          break;
-      }
-    }
-  }
-
-  if (cands.empty()) {
-    return;
-  }
+  auto border = LEVEL_GEN_BORDER_FOR_ITEM_PLACEMENT;
 
   //
   // Place all the monsters we can
   //
   while (nmonst-- > 0) {
-    auto cand = cands[ pcg_rand() % cands.size() ];
-    auto x    = cand.x;
-    auto y    = cand.y;
-    auto r    = l->data[ x ][ y ].room;
-    if (r && (l->room_entrance == r)) {
-      continue;
-    }
+    auto x = pcg_random_range(border, MAP_WIDTH - border);
+    auto y = pcg_random_range(border, MAP_HEIGHT - border);
+    auto c = l->data[ x ][ y ].c;
 
-    if (d100() < 90) {
-      l->data[ x ][ y ].c = CHARMAP_MONST1;
-    } else {
-      l->data[ x ][ y ].c = CHARMAP_MONST2;
+    switch (c) {
+      case CHARMAP_FLOOR :
+        auto r = l->data[ x ][ y ].room;
+        if (r && (l->room_entrance == r)) {
+          continue;
+        }
+
+        if (d100() < 90) {
+          l->data[ x ][ y ].c = CHARMAP_MONST1;
+        } else {
+          l->data[ x ][ y ].c = CHARMAP_MONST2;
+        }
+        l->info.monst_count++;
     }
   }
 
@@ -3756,25 +3738,19 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
   // Place all the treasure we can
   //
   while (ntreasure-- > 0) {
-    auto cand = cands[ pcg_rand() % cands.size() ];
-    auto x    = cand.x;
-    auto y    = cand.y;
-    auto r    = l->data[ x ][ y ].room;
+    auto x = pcg_random_range(border, MAP_WIDTH - border);
+    auto y = pcg_random_range(border, MAP_HEIGHT - border);
+    auto c = l->data[ x ][ y ].c;
 
-    if (r && (l->room_entrance == r)) {
-      l->data[ x ][ y ].c = CHARMAP_TREASURE;
-      continue;
-    }
+    switch (c) {
+      case CHARMAP_FLOOR :
+        auto r = l->data[ x ][ y ].room;
+        if (r && (l->room_entrance == r)) {
+          continue;
+        }
 
-    if (r && (l->room_exit == r)) {
-      l->data[ x ][ y ].c = CHARMAP_TREASURE;
-      continue;
-    }
-
-    if (d100() < 90) {
-      l->data[ x ][ y ].c = CHARMAP_TREASURE;
-    } else {
-      l->data[ x ][ y ].c = CHARMAP_TREASURE;
+        l->data[ x ][ y ].c = CHARMAP_TREASURE;
+        l->info.treasure_count++;
     }
   }
 }
@@ -3801,7 +3777,7 @@ static void level_gen_add_missing_keys_do(Gamep g, class LevelGen *l)
       }
 
       auto tries  = MAX_LEVEL_GEN_PLACE_MISSING_KEY_TRIES;
-      auto border = 4;
+      auto border = LEVEL_GEN_BORDER_FOR_ITEM_PLACEMENT;
 
       while (tries-- > 0) {
         auto kx = pcg_random_range(border, MAP_WIDTH - border);
@@ -3884,11 +3860,14 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
 {
   TRACE_NO_INDENT();
 
-  int need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->info.monst_count;
-  int need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->info.treasure_count;
+  auto tries = MAX_LEVEL_GEN_MIN_MONST_PLACE_TRY;
+  while (tries-- > 0) {
+    int need_monsts   = MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL - l->info.monst_count;
+    int need_treasure = MAX_LEVEL_GEN_MIN_TREASURE_PER_LEVEL - l->info.treasure_count;
 
-  if ((need_monsts > 0) || (need_treasure > 0)) {
-    level_gen_add_missing_monsts_and_treasure(g, l, need_monsts, need_treasure);
+    if ((need_monsts > 0) || (need_treasure > 0)) {
+      level_gen_add_missing_monsts_and_treasure(g, l, need_monsts, need_treasure);
+    }
   }
 }
 
@@ -3976,7 +3955,7 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
   //
   auto tries = MAX_LEVEL_GEN_LOOK_FOR_ROOM_TRIES;
   while (tries-- > 0) {
-    auto border = 4;
+    auto border = LEVEL_GEN_BORDER_FOR_ITEM_PLACEMENT;
     auto x      = pcg_random_range(border, MAP_WIDTH - border);
     auto y      = pcg_random_range(border, MAP_HEIGHT - border);
     r           = l->data[ x ][ y ].room;
