@@ -84,6 +84,12 @@ typedef struct LevelInfo_ {
   int teleport_count;
 
   //
+  // How many locked doors. Must have corresponding key counts.
+  //
+  int door_locked_count;
+  int key_count;
+
+  //
   // How many room fragments we've added
   //
   int fragment_count;
@@ -397,12 +403,17 @@ enum {
 };
 
 enum {
-  NO_FLAGS = 0,
+  NO_FLAGS = 0x0,
   //
   // Sanity check on exits that we have no tiles in the same column or row
   // as an exit; it makes it harder to join rooms together
   //
-  ROOM_CHECK_EXIT_FLAG = 1,
+  ROOM_CHECK_EXIT_FLAG = 0x1,
+  //
+  // Secret rooms which need a key to enter
+  //
+  ROOM_SECRET_FLAG = 0x2,
+  ROOM_NEXT_FLAG   = 0x4,
 };
 
 enum {

@@ -60,6 +60,16 @@ static const int MAX_LEVEL_GEN_MIN_MONST_PER_LEVEL    = 6;
 static const int MAX_LEVEL_GEN_FRAGMENT_TRIES = 100;
 
 //
+// When adding missing teleports
+//
+static const int MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES = 100;
+
+//
+// Secret rooms need keys
+//
+static const int MAX_LEVEL_GEN_PLACE_MISSING_KEY_TRIES = 1000;
+
+//
 // The max amount of fragments to create
 //
 static const int MAX_LEVEL_GEN_FRAGMENTS = 20;
@@ -87,8 +97,20 @@ static const int LEVEL_BLOB_GEN_PROB = 80;
 //
 // Chance of creating some doors for a room. We always add some doors, and then a chance of more.
 //
-static const int LEVEL_DOOR_TRIES = 1;
-static const int LEVEL_DOOR_PROB  = 10;
+static const int MAX_LEVEL_GEN_LOOK_FOR_ROOM_TRIES                 = 100;
+static const int MAX_LEVEL_GEN_ADD_ROOM_WITH_DOOR_TRIES            = 1;
+static const int MAX_LEVEL_GEN_ADD_ADDITIONAL_ROOM_WITH_DOOR_TRIES = 10;
+
+//
+// Chance of obscuring things
+//
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TELEPORTS    = 50;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_ITEMS        = 20;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TRAPS        = 75;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_KEYS         = 100;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_CHASMS       = 50;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_LOCKED_DOORS = 50;
+static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_SECRET_DOORS = 80;
 
 //
 // Chances of creating, tested in the following order, with the default being water
@@ -258,6 +280,11 @@ public:
   //
   int width  = {};
   int height = {};
+
+  //
+  // e.g. ROOM_CHECK_EXIT_FLAG
+  //
+  unsigned int flags = {};
 
   //
   // Room data
@@ -493,6 +520,7 @@ static class Room *room_rotate(Gamep g, class Room *r)
   n->line      = r->line;
   n->width     = r->height;
   n->height    = r->width;
+  n->flags     = r->flags;
   n->data      = (char *) myzalloc(r->width * r->height, "room data");
 
   for (int y = 0; y < r->height; y++) {
@@ -525,6 +553,7 @@ static class Room *room_flip_horiz(Gamep g, class Room *r)
   n->line      = r->line;
   n->width     = r->width;
   n->height    = r->height;
+  n->flags     = r->flags;
   n->data      = (char *) myzalloc(r->width * r->height, "room data");
 
   for (int y = 0; y < r->height; y++) {
@@ -681,6 +710,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
   r->line      = line;
   r->width     = room_width;
   r->height    = room_height;
+  r->flags     = room_flags;
   r->data      = (char *) myzalloc(room_width * room_height, "room data");
 
   //
@@ -1220,31 +1250,31 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
   //
   // Allocate space for the fragment_alt
   //
-  class FragmentAlt *r = new FragmentAlt();
-  fragment_alts_all.push_back(r);
+  class FragmentAlt *f = new FragmentAlt();
+  fragment_alts_all.push_back(f);
 
   fragment_alts_curr.clear();
-  fragment_alts_curr.push_back(r);
+  fragment_alts_curr.push_back(f);
 
-  r->id     = fragment_alt_no++;
-  r->chance = chance;
-  r->file   = file;
-  r->line   = line;
-  r->width  = fragment_alt_width;
-  r->height = fragment_alt_height;
-  r->data   = (char *) myzalloc(fragment_alt_width * fragment_alt_height, "fragment_alt data");
+  f->id     = fragment_alt_no++;
+  f->chance = chance;
+  f->file   = file;
+  f->line   = line;
+  f->width  = fragment_alt_width;
+  f->height = fragment_alt_height;
+  f->data   = (char *) myzalloc(fragment_alt_width * fragment_alt_height, "fragment_alt data");
 
   //
   // Now read the fragment_alt again
   //
   va_start(ap, line);
 
-  for (int y = 0; y < r->height; y++) {
+  for (int y = 0; y < f->height; y++) {
     const char *fragment_alt_line = va_arg(ap, char *);
-    for (int x = 0; x < r->width; x++) {
+    for (int x = 0; x < f->width; x++) {
       auto c = fragment_alt_line[ x ];
 
-      r->data[ (y * r->width) + x ] = c;
+      f->data[ (y * f->width) + x ] = c;
     }
   }
 
@@ -1253,15 +1283,15 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
   //
   // Make alternate fragment_alts
   //
-  fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_rotate(g, r)));
-  fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_flip_horiz(g, r))));
+  fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_rotate(g, f)));
+  fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_rotate(g, fragment_alt_flip_horiz(g, f))));
 
   //
   // Push the alternatives onto the end of each fragment
   //
   int i = 0;
-  for (auto f : fragments_curr) {
-    f->fragment_alts.push_back(fragment_alts_curr[ i++ ]);
+  for (auto c : fragments_curr) {
+    c->fragment_alts.push_back(fragment_alts_curr[ i++ ]);
   }
 
   return true;
@@ -1291,17 +1321,17 @@ static class FragmentAlt *fragment_alt_random_get(Gamep g, class LevelGen *l, Fr
 //
 // Dump a fragment_alt
 //
-static void fragment_alt_dump(Gamep g, class FragmentAlt *r)
+static void fragment_alt_dump(Gamep g, class FragmentAlt *f)
 {
   TRACE_NO_INDENT();
 
   level_gen_mutex.lock();
-  LOG("FragmentAlt %d @ %s:%d", r->id, r->file, r->line);
+  LOG("FragmentAlt %d @ %s:%d", f->id, f->file, f->line);
 
-  for (int y = 0; y < r->height; y++) {
+  for (int y = 0; y < f->height; y++) {
     std::string tmp;
-    for (int x = 0; x < r->width; x++) {
-      tmp += r->data[ (y * r->width) + x ];
+    for (int x = 0; x < f->width; x++) {
+      tmp += f->data[ (y * f->width) + x ];
     }
     LOG("[%s]", tmp.c_str());
   }
@@ -1317,8 +1347,8 @@ void fragment_alts_dump(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto r : fragment_alts_all) {
-    fragment_alt_dump(g, r);
+  for (auto f : fragment_alts_all) {
+    fragment_alt_dump(g, f);
   }
 }
 
@@ -1329,15 +1359,15 @@ void fragment_alts_fini(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto r : fragment_alts_all) {
-    delete r;
+  for (auto f : fragment_alts_all) {
+    delete f;
   }
 }
 
 //
 // Read a fragment char
 //
-static char fragment_char(Gamep g, class Fragment *r, int x, int y)
+static char fragment_char(Gamep g, class Fragment *f, int x, int y)
 {
   if (x < 0) {
     return CHARMAP_EMPTY;
@@ -1345,20 +1375,20 @@ static char fragment_char(Gamep g, class Fragment *r, int x, int y)
   if (y < 0) {
     return CHARMAP_EMPTY;
   }
-  if (x >= r->width) {
+  if (x >= f->width) {
     return CHARMAP_EMPTY;
   }
-  if (y >= r->height) {
+  if (y >= f->height) {
     return CHARMAP_EMPTY;
   }
 
-  return r->data[ (y * r->width) + x ];
+  return f->data[ (y * f->width) + x ];
 }
 
 //
 // Rotate the current fragment clockwise and put that into a new fragment
 //
-static class Fragment *fragment_rotate(Gamep g, class Fragment *r)
+static class Fragment *fragment_rotate(Gamep g, class Fragment *f)
 {
   TRACE_NO_INDENT();
 
@@ -1367,18 +1397,18 @@ static class Fragment *fragment_rotate(Gamep g, class Fragment *r)
   fragments_curr.push_back(n);
 
   n->id     = fragment_no++;
-  n->chance = r->chance;
-  n->file   = r->file;
-  n->line   = r->line;
-  n->width  = r->height;
-  n->height = r->width;
-  n->data   = (char *) myzalloc(r->width * r->height, "fragment data");
+  n->chance = f->chance;
+  n->file   = f->file;
+  n->line   = f->line;
+  n->width  = f->height;
+  n->height = f->width;
+  n->data   = (char *) myzalloc(f->width * f->height, "fragment data");
 
-  for (int y = 0; y < r->height; y++) {
-    for (int x = 0; x < r->width; x++) {
+  for (int y = 0; y < f->height; y++) {
+    for (int x = 0; x < f->width; x++) {
       int nx                          = n->width - y - 1;
       int ny                          = x;
-      n->data[ (ny * n->width) + nx ] = r->data[ (y * r->width) + x ];
+      n->data[ (ny * n->width) + nx ] = f->data[ (y * f->width) + x ];
     }
   }
 
@@ -1388,7 +1418,7 @@ static class Fragment *fragment_rotate(Gamep g, class Fragment *r)
 //
 // Flip the current fragment horizontally and put that into a new fragment
 //
-static class Fragment *fragment_flip_horiz(Gamep g, class Fragment *r)
+static class Fragment *fragment_flip_horiz(Gamep g, class Fragment *f)
 {
   TRACE_NO_INDENT();
 
@@ -1397,18 +1427,18 @@ static class Fragment *fragment_flip_horiz(Gamep g, class Fragment *r)
   fragments_curr.push_back(n);
 
   n->id     = fragment_no++;
-  n->chance = r->chance;
-  n->file   = r->file;
-  n->line   = r->line;
-  n->width  = r->width;
-  n->height = r->height;
-  n->data   = (char *) myzalloc(r->width * r->height, "fragment data");
+  n->chance = f->chance;
+  n->file   = f->file;
+  n->line   = f->line;
+  n->width  = f->width;
+  n->height = f->height;
+  n->data   = (char *) myzalloc(f->width * f->height, "fragment data");
 
-  for (int y = 0; y < r->height; y++) {
-    for (int x = 0; x < r->width; x++) {
-      int nx                          = r->width - x - 1;
+  for (int y = 0; y < f->height; y++) {
+    for (int x = 0; x < f->width; x++) {
+      int nx                          = f->width - x - 1;
       int ny                          = y;
-      n->data[ (ny * r->width) + nx ] = r->data[ (y * r->width) + x ];
+      n->data[ (ny * f->width) + nx ] = f->data[ (y * f->width) + x ];
     }
   }
 
@@ -1524,31 +1554,31 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
   //
   // Allocate space for the fragment
   //
-  class Fragment *r = new Fragment();
-  fragments_all.push_back(r);
+  class Fragment *f = new Fragment();
+  fragments_all.push_back(f);
 
   fragments_curr.clear();
-  fragments_curr.push_back(r);
+  fragments_curr.push_back(f);
 
-  r->id     = fragment_no++;
-  r->chance = chance;
-  r->file   = file;
-  r->line   = line;
-  r->width  = fragment_width;
-  r->height = fragment_height;
-  r->data   = (char *) myzalloc(fragment_width * fragment_height, "fragment data");
+  f->id     = fragment_no++;
+  f->chance = chance;
+  f->file   = file;
+  f->line   = line;
+  f->width  = fragment_width;
+  f->height = fragment_height;
+  f->data   = (char *) myzalloc(fragment_width * fragment_height, "fragment data");
 
   //
   // Now read the fragment again
   //
   va_start(ap, line);
 
-  for (int y = 0; y < r->height; y++) {
+  for (int y = 0; y < f->height; y++) {
     const char *fragment_line = va_arg(ap, char *);
-    for (int x = 0; x < r->width; x++) {
+    for (int x = 0; x < f->width; x++) {
       auto c = fragment_line[ x ];
 
-      r->data[ (y * r->width) + x ] = c;
+      f->data[ (y * f->width) + x ] = c;
     }
   }
 
@@ -1557,8 +1587,8 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
   //
   // Make alternate fragments
   //
-  fragment_rotate(g, fragment_rotate(g, fragment_rotate(g, r)));
-  fragment_rotate(g, fragment_rotate(g, fragment_rotate(g, fragment_flip_horiz(g, r))));
+  fragment_rotate(g, fragment_rotate(g, fragment_rotate(g, f)));
+  fragment_rotate(g, fragment_rotate(g, fragment_rotate(g, fragment_flip_horiz(g, f))));
 
   return true;
 }
@@ -1587,17 +1617,17 @@ static class Fragment *fragment_random_get(Gamep g, class LevelGen *l)
 //
 // Dump a fragment
 //
-static void fragment_dump(Gamep g, class Fragment *r)
+static void fragment_dump(Gamep g, class Fragment *f)
 {
   TRACE_NO_INDENT();
 
   level_gen_mutex.lock();
-  LOG("Fragment %d @ %s:%d", r->id, r->file, r->line);
+  LOG("Fragment %d @ %s:%d", f->id, f->file, f->line);
 
-  for (int y = 0; y < r->height; y++) {
+  for (int y = 0; y < f->height; y++) {
     std::string tmp;
-    for (int x = 0; x < r->width; x++) {
-      tmp += r->data[ (y * r->width) + x ];
+    for (int x = 0; x < f->width; x++) {
+      tmp += f->data[ (y * f->width) + x ];
     }
     LOG("[%s]", tmp.c_str());
   }
@@ -1613,8 +1643,8 @@ void fragments_dump(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto r : fragments_all) {
-    fragment_dump(g, r);
+  for (auto f : fragments_all) {
+    fragment_dump(g, f);
   }
 }
 
@@ -1748,8 +1778,8 @@ void fragments_fini(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  for (auto r : fragments_all) {
-    delete r;
+  for (auto f : fragments_all) {
+    delete f;
   }
 }
 
@@ -2846,7 +2876,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
   for (int y = dist; y < MAP_HEIGHT - dist - 1; y++) {
     for (int x = dist; x < MAP_WIDTH - dist - 1; x++) {
       switch (l->data[ x ][ y ].c) {
-        case CHARMAP_FLOOR :
+        case CHARMAP_JOIN :
           {
             //
             // Decrease the chance of connecting leaf rooms so we don't get too many
@@ -2951,25 +2981,25 @@ static void level_gen_connect_adjacent_rooms(Gamep g, class LevelGen *l)
   TRACE_NO_INDENT();
 
   const std::initializer_list< std::pair< int, int > > dists = {
-      std::pair(2 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(3 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(4 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(5 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(6 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(7 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(8 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(9 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(10 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(11 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(12 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(13 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(14 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(15 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(16 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(17 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(18 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(19 /* corridor length */, 20 /* percentage chance of occuring */),
-      std::pair(20 /* corridor length */, 20 /* percentage chance of occuring */),
+      std::pair(2 /* corridor length */, 80 /* percentage chance of occuring */),
+      std::pair(3 /* corridor length */, 80 /* percentage chance of occuring */),
+      std::pair(4 /* corridor length */, 80 /* percentage chance of occuring */),
+      std::pair(5 /* corridor length */, 80 /* percentage chance of occuring */),
+      std::pair(6 /* corridor length */, 80 /* percentage chance of occuring */),
+      std::pair(7 /* corridor length */, 80 /* percentage chance of occuring */),
+      std::pair(8 /* corridor length */, 80 /* percentage chance of occuring */),
+      std::pair(9 /* corridor length */, 80 /* percentage chance of occuring */),
+      std::pair(10 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(11 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(12 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(13 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(14 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(15 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(16 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(17 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(18 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(19 /* corridor length */, 40 /* percentage chance of occuring */),
+      std::pair(20 /* corridor length */, 40 /* percentage chance of occuring */),
   };
   for (auto d : dists) {
     level_gen_connect_adjacent_rooms_with_distance_and_chance(g, l, d.first, d.second);
@@ -3293,7 +3323,6 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_CHASM_50 :
         case CHARMAP_EMPTY :
         case CHARMAP_WALL :
-        case CHARMAP_BARREL :
         case CHARMAP_BRAZIER :
         case CHARMAP_BRIDGE :
         case CHARMAP_CORRIDOR :
@@ -3306,22 +3335,89 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_JOIN :
         case CHARMAP_MOB1 :
         case CHARMAP_MOB2 :
-        case CHARMAP_MONST1 :
-        case CHARMAP_MONST2 :     break;
-        case CHARMAP_KEY :
-        case CHARMAP_TELEPORT :
-        case CHARMAP_TRAP :
-        case CHARMAP_PILLAR :
-        case CHARMAP_TREASURE :
-        case CHARMAP_DOOR_TYPE_LOCKED :
-        case CHARMAP_DOOR_TYPE_SECRET :
         case CHARMAP_DOOR_TYPE_UNLOCKED :
-        case CHARMAP_CHASM :
+        case CHARMAP_MONST1 :
+        case CHARMAP_MONST2 :             break;
+        case CHARMAP_DOOR_TYPE_SECRET :
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
               if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
-                if (d100() < 25) {
+                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_SECRET_DOORS) {
+                  l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
+                }
+              }
+            }
+          }
+          break;
+        case CHARMAP_TRAP :
+          for (int dy = -2; dy <= 2; dy++) {
+            for (int dx = -2; dx <= 2; dx++) {
+              auto d = l->data[ x - dx ][ y - dy ].c;
+              if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
+                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TRAPS) {
+                  l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
+                }
+              }
+            }
+          }
+          break;
+        case CHARMAP_PILLAR :
+        case CHARMAP_BARREL :
+        case CHARMAP_TREASURE :
+          for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+              auto d = l->data[ x - dx ][ y - dy ].c;
+              if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
+                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_ITEMS) {
+                  l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
+                }
+              }
+            }
+          }
+          break;
+        case CHARMAP_DOOR_TYPE_LOCKED :
+          for (int dy = -2; dy <= 2; dy++) {
+            for (int dx = -2; dx <= 2; dx++) {
+              auto d = l->data[ x - dx ][ y - dy ].c;
+              if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
+                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_LOCKED_DOORS) {
+                  l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
+                }
+              }
+            }
+          }
+          break;
+        case CHARMAP_CHASM :
+          for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+              auto d = l->data[ x - dx ][ y - dy ].c;
+              if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
+                if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_CHASMS) {
+                  l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
+                }
+              }
+            }
+          }
+          break;
+        case CHARMAP_TELEPORT :
+          for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+              auto d = l->data[ x - dx ][ y - dy ].c;
+              if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_TELEPORTS) {
+                if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
+                  l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
+                }
+              }
+            }
+          }
+          break;
+        case CHARMAP_KEY :
+          for (int dy = -2; dy <= 2; dy++) {
+            for (int dx = -2; dx <= 2; dx++) {
+              auto d = l->data[ x - dx ][ y - dy ].c;
+              if (d100() < LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_KEYS) {
+                if ((d == CHARMAP_EMPTY) || (d == CHARMAP_FLOOR)) {
                   l->data[ x - dx ][ y - dy ].c = CHARMAP_FOLIAGE;
                 }
               }
@@ -3552,10 +3648,13 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  l->info.monst_count    = 0;
-  l->info.monst1_count   = 0;
-  l->info.monst2_count   = 0;
-  l->info.treasure_count = 0;
+  l->info.monst_count       = 0;
+  l->info.monst1_count      = 0;
+  l->info.monst2_count      = 0;
+  l->info.treasure_count    = 0;
+  l->info.teleport_count    = 0;
+  l->info.door_locked_count = 0;
+  l->info.key_count         = 0;
 
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
@@ -3579,6 +3678,18 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
           // Must have > 1 teleport
           //
           l->info.teleport_count++;
+          break;
+        case CHARMAP_DOOR_TYPE_LOCKED :
+          //
+          // Must have > 1 key
+          //
+          l->info.door_locked_count++;
+          break;
+        case CHARMAP_KEY :
+          //
+          // Must have > 1 key
+          //
+          l->info.key_count++;
           break;
       }
     }
@@ -3669,6 +3780,104 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
 }
 
 //
+// For secret doors, need to add a corresponding key
+//
+static void level_gen_add_missing_keys_do(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto r = l->data[ x ][ y ].room;
+
+      if (r && (r->flags & ROOM_SECRET_FLAG)) {
+        continue;
+      }
+      if (r && (l->room_entrance == r)) {
+        continue;
+      }
+      if (r && (l->room_exit == r)) {
+        continue;
+      }
+
+      auto tries  = MAX_LEVEL_GEN_PLACE_MISSING_KEY_TRIES;
+      auto border = 4;
+
+      while (tries-- > 0) {
+        auto kx = pcg_random_range(border, MAP_WIDTH - border);
+        auto ky = pcg_random_range(border, MAP_HEIGHT - border);
+        auto c  = l->data[ kx ][ ky ].c;
+        if (c == CHARMAP_FLOOR) {
+          l->data[ kx ][ ky ].c = CHARMAP_KEY;
+          return;
+        }
+      }
+    }
+  }
+}
+
+//
+// For secret doors, need to add a corresponding key
+//
+static void level_gen_add_missing_keys(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  int tries = l->info.door_locked_count;
+  tries -= l->info.key_count;
+
+  while (tries-- > 0) {
+    level_gen_add_missing_keys_do(g, l);
+  }
+}
+
+//
+// If too many keys, remove one
+//
+static void level_gen_remove_additional_keys_do(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  std::vector< spoint > cands;
+
+  //
+  // Find floor tiles with floor space around them, candidates for placing items
+  //
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      auto c = l->data[ x ][ y ].c;
+
+      switch (c) {
+        case CHARMAP_KEY : cands.push_back(spoint(x, y)); break;
+      }
+    }
+  }
+
+  if (cands.empty()) {
+    return;
+  }
+
+  auto cand                     = cands[ pcg_rand() % cands.size() ];
+  l->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
+  CON("removed additional key");
+}
+
+//
+// For secret doors, need to add a corresponding key
+//
+static void level_gen_remove_additional_keys(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  int tries = l->info.key_count;
+  tries -= l->info.door_locked_count;
+
+  while (tries-- > 0) {
+    level_gen_remove_additional_keys_do(g, l);
+  }
+}
+
+//
 // Try to add some more content
 //
 static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l)
@@ -3734,7 +3943,7 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
   //
   // Place an additional teleport
   //
-  auto tries = 100;
+  auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
   while (tries-- > 0) {
     auto cand = cands[ pcg_rand() % cands.size() ];
     auto x    = cand.x;
@@ -3744,7 +3953,6 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
     if (r && (l->room_entrance == r)) {
       continue;
     }
-
     if (r && (l->room_exit == r)) {
       continue;
     }
@@ -3755,7 +3963,7 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
 }
 
 //
-// Add some doors
+// Look for a single room we can add doors at the exits from it
 //
 static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
 {
@@ -3766,7 +3974,7 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
   //
   // Find a random room.
   //
-  auto tries = 100;
+  auto tries = MAX_LEVEL_GEN_LOOK_FOR_ROOM_TRIES;
   while (tries-- > 0) {
     auto border = 4;
     auto x      = pcg_random_range(border, MAP_WIDTH - border);
@@ -3774,6 +3982,9 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
     r           = l->data[ x ][ y ].room;
 
     if (! r) {
+      continue;
+    }
+    if (r->flags & ROOM_SECRET_FLAG) {
       continue;
     }
     if (l->room_entrance == r) {
@@ -3788,8 +3999,8 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
   //
   // Look for the tiles for this room.
   //
-  for (auto y = 0; y < MAP_HEIGHT; y++) {
-    for (auto x = 0; x < MAP_WIDTH; x++) {
+  for (auto y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (auto x = 1; x < MAP_WIDTH - 1; x++) {
       auto other_room = l->data[ x ][ y ].room;
       if (other_room != r) {
         continue;
@@ -3807,8 +4018,8 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
           for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
               switch (l->data[ x + dx ][ y + dy ].c) {
-                case CHARMAP_CORRIDOR :
-                case CHARMAP_JOIN :     l->data[ x + dx ][ y + dy ].c = CHARMAP_DOOR_TYPE_UNLOCKED; break;
+                // case CHARMAP_CORRIDOR :
+                case CHARMAP_JOIN : l->data[ x + dx ][ y + dy ].c = CHARMAP_DOOR_TYPE_UNLOCKED; break;
               }
             }
           }
@@ -3827,11 +4038,11 @@ static void level_gen_add_doors(Gamep g, class LevelGen *l)
 
   int tries = 0;
 
-  while (tries++ < LEVEL_DOOR_TRIES) {
+  while (tries++ < MAX_LEVEL_GEN_ADD_ROOM_WITH_DOOR_TRIES) {
     level_gen_add_doors_do(g, l);
   }
 
-  while (d100() < LEVEL_DOOR_PROB) {
+  while (d100() < MAX_LEVEL_GEN_ADD_ADDITIONAL_ROOM_WITH_DOOR_TRIES) {
     level_gen_add_doors_do(g, l);
   }
 }
@@ -4075,19 +4286,29 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   level_gen_add_missing_monsts_and_treasure(g, l);
 
   //
+  // Secret doors need keys
+  //
+  level_gen_add_missing_keys(g, l);
+
+  //
   // If not enough teleports
   //
   level_gen_add_missing_teleports(g, l);
 
   //
-  // Hide doors
-  //
-  level_gen_add_foliage_around_secret_doors(g, l);
-
-  //
   // Final count
   //
   level_gen_count_items(g, l);
+
+  //
+  // If too many keys, remove some
+  //
+  level_gen_remove_additional_keys(g, l);
+
+  //
+  // Hide doors
+  //
+  level_gen_add_foliage_around_secret_doors(g, l);
 
   //
   // Populate the map with things from the level created
