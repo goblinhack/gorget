@@ -98,6 +98,10 @@ typedef struct Thing_ {
   // faster to malloc and memset versus default construction.
   //////////////////////////////////////////////////////////////
   //
+  // Template ID. MUST BE FIRST AS WE memset the thing after this.
+  //
+  uint16_t tp_id;
+  //
   // Unique ID
   //
   ThingId id;
@@ -219,10 +223,6 @@ typedef struct Thing_ {
   // Accumulates and holds the amount of time we've been falling.
   //
   int16_t _is_falling;
-  //
-  // Template ID
-  //
-  uint16_t tp_id;
   //
   // Current game tick this thing has completed
   //

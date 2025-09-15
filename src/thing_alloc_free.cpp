@@ -6,6 +6,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_random.hpp"
 #include "my_tp_callbacks.hpp"
 
 #include <iostream>
@@ -21,27 +22,26 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
     DIE("no template set for thing allocation");
   }
 
-  thing_mutex.lock();
+  const auto tp_id = tp_id_get(tp);
 
-  static ThingId last_index;
-
-  for (ThingId n = 0; n < (1 << THING_COMMON_ID_BITS); n++) {
-    //
-    // Wrap around
-    //
-    ThingId index = (last_index + n + 1) % (1 << THING_COMMON_ID_BITS);
-
-    //
-    // Skip index 0
-    //
-    if (! index) {
+  for (auto tries = 0; tries < (1 << THING_COMMON_ID_BITS); tries++) {
+    auto index = pcg_random_range(1, 1 << THING_COMMON_ID_BITS);
+    auto t     = &v->thing_body[ index ];
+    if (t->tp_id) {
       continue;
     }
 
-    auto t = &v->thing_body[ index ];
-    if (t->id) {
-      continue;
+    thing_mutex.lock();
+    {
+      if (unlikely(t->tp_id)) {
+        thing_mutex.unlock();
+        continue;
+      }
+      t->tp_id = tp_id;
+      thing_mutex.unlock();
     }
+
+    memset((char *) t + SIZEOF(t->tp_id), 0, SIZEOF(*t) - SIZEOF(t->tp_id));
 
     static uint16_t entropy;
     entropy++;
@@ -50,25 +50,16 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
       entropy++;
     }
 
-    memset((void *) t, 0, SIZEOF(*t));
-
     ThingId thing_id;
     thing_id = (entropy << THING_COMMON_ID_BITS) | index;
     t->id    = thing_id;
-    t->tp_id = tp_id_get(tp);
 
     if (thing_is_monst(t) || thing_is_player(t)) {
       thing_ai_alloc(g, v, l, t);
     }
 
-    last_index = index;
-
-    thing_mutex.unlock();
-
     return t;
   }
-
-  thing_mutex.unlock();
 
   DIE("out of things");
 }
@@ -76,8 +67,6 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
 void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
-
-  thing_mutex.lock();
 
   auto o = thing_find(g, v, t->id);
   if (t != o) {
@@ -102,10 +91,10 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   thing_pop(g, v, t);
+
+  thing_mutex.lock();
   thing_ai_free(g, v, l, t);
-
   memset((void *) t, 0, SIZEOF(*t));
-
   thing_mutex.unlock();
 }
 
@@ -113,23 +102,27 @@ ThingAip thing_ai_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  static ThingAiId last_index;
-
   //
   // Continue from the last successful allocation
   //
-  for (ThingAiId index = 0; index < THING_AI_MAX; index++) {
-    ThingAiId ai_id = last_index + index;
-    if (ai_id == 0) {
+  for (auto tries = 0; tries < THING_AI_MAX; tries++) {
+    ThingAiId ai_id = pcg_random_range(1, THING_AI_MAX - 1);
+    if (v->thing_ai[ ai_id ].in_use) {
       continue;
     }
 
-    if (! v->thing_ai[ ai_id ].in_use) {
+    thing_mutex.lock();
+    {
+      if (unlikely(v->thing_ai[ ai_id ].in_use)) {
+        thing_mutex.unlock();
+        continue;
+      }
       v->thing_ai[ ai_id ].in_use = true;
-      t->ai_id                    = ai_id;
-      last_index                  = ai_id;
-      return &v->thing_ai[ ai_id ];
     }
+    thing_mutex.unlock();
+
+    t->ai_id = ai_id;
+    return &v->thing_ai[ ai_id ];
   }
 
   ERR("out of Thing AI IDs");
