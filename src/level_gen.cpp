@@ -673,7 +673,6 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
           }
           room_type = ROOM_TYPE_START;
           break;
-          break;
         default : DIE("room has unknown char [%c] in room @ %s:%d", room_line[ i ], file, line); return;
       }
     }
@@ -2738,7 +2737,6 @@ static bool level_gen_tile_is_traversable(Gamep g, class LevelGen *l, int x, int
     case CHARMAP_CORRIDOR :           return true;
     case CHARMAP_DEEP_WATER :         return true;
     case CHARMAP_DOOR_TYPE_LOCKED :   return true;
-    case CHARMAP_DOOR_TYPE_SECRET :   return true;
     case CHARMAP_DOOR_TYPE_UNLOCKED : return true;
     case CHARMAP_ENTRANCE :           return true;
     case CHARMAP_EXIT :               return true;
@@ -3903,17 +3901,52 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
 }
 
 //
+// Try to add a telport on the main path
+//
+static bool level_gen_add_missing_teleport_do(Gamep g, class LevelGen *l, const std::vector< spoint > &cands)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Place an additional teleport
+  //
+  auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
+  while (tries-- > 0) {
+    auto cand = cands[ pcg_rand() % cands.size() ];
+    auto x    = cand.x;
+    auto y    = cand.y;
+    auto r    = l->data[ x ][ y ].room;
+
+    if (r && (l->room_entrance == r)) {
+      continue;
+    }
+    if (r && (l->room_exit == r)) {
+      continue;
+    }
+    if (! l->info.on_path_entrance_to_exit[ x ][ y ]) {
+      continue;
+    }
+
+    l->data[ x ][ y ].c = CHARMAP_TELEPORT;
+    return true;
+  }
+
+  return false;
+}
+
+//
 // Try to add some additional teleports if needed
 //
 static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  if (l->info.teleport_count != 1) {
+  if (! l->info.teleport_count) {
     return;
   }
 
   std::vector< spoint > cands;
+  int                   reachable_teleports = 0;
 
   //
   // Find floor tiles with floor space around them, candidates for placing items
@@ -3930,6 +3963,12 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
       }
 
       switch (c) {
+        case CHARMAP_TELEPORT :
+          //
+          // We need at least one teleport in a reachable room
+          //
+          reachable_teleports++;
+          break;
         case CHARMAP_FLOOR :
           if (/* top left  */ l->data[ x - 1 ][ y - 1 ].c == CHARMAP_FLOOR &&
               /* bot right */ l->data[ x - 1 ][ y + 1 ].c == CHARMAP_FLOOR &&
@@ -3953,22 +3992,20 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
   //
   // Place an additional teleport
   //
+  if ((l->info.teleport_count == 1) || ! reachable_teleports) {
+    auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
+    while (tries-- > 0) {
+      if (level_gen_add_missing_teleport_do(g, l, cands)) {
+        return;
+      }
+    }
+  }
+
   auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
   while (tries-- > 0) {
-    auto cand = cands[ pcg_rand() % cands.size() ];
-    auto x    = cand.x;
-    auto y    = cand.y;
-    auto r    = l->data[ x ][ y ].room;
-
-    if (r && (l->room_entrance == r)) {
-      continue;
+    if (level_gen_add_missing_teleport_do(g, l, cands)) {
+      return;
     }
-    if (r && (l->room_exit == r)) {
-      continue;
-    }
-
-    l->data[ x ][ y ].c = CHARMAP_TELEPORT;
-    break;
   }
 }
 
@@ -4144,6 +4181,9 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
   }
   l->walked[ x ][ y ]                        = true;
   l->info.on_path_entrance_to_exit[ x ][ y ] = level_gen_tile_is_traversable(g, l, x, y) ? 1 : 0;
+  if (! l->info.on_path_entrance_to_exit[ x ][ y ]) {
+    return;
+  }
 
   if (x > 0) {
     level_gen_mark_tiles_on_path_entrance_to_exit(g, l, x - 1, y);
@@ -4225,6 +4265,34 @@ static void level_gen_create(Gamep g, class LevelGen *l)
   // Copy useful level stats for later debugging.
   //
   level->info = l->info;
+}
+
+//
+// Flood the walkable areas
+//
+static void level_gen_test_flood(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Find floor tiles with floor space around them, candidates for placing items
+  //
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_ENTRANCE :
+        case CHARMAP_EXIT :     break;
+        default :
+          //
+          // Only place telports on tiles between the entrance and exit
+          //
+          if (l->info.on_path_entrance_to_exit[ x ][ y ]) {
+            l->data[ x ][ y ].c = CHARMAP_CORRIDOR;
+          }
+          break;
+      }
+    }
+  }
 }
 
 //
@@ -4353,6 +4421,13 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   // Hide doors
   //
   level_gen_add_foliage_around_secret_doors(g, l);
+
+  //
+  // Show walkable areas
+  //
+  if (0) {
+    level_gen_test_flood(g, l);
+  }
 
   //
   // Populate the map with things from the level created
