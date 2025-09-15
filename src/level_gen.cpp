@@ -3988,6 +3988,41 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
       //
       // Only look for join tiles adjacent to some walkable tiles.
       //
+      // Rooms which have been extended with corridors are not easily
+      // enclosed in doors now.
+      //
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_FLOOR :
+        case CHARMAP_DIRT :
+        case CHARMAP_GRASS :
+        case CHARMAP_FOLIAGE :
+
+          {
+            for (int dy = -1; dy <= 1; dy++) {
+              for (int dx = -1; dx <= 1; dx++) {
+                switch (l->data[ x + dx ][ y + dy ].c) {
+                  case CHARMAP_CORRIDOR :
+                  case CHARMAP_BRIDGE :   return;
+                }
+              }
+            }
+          }
+      }
+    }
+  }
+
+  //
+  // Look for the tiles for this room.
+  //
+  // Only look for join tiles adjacent to some walkable tiles.
+  //
+  for (auto y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (auto x = 1; x < MAP_WIDTH - 1; x++) {
+      auto other_room = l->data[ x ][ y ].room;
+      if (other_room != r) {
+        continue;
+      }
+
       switch (l->data[ x ][ y ].c) {
         case CHARMAP_FLOOR :
         case CHARMAP_DIRT :
@@ -3997,7 +4032,6 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
           for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
               switch (l->data[ x + dx ][ y + dy ].c) {
-                // case CHARMAP_CORRIDOR :
                 case CHARMAP_JOIN : l->data[ x + dx ][ y + dy ].c = CHARMAP_DOOR_TYPE_UNLOCKED; break;
               }
             }
