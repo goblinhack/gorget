@@ -408,12 +408,16 @@ enum {
   // Sanity check on exits that we have no tiles in the same column or row
   // as an exit; it makes it harder to join rooms together
   //
-  ROOM_CHECK_EXIT_FLAG = 0x1,
+  ROOM_FLAG_CHECK_EXITS = 0x1,
   //
   // Secret rooms which need a key to enter
   //
-  ROOM_SECRET_FLAG = 0x2,
-  ROOM_NEXT_FLAG   = 0x4,
+  ROOM_FLAG_LOCKED = 0x2,
+  //
+  // Key room
+  //
+  ROOM_FLAG_HAS_KEY = 0x4,
+  ROOM_FLAG_NEXT    = 0x8,
 };
 
 enum {
@@ -510,6 +514,7 @@ void rooms_small(Gamep);
 void rooms_medium(Gamep);
 void rooms_start(Gamep);
 void rooms_exit(Gamep);
+void rooms_key(Gamep);
 void rooms_prefab(Gamep);
 void rooms_prefab_secret(Gamep);
 

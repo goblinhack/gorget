@@ -41,11 +41,14 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
   LOG("Seed          : %u", l->info.seed_num);
 
   if (l->info.room_count) {
-    LOG("Room count    : %d", l->info.room_count);
-    LOG("Fragment count: %d", l->info.fragment_count);
-    LOG("Treasure count: %d", l->info.treasure_count);
-    LOG("Monst count   : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count,
+    LOG("Room count        : %d", l->info.room_count);
+    LOG("Fragment count    : %d", l->info.fragment_count);
+    LOG("Treasure count    : %d", l->info.treasure_count);
+    LOG("Monst count       : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count,
         l->info.monst2_count);
+    LOG("Teleport count    : %d", l->info.teleport_count);
+    LOG("Locked door count : %d", l->info.door_locked_count);
+    LOG("Key count         : %d", l->info.key_count);
   }
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
@@ -110,21 +113,21 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
         if (level_open_is_door_type_unlocked(g, v, l, p)) {
           c = CHARMAP_FLOOR;
         } else {
-          c = CHARMAP_DOOR_TYPE_UNLOCKED;
+          c = CHARMAP_DOOR_UNLOCKED;
         }
       }
       if (level_is_door_type_locked(g, v, l, p)) {
         if (level_open_is_door_type_locked(g, v, l, p)) {
           c = CHARMAP_FLOOR;
         } else {
-          c = CHARMAP_DOOR_TYPE_LOCKED;
+          c = CHARMAP_DOOR_LOCKED;
         }
       }
       if (level_is_door_type_secret(g, v, l, p)) {
         if (level_open_is_door_type_secret(g, v, l, p)) {
           c = CHARMAP_FLOOR;
         } else {
-          c = CHARMAP_DOOR_TYPE_SECRET;
+          c = CHARMAP_DOOR_SECRET;
         }
       }
       if (level_alive_is_foliage(g, v, l, p)) {

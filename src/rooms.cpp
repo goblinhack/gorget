@@ -22,6 +22,7 @@ void rooms_init(Gamep g)
   rooms_small(g);
   rooms_medium(g);
   rooms_exit(g);
+  rooms_key(g);
   rooms_prefab(g);
   rooms_prefab_secret(g);
 }

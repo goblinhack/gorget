@@ -127,19 +127,19 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           need_floor = true;
           tp         = tp_brazier;
           break;
-        case CHARMAP_DOOR_TYPE_UNLOCKED :
+        case CHARMAP_DOOR_UNLOCKED :
           need_floor = true;
           tp         = tp_random(is_door_type_unlocked);
           break;
-        case CHARMAP_DOOR_TYPE_LOCKED :
+        case CHARMAP_DOOR_LOCKED :
           need_floor = true;
-          if (d100() < 50) {
-            tp = tp_random(is_door_type_secret);
-          } else {
+          if (l->info.key_count) {
             tp = tp_random(is_door_type_locked);
+          } else {
+            tp = tp_random(is_door_type_secret);
           }
           break;
-        case CHARMAP_DOOR_TYPE_SECRET :
+        case CHARMAP_DOOR_SECRET :
           need_floor = true;
           tp         = tp_random(is_door_type_secret);
           break;

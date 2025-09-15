@@ -67,7 +67,7 @@ static void room_gen_dump(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  fprintf(grid->out, "  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,\n");
+  fprintf(grid->out, "  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,\n");
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     fprintf(grid->out, "           /* line */ (const char *) \"");

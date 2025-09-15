@@ -667,7 +667,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " ^        ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^       ",
            /* line */ (const char *) "    .       ",
            /* line */ (const char *) "  ......bb  ",
@@ -681,7 +681,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "      ^     ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) "    .xxxxx ",
            /* line */ (const char *) "    .xM$$x ",
@@ -694,7 +694,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "       ^   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^          ^          ",
            /* line */ (const char *) "    . xxxxxx   .          ",
            /* line */ (const char *) "    . xB$$Bx55......5     ",
@@ -710,7 +710,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "                       ^  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^          ^          ",
            /* line */ (const char *) "    .xxxxxxxxxx.          ",
            /* line */ (const char *) "    .x$......Gx.......... ",
@@ -726,7 +726,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "                       ^  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^          ^          ",
            /* line */ (const char *) "    .xxxxxxxxxx.          ",
            /* line */ (const char *) "    .x$......Gx.......... ",
@@ -742,7 +742,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "                       ^  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ^               ",
            /* line */ (const char *) "  . 55 xxxxxxxxxx ",
            /* line */ (const char *) "  . 55 x$$....G.x ",
@@ -756,7 +756,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "   ^              ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ^               ",
            /* line */ (const char *) "  .  xxxxxxx      ",
            /* line */ (const char *) "  ..`+...$$x..g.  ",
@@ -770,7 +770,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "   ^              ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^          ",
            /* line */ (const char *) "     .  xxxxxxx ",
            /* line */ (const char *) " ..55.55x$s..mx ",
@@ -787,7 +787,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "           ^    ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ^      ",
            /* line */ (const char *) "  . xxxx ",
            /* line */ (const char *) " 5.`x.$x ",
@@ -804,7 +804,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "    ^    ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   ^       ",
            /* line */ (const char *) " 5....t... ",
            /* line */ (const char *) " 5.... ... ",
@@ -817,7 +817,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  ^        ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   ^          ",
            /* line */ (const char *) " 5..C.......5 ",
            /* line */ (const char *) " 5...C......5 ",
@@ -834,7 +834,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "xxxxxx        ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "xxxxxxxxxx ",
            /* line */ (const char *) "x$.s.....x ",
            /* line */ (const char *) "x$.x.....x ",
@@ -849,7 +849,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " ..        ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) " $ ~~~~~~~. ",
            /* line */ (const char *) " .s~~~~ ... ",
            /* line */ (const char *) "        ... ",
@@ -866,7 +866,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " xxxxxxxx   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^      ",
            /* line */ (const char *) "     .      ",
            /* line */ (const char *) "    .....   ",
@@ -883,7 +883,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "    ^       ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^      ",
            /* line */ (const char *) "...  .      ",
            /* line */ (const char *) "......  xxxx",
@@ -900,7 +900,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " ^          ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^      ",
            /* line */ (const char *) "      .``m   ",
            /* line */ (const char *) " .. ...  $   ",
@@ -919,7 +919,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "           ^ ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^      ",
            /* line */ (const char *) "      .      ",
            /* line */ (const char *) "  .~~~~      ",
@@ -937,7 +937,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " ....xxxxxxxx",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   ^        ",
            /* line */ (const char *) "   .        ",
            /* line */ (const char *) "   .....    ",
@@ -954,7 +954,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  ..~~~~~~~~",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ^          ",
            /* line */ (const char *) "  .  CCCCC.$ ",
            /* line */ (const char *) "  ......C..m ",
@@ -970,7 +970,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) ".......t..   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^        ",
            /* line */ (const char *) "..$  .        ",
            /* line */ (const char *) ".m.  . CC..   ",
@@ -985,7 +985,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "    .....xxx  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    B.B     ",
            /* line */ (const char *) "    ...     ",
            /* line */ (const char *) "   .....    ",
@@ -1001,7 +1001,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  xxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^     ",
            /* line */ (const char *) " .... . ..  ",
            /* line */ (const char *) " .........  ",
@@ -1016,7 +1016,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  ^         ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^      ",
            /* line */ (const char *) " .......CC  ",
            /* line */ (const char *) " ........C  ",
@@ -1030,7 +1030,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " CCC..xxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  .......  ",
            /* line */ (const char *) "   .CC..   ",
            /* line */ (const char *) "   .CC..   ",
@@ -1043,7 +1043,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  xxxxxxxxx",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^     ",
            /* line */ (const char *) " ... . ..  ",
            /* line */ (const char *) "  .......  ",
@@ -1057,7 +1057,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "     ...   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) " .......~~ ",
            /* line */ (const char *) " ........~ ",
            /* line */ (const char *) " ...xxx..~ ",
@@ -1071,7 +1071,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "      xxxxx",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ..   ..  ",
            /* line */ (const char *) "  .......  ",
            /* line */ (const char *) "   .L.L.   ",
@@ -1087,7 +1087,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  xxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^    ",
            /* line */ (const char *) " .......~~ ",
            /* line */ (const char *) " ........~ ",
@@ -1101,7 +1101,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " ~~~.. xxxx",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^     ",
            /* line */ (const char *) "     C=C..  ",
            /* line */ (const char *) "    .C=C..  ",
@@ -1119,7 +1119,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "     ^      ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^     ",
            /* line */ (const char *) "   .... .. ",
            /* line */ (const char *) "  .b...... ",
@@ -1137,7 +1137,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "        ^  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^     ",
            /* line */ (const char *) "     .     ",
            /* line */ (const char *) "  g....... ",
@@ -1155,7 +1155,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "        ^  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^     ",
            /* line */ (const char *) "   ......   ",
            /* line */ (const char *) "  ..|...|.  ",
@@ -1172,7 +1172,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " xxxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^       ",
            /* line */ (const char *) "  ......CC  ",
            /* line */ (const char *) " m.......C  ",
@@ -1189,7 +1189,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "xxxxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^       ",
            /* line */ (const char *) "    .....     ",
            /* line */ (const char *) "   .......    ",
@@ -1208,7 +1208,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " xxxxxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^     ",
            /* line */ (const char *) "   ....... ",
            /* line */ (const char *) "  .....C.. ",
@@ -1227,7 +1227,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "xxxxxx ... ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^     ",
            /* line */ (const char *) "  ......   ",
            /* line */ (const char *) " ..|...|.  ",
@@ -1247,7 +1247,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " xxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   ........  ",
            /* line */ (const char *) "  m..... ..  ",
            /* line */ (const char *) "  ...... ..  ",
@@ -1265,7 +1265,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " xxxxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^     ",
            /* line */ (const char *) "  ......   ",
            /* line */ (const char *) " ..|...|.  ",
@@ -1284,7 +1284,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " xxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ^        ",
            /* line */ (const char *) "^..        ",
            /* line */ (const char *) " ...       ",
@@ -1298,7 +1298,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "         ^ ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ...      ",
            /* line */ (const char *) "  .m.      ",
            /* line */ (const char *) "  ...      ",
@@ -1312,7 +1312,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "       ^   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^      ",
            /* line */ (const char *) "  ....      ",
            /* line */ (const char *) "  ....      ",
@@ -1329,7 +1329,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "xxxxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   ...LLLL. ",
            /* line */ (const char *) "   ...L.. L ",
            /* line */ (const char *) "   ...LL..L ",
@@ -1345,7 +1345,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "        ^   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ..LLLLL  ",
            /* line */ (const char *) "   $C....LLL  ",
            /* line */ (const char *) "     ..L...L  ",
@@ -1363,7 +1363,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) " xxxxxxxxxxxxx",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) " ^          ",
            /* line */ (const char *) " ......LL.  ",
            /* line */ (const char *) " ......LL$  ",
@@ -1383,7 +1383,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "xxxxxxx.... ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   ^       ",
            /* line */ (const char *) " . .....b. ",
            /* line */ (const char *) " . ......b ",
@@ -1404,7 +1404,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  xxxxxxx  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "        ^  ",
            /* line */ (const char *) " ...b..... ",
            /* line */ (const char *) " ......m..^",
@@ -1422,7 +1422,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  xxxxxxx  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^    ",
            /* line */ (const char *) "  .......B ",
            /* line */ (const char *) "  .b...... ",
@@ -1438,7 +1438,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "       ^   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "       ^   ",
            /* line */ (const char *) "   ......B ",
            /* line */ (const char *) "   ....... ",
@@ -1457,7 +1457,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  xxxxxxx  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "        ^  ",
            /* line */ (const char *) "        .  ",
            /* line */ (const char *) "        .  ",
@@ -1476,7 +1476,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "  xxxxxxx  ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ^        ",
            /* line */ (const char *) "  .m..s... ",
            /* line */ (const char *) "  .mm.   . ",
@@ -1492,7 +1492,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "     xxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ^        ",
            /* line */ (const char *) "  G..bs... ",
            /* line */ (const char *) "  ....   . ",
@@ -1508,7 +1508,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "     xxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) " ^         ",
            /* line */ (const char *) " `.....`.  ",
            /* line */ (const char *) " ...``.`.. ",
@@ -1524,7 +1524,7 @@ void rooms_prefab_secret(Gamep g)
            /* line */ (const char *) "         ^ ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_SECRET_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_LOCKED, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   ^       ",
            /* line */ (const char *) "   .       ",
            /* line */ (const char *) "  .......$ ",

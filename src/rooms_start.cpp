@@ -12,7 +12,7 @@ void rooms_start(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) " xxx.xxxxx ",
            /* line */ (const char *) " x.......x ",
@@ -26,7 +26,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "       ^   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "       ^     ",
            /* line */ (const char *) "     x...x   ",
            /* line */ (const char *) "  xxxx.xxxx  ",
@@ -42,7 +42,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "      ^      ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "          ^     ",
            /* line */ (const char *) "        x.x     ",
            /* line */ (const char *) "        x.x     ",
@@ -58,7 +58,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "         ^      ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) " xxx.xxxxx ",
            /* line */ (const char *) " x.......x ",
@@ -72,7 +72,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) " xxx.xxxxx ",
            /* line */ (const char *) " x.......x ",
@@ -86,7 +86,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) "   x.xxxxx ",
            /* line */ (const char *) "   x.....x ",
@@ -100,7 +100,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) "   x.xxx   ",
            /* line */ (const char *) "   x...x   ",
@@ -114,7 +114,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) "   x.xxx   ",
            /* line */ (const char *) "   x...x   ",
@@ -128,7 +128,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) "   x.xxx   ",
            /* line */ (const char *) "   x...x   ",
@@ -142,7 +142,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) "   x.xxx   ",
            /* line */ (const char *) "   x...x   ",
@@ -156,7 +156,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) " xxx.xxx   ",
            /* line */ (const char *) "^......x   ",
@@ -170,7 +170,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) " xxx.xxxxx ",
            /* line */ (const char *) "^.........^",
@@ -184,7 +184,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) " xxx.xxxxx ",
            /* line */ (const char *) "^.........^",
@@ -195,7 +195,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^          ",
            /* line */ (const char *) " xxx.xxxxxxxxxx",
            /* line */ (const char *) "^.............x",
@@ -206,7 +206,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "               ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) " ^           ",
            /* line */ (const char *) "x.xxxxxxxxxx ",
            /* line */ (const char *) "x...........^",
@@ -219,7 +219,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) " ^           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) " ^           ",
            /* line */ (const char *) "x.xxxxxxxxxx ",
            /* line */ (const char *) "x...........^",
@@ -232,7 +232,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) " ^           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) " ^           ",
            /* line */ (const char *) "x.xxxxxxxxxx ",
            /* line */ (const char *) "x...........^",
@@ -245,7 +245,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) " ^           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^      ",
            /* line */ (const char *) "  xxx.xxxxx ",
            /* line */ (const char *) "  x.......xx",
@@ -258,7 +258,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "  xxxxxxxxxx",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) " ^        ",
            /* line */ (const char *) "x.xxxxxx  ",
            /* line */ (const char *) "x......x  ",
@@ -270,7 +270,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "  xxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    xxxxxxx   ",
            /* line */ (const char *) " xxxx.....xx  ",
            /* line */ (const char *) "^..........xx ",
@@ -282,7 +282,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) " xxxxxx       ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    xxxxxxx   ",
            /* line */ (const char *) " xxxx.....xx  ",
            /* line */ (const char *) "^..........xx ",
@@ -293,7 +293,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) " xxxxxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    xxxxxxx   ",
            /* line */ (const char *) " xxxx.....xx  ",
            /* line */ (const char *) "^..........xx ",
@@ -305,7 +305,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) " xxxxxx       ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  xxxxxxxxx ",
            /* line */ (const char *) " xx.CCCCCCx ",
            /* line */ (const char *) "^....CCCCCx ",
@@ -316,7 +316,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "    xxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^   ",
            /* line */ (const char *) "     x.x  ",
            /* line */ (const char *) "     x.x  ",
@@ -330,7 +330,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "xxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^   ",
            /* line */ (const char *) "     x.x  ",
            /* line */ (const char *) "     x.x  ",
@@ -348,7 +348,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "xxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^   ",
            /* line */ (const char *) "     x.x  ",
            /* line */ (const char *) "     x.x  ",
@@ -365,7 +365,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "xxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "      ^   ",
            /* line */ (const char *) "     x.x  ",
            /* line */ (const char *) "     x.x  ",
@@ -380,7 +380,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "xxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) " ^         ",
            /* line */ (const char *) "x.xxxxxx   ",
            /* line */ (const char *) "x......x   ",
@@ -393,7 +393,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) " xxxxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) " xxx.xxxxx ",
            /* line */ (const char *) " x........^",
@@ -404,7 +404,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "       ^   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "    ^      ",
            /* line */ (const char *) " xxx.xxxxx ",
            /* line */ (const char *) " x.......x ",
@@ -415,7 +415,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^     ",
            /* line */ (const char *) " xxxx.xxxx ",
            /* line */ (const char *) " x.......x ",
@@ -426,7 +426,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "           ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^          ",
            /* line */ (const char *) " xxxx.xxxx      ",
            /* line */ (const char *) "^........x      ",
@@ -443,7 +443,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "                ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^          ",
            /* line */ (const char *) " xxxx.xxxx      ",
            /* line */ (const char *) "^........x      ",
@@ -456,7 +456,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "                ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^          ",
            /* line */ (const char *) " xxxx.xxxxx     ",
            /* line */ (const char *) "^.........xx    ",
@@ -469,7 +469,7 @@ void rooms_start(Gamep g)
            /* line */ (const char *) "                ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, ROOM_CHECK_EXIT_FLAG, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^          ",
            /* line */ (const char *) " xxxx.xxxx      ",
            /* line */ (const char *) "^.........x     ",

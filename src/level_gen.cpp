@@ -117,6 +117,7 @@ static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_KEYS         = 100;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_CHASMS       = 50;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_LOCKED_DOORS = 50;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_SECRET_DOORS = 80;
+static const int LEVEL_GEN_CHANCE_OF_DOOR_LOCKED                 = 30;
 
 //
 // Chances of creating, tested in the following order, with the default being water
@@ -236,7 +237,13 @@ public:
   //
   // Only one exit per level
   //
-  bool has_placed_exit = {};
+  bool has_placed_ROOM_TYPE_EXIT = {};
+
+  //
+  // We've placed a secret room and need a key room
+  //
+  bool has_placed_ROOM_TYPE_DOOR_LOCKED = {};
+  bool has_placed_ROOM_TYPE_HAS_KEY     = {};
 
   //
   // Temporary for flood fill
@@ -256,6 +263,8 @@ typedef enum {
 #define ROOM_TYPE_FIRST ROOM_TYPE_START
   ROOM_TYPE_NORMAL,
   ROOM_TYPE_EXIT,
+  ROOM_TYPE_LOCKED,
+  ROOM_TYPE_HAS_KEY,
   ROOM_TYPE_MAX
 } RoomType;
 
@@ -288,7 +297,7 @@ public:
   int height = {};
 
   //
-  // e.g. ROOM_CHECK_EXIT_FLAG
+  // e.g. ROOM_FLAG_CHECK_EXITS
   //
   unsigned int flags = {};
 
@@ -631,34 +640,34 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
     //
     for (auto i = 0; i < room_width; i++) {
       switch (room_line[ i ]) {
-        case CHARMAP_BARREL :             break;
-        case CHARMAP_BRAZIER :            break;
-        case CHARMAP_BRIDGE :             break;
-        case CHARMAP_CHASM :              break;
-        case CHARMAP_CHASM_50 :           break;
-        case CHARMAP_CORRIDOR :           break;
-        case CHARMAP_DEEP_WATER :         break;
-        case CHARMAP_DOOR_TYPE_LOCKED :   break;
-        case CHARMAP_DOOR_TYPE_SECRET :   break;
-        case CHARMAP_DOOR_TYPE_UNLOCKED : break;
-        case CHARMAP_EMPTY :              break;
-        case CHARMAP_FLOOR :              break;
-        case CHARMAP_FLOOR_50 :           break;
-        case CHARMAP_FOLIAGE :            break;
-        case CHARMAP_GRASS :              break;
-        case CHARMAP_JOIN :               break;
-        case CHARMAP_KEY :                break;
-        case CHARMAP_LAVA :               break;
-        case CHARMAP_MOB1 :               break;
-        case CHARMAP_MOB2 :               break;
-        case CHARMAP_MONST1 :             break;
-        case CHARMAP_MONST2 :             break;
-        case CHARMAP_PILLAR :             break;
-        case CHARMAP_TELEPORT :           break;
-        case CHARMAP_TRAP :               break;
-        case CHARMAP_TREASURE :           break;
-        case CHARMAP_WALL :               break;
-        case CHARMAP_WATER :              break;
+        case CHARMAP_BARREL :        break;
+        case CHARMAP_BRAZIER :       break;
+        case CHARMAP_BRIDGE :        break;
+        case CHARMAP_CHASM :         break;
+        case CHARMAP_CHASM_50 :      break;
+        case CHARMAP_CORRIDOR :      break;
+        case CHARMAP_DEEP_WATER :    break;
+        case CHARMAP_DOOR_LOCKED :   break;
+        case CHARMAP_DOOR_SECRET :   break;
+        case CHARMAP_DOOR_UNLOCKED : break;
+        case CHARMAP_EMPTY :         break;
+        case CHARMAP_FLOOR :         break;
+        case CHARMAP_FLOOR_50 :      break;
+        case CHARMAP_FOLIAGE :       break;
+        case CHARMAP_GRASS :         break;
+        case CHARMAP_JOIN :          break;
+        case CHARMAP_KEY :           break;
+        case CHARMAP_LAVA :          break;
+        case CHARMAP_MOB1 :          break;
+        case CHARMAP_MOB2 :          break;
+        case CHARMAP_MONST1 :        break;
+        case CHARMAP_MONST2 :        break;
+        case CHARMAP_PILLAR :        break;
+        case CHARMAP_TELEPORT :      break;
+        case CHARMAP_TRAP :          break;
+        case CHARMAP_TREASURE :      break;
+        case CHARMAP_WALL :          break;
+        case CHARMAP_WATER :         break;
         case CHARMAP_EXIT :
           if (exit_count++) {
             DIE("room has too many exits in room @ %s:%d", file, line);
@@ -681,6 +690,17 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
   }
 
   va_end(ap);
+
+  //
+  // Special room types
+  //
+  if (room_flags & ROOM_FLAG_LOCKED) {
+    room_type = ROOM_TYPE_LOCKED;
+  }
+
+  if (room_flags & ROOM_FLAG_HAS_KEY) {
+    room_type = ROOM_TYPE_HAS_KEY;
+  }
 
   //
   // Check the room sizes
@@ -769,7 +789,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
   // Sanity check on exits that we have no tiles in the same column or row
   // as an exit; it makes it harder to join rooms together
   //
-  if (room_flags & ROOM_CHECK_EXIT_FLAG) {
+  if (room_flags & ROOM_FLAG_CHECK_EXITS) {
     for (int y = 0; y < r->height; y++) {
       for (int x = 0; x < r->width; x++) {
         auto c = r->data[ (y * r->width) + x ];
@@ -1191,36 +1211,36 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
     //
     for (auto i = 0; i < fragment_alt_width; i++) {
       switch (fragment_alt_line[ i ]) {
-        case CHARMAP_BARREL :             break;
-        case CHARMAP_BRAZIER :            break;
-        case CHARMAP_BRIDGE :             break;
-        case CHARMAP_CHASM :              break;
-        case CHARMAP_CHASM_50 :           break;
-        case CHARMAP_CORRIDOR :           break;
-        case CHARMAP_DEEP_WATER :         break;
-        case CHARMAP_DOOR_TYPE_LOCKED :   break;
-        case CHARMAP_DOOR_TYPE_SECRET :   break;
-        case CHARMAP_DOOR_TYPE_UNLOCKED : break;
-        case CHARMAP_EMPTY :              break;
-        case CHARMAP_ENTRANCE :           break;
-        case CHARMAP_EXIT :               break;
-        case CHARMAP_FLOOR :              break;
-        case CHARMAP_FLOOR_50 :           break;
-        case CHARMAP_FOLIAGE :            break;
-        case CHARMAP_GRASS :              break;
-        case CHARMAP_JOIN :               break;
-        case CHARMAP_KEY :                break;
-        case CHARMAP_LAVA :               break;
-        case CHARMAP_MOB1 :               break;
-        case CHARMAP_MOB2 :               break;
-        case CHARMAP_MONST1 :             break;
-        case CHARMAP_MONST2 :             break;
-        case CHARMAP_PILLAR :             break;
-        case CHARMAP_TELEPORT :           break;
-        case CHARMAP_TRAP :               break;
-        case CHARMAP_TREASURE :           break;
-        case CHARMAP_WALL :               break;
-        case CHARMAP_WATER :              break;
+        case CHARMAP_BARREL :        break;
+        case CHARMAP_BRAZIER :       break;
+        case CHARMAP_BRIDGE :        break;
+        case CHARMAP_CHASM :         break;
+        case CHARMAP_CHASM_50 :      break;
+        case CHARMAP_CORRIDOR :      break;
+        case CHARMAP_DEEP_WATER :    break;
+        case CHARMAP_DOOR_LOCKED :   break;
+        case CHARMAP_DOOR_SECRET :   break;
+        case CHARMAP_DOOR_UNLOCKED : break;
+        case CHARMAP_EMPTY :         break;
+        case CHARMAP_ENTRANCE :      break;
+        case CHARMAP_EXIT :          break;
+        case CHARMAP_FLOOR :         break;
+        case CHARMAP_FLOOR_50 :      break;
+        case CHARMAP_FOLIAGE :       break;
+        case CHARMAP_GRASS :         break;
+        case CHARMAP_JOIN :          break;
+        case CHARMAP_KEY :           break;
+        case CHARMAP_LAVA :          break;
+        case CHARMAP_MOB1 :          break;
+        case CHARMAP_MOB2 :          break;
+        case CHARMAP_MONST1 :        break;
+        case CHARMAP_MONST2 :        break;
+        case CHARMAP_PILLAR :        break;
+        case CHARMAP_TELEPORT :      break;
+        case CHARMAP_TRAP :          break;
+        case CHARMAP_TREASURE :      break;
+        case CHARMAP_WALL :          break;
+        case CHARMAP_WATER :         break;
         default :
           DIE("fragment_alt has unknown char [%c] in fragment_alt @ %s:%d", fragment_alt_line[ i ], file, line);
           return false;
@@ -1494,37 +1514,37 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
     //
     for (auto i = 0; i < fragment_width; i++) {
       switch (fragment_line[ i ]) {
-        case CHARMAP_BARREL :             break;
-        case CHARMAP_BRAZIER :            break;
-        case CHARMAP_BRIDGE :             break;
-        case CHARMAP_CHASM :              break;
-        case CHARMAP_CHASM_50 :           break;
-        case CHARMAP_CORRIDOR :           break;
-        case CHARMAP_DEEP_WATER :         break;
-        case CHARMAP_DOOR_TYPE_LOCKED :   break;
-        case CHARMAP_DOOR_TYPE_SECRET :   break;
-        case CHARMAP_DOOR_TYPE_UNLOCKED : break;
-        case CHARMAP_EMPTY :              break;
-        case CHARMAP_ENTRANCE :           break;
-        case CHARMAP_EXIT :               break;
-        case CHARMAP_FLOOR :              break;
-        case CHARMAP_FLOOR_50 :           break;
-        case CHARMAP_FOLIAGE :            break;
-        case CHARMAP_GRASS :              break;
-        case CHARMAP_JOIN :               break;
-        case CHARMAP_KEY :                break;
-        case CHARMAP_LAVA :               break;
-        case CHARMAP_MOB1 :               break;
-        case CHARMAP_MOB2 :               break;
-        case CHARMAP_MONST1 :             break;
-        case CHARMAP_MONST2 :             break;
-        case CHARMAP_PILLAR :             break;
-        case CHARMAP_TELEPORT :           break;
-        case CHARMAP_TRAP :               break;
-        case CHARMAP_TREASURE :           break;
-        case CHARMAP_WALL :               break;
-        case CHARMAP_WATER :              break;
-        case CHARMAP_WILDCARD :           break;
+        case CHARMAP_BARREL :        break;
+        case CHARMAP_BRAZIER :       break;
+        case CHARMAP_BRIDGE :        break;
+        case CHARMAP_CHASM :         break;
+        case CHARMAP_CHASM_50 :      break;
+        case CHARMAP_CORRIDOR :      break;
+        case CHARMAP_DEEP_WATER :    break;
+        case CHARMAP_DOOR_LOCKED :   break;
+        case CHARMAP_DOOR_SECRET :   break;
+        case CHARMAP_DOOR_UNLOCKED : break;
+        case CHARMAP_EMPTY :         break;
+        case CHARMAP_ENTRANCE :      break;
+        case CHARMAP_EXIT :          break;
+        case CHARMAP_FLOOR :         break;
+        case CHARMAP_FLOOR_50 :      break;
+        case CHARMAP_FOLIAGE :       break;
+        case CHARMAP_GRASS :         break;
+        case CHARMAP_JOIN :          break;
+        case CHARMAP_KEY :           break;
+        case CHARMAP_LAVA :          break;
+        case CHARMAP_MOB1 :          break;
+        case CHARMAP_MOB2 :          break;
+        case CHARMAP_MONST1 :        break;
+        case CHARMAP_MONST2 :        break;
+        case CHARMAP_PILLAR :        break;
+        case CHARMAP_TELEPORT :      break;
+        case CHARMAP_TRAP :          break;
+        case CHARMAP_TREASURE :      break;
+        case CHARMAP_WALL :          break;
+        case CHARMAP_WATER :         break;
+        case CHARMAP_WILDCARD :      break;
         default :
           DIE("fragment has unknown char [%c] in fragment @ %s:%d", fragment_line[ i ], file, line);
           return false;
@@ -1839,34 +1859,34 @@ void level_add(Gamep g, int chance, LevelType level_type, const std::string &ali
     //
     for (auto i = 0; i < level_width; i++) {
       switch (level_line[ i ]) {
-        case CHARMAP_BARREL :             break;
-        case CHARMAP_BRAZIER :            break;
-        case CHARMAP_BRIDGE :             break;
-        case CHARMAP_CHASM :              break;
-        case CHARMAP_CHASM_50 :           break;
-        case CHARMAP_CORRIDOR :           break;
-        case CHARMAP_DEEP_WATER :         break;
-        case CHARMAP_DOOR_TYPE_SECRET :   break;
-        case CHARMAP_DOOR_TYPE_UNLOCKED : break;
-        case CHARMAP_DOOR_TYPE_LOCKED :   break;
-        case CHARMAP_EMPTY :              break;
-        case CHARMAP_FLOOR :              break;
-        case CHARMAP_FLOOR_50 :           break;
-        case CHARMAP_FOLIAGE :            break;
-        case CHARMAP_GRASS :              break;
-        case CHARMAP_JOIN :               break;
-        case CHARMAP_KEY :                break;
-        case CHARMAP_LAVA :               break;
-        case CHARMAP_MOB1 :               break;
-        case CHARMAP_MOB2 :               break;
-        case CHARMAP_MONST1 :             break;
-        case CHARMAP_MONST2 :             break;
-        case CHARMAP_PILLAR :             break;
-        case CHARMAP_TELEPORT :           break;
-        case CHARMAP_TRAP :               break;
-        case CHARMAP_TREASURE :           break;
-        case CHARMAP_WALL :               break;
-        case CHARMAP_WATER :              break;
+        case CHARMAP_BARREL :        break;
+        case CHARMAP_BRAZIER :       break;
+        case CHARMAP_BRIDGE :        break;
+        case CHARMAP_CHASM :         break;
+        case CHARMAP_CHASM_50 :      break;
+        case CHARMAP_CORRIDOR :      break;
+        case CHARMAP_DEEP_WATER :    break;
+        case CHARMAP_DOOR_SECRET :   break;
+        case CHARMAP_DOOR_UNLOCKED : break;
+        case CHARMAP_DOOR_LOCKED :   break;
+        case CHARMAP_EMPTY :         break;
+        case CHARMAP_FLOOR :         break;
+        case CHARMAP_FLOOR_50 :      break;
+        case CHARMAP_FOLIAGE :       break;
+        case CHARMAP_GRASS :         break;
+        case CHARMAP_JOIN :          break;
+        case CHARMAP_KEY :           break;
+        case CHARMAP_LAVA :          break;
+        case CHARMAP_MOB1 :          break;
+        case CHARMAP_MOB2 :          break;
+        case CHARMAP_MONST1 :        break;
+        case CHARMAP_MONST2 :        break;
+        case CHARMAP_PILLAR :        break;
+        case CHARMAP_TELEPORT :      break;
+        case CHARMAP_TRAP :          break;
+        case CHARMAP_TREASURE :      break;
+        case CHARMAP_WALL :          break;
+        case CHARMAP_WATER :         break;
         case CHARMAP_EXIT :
           if (exit_count++) {
             DIE("level has too many exits in level @ %s:%d", file, line);
@@ -2043,11 +2063,15 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
     LOG("Level: %u", l->level_num);
   }
 
-  LOG("Seed          : %u", l->info.seed_num);
-  LOG("Room count    : %d", l->info.room_count);
-  LOG("Fragment count: %d", l->info.fragment_count);
-  LOG("Treasure count: %d", l->info.treasure_count);
-  LOG("Monst count   : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count, l->info.monst2_count);
+  LOG("Seed              : %u", l->info.seed_num);
+  LOG("Room count        : %d", l->info.room_count);
+  LOG("Fragment count    : %d", l->info.fragment_count);
+  LOG("Treasure count    : %d", l->info.treasure_count);
+  LOG("Monst count       : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count,
+      l->info.monst2_count);
+  LOG("Teleport count    : %d", l->info.teleport_count);
+  LOG("Locked door count : %d", l->info.door_locked_count);
+  LOG("Key count         : %d", l->info.key_count);
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
@@ -2237,8 +2261,16 @@ static bool level_gen_place_room_at_door_intersection(Gamep g, LevelGen *l, cons
       // Have placed an exit?
       //
       if (r->room_type == ROOM_TYPE_EXIT) {
-        l->has_placed_exit = true;
-        l->room_exit       = r;
+        l->has_placed_ROOM_TYPE_EXIT = true;
+        l->room_exit                 = r;
+      }
+
+      if (r->room_type == ROOM_TYPE_LOCKED) {
+        l->has_placed_ROOM_TYPE_DOOR_LOCKED = true;
+      }
+
+      if (r->room_type == ROOM_TYPE_HAS_KEY) {
+        l->has_placed_ROOM_TYPE_HAS_KEY = true;
       }
 
       //
@@ -2310,7 +2342,8 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  int attempts = 0;
+  int  attempts                   = 0;
+  bool need_ROOM_TYPE_DOOR_LOCKED = d100() < LEVEL_GEN_CHANCE_OF_DOOR_LOCKED;
 
   //
   // Keep placing rooms until we hit the max allowed
@@ -2346,9 +2379,26 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
     RoomType room_type = ROOM_TYPE_NORMAL;
 
     //
+    // Special rooms? Keep trying to place until we can.
+    //
+    if (need_ROOM_TYPE_DOOR_LOCKED) {
+      if (! l->has_placed_ROOM_TYPE_DOOR_LOCKED) {
+        if (d100() < 50) {
+          room_type = ROOM_TYPE_LOCKED;
+        }
+      }
+
+      if (l->has_placed_ROOM_TYPE_DOOR_LOCKED) {
+        if (! l->has_placed_ROOM_TYPE_HAS_KEY) {
+          room_type = ROOM_TYPE_HAS_KEY;
+        }
+      }
+    }
+
+    //
     // If we have not yet placed an exit room, should we?
     //
-    if (! l->has_placed_exit) {
+    if (! l->has_placed_ROOM_TYPE_EXIT) {
       if (d100() < 50) {
         room_type = ROOM_TYPE_EXIT;
       } else if ((int) l->rooms_placed.size() > l->min_room_count) {
@@ -2502,9 +2552,9 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
           case CHARMAP_BRIDGE :
           case CHARMAP_CHASM :
           case CHARMAP_CORRIDOR :
-          case CHARMAP_DOOR_TYPE_LOCKED :
-          case CHARMAP_DOOR_TYPE_SECRET :
-          case CHARMAP_DOOR_TYPE_UNLOCKED :
+          case CHARMAP_DOOR_LOCKED :
+          case CHARMAP_DOOR_SECRET :
+          case CHARMAP_DOOR_UNLOCKED :
           case CHARMAP_ENTRANCE :
           case CHARMAP_EXIT :
           case CHARMAP_FLOOR :
@@ -2571,9 +2621,9 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
           case CHARMAP_CHASM_50 :
           case CHARMAP_CORRIDOR :
           case CHARMAP_DEEP_WATER :
-          case CHARMAP_DOOR_TYPE_LOCKED :
-          case CHARMAP_DOOR_TYPE_SECRET :
-          case CHARMAP_DOOR_TYPE_UNLOCKED :
+          case CHARMAP_DOOR_LOCKED :
+          case CHARMAP_DOOR_SECRET :
+          case CHARMAP_DOOR_UNLOCKED :
           case CHARMAP_EMPTY :
           case CHARMAP_ENTRANCE :
           case CHARMAP_EXIT :
@@ -2697,7 +2747,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
     //
     // Check we have an exit room
     //
-    if (! l->has_placed_exit) {
+    if (! l->has_placed_ROOM_TYPE_EXIT) {
       level_no_exit_room++;
       continue;
     }
@@ -2732,27 +2782,27 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
 static bool level_gen_tile_is_traversable(Gamep g, class LevelGen *l, int x, int y)
 {
   switch (l->data[ x ][ y ].c) {
-    case CHARMAP_BARREL :             return true;
-    case CHARMAP_BRIDGE :             return true;
-    case CHARMAP_CORRIDOR :           return true;
-    case CHARMAP_DEEP_WATER :         return true;
-    case CHARMAP_DOOR_TYPE_LOCKED :   return true;
-    case CHARMAP_DOOR_TYPE_UNLOCKED : return true;
-    case CHARMAP_ENTRANCE :           return true;
-    case CHARMAP_EXIT :               return true;
-    case CHARMAP_FLOOR :              return true;
-    case CHARMAP_FOLIAGE :            return true;
-    case CHARMAP_GRASS :              return true;
-    case CHARMAP_JOIN :               return true;
-    case CHARMAP_KEY :                return true;
-    case CHARMAP_MOB1 :               return true;
-    case CHARMAP_MOB2 :               return true;
-    case CHARMAP_MONST1 :             return true;
-    case CHARMAP_MONST2 :             return true;
-    case CHARMAP_TRAP :               return true;
-    case CHARMAP_TREASURE :           return true;
-    case CHARMAP_WATER :              return true;
-    default :                         return false;
+    case CHARMAP_BARREL :        return true;
+    case CHARMAP_BRIDGE :        return true;
+    case CHARMAP_CORRIDOR :      return true;
+    case CHARMAP_DEEP_WATER :    return true;
+    case CHARMAP_DOOR_LOCKED :   return true;
+    case CHARMAP_DOOR_UNLOCKED : return true;
+    case CHARMAP_ENTRANCE :      return true;
+    case CHARMAP_EXIT :          return true;
+    case CHARMAP_FLOOR :         return true;
+    case CHARMAP_FOLIAGE :       return true;
+    case CHARMAP_GRASS :         return true;
+    case CHARMAP_JOIN :          return true;
+    case CHARMAP_KEY :           return true;
+    case CHARMAP_MOB1 :          return true;
+    case CHARMAP_MOB2 :          return true;
+    case CHARMAP_MONST1 :        return true;
+    case CHARMAP_MONST2 :        return true;
+    case CHARMAP_TRAP :          return true;
+    case CHARMAP_TREASURE :      return true;
+    case CHARMAP_WATER :         return true;
+    default :                    return false;
   }
 }
 
@@ -2770,8 +2820,8 @@ static bool level_gen_trim_dead_tiles(Gamep g, class LevelGen *l)
       switch (l->data[ x ][ y ].c) {
         case CHARMAP_CORRIDOR :
         case CHARMAP_TRAP :
-        case CHARMAP_DOOR_TYPE_UNLOCKED :
-        case CHARMAP_DOOR_TYPE_LOCKED :
+        case CHARMAP_DOOR_UNLOCKED :
+        case CHARMAP_DOOR_LOCKED :
         case CHARMAP_JOIN :
           {
             //
@@ -3292,9 +3342,9 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_BRAZIER :
         case CHARMAP_BRIDGE :
         case CHARMAP_CORRIDOR :
-        case CHARMAP_DOOR_TYPE_LOCKED :
-        case CHARMAP_DOOR_TYPE_SECRET :
-        case CHARMAP_DOOR_TYPE_UNLOCKED :
+        case CHARMAP_DOOR_LOCKED :
+        case CHARMAP_DOOR_SECRET :
+        case CHARMAP_DOOR_UNLOCKED :
         case CHARMAP_ENTRANCE :
         case CHARMAP_EXIT :
         case CHARMAP_FLOOR :
@@ -3370,10 +3420,10 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_JOIN :
         case CHARMAP_MOB1 :
         case CHARMAP_MOB2 :
-        case CHARMAP_DOOR_TYPE_UNLOCKED :
+        case CHARMAP_DOOR_UNLOCKED :
         case CHARMAP_MONST1 :
-        case CHARMAP_MONST2 :             break;
-        case CHARMAP_DOOR_TYPE_SECRET :
+        case CHARMAP_MONST2 :        break;
+        case CHARMAP_DOOR_SECRET :
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
@@ -3411,7 +3461,7 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
             }
           }
           break;
-        case CHARMAP_DOOR_TYPE_LOCKED :
+        case CHARMAP_DOOR_LOCKED :
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
@@ -3713,7 +3763,7 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
           //
           l->info.teleport_count++;
           break;
-        case CHARMAP_DOOR_TYPE_LOCKED :
+        case CHARMAP_DOOR_LOCKED :
           //
           // Must have > 1 key
           //
@@ -3795,7 +3845,7 @@ static void level_gen_add_missing_keys_do(Gamep g, class LevelGen *l)
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
       auto r = l->data[ x ][ y ].room;
 
-      if (r && (r->flags & ROOM_SECRET_FLAG)) {
+      if (r && (r->flags & ROOM_FLAG_LOCKED)) {
         continue;
       }
       if (r && (l->room_entrance == r)) {
@@ -3864,7 +3914,6 @@ static void level_gen_remove_additional_keys_do(Gamep g, class LevelGen *l)
 
   auto cand                     = cands[ pcg_rand() % cands.size() ];
   l->data[ cand.x ][ cand.y ].c = CHARMAP_FLOOR;
-  CON("removed additional key");
 }
 
 //
@@ -4031,7 +4080,7 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
     if (! r) {
       continue;
     }
-    if (r->flags & ROOM_SECRET_FLAG) {
+    if (r->flags & ROOM_FLAG_LOCKED) {
       continue;
     }
     if (l->room_entrance == r) {
@@ -4100,7 +4149,7 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
           for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
               switch (l->data[ x + dx ][ y + dy ].c) {
-                case CHARMAP_JOIN : l->data[ x + dx ][ y + dy ].c = CHARMAP_DOOR_TYPE_UNLOCKED; break;
+                case CHARMAP_JOIN : l->data[ x + dx ][ y + dy ].c = CHARMAP_DOOR_UNLOCKED; break;
               }
             }
           }
@@ -4138,29 +4187,17 @@ static void level_gen_remove_doors_next_to_each_other(Gamep g, class LevelGen *l
   for (auto y = 1; y < MAP_HEIGHT - 1; y++) {
     for (auto x = 1; x < MAP_WIDTH - 1; x++) {
       switch (l->data[ x ][ y ].c) {
-        case CHARMAP_DOOR_TYPE_UNLOCKED :
-          if (l->data[ x - 1 ][ y ].c == CHARMAP_DOOR_TYPE_UNLOCKED) {
+        case CHARMAP_DOOR_UNLOCKED :
+          if (l->data[ x - 1 ][ y ].c == CHARMAP_DOOR_UNLOCKED) {
             l->data[ x - 1 ][ y ].c = CHARMAP_CORRIDOR;
           }
-          if (l->data[ x + 1 ][ y ].c == CHARMAP_DOOR_TYPE_UNLOCKED) {
+          if (l->data[ x + 1 ][ y ].c == CHARMAP_DOOR_UNLOCKED) {
             l->data[ x + 1 ][ y ].c = CHARMAP_CORRIDOR;
           }
-          if (l->data[ x ][ y - 1 ].c == CHARMAP_DOOR_TYPE_UNLOCKED) {
+          if (l->data[ x ][ y - 1 ].c == CHARMAP_DOOR_UNLOCKED) {
             l->data[ x ][ y - 1 ].c = CHARMAP_CORRIDOR;
           }
-          if (l->data[ x ][ y + 1 ].c == CHARMAP_DOOR_TYPE_UNLOCKED) {
-            l->data[ x ][ y + 1 ].c = CHARMAP_CORRIDOR;
-          }
-          if (l->data[ x - 1 ][ y ].c == CHARMAP_DOOR_TYPE_LOCKED) {
-            l->data[ x - 1 ][ y ].c = CHARMAP_CORRIDOR;
-          }
-          if (l->data[ x + 1 ][ y ].c == CHARMAP_DOOR_TYPE_LOCKED) {
-            l->data[ x + 1 ][ y ].c = CHARMAP_CORRIDOR;
-          }
-          if (l->data[ x ][ y - 1 ].c == CHARMAP_DOOR_TYPE_LOCKED) {
-            l->data[ x ][ y - 1 ].c = CHARMAP_CORRIDOR;
-          }
-          if (l->data[ x ][ y + 1 ].c == CHARMAP_DOOR_TYPE_LOCKED) {
+          if (l->data[ x ][ y + 1 ].c == CHARMAP_DOOR_UNLOCKED) {
             l->data[ x ][ y + 1 ].c = CHARMAP_CORRIDOR;
           }
       }
@@ -4252,6 +4289,11 @@ static void level_gen_create(Gamep g, class LevelGen *l)
   }
 
   //
+  // Copy useful level stats for later debugging.
+  //
+  level->info = l->info;
+
+  //
   // Create things
   //
   level_populate(g, v, level, level_string.c_str());
@@ -4260,11 +4302,6 @@ static void level_gen_create(Gamep g, class LevelGen *l)
   // Create joined up tiles
   //
   level_assign_tiles(g, v, level);
-
-  //
-  // Copy useful level stats for later debugging.
-  //
-  level->info = l->info;
 }
 
 //
@@ -4408,7 +4445,7 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   level_gen_add_missing_teleports(g, l);
 
   //
-  // Final count
+  // Count the keys
   //
   level_gen_count_items(g, l);
 
@@ -4428,6 +4465,11 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   if (0) {
     level_gen_test_flood(g, l);
   }
+
+  //
+  // Final count
+  //
+  level_gen_count_items(g, l);
 
   //
   // Populate the map with things from the level created
