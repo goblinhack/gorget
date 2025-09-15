@@ -46,7 +46,7 @@ static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES = 200;
 //
 // After this length, corridors become bridges
 //
-static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN = 6;
+static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN = 3;
 
 //
 // Per level minimums
@@ -2892,6 +2892,12 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
             }
 
             for (auto direction : directions) {
+
+              //
+              // Bridge or corridor?
+              //
+              bool bridge_candidate = false;
+
               //
               // Check there is nothing in the way
               //
@@ -2905,6 +2911,27 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
                   case CHARMAP_LAVA :
                   case CHARMAP_EMPTY :      break;
                   default :                 has_clear_path = false; break;
+                }
+                if (! has_clear_path) {
+                  break;
+                }
+
+                //
+                // No bridges next to bridges
+                //
+                // Also only have a bridge if there is some hazard to cross
+                //
+                for (auto delta : directions) {
+                  switch (l->data[ adj.x + delta.x ][ adj.y + delta.y ].c) {
+                    case CHARMAP_WATER :
+                    case CHARMAP_DEEP_WATER :
+                    case CHARMAP_CHASM :      bridge_candidate = true;
+                    case CHARMAP_BRIDGE :     has_clear_path = false; break;
+                    default :                 break;
+                  }
+                }
+                if (! has_clear_path) {
+                  break;
                 }
               }
 
@@ -2960,10 +2987,14 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
                 for (auto d = 1; d < dist; d++) {
                   spoint adj(x + direction.x * d, y + direction.y * d);
 
-                  if (dist >= MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
+                  if (bridge_candidate) {
                     l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
                   } else {
-                    l->data[ adj.x ][ adj.y ].c = CHARMAP_CORRIDOR;
+                    if (dist > MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
+                      l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
+                    } else {
+                      l->data[ adj.x ][ adj.y ].c = CHARMAP_CORRIDOR;
+                    }
                   }
 
                   l->data[ adj.x ][ adj.y ].room = room_a;
