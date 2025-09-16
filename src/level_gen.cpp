@@ -2788,6 +2788,7 @@ static bool level_gen_tile_is_traversable(Gamep g, class LevelGen *l, int x, int
     case CHARMAP_DEEP_WATER :    return true;
     case CHARMAP_DOOR_LOCKED :   return true;
     case CHARMAP_DOOR_UNLOCKED : return true;
+    case CHARMAP_DOOR_SECRET :   return true; // needed
     case CHARMAP_ENTRANCE :      return true;
     case CHARMAP_EXIT :          return true;
     case CHARMAP_FLOOR :         return true;
@@ -3337,21 +3338,17 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_CHASM :
         case CHARMAP_CHASM_50 :
         case CHARMAP_EMPTY :
-        case CHARMAP_WALL :       break;
-        case CHARMAP_BARREL :
-        case CHARMAP_BRAZIER :
-        case CHARMAP_BRIDGE :
-        case CHARMAP_CORRIDOR :
         case CHARMAP_DOOR_LOCKED :
         case CHARMAP_DOOR_SECRET :
         case CHARMAP_DOOR_UNLOCKED :
+        case CHARMAP_GRASS :
+        case CHARMAP_WALL :
+        case CHARMAP_BARREL :
+        case CHARMAP_BRAZIER :
+        case CHARMAP_BRIDGE :
         case CHARMAP_ENTRANCE :
         case CHARMAP_EXIT :
-        case CHARMAP_FLOOR :
-        case CHARMAP_FLOOR_50 :
         case CHARMAP_FOLIAGE :
-        case CHARMAP_GRASS :
-        case CHARMAP_JOIN :
         case CHARMAP_KEY :
         case CHARMAP_MOB1 :
         case CHARMAP_MOB2 :
@@ -3360,7 +3357,11 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
         case CHARMAP_PILLAR :
         case CHARMAP_TELEPORT :
         case CHARMAP_TRAP :
-        case CHARMAP_TREASURE :
+        case CHARMAP_TREASURE :      break;
+        case CHARMAP_CORRIDOR :
+        case CHARMAP_FLOOR :
+        case CHARMAP_FLOOR_50 :
+        case CHARMAP_JOIN :
           if (l->data[ x - 1 ][ y - 1 ].c == CHARMAP_EMPTY) {
             l->data[ x - 1 ][ y - 1 ].c = CHARMAP_WALL;
           }
