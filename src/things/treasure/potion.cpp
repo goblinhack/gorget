@@ -21,20 +21,12 @@ static bool tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, T
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_player(collecter)) {
-    TOPCON("test carry");
-  }
-
   return true;
 }
 
 static bool tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper)
 {
   TRACE_NO_INDENT();
-
-  if (thing_is_player(dropper)) {
-    TOPCON("test drop");
-  }
 
   return true;
 }
@@ -56,6 +48,7 @@ bool tp_load_potion(void)
   tp_flag_set(tp, is_collectable);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_item_mergeable);
   tp_flag_set(tp, is_inventory_item);
   tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_loggable);

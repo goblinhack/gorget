@@ -12,29 +12,39 @@
 //
 // Open doors
 //
-bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
+
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
 
   if (! thing_is_openable(t)) {
     return false;
   }
 
-  return thing_is_open_try_set(g, v, l, t, opener);
+  return thing_is_open_try_set(g, v, l, t, player_or_monst);
 }
 
 //
 // Close doors
 //
-bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp closer)
+bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
+
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
 
   if (! thing_is_openable(t)) {
     return false;
   }
 
-  return thing_is_open_try_unset(g, v, l, t, closer);
+  return thing_is_open_try_unset(g, v, l, t, player_or_monst);
 }
 
 //

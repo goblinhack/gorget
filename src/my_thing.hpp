@@ -58,9 +58,13 @@ typedef struct ThingEvent_ {
 //
 // Inventory items
 //
-typedef struct ThingItem_ {
-  ThingId item;
-} ThingItem;
+typedef struct ThingSlot_ {
+  ThingId item_id;
+  //
+  // How many of this identical item are there?
+  //
+  int count;
+} ThingSlot;
 
 //
 // Per thing AI memory
@@ -70,8 +74,23 @@ typedef struct ThingAi_ {
   //
   // This is the max any player or monster can carry
   //
-  ThingItem items[ THING_INVENTORY_MAX ];
+  ThingSlot slots[ THING_INVENTORY_MAX ];
 } ThingAi;
+
+#define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                      \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _ai_ = thing_ai_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                  \
+      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
+        for (ThingSlotp _slot_ = &_ai_->slots[ _n_ ]; _slot_; _slot_ = nullptr)                                      \
+          for (Thingp _it_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
+               loop2 = (Thingp) 0)
+
+#define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _player_or_monst_, _it_)                                              \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _ai_ = thing_ai_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                  \
+      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
+        for (ThingSlotp _slot_ = &_ai_->slots[ _n_ ]; _slot_; _slot_ = nullptr)                                      \
+          for (Thingp _it_ = thing_find_optional(g, v, _slot_->item_id); _it_; _it_ = nullptr)
 
 //
 // Player specific memory
@@ -313,10 +332,11 @@ bool player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
 bool thing_can_move_to_by_opening(Gamep, Levelsp, Levelp, Thingp, spoint);
 bool thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-bool thing_carry_item(Gamep, Levelsp, Levelp, Thingp, Thingp);
-bool thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
-bool thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp);
-bool thing_crush(Gamep, Levelsp, Levelp, Thingp, Thingp);
+bool thing_carry_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+bool thing_drop_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+bool thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+bool thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+bool thing_crush(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 bool thing_is_able_to_collect_items(Thingp);
 bool thing_is_able_to_collect_keys(Thingp);
 bool thing_is_able_to_crush_grass(Thingp);
@@ -432,7 +452,7 @@ bool thing_is_treasure(Thingp);
 bool thing_is_undead(Thingp);
 bool thing_is_unused1(Thingp);
 bool thing_is_unused10(Thingp);
-bool thing_is_unused11(Thingp);
+bool thing_is_item_mergeable(Thingp);
 bool thing_is_unused2(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
@@ -488,8 +508,10 @@ void thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
 void thing_update_pos(Gamep, Thingp);
 void thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
-// end sort marker1 }
-
+bool thing_inventory_item_mergeable(Gamep, Levelsp, Levelp, Thingp a, Thingp b);
+void thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
+bool thing_inventory_add(Gamep, Levelsp, Levelp, Thingp player_or_monst, Thingp it);
+bool thing_inventory_remove(Gamep, Levelsp, Levelp, Thingp player_or_monst, Thingp it);
 void player_map_center(Gamep, Levelsp, Levelp);
 bool player_check_if_target_needs_move_confirm(Gamep, Levelsp, Levelp, spoint);
 void player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right);

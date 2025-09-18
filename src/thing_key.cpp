@@ -13,7 +13,7 @@
 //
 // Add a key to the things inventory
 //
-bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst, Thingp it)
+bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
 
@@ -22,6 +22,11 @@ bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst, Thi
   }
 
   if (! thing_is_able_to_collect_keys(player_or_monst)) {
+    return false;
+  }
+
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
 

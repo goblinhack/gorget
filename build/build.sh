@@ -374,13 +374,6 @@ if [[ $OPT_DEV1 != "" ]]; then
     WERROR="-Werror"
 fi
 
-#
-# Hard code on for me
-#
-if [[ $(grep -q goblinhack ~/.gitconfig 2>/dev/null) ]]; then
-  WERROR="-Werror"
-fi
-
 echo "#define MYVER \"$MYVER\"" >> $CONFIG_H
 
 log_info "VERSION (game)             : $MYVER"
@@ -390,6 +383,23 @@ cd src || exit
 if [[ $OPT_PROF != "" ]]; then
     C_FLAGS+=" -pg"
     LDFLAGS+=" -pg"
+fi
+
+if [[ $OPT_DEV1 != "" ]]; then
+    C_FLAGS+=" -DOPT_DEV"
+fi
+
+if [[ $OPT_DEV2 != "" ]]; then
+    C_FLAGS+=" -DOPT_DEV"
+fi
+
+#
+# Hard code on for me
+#
+$(grep -q goblinhack ~/.gitconfig) 2>/dev/null
+GOBLINHACK=$?
+if [[ $GOBLINHACK ]]; then
+  WERROR="-Werror"
 fi
 
 MAKEFILE=../build/Makefile.template

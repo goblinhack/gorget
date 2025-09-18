@@ -686,18 +686,27 @@ bool thing_is_carried(Thingp t)
 //
 // Returns true/false on success/fail
 //
-bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp carrier, bool val)
+bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst, bool val)
 {
   TRACE_NO_INDENT();
-  if (! t) {
+
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+
+  if (! item) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
 
-  if (t->_is_carried == val) {
+  if (item->_is_carried == val) {
+    auto s = to_string(g, item);
+    THING_LOG(player_or_monst, "carry-try: %s (failed, already carried)", s.c_str());
     return true;
   }
-  t->_is_carried = val;
+  auto old_value    = item->_is_carried;
+  item->_is_carried = val;
 
   //
   // Attempt the collect/drop. It can fail.
@@ -706,22 +715,54 @@ bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp car
     //
     // Try to collect
     //
-    if (! tp_on_carry_request(g, v, l, t, carrier)) {
+    if (! tp_on_carry_request(g, v, l, item, player_or_monst)) {
       //
       // Collect failed
       //
-      t->_is_carried = false;
+      item->_is_carried = old_value;
+
+      auto s = to_string(g, item);
+      THING_LOG(player_or_monst, "carry-try: %s (failed, carry request)", s.c_str());
       return false;
     }
+
+    //
+    // Add to the inventory.
+    //
+    if (! thing_inventory_add(g, v, l, item, player_or_monst)) {
+      //
+      // Possibly out of slots
+      //
+      item->_is_carried = old_value;
+
+      auto s = to_string(g, item);
+      THING_LOG(player_or_monst, "carry-try: %s (failed, inventory add)", s.c_str());
+      return false;
+    }
+
   } else {
     //
     // Try to drop
     //
-    if (! tp_on_drop_request(g, v, l, t, carrier)) {
+    if (! tp_on_drop_request(g, v, l, item, player_or_monst)) {
       //
       // Drop failed
       //
-      t->_is_carried = true;
+      item->_is_carried = old_value;
+
+      auto s = to_string(g, item);
+      THING_LOG(player_or_monst, "drop-try: %s (failed, drop request)", s.c_str());
+      return false;
+    }
+
+    //
+    // Remove from the inventory.
+    //
+    if (! thing_inventory_remove(g, v, l, item, player_or_monst)) {
+      item->_is_carried = old_value;
+
+      auto s = to_string(g, item);
+      THING_LOG(player_or_monst, "drop-try: %s (failed, inventory remove)", s.c_str());
       return false;
     }
   }
@@ -729,15 +770,15 @@ bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp car
   //
   // Reset animation
   //
-  thing_anim_init(g, v, l, t, THING_ANIM_IDLE);
+  thing_anim_init(g, v, l, item, THING_ANIM_IDLE);
 
   return true;
 }
 
-bool thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropr)
+bool thing_is_carried_try_unset(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
-  return thing_is_carried_try_set(g, v, l, t, dropr, false);
+  return thing_is_carried_try_set(g, v, l, item, player_or_monst, false);
 }
 
 bool thing_is_animated_can_hflip(Thingp t)
@@ -1360,14 +1401,14 @@ bool thing_is_unused10(Thingp t)
   return tp_flag(thing_tp(t), is_unused10);
 }
 
-bool thing_is_unused11(Thingp t)
+bool thing_is_item_mergeable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused11);
+  return tp_flag(thing_tp(t), is_item_mergeable);
 }
 
 bool thing_is_door_type_locked(Thingp t)

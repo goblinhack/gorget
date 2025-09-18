@@ -115,9 +115,13 @@ void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
   if (DEBUG2)                                                                                                        \
   LOG
 
+#ifdef OPT_DEV
+#define ERR DIE
+#else
 #define ERR                                                                                                          \
   TRACE_NO_INDENT();                                                                                                 \
   err_wrapper
+#endif
 
 #define MY_STDERR (g_log_stderr ? g_log_stderr : stderr)
 #define MY_STDOUT (g_log_stdout ? g_log_stdout : stdout)

@@ -22,21 +22,21 @@ typedef void (*tp_on_spawn_t)(Gamep, Levelsp, Levelp, Thingp me);
 void tp_on_spawn_set(Tpp, tp_on_spawn_t);
 void tp_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-typedef bool (*tp_on_carry_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp collecter);
+typedef bool (*tp_on_carry_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp player_or_monst);
 void tp_on_carry_request_set(Tpp, tp_on_carry_request_t);
-bool tp_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collecter);
+bool tp_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst);
 
-typedef bool (*tp_on_drop_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp dropper);
+typedef bool (*tp_on_drop_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp player_or_monst);
 void tp_on_drop_request_set(Tpp, tp_on_drop_request_t);
-bool tp_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper);
+bool tp_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst);
 
-typedef bool (*tp_on_open_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
+typedef bool (*tp_on_open_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp player_or_monst);
 void tp_on_open_request_set(Tpp, tp_on_open_request_t);
-bool tp_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener);
+bool tp_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst);
 
-typedef bool (*tp_on_close_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp opener);
+typedef bool (*tp_on_close_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp player_or_monst);
 void tp_on_close_request_set(Tpp, tp_on_close_request_t);
-bool tp_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener);
+bool tp_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst);
 
 typedef void (*tp_on_tick_idle_t)(Gamep, Levelsp, Levelp, Thingp me);
 void tp_on_tick_idle_set(Tpp, tp_on_tick_idle_t);

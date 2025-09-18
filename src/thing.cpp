@@ -94,7 +94,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
   LOG("- Free things         %u", free_things);
 }
 
-ThingAip thing_ai(Gamep g, Thingp t)
+ThingAip thing_ai_struct(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 

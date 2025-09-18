@@ -56,6 +56,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_LIFESPAN_EXPIRED : //
       case THING_EVENT_FALL :             //
       case THING_EVENT_CARRIED :          //
+      case THING_EVENT_CARRIED_MERGED :   //
       case THING_EVENT_ENUM_MAX :         //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -90,6 +91,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_OPEN :             //
       case THING_EVENT_LIFESPAN_EXPIRED : //
       case THING_EVENT_CARRIED :          //
+      case THING_EVENT_CARRIED_MERGED :   //
       case THING_EVENT_ENUM_MAX :         //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
     }
@@ -138,6 +140,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_LIFESPAN_EXPIRED : //
       case THING_EVENT_FALL :             //
       case THING_EVENT_CARRIED :          //
+      case THING_EVENT_CARRIED_MERGED :   //
       case THING_EVENT_ENUM_MAX :         //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -331,11 +334,12 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
         break;
-      case THING_EVENT_OPEN : //
+      case THING_EVENT_OPEN :           //
+      case THING_EVENT_CARRIED :        //
+      case THING_EVENT_CARRIED_MERGED : //
+      case THING_EVENT_ENUM_MAX :       //
+        ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
-      case THING_EVENT_CARRIED : //
-        break;
-      case THING_EVENT_ENUM_MAX : break;
     }
 
     thing_dead(g, v, l, t, e);

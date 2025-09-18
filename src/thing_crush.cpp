@@ -13,7 +13,9 @@
 //
 // Add a key to the things inventory
 //
-bool thing_crush(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst, Thingp it)
+// "me" here could be a barrel
+//
+bool thing_crush(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp me)
 {
   TRACE_NO_INDENT();
 
@@ -25,7 +27,7 @@ bool thing_crush(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst, Thingp it
   // Crush grass?
   //
   if (thing_is_grass(it)) {
-    if (! thing_is_able_to_crush_grass(player_or_monst)) {
+    if (! thing_is_able_to_crush_grass(me)) {
       return false;
     }
   }
@@ -36,7 +38,7 @@ bool thing_crush(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst, Thingp it
   ThingEvent e {
       .reason     = "by crushing",     //
       .event_type = THING_EVENT_CRUSH, //
-      .source     = player_or_monst    //
+      .source     = me                 //
   };
   thing_dead(g, v, l, it, e);
   return true;

@@ -196,6 +196,7 @@ using Texp         = class Tex *;
 using ThingId      = unsigned int;
 using ThingAiId    = unsigned short;
 using Thingp       = struct Thing_ *;
+using ThingSlotp   = struct ThingSlot_ *;
 using ThingAip     = struct ThingAi_ *;
 using ThingPlayerp = struct ThingPlayer_ *;
 using Tilep        = class Tile *;
@@ -205,7 +206,6 @@ using Testp        = class Test *;
 using Widp         = class Wid *;
 using LevelNum     = unsigned char;
 
-#define NULL_TP    ((Tpp) nullptr)
 #define NULL_THING ((Thingp) nullptr)
 
 extern bool g_die_occurred;                      // Fatal error has occurred

@@ -1,5 +1,3 @@
-key prefabs
-damaged doors
 inventory
 line of sight
 "is collected" should be line of sight
@@ -9,6 +7,7 @@ monst AI
 ghosts and walls
 lighting
 score is hard coded to 666
+damaged door visuals
 
 ideas
 -----

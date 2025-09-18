@@ -291,13 +291,16 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   // Check if already present.
   //
   auto curr_level = thing_level(g, v, t);
-  if (new_level == curr_level) {
-    if (to == t->at) {
-      return false;
-    }
+  if ((new_level == curr_level) && (to == t->at)) {
+    //
+    // No need to pop. If might be an inventory item though, so make sure and push.
+    //
+  } else {
+    //
+    // Remove from the currentl level or position
+    //
+    thing_pop(g, v, t);
   }
-
-  thing_pop(g, v, t);
 
   t->pix_at.x = t->at.x * INNER_TILE_WIDTH;
   t->pix_at.y = t->at.y * INNER_TILE_HEIGHT;

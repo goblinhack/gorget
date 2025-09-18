@@ -1220,7 +1220,7 @@ void tp_on_open_request_set(Tpp tp, tp_on_open_request_t callback)
   tp->on_open_request = callback;
 }
 
-bool tp_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener)
+bool tp_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1234,7 +1234,11 @@ bool tp_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener)
     //
     return true;
   }
-  return tp->on_open_request(g, v, l, me, opener);
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+  return tp->on_open_request(g, v, l, me, player_or_monst);
 }
 
 void tp_on_close_request_set(Tpp tp, tp_on_close_request_t callback)
@@ -1247,7 +1251,7 @@ void tp_on_close_request_set(Tpp tp, tp_on_close_request_t callback)
   tp->on_close_request = callback;
 }
 
-bool tp_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener)
+bool tp_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1261,7 +1265,11 @@ bool tp_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp opener)
     //
     return true;
   }
-  return tp->on_close_request(g, v, l, me, opener);
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+  return tp->on_close_request(g, v, l, me, player_or_monst);
 }
 
 void tp_on_carry_request_set(Tpp tp, tp_on_carry_request_t callback)
@@ -1274,7 +1282,7 @@ void tp_on_carry_request_set(Tpp tp, tp_on_carry_request_t callback)
   tp->on_carry_request = callback;
 }
 
-bool tp_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collecter)
+bool tp_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1288,7 +1296,11 @@ bool tp_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp collect
     //
     return true;
   }
-  return tp->on_carry_request(g, v, l, me, collecter);
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+  return tp->on_carry_request(g, v, l, me, player_or_monst);
 }
 
 void tp_on_drop_request_set(Tpp tp, tp_on_drop_request_t callback)
@@ -1301,7 +1313,7 @@ void tp_on_drop_request_set(Tpp tp, tp_on_drop_request_t callback)
   tp->on_drop_request = callback;
 }
 
-bool tp_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper)
+bool tp_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1315,7 +1327,11 @@ bool tp_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp dropper)
     //
     return true;
   }
-  return tp->on_drop_request(g, v, l, me, dropper);
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+  return tp->on_drop_request(g, v, l, me, player_or_monst);
 }
 
 void tp_on_death_set(Tpp tp, tp_on_death_t callback)
@@ -1448,7 +1464,7 @@ void tp_on_shoved_set(Tpp tp, tp_on_shoved_t callback)
   tp->on_shoved = callback;
 }
 
-void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover)
+void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1459,7 +1475,11 @@ void tp_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp shover)
   if (! tp->on_shoved) {
     return;
   }
-  return tp->on_shoved(g, v, l, me, shover);
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return;
+  }
+  return tp->on_shoved(g, v, l, me, player_or_monst);
 }
 
 void tp_on_fall_begin_set(Tpp tp, tp_on_fall_begin_t callback)

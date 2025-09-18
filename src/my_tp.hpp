@@ -122,7 +122,7 @@
       list_macro(is_undead, "is_undead"),                               /* newline */                                \
       list_macro(is_unused1, "is_unused1"),                             /* newline */                                \
       list_macro(is_unused10, "is_unused10"),                           /* newline */                                \
-      list_macro(is_unused11, "is_unused11"),                           /* newline */                                \
+      list_macro(is_item_mergeable, "is_item_mergeable"),               /* newline */                                \
       list_macro(is_door_type_locked, "is_door_type_locked"),           /* newline */                                \
       list_macro(is_inventory_item, "is_inventory_item"),               /* newline */                                \
       list_macro(is_unused2, "is_unused2"),                             /* newline */                                \
@@ -238,19 +238,20 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 // Thing damage enum
 //
 #define THING_EVENT_ENUM(list_macro)                                                                                 \
-  clang_format_indent()                                      /* dummy line for clang indentation fixup */            \
-      list_macro(THING_EVENT_CRUSH, "crush"),                /* newline */                                           \
-      list_macro(THING_EVENT_FALL, "falling"),               /* newline */                                           \
-      list_macro(THING_EVENT_FIRE_DAMAGE, "fire"),           /* newline */                                           \
-      list_macro(THING_EVENT_HEAT_DAMAGE, "heat"),           /* newline */                                           \
-      list_macro(THING_EVENT_LIFESPAN_EXPIRED, "lifespan"),  /* newline */                                           \
-      list_macro(THING_EVENT_MELEE_DAMAGE, "melee"),         /* newline */                                           \
-      list_macro(THING_EVENT_OPEN, "open"),                  /* newline */                                           \
-      list_macro(THING_EVENT_NONE, "none"),                  /* newline */                                           \
-      list_macro(THING_EVENT_SHOVED, "shove"),               /* newline */                                           \
-      list_macro(THING_EVENT_WATER_DAMAGE, "water"),         /* newline */                                           \
-      list_macro(THING_EVENT_EXPLOSION_DAMAGE, "explosion"), /* newline */                                           \
-      list_macro(THING_EVENT_CARRIED, "carried"),            /* newline */
+  clang_format_indent()                                         /* dummy line for clang indentation fixup */         \
+      list_macro(THING_EVENT_CRUSH, "crush"),                   /* newline */                                        \
+      list_macro(THING_EVENT_FALL, "falling"),                  /* newline */                                        \
+      list_macro(THING_EVENT_FIRE_DAMAGE, "fire"),              /* newline */                                        \
+      list_macro(THING_EVENT_HEAT_DAMAGE, "heat"),              /* newline */                                        \
+      list_macro(THING_EVENT_LIFESPAN_EXPIRED, "lifespan"),     /* newline */                                        \
+      list_macro(THING_EVENT_MELEE_DAMAGE, "melee"),            /* newline */                                        \
+      list_macro(THING_EVENT_OPEN, "open"),                     /* newline */                                        \
+      list_macro(THING_EVENT_NONE, "none"),                     /* newline */                                        \
+      list_macro(THING_EVENT_SHOVED, "shove"),                  /* newline */                                        \
+      list_macro(THING_EVENT_WATER_DAMAGE, "water"),            /* newline */                                        \
+      list_macro(THING_EVENT_EXPLOSION_DAMAGE, "explosion"),    /* newline */                                        \
+      list_macro(THING_EVENT_CARRIED, "carried"),               /* newline */                                        \
+      list_macro(THING_EVENT_CARRIED_MERGED, "carried-merged"), /* newline */
 
 ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 
@@ -597,7 +598,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_undead(tp)                tp_flag(tp, is_undead)
 #define tp_is_unused1(tp)               tp_flag(tp, is_unused1)
 #define tp_is_unused10(tp)              tp_flag(tp, is_unused10)
-#define tp_is_unused11(tp)              tp_flag(tp, is_unused11)
+#define tp_is_item_mergeable(tp)        tp_flag(tp, is_item_mergeable)
 #define tp_is_unused2(tp)               tp_flag(tp, is_unused2)
 #define tp_is_unused3(tp)               tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)               tp_flag(tp, is_unused4)
@@ -707,7 +708,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_undead(g, v, l, p)                level_afirst_flag(g, v, l, is_undead, p)
 #define level_afirst_is_unused1(g, v, l, p)               level_afirst_flag(g, v, l, is_unused1, p)
 #define level_afirst_is_unused10(g, v, l, p)              level_afirst_flag(g, v, l, is_unused10, p)
-#define level_afirst_is_unused11(g, v, l, p)              level_afirst_flag(g, v, l, is_unused11, p)
+#define level_afirst_is_item_mergeable(g, v, l, p)        level_afirst_flag(g, v, l, is_item_mergeable, p)
 #define level_afirst_is_unused2(g, v, l, p)               level_afirst_flag(g, v, l, is_unused2, p)
 #define level_afirst_is_unused3(g, v, l, p)               level_afirst_flag(g, v, l, is_unused3, p)
 #define level_afirst_is_unused34(g, v, l, p)              level_afirst_flag(g, v, l, is_able_to_fall, p)
@@ -820,7 +821,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_undead(g, v, l, p)                 level_alive_flag(g, v, l, is_undead, p)
 #define level_alive_is_unused1(g, v, l, p)                level_alive_flag(g, v, l, is_unused1, p)
 #define level_alive_is_unused10(g, v, l, p)               level_alive_flag(g, v, l, is_unused10, p)
-#define level_alive_is_unused11(g, v, l, p)               level_alive_flag(g, v, l, is_unused11, p)
+#define level_alive_is_item_mergeable(g, v, l, p)         level_alive_flag(g, v, l, is_item_mergeable, p)
 #define level_alive_is_unused2(g, v, l, p)                level_alive_flag(g, v, l, is_unused2, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_able_to_fall, p)
@@ -933,7 +934,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_undead(g, v, l, p)                 level_count_flag(g, v, l, is_undead, p)
 #define level_count_is_unused1(g, v, l, p)                level_count_flag(g, v, l, is_unused1, p)
 #define level_count_is_unused10(g, v, l, p)               level_count_flag(g, v, l, is_unused10, p)
-#define level_count_is_unused11(g, v, l, p)               level_count_flag(g, v, l, is_unused11, p)
+#define level_count_is_item_mergeable(g, v, l, p)         level_count_flag(g, v, l, is_item_mergeable, p)
 #define level_count_is_unused2(g, v, l, p)                level_count_flag(g, v, l, is_unused2, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_able_to_fall, p)
@@ -1046,7 +1047,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_undead(g, v, l, p)                 level_first_flag(g, v, l, is_undead, p)
 #define level_first_is_unused1(g, v, l, p)                level_first_flag(g, v, l, is_unused1, p)
 #define level_first_is_unused10(g, v, l, p)               level_first_flag(g, v, l, is_unused10, p)
-#define level_first_is_unused11(g, v, l, p)               level_first_flag(g, v, l, is_unused11, p)
+#define level_first_is_item_mergeable(g, v, l, p)         level_first_flag(g, v, l, is_item_mergeable, p)
 #define level_first_is_unused2(g, v, l, p)                level_first_flag(g, v, l, is_unused2, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_able_to_fall, p)
@@ -1171,7 +1172,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_undead(g, v, l, p)                       level_flag(g, v, l, is_undead, p)
 #define level_is_unused1(g, v, l, p)                      level_flag(g, v, l, is_unused1, p)
 #define level_is_unused10(g, v, l, p)                     level_flag(g, v, l, is_unused10, p)
-#define level_is_unused11(g, v, l, p)                     level_flag(g, v, l, is_unused11, p)
+#define level_is_item_mergeable(g, v, l, p)               level_flag(g, v, l, is_item_mergeable, p)
 #define level_is_unused2(g, v, l, p)                      level_flag(g, v, l, is_unused2, p)
 #define level_is_unused3(g, v, l, p)                      level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)                      level_flag(g, v, l, is_unused4, p)
@@ -1279,7 +1280,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_undead(g, v, l, p)                  level_open_flag(g, v, l, is_undead, p)
 #define level_open_is_unused1(g, v, l, p)                 level_open_flag(g, v, l, is_unused1, p)
 #define level_open_is_unused10(g, v, l, p)                level_open_flag(g, v, l, is_unused10, p)
-#define level_open_is_unused11(g, v, l, p)                level_open_flag(g, v, l, is_unused11, p)
+#define level_open_is_item_mergeable(g, v, l, p)          level_open_flag(g, v, l, is_item_mergeable, p)
 #define level_open_is_unused2(g, v, l, p)                 level_open_flag(g, v, l, is_unused2, p)
 #define level_open_is_unused3(g, v, l, p)                 level_open_flag(g, v, l, is_unused3, p)
 #define level_open_is_unused34(g, v, l, p)                level_open_flag(g, v, l, is_able_to_fall, p)
