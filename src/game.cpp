@@ -127,7 +127,7 @@ public:
   SDL_Keysym key_unused13   = {};
   SDL_Keysym key_unused14   = {};
   SDL_Keysym key_unused15   = {};
-  SDL_Keysym key_unused16   = {};
+  SDL_Keysym key_inventory  = {};
   SDL_Keysym key_jump       = {};
   SDL_Keysym key_ascend     = {};
   SDL_Keysym key_descend    = {};
@@ -338,8 +338,12 @@ void Config::reset(void)
   tiles_visible_across   = MAP_TILES_ACROSS_DEF;
   tiles_visible_down     = MAP_TILES_DOWN_DEF;
 
-  key_wait.sym       = SDLK_PERIOD;
+  key_ascend.sym     = SDLK_LESS;
+  key_console.sym    = SDLK_BACKQUOTE;
+  key_descend.sym    = SDLK_GREATER;
   key_help.sym       = SDLK_h;
+  key_inventory.sym  = SDLK_i;
+  key_jump.sym       = SDLK_j;
   key_load.sym       = SDLK_F12;
   key_move_down.sym  = SDLK_s;
   key_move_left.sym  = SDLK_a;
@@ -348,11 +352,8 @@ void Config::reset(void)
   key_quit.sym       = SDLK_q;
   key_save.sym       = SDLK_F1;
   key_screenshot.sym = SDLK_F10;
+  key_wait.sym       = SDLK_PERIOD;
   key_zoom.sym       = SDLK_z;
-  key_console.sym    = SDLK_BACKQUOTE;
-  key_ascend.sym     = SDLK_LESS;
-  key_descend.sym    = SDLK_GREATER;
-  key_jump.sym       = SDLK_j;
   music_volume       = {MIX_MAX_VOLUME / 2};
   sdl_delay          = 1;
   sound_volume       = {MIX_MAX_VOLUME};
@@ -2311,21 +2312,21 @@ void game_key_unused15_set(Gamep g, SDL_Keysym key)
   g->config.key_unused15 = key;
 }
 
-SDL_Keysym game_key_unused16_get(Gamep g)
+SDL_Keysym game_key_inventory_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (! g)
     return no_key;
-  return g->config.key_unused16;
+  return g->config.key_inventory;
 }
-void game_key_unused16_set(Gamep g, SDL_Keysym key)
+void game_key_inventory_set(Gamep g, SDL_Keysym key)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.key_unused16 = key;
+  g->config.key_inventory = key;
 }
 
 SDL_Keysym game_key_jump_get(Gamep g)

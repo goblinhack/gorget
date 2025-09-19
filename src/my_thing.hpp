@@ -524,6 +524,7 @@ void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 bool player_jump(Gamep, Levelsp, Levelp, Thingp, spoint);
 bool player_move_request(Gamep, bool up, bool down, bool left, bool right);
 bool player_move_to_next(Gamep, Levelsp, Levelp, Thingp);
+// end sort marker1 {
 
 bool thing_is_dead(Thingp);
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);

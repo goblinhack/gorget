@@ -23,124 +23,124 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
   SDL_Keysym none = {};
 
   if (sdlk_eq(game_key_help_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key help." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for help." UI_RESET_FMT);
     game_key_help_set(g, none);
   }
   if (sdlk_eq(game_key_load_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key load." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for load." UI_RESET_FMT);
     game_key_load_set(g, none);
   }
   if (sdlk_eq(game_key_move_down_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key move down." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for move down." UI_RESET_FMT);
     game_key_move_down_set(g, none);
   }
   if (sdlk_eq(game_key_move_left_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key move left." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for move left." UI_RESET_FMT);
     game_key_move_left_set(g, none);
   }
   if (sdlk_eq(game_key_move_right_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key move right." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for move right." UI_RESET_FMT);
     game_key_move_right_set(g, none);
   }
   if (sdlk_eq(game_key_move_up_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key move up." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for move up." UI_RESET_FMT);
     game_key_move_up_set(g, none);
   }
   if (sdlk_eq(game_key_ascend_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key descend" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for descend" UI_RESET_FMT);
     game_key_ascend_set(g, none);
   }
   if (sdlk_eq(game_key_ascend_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key ascend" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for ascend" UI_RESET_FMT);
     game_key_ascend_set(g, none);
   }
   if (sdlk_eq(game_key_zoom_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key zoom" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for zoom" UI_RESET_FMT);
     game_key_zoom_set(g, none);
   }
   if (sdlk_eq(game_key_quit_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key quit." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for quit." UI_RESET_FMT);
     game_key_quit_set(g, none);
   }
   if (sdlk_eq(game_key_save_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key save." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for save." UI_RESET_FMT);
     game_key_save_set(g, none);
   }
   if (sdlk_eq(game_key_screenshot_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key screenshot." UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for screenshot." UI_RESET_FMT);
     game_key_screenshot_set(g, none);
   }
+  if (sdlk_eq(game_key_inventory_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for inventory" UI_RESET_FMT);
+    game_key_inventory_set(g, none);
+  }
+  if (sdlk_eq(game_key_jump_get(g), code)) {
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for jump" UI_RESET_FMT);
+    game_key_jump_set(g, none);
+  }
   if (sdlk_eq(game_key_console_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key console" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for console" UI_RESET_FMT);
     game_key_console_set(g, none);
   }
   if (sdlk_eq(game_key_unused1_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused1" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused1" UI_RESET_FMT);
     game_key_unused1_set(g, none);
   }
   if (sdlk_eq(game_key_unused2_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused2" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused2" UI_RESET_FMT);
     game_key_unused2_set(g, none);
   }
   if (sdlk_eq(game_key_unused3_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused3" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused3" UI_RESET_FMT);
     game_key_unused3_set(g, none);
   }
   if (sdlk_eq(game_key_unused4_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused4" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused4" UI_RESET_FMT);
     game_key_unused4_set(g, none);
   }
   if (sdlk_eq(game_key_unused5_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused5" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused5" UI_RESET_FMT);
     game_key_unused5_set(g, none);
   }
   if (sdlk_eq(game_key_unused6_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused6" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused6" UI_RESET_FMT);
     game_key_unused6_set(g, none);
   }
   if (sdlk_eq(game_key_unused7_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused7" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused7" UI_RESET_FMT);
     game_key_unused7_set(g, none);
   }
   if (sdlk_eq(game_key_unused8_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused8" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused8" UI_RESET_FMT);
     game_key_unused8_set(g, none);
   }
   if (sdlk_eq(game_key_unused9_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused9" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused9" UI_RESET_FMT);
     game_key_unused9_set(g, none);
   }
   if (sdlk_eq(game_key_unused10_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused10" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused10" UI_RESET_FMT);
     game_key_unused10_set(g, none);
   }
   if (sdlk_eq(game_key_unused11_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused11" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused11" UI_RESET_FMT);
     game_key_unused11_set(g, none);
   }
   if (sdlk_eq(game_key_unused12_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused12" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused12" UI_RESET_FMT);
     game_key_unused12_set(g, none);
   }
   if (sdlk_eq(game_key_unused13_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused13" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused13" UI_RESET_FMT);
     game_key_unused13_set(g, none);
   }
   if (sdlk_eq(game_key_unused14_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused14" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused14" UI_RESET_FMT);
     game_key_unused14_set(g, none);
   }
   if (sdlk_eq(game_key_unused15_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused15" UI_RESET_FMT);
+    CON("%%fg=orange$Conflicting keyboard mapping, disabling key for unused15" UI_RESET_FMT);
     game_key_unused15_set(g, none);
-  }
-  if (sdlk_eq(game_key_unused16_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_unused16" UI_RESET_FMT);
-    game_key_unused16_set(g, none);
-  }
-  if (sdlk_eq(game_key_jump_get(g), code)) {
-    CON("%%fg=orange$Conflicting keyboard mapping, disabling key_jump" UI_RESET_FMT);
-    game_key_jump_set(g, none);
   }
 }
 
@@ -420,13 +420,13 @@ static void wid_cfg_key_unused15_set(Gamep g, SDL_Keysym code)
   wid_cfg_keyboard_select(g);
 }
 
-static void wid_cfg_key_unused16_set(Gamep g, SDL_Keysym code)
+static void wid_cfg_key_inventory_set(Gamep g, SDL_Keysym code)
 {
   TRACE_NO_INDENT();
   local_g_config_changed = true;
-  game_key_unused16_set(g, none);
+  game_key_inventory_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
-  game_key_unused16_set(g, code);
+  game_key_inventory_set(g, code);
   wid_cfg_keyboard_select(g);
 }
 
@@ -780,11 +780,11 @@ static bool wid_cfg_key_unused15(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused16(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_key_inventory(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  grab_key(g, "key_unused16");
-  sdl.on_sdl_key_grab    = wid_cfg_key_unused16_set;
+  grab_key(g, "key_inventory");
+  sdl.on_sdl_key_grab    = wid_cfg_key_inventory_set;
   local_g_config_changed = true;
   return true;
 }
@@ -1995,14 +1995,14 @@ void wid_cfg_keyboard_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "key_unused16");
+    auto w = wid_new_square_button(g, p, "key_inventory");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "key_unused16");
+    wid_set_text(w, "key_inventory");
   }
   {
     TRACE_NO_INDENT();
@@ -2016,8 +2016,8 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_mode(g, w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, ::to_string(game_key_unused16_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused16);
+    wid_set_text(w, ::to_string(game_key_inventory_get(g)));
+    wid_set_on_mouse_up(g, w, wid_cfg_key_inventory);
   }
 
   wid_update(g, wid_cfg_keyboard_window->wid_text_area->wid_text_area);

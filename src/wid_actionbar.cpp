@@ -14,6 +14,7 @@ static Widp      wid_actionbar {};
 static WidPopup *wid_over_save {};
 static WidPopup *wid_over_load {};
 static WidPopup *wid_over_wait {};
+static WidPopup *wid_over_inventory {};
 static WidPopup *wid_over_ascend {};
 static WidPopup *wid_over_descend {};
 static WidPopup *wid_over_quit {};
@@ -178,6 +179,52 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
 
   delete wid_over_wait;
   wid_over_wait = nullptr;
+}
+
+static bool wid_actionbar_inventory(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  LOG("Actionbar inventory");
+  TRACE_NO_INDENT();
+
+  return game_event_inventory(g);
+}
+
+static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+{
+  TRACE_NO_INDENT();
+
+  int tlx;
+  int tly;
+  int brx;
+  int bry;
+  wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
+
+  int width  = 32;
+  int height = 10;
+
+  tlx -= width / 2;
+  brx += width / 2;
+  tly -= height;
+
+  bry -= 1;
+  tly += 1;
+
+  spoint tl(tlx, tly);
+  spoint br(brx, bry);
+
+  wid_over_inventory = new WidPopup(g, "Inventory", tl, br, nullptr, "", false, false);
+  wid_over_inventory->log(g, UI_HIGHLIGHT_FMT_STR "Inventory");
+  wid_over_inventory->log_empty_line(g);
+  wid_over_inventory->log(g, "Select this to view your hard gotten loot.");
+  wid_over_inventory->compress(g);
+}
+
+static void wid_actionbar_inventory_over_end(Gamep g, Widp w)
+{
+  TRACE_NO_INDENT();
+
+  delete wid_over_inventory;
+  wid_over_inventory = nullptr;
 }
 
 static bool wid_actionbar_ascend(Gamep g, Widp w, int x, int y, uint32_t button)
@@ -390,15 +437,16 @@ bool wid_actionbar_create_window(Gamep g)
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
 
-  int  option_width = 10;
-  int  options      = 0;
-  bool opt_wait     = true;
-  bool opt_quit     = true;
-  bool opt_help     = true;
-  bool opt_load     = false;
-  bool opt_save     = false;
-  bool opt_descend  = level_is_exit(g, v, l, player->at);
-  bool opt_ascend   = level_is_entrance(g, v, l, player->at);
+  int  option_width  = 10;
+  int  options       = 0;
+  bool opt_wait      = true;
+  bool opt_inventory = true;
+  bool opt_quit      = true;
+  bool opt_help      = true;
+  bool opt_load      = false;
+  bool opt_save      = false;
+  bool opt_descend   = level_is_exit(g, v, l, player->at);
+  bool opt_ascend    = level_is_entrance(g, v, l, player->at);
 
   if (g_opt_debug1 || (l->level_num == LEVEL_SELECT_ID)) {
     opt_save = true;
@@ -406,10 +454,11 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   if (l->level_num == LEVEL_SELECT_ID) {
-    opt_wait    = false;
-    opt_help    = false;
-    opt_ascend  = false;
-    opt_descend = false;
+    opt_wait      = false;
+    opt_inventory = false;
+    opt_help      = false;
+    opt_ascend    = false;
+    opt_descend   = false;
   }
 
   if (opt_help) {
@@ -421,6 +470,10 @@ bool wid_actionbar_create_window(Gamep g)
   }
 
   if (opt_wait) {
+    options++;
+  }
+
+  if (opt_inventory) {
     options++;
   }
 
@@ -494,6 +547,23 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_wait_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_wait_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_wait_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Wait");
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, box_highlight_style);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_style(w, box_style);
+    x_at += option_width + 1;
+  }
+
+  if (opt_inventory) {
+    auto   w  = wid_new_square_button(g, wid_actionbar, "wid actionbar inventory");
+    spoint tl = spoint(x_at, 0);
+    spoint br = spoint(x_at + option_width - 1, 0);
+    wid_set_pos(w, tl, br);
+    wid_set_on_mouse_down(g, w, wid_actionbar_inventory);
+    wid_set_on_mouse_over_begin(g, w, wid_actionbar_inventory_over_begin);
+    wid_set_on_mouse_over_end(g, w, wid_actionbar_inventory_over_end);
+    wid_set_text(w,
+                 UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_inventory_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Inv");
     wid_set_mode(g, w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(g, w, WID_MODE_NORMAL);

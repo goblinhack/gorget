@@ -232,8 +232,8 @@ void       game_key_unused14_set(Gamep, SDL_Keysym);
 SDL_Keysym game_key_unused15_get(Gamep);
 void       game_key_unused15_set(Gamep, SDL_Keysym);
 
-SDL_Keysym game_key_unused16_get(Gamep);
-void       game_key_unused16_set(Gamep, SDL_Keysym);
+SDL_Keysym game_key_inventory_get(Gamep);
+void       game_key_inventory_set(Gamep, SDL_Keysym);
 
 SDL_Keysym game_key_jump_get(Gamep);
 void       game_key_jump_set(Gamep, SDL_Keysym);
@@ -277,6 +277,7 @@ bool game_event_load(Gamep);
 bool game_event_quit(Gamep);
 bool game_event_save(Gamep);
 bool game_event_wait(Gamep);
+bool game_event_inventory(Gamep);
 bool game_load_config(Gamep game);
 bool game_load_last_config(const char *appdata);
 bool game_load_snapshot(Gamep);

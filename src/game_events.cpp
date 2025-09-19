@@ -237,6 +237,34 @@ bool game_event_wait(Gamep g)
   return true;
 }
 
+bool game_event_inventory(Gamep g)
+{
+  LOG("Inventory");
+  TRACE_AND_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  if (thing_is_dead(player)) {
+    return false;
+  }
+
+  // TODO
+  return true;
+}
+
 bool game_event_descend(Gamep g)
 {
   LOG("Descend");
@@ -425,6 +453,12 @@ bool game_input(Gamep g, const SDL_Keysym *key)
   if (sdlk_eq(*key, game_key_wait_get(g))) {
     LOG("Pressed wait key");
     game_event_wait(g);
+    return false; // To avoid click noise
+  }
+
+  if (sdlk_eq(*key, game_key_inventory_get(g))) {
+    LOG("Pressed inventory key");
+    game_event_inventory(g);
     return false; // To avoid click noise
   }
 
