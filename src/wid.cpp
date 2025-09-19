@@ -1894,7 +1894,7 @@ static Widp wid_new(Gamep g, Widp parent)
   wid_set_mode(g, w, WID_MODE_NORMAL);
 
   w->visible = true;
-  wid_set_style(w, UI_WID_STYLE_SOLID_NONE);
+  wid_set_style(w, UI_WID_STYLE_NORMAL);
   WID_DBG(w, "new");
 
   return w;
@@ -1918,7 +1918,7 @@ static Widp wid_new(Gamep g)
   wid_set_mode(g, w, WID_MODE_NORMAL);
 
   w->visible = true;
-  wid_set_style(w, UI_WID_STYLE_SOLID_NONE);
+  wid_set_style(w, UI_WID_STYLE_NORMAL);
   WID_DBG(w, "new");
 
   return w;

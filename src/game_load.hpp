@@ -5,6 +5,7 @@
 #include "3rdparty/minilzo.hpp"
 #include "my_alloc.hpp"
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
@@ -602,6 +603,12 @@ void Game::load_select(void)
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, "BACK");
+
+    wid_set_mode(game, w, WID_MODE_OVER);
+    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+    wid_set_color(w, WID_COLOR_BG, RED);
+    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+    wid_set_mode(game, w, WID_MODE_NORMAL);
   }
 
   game_headers_only = true;

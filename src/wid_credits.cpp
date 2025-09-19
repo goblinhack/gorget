@@ -4,6 +4,7 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
@@ -104,6 +105,12 @@ void wid_credits_select(Gamep g)
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_credits_mouse_up);
+
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+    wid_set_color(w, WID_COLOR_BG, RED);
+    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, "BACK");

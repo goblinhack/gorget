@@ -4,6 +4,7 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
@@ -152,7 +153,7 @@ void wid_more_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Back");
+    auto w = wid_new_square_button(g, p, "BACK");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -162,7 +163,13 @@ void wid_more_select(Gamep g)
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_more_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ack");
+    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ACK");
+
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+    wid_set_color(w, WID_COLOR_BG, RED);
+    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
   }
 
   wid_update(g, wid_more_window->wid_text_area->wid_text_area);

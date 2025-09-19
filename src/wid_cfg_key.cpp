@@ -958,7 +958,7 @@ void wid_cfg_keyboard_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Back");
+    auto w = wid_new_square_button(g, p, "BACK");
 
     spoint tl(1, y_at);
     spoint br(8, y_at + 2);
@@ -966,7 +966,13 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_cfg_keyboard_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Back");
+    wid_set_text(w, "BACK");
+
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+    wid_set_color(w, WID_COLOR_BG, RED);
+    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
   }
   {
     TRACE_NO_INDENT();

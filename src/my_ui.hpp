@@ -82,7 +82,7 @@
 
 enum {
   UI_WID_STYLE_SPARSE_NONE = -1, // Used for widgets with their own backgrounds
-  UI_WID_STYLE_SOLID_NONE,
+  UI_WID_STYLE_SOLID_GRAY,
   UI_WID_STYLE_GREEN,
   UI_WID_STYLE_RED,
   UI_WID_STYLE_NORMAL,

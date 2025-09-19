@@ -4,6 +4,7 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
@@ -83,18 +84,21 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     return;
   }
 
-#if 0
-  auto box_style           = UI_WID_STYLE_HORIZ_DARK;
-  auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
-#endif
+  const int inventory_width  = UI_INVENTORY_WIDTH;
+  const int inventory_height = UI_INVENTORY_HEIGHT;
 
-  static int inventory_width  = UI_INVENTORY_WIDTH;
-  static int inventory_height = UI_INVENTORY_HEIGHT;
+  const auto button_width           = inventory_width - 4;
+  const auto button_height          = 0;
+  const auto button_step            = 1;
+  const auto button_style           = UI_WID_STYLE_SPARSE_NONE;
+  const auto button_highlight_style = UI_WID_STYLE_SOLID_GRAY;
 
-  int left_half  = inventory_width / 2;
-  int right_half = inventory_width - left_half;
-  int top_half   = inventory_height / 2;
-  int bot_half   = inventory_height - top_half;
+  auto y_at = 2;
+
+  const int left_half  = inventory_width / 2;
+  const int right_half = inventory_width - left_half;
+  const int top_half   = inventory_height / 2;
+  const int bot_half   = inventory_height - top_half;
 
   {
     TRACE_NO_INDENT();
@@ -111,18 +115,92 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
   }
 
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player, slot, item)
-  { //
-    if (! item) {
-      THING_LOG(player, "slot %d: -", _n_);
-      continue;
+  {
+    auto tp = item ? thing_tp(item) : nullptr;
+
+    //
+    // Item icon
+    //
+    if (tp) {
+      Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
+      if (tile) {
+        TRACE_NO_INDENT();
+        auto   w = wid_new_square_button(g, wid_inventory_window, "Icon");
+        spoint tl(1, y_at);
+        spoint br(2, y_at + button_height);
+        wid_set_tile(TILE_LAYER_BG_0, w, tile);
+        wid_set_style(w, button_style);
+        wid_set_pos(w, tl, br);
+      }
     }
 
-    auto s = to_string(g, item);
-    if (slot->count) {
-      THING_LOG(player, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
-    } else {
-      THING_LOG(player, "slot %d: %s", _n_, s.c_str());
+    //
+    // Key shortcut
+    //
+    {
+      TRACE_NO_INDENT();
+      auto w = wid_new_square_button(g, wid_inventory_window, "Key");
+
+      std::string s;
+      s += (char) ('a' + _n_);
+      s += ')';
+
+      spoint tl(3, y_at);
+      spoint br(6, y_at + button_height);
+      wid_set_text_lhs(w, true);
+
+      wid_set_mode(g, w, WID_MODE_NORMAL);
+      wid_set_color(w, WID_COLOR_TEXT_FG, GRAY50);
+      wid_set_style(w, button_style);
+#if 0
+      wid_set_on_mouse_up(g, w, wid_main_menu_more);
+#endif
+      wid_set_pos(w, tl, br);
+      wid_set_text(w, s);
     }
+
+    //
+    // Item name
+    //
+    {
+      std::string s;
+
+      if (item) {
+        s = tp_short_name(tp);
+      } else {
+        s = "-";
+      }
+
+      if (slot->count) {
+        s += " x";
+        s += std::to_string(slot->count);
+      }
+
+      {
+        TRACE_NO_INDENT();
+        auto w = wid_new_square_button(g, wid_inventory_window, "Item");
+
+        spoint tl(6, y_at);
+        spoint br(button_width, y_at + button_height);
+        wid_set_text_lhs(w, true);
+
+        wid_set_mode(g, w, WID_MODE_OVER);
+        wid_set_style(w, button_highlight_style);
+        wid_set_color(w, WID_COLOR_BG, RED);
+        wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+
+        wid_set_mode(g, w, WID_MODE_NORMAL);
+        wid_set_color(w, WID_COLOR_TEXT_FG, GRAY70);
+        wid_set_style(w, button_style);
+#if 0
+      wid_set_on_mouse_up(g, w, wid_main_menu_more);
+#endif
+        wid_set_pos(w, tl, br);
+        wid_set_text(w, s);
+      }
+    }
+
+    y_at += button_step;
   }
 
   {
@@ -134,6 +212,12 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
+
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+    wid_set_color(w, WID_COLOR_BG, RED);
+    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, "BACK");
