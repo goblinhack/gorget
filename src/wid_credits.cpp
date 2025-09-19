@@ -98,22 +98,13 @@ void wid_credits_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_credits_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "credits");
+    auto w = wid_back_button(g, p, "credits");
 
     spoint tl(menu_width / 2 - 4, menu_height - 4);
     spoint br(menu_width / 2 + 3, menu_height - 2);
 
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_credits_mouse_up);
-
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
-    wid_set_color(w, WID_COLOR_BG, RED);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "BACK");
   }
 
   wid_update(g, wid_credits_window->wid_text_area->wid_text_area);

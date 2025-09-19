@@ -10,6 +10,7 @@
 #include "my_sound.hpp"
 #include "my_wid_popup.hpp"
 #include "my_wid_warning.hpp"
+#include "my_wids.hpp"
 
 WidPopup *wid_warning_window;
 
@@ -133,11 +134,10 @@ void wid_warning(Gamep g, std::string warning, wid_warning_callback_t callback)
   {
     TRACE_NO_INDENT();
     auto p = wid_warning_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "No");
+    auto w = wid_no_button(g, p, "No");
 
     spoint tl1(width / 2 - 12, y_at + 2);
     spoint br1(width / 2 - 2, y_at + 4);
-    wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_down(g, w, wid_warning_no);
     wid_set_void_context(w, (void *) callback);
     wid_set_pos(w, tl1, br1);
@@ -147,11 +147,10 @@ void wid_warning(Gamep g, std::string warning, wid_warning_callback_t callback)
   {
     TRACE_NO_INDENT();
     auto p = wid_warning_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Yes");
+    auto w = wid_yes_button(g, p, "Yes");
 
     spoint tl2(width / 2 + 0, y_at + 2);
     spoint br2(width / 2 + 10, y_at + 4);
-    wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_down(g, w, wid_warning_yes);
     wid_set_void_context(w, (void *) callback);
     wid_set_pos(w, tl2, br2);

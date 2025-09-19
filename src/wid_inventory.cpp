@@ -87,11 +87,10 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
   const int inventory_width  = UI_INVENTORY_WIDTH;
   const int inventory_height = UI_INVENTORY_HEIGHT;
 
-  const auto button_width           = inventory_width - 4;
-  const auto button_height          = 0;
-  const auto button_step            = 1;
-  const auto button_style           = UI_WID_STYLE_SPARSE_NONE;
-  const auto button_highlight_style = UI_WID_STYLE_SOLID_GRAY;
+  const auto button_width  = inventory_width - 4;
+  const auto button_height = 0;
+  const auto button_step   = 1;
+  const auto button_style  = UI_WID_STYLE_SPARSE_NONE;
 
   auto y_at = 2;
 
@@ -178,20 +177,11 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
       {
         TRACE_NO_INDENT();
-        auto w = wid_new_square_button(g, wid_inventory_window, "Item");
+        auto w = wid_solid_button(g, wid_inventory_window, "Item");
 
         spoint tl(6, y_at);
         spoint br(button_width, y_at + button_height);
         wid_set_text_lhs(w, true);
-
-        wid_set_mode(g, w, WID_MODE_OVER);
-        wid_set_style(w, button_highlight_style);
-        wid_set_color(w, WID_COLOR_BG, RED);
-        wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-
-        wid_set_mode(g, w, WID_MODE_NORMAL);
-        wid_set_color(w, WID_COLOR_TEXT_FG, GRAY70);
-        wid_set_style(w, button_style);
 #if 0
       wid_set_on_mouse_up(g, w, wid_main_menu_more);
 #endif
@@ -205,22 +195,12 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
   {
     TRACE_NO_INDENT();
-    auto w = wid_new_square_button(g, wid_inventory_window, "BACK");
+    auto w = wid_back_button(g, wid_inventory_window, "BACK");
 
     spoint tl(inventory_width / 2 - 4, inventory_height - 4);
     spoint br(inventory_width / 2 + 3, inventory_height - 2);
-
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
-
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
-    wid_set_color(w, WID_COLOR_BG, RED);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "BACK");
   }
 
   wid_update(g, wid_inventory_window);

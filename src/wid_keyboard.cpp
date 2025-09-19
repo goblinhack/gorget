@@ -11,6 +11,7 @@
 #include "my_sound.hpp"
 #include "my_wid.hpp"
 #include "my_wid_keyboard.hpp"
+#include "my_wids.hpp"
 
 /*
  * How keys appear on screen
@@ -187,8 +188,6 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
       if (ctx->is_new) {
         wid_set_pos(b, tl, br);
       }
-
-      wid_set_color(b, WID_COLOR_TEXT_FG, c);
     }
   }
   wid_update(g, w);
@@ -627,32 +626,6 @@ static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym 
   return false;
 }
 
-static void wid_keyboard_mouse_over(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
-{
-  TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
-  verify(MTYPE_MISC, ctx);
-
-  if (! relx && ! rely && ! wheelx && ! wheely) {
-    return;
-  }
-
-  /*
-   * If we recreate the keyboard with a fixed focus we will be told about
-   * a mouse over event immediately which may not be over the focus item
-   * and will cause us to move. Annoying.
-   */
-  if (time_ms() - ctx->created < 100) {
-    return;
-  }
-
-  int focus  = wid_get_int_context(w);
-  int focusx = (focus & 0xff);
-  int focusy = (focus & 0xff00) >> 8;
-
-  wid_keyboard_set_focus(g, ctx, focusx, focusy);
-}
-
 static void wid_keyboard_destroy(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
@@ -829,34 +802,26 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
     for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
       for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
-        Widp b                 = wid_new_square_button(g, button_container, "wid keyboard button");
+        Widp b;
+
+        if (! strcasecmp(keys[ y ][ x ], "CANCL")) {
+          b = wid_cancel_button(g, button_container, "wid keyboard button");
+        } else if (! strcasecmp(keys[ y ][ x ], "OK")) {
+          b = wid_yes_button(g, button_container, "wid keyboard button");
+        } else {
+          b = wid_menu_button(g, button_container, "wid keyboard button");
+        }
         ctx->buttons[ y ][ x ] = b;
 
         wid_set_text(b, keys[ y ][ x ]);
 
-        wid_set_on_mouse_over_begin(g, b, wid_keyboard_mouse_over);
         wid_set_on_key_down(g, b, wid_keyboard_button_key_event);
         wid_set_on_joy_button(g, b, wid_keyboard_button_joy_button_event);
         wid_set_on_mouse_down(g, b, wid_keyboard_button_mouse_event);
-        wid_set_style(b, UI_WID_STYLE_NORMAL);
-
-        wid_set_color(b, WID_COLOR_TEXT_FG, GREEN);
-        wid_set_mode(g, b, WID_MODE_OVER);
-
-        wid_set_color(b, WID_COLOR_TEXT_FG, GREEN);
-        wid_set_mode(g, b, WID_MODE_NORMAL);
 
         wid_set_void_context(b, ctx);
         int focus = (y << 8) | x;
         wid_set_int_context(b, focus);
-
-        if (! strcasecmp(keys[ y ][ x ], "CANCL")) {
-          wid_set_style(b, UI_WID_STYLE_RED);
-        }
-
-        if (! strcasecmp(keys[ y ][ x ], "OK")) {
-          wid_set_style(b, UI_WID_STYLE_GREEN);
-        }
       }
     }
   }

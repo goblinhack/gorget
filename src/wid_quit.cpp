@@ -143,11 +143,10 @@ void wid_quit_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Yes");
+    auto w = wid_yes_button(g, p, "Yes");
 
     spoint tl(0, y_at);
     spoint br(width / 2 - 2, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(g, w, wid_quit_yes);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Y" UI_RESET_FMT "es");
@@ -156,11 +155,10 @@ void wid_quit_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "No");
+    auto w = wid_no_button(g, p, "No");
 
     spoint tl(width / 2, y_at);
     spoint br(width - 2, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(g, w, wid_quit_no);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "o");

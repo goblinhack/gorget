@@ -48,8 +48,8 @@ static void wid_actionbar_save_over_begin(Gamep g, Widp w, int relx, int rely, i
   brx += width / 2;
   tly -= height;
 
-  bry -= 1;
-  tly -= 0;
+  bry += 2;
+  tly += 2;
 
   spoint tl(tlx, tly);
   spoint br(brx, bry);
@@ -93,8 +93,8 @@ static void wid_actionbar_load_over_begin(Gamep g, Widp w, int relx, int rely, i
   brx += width / 2;
   tly -= height;
 
-  bry -= 1;
-  tly -= 0;
+  bry += 2;
+  tly += 2;
 
   spoint tl(tlx, tly);
   spoint br(brx, bry);

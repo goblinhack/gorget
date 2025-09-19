@@ -148,10 +148,8 @@ void wid_options_menu_select(Gamep g)
     wid_options_menu_destroy(g);
   }
 
-  auto box_height          = 2;
-  auto box_step            = 3;
-  auto box_style           = UI_WID_STYLE_NORMAL;
-  auto box_highlight_style = UI_WID_STYLE_NORMAL;
+  auto box_height = 2;
+  auto box_step   = 3;
 
   int    menu_height = 26;
   int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
@@ -171,14 +169,10 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Choose seed");
+    auto w = wid_menu_button(g, p, "Choose seed");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_options_menu_seed);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_FMT_STR "hange seed");
@@ -187,14 +181,10 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Choose player name");
+    auto w = wid_menu_button(g, p, "Choose player name");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_options_menu_player_name);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "P" UI_FMT_STR "layer name");
@@ -203,14 +193,10 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "gfx");
+    auto w = wid_menu_button(g, p, "gfx");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_options_menu_gfx);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "G" UI_RESET_FMT "raphics");
@@ -219,14 +205,10 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "mouse");
+    auto w = wid_menu_button(g, p, "mouse");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_options_menu_mouse);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "M" UI_RESET_FMT "ouse");
@@ -235,14 +217,10 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "sound");
+    auto w = wid_menu_button(g, p, "sound");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_options_menu_sound);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ound");
@@ -251,14 +229,10 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "keyboard");
+    auto w = wid_menu_button(g, p, "keyboard");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_options_menu_keyboard);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "K" UI_RESET_FMT "eyboard");
@@ -267,23 +241,12 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "BACK");
+    auto w = wid_back_button(g, p, "BACK");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_options_menu_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ACK");
-
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
-    wid_set_color(w, WID_COLOR_BG, RED);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
   }
 
   wid_update(g, wid_options_menu_window->wid_text_area->wid_text_area);

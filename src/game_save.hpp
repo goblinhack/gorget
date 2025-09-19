@@ -451,22 +451,13 @@ bool Game::save_select(void)
   {
     TRACE_NO_INDENT();
     auto p = wid_save->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(game, p, "back");
+    auto w = wid_back_button(game, p, "back");
 
     spoint tl(menu_width / 2 - 4, menu_height - 4);
     spoint br(menu_width / 2 + 3, menu_height - 2);
 
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(game, w, wid_save_cancel);
-
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "BACK");
-
-    wid_set_mode(game, w, WID_MODE_OVER);
-    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
-    wid_set_color(w, WID_COLOR_BG, RED);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_mode(game, w, WID_MODE_NORMAL);
   }
 
   game_headers_only = true;
@@ -484,7 +475,7 @@ bool Game::save_select(void)
     }
 
     auto   p = wid_save->wid_text_area->wid_text_area;
-    auto   w = wid_new_square_button(game, p, "save slot");
+    auto   w = wid_solid_button(game, p, "save slot");
     spoint tl(0, y_at);
     spoint br(menu_width - 2, y_at);
 
@@ -495,14 +486,12 @@ bool Game::save_select(void)
       } else {
         s += "<empty>";
       }
-      wid_set_style(w, UI_WID_STYLE_HORIZ_DARK);
     } else {
       if (slot == UI_WID_SAVE_SLOTS - 1) {
         s += "snapshot: " + tmp.save_meta;
       } else {
         s += tmp.save_meta;
       }
-      wid_set_style(w, UI_WID_STYLE_HORIZ_LIGHT);
     }
 
     if (slot == UI_WID_SAVE_SLOTS - 1) {

@@ -63,7 +63,7 @@
 #define UI_BOTCON_TEXT_COLOR UI_COLOR
 
 #define UI_INVENTORY_WIDTH  (UI_CENTER_WIDTH - 2)
-#define UI_INVENTORY_HEIGHT (THING_INVENTORY_MAX + 10)
+#define UI_INVENTORY_HEIGHT (THING_INVENTORY_MAX + 7)
 
 //
 // Do faster processing of events, like reading the keyboard and updating widgets.

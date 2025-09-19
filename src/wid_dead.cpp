@@ -10,6 +10,7 @@
 #include "my_string.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
+#include "my_wids.hpp"
 
 static WidPopup *wid_dead_window;
 
@@ -257,15 +258,13 @@ void wid_dead_select(Gamep g, std::string reason)
   wid_dead_window->log_empty_line(g);
 
   auto p = wid_dead_window->wid_text_area->wid_text_area;
-  auto w = wid_new_square_button(g, p, "dead");
+  auto w = wid_menu_button(g, p, "dead");
 
   {
     spoint tl2(9, h - 7);
     spoint br2(width - 11, h - 5);
 
     wid_set_pos(w, tl2, br2);
-
-    wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(g, w, wid_dead_mouse_up);
     wid_set_text(w, "Continue");
   }

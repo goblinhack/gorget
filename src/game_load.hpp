@@ -593,7 +593,7 @@ void Game::load_select(void)
   {
     TRACE_NO_INDENT();
     auto p = wid_load->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(game, p, "back");
+    auto w = wid_back_button(game, p, "back");
 
     spoint tl(menu_width / 2 - 4, menu_height - 4);
     spoint br(menu_width / 2 + 3, menu_height - 2);
@@ -602,13 +602,6 @@ void Game::load_select(void)
     wid_set_on_mouse_up(game, w, wid_load_cancel);
 
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "BACK");
-
-    wid_set_mode(game, w, WID_MODE_OVER);
-    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
-    wid_set_color(w, WID_COLOR_BG, RED);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_mode(game, w, WID_MODE_NORMAL);
   }
 
   game_headers_only = true;
@@ -625,7 +618,7 @@ void Game::load_select(void)
     }
 
     auto   p = wid_load->wid_text_area->wid_text_area;
-    auto   w = wid_new_square_button(game, p, "load slot");
+    auto   w = wid_solid_button(game, p, "load slot");
     spoint tl(0, y_at);
     spoint br(menu_width - 2, y_at);
 
@@ -633,7 +626,6 @@ void Game::load_select(void)
     if (! load(tmp_file, tmp)) {
       if (! game_load_error.empty()) {
         s += game_load_error;
-        wid_set_style(w, UI_WID_STYLE_HORIZ_DARK);
         CON("GAME LOADING ERROR: %s", game_load_error.c_str());
       } else {
         if (slot == UI_WID_SAVE_SLOTS - 1) {
@@ -641,7 +633,6 @@ void Game::load_select(void)
         } else {
           s += "<empty>";
         }
-        wid_set_style(w, UI_WID_STYLE_HORIZ_DARK);
       }
       slot_valid[ slot ] = false;
     } else {
@@ -655,7 +646,6 @@ void Game::load_select(void)
       } else {
         wid_set_on_mouse_up(game, w, wid_load_mouse_up);
       }
-      wid_set_style(w, UI_WID_STYLE_HORIZ_LIGHT);
       slot_valid[ slot ] = true;
     }
     wid_set_int_context(w, slot);

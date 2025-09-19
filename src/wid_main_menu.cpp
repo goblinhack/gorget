@@ -324,12 +324,10 @@ void wid_main_menu_select(Gamep g)
     wid_main_menu_destroy(g);
   }
 
-  const auto button_height          = 2;
-  const auto button_step            = 3;
-  const auto button_style           = UI_WID_STYLE_NORMAL;
-  const auto button_highlight_style = UI_WID_STYLE_NORMAL;
-  const auto menu_height            = 16;
-  const auto menu_width             = UI_WID_POPUP_WIDTH_NORMAL;
+  const auto button_height = 2;
+  const auto button_step   = 3;
+  const auto menu_height   = 16;
+  const auto menu_width    = UI_WID_POPUP_WIDTH_NORMAL;
 
   auto y_at = 0;
 
@@ -350,14 +348,10 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "New Game");
+    auto w = wid_menu_button(g, p, "New Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, button_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, button_style);
     wid_set_on_mouse_up(g, w, game_menu_new_game);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "ew game" UI_RESET_FMT);
@@ -366,14 +360,10 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Load Game");
+    auto w = wid_menu_button(g, p, "Load Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, button_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, button_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_load);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "L" UI_FMT_STR "oad game");
@@ -382,14 +372,10 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Options");
+    auto w = wid_menu_button(g, p, "Options");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, button_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, button_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_cfg);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "O" UI_FMT_STR "ptions");
@@ -398,14 +384,10 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "More");
+    auto w = wid_menu_button(g, p, "More");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, button_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, button_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_more);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "M" UI_FMT_STR "ore");
@@ -414,14 +396,10 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Quit Game");
+    auto w = wid_menu_button(g, p, "Quit Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, button_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, button_style);
     wid_set_on_mouse_up(g, w, wid_main_menu_quit);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Q" UI_FMT_STR "uit Game");

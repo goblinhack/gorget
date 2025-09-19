@@ -167,12 +167,10 @@ void wid_cfg_sound_select(Gamep g)
     wid_cfg_sound_destroy(g);
   }
 
-  auto box_style           = UI_WID_STYLE_HORIZ_DARK;
-  auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
-  auto m                   = TERM_WIDTH / 2;
+  auto m = TERM_WIDTH / 2;
 
-  spoint outer_tl(m - 16, TERM_HEIGHT / 2 - 5);
-  spoint outer_br(m + 16, TERM_HEIGHT / 2 + 6);
+  spoint outer_tl(m - 16, TERM_HEIGHT / 2 - 8);
+  spoint outer_br(m + 16, TERM_HEIGHT / 2 + 8);
 
   auto width = outer_br.x - outer_tl.x - 2;
 
@@ -201,29 +199,20 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "BACK");
+    auto w = wid_back_button(g, p, "BACK");
 
     spoint tl(1, y_at);
     spoint br(6, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(g, w, wid_cfg_sound_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ACK");
-
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
-    wid_set_color(w, WID_COLOR_BG, RED);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
   }
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Save");
+    auto w = wid_save_button(g, p, "Save");
 
     spoint tl(width - 15, y_at);
     spoint br(width - 10, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(g, w, wid_cfg_sound_save);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ave");
@@ -231,11 +220,10 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Cancel");
+    auto w = wid_cancel_button(g, p, "Cancel");
 
     spoint tl(width - 8, y_at);
     spoint br(width - 1, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(g, w, wid_cfg_sound_cancel);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_RESET_FMT "ancel");
@@ -257,28 +245,20 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Effects volume value");
+    auto w = wid_solid_button(g, p, "Effects volume value");
 
     spoint tl(width / 2, y_at);
     spoint br(width / 2 + 8, y_at);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_pos(w, tl, br);
     wid_set_text(w, std::to_string(game_sound_volume_get(g)));
   }
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Effects value +");
+    auto w = wid_menu_button(g, p, "Effects value +");
 
     spoint tl(width / 2 + 9, y_at);
-    spoint br(width / 2 + 11, y_at);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
+    spoint br(width / 2 + 11, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(g, w, wid_cfg_sound_effects_volume_incr);
     wid_set_on_mouse_held(g, w, wid_cfg_sound_effects_volume_incr);
@@ -287,21 +267,17 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Effects value -");
+    auto w = wid_menu_button(g, p, "Effects value -");
 
     spoint tl(width / 2 + 12, y_at);
-    spoint br(width / 2 + 14, y_at);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
+    spoint br(width / 2 + 14, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(g, w, wid_cfg_sound_effects_volume_decr);
     wid_set_on_mouse_held(g, w, wid_cfg_sound_effects_volume_decr);
     wid_set_text(w, "-");
   }
 
-  y_at++;
+  y_at += 4;
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
@@ -317,28 +293,20 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Music volume value");
+    auto w = wid_solid_button(g, p, "Music volume value");
 
     spoint tl(width / 2, y_at);
     spoint br(width / 2 + 8, y_at);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_pos(w, tl, br);
     wid_set_text(w, std::to_string(game_music_volume_get(g)));
   }
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Music value +");
+    auto w = wid_menu_button(g, p, "Music value +");
 
     spoint tl(width / 2 + 9, y_at);
-    spoint br(width / 2 + 11, y_at);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
+    spoint br(width / 2 + 11, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(g, w, wid_cfg_sound_music_volume_incr);
     wid_set_on_mouse_held(g, w, wid_cfg_sound_music_volume_incr);
@@ -347,14 +315,10 @@ void wid_cfg_sound_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_sound_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Music value -");
+    auto w = wid_menu_button(g, p, "Music value -");
 
     spoint tl(width / 2 + 12, y_at);
-    spoint br(width / 2 + 14, y_at);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
+    spoint br(width / 2 + 14, y_at + 2);
     wid_set_pos(w, tl, br);
     wid_set_on_mouse_down(g, w, wid_cfg_sound_music_volume_decr);
     wid_set_on_mouse_held(g, w, wid_cfg_sound_music_volume_decr);

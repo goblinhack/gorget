@@ -96,10 +96,8 @@ void wid_more_select(Gamep g)
     wid_more_destroy(g);
   }
 
-  auto box_height          = 2;
-  auto box_step            = 3;
-  auto box_style           = UI_WID_STYLE_NORMAL;
-  auto box_highlight_style = UI_WID_STYLE_NORMAL;
+  auto box_height = 2;
+  auto box_step   = 3;
 
   int    menu_height = 14;
   int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
@@ -121,14 +119,10 @@ void wid_more_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Credits");
+    auto w = wid_menu_button(g, p, "Credits");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_more_credits);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_FMT_STR "redits");
@@ -137,14 +131,10 @@ void wid_more_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Hiscores");
+    auto w = wid_menu_button(g, p, "Hiscores");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_more_hiscores);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "H" UI_FMT_STR "iscores");
@@ -153,23 +143,12 @@ void wid_more_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "BACK");
+    auto w = wid_back_button(g, p, "BACK");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
     wid_set_on_mouse_up(g, w, wid_more_back);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, UI_HIGHLIGHT_FMT_STR "B" UI_RESET_FMT "ACK");
-
-    wid_set_mode(g, w, WID_MODE_OVER);
-    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
-    wid_set_color(w, WID_COLOR_BG, RED);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_mode(g, w, WID_MODE_NORMAL);
   }
 
   wid_update(g, wid_more_window->wid_text_area->wid_text_area);
