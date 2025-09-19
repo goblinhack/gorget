@@ -49,7 +49,6 @@ bool tp_load_potion(void)
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_inventory_item);
-  tp_short_name_set(tp, "purple potion");
   tp_flag_set(tp, is_item_mergeable);
   tp_flag_set(tp, is_item);
   tp_flag_set(tp, is_loggable);
@@ -62,6 +61,7 @@ bool tp_load_potion(void)
   tp_long_name_set(tp, name);
   tp_on_carry_request_set(tp, tp_potion_on_carry_request);
   tp_on_drop_request_set(tp, tp_potion_on_drop_request);
+  tp_short_name_set(tp, "purple potion");
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
