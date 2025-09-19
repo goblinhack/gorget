@@ -158,9 +158,6 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
     return;
   }
 
-  //
-  // Look for the thing
-  //
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player_or_monst, slot, item)
   { //
     if (! item) {

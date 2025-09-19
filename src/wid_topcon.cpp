@@ -191,7 +191,7 @@ void wid_topcon_log(std::string s)
 static void wid_topcon_wid_create(Gamep g)
 {
   TRACE_NO_INDENT();
-  int h = UI_TOPCON_VIS_HEIGHT;
+  int h = UI_TOPCON_HEIGHT;
 
   if (wid_topcon_window) {
     wid_topcon_fini(g);
@@ -200,7 +200,7 @@ static void wid_topcon_wid_create(Gamep g)
   TRACE_NO_INDENT();
   {
     spoint tl = spoint(UI_LEFTBAR_WIDTH, 0);
-    spoint br = spoint(UI_LEFTBAR_WIDTH + UI_TOPCON_VIS_WIDTH - 1, h - 1);
+    spoint br = spoint(UI_LEFTBAR_WIDTH + UI_TOPCON_WIDTH - 1, h - 1);
 
     wid_topcon_window = wid_new_square_window(g, "wid topcon");
     wid_set_name(wid_topcon_window, "wid topcon window");
@@ -211,7 +211,7 @@ static void wid_topcon_wid_create(Gamep g)
   TRACE_NO_INDENT();
   {
     spoint tl = spoint(0, 0);
-    spoint br = spoint(UI_TOPCON_VIS_WIDTH - 1, h - 1);
+    spoint br = spoint(UI_TOPCON_WIDTH - 1, h - 1);
 
     wid_topcon_container = wid_new_container(g, wid_topcon_window, "wid topcon container");
     wid_set_pos(wid_topcon_container, tl, br);

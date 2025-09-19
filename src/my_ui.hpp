@@ -44,16 +44,6 @@
 #define UI_RED_FMT_STR                "%%fg=red$"
 #define UI_TILE_HEIGHT                8
 #define UI_TILE_WIDTH                 8
-#define UI_TOPCON_HEIGHT              4 // Scrollbar limit
-#define UI_TOPCON_TEXT_COLOR          UI_COLOR
-#define UI_TOPCON_VIS_HEIGHT          UI_TOPCON_HEIGHT
-#define UI_TOPCON_VIS_WIDTH           UI_TOPCON_WIDTH
-#define UI_TOPCON_WIDTH               (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
-#define UI_BOTCON_HEIGHT              1 // Scrollbar limit
-#define UI_BOTCON_TEXT_COLOR          UI_COLOR
-#define UI_BOTCON_VIS_HEIGHT          UI_BOTCON_HEIGHT
-#define UI_BOTCON_VIS_WIDTH           UI_BOTCON_WIDTH
-#define UI_BOTCON_WIDTH               (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
 #define UI_TYPE_PIXELART              0
 #define UI_TYPES_MAX                  1
 #define UI_WID_POPUP_WIDTH_NORMAL     18
@@ -61,6 +51,19 @@
 #define UI_WID_SAVE_SLOTS             10 // How many save game slots
 #define UI_MAX_SEED_NAME_LEN          10
 #define UI_MAX_PLAYER_NAME_LEN        12
+
+#define UI_CENTER_WIDTH (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
+
+#define UI_TOPCON_TEXT_COLOR UI_COLOR
+#define UI_TOPCON_HEIGHT     4
+#define UI_TOPCON_WIDTH      UI_CENTER_WIDTH
+
+#define UI_BOTCON_WIDTH      UI_CENTER_WIDTH
+#define UI_BOTCON_HEIGHT     1 // Scrollbar limit
+#define UI_BOTCON_TEXT_COLOR UI_COLOR
+
+#define UI_INVENTORY_WIDTH  (UI_CENTER_WIDTH - 2)
+#define UI_INVENTORY_HEIGHT (THING_INVENTORY_MAX + 10)
 
 //
 // Do faster processing of events, like reading the keyboard and updating widgets.

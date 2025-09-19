@@ -915,6 +915,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_LOADED :
     case STATE_SAVE_MENU :
     case STATE_QUIT_MENU :         wid_actionbar_fini(g); break;
+    case STATE_INVENTORY :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 
@@ -947,6 +948,7 @@ void Game::state_change(GameState new_state, const std::string &why)
         case STATE_PLAYING :
         case STATE_LOAD_MENU :
         case STATE_SAVE_MENU :
+        case STATE_INVENTORY :     break;
         case STATE_QUIT_MENU :
           if (0) {} /* clang format */
           wid_actionbar_init(g);
@@ -961,6 +963,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_LOADED :
     case STATE_SAVE_MENU :
     case STATE_QUIT_MENU :         break;
+    case STATE_INVENTORY :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 
@@ -1028,6 +1031,7 @@ void Game::tick(void)
     case STATE_LOADED :            break;
     case STATE_SAVE_MENU :         break;
     case STATE_QUIT_MENU :         break;
+    case STATE_INVENTORY :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 
@@ -1117,10 +1121,8 @@ void Game::display(void)
     case STATE_INIT :      break;
     case STATE_MAIN_MENU : break;
     case STATE_QUITTING :  break;
+    case STATE_INVENTORY :
     case STATE_PLAYING :
-      //
-      // Fallthrough
-      //
     case STATE_DEAD_MENU :
       level_mouse_position_get(g, v, l);
       level_display(g, v, l);

@@ -488,6 +488,10 @@ void sdl_key_repeat_events(Gamep g)
 {
   TRACE_NO_INDENT();
 
+  if (game_state(g) != STATE_PLAYING) {
+    return;
+  }
+
   const uint8_t *state = SDL_GetKeyboardState(nullptr);
 
   static bool up_held_prev;

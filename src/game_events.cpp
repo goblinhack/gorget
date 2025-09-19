@@ -257,11 +257,8 @@ bool game_event_inventory(Gamep g)
     return false;
   }
 
-  if (thing_is_dead(player)) {
-    return false;
-  }
+  wid_inventory_show(g, v, l, player);
 
-  // TODO
   return true;
 }
 

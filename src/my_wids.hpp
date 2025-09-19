@@ -6,6 +6,7 @@
 #ifndef _MY_WIDS_HPP_
 #define _MY_WIDS_HPP_
 
+#include "my_thing.hpp"
 #include "my_wid.hpp"
 #include "my_wid_popup.hpp"
 
@@ -24,6 +25,7 @@ extern void wid_credits_select(Gamep);
 extern void wid_dead_fini(Gamep);
 extern void wid_dead_select(Gamep, std::string reason);
 extern void wid_hiscores_show(Gamep);
+extern void wid_inventory_show(Gamep, Levelsp, Levelp, Thingp);
 extern void wid_leftbar_fini(Gamep);
 extern void wid_load_destroy(Gamep);
 extern void wid_load_select(Gamep);

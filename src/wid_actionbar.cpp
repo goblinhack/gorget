@@ -200,7 +200,7 @@ static void wid_actionbar_inventory_over_begin(Gamep g, Widp w, int relx, int re
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
   int width  = 32;
-  int height = 10;
+  int height = 8;
 
   tlx -= width / 2;
   brx += width / 2;
@@ -343,8 +343,8 @@ static void wid_actionbar_quit_over_begin(Gamep g, Widp w, int relx, int rely, i
   tlx -= width / 2;
   brx += width / 2;
   tly -= height;
-  bry -= 1;
-  tly -= 0;
+  tly += 2;
+  bry += 2;
 
   spoint tl(tlx, tly);
   spoint br(brx, bry);
@@ -388,8 +388,8 @@ static void wid_actionbar_help_over_begin(Gamep g, Widp w, int relx, int rely, i
   tlx -= width / 2;
   brx += width / 2;
   tly -= height;
-  bry -= 1;
-  tly -= 0;
+  bry += 1;
+  tly += 1;
 
   spoint tl(tlx, tly);
   spoint br(brx, bry);
