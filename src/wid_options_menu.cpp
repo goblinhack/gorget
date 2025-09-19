@@ -280,6 +280,4 @@ void wid_options_menu_select(Gamep g)
   }
 
   wid_update(g, wid_options_menu_window->wid_text_area->wid_text_area);
-
-  game_state_change(g, STATE_MAIN_MENU, "main menu");
 }
