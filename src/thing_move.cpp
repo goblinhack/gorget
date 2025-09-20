@@ -315,6 +315,14 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   //
   thing_update_pos(g, t);
 
+  //
+  // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
+  // centered once more.
+  //
+  if (thing_is_player(t)) {
+    level_forced_auto_scroll(g, v, new_level);
+  }
+
   return true;
 }
 

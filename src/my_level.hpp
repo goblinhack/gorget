@@ -283,6 +283,10 @@ typedef struct Levels_ {
   //
   spoint pixel_map_at;
   //
+  // Maximum pixel bound
+  //
+  spoint pixel_max;
+  //
   // Levels display bounds
   //
   int minx;
@@ -323,6 +327,11 @@ typedef struct Levels_ {
   // If the player has moved, we need to scroll the map
   //
   uint8_t requested_auto_scroll : 1;
+  //
+  // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
+  // centered once more.
+  //
+  uint8_t requested_forced_auto_scroll : 1;
   //
   // Player move request.
   //
@@ -467,6 +476,7 @@ void level_populate(Gamep, Levelsp, Levelp, const char *);
 void level_populate(Gamep, Levelsp, Levelp, int w, int h, const char *);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);
 void level_scroll_delta(Gamep, Levelsp, Levelp, spoint);
+void level_forced_auto_scroll(Gamep, Levelsp, Levelp);
 void level_cursor_path_reset(Gamep, Levelsp);
 void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);

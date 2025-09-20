@@ -46,10 +46,15 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  //
-  // If the player is scrolling the map via the mouse, do not auto scroll.
-  //
-  if (! v->requested_auto_scroll) {
+  if (v->requested_forced_auto_scroll) {
+    //
+    // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
+    // centered once more.
+    //
+  } else if (! v->requested_auto_scroll) {
+    //
+    // If the player is scrolling the map via the mouse, do not auto scroll.
+    //
     return;
   }
 
@@ -70,19 +75,59 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   const auto scroll_speed  = MAP_SCROLL_SPEED;
 
   //
+  // Did we scroll any pixels?
+  //
+  int dx = 0;
+  int dy = 0;
+
+  //
   // If too close to the edges, scroll.
   //
   if (x > 1.0 - scroll_border) {
-    v->pixel_map_at.x += (int) ((x - scroll_border) * scroll_speed);
+    dx = (int) ((x - scroll_border) * scroll_speed);
+    v->pixel_map_at.x += dx;
   }
   if (x < scroll_border) {
-    v->pixel_map_at.x -= (int) ((scroll_border - x) * scroll_speed);
+    dy = (int) ((scroll_border - x) * scroll_speed);
+    v->pixel_map_at.x -= dy;
   }
   if (y > 1.0 - scroll_border) {
-    v->pixel_map_at.y += (int) ((y - scroll_border) * scroll_speed);
+    dy = (int) ((y - scroll_border) * scroll_speed);
+    v->pixel_map_at.y += dy;
   }
   if (y < scroll_border) {
-    v->pixel_map_at.y -= (int) ((scroll_border - y) * scroll_speed);
+    dx = (int) ((scroll_border - y) * scroll_speed);
+    v->pixel_map_at.y -= dx;
+  }
+
+  //
+  // Check for overflow
+  //
+  if (v->pixel_map_at.x > v->pixel_max.x) {
+    dx                = 0;
+    v->pixel_map_at.x = v->pixel_max.x;
+  }
+
+  if (v->pixel_map_at.y > v->pixel_max.y) {
+    dy                = 0;
+    v->pixel_map_at.y = v->pixel_max.y;
+  }
+
+  if (v->pixel_map_at.x < 0) {
+    dx                = 0;
+    v->pixel_map_at.x = 0;
+  }
+
+  if (v->pixel_map_at.y < 0) {
+    dy                = 0;
+    v->pixel_map_at.y = 0;
+  }
+
+  //
+  // Have we finished scrolling?
+  //
+  if ((dx == 0) && (dy == 0)) {
+    v->requested_forced_auto_scroll = false;
   }
 
   level_bounds_set(g, v, l);
@@ -97,6 +142,19 @@ void level_scroll_delta(Gamep g, Levelsp v, Levelp l, spoint delta)
 
   v->pixel_map_at += delta;
   v->requested_auto_scroll = false;
+
+  level_bounds_set(g, v, l);
+}
+
+//
+// For a time period e.g. post teleport, we want to ignore mouse moves until the player is
+// centered once more.
+//
+void level_forced_auto_scroll(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  v->requested_forced_auto_scroll = true;
 
   level_bounds_set(g, v, l);
 }

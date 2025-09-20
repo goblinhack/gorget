@@ -717,14 +717,18 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
     v->pixel_map_at.y = 0;
   }
 
-  int max_pix_x = (MAP_WIDTH * dw) - game_map_fbo_width_get(g);
-  int max_pix_y = (MAP_HEIGHT * dh) - game_map_fbo_height_get(g);
+  v->pixel_max.x = (MAP_WIDTH * dw) - game_map_fbo_width_get(g);
+  v->pixel_max.y = (MAP_HEIGHT * dh) - game_map_fbo_height_get(g);
 
-  if (v->pixel_map_at.x > max_pix_x) {
-    v->pixel_map_at.x = max_pix_x;
+  //
+  // Overflow?
+  //
+  if (v->pixel_map_at.x > v->pixel_max.x) {
+    v->pixel_map_at.x = v->pixel_max.x;
   }
-  if (v->pixel_map_at.y > max_pix_y) {
-    v->pixel_map_at.y = max_pix_y;
+
+  if (v->pixel_map_at.y > v->pixel_max.y) {
+    v->pixel_map_at.y = v->pixel_max.y;
   }
 
   //
