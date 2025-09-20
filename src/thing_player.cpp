@@ -201,6 +201,9 @@ void player_state_change(Gamep g, Levelsp v, PlayerState new_state)
       // Replace the mouse path
       //
       if (old_state == PLAYER_STATE_FOLLOWING_A_PATH) {
+        //
+        // Only auto scroll at the start and end of moving
+        //
         v->requested_auto_scroll = true;
       }
       break;
@@ -219,6 +222,9 @@ void player_state_change(Gamep g, Levelsp v, PlayerState new_state)
       // Already following a path, stick to it until completion.
       //
       if (old_state != PLAYER_STATE_FOLLOWING_A_PATH) {
+        //
+        // Only auto scroll at the start and end of moving
+        //
         v->requested_auto_scroll = true;
       }
       break;
