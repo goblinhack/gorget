@@ -297,12 +297,10 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
   v->tick++;
   LOG("Tick %u begin", v->tick);
 
-  v->tick_begin_requested         = false;
-  v->frame_begin                  = v->frame;
-  v->time_step                    = 0.0;
-  v->tick_in_progress             = true;
-  v->requested_auto_scroll        = true;
-  v->requested_forced_auto_scroll = true;
+  v->tick_begin_requested = false;
+  v->frame_begin          = v->frame;
+  v->time_step            = 0.0;
+  v->tick_in_progress     = true;
 
   auto p = thing_player(g);
   if (! p) {
