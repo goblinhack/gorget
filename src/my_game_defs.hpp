@@ -27,5 +27,6 @@
 #define POPUP_DURATION_TILE_HEIGHT 6
 #define MAP_TILES_ACROSS_DEF       16
 #define MAP_TILES_DOWN_DEF         16
+#define TEST_SEED                  "test-seed"
 
 #endif

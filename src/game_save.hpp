@@ -40,7 +40,12 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   uint32_t serialized_size = sizeof(Config);
   out << bits(serialized_size);
 
-  out << bits(my.t.seed_name);
+  if (my.t.seed_name == TEST_SEED) {
+    std::string nothing;
+    out << bits(nothing);
+  } else {
+    out << bits(my.t.seed_name);
+  }
   out << bits(my.t.seed_num);
 
   WRITE_MAGIC(CONFIG_MAGIC_1);

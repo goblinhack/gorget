@@ -416,7 +416,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
   // We need a consistent seed for all tests, so damage doesn't vary
   //
   TRACE_NO_INDENT();
-  g->seed_set("test-seed");
+  g->seed_set(TEST_SEED);
 
   TRACE_NO_INDENT();
   g->player_name_set("Ser Testalot");
