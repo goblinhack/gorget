@@ -45,8 +45,8 @@ Widp wid_back_button(Gamep, Widp parent, const std::string name);
 Widp wid_menu_button(Gamep, Widp parent, const std::string name);
 Widp wid_save_button(Gamep, Widp parent, const std::string name);
 Widp wid_cancel_button(Gamep, Widp parent, const std::string name);
-Widp wid_yes_button(Gamep, Widp parent, const std::string name);
-Widp wid_no_button(Gamep, Widp parent, const std::string name);
+Widp wid_green_button(Gamep, Widp parent, const std::string name);
+Widp wid_red_button(Gamep, Widp parent, const std::string name);
 Widp wid_solid_button(Gamep, Widp parent, const std::string name);
 
 #endif

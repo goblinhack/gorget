@@ -143,7 +143,7 @@ void wid_quit_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_no_button(g, p, "Yes");
+    auto w = wid_red_button(g, p, "Yes");
 
     spoint tl(0, y_at);
     spoint br(width / 2 - 2, y_at + 2);
@@ -155,7 +155,7 @@ void wid_quit_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_yes_button(g, p, "No");
+    auto w = wid_green_button(g, p, "No");
 
     spoint tl(width / 2, y_at);
     spoint br(width - 2, y_at + 2);

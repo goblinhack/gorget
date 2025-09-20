@@ -113,6 +113,19 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_raise(g, wid_inventory_window);
   }
 
+  {
+    TRACE_NO_INDENT();
+    auto   w = wid_new_square_button(g, wid_inventory_window, "text");
+    spoint tl(0, y_at);
+    spoint br(inventory_width, y_at);
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, UI_FMT_STR "Mouse select an item or press key a-z");
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
+    wid_set_shape_none(w);
+    wid_set_text_centerx(w, true);
+    y_at += 2;
+  }
+
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player, slot, item)
   {
     auto tp = item ? thing_tp(item) : nullptr;

@@ -31,7 +31,8 @@ void wid_player_name_select(Gamep g)
 
   CON("Choose player name menu");
 
-  wid_choose_player_name = wid_keyboard(
-      g, "", "Enter a name for the player, max " + std::to_string(UI_MAX_PLAYER_NAME_LEN) + " characters", selected,
-      selected, UI_MAX_PLAYER_NAME_LEN);
+  wid_choose_player_name
+      = wid_keyboard(g, game_player_name_get(g),
+                     "Enter a name for the player, max " + std::to_string(UI_MAX_PLAYER_NAME_LEN) + " characters",
+                     selected, selected, UI_MAX_PLAYER_NAME_LEN);
 }
