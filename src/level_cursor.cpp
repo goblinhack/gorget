@@ -269,10 +269,10 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   d.val[ start.x ][ start.y ] = DMAP_IS_PASSABLE;
 
   // dmap_print(&d, start, dmap_start, dmap_end);
-  dmap_process_allow_diagonals(&d, dmap_start, dmap_end, true);
+  dmap_process(&d, dmap_start, dmap_end);
   // dmap_print(&d, start, dmap_start, dmap_end);
 
-  auto p         = dmap_solve(&d, start);
+  auto p         = dmap_solve(g, v, l, player, &d, start);
   auto path_size = p.size();
   if (! path_size) {
     return empty;

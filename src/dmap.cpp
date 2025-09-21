@@ -4,6 +4,7 @@
 
 #include "my_dmap.hpp"
 #include "my_sprintf.hpp"
+#include "my_thing.hpp"
 
 void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
 {
@@ -143,240 +144,6 @@ void dmap_print(const Dmap *D)
   }
 }
 
-void dmap_process_no_diagonals(Dmap *D, spoint tl, spoint br, bool place_border)
-{
-  uint8_t                                                           x;
-  uint8_t                                                           y;
-  uint8_t                                                           a;
-  uint8_t                                                           b;
-  uint8_t                                                           c;
-  uint8_t                                                           d;
-  uint8_t                                                          *e;
-  uint8_t                                                           f;
-  uint8_t                                                           g;
-  uint8_t                                                           h;
-  uint8_t                                                           i;
-  uint8_t                                                           lowest;
-  uint8_t                                                           changed;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
-
-  int minx, miny, maxx, maxy;
-  if (tl.x < br.x) {
-    minx = tl.x;
-    maxx = br.x;
-  } else {
-    minx = br.x;
-    maxx = tl.x;
-  }
-  if (tl.y < br.y) {
-    miny = tl.y;
-    maxy = br.y;
-  } else {
-    miny = br.y;
-    maxy = tl.y;
-  }
-
-  //
-  // We always place a border around the dmap so the search doesn't trickly off the map.
-  // So grow the search space slightly so that creatures that can only see one tile, do
-  // not lose out and have nothing to look at.
-  //
-  if (place_border) {
-    minx--;
-    miny--;
-    maxx++;
-    maxy++;
-  }
-
-  if (minx < 0) {
-    minx = 0;
-  }
-  if (miny < 0) {
-    miny = 0;
-  }
-  if (maxx >= MAP_WIDTH) {
-    maxx = MAP_WIDTH - 1;
-  }
-  if (maxy >= MAP_HEIGHT) {
-    maxy = MAP_HEIGHT - 1;
-  }
-
-  //
-  // Need a wall around the dmap or the search will sort of trickle off the map
-  //
-  for (y = miny; y <= maxy; y++) {
-    D->val[ minx ][ y ] = DMAP_IS_WALL;
-    D->val[ maxx ][ y ] = DMAP_IS_WALL;
-  }
-  for (x = minx; x <= maxx; x++) {
-    D->val[ x ][ miny ] = DMAP_IS_WALL;
-    D->val[ x ][ maxy ] = DMAP_IS_WALL;
-  }
-
-  bool all_walls;
-
-  //
-  // Try to minimize the DMAP area if it is mostly walls at the edges, for speed.
-  //
-  all_walls = true;
-  for (x = minx; (x <= maxx) && all_walls; x++) {
-    for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      minx = x;
-    }
-  }
-
-  all_walls = true;
-  for (x = maxx; (x > minx) && all_walls; x--) {
-    for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      maxx = x;
-    }
-  }
-
-  all_walls = true;
-  for (y = miny; (y <= maxy) && all_walls; y++) {
-    for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      miny = y;
-    }
-  }
-
-  all_walls = true;
-  for (y = maxy; (y > miny) && all_walls; y--) {
-    for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      maxy = y;
-    }
-  }
-
-  for (y = miny + 1; y <= maxy - 1; y++) {
-    for (x = minx + 1; x <= maxx - 1; x++) {
-      orig[ x ][ y ] = D->val[ x ][ y ];
-
-      e = &D->val[ x ][ y ];
-      if (*e != DMAP_IS_WALL) {
-        valid[ x ][ y ]      = (uint8_t) 1;
-        orig_valid[ x ][ y ] = (uint8_t) 1;
-        continue;
-      }
-
-      valid[ x ][ y ]      = (uint8_t) 0;
-      orig_valid[ x ][ y ] = (uint8_t) 0;
-    }
-  }
-
-  do {
-    changed = false;
-
-    for (y = miny + 1; y <= maxy - 1; y++) {
-      for (x = minx + 1; x <= maxx - 1; x++) {
-        if (! orig_valid[ x ][ y ]) {
-          continue;
-        }
-
-        if (! valid[ x ][ y ]) {
-          continue;
-        }
-
-        e = &D->val[ x ][ y ];
-
-        //
-        // Avoid diagonal moves.
-        //
-        if ((D->val[ x - 1 ][ y ] == DMAP_IS_WALL) || (D->val[ x ][ y - 1 ] == DMAP_IS_WALL)) {
-          a = DMAP_IS_WALL;
-        } else {
-          a = D->val[ x - 1 ][ y - 1 ];
-        }
-
-        b = D->val[ x ][ y - 1 ];
-
-        if ((D->val[ x + 1 ][ y ] == DMAP_IS_WALL) || (D->val[ x ][ y - 1 ] == DMAP_IS_WALL)) {
-          c = DMAP_IS_WALL;
-        } else {
-          c = D->val[ x + 1 ][ y - 1 ];
-        }
-
-        d = D->val[ x - 1 ][ y ];
-        f = D->val[ x + 1 ][ y ];
-
-        if ((D->val[ x - 1 ][ y ] == DMAP_IS_WALL) || (D->val[ x ][ y + 1 ] == DMAP_IS_WALL)) {
-          g = DMAP_IS_WALL;
-        } else {
-          g = D->val[ x - 1 ][ y + 1 ];
-        }
-
-        h = D->val[ x ][ y + 1 ];
-
-        if ((D->val[ x + 1 ][ y ] == DMAP_IS_WALL) || (D->val[ x ][ y + 1 ] == DMAP_IS_WALL)) {
-          i = DMAP_IS_WALL;
-        } else {
-          i = D->val[ x + 1 ][ y + 1 ];
-        }
-
-        if (a < b) {
-          lowest = a;
-        } else {
-          lowest = b;
-        }
-
-        if (c < lowest) {
-          lowest = c;
-        }
-        if (d < lowest) {
-          lowest = d;
-        }
-        if (f < lowest) {
-          lowest = f;
-        }
-        if (g < lowest) {
-          lowest = g;
-        }
-        if (h < lowest) {
-          lowest = h;
-        }
-        if (i < lowest) {
-          lowest = i;
-        }
-
-        if (*e - lowest >= 2) {
-          *e      = lowest + 1;
-          changed = true;
-        }
-      }
-    }
-  } while (changed);
-
-  //
-  // Mix in any original depth stats
-  //
-  for (y = miny + 1; y <= maxy - 1; y++) {
-    for (x = minx + 1; x <= maxx - 1; x++) {
-      uint8_t o = orig[ x ][ y ];
-      if (o != DMAP_IS_WALL) {
-        if (o > DMAP_IS_PASSABLE) {
-          o         = o - DMAP_IS_PASSABLE;
-          uint8_t n = D->val[ x ][ y ];
-          if (o + n < DMAP_IS_PASSABLE) {
-            D->val[ x ][ y ] += o;
-          }
-        }
-      }
-    }
-  }
-}
-
 //
 // Pre:
 //
@@ -398,26 +165,24 @@ void dmap_process_no_diagonals(Dmap *D, spoint tl, spoint br, bool place_border)
 // 2 2 2 2 2
 // 3 3 3 3 3
 //
-void dmap_process_allow_diagonals(Dmap *D, spoint tl, spoint br, bool place_border)
+void dmap_process(Dmap *D, spoint tl, spoint br)
 {
-  uint8_t                                                           x;
-  uint8_t                                                           y;
-  uint8_t                                                           a;
-  uint8_t                                                           b;
-  uint8_t                                                           c;
-  uint8_t                                                           d;
-  uint8_t                                                          *e;
-  uint8_t                                                           f;
-  uint8_t                                                           g;
-  uint8_t                                                           h;
-  uint8_t                                                           i;
-  uint8_t                                                           lowest;
-  uint8_t                                                           changed;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
+  uint8_t  x;
+  uint8_t  y;
+  uint8_t  a;
+  uint8_t  b;
+  uint8_t  c;
+  uint8_t  d;
+  uint8_t *e;
+  uint8_t  f;
+  uint8_t  g;
+  uint8_t  h;
+  uint8_t  i;
+  uint8_t  lowest;
+  uint8_t  changed;
+  uint8_t  minx, miny, maxx, maxy;
+  auto     orig = *D;
 
-  int minx, miny, maxx, maxy;
   if (tl.x < br.x) {
     minx = tl.x;
     maxx = br.x;
@@ -433,114 +198,17 @@ void dmap_process_allow_diagonals(Dmap *D, spoint tl, spoint br, bool place_bord
     maxy = tl.y;
   }
 
-  //
-  // We always place a border around the dmap so the search doesn't trickly off the map.
-  // So grow the search space slightly so that creatures that can only see one tile, do
-  // not lose out and have nothing to look at.
-  //
-  if (place_border) {
-    minx--;
-    miny--;
-    maxx++;
-    maxy++;
-  }
-
-  if (minx < 0) {
-    minx = 0;
-  }
-  if (miny < 0) {
-    miny = 0;
-  }
-  if (maxx >= MAP_WIDTH) {
-    maxx = MAP_WIDTH - 1;
-  }
-  if (maxy >= MAP_HEIGHT) {
-    maxy = MAP_HEIGHT - 1;
-  }
-
-  //
-  // Need a wall around the dmap or the search will sort of trickle off the map
-  //
-  for (y = miny; y <= maxy; y++) {
-    D->val[ minx ][ y ] = DMAP_IS_WALL;
-    D->val[ maxx ][ y ] = DMAP_IS_WALL;
-  }
-  for (x = minx; x <= maxx; x++) {
-    D->val[ x ][ miny ] = DMAP_IS_WALL;
-    D->val[ x ][ maxy ] = DMAP_IS_WALL;
-  }
-
-  bool all_walls;
-
-  //
-  // Try to minimize the DMAP area if it is mostly walls at the edges, for speed.
-  //
-  all_walls = true;
-  for (x = minx; (x <= maxx) && all_walls; x++) {
-    for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      minx = x;
-    }
-  }
-
-  all_walls = true;
-  for (x = maxx; (x > minx) && all_walls; x--) {
-    for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      maxx = x;
-    }
-  }
-
-  all_walls = true;
-  for (y = miny; (y <= maxy) && all_walls; y++) {
-    for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      miny = y;
-    }
-  }
-
-  all_walls = true;
-  for (y = maxy; (y > miny) && all_walls; y--) {
-    for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      maxy = y;
-    }
-  }
-
-  for (y = miny + 1; y <= maxy - 1; y++) {
-    for (x = minx + 1; x <= maxx - 1; x++) {
-      orig[ x ][ y ] = D->val[ x ][ y ];
-
-      e = &D->val[ x ][ y ];
-      if (*e != DMAP_IS_WALL) {
-        valid[ x ][ y ]      = (uint8_t) 1;
-        orig_valid[ x ][ y ] = (uint8_t) 1;
-        continue;
-      }
-
-      valid[ x ][ y ]      = (uint8_t) 0;
-      orig_valid[ x ][ y ] = (uint8_t) 0;
-    }
-  }
+  minx++;
+  miny++;
+  maxx--;
+  maxy--;
 
   do {
     changed = false;
 
-    for (y = miny + 1; y <= maxy - 1; y++) {
-      for (x = minx + 1; x <= maxx - 1; x++) {
-        if (! orig_valid[ x ][ y ]) {
-          continue;
-        }
-
-        if (! valid[ x ][ y ]) {
+    for (y = miny; y < maxy; y++) {
+      for (x = minx; x < maxx; x++) {
+        if (orig.val[ x ][ y ] == DMAP_IS_WALL) {
           continue;
         }
 
@@ -587,24 +255,6 @@ void dmap_process_allow_diagonals(Dmap *D, spoint tl, spoint br, bool place_bord
       }
     }
   } while (changed);
-
-  //
-  // Mix in any original depth stats
-  //
-  for (y = miny + 1; y <= maxy - 1; y++) {
-    for (x = minx + 1; x <= maxx - 1; x++) {
-      uint8_t o = orig[ x ][ y ];
-      if (o != DMAP_IS_WALL) {
-        if (o > DMAP_IS_PASSABLE) {
-          o         = o - DMAP_IS_PASSABLE;
-          uint8_t n = D->val[ x ][ y ];
-          if (o + n < DMAP_IS_PASSABLE) {
-            D->val[ x ][ y ] += o;
-          }
-        }
-      }
-    }
-  }
 }
 
 //
@@ -628,26 +278,24 @@ void dmap_process_allow_diagonals(Dmap *D, spoint tl, spoint br, bool place_bord
 // 0 1 1 1 0
 // 0 0 0 0 0
 //
-void dmap_process_reverse_allow_diagonals(Dmap *D, spoint tl, spoint br, bool place_border)
+void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
 {
-  uint8_t                                                           x;
-  uint8_t                                                           y;
-  uint8_t                                                           a;
-  uint8_t                                                           b;
-  uint8_t                                                           c;
-  uint8_t                                                           d;
-  uint8_t                                                          *e;
-  uint8_t                                                           f;
-  uint8_t                                                           g;
-  uint8_t                                                           h;
-  uint8_t                                                           i;
-  uint8_t                                                           highest;
-  uint8_t                                                           changed;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
-  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
+  uint8_t  x;
+  uint8_t  y;
+  uint8_t  a;
+  uint8_t  b;
+  uint8_t  c;
+  uint8_t  d;
+  uint8_t *e;
+  uint8_t  f;
+  uint8_t  g;
+  uint8_t  h;
+  uint8_t  i;
+  uint8_t  highest;
+  uint8_t  changed;
+  uint8_t  minx, miny, maxx, maxy;
+  auto     orig = *D;
 
-  int minx, miny, maxx, maxy;
   if (tl.x < br.x) {
     minx = tl.x;
     maxx = br.x;
@@ -663,114 +311,17 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, spoint tl, spoint br, bool pl
     maxy = tl.y;
   }
 
-  //
-  // We always place a border around the dmap so the search doesn't trickly off the map.
-  // So grow the search space slightly so that creatures that can only see one tile, do
-  // not lose out and have nothing to look at.
-  //
-  if (place_border) {
-    minx--;
-    miny--;
-    maxx++;
-    maxy++;
-  }
-
-  if (minx < 0) {
-    minx = 0;
-  }
-  if (miny < 0) {
-    miny = 0;
-  }
-  if (maxx >= MAP_WIDTH) {
-    maxx = MAP_WIDTH - 1;
-  }
-  if (maxy >= MAP_HEIGHT) {
-    maxy = MAP_HEIGHT - 1;
-  }
-
-  //
-  // Need a wall around the dmap or the search will sort of trickle off the map
-  //
-  for (y = miny; y <= maxy; y++) {
-    D->val[ minx ][ y ] = DMAP_IS_WALL;
-    D->val[ maxx ][ y ] = DMAP_IS_WALL;
-  }
-  for (x = minx; x <= maxx; x++) {
-    D->val[ x ][ miny ] = DMAP_IS_WALL;
-    D->val[ x ][ maxy ] = DMAP_IS_WALL;
-  }
-
-  bool all_walls;
-
-  //
-  // Try to minimize the DMAP area if it is mostly walls at the edges, for speed.
-  //
-  all_walls = true;
-  for (x = minx; (x <= maxx) && all_walls; x++) {
-    for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      minx = x;
-    }
-  }
-
-  all_walls = true;
-  for (x = maxx; (x > minx) && all_walls; x--) {
-    for (y = miny; (y <= maxy) && all_walls; y++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      maxx = x;
-    }
-  }
-
-  all_walls = true;
-  for (y = miny; (y <= maxy) && all_walls; y++) {
-    for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      miny = y;
-    }
-  }
-
-  all_walls = true;
-  for (y = maxy; (y > miny) && all_walls; y--) {
-    for (x = minx; (x <= maxx) && all_walls; x++) {
-      all_walls = (D->val[ x ][ y ] == DMAP_IS_WALL);
-    }
-    if (all_walls) {
-      maxy = y;
-    }
-  }
-
-  for (y = miny + 1; y <= maxy - 1; y++) {
-    for (x = minx + 1; x <= maxx - 1; x++) {
-      orig[ x ][ y ] = D->val[ x ][ y ];
-
-      e = &D->val[ x ][ y ];
-      if (*e != DMAP_IS_WALL) {
-        valid[ x ][ y ]      = (uint8_t) 1;
-        orig_valid[ x ][ y ] = (uint8_t) 1;
-        continue;
-      }
-
-      valid[ x ][ y ]      = (uint8_t) 0;
-      orig_valid[ x ][ y ] = (uint8_t) 0;
-    }
-  }
+  minx++;
+  miny++;
+  maxx--;
+  maxy--;
 
   do {
     changed = false;
 
-    for (y = miny + 1; y <= maxy - 1; y++) {
-      for (x = minx + 1; x <= maxx - 1; x++) {
-        if (! orig_valid[ x ][ y ]) {
-          continue;
-        }
-
-        if (! valid[ x ][ y ]) {
+    for (y = miny; y <= maxy; y++) {
+      for (x = minx; x <= maxx; x++) {
+        if (orig.val[ x ][ y ] == DMAP_IS_WALL) {
           continue;
         }
 
@@ -842,26 +393,9 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, spoint tl, spoint br, bool pl
       }
     }
   } while (changed);
-
-  //
-  // Mix in any original depth stats
-  //
-  for (y = miny + 1; y <= maxy - 1; y++) {
-    for (x = minx + 1; x <= maxx - 1; x++) {
-      uint8_t o = orig[ x ][ y ];
-      if (o != DMAP_IS_WALL) {
-        if (o > DMAP_IS_PASSABLE) {
-          o         = o - DMAP_IS_PASSABLE;
-          uint8_t n = D->val[ x ][ y ];
-          if (o + n < DMAP_IS_PASSABLE) {
-            D->val[ x ][ y ] += o;
-          }
-        }
-      }
-    }
-  }
 }
 
+#if 0
 static bool is_obs_at(const Dmap *D, int x, int y)
 {
   if ((x >= MAP_WIDTH) || (y >= MAP_HEIGHT) || (x < 0) || (y < 0)) {
@@ -874,54 +408,7 @@ static bool is_obs_at(const Dmap *D, int x, int y)
 
   return false;
 }
-
-//
-// Given 3 points, can we do a shortcut diagonal move?
-//
-bool dmap_can_i_move_diagonally(const Dmap *D, spoint a, spoint b, spoint c)
-{
-  auto px = a.x;
-  auto py = a.y;
-
-  auto nx = b.x;
-  auto ny = b.y;
-
-  auto mx = c.x;
-  auto my = c.y;
-
-  if (px - 1 == mx && py + 1 == my && px == nx && py + 1 == ny && ! is_obs_at(D, px - 1, py)) {
-    return true;
-  }
-
-  if (px - 1 == mx && py + 1 == my && px - 1 == nx && py == ny && ! is_obs_at(D, px, py + 1)) {
-    return true;
-  }
-
-  if (px + 1 == mx && py + 1 == my && px == nx && py + 1 == ny && ! is_obs_at(D, px + 1, py)) {
-    return true;
-  }
-
-  if (px + 1 == mx && py + 1 == my && px + 1 == nx && py == ny && ! is_obs_at(D, px, py + 1)) {
-    return true;
-  }
-
-  if (px - 1 == mx && py - 1 == my && px == nx && py - 1 == ny && ! is_obs_at(D, px - 1, py)) {
-    return true;
-  }
-
-  if (px - 1 == mx && py - 1 == my && px - 1 == nx && py == ny && ! is_obs_at(D, px, py - 1)) {
-    return true;
-  }
-
-  if (px + 1 == mx && py - 1 == my && px == nx && py - 1 == ny && ! is_obs_at(D, px + 1, py)) {
-    return true;
-  }
-
-  if (px + 1 == mx && py - 1 == my && px + 1 == nx && py == ny && ! is_obs_at(D, px, py - 1)) {
-    return true;
-  }
-  return false;
-}
+#endif
 
 static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas,
                                          bool allow_diagonals)
@@ -1033,7 +520,7 @@ std::vector< spoint > dmap_solve_manhattan(const Dmap *D, const spoint start)
 //
 // Try to solve diagonally first. Then fallback to manhattan if we cannot.
 //
-std::vector< spoint > dmap_solve(const Dmap *D, const spoint start)
+std::vector< spoint > dmap_solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Dmap *D, const spoint start)
 {
   //
   // No path? Intentionally not allowing diagonal moves here as that allows the
@@ -1047,154 +534,16 @@ std::vector< spoint > dmap_solve(const Dmap *D, const spoint start)
   // if we allow the diagonal move then the hidden treasure in the middle of the
   // wall gets exposed.
   //
-  auto p         = dmap_solve_allow_diagonal(D, start);
-  auto path_size = p.size();
-  if (! path_size) {
-    std::vector< spoint > empty_path;
-    return empty_path;
-  }
+  auto p = dmap_solve_manhattan(D, start);
 
   //
-  // Take a path like the following
+  // Shorten paths, but don't cut corners
   //
-  // ...........
-  // .@.........
-  // ..*........
-  // ...*.#.....
-  // ....*###...
-  // .....*.#...
-  // ......*#...
-  // .......*...
+  // x..##    x..##
+  // xx.##    .x.##
+  // .xx## -> ..x##
+  // ..xxx    ..xxx
   //
-  // and convert it to avoid cutting across walls diagonally
-  //
-  // ...........
-  // .@.........
-  // ..*........
-  // ...*.#.....
-  // ....*###...
-  // ....**.#...
-  // ......*#...
-  // ......**...
-  //
-  p.insert(p.begin(), start);
-  std::vector< spoint > out;
-  path_size = p.size();
-
-  for (int i = 0; i < (int) path_size; i++) {
-    auto hop0 = p[ i ];
-
-    if (i == (int) path_size - 1) {
-      out.push_back(hop0);
-      break;
-    }
-
-    auto hop1 = p[ i + 1 ];
-
-    // s.
-    // .e
-    if (((hop0.x + 1) == hop1.x) && ((hop0.y + 1) == hop1.y)) {
-      if (is_obs_at(D, hop0.x + 1, hop0.y) && is_obs_at(D, hop0.x, hop0.y + 1)) {
-        //
-        // Allow fully diagonal moves between walls?
-        //
-      } else if (is_obs_at(D, hop0.x + 1, hop0.y)) {
-        //
-        // Try to make a path around the obstacle
-        //
-        out.push_back(hop0);
-        out.push_back(spoint(hop0.x, hop0.y + 1));
-        continue;
-      } else if (is_obs_at(D, hop0.x, hop0.y + 1)) {
-        //
-        // Try to make a path around the obstacle
-        //
-        out.push_back(hop0);
-        out.push_back(spoint(hop0.x + 1, hop0.y));
-        continue;
-      }
-    }
-
-    // .s
-    // e.
-    if (((hop0.x - 1) == hop1.x) && ((hop0.y + 1) == hop1.y)) {
-      if (is_obs_at(D, hop0.x - 1, hop0.y) && is_obs_at(D, hop0.x, hop0.y + 1)) {
-        //
-        // Allow fully diagonal moves between walls?
-        //
-      } else if (is_obs_at(D, hop0.x - 1, hop0.y)) {
-        //
-        // Try to make a path around the obstacle
-        //
-        out.push_back(hop0);
-        out.push_back(spoint(hop0.x, hop0.y + 1));
-        continue;
-      } else if (is_obs_at(D, hop0.x, hop0.y + 1)) {
-        //
-        // Try to make a path around the obstacle
-        //
-        out.push_back(hop0);
-        out.push_back(spoint(hop0.x - 1, hop0.y));
-        continue;
-      }
-    }
-
-    // .e
-    // s.
-    if (((hop0.x + 1) == hop1.x) && ((hop0.y - 1) == hop1.y)) {
-      if (is_obs_at(D, hop0.x + 1, hop0.y) && is_obs_at(D, hop0.x, hop0.y - 1)) {
-        //
-        // Allow fully diagonal moves between walls?
-        //
-      } else if (is_obs_at(D, hop0.x + 1, hop0.y)) {
-        //
-        // Try to make a path around the obstacle
-        //
-        out.push_back(hop0);
-        out.push_back(spoint(hop0.x, hop0.y - 1));
-        continue;
-      } else if (is_obs_at(D, hop0.x, hop0.y - 1)) {
-        //
-        // Try to make a path around the obstacle
-        //
-        out.push_back(hop0);
-        out.push_back(spoint(hop0.x + 1, hop0.y));
-        continue;
-      }
-    }
-
-    // e.
-    // .s
-    if (((hop0.x - 1) == hop1.x) && ((hop0.y - 1) == hop1.y)) {
-      if (is_obs_at(D, hop0.x - 1, hop0.y) && is_obs_at(D, hop0.x, hop0.y - 1)) {
-        //
-        // Allow fully diagonal moves between walls?
-        //
-      } else if (is_obs_at(D, hop0.x - 1, hop0.y)) {
-        //
-        // Try to make a path around the obstacle
-        //
-        out.push_back(hop0);
-        out.push_back(spoint(hop0.x, hop0.y - 1));
-        continue;
-      } else if (is_obs_at(D, hop0.x, hop0.y - 1)) {
-        //
-        // Try to make a path around the obstacle
-        //
-        out.push_back(hop0);
-        out.push_back(spoint(hop0.x - 1, hop0.y));
-        continue;
-      }
-    }
-
-    out.push_back(hop0);
-  }
-
-  out.erase(out.begin());
-  path_size = out.size();
-  if (! path_size) {
-    return out;
-  }
-
-  return out;
+  thing_path_shorten(g, v, l, t, p);
+  return p;
 }

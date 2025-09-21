@@ -13,6 +13,7 @@
 #include "my_types.hpp"
 
 #include <string>
+#include <vector>
 
 //
 // Entropy is always > 0 for Thing IDs to distinguish them
@@ -770,6 +771,8 @@ bool thing_is_immune_to(Thingp, ThingEventType);
 void thing_display(Gamep, Levelsp, Levelp, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index);
 void thing_get_coords(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spoint *, uint16_t *tile_index);
 void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);
+
+void thing_path_shorten(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &path);
 
 void THING_CON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_DBG(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
