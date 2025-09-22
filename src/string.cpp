@@ -479,6 +479,9 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
     return result;
   }
 
+  bool keep_leading_spaces = true;
+  bool first_line          = true;
+
   for (; /*ever*/;) {
     line_len   = 0;
     line_start = text_iter;
@@ -493,9 +496,12 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
       }
     }
 
-    while (*text_iter == ' ') {
-      text_iter++;
+    if (! keep_leading_spaces) {
+      while (*text_iter == ' ') {
+        text_iter++;
+      }
     }
+    keep_leading_spaces = false;
 
     /*
      * Read in as much of the line we can up to the line length.
@@ -617,9 +623,11 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
         continue;
       }
 
-      if (*line_start == ' ') {
-        line_start++;
-        continue;
+      if (! first_line) {
+        if (*line_start == ' ') {
+          line_start++;
+          continue;
+        }
       }
       break;
     }
@@ -629,6 +637,7 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
 
     // printf("OUT [%s] max_line_len %d\n", tmp.c_str(), line_len);
     result.push_back(tmp);
+    first_line = false;
 
     text_iter = line_end;
     if (! *text_iter) {

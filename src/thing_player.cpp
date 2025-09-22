@@ -64,6 +64,9 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
           //
           // Player not initialized yet
           //
+          if (g_opt_quick_start_level_select_menu) {
+            thing_player_cursor_loop(g, v, l);
+          }
           break;
         case PLAYER_STATE_DEAD :
           //

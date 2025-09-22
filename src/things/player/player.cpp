@@ -24,6 +24,15 @@ static std::string tp_player_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "You";
 }
 
+static std::string tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "This is you; a once noble wizard, down on their luck and forced to venture deep into the underrealms to "
+         "reclaim "
+         "their lost skills.";
+}
+
 static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -119,6 +128,7 @@ bool tp_load_player(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
   tp_description_set(tp, tp_player_description_get);
+  tp_detail_set(tp, tp_player_detail_get);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);

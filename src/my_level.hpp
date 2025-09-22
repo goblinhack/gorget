@@ -267,6 +267,11 @@ typedef struct Levels_ {
   //
   ThingId level_select_id;
   //
+  // Things described in the rightbar.
+  //
+  ThingId describe[ THING_DESCRIBE_MAX ];
+  uint8_t describe_count;
+  //
   // The cursor path highlighted.
   //
   uint8_t cursor[ MAP_WIDTH ][ MAP_HEIGHT ];
@@ -551,7 +556,7 @@ void   level_select_assign_levels_to_grid(Gamep, Levelsp);
 void   level_select_destroy(Gamep, Levelsp, Levelp);
 void   level_select_grid_of_empty_levels(Gamep);
 void   level_select_rightbar_needs_update(Gamep, Levelsp, Levelp);
-void   level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, Widp);
+void   level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, WidPopup *);
 void   level_select_test(Gamep);
 void   level_select_update_grid_tiles(Gamep, Levelsp);
 void   level_select_user_chose_a_level(Gamep, Levelsp, Levelp);

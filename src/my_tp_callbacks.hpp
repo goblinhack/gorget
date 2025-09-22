@@ -14,6 +14,10 @@ typedef std::string (*tp_description_get_t)(Gamep, Levelsp, Levelp, Thingp me);
 void        tp_description_set(Tpp, tp_description_get_t);
 std::string tp_description_get(Gamep g, Levelsp v, Levelp l, Thingp me);
 
+typedef std::string (*tp_detail_get_t)(Gamep, Levelsp, Levelp, Thingp me);
+void        tp_detail_set(Tpp, tp_detail_get_t);
+std::string tp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me);
+
 typedef bool (*tp_mouse_down_t)(Gamep, Levelsp, Levelp, Thingp me, int x, int y, int button);
 void tp_mouse_down_set(Tpp, tp_mouse_down_t);
 bool tp_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button);

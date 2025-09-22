@@ -16,6 +16,13 @@ static std::string tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "vengeful spirit";
 }
 
+static std::string tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "The spirit of one less fortunate than you. Beware, ghosts can traverse chasms and walk through walls.";
+}
+
 bool tp_load_ghost(void)
 {
   auto tp   = tp_load("ghost"); // keep as string for scripts
@@ -23,6 +30,7 @@ bool tp_load_ghost(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_ghost_description_get);
+  tp_detail_set(tp, tp_ghost_detail_get);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

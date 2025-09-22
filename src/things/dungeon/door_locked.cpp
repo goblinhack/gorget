@@ -17,12 +17,12 @@ static std::string tp_door_type_locked_description_get(Gamep g, Levelsp v, Level
   TRACE_NO_INDENT();
 
   if (thing_is_open(t)) {
-    return "open door_type_locked";
+    return "open door";
   }
   if (thing_is_dead(t)) {
-    return "broken door_type_locked";
+    return "broken door";
   }
-  return "closed door_type_locked";
+  return "locked door";
 }
 
 static bool tp_door_type_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button)

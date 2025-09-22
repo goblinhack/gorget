@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_string.hpp"
 #include "my_tp_callbacks.hpp"
@@ -23,6 +24,12 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   std::string all_things_description;
   auto        at = v->cursor_at;
 
+  if (v->describe_count) {
+    game_request_to_remake_ui_set(g);
+    v->describe_count = 0;
+    memset(v->describe, 0, sizeof(v->describe));
+  }
+
   FOR_ALL_THINGS_AT(g, v, l, it, at)
   {
     if (! thing_is_described_cursor(it)) {
@@ -30,9 +37,16 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     }
 
     auto one_desc = tp_description_get(g, v, l, it);
-
     if (one_desc.empty()) {
       continue;
+    }
+
+    auto one_detail = tp_detail_get(g, v, l, it);
+    if (! one_detail.empty()) {
+      if (v->describe_count < THING_DESCRIBE_MAX) {
+        v->describe[ v->describe_count++ ] = it->id;
+        game_request_to_remake_ui_set(g);
+      }
     }
 
     //

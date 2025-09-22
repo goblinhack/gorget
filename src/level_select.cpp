@@ -609,31 +609,20 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
 //
 // Show a sorted list of vales
 //
-static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp parent,
-                                           std::map< std::string, int > &map_in, std::string map_name, int width,
-                                           int x_at, int y_at)
+static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPopup *parent,
+                                            std::map< std::string, int > &map_in, std::string map_name)
 {
   TRACE_NO_INDENT();
 
   if (! map_in.size()) {
-    return y_at;
+    return;
   }
 
   {
-    TRACE_NO_INDENT();
-    auto   w = wid_new_square_button(g, parent, map_name);
-    spoint tl(x_at, y_at);
-    spoint br(width - 1, y_at);
-    auto   s1 = dynprintf(" %s:", map_name.c_str());
-    wid_set_color(w, WID_COLOR_TEXT_FG, YELLOW);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, s1);
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_shape_none(w);
-    wid_set_text_lhs(w, true);
+    auto s1 = dynprintf(" %s:", map_name.c_str());
+    parent->log(g, UI_INFO_FMT_STR + std::string(s1) + UI_RESET_FMT, TEXT_FORMAT_LHS);
     myfree(s1);
   }
-  y_at++;
 
   while (map_in.size()) {
     std::string highest;
@@ -649,35 +638,22 @@ static int level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, Widp pa
 
     {
       TRACE_NO_INDENT();
-      auto   w = wid_new_square_button(g, parent, map_name);
-      spoint tl(x_at, y_at);
-      spoint br(width - 1, y_at);
-
       auto        tp   = tp_find_mand(highest.c_str());
       std::string name = tp_short_name(tp);
 
       auto s2 = dynprintf("  %u x %%tp=%s$ %s", map_in[ highest ], highest.c_str(), name.c_str());
-
-      wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-      wid_set_pos(w, tl, br);
-      wid_set_text(w, s2);
-      wid_set_style(w, UI_WID_STYLE_NORMAL);
-      wid_set_shape_none(w);
-      wid_set_text_lhs(w, true);
+      parent->log(g, s2, TEXT_FORMAT_LHS);
       myfree(s2);
     }
-    y_at++;
 
     map_in.erase(highest);
   }
-
-  return y_at;
 }
 
 //
 // If in level select mode, update what we're hovering over
 //
-void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp parent)
+void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup *parent)
 {
   TRACE_NO_INDENT();
 
@@ -701,6 +677,8 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
   if (! level_over) {
     return;
   }
+
+  parent->log_empty_line(g);
 
   LOG("show level contents for level %d,%d mod %d,%d %p level num %u", x, y, dx, dy, (void *) level_over,
       level_over->level_num);
@@ -732,135 +710,39 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, Widp pare
     }
   }
 
-  auto x_at  = 1;
-  auto y_at  = 4;
-  auto width = UI_RIGHTBAR_WIDTH;
-
-  {
-    TRACE_NO_INDENT();
-    auto   w = wid_new_square_button(g, parent, "level");
-    spoint tl(x_at, y_at);
-    spoint br(width - 1, y_at);
-    wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
-    wid_set_pos(w, tl, br);
-    auto tmp = dynprintf("Level %u", level_over->level_num + 1);
-    wid_set_text(w, tmp);
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_shape_none(w);
-    wid_set_text_lhs(w, true);
-    myfree(tmp);
-    y_at++;
-  }
+  auto tmp = dynprintf("Level %u", level_over->level_num + 1);
+  parent->log(g, UI_INFO_FMT_STR + std::string(tmp) + UI_RESET_FMT);
+  myfree(tmp);
+  parent->log_empty_line(g);
 
   if (level_over->next_level) {
     if (player_level->player_completed_level_via_exit) {
-      TRACE_NO_INDENT();
-      auto   w = wid_new_square_button(g, parent, "level");
-      spoint tl(x_at, y_at);
-      spoint br(width - 1, y_at);
-      wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-      wid_set_pos(w, tl, br);
-      wid_set_text(w, " You can enter here");
-      wid_set_style(w, UI_WID_STYLE_NORMAL);
-      wid_set_shape_none(w);
-      wid_set_text_lhs(w, true);
-      y_at++;
+      parent->log(g, " You can enter here", TEXT_FORMAT_LHS);
     } else if (player_level->player_fell_out_of_level) {
-      TRACE_NO_INDENT();
-      auto   w = wid_new_square_button(g, parent, "level");
-      spoint tl(x_at, y_at);
-      spoint br(width - 1, y_at);
-      wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-      wid_set_pos(w, tl, br);
-      wid_set_text(w, " You can climb back here");
-      wid_set_style(w, UI_WID_STYLE_NORMAL);
-      wid_set_shape_none(w);
-      wid_set_text_lhs(w, true);
-      y_at++;
+      parent->log(g, " You can climb back here", TEXT_FORMAT_LHS);
     } else {
-      TRACE_NO_INDENT();
-      auto   w = wid_new_square_button(g, parent, "level");
-      spoint tl(x_at, y_at);
-      spoint br(width - 1, y_at);
-      wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-      wid_set_pos(w, tl, br);
-      wid_set_text(w, " You can go back here");
-      wid_set_style(w, UI_WID_STYLE_NORMAL);
-      wid_set_shape_none(w);
-      wid_set_text_lhs(w, true);
-      y_at++;
+      parent->log(g, " You can go back here", TEXT_FORMAT_LHS);
     }
   } else if (level_over != player_level) {
-    TRACE_NO_INDENT();
-    auto   w = wid_new_square_button(g, parent, "level");
-    spoint tl(x_at, y_at);
-    spoint br(width - 1, y_at);
-    wid_set_color(w, WID_COLOR_TEXT_FG, RED);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, " You cannot enter here yet");
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_shape_none(w);
-    wid_set_text_lhs(w, true);
-    y_at++;
+    parent->log(g, " You cannot enter here", TEXT_FORMAT_LHS);
   } else {
-    TRACE_NO_INDENT();
-    auto   w = wid_new_square_button(g, parent, "level");
-    spoint tl(x_at, y_at);
-    spoint br(width - 1, y_at);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, " You can re-enter here");
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_shape_none(w);
-    wid_set_text_lhs(w, true);
-    y_at++;
+    parent->log(g, " You can re-enter here", TEXT_FORMAT_LHS);
   }
 
   if (level_over->player_completed_level_via_exit) {
-    TRACE_NO_INDENT();
-    auto   w = wid_new_square_button(g, parent, "level");
-    spoint tl(x_at, y_at);
-    spoint br(width - 1, y_at);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, " You completed this level");
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_shape_none(w);
-    wid_set_text_lhs(w, true);
-    y_at++;
+    parent->log(g, " You completed this level", TEXT_FORMAT_LHS);
   } else if (level_over->player_fell_out_of_level) {
-    TRACE_NO_INDENT();
-    auto   w = wid_new_square_button(g, parent, "level");
-    spoint tl(x_at, y_at);
-    spoint br(width - 1, y_at);
-    wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, " You fell out of this level");
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_shape_none(w);
-    wid_set_text_lhs(w, true);
-    y_at++;
+    parent->log(g, " You fell out of this level", TEXT_FORMAT_LHS);
   }
-
-  y_at++;
 
   {
-    TRACE_NO_INDENT();
-    auto   w = wid_new_square_button(g, parent, "contents");
-    spoint tl(x_at, y_at);
-    spoint br(width - 1, y_at);
-    wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, "Contents:");
-    wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_shape_none(w);
-    wid_set_text_lhs(w, true);
-    y_at++;
+    parent->log_empty_line(g);
+    parent->log(g, " Contents:", TEXT_FORMAT_LHS);
   }
 
-  y_at = level_select_show_sorted_values(g, v, level_over, parent, mobs, "Mobs", width, x_at, y_at);
-  y_at = level_select_show_sorted_values(g, v, level_over, parent, monsts, "Monsters", width, x_at, y_at);
-  y_at = level_select_show_sorted_values(g, v, level_over, parent, treasure, "Loot", width, x_at, y_at);
+  level_select_show_sorted_values(g, v, level_over, parent, mobs, "Mobs");
+  level_select_show_sorted_values(g, v, level_over, parent, monsts, "Monsters");
+  level_select_show_sorted_values(g, v, level_over, parent, treasure, "Loot");
 }
 
 //

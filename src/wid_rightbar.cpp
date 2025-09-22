@@ -9,11 +9,10 @@
 #include "my_level.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
+#include "my_tp_callbacks.hpp"
 #include "my_wids.hpp"
 
-static Widp wid_rightbar {};
-
-static WidPopup *wid_rightbar_popup;
+static WidPopup *wid_rightbar;
 
 static bool wid_rightbar_create_window(Gamep g)
 {
@@ -32,8 +31,6 @@ static bool wid_rightbar_create_window(Gamep g)
     return false;
   }
 
-  auto x_at  = 1;
-  auto y_at  = 4;
   auto width = UI_RIGHTBAR_WIDTH;
 
   {
@@ -41,11 +38,7 @@ static bool wid_rightbar_create_window(Gamep g)
     spoint tl(TERM_WIDTH - width, 0);
     spoint br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
 
-    wid_rightbar = wid_new_square_window(g, "wid rightbar");
-    wid_set_ignore_scroll_events(wid_rightbar, true);
-    wid_set_pos(wid_rightbar, tl, br);
-    wid_set_style(wid_rightbar, UI_WID_STYLE_NORMAL);
-    wid_lower(g, wid_rightbar);
+    wid_rightbar = new WidPopup(g, "right bar", tl, br, nullptr, "", false, false);
   }
 
   if (l->level_num == LEVEL_SELECT_ID) {
@@ -59,22 +52,31 @@ static bool wid_rightbar_create_window(Gamep g)
     //
     {
       TRACE_NO_INDENT();
-      auto   w = wid_new_square_button(g, wid_rightbar, "level");
-      spoint tl(x_at, y_at);
-      spoint br(width - 1, y_at);
-      wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
-      wid_set_pos(w, tl, br);
+      wid_rightbar->log_empty_line(g);
       auto s = dynprintf("Level:%u Dungeon:%s", l->level_num + 1, game_seed_name_get(g));
-      wid_set_text(w, s);
-      wid_set_style(w, UI_WID_STYLE_NORMAL);
-      wid_set_shape_none(w);
-      wid_set_text_centerx(w, true);
+      wid_rightbar->log(g, s);
+      wid_rightbar->log_empty_line(g);
       myfree(s);
-      y_at++;
+    }
+
+    {
+      TRACE_NO_INDENT();
+      if (v->describe_count) {
+        wid_rightbar->log_empty_line(g);
+      }
+
+      for (auto n = 0; n < v->describe_count; n++) {
+        auto t = thing_find_optional(g, v, v->describe[ n ]);
+        if (t) {
+          auto tp = thing_tp(t);
+          auto s  = capitalize(tp_long_name(tp));
+          wid_rightbar->log(g, UI_INFO_FMT_STR + s + UI_RESET_FMT);
+          wid_rightbar->log_empty_line(g);
+          wid_rightbar->log(g, tp_detail_get(g, v, l, t), TEXT_FORMAT_LHS);
+        }
+      }
     }
   }
-
-  wid_update(g, wid_rightbar);
 
   return true;
 }
@@ -82,10 +84,9 @@ static bool wid_rightbar_create_window(Gamep g)
 void wid_rightbar_fini(Gamep g)
 {
   TRACE_NO_INDENT();
-  wid_destroy(g, &wid_rightbar);
 
-  delete wid_rightbar_popup;
-  wid_rightbar_popup = nullptr;
+  delete wid_rightbar;
+  wid_rightbar = nullptr;
 }
 
 bool wid_rightbar_init(Gamep g)
@@ -96,8 +97,6 @@ bool wid_rightbar_init(Gamep g)
 
 bool wid_rightbar_create(Gamep g)
 {
-  wid_rightbar_fini(g);
-
   auto level = game_levels_get(g);
   if (! level) {
     return false;

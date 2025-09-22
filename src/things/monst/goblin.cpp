@@ -20,6 +20,13 @@ static std::string tp_goblin_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "starter pack goblin";
 }
 
+static std::string tp_goblin_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "An entry level goblin.";
+}
+
 bool tp_load_goblin(void)
 {
   auto tp   = tp_load("goblin"); // keep as string for scripts
@@ -28,6 +35,7 @@ bool tp_load_goblin(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_description_set(tp, tp_goblin_description_get);
+  tp_detail_set(tp, tp_goblin_detail_get);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);

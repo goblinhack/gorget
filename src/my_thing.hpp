@@ -31,6 +31,7 @@
 // Essentially equates to the max number of monsters
 //
 #define THING_AI_MAX        65535 /* The size of thing_ai */
+#define THING_DESCRIBE_MAX  10    /* The number of things we can show in the rightbar */
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 4)
 #define THING_INVENTORY_MAX 26
 

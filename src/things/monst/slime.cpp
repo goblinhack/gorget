@@ -20,6 +20,13 @@ static std::string tp_slime_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "living slime";
 }
 
+static std::string tp_slime_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "A voracious mass of sentient slime.";
+}
+
 bool tp_load_slime(void)
 {
   auto tp   = tp_load("slime"); // keep as string for scripts
@@ -28,6 +35,7 @@ bool tp_load_slime(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_description_set(tp, tp_slime_description_get);
+  tp_detail_set(tp, tp_slime_detail_get);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_jump);
@@ -48,7 +56,7 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d10+4");
   tp_jump_distance_set(tp, 3);
-  tp_long_name_set(tp, name);
+  tp_long_name_set(tp, "sentient slime");
   tp_monst_group_add(tp, MONST_GROUP_2);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 30);  // celsius
