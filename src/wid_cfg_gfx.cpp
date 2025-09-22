@@ -412,8 +412,8 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Resolution value");
 
-    spoint tl(width / 2 + 4, y_at);
-    spoint br(width / 2 + 12, y_at + 2);
+    spoint tl(width / 2, y_at);
+    spoint br(width / 2 + 10, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
@@ -432,8 +432,8 @@ void wid_cfg_gfx_select(Gamep g)
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
       auto w = wid_menu_button(g, p, "Resolution value +");
 
-      spoint tl(width / 2 + 13, y_at);
-      spoint br(width / 2 + 15, y_at + 2);
+      spoint tl(width / 2 + 12, y_at);
+      spoint br(width / 2 + 14, y_at + 2);
       wid_set_pos(w, tl, br);
       wid_set_on_mouse_up(g, w, wid_cfg_gfx_resolution_incr);
       wid_set_text(w, "+");
@@ -472,7 +472,7 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Terminal value");
 
-    spoint tl(width / 2 + 4, y_at);
+    spoint tl(width / 2, y_at);
     spoint br(width / 2 + 12, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
@@ -503,7 +503,7 @@ void wid_cfg_gfx_select(Gamep g)
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Font size value");
 
-    spoint tl(width / 2 + 4, y_at);
+    spoint tl(width / 2, y_at);
     spoint br(width / 2 + 12, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
