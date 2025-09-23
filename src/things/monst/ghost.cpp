@@ -20,7 +20,8 @@ static std::string tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "The spirit of one less fortunate than you. Beware, ghosts can traverse chasms and walk through walls.";
+  return "The spirit of one less fortunate than you. Beware, such spirits can traverse chasms and float through "
+         "solid rock.";
 }
 
 bool tp_load_ghost(void)

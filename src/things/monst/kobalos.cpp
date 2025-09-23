@@ -10,32 +10,35 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_goblin_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   if (thing_is_dead(t)) {
-    return "dead goblin";
+    return "dead kobalos";
   }
-  return "starter pack goblin";
+  return "starter pack kobalos";
 }
 
-static std::string tp_goblin_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "An entry level goblin.";
+  std::string s;
+  s += "Kobalos are a small green-skinned creatures, that are identical in every possible way to a goblin. ";
+  s += "They are vindictive, greedy little things and have a habit of thievery...";
+  return s;
 }
 
-bool tp_load_goblin(void)
+bool tp_load_kobalos(void)
 {
-  auto tp   = tp_load("goblin"); // keep as string for scripts
+  auto tp   = tp_load("kobalos"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
-  tp_description_set(tp, tp_goblin_description_get);
-  tp_detail_set(tp, tp_goblin_detail_get);
+  tp_description_set(tp, tp_kobalos_description_get);
+  tp_detail_set(tp, tp_kobalos_detail_get);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
@@ -44,7 +47,7 @@ bool tp_load_goblin(void)
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_goblin);
+  tp_flag_set(tp, is_kobalos);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);

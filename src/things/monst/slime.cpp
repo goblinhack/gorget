@@ -24,7 +24,7 @@ static std::string tp_slime_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "A voracious mass of sentient slime.";
+  return "A voracious mass of sentient slime that hungers constantly.";
 }
 
 bool tp_load_slime(void)

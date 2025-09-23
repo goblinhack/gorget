@@ -406,7 +406,7 @@ bool thing_is_flying(Thingp);
 bool thing_is_foliage(Thingp);
 bool thing_is_gaseous(Thingp);
 bool thing_is_ghost(Thingp);
-bool thing_is_goblin(Thingp);
+bool thing_is_kobalos(Thingp);
 bool thing_is_grass(Thingp);
 bool thing_is_indestructible(Thingp);
 bool thing_is_inventory_item(Thingp);

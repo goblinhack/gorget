@@ -58,7 +58,7 @@ std::string thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFla
 
 #endif
   //
-  // "the goblin's short sword" for example
+  // "the kobalos's short sword" for example
   //
   auto t_o = top_owner(g, v, l, t);
   if (f & TEXT_INCLUDE_OWNER) {

@@ -17,6 +17,13 @@ static std::string tp_ghost_mob_description_get(Gamep g, Levelsp v, Levelp l, Th
   return "pile of bones";
 }
 
+static std::string tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "This large pile of bones, whispers and moans as spectral creations dance around it.";
+}
+
 static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_NO_INDENT();
@@ -32,6 +39,7 @@ bool tp_load_ghost_mob(void)
   // begin sort marker1 {
   tp_apostrophize_name_set(tp, "ghosts mob's");
   tp_description_set(tp, tp_ghost_mob_description_get);
+  tp_detail_set(tp, tp_ghost_mob_detail_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);

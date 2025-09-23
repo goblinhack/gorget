@@ -67,7 +67,7 @@
       list_macro(is_foliage, "is_foliage"),                             /* newline */                                \
       list_macro(is_gaseous, "is_gaseous"),                             /* newline */                                \
       list_macro(is_ghost, "is_ghost"),                                 /* newline */                                \
-      list_macro(is_goblin, "is_goblin"),                               /* newline */                                \
+      list_macro(is_kobalos, "is_kobalos"),                               /* newline */                                \
       list_macro(is_grass, "is_grass"),                                 /* newline */                                \
       list_macro(is_indestructible, "is_indestructible"),               /* newline */                                \
       list_macro(is_item, "is_item"),                                   /* newline */                                \
@@ -543,7 +543,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_foliage(tp)               tp_flag(tp, is_foliage)
 #define tp_is_gaseous(tp)               tp_flag(tp, is_gaseous)
 #define tp_is_ghost(tp)                 tp_flag(tp, is_ghost)
-#define tp_is_goblin(tp)                tp_flag(tp, is_goblin)
+#define tp_is_kobalos(tp)                tp_flag(tp, is_kobalos)
 #define tp_is_grass(tp)                 tp_flag(tp, is_grass)
 #define tp_is_indestructible(tp)        tp_flag(tp, is_indestructible)
 #define tp_is_inventory_item(tp)        tp_flag(tp, is_inventory_item)
@@ -659,7 +659,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_foliage(g, v, l, p)               level_afirst_flag(g, v, l, is_foliage, p)
 #define level_afirst_is_gaseous(g, v, l, p)               level_afirst_flag(g, v, l, is_gaseous, p)
 #define level_afirst_is_ghost(g, v, l, p)                 level_afirst_flag(g, v, l, is_ghost, p)
-#define level_afirst_is_goblin(g, v, l, p)                level_afirst_flag(g, v, l, is_goblin, p)
+#define level_afirst_is_kobalos(g, v, l, p)                level_afirst_flag(g, v, l, is_kobalos, p)
 #define level_afirst_is_grass(g, v, l, p)                 level_afirst_flag(g, v, l, is_grass, p)
 #define level_afirst_is_inventory_item(g, v, l, p)        level_afirst_flag(g, v, l, is_inventory_item, p)
 #define level_afirst_is_item_mergeable(g, v, l, p)        level_afirst_flag(g, v, l, is_item_mergeable, p)
@@ -772,7 +772,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_foliage(g, v, l, p)                level_alive_flag(g, v, l, is_foliage, p)
 #define level_alive_is_gaseous(g, v, l, p)                level_alive_flag(g, v, l, is_gaseous, p)
 #define level_alive_is_ghost(g, v, l, p)                  level_alive_flag(g, v, l, is_ghost, p)
-#define level_alive_is_goblin(g, v, l, p)                 level_alive_flag(g, v, l, is_goblin, p)
+#define level_alive_is_kobalos(g, v, l, p)                 level_alive_flag(g, v, l, is_kobalos, p)
 #define level_alive_is_grass(g, v, l, p)                  level_alive_flag(g, v, l, is_grass, p)
 #define level_alive_is_inventory_item(g, v, l, p)         level_alive_flag(g, v, l, is_inventory_item, p)
 #define level_alive_is_item_mergeable(g, v, l, p)         level_alive_flag(g, v, l, is_item_mergeable, p)
@@ -885,7 +885,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_foliage(g, v, l, p)                level_count_flag(g, v, l, is_foliage, p)
 #define level_count_is_gaseous(g, v, l, p)                level_count_flag(g, v, l, is_gaseous, p)
 #define level_count_is_ghost(g, v, l, p)                  level_count_flag(g, v, l, is_ghost, p)
-#define level_count_is_goblin(g, v, l, p)                 level_count_flag(g, v, l, is_goblin, p)
+#define level_count_is_kobalos(g, v, l, p)                 level_count_flag(g, v, l, is_kobalos, p)
 #define level_count_is_grass(g, v, l, p)                  level_count_flag(g, v, l, is_grass, p)
 #define level_count_is_inventory_item(g, v, l, p)         level_count_flag(g, v, l, is_inventory_item, p)
 #define level_count_is_item_mergeable(g, v, l, p)         level_count_flag(g, v, l, is_item_mergeable, p)
@@ -998,7 +998,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_foliage(g, v, l, p)                level_first_flag(g, v, l, is_foliage, p)
 #define level_first_is_gaseous(g, v, l, p)                level_first_flag(g, v, l, is_gaseous, p)
 #define level_first_is_ghost(g, v, l, p)                  level_first_flag(g, v, l, is_ghost, p)
-#define level_first_is_goblin(g, v, l, p)                 level_first_flag(g, v, l, is_goblin, p)
+#define level_first_is_kobalos(g, v, l, p)                 level_first_flag(g, v, l, is_kobalos, p)
 #define level_first_is_grass(g, v, l, p)                  level_first_flag(g, v, l, is_grass, p)
 #define level_first_is_inventory_item(g, v, l, p)         level_first_flag(g, v, l, is_inventory_item, p)
 #define level_first_is_item_mergeable(g, v, l, p)         level_first_flag(g, v, l, is_item_mergeable, p)
@@ -1117,7 +1117,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_foliage(g, v, l, p)                      level_flag(g, v, l, is_foliage, p)
 #define level_is_gaseous(g, v, l, p)                      level_flag(g, v, l, is_gaseous, p)
 #define level_is_ghost(g, v, l, p)                        level_flag(g, v, l, is_ghost, p)
-#define level_is_goblin(g, v, l, p)                       level_flag(g, v, l, is_goblin, p)
+#define level_is_kobalos(g, v, l, p)                       level_flag(g, v, l, is_kobalos, p)
 #define level_is_grass(g, v, l, p)                        level_flag(g, v, l, is_grass, p)
 #define level_is_indestructible(g, v, l, p)               level_flag(g, v, l, is_indestructible, p)
 #define level_is_inventory_item(g, v, l, p)               level_flag(g, v, l, is_inventory_item, p)
@@ -1231,7 +1231,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_foliage(g, v, l, p)                 level_open_flag(g, v, l, is_foliage, p)
 #define level_open_is_gaseous(g, v, l, p)                 level_open_flag(g, v, l, is_gaseous, p)
 #define level_open_is_ghost(g, v, l, p)                   level_open_flag(g, v, l, is_ghost, p)
-#define level_open_is_goblin(g, v, l, p)                  level_open_flag(g, v, l, is_goblin, p)
+#define level_open_is_kobalos(g, v, l, p)                  level_open_flag(g, v, l, is_kobalos, p)
 #define level_open_is_grass(g, v, l, p)                   level_open_flag(g, v, l, is_grass, p)
 #define level_open_is_inventory_item(g, v, l, p)          level_open_flag(g, v, l, is_inventory_item, p)
 #define level_open_is_item_mergeable(g, v, l, p)          level_open_flag(g, v, l, is_item_mergeable, p)

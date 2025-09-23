@@ -10,28 +10,36 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_goblin_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_kobalos_mob_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "goblin spawning grounds";
+  return "kobalos spawning grounds";
 }
 
-static void tp_goblin_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+static std::string tp_kobalos_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "This hideous, puslating creation is a kobalos spawning device.";
+}
+
+static void tp_kobalos_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
   sound_play(g, "explosion");
 }
 
-bool tp_load_goblin_mob(void)
+bool tp_load_kobalos_mob(void)
 {
-  auto tp   = tp_load("goblin_mob"); // keep as string for scripts
+  auto tp   = tp_load("kobalos_mob"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_apostrophize_name_set(tp, "goblins mob's");
-  tp_description_set(tp, tp_goblin_mob_description_get);
+  tp_apostrophize_name_set(tp, "kobaloss mob's");
+  tp_description_set(tp, tp_kobalos_mob_description_get);
+  tp_detail_set(tp, tp_kobalos_mob_detail_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
@@ -55,10 +63,10 @@ bool tp_load_goblin_mob(void)
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_health_set(tp, "1d3+3");
-  tp_long_name_set(tp, "goblin mob");
-  tp_on_death_set(tp, tp_goblin_mob_on_death);
-  tp_pluralize_name_set(tp, "gobliny mobs");
-  tp_short_name_set(tp, "goblin den");
+  tp_long_name_set(tp, "kobalos mob");
+  tp_on_death_set(tp, tp_kobalos_mob_on_death);
+  tp_pluralize_name_set(tp, "kobalosy mobs");
+  tp_short_name_set(tp, "kobalos den");
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius

@@ -1071,14 +1071,14 @@ bool thing_is_ghost(Thingp t)
   return tp_flag(thing_tp(t), is_ghost);
 }
 
-bool thing_is_goblin(Thingp t)
+bool thing_is_kobalos(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_goblin);
+  return tp_flag(thing_tp(t), is_kobalos);
 }
 
 bool thing_is_grass(Thingp t)

@@ -35,8 +35,8 @@ bool templates_init(void)
   if (!tp_load_foliage()) { return false; }
   if (!tp_load_ghost_mob()) { return false; }
   if (!tp_load_ghost()) { return false; }
-  if (!tp_load_goblin_mob()) { return false; }
-  if (!tp_load_goblin()) { return false; }
+  if (!tp_load_kobalos_mob()) { return false; }
+  if (!tp_load_kobalos()) { return false; }
   if (!tp_load_grass()) { return false; }
   if (!tp_load_key()) { return false; }
   if (!tp_load_lava()) { return false; }

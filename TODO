@@ -1,3 +1,7 @@
+mob detail
+health bars
+drop icon
+drop/collect messages
 --seed crashes
 inventory
 line of sight
@@ -9,6 +13,7 @@ ghosts and walls
 lighting
 score is hard coded to 666
 damaged door visuals
+kobalos need to steal items
 
 ideas
 -----
