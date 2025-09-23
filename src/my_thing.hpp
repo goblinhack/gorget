@@ -799,5 +799,6 @@ std::string thing_pluralize_name(Thingp, ThingTextFlags);
 std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 std::string thing_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 std::string to_death_reason_string(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
+void        wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *);
 
 #endif
