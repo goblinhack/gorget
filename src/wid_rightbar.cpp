@@ -8,6 +8,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_sprintf.hpp"
 #include "my_string.hpp"
 #include "my_tp_callbacks.hpp"
 #include "my_wids.hpp"
@@ -36,10 +37,10 @@ static bool wid_rightbar_create_window(Gamep g)
   spoint br(TERM_WIDTH - 1, TERM_HEIGHT - 1);
   wid_rightbar = new WidPopup(g, "right bar", tl, br, nullptr, "", false, false);
 
+  //
+  // If in level select mode, we show different contents
+  //
   if (l->level_num == LEVEL_SELECT_ID) {
-    //
-    // If in level select mode, we show different contents
-    //
     level_select_rightbar_show_contents(g, v, l, wid_rightbar);
     return true;
   }
@@ -48,10 +49,9 @@ static bool wid_rightbar_create_window(Gamep g)
   // Normal level contents
   //
   wid_rightbar->log_empty_line(g);
-  auto s = dynprintf("Level:%u Dungeon:%s", l->level_num + 1, game_seed_name_get(g));
+  auto s = string_sprintf("Level:%u Dungeon:%s", l->level_num + 1, game_seed_name_get(g));
   wid_rightbar->log(g, s);
   wid_rightbar->log_empty_line(g);
-  myfree(s);
 
   for (auto n = 0; n < v->describe_count; n++) {
     auto t = thing_find_optional(g, v, v->describe[ n ]);

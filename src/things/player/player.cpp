@@ -28,9 +28,7 @@ static std::string tp_player_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "This is you; a once noble wizard, down on their luck and forced to venture deep into the underrealms to "
-         "reclaim "
-         "their lost skills.";
+  return "You: a luckless wizard hoping to reclaim forgotten skills.";
 }
 
 static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)

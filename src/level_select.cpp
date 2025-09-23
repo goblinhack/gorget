@@ -10,6 +10,7 @@
 #include "my_level.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
+#include "my_sprintf.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
@@ -619,9 +620,8 @@ static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPop
   }
 
   {
-    auto s1 = dynprintf(" %s:", map_name.c_str());
+    auto s1 = string_sprintf(" %s:", map_name.c_str());
     parent->log(g, UI_INFO_FMT_STR + std::string(s1) + UI_RESET_FMT, TEXT_FORMAT_LHS);
-    myfree(s1);
   }
 
   while (map_in.size()) {
@@ -641,9 +641,8 @@ static void level_select_show_sorted_values(Gamep g, Levelsp v, Levelp l, WidPop
       auto        tp   = tp_find_mand(highest.c_str());
       std::string name = tp_short_name(tp);
 
-      auto s2 = dynprintf("  %u x %%tp=%s$ %s", map_in[ highest ], highest.c_str(), name.c_str());
+      auto s2 = string_sprintf("  %u x %%tp=%s$ %s", map_in[ highest ], highest.c_str(), name.c_str());
       parent->log(g, s2, TEXT_FORMAT_LHS);
-      myfree(s2);
     }
 
     map_in.erase(highest);
@@ -710,9 +709,8 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
     }
   }
 
-  auto tmp = dynprintf("Level %u", level_over->level_num + 1);
+  auto tmp = string_sprintf("Level %u", level_over->level_num + 1);
   parent->log(g, UI_INFO_FMT_STR + std::string(tmp) + UI_RESET_FMT);
-  myfree(tmp);
   parent->log_empty_line(g);
 
   if (level_over->next_level) {
