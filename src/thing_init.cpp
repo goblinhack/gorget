@@ -94,7 +94,11 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
     thing_health_set(g, v, l, t, tp_health_max_get(tp));
   } else {
     thing_lifespan_set(g, v, l, t, tp_lifespan_get(tp));
-    thing_health_set(g, v, l, t, tp_health_get(tp));
+    if (thing_is_player(t) || thing_is_monst(t)) {
+      thing_health_set(g, v, l, t, tp_health_max_get(tp));
+    } else {
+      thing_health_set(g, v, l, t, tp_health_get(tp));
+    }
   }
 
   //

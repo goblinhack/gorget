@@ -27,7 +27,8 @@
 #define UI_POPUP_TEXT_COLOR           UI_COLOR
 #define UI_SCROLL_JOY_SCALE           1.0
 #define UI_SCROLL_JOY_SCALE_MAX       1.5
-#define UI_COLOR                      GRAY // Default text color
+#define UI_COLOR                      GRAY  // Default text color
+#define UI_HIGHLIGHT_COLOR            WHITE // Default highlight color
 #define UI_COLOR_STR                  "gray"
 #define UI_FMT_STR                    "%%fg=" UI_COLOR_STR "$"
 #define UI_INFO_FMT_STR               "%%fg=green$"

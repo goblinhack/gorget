@@ -1,8 +1,6 @@
-mob detail
 health bars
 drop icon
 drop/collect messages
---seed crashes
 inventory
 line of sight
 "is collected" should be line of sight

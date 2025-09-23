@@ -134,7 +134,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 //
 // Get the wid on the bottom of the list/screen.
 //
-void WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, std::string color)
+Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, std::string color)
 {
   TRACE_NO_INDENT();
 
@@ -149,7 +149,7 @@ void WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
       wid_update(g, wid_text_box_container);
     } else {
       ERR("Text box overflow on [%s] height %d line_count %d", str.c_str(), height, line_count);
-      return;
+      return nullptr;
     }
   } else {
     if (line_count < scroll_height) {
@@ -191,16 +191,18 @@ void WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
   if (! color.empty()) {
     wid_set_color(text_wid, WID_COLOR_TEXT_FG, color_find(color.c_str()));
   }
+  return text_wid;
 }
 
 //
 // Log a message to the text box
 //
-void WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std::string color)
+Widp WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std::string color)
 {
   TRACE_NO_INDENT();
 
-  int chars_per_line = wid_get_width(wid_text_area);
+  int  chars_per_line = wid_get_width(wid_text_area);
+  Widp w              = nullptr;
 
   auto d = split(s, chars_per_line);
 
@@ -209,17 +211,18 @@ void WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std:
     // Handles %%fg=...$ with no text due to a split
     //
     if (length_without_format(c)) {
-      log_(g, c, format, color);
+      w = log_(g, c, format, color);
     }
   }
+  return w;
 }
 
 //
 // Log a blank line to the text box
 //
-void WidTextBox::log_empty_line(Gamep g)
+Widp WidTextBox::log_empty_line(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  log_(g, " ");
+  return log_(g, " ");
 }
