@@ -479,6 +479,10 @@ static void parse_args(int argc, char *argv[])
 
   for (i = 1; i < argc; i++) {
     if (! strcasecmp(argv[ i ], "--seed") || ! strcasecmp(argv[ i ], "-seed")) {
+      if (i == argc - 1) {
+        usage();
+        DIE("Missing parameter for argument, %s", argv[ i ]);
+      }
       g_opt_seed_name = argv[ i + 1 ];
       i++;
       continue;
@@ -510,6 +514,10 @@ static void parse_args(int argc, char *argv[])
     }
 
     if (! strcasecmp(argv[ i ], "--level") || ! strcasecmp(argv[ i ], "-level")) {
+      if (i == argc - 1) {
+        usage();
+        DIE("Missing parameter for argument, %s", argv[ i ]);
+      }
       g_opt_level_name  = argv[ i + 1 ];
       g_opt_quick_start = true;
       i++;
@@ -517,6 +525,10 @@ static void parse_args(int argc, char *argv[])
     }
 
     if (! strcasecmp(argv[ i ], "--test") || ! strcasecmp(argv[ i ], "-test")) {
+      if (i == argc - 1) {
+        usage();
+        DIE("Missing parameter for argument, %s", argv[ i ]);
+      }
       g_opt_test_name    = argv[ i + 1 ];
       g_opt_tests        = true;
       g_opt_debug2       = true;
