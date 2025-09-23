@@ -318,6 +318,11 @@ uint8_t sdl_display_init(Gamep g)
 
   SDL_SetWindowTitle(sdl.window, "gorget");
 
+  //
+  // Ensure the window is always in front.
+  //
+  SDL_RaiseWindow(sdl.window);
+
   LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
   LOG("SDL: OpenGL Renderer : %s", glGetString(GL_RENDERER));
   LOG("SDL: OpenGL Version  : %s", glGetString(GL_VERSION));
