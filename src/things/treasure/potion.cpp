@@ -66,16 +66,16 @@ bool tp_load_potion(void)
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_treasure);
+  tp_health_set(tp, "1d4");
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
   tp_on_carry_request_set(tp, tp_potion_on_carry_request);
   tp_on_drop_request_set(tp, tp_potion_on_drop_request);
   tp_short_name_set(tp, "purple potion");
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
-  tp_health_set(tp, "1d4");
-  tp_weight_set(tp, WEIGHT_FEATHER); // grams
+  tp_weight_set(tp, WEIGHT_FEATHER);    // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 

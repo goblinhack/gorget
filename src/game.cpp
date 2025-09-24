@@ -923,9 +923,21 @@ void Game::state_change(GameState new_state, const std::string &why)
   // Enter the new state
   //
   switch (new_state) {
-    case STATE_INIT :      break;
-    case STATE_MAIN_MENU : wid_main_menu_select(g); break;
-    case STATE_QUITTING :  break;
+    case STATE_INIT : break;
+    case STATE_MAIN_MENU :
+      if (g_opt_quick_start) {
+        //
+        // Do nothing
+        //
+      } else if (g_opt_quick_start_level_select_menu) {
+        //
+        // Do nothing
+        //
+      } else {
+        wid_main_menu_select(g);
+      }
+      break;
+    case STATE_QUITTING : break;
     case STATE_PLAYING :
       switch (old_state) {
         case STATE_INIT :     break;

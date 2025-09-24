@@ -42,7 +42,6 @@ bool tp_load_ghost_mob(void)
   tp_detail_set(tp, tp_ghost_mob_detail_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
-  tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
@@ -50,6 +49,7 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob1);

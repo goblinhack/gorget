@@ -141,6 +141,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
@@ -156,7 +157,6 @@ bool tp_load_player(void)
   tp_on_moved_set(tp, tp_player_on_moved);
   tp_on_teleported_set(tp, tp_player_on_teleported);
   tp_on_tick_end_set(tp, tp_player_tick_end);
-  tp_flag_set(tp, is_health_bar_shown);
   tp_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius

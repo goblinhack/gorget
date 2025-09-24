@@ -37,8 +37,8 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_ethereal);
-  tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_ghost);
+  tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_levitating);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);

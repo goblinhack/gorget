@@ -42,10 +42,10 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
@@ -56,10 +56,10 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d10+4");
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
   tp_long_name_set(tp, "sentient slime");
   tp_monst_group_add(tp, MONST_GROUP_2);
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius

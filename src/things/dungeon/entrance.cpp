@@ -41,8 +41,8 @@ bool tp_load_entrance(void)
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_long_name_set(tp, name);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

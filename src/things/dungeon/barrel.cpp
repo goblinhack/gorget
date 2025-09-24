@@ -92,9 +92,9 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d6");
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_barrel_on_death);
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_on_fall_end_set(tp, tp_barrel_on_fall_end);
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius

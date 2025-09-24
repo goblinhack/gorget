@@ -36,8 +36,8 @@ bool tp_load_trap(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_flag_set(tp, is_trap);
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
