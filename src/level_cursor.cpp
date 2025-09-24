@@ -434,6 +434,8 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint >
       break;
     }
   }
+
+  move_path.clear();
 }
 
 //

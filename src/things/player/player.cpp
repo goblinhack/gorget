@@ -40,6 +40,8 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   } else {
     sound_play(g, "footstep");
   }
+
+  v->cursor[ t->at.x ][ t->at.y ] = CURSOR_NONE;
 }
 
 static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)

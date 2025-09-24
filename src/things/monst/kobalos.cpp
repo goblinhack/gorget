@@ -17,7 +17,7 @@ static std::string tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thin
   if (thing_is_dead(t)) {
     return "dead kobalos";
   }
-  return "starter pack kobalos";
+  return "kobalos";
 }
 
 static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
