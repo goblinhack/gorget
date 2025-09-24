@@ -17,6 +17,13 @@ static std::string tp_barrel_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "barrel of oil";
 }
 
+static std::string tp_barrel_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "A not out of place in a dungeon, barrel of oil.";
+}
+
 static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -64,6 +71,7 @@ bool tp_load_barrel(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to stop burning
   tp_description_set(tp, tp_barrel_description_get);
+  tp_detail_set(tp, tp_barrel_detail_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_barrel);
@@ -86,6 +94,7 @@ bool tp_load_barrel(void)
   tp_health_set(tp, "1d6");
   tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_barrel_on_death);
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_on_fall_end_set(tp, tp_barrel_on_fall_end);
   tp_temperature_burns_at_set(tp, 50);  // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius

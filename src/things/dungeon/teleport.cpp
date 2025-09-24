@@ -16,6 +16,13 @@ static std::string tp_teleport_description_get(Gamep g, Levelsp v, Levelp l, Thi
   return "teleport";
 }
 
+static std::string tp_teleport_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "Run of the mill teleport.";
+}
+
 bool tp_load_teleport(void)
 {
   TRACE_NO_INDENT();
@@ -25,6 +32,7 @@ bool tp_load_teleport(void)
 
   // begin sort marker1 {
   tp_description_set(tp, tp_teleport_description_get);
+  tp_detail_set(tp, tp_teleport_detail_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
@@ -32,6 +40,7 @@ bool tp_load_teleport(void)
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_teleport);
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

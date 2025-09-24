@@ -85,20 +85,15 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   thing_value27_set(g, v, l, t, tp_value27_get(tp));
   thing_value28_set(g, v, l, t, tp_value28_get(tp));
   thing_jump_distance_set(g, v, l, t, tp_jump_distance_get(tp));
+  thing_health_set(g, v, l, t, tp_health_max_get(tp));
 
   //
   // More consistent for tests to use max values
   //
   if (g_opt_tests) {
     thing_lifespan_set(g, v, l, t, tp_lifespan_max_get(tp));
-    thing_health_set(g, v, l, t, tp_health_max_get(tp));
   } else {
     thing_lifespan_set(g, v, l, t, tp_lifespan_get(tp));
-    if (thing_is_player(t) || thing_is_monst(t)) {
-      thing_health_set(g, v, l, t, tp_health_max_get(tp));
-    } else {
-      thing_health_set(g, v, l, t, tp_health_get(tp));
-    }
   }
 
   //

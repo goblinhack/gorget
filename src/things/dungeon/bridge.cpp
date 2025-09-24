@@ -127,6 +127,7 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_tiled);
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_health_set(tp, "1d12");
   tp_long_name_set(tp, name);
   tp_on_death_set(tp, tp_bridge_on_death);

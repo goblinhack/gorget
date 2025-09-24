@@ -51,7 +51,6 @@ static bool wid_rightbar_create_window(Gamep g)
   wid_rightbar->log_empty_line(g);
   auto s = string_sprintf("Level:%u Dungeon:%s", l->level_num + 1, game_seed_name_get(g));
   wid_rightbar->log(g, s);
-  wid_rightbar->log_empty_line(g);
 
   for (auto n = 0; n < v->describe_count; n++) {
     auto t = thing_find_optional(g, v, v->describe[ n ]);
@@ -62,7 +61,7 @@ static bool wid_rightbar_create_window(Gamep g)
       continue;
     }
 
-    wid_thing_info(g, v, l, t, wid_rightbar);
+    wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
   }
 
   return true;

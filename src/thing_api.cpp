@@ -1391,14 +1391,14 @@ bool thing_is_unused1(Thingp t)
   return tp_flag(thing_tp(t), is_unused1);
 }
 
-bool thing_is_unused10(Thingp t)
+bool thing_is_health_bar_shown(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("no thing for %s", __FUNCTION__);
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused10);
+  return tp_flag(thing_tp(t), is_health_bar_shown);
 }
 
 bool thing_is_item_mergeable(Thingp t)

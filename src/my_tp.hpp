@@ -67,7 +67,7 @@
       list_macro(is_foliage, "is_foliage"),                             /* newline */                                \
       list_macro(is_gaseous, "is_gaseous"),                             /* newline */                                \
       list_macro(is_ghost, "is_ghost"),                                 /* newline */                                \
-      list_macro(is_kobalos, "is_kobalos"),                               /* newline */                                \
+      list_macro(is_kobalos, "is_kobalos"),                             /* newline */                                \
       list_macro(is_grass, "is_grass"),                                 /* newline */                                \
       list_macro(is_indestructible, "is_indestructible"),               /* newline */                                \
       list_macro(is_item, "is_item"),                                   /* newline */                                \
@@ -121,7 +121,7 @@
       list_macro(is_treasure, "is_treasure"),                           /* newline */                                \
       list_macro(is_undead, "is_undead"),                               /* newline */                                \
       list_macro(is_unused1, "is_unused1"),                             /* newline */                                \
-      list_macro(is_unused10, "is_unused10"),                           /* newline */                                \
+      list_macro(is_health_bar_shown, "is_health_bar_shown"),           /* newline */                                \
       list_macro(is_item_mergeable, "is_item_mergeable"),               /* newline */                                \
       list_macro(is_door_type_locked, "is_door_type_locked"),           /* newline */                                \
       list_macro(is_inventory_item, "is_inventory_item"),               /* newline */                                \
@@ -159,8 +159,10 @@ ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepth)
 
 #define MAP_Z_DEPTH_ENUM_FIRST ((MapZDepth) 0)
 
-#define FOR_ALL_Z_DEPTH(_z_depth_)                                                                                   \
-  for (uint8_t _z_depth_ = MAP_Z_DEPTH_ENUM_FIRST; _z_depth_ < MAP_Z_DEPTH_ENUM_MAX; _z_depth_++)
+#define FOR_ALL_MAP_Z_DEPTH(_iter_)                                                                                  \
+  for (MapZDepth _iter_ = MAP_Z_DEPTH_ENUM_FIRST; /* newline */                                                      \
+       _iter_ < MAP_Z_DEPTH_ENUM_MAX;             /* newline */                                                      \
+       _iter_ = static_cast< MapZDepth >(static_cast< int >(_iter_) + 1))
 
 //
 // Monst challenge level
@@ -239,11 +241,11 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 //
 #define THING_EVENT_ENUM(list_macro)                                                                                 \
   clang_format_indent()                                         /* dummy line for clang indentation fixup */         \
-      list_macro(THING_EVENT_CRUSH, "crush"),                   /* newline */                                        \
+      list_macro(THING_EVENT_CRUSH, "crushing"),                /* newline */                                        \
       list_macro(THING_EVENT_FALL, "falling"),                  /* newline */                                        \
-      list_macro(THING_EVENT_FIRE_DAMAGE, "fire"),              /* newline */                                        \
-      list_macro(THING_EVENT_HEAT_DAMAGE, "heat"),              /* newline */                                        \
-      list_macro(THING_EVENT_LIFESPAN_EXPIRED, "lifespan"),     /* newline */                                        \
+      list_macro(THING_EVENT_FIRE_DAMAGE, "burning"),           /* newline */                                        \
+      list_macro(THING_EVENT_HEAT_DAMAGE, "scalding"),          /* newline */                                        \
+      list_macro(THING_EVENT_LIFESPAN_EXPIRED, "life"),         /* newline */                                        \
       list_macro(THING_EVENT_MELEE_DAMAGE, "melee"),            /* newline */                                        \
       list_macro(THING_EVENT_OPEN, "open"),                     /* newline */                                        \
       list_macro(THING_EVENT_NONE, "none"),                     /* newline */                                        \
@@ -254,6 +256,13 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
       list_macro(THING_EVENT_CARRIED_MERGED, "carried-merged"), /* newline */
 
 ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
+
+#define THING_EVENT_ENUM_FIRST ((ThingEventType) 0)
+
+#define FOR_ALL_THING_EVENT(_iter_)                                                                                  \
+  for (ThingEventType _iter_ = THING_EVENT_ENUM_FIRST; /* newline */                                                 \
+       _iter_ < THING_EVENT_ENUM_MAX;                  /* newline */                                                 \
+       _iter_ = static_cast< ThingEventType >(static_cast< int >(_iter_) + 1))
 
 //
 // Thing chance enum
@@ -543,7 +552,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_foliage(tp)               tp_flag(tp, is_foliage)
 #define tp_is_gaseous(tp)               tp_flag(tp, is_gaseous)
 #define tp_is_ghost(tp)                 tp_flag(tp, is_ghost)
-#define tp_is_kobalos(tp)                tp_flag(tp, is_kobalos)
+#define tp_is_kobalos(tp)               tp_flag(tp, is_kobalos)
 #define tp_is_grass(tp)                 tp_flag(tp, is_grass)
 #define tp_is_indestructible(tp)        tp_flag(tp, is_indestructible)
 #define tp_is_inventory_item(tp)        tp_flag(tp, is_inventory_item)
@@ -598,7 +607,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_treasure(tp)              tp_flag(tp, is_treasure)
 #define tp_is_undead(tp)                tp_flag(tp, is_undead)
 #define tp_is_unused1(tp)               tp_flag(tp, is_unused1)
-#define tp_is_unused10(tp)              tp_flag(tp, is_unused10)
+#define tp_is_health_bar_shown(tp)      tp_flag(tp, is_health_bar_shown)
 #define tp_is_unused2(tp)               tp_flag(tp, is_unused2)
 #define tp_is_unused3(tp)               tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)               tp_flag(tp, is_unused4)
@@ -659,7 +668,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_foliage(g, v, l, p)               level_afirst_flag(g, v, l, is_foliage, p)
 #define level_afirst_is_gaseous(g, v, l, p)               level_afirst_flag(g, v, l, is_gaseous, p)
 #define level_afirst_is_ghost(g, v, l, p)                 level_afirst_flag(g, v, l, is_ghost, p)
-#define level_afirst_is_kobalos(g, v, l, p)                level_afirst_flag(g, v, l, is_kobalos, p)
+#define level_afirst_is_kobalos(g, v, l, p)               level_afirst_flag(g, v, l, is_kobalos, p)
 #define level_afirst_is_grass(g, v, l, p)                 level_afirst_flag(g, v, l, is_grass, p)
 #define level_afirst_is_inventory_item(g, v, l, p)        level_afirst_flag(g, v, l, is_inventory_item, p)
 #define level_afirst_is_item_mergeable(g, v, l, p)        level_afirst_flag(g, v, l, is_item_mergeable, p)
@@ -708,7 +717,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_treasure(g, v, l, p)              level_afirst_flag(g, v, l, is_treasure, p)
 #define level_afirst_is_undead(g, v, l, p)                level_afirst_flag(g, v, l, is_undead, p)
 #define level_afirst_is_unused1(g, v, l, p)               level_afirst_flag(g, v, l, is_unused1, p)
-#define level_afirst_is_unused10(g, v, l, p)              level_afirst_flag(g, v, l, is_unused10, p)
+#define level_afirst_is_health_bar_shown(g, v, l, p)      level_afirst_flag(g, v, l, is_health_bar_shown, p)
 #define level_afirst_is_unused2(g, v, l, p)               level_afirst_flag(g, v, l, is_unused2, p)
 #define level_afirst_is_unused3(g, v, l, p)               level_afirst_flag(g, v, l, is_unused3, p)
 #define level_afirst_is_unused34(g, v, l, p)              level_afirst_flag(g, v, l, is_able_to_fall, p)
@@ -772,7 +781,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_foliage(g, v, l, p)                level_alive_flag(g, v, l, is_foliage, p)
 #define level_alive_is_gaseous(g, v, l, p)                level_alive_flag(g, v, l, is_gaseous, p)
 #define level_alive_is_ghost(g, v, l, p)                  level_alive_flag(g, v, l, is_ghost, p)
-#define level_alive_is_kobalos(g, v, l, p)                 level_alive_flag(g, v, l, is_kobalos, p)
+#define level_alive_is_kobalos(g, v, l, p)                level_alive_flag(g, v, l, is_kobalos, p)
 #define level_alive_is_grass(g, v, l, p)                  level_alive_flag(g, v, l, is_grass, p)
 #define level_alive_is_inventory_item(g, v, l, p)         level_alive_flag(g, v, l, is_inventory_item, p)
 #define level_alive_is_item_mergeable(g, v, l, p)         level_alive_flag(g, v, l, is_item_mergeable, p)
@@ -821,7 +830,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_treasure(g, v, l, p)               level_alive_flag(g, v, l, is_treasure, p)
 #define level_alive_is_undead(g, v, l, p)                 level_alive_flag(g, v, l, is_undead, p)
 #define level_alive_is_unused1(g, v, l, p)                level_alive_flag(g, v, l, is_unused1, p)
-#define level_alive_is_unused10(g, v, l, p)               level_alive_flag(g, v, l, is_unused10, p)
+#define level_alive_is_health_bar_shown(g, v, l, p)       level_alive_flag(g, v, l, is_health_bar_shown, p)
 #define level_alive_is_unused2(g, v, l, p)                level_alive_flag(g, v, l, is_unused2, p)
 #define level_alive_is_unused3(g, v, l, p)                level_alive_flag(g, v, l, is_unused3, p)
 #define level_alive_is_unused34(g, v, l, p)               level_alive_flag(g, v, l, is_able_to_fall, p)
@@ -885,7 +894,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_foliage(g, v, l, p)                level_count_flag(g, v, l, is_foliage, p)
 #define level_count_is_gaseous(g, v, l, p)                level_count_flag(g, v, l, is_gaseous, p)
 #define level_count_is_ghost(g, v, l, p)                  level_count_flag(g, v, l, is_ghost, p)
-#define level_count_is_kobalos(g, v, l, p)                 level_count_flag(g, v, l, is_kobalos, p)
+#define level_count_is_kobalos(g, v, l, p)                level_count_flag(g, v, l, is_kobalos, p)
 #define level_count_is_grass(g, v, l, p)                  level_count_flag(g, v, l, is_grass, p)
 #define level_count_is_inventory_item(g, v, l, p)         level_count_flag(g, v, l, is_inventory_item, p)
 #define level_count_is_item_mergeable(g, v, l, p)         level_count_flag(g, v, l, is_item_mergeable, p)
@@ -934,7 +943,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_treasure(g, v, l, p)               level_count_flag(g, v, l, is_treasure, p)
 #define level_count_is_undead(g, v, l, p)                 level_count_flag(g, v, l, is_undead, p)
 #define level_count_is_unused1(g, v, l, p)                level_count_flag(g, v, l, is_unused1, p)
-#define level_count_is_unused10(g, v, l, p)               level_count_flag(g, v, l, is_unused10, p)
+#define level_count_is_health_bar_shown(g, v, l, p)       level_count_flag(g, v, l, is_health_bar_shown, p)
 #define level_count_is_unused2(g, v, l, p)                level_count_flag(g, v, l, is_unused2, p)
 #define level_count_is_unused3(g, v, l, p)                level_count_flag(g, v, l, is_unused3, p)
 #define level_count_is_unused34(g, v, l, p)               level_count_flag(g, v, l, is_able_to_fall, p)
@@ -998,7 +1007,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_foliage(g, v, l, p)                level_first_flag(g, v, l, is_foliage, p)
 #define level_first_is_gaseous(g, v, l, p)                level_first_flag(g, v, l, is_gaseous, p)
 #define level_first_is_ghost(g, v, l, p)                  level_first_flag(g, v, l, is_ghost, p)
-#define level_first_is_kobalos(g, v, l, p)                 level_first_flag(g, v, l, is_kobalos, p)
+#define level_first_is_kobalos(g, v, l, p)                level_first_flag(g, v, l, is_kobalos, p)
 #define level_first_is_grass(g, v, l, p)                  level_first_flag(g, v, l, is_grass, p)
 #define level_first_is_inventory_item(g, v, l, p)         level_first_flag(g, v, l, is_inventory_item, p)
 #define level_first_is_item_mergeable(g, v, l, p)         level_first_flag(g, v, l, is_item_mergeable, p)
@@ -1047,7 +1056,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_treasure(g, v, l, p)               level_first_flag(g, v, l, is_treasure, p)
 #define level_first_is_undead(g, v, l, p)                 level_first_flag(g, v, l, is_undead, p)
 #define level_first_is_unused1(g, v, l, p)                level_first_flag(g, v, l, is_unused1, p)
-#define level_first_is_unused10(g, v, l, p)               level_first_flag(g, v, l, is_unused10, p)
+#define level_first_is_health_bar_shown(g, v, l, p)       level_first_flag(g, v, l, is_health_bar_shown, p)
 #define level_first_is_unused2(g, v, l, p)                level_first_flag(g, v, l, is_unused2, p)
 #define level_first_is_unused3(g, v, l, p)                level_first_flag(g, v, l, is_unused3, p)
 #define level_first_is_unused34(g, v, l, p)               level_first_flag(g, v, l, is_able_to_fall, p)
@@ -1117,7 +1126,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_foliage(g, v, l, p)                      level_flag(g, v, l, is_foliage, p)
 #define level_is_gaseous(g, v, l, p)                      level_flag(g, v, l, is_gaseous, p)
 #define level_is_ghost(g, v, l, p)                        level_flag(g, v, l, is_ghost, p)
-#define level_is_kobalos(g, v, l, p)                       level_flag(g, v, l, is_kobalos, p)
+#define level_is_kobalos(g, v, l, p)                      level_flag(g, v, l, is_kobalos, p)
 #define level_is_grass(g, v, l, p)                        level_flag(g, v, l, is_grass, p)
 #define level_is_indestructible(g, v, l, p)               level_flag(g, v, l, is_indestructible, p)
 #define level_is_inventory_item(g, v, l, p)               level_flag(g, v, l, is_inventory_item, p)
@@ -1172,7 +1181,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_treasure(g, v, l, p)                     level_flag(g, v, l, is_treasure, p)
 #define level_is_undead(g, v, l, p)                       level_flag(g, v, l, is_undead, p)
 #define level_is_unused1(g, v, l, p)                      level_flag(g, v, l, is_unused1, p)
-#define level_is_unused10(g, v, l, p)                     level_flag(g, v, l, is_unused10, p)
+#define level_is_health_bar_shown(g, v, l, p)             level_flag(g, v, l, is_health_bar_shown, p)
 #define level_is_unused2(g, v, l, p)                      level_flag(g, v, l, is_unused2, p)
 #define level_is_unused3(g, v, l, p)                      level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)                      level_flag(g, v, l, is_unused4, p)
@@ -1231,7 +1240,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_foliage(g, v, l, p)                 level_open_flag(g, v, l, is_foliage, p)
 #define level_open_is_gaseous(g, v, l, p)                 level_open_flag(g, v, l, is_gaseous, p)
 #define level_open_is_ghost(g, v, l, p)                   level_open_flag(g, v, l, is_ghost, p)
-#define level_open_is_kobalos(g, v, l, p)                  level_open_flag(g, v, l, is_kobalos, p)
+#define level_open_is_kobalos(g, v, l, p)                 level_open_flag(g, v, l, is_kobalos, p)
 #define level_open_is_grass(g, v, l, p)                   level_open_flag(g, v, l, is_grass, p)
 #define level_open_is_inventory_item(g, v, l, p)          level_open_flag(g, v, l, is_inventory_item, p)
 #define level_open_is_item_mergeable(g, v, l, p)          level_open_flag(g, v, l, is_item_mergeable, p)
@@ -1280,7 +1289,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_treasure(g, v, l, p)                level_open_flag(g, v, l, is_treasure, p)
 #define level_open_is_undead(g, v, l, p)                  level_open_flag(g, v, l, is_undead, p)
 #define level_open_is_unused1(g, v, l, p)                 level_open_flag(g, v, l, is_unused1, p)
-#define level_open_is_unused10(g, v, l, p)                level_open_flag(g, v, l, is_unused10, p)
+#define level_open_is_health_bar_shown(g, v, l, p)        level_open_flag(g, v, l, is_health_bar_shown, p)
 #define level_open_is_unused2(g, v, l, p)                 level_open_flag(g, v, l, is_unused2, p)
 #define level_open_is_unused3(g, v, l, p)                 level_open_flag(g, v, l, is_unused3, p)
 #define level_open_is_unused34(g, v, l, p)                level_open_flag(g, v, l, is_able_to_fall, p)

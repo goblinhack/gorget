@@ -43,9 +43,7 @@ static bool wid_leftbar_create_window(Gamep g)
     return false;
   }
 
-  wid_leftbar->log_empty_line(g);
-
-  wid_thing_info(g, v, l, player, wid_leftbar);
+  wid_thing_info(g, v, l, player, wid_leftbar, UI_LEFTBAR_WIDTH);
 
   return true;
 }

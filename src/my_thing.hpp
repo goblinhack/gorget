@@ -461,7 +461,7 @@ bool thing_is_trap(Thingp);
 bool thing_is_treasure(Thingp);
 bool thing_is_undead(Thingp);
 bool thing_is_unused1(Thingp);
-bool thing_is_unused10(Thingp);
+bool thing_is_health_bar_shown(Thingp);
 bool thing_is_unused2(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
@@ -799,6 +799,6 @@ std::string thing_pluralize_name(Thingp, ThingTextFlags);
 std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 std::string thing_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 std::string to_death_reason_string(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
-void        wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *);
+void        wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
 
 #endif

@@ -17,6 +17,13 @@ static std::string tp_potion_description_get(Gamep g, Levelsp v, Levelp l, Thing
   return "potion";
 }
 
+static std::string tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return "A mysterious purple potion.";
+}
+
 static bool tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collecter)
 {
   TRACE_NO_INDENT();
@@ -41,6 +48,7 @@ bool tp_load_potion(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_description_set(tp, tp_potion_description_get);
+  tp_detail_set(tp, tp_potion_detail_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -62,10 +70,12 @@ bool tp_load_potion(void)
   tp_on_carry_request_set(tp, tp_potion_on_carry_request);
   tp_on_drop_request_set(tp, tp_potion_on_drop_request);
   tp_short_name_set(tp, "purple potion");
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius
-  tp_weight_set(tp, WEIGHT_FEATHER);    // grams
+  tp_health_set(tp, "1d4");
+  tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 

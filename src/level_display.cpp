@@ -130,7 +130,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   // Display tiles in z prio order
   //
-  FOR_ALL_Z_DEPTH(z_depth)
+  FOR_ALL_MAP_Z_DEPTH(z_depth)
   {
     for (auto y = v->miny; y < v->maxy; y++) {
       for (auto x = v->minx; x < v->maxx; x++) {

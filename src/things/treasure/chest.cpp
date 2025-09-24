@@ -23,6 +23,19 @@ static std::string tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp
   return "closed chest";
 }
 
+static std::string tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (thing_is_open(t)) {
+    return "An open chest.";
+  }
+  if (thing_is_dead(t)) {
+    return "A broken chest.";
+  }
+  return "A closed chest. What wonders might it contain? Probably none.";
+}
+
 bool tp_load_treasure(void)
 {
   TRACE_NO_INDENT();
@@ -33,6 +46,7 @@ bool tp_load_treasure(void)
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_description_set(tp, tp_chest_description_get);
+  tp_detail_set(tp, tp_chest_detail_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -49,7 +63,8 @@ bool tp_load_treasure(void)
   tp_flag_set(tp, is_treasure);
   tp_health_set(tp, "1d20");
   tp_long_name_set(tp, name);
-  tp_temperature_burns_at_set(tp, 100);  // celsius
+  tp_temperature_burns_at_set(tp, 100); // celsius
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
   tp_weight_set(tp, WEIGHT_VHEAVY);      // grams

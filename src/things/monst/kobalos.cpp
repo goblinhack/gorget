@@ -43,6 +43,7 @@ bool tp_load_kobalos(void)
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_corpse_on_death);
@@ -55,6 +56,7 @@ bool tp_load_kobalos(void)
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
+  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d4");
   tp_long_name_set(tp, name);
