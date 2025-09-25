@@ -6,6 +6,7 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
+#include "my_level.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_string.hpp"
@@ -17,9 +18,52 @@ static Widp wid_inventory_window;
 static void wid_inventory_destroy(Gamep g)
 {
   TRACE_NO_INDENT();
-  wid_destroy(g, &wid_inventory_window);
 
-  game_state_change(g, STATE_PLAYING, "close inventory");
+  if (wid_inventory_window) {
+    wid_destroy(g, &wid_inventory_window);
+
+    game_state_change(g, STATE_PLAYING, "close inventory");
+  }
+}
+
+static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
+{
+  TRACE_NO_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
+
+  auto t = wid_get_thing_context(g, v, w, 0);
+  if (! t) {
+    return;
+  }
+
+  level_cursor_describe_add(g, v, t);
+}
+
+static void wid_inventory_mouse_over_end(Gamep g, Widp w)
+{
+  TRACE_NO_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
+
+  auto t = wid_get_thing_context(g, v, w, 0);
+  if (! t) {
+    return;
+  }
+
+  level_cursor_describe_remove(g, v, t);
+}
+
+static bool wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+  return true;
 }
 
 static bool wid_inventory_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
@@ -60,7 +104,7 @@ static bool wid_inventory_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
   return false;
 }
 
-static bool wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_inventory_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_inventory_destroy(g);
@@ -143,6 +187,13 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         wid_set_tile(TILE_LAYER_BG_0, w, tile);
         wid_set_style(w, button_style);
         wid_set_pos(w, tl, br);
+
+        if (item) {
+          wid_set_thing_context(g, v, w, item);
+          wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
+          wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+          wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
+        }
       }
     }
 
@@ -164,11 +215,15 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       wid_set_mode(g, w, WID_MODE_NORMAL);
       wid_set_color(w, WID_COLOR_TEXT_FG, GRAY50);
       wid_set_style(w, button_style);
-#if 0
-      wid_set_on_mouse_up(g, w, wid_main_menu_more);
-#endif
       wid_set_pos(w, tl, br);
       wid_set_text(w, s);
+
+      if (item) {
+        wid_set_thing_context(g, v, w, item);
+        wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
+        wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+        wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
+      }
     }
 
     //
@@ -195,11 +250,15 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
         spoint tl(6, y_at);
         spoint br(button_width, y_at + button_height);
         wid_set_text_lhs(w, true);
-#if 0
-      wid_set_on_mouse_up(g, w, wid_main_menu_more);
-#endif
         wid_set_pos(w, tl, br);
         wid_set_text(w, s);
+
+        if (item) {
+          wid_set_thing_context(g, v, w, item);
+          wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
+          wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+          wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
+        }
       }
     }
 
@@ -212,7 +271,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
     spoint tl(inventory_width / 2 - 4, inventory_height - 4);
     spoint br(inventory_width / 2 + 3, inventory_height - 2);
-    wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
+    wid_set_on_mouse_up(g, w, wid_inventory_back);
     wid_set_pos(w, tl, br);
   }
 

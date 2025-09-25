@@ -13,13 +13,13 @@ std::string to_string(Gamep g, Thingp t)
   TRACE_NO_INDENT();
 
   if (! t) {
-    ERR("no thing for %s", __FUNCTION__);
+    ERR("No thing pointer set");
     return "<no thing>";
   }
 
   auto tp = thing_tp(t);
   if (! t) {
-    ERR("no tp for %s", __FUNCTION__);
+    ERR("No thing template pointer set");
     return "<no tp>";
   }
 

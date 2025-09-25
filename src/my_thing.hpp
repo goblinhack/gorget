@@ -799,6 +799,11 @@ std::string thing_pluralize_name(Thingp, ThingTextFlags);
 std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 std::string thing_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 std::string to_death_reason_string(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
-void        wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
+
+void   wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
+void   wid_set_thing_context(Gamep, Levelsp, Widp, Thingp);
+Thingp wid_get_thing_context(Gamep, Levelsp, Widp, int);
+void   wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp);
+void   wid_clear_thing_contexts(Gamep, Levelsp, Widp);
 
 #endif

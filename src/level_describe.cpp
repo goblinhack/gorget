@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_string.hpp"
@@ -10,10 +11,153 @@
 #include "my_wid_botcon.hpp"
 
 //
+// Update the count of things being described
+//
+void level_cursor_describe_update(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return;
+  }
+
+  if (! v) {
+    ERR("No levels pointer set");
+    return;
+  }
+
+  v->describe_count = 0;
+
+  for (auto i = 0; i < THING_DESCRIBE_MAX; i++) {
+    if (v->describe[ i ]) {
+      v->describe_count++;
+    }
+  }
+}
+
+//
+// Add a thing to be described
+//
+bool level_cursor_describe_add(Gamep g, Levelsp v, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return false;
+  }
+
+  if (! v) {
+    ERR("No levels pointer set");
+    return false;
+  }
+
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+
+  for (auto i = 0; i < THING_DESCRIBE_MAX; i++) {
+    auto cand = thing_find_optional(g, v, v->describe[ i ]);
+    if (cand == t) {
+      return true;
+    }
+  }
+
+  for (auto i = 0; i < THING_DESCRIBE_MAX; i++) {
+    auto cand = thing_find_optional(g, v, v->describe[ i ]);
+    if (! cand) {
+      v->describe[ i ] = t->id;
+      game_request_to_remake_ui_set(g);
+      level_cursor_describe_update(g, v);
+      return true;
+    }
+  }
+
+  return false;
+}
+
+//
+// Remove a thing from the describe array
+//
+bool level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return false;
+  }
+
+  if (! v) {
+    ERR("No levels pointer set");
+    return false;
+  }
+
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+
+  for (auto i = 0; i < THING_DESCRIBE_MAX; i++) {
+    auto cand = thing_find_optional(g, v, t->id);
+    if (cand == t) {
+      v->describe[ i ] = 0;
+      game_request_to_remake_ui_set(g);
+      level_cursor_describe_update(g, v);
+      return true;
+    }
+  }
+  return false;
+}
+
+//
+// Reset what things are being described
+//
+void level_cursor_describe_clear(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return;
+  }
+
+  if (! v) {
+    ERR("No levels pointer set");
+    return;
+  }
+
+  if (v->describe_count) {
+    memset(v->describe, 0, sizeof(v->describe));
+    game_request_to_remake_ui_set(g);
+    level_cursor_describe_update(g, v);
+  }
+}
+
+//
 // Describe what is under the cursor
 //
 void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 {
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("No game pointer set");
+    return;
+  }
+
+  if (! v) {
+    ERR("No levels pointer set");
+    return;
+  }
+
+  if (! l) {
+    ERR("No level pointer set");
+    return;
+  }
+
   //
   // Only if over the map
   //
@@ -24,11 +168,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   std::string all_things_description;
   auto        at = v->cursor_at;
 
-  if (v->describe_count) {
-    game_request_to_remake_ui_set(g);
-    v->describe_count = 0;
-    memset(v->describe, 0, sizeof(v->describe));
-  }
+  level_cursor_describe_clear(g, v);
 
   FOR_ALL_THINGS_AT(g, v, l, it, at)
   {
@@ -43,10 +183,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 
     auto one_detail = tp_detail_get(g, v, l, it);
     if (! one_detail.empty()) {
-      if (v->describe_count < THING_DESCRIBE_MAX) {
-        v->describe[ v->describe_count++ ] = it->id;
-        game_request_to_remake_ui_set(g);
-      }
+      level_cursor_describe_add(g, v, it);
     }
 
     //

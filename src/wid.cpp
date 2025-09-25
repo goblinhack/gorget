@@ -237,6 +237,8 @@ public:
   int         int_context {-1};
   void       *void_context {};
 
+  std::array< ThingId, UI_MAX_WID_CONTEXT > thing_id_context {};
+
   //
   // Text placement.
   //
@@ -717,6 +719,128 @@ void *wid_get_void_context(Widp w)
     return nullptr;
   }
   return (w->void_context);
+}
+
+void wid_set_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("NULL game pointer");
+    return;
+  }
+
+  if (! v) {
+    ERR("NULL levels pointer");
+    return;
+  }
+
+  if (! w) {
+    ERR("NULL pointer");
+    return;
+  }
+
+  if (! t) {
+    ERR("NULL thing pointer");
+    return;
+  }
+
+  for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
+    auto cand = thing_find_optional(g, v, w->thing_id_context[ i ]);
+    if (cand == t) {
+      return;
+    }
+  }
+
+  for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
+    auto cand = w->thing_id_context[ i ];
+    if (! cand) {
+      w->thing_id_context[ i ] = t->id;
+      return;
+    }
+  }
+}
+
+void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("NULL game pointer");
+    return;
+  }
+
+  if (! v) {
+    ERR("NULL levels pointer");
+    return;
+  }
+
+  if (! w) {
+    ERR("NULL pointer");
+    return;
+  }
+
+  if (! t) {
+    ERR("NULL thing pointer");
+    return;
+  }
+
+  for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
+    auto cand = thing_find_optional(g, v, w->thing_id_context[ i ]);
+    if (cand == t) {
+      w->thing_id_context[ i ] = 0;
+      return;
+    }
+  }
+}
+
+Thingp wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("NULL game pointer");
+    return nullptr;
+  }
+
+  if (! v) {
+    ERR("NULL levels pointer");
+    return nullptr;
+  }
+
+  if (! w) {
+    ERR("NULL pointer");
+    return nullptr;
+  }
+
+  if (which >= UI_MAX_WID_CONTEXT) {
+    ERR("index overflow for UI_MAX_WID_CONTEXT");
+    return nullptr;
+  }
+
+  return thing_find_optional(g, v, w->thing_id_context[ which ]);
+}
+
+void wid_clear_thing_contexts(Gamep g, Levelsp v, Widp w)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    ERR("NULL game pointer");
+    return;
+  }
+
+  if (! v) {
+    ERR("NULL levels pointer");
+    return;
+  }
+
+  if (! w) {
+    ERR("NULL pointer");
+    return;
+  }
+
+  std::fill(w->thing_id_context.begin(), w->thing_id_context.end(), 0);
 }
 
 void wid_set_prev(Gamep g, Widp w, Widp prev)

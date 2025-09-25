@@ -120,6 +120,7 @@ void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #else
 #define ERR                                                                                                          \
   TRACE_NO_INDENT();                                                                                                 \
+  LOG("Error at %s:%s():%u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                            \
   err_wrapper
 #endif
 
