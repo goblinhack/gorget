@@ -1010,16 +1010,34 @@ void Game::tick(void)
     case STATE_QUITTING :  break;
     case STATE_DEAD_MENU :
     case STATE_PLAYING :
+    case STATE_INVENTORY :
+      if (v) {
+        if (game_request_to_remake_ui_get(game)) {
+          wid_leftbar_init(g);
+          wid_rightbar_init(g);
+          wid_actionbar_init(g);
+        }
+      }
+      break;
+    case STATE_MOVE_WARNING_MENU : break;
+    case STATE_KEYBOARD_MENU :     break;
+    case STATE_LOAD_MENU :         break;
+    case STATE_LOADED :            break;
+    case STATE_SAVE_MENU :         break;
+    case STATE_QUIT_MENU :         break;
+    case GAME_STATE_ENUM_MAX :     break;
+  }
+
+  switch (state) {
+    case STATE_INIT :      break;
+    case STATE_MAIN_MENU : break;
+    case STATE_QUITTING :  break;
+    case STATE_DEAD_MENU :
+    case STATE_PLAYING :
       if (v) {
         auto l = game_level_get(g, v);
         if (l) {
           level_tick(g, v, l);
-
-          if (game_request_to_remake_ui_get(game)) {
-            wid_leftbar_init(g);
-            wid_rightbar_init(g);
-            wid_actionbar_init(g);
-          }
 
           //
           // Fixed frame counter, 100 per second

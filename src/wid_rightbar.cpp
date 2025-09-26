@@ -57,6 +57,7 @@ static bool wid_rightbar_create_window(Gamep g)
     if (! t) {
       continue;
     }
+
     if (thing_is_player(t)) {
       continue;
     }
