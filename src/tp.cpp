@@ -256,12 +256,12 @@ public:
   ~Tp(void);
 };
 
-using Tpidmap = std::vector< class Tp * >;
-Tpidmap tp_id_map;
+using TpVec = std::vector< class Tp * >;
+TpVec tp_vec;
 
 // begin sort marker3 {
-static Tpidmap tp_flag_map[ THING_FLAG_ENUM_MAX ];
-static Tpidmap tp_monst_group[ MONST_GROUP_ENUM_MAX ];
+static TpVec tp_flag_vec[ THING_FLAG_ENUM_MAX ];
+static TpVec tp_monst_vec[ MONST_GROUP_ENUM_MAX ];
 // end sort marker3 }
 
 static std::unordered_map< std::string, class Tp * > tp_name_map;
@@ -307,12 +307,12 @@ Tpp tp_find(TpId id)
 {
   TRACE_NO_INDENT();
 
-  if ((int) id - 1 >= (int) tp_id_map.size()) {
-    DIE("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_id_map", id);
+  if ((int) id - 1 >= (int) tp_vec.size()) {
+    DIE("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_vec", id);
     return nullptr;
   }
 
-  auto result = tp_id_map[ id - 1 ];
+  auto result = tp_vec[ id - 1 ];
   if (! result) {
     DIE("tp_find: thing template %" PRIx16 " not found", id);
     return nullptr;
@@ -353,15 +353,15 @@ void tp_fini(void)
     delete tp.second;
   }
 
-  tp_id_map.clear();
+  tp_vec.clear();
   tp_name_map.clear();
 
   for (auto c = 0; c < MONST_GROUP_ENUM_MAX; c++) {
-    tp_monst_group[ c ].clear();
+    tp_monst_vec[ c ].clear();
   }
 
   for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
-    tp_flag_map[ f ].clear();
+    tp_flag_vec[ f ].clear();
   }
 }
 
@@ -422,8 +422,8 @@ Tpp tp_load(const std::string &val)
     ERR("tp_load: thing insert name [%s] failed", val.c_str());
   }
 
-  tp_id_map.push_back(tp);
-  tp->id = tp_id_map.size();
+  tp_vec.push_back(tp);
+  tp->id = tp_vec.size();
 
   //
   // Finalizing is done in tp_fixup
@@ -436,13 +436,13 @@ static void tp_fixup(void)
 {
   TRACE_NO_INDENT();
 
-  for (auto &tp : tp_id_map) {
+  for (auto &tp : tp_vec) {
     //
     // Populate the flag map for quick lookup of things that share a flag
     //
     for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
       if (tp->flag[ f ]) {
-        tp_flag_map[ f ].push_back(tp);
+        tp_flag_vec[ f ].push_back(tp);
       }
     }
   }
@@ -469,7 +469,7 @@ Tilep tp_first_tile(Tpp tp, ThingAnim val)
   return tp->tiles[ val ][ 0 ];
 }
 
-static Tpp tp_get_with_no_rarity_filter(Tpidmap &m)
+static Tpp tp_get_with_no_rarity_filter(TpVec &m)
 {
   TRACE_NO_INDENT();
 
@@ -512,23 +512,23 @@ Tpp tp_random_monst(int c)
     return nullptr;
   }
 
-  if (unlikely(! tp_monst_group[ c ].size())) {
+  if (unlikely(! tp_monst_vec[ c ].size())) {
     ERR("tp_random_monst: no rating %d monsters found", c);
     return nullptr;
   }
 
-  return tp_get_with_no_rarity_filter(tp_monst_group[ c ]);
+  return tp_get_with_no_rarity_filter(tp_monst_vec[ c ]);
 }
 
 Tpp tp_random(ThingFlag f)
 {
   TRACE_NO_INDENT();
 
-  if (unlikely(! tp_flag_map[ f ].size())) {
+  if (unlikely(! tp_flag_vec[ f ].size())) {
     ERR("tp_random: no tp found for ThingFlag %d/%s", f, ThingFlag_to_c_str(f));
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_flag_map[ f ]);
+  return tp_get_with_no_rarity_filter(tp_flag_vec[ f ]);
 }
 
 void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
@@ -923,7 +923,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
   //
   // Keep track of all things in each group so we can select random monsters from them
   //
-  tp_monst_group[ val ].push_back(tp);
+  tp_monst_vec[ val ].push_back(tp);
 
   //
   // Handy aliases
