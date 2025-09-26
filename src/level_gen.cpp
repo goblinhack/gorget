@@ -2670,6 +2670,12 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
 
   LevelGen *l = {};
 
+  //
+  // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
+  //
+  uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * MAX_LEVELS);
+  pcg_srand(seed_num);
+
   bool add_blob = d100() < LEVEL_BLOB_GEN_PROB;
 
   for (int level_gen_tries = 0; level_gen_tries < MAX_LEVEL_GEN_TRIES_FOR_SAME_SEED; level_gen_tries++) {
@@ -2686,7 +2692,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
     //
     // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
     //
-    uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * MAX_LEVELS) + level_gen_tries;
+    seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * MAX_LEVELS) + level_gen_tries;
     pcg_srand(seed_num);
     l->info.seed_num = seed_num;
 

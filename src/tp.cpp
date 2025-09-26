@@ -264,7 +264,7 @@ static TpVec tp_flag_vec[ THING_FLAG_ENUM_MAX ];
 static TpVec tp_monst_vec[ MONST_GROUP_ENUM_MAX ];
 // end sort marker3 }
 
-static std::unordered_map< std::string, class Tp * > tp_name_map;
+static std::map< std::string, class Tp * > tp_name_map;
 
 static uint8_t tp_init_done;
 
@@ -372,7 +372,7 @@ static void tp_assign_id(const std::string &tp_name, int *id_out)
 {
   TRACE_NO_INDENT();
 
-  static std::unordered_map< std::string, int > tp_preferred_id;
+  static std::map< std::string, int > tp_preferred_id;
 
   static const std::vector< std::string > tp_arr(tps);
 

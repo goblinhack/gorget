@@ -7,6 +7,7 @@
 #include "my_dice.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_random.hpp"
 
 #include <string.h>
 
