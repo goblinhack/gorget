@@ -4495,6 +4495,12 @@ static void level_gen_create_level(Gamep g, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
+  //
+  // Per thread stdout
+  //
+  redirect_stdout(level_num);
+  redirect_stderr(level_num);
+
   auto l = level_gen(g, level_num);
   if (! l) {
     ERR("No levels generated");
@@ -4502,6 +4508,8 @@ static void level_gen_create_level(Gamep g, LevelNum level_num)
   }
 
   levels[ level_num ] = l;
+
+  level_gen_dump(g, l);
 
   auto v = game_levels_get(g);
   if (! v) {

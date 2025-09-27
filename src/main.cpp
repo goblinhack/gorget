@@ -24,6 +24,7 @@
 #include "my_ramdisk.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_sprintf.hpp"
 #include "my_test.hpp"
 #include "my_tests.hpp"
 #include "my_wid_console.hpp"
@@ -594,6 +595,50 @@ static void parse_args(int argc, char *argv[])
   }
 }
 
+void redirect_stdout(int thread)
+{
+  const char *appdata;
+  appdata = getenv("APPDATA");
+  if (! appdata || ! appdata[ 0 ]) {
+    appdata = "appdata";
+  }
+
+  if (! g_log_stdout) {
+    std::string out;
+    if (thread != -1) {
+      out = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", thread);
+    } else {
+      out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
+      g_log_stdout_filename = out;
+      LOG("Will use STDOUT as '%s'", out.c_str());
+    }
+
+    g_log_stdout = fopen(out.c_str(), "w+");
+  }
+}
+
+void redirect_stderr(int thread)
+{
+  const char *appdata;
+  appdata = getenv("APPDATA");
+  if (! appdata || ! appdata[ 0 ]) {
+    appdata = "appdata";
+  }
+
+  if (! g_log_stderr) {
+    std::string out;
+    if (thread != -1) {
+      out = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", thread);
+    } else {
+      out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
+      g_log_stderr_filename = out;
+      LOG("Will use STDERR as '%s'", out.c_str());
+    }
+
+    g_log_stderr = fopen(out.c_str(), "w+");
+  }
+}
+
 //
 // Where all logs go
 //
@@ -618,22 +663,6 @@ static std::string create_appdata_dir(void)
   mkdir(dir, 0700);
 #endif
   myfree(dir);
-
-  if (! g_log_stdout) {
-    char *out             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
-    g_log_stdout_filename = std::string(out);
-    g_log_stdout          = fopen(out, "w+");
-    LOG("Will use STDOUT as '%s'", out);
-    myfree(out);
-  }
-
-  if (! g_log_stderr) {
-    char *err             = dynprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
-    g_log_stderr_filename = std::string(err);
-    g_log_stderr          = fopen(err, "w+");
-    LOG("Will use STDERR as '%s'", err);
-    myfree(err);
-  }
 
   return std::string(appdata);
 }
@@ -663,6 +692,9 @@ int main(int argc, char *argv[])
   ARGV    = argv;
 
   auto appdata = create_appdata_dir(); // Want this first so we get all logs
+                                       //
+  redirect_stdout();
+  redirect_stderr();
 
   LOG("Greetings mortal");
 

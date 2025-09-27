@@ -23,8 +23,8 @@ extern std::string g_opt_level_name;
 extern std::string g_log_stderr_filename;
 extern std::string g_log_stdout_filename;
 
-extern FILE *g_log_stdout;
-extern FILE *g_log_stderr;
+extern thread_local FILE *g_log_stdout;
+extern thread_local FILE *g_log_stderr;
 
 void DYING(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void CLEANUP_ERR(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
@@ -126,5 +126,8 @@ void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 
 #define MY_STDERR (g_log_stderr ? g_log_stderr : stderr)
 #define MY_STDOUT (g_log_stdout ? g_log_stdout : stdout)
+
+void redirect_stdout(int thread = -1);
+void redirect_stderr(int thread = -1);
 
 #endif
