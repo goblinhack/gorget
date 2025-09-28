@@ -16,6 +16,8 @@
   clang_format_indent()                                    /* dummy line for clang indentation fixup */              \
       list_macro(STATE_INIT, "INIT"),                      /* newline */                                             \
       list_macro(STATE_MAIN_MENU, "MAIN-MENU"),            /* newline */                                             \
+      list_macro(STATE_GENERATING, "GENERATING"),          /* newline */                                             \
+      list_macro(STATE_GENERATED, "GENERATED"),            /* newline */                                             \
       list_macro(STATE_PLAYING, "PLAYING"),                /* newline */                                             \
       list_macro(STATE_MOVE_WARNING_MENU, "MOVE-WARNING"), /* newline */                                             \
       list_macro(STATE_QUITTING, "QUITTING"),              /* newline */                                             \

@@ -732,6 +732,11 @@ void Game::create_levels(void)
   destroy_levels();
 
   //
+  // Begin generation
+  //
+  state_change(STATE_GENERATING, "generate levels");
+
+  //
   // Create the grid of empty levels. No actual levels exist yet.
   //
   level_select_grid_of_empty_levels(g);
@@ -760,8 +765,6 @@ void Game::create_levels(void)
   //
   level_select_update_grid_tiles(g, v);
 
-  game_map_zoom_in(g);
-
   if (g_opt_quick_start_level_select_menu) {
     level_change(g, v, LEVEL_SELECT_ID);
   } else {
@@ -769,6 +772,8 @@ void Game::create_levels(void)
   }
 
   levels_stats_dump(g);
+
+  state_change(STATE_GENERATED, "generated levels");
 }
 void game_create_levels(Gamep g) { g->create_levels(); }
 
@@ -916,6 +921,8 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_SAVE_MENU :
     case STATE_QUIT_MENU :         wid_actionbar_fini(g); break;
     case STATE_INVENTORY :         break;
+    case STATE_GENERATING :        break;
+    case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 
@@ -961,8 +968,10 @@ void Game::state_change(GameState new_state, const std::string &why)
         case STATE_LOAD_MENU :
         case STATE_SAVE_MENU :
         case STATE_INVENTORY :     break;
+        case STATE_GENERATING :    break;
+        case STATE_GENERATED :     break;
         case STATE_QUIT_MENU :
-          if (0) {} /* clang format */
+          // newline
           wid_actionbar_init(g);
           break;
         case STATE_MOVE_WARNING_MENU : break;
@@ -976,6 +985,8 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_SAVE_MENU :
     case STATE_QUIT_MENU :         break;
     case STATE_INVENTORY :         break;
+    case STATE_GENERATING :        break;
+    case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 
@@ -1025,6 +1036,8 @@ void Game::tick(void)
     case STATE_LOADED :            break;
     case STATE_SAVE_MENU :         break;
     case STATE_QUIT_MENU :         break;
+    case STATE_GENERATING :        break;
+    case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 
@@ -1062,6 +1075,8 @@ void Game::tick(void)
     case STATE_SAVE_MENU :         break;
     case STATE_QUIT_MENU :         break;
     case STATE_INVENTORY :         break;
+    case STATE_GENERATING :        break;
+    case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 
@@ -1164,6 +1179,8 @@ void Game::display(void)
     case STATE_LOADED :            break;
     case STATE_SAVE_MENU :         break;
     case STATE_QUIT_MENU :         break;
+    case STATE_GENERATING :        break;
+    case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 }

@@ -30,8 +30,8 @@ static bool test_barrel_explosion(Gamep g, Testp t)
   std::string expect1
       = "xxxxxxx"
         "xxx...x"
-        "xxx!x.x"
-        "x@!!x.x"
+        "xxx.x.x"
+        "x;!!x.x"
         "xxxxx.x"
         "x.....x"
         "xxxxxxx";

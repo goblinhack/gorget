@@ -249,7 +249,7 @@ typedef struct Levels_ {
   //
   // All things structure memory.
   //
-  Thing thing_body[ 1 << THING_COMMON_ID_BITS ];
+  Thing thing_body[ 1 << THING_INDEX_BITS ];
   //
   // Space for monster AI
   //

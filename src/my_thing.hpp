@@ -17,21 +17,41 @@
 
 //
 // Entropy is always > 0 for Thing IDs to distinguish them
-// A thing ID is composed as: [ Entropy bits] [ ID bits ]
+// A thing ID is composed as: [ Entropy bits ] [ ID bits ]
 //
-#define THING_COMMON_ID_ENTROPY_BITS    6
-#define THING_COMMON_ID_BITS            21
-#define THING_COMMON_ID_BASE            (1U << (THING_COMMON_ID_BITS))
-#define THING_COMMON_ID_ENTROPY_MASK    (((1U << THING_COMMON_ID_ENTROPY_BITS) - 1) << THING_COMMON_ID_BITS)
-#define THING_COMMON_ID_MASK            ((1U << THING_COMMON_ID_BITS) - 1)
-#define THING_COMMON_ID_GET_ENTROPY(id) ((id & THING_COMMON_ID_ENTROPY_MASK) >> THING_COMMON_ID_BITS)
-#define THING_COMMON_ID_GET(id)         (id & THING_COMMON_ID_MASK)
+//                       31      |       |       |      0
+//                       +-------------------------------
+//                       LLLLLLLLIIIIIIIIIIIIEEEEEEEEEEEE
+//
+// E Entropy
+// I Per level ID
+// L Level
+//
+#define THING_LEVEL_ID_BITS     8
+#define THING_PER_LEVEL_ID_BITS 14
+#define THING_INDEX_BITS        (THING_LEVEL_ID_BITS + THING_PER_LEVEL_ID_BITS)
+#define THING_ENTROPY_BITS      10
+
+typedef union {
+  struct {
+    unsigned int val : 32;
+  } __attribute__((__packed__)) a;
+  struct {
+    unsigned int entropy      : THING_ENTROPY_BITS;
+    unsigned int per_level_id : THING_PER_LEVEL_ID_BITS;
+    unsigned int level_num    : THING_LEVEL_ID_BITS;
+  } __attribute__((__packed__)) b;
+  struct {
+    unsigned int entropy : THING_ENTROPY_BITS;
+    unsigned int index   : THING_INDEX_BITS;
+  } __attribute__((__packed__)) c;
+} __attribute__((__packed__)) ThingIdPacked;
 
 //
 // Essentially equates to the max number of monsters
 //
-#define THING_AI_MAX        65535 /* The size of thing_ai */
-#define THING_DESCRIBE_MAX  10    /* The number of things we can show in the rightbar */
+#define THING_AI_MAX        65535 // The size of thing_ai
+#define THING_DESCRIBE_MAX  10    // The number of things we can show in the rightbar
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 4)
 #define THING_INVENTORY_MAX 26
 
@@ -118,12 +138,15 @@ typedef struct Thing_ {
   // Why C types only ? For large data structures it is visibly
   // faster to malloc and memset versus default construction.
   //////////////////////////////////////////////////////////////
-  //
-  // Template ID. MUST BE FIRST AS WE memset the thing after this.
-  //
+
+  //////////////////////////////////////////////////////////////
+  // Template ID. MUST BE FIRST AS WE memset the Thing after this.
   uint16_t tp_id;
+  // Template ID. MUST BE FIRST AS WE memset the Thing after this.
+  //////////////////////////////////////////////////////////////
+
   //
-  // Unique ID
+  // Unique ID with some entropy built in
   //
   ThingId id;
   //

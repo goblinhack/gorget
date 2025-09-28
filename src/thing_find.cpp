@@ -15,17 +15,16 @@ Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
     return nullptr;
   }
 
-  auto thing_id = id;
-  auto index    = THING_COMMON_ID_GET(thing_id);
-
-  ASSERT_EX(index, <, (1 << THING_COMMON_ID_BITS));
+  ThingIdPacked id_packed;
+  id_packed.a.val = id;
+  auto index      = id_packed.c.index;
 
   auto t = &v->thing_body[ index ];
   if (! t) {
     return nullptr;
   }
 
-  if (t->id == thing_id) {
+  if (t->id == id) {
     return t;
   }
 
@@ -36,18 +35,44 @@ Thingp thing_find(Gamep g, Levelsp v, ThingId id)
 {
   TRACE_NO_INDENT();
 
-  auto thing_id = id;
-  auto index    = THING_COMMON_ID_GET(thing_id);
-
-  ASSERT_EX(index, <, (1 << THING_COMMON_ID_BITS));
+  ThingIdPacked id_packed = {};
+  id_packed.a.val         = id;
+  auto index              = id_packed.c.index;
 
   auto t = &v->thing_body[ index ];
   if (! t) {
-    DIE("Thing not found for id, %" PRIx32 "", id);
+    DIE("Thing not found for as id 08%" PRIx32 //
+        " (level: %" PRIu32                    //
+        " id: %08" PRIx32                      //
+        " entropy: %08" PRIx32                 //
+        ")",                                   //
+        id,                                    //
+        id_packed.b.level_num,                 //
+        id_packed.b.per_level_id,              //
+        id_packed.b.entropy);
   }
 
   if (t->id != id) {
-    DIE("Thing found as id %" PRIx32 " but entropy mismatch for id, %" PRIx32 "", t->id, id);
+    ThingIdPacked id_found = {};
+    id_found.a.val         = t->id;
+
+    DIE("Thing found as id 08%" PRIx32                         //
+        " (level: %" PRIu32                                    //
+        " id: %08" PRIx32                                      //
+        " entropy: %08" PRIx32                                 //
+        "), but entropy mismatch with expected id, 08%" PRIx32 //
+        " (level: %" PRIu32                                    //
+        " id: %08" PRIx32                                      //
+        " entropy: %08" PRIx32                                 //
+        ")",                                                   //
+        t->id,                                                 //
+        id_found.b.level_num,                                  //
+        id_found.b.per_level_id,                               //
+        id_found.b.entropy,                                    //
+        id,                                                    //
+        id_packed.b.level_num,                                 //
+        id_packed.b.per_level_id,                              //
+        id_packed.b.entropy);
   }
 
   return t;

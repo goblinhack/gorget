@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <format>
+
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
 #include "my_game.hpp"
@@ -22,13 +24,10 @@ void levels_stats_dump(Gamep g)
   }
 
   LOG("Level stats:");
-  LOG("- Total memory:       %" PRI_SIZE_T " Mb", sizeof(Levels) / (1024 * 1024));
-  LOG("- Per level memory:   %" PRI_SIZE_T " Kb", sizeof(Level) / (1024));
-  LOG("- Thing AI:           %" PRI_SIZE_T " Mb", sizeof(v->thing_ai) / (1024 * 1024));
-  LOG("- Thing structs:      %" PRI_SIZE_T " Mb", sizeof(v->thing_body) / (1024 * 1024));
-  LOG("- Levels:             %" PRI_SIZE_T " Mb", sizeof(v->level) / (1024 * 1024));
-  LOG("- Thing size:         %" PRI_SIZE_T " b", sizeof(Thing));
-  LOG("- Max things:         %u", THING_COMMON_ID_BASE - 1);
+  LOG("- Total memory:         %" PRI_SIZE_T " Mb", sizeof(Levels) / (1024 * 1024));
+  LOG("- Per level memory:     %" PRI_SIZE_T " Kb", sizeof(Level) / (1024));
+  LOG("- Levels:               %" PRI_SIZE_T " Mb", sizeof(v->level) / (1024 * 1024));
+  LOG("- Max things:           %u", 1 << THING_INDEX_BITS);
 
   thing_stats_dump(g, v);
 }

@@ -111,6 +111,8 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
     case STATE_SAVE_MENU :         break;
     case STATE_QUIT_MENU :         break;
     case STATE_INVENTORY :         break;
+    case STATE_GENERATING :        break;
+    case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
 }

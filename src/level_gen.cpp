@@ -4479,6 +4479,13 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
   level_gen_count_items(g, l);
 
   //
+  // Dump the level to the per thread output log file
+  //
+  if (g_opt_debug1) {
+    level_gen_dump(g, l);
+  }
+
+  //
   // Populate the map with things from the level created
   //
   level_gen_create(g, l);
@@ -4508,8 +4515,6 @@ static void level_gen_create_level(Gamep g, LevelNum level_num)
   }
 
   levels[ level_num ] = l;
-
-  level_gen_dump(g, l);
 
   auto v = game_levels_get(g);
   if (! v) {

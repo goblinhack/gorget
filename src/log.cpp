@@ -119,9 +119,13 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
 
   if (g_die_occurred) {
     fprintf(stderr, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
+    fprintf(MY_STDERR, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
     exit(1);
   }
   g_die_occurred = true;
+
+  callstack_dump();
+  backtrace_dump();
 
   char buf[ MAXLONGSTR ];
   buf[ 0 ]  = '\0';
@@ -137,6 +141,7 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   fprintf(stderr, "%s\n", buf);
+  fprintf(MY_STDERR, "%s\n", buf);
 
   ERR("%s", buf + tslen);
   FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
@@ -161,6 +166,7 @@ static void cleanup_ok_wrapper_(const char *fmt, va_list args)
 
   if (g_die_occurred) {
     fprintf(stderr, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
+    fprintf(MY_STDERR, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
     exit(1);
   }
   g_die_occurred = true;
@@ -196,7 +202,7 @@ static void dying_(const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   fprintf(stderr, "%s\n", buf);
-  putf(MY_STDOUT, buf);
+  fprintf(MY_STDERR, "%s\n", buf);
 
   FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 }

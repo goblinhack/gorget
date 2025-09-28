@@ -277,7 +277,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 //
 static void level_select_map_set(Gamep g, Levelsp v)
 {
-  LOG("level select map");
+  LOG("Level select map");
   TRACE_NO_INDENT();
 
   LevelSelect *s            = &v->level_select;

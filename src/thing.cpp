@@ -79,7 +79,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
   int in_use_things = 0;
   int free_things   = 0;
 
-  for (ThingId index = 0; index < (1 << THING_COMMON_ID_BITS); index++) {
+  for (ThingId index = 0; index < (1 << THING_INDEX_BITS); index++) {
     auto t = &v->thing_body[ index ];
     if (t->id) {
       in_use_things++;

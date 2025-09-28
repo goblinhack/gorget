@@ -606,14 +606,14 @@ void redirect_stdout(int thread)
   if (! g_log_stdout) {
     std::string out;
     if (thread != -1) {
-      out = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", thread);
+      out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", thread);
+      g_log_stdout = fopen(out.c_str(), "w");
     } else {
       out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
       g_log_stdout_filename = out;
       LOG("Will use STDOUT as '%s'", out.c_str());
+      g_log_stdout = fopen(out.c_str(), "w+");
     }
-
-    g_log_stdout = fopen(out.c_str(), "w+");
   }
 }
 
@@ -628,14 +628,14 @@ void redirect_stderr(int thread)
   if (! g_log_stderr) {
     std::string out;
     if (thread != -1) {
-      out = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", thread);
+      out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", thread);
+      g_log_stderr = fopen(out.c_str(), "w");
     } else {
       out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
       g_log_stderr_filename = out;
       LOG("Will use STDERR as '%s'", out.c_str());
+      g_log_stderr = fopen(out.c_str(), "w+");
     }
-
-    g_log_stderr = fopen(out.c_str(), "w+");
   }
 }
 
