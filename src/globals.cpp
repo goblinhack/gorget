@@ -13,6 +13,8 @@ char *TTF_PATH;
 thread_local FILE *g_log_stdout; // stdout is redirected to a log file
 thread_local FILE *g_log_stderr; // stderr is redirected to a log file
 
+thread_local int g_thread_id;
+
 std::string g_log_stderr_filename;
 std::string g_log_stdout_filename;
 

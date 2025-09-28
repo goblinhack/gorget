@@ -23,6 +23,8 @@ extern std::string g_opt_level_name;
 extern std::string g_log_stderr_filename;
 extern std::string g_log_stdout_filename;
 
+extern thread_local int g_thread_id;
+
 extern thread_local FILE *g_log_stdout;
 extern thread_local FILE *g_log_stderr;
 
@@ -124,10 +126,10 @@ void sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
   err_wrapper
 #endif
 
-#define MY_STDERR (g_log_stderr ? g_log_stderr : stderr)
-#define MY_STDOUT (g_log_stdout ? g_log_stdout : stdout)
+#define MY_STDERR get_stdout()
+#define MY_STDOUT get_stdout()
 
-void redirect_stdout(int thread = -1);
-void redirect_stderr(int thread = -1);
+FILE *get_stdout(void);
+FILE *get_stderr(void);
 
 #endif

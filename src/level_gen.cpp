@@ -4505,8 +4505,7 @@ static void level_gen_create_level(Gamep g, LevelNum level_num)
   //
   // Per thread stdout
   //
-  redirect_stdout(level_num);
-  redirect_stderr(level_num);
+  g_thread_id = level_num;
 
   auto l = level_gen(g, level_num);
   if (! l) {

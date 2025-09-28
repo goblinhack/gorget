@@ -595,48 +595,54 @@ static void parse_args(int argc, char *argv[])
   }
 }
 
-void redirect_stdout(int thread)
+FILE *get_stdout(void)
 {
+  if (g_log_stdout) {
+    return g_log_stdout;
+  }
+
   const char *appdata;
   appdata = getenv("APPDATA");
   if (! appdata || ! appdata[ 0 ]) {
     appdata = "appdata";
   }
 
-  if (! g_log_stdout) {
-    std::string out;
-    if (thread != -1) {
-      out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", thread);
-      g_log_stdout = fopen(out.c_str(), "w");
-    } else {
-      out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
-      g_log_stdout_filename = out;
-      LOG("Will use STDOUT as '%s'", out.c_str());
-      g_log_stdout = fopen(out.c_str(), "w+");
-    }
+  std::string out;
+  if (g_thread_id != -1) {
+    out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", g_thread_id);
+    g_log_stdout = fopen(out.c_str(), "w");
+  } else {
+    out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
+    g_log_stdout_filename = out;
+    g_log_stdout          = fopen(out.c_str(), "w+");
   }
+
+  return g_log_stdout;
 }
 
-void redirect_stderr(int thread)
+FILE *get_stderr(void)
 {
+  if (g_log_stderr) {
+    return g_log_stderr;
+  }
+
   const char *appdata;
   appdata = getenv("APPDATA");
   if (! appdata || ! appdata[ 0 ]) {
     appdata = "appdata";
   }
 
-  if (! g_log_stderr) {
-    std::string out;
-    if (thread != -1) {
-      out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", thread);
-      g_log_stderr = fopen(out.c_str(), "w");
-    } else {
-      out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
-      g_log_stderr_filename = out;
-      LOG("Will use STDERR as '%s'", out.c_str());
-      g_log_stderr = fopen(out.c_str(), "w+");
-    }
+  std::string out;
+  if (g_thread_id != -1) {
+    out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", g_thread_id);
+    g_log_stderr = fopen(out.c_str(), "w");
+  } else {
+    out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
+    g_log_stderr_filename = out;
+    g_log_stderr          = fopen(out.c_str(), "w+");
   }
+
+  return g_log_stderr;
 }
 
 //
@@ -692,11 +698,12 @@ int main(int argc, char *argv[])
   ARGV    = argv;
 
   auto appdata = create_appdata_dir(); // Want this first so we get all logs
-                                       //
-  redirect_stdout();
-  redirect_stderr();
 
-  LOG("Greetings mortal");
+  g_thread_id = -1;
+  get_stdout();
+  get_stderr();
+  LOG("Will use STDOUT as '%s'", g_log_stdout_filename.c_str());
+  LOG("Will use STDERR as '%s'", g_log_stderr_filename.c_str());
 
   //////////////////////////////////////////////////////////////////////////////
   // Use LOG instead of CON until we set stdout or you see two logs
