@@ -190,15 +190,78 @@ static bool wid_cfg_gfx_resolution_apply(Gamep g, Widp w, int x, int y, uint32_t
   return true;
 }
 
+//
+// The mac menu bar can mean the current requested resolution is slightly
+// different from what we can request. Find the closest match.
+//
+static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  auto w           = game_window_pix_width_get(g);
+  auto h           = game_window_pix_height_get(g);
+  auto current_res = std::to_string(w) + "x" + std::to_string(h);
+  LOG("Find closest resolution to %s:", current_res.c_str());
+
+  //
+  // Find the closest mode
+  //
+  int         dist      = 0;
+  int         best_dist = INT_MAX;
+  std::string best_cand;
+
+  auto n = SDL_GetNumDisplayModes(0);
+  for (int i = 0; i < n; ++i) {
+    SDL_DisplayMode mode;
+    SDL_GetDisplayMode(0, i, &mode);
+
+    auto cand_res = std::to_string(mode.w) + "x" + std::to_string(mode.h);
+    dist          = abs(((w - mode.w) * 10000) + (h - mode.h));
+    LOG(" - candidate %s dist %d", cand_res.c_str(), dist);
+
+    if (dist < best_dist) {
+      best_cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
+      best_dist = dist;
+    }
+  }
+
+  if (best_cand != "") {
+    LOG(" - best %s", best_cand.c_str());
+    return best_cand;
+  }
+
+  //
+  // Failsafe, just choose a matching mode
+  //
+  if (best_cand == "") {
+    for (int i = 0; i < n; ++i) {
+      SDL_DisplayMode mode;
+      SDL_GetDisplayMode(0, i, &mode);
+      best_cand = std::to_string(mode.w) + "x" + std::to_string(mode.h);
+      break;
+    }
+  }
+
+  LOG("Chose fallback resolution of: %s", best_cand.c_str());
+
+  return best_cand;
+}
+
 static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  auto res = std::to_string(game_window_pix_width_get(g)) + "x" + std::to_string(game_window_pix_height_get(g));
+
+  //
+  // What is the starting resolution?
+  //
+  std::string current_res;
+
   if (pending_mode_set) {
-    res = std::to_string(pending_mode.w) + "x" + std::to_string(pending_mode.h);
-    CON("Increment resolution (pending %s)", res.c_str());
+    current_res = std::to_string(pending_mode.w) + "x" + std::to_string(pending_mode.h);
+    CON("Increment resolution (pending %s)", current_res.c_str());
   } else {
-    CON("Increment resolution (current %s)", res.c_str());
+    current_res = wid_cfg_gfx_find_closest_resolution(g);
+    CON("Increment resolution (current %s)", current_res.c_str());
   }
 
   auto                                     n = SDL_GetNumDisplayModes(0);
@@ -214,7 +277,7 @@ static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t 
   }
   for (int i = 0; i < (int) cands.size(); ++i) {
     auto cand = cands[ i ];
-    if (res == cand) {
+    if (current_res == cand) {
       if (i > 0) {
         chosen = cands[ i - 1 ];
         LOG(" - candidate: %s (current)", cand.c_str());
@@ -234,7 +297,7 @@ static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t 
     wid_cfg_gfx_select(g);
   } else {
     sound_play(g, "error");
-    CON("At maximum resolution (current %s)", res.c_str());
+    CON("At maximum resolution (current %s)", current_res.c_str());
   }
 
   return true;
@@ -243,12 +306,18 @@ static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t 
 static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  auto res = std::to_string(game_window_pix_width_get(g)) + "x" + std::to_string(game_window_pix_height_get(g));
+
+  //
+  // What is the starting resolution?
+  //
+  std::string current_res;
+
   if (pending_mode_set) {
-    res = std::to_string(pending_mode.w) + "x" + std::to_string(pending_mode.h);
-    CON("Decrement resolution (pending %s)", res.c_str());
+    current_res = std::to_string(pending_mode.w) + "x" + std::to_string(pending_mode.h);
+    CON("Decrement resolution (pending %s)", current_res.c_str());
   } else {
-    CON("Decrement resolution (current %s)", res.c_str());
+    current_res = wid_cfg_gfx_find_closest_resolution(g);
+    CON("Decrement resolution (current %s)", current_res.c_str());
   }
 
   auto                                     n = SDL_GetNumDisplayModes(0);
@@ -264,7 +333,7 @@ static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t 
   }
   for (int i = 0; i < (int) cands.size(); ++i) {
     auto cand = cands[ i ];
-    if (res == cand) {
+    if (current_res == cand) {
       if (i < (int) cands.size() - 1) {
         chosen = cands[ i + 1 ];
         LOG(" - candidate: %s (current)", cand.c_str());
@@ -284,7 +353,7 @@ static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t 
     wid_cfg_gfx_select(g);
   } else {
     sound_play(g, "error");
-    CON("At minimm resolution (current %s)", res.c_str());
+    CON("At minimum resolution (current %s)", current_res.c_str());
   }
 
   return true;
