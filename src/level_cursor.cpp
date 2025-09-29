@@ -357,9 +357,9 @@ void level_cursor_path_reset(Gamep g, Levelsp v)
 }
 
 //
-// Copy the mouse path to the thing
+// Copy the given path to the thing
 //
-void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
+void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
 {
   auto t = thing_player(g);
   if (! t) {
@@ -513,7 +513,7 @@ void level_cursor_path_recreate(Gamep g, Levelsp v, Levelp l)
 //
 // Apply the mouse path to the player
 //
-void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l)
+void level_cursor_copy_mouse_path_to_player(Gamep g, Levelsp v, Levelp l)
 {
   //
   // Only if over the map
@@ -525,7 +525,7 @@ void level_cursor_path_apply(Gamep g, Levelsp v, Levelp l)
   //
   // Update the player with the path.
   //
-  level_cursor_path_apply(g, v, l, cursor_path);
+  level_cursor_copy_path_to_player(g, v, l, cursor_path);
 
   //
   // If in level select mode, update what we're hovering over

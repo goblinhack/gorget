@@ -62,53 +62,10 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
     return true;
   }
 
-  switch (player_state(g, v)) {
-    case PLAYER_STATE_INIT :
-      //
-      // Player not initialized yet
-      //
-      break;
-    case PLAYER_STATE_DEAD :
-      //
-      // No player mouse events when dead
-      //
-      break;
-    case PLAYER_STATE_NORMAL :
-      //
-      // Give a chance to open/close doors first/
-      //
-      if (player_mouse_down(g, v, l, x, y, button)) {
-        //
-        // Processed an event, like door closing
-        //
-        return true;
-      }
-
-      //
-      // Replace the mouse path
-      //
-      player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
-      level_cursor_path_apply(g, v, l);
-      return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
-    case PLAYER_STATE_PATH_REQUESTED :
-      //
-      // Player wants to start following or replace the current path.
-      //
-      break;
-    case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
-      //
-      // Wait for confirmation.
-      //
-      break;
-    case PLAYER_STATE_FOLLOWING_A_PATH :
-      //
-      // Already following a path, stick to it until completion.
-      //
-      break;
-    case PLAYER_STATE_ENUM_MAX : break;
-  }
-
-  return false;
+  //
+  // Returns true on the event being consumed
+  //
+  return thing_player_mouse_down(g, v, l, x, y, button);
 }
 
 bool game_mouse_up(Gamep g, int x, int y, uint32_t button) { return false; }
@@ -361,7 +318,7 @@ bool game_event_jump(Gamep g)
     // can offer a confirm box.
     //
     player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
-    level_cursor_path_apply(g, v, l);
+    level_cursor_copy_mouse_path_to_player(g, v, l);
     return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
   } else {
     //

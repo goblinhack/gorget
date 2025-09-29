@@ -28,6 +28,99 @@ Thingp thing_player(Gamep g)
 }
 
 //
+// Replace the mouse path upon mouse down events
+//
+static bool thing_player_replace_current_mouse_path(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Need to recreate the path first, as the player may have moved since the last mouse move
+  //
+  level_cursor_path_recreate(g, v, l);
+
+  player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
+
+  //
+  // Apply the new path
+  //
+  level_cursor_copy_mouse_path_to_player(g, v, l);
+
+  return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
+}
+
+//
+// Pass the event to things for consumption e.g. doors
+//
+static bool thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+
+  FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
+  {
+    if (tp_mouse_down(g, v, l, it, x, y, button)) {
+      //
+      // Processed an event, like door closing
+      //
+      return true;
+    }
+  }
+
+  return false;
+}
+
+//
+// Return true on the event being consumed
+//
+bool thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
+{
+  TRACE_NO_INDENT();
+
+  switch (player_state(g, v)) {
+    case PLAYER_STATE_INIT :
+      //
+      // Player not initialized yet
+      //
+      break;
+    case PLAYER_STATE_DEAD :
+      //
+      // No player mouse events when dead
+      //
+      break;
+    case PLAYER_STATE_NORMAL :
+      //
+      // Give a chance to open/close doors first.
+      //
+      if (thing_player_pass_event_to_other_things(g, v, l, x, y, button)) {
+        return true;
+      }
+
+      //
+      // Replace the mouse path
+      //
+      return thing_player_replace_current_mouse_path(g, v, l);
+    case PLAYER_STATE_PATH_REQUESTED :
+      //
+      // Player wants to start following or replace the current path.
+      //
+      break;
+    case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
+      //
+      // Wait for confirmation.
+      //
+      break;
+    case PLAYER_STATE_FOLLOWING_A_PATH :
+      //
+      // Already following a path. Allow the player to change the path.
+      //
+      return thing_player_replace_current_mouse_path(g, v, l);
+    case PLAYER_STATE_ENUM_MAX : break;
+  }
+
+  return false;
+}
+
+//
 // Called per display loop
 //
 static void thing_player_cursor_loop(Gamep g, Levelsp v, Levelp l)
@@ -83,7 +176,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
           //
           // Player wants to start following or replace the current path.
           //
-          level_cursor_path_apply(g, v, l);
+          level_cursor_copy_mouse_path_to_player(g, v, l);
           break;
         case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
           //
@@ -92,8 +185,10 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
           break;
         case PLAYER_STATE_FOLLOWING_A_PATH :
           //
-          // Already following a path, stick to it until completion.
+          // Already following a path. Allow the player to mouse around looking for
+          // a better path while moving.
           //
+          thing_player_cursor_loop(g, v, l);
           break;
         case PLAYER_STATE_ENUM_MAX : break;
       }
@@ -295,55 +390,6 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
   }
 }
 
-bool player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
-{
-  TRACE_NO_INDENT();
-
-  switch (player_state(g, v)) {
-    case PLAYER_STATE_INIT :
-      //
-      // Player not initialized yet
-      //
-      break;
-    case PLAYER_STATE_DEAD :
-      //
-      // No player mouse events when dead
-      //
-      break;
-    case PLAYER_STATE_NORMAL :
-      //
-      // Pass the event to things
-      //
-      FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
-      {
-        TRACE_NO_INDENT();
-
-        if (tp_mouse_down(g, v, l, it, x, y, button)) {
-          return true;
-        }
-      }
-      break;
-    case PLAYER_STATE_PATH_REQUESTED :
-      //
-      // Player wants to start following or replace the current path.
-      //
-      break;
-    case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
-      //
-      // Wait for confirmation.
-      //
-      break;
-    case PLAYER_STATE_FOLLOWING_A_PATH :
-      //
-      // Already following a path, stick to it until completion.
-      //
-      break;
-    case PLAYER_STATE_ENUM_MAX : break;
-  }
-
-  return false;
-}
-
 //
 // Return true on the event being consumed
 //
@@ -403,7 +449,7 @@ static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, b
       std::vector< spoint > move_path;
       move_path.push_back(to);
       player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
-      level_cursor_path_apply(g, v, l, move_path);
+      level_cursor_copy_path_to_player(g, v, l, move_path);
       player_check_if_target_needs_move_confirm(g, v, l, to);
     }
     return true;
