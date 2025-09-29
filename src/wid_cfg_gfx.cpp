@@ -13,6 +13,8 @@
 #include "my_sound.hpp"
 #include "my_wids.hpp"
 
+#include <limits.h>
+
 static WidPopup *wid_cfg_gfx_window;
 
 static SDL_DisplayMode pending_mode;
