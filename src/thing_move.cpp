@@ -293,9 +293,23 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   auto curr_level = thing_level(g, v, t);
   if ((new_level == curr_level) && (to == t->at)) {
     //
-    // No need to pop. If might be an inventory item though, so make sure and push.
+    // No need to pop. If might be an inventory item though, so make sure and push
+    // it onto the map after this check.
     //
   } else {
+    //
+    // If the player is following a path and we teleport warp, then we want to stop
+    // following that path.
+    //
+    if (thing_is_player(t)) {
+      player_state_change(g, v, PLAYER_STATE_NORMAL);
+    }
+
+    //
+    // Complete the current move
+    //
+    thing_move_or_jump_finish(g, v, curr_level, t);
+
     //
     // Remove from the currentl level or position
     //
