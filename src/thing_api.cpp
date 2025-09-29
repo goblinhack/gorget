@@ -2001,24 +2001,24 @@ bool thing_is_unused7(Thingp t)
   return tp_flag(thing_tp(t), is_unused7);
 }
 
-bool thing_is_unused8(Thingp t)
+bool thing_is_item_equipable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused8);
+  return tp_flag(thing_tp(t), is_item_equipable);
 }
 
-bool thing_is_unused9(Thingp t)
+bool thing_is_item_droppable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused9);
+  return tp_flag(thing_tp(t), is_item_droppable);
 }
 
 bool thing_is_walk_through_walls(Thingp t)

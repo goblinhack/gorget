@@ -84,7 +84,7 @@ void BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void BOTCON_NEW_LINE(void);
 
 void cleanup(void);
-void restart(Gamep);
+void game_restart(Gamep, const std::string);
 
 void reset_globals(void);
 void flush_the_console(void);

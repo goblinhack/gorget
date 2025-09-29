@@ -74,6 +74,7 @@ static bool thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l
 //
 bool thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
 {
+  LOG("Thing mouse down");
   TRACE_NO_INDENT();
 
   switch (player_state(g, v)) {
@@ -206,6 +207,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
     case STATE_SAVE_MENU :         break;
     case STATE_QUIT_MENU :         break;
     case STATE_INVENTORY :         break;
+    case STATE_ITEM_MENU :         break;
     case STATE_GENERATING :        break;
     case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;

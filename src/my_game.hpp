@@ -25,6 +25,7 @@
       list_macro(STATE_LOAD_MENU, "LOAD-MENU"),            /* newline */                                             \
       list_macro(STATE_LOADED, "LOADED"),                  /* newline */                                             \
       list_macro(STATE_INVENTORY, "INVENTORY"),            /* newline */                                             \
+      list_macro(STATE_ITEM_MENU, "ITEM-MENU"),            /* newline */                                             \
       list_macro(STATE_DEAD_MENU, "DEAD-MENU"),            /* newline */                                             \
       list_macro(STATE_SAVE_MENU, "SAVE-MENU"),            /* newline */                                             \
       list_macro(STATE_QUIT_MENU, "QUIT-MENU"),            /* newline */

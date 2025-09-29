@@ -63,6 +63,20 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
 static bool wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto t = wid_get_thing_context(g, v, w, 0);
+  if (! t) {
+    return false;
+  }
+
+  wid_inventory_destroy(g);
+  wid_item_menu_select(g, v, t);
+
   return true;
 }
 

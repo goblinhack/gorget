@@ -45,7 +45,7 @@ void    sdl_prepare_to_exit(Gamep);
 void    sdl_fbo_dump(Gamep, int fbo, const std::string &name);
 void    sdl_fbo_load(Gamep, int fbo, const std::vector< uint8_t > &pixels);
 void    sdl_fini(Gamep);
-void    sdl_video_fini(Gamep);
+void    sdl_display_fini(Gamep);
 void    sdl_flush_display(Gamep, bool force = false);
 void    sdl_joy_rumble(float strength, uint32_t ms);
 void    sdl_key_repeat_events(Gamep);

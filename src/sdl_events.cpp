@@ -20,10 +20,10 @@ int sdl_filter_events(void *userdata, SDL_Event *event)
   TRACE_NO_INDENT();
 
   switch (event->type) {
-    // This is important!  Queue it if we want to quit. */
+    // This is important!  Queue it if we want to quit.
     case SDL_QUIT : return 1;
 
-    // Mouse and keyboard events go to threads */
+    // Mouse and keyboard events go to threads
     case SDL_MOUSEMOTION :
     case SDL_MOUSEBUTTONDOWN :
     case SDL_MOUSEBUTTONUP :
@@ -240,6 +240,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
   TRACE_NO_INDENT();
 
   SDL_Keysym *key = &event->key.keysym;
+  LOG("SDL: Event");
 
   wid_mouse_two_clicks = false;
 
@@ -252,7 +253,27 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
       LOG("SDL: Event key up");
       sdl_event_keyup(g, key, event);
       break;
-    case SDL_MOUSEMOTION : sdl_event_mousemotion(g, key, event, processed_mouse_motion_event); break;
+    case SDL_MOUSEMOTION :
+      {
+        TRACE_NO_INDENT();
+
+        //
+        // Work around a macos? issue where the focus is not present when starting
+        //
+        if (! g_opt_restarted) {
+          static bool first = true;
+          if (first) {
+            first = false;
+            if (! SDL_GetKeyboardFocus()) {
+              CON("Restart needed due to lack of window focus");
+              g_need_restart_with_given_arguments = "--restart";
+            }
+          }
+        }
+
+        sdl_event_mousemotion(g, key, event, processed_mouse_motion_event);
+      }
+      break;
     case SDL_MOUSEBUTTONDOWN :
       LOG("SDL: Event mouse button down");
       sdl_event_mousedown(g, key, event);

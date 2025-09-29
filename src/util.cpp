@@ -17,7 +17,7 @@ void *myzalloc_(int size, const char *what, const char *file, const char *func, 
     DIE("No memory, %s:%s:%u, size %u", file, func, line, size);
   }
 
-  IF_DEBUG { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
+  IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
 
   return ptr;
 }
@@ -31,7 +31,7 @@ void *mymalloc_(int size, const char *what, const char *file, const char *func, 
     DIE("No memory, %s:%s:%u", file, func, line);
   }
 
-  IF_DEBUG { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
+  IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
 
   return ptr;
 }
@@ -39,14 +39,14 @@ void *mymalloc_(int size, const char *what, const char *file, const char *func, 
 void *myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line)
 {
   TRACE_NO_INDENT();
-  IF_DEBUG { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
+  IF_DEBUG2 { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
 
   ptr = realloc(ptr, size);
   if (! ptr) {
     DIE("No memory, %s:%s:%u", file, func, line);
   }
 
-  IF_DEBUG { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
+  IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
 
   return ptr;
 }
@@ -54,7 +54,7 @@ void *myrealloc_(void *ptr, int size, const char *what, const char *file, const 
 void myfree_(void *ptr, const char *file, const char *func, int line)
 {
   TRACE_NO_INDENT();
-  IF_DEBUG { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
+  IF_DEBUG2 { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
 
   free(ptr);
 }
@@ -74,7 +74,7 @@ char *dupstr_(const char *in, const char *what, const char *file, const char *fu
 
   int size = (__typeof__(size)) strlen(in);
 
-  IF_DEBUG { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
+  IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
 
   return ptr;
 }

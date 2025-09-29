@@ -945,12 +945,14 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
 
 void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
 {
-  TRACE_NO_INDENT();
+  LOG("Wid mouse down");
+  TRACE_AND_INDENT();
 
   Widp w {};
 
   pixel_to_ascii(g, &x, &y);
   if (! ascii_ok(x, y)) {
+    LOG("Wid mouse down, ignore, no pixel");
     return;
   }
   ascii_mouse_x = x;
@@ -958,6 +960,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
 
   w = wid_mouse_down_handler(g, x, y);
   if (unlikely(! w)) {
+    LOG("Wid mouse down, ignore, no handler");
     return;
   }
 
@@ -976,6 +979,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
     //
     if (wid_get_moveable(w)) {
       wid_mouse_motion_begin(g, w, x, y);
+      LOG("Wid mouse down, mouse move");
       return;
     }
 
@@ -983,6 +987,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
       game_last_mouse_down_set(g, time_ms_cached());
     }
 
+    LOG("Wid mouse down, processed, raise on mouse");
     return;
   }
 
@@ -990,6 +995,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
     wid_set_mode(g, w, WID_MODE_ACTIVE);
     wid_raise(g, w);
     wid_mouse_motion_begin(g, w, x, y);
+    LOG("Wid mouse down, make wid active");
     return;
   }
 

@@ -921,6 +921,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_SAVE_MENU :
     case STATE_QUIT_MENU :         wid_actionbar_fini(g); break;
     case STATE_INVENTORY :         break;
+    case STATE_ITEM_MENU :         break;
     case STATE_GENERATING :        break;
     case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
@@ -968,6 +969,7 @@ void Game::state_change(GameState new_state, const std::string &why)
         case STATE_LOAD_MENU :
         case STATE_SAVE_MENU :
         case STATE_INVENTORY :     break;
+        case STATE_ITEM_MENU :     break;
         case STATE_GENERATING :    break;
         case STATE_GENERATED :     break;
         case STATE_QUIT_MENU :
@@ -985,6 +987,7 @@ void Game::state_change(GameState new_state, const std::string &why)
     case STATE_SAVE_MENU :
     case STATE_QUIT_MENU :         break;
     case STATE_INVENTORY :         break;
+    case STATE_ITEM_MENU :         break;
     case STATE_GENERATING :        break;
     case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
@@ -1030,6 +1033,7 @@ void Game::tick(void)
         }
       }
       break;
+    case STATE_ITEM_MENU :         break;
     case STATE_MOVE_WARNING_MENU : break;
     case STATE_KEYBOARD_MENU :     break;
     case STATE_LOAD_MENU :         break;
@@ -1075,6 +1079,7 @@ void Game::tick(void)
     case STATE_SAVE_MENU :         break;
     case STATE_QUIT_MENU :         break;
     case STATE_INVENTORY :         break;
+    case STATE_ITEM_MENU :         break;
     case STATE_GENERATING :        break;
     case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
@@ -1167,6 +1172,7 @@ void Game::display(void)
     case STATE_MAIN_MENU : break;
     case STATE_QUITTING :  break;
     case STATE_INVENTORY :
+    case STATE_ITEM_MENU :
     case STATE_PLAYING :
     case STATE_DEAD_MENU :
       level_mouse_position_get(g, v, l);

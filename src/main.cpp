@@ -32,13 +32,14 @@
 #include "my_wids.hpp"
 
 static char      **ARGV;
+static int         ARGC;
 static std::string original_program_name;
 
 static bool skip_gfx_and_audio; // For tests
 
 void cleanup(void)
 {
-  LOG("Exiting, cleanup callded");
+  LOG("Exiting, cleanup called");
   TRACE_AND_INDENT();
 
   if (g_quitting) {
@@ -130,21 +131,51 @@ void cleanup(void)
   LOG("Cleanup done");
 }
 
-void restart(Gamep g)
+void game_restart(Gamep g, std::string restart_arg)
 {
-  LOG("Exiting, restart callded");
+  LOG("Exiting, restart called");
   TRACE_AND_INDENT();
 
-  char *args[] = {nullptr, (char *) "-restart", nullptr};
-  char *executable;
+  char       *executable;
+  const char *argv[ ARGC + 2 ];
+  int         argc = 0;
+  int         i;
+
+  memset(argv, 0, sizeof(argv));
+
+  //
+  // Original program name
+  //
+  executable     = (char *) original_program_name.c_str();
+  argv[ argc++ ] = executable;
+
+  //
+  // Copy arguments and append any we need
+  //
+  for (i = 1; i < ARGC; i++) {
+    if (strstr(ARGV[ i ], "-restart")) {
+      continue;
+    }
+    argv[ argc++ ] = ARGV[ i ];
+  }
+  argv[ argc++ ] = restart_arg.c_str();
+
+  //
+  // Build the full command line
+  //
+  std::string argument_line;
+  CON("Command line arguments for restarting '%s'", executable);
+  for (i = 1; i < argc; i++) {
+    CON("+ argument: \"%s\"", argv[ i ]);
+    argument_line += ' ';
+    argument_line += argv[ i ];
+  }
 
   if (g_opt_debug1) {
     wid_visible(g, wid_console_window);
     wid_raise(g, wid_console_window);
     wid_update(g, wid_console_window);
   }
-
-  executable = (char *) original_program_name.c_str();
 
   bool use_system;
 
@@ -165,23 +196,26 @@ void restart(Gamep g)
 #endif
 
   CON("Restart \"%s\"", executable);
+
   if (g_opt_debug1) {
     sdl_flush_display(g, true);
   }
 
-  CON("Quit");
   cleanup();
 
   if (use_system) {
     char tmp_cmd[ PATH_MAX ];
-    snprintf(tmp_cmd, SIZEOF(tmp_cmd), "%s &", executable);
+    snprintf(tmp_cmd, SIZEOF(tmp_cmd), "%s &", argument_line.c_str());
+    CON("system(%s)", tmp_cmd);
     int ret = system(tmp_cmd);
     exit(ret);
-  } else {
-    args[ 0 ] = executable;
-    execve(executable, (char *const *) args, nullptr);
-    DIE("Failed to restart");
   }
+
+  argv[ 0 ] = executable;
+  CON("execve(...)");
+  execve(executable, (char *const *) argv, nullptr);
+
+  DIE("Failed to restart");
 }
 
 //
@@ -568,6 +602,11 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
+    if (! strcasecmp(argv[ i ], "--restart-in-gfx-menu") || ! strcasecmp(argv[ i ], "-restart-in-gfx-menu")) {
+      g_opt_restarted_in_gfx_menu = true;
+      continue;
+    }
+
     //
     // Bad argument.
     //
@@ -696,6 +735,7 @@ int main(int argc, char *argv[])
   TRACE_NO_INDENT();
   Gamep g = nullptr;
   ARGV    = argv;
+  ARGC    = argc;
 
   auto appdata = create_appdata_dir(); // Want this first so we get all logs
 
@@ -789,7 +829,7 @@ int main(int argc, char *argv[])
   if (! g_opt_tests) {
     TRACE_NO_INDENT();
     if (! sdl_display_init(g)) {
-      ERR("SDL: Init");
+      ERR("SDL: Display init");
     }
   }
 
@@ -811,11 +851,9 @@ int main(int argc, char *argv[])
     LOG("SDL: Pump events done");
   }
 
-  {
+  if (g_need_restart_with_given_arguments != "") {
     TRACE_NO_INDENT();
-    if (g_need_restart) {
-      restart(g);
-    }
+    game_restart(g, g_need_restart_with_given_arguments);
   }
 
   {
@@ -1064,9 +1102,9 @@ int main(int argc, char *argv[])
     // Main menu
     //
     TRACE_NO_INDENT();
-    if (g_opt_restarted) {
+    if (g_opt_restarted_in_gfx_menu) {
+      g_opt_restarted_in_gfx_menu = false;
       wid_cfg_gfx_select(g);
-      g_opt_restarted = false;
     } else if (g_opt_quick_start) {
       wid_new_game(g);
     } else if (g_opt_quick_start_level_select_menu) {
@@ -1104,12 +1142,12 @@ int main(int argc, char *argv[])
   LOG("SDL loop finished");
   flush_the_console(g);
 
-  if (g_need_restart) {
-    g_need_restart = false;
-    restart(g);
+  if (g_need_restart_with_given_arguments != "") {
+    TRACE_NO_INDENT();
+    game_restart(g, g_need_restart_with_given_arguments);
   }
 
-  CON("Quit");
+  LOG("Quit");
   cleanup();
 
   CON("Goodbye my friend and take care until next time!");

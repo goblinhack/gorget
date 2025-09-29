@@ -205,7 +205,7 @@ uint8_t sdl_display_init(Gamep g)
 
     LOG("SDL: Init display");
     if (SDL_GetCurrentDisplayMode(0, &mode) < 0) {
-      DIE("SDL_GetCurrentDisplayMode couldn't set windowed display: %s", SDL_GetError());
+      DIE("SDL_GetCurrentDisplayMode couldn't set windowed display: '%s'", SDL_GetError());
       return false;
     }
 
@@ -223,7 +223,10 @@ uint8_t sdl_display_init(Gamep g)
   uint32_t video_flags;
 
   LOG("SDL: Set SDL_WINDOW_OPENGL");
-  video_flags = SDL_WINDOW_OPENGL;
+  //
+  // SDL_WINDOW_ALWAYS_ON_TOP is meant to help with focus
+  //
+  video_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_ALWAYS_ON_TOP;
 
   if (game_gfx_borderless_get(g)) {
     LOG("SDL: Set SDL_WINDOW_BORDERLESS");
@@ -251,19 +254,19 @@ uint8_t sdl_display_init(Gamep g)
       video_flags |= SDL_WINDOW_ALLOW_HIGHDPI;
       LOG("SDL: Set SDL_WINDOW_ALLOW_HIGHDPI");
     } else {
-      ERR("SDL: Cannot enable high DPI: %s", SDL_GetError());
+      ERR("SDL: Cannot enable high DPI: '%s'", SDL_GetError());
     }
   }
 
   if (g_opt_do_level_select_gen || g_opt_do_room_gen || g_opt_do_level_gen) {
-    video_flags = SDL_WINDOW_OPENGL;
+    video_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_ALWAYS_ON_TOP;
   }
 
   LOG("SDL: Create window size %ux%u", video_width, video_height);
   sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
                                 video_flags);
   if (! sdl.window) {
-    ERR("SDL_CreateWindow couldn't set windowed display %ux%u: %s", video_width, video_height, SDL_GetError());
+    ERR("SDL_CreateWindow couldn't set windowed display %ux%u: '%s'", video_width, video_height, SDL_GetError());
     game_config_reset(g);
     game_save_config(g);
     return false;
@@ -322,6 +325,8 @@ uint8_t sdl_display_init(Gamep g)
   // Ensure the window is always in front.
   //
   SDL_RaiseWindow(sdl.window);
+  SDL_SetWindowInputFocus(sdl.window);
+  // SDL_OnWindowFocusLost
 
   LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
   LOG("SDL: OpenGL Renderer : %s", glGetString(GL_RENDERER));
@@ -330,4 +335,31 @@ uint8_t sdl_display_init(Gamep g)
   IF_DEBUG { DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS)); }
 
   return true;
+}
+
+void sdl_display_fini(Gamep g)
+{
+  LOG("SDL: Video fini");
+  TRACE_AND_INDENT();
+
+  gl_fini_2d_mode(g);
+
+#ifdef ENABLE_UI_ASCII_MOUSE
+  SDL_ShowCursor(0);
+  SDL_ShowCursor(1);
+#endif
+
+  if (sdl.init_video) {
+    LOG("SDL: Video quit");
+    sdl.init_video = 0;
+    SDL_VideoQuit();
+  }
+
+  LOG("SDL: Delete GL context");
+  SDL_GL_DeleteContext(sdl.context);
+  sdl.context = nullptr;
+
+  LOG("SDL: Destroy window");
+  SDL_DestroyWindow(sdl.window);
+  sdl.window = nullptr;
 }

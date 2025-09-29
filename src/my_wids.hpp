@@ -33,6 +33,7 @@ void wid_load_select(Gamep);
 void wid_main_menu_destroy(Gamep);
 void wid_main_menu_select(Gamep);
 void wid_more_select(Gamep);
+void wid_item_menu_select(Gamep, Levelsp, Thingp it);
 void wid_new_game(Gamep);
 void wid_player_name_select(Gamep);
 void wid_quit_destroy(Gamep);

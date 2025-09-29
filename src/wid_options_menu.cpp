@@ -142,7 +142,7 @@ static bool wid_options_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *
 void wid_options_menu_select(Gamep g)
 {
   TRACE_NO_INDENT();
-  CON("Config menu");
+  LOG("Options menu");
 
   if (wid_options_menu_window) {
     wid_options_menu_destroy(g);
@@ -155,7 +155,7 @@ void wid_options_menu_select(Gamep g)
   int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
   spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
-  wid_options_menu_window = new WidPopup(g, "Config menu", outer_tl, outer_br, nullptr, "nothing", false, false);
+  wid_options_menu_window = new WidPopup(g, "Options menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
 

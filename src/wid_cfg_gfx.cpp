@@ -34,7 +34,7 @@ static bool wid_cfg_gfx_save(Gamep g, Widp w, int x, int y, uint32_t button)
 
   wid_cfg_gfx_destroy(g);
 
-  g_need_restart = true;
+  g_need_restart_with_given_arguments = "--restart-in-gfx-menu";
   wid_main_menu_destroy(g);
 
   return true;

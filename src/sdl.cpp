@@ -13,33 +13,6 @@
 
 SDL sdl;
 
-void sdl_video_fini(Gamep g)
-{
-  LOG("SDL: Video fini");
-  TRACE_AND_INDENT();
-
-  gl_fini_2d_mode(g);
-
-#ifdef ENABLE_UI_ASCII_MOUSE
-  SDL_ShowCursor(0);
-  SDL_ShowCursor(1);
-#endif
-
-  if (sdl.init_video) {
-    LOG("SDL: Video quit");
-    sdl.init_video = 0;
-    SDL_VideoQuit();
-  }
-
-  LOG("SDL: Delete GL context");
-  SDL_GL_DeleteContext(sdl.context);
-  sdl.context = nullptr;
-
-  LOG("SDL: Destroy window");
-  SDL_DestroyWindow(sdl.window);
-  sdl.window = nullptr;
-}
-
 void sdl_fini(Gamep g)
 {
   if (! sdl.init_video) {
@@ -49,7 +22,7 @@ void sdl_fini(Gamep g)
   LOG("SDL: Fini");
   TRACE_AND_INDENT();
 
-  sdl_video_fini(g);
+  sdl_display_fini(g);
 
   LOG("SDL: Quit");
   SDL_Quit();

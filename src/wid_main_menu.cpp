@@ -26,6 +26,11 @@ void wid_main_menu_destroy(Gamep g)
 void wid_main_menu_hide(Gamep g)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_main_menu_window) {
+    return;
+  }
+
   wid_hide(g, wid_main_menu_window->wid_popup_container);
 }
 

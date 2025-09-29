@@ -20,14 +20,17 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
 
   if (wid_some_recent_event_occurred()) {
+    LOG("Game mouse down, ignore, some event occurred");
     return false;
   }
 
   if (! g) {
+    LOG("Game mouse down, ignore, no game");
     return false;
   }
 
   if (game_state(g) != STATE_PLAYING) {
+    LOG("Game mouse down, ignore, not playing");
     return false;
   }
 
@@ -36,6 +39,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   auto v = game_levels_get(g);
   if (! v) {
+    LOG("Game mouse down, ignore, no levels");
     return true;
   }
 
@@ -44,6 +48,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   auto l = game_level_get(g, v);
   if (! l) {
+    LOG("Game mouse down, ignore, no level");
     return false;
   }
 
@@ -51,6 +56,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   // Over the map?
   //
   if (! level_cursor_is_valid(g, v)) {
+    LOG("Game mouse down, ignore, no cursor valid");
     return false;
   }
 

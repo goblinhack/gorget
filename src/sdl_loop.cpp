@@ -53,7 +53,6 @@ void sdl_loop(Gamep g)
 
   for (; /*ever*/;) {
     // DBG("SDL: tick");
-
     frames++;
 
     //
@@ -218,7 +217,7 @@ void sdl_loop(Gamep g)
     //
     // Config change?
     //
-    if (unlikely(g_need_restart)) {
+    if (unlikely(g_need_restart_with_given_arguments != "")) {
       LOG("Restart needed");
       break;
     }

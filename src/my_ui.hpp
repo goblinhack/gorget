@@ -52,7 +52,7 @@
 #define UI_WID_SAVE_SLOTS             10 // How many save game slots
 #define UI_MAX_SEED_NAME_LEN          10
 #define UI_MAX_PLAYER_NAME_LEN        12
-#define UI_MAX_WID_CONTEXT      2
+#define UI_MAX_WID_CONTEXT            2
 
 #define UI_CENTER_WIDTH (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
 
