@@ -45,8 +45,6 @@ void sdl_loop(Gamep g)
 
   g_main_loop_running = true;
 
-  // gl_enter_2d_mode(g);
-
 #ifdef ENABLE_UI_ASCII_MOUSE
   SDL_ShowCursor(0);
 #endif
@@ -66,8 +64,8 @@ void sdl_loop(Gamep g)
     if (unlikely(g_errored)) {
       if (g_errored != old_g_errored) {
         CON(UI_IMPORTANT_FMT_STR "An error occurred. Check the logs above." UI_RESET_FMT);
-        CON("To dismiss this console, press TAB.");
-        CON("To continue playing at your own risk, try 'clear errored'");
+        auto key = ::to_string(game_key_console_get(g));
+        CON("To continue playing at your own risk, 'clear errored' and then press <%s>", key.c_str());
         if (wid_console_window && ! wid_is_visible(wid_console_window)) {
           wid_visible(g, wid_console_window);
           wid_raise(g, wid_console_window);
@@ -195,19 +193,19 @@ void sdl_loop(Gamep g)
       //
       // Per tick state handling
       //
-      game_tick(g);
+      if (! g_errored) {
+        game_tick(g);
+      }
     }
 
     //
     // Display the level
     //
-    {
-      glcolor(WHITE);
-      gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
-      game_display(g);
-      blit_fbo_unbind();
-      gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
-    }
+    glcolor(WHITE);
+    gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
+    game_display(g);
+    blit_fbo_unbind();
+    gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
 
     //
     // Display the FBOs

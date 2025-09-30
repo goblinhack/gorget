@@ -21,6 +21,7 @@
 #include "my_wids.hpp"
 
 #ifdef ENABLE_DEBUG_GFX_GL_BLEND
+#include <unistd.h>
 #endif
 
 typedef struct {
@@ -3738,15 +3739,27 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
 
   Widp w {};
 
-  if (game_input(g, key)) {
-    return true;
+  if (! g_errored) {
+    if (game_input(g, key)) {
+      return true;
+    }
   }
 
   w = wid_get_top_parent(wid_console_input_line);
 
   if (sdlk_eq(*key, game_key_console_get(g))) {
-    sound_play(g, "keypress");
-    wid_toggle_hidden(g, wid_console_window);
+    LOG("Open console");
+
+    if (g_errored) {
+      auto console_key = ::to_string(game_key_console_get(g));
+      CON("To continue, 'clear errored' and then press <%s>", console_key.c_str());
+
+      if (wid_console_window && ! wid_is_visible(wid_console_window)) {
+        wid_visible(g, wid_console_window);
+      }
+    } else {
+      wid_toggle_hidden(g, wid_console_window);
+    }
     wid_raise(g, wid_console_window);
 
     //
@@ -3768,7 +3781,16 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
   }
 
   switch ((int) key->sym) {
-    case '?' : wid_cfg_keyboard_select(g); break;
+    case '?' :
+      if (g_errored) {
+        if (wid_console_window && ! wid_is_visible(wid_console_window)) {
+          wid_visible(g, wid_console_window);
+          wid_raise(g, wid_console_window);
+        }
+      } else {
+        wid_cfg_keyboard_select(g);
+      }
+      break;
 
     case SDLK_ESCAPE :
       if (w->visible) {
@@ -4650,7 +4672,9 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
 #endif
   if (wid_focus && ! wid_is_hidden(wid_focus) && (wid_focus->on_key_down)) {
     if ((wid_focus->on_key_down)(g, wid_focus, key)) {
-      DBG("WID: key grabbed by focused wid: %s at (%d,%d)", wid_focus->name.c_str(), ascii_mouse_x, ascii_mouse_y);
+      if (wid_focus) {
+        DBG("WID: key grabbed by focused wid: %s at (%d,%d)", wid_focus->name.c_str(), ascii_mouse_x, ascii_mouse_y);
+      }
       //
       // Do not raise, gets in the way of popups the callback creates.
       //
@@ -4685,25 +4709,27 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
 try_parent:
-  w = w->parent;
-
-  //
-  // Ripple the key event to the parent so global things like pressing
-  // escape can do things.
-  //
-  while (w) {
-    if (w->on_key_down) {
-      if ((w->on_key_down)(g, w, key)) {
-        DBG("WID: key grabbed by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
-        //
-        // Do not raise, gets in the way of popups the callback
-        // creates.
-        //
-        return;
-      }
-    }
-
+  if (w) {
     w = w->parent;
+
+    //
+    // Ripple the key event to the parent so global things like pressing
+    // escape can do things.
+    //
+    while (w) {
+      if (w->on_key_down) {
+        if ((w->on_key_down)(g, w, key)) {
+          DBG("WID: key grabbed by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
+          //
+          // Do not raise, gets in the way of popups the callback
+          // creates.
+          //
+          return;
+        }
+      }
+
+      w = w->parent;
+    }
   }
 
   //
@@ -4731,7 +4757,9 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   if (wid_focus && ! wid_is_hidden(wid_focus) && (wid_focus->on_key_up)) {
 
     if ((wid_focus->on_key_up)(g, wid_focus, key)) {
-      wid_set_mode(g, wid_focus, WID_MODE_ACTIVE);
+      if (wid_focus) {
+        wid_set_mode(g, wid_focus, WID_MODE_ACTIVE);
+      }
 
       //
       // Do not raise, gets in the way of popups the callback creates.
@@ -4763,26 +4791,28 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
 try_parent:
-  w = w->parent;
-
-  //
-  // Ripple the key event to the parent so global things like pressing
-  // escape can do things.
-  //
-  while (w) {
-    if (w->on_key_up) {
-      if ((w->on_key_up)(g, w, key)) {
-        wid_set_mode(g, w, WID_MODE_ACTIVE);
-
-        //
-        // Do not raise, gets in the way of popups the callback
-        // creates.
-        //
-        return;
-      }
-    }
-
+  if (w) {
     w = w->parent;
+
+    //
+    // Ripple the key event to the parent so global things like pressing
+    // escape can do things.
+    //
+    while (w) {
+      if (w->on_key_up) {
+        if ((w->on_key_up)(g, w, key)) {
+          wid_set_mode(g, w, WID_MODE_ACTIVE);
+
+          //
+          // Do not raise, gets in the way of popups the callback
+          // creates.
+          //
+          return;
+        }
+      }
+
+      w = w->parent;
+    }
   }
 }
 

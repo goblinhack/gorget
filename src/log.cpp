@@ -338,6 +338,11 @@ void err_wrapper(const char *fmt, ...)
   wid_unset_focus(g);
   wid_unset_focus_lock();
 
+  if (wid_console_window && ! wid_is_visible(wid_console_window)) {
+    wid_visible(g, wid_console_window);
+    wid_raise(g, wid_console_window);
+  }
+
   nested_error = false;
 
   if (g_quitting) {
@@ -356,18 +361,22 @@ static void sdl_msgerr_(const char *fmt, va_list args)
 
 #if SDL_MAJOR_VERSION >= 2
   SDL_Log("%s", buf);
-  CON("SDL: %s", buf);
 
   //
   // Fullscreen sometimes hides the error, so create a temp window
   //
-  LOG("Show SDL message box");
-  auto window
-      = SDL_CreateWindow("gorget error", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1, 1, SDL_WINDOW_SHOWN);
-  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, window);
-  LOG("Launched SDL message box");
-  SDL_DestroyWindow(window);
+  if (! g_errored) {
+    LOG("Show SDL message box");
+
+    auto window
+        = SDL_CreateWindow("gorget error", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1, 1, SDL_WINDOW_SHOWN);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, window);
+    LOG("Launched SDL message box");
+    SDL_DestroyWindow(window);
+  }
 #endif
+
+  ERR("SDL: %s", buf);
 }
 
 void sdl_msg_box(const char *fmt, ...)
