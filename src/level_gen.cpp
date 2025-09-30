@@ -2980,9 +2980,13 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
                   switch (l->data[ adj.x + delta.x ][ adj.y + delta.y ].c) {
                     case CHARMAP_WATER :
                     case CHARMAP_DEEP_WATER :
-                    case CHARMAP_CHASM :      bridge_candidate = true;
-                    case CHARMAP_BRIDGE :     has_clear_path = false; break;
-                    default :                 break;
+                    case CHARMAP_CHASM : // newline
+                      bridge_candidate = true;
+                      break;
+                    case CHARMAP_BRIDGE : // newline
+                      has_clear_path = false;
+                      break;
+                    default : break;
                   }
                 }
                 if (! has_clear_path) {
