@@ -81,14 +81,14 @@ static bool wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp t, Tp
     return false;
   }
 
-  char tmp[ width * 2 ];
+  char tmp[ MAXSHORTSTR ];
 
   //
   // "Health            "
   //
   memset(tmp, 0, sizeof(tmp));
   memset(tmp, ' ', sizeof(tmp) - 1);
-  strncpy(tmp + 1, "Health", sizeof("Health") - 1);
+  strncpy(tmp + 1, "Health", sizeof("Health "));
 
   //
   // "Health         a/b"
