@@ -12,6 +12,10 @@
 #include "my_test.hpp"
 #include "my_wid_console.hpp"
 
+#ifndef PATH_MAX
+#define PATH_MAX 512
+#endif
+
 //
 // Restart the game, with an optional restart argument to indicate how to restart
 //
