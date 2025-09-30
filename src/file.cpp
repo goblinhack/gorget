@@ -31,7 +31,7 @@ unsigned char *file_load(const char *filename, int *outlen)
    */
   if (file_exists(filename)) {
     if (strstr(filename, "data/")) {
-      if (file_exists_and_is_newer_than(filename, EXEC_FULL_PATH_AND_NAME)) {
+      if (file_exists_and_is_newer_than(filename, g_exec_full_path_and_name)) {
         out = file_io_read_if_exists(filename, outlen);
         if (out) {
           FILE_LOG("Read file %s (newer than exec)", filename);
@@ -63,11 +63,11 @@ unsigned char *file_load(const char *filename, int *outlen)
     }
   }
 
-  if (EXEC_DIR) {
-    alt_filename = strprepend(filename, EXEC_DIR);
+  if (g_exec_dir) {
+    alt_filename = strprepend(filename, g_exec_dir);
 
     if (file_exists(alt_filename)) {
-      if (file_exists_and_is_newer_than(alt_filename, EXEC_FULL_PATH_AND_NAME)) {
+      if (file_exists_and_is_newer_than(alt_filename, g_exec_full_path_and_name)) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out) {
           myfree(alt_filename);

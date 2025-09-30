@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <libgen.h>
 #include <signal.h>
 #include <string.h>
 #include <strings.h>
@@ -31,433 +30,7 @@
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
-static char      **ARGV;
-static int         ARGC;
-static std::string original_program_name;
-
 static bool skip_gfx_and_audio; // For tests
-
-void cleanup(void)
-{
-  LOG("Exiting, cleanup called");
-  TRACE_AND_INDENT();
-
-  if (g_quitting) {
-    LOG("Quitting, nested");
-    return;
-  }
-
-  g_quitting = true;
-
-  extern Gamep game;
-  auto         g = game;
-
-#ifdef ENABLE_CRASH_HANDLER
-  signal(SIGSEGV, nullptr); // uninstall our handler
-  signal(SIGABRT, nullptr); // uninstall our handler
-  signal(SIGINT, nullptr);  // uninstall our handler
-#ifndef _WIN32
-  signal(SIGPIPE, nullptr); // uninstall our handler
-#endif
-  signal(SIGFPE, nullptr); // uninstall our handler
-#endif
-
-  sdl_prepare_to_exit(g);
-  wid_console_fini(g);
-  command_fini();
-  font_fini();
-  tex_fini();
-  wid_tiles_fini();
-  tile_fini();
-  blit_fini();
-  color_fini();
-  audio_fini();
-  music_fini();
-  sound_fini();
-  sdl_fini(g);
-  rooms_fini(g);
-  levels_fini(g);
-  fragments_fini(g);
-  fragment_alts_fini(g);
-
-  //
-  // Do this last as sdl_fini depends on it.
-  //
-  game_fini(g);
-  g = nullptr;
-
-  //
-  // Must be post game_fini
-  //
-  tp_fini();
-
-  //
-  // Wid fini has to be after game_fini, as the game state change to none will
-  // destroy remaining windows.
-  //
-  wid_fini(nullptr);
-
-  if (EXEC_FULL_PATH_AND_NAME) {
-    myfree(EXEC_FULL_PATH_AND_NAME);
-    EXEC_FULL_PATH_AND_NAME = nullptr;
-  }
-
-  if (DATA_PATH) {
-    myfree(DATA_PATH);
-    DATA_PATH = nullptr;
-  }
-
-  if (TTF_PATH) {
-    myfree(TTF_PATH);
-    TTF_PATH = nullptr;
-  }
-
-  if (GFX_PATH) {
-    myfree(GFX_PATH);
-    GFX_PATH = nullptr;
-  }
-
-  if (EXEC_DIR) {
-    myfree(EXEC_DIR);
-    EXEC_DIR = nullptr;
-  }
-
-#ifdef ENABLE_DEBUG_MEM_LEAKS
-  if (! g_die_occurred) {
-    ptrcheck_leak_print();
-  }
-#endif
-
-  LOG("Cleanup done");
-}
-
-void game_restart(Gamep g, std::string restart_arg)
-{
-  LOG("Exiting, restart called");
-  TRACE_AND_INDENT();
-
-  char       *executable;
-  const char *argv[ ARGC + 2 ];
-  int         argc = 0;
-  int         i;
-
-  memset(argv, 0, sizeof(argv));
-
-  //
-  // Original program name
-  //
-  executable     = (char *) original_program_name.c_str();
-  argv[ argc++ ] = executable;
-
-  //
-  // Copy arguments and append any we need
-  //
-  for (i = 1; i < ARGC; i++) {
-    if (strstr(ARGV[ i ], "-restart")) {
-      continue;
-    }
-    argv[ argc++ ] = ARGV[ i ];
-  }
-  argv[ argc++ ] = restart_arg.c_str();
-
-  //
-  // Build the full command line
-  //
-  std::string argument_line;
-  CON("Command line arguments for restarting '%s'", executable);
-  for (i = 1; i < argc; i++) {
-    CON("+ argument: \"%s\"", argv[ i ]);
-    argument_line += ' ';
-    argument_line += argv[ i ];
-  }
-
-  if (g_opt_debug1) {
-    wid_visible(g, wid_console_window);
-    wid_raise(g, wid_console_window);
-    wid_update(g, wid_console_window);
-  }
-
-  bool use_system;
-
-#ifdef __linux__
-  //
-  // For some reason SDL audio fails if we use execve
-  //
-  use_system = true;
-#elif _WIN32
-  //
-  // Windows has spaces in the path name and that ends up being incorrectly
-  // split by execve on the 2nd boot. So, just avoid the issue.
-  //
-  executable = (char *) "gorget.exe";
-  use_system = false;
-#else
-  use_system = false;
-#endif
-
-  CON("Restart \"%s\"", executable);
-
-  if (g_opt_debug1) {
-    sdl_flush_display(g, true);
-  }
-
-  cleanup();
-
-  if (use_system) {
-    char tmp_cmd[ PATH_MAX ];
-    snprintf(tmp_cmd, SIZEOF(tmp_cmd), "%s &", argument_line.c_str());
-    CON("system(%s)", tmp_cmd);
-    int ret = system(tmp_cmd);
-    exit(ret);
-  }
-
-  argv[ 0 ] = executable;
-  CON("execve(...)");
-  execve(executable, (char *const *) argv, nullptr);
-
-  DIE("Failed to restart");
-}
-
-//
-// Find the binary we are running.
-//
-static void find_executable(void)
-{
-  TRACE_NO_INDENT();
-
-  char       *parent_dir         = nullptr;
-  char       *curr_dir           = nullptr;
-  std::string exec_name          = "";
-  char       *exec_expanded_name = nullptr;
-  char       *path               = nullptr;
-  char       *tmp;
-
-  exec_name = mybasename(ARGV[ 0 ], __FUNCTION__);
-  LOG("Will use EXEC_NAME as '%s'", exec_name.c_str());
-
-  //
-  // Get the current directory, ending in a single /
-  //
-  curr_dir = dynprintf("%s" DIR_SEP, dir_dot());
-  tmp      = strsub(curr_dir, DIR_SEP DIR_SEP, DIR_SEP, "curr_dir");
-  myfree(curr_dir);
-  curr_dir = tmp;
-
-  //
-  // Get the parent directory, ending in a single /
-  //
-  parent_dir = dynprintf("%s" DIR_SEP, dir_dotdot(dir_dot()));
-  tmp        = strsub(parent_dir, DIR_SEP DIR_SEP, DIR_SEP, "parent_dir");
-  myfree(parent_dir);
-  parent_dir = tmp;
-
-  //
-  // Get rid of ../ from the program name and replace with the path.
-  //
-  exec_expanded_name = dupstr(ARGV[ 0 ], __FUNCTION__);
-  if (*exec_expanded_name == '.') {
-    tmp = strsub(exec_expanded_name, ".." DIR_SEP, parent_dir, "exec_expanded_name");
-    myfree(exec_expanded_name);
-    exec_expanded_name = tmp;
-  }
-
-  //
-  // Get rid of ./ from the program name.
-  //
-  if (*exec_expanded_name == '.') {
-    tmp = strsub(exec_expanded_name, "." DIR_SEP, "", "exec_expanded_name2");
-    myfree(exec_expanded_name);
-    exec_expanded_name = tmp;
-  }
-
-  //
-  // Get rid of any // from the path
-  //
-  tmp = strsub(exec_expanded_name, DIR_SEP DIR_SEP, DIR_SEP, "exec_expanded_name3");
-  myfree(exec_expanded_name);
-  exec_expanded_name = tmp;
-
-  //
-  // Look in the simplest case first.
-  //
-  EXEC_FULL_PATH_AND_NAME = dynprintf("%s%s", curr_dir, exec_name.c_str());
-  if (file_exists(EXEC_FULL_PATH_AND_NAME)) {
-    EXEC_DIR = dupstr(curr_dir, "exec dir 1");
-    goto cleanup;
-  }
-
-  myfree(EXEC_FULL_PATH_AND_NAME);
-
-  //
-  // Try the parent dir.
-  //
-  EXEC_FULL_PATH_AND_NAME = dynprintf("%s%s", parent_dir, exec_name.c_str());
-  if (file_exists(EXEC_FULL_PATH_AND_NAME)) {
-    EXEC_DIR = dupstr(parent_dir, "exec dir 2");
-    goto cleanup;
-  }
-
-  myfree(EXEC_FULL_PATH_AND_NAME);
-
-  //
-  // Try the PATH.
-  //
-  path = getenv("PATH");
-  if (path) {
-    char *dir = nullptr;
-
-    path = dupstr(path, "path");
-
-    for (dir = strtok(path, PATHSEP); dir; dir = strtok(nullptr, PATHSEP)) {
-      EXEC_FULL_PATH_AND_NAME = dynprintf("%s" DIR_SEP "%s", dir, exec_name.c_str());
-      if (file_exists(EXEC_FULL_PATH_AND_NAME)) {
-        EXEC_DIR = dynprintf("%s" DIR_SEP, dir);
-        goto cleanup;
-      }
-
-      myfree(EXEC_FULL_PATH_AND_NAME);
-    }
-
-    myfree(path);
-    path = nullptr;
-  }
-
-  EXEC_FULL_PATH_AND_NAME = dupstr(exec_expanded_name, "full path");
-  EXEC_DIR                = dupstr(dirname(exec_expanded_name), "exec dir");
-
-cleanup:
-  auto new_EXEC_DIR = strsub(EXEC_DIR, "/", DIR_SEP, "EXEC_DIR");
-  myfree(EXEC_DIR);
-  EXEC_DIR = new_EXEC_DIR;
-
-  DBG2("EXEC_DIR set to %s", EXEC_DIR);
-  DBG2("Parent dir  : \"%s\"", parent_dir);
-  DBG2("Curr dir    : \"%s\"", curr_dir);
-  DBG2("Full name   : \"%s\"", exec_expanded_name);
-
-  if (path) {
-    myfree(path);
-  }
-
-  if (exec_expanded_name) {
-    myfree(exec_expanded_name);
-  }
-
-  if (parent_dir) {
-    myfree(parent_dir);
-  }
-
-  if (curr_dir) {
-    myfree(curr_dir);
-  }
-}
-
-//
-// Find all installed file locations.
-//
-static void find_exec_dir(void)
-{
-  TRACE_NO_INDENT();
-  find_executable();
-
-  //
-  // Make sure the exec dir ends in a /
-  //
-  auto tmp  = dynprintf("%s" DIR_SEP, EXEC_DIR);
-  auto tmp2 = strsub(tmp, "//", DIR_SEP, "EXEC_DIR");
-  auto tmp3 = strsub(tmp2, "\\\\", DIR_SEP, "EXEC_DIR");
-  auto tmp4 = strsub(tmp3, "/", DIR_SEP, "EXEC_DIR");
-  auto tmp5 = strsub(tmp4, "\\", DIR_SEP, "EXEC_DIR");
-  myfree(tmp);
-  myfree(tmp2);
-  myfree(tmp3);
-  myfree(tmp4);
-  if (EXEC_DIR) {
-    myfree(EXEC_DIR);
-  }
-  EXEC_DIR = tmp5;
-
-  LOG("Will use EXEC_DIR as '%s'", EXEC_DIR);
-}
-
-//
-// Hunt down the data/ dir.
-//
-static void find_data_dir(void)
-{
-  TRACE_NO_INDENT();
-  DATA_PATH = dynprintf("%sdata" DIR_SEP, EXEC_DIR);
-  if (dir_exists(DATA_PATH)) {
-    return;
-  }
-  myfree(DATA_PATH);
-
-  DATA_PATH = dynprintf(".." DIR_SEP "data");
-  if (dir_exists(DATA_PATH)) {
-    return;
-  }
-  myfree(DATA_PATH);
-
-  DATA_PATH = dupstr(EXEC_DIR, __FUNCTION__);
-}
-
-//
-// Hunt down the fonts/ dir.
-//
-static void find_ttf_dir(void)
-{
-  TRACE_NO_INDENT();
-  TTF_PATH = dynprintf("%sdata" DIR_SEP "ttf" DIR_SEP, EXEC_DIR);
-  if (dir_exists(TTF_PATH)) {
-    return;
-  }
-  myfree(TTF_PATH);
-
-  TTF_PATH = dynprintf(".." DIR_SEP "data" DIR_SEP "ttf" DIR_SEP);
-  if (dir_exists(TTF_PATH)) {
-    return;
-  }
-  myfree(TTF_PATH);
-
-  TTF_PATH = dupstr(EXEC_DIR, __FUNCTION__);
-}
-
-//
-// Hunt down the gfx/ dir.
-//
-static void find_gfx_dir(void)
-{
-  TRACE_NO_INDENT();
-  GFX_PATH = dynprintf("%sdata" DIR_SEP "gfx" DIR_SEP, EXEC_DIR);
-  if (dir_exists(GFX_PATH)) {
-    return;
-  }
-  myfree(GFX_PATH);
-
-  GFX_PATH = dynprintf(".." DIR_SEP "gfx" DIR_SEP);
-  if (dir_exists(GFX_PATH)) {
-    return;
-  }
-  myfree(GFX_PATH);
-
-  GFX_PATH = dupstr(EXEC_DIR, __FUNCTION__);
-}
-
-//
-// Find all installed file locations.
-//
-static void find_file_locations(void)
-{
-  TRACE_NO_INDENT();
-
-  find_exec_dir();
-  find_data_dir();
-  find_ttf_dir();
-  find_gfx_dir();
-
-  LOG("Gfx path    : \"%s\"", GFX_PATH);
-  LOG("Font path   : \"%s\"", TTF_PATH);
-}
 
 static void usage(void)
 {
@@ -634,114 +207,18 @@ static void parse_args(int argc, char *argv[])
   }
 }
 
-FILE *get_stdout(void)
-{
-  if (g_log_stdout) {
-    return g_log_stdout;
-  }
-
-  const char *appdata;
-  appdata = getenv("APPDATA");
-  if (! appdata || ! appdata[ 0 ]) {
-    appdata = "appdata";
-  }
-
-  std::string out;
-  if (g_thread_id != -1) {
-    out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", g_thread_id);
-    g_log_stdout = fopen(out.c_str(), "w");
-  } else {
-    out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
-    g_log_stdout_filename = out;
-    g_log_stdout          = fopen(out.c_str(), "w+");
-  }
-
-  return g_log_stdout;
-}
-
-FILE *get_stderr(void)
-{
-  if (g_log_stderr) {
-    return g_log_stderr;
-  }
-
-  const char *appdata;
-  appdata = getenv("APPDATA");
-  if (! appdata || ! appdata[ 0 ]) {
-    appdata = "appdata";
-  }
-
-  std::string out;
-  if (g_thread_id != -1) {
-    out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", g_thread_id);
-    g_log_stderr = fopen(out.c_str(), "w");
-  } else {
-    out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
-    g_log_stderr_filename = out;
-    g_log_stderr          = fopen(out.c_str(), "w+");
-  }
-
-  return g_log_stderr;
-}
-
-//
-// Where all logs go
-//
-static std::string create_appdata_dir(void)
-{
-  const char *appdata;
-  appdata = getenv("APPDATA");
-  if (! appdata || ! appdata[ 0 ]) {
-    appdata = "appdata";
-  }
-
-#ifdef _WIN32
-  mkdir(appdata);
-#else
-  mkdir(appdata, 0700);
-#endif
-
-  char *dir = dynprintf("%s%s%s", appdata, DIR_SEP, "gorget");
-#ifdef _WIN32
-  mkdir(dir);
-#else
-  mkdir(dir, 0700);
-#endif
-  myfree(dir);
-
-  return std::string(appdata);
-}
-
-void flush_the_console(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (! wid_console_window) {
-    return;
-  }
-
-  //
-  // Easier to see progress on windows where there is no console
-  //
-  if (g_opt_debug1) {
-    wid_visible(g, wid_console_window);
-    wid_raise(g, wid_console_window);
-    wid_update(g, wid_console_window);
-    sdl_flush_display(g, true);
-  }
-}
-
 int main(int argc, char *argv[])
 {
   TRACE_NO_INDENT();
   Gamep g = nullptr;
-  ARGV    = argv;
-  ARGC    = argc;
+  g_argv  = argv;
+  g_argc  = argc;
 
-  auto appdata = create_appdata_dir(); // Want this first so we get all logs
+  auto appdata = log_dir_create(); // Want this first so we get all logs
 
   g_thread_id = -1;
-  get_stdout();
-  get_stderr();
+  redirect_stdout();
+  redirect_stderr();
   LOG("Will use STDOUT as '%s'", g_log_stdout_filename.c_str());
   LOG("Will use STDERR as '%s'", g_log_stderr_filename.c_str());
 
@@ -853,7 +330,7 @@ int main(int argc, char *argv[])
 
   if (g_need_restart_with_given_arguments != "") {
     TRACE_NO_INDENT();
-    game_restart(g, g_need_restart_with_given_arguments);
+    restart(g, g_need_restart_with_given_arguments);
   }
 
   {
@@ -914,7 +391,7 @@ int main(int argc, char *argv[])
       ERR("Wid_console init");
     }
     wid_toggle_hidden(g, wid_console_window);
-    flush_the_console(g);
+    wid_console_flush(g);
 
     if (g_opt_debug1) {
       wid_visible(g, wid_console_window);
@@ -948,13 +425,13 @@ int main(int argc, char *argv[])
   //
   if (! skip_gfx_and_audio) {
     TRACE_NO_INDENT();
-    original_program_name = std::string(argv[ 0 ]);
+    g_program_name = std::string(argv[ 0 ]);
     if (g_opt_debug1) {
-      CON("Original program name: %s", original_program_name.c_str());
+      CON("Original program name: %s", g_program_name.c_str());
     } else {
-      LOG("Original program name: %s", original_program_name.c_str());
+      LOG("Original program name: %s", g_program_name.c_str());
     }
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   if (! skip_gfx_and_audio) {
@@ -974,7 +451,7 @@ int main(int argc, char *argv[])
     if (! tile_init()) {
       ERR("Tile init");
     }
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   if (! skip_gfx_and_audio) {
@@ -987,7 +464,7 @@ int main(int argc, char *argv[])
     if (! tex_init()) {
       ERR("Tex init");
     }
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   if (! skip_gfx_and_audio) {
@@ -1000,7 +477,7 @@ int main(int argc, char *argv[])
     if (! audio_init()) {
       ERR("Audio init");
     }
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   if (! skip_gfx_and_audio) {
@@ -1013,7 +490,7 @@ int main(int argc, char *argv[])
     if (! music_init()) {
       ERR("Music init");
     }
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   if (! skip_gfx_and_audio) {
@@ -1028,13 +505,13 @@ int main(int argc, char *argv[])
     } else {
       sounds_init();
     }
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   {
     TRACE_NO_INDENT();
     find_file_locations();
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   {
@@ -1054,7 +531,7 @@ int main(int argc, char *argv[])
       ERR("Command init");
     }
     LOG("Loaded commands");
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   {
@@ -1096,7 +573,7 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
-    flush_the_console(g);
+    wid_console_flush(g);
 
     //
     // Main menu
@@ -1113,7 +590,7 @@ int main(int argc, char *argv[])
       wid_main_menu_select(g);
     }
 
-    flush_the_console(g);
+    wid_console_flush(g);
   }
 
   wid_hide(g, wid_console_window);
@@ -1140,11 +617,11 @@ int main(int argc, char *argv[])
   TRACE_NO_INDENT();
   sdl_loop(g);
   LOG("SDL loop finished");
-  flush_the_console(g);
+  wid_console_flush(g);
 
   if (g_need_restart_with_given_arguments != "") {
     TRACE_NO_INDENT();
-    game_restart(g, g_need_restart_with_given_arguments);
+    restart(g, g_need_restart_with_given_arguments);
   }
 
   LOG("Quit");

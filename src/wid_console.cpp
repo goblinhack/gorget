@@ -280,3 +280,21 @@ void wid_console_deserialize(std::vector< std::string > r)
   DBG2("^^^^^^^^^^^^^^^^^^^^^^^^^^^");
   DBG2("End of replaying of old log");
 }
+
+void wid_console_flush(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! wid_console_window) {
+    return;
+  }
+
+  //
+  // Easier to see progress on windows where there is no console
+  //
+  if (g_opt_debug1) {
+    wid_visible(g, wid_console_window);
+    wid_raise(g, wid_console_window);
+    wid_update(g, wid_console_window);
+    sdl_flush_display(g, true);
+  }
+}

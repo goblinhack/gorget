@@ -2,15 +2,47 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <stdlib.h>
+#include <sys/stat.h>
+
 #include "my_ascii.hpp"
 #include "my_backtrace.hpp"
 #include "my_callstack.hpp"
 #include "my_console.hpp"
 #include "my_log.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_wid_botcon.hpp"
 #include "my_wid_console.hpp"
 #include "my_wid_topcon.hpp"
+
+//
+// Where all logs go
+//
+std::string log_dir_create(void)
+{
+  const char *appdata;
+  appdata = getenv("APPDATA");
+  if (! appdata || ! appdata[ 0 ]) {
+    appdata = "appdata";
+  }
+
+#ifdef _WIN32
+  mkdir(appdata);
+#else
+  mkdir(appdata, 0700);
+#endif
+
+  char *dir = dynprintf("%s%s%s", appdata, DIR_SEP, "gorget");
+#ifdef _WIN32
+  mkdir(dir);
+#else
+  mkdir(dir, 0700);
+#endif
+  myfree(dir);
+
+  return std::string(appdata);
+}
 
 void log_(const char *fmt, va_list args)
 {
