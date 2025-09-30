@@ -337,11 +337,7 @@ void err_wrapper(const char *fmt, ...)
 
   wid_unset_focus(g);
   wid_unset_focus_lock();
-
-  if (wid_console_window && ! wid_is_visible(wid_console_window)) {
-    wid_visible(g, wid_console_window);
-    wid_raise(g, wid_console_window);
-  }
+  wid_console_raise(g);
 
   nested_error = false;
 

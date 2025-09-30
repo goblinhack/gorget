@@ -22,8 +22,6 @@ void        BOTCON_NEW_LINE(void);
 void        cleanup(void);
 void        restart(Gamep, const std::string);
 void        reset_globals(void);
-void        wid_console_flush(void);
-void        wid_console_flush(Gamep);
 void        common_error_handler(const std::string &error);
 void        ctrlc_handler(int sig);
 void        error_handler(const std::string &error);

@@ -73,12 +73,7 @@ void restart(Gamep g, std::string restart_arg)
     argument_line += argv[ i ];
   }
 
-  if (g_opt_debug1) {
-    wid_visible(g, wid_console_window);
-    wid_raise(g, wid_console_window);
-    wid_update(g, wid_console_window);
-    sdl_flush_display(g, true);
-  }
+  wid_console_flush(g);
 
   bool use_system;
 

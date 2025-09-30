@@ -2753,6 +2753,7 @@ void wid_toggle_hidden(Gamep g, Widp w)
 
   if (w->hidden) {
     wid_visible(g, w);
+    wid_raise(g, w);
   } else {
     wid_hide(g, w);
   }
@@ -3739,7 +3740,13 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
 
   Widp w {};
 
+  //
+  // Pass to the game first
+  //
   if (! g_errored) {
+    //
+    // Unless in an errored condition
+    //
     if (game_input(g, key)) {
       return true;
     }
@@ -3751,21 +3758,24 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
     LOG("Open console");
 
     if (g_errored) {
+      //
+      // Console is always present until errors are cleared
+      //
       auto console_key = ::to_string(game_key_console_get(g));
       CON("To continue, 'clear errored' and then press <%s>", console_key.c_str());
 
-      if (wid_console_window && ! wid_is_visible(wid_console_window)) {
-        wid_visible(g, wid_console_window);
-      }
+      wid_console_raise(g);
     } else {
+      //
+      // Toggle console on/off
+      //
       wid_toggle_hidden(g, wid_console_window);
     }
-    wid_raise(g, wid_console_window);
 
     //
     // Need this so the console gets focus over the menu.
     //
-    if (w->visible) {
+    if (w && w->visible) {
       wid_set_focus(g, w);
       wid_focus_lock(g, w);
     } else {
@@ -3783,24 +3793,21 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
   switch ((int) key->sym) {
     case '?' :
       if (g_errored) {
-        if (wid_console_window && ! wid_is_visible(wid_console_window)) {
-          wid_visible(g, wid_console_window);
-          wid_raise(g, wid_console_window);
-        }
+        wid_console_raise(g);
       } else {
         wid_cfg_keyboard_select(g);
       }
       break;
 
     case SDLK_ESCAPE :
-      if (w->visible) {
+      if (w && w->visible) {
         wid_hide(g, w);
       }
 
       //
       // Need this so the console gets focus over the menu.
       //
-      if (w->visible) {
+      if (w && w->visible) {
         wid_set_focus(g, w);
         wid_focus_lock(g, w);
       } else {
@@ -3818,12 +3825,10 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
     case SDLK_LEFT :   wid_set_prev_focus(g); break;
 
     default :
-      {
-        if (wid_console_window && wid_console_window->visible) {
-          wid_console_receive_input(g, wid_console_input_line, key);
-        }
-        break;
+      if (wid_console_window && wid_console_window->visible) {
+        wid_console_receive_input(g, wid_console_input_line, key);
       }
+      break;
   }
 
   return true;

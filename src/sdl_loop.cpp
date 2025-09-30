@@ -66,10 +66,7 @@ void sdl_loop(Gamep g)
         CON(UI_IMPORTANT_FMT_STR "An error occurred. Check the logs above." UI_RESET_FMT);
         auto key = ::to_string(game_key_console_get(g));
         CON("To continue playing at your own risk, 'clear errored' and then press <%s>", key.c_str());
-        if (wid_console_window && ! wid_is_visible(wid_console_window)) {
-          wid_visible(g, wid_console_window);
-          wid_raise(g, wid_console_window);
-        }
+        wid_console_raise(g);
       }
     }
     old_g_errored = g_errored;

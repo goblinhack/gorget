@@ -76,9 +76,18 @@ static void parse_args(int argc, char *argv[])
   //
   // Parse format args
   //
-  LOG("Parse command line arguments for '%s'", argv[ 0 ]);
+  if (g_opt_debug1) {
+    CON("Parse command line arguments for '%s'", argv[ 0 ]);
+  } else {
+    LOG("Parse command line arguments for '%s'", argv[ 0 ]);
+  }
+
   for (i = 1; i < argc; i++) {
-    LOG("+ argument: \"%s\"", argv[ i ]);
+    if (g_opt_debug1) {
+      CON("+ argument: \"%s\"", argv[ i ]);
+    } else {
+      LOG("+ argument: \"%s\"", argv[ i ]);
+    }
   }
 
   if (argc) {
@@ -390,14 +399,7 @@ int main(int argc, char *argv[])
     if (! wid_console_init(g)) {
       ERR("Wid_console init");
     }
-    wid_toggle_hidden(g, wid_console_window);
     wid_console_flush(g);
-
-    if (g_opt_debug1) {
-      wid_visible(g, wid_console_window);
-      wid_raise(g, wid_console_window);
-      wid_update(g, wid_console_window);
-    }
   }
 
   if (! g_opt_tests) {

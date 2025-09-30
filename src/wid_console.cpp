@@ -292,9 +292,19 @@ void wid_console_flush(Gamep g)
   // Easier to see progress on windows where there is no console
   //
   if (g_opt_debug1) {
-    wid_visible(g, wid_console_window);
-    wid_raise(g, wid_console_window);
-    wid_update(g, wid_console_window);
+    wid_console_raise(g);
     sdl_flush_display(g, true);
   }
+}
+
+void wid_console_raise(Gamep g)
+{
+  TRACE_NO_INDENT();
+  if (! wid_console_window) {
+    return;
+  }
+
+  wid_visible(g, wid_console_window);
+  wid_raise(g, wid_console_window);
+  wid_update(g, wid_console_window);
 }

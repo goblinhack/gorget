@@ -7,7 +7,8 @@
 void wid_console_fini(Gamep);
 bool wid_console_init(Gamep);
 void wid_console_log(std::string s);
-void wid_console_hello(Gamep);
+void wid_console_raise(Gamep);
+void wid_console_flush(Gamep);
 
 #include "my_wid.hpp"
 
