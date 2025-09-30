@@ -2,6 +2,11 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <iostream>
+#include <signal.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #include "my_callstack.hpp"
