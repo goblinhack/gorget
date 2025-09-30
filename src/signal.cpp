@@ -133,7 +133,7 @@ static void debug_crash_handler(int sig)
 }
 #endif
 
-void common_error_handler(std::string &tech_support)
+static void common_error_handler(std::string &tech_support)
 {
   TRACE_NO_INDENT();
 

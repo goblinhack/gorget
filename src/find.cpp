@@ -15,7 +15,7 @@
 //
 // Find the binary we are running.
 //
-void find_executable(void)
+static void find_executable(void)
 {
   TRACE_NO_INDENT();
 
@@ -149,7 +149,7 @@ cleanup:
 //
 // Find all installed file locations.
 //
-void find_exec_dir(void)
+static void find_exec_dir(void)
 {
   TRACE_NO_INDENT();
   find_executable();
@@ -177,7 +177,7 @@ void find_exec_dir(void)
 //
 // Hunt down the data/ dir.
 //
-void find_data_dir(void)
+static void find_data_dir(void)
 {
   TRACE_NO_INDENT();
   g_data_path = dynprintf("%sdata" DIR_SEP, g_exec_dir);
@@ -198,7 +198,7 @@ void find_data_dir(void)
 //
 // Hunt down the fonts/ dir.
 //
-void find_ttf_dir(void)
+static void find_ttf_dir(void)
 {
   TRACE_NO_INDENT();
   g_ttf_path = dynprintf("%sdata" DIR_SEP "ttf" DIR_SEP, g_exec_dir);
@@ -219,7 +219,7 @@ void find_ttf_dir(void)
 //
 // Hunt down the gfx/ dir.
 //
-void find_gfx_dir(void)
+static void find_gfx_dir(void)
 {
   TRACE_NO_INDENT();
   g_gfx_path = dynprintf("%sdata" DIR_SEP "gfx" DIR_SEP, g_exec_dir);
