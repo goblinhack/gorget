@@ -65,7 +65,6 @@ public:
 
   bool debug_mode             = {};
   bool fps_counter            = {};
-  bool gfx_allow_highdpi      = {};
   bool gfx_borderless         = {};
   bool gfx_fullscreen         = {};
   bool gfx_fullscreen_desktop = {};
@@ -322,7 +321,6 @@ void Config::reset(void)
   fps_counter            = false;
   map_fbo_height         = {};
   map_fbo_width          = {};
-  gfx_allow_highdpi      = false;
   gfx_borderless         = true;
   gfx_fullscreen_desktop = true;
   gfx_fullscreen         = false;
@@ -1475,25 +1473,6 @@ void game_fps_value_set(Gamep g, int val)
     return;
   }
   g->fps_value = val;
-}
-
-bool game_gfx_allow_highdpi_get(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return false;
-  }
-  return g->config.gfx_allow_highdpi;
-}
-void game_gfx_allow_highdpi_set(Gamep g, bool val)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  g->config.gfx_allow_highdpi = val;
 }
 
 bool game_gfx_borderless_get(Gamep g)

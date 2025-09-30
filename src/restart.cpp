@@ -39,7 +39,7 @@ void restart(Gamep g, std::string restart_arg)
   TRACE_NO_INDENT();
 
   char       *executable;
-  const char *argv[ g_argc + 2 ];
+  const char *argv[ MAXSHORTSTR /* in pointers, should be enough */ ];
   int         argc = 0;
   int         i;
 

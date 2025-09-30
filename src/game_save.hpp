@@ -62,7 +62,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
 
   WRITE_MAGIC(CONFIG_MAGIC_3);
 
-  out << bits(my.t.gfx_allow_highdpi);
   out << bits(my.t.gfx_borderless);
   out << bits(my.t.gfx_fullscreen);
   out << bits(my.t.gfx_fullscreen_desktop);

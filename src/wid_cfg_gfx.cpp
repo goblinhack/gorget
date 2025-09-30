@@ -127,21 +127,6 @@ static bool wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y,
   return true;
 }
 
-static bool wid_cfg_gfx_allow_highdpi_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
-{
-  TRACE_NO_INDENT();
-  CON("Toggle gfx allow highdpi");
-
-  if (game_gfx_allow_highdpi_get(g)) {
-    game_gfx_allow_highdpi_unset(g);
-  } else {
-    game_gfx_allow_highdpi_set(g);
-  }
-
-  wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
-  return true;
-}
-
 static bool wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
@@ -666,43 +651,6 @@ void wid_cfg_gfx_select(Gamep g)
       wid_set_text(w, "True");
     } else {
       wid_set_text(w, "False");
-    }
-  }
-
-  if (0) {
-    /////////////////////////////////////////////////////////////////////////
-    // High DPI
-    //
-    // Seems to have issues with mouse position, so disabled
-    /////////////////////////////////////////////////////////////////////////
-    y_at++;
-    {
-      TRACE_NO_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_square_button(g, p, "High DPI res");
-
-      spoint tl(1, y_at);
-      spoint br(width / 2, y_at + 2);
-      wid_set_shape_none(w);
-      wid_set_pos(w, tl, br);
-      wid_set_text_lhs(w, true);
-      wid_set_text(w, "High DPI resolution");
-    }
-    {
-      TRACE_NO_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_menu_button(g, p, "High DPI value");
-
-      spoint tl(23, y_at);
-      spoint br(37, y_at + 2);
-      wid_set_pos(w, tl, br);
-      wid_set_on_mouse_up(g, w, wid_cfg_gfx_allow_highdpi_toggle);
-
-      if (game_gfx_allow_highdpi_get(g)) {
-        wid_set_text(w, "True");
-      } else {
-        wid_set_text(w, "False");
-      }
     }
   }
 

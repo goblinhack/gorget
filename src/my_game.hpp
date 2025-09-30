@@ -80,10 +80,6 @@ void game_fps_counter_unset(Gamep);
 int  game_fps_value_get(Gamep);
 void game_fps_value_set(Gamep, int);
 
-bool game_gfx_allow_highdpi_get(Gamep);
-void game_gfx_allow_highdpi_set(Gamep, bool = true);
-void game_gfx_allow_highdpi_unset(Gamep);
-
 bool game_gfx_borderless_get(Gamep);
 void game_gfx_borderless_set(Gamep);
 void game_gfx_borderless_unset(Gamep);

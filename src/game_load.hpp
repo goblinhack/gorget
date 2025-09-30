@@ -78,7 +78,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
 
   READ_MAGIC("config part 3", CONFIG_MAGIC_3);
 
-  in >> bits(my.t.gfx_allow_highdpi);
   in >> bits(my.t.gfx_borderless);
   in >> bits(my.t.gfx_fullscreen);
   in >> bits(my.t.gfx_fullscreen_desktop);
@@ -133,7 +132,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: config_pix_width       = %d", my.t.config_pix_width);
   LOG("Read config: debug_mode             = %d", my.t.debug_mode);
   LOG("Read config: fps_counter            = %d", my.t.fps_counter);
-  LOG("Read config: gfx_allow_highdpi      = %d", my.t.gfx_allow_highdpi);
   LOG("Read config: gfx_borderless         = %d", my.t.gfx_borderless);
   LOG("Read config: gfx_fullscreen         = %d", my.t.gfx_fullscreen);
   LOG("Read config: gfx_fullscreen_desktop = %d", my.t.gfx_fullscreen_desktop);

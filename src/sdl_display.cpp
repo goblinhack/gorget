@@ -243,21 +243,6 @@ uint8_t sdl_display_init(Gamep g)
     video_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
   }
 
-  if (game_gfx_allow_highdpi_get(g)) {
-    //
-    // For a lo pixel game this makes no sense as the frame
-    // buffers are really large and slows things down.
-    //
-    LOG("SDL: Calling SDL_GetDisplayDPI");
-    float dpi;
-    if (SDL_GetDisplayDPI(0, nullptr, &dpi, nullptr) == 0) {
-      video_flags |= SDL_WINDOW_ALLOW_HIGHDPI;
-      LOG("SDL: Set SDL_WINDOW_ALLOW_HIGHDPI");
-    } else {
-      ERR("SDL: Cannot enable high DPI: '%s'", SDL_GetError());
-    }
-  }
-
   if (g_opt_do_level_select_gen || g_opt_do_room_gen || g_opt_do_level_gen) {
     video_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_ALWAYS_ON_TOP;
   }
@@ -273,13 +258,8 @@ uint8_t sdl_display_init(Gamep g)
   }
 
   int w, h;
-  if (video_flags & SDL_WINDOW_ALLOW_HIGHDPI) {
-    SDL_GL_GetDrawableSize(sdl.window, &w, &h);
-    LOG("SDL: Created dpi window size %ux%u", w, h);
-  } else {
-    SDL_GetWindowSize(sdl.window, &w, &h);
-    LOG("SDL: Created window size %ux%u", w, h);
-  }
+  SDL_GetWindowSize(sdl.window, &w, &h);
+  LOG("SDL: Created window size %ux%u", w, h);
 
   game_config_pix_width_set(g, w);
   game_config_pix_height_set(g, h);
