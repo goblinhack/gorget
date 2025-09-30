@@ -3,9 +3,7 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
 #include "my_tp_callbacks.hpp"
 
 Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)

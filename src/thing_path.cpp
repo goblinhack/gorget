@@ -2,12 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_ptrcheck.hpp"
-#include "my_tile.hpp"
-#include "my_tp_callbacks.hpp"
 
 //
 // Shorten paths, but don't cut corners

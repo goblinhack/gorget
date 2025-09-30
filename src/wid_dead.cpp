@@ -9,7 +9,6 @@
 #include "my_sound.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"
-#include "my_wid_popup.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_dead_window;

@@ -22,7 +22,6 @@
 #include <memory>
 
 #include "my_backtrace.hpp"
-#include "my_main.hpp"
 #include "my_sprintf.hpp"
 
 void Backtrace::init(void)

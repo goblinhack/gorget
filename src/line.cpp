@@ -3,7 +3,6 @@
 //
 
 #include "my_line.hpp"
-#include "my_spoint.hpp"
 
 #include <math.h>
 #include <vector>

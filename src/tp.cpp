@@ -7,7 +7,6 @@
 #include "my_dice.hpp"
 #include "my_dice_roll.hpp"
 #include "my_gl.hpp"
-#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 #include "my_tp_callbacks.hpp"

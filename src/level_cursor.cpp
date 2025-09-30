@@ -4,7 +4,6 @@
 
 #include "my_callstack.hpp"
 #include "my_dmap.hpp"
-#include "my_game.hpp"
 #include "my_level.hpp"
 
 static std::vector< spoint > cursor_path;

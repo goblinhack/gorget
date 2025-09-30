@@ -6,7 +6,6 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_leftbar;

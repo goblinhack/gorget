@@ -5,8 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_tp_callbacks.hpp"
 
 #include <iostream>
 

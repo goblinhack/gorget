@@ -6,7 +6,6 @@
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
-#include "my_ptrcheck.hpp"
 
 //
 // We focus on the current level if on the level select screen.

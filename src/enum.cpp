@@ -2,11 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_tps.hpp"
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)

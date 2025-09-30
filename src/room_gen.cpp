@@ -8,7 +8,6 @@
 #include "my_dice.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
 #include "my_random.hpp"
 
 static const int MAX_ROOM_CORRIDOR = 3;

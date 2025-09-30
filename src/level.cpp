@@ -4,12 +4,8 @@
 
 #include <format>
 
-#include "my_callstack.hpp"
 #include "my_charmap.hpp"
-#include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_ptrcheck.hpp"
 #include "my_test.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"

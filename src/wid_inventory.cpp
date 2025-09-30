@@ -4,13 +4,10 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_string.hpp"
-#include "my_thing.hpp"
 #include "my_wids.hpp"
 
 static Widp wid_inventory_window;

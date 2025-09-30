@@ -8,7 +8,6 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_wid_popup.hpp"
 #include "my_wid_warning.hpp"
 #include "my_wids.hpp"
 

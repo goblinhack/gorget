@@ -3,7 +3,6 @@
 //
 
 #include "my_cave.hpp"
-#include "my_game.hpp"
 #include "my_random.hpp"
 #include "my_spoint.hpp"
 

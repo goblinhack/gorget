@@ -3,10 +3,8 @@
 //
 
 #include "my_console.hpp"
-#include "my_game.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sprintf.hpp"
-#include "my_string.hpp"
 #include "my_test.hpp"
 #include "my_tests.hpp"
 #include "my_time.hpp"

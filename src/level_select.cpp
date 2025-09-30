@@ -4,14 +4,11 @@
 
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
-#include "my_color_defs.hpp"
 #include "my_dice.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 #include "my_sprintf.hpp"
-#include "my_string.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 

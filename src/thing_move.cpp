@@ -4,10 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_ptrcheck.hpp"
 #include "my_tile.hpp"
-#include "my_tp_callbacks.hpp"
 
 //
 // Get thing direction

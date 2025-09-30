@@ -4,15 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_cpp_template.hpp"
-#include "my_fpoint.hpp"
-#include "my_game_popups.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_ptrcheck.hpp"
-#include "my_random.hpp"
-#include "my_sound.hpp"
-#include "my_tile.hpp"
-#include "my_tp_callbacks.hpp"
 
 static bool teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint &out)
 {

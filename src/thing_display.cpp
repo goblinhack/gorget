@@ -6,13 +6,8 @@
 #include "my_color_defs.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_math.hpp"
-#include "my_string.hpp"
-#include "my_tile.hpp"
-#include "my_tp.hpp"
-#include "my_ui.hpp"
 
 void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint *tl, spoint *br,
                       uint16_t *tile_index)

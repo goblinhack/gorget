@@ -6,7 +6,6 @@
 #include "my_dir.hpp"
 #include "my_file.hpp"
 #include "my_ptrcheck.hpp"
-#include "my_ramdisk.hpp"
 #include "my_string.hpp"
 
 #include <libgen.h>

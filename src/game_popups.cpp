@@ -7,7 +7,6 @@
 #include "my_game_popups.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
 #include "my_time.hpp"
 
 void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c)

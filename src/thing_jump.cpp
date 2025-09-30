@@ -4,14 +4,9 @@
 
 #include "my_callstack.hpp"
 #include "my_fpoint.hpp"
-#include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_line.hpp"
-#include "my_main.hpp"
-#include "my_ptrcheck.hpp"
-#include "my_sound.hpp"
 #include "my_tile.hpp"
-#include "my_tp_callbacks.hpp"
 
 //
 // If jumping too far, truncate the jump

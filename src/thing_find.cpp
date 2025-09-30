@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
 
 Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 {

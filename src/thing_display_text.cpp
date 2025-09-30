@@ -9,8 +9,6 @@
 #include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_string.hpp"
-#include "my_tile.hpp"
-#include "my_tp.hpp"
 #include "my_ui.hpp"
 
 void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg,

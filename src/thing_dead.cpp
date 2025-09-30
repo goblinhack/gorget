@@ -8,7 +8,6 @@
 #include "my_string.hpp"
 #include "my_tp_callbacks.hpp"
 #include "my_ui.hpp"
-#include "my_wids.hpp"
 
 //
 // The player has been attacked

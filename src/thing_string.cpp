@@ -6,7 +6,6 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_sprintf.hpp"
-#include "my_thing.hpp"
 
 std::string to_string(Gamep g, Thingp t)
 {
