@@ -356,6 +356,7 @@ static void sdl_msgerr_(const char *fmt, va_list args)
 
 #if SDL_MAJOR_VERSION >= 2
   SDL_Log("%s", buf);
+  CON("SDL: %s", buf);
 
   //
   // Fullscreen sometimes hides the error, so create a temp window

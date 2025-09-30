@@ -688,9 +688,9 @@ bool game_load_last_config(const char *appdata)
     oldptr(MTYPE_GAME, game);
     delete game;
     game = nullptr;
-    reset_globals();
     game = new Game(std::string(appdata));
     newptr(MTYPE_GAME, game, "game (2)");
+    reset_globals();
     game_save_config(game);
     g_errored = false;
   }
