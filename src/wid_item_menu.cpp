@@ -34,14 +34,50 @@ static bool wid_item_menu_destroy(Gamep g)
     return false;
   }
 
-  wid_inventory_show(g, v, l, player);
+  if (thing_inventory_is_empty(g, v, l, player)) {
+    //
+    // If empty, just go back to playing
+    //
+    game_state_change(g, STATE_PLAYING, "close inventory");
+  } else {
+    //
+    // Re-open the inventory
+    //
+    wid_inventory_show(g, v, l, player);
+  }
+
   return true;
 }
 
 static bool wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  TOPCON("TODO drop");
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return false;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return false;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  auto item = wid_get_thing_context(g, v, w, 0);
+  if (! item) {
+    return false;
+  }
+
+  if (! thing_drop_item(g, v, l, item, player)) {
+    sound_play(g, "error");
+    return false;
+  }
+
   return wid_item_menu_destroy(g);
 }
 
@@ -101,7 +137,7 @@ static bool wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
   return false;
 }
 
-void wid_item_menu_select(Gamep g, Levelsp v, Thingp it)
+void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 {
   TRACE_NO_INDENT();
   LOG("Item menu");
@@ -114,11 +150,11 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp it)
   auto box_step    = 3;
   auto menu_height = 2;
 
-  if (thing_is_item_droppable(it)) {
+  if (thing_is_item_droppable(item)) {
     menu_height += box_step;
   }
 
-  if (thing_is_item_equipable(it)) {
+  if (thing_is_item_equipable(item)) {
     menu_height += box_step;
   }
 
@@ -142,7 +178,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp it)
 
   int y_at = 0;
 
-  if (thing_is_item_droppable(it)) {
+  if (thing_is_item_droppable(item)) {
     TRACE_NO_INDENT();
     auto p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto w = wid_menu_button(g, p, "Drop");
@@ -152,10 +188,11 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp it)
     wid_set_on_mouse_up(g, w, wid_item_menu_drop);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_FMT_STR "rop");
+    wid_set_thing_context(g, v, w, item);
     y_at += box_step;
   }
 
-  if (thing_is_item_equipable(it)) {
+  if (thing_is_item_equipable(item)) {
     TRACE_NO_INDENT();
     auto p = wid_item_menu_window->wid_text_area->wid_text_area;
     auto w = wid_menu_button(g, p, "Equip");
@@ -165,6 +202,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp it)
     wid_set_on_mouse_up(g, w, wid_item_menu_equip);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "E" UI_FMT_STR "quip");
+    wid_set_thing_context(g, v, w, item);
     y_at += box_step;
   }
 

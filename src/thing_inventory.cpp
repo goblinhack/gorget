@@ -6,6 +6,23 @@
 #include "my_level.hpp"
 
 //
+// Anything in the inventory
+//
+bool thing_inventory_is_empty(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
+{
+  TRACE_NO_INDENT();
+
+  if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
+    THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
+    return false;
+  }
+
+  FOR_ALL_INVENTORY_ITEMS(g, v, l, player_or_monst, item) { return false; }
+
+  return true;
+}
+
+//
 // Can we combine identical items?
 //
 bool thing_inventory_item_mergeable(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b)

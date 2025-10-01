@@ -451,6 +451,7 @@ bool thing_is_levitating(Thingp);
 bool thing_is_light_source(Thingp);
 bool thing_is_loggable(Thingp);
 bool thing_is_minion(Thingp);
+bool thing_inventory_is_empty(Gamep, Levelsp, Levelp, Thingp);
 bool thing_is_mob(Thingp);
 bool thing_is_mob1(Thingp);
 bool thing_is_mob2(Thingp);
