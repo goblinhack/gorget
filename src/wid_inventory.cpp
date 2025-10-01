@@ -12,6 +12,10 @@
 
 static Widp wid_inventory_window;
 
+static Widp wid_shortcut[ THING_INVENTORY_MAX ];
+static Widp wid_item[ THING_INVENTORY_MAX ];
+static Widp wid_icon[ THING_INVENTORY_MAX ];
+
 static void wid_inventory_destroy(Gamep g)
 {
   TRACE_NO_INDENT();
@@ -26,6 +30,14 @@ static void wid_inventory_destroy(Gamep g)
 static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
+
+  for (auto n = 0; n < THING_INVENTORY_MAX; n++) {
+    w = wid_item[ n ];
+    if (w != wid_over) {
+      wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+      wid_set_color(w, WID_COLOR_BG, GRAY20);
+    }
+  }
 
   auto v = game_levels_get(g);
   if (! v) {
@@ -96,6 +108,54 @@ static bool wid_inventory_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
             TRACE_NO_INDENT();
             auto c = wid_event_to_char(key);
             switch (c) {
+              case 'a' :
+              case 'b' :
+              case 'c' :
+              case 'd' :
+              case 'e' :
+              case 'f' :
+              case 'g' :
+              case 'h' :
+              case 'i' :
+              case 'j' :
+              case 'k' :
+              case 'l' :
+              case 'm' :
+              case 'n' :
+              case 'o' :
+              case 'p' :
+              case 'q' :
+              case 'r' :
+              case 's' :
+              case 't' :
+              case 'u' :
+              case 'v' :
+              case 'w' :
+              case 'x' :
+              case 'y' :
+              case 'z' :
+                for (auto n = 0; n < THING_INVENTORY_MAX; n++) {
+                  w = wid_item[ n ];
+                  if (w) {
+                    wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+                    wid_set_color(w, WID_COLOR_BG, GRAY20);
+                  }
+                }
+
+                wid_unset_focus(g);
+
+                w = wid_icon[ c - 'a' ];
+                if (w) {
+                  wid_inventory_mouse_up(g, w, -1, -1, 0);
+                }
+
+                w = wid_item[ c - 'a' ];
+                if (w) {
+                  wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+                  wid_set_color(w, WID_COLOR_BG, GREEN);
+                  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+                }
+                break;
               case '\n' :
               case SDLK_ESCAPE :
                 {
@@ -181,6 +241,10 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     y_at += 2;
   }
 
+  memset(wid_shortcut, 0, sizeof(wid_shortcut));
+  memset(wid_icon, 0, sizeof(wid_icon));
+  memset(wid_item, 0, sizeof(wid_item));
+
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player, slot, item)
   {
     auto tp = item ? thing_tp(item) : nullptr;
@@ -201,10 +265,13 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
         if (item) {
           wid_set_thing_context(g, v, w, item);
-          wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
-          wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
           wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
         }
+
+        wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
+        wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+
+        wid_icon[ _n_ ] = w;
       }
     }
 
@@ -231,10 +298,13 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
       if (item) {
         wid_set_thing_context(g, v, w, item);
-        wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
-        wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
         wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
       }
+
+      wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
+      wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+
+      wid_shortcut[ _n_ ] = w;
     }
 
     //
@@ -266,10 +336,13 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
         if (item) {
           wid_set_thing_context(g, v, w, item);
-          wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
-          wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
           wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
         }
+
+        wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
+        wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+
+        wid_item[ _n_ ] = w;
       }
     }
 
