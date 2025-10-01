@@ -12,6 +12,11 @@
 
 static WidPopup *wid_item_menu_window;
 
+//
+// Used for keypresses, so we know which item to operate on
+//
+static Thingp g_item;
+
 static bool wid_item_menu_destroy(Gamep g)
 {
   TRACE_NO_INDENT();
@@ -68,7 +73,7 @@ static bool wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button)
     return false;
   }
 
-  auto item = wid_get_thing_context(g, v, w, 0);
+  auto item = g_item;
   if (! item) {
     return false;
   }
@@ -142,6 +147,8 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   TRACE_NO_INDENT();
   LOG("Item menu");
 
+  g_item = item;
+
   if (wid_item_menu_window) {
     wid_item_menu_destroy(g);
   }
@@ -188,7 +195,6 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
     wid_set_on_mouse_up(g, w, wid_item_menu_drop);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_FMT_STR "rop");
-    wid_set_thing_context(g, v, w, item);
     y_at += box_step;
   }
 
@@ -202,7 +208,6 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
     wid_set_on_mouse_up(g, w, wid_item_menu_equip);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "E" UI_FMT_STR "quip");
-    wid_set_thing_context(g, v, w, item);
     y_at += box_step;
   }
 
