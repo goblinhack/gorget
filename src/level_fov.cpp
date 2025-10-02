@@ -52,6 +52,41 @@ static const int matrix_table[ 8 ][ 4 ] = {
     {-1, 0, 0, -1}, {0, -1, -1, 0}, {0, 1, -1, 0}, {1, 0, 0, -1},
 };
 
+//
+// Something blocking the light?
+//
+static bool level_fov_light_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, spoint pov)
+{
+  FOR_ALL_THINGS_AT(g, v, l, it, pov)
+  {
+    if (thing_is_open(it)) {
+      continue;
+    }
+
+    if (thing_is_light_blocker(it)) {
+      return true;
+    }
+  }
+
+  return false;
+
+#if 0
+    if (me->is_monst()) {
+      if (! light_blocker) {
+        light_blocker = is_light_blocker_for_monst(p);
+      }
+
+      if (! light_blocker) {
+        if (! me->is_player()) {
+          if (! me->is_able_to_see_in_magical_darkness()) {
+            light_blocker = is_darkness(p);
+          }
+        }
+      }
+    }
+#endif
+}
+
 static void level_fov_set(FovMap *m, spoint pov, bool val)
 {
 #ifdef OPT_DEV
@@ -66,9 +101,15 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
 
 // Cast visiblity using shadowcasting.
 void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
-                  FovMap *fov_currently_can_see, FovMap *fov_have_ever_seen, spoint pov,
-                  int    distance_from_origin, // Polar distance_from_origin from POV.
-                  double view_slope_high, double view_slope_low, int max_radius, int octant, bool light_walls)
+                  FovMap      *fov_currently_can_see,      //
+                  FovMap      *fov_have_ever_seen,         //
+                  const spoint pov,                        //
+                  const int    distance_from_origin,       // Polar distance_from_origin from POV.
+                  double       view_slope_high,            //
+                  double       view_slope_low,             //
+                  const int    max_radius,                 //
+                  const int    octant,                     //
+                  const bool   light_walls)
 {
   const int xx             = matrix_table[ octant ][ 0 ];
   const int xy             = matrix_table[ octant ][ 1 ];
@@ -112,24 +153,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
     //
     // Treat player and monster blocking differently so the player can use cover
     //
-    auto light_blocker = level_is_light_blocker(g, v, l, p);
-#if 0
-    if (me->is_monst()) {
-      if (! light_blocker) {
-        light_blocker = is_light_blocker_for_monst(p);
-      }
-
-#if TODO
-      if (! light_blocker) {
-        if (! me->is_player()) {
-          if (! me->is_able_to_see_in_magical_darkness()) {
-            light_blocker = is_darkness(p);
-          }
-        }
-      }
-#endif
-    }
-#endif
+    auto light_blocker = level_fov_light_blocker_at(g, v, l, me, p);
 
     if (angle * angle + distance_from_origin * distance_from_origin <= radius_squared
         && (light_walls || ! light_blocker)) {
@@ -173,7 +197,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
 }
 
 void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_currently_can_see, FovMap *fov_have_ever_seen,
-               spoint pov, int max_radius, bool light_walls)
+               spoint pov, int max_radius)
 {
   TRACE_NO_INDENT();
 
@@ -181,6 +205,8 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_currently_ca
     ERR("out of bounds");
     return;
   }
+
+  const bool light_walls = thing_is_player(me);
 
   memset(fov_currently_can_see, 0, sizeof(*fov_currently_can_see));
 

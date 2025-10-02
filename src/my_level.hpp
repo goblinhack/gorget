@@ -504,6 +504,7 @@ void level_debug(Gamep, Levelsp, Levelp);
 void level_init(Gamep, Levelsp, Levelp, LevelNum);
 void level_tile_update_set(Gamep, Levelsp, Levelp, spoint);
 void level_tile_update(Gamep, Levelsp, Levelp);
+void level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius);
 
 typedef enum {
   LEVEL_TYPE_NORMAL,

@@ -60,6 +60,7 @@ bool tp_load_door_type_secret(void)
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_fire);
   tp_flag_set(tp, is_obs_to_jumping_onto);
+  tp_flag_set(tp, is_light_blocker);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
