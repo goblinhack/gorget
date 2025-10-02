@@ -56,6 +56,13 @@ typedef union {
 #define THING_INVENTORY_MAX 26
 
 //
+// Field of view for a monster or player
+//
+typedef struct FovMap_ {
+  uint8_t can_see[ MAP_WIDTH ][ MAP_HEIGHT ];
+} FovMap;
+
+//
 // Some kind of event that befalls a thing. Usually an attack
 //
 typedef struct ThingEvent_ {
@@ -146,50 +153,73 @@ typedef struct Thing_ {
   //////////////////////////////////////////////////////////////
 
   //
-  // Unique ID with some entropy built in
-  //
-  ThingId id;
-  //
-  // If owned, by whom
-  //
-  ThingId owner_id;
-  //
-  // For players and monsters
-  //
-  ThingAiId ai_id;
-  //
-  // Map co-ords.
-  //
-  spoint at;
-  //
-  // Which level am I on?
-  //
-  LevelNum level_num;
-  //
-  // Previous map co-ords. Does not change when the move finishes.
-  //
-  spoint old_at;
-  //
-  // Previous map co-ords used for interpolation when moving. Changes when
-  // the move finishes.
-  //
-  spoint moving_from;
-  //
-  // Last location we were pushed onto the map.
-  //
-  spoint last_pushed_at;
-  //
   // Direction
   //
   uint8_t dir;
+  //
+  // The current tiles[] index for this object
+  //
+  uint8_t anim_index;
+  //
+  // Keeps track of counters in the level this thing has modified.
+  //
+  uint8_t count[ THING_FLAG_ENUM_MAX ];
+  //
+  // Snuffed it.
+  //
+  uint8_t _is_dead : 1;
+  //
+  // Was set fire to.
+  //
+  uint8_t _is_burning : 1;
+  //
+  // Snuffed it and is a corpse.
+  //
+  uint8_t _is_corpse : 1;
+  //
+  // If a thing has died and leaves no corpse, schedule it to be removed from the game.
+  //
+  uint8_t _is_scheduled_for_cleanup : 1;
+  //
+  // Zzz
+  //
+  uint8_t _is_sleeping : 1;
+  //
+  // For doors, so we do not need keys forever
+  //
+  uint8_t _is_unlocked : 1;
+  //
+  // For doors, chests etc...
+  //
+  uint8_t _is_open : 1;
+  //
+  // Is being carried
+  //
+  uint8_t _is_carried : 1;
+  //
+  // Pushed onto the map?
+  //
+  uint8_t _is_on_map : 1;
+  //
+  // Currently moving between tiles. The thing is already at the destination.
+  //
+  uint8_t _is_moving : 1;
+  //
+  // Currently teleporting between tiles. The thing is already at the destination.
+  //
+  uint8_t _is_teleporting : 1;
+  //
+  // Currently jumping between tiles. The thing is already at the destination.
+  //
+  uint8_t _is_jumping : 1;
   //
   // Idle etc...
   //
   ThingAnim anim_type;
   //
-  // The current tiles[] index for this object
+  // Which level am I on?
   //
-  uint8_t anim_index;
+  LevelNum level_num;
   //
   // Current tile.
   //
@@ -202,10 +232,6 @@ typedef struct Thing_ {
   // Move speed, with 100 being normal. Updated at start of tick.
   //
   int16_t _speed;
-  //
-  // Weight in grams. Impacts things like grass being crushed.
-  //
-  int32_t _weight;
   //
   // Temperature in celsius.
   //
@@ -272,65 +298,46 @@ typedef struct Thing_ {
   //
   uint16_t tick;
   //
-  // Interpolated co-ords in pixels
+  // Unique ID with some entropy built in
   //
-  spoint pix_at;
+  ThingId id;
+  //
+  // If owned, by whom
+  //
+  ThingId owner_id;
+  //
+  // For players and monsters
+  //
+  ThingAiId ai_id;
+  //
+  // Weight in grams. Impacts things like grass being crushed.
+  //
+  int32_t _weight;
   //
   // Increases per tick and when it reaches 1, allows the thing to move
   //
   float thing_dt;
   //
-  // Keeps track of counters in the level this thing has modified.
+  // Interpolated co-ords in pixels
   //
-  uint8_t count[ THING_FLAG_ENUM_MAX ];
+  spoint pix_at;
   //
-  // Snuffed it.
+  // Map co-ords.
   //
-  bool _is_dead : 1;
+  spoint at;
   //
-  // Was set fire to.
+  // Previous map co-ords. Does not change when the move finishes.
   //
-  bool _is_burning : 1;
+  spoint old_at;
   //
-  // Snuffed it and is a corpse.
+  // Previous map co-ords used for interpolation when moving. Changes when
+  // the move finishes.
   //
-  bool _is_corpse : 1;
+  spoint moving_from;
   //
-  // If a thing has died and leaves no corpse, schedule it to be removed from the game.
+  // Last location we were pushed onto the map.
   //
-  bool _is_scheduled_for_cleanup : 1;
-  //
-  // Zzz
-  //
-  bool _is_sleeping : 1;
-  //
-  // For doors, so we do not need keys forever
-  //
-  bool _is_unlocked : 1;
-  //
-  // For doors, chests etc...
-  //
-  bool _is_open : 1;
-  //
-  // Is being carried
-  //
-  bool _is_carried : 1;
-  //
-  // Pushed onto the map?
-  //
-  bool _is_on_map : 1;
-  //
-  // Currently moving between tiles. The thing is already at the destination.
-  //
-  bool _is_moving : 1;
-  //
-  // Currently teleporting between tiles. The thing is already at the destination.
-  //
-  bool _is_teleporting : 1;
-  //
-  // Currently jumping between tiles. The thing is already at the destination.
-  //
-  bool _is_jumping : 1;
+  spoint last_pushed_at;
 } Thing;
 
 Levelp       thing_level(Gamep, Levelsp, Thingp);
@@ -493,7 +500,7 @@ bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused5(Thingp);
 bool thing_is_unused6(Thingp);
-bool thing_is_unused7(Thingp);
+bool thing_is_light_blocker(Thingp);
 bool thing_is_wait_on_dead_anim(Thingp);
 bool thing_is_walk_through_walls(Thingp);
 bool thing_is_wall(Thingp);

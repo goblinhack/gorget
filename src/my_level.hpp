@@ -59,7 +59,7 @@ typedef struct LevelInfo_ {
   //
   // Is this tile on the main flood fill path from start to exit
   //
-  bool on_path_entrance_to_exit[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t on_path_entrance_to_exit[ MAP_WIDTH ][ MAP_HEIGHT ];
 
   //
   // How many rooms?

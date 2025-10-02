@@ -1990,14 +1990,14 @@ bool thing_is_levitating(Thingp t)
   return tp_flag(thing_tp(t), is_levitating);
 }
 
-bool thing_is_unused7(Thingp t)
+bool thing_is_light_blocker(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused7);
+  return tp_flag(thing_tp(t), is_light_blocker);
 }
 
 bool thing_is_item_equipable(Thingp t)
