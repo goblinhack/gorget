@@ -28,10 +28,10 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_light_blocker);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_fire);
-  tp_flag_set(tp, is_light_blocker);
   tp_flag_set(tp, is_obs_to_jump_over);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
