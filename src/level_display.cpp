@@ -131,8 +131,21 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   {
     for (auto y = v->miny; y < v->maxy; y++) {
       for (auto x = v->minx; x < v->maxx; x++) {
-        for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-          level_display_slot(g, v, l, spoint(x, y), slot, z_depth);
+
+        spoint p(x, y);
+        auto   display_tile = false;
+
+        if (! player) {
+          TOPCON("no player");
+          display_tile = true;
+        } else if (thing_can_see_tile(g, v, l, player, p)) {
+          display_tile = true;
+        }
+
+        if (display_tile) {
+          for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+            level_display_slot(g, v, l, p, slot, z_depth);
+          }
         }
       }
     }

@@ -175,7 +175,7 @@ public:
   int value25 {0};
   int value26 {0};
   int value27 {0};
-  int value28 {0};
+  int vision_distance {0};
   int jump_distance {0};
 
   //
@@ -2068,24 +2068,24 @@ int tp_value27_get(Tpp tp)
   }
   return tp->value27;
 }
-void tp_value28_set(Tpp tp, int val)
+void tp_vision_distance_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->value28 = val;
+  tp->vision_distance = val;
 }
 
-int tp_value28_get(Tpp tp)
+int tp_vision_distance_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return 0;
   }
-  return tp->value28;
+  return tp->vision_distance;
 }
 void tp_jump_distance_set(Tpp tp, int val)
 {

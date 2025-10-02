@@ -3103,44 +3103,44 @@ int thing_value27_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value27 -= val;
 }
-int thing_value28(Thingp t)
+int thing_vision_distance(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value28;
+  return t->_vision_distance;
 }
 
-int thing_value28_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_vision_distance_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value28 = val;
+  return t->_vision_distance = val;
 }
 
-int thing_value28_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_vision_distance_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value28 += val;
+  return t->_vision_distance += val;
 }
 
-int thing_value28_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_vision_distance_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value28 -= val;
+  return t->_vision_distance -= val;
 }
 int thing_jump_distance(Thingp t)
 {

@@ -484,8 +484,8 @@ int  tp_value26_get(Tpp tp);
 void tp_value27_set(Tpp, int val);
 int  tp_value27_get(Tpp tp);
 
-void tp_value28_set(Tpp, int val);
-int  tp_value28_get(Tpp tp);
+void tp_vision_distance_set(Tpp, int val);
+int  tp_vision_distance_get(Tpp tp);
 
 void tp_jump_distance_set(Tpp, int val);
 int  tp_jump_distance_get(Tpp tp);

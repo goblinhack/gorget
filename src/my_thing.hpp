@@ -96,21 +96,39 @@ typedef struct ThingSlot_ {
 } ThingSlot;
 
 //
+// Per thing inventory memory
+//
+typedef struct ThingInventory_ {
+  //
+  // This is the max any player or monster can carry
+  //
+  ThingSlot slots[ THING_INVENTORY_MAX ];
+} ThingInventory;
+
+//
 // Per thing AI memory
 //
 typedef struct ThingAi_ {
   uint8_t in_use : 1;
   //
-  // This is the max any player or monster can carry
+  // What we're carrying
   //
-  ThingSlot slots[ THING_INVENTORY_MAX ];
+  ThingInventory inventory;
+  //
+  // What we can currently see
+  //
+  FovMap fov_can_see_tile;
+  //
+  // What we have ever seen
+  //
+  FovMap fov_has_ever_seen_tile;
 } ThingAi;
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                      \
   if (_g_ && _v_ && _l_)                                                                                             \
     for (auto _ai_ = thing_ai_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                  \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (ThingSlotp _slot_ = &_ai_->slots[ _n_ ]; _slot_; _slot_ = nullptr)                                      \
+        for (ThingSlotp _slot_ = &_ai_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                            \
           for (Thingp _it_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
                loop2 = (Thingp) 0)
 
@@ -118,7 +136,7 @@ typedef struct ThingAi_ {
   if (_g_ && _v_ && _l_)                                                                                             \
     for (auto _ai_ = thing_ai_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                  \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (ThingSlotp _slot_ = &_ai_->slots[ _n_ ]; _slot_; _slot_ = nullptr)                                      \
+        for (ThingSlotp _slot_ = &_ai_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                            \
           for (Thingp _it_ = thing_find_optional(g, v, _slot_->item_id); _it_; _it_ = nullptr)
 
 //
@@ -164,6 +182,14 @@ typedef struct Thing_ {
   // Keeps track of counters in the level this thing has modified.
   //
   uint8_t count[ THING_FLAG_ENUM_MAX ];
+  //
+  // Vision in tiles.
+  //
+  uint8_t _vision_distance;
+  //
+  // Jump distance in tiles.
+  //
+  uint8_t _jump_distance;
   //
   // Snuffed it.
   //
@@ -271,8 +297,6 @@ typedef struct Thing_ {
   int16_t _value25;
   int16_t _value26;
   int16_t _value27;
-  int16_t _value28;
-  int16_t _jump_distance;
   //
   // Lifespan remaining in ticks
   //
@@ -556,6 +580,8 @@ void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int 
 void thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
+bool thing_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
+bool thing_has_ever_seen_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 void thing_update_pos(Gamep, Thingp);
 void thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
 // end sort marker1 {
@@ -618,6 +644,9 @@ int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 int thing_weight(Thingp);
 int thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
+
+int thing_vision_distance(Thingp);
+int thing_vision_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 int thing_temperature(Thingp);
 int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
@@ -769,10 +798,10 @@ int thing_value27_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_value27_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_value27_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value28(Thingp);
-int thing_value28_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value28_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value28_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_vision_distance(Thingp);
+int thing_vision_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_vision_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_vision_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_jump_distance(Thingp);
 int thing_jump_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);

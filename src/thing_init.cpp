@@ -53,6 +53,10 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   thing_speed_set(g, v, l, t, tp_speed_get(tp));
   thing_weight_set(g, v, l, t, tp_weight_get(tp));
   thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
+  thing_vision_distance_set(g, v, l, t, tp_vision_distance_get(tp));
+  thing_jump_distance_set(g, v, l, t, tp_jump_distance_get(tp));
+  thing_health_set(g, v, l, t, tp_health_max_get(tp));
+
   thing_value1_set(g, v, l, t, tp_value1_get(tp));
   thing_value2_set(g, v, l, t, tp_value2_get(tp));
   thing_value3_set(g, v, l, t, tp_value3_get(tp));
@@ -80,9 +84,6 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   thing_value25_set(g, v, l, t, tp_value25_get(tp));
   thing_value26_set(g, v, l, t, tp_value26_get(tp));
   thing_value27_set(g, v, l, t, tp_value27_get(tp));
-  thing_value28_set(g, v, l, t, tp_value28_get(tp));
-  thing_jump_distance_set(g, v, l, t, tp_jump_distance_get(tp));
-  thing_health_set(g, v, l, t, tp_health_max_get(tp));
 
   //
   // More consistent for tests to use max values
