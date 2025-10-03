@@ -112,7 +112,7 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
 // Cast visiblity using shadowcasting.
 void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
                   FovMap      *fov_can_see_tile,           //
-                  FovMap      *fov_has_ever_seen_tile,     //
+                  FovMap      *fov_has_seen_tile,     //
                   const spoint pov,                        //
                   const int    distance_from_origin,       // Polar distance_from_origin from POV.
                   double       view_slope_high,            //
@@ -169,8 +169,8 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
         && (light_walls || ! light_blocker)) {
       level_fov_set(fov_can_see_tile, p, true);
 
-      if (fov_has_ever_seen_tile) {
-        level_fov_set(fov_has_ever_seen_tile, p, true);
+      if (fov_has_seen_tile) {
+        level_fov_set(fov_has_seen_tile, p, true);
       }
 
 #ifdef TODO
@@ -190,7 +190,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
       //
       // Get the last sequence of floors as a view and recurse into them.
       //
-      level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_ever_seen_tile, pov, distance_from_origin + 1,
+      level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, distance_from_origin + 1,
                    view_slope_high, tile_slope_high, max_radius, octant, light_walls);
     }
 
@@ -201,12 +201,12 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
     //
     // Tail-recurse into the current view.
     //
-    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_ever_seen_tile, pov, distance_from_origin + 1,
+    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, distance_from_origin + 1,
                  view_slope_high, view_slope_low, max_radius, octant, light_walls);
   }
 }
 
-void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_ever_seen_tile,
+void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile, FovMap *fov_has_seen_tile,
                spoint pov, int max_radius)
 {
   TRACE_NO_INDENT();
@@ -228,12 +228,12 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
 
   // recursive shadow casting
   for (int octant = 0; octant < 8; ++octant) {
-    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_ever_seen_tile, pov, 1, 1.0, 0.0, max_radius, octant,
+    level_fov_do(g, v, l, me, fov_can_see_tile, fov_has_seen_tile, pov, 1, 1.0, 0.0, max_radius, octant,
                  light_walls);
   }
 
   level_fov_set(fov_can_see_tile, pov, true);
-  level_fov_set(fov_has_ever_seen_tile, pov, true);
+  level_fov_set(fov_has_seen_tile, pov, true);
 
   // me->can_see_you(point(pov_x, pov_y));
 }

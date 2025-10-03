@@ -121,7 +121,7 @@ typedef struct ThingAi_ {
   //
   // What we have ever seen
   //
-  FovMap fov_has_ever_seen_tile;
+  FovMap fov_has_seen_tile;
 } ThingAi;
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                      \
@@ -399,7 +399,7 @@ bool thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 bool thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 bool thing_crush(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 bool thing_drop_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
-bool thing_vision_has_ever_seen_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
+bool thing_vision_has_seen_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 bool thing_inventory_add(Gamep, Levelsp, Levelp, Thingp player_or_monst, Thingp it);
 bool thing_inventory_is_empty(Gamep, Levelsp, Levelp, Thingp);
 bool thing_inventory_item_mergeable(Gamep, Levelsp, Levelp, Thingp a, Thingp b);

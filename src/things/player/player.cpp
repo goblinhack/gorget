@@ -112,7 +112,7 @@ static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_ever_seen_tile, t->at, thing_vision_distance(t));
+  level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_seen_tile, t->at, thing_vision_distance(t));
 }
 
 static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -124,7 +124,7 @@ static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_ever_seen_tile, t->at, thing_vision_distance(t));
+  level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_seen_tile, t->at, thing_vision_distance(t));
 }
 
 static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)

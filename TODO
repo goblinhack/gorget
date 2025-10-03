@@ -1,6 +1,5 @@
-prefer longest path when moving
-preserve vision on levels
-line of sight
+reset vision on level change
+prefer longest path when moving; some times we choose shorter
 "is collected" should be line of sight
 "is burning" should be line of sight
 mobs generating monsters
