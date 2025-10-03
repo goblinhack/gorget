@@ -17,12 +17,12 @@ bool tp_load_wall(void)
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered);
+    tp_flag_set(tp, is_blit_never_monochrome);
     tp_flag_set(tp, is_light_blocker);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);
     tp_flag_set(tp, is_obs_to_falling_onto);
     tp_flag_set(tp, is_obs_to_fire);
-    tp_flag_set(tp, is_blit_never_in_monochrome);
     tp_flag_set(tp, is_obs_to_jump_over);
     tp_flag_set(tp, is_obs_to_jumping_onto);
     tp_flag_set(tp, is_obs_to_movement);

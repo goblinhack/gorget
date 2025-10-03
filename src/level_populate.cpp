@@ -6,6 +6,7 @@
 #include "my_charmap.hpp"
 #include "my_dice.hpp"
 #include "my_level.hpp"
+#include "my_tp_callbacks.hpp"
 
 #include <string.h>
 
@@ -244,4 +245,6 @@ void level_populate(Gamep g, Levelsp v, Levelp l, const char *in)
   TRACE_NO_INDENT();
 
   level_populate(g, v, l, MAP_WIDTH, MAP_HEIGHT, in);
+
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { tp_on_level_ready(g, v, l, t); }
 }

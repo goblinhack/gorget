@@ -36,8 +36,8 @@ bool tp_load_entrance(void)
   tp_detail_set(tp, tp_entrance_detail_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_never_monochrome);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_blit_never_in_monochrome);
   tp_flag_set(tp, is_entrance);
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_obs_to_falling_onto);

@@ -141,7 +141,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
           display_tile = true;
         } else if (thing_has_ever_seen_tile(g, v, l, player, p)) {
           display_tile = true;
-          if (level_is_blit_never_in_monochrome(g, v, l, p)) {
+          if (level_is_blit_never_monochrome(g, v, l, p)) {
             //
             // Show in normal colors
             //

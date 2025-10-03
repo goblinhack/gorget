@@ -235,6 +235,7 @@ public:
   tp_detail_get_t       detail_get       = {};
   tp_mouse_down_t       mouse_down       = {};
   tp_on_spawn_t         on_spawn         = {};
+  tp_on_level_ready_t   on_level_ready   = {};
   tp_on_open_request_t  on_open_request  = {};
   tp_on_carry_request_t on_carry_request = {};
   tp_on_drop_request_t  on_drop_request  = {};
@@ -1232,6 +1233,30 @@ void tp_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
   return tp->on_spawn(g, v, l, me);
+}
+
+void tp_on_level_ready_set(Tpp tp, tp_on_level_ready_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->on_level_ready = callback;
+}
+
+void tp_on_level_ready(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  if (! tp->on_level_ready) {
+    return;
+  }
+  return tp->on_level_ready(g, v, l, me);
 }
 
 void tp_on_open_request_set(Tpp tp, tp_on_open_request_t callback)

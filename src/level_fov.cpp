@@ -101,8 +101,8 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
 
 // Cast visiblity using shadowcasting.
 void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
-                  FovMap      *fov_can_see_tile,      //
-                  FovMap      *fov_has_ever_seen_tile,         //
+                  FovMap      *fov_can_see_tile,           //
+                  FovMap      *fov_has_ever_seen_tile,     //
                   const spoint pov,                        //
                   const int    distance_from_origin,       // Polar distance_from_origin from POV.
                   double       view_slope_high,            //

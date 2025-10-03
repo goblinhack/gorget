@@ -96,6 +96,18 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
+static void tp_player_level_ready(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto ai = thing_ai_struct(g, t);
+  if (! ai) {
+    return;
+  }
+
+  level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_ever_seen_tile, t->at, thing_vision_distance(t));
+}
+
 static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -168,6 +180,7 @@ bool tp_load_player(void)
   tp_on_fall_begin_set(tp, tp_player_on_fall_begin);
   tp_on_fall_end_set(tp, tp_player_on_fall_end);
   tp_on_jump_end_set(tp, tp_player_on_jump_end);
+  tp_on_level_ready_set(tp, tp_player_level_ready);
   tp_on_moved_set(tp, tp_player_on_moved);
   tp_on_teleported_set(tp, tp_player_on_teleported);
   tp_on_tick_begin_set(tp, tp_player_tick_begin);
