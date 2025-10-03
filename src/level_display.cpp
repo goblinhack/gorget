@@ -108,13 +108,15 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   // What level is the player on?
   //
   auto player = thing_player(g);
+  if (! player) {
+    ERR("No player");
+    return;
+  }
 
   //
   // Soft scroll to the player
   //
-  if (player) {
-    level_scroll_to_focus(g, v, l);
-  }
+  level_scroll_to_focus(g, v, l);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glcolor(WHITE);
@@ -135,11 +137,17 @@ void level_display(Gamep g, Levelsp v, Levelp l)
         spoint p(x, y);
         auto   display_tile = false;
 
-        if (! player) {
-          TOPCON("no player");
+        if (thing_can_see_tile(g, v, l, player, p)) {
           display_tile = true;
-        } else if (thing_can_see_tile(g, v, l, player, p)) {
+        } else if (thing_has_ever_seen_tile(g, v, l, player, p)) {
           display_tile = true;
+          if (level_is_blit_never_in_monochrome(g, v, l, p)) {
+            //
+            // Show in normal colors
+            //
+          } else {
+            g_monochrome = true;
+          }
         }
 
         if (display_tile) {
@@ -147,6 +155,8 @@ void level_display(Gamep g, Levelsp v, Levelp l)
             level_display_slot(g, v, l, p, slot, z_depth);
           }
         }
+
+        g_monochrome = false;
       }
     }
   }

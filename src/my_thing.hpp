@@ -524,7 +524,7 @@ bool thing_is_unused2(Thingp);
 bool thing_is_unused3(Thingp);
 bool thing_is_unused4(Thingp);
 bool thing_is_unused5(Thingp);
-bool thing_is_unused6(Thingp);
+bool thing_is_blit_never_in_monochrome(Thingp);
 bool thing_is_wait_on_dead_anim(Thingp);
 bool thing_is_walk_through_walls(Thingp);
 bool thing_is_wall(Thingp);

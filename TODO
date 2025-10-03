@@ -1,3 +1,5 @@
+prefer longest path when moving
+preserve vision on levels
 line of sight
 "is collected" should be line of sight
 "is burning" should be line of sight
@@ -11,6 +13,7 @@ kobalos need to steal items
 
 ideas
 -----
+ogyr (celtic)
 boulders that can crush
 items hiding in bushes
 door mimic

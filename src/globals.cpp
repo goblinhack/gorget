@@ -22,6 +22,7 @@ bool               g_opt_quick_start;                   // Start in the main men
 bool               g_opt_restarted_in_gfx_menu;         // Post restart
 bool               g_opt_restarted;                     // Post restart
 bool               g_opt_tests;                         // Run tests.
+bool               g_monochrome;                        // Ugly hack to switch to monochrome gfx
 bool               g_quitting;                          // Exiting the game
 char              *g_data_path;
 char              *g_exec_dir;

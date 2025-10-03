@@ -7,6 +7,7 @@
 #define _MY_TILE_HPP_
 
 #include "my_color.hpp"
+#include "my_gl.hpp"
 #include "my_spoint.hpp"
 #include "my_types.hpp"
 
@@ -99,7 +100,7 @@ void tile_load(const char *, uint32_t width, uint32_t height, uint32_t nargs, ..
 void tile_load_arr(const char *file, const char *tex_name, uint32_t width, uint32_t height, uint32_t nargs,
                    const char *arr[]);
 void tile_load_arr_sprites(const char *file, const char *tex_name, uint32_t width, uint32_t height, uint32_t nargs,
-                           const char *arr[], int gl_mode);
+                           const char *arr[], int gl_mode = GL_NEAREST);
 void tile_blit_frozen(const Tilep &tile, const spoint tl, const spoint br);
 void tile_blit_burnt(const Tilep &tile, const spoint tl, const spoint br);
 int  tile_gl_binding(Tilep);

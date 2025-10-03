@@ -427,6 +427,6 @@ void gfx_init_lava(void)
         // ##############################################################################
       /* clang-format on */
   };
-  tile_load_arr("data/gfx/tiles_lava.tga", "tiles_lava", INNER_TILE_WIDTH, INNER_TILE_HEIGHT, ARRAY_SIZE(lava_tiles),
-                lava_tiles);
+  tile_load_arr_sprites("data/gfx/tiles_lava.tga", "tiles_lava", INNER_TILE_WIDTH, INNER_TILE_HEIGHT,
+                        ARRAY_SIZE(lava_tiles), lava_tiles);
 }

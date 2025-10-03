@@ -1970,14 +1970,14 @@ bool thing_is_ethereal(Thingp t)
   return tp_flag(thing_tp(t), is_ethereal);
 }
 
-bool thing_is_unused6(Thingp t)
+bool thing_is_blit_never_in_monochrome(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused6);
+  return tp_flag(thing_tp(t), is_blit_never_in_monochrome);
 }
 
 bool thing_is_levitating(Thingp t)

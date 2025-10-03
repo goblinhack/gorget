@@ -380,7 +380,7 @@ static std::pair< Texp, Texp > tex_sprite(SDL_Surface *in, std::string file, std
       color c1;
       getPixelFast(in, ix, iy, c1);
       color   c2  = c1;
-      uint8_t avg = ((int) c1.r + (int) c1.g + (int) c1.b) / 3;
+      uint8_t avg = ((int) c1.r + (int) c1.g + (int) c1.b) / 5;
       c1.r        = avg;
       c1.g        = avg;
       c1.b        = avg;

@@ -880,6 +880,9 @@ void tile_is_alive_on_end_of_anim_set(Tilep t)
 int Tile::gl_binding(void) const
 {
   TRACE_NO_INDENT();
+  if (g_monochrome) {
+    return _gl_binding_monochrome;
+  }
   return _gl_binding;
 }
 
