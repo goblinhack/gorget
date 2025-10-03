@@ -59,6 +59,16 @@ static bool level_fov_light_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, 
 {
   FOR_ALL_THINGS_AT(g, v, l, it, pov)
   {
+    //
+    // Dead foliage should not block
+    //
+    if (thing_is_dead(it)) {
+      continue;
+    }
+
+    //
+    // Open doors should not block
+    //
     if (thing_is_open(it)) {
       continue;
     }
