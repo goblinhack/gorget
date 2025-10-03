@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_tp_callbacks.hpp"
 
 //
 // Return the level of the thing
@@ -51,4 +52,9 @@ void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t
   // Now move to the correct location
   //
   thing_warp_to(g, v, new_level, t, new_level->entrance);
+
+  //
+  // Need to reset vision when entering a new level, and other things
+  //
+  tp_on_level_entered(g, v, new_level, t);
 }

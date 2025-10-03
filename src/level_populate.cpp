@@ -246,5 +246,5 @@ void level_populate(Gamep g, Levelsp v, Levelp l, const char *in)
 
   level_populate(g, v, l, MAP_WIDTH, MAP_HEIGHT, in);
 
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { tp_on_level_ready(g, v, l, t); }
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { tp_on_level_populated(g, v, l, t); }
 }

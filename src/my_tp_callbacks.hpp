@@ -26,9 +26,13 @@ typedef void (*tp_on_spawn_t)(Gamep, Levelsp, Levelp, Thingp me);
 void tp_on_spawn_set(Tpp, tp_on_spawn_t);
 void tp_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me);
 
-typedef void (*tp_on_level_ready_t)(Gamep, Levelsp, Levelp, Thingp me);
-void tp_on_level_ready_set(Tpp, tp_on_level_ready_t);
-void tp_on_level_ready(Gamep g, Levelsp v, Levelp l, Thingp me);
+typedef void (*tp_on_level_entered_t)(Gamep, Levelsp, Levelp, Thingp me);
+void tp_on_level_entered_set(Tpp, tp_on_level_entered_t);
+void tp_on_level_entered(Gamep g, Levelsp v, Levelp l, Thingp me);
+
+typedef void (*tp_on_level_populated_t)(Gamep, Levelsp, Levelp, Thingp me);
+void tp_on_level_populated_set(Tpp, tp_on_level_populated_t);
+void tp_on_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me);
 
 typedef bool (*tp_on_carry_request_t)(Gamep, Levelsp, Levelp, Thingp me, Thingp player_or_monst);
 void tp_on_carry_request_set(Tpp, tp_on_carry_request_t);

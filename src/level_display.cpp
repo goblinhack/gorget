@@ -137,9 +137,9 @@ void level_display(Gamep g, Levelsp v, Levelp l)
         spoint p(x, y);
         auto   display_tile = false;
 
-        if (thing_can_see_tile(g, v, l, player, p)) {
+        if (thing_vision_can_see_tile(g, v, l, player, p)) {
           display_tile = true;
-        } else if (thing_has_ever_seen_tile(g, v, l, player, p)) {
+        } else if (thing_vision_has_ever_seen_tile(g, v, l, player, p)) {
           display_tile = true;
           if (level_is_blit_never_monochrome(g, v, l, p)) {
             //

@@ -231,26 +231,27 @@ public:
   //
   // Callbacks
   //
-  tp_description_get_t  description_get  = {};
-  tp_detail_get_t       detail_get       = {};
-  tp_mouse_down_t       mouse_down       = {};
-  tp_on_spawn_t         on_spawn         = {};
-  tp_on_level_ready_t   on_level_ready   = {};
-  tp_on_open_request_t  on_open_request  = {};
-  tp_on_carry_request_t on_carry_request = {};
-  tp_on_drop_request_t  on_drop_request  = {};
-  tp_on_close_request_t on_close_request = {};
-  tp_on_tick_idle_t     tick_idle        = {};
-  tp_on_tick_begin_t    tick_begin       = {};
-  tp_on_tick_end_t      tick_end         = {};
-  tp_on_death_t         on_death         = {};
-  tp_on_moved_t         on_moved         = {};
-  tp_on_teleported_t    on_teleported    = {};
-  tp_on_shoved_t        on_shoved        = {};
-  tp_on_jump_end_t      on_jump_end      = {};
-  tp_on_jump_begin_t    on_jump_begin    = {};
-  tp_on_fall_begin_t    on_fall_begin    = {};
-  tp_on_fall_end_t      on_fall_end      = {};
+  tp_description_get_t    description_get    = {};
+  tp_detail_get_t         detail_get         = {};
+  tp_mouse_down_t         mouse_down         = {};
+  tp_on_spawn_t           on_spawn           = {};
+  tp_on_level_populated_t on_level_populated = {};
+  tp_on_level_entered_t   on_level_entered   = {};
+  tp_on_open_request_t    on_open_request    = {};
+  tp_on_carry_request_t   on_carry_request   = {};
+  tp_on_drop_request_t    on_drop_request    = {};
+  tp_on_close_request_t   on_close_request   = {};
+  tp_on_tick_idle_t       tick_idle          = {};
+  tp_on_tick_begin_t      tick_begin         = {};
+  tp_on_tick_end_t        tick_end           = {};
+  tp_on_death_t           on_death           = {};
+  tp_on_moved_t           on_moved           = {};
+  tp_on_teleported_t      on_teleported      = {};
+  tp_on_shoved_t          on_shoved          = {};
+  tp_on_jump_end_t        on_jump_end        = {};
+  tp_on_jump_begin_t      on_jump_begin      = {};
+  tp_on_fall_begin_t      on_fall_begin      = {};
+  tp_on_fall_end_t        on_fall_end        = {};
 
   Tp(void);
   ~Tp(void);
@@ -1235,17 +1236,17 @@ void tp_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->on_spawn(g, v, l, me);
 }
 
-void tp_on_level_ready_set(Tpp tp, tp_on_level_ready_t callback)
+void tp_on_level_populated_set(Tpp tp, tp_on_level_populated_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->on_level_ready = callback;
+  tp->on_level_populated = callback;
 }
 
-void tp_on_level_ready(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_on_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1253,10 +1254,34 @@ void tp_on_level_ready(Gamep g, Levelsp v, Levelp l, Thingp me)
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_level_ready) {
+  if (! tp->on_level_populated) {
     return;
   }
-  return tp->on_level_ready(g, v, l, me);
+  return tp->on_level_populated(g, v, l, me);
+}
+
+void tp_on_level_entered_set(Tpp tp, tp_on_level_entered_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->on_level_entered = callback;
+}
+
+void tp_on_level_entered(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  if (! tp->on_level_entered) {
+    return;
+  }
+  return tp->on_level_entered(g, v, l, me);
 }
 
 void tp_on_open_request_set(Tpp tp, tp_on_open_request_t callback)
