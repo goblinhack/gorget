@@ -12,7 +12,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_door_type_locked_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_door_locked_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -25,7 +25,7 @@ static std::string tp_door_type_locked_description_get(Gamep g, Levelsp v, Level
   return "locked door";
 }
 
-static bool tp_door_type_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button)
+static bool tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button)
 {
   TRACE_NO_INDENT();
 
@@ -56,7 +56,7 @@ static bool tp_door_type_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp 
   return false;
 }
 
-static bool tp_door_type_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 
@@ -82,7 +82,7 @@ static bool tp_door_type_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Th
   thing_keys_carried_decr(g, v, l, opener, 1);
 
   if (thing_is_player(opener)) {
-    TOPCON("The door_type_locked opens.");
+    TOPCON("The door_locked opens.");
 
     thing_is_unlocked_set(g, v, l, t);
   }
@@ -92,12 +92,12 @@ static bool tp_door_type_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Th
   return true;
 }
 
-static bool tp_door_type_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+static bool tp_door_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 
   if (thing_is_player(opener)) {
-    TOPCON("The door_type_locked closes.");
+    TOPCON("The door_locked closes.");
   }
 
   sound_play(g, "door");
@@ -105,21 +105,21 @@ static bool tp_door_type_locked_on_close_request(Gamep g, Levelsp v, Levelp l, T
   return true;
 }
 
-bool tp_load_door_type_locked(void)
+bool tp_load_door_locked(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("door_type_locked"); // keep as string for scripts
+  auto tp   = tp_load("door_locked"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
-  tp_description_set(tp, tp_door_type_locked_description_get);
+  tp_description_set(tp, tp_door_locked_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_door_type_locked);
+  tp_flag_set(tp, is_door_locked);
   tp_flag_set(tp, is_light_blocker);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_cursor_path);
@@ -135,9 +135,9 @@ bool tp_load_door_type_locked(void)
   tp_health_set(tp, "200");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
-  tp_mouse_down_set(tp, tp_door_type_locked_mouse_down);
-  tp_on_close_request_set(tp, tp_door_type_locked_on_close_request);
-  tp_on_open_request_set(tp, tp_door_type_locked_on_open_request);
+  tp_mouse_down_set(tp, tp_door_locked_mouse_down);
+  tp_on_close_request_set(tp, tp_door_locked_on_close_request);
+  tp_on_open_request_set(tp, tp_door_locked_on_open_request);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
@@ -153,7 +153,7 @@ bool tp_load_door_type_locked(void)
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
-  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("door_type_locked.open.0"));
+  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("door_locked.open.0"));
 
   return true;
 }

@@ -51,7 +51,7 @@ bool tp_load_ghost(void)
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
-  tp_monst_group_add(tp, MONST_GROUP_0);
+  tp_monst_group_add(tp, MONST_GROUP_MOB);
   tp_speed_set(tp, 100);
   tp_temperature_initial_set(tp, -10); // celsius
   tp_weight_set(tp, WEIGHT_FEATHER);   // grams

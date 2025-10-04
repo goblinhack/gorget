@@ -1000,14 +1000,14 @@ bool thing_is_dirt(Thingp t)
   return tp_flag(thing_tp(t), is_dirt);
 }
 
-bool thing_is_door_type_unlocked(Thingp t)
+bool thing_is_door_unlocked(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_door_type_unlocked);
+  return tp_flag(thing_tp(t), is_door_unlocked);
 }
 
 bool thing_is_dungeon_entrance(Thingp t)
@@ -1240,24 +1240,24 @@ bool thing_is_monst(Thingp t)
   return tp_flag(thing_tp(t), is_monst);
 }
 
-bool thing_is_monst_group_1(Thingp t)
+bool thing_is_monst_group_easy(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst_group_1);
+  return tp_flag(thing_tp(t), is_monst_group_easy);
 }
 
-bool thing_is_monst_group_2(Thingp t)
+bool thing_is_monst_group_hard(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst_group_2);
+  return tp_flag(thing_tp(t), is_monst_group_hard);
 }
 
 bool thing_is_obs_to_movement(Thingp t)
@@ -1310,14 +1310,14 @@ bool thing_is_rock(Thingp t)
   return tp_flag(thing_tp(t), is_rock);
 }
 
-bool thing_is_door_type_secret(Thingp t)
+bool thing_is_door_secret(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_door_type_secret);
+  return tp_flag(thing_tp(t), is_door_secret);
 }
 
 bool thing_is_slime(Thingp t)
@@ -1410,14 +1410,14 @@ bool thing_is_item_mergeable(Thingp t)
   return tp_flag(thing_tp(t), is_item_mergeable);
 }
 
-bool thing_is_door_type_locked(Thingp t)
+bool thing_is_door_locked(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_door_type_locked);
+  return tp_flag(thing_tp(t), is_door_locked);
 }
 
 bool thing_is_inventory_item(Thingp t)
@@ -1840,14 +1840,14 @@ bool thing_is_corpse_on_death(Thingp t)
   return tp_flag(thing_tp(t), is_corpse_on_death);
 }
 
-bool thing_is_monst_group_0(Thingp t)
+bool thing_is_monst_group_mob(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_monst_group_0);
+  return tp_flag(thing_tp(t), is_monst_group_mob);
 }
 
 bool thing_is_physics_temperature(Thingp t)

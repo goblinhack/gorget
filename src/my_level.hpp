@@ -70,8 +70,9 @@ typedef struct LevelInfo_ {
   // How many monsters?
   //
   int monst_count;
-  int monst1_count;
-  int monst2_count;
+  int monst_group_mob_count;
+  int monst_group_easy_count;
+  int monst_group_hard_count;
 
   //
   // How much treasure?
@@ -443,7 +444,7 @@ enum {
 
 Levelsp levels_memory_alloc(Gamep);
 void    levels_destroy(Gamep, Levelsp);
-void    levels_stats_dump(Gamep);
+void    level_debug_stats(Gamep);
 
 Levelp level_change(Gamep, Levelsp, LevelNum);
 void   level_entered(Gamep, Levelsp, Levelp);
@@ -490,6 +491,7 @@ void level_cursor_path_reset(Gamep, Levelsp);
 void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
+void level_count_items(Gamep, Levelsp, Levelp);
 void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
 void level_tick_water(Gamep, Levelsp, Levelp);
 void level_tick_explosion(Gamep, Levelsp, Levelp);

@@ -10,59 +10,6 @@
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 
-void levels_stats_dump(Gamep g)
-{
-  TRACE_NO_INDENT();
-
-  auto v = game_levels_get(g);
-  if (! v) {
-    return;
-  }
-
-  LOG("Level stats:");
-  LOG("- Total memory:         %" PRI_SIZE_T " Mb", sizeof(Levels) / (1024 * 1024));
-  LOG("- Per level memory:     %" PRI_SIZE_T " Kb", sizeof(Level) / (1024));
-  LOG("- Levels:               %" PRI_SIZE_T " Mb", sizeof(v->level) / (1024 * 1024));
-  LOG("- Max things:           %u", 1 << THING_INDEX_BITS);
-
-  thing_stats_dump(g, v);
-}
-
-void level_debug(Gamep g, Levelsp v, Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  LOG("Level         : %d", l->level_num);
-  LOG("Seed          : %u", l->info.seed_num);
-
-  if (l->info.room_count) {
-    LOG("Room count        : %d", l->info.room_count);
-    LOG("Fragment count    : %d", l->info.fragment_count);
-    LOG("Treasure count    : %d", l->info.treasure_count);
-    LOG("Monst count       : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count,
-        l->info.monst2_count);
-    LOG("Teleport count    : %d", l->info.teleport_count);
-    LOG("Locked door count : %d", l->info.door_locked_count);
-    LOG("Key count         : %d", l->info.key_count);
-  }
-
-  for (int y = 0; y < MAP_HEIGHT; y++) {
-    std::string tmp;
-    for (int x = 0; x < MAP_WIDTH; x++) {
-      auto c = l->debug[ x ][ y ];
-      if (c) {
-        tmp += l->debug[ x ][ y ];
-      }
-    }
-
-    if (! tmp.empty()) {
-      LOG("[%s]", tmp.c_str());
-    }
-  }
-
-  LOG("-");
-}
-
 //
 // Convert a level into a single string
 //
@@ -104,22 +51,22 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_dirt(g, v, l, p)) {
         c = CHARMAP_DIRT;
       }
-      if (level_is_door_type_unlocked(g, v, l, p)) {
-        if (level_open_is_door_type_unlocked(g, v, l, p)) {
+      if (level_is_door_unlocked(g, v, l, p)) {
+        if (level_open_is_door_unlocked(g, v, l, p)) {
           c = CHARMAP_FLOOR;
         } else {
           c = CHARMAP_DOOR_UNLOCKED;
         }
       }
-      if (level_is_door_type_locked(g, v, l, p)) {
-        if (level_open_is_door_type_locked(g, v, l, p)) {
+      if (level_is_door_locked(g, v, l, p)) {
+        if (level_open_is_door_locked(g, v, l, p)) {
           c = CHARMAP_FLOOR;
         } else {
           c = CHARMAP_DOOR_LOCKED;
         }
       }
-      if (level_is_door_type_secret(g, v, l, p)) {
-        if (level_open_is_door_type_secret(g, v, l, p)) {
+      if (level_is_door_secret(g, v, l, p)) {
+        if (level_open_is_door_secret(g, v, l, p)) {
           c = CHARMAP_FLOOR;
         } else {
           c = CHARMAP_DOOR_SECRET;
@@ -146,10 +93,10 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_mob2(g, v, l, p)) {
         c = CHARMAP_MOB2;
       }
-      if (level_is_monst_group_1(g, v, l, p)) {
+      if (level_is_monst_group_easy(g, v, l, p)) {
         c = CHARMAP_MONST1;
       }
-      if (level_is_monst_group_2(g, v, l, p)) {
+      if (level_is_monst_group_hard(g, v, l, p)) {
         c = CHARMAP_MONST2;
       }
       if (level_is_pillar(g, v, l, p)) {

@@ -767,7 +767,7 @@ void Game::create_levels(void)
     level_change(g, v, 0);
   }
 
-  levels_stats_dump(g);
+  level_debug_stats(g);
 
   state_change(STATE_GENERATED, "generated levels");
 }

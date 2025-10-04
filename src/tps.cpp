@@ -24,9 +24,9 @@ bool templates_init(void)
   if (!tp_load_cursor_path()) { return false; }
   if (!tp_load_deep_water()) { return false; }
   if (!tp_load_dirt()) { return false; }
-  if (!tp_load_door_type_locked()) { return false; }
-  if (!tp_load_door_type_secret()) { return false; }
-  if (!tp_load_door_type_unlocked()) { return false; }
+  if (!tp_load_door_locked()) { return false; }
+  if (!tp_load_door_secret()) { return false; }
+  if (!tp_load_door_unlocked()) { return false; }
   if (!tp_load_entrance()) { return false; }
   if (!tp_load_exit()) { return false; }
   if (!tp_load_explosion()) { return false; }

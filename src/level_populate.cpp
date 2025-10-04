@@ -129,19 +129,19 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_DOOR_UNLOCKED :
           need_floor = true;
-          tp         = tp_random(is_door_type_unlocked);
+          tp         = tp_random(is_door_unlocked);
           break;
         case CHARMAP_DOOR_LOCKED :
           need_floor = true;
           if (l->info.key_count) {
-            tp = tp_random(is_door_type_locked);
+            tp = tp_random(is_door_locked);
           } else {
-            tp = tp_random(is_door_type_secret);
+            tp = tp_random(is_door_secret);
           }
           break;
         case CHARMAP_DOOR_SECRET :
           need_floor = true;
-          tp         = tp_random(is_door_type_secret);
+          tp         = tp_random(is_door_secret);
           break;
         case CHARMAP_GRASS :
           need_floor = true;
@@ -247,4 +247,6 @@ void level_populate(Gamep g, Levelsp v, Levelp l, const char *in)
   level_populate(g, v, l, MAP_WIDTH, MAP_HEIGHT, in);
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { tp_on_level_populated(g, v, l, t); }
+
+  level_count_items(g, v, l);
 }

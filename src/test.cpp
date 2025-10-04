@@ -27,7 +27,7 @@ std::initializer_list< std::string > tests = {
     "brazier_shove_ok",
     "bridge_on_fire_over_lava",
     "bridge_on_fire",
-    "door_type_secret",
+    "door_secret",
     "fire_on_water",
     "fire_over_chasm",
     "foliage_on_fire",

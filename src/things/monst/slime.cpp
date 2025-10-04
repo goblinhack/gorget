@@ -59,7 +59,7 @@ bool tp_load_slime(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
   tp_long_name_set(tp, "sentient slime");
-  tp_monst_group_add(tp, MONST_GROUP_2);
+  tp_monst_group_add(tp, MONST_GROUP_HARD);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius

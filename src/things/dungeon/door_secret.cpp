@@ -12,7 +12,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static std::string tp_door_type_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -23,7 +23,7 @@ static std::string tp_door_type_secret_description_get(Gamep g, Levelsp v, Level
   return "odd looking rock";
 }
 
-static bool tp_door_type_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+static bool tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 
@@ -43,18 +43,18 @@ static bool tp_door_type_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Th
   return true;
 }
 
-bool tp_load_door_type_secret(void)
+bool tp_load_door_secret(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("door_type_secret"); // keep as string for scripts
+  auto tp   = tp_load("door_secret"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
-  tp_description_set(tp, tp_door_type_secret_description_get);
+  tp_description_set(tp, tp_door_secret_description_get);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_never_monochrome);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_door_type_secret);
+  tp_flag_set(tp, is_door_secret);
   tp_flag_set(tp, is_light_blocker);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_cursor_path);
@@ -73,13 +73,13 @@ bool tp_load_door_type_secret(void)
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, "secret door");
-  tp_on_open_request_set(tp, tp_door_type_secret_on_open_request);
+  tp_on_open_request_set(tp, tp_door_secret_on_open_request);
   tp_weight_set(tp, WEIGHT_VHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("door_type_secret.idle.0"));
-  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("door_type_secret.open.0"));
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("door_secret.idle.0"));
+  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("door_secret.open.0"));
 
   return true;
 }

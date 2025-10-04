@@ -2065,8 +2065,8 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   LOG("Room count        : %d", l->info.room_count);
   LOG("Fragment count    : %d", l->info.fragment_count);
   LOG("Treasure count    : %d", l->info.treasure_count);
-  LOG("Monst count       : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst1_count,
-      l->info.monst2_count);
+  LOG("Monst count       : %d (normal:%d enhanced:%d)", l->info.monst_count, l->info.monst_group_easy_count,
+      l->info.monst_group_hard_count);
   LOG("Teleport count    : %d", l->info.teleport_count);
   LOG("Locked door count : %d", l->info.door_locked_count);
   LOG("Key count         : %d", l->info.key_count);
@@ -3742,13 +3742,13 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
-  l->info.monst_count       = 0;
-  l->info.monst1_count      = 0;
-  l->info.monst2_count      = 0;
-  l->info.treasure_count    = 0;
-  l->info.teleport_count    = 0;
-  l->info.door_locked_count = 0;
-  l->info.key_count         = 0;
+  l->info.monst_count            = 0;
+  l->info.monst_group_easy_count = 0;
+  l->info.monst_group_hard_count = 0;
+  l->info.treasure_count         = 0;
+  l->info.teleport_count         = 0;
+  l->info.door_locked_count      = 0;
+  l->info.key_count              = 0;
 
   for (int y = 1; y < MAP_HEIGHT - 1; y++) {
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
@@ -3757,11 +3757,11 @@ static void level_gen_count_items(Gamep g, class LevelGen *l)
       switch (c) {
         case CHARMAP_MONST1 :
           l->info.monst_count++;
-          l->info.monst1_count++;
+          l->info.monst_group_easy_count++;
           break;
         case CHARMAP_MONST2 :
           l->info.monst_count++;
-          l->info.monst2_count++;
+          l->info.monst_group_hard_count++;
           break;
         case CHARMAP_TREASURE : //
           l->info.treasure_count++;
@@ -4475,12 +4475,6 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
     level_gen_test_flood(g, l);
   }
 
-  //
-  // Final count
-  //
-  level_gen_count_items(g, l);
-
-  //
   // Dump the level to the per thread output log file
   //
   if (g_opt_debug1) {

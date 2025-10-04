@@ -15,7 +15,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  ai->fov_can_see_tile       = {{{0}}};
+  ai->fov_can_see_tile  = {{{0}}};
   ai->fov_has_seen_tile = {{{0}}};
 }
 
