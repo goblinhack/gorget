@@ -139,7 +139,10 @@ static int level_find_door_fail_count;
 static int level_not_enough_rooms;
 static int level_no_exit_room;
 
-static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg = nullptr);
+//
+// Fixed or proc gen levels
+//
+static std::array< class LevelGen *, MAX_LEVELS > levels_generated = {};
 
 class Cell
 {
@@ -459,16 +462,16 @@ static std::vector< class Fragment * > fragments_curr;
 //
 static char room_char(Gamep g, class Room *r, int x, int y)
 {
-  if (x < 0) {
+  if (unlikely(x < 0)) {
     return CHARMAP_EMPTY;
   }
-  if (y < 0) {
+  if (unlikely(y < 0)) {
     return CHARMAP_EMPTY;
   }
-  if (x >= r->width) {
+  if (unlikely(x >= r->width)) {
     return CHARMAP_EMPTY;
   }
-  if (y >= r->height) {
+  if (unlikely(y >= r->height)) {
     return CHARMAP_EMPTY;
   }
 
@@ -2007,7 +2010,7 @@ static class LevelFixed *level_random_get(Gamep g, LevelType level_type)
 //
 // Get a random level.
 //
-static class LevelFixed *level_fixed_get(Gamep g, const std::string &alias)
+static class LevelFixed *level_fixed_find_by_name(Gamep g, const std::string &alias)
 {
   TRACE_NO_INDENT();
 
@@ -2049,7 +2052,7 @@ static std::string level_gen_string(Gamep g, class LevelGen *o, class LevelFixed
 //
 // Dump a level
 //
-static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
+static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg = nullptr)
 {
   TRACE_NO_INDENT();
 
@@ -2661,7 +2664,7 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_gen_new(Gamep g, LevelNum level_num)
+static class LevelGen *level_gen_new_class(Gamep g, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
@@ -2688,7 +2691,10 @@ static class LevelGen *level_gen_new(Gamep g, LevelNum level_num)
   return l;
 }
 
-static bool level_gen_is_fixed_level(Gamep g, Levelsp v, LevelNum level_num)
+//
+// Is this a special named level? or some kind of boss level?
+//
+static bool level_gen_is_special_level(Gamep g, Levelsp v, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
@@ -2713,7 +2719,7 @@ static bool level_gen_is_fixed_level(Gamep g, Levelsp v, LevelNum level_num)
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_gen_create_rooms(Gamep g, Levelsp v, LevelNum level_num)
+static class LevelGen *level_proc_gen_create_rooms(Gamep g, Levelsp v, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
@@ -2736,7 +2742,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, Levelsp v, LevelNum level
       l = nullptr;
     }
 
-    l = level_gen_new(g, level_num);
+    l = level_gen_new_class(g, level_num);
 
     //
     // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
@@ -4301,7 +4307,11 @@ void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l)
   level_gen_mark_tiles_on_path_entrance_to_exit(g, l, l->info.entrance.x, l->info.entrance.y);
 }
 
-static void level_gen_populate_tiles(Gamep g, class LevelGen *l)
+//
+// Convert the level into a string and then populate all the things onto the
+// real level, assign tiles etc...
+//
+static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -4325,7 +4335,7 @@ static void level_gen_populate_tiles(Gamep g, class LevelGen *l)
     //
     // Test level
     //
-    auto fixed_level = level_fixed_get(g, g_opt_level_name);
+    auto fixed_level = level_fixed_find_by_name(g, g_opt_level_name);
     if (! fixed_level) {
       ERR("No fixed level \"%s\" created", g_opt_level_name.c_str());
       return;
@@ -4408,11 +4418,11 @@ static void level_gen_test_flood(Gamep g, class LevelGen *l)
 //
 // Create a level from the current game seed
 //
-static class LevelGen *level_gen_proc_gen(Gamep g, Levelsp v, LevelNum level_num)
+static class LevelGen *level_gen_create_proc_gen_level(Gamep g, Levelsp v, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
-  LevelGen *l = level_gen_create_rooms(g, v, level_num);
+  LevelGen *l = level_proc_gen_create_rooms(g, v, level_num);
   if (! l) {
     return l;
   }
@@ -4542,53 +4552,71 @@ static class LevelGen *level_gen_proc_gen(Gamep g, Levelsp v, LevelNum level_num
   return l;
 }
 
-static std::array< class LevelGen *, MAX_LEVELS > levels = {};
-
 //
-// Create a level and store in the array of levels
+// Create a level (fixed or proc gen) and store in the array of levels
 //
-static void level_gen_create_level(Gamep g, LevelNum level_num)
+static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
   //
-  // Per thread stdout
+  // Per thread stdout name
   //
   g_thread_id = level_num;
 
   auto v = game_levels_get(g);
   if (! v) {
-    ERR("No levels created");
+    if (g_opt_level_name != "") {
+      ERR("No levels generate for level %s", g_opt_level_name.c_str());
+    } else {
+      ERR("No levels generate for level num %u", level_num);
+    }
+    return;
   }
 
   LevelGen *l;
 
-  if (level_gen_is_fixed_level(g, v, level_num)) {
+  if (level_gen_is_special_level(g, v, level_num)) {
     //
-    // Ficed levels
+    // Fixed level of some kind
     //
-    l = level_gen_new(g, level_num);
+    l = level_gen_new_class(g, level_num);
   } else {
     //
     // Procedurally generated levels
     //
-    l = level_gen_proc_gen(g, v, level_num);
-    if (! l) {
-      ERR("No levels generated");
-      return;
+    l = level_gen_create_proc_gen_level(g, v, level_num);
+  }
+
+  //
+  // Check it was created
+  //
+  if (! l) {
+    if (g_opt_level_name != "") {
+      ERR("No level generated for level %s", g_opt_level_name.c_str());
+    } else {
+      ERR("No level generated for level num %u", level_num);
     }
+    return;
   }
 
   //
   // Populate the map with things from the level created
   //
-  level_gen_populate_tiles(g, l);
+  level_gen_populate_for_fixed_or_proc_gen_level(g, l);
 
-  levels[ level_num ] = l;
+  //
+  // Final check it worked
+  //
+  levels_generated[ level_num ] = l;
 
   auto level = game_level_get(g, v, level_num);
   if (! level) {
-    ERR("No level %u created", level_num);
+    if (g_opt_level_name != "") {
+      ERR("No level populated for level %s", g_opt_level_name.c_str());
+    } else {
+      ERR("No level populated for level num %u", level_num);
+    }
   }
 }
 
@@ -4610,7 +4638,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
   std::vector< std::thread > threads;
 
   for (auto i = 0; i < max_threads; i++) {
-    threads.push_back(std::thread(level_gen_create_level, g, i));
+    threads.push_back(std::thread(level_gen_create_fixed_or_proc_gen_level, g, i));
   }
 
   for (auto i = 0; i < max_threads; i++) {
@@ -4619,7 +4647,7 @@ void level_gen_create_levels(Gamep g, Levelsp v)
 
   if (g_opt_debug2) {
     for (auto i = 0; i < max_threads; i++) {
-      auto l = levels[ i ];
+      auto l = levels_generated[ i ];
       if (l) {
         level_gen_dump(g, l);
       }
