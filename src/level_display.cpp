@@ -137,7 +137,9 @@ void level_display(Gamep g, Levelsp v, Levelp l)
         spoint p(x, y);
         auto   display_tile = false;
 
-        if (l->level_num == LEVEL_SELECT_ID) {
+        if (g_opt_debug1) {
+          display_tile = true;
+        } else if (l->level_num == LEVEL_SELECT_ID) {
           //
           // No lighting in level selection
           //

@@ -151,7 +151,7 @@ public:
   //
   // Room char
   //
-  char c = {};
+  char c = CHARMAP_EMPTY;
 
   //
   // The room this cell was sourced from
@@ -165,12 +165,6 @@ private:
 public:
   LevelGen(void)
   {
-    for (int y = 0; y < MAP_HEIGHT; y++) {
-      for (int x = 0; x < MAP_WIDTH; x++) {
-        data[ x ][ y ].c    = CHARMAP_EMPTY;
-        data[ x ][ y ].room = nullptr;
-      }
-    }
     memset(&info.entrance, 0, SIZEOF(info.entrance));
     memset(&info, 0, SIZEOF(info));
   }
@@ -251,7 +245,7 @@ public:
   //
   // Level tiles and room info
   //
-  Cell data[ MAP_WIDTH ][ MAP_HEIGHT ] = {};
+  Cell data[ MAP_WIDTH ][ MAP_HEIGHT ];
 
   Cave cave = {};
 };
@@ -2028,18 +2022,23 @@ static class LevelFixed *level_fixed_get(Gamep g, const std::string &alias)
 //
 // Convert a level into a single string
 //
-static std::string level_gen_string(Gamep g, class LevelFixed *l)
+static std::string level_gen_string(Gamep g, class LevelGen *o, class LevelFixed *l)
 {
   TRACE_NO_INDENT();
 
   std::string out;
 
+  //
+  // Useful to have the chars in the common LevelGen structure for things like
+  // counting.
+  //
   for (int y = 0; y < MAP_HEIGHT; y++) {
     for (int x = 0; x < MAP_WIDTH; x++) {
       auto c = l->data[ (y * MAP_WIDTH) + x ];
       if (! c) {
         c = CHARMAP_CHASM;
       }
+      o->data[ x ][ y ].c = c;
       out += c;
     }
   }
@@ -2662,7 +2661,59 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
 //
 // Create rooms from the current seed
 //
-static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
+static class LevelGen *level_gen_new(Gamep g, LevelNum level_num)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
+  //
+  uint32_t seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * MAX_LEVELS);
+  pcg_srand(seed_num);
+
+  auto l = new LevelGen();
+
+  //
+  // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
+  //
+  seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * MAX_LEVELS);
+  pcg_srand(seed_num);
+  l->info.seed_num = seed_num;
+
+  l->level_num      = level_num;
+  l->min_room_count = MIN_LEVEL_ROOM_COUNT + (level_num / 10);
+  l->max_room_count = l->min_room_count + 10;
+  l->debug          = g_opt_debug2;
+
+  return l;
+}
+
+static bool level_gen_is_fixed_level(Gamep g, Levelsp v, LevelNum level_num)
+{
+  TRACE_NO_INDENT();
+
+  if (g_opt_level_name != "") {
+    //
+    // Test level
+    //
+    return true;
+  }
+
+  LevelSelect *s = &v->level_select;
+  if (level_num == s->level_count - 1) {
+    //
+    // Final boss level
+    //
+    return true;
+  }
+
+  return false;
+}
+
+//
+// Create rooms from the current seed
+//
+static class LevelGen *level_gen_create_rooms(Gamep g, Levelsp v, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
@@ -2685,7 +2736,7 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
       l = nullptr;
     }
 
-    l = new LevelGen();
+    l = level_gen_new(g, level_num);
 
     //
     // Per thread seed that increments each time we fail. Hopefully this avoids dup levels.
@@ -2693,11 +2744,6 @@ static class LevelGen *level_gen_create_rooms(Gamep g, LevelNum level_num)
     seed_num = (game_seed_num_get(g) * 1001) + ((level_num + 1) * MAX_LEVELS) + level_gen_tries;
     pcg_srand(seed_num);
     l->info.seed_num = seed_num;
-
-    l->level_num      = level_num;
-    l->min_room_count = MIN_LEVEL_ROOM_COUNT + (level_num / 10);
-    l->max_room_count = l->min_room_count + 10;
-    l->debug          = g_opt_debug2;
 
     //
     // Add a blob of hazard in the center of the level
@@ -4255,7 +4301,7 @@ void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l)
   level_gen_mark_tiles_on_path_entrance_to_exit(g, l, l->info.entrance.x, l->info.entrance.y);
 }
 
-static void level_gen_create(Gamep g, class LevelGen *l)
+static void level_gen_populate_tiles(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
@@ -4265,12 +4311,16 @@ static void level_gen_create(Gamep g, class LevelGen *l)
     return;
   }
 
-  auto level_string = level_gen_string(g, l);
-  auto level        = game_level_get(g, v, l->level_num);
+  LevelSelect *s = &v->level_select;
 
+  auto level         = game_level_get(g, v, l->level_num);
   level->initialized = true;
   level->level_num   = l->level_num;
 
+  //
+  // Create a string holding all the level chars
+  //
+  std::string level_string;
   if (g_opt_level_name != "") {
     //
     // Test level
@@ -4281,24 +4331,31 @@ static void level_gen_create(Gamep g, class LevelGen *l)
       return;
     }
 
-    level_string = level_gen_string(g, fixed_level);
+    level_string = level_gen_string(g, l, fixed_level);
+  } else if (l->level_num == s->level_count - 1) {
+    //
+    // Final boss level
+    //
+    auto fixed_level = level_random_get(g, LEVEL_TYPE_BOSS);
+    if (! fixed_level) {
+      ERR("No fixed boss level \"%u\" created", l->level_num);
+      return;
+    }
+    level_string = level_gen_string(g, l, fixed_level);
   } else {
     //
-    // Boss level
+    // Procedurally generated level
     //
-    LevelSelect *s = &v->level_select;
-    if (l->level_num == s->level_count - 1) {
-      auto fixed_level = level_random_get(g, LEVEL_TYPE_BOSS);
-      if (! fixed_level) {
-        ERR("No fixed level \"%s\" created", g_opt_level_name.c_str());
-        return;
-      }
-      level_string = level_gen_string(g, fixed_level);
-    }
+    level_string = level_gen_string(g, l);
   }
 
   //
-  // Copy useful level stats for later debugging.
+  // Final count
+  //
+  level_gen_count_items(g, l);
+
+  //
+  // Copy useful level stats for use in level_populate
   //
   level->info = l->info;
 
@@ -4306,6 +4363,13 @@ static void level_gen_create(Gamep g, class LevelGen *l)
   // Create things
   //
   level_populate(g, v, level, level_string.c_str());
+
+  //
+  // Dump the level to the per thread output log file
+  //
+  if (g_opt_debug1) {
+    level_gen_dump(g, l);
+  }
 
   //
   // Create joined up tiles
@@ -4344,11 +4408,11 @@ static void level_gen_test_flood(Gamep g, class LevelGen *l)
 //
 // Create a level from the current game seed
 //
-static class LevelGen *level_gen(Gamep g, LevelNum level_num)
+static class LevelGen *level_gen_proc_gen(Gamep g, Levelsp v, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
-  LevelGen *l = level_gen_create_rooms(g, level_num);
+  LevelGen *l = level_gen_create_rooms(g, v, level_num);
   if (! l) {
     return l;
   }
@@ -4475,17 +4539,6 @@ static class LevelGen *level_gen(Gamep g, LevelNum level_num)
     level_gen_test_flood(g, l);
   }
 
-  // Dump the level to the per thread output log file
-  //
-  if (g_opt_debug1) {
-    level_gen_dump(g, l);
-  }
-
-  //
-  // Populate the map with things from the level created
-  //
-  level_gen_create(g, l);
-
   return l;
 }
 
@@ -4503,18 +4556,35 @@ static void level_gen_create_level(Gamep g, LevelNum level_num)
   //
   g_thread_id = level_num;
 
-  auto l = level_gen(g, level_num);
-  if (! l) {
-    ERR("No levels generated");
-    return;
-  }
-
-  levels[ level_num ] = l;
-
   auto v = game_levels_get(g);
   if (! v) {
     ERR("No levels created");
   }
+
+  LevelGen *l;
+
+  if (level_gen_is_fixed_level(g, v, level_num)) {
+    //
+    // Ficed levels
+    //
+    l = level_gen_new(g, level_num);
+  } else {
+    //
+    // Procedurally generated levels
+    //
+    l = level_gen_proc_gen(g, v, level_num);
+    if (! l) {
+      ERR("No levels generated");
+      return;
+    }
+  }
+
+  //
+  // Populate the map with things from the level created
+  //
+  level_gen_populate_tiles(g, l);
+
+  levels[ level_num ] = l;
 
   auto level = game_level_get(g, v, level_num);
   if (! level) {
