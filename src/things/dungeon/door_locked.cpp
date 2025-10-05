@@ -82,7 +82,7 @@ static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp 
   thing_keys_carried_decr(g, v, l, opener, 1);
 
   if (thing_is_player(opener)) {
-    TOPCON("The door_locked opens.");
+    TOPCON("The locked door opens.");
 
     thing_is_unlocked_set(g, v, l, t);
   }
@@ -97,7 +97,7 @@ static bool tp_door_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp
   TRACE_NO_INDENT();
 
   if (thing_is_player(opener)) {
-    TOPCON("The door_locked closes.");
+    TOPCON("The locked door closes.");
   }
 
   sound_play(g, "door");
