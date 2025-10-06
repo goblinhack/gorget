@@ -38,7 +38,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
     //
     // First time entering this level?
     //
-    if (! l->entered) {
+    if (! l->player_has_entered_level) {
       level_enter(g, v, l);
     }
   }

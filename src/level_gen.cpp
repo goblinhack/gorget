@@ -166,11 +166,7 @@ class LevelGen
 {
 private:
 public:
-  LevelGen(void)
-  {
-    memset(&info.entrance, 0, SIZEOF(info.entrance));
-    memset(&info, 0, SIZEOF(info));
-  }
+  LevelGen(void) { info = {}; }
   ~LevelGen(void) {}
 
   //
@@ -1049,12 +1045,12 @@ static void room_place_at(Gamep g, class LevelGen *l, class Room *r, spoint at)
       spoint p(rx + at.x, ry + at.y);
 
       if (room_c == CHARMAP_ENTRANCE) {
-        l->info.entrance.x = p.x;
-        l->info.entrance.y = p.y;
+        l->info.entrance_at.x = p.x;
+        l->info.entrance_at.y = p.y;
       }
       if (room_c == CHARMAP_EXIT) {
-        l->info.exit.x = p.x;
-        l->info.exit.y = p.y;
+        l->info.exit_at.x = p.x;
+        l->info.exit_at.y = p.y;
       }
 
       class Cell *cell = &l->data[ p.x ][ p.y ];
@@ -2311,7 +2307,7 @@ static bool level_gen_create_another_room(Gamep g, LevelGen *l, RoomType room_ty
   // If this door is too close, then switch to a normal room
   //
   if (room_type == ROOM_TYPE_EXIT) {
-    spoint entrance(l->info.entrance.x, l->info.entrance.y);
+    spoint entrance(l->info.entrance_at.x, l->info.entrance_at.y);
     if (distance(door_other, entrance) < MIN_LEVEL_EXIT_DISTANCE) {
       room_type = ROOM_TYPE_NORMAL;
     }
@@ -4304,7 +4300,7 @@ void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l)
 {
   memset(l->walked, 0, SIZEOF(l->walked));
   memset(l->info.on_path_entrance_to_exit, 0, SIZEOF(l->info.on_path_entrance_to_exit));
-  level_gen_mark_tiles_on_path_entrance_to_exit(g, l, l->info.entrance.x, l->info.entrance.y);
+  level_gen_mark_tiles_on_path_entrance_to_exit(g, l, l->info.entrance_at.x, l->info.entrance_at.y);
 }
 
 //

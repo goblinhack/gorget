@@ -338,12 +338,12 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   //
   if (level_changed) {
     tp_on_level_enter(g, v, new_level, t);
-
-    //
-    // Join the level, but at the old position
-    //
-    thing_push(g, v, new_level, t);
   }
+
+  //
+  // Join the level.
+  //
+  thing_push(g, v, new_level, t);
 
   //
   // Need to update with the new pixel position

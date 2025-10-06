@@ -1,4 +1,5 @@
-reset vision on level change
+no cursor path to tiles you cannot see
+level memory of seen tiles
 "is collected" should be line of sight
 "is burning" should be line of sight
 mobs generating monsters

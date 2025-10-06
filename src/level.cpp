@@ -277,7 +277,7 @@ void level_enter(Gamep g, Levelsp v, Levelp l)
   LOG("Level entered: %u", l->level_num);
   TRACE_AND_INDENT();
 
-  l->entered = true;
+  l->player_has_entered_level = true;
 }
 
 void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)

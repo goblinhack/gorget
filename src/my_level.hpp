@@ -49,12 +49,12 @@ typedef struct LevelInfo_ {
   //
   // Where the player start is
   //
-  spoint entrance;
+  spoint entrance_at;
 
   //
   // Where the exit is
   //
-  spoint exit;
+  spoint exit_at;
 
   //
   // Is this tile on the main flood fill path from start to exit
@@ -132,14 +132,14 @@ typedef struct Level_ {
   //
   uint8_t initialized : 1;
   //
-  // Player has entered level
-  //
-  uint8_t entered : 1;
-  //
   // Booleans that are set whenever something of this type is created on the level
   // and then cleared at end of tick.
   //
   uint8_t is_tick_delay_on_spawn : 1;
+  //
+  // Player has entered level
+  //
+  uint8_t player_has_entered_level : 1;
   //
   // Player has completed level on way or another
   //
@@ -148,7 +148,7 @@ typedef struct Level_ {
   //
   // Player can enter this level
   //
-  uint8_t next_level : 1;
+  uint8_t player_can_enter_this_level_next : 1;
   //
   // Level needs tiles updated
   //

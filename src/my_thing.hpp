@@ -572,6 +572,7 @@ void thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
 void thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
+void thing_level_warp_to_exit(Gamep, Levelsp, Levelp, Thingp);
 void thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
 void thing_player_event_loop(Gamep, Levelsp, Levelp);
 void thing_pop(Gamep, Levelsp, Thingp);

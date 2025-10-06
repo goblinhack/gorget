@@ -37,6 +37,8 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
 
   if (l->info.room_count) {
     LOG("Room count        : %d", l->info.room_count);
+    LOG("Entrance at       : %d,%d", l->info.entrance_at.x, l->info.entrance_at.y);
+    LOG("Exit at           : %d,%d", l->info.exit_at.x, l->info.exit_at.y);
     LOG("Fragment count    : %d", l->info.fragment_count);
     LOG("Treasure count    : %d", l->info.treasure_count);
     LOG("Monst count       : %d (mob:%d easy:%d hard:%d)", l->info.monst_count, l->info.monst_group_mob_count,
@@ -44,6 +46,18 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
     LOG("Teleport count    : %d", l->info.teleport_count);
     LOG("Locked door count : %d", l->info.door_locked_count);
     LOG("Key count         : %d", l->info.key_count);
+    if (l->player_has_entered_level) {
+      LOG("- player has entered level");
+    }
+    if (l->player_completed_level_via_exit) {
+      LOG("- player completed level via exit");
+    }
+    if (l->player_fell_out_of_level) {
+      LOG("- player fell out of level");
+    }
+    if (l->player_can_enter_this_level_next) {
+      LOG("- player can enter this level next");
+    }
   }
 
   for (int y = 0; y < MAP_HEIGHT; y++) {

@@ -442,10 +442,14 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
 
 static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool need_path)
 {
+  TRACE_NO_INDENT();
+  LOG("Player move try");
+
   if (thing_can_move_to(g, v, l, t, to)) {
     //
     // Fake a mouse path for movement
     //
+    LOG("Player move try: can move to");
     if (need_path) {
       std::vector< spoint > move_path;
       move_path.push_back(to);
@@ -458,6 +462,7 @@ static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, b
     //
     // Can we shove it out of the way to move?
     //
+    LOG("Player move try: can move to by shoving");
     if (thing_shove_to(g, v, l, t, to)) {
       level_tick_begin_requested(g, v, l, "player shoved");
       return true;
@@ -468,6 +473,7 @@ static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, b
     //
     // Can we open it allow movement?
     //
+    LOG("Player move try: can move to by opening");
     if (thing_move_to(g, v, l, t, to)) {
       level_tick_begin_requested(g, v, l, "player opened a door to move");
       return true;
@@ -809,6 +815,7 @@ static bool player_move_path_destination(Gamep g, Levelsp v, Levelp l, Thingp t,
 bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
+  LOG("Player move to next");
 
   //
   // If already moving, do not pop the next path tile

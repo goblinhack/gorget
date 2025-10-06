@@ -44,15 +44,6 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   v->cursor[ t->at.x ][ t->at.y ] = CURSOR_NONE;
 }
 
-static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  sound_play(g, "teleport");
-
-  game_popup_text_add(g, t->at.x, t->at.y, std::string("Urgh"));
-}
-
 static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -115,7 +106,6 @@ static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
 static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
-  TOPCON("enter level");
   tp_player_vision_update(g, v, l, t);
 }
 
@@ -128,6 +118,17 @@ static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t)
 static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
+  tp_player_vision_update(g, v, l, t);
+}
+
+static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  sound_play(g, "teleport");
+
+  game_popup_text_add(g, t->at.x, t->at.y, std::string("Urgh"));
+
   tp_player_vision_update(g, v, l, t);
 }
 

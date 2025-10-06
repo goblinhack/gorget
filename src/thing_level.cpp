@@ -43,3 +43,25 @@ void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t
   //
   thing_warp_to(g, v, new_level, t, new_level->entrance);
 }
+
+//
+// Move the thing immediately to the new level exit
+//
+void thing_level_warp_to_exit(Gamep g, Levelsp v, Levelp new_level, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (! t) {
+    return;
+  }
+
+  auto old_level = game_level_get(g, v, t->level_num);
+  if (old_level == new_level) {
+    return;
+  }
+
+  //
+  // Now move to the correct location
+  //
+  thing_warp_to(g, v, new_level, t, new_level->exit);
+}
