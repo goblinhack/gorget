@@ -215,7 +215,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       // Limit to previously walked tiles
       //
       if (attempt == 1) {
-        if (! l->is_walked[ x ][ y ]) {
+        if (! l->player_has_walked_tile[ x ][ y ]) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
           continue;
         }

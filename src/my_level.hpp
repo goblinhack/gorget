@@ -162,9 +162,13 @@ typedef struct Level_ {
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
   //
+  // What we have ever seen
+  //
+  FovMap player_fov_has_seen_tile;
+  //
   // Has the player been on this tile?
   //
-  uint8_t is_walked[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t player_has_walked_tile[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
   // Original character map when the level was generated
   //
@@ -387,10 +391,8 @@ typedef struct Levels_ {
       for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                     \
         for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                 \
           for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                    \
-            for (auto _slot_ = 0;                                                                                    \
-                 _t_ = thing_and_tp_get_at(_g_, _v_, _l_, spoint(_x_, _y_), _slot_, &_tp_), _slot_ < MAP_SLOTS;      \
-                 _slot_++)                                                                                           \
-              if (_t_)
+            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
+              if ((_t_ = thing_and_tp_get_at(_g_, _v_, _l_, spoint(_x_, _y_), _slot_, &_tp_)))
 
 //
 // For all things at a specific location
@@ -398,16 +400,15 @@ typedef struct Levels_ {
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                   \
   if (_g_ && _v_ && _l_)                                                                                             \
     for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                          \
-      for (auto _slot_ = 0; _t_ = thing_get(_g_, _v_, _l_, _p_, _slot_), _slot_ < MAP_SLOTS; _slot_++)               \
-        if (_t_)
+      for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                            \
+        if ((_t_ = thing_get(_g_, _v_, _l_, _p_, _slot_)))
 
 #define FOR_ALL_TPS_AT(_g_, _v_, _l_, _tp_, _p_)                                                                     \
   if (_g_ && _v_ && _l_)                                                                                             \
     for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                     \
       for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                        \
-        for (auto _slot_ = 0; _t_ = thing_and_tp_get_at(_g_, _v_, _l_, _p_, _slot_, &_tp_), _slot_ < MAP_SLOTS;      \
-             _slot_++)                                                                                               \
-          if (_t_)
+        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
+          if ((_t_ = thing_and_tp_get_at(_g_, _v_, _l_, _p_, _slot_, &_tp_)))
 
 enum {
   CHANCE_VVV_UNLIKELY = 1,

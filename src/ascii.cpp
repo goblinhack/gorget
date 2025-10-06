@@ -118,8 +118,17 @@ void pixel_to_ascii(Gamep g, int *x, int *y)
   float mx = *x;
   float my = *y;
 
-  mx /= game_ascii_pix_width_get(g);
-  my /= game_ascii_pix_height_get(g);
+  auto w = game_ascii_pix_width_get(g);
+  auto h = game_ascii_pix_height_get(g);
+
+  if (! w || ! h) {
+    *x = 0;
+    *y = 0;
+    return;
+  }
+
+  mx /= w;
+  my /= h;
 
   if (mx > TERM_WIDTH - 1) {
     mx = TERM_WIDTH - 1;

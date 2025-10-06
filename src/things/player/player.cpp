@@ -93,7 +93,7 @@ static void tp_player_vision_update(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto ai = thing_ai_struct(g, t);
   if (ai) {
-    level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_seen_tile, t->at, thing_vision_distance(t));
+    level_fov(g, v, l, t, &ai->fov_can_see_tile, &l->player_fov_has_seen_tile, t->at, thing_vision_distance(t));
   }
 }
 

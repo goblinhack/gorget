@@ -169,6 +169,9 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me, //
         && (light_walls || ! light_blocker)) {
       level_fov_set(fov_can_see_tile, p, true);
 
+      //
+      // Monsters do not have this
+      //
       if (fov_has_seen_tile) {
         level_fov_set(fov_has_seen_tile, p, true);
       }

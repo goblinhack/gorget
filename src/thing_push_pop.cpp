@@ -44,7 +44,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       // Keep track of tiles the player has been on.
       //
       if (tp_is_player(tp)) {
-        l->is_walked[ p.x ][ p.y ] = true;
+        l->player_has_walked_tile[ p.x ][ p.y ] = true;
       }
 
       //

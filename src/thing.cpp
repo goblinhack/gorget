@@ -26,6 +26,16 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
     return nullptr;
   }
 
+  if (is_oob(p)) {
+    ERR("out of bounds %d,%d, slot %d", p.x, p.y, slot);
+    return nullptr;
+  }
+
+  if ((slot < 0) || (slot >= MAP_SLOTS)) {
+    ERR("slot out of bounds %d,%d, slot %d", p.x, p.y, slot);
+    return nullptr;
+  }
+
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
   if (! id) {
     return nullptr;
@@ -45,6 +55,16 @@ Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp
 
   if (! l) {
     ERR("trying to get a thing on a null level");
+    return nullptr;
+  }
+
+  if (is_oob(p)) {
+    ERR("out of bounds %d,%d, slot %d", p.x, p.y, slot);
+    return nullptr;
+  }
+
+  if ((slot < 0) || (slot >= MAP_SLOTS)) {
+    ERR("slot out of bounds %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
 

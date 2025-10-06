@@ -15,8 +15,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  ai->fov_can_see_tile  = {{{0}}};
-  ai->fov_has_seen_tile = {{{0}}};
+  ai->fov_can_see_tile = {{{0}}};
 }
 
 bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
@@ -32,6 +31,7 @@ bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
   if (is_oob(p)) {
     return false;
   }
+
   return ai->fov_can_see_tile.can_see[ p.x ][ p.y ];
 }
 
@@ -39,14 +39,14 @@ bool thing_vision_has_seen_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p
 {
   TRACE_NO_INDENT();
 
-  auto ai = thing_ai_struct(g, t);
-  if (! ai) {
-    ERR("missing ai struct");
+  if (thing_is_monst(t)) {
+    ERR("not implemented for monsters");
     return false;
   }
 
   if (is_oob(p)) {
     return false;
   }
-  return ai->fov_has_seen_tile.can_see[ p.x ][ p.y ];
+
+  return l->player_fov_has_seen_tile.can_see[ p.x ][ p.y ];
 }

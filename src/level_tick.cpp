@@ -89,6 +89,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 void level_tick(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
+
   verify(MTYPE_LEVELS, game_levels_get(g));
 
   v->last_time_step = v->time_step;
@@ -293,6 +294,8 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 
 static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 {
+  TRACE_NO_INDENT();
+
   v->tick++;
   LOG("Tick %u begin", v->tick);
 
@@ -316,6 +319,8 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 
 static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
 {
+  TRACE_NO_INDENT();
+
   auto p = thing_player(g);
   if (! p) {
     TOPCON("noplayer");

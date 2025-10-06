@@ -336,7 +336,7 @@ case "$MY_OS_NAME" in
         DSYM="dsymutil \${TARGET_GAME} &"
 
         if [[ $OPT_DEV2 != "" ]]; then
-            C_FLAGS+=" -fsanitize=address -fno-omit-frame-pointer"
+            C_FLAGS+=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer"
             LDFLAGS+=" -fsanitize=address"
         fi
         ;;
@@ -346,7 +346,7 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -lGL "
 
         if [[ $OPT_DEV2 != "" ]]; then
-            C_FLAGS+=" -fsanitize=address -fno-omit-frame-pointer -fno-common"
+            C_FLAGS+=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fno-common"
             LDFLAGS+=" -fsanitize=address"
         fi
 
