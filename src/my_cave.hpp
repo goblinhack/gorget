@@ -32,8 +32,8 @@ typedef struct {
   //
   // Used for cellular automata
   //
-  uint8_t curr[ MAP_WIDTH + MAP_LEVEL_CELLULAR_BORDER ][ MAP_HEIGHT + MAP_LEVEL_CELLULAR_BORDER ];
-  uint8_t prev[ MAP_WIDTH + MAP_LEVEL_CELLULAR_BORDER ][ MAP_HEIGHT + MAP_LEVEL_CELLULAR_BORDER ];
+  uint8_t curr[ MAP_WIDTH + MAP_LEVEL_CELLULAR_BORDER * 2 ][ MAP_HEIGHT + MAP_LEVEL_CELLULAR_BORDER * 2 ];
+  uint8_t prev[ MAP_WIDTH + MAP_LEVEL_CELLULAR_BORDER * 2 ][ MAP_HEIGHT + MAP_LEVEL_CELLULAR_BORDER * 2 ];
 
   //
   // Keeps track of the largest blob so fat
