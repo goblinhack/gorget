@@ -686,7 +686,7 @@ void config_game_gfx_update(Gamep g)
   int max_fbo_w = INNER_TILE_WIDTH * MAP_WIDTH;
   int max_fbo_h = INNER_TILE_HEIGHT * MAP_HEIGHT;
 
-  double map_w_h_ratio = map_w / map_h;
+  double map_w_h_ratio = (double) map_w / (double) map_h;
   int    fbo_w         = INNER_TILE_WIDTH * game_tiles_visible_across_get(g);
   int    fbo_h         = (int) ceil(fbo_w / map_w_h_ratio);
 
