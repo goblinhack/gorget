@@ -185,12 +185,18 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         spoint p(x, y);
 
         if (attempt == 3) {
+          //
+          // Any tile will do
+          //
           if (level_is_obs_to_cursor_path(g, v, l, p)) {
             d.val[ x ][ y ] = DMAP_IS_WALL;
           } else {
             d.val[ x ][ y ] = DMAP_IS_PASSABLE;
           }
         } else {
+          //
+          // Avoid hazards
+          //
           if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
             d.val[ x ][ y ] = DMAP_IS_WALL;
           } else {
@@ -201,62 +207,61 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
     }
   }
 
-  //
-  // Limit to previously walked tiles
-  //
-  if (attempt == 1) {
-    for (auto y = miny; y < maxy; y++) {
-      for (auto x = minx; x < maxx; x++) {
-        spoint p(x, y);
+  for (auto y = miny; y < maxy; y++) {
+    for (auto x = minx; x < maxx; x++) {
+      spoint p(x, y);
 
-        //
-        // If the tile is really close then just use the shortest path else we can
-        // get things like:
-        //
-        // original path to X:
-        //
-        //     ..@
-        //   ..
-        //  X
-        //
-        // and the return path then looks odd, not taking the shortest path:
-        //
-        //   .
-        //  @ X
-        //
-        //
-        // when we really want:
-        //
-        //  @.X
-        //
-        if (distance(p, player->at) <= 2) {
-
-          //
-          // Shortcuts cannot go through walls
-          //
-          if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
-            d.val[ x ][ y ] = DMAP_IS_WALL;
-            continue;
-          }
-
-          //
-          // Probably best to not use tiles where there is a monster for a shortcut
-          //
-          if (level_is_monst(g, v, l, p)) {
-            d.val[ x ][ y ] = DMAP_IS_WALL;
-            continue;
-          }
-
-          //
-          // Allow the shortcut
-          //
-          continue;
-        }
-
+      //
+      // Limit to previously walked tiles
+      //
+      if (attempt == 1) {
         if (! l->is_walked[ x ][ y ]) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
           continue;
         }
+      }
+
+      //
+      // If the tile is really close then just use the shortest path else we can
+      // get things like:
+      //
+      // original path to X:
+      //
+      //     ..@
+      //   ..
+      //  X
+      //
+      // and the return path then looks odd, not taking the shortest path:
+      //
+      //   .
+      //  @ X
+      //
+      //
+      // when we really want:
+      //
+      //  @.X
+      //
+      if (distance(p, player->at) <= 2) {
+        //
+        // Shortcuts cannot go through walls
+        //
+        if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+          d.val[ x ][ y ] = DMAP_IS_WALL;
+          continue;
+        }
+
+        //
+        // Probably best to not use tiles where there is a monster for a shortcut
+        //
+        if (level_is_monst(g, v, l, p)) {
+          d.val[ x ][ y ] = DMAP_IS_WALL;
+          continue;
+        }
+
+        //
+        // Allow the shortcut
+        //
+        continue;
       }
     }
   }
@@ -282,6 +287,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   // we want.
   //
   if (p[ path_size - 1 ] != end) {
+    // LOG("did not reach %d,%d", end.x, end.y);
     return empty;
   }
 

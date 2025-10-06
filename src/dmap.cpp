@@ -223,6 +223,26 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
         h = D->val[ x ][ y + 1 ];
         i = D->val[ x + 1 ][ y + 1 ];
 
+        //
+        // a b c
+        // d e f
+        // g h i
+        //
+        // No corner cutting
+        //
+        if ((b == DMAP_IS_WALL) && (d == DMAP_IS_WALL)) {
+          a = DMAP_IS_WALL;
+        }
+        if ((b == DMAP_IS_WALL) && (f == DMAP_IS_WALL)) {
+          c = DMAP_IS_WALL;
+        }
+        if ((d == DMAP_IS_WALL) && (h == DMAP_IS_WALL)) {
+          g = DMAP_IS_WALL;
+        }
+        if ((f == DMAP_IS_WALL) && (h == DMAP_IS_WALL)) {
+          i = DMAP_IS_WALL;
+        }
+
         if (a < b) {
           lowest = a;
         } else {
@@ -335,6 +355,26 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
         g = D->val[ x - 1 ][ y + 1 ];
         h = D->val[ x ][ y + 1 ];
         i = D->val[ x + 1 ][ y + 1 ];
+
+        //
+        // a b c
+        // d e f
+        // g h i
+        //
+        // No corner cutting
+        //
+        if ((b == DMAP_IS_WALL) && (d == DMAP_IS_WALL)) {
+          a = DMAP_IS_WALL;
+        }
+        if ((b == DMAP_IS_WALL) && (f == DMAP_IS_WALL)) {
+          c = DMAP_IS_WALL;
+        }
+        if ((d == DMAP_IS_WALL) && (h == DMAP_IS_WALL)) {
+          g = DMAP_IS_WALL;
+        }
+        if ((f == DMAP_IS_WALL) && (h == DMAP_IS_WALL)) {
+          i = DMAP_IS_WALL;
+        }
 
         if (a >= DMAP_IS_PASSABLE) {
           a = 0;

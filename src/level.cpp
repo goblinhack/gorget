@@ -370,7 +370,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  DBG("Level destroy %u", l->level_num);
+  DBG2("Level destroy %u", l->level_num);
 
   //
   // Remove all things
