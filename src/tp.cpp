@@ -236,7 +236,8 @@ public:
   tp_mouse_down_t         mouse_down         = {};
   tp_on_spawn_t           on_spawn           = {};
   tp_on_level_populated_t on_level_populated = {};
-  tp_on_level_entered_t   on_level_entered   = {};
+  tp_on_level_enter_t   on_level_enter   = {};
+  tp_on_level_leave_t     on_level_leave     = {};
   tp_on_open_request_t    on_open_request    = {};
   tp_on_carry_request_t   on_carry_request   = {};
   tp_on_drop_request_t    on_drop_request    = {};
@@ -1260,17 +1261,17 @@ void tp_on_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->on_level_populated(g, v, l, me);
 }
 
-void tp_on_level_entered_set(Tpp tp, tp_on_level_entered_t callback)
+void tp_on_level_enter_set(Tpp tp, tp_on_level_enter_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->on_level_entered = callback;
+  tp->on_level_enter = callback;
 }
 
-void tp_on_level_entered(Gamep g, Levelsp v, Levelp l, Thingp me)
+void tp_on_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -1278,10 +1279,34 @@ void tp_on_level_entered(Gamep g, Levelsp v, Levelp l, Thingp me)
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_level_entered) {
+  if (! tp->on_level_enter) {
     return;
   }
-  return tp->on_level_entered(g, v, l, me);
+  return tp->on_level_enter(g, v, l, me);
+}
+
+void tp_on_level_leave_set(Tpp tp, tp_on_level_leave_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->on_level_leave = callback;
+}
+
+void tp_on_level_leave(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  if (! tp->on_level_leave) {
+    return;
+  }
+  return tp->on_level_leave(g, v, l, me);
 }
 
 void tp_on_open_request_set(Tpp tp, tp_on_open_request_t callback)

@@ -447,7 +447,7 @@ void    levels_destroy(Gamep, Levelsp);
 void    level_debug_stats(Gamep);
 
 Levelp level_change(Gamep, Levelsp, LevelNum);
-void   level_entered(Gamep, Levelsp, Levelp);
+void   level_enter(Gamep, Levelsp, Levelp);
 void   level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
 void   level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
 void   level_destroy(Gamep, Levelsp, Levelp);

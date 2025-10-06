@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_tile.hpp"
+#include "my_tp_callbacks.hpp"
 
 //
 // Get thing direction
@@ -284,11 +285,24 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
     return false;
   }
 
+  bool level_changed = false;
+  auto old_level     = thing_level(g, v, t);
+
   //
-  // Check if already present.
+  // Need to reset vision when leaving a level
   //
-  auto curr_level = thing_level(g, v, t);
-  if ((new_level == curr_level) && (to == t->at)) {
+  if (old_level != new_level) {
+    level_changed = true;
+  }
+
+  if (level_changed) {
+    tp_on_level_leave(g, v, old_level, t);
+  }
+
+  //
+  // Check if already present at the destination.
+  //
+  if ((new_level == old_level) && (to == t->at)) {
     //
     // No need to pop. If might be an inventory item though, so make sure and push
     // it onto the map after this check.
@@ -305,10 +319,10 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
     //
     // Complete the current move
     //
-    thing_move_or_jump_finish(g, v, curr_level, t);
+    thing_move_or_jump_finish(g, v, old_level, t);
 
     //
-    // Remove from the currentl level or position
+    // Remove from the current level or position
     //
     thing_pop(g, v, t);
   }
@@ -319,7 +333,17 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   t->old_at = t->at;
   t->at     = to;
 
-  thing_push(g, v, new_level, t);
+  //
+  // Enter the new level callback
+  //
+  if (level_changed) {
+    tp_on_level_enter(g, v, new_level, t);
+
+    //
+    // Join the level, but at the old position
+    //
+    thing_push(g, v, new_level, t);
+  }
 
   //
   // Need to update with the new pixel position

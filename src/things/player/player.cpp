@@ -96,35 +96,39 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-static void tp_player_level_entered(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_player_vision_update(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
+  auto ai = thing_ai_struct(g, t);
+  if (ai) {
+    level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_seen_tile, t->at, thing_vision_distance(t));
+  }
+}
+
+static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
   thing_vision_reset(g, v, l, t);
+}
+
+static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  TOPCON("enter level");
+  tp_player_vision_update(g, v, l, t);
 }
 
 static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
-
-  auto ai = thing_ai_struct(g, t);
-  if (! ai) {
-    return;
-  }
-
-  level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_seen_tile, t->at, thing_vision_distance(t));
+  tp_player_vision_update(g, v, l, t);
 }
 
 static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
-
-  auto ai = thing_ai_struct(g, t);
-  if (! ai) {
-    return;
-  }
-
-  level_fov(g, v, l, t, &ai->fov_can_see_tile, &ai->fov_has_seen_tile, t->at, thing_vision_distance(t));
+  tp_player_vision_update(g, v, l, t);
 }
 
 static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -187,7 +191,8 @@ bool tp_load_player(void)
   tp_on_fall_begin_set(tp, tp_player_on_fall_begin);
   tp_on_fall_end_set(tp, tp_player_on_fall_end);
   tp_on_jump_end_set(tp, tp_player_on_jump_end);
-  tp_on_level_entered_set(tp, tp_player_level_entered);
+  tp_on_level_enter_set(tp, tp_player_level_enter);
+  tp_on_level_leave_set(tp, tp_player_level_leave);
   tp_on_level_populated_set(tp, tp_player_level_populated);
   tp_on_moved_set(tp, tp_player_on_moved);
   tp_on_teleported_set(tp, tp_player_on_teleported);

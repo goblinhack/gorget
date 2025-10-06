@@ -272,7 +272,7 @@ void levels_destroy(Gamep g, Levelsp v)
   levels_memory_free(g, v);
 }
 
-void level_entered(Gamep g, Levelsp v, Levelp l)
+void level_enter(Gamep g, Levelsp v, Levelp l)
 {
   LOG("Level entered: %u", l->level_num);
   TRACE_AND_INDENT();

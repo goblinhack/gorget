@@ -39,22 +39,7 @@ void thing_level_warp_to_entrance(Gamep g, Levelsp v, Levelp new_level, Thingp t
   }
 
   //
-  // Leave the old level
-  //
-  thing_pop(g, v, t);
-
-  //
-  // Join the level, but at the old position
-  //
-  thing_push(g, v, new_level, t);
-
-  //
   // Now move to the correct location
   //
   thing_warp_to(g, v, new_level, t, new_level->entrance);
-
-  //
-  // Need to reset vision when entering a new level, and other things
-  //
-  tp_on_level_entered(g, v, new_level, t);
 }
