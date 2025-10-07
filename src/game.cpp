@@ -89,8 +89,8 @@ public:
   //
   // The number of tiles on screen.
   //
-  int tiles_visible_across;
-  int tiles_visible_down;
+  int tiles_visible_across = {};
+  int tiles_visible_down   = {};
 
   int ascii_pix_height = {};
   int ascii_pix_width  = {};
@@ -185,7 +185,7 @@ public:
   //
   // User configuration.
   //
-  Config config;
+  Config config = {};
 
   /////////////////////////////////////////////////////////////////////////
   // not worth saving

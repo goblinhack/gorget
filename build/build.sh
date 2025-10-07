@@ -278,18 +278,7 @@ echo "#include \"my_cfg.hpp\"" > $CONFIG_H
 C_FLAGS+=" -include cfg.hpp"
 rm -f src/precompiled.hpp.gch
 
-case "$MY_OS_NAME" in
-    *MING*|*MSYS*)
-        ;;
-    *Darwin*)
-        SANITIZER=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer"
-        ;;
-    *inux*)
-        SANITIZER=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fsanitize=memory -fPIE -pie"
-        ;;
-    *)
-        ;;
-esac
+SANITIZER=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer"
 
 case "$MY_OS_NAME" in
     *MSYS*)

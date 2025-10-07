@@ -32,8 +32,8 @@ public:
   std::string name;
   std::string reason;
   std::string when;
-  int         score;
-  int         levels_completed;
+  int         score            = {};
+  int         levels_completed = {};
 
   //
   // The number of scores in the table.
