@@ -278,9 +278,19 @@ echo "#include \"my_cfg.hpp\"" > $CONFIG_H
 C_FLAGS+=" -include cfg.hpp"
 rm -f src/precompiled.hpp.gch
 
-#
-# for backtraces, but it doesn't help much
-#
+case "$MY_OS_NAME" in
+    *MING*|*MSYS*)
+        ;;
+    *Darwin*)
+        SANITIZER=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer"
+        ;;
+    *inux*)
+        SANITIZER=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fsanitize=memory -fPIE -pie"
+        ;;
+    *)
+        ;;
+esac
+
 case "$MY_OS_NAME" in
     *MSYS*)
         log_err "Please compile for ming64, not msys"
@@ -336,8 +346,8 @@ case "$MY_OS_NAME" in
         DSYM="dsymutil \${TARGET_GAME} &"
 
         if [[ $OPT_DEV2 != "" ]]; then
-            C_FLAGS+=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer"
-            LDFLAGS+=" -fsanitize=address"
+            C_FLAGS+="$SANITIZER"
+            LDFLAGS+="$SANITIZER"
         fi
         ;;
     *inux*)
@@ -346,8 +356,8 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -lGL "
 
         if [[ $OPT_DEV2 != "" ]]; then
-            C_FLAGS+=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fno-common"
-            LDFLAGS+=" -fsanitize=address"
+            C_FLAGS+="$SANITIZER"
+            LDFLAGS+="$SANITIZER"
         fi
 
         pkg-config --print-provides libunwind >/dev/null 2>/dev/null
