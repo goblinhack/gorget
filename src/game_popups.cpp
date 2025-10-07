@@ -193,6 +193,7 @@ void game_popups_clear(Gamep g)
       for (auto p : *l) {
         delete p;
       }
+      l->clear();
     }
   }
 }
