@@ -190,7 +190,9 @@ void game_popups_clear(Gamep g)
       }
 
       auto l = game_popups_get(g, x, y);
-      l->clear();
+      for (auto p : *l) {
+        delete p;
+      }
     }
   }
 }
