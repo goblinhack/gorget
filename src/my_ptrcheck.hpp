@@ -16,7 +16,7 @@ void *myzalloc_(int size, const char *what, const char *func, const char *file, 
 void *mymalloc_(int size, const char *what, const char *func, const char *file, int line);
 void *myrealloc_(void *ptr, int size, const char *what, const char *func, const char *file, int line);
 void  myfree_(void *ptr, const char *func, const char *file, int line);
-char *dupstr_(const char *in, const char *what, const char *func, const char *file, int line);
+char *mydupstr_(const char *in, const char *what, const char *func, const char *file, int line);
 char *strsub_(const char *in, const char *old, const char *replace_with, const char *what, const char *file,
               const char *func, int line);
 
@@ -28,7 +28,7 @@ char *strsub_(const char *in, const char *old, const char *replace_with, const c
 
 #define myfree(__ptr__) myfree_((__ptr__), PTRCHECK_AT)
 
-#define dupstr(__ptr__, __what__) dupstr_((__ptr__), (__what__), PTRCHECK_AT)
+#define mydupstr(__ptr__, __what__) mydupstr_((__ptr__), (__what__), PTRCHECK_AT)
 
 #define strsub(a, b, c, __what__) strsub_(a, b, c, (__what__), PTRCHECK_AT)
 

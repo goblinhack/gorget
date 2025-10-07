@@ -106,7 +106,7 @@ char *strsub_(const char *in, const char *look_for, const char *replace_with, co
   // printf("  replace  %s\n", replace_with);
   at = strstr(in, look_for);
   if (! at) {
-    buf = dupstr(in, what);
+    buf = mydupstr(in, what);
     return buf;
   }
 
@@ -368,7 +368,7 @@ char *dynprintf(const char *fmt, ...)
   ret = dynvprintf_(fmt, args);
   va_end(args);
 
-  return (dupstr(ret, __FUNCTION__));
+  return (mydupstr(ret, __FUNCTION__));
 }
 
 char *dynvprintf(const char *fmt, va_list args)
@@ -379,7 +379,7 @@ char *dynvprintf(const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   vsnprintf(buf, MAXSTR, fmt, args);
 
-  return (dupstr(buf, __FUNCTION__));
+  return (mydupstr(buf, __FUNCTION__));
 }
 
 /*
@@ -390,7 +390,7 @@ char *dynvprintf(const char *fmt, va_list args)
 std::string mybasename(const char *in, const char *who)
 {
   TRACE_NO_INDENT();
-  char       *tmp = dupstr(in, who);
+  char       *tmp = mydupstr(in, who);
   std::string tmp2(basename(tmp));
   myfree(tmp);
 

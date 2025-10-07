@@ -48,7 +48,7 @@ static void find_executable(void)
   //
   // Get rid of ../ from the program name and replace with the path.
   //
-  exec_expanded_name = dupstr(g_argv[ 0 ], __FUNCTION__);
+  exec_expanded_name = mydupstr(g_argv[ 0 ], __FUNCTION__);
   if (*exec_expanded_name == '.') {
     tmp = strsub(exec_expanded_name, ".." DIR_SEP, parent_dir, "exec_expanded_name");
     myfree(exec_expanded_name);
@@ -76,7 +76,7 @@ static void find_executable(void)
   //
   g_exec_full_path_and_name = dynprintf("%s%s", curr_dir, exec_name.c_str());
   if (file_exists(g_exec_full_path_and_name)) {
-    g_exec_dir = dupstr(curr_dir, "exec dir 1");
+    g_exec_dir = mydupstr(curr_dir, "exec dir 1");
     goto cleanup;
   }
 
@@ -88,7 +88,7 @@ static void find_executable(void)
   //
   g_exec_full_path_and_name = dynprintf("%s%s", parent_dir, exec_name.c_str());
   if (file_exists(g_exec_full_path_and_name)) {
-    g_exec_dir = dupstr(parent_dir, "exec dir 2");
+    g_exec_dir = mydupstr(parent_dir, "exec dir 2");
     goto cleanup;
   }
 
@@ -102,7 +102,7 @@ static void find_executable(void)
   if (path) {
     char *dir = nullptr;
 
-    path = dupstr(path, "path");
+    path = mydupstr(path, "path");
 
     for (dir = strtok(path, PATHSEP); dir; dir = strtok(nullptr, PATHSEP)) {
       g_exec_full_path_and_name = dynprintf("%s" DIR_SEP "%s", dir, exec_name.c_str());
@@ -119,8 +119,8 @@ static void find_executable(void)
     path = nullptr;
   }
 
-  g_exec_full_path_and_name = dupstr(exec_expanded_name, "full path");
-  g_exec_dir                = dupstr(dirname(exec_expanded_name), "exec dir");
+  g_exec_full_path_and_name = mydupstr(exec_expanded_name, "full path");
+  g_exec_dir                = mydupstr(dirname(exec_expanded_name), "exec dir");
 
 cleanup:
   auto new_g_exec_dir = strsub(g_exec_dir, "/", DIR_SEP, "g_exec_dir");
@@ -196,7 +196,7 @@ static void find_data_dir(void)
   }
   myfree(g_data_path);
 
-  g_data_path = dupstr(g_exec_dir, __FUNCTION__);
+  g_data_path = mydupstr(g_exec_dir, __FUNCTION__);
 }
 
 //
@@ -217,7 +217,7 @@ static void find_ttf_dir(void)
   }
   myfree(g_ttf_path);
 
-  g_ttf_path = dupstr(g_exec_dir, __FUNCTION__);
+  g_ttf_path = mydupstr(g_exec_dir, __FUNCTION__);
 }
 
 //
@@ -238,7 +238,7 @@ static void find_gfx_dir(void)
   }
   myfree(g_gfx_path);
 
-  g_gfx_path = dupstr(g_exec_dir, __FUNCTION__);
+  g_gfx_path = mydupstr(g_exec_dir, __FUNCTION__);
 }
 
 //

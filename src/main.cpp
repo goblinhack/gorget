@@ -247,14 +247,22 @@ int main(int argc, char *argv[])
   LOG("Platform is __linux__");
 #endif
 
+  //////////////////////////////////////////////////////////////////////////////
+  // ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ Use LOG
+  // instead of CON until we set stdout or you see two logs
+  //////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Call parse_args before any memory allocations, in case debug2 is enabled
+  //////////////////////////////////////////////////////////////////////////////
   {
     TRACE_NO_INDENT();
-    find_file_locations();
+    parse_args(argc, argv);
   }
 
   {
     TRACE_NO_INDENT();
-    parse_args(argc, argv);
+    find_file_locations();
   }
 
   {
@@ -262,11 +270,6 @@ int main(int argc, char *argv[])
     TRACE_NO_INDENT();
     ramdisk_init();
   }
-
-  //////////////////////////////////////////////////////////////////////////////
-  // ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ Use LOG
-  // instead of CON until we set stdout or you see two logs
-  //////////////////////////////////////////////////////////////////////////////
 
   {
     LOG("Create console");
