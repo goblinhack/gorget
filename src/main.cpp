@@ -249,11 +249,16 @@ int main(int argc, char *argv[])
 
   {
     TRACE_NO_INDENT();
+    find_file_locations();
+  }
+
+  {
+    TRACE_NO_INDENT();
     parse_args(argc, argv);
   }
 
   {
-    LOG("Ramdisk");
+    LOG("Ramdisk init");
     TRACE_NO_INDENT();
     ramdisk_init();
   }
@@ -503,12 +508,6 @@ int main(int argc, char *argv[])
     } else {
       sounds_init();
     }
-    wid_console_flush(g);
-  }
-
-  {
-    TRACE_NO_INDENT();
-    find_file_locations();
     wid_console_flush(g);
   }
 

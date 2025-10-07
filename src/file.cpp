@@ -31,6 +31,7 @@ unsigned char *file_load(const char *filename, int *outlen)
    */
   if (file_exists(filename)) {
     if (strstr(filename, "data/")) {
+      TRACE_NO_INDENT();
       if (file_exists_and_is_newer_than(filename, g_exec_full_path_and_name)) {
         out = file_io_read_if_exists(filename, outlen);
         if (out) {
@@ -39,6 +40,7 @@ unsigned char *file_load(const char *filename, int *outlen)
         }
       }
 
+      TRACE_NO_INDENT();
       if (file_exists_and_is_newer_than(filename, ".o/file.o")) {
         out = file_io_read_if_exists(filename, outlen);
         if (out) {
@@ -47,6 +49,7 @@ unsigned char *file_load(const char *filename, int *outlen)
         }
       }
 
+      TRACE_NO_INDENT();
       if (file_exists_and_is_newer_than(filename, "src/.o/file.o")) {
         out = file_io_read_if_exists(filename, outlen);
         if (out) {
@@ -55,6 +58,7 @@ unsigned char *file_load(const char *filename, int *outlen)
         }
       }
     } else {
+      TRACE_NO_INDENT();
       out = file_io_read_if_exists(filename, outlen);
       if (out) {
         FILE_LOG("Read file %s (exists locally)", filename);
@@ -67,6 +71,7 @@ unsigned char *file_load(const char *filename, int *outlen)
     alt_filename = strprepend(filename, g_exec_dir);
 
     if (file_exists(alt_filename)) {
+      TRACE_NO_INDENT();
       if (file_exists_and_is_newer_than(alt_filename, g_exec_full_path_and_name)) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out) {
@@ -77,6 +82,7 @@ unsigned char *file_load(const char *filename, int *outlen)
         }
       }
 
+      TRACE_NO_INDENT();
       if (file_exists_and_is_newer_than(alt_filename, ".o/file.o")) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out) {
@@ -87,6 +93,7 @@ unsigned char *file_load(const char *filename, int *outlen)
         }
       }
 
+      TRACE_NO_INDENT();
       if (file_exists_and_is_newer_than(alt_filename, "src/.o/file.o")) {
         out = file_io_read_if_exists(alt_filename, outlen);
         if (out) {
@@ -99,6 +106,7 @@ unsigned char *file_load(const char *filename, int *outlen)
     }
   }
 
+  TRACE_NO_INDENT();
   auto r = ramdisk_load(filename, outlen);
   if (r) {
     FILE_LOG("Read (ramdisk) %s, %dMb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
@@ -114,6 +122,7 @@ unsigned char *file_load(const char *filename, int *outlen)
   /*
    * Fallback to the disk.
    */
+  TRACE_NO_INDENT();
   out = file_io_read_if_exists(filename, outlen);
   if (out) {
     if (alt_filename) {
@@ -124,6 +133,7 @@ unsigned char *file_load(const char *filename, int *outlen)
     return out;
   }
 
+  TRACE_NO_INDENT();
   out = file_io_read_if_exists(alt_filename, outlen);
   if (out) {
     if (alt_filename) {
@@ -140,6 +150,7 @@ unsigned char *file_load(const char *filename, int *outlen)
   }
 
   {
+    TRACE_NO_INDENT();
     std::string base_alt_filename = mybasename(filename, "strip dir");
 
     out = file_io_read_if_exists(base_alt_filename.c_str(), outlen);
@@ -386,6 +397,16 @@ uint8_t file_exists_and_is_newer_than(const char *filename1, const char *filenam
   struct stat buf1;
   struct stat buf2;
   double      delta;
+
+  if (! filename1) {
+    DIE("expected two filenames");
+  }
+
+  if (! filename2) {
+    DIE("expected two filenames");
+  }
+
+  // fprintf(stdout, "%s/%s\n", filename1, filename2);
 
   if (stat(filename1, &buf1) < 0) {
     return false;

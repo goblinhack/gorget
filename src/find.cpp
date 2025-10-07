@@ -9,6 +9,7 @@
 #include "my_string.hpp"
 
 #include <libgen.h>
+#include <string.h>
 #include <unistd.h>
 
 //
@@ -80,6 +81,7 @@ static void find_executable(void)
   }
 
   myfree(g_exec_full_path_and_name);
+  g_exec_full_path_and_name = nullptr;
 
   //
   // Try the parent dir.
@@ -91,6 +93,7 @@ static void find_executable(void)
   }
 
   myfree(g_exec_full_path_and_name);
+  g_exec_full_path_and_name = nullptr;
 
   //
   // Try the PATH.
@@ -109,6 +112,7 @@ static void find_executable(void)
       }
 
       myfree(g_exec_full_path_and_name);
+      g_exec_full_path_and_name = nullptr;
     }
 
     myfree(path);
@@ -151,6 +155,7 @@ cleanup:
 static void find_exec_dir(void)
 {
   TRACE_NO_INDENT();
+
   find_executable();
 
   //
