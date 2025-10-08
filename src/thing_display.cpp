@@ -174,6 +174,6 @@ void thing_display(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, sp
   } else if (tp_is_blit_square_outlined(tp)) {
     tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, true);
   } else {
-    tile_blit(tile, x1, x2, y1, y2, tl, br);
+    tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
   }
 }

@@ -262,14 +262,12 @@ extern GLuint g_fbo_id[ MAX_FBO ];
 extern GLuint g_fbo_tex_id[ MAX_FBO ];
 extern GLuint g_render_buf_id[ MAX_FBO ];
 
-void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
-          GLushort right, GLushort bottom);
+          GLushort right, GLushort bottom, color c);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, spoint tl, spoint tr, spoint bl,
-          spoint br);
+          spoint br, color c);
+void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
 void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br);
-void blit_colored(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, color color_bl,
-                  color color_br, color color_tl, color color_tr);
 void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
                   GLushort right, GLushort bottom, color color_bl, color color_br, color color_tl, color color_tr);
 void blit_fbo(Gamep, int fbo);
@@ -310,8 +308,6 @@ void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_t
              spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
              uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
              uint8_t g4, uint8_t b4, uint8_t a4);
-void glcolor(color s);
-void glcolorfast(color s);
 
 #define GL_ERROR_CHECK()                                                                                             \
   {                                                                                                                  \

@@ -45,25 +45,6 @@ void color_fini(void)
   color_map.clear();
 }
 
-color gl_save_color(255, 255, 255, 255);
-color gl_last_color(255, 255, 255, 255);
-
-void glcolor_save(void)
-{
-  TRACE_NO_INDENT();
-  gl_save_color = gl_last_color;
-}
-
-void glcolor_restore(void)
-{
-  TRACE_NO_INDENT();
-  color s = gl_last_color = gl_save_color;
-
-  glColor4ub(s.r, s.g, s.b, s.a);
-}
-
-color gl_color_current(void) { return gl_last_color; }
-
 color string2color(const char **s)
 {
   TRACE_NO_INDENT();
@@ -172,82 +153,6 @@ color string2color(std::string &s)
   return (result->second);
 }
 
-const char *string2colorname(const char **s)
-{
-  TRACE_NO_INDENT();
-  static char        tmp[ MAXSHORTSTR ];
-  static const char *eo_tmp = tmp + MAXSHORTSTR - 1;
-  const char        *c      = *s;
-  char              *t      = tmp;
-
-  while (t < eo_tmp) {
-    if ((*c == '\0') || (*c == '$')) {
-      break;
-    }
-
-    *t++ = *c++;
-  }
-
-  if (c == eo_tmp) {
-    return nullptr;
-  }
-
-  *t++ = '\0';
-  *s += (t - tmp);
-
-  if (! strcasecmp(tmp, "reset")) {
-    return (UI_COLOR_STR);
-  }
-
-  auto result = color_map.find(std::string(tmp));
-
-  if (result == color_map.end()) {
-    if (color_init_done) { // avoids color warnings due to very early errors
-      ERR("Unknown color [%s]", tmp);
-    }
-    return ("");
-  }
-
-  return tmp;
-}
-
-std::string string2colorname(std::string &s)
-{
-  TRACE_NO_INDENT();
-  auto        iter = s.begin();
-  std::string out;
-
-  if (s == "") {
-    return ("white");
-  }
-
-  while (iter != s.end()) {
-    auto c = *iter;
-
-    if ((c == '\0') || (c == '$')) {
-      break;
-    }
-
-    out += c;
-    iter++;
-  }
-
-  if (out == "reset") {
-    return (UI_COLOR_STR);
-  }
-
-  auto result = color_map.find(out);
-
-  if (result == color_map.end()) {
-    if (color_init_done) { // avoids color warnings due to very early errors
-      ERR("Unknown color [%s]", out.c_str());
-    }
-    return ("");
-  }
-
-  return out;
-}
-
 color color_find(const char *s)
 {
   TRACE_NO_INDENT();
@@ -271,14 +176,12 @@ color color_find(const char *s)
   return (result->second);
 }
 
-color color_to_mono(color a)
+bool color_eq(const color &col1, const color &col2)
 {
-  TRACE_NO_INDENT();
-  float avg = (float) (a.r + a.g + a.b) / (float) 3.0;
+  return col1.r == col2.r && col1.g == col2.g && col1.b == col2.b && col1.a == col2.a;
+}
 
-  a.r = (int) avg;
-  a.g = (int) avg;
-  a.b = (int) avg;
-
-  return a;
+bool color_neq(const color &col1, const color &col2)
+{
+  return col1.r != col2.r || col1.g != col2.g || col1.b != col2.b || col1.a != col2.a;
 }

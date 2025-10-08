@@ -136,7 +136,7 @@ static void game_display_title_bg(Gamep g)
   std::string t = "title_bg";
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 
@@ -150,7 +150,7 @@ static void game_display_title_fg1(Gamep g)
   std::string t = "title_fg1_1";
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 
@@ -182,7 +182,7 @@ static void game_display_title_fg2(Gamep g)
   std::string t = "title_fg2_1";
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 
@@ -262,7 +262,7 @@ static void game_display_title_fg3(Gamep g)
   std::string t = "title_fg3_1";
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 
@@ -287,7 +287,7 @@ static void game_display_title_fg4(Gamep g)
   std::string t = "title_fg4_" + std::to_string(frame);
   blit_init();
   tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)));
+            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
   blit_flush();
 }
 

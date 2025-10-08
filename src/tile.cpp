@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_cpp_template.hpp"
 #include "my_fpoint.hpp"
 #include "my_game.hpp"
@@ -776,30 +777,12 @@ Tilep tile_index_to_tile(int i)
 
   return all_tiles_array[ i - 1 ];
 }
-//
-// Blits a whole tile.
-//
-void tile_blit_at(const Tilep &tile, spoint tl, spoint br)
-{
-  blit(tile->gl_binding(), tile->x1, tile->y2, tile->x2, tile->y1, tl.x, tl.y, br.x, br.y);
-}
 
 //
 // Blits a whole tile. Y co-ords are inverted.
 //
 void tile_blit_colored_fat(Tilep tile, spoint tl, spoint br, color color_tl, color color_tr, color color_bl,
                            color color_br)
-{
-  float x1 = tile->x1;
-  float x2 = tile->x2;
-  float y1 = tile->y1;
-  float y2 = tile->y2;
-
-  blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
-}
-
-void tile_blit_colored(Tilep tile, spoint tl, spoint br, color color_tl, color color_tr, color color_bl,
-                       color color_br)
 {
   float x1 = tile->x1;
   float x2 = tile->x2;
@@ -929,7 +912,6 @@ void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2
                        const color &c, int single_pix_size, bool square)
 {
   color outline = {10, 10, 10, 255};
-  glcolor(outline);
 
   auto binding = tile->gl_binding_mask();
 
@@ -945,27 +927,24 @@ void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2
     }
 
     if (square) {
-      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
-      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
-      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
-      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy, outline);
+      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy, outline);
+      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy, outline);
+      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy, outline);
     }
-    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
-    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
-    blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
-    blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
+    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y, outline);
+    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y, outline);
+    blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy, outline);
+    blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy, outline);
   }
 
-  glcolor(c);
   binding = tile->gl_binding();
-  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
 void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
                        const color &c, const color &outline, int single_pix_size, bool square)
 {
-  glcolor(outline);
-
   auto binding = tile->gl_binding_mask();
 
   if (single_pix_size) {
@@ -980,26 +959,19 @@ void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2
     }
 
     if (square) {
-      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy);
-      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy);
-      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy);
-      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy);
+      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y - dy, br.x - dx, tl.y - dy, outline);
+      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y + dy, br.x + dx, tl.y + dy, outline);
+      blit(binding, x1, y2, x2, y1, tl.x - dx, br.y + dy, br.x - dx, tl.y + dy, outline);
+      blit(binding, x1, y2, x2, y1, tl.x + dx, br.y - dy, br.x + dx, tl.y - dy, outline);
     }
-    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y);
-    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y);
-    blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy);
-    blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy);
+    blit(binding, x1, y2, x2, y1, tl.x + dx, br.y, br.x + dx, tl.y, outline);
+    blit(binding, x1, y2, x2, y1, tl.x - dx, br.y, br.x - dx, tl.y, outline);
+    blit(binding, x1, y2, x2, y1, tl.x, br.y + dy, br.x, tl.y + dy, outline);
+    blit(binding, x1, y2, x2, y1, tl.x, br.y - dy, br.x, tl.y - dy, outline);
   }
 
-  glcolor(c);
   binding = tile->gl_binding();
-  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
-}
-
-void tile_blit_outline(int index, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-                       const color &c, int single_pix_size, bool square)
-{
-  tile_blit_outline(tile_index_to_tile(index), x1, x2, y1, y2, tl, br, c, square);
+  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c)
@@ -1016,104 +988,12 @@ void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color 
   y2 = tile->y2;
 
   auto binding = tile->gl_binding();
-  glcolor(c);
-  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
+  blit(binding, x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
-void tile_blit(const Tilep &tile, const spoint tl, const spoint br)
+void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, color c)
 {
-  float x1, x2, y1, y2;
-
-  //
-  // Only some walls have deco tiles, so the pointer is left null for
-  // those that do not.
-  //
-  if (unlikely(! tile)) {
-    return;
-  }
-
-  x1 = tile->x1;
-  x2 = tile->x2;
-  y1 = tile->y1;
-  y2 = tile->y2;
-
-  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
-}
-
-void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br)
-{
-  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
-}
-
-void tile_blit_mask(const Tilep &tile, const spoint tl, const spoint br)
-{
-  float x1, x2, y1, y2;
-
-  //
-  // Only some walls have deco tiles, so the pointer is left null for
-  // those that do not.
-  //
-  if (unlikely(! tile)) {
-    return;
-  }
-
-  x1 = tile->x1;
-  x2 = tile->x2;
-  y1 = tile->y1;
-  y2 = tile->y2;
-
-  blit(tile->gl_binding_mask(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
-}
-
-void tile_blit(const Tilep &tile, const spoint tl, const spoint tr, const spoint bl, const spoint br)
-{
-  float x1, x2, y1, y2;
-
-  //
-  // Only some walls have deco tiles, so the pointer is left null for
-  // those that do not.
-  //
-  if (unlikely(! tile)) {
-    return;
-  }
-
-  x1 = tile->x1;
-  x2 = tile->x2;
-  y1 = tile->y1;
-  y2 = tile->y2;
-
-  blit(tile->gl_binding(), x1, y2, x2, y1, tl, tr, bl, br);
-}
-
-void tile_blit(int index, const spoint tl, const spoint br) { tile_blit(tile_index_to_tile(index), tl, br); }
-
-void tile_blit_section(const Tilep &tile, const spoint tile_tl, const spoint tile_br, const spoint tl,
-                       const spoint br)
-{
-  float x1, x2, y1, y2;
-
-  //
-  // Only some walls have deco tiles, so the pointer is left null for
-  // those that do not.
-  //
-  if (unlikely(! tile)) {
-    return;
-  }
-
-  float tw = tile->x2 - tile->x1;
-  float th = tile->y2 - tile->y1;
-
-  x1 = tile->x1 + tile_tl.x * tw;
-  x2 = tile->x1 + tile_br.x * tw;
-  y1 = tile->y1 + tile_tl.y * th;
-  y2 = tile->y1 + tile_br.y * th;
-
-  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y);
-}
-
-void tile_blit_section(int index, const spoint tile_tl, const spoint tile_br, const spoint tl, const spoint br)
-{
-  tile_blit_section(tile_index_to_tile(index), tile_tl, tile_br, tl, br);
+  blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
 void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
@@ -1138,13 +1018,6 @@ void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const f
   y2 = tile->y1 + tile_br.y * th;
 
   blit_colored(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
-}
-
-void tile_blit_section_colored(int index, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
-                               const spoint br, color color_tl, color color_tr, color color_bl, color color_br)
-{
-  tile_blit_section_colored(tile_index_to_tile(index), tile_tl, tile_br, tl, br, color_tl, color_tr, color_bl,
-                            color_br);
 }
 
 //

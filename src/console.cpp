@@ -130,87 +130,87 @@ void term_log(const char *s)
 
 int term_color_to_console_color(color c)
 {
-  if (c == BLACK)
+  if (color_eq(c, BLACK))
     return TERM_COLOR_BLACK;
-  if (c == BLUE)
+  if (color_eq(c, BLUE))
     return TERM_COLOR_BLACK;
-  if (c == BROWN)
+  if (color_eq(c, BROWN))
     return TERM_COLOR_BLACK;
-  if (c == COLOR_NONE)
+  if (color_eq(c, COLOR_NONE))
     return TERM_COLOR_RESET;
-  if (c == CYAN)
+  if (color_eq(c, CYAN))
     return TERM_COLOR_CYAN;
-  if (c == DARKBLUE)
+  if (color_eq(c, DARKBLUE))
     return TERM_COLOR_BLUE;
-  if (c == DARKGRAY)
+  if (color_eq(c, DARKGRAY))
     return TERM_COLOR_BLACK;
-  if (c == DARKGREEN)
+  if (color_eq(c, DARKGREEN))
     return TERM_COLOR_GREEN;
-  if (c == DARKOLIVEGREEN2)
+  if (color_eq(c, DARKOLIVEGREEN2))
     return TERM_COLOR_GREEN;
-  if (c == DARKOLIVEGREEN)
+  if (color_eq(c, DARKOLIVEGREEN))
     return TERM_COLOR_GREEN;
-  if (c == DARKRED)
+  if (color_eq(c, DARKRED))
     return TERM_COLOR_RED;
-  if (c == DEEPWATER)
+  if (color_eq(c, DEEPWATER))
     return TERM_COLOR_BLUE;
-  if (c == FORESTGREEN)
+  if (color_eq(c, FORESTGREEN))
     return TERM_COLOR_GREEN;
-  if (c == GOLD)
+  if (color_eq(c, GOLD))
     return TERM_COLOR_YELLOW;
-  if (c == GRAY10)
+  if (color_eq(c, GRAY10))
     return TERM_COLOR_BLUE;
-  if (c == GRAY30)
+  if (color_eq(c, GRAY30))
     return TERM_COLOR_BLUE;
-  if (c == GRAY40)
+  if (color_eq(c, GRAY40))
     return TERM_COLOR_BLUE;
-  if (c == GRAY50)
+  if (color_eq(c, GRAY50))
     return TERM_COLOR_BLUE;
-  if (c == GRAY5)
+  if (color_eq(c, GRAY5))
     return TERM_COLOR_BLUE;
-  if (c == GRAY60)
+  if (color_eq(c, GRAY60))
     return TERM_COLOR_WHITE;
-  if (c == GRAY70)
+  if (color_eq(c, GRAY70))
     return TERM_COLOR_WHITE;
-  if (c == GRAY80)
+  if (color_eq(c, GRAY80))
     return TERM_COLOR_WHITE;
-  if (c == GRAY90)
+  if (color_eq(c, GRAY90))
     return TERM_COLOR_WHITE;
-  if (c == GRAY)
+  if (color_eq(c, GRAY))
     return TERM_COLOR_WHITE;
-  if (c == GREEN)
+  if (color_eq(c, GREEN))
     return TERM_COLOR_GREEN;
-  if (c == LIGHTBLUE)
+  if (color_eq(c, LIGHTBLUE))
     return TERM_COLOR_BLUE;
-  if (c == LIGHTGREEN)
+  if (color_eq(c, LIGHTGREEN))
     return TERM_COLOR_GREEN;
-  if (c == LIMEGREEN)
+  if (color_eq(c, LIMEGREEN))
     return TERM_COLOR_GREEN;
-  if (c == LIME)
+  if (color_eq(c, LIME))
     return TERM_COLOR_GREEN;
-  if (c == MAGENTA)
+  if (color_eq(c, MAGENTA))
     return TERM_COLOR_PINK;
-  if (c == ORANGE)
+  if (color_eq(c, ORANGE))
     return TERM_COLOR_YELLOW;
-  if (c == PEACHPUFF)
+  if (color_eq(c, PEACHPUFF))
     return TERM_COLOR_RED;
-  if (c == PINK)
+  if (color_eq(c, PINK))
     return TERM_COLOR_RED;
-  if (c == PURPLE)
+  if (color_eq(c, PURPLE))
     return TERM_COLOR_PINK;
-  if (c == RED)
+  if (color_eq(c, RED))
     return TERM_COLOR_RED;
-  if (c == SILVER)
+  if (color_eq(c, SILVER))
     return TERM_COLOR_WHITE;
-  if (c == STEELBLUE)
+  if (color_eq(c, STEELBLUE))
     return TERM_COLOR_WHITE;
-  if (c == WATER)
+  if (color_eq(c, WATER))
     return TERM_COLOR_CYAN;
-  if (c == WHITE)
+  if (color_eq(c, WHITE))
     return TERM_COLOR_WHITE;
-  if (c == YELLOW)
+  if (color_eq(c, YELLOW))
     return TERM_COLOR_YELLOW;
-  if (c == PURPLE)
+  if (color_eq(c, PURPLE))
     return TERM_COLOR_BLUE;
   return TERM_COLOR_BLUE;
 }

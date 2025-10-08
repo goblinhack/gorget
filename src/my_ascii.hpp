@@ -143,11 +143,6 @@ void ascii_set(int depth, int x, int y, Tilep, float tx, float ty, float dx, flo
 void ascii_set_scissors(spoint tl, spoint br);
 void pixel_to_ascii(Gamep, int *x, int *y);
 
-void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
-                               const spoint br, color color_tl, color color_tr, color color_bl, color color_br);
-void tile_blit_section_colored(uint16_t index, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
-                               const spoint br, color color_tl, color color_tr, color color_bl, color color_br);
-
 extern float tile_pix_w;
 extern float tile_pix_h;
 

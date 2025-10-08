@@ -5225,7 +5225,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_FG ] && w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ]) {
       ascii_putf__(x, y, w_box_args.col_text, w_box_args.col_bg, text);
     } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_FG ]) {
-      ascii_putf__(x, y, w_box_args.col_text, COLOR_NONE, text);
+      ascii_putf__(x, y, w_box_args.col_text, WHITE, text);
     } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ]) {
       ascii_putf__(x, y, WHITE, w_box_args.col_bg, text);
     } else {

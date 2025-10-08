@@ -306,7 +306,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     return;
   }
 
-  if (bg != COLOR_NONE) {
+  if (color_eq(bg, COLOR_NONE)) {
     bg_set = true;
   }
 
@@ -859,7 +859,7 @@ static void ascii_blit(Gamep g)
         Texp tex = cell->tex[ depth ];
 
         blit(tex_get_gl_binding(tex), cell->tx[ depth ], cell->ty[ depth ], cell->tx[ depth ] + cell->dx[ depth ],
-             cell->ty[ depth ] + cell->dy[ depth ], tile_tl.x, tile_tl.y, tile_br.x, tile_br.y);
+             cell->ty[ depth ] + cell->dy[ depth ], tile_tl.x, tile_tl.y, tile_br.x, tile_br.y, WHITE);
       } else if (cell->tile[ depth ]) {
         color bg_color_tl = cell->color_tl[ depth ];
         color bg_color_tr = cell->color_tr[ depth ];
@@ -1057,7 +1057,7 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
 
         {
           auto depth = TILE_LAYER_BG_0;
-          if (tiles_in[ depth ] || (col_bg != COLOR_NONE)) {
+          if (tiles_in[ depth ] || color_neq(col_bg, COLOR_NONE)) {
             ascii_set(depth + 1, x, y, tiles_in[ depth ], tx, ty, dx, dy);
             ascii_set(depth + 1, x, y, col_bg);
           }
@@ -1065,7 +1065,7 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
 
         for (int depth = TILE_LAYER_FG_0; depth < TILE_LAYER_MAX - 1; depth++) {
           {
-            if (tiles_in[ depth ] || (col_fg != COLOR_NONE)) {
+            if (tiles_in[ depth ] || color_neq(col_fg, COLOR_NONE)) {
               ascii_set(depth + 1, x, y, tiles_in[ depth ], tx, ty, dx, dy);
               ascii_set(depth + 1, x, y, col_fg);
             }

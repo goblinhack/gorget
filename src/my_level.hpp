@@ -100,6 +100,27 @@ typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
 } LevelInfo;
 
+typedef struct {
+  //
+  // The color of this tile
+  //
+  color c;
+  //
+  // The total of all lights intersecting here, which is then scaled into the final light
+  //
+  int16_t r;
+  int16_t g;
+  int16_t b;
+  int16_t sources;
+} LightTile;
+
+//
+// Light map for the level
+//
+typedef struct LightMap_ {
+  LightTile tile[ MAP_WIDTH ][ MAP_HEIGHT ];
+} LightMap;
+
 typedef struct Level_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
@@ -157,6 +178,10 @@ typedef struct Level_ {
   // When a tile is destroyed, we need to update adjacent tiles. This limits the update to only changed tiles.
   //
   uint8_t _tile_update_required[ MAP_WIDTH ][ MAP_HEIGHT ];
+  //
+  // All light from all light sources, combined.
+  //
+  LightMap light_map;
   //
   // What things are where? Each Id points to a thing structure.
   //

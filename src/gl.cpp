@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_ptrcheck.hpp"
@@ -503,14 +504,15 @@ void blit_fbo(Gamep g, int fbo)
   int tex_height;
   fbo_get_size(g, fbo, tex_width, tex_height);
   blit_init();
-  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height);
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, tex_width, tex_height, WHITE);
   blit_flush();
 }
 
 void blit_fbo_window_pix(Gamep g, int fbo)
 {
   blit_init();
-  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_window_pix_width_get(g), game_window_pix_height_get(g));
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_window_pix_width_get(g), game_window_pix_height_get(g),
+       WHITE);
   blit_flush();
 }
 
@@ -1288,21 +1290,6 @@ void gl_error(GLenum errCode)
   }
 }
 
-/*
- * Set the current GL color
- */
-void glcolor(color s)
-{
-  gl_last_color = s;
-
-  glColor4ub(s.r, s.g, s.b, s.a);
-}
-
-/*
- * Set the internal GL color
- */
-void glcolorfast(color s) { gl_last_color = s; }
-
 //
 // gl_push
 //
@@ -1375,7 +1362,7 @@ void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_t
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
-          GLushort right, GLushort bottom)
+          GLushort right, GLushort bottom, color c)
 {
   uint8_t first;
 
@@ -1391,7 +1378,6 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
   buf_tex = tex;
 
-  color   c = gl_color_current();
   uint8_t r = c.r;
   uint8_t g = c.g;
   uint8_t b = c.b;
@@ -1402,7 +1388,7 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, spoint tl, spoint tr, spoint bl,
-          spoint br)
+          spoint br, color c)
 {
   uint8_t first;
 
@@ -1418,7 +1404,6 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, s
 
   buf_tex = tex;
 
-  color   c = gl_color_current();
   uint8_t r = c.r;
   uint8_t g = c.g;
   uint8_t b = c.b;
@@ -1427,6 +1412,13 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, s
   gl_push(&bufp, bufp_end, first, texMinX, texMinY, texMaxX, texMaxY, tl, tr, bl, br, r, g, b, a, r, g, b, a, r, g, b,
           a, r, g, b, a);
 }
+
+void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom)
+{
+  blit(tex, 0, 0, 1, 1, left, top, right, bottom, WHITE);
+}
+
+void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br) { blit(tex, 0, 0, 1, 1, tl, tr, bl, br, WHITE); }
 
 void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
                   GLushort right, GLushort bottom, color color_bl, color color_br, color color_tl, color color_tr)
@@ -1450,15 +1442,10 @@ void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float te
           color_tr.b, color_tr.a, color_br.r, color_br.g, color_br.b, color_br.a);
 }
 
-void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom)
-{
-  blit(tex, 0, 0, 1, 1, left, top, right, bottom);
-}
-
-void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br) { blit(tex, 0, 0, 1, 1, tl, tr, bl, br); }
-
+#if 0
 void blit_colored(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, color color_bl,
                   color color_br, color color_tl, color color_tr)
 {
   blit_colored(tex, 0, 0, 1, 1, left, top, right, bottom, color_bl, color_br, color_tl, color_tr);
 }
+#endif
