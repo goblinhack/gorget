@@ -1290,13 +1290,10 @@ void gl_error(GLenum errCode)
   }
 }
 
-//
-// gl_push
-//
-void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
-             spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
-             uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
-             uint8_t g4, uint8_t b4, uint8_t a4)
+void gl_push(float **P, float *p_end, uint8_t first_vertex, float tex_left, float tex_top, float tex_right,
+             float tex_bottom, spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1,
+             uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
+             uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
 {
   float *p = *P;
 
@@ -1305,10 +1302,9 @@ void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_t
     return;
   }
 
-  if (likely(! first)) {
+  if (likely(! first_vertex)) {
     //
-    // If there is a break in the triangle strip then make a degenerate
-    // triangle.
+    // If there is a break in the triangle strip then make a degenerate triangle.
     //
     if ((glapi_last_right != bl.x) || (glapi_last_bottom != bl.y)) {
       gl_push_texcoord(p, glapi_last_tex_right, glapi_last_tex_bottom);
@@ -1344,36 +1340,33 @@ void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_t
   *P                    = p;
 }
 
-//
-// gl_push
-//
-void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
-             GLushort left, GLushort top, GLushort right, GLushort bottom, uint8_t r1, uint8_t g1, uint8_t b1,
-             uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
-             uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
+void gl_push(float **P, float *p_end, uint8_t blit_flush, float tex_left, float tex_top, float tex_right,
+             float tex_bottom, GLushort left, GLushort top, GLushort right, GLushort bottom, uint8_t r1, uint8_t g1,
+             uint8_t b1, uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3,
+             uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
 {
   spoint tl(left, top);
   spoint tr(right, top);
   spoint bl(left, bottom);
   spoint br(right, bottom);
 
-  gl_push(P, p_end, first, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2, b2, a2,
-          r3, g3, b3, a3, r4, g4, b4, a4);
+  gl_push(P, p_end, blit_flush, tex_left, tex_top, tex_right, tex_bottom, tl, tr, bl, br, r1, g1, b1, a1, r2, g2, b2,
+          a2, r3, g3, b3, a3, r4, g4, b4, a4);
 }
+
+static uint8_t first_vertex;
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
           GLushort right, GLushort bottom, const color &c)
 {
-  uint8_t first;
-
   if (unlikely(! buf_tex)) {
     blit_init();
-    first = true;
+    first_vertex = true;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first = true;
+    first_vertex = true;
   } else {
-    first = false;
+    first_vertex = false;
   }
 
   buf_tex = tex;
@@ -1383,29 +1376,27 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   uint8_t b = c.b;
   uint8_t a = c.a;
 
-  gl_push(&bufp, bufp_end, first, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r, g, b,
-          a, r, g, b, a, r, g, b, a);
+  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, r, g, b, a, r,
+          g, b, a, r, g, b, a, r, g, b, a);
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
           GLushort right, GLushort bottom, const color &color_bl, const color &color_br, const color &color_tl,
           const color &color_tr)
 {
-  uint8_t first;
-
   if (unlikely(! buf_tex)) {
     blit_init();
-    first = true;
+    first_vertex = true;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first = true;
+    first_vertex = true;
   } else {
-    first = false;
+    first_vertex = false;
   }
 
   buf_tex = tex;
 
-  gl_push(&bufp, bufp_end, first, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, color_tl.r,
+  gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, color_tl.r,
           color_tl.g, color_tl.b, color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g,
           color_tr.b, color_tr.a, color_br.r, color_br.g, color_br.b, color_br.a);
 }

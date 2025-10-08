@@ -219,11 +219,26 @@ int main(int argc, char *argv[])
   g_argv  = argv;
   g_argc  = argc;
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Call parse_args before any memory allocations, in case debug2 is enabled
+  //////////////////////////////////////////////////////////////////////////////
+  {
+    TRACE_NO_INDENT();
+    parse_args(argc, argv);
+  }
+
+  TRACE_NO_INDENT();
   auto appdata = log_dir_create(); // Want this first so we get all logs
 
   g_thread_id = -1;
+
+  TRACE_NO_INDENT();
   redirect_stdout();
+
+  TRACE_NO_INDENT();
   redirect_stderr();
+
+  TRACE_NO_INDENT();
   LOG("Will use STDOUT as '%s'", g_log_stdout_filename.c_str());
   LOG("Will use STDERR as '%s'", g_log_stderr_filename.c_str());
 
@@ -231,6 +246,7 @@ int main(int argc, char *argv[])
   // Use LOG instead of CON until we set stdout or you see two logs
   // v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v
   //////////////////////////////////////////////////////////////////////////////
+  TRACE_NO_INDENT();
 #ifdef _WIN32
   LOG("Platform is _WIN32");
 #endif
@@ -251,14 +267,6 @@ int main(int argc, char *argv[])
   // ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ Use LOG
   // instead of CON until we set stdout or you see two logs
   //////////////////////////////////////////////////////////////////////////////
-
-  //////////////////////////////////////////////////////////////////////////////
-  // Call parse_args before any memory allocations, in case debug2 is enabled
-  //////////////////////////////////////////////////////////////////////////////
-  {
-    TRACE_NO_INDENT();
-    parse_args(argc, argv);
-  }
 
   {
     TRACE_NO_INDENT();

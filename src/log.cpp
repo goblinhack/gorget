@@ -21,6 +21,8 @@
 //
 std::string log_dir_create(void)
 {
+  TRACE_NO_INDENT();
+
   const char *appdata;
   appdata = getenv("APPDATA");
   if (! appdata || ! appdata[ 0 ]) {

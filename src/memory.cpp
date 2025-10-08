@@ -19,6 +19,9 @@ void *myzalloc_(int size, const char *what, const char *file, const char *func, 
 
   IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
 
+  // callstack_dump();
+  g_memory_allocated++;
+
   return ptr;
 }
 
@@ -33,6 +36,9 @@ void *mymalloc_(int size, const char *what, const char *file, const char *func, 
   }
 
   IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
+
+  // callstack_dump();
+  g_memory_allocated++;
 
   return ptr;
 }
@@ -49,6 +55,9 @@ void *myrealloc_(void *ptr, int size, const char *what, const char *file, const 
 
   IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
 
+  // callstack_dump();
+  g_memory_allocated++;
+
   return ptr;
 }
 
@@ -57,6 +66,9 @@ void myfree_(void *ptr, const char *file, const char *func, int line)
   TRACE_NO_INDENT();
 
   IF_DEBUG2 { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
+
+  // callstack_dump();
+  g_memory_allocated++;
 
   free(ptr);
 }
@@ -81,6 +93,9 @@ char *mydupstr_(const char *in, const char *what, const char *file, const char *
 
     ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
   }
+
+  // callstack_dump();
+  g_memory_allocated++;
 
   return ptr;
 }

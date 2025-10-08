@@ -23,6 +23,8 @@ bool               g_opt_restarted_in_gfx_menu;         // Post restart
 bool               g_opt_restarted;                     // Post restart
 bool               g_opt_tests;                         // Run tests.
 bool               g_monochrome;                        // Ugly hack to switch to monochrome gfx
+int                g_memory_allocated;                  // We've allocated something
+int                g_ptrcheck_inited;                   // Ptrcheck is active
 bool               g_quitting;                          // Exiting the game
 char              *g_data_path;
 char              *g_exec_dir;

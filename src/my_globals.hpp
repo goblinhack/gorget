@@ -27,6 +27,8 @@ extern bool               g_opt_quick_start;                   // Start in the m
 extern bool               g_opt_restarted_in_gfx_menu;         // Post restart
 extern bool               g_opt_restarted;                     // Post restart
 extern bool               g_opt_tests;                         // Dungeon tests
+extern int                g_memory_allocated;                  // We've allocated something
+extern bool               g_ptrcheck_inited;                   // Ptrcheck is active
 extern bool               g_monochrome;                        // Ugly hack to switch to monochrome gfx
 extern char              *g_data_path;
 extern char              *g_exec_dir;

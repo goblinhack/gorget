@@ -7,6 +7,7 @@
 #define _MY_TILE_HPP_
 
 #include "my_color.hpp"
+#include "my_fpoint.hpp"
 #include "my_gl.hpp"
 #include "my_spoint.hpp"
 #include "my_types.hpp"

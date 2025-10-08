@@ -212,6 +212,13 @@ static void hash_add(hash_t *hash_table, Ptrcheck *pc)
   hash_elem_t **slot;
   hash_elem_t  *elem;
 
+  if (! g_ptrcheck_inited) {
+    if (g_memory_allocated > 0) {
+      DIE("memory has already been allocated prior to invoking ptrcheck (%d times)", g_memory_allocated);
+    }
+    g_ptrcheck_inited = true;
+  }
+
   if (! pc) {
     return;
   }
