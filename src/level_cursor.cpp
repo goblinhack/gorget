@@ -226,12 +226,21 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         }
       }
 
-      //
-      // If we've never seen this tile, skip it
-      //
-      if (! thing_vision_has_seen_tile(g, v, l, player, p)) {
-        d.val[ x ][ y ] = DMAP_IS_WALL;
-        continue;
+      IF_DEBUG2
+      {
+        //
+        // In debug mode, allow movement everywhere
+        //
+      }
+      else
+      {
+        //
+        // If we've never seen this tile, skip it
+        //
+        if (! thing_vision_has_seen_tile(g, v, l, player, p)) {
+          d.val[ x ][ y ] = DMAP_IS_WALL;
+          continue;
+        }
       }
 
       //
