@@ -104,10 +104,12 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
     //
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
+        spoint p(x, y);
+
         //
         // But we still can't walk through walls to get out of the hazard
         //
-        if (level_is_obs_to_cursor_path(g, v, l, spoint(x, y))) {
+        if (level_is_obs_to_cursor_path(g, v, l, p)) {
           d.val[ x ][ y ] = DMAP_IS_WALL;
         } else {
           d.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -207,6 +209,9 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
     }
   }
 
+  //
+  // Prune the path
+  //
   for (auto y = miny; y < maxy; y++) {
     for (auto x = minx; x < maxx; x++) {
       spoint p(x, y);
@@ -219,6 +224,14 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           d.val[ x ][ y ] = DMAP_IS_WALL;
           continue;
         }
+      }
+
+      //
+      // If we've never seen this tile, skip it
+      //
+      if (! thing_vision_has_seen_tile(g, v, l, player, p)) {
+        d.val[ x ][ y ] = DMAP_IS_WALL;
+        continue;
       }
 
       //
@@ -366,8 +379,8 @@ void level_cursor_path_reset(Gamep g, Levelsp v)
 //
 void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
 {
-  auto t = thing_player(g);
-  if (! t) {
+  auto player = thing_player(g);
+  if (! player) {
     //
     // If no player, clear the cursor
     //
@@ -426,9 +439,9 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
   int index                     = 0;
   player_struct->move_path.size = 0;
 
-  THING_DBG(t, "apply cursor path size: %d", (int) move_path.size());
+  THING_DBG(player, "apply cursor path size: %d", (int) move_path.size());
   for (auto p : move_path) {
-    THING_DBG(t, " - cursor path: %d,%d", p.x, p.y);
+    THING_DBG(player, " - cursor path: %d,%d", p.x, p.y);
   }
 
   for (auto p : move_path) {

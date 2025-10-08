@@ -278,7 +278,7 @@ echo "#include \"my_cfg.hpp\"" > $CONFIG_H
 C_FLAGS+=" -include cfg.hpp"
 rm -f src/precompiled.hpp.gch
 
-SANITIZER=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer"
+EXTRA_CHECKS=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fno-common"
 
 case "$MY_OS_NAME" in
     *MSYS*)
@@ -335,8 +335,8 @@ case "$MY_OS_NAME" in
         DSYM="dsymutil \${TARGET_GAME} &"
 
         if [[ $OPT_DEV2 != "" ]]; then
-            C_FLAGS+="$SANITIZER"
-            LDFLAGS+="$SANITIZER"
+            C_FLAGS+="$EXTRA_CHECKS"
+            LDFLAGS+="$EXTRA_CHECKS"
         fi
         ;;
     *inux*)
@@ -345,8 +345,8 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -lGL "
 
         if [[ $OPT_DEV2 != "" ]]; then
-            C_FLAGS+="$SANITIZER"
-            LDFLAGS+="$SANITIZER"
+            C_FLAGS+="$EXTRA_CHECKS"
+            LDFLAGS+="$EXTRA_CHECKS"
         fi
 
         pkg-config --print-provides libunwind >/dev/null 2>/dev/null
@@ -406,7 +406,7 @@ MAKEFILE=../build/Makefile.template
 if [[ $OPT_REL != "" ]]; then
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 -ffast-math -g" > $MAKEFILE
 else
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O0 -g" > $MAKEFILE
+    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -Og -g" > $MAKEFILE
 fi
 
 if [[ $OPT_DEV2 != "" ]]; then
@@ -435,7 +435,7 @@ WARNING_FLAGS+=-Wno-unknown-warning-option
 #
 WARNING_FLAGS+=-Wuninitialized
 WARNING_FLAGS+=-Wmaybe-uninitialized
-#WARNING_FLAGS+=-Wuninitialized=verbose
+WARNING_FLAGS+=-Wuninitialized=verbose
 #
 # When compiling C, give string constants the type const char[length] so that copying the address of
 # one into a non-const char * pointer produces a warning. These warnings help you find at compile time
