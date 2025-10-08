@@ -31,56 +31,48 @@ enum {
 
 class Tex *tile_tex(Tilep);
 
-bool tile_init(void);
-void tile_fini(void);
-
-int tile_height(Tilep);
-int tile_width(Tilep);
-
+bool        tile_init(void);
+bool        tile_is_alive_on_end_of_anim(Tilep);
+bool        tile_is_cleanup_on_end_of_anim(Tilep);
+bool        tile_is_dead(Tilep);
+bool        tile_is_end_of_anim(Tilep);
+bool        tile_is_loggable(Tilep);
+bool        tile_is_open(Tilep);
+int         tile_height(Tilep);
+int         tile_width(Tilep);
+int         tile_gl_binding(Tilep);
 std::string tile_name_get(Tilep);
-
-Tilep string2tile(const char **s, int *len = nullptr);
-Tilep string2tile(std::string &s, int *len = nullptr);
-Tilep tile_find_mand(std::string name);
-Tilep tile_index_to_tile(int i);
-Tilep tile_find(std::string name);
-
-uint32_t tile_delay_ms(Tilep);
-void     tile_delay_ms_set(Tilep, uint32_t);
-
-uint32_t tile_global_index(Tilep);
-void     tile_global_index_set(Tilep, uint32_t);
-
-uint32_t tile_index(Tilep);
-uint32_t tile_move(Tilep);
-
-bool tile_is_alive_on_end_of_anim(Tilep);
-void tile_is_alive_on_end_of_anim_set(Tilep);
-bool tile_is_cleanup_on_end_of_anim(Tilep);
-void tile_is_cleanup_on_end_of_anim_set(Tilep);
-bool tile_is_dead(Tilep);
-bool tile_is_end_of_anim(Tilep);
-bool tile_is_open(Tilep);
-bool tile_is_loggable(Tilep);
+Tilep       string2tile(const char **s, int *len = nullptr);
+Tilep       string2tile(std::string &s, int *len = nullptr);
+Tilep       tile_find_mand(std::string name);
+Tilep       tile_find(std::string name);
+Tilep       tile_index_to_tile(int i);
+uint32_t    tile_delay_ms(Tilep);
+uint32_t    tile_global_index(Tilep);
+uint32_t    tile_index(Tilep);
+uint32_t    tile_move(Tilep);
+void        tile_coords(Tilep, float *x1, float *y1, float *x2, float *y2);
+void        tile_delay_ms_set(Tilep, uint32_t);
+void        tile_fini(void);
+void        tile_free(Tilep);
+void        tile_global_index_set(Tilep, uint32_t);
+void        tile_is_alive_on_end_of_anim_set(Tilep);
+void        tile_is_cleanup_on_end_of_anim_set(Tilep);
+void        tile_load(const char *, uint32_t width, uint32_t height, uint32_t nargs, ...);
+void tile_load_arr(const char *file, const char *tex_name, uint32_t w, uint32_t h, uint32_t nargs, const char *arr[]);
+void tile_submerge_pct(Gamep, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent);
+void tile_load_arr_sprites(const char *file, const char *tex, uint32_t w, uint32_t h, uint32_t nargs,
+                           const char *arr[], int gl_mode = GL_NEAREST);
 
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c);
-void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br, color c);
-void tile_blit_colored_fat(Tilep tile, spoint tl, spoint br, color color_tl, color color_tr, color color_bl,
-                           color color_br);
-void tile_blit_section_colored(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
-                               const spoint br, color color_tl, color color_tr, color color_bl, color color_br);
+void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+               const color &c);
+void tile_blit(const Tilep &tile, spoint tl, spoint br, color color_tl, color color_tr, color color_bl,
+               color color_br);
+void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,
+                       const spoint br, const color &color_tl, const color &color_tr, const color &color_bl,
+                       const color &color_br);
 void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-                       const color &c, int single_pix_size, bool square = false);
-void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-                       const color &c, const color &o, int single_pix_size, bool square = false);
-void tile_free(Tilep);
-void tile_coords(Tilep, float *x1, float *y1, float *x2, float *y2);
-void tile_load(const char *, uint32_t width, uint32_t height, uint32_t nargs, ...);
-void tile_load_arr(const char *file, const char *tex_name, uint32_t width, uint32_t height, uint32_t nargs,
-                   const char *arr[]);
-void tile_load_arr_sprites(const char *file, const char *tex_name, uint32_t width, uint32_t height, uint32_t nargs,
-                           const char *arr[], int gl_mode = GL_NEAREST);
-int  tile_gl_binding(Tilep);
-void tile_submerge_pct(Gamep, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent);
+                       const color &c, const color &outline, int single_pix_size, bool square);
 
 #endif

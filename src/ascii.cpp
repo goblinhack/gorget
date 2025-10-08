@@ -866,7 +866,7 @@ static void ascii_blit(Gamep g)
         color bg_color_bl = cell->color_bl[ depth ];
         color bg_color_br = cell->color_br[ depth ];
 
-        tile_blit_colored_fat(cell->tile[ depth ], tile_tl, tile_br, bg_color_tl, bg_color_tr, bg_color_bl,
+        tile_blit(cell->tile[ depth ], tile_tl, tile_br, bg_color_tl, bg_color_tr, bg_color_bl,
                               bg_color_br);
       }
 
@@ -904,7 +904,7 @@ static void ascii_blit(Gamep g)
           color color_bl = cell->color_bl[ depth ];
           color color_br = cell->color_br[ depth ];
 
-          tile_blit_section_colored(
+          tile_blit_section(
               cell->tile[ depth ], fpoint(cell->tx[ depth ], cell->ty[ depth ]),
               fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br,
               color_tl, color_tr, color_bl, color_br);
@@ -919,7 +919,7 @@ static void ascii_blit(Gamep g)
           color color_bl = cell->color_bl[ depth ];
           color color_br = cell->color_br[ depth ];
 
-          tile_blit_section_colored(
+          tile_blit_section(
               tile, fpoint(cell->tx[ depth ], cell->ty[ depth ]),
               fpoint(cell->tx[ depth ] + cell->dx[ depth ], cell->ty[ depth ] + cell->dy[ depth ]), tile_tl, tile_br,
               color_tl, color_tr, color_bl, color_br);
@@ -969,7 +969,7 @@ static void ascii_blit(Gamep g)
           color fg_color_bl = cell->color_bl[ depth ];
           color fg_color_br = cell->color_br[ depth ];
 
-          tile_blit_colored_fat(tile, tile_tl, tile_br, fg_color_tl, fg_color_tr, fg_color_bl, fg_color_br);
+          tile_blit(tile, tile_tl, tile_br, fg_color_tl, fg_color_tr, fg_color_bl, fg_color_br);
         }
       }
 

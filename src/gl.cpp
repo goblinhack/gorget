@@ -1362,7 +1362,7 @@ void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_t
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
-          GLushort right, GLushort bottom, color c)
+          GLushort right, GLushort bottom, const color &c)
 {
   uint8_t first;
 
@@ -1387,41 +1387,9 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           a, r, g, b, a, r, g, b, a);
 }
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, spoint tl, spoint tr, spoint bl,
-          spoint br, color c)
-{
-  uint8_t first;
-
-  if (unlikely(! buf_tex)) {
-    blit_init();
-    first = true;
-  } else if (unlikely(buf_tex != tex)) {
-    blit_flush();
-    first = true;
-  } else {
-    first = false;
-  }
-
-  buf_tex = tex;
-
-  uint8_t r = c.r;
-  uint8_t g = c.g;
-  uint8_t b = c.b;
-  uint8_t a = c.a;
-
-  gl_push(&bufp, bufp_end, first, texMinX, texMinY, texMaxX, texMaxY, tl, tr, bl, br, r, g, b, a, r, g, b, a, r, g, b,
-          a, r, g, b, a);
-}
-
-void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom)
-{
-  blit(tex, 0, 0, 1, 1, left, top, right, bottom, WHITE);
-}
-
-void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br) { blit(tex, 0, 0, 1, 1, tl, tr, bl, br, WHITE); }
-
-void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
-                  GLushort right, GLushort bottom, color color_bl, color color_br, color color_tl, color color_tr)
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
+          GLushort right, GLushort bottom, const color &color_bl, const color &color_br, const color &color_tl,
+          const color &color_tr)
 {
   uint8_t first;
 
@@ -1441,11 +1409,3 @@ void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float te
           color_tl.g, color_tl.b, color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g,
           color_tr.b, color_tr.a, color_br.r, color_br.g, color_br.b, color_br.a);
 }
-
-#if 0
-void blit_colored(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, color color_bl,
-                  color color_br, color color_tl, color color_tr)
-{
-  blit_colored(tex, 0, 0, 1, 1, left, top, right, bottom, color_bl, color_br, color_tl, color_tr);
-}
-#endif

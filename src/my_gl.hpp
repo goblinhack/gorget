@@ -263,13 +263,10 @@ extern GLuint g_fbo_tex_id[ MAX_FBO ];
 extern GLuint g_render_buf_id[ MAX_FBO ];
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
-          GLushort right, GLushort bottom, color c);
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, spoint tl, spoint tr, spoint bl,
-          spoint br, color c);
-void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
-void blit(int tex, spoint tl, spoint tr, spoint bl, spoint br);
-void blit_colored(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
-                  GLushort right, GLushort bottom, color color_bl, color color_br, color color_tl, color color_tr);
+          GLushort right, GLushort bottom, const color &c);
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
+          GLushort right, GLushort bottom, const color &color_bl, const color &color_br, const color &color_tl,
+          const color &color_tr);
 void blit_fbo(Gamep, int fbo);
 void blit_fbo_push(int fbo);
 void blit_fbo_pop(void);
