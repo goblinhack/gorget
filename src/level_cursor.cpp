@@ -273,14 +273,6 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         }
 
         //
-        // Probably best to not use tiles where there is a monster for a shortcut
-        //
-        if (level_is_monst(g, v, l, p)) {
-          d.val[ x ][ y ] = DMAP_IS_WALL;
-          continue;
-        }
-
-        //
         // Allow the shortcut
         //
         continue;
