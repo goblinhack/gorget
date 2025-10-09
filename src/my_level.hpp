@@ -179,10 +179,6 @@ typedef struct Level_ {
   //
   uint8_t _tile_update_required[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
-  // All light from all light sources, combined.
-  //
-  LightMap light_map;
-  //
   // What things are where? Each Id points to a thing structure.
   //
   ThingId thing_id[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];

@@ -147,6 +147,7 @@ bool game_event_save(Gamep g)
       //
     } else {
       TOPCON(UI_WARNING_FMT_STR "You can only save games when you exit the level." UI_RESET_FMT);
+      sound_play(g, "error");
       return true;
     }
   }
@@ -250,6 +251,7 @@ bool game_event_descend(Gamep g)
 
   if (! level_is_exit(g, v, l, player->at)) {
     TOPCON(UI_WARNING_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
+    sound_play(g, "error");
     return false;
   }
 
@@ -284,6 +286,7 @@ bool game_event_ascend(Gamep g)
 
   if (! level_is_entrance(g, v, l, player->at)) {
     TOPCON(UI_WARNING_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
+    sound_play(g, "error");
     return false;
   }
 
