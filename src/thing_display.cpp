@@ -109,9 +109,15 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
   }
 }
 
-void thing_display(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, spoint br, uint16_t tile_index)
+void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint tl, spoint br,
+                   uint16_t tile_index)
 {
   TRACE_NO_INDENT();
+
+  auto player = thing_player(g);
+  if (! player) {
+    return;
+  }
 
   auto tile = tile_index_to_tile(tile_index);
   if (! tile) {
@@ -163,10 +169,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp t, spoint tl, sp
   }
 
   //
-  // Show the player as faded when teleporting
+  // Apply lighting to current tiles
   //
-  if (t && thing_is_teleporting(t)) {
-    fg.a = 100;
+  if (thing_vision_can_see_tile(g, v, l, player, p)) {
+    fg   = v->light_map.tile[ p.x ][ p.y ].c;
+    fg.a = 255;
   }
 
   if (tp_is_blit_outlined(tp)) {

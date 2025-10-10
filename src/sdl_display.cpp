@@ -185,10 +185,14 @@ uint8_t sdl_display_init(Gamep g)
   uint32_t video_flags;
 
   LOG("SDL: Set SDL_WINDOW_OPENGL");
+  video_flags = SDL_WINDOW_OPENGL;
+
   //
   // SDL_WINDOW_ALWAYS_ON_TOP is meant to help with focus
   //
-  video_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_ALWAYS_ON_TOP;
+  // but does it cause issues with debugging, where the debugger window is always behind?
+  //
+  // video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
 
   if (game_gfx_borderless_get(g)) {
     LOG("SDL: Set SDL_WINDOW_BORDERLESS");

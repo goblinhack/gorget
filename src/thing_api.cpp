@@ -1180,7 +1180,7 @@ bool thing_is_level_visited(Thingp t)
   return tp_flag(thing_tp(t), is_level_visited);
 }
 
-bool thing_is_light_source(Thingp t)
+int thing_is_light_source(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {

@@ -72,7 +72,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
     spoint   tl, br;
     uint16_t tile_index;
     thing_get_coords(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
-    thing_display(g, v, l, tp, NULL_THING, tl, br, tile_index);
+    thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index);
   }
 }
 
@@ -97,7 +97,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
   spoint   tl, br;
   uint16_t tile_index;
   thing_get_coords(g, v, l, p, tp, t, &tl, &br, &tile_index);
-  thing_display(g, v, l, tp, t, tl, br, tile_index);
+  thing_display(g, v, l, p, tp, t, tl, br, tile_index);
 }
 
 void level_display(Gamep g, Levelsp v, Levelp l)

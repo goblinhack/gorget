@@ -382,6 +382,11 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     }
   }
 
+  //
+  // Update the lighting
+  //
+  level_light_calculate(g, v, l);
+
   LOG("Tick %u end", v->tick);
   LOG("-");
 }

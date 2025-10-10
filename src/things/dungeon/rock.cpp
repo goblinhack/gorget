@@ -17,7 +17,6 @@ bool tp_load_rock(void)
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered);
-    tp_flag_set(tp, is_blit_never_monochrome);
     tp_flag_set(tp, is_light_blocker);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);

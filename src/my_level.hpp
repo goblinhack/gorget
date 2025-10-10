@@ -269,6 +269,10 @@ typedef struct Levels_ {
   //
   Level level[ MAX_LEVELS ];
   //
+  // Level lighting
+  //
+  LightMap light_map;
+  //
   // Which levels are where
   //
   LevelSelect level_select;
@@ -279,7 +283,7 @@ typedef struct Levels_ {
   //
   // Space for monster AI
   //
-  ThingAi thing_ai[ THING_AI_MAX ];
+  ThingExt thing_ext[ THING_EXT_MAX ];
   //
   // Space for player AI
   //
@@ -464,71 +468,74 @@ enum {
   LEVEL_TEST_FLAG = 1,
 };
 
-Levelsp levels_memory_alloc(Gamep);
-void    levels_destroy(Gamep, Levelsp);
-void    level_debug_stats(Gamep);
-
-Levelp level_change(Gamep, Levelsp, LevelNum);
-void   level_enter(Gamep, Levelsp, Levelp);
-void   level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
-void   level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
-void   level_destroy(Gamep, Levelsp, Levelp);
-
-ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);
-
 bool is_oob(spoint);
 bool is_oob(int, int);
 
-bool   level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
-Thingp level_first_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
-Thingp level_afirst_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
-Thingp level_ofirst_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
-bool   level_alive_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
-bool   level_open_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
-int    level_count_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
-bool   level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint, Tpp);
-bool   level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint, int slot, ThingId);
-bool   level_tick_is_in_progress(Gamep, Levelsp, Levelp);
-
-void level_anim(Gamep, Levelsp, Levelp);
-void level_assign_tiles(Gamep, Levelsp, Levelp);
-void level_bounds_set(Gamep, Levelsp, Levelp);
-void level_cursor_set(Gamep, Levelsp, spoint);
-bool level_cursor_is_valid(Gamep, Levelsp);
-void level_cursor_path_recreate(Gamep, Levelsp, Levelp);
-void level_cursor_copy_mouse_path_to_player(Gamep, Levelsp, Levelp);
-void level_cursor_copy_path_to_player(Gamep, Levelsp, Levelp, std::vector< spoint > &move_path);
-void level_cursor_describe(Gamep, Levelsp, Levelp);
-void level_cursor_describe_update(Gamep, Levelsp);
-bool level_cursor_describe_add(Gamep, Levelsp, Thingp);
-bool level_cursor_describe_remove(Gamep, Levelsp, Thingp);
-void level_cursor_describe_clear(Gamep, Levelsp);
-void level_display(Gamep, Levelsp, Levelp);
-void level_populate(Gamep, Levelsp, Levelp, const char *);
-void level_populate(Gamep, Levelsp, Levelp, int w, int h, const char *);
-void level_mouse_position_get(Gamep, Levelsp, Levelp);
-void level_scroll_delta(Gamep, Levelsp, Levelp, spoint);
-void level_forced_auto_scroll(Gamep, Levelsp, Levelp);
-void level_cursor_path_reset(Gamep, Levelsp);
-void level_scroll_to_focus(Gamep, Levelsp, Levelp);
-void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
-void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
-void level_count_items(Gamep, Levelsp, Levelp);
-void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
-void level_tick_water(Gamep, Levelsp, Levelp);
-void level_tick_explosion(Gamep, Levelsp, Levelp);
-void level_tick_chasm(Gamep, Levelsp, Levelp);
-void level_tick_teleport(Gamep, Levelsp, Levelp);
-void level_tick_end_temperature(Gamep, Levelsp, Levelp);
-void level_tick(Gamep, Levelsp, Levelp);
-void level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);
-void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
-bool level_match_contents(Gamep, Levelsp, Levelp, Testp, int w, int h, const char *in);
-void level_debug(Gamep, Levelsp, Levelp);
-void level_init(Gamep, Levelsp, Levelp, LevelNum);
-void level_tile_update_set(Gamep, Levelsp, Levelp, spoint);
-void level_tile_update(Gamep, Levelsp, Levelp);
-void level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius);
+bool    level_alive_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+bool    level_cursor_describe_add(Gamep, Levelsp, Thingp);
+bool    level_cursor_describe_remove(Gamep, Levelsp, Thingp);
+bool    level_cursor_is_valid(Gamep, Levelsp);
+bool    level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
+bool    level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint, Tpp);
+bool    level_match_contents(Gamep, Levelsp, Levelp, Testp, int w, int h, const char *in);
+bool    level_open_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+bool    level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint, int slot, ThingId);
+bool    level_tick_is_in_progress(Gamep, Levelsp, Levelp);
+int     level_count_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+Levelp  level_change(Gamep, Levelsp, LevelNum);
+Levelsp levels_memory_alloc(Gamep);
+ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);
+Thingp  level_afirst_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+Thingp  level_first_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+Thingp  level_ofirst_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+void    level_anim(Gamep, Levelsp, Levelp);
+void    level_assign_tiles(Gamep, Levelsp, Levelp);
+void    level_bounds_set(Gamep, Levelsp, Levelp);
+void    level_count_items(Gamep, Levelsp, Levelp);
+void    level_cursor_copy_mouse_path_to_player(Gamep, Levelsp, Levelp);
+void    level_cursor_copy_path_to_player(Gamep, Levelsp, Levelp, std::vector< spoint > &move_path);
+void    level_cursor_describe_clear(Gamep, Levelsp);
+void    level_cursor_describe_update(Gamep, Levelsp);
+void    level_cursor_describe(Gamep, Levelsp, Levelp);
+void    level_cursor_path_recreate(Gamep, Levelsp, Levelp);
+void    level_cursor_path_reset(Gamep, Levelsp);
+void    level_cursor_set(Gamep, Levelsp, spoint);
+void    level_debug_stats(Gamep);
+void    level_debug(Gamep, Levelsp, Levelp);
+void    level_destroy(Gamep, Levelsp, Levelp);
+void    level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);
+void    level_display(Gamep, Levelsp, Levelp);
+void    level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
+void    level_enter(Gamep, Levelsp, Levelp);
+void    level_forced_auto_scroll(Gamep, Levelsp, Levelp);
+void    level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius);
+void    level_init(Gamep, Levelsp, Levelp, LevelNum);
+void    level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
+void    level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
+void    level_light_calculate(Gamep, Levelsp, Levelp);
+void    level_mouse_position_get(Gamep, Levelsp, Levelp);
+void    level_populate(Gamep, Levelsp, Levelp, const char *);
+void    level_populate(Gamep, Levelsp, Levelp, int w, int h, const char *);
+void    level_scroll_delta(Gamep, Levelsp, Levelp, spoint);
+void    level_scroll_to_focus(Gamep, Levelsp, Levelp);
+void    level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
+void    level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
+void    level_tick_begin_temperature(Gamep, Levelsp, Levelp);
+void    level_tick_chasm(Gamep, Levelsp, Levelp);
+void    level_tick_end_temperature(Gamep, Levelsp, Levelp);
+void    level_tick_explosion(Gamep, Levelsp, Levelp);
+void    level_tick_teleport(Gamep, Levelsp, Levelp);
+void    level_tick_water(Gamep, Levelsp, Levelp);
+void    level_tick(Gamep, Levelsp, Levelp);
+void    level_tile_update_set(Gamep, Levelsp, Levelp, spoint);
+void    level_tile_update(Gamep, Levelsp, Levelp);
+void    levels_destroy(Gamep, Levelsp);
+void    level_gen_create_levels(Gamep, Levelsp);
+void    level_gen_stats_dump(Gamep);
+void    level_gen_test(Gamep);
+void    level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, int16_t, int16_t);
+void    level_water_tick(Gamep, Levelsp, Levelp);
+void    level_water_update(Gamep, Levelsp, Levelp);
 
 typedef enum {
   LEVEL_TYPE_NORMAL,
@@ -567,14 +574,6 @@ void fragments_fini(Gamep);
 void fragment_alts_fini(Gamep);
 bool fragment_add(Gamep, int chance, const char *file, int line, ...);
 bool fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
-
-void level_water_update(Gamep, Levelsp, Levelp);
-void level_water_tick(Gamep, Levelsp, Levelp);
-void level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, int16_t, int16_t);
-
-void level_gen_test(Gamep);
-void level_gen_create_levels(Gamep, Levelsp);
-void level_gen_stats_dump(Gamep);
 
 bool   level_select_is_oob(int x, int y);
 bool   level_select_is_oob(spoint);

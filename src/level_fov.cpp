@@ -235,7 +235,10 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
   }
 
   level_fov_set(fov_can_see_tile, pov, true);
-  level_fov_set(fov_has_seen_tile, pov, true);
+
+  if (fov_has_seen_tile) {
+    level_fov_set(fov_has_seen_tile, pov, true);
+  }
 
   // me->can_see_you(point(pov_x, pov_y));
 }

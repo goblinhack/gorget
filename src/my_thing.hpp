@@ -48,10 +48,10 @@ typedef union {
 } __attribute__((__packed__)) ThingIdPacked;
 
 //
-// Essentially equates to the max number of monsters
+// Essentially equates to the max number of monsters+light sources per level
 //
-#define THING_AI_MAX        65535 // The size of thing_ai
-#define THING_DESCRIBE_MAX  10    // The number of things we can show in the rightbar
+#define THING_EXT_MAX       (MAX_LEVELS * 500) // The size of thing_ext
+#define THING_DESCRIBE_MAX  10                 // The number of things we can show in the rightbar
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 4)
 #define THING_INVENTORY_MAX 26
 
@@ -108,7 +108,7 @@ typedef struct ThingInventory_ {
 //
 // Per thing AI memory
 //
-typedef struct ThingAi_ {
+typedef struct ThingExt_ {
   uint8_t in_use : 1;
   //
   // What we're carrying
@@ -118,11 +118,11 @@ typedef struct ThingAi_ {
   // What we can currently see
   //
   FovMap fov_can_see_tile;
-} ThingAi;
+} ThingExt;
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                      \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ai_ = thing_ai_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                  \
+    for (auto _ai_ = thing_ext_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                 \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (ThingSlotp _slot_ = &_ai_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                            \
           for (Thingp _it_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
@@ -130,7 +130,7 @@ typedef struct ThingAi_ {
 
 #define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _player_or_monst_, _it_)                                              \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ai_ = thing_ai_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                  \
+    for (auto _ai_ = thing_ext_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                 \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (ThingSlotp _slot_ = &_ai_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                            \
           for (Thingp _it_ = thing_find_optional(g, v, _slot_->item_id); _it_; _it_ = nullptr)
@@ -328,7 +328,7 @@ typedef struct Thing_ {
   //
   // For players and monsters
   //
-  ThingAiId ai_id;
+  ThingExtId ai_id;
   //
   // Weight in grams. Impacts things like grass being crushed.
   //
@@ -361,8 +361,8 @@ typedef struct Thing_ {
 } Thing;
 
 Levelp       thing_level(Gamep, Levelsp, Thingp);
-ThingAip     thing_ai_alloc(Gamep, Levelsp, Levelp, Thingp t);
-ThingAip     thing_ai_struct(Gamep, Thingp);
+ThingExtp    thing_ext_alloc(Gamep, Levelsp, Levelp, Thingp t);
+ThingExtp    thing_ext_struct(Gamep, Thingp);
 Thingp       immediate_owner(Gamep, Levelsp, Levelp, Thingp);
 Thingp       thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, spoint);
 Thingp       thing_and_tp_get_at(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp * = nullptr);
@@ -375,7 +375,7 @@ Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, spoint);
 Thingp       top_owner(Gamep, Levelsp, Levelp, Thingp);
 ThingPlayerp thing_player_struct(Gamep);
 Tpp          thing_tp(Thingp);
-void         thing_ai_free(Gamep, Levelsp, Levelp, Thingp t);
+void         thing_ext_free(Gamep, Levelsp, Levelp, Thingp t);
 void         thing_free(Gamep, Levelsp, Levelp, Thingp t);
 void         thing_stats_dump(Gamep, Levelsp);
 
@@ -478,7 +478,7 @@ bool thing_is_level_not_visited(Thingp);
 bool thing_is_level_visited(Thingp);
 bool thing_is_levitating(Thingp);
 bool thing_is_light_blocker(Thingp);
-bool thing_is_light_source(Thingp);
+int  thing_is_light_source(Thingp);
 bool thing_is_loggable(Thingp);
 bool thing_is_minion(Thingp);
 bool thing_is_mob(Thingp);
@@ -828,7 +828,7 @@ int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 bool thing_is_immune_to(Thingp, ThingEventType);
 
-void thing_display(Gamep, Levelsp, Levelp, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index);
+void thing_display(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index);
 void thing_get_coords(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spoint *, uint16_t *tile_index);
 void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);
 

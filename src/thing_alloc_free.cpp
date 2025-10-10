@@ -123,8 +123,8 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
           index_packed.b.entropy);
     }
 
-    if (thing_is_monst(t) || thing_is_player(t)) {
-      thing_ai_alloc(g, v, l, t);
+    if (thing_is_monst(t) || thing_is_player(t) || thing_is_light_source(t)) {
+      thing_ext_alloc(g, v, l, t);
     }
 
     return t;
@@ -162,43 +162,43 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_pop(g, v, t);
 
   thing_mutex.lock();
-  thing_ai_free(g, v, l, t);
+  thing_ext_free(g, v, l, t);
   memset((void *) t, 0, SIZEOF(*t));
   thing_mutex.unlock();
 }
 
-ThingAip thing_ai_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
+ThingExtp thing_ext_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   //
   // Continue from the last successful allocation
   //
-  for (auto tries = 0; tries < THING_AI_MAX; tries++) {
-    ThingAiId ai_id = os_random_range(1, THING_AI_MAX - 1);
-    if (v->thing_ai[ ai_id ].in_use) {
+  for (auto tries = 0; tries < THING_EXT_MAX; tries++) {
+    ThingExtId ai_id = os_random_range(1, THING_EXT_MAX - 1);
+    if (v->thing_ext[ ai_id ].in_use) {
       continue;
     }
 
     thing_mutex.lock();
     {
-      if (unlikely(v->thing_ai[ ai_id ].in_use)) {
+      if (unlikely(v->thing_ext[ ai_id ].in_use)) {
         thing_mutex.unlock();
         continue;
       }
-      v->thing_ai[ ai_id ].in_use = true;
+      v->thing_ext[ ai_id ].in_use = true;
     }
     thing_mutex.unlock();
 
     t->ai_id = ai_id;
-    return &v->thing_ai[ ai_id ];
+    return &v->thing_ext[ ai_id ];
   }
 
   ERR("out of Thing AI IDs");
   return 0;
 }
 
-void thing_ai_free(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -207,10 +207,10 @@ void thing_ai_free(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  if (! v->thing_ai[ ai_id ].in_use) {
+  if (! v->thing_ext[ ai_id ].in_use) {
     ERR("freeing unused Thing AI ID is not in use, %" PRIx32 "", ai_id);
   }
 
-  v->thing_ai[ ai_id ].in_use = false;
-  t->ai_id                    = 0;
+  v->thing_ext[ ai_id ].in_use = false;
+  t->ai_id                     = 0;
 }

@@ -91,7 +91,7 @@ static void tp_player_vision_update(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto ai = thing_ai_struct(g, t);
+  auto ai = thing_ext_struct(g, t);
   if (ai) {
     level_fov(g, v, l, t, &ai->fov_can_see_tile, &l->player_fov_has_seen_tile, t->at, thing_vision_distance(t));
   }
@@ -201,7 +201,8 @@ bool tp_load_player(void)
   tp_on_tick_end_set(tp, tp_player_tick_end);
   tp_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_speed_set(tp, 100);
-  tp_temperature_burns_at_set(tp, 100);      // celsius
+  tp_temperature_burns_at_set(tp, 100); // celsius
+  tp_flag_set(tp, is_light_source, 20);
   tp_temperature_damage_at_set(tp, 35);      // celsius
   tp_temperature_initial_set(tp, 20);        // celsius
   tp_vision_distance_set(tp, MAP_WIDTH / 2); // tiles

@@ -367,8 +367,8 @@ void log_(Tpp, const char *fmt, va_list args); // compile error without
 void tp_fini(void);
 void tp_get_id(const char *, int *id);
 
-bool tp_flag(Tpp, ThingFlag);
-void tp_flag_set(Tpp, ThingFlag, bool val = true);
+int  tp_flag(Tpp, ThingFlag);
+void tp_flag_set(Tpp, ThingFlag, int val = 1);
 
 void    tp_z_depth_set(Tpp, MapZDepth val);
 uint8_t tp_z_depth_get(Tpp tp);

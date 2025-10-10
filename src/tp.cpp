@@ -96,7 +96,7 @@ public:
   //
   // See ThingFlag
   //
-  uint8_t flag[ THING_FLAG_ENUM_MAX ] = {};
+  int flag[ THING_FLAG_ENUM_MAX ] = {};
 
   //
   // Animation tiles
@@ -236,7 +236,7 @@ public:
   tp_mouse_down_t         mouse_down         = {};
   tp_on_spawn_t           on_spawn           = {};
   tp_on_level_populated_t on_level_populated = {};
-  tp_on_level_enter_t   on_level_enter   = {};
+  tp_on_level_enter_t     on_level_enter     = {};
   tp_on_level_leave_t     on_level_leave     = {};
   tp_on_open_request_t    on_open_request    = {};
   tp_on_carry_request_t   on_carry_request   = {};
@@ -824,7 +824,7 @@ void tp_light_color_apply(Tpp tp)
   glcolor(tp->light_color);
 }
 
-bool tp_flag(Tpp tp, ThingFlag f)
+int tp_flag(Tpp tp, ThingFlag f)
 {
   TRACE_NO_INDENT();
   if (! tp) {
@@ -834,7 +834,7 @@ bool tp_flag(Tpp tp, ThingFlag f)
   return tp->flag[ f ];
 }
 
-void tp_flag_set(Tpp tp, ThingFlag f, bool val)
+void tp_flag_set(Tpp tp, ThingFlag f, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {

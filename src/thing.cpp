@@ -112,7 +112,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
   LOG("- Free things         %u", free_things);
 }
 
-ThingAip thing_ai_struct(Gamep g, Thingp t)
+ThingExtp thing_ext_struct(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -126,7 +126,7 @@ ThingAip thing_ai_struct(Gamep g, Thingp t)
     return nullptr;
   }
 
-  return &v->thing_ai[ ai_id ];
+  return &v->thing_ext[ ai_id ];
 }
 
 ThingPlayerp thing_player_struct(Gamep g)
