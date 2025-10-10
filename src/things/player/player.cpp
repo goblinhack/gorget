@@ -180,7 +180,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_health_bar_shown);
-  tp_flag_set(tp, is_light_source, 20);
+  tp_flag_set(tp, is_light_source, 10);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

@@ -54,7 +54,7 @@ void level_light_calculate(Gamep g, Levelsp v, Levelp l)
           light_tile->r += c;
           light_tile->g += c;
           light_tile->b += c;
-          light_tile->sources++;
+          light_tile->sources = 1;
         }
       }
     }
@@ -68,32 +68,17 @@ void level_light_calculate(Gamep g, Levelsp v, Levelp l)
 
         float c_r = (float) light_tile->r / (float) sources;
         if (c_r > 255) {
-          DIE("c");
           c_r = 255;
-        }
-        if (c_r < 0) {
-          DIE("d");
-          c_r = 0;
         }
 
         float c_g = (float) light_tile->g / (float) sources;
         if (c_g > 255) {
-          DIE("e");
           c_g = 255;
-        }
-        if (c_g < 0) {
-          DIE("f");
-          c_g = 0;
         }
 
         float c_b = (float) light_tile->b / (float) sources;
         if (c_b > 255) {
-          DIE("g");
           c_b = 255;
-        }
-        if (c_b < 0) {
-          DIE("h");
-          c_b = 0;
         }
 
         light_tile->c.r = (uint8_t) c_r;

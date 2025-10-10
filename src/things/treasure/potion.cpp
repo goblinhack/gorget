@@ -60,6 +60,7 @@ bool tp_load_potion(void)
   tp_flag_set(tp, is_item_droppable);
   tp_flag_set(tp, is_item_mergeable);
   tp_flag_set(tp, is_item);
+  tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_physics_explosion);

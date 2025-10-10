@@ -31,6 +31,7 @@ bool tp_load_key(void)
   tp_flag_set(tp, is_collectable);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_key);
+  tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
