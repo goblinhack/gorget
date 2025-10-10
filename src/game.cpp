@@ -393,6 +393,8 @@ void Game::init(void)
 
   seed_set();
 
+  level_light_precalculate(this);
+
   player_name_set(nullptr);
 }
 void game_init(Gamep g) { g->init(); }

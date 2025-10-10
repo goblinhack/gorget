@@ -11,6 +11,73 @@
 #include "my_random.hpp"
 #include "my_time.hpp"
 
+static float light_fade[ MAP_WIDTH ];
+
+void level_light_precalculate(Gamep g)
+{
+  static const char light_fade_map[]
+      = "xxxx                                            " //
+        "    xx                                          " //
+        "      x                                         " //
+        "       x                                        " //
+        "        x                                       " //
+        "        x                                       " //
+        "         x                                      " //
+        "         x                                      " //
+        "          x                                     " //
+        "          x                                     " //
+        "          x                                     " //
+        "          x                                     " //
+        "          x                                     " //
+        "          x                                     " //
+        "           x                                    " //
+        "           x                                    " //
+        "           x                                    " //
+        "           x                                    " //
+        "           x                                    " //
+        "            x                                   " //
+        "            x                                   " //
+        "            x                                   " //
+        "            x                                   " //
+        "            x                                   " //
+        "             x                                  " //
+        "             x                                  " //
+        "             x                                  " //
+        "              x                                 " //
+        "              x                                 " //
+        "              x                                 " //
+        "               x                                " //
+        "               x                                " //
+        "                x                               " //
+        "                 x                              " //
+        "                  xx                            " //
+        "                    xxx                         " //
+        "                       xxxx                     " //
+        "                           xxxxxx               " //
+        "                                 xxxxxxx        " //
+        "                                        xxxxxxxx" //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+      ;
+
+  for (auto x = 0; x < MAP_WIDTH; x++) {
+    for (auto y = 0; y < MAP_HEIGHT; y++) {
+      auto c = light_fade_map[ (MAP_WIDTH * y) + x ];
+      if (c == 'x') {
+        if (light_fade[ x ] == 0) {
+          light_fade[ x ] = 1.0 - ((float) y / MAP_HEIGHT);
+        }
+      }
+    }
+  }
+}
+
 //
 // All light from all light sources, combined.
 //
@@ -36,24 +103,20 @@ void level_light_calculate(Gamep g, Levelsp v, Levelp l)
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
         if (fov_can_see_tile.can_see[ x ][ y ]) {
-          float d        = distance(t->at, spoint(x, y));
-          float strength = ((max_radius - d) / max_radius) * 255.0;
+          int light_fade_index = (int) ((distance(t->at, spoint(x, y)) / max_radius) * (float) MAP_WIDTH);
+          if (light_fade_index >= MAP_WIDTH) {
+            light_fade_index = MAP_WIDTH - 1;
+          }
 
+          auto light_tile = &v->light_map.tile[ x ][ y ];
+          int  strength   = (int) (light_fade[ light_fade_index ] * 255.0);
           if (strength > 255) {
-            DIE("a");
-            strength = 255;
-          }
-          if (strength < 0) {
-            DIE("b");
-            strength = 0;
+            DIE("x");
           }
 
-          auto    light_tile = &v->light_map.tile[ x ][ y ];
-          uint8_t c          = (int) strength;
-
-          light_tile->r += c;
-          light_tile->g += c;
-          light_tile->b += c;
+          light_tile->r += strength;
+          light_tile->g += strength;
+          light_tile->b += strength;
           light_tile->sources = 1;
         }
       }
@@ -84,6 +147,7 @@ void level_light_calculate(Gamep g, Levelsp v, Levelp l)
         light_tile->c.r = (uint8_t) c_r;
         light_tile->c.g = (uint8_t) c_g;
         light_tile->c.b = (uint8_t) c_b;
+        light_tile->c.a = 255;
       }
     }
   }

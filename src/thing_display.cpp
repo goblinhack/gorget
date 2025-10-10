@@ -168,12 +168,20 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spo
     }
   }
 
-  //
-  // Apply lighting to current tiles
-  //
-  if (thing_vision_can_see_tile(g, v, l, player, p)) {
-    fg   = v->light_map.tile[ p.x ][ p.y ].c;
-    fg.a = 255;
+  if (l->level_num == LEVEL_SELECT_ID) {
+    //
+    // No lighting
+    //
+    fg = WHITE;
+  } else if (thing_vision_can_see_tile(g, v, l, player, p)) {
+    //
+    // Apply lighting to current tiles
+    //
+    fg = v->light_map.tile[ p.x ][ p.y ].c;
+  } else {
+    //
+    // Default color, which might be monochrome for non visited tiles
+    //
   }
 
   if (tp_is_blit_outlined(tp)) {

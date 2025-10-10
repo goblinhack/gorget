@@ -95,6 +95,11 @@ static void tp_player_vision_update(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (ai) {
     level_fov(g, v, l, t, &ai->fov_can_see_tile, &l->player_fov_has_seen_tile, t->at, thing_vision_distance(t));
   }
+
+  //
+  // Update the lighting for all things
+  //
+  level_light_calculate(g, v, l);
 }
 
 static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -180,7 +185,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_health_bar_shown);
-  tp_flag_set(tp, is_light_source, 10);
+  tp_flag_set(tp, is_light_source, MAP_WIDTH / 2);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
