@@ -508,7 +508,6 @@ void    level_display(Gamep, Levelsp, Levelp);
 void    level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
 void    level_enter(Gamep, Levelsp, Levelp);
 void    level_forced_auto_scroll(Gamep, Levelsp, Levelp);
-void    level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius);
 void    level_init(Gamep, Levelsp, Levelp, LevelNum);
 void    level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
 void    level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
@@ -537,6 +536,10 @@ void    level_gen_test(Gamep);
 void    level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, int16_t, int16_t);
 void    level_water_tick(Gamep, Levelsp, Levelp);
 void    level_water_update(Gamep, Levelsp, Levelp);
+
+typedef bool (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p, int max_radius);
+void level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius,
+               level_fov_can_see_callback_t = nullptr);
 
 typedef enum {
   LEVEL_TYPE_NORMAL,

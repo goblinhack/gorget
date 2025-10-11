@@ -141,7 +141,7 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_fire);
   tp_flag_set(tp, is_gaseous);
-  tp_flag_set(tp, is_light_source, 3);
+  tp_flag_set(tp, is_light_source, 5);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
