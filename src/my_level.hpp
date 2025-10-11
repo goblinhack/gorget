@@ -111,7 +111,7 @@ typedef struct {
   int16_t r;
   int16_t g;
   int16_t b;
-  int16_t sources;
+  uint8_t lit : 1;
 } LightTile;
 
 //
@@ -537,7 +537,7 @@ void    level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_
 void    level_water_tick(Gamep, Levelsp, Levelp);
 void    level_water_update(Gamep, Levelsp, Levelp);
 
-typedef bool (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p, int max_radius);
+typedef void (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p, int max_radius);
 void level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius,
                level_fov_can_see_callback_t = nullptr);
 

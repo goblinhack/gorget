@@ -114,19 +114,19 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
                   FovMap                      *fov_can_see_tile,     //
                   FovMap                      *fov_has_seen_tile,    //
                   const spoint                 pov,                  //
-                  const int                    distance_from_origin, // Polar distance_from_origin from POV.
-                  double                       view_slope_high,      //
-                  double                       view_slope_low,       //
-                  const int                    max_radius,           //
-                  const int                    octant,               //
+                  const short                  distance_from_origin, // Polar distance_from_origin from POV.
+                  float                        view_slope_high,      //
+                  float                        view_slope_low,       //
+                  const short                  max_radius,           //
+                  const short                  octant,               //
                   const bool                   light_walls,          //
                   level_fov_can_see_callback_t can_see_callback)
 {
-  const int xx             = matrix_table[ octant ][ 0 ];
-  const int xy             = matrix_table[ octant ][ 1 ];
-  const int yx             = matrix_table[ octant ][ 2 ];
-  const int yy             = matrix_table[ octant ][ 3 ];
-  const int radius_squared = max_radius * max_radius;
+  const short xx             = matrix_table[ octant ][ 0 ];
+  const short xy             = matrix_table[ octant ][ 1 ];
+  const short yx             = matrix_table[ octant ][ 2 ];
+  const short yy             = matrix_table[ octant ][ 3 ];
+  const short radius_squared = max_radius * max_radius;
 
   if (view_slope_high < view_slope_low) {
     return; // View is invalid.
@@ -142,10 +142,10 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
 
   bool prev_tile_blocked = false;
 
-  for (int angle = distance_from_origin; angle >= 0; --angle) { // Polar angle coordinates from high to low.
-    const double tile_slope_high     = (angle + 0.5) / (distance_from_origin - 0.5);
-    const double tile_slope_low      = (angle - 0.5) / (distance_from_origin + 0.5);
-    const double prev_tile_slope_low = (angle + 0.5) / (distance_from_origin + 0.5);
+  for (short angle = distance_from_origin; angle >= 0; --angle) { // Polar angle coordinates from high to low.
+    const float tile_slope_high     = (angle + 0.5) / (distance_from_origin - 0.5);
+    const float tile_slope_low      = (angle - 0.5) / (distance_from_origin + 0.5);
+    const float prev_tile_slope_low = (angle + 0.5) / (distance_from_origin + 0.5);
 
     if (tile_slope_low > view_slope_high) {
       continue; // Tile is not in the view yet.
@@ -184,7 +184,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
       // Per tile can see callback check
       //
       if (can_see_callback) {
-        (void) (can_see_callback) (g, v, l, me, pov, p, max_radius);
+        (can_see_callback)(g, v, l, me, pov, p, max_radius);
       }
 
 #ifdef TODO
@@ -225,21 +225,10 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
 {
   TRACE_NO_INDENT();
 
-  if (is_oob(pov)) {
-    ERR("out of bounds");
-    return;
-  }
-
   const bool light_walls = true;
 
   if (fov_can_see_tile) {
     memset(fov_can_see_tile, 0, sizeof(*fov_can_see_tile));
-  }
-
-  if (max_radius <= 0) {
-    auto max_radius_x = std::max(MAP_WIDTH - (int) pov.x, (int) pov.x);
-    auto max_radius_y = std::max(MAP_HEIGHT - (int) pov.y, (int) pov.y);
-    max_radius        = (int) (sqrt(max_radius_x * max_radius_x + max_radius_y * max_radius_y)) + 1;
   }
 
   // recursive shadow casting
@@ -257,7 +246,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
   }
 
   if (can_see_callback) {
-    (void) (can_see_callback) (g, v, l, me, pov, pov, max_radius);
+    (can_see_callback)(g, v, l, me, pov, pov, max_radius);
   }
 
   // me->can_see_you(point(pov_x, pov_y));

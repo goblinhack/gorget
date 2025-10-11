@@ -81,28 +81,24 @@ void level_light_precalculate(Gamep g)
 //
 // All light from all light sources, combined.
 //
-static bool level_light_calculate_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p,
+static void level_light_calculate_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p,
                                                    int max_radius)
 {
-  TRACE_NO_INDENT();
-
-  int light_fade_index = (int) ((distance(pov, p) / (float) max_radius) * (float) MAP_WIDTH);
-  if (light_fade_index >= MAP_WIDTH) {
+  auto light_fade_index = (int) ((distance(pov, p) / (float) max_radius) * (float) MAP_WIDTH);
+  if (unlikely(light_fade_index >= MAP_WIDTH)) {
     light_fade_index = MAP_WIDTH - 1;
   }
 
   auto light_tile = &v->light_map.tile[ p.x ][ p.y ];
-  int  strength   = (int) (light_fade[ light_fade_index ] * 255.0);
-  if (strength > 255) {
-    DIE("x");
+  auto strength   = (int) (light_fade[ light_fade_index ] * 255.0);
+  if (unlikely(strength > 255)) {
+    DIE("unexpected value in lighting");
   }
 
   light_tile->r += strength;
   light_tile->g += strength;
   light_tile->b += strength;
-  light_tile->sources = 1;
-
-  return true;
+  light_tile->lit = true;
 }
 
 //
@@ -131,20 +127,17 @@ void level_light_calculate(Gamep g, Levelsp v, Levelp l)
   for (auto x = 0; x < MAP_WIDTH; x++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       auto light_tile = &v->light_map.tile[ x ][ y ];
-      if (light_tile->sources) {
-        float sources = light_tile->sources;
 
-        float c_r = (float) light_tile->r / (float) sources;
+      if (light_tile->lit) {
+        auto c_r = light_tile->r;
         if (c_r > 255) {
           c_r = 255;
         }
-
-        float c_g = (float) light_tile->g / (float) sources;
+        auto c_g = light_tile->g;
         if (c_g > 255) {
           c_g = 255;
         }
-
-        float c_b = (float) light_tile->b / (float) sources;
+        auto c_b = light_tile->b;
         if (c_b > 255) {
           c_b = 255;
         }
