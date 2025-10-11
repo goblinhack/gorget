@@ -334,13 +334,6 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   t->at     = to;
 
   //
-  // Enter the new level callback
-  //
-  if (level_changed) {
-    tp_on_level_enter(g, v, new_level, t);
-  }
-
-  //
   // Join the level.
   //
   thing_push(g, v, new_level, t);
@@ -356,6 +349,13 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   //
   if (thing_is_player(t)) {
     level_forced_auto_scroll(g, v, new_level);
+  }
+
+  //
+  // Enter the new level callback. Do this after updating position so that light update works.
+  //
+  if (level_changed) {
+    tp_on_level_enter(g, v, new_level, t);
   }
 
   return true;
