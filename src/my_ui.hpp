@@ -32,7 +32,7 @@
 #define UI_MAX_PLAYER_NAME_LEN        12
 #define UI_MAX_SEED_NAME_LEN          10
 #define UI_MAX_WID_CONTEXT            2
-#define UI_MONOCHROME_SCALE           8   // The higher the number, the darker monochrome tiles are
+#define UI_MONOCHROME_SCALE           3   // The higher the number, the darker monochrome tiles are
 #define UI_MOUSE_DOUBLE_CLICK         500 // Double click time
 #define UI_ORANGE_FMT_STR             "%%fg=orange$"
 #define UI_POPUP_TEXT_COLOR           UI_COLOR
