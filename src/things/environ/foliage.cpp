@@ -28,14 +28,13 @@ bool tp_load_foliage(void)
   tp_description_set(tp, tp_foliage_description_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_burnable); // is capable of being burned by fire
-  tp_flag_set(tp, is_light_source, 1);
-  tp_light_color_set(tp, "green");
+  tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_foliage);
   tp_flag_set(tp, is_light_blocker);
+  tp_flag_set(tp, is_light_source, 1);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
@@ -43,6 +42,7 @@ bool tp_load_foliage(void)
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d5");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_light_color_set(tp, "green");
   tp_long_name_set(tp, name);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius
