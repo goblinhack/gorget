@@ -324,8 +324,9 @@ void        tp_apostrophize_name_set(Tpp, const std::string &);
 std::string tp_real_name(Tpp);
 void        tp_real_name_set(Tpp, const std::string &);
 
-void tp_light_color_set(Tpp, const std::string &);
-void tp_light_color_apply(Tpp);
+void  tp_light_color_set(Tpp, const std::string &);
+void  tp_light_color_apply(Tpp);
+color tp_light_color(Tpp);
 
 int   tp_tiles_size(Tpp, ThingAnim);
 Tilep tp_first_tile(class Tp *, ThingAnim);

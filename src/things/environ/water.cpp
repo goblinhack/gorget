@@ -30,6 +30,8 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_obs_to_fire);
+  tp_flag_set(tp, is_light_source, 2);
+  tp_light_color_set(tp, "blue");
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_delay_on_spawn);

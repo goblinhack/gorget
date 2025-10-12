@@ -90,14 +90,13 @@ static void level_light_calculate_can_see_callback(Gamep g, Levelsp v, Levelp l,
   }
 
   auto light_tile = &v->light_map.tile[ p.x ][ p.y ];
-  auto strength   = (int) (light_fade[ light_fade_index ] * 255.0);
-  if (unlikely(strength > 255)) {
-    DIE("unexpected value in lighting");
-  }
+  auto strength   = light_fade[ light_fade_index ];
 
-  light_tile->r += strength;
-  light_tile->g += strength;
-  light_tile->b += strength;
+  color c = tp_light_color(thing_tp(t));
+
+  light_tile->r += (int) (strength * c.r);
+  light_tile->g += (int) (strength * c.g);
+  light_tile->b += (int) (strength * c.b);
   light_tile->lit = true;
 }
 

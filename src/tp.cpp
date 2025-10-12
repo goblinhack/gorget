@@ -824,6 +824,16 @@ void tp_light_color_apply(Tpp tp)
   glcolor(tp->light_color);
 }
 
+color tp_light_color(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return WHITE;
+  }
+  return tp->light_color;
+}
+
 int tp_flag(Tpp tp, ThingFlag f)
 {
   TRACE_NO_INDENT();

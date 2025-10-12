@@ -35,6 +35,7 @@ bool tp_load_key(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_light_color_set(tp, "yellow");
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_FEATHER); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

@@ -59,6 +59,7 @@ bool tp_load_slime(void)
   tp_health_set(tp, "1d10+4");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
+  tp_light_color_set(tp, "green");
   tp_long_name_set(tp, "sentient slime");
   tp_monst_group_add(tp, MONST_GROUP_HARD);
   tp_speed_set(tp, 100);

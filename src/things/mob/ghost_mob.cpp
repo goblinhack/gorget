@@ -65,6 +65,7 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_health_set(tp, "1d3+2");
+  tp_light_color_set(tp, "cyan");
   tp_long_name_set(tp, "ghost mob");
   tp_on_death_set(tp, tp_ghost_mob_on_death);
   tp_pluralize_name_set(tp, "ghostly mobs");
