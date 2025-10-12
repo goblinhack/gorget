@@ -153,12 +153,16 @@ void level_display(Gamep g, Levelsp v, Levelp l)
           //
           // Has seen previously
           //
-          display_tile = true;
-          if (level_is_blit_never_monochrome(g, v, l, p)) {
+          if (level_is_blit_colored_always(g, v, l, p)) {
             //
-            // Show in normal colors
+            // Show in normal colors. Implies "is_blit_if_has_seen".
             //
+            display_tile = true;
           } else {
+            //
+            // Show in monochrome
+            //
+            display_tile = true;
             g_monochrome = true;
           }
         }

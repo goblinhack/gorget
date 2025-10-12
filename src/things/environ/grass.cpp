@@ -32,6 +32,7 @@ bool tp_load_grass(void)
   tp_description_set(tp, tp_grass_description_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_corpse_on_death);

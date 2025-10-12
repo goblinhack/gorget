@@ -1860,14 +1860,14 @@ bool thing_is_physics_temperature(Thingp t)
   return tp_flag(thing_tp(t), is_physics_temperature);
 }
 
-bool thing_is_unused5(Thingp t)
+bool thing_is_blit_if_has_seen(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused5);
+  return tp_flag(thing_tp(t), is_blit_if_has_seen);
 }
 
 bool thing_is_smoke(Thingp t)
@@ -1970,14 +1970,14 @@ bool thing_is_ethereal(Thingp t)
   return tp_flag(thing_tp(t), is_ethereal);
 }
 
-bool thing_is_blit_never_monochrome(Thingp t)
+bool thing_is_blit_colored_always(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_blit_never_monochrome);
+  return tp_flag(thing_tp(t), is_blit_colored_always);
 }
 
 bool thing_is_levitating(Thingp t)

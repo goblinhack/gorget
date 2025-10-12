@@ -52,7 +52,8 @@ bool tp_load_door_secret(void)
   // begin sort marker1 {
   tp_description_set(tp, tp_door_secret_description_get);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_blit_never_monochrome);
+  tp_flag_set(tp, is_blit_colored_always);
+  tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_door_secret);
   tp_flag_set(tp, is_light_blocker);

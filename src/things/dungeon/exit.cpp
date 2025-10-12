@@ -36,7 +36,8 @@ bool tp_load_exit(void)
   tp_detail_set(tp, tp_exit_detail_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_blit_never_monochrome);
+  tp_flag_set(tp, is_blit_colored_always);
+  tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_exit);
   tp_flag_set(tp, is_indestructible);

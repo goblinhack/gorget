@@ -30,7 +30,7 @@
       list_macro(is_animated, "is_animated"),                           /* newline */                                \
       list_macro(is_barrel, "is_barrel"),                               /* newline */                                \
       list_macro(is_blit_centered, "is_blit_centered"),                 /* newline */                                \
-      list_macro(is_blit_never_monochrome, "is_blit_never_monochrome"), /* newline */                                \
+      list_macro(is_blit_colored_always, "is_blit_colored_always"),     /* newline */                                \
       list_macro(is_blit_on_ground, "is_blit_on_ground"),               /* newline */                                \
       list_macro(is_blit_outlined, "is_blit_outlined"),                 /* newline */                                \
       list_macro(is_blit_square_outlined, "is_blit_square_outlined"),   /* newline */                                \
@@ -132,7 +132,7 @@
       list_macro(is_unused2, "is_unused2"),                             /* newline */                                \
       list_macro(is_unused3, "is_unused3"),                             /* newline */                                \
       list_macro(is_unused4, "is_unused4"),                             /* newline */                                \
-      list_macro(is_unused5, "is_unused5"),                             /* newline */                                \
+      list_macro(is_blit_if_has_seen, "is_blit_if_has_seen"),           /* newline */                                \
       list_macro(is_wait_on_dead_anim, "is_wait_on_dead_anim"),         /* newline */                                \
       list_macro(is_walk_through_walls, "is_walk_through_walls"),       /* newline */                                \
       list_macro(is_wall, "is_wall"),                                   /* newline */                                \
@@ -514,7 +514,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_animated(tp)              tp_flag(tp, is_animated)
 #define tp_is_barrel(tp)                tp_flag(tp, is_barrel)
 #define tp_is_blit_centered(tp)         tp_flag(tp, is_blit_centered)
-#define tp_is_blit_never_monochrome(tp) tp_flag(tp, is_blit_never_monochrome)
+#define tp_is_blit_colored_always(tp)   tp_flag(tp, is_blit_colored_always)
+#define tp_is_blit_if_has_seen(tp)      tp_flag(tp, is_blit_if_has_seen)
 #define tp_is_blit_on_ground(tp)        tp_flag(tp, is_blit_on_ground)
 #define tp_is_blit_outlined(tp)         tp_flag(tp, is_blit_outlined)
 #define tp_is_blit_square_outlined(tp)  tp_flag(tp, is_blit_square_outlined)
@@ -616,7 +617,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused2(tp)               tp_flag(tp, is_unused2)
 #define tp_is_unused3(tp)               tp_flag(tp, is_unused3)
 #define tp_is_unused4(tp)               tp_flag(tp, is_unused4)
-#define tp_is_unused5(tp)               tp_flag(tp, is_unused5)
 #define tp_is_wait_on_dead_anim(tp)     tp_flag(tp, is_wait_on_dead_anim)
 #define tp_is_walk_through_walls(tp)    tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                  tp_flag(tp, is_wall)
@@ -634,7 +634,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_animated_no_dir(g, v, l, p)       level_afirst_flag(g, v, l, is_animated_no_dir, p)
 #define level_afirst_is_animated(g, v, l, p)              level_afirst_flag(g, v, l, is_animated, p)
 #define level_afirst_is_barrel(g, v, l, p)                level_afirst_flag(g, v, l, is_barrel, p)
-#define level_afirst_is_blit_never_monochrome(g, v, l, p) level_afirst_flag(g, v, l, is_blit_never_monochrome, p)
+#define level_afirst_is_blit_colored_always(g, v, l, p)   level_afirst_flag(g, v, l, is_blit_colored_always, p)
+#define level_afirst_is_blit_if_has_seen(g, v, l, p)      level_afirst_flag(g, v, l, is_blit_if_has_seen, p)
 #define level_afirst_is_brazier(g, v, l, p)               level_afirst_flag(g, v, l, is_brazier, p)
 #define level_afirst_is_bridge(g, v, l, p)                level_afirst_flag(g, v, l, is_bridge, p)
 #define level_afirst_is_broken_on_death(g, v, l, p)       level_afirst_flag(g, v, l, is_broken_on_death, p)
@@ -731,7 +732,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_unused37(g, v, l, p)              level_afirst_flag(g, v, l, is_floating, p)
 #define level_afirst_is_unused38(g, v, l, p)              level_afirst_flag(g, v, l, is_obs_to_fire, p)
 #define level_afirst_is_unused4(g, v, l, p)               level_afirst_flag(g, v, l, is_unused4, p)
-#define level_afirst_is_unused5(g, v, l, p)               level_afirst_flag(g, v, l, is_unused5, p)
 #define level_afirst_is_wait_on_dead_anim(g, v, l, p)     level_afirst_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_afirst_is_walk_through_walls(g, v, l, p)    level_afirst_flag(g, v, l, is_walk_through_walls, p)
 #define level_afirst_is_wall(g, v, l, p)                  level_afirst_flag(g, v, l, is_wall, p)
@@ -747,7 +747,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_animated_sync_first(g, v, l, p)    level_alive_flag(g, v, l, is_animated_sync_first, p)
 #define level_alive_is_animated(g, v, l, p)               level_alive_flag(g, v, l, is_animated, p)
 #define level_alive_is_barrel(g, v, l, p)                 level_alive_flag(g, v, l, is_barrel, p)
-#define level_alive_is_blit_never_monochrome(g, v, l, p)  level_alive_flag(g, v, l, is_blit_never_monochrome, p)
+#define level_alive_is_blit_colored_always(g, v, l, p)    level_alive_flag(g, v, l, is_blit_colored_always, p)
+#define level_alive_is_blit_if_has_seen(g, v, l, p)       level_alive_flag(g, v, l, is_blit_if_has_seen, p)
 #define level_alive_is_brazier(g, v, l, p)                level_alive_flag(g, v, l, is_brazier, p)
 #define level_alive_is_bridge(g, v, l, p)                 level_alive_flag(g, v, l, is_bridge, p)
 #define level_alive_is_broken_on_death(g, v, l, p)        level_alive_flag(g, v, l, is_broken_on_death, p)
@@ -844,7 +845,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused37(g, v, l, p)               level_alive_flag(g, v, l, is_floating, p)
 #define level_alive_is_unused38(g, v, l, p)               level_alive_flag(g, v, l, is_obs_to_fire, p)
 #define level_alive_is_unused4(g, v, l, p)                level_alive_flag(g, v, l, is_unused4, p)
-#define level_alive_is_unused5(g, v, l, p)                level_alive_flag(g, v, l, is_unused5, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)      level_alive_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_alive_is_walk_through_walls(g, v, l, p)     level_alive_flag(g, v, l, is_walk_through_walls, p)
 #define level_alive_is_wall(g, v, l, p)                   level_alive_flag(g, v, l, is_wall, p)
@@ -860,7 +860,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_animated_sync_count(g, v, l, p)    level_count_flag(g, v, l, is_animated_sync_count, p)
 #define level_count_is_animated(g, v, l, p)               level_count_flag(g, v, l, is_animated, p)
 #define level_count_is_barrel(g, v, l, p)                 level_count_flag(g, v, l, is_barrel, p)
-#define level_count_is_blit_never_monochrome(g, v, l, p)  level_count_flag(g, v, l, is_blit_never_monochrome, p)
+#define level_count_is_blit_colored_always(g, v, l, p)    level_count_flag(g, v, l, is_blit_colored_always, p)
+#define level_count_is_blit_if_has_seen(g, v, l, p)       level_count_flag(g, v, l, is_blit_if_has_seen, p)
 #define level_count_is_brazier(g, v, l, p)                level_count_flag(g, v, l, is_brazier, p)
 #define level_count_is_bridge(g, v, l, p)                 level_count_flag(g, v, l, is_bridge, p)
 #define level_count_is_broken_on_death(g, v, l, p)        level_count_flag(g, v, l, is_broken_on_death, p)
@@ -957,7 +958,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused37(g, v, l, p)               level_count_flag(g, v, l, is_floating, p)
 #define level_count_is_unused38(g, v, l, p)               level_count_flag(g, v, l, is_obs_to_fire, p)
 #define level_count_is_unused4(g, v, l, p)                level_count_flag(g, v, l, is_unused4, p)
-#define level_count_is_unused5(g, v, l, p)                level_count_flag(g, v, l, is_unused5, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)      level_count_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_count_is_walk_through_walls(g, v, l, p)     level_count_flag(g, v, l, is_walk_through_walls, p)
 #define level_count_is_wall(g, v, l, p)                   level_count_flag(g, v, l, is_wall, p)
@@ -973,7 +973,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_animated_sync_first_is(g, v, l, p) level_first_flag(g, v, l, is_animated_sync_first_is, p)
 #define level_first_is_animated(g, v, l, p)               level_first_flag(g, v, l, is_animated, p)
 #define level_first_is_barrel(g, v, l, p)                 level_first_flag(g, v, l, is_barrel, p)
-#define level_first_is_blit_never_monochrome(g, v, l, p)  level_first_flag(g, v, l, is_blit_never_monochrome, p)
+#define level_first_is_blit_colored_always(g, v, l, p)    level_first_flag(g, v, l, is_blit_colored_always, p)
+#define level_first_is_blit_if_has_seen(g, v, l, p)       level_first_flag(g, v, l, is_blit_if_has_seen, p)
 #define level_first_is_brazier(g, v, l, p)                level_first_flag(g, v, l, is_brazier, p)
 #define level_first_is_bridge(g, v, l, p)                 level_first_flag(g, v, l, is_bridge, p)
 #define level_first_is_broken_on_death(g, v, l, p)        level_first_flag(g, v, l, is_broken_on_death, p)
@@ -1070,7 +1071,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_unused37(g, v, l, p)               level_first_flag(g, v, l, is_floating, p)
 #define level_first_is_unused38(g, v, l, p)               level_first_flag(g, v, l, is_obs_to_fire, p)
 #define level_first_is_unused4(g, v, l, p)                level_first_flag(g, v, l, is_unused4, p)
-#define level_first_is_unused5(g, v, l, p)                level_first_flag(g, v, l, is_unused5, p)
 #define level_first_is_wait_on_dead_anim(g, v, l, p)      level_first_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_first_is_walk_through_walls(g, v, l, p)     level_first_flag(g, v, l, is_walk_through_walls, p)
 #define level_first_is_wall(g, v, l, p)                   level_first_flag(g, v, l, is_wall, p)
@@ -1088,7 +1088,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_animated(g, v, l, p)                     level_flag(g, v, l, is_animated, p)
 #define level_is_barrel(g, v, l, p)                       level_flag(g, v, l, is_barrel, p)
 #define level_is_blit_centered(g, v, l, p)                level_flag(g, v, l, is_blit_centered, p)
-#define level_is_blit_never_monochrome(g, v, l, p)        level_flag(g, v, l, is_blit_never_monochrome, p)
+#define level_is_blit_colored_always(g, v, l, p)          level_flag(g, v, l, is_blit_colored_always, p)
+#define level_is_blit_if_has_seen(g, v, l, p)             level_flag(g, v, l, is_blit_if_has_seen, p)
 #define level_is_blit_on_ground(g, v, l, p)               level_flag(g, v, l, is_blit_on_ground, p)
 #define level_is_blit_outlined(g, v, l, p)                level_flag(g, v, l, is_blit_outlined, p)
 #define level_is_blit_square_outlined(g, v, l, p)         level_flag(g, v, l, is_blit_square_outlined, p)
@@ -1190,7 +1191,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused2(g, v, l, p)                      level_flag(g, v, l, is_unused2, p)
 #define level_is_unused3(g, v, l, p)                      level_flag(g, v, l, is_unused3, p)
 #define level_is_unused4(g, v, l, p)                      level_flag(g, v, l, is_unused4, p)
-#define level_is_unused5(g, v, l, p)                      level_flag(g, v, l, is_unused5, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)            level_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_is_walk_through_walls(g, v, l, p)           level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                         level_flag(g, v, l, is_wall, p)
@@ -1206,7 +1206,8 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_animated_sync_first(g, v, l, p)     level_open_flag(g, v, l, is_animated_sync_first, p)
 #define level_open_is_animated(g, v, l, p)                level_open_flag(g, v, l, is_animated, p)
 #define level_open_is_barrel(g, v, l, p)                  level_open_flag(g, v, l, is_barrel, p)
-#define level_open_is_blit_never_monochrome(g, v, l, p)   level_open_flag(g, v, l, is_blit_never_monochrome, p)
+#define level_open_is_blit_colored_always(g, v, l, p)     level_open_flag(g, v, l, is_blit_colored_always, p)
+#define level_open_is_blit_if_has_seen(g, v, l, p)        level_open_flag(g, v, l, is_blit_if_has_seen, p)
 #define level_open_is_brazier(g, v, l, p)                 level_open_flag(g, v, l, is_brazier, p)
 #define level_open_is_bridge(g, v, l, p)                  level_open_flag(g, v, l, is_bridge, p)
 #define level_open_is_broken_on_death(g, v, l, p)         level_open_flag(g, v, l, is_broken_on_death, p)
@@ -1303,7 +1304,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_unused37(g, v, l, p)                level_open_flag(g, v, l, is_floating, p)
 #define level_open_is_unused38(g, v, l, p)                level_open_flag(g, v, l, is_obs_to_fire, p)
 #define level_open_is_unused4(g, v, l, p)                 level_open_flag(g, v, l, is_unused4, p)
-#define level_open_is_unused5(g, v, l, p)                 level_open_flag(g, v, l, is_unused5, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)       level_open_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_open_is_walk_through_walls(g, v, l, p)      level_open_flag(g, v, l, is_walk_through_walls, p)
 #define level_open_is_wall(g, v, l, p)                    level_open_flag(g, v, l, is_wall, p)

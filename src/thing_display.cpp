@@ -9,7 +9,7 @@
 #include "my_level.hpp"
 #include "my_math.hpp"
 
-void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint *tl, spoint *br,
+void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint *tl, spoint *br,
                       uint16_t *tile_index)
 {
   TRACE_NO_INDENT();
@@ -18,11 +18,11 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
   int dw   = INNER_TILE_WIDTH * zoom;
   int dh   = INNER_TILE_HEIGHT * zoom;
 
-  if (t) {
+  if (t_maybe_null) {
     //
     // Things
     //
-    *tile_index = t->tile_index;
+    *tile_index = t_maybe_null->tile_index;
   } else if (tp) {
     //
     // Cursor
@@ -44,11 +44,11 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
   auto pix_height = tile_height(tile) * zoom;
   auto pix_width  = tile_width(tile) * zoom;
 
-  if (t) {
+  if (t_maybe_null) {
     //
     // All things
     //
-    *tl = t->pix_at;
+    *tl = t_maybe_null->pix_at;
     tl->x *= zoom;
     tl->y *= zoom;
   } else {
@@ -73,8 +73,8 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
     tl->y -= (pix_height - dh) / 2;
   }
 
-  if (t && thing_is_jumping(t)) {
-    auto jump_height = (int) ((sin(PI * t->thing_dt)) * (float) dh);
+  if (t_maybe_null && thing_is_jumping(t_maybe_null)) {
+    auto jump_height = (int) ((sin(PI * t_maybe_null->thing_dt)) * (float) dh);
     tl->y -= jump_height;
     br->y -= jump_height;
   }
@@ -88,8 +88,8 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
   //
   // Flippable?
   //
-  if (tp && tp_is_animated_can_hflip(tp)) {
-    if (thing_is_dir_left(t) || thing_is_dir_tl(t) || thing_is_dir_bl(t)) {
+  if (t_maybe_null && tp_is_animated_can_hflip(tp)) {
+    if (thing_is_dir_left(t_maybe_null) || thing_is_dir_tl(t_maybe_null) || thing_is_dir_bl(t_maybe_null)) {
       std::swap(tl->x, br->x);
     }
   }
@@ -97,19 +97,19 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, 
   //
   // Update submerged status
   //
-  if (tp && tp_is_submergible(tp)) {
-    thing_submerged_pct_set(g, v, l, t, 0);
+  if (t_maybe_null && tp_is_submergible(tp)) {
+    thing_submerged_pct_set(g, v, l, t_maybe_null, 0);
     if (level_is_deep_water(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t, 80);
+      thing_submerged_pct_set(g, v, l, t_maybe_null, 80);
     } else if (level_is_water(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t, 50);
+      thing_submerged_pct_set(g, v, l, t_maybe_null, 50);
     } else if (level_is_lava(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t, 40);
+      thing_submerged_pct_set(g, v, l, t_maybe_null, 40);
     }
   }
 }
 
-void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint tl, spoint br,
+void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
                    uint16_t tile_index)
 {
   TRACE_NO_INDENT();
@@ -117,6 +117,18 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spo
   auto player = thing_player(g);
   if (! player) {
     return;
+  }
+
+  //
+  // If we cannot see this tile currently, but it is shown if it the tile has been seen, then show it.
+  //
+  if (t_maybe_null && ! thing_vision_can_see_tile(g, v, l, player, p)) {
+    //
+    // "has seen" is implied if we get here at all
+    //
+    if (! thing_is_blit_if_has_seen(t_maybe_null)) {
+      return;
+    }
   }
 
   auto tile = tile_index_to_tile(tile_index);
@@ -144,26 +156,26 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spo
     single_pix_size = 0;
   }
 
-  if (t) {
+  if (t_maybe_null) {
     //
     // Handle various effects
     //
     int fall_height;
     int submerged_pct;
-    if ((fall_height = thing_is_falling(t))) {
+    if ((fall_height = thing_is_falling(t_maybe_null))) {
       //
       // Falling
       //
       int dh = (int) (((MAX_FALL_TILE_HEIGHT * ((float) (br.y - tl.y))) / MAX_FALL_TIME_MS) * fall_height);
       tl.y += dh;
       br.y += dh;
-      // THING_TOPCON(t, "%d", dh);
-    } else if ((submerged_pct = thing_submerged_pct(t))) {
+      // THING_TOPCON(t_maybe_null, "%d", dh);
+    } else if ((submerged_pct = thing_submerged_pct(t_maybe_null))) {
       //
       // Submerge the tile if it is over some kind of liquid.
       //
       if (submerged_pct) {
-        tile_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t));
+        tile_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t_maybe_null));
       }
     }
   }

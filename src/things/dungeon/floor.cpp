@@ -16,6 +16,7 @@ bool tp_load_floor(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_floor);
   tp_flag_set(tp, is_teleport_blocked);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
