@@ -62,7 +62,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   // If in level select mode, enter the new level
   //
-  if (l->level_num == LEVEL_SELECT_ID) {
+  if (level_is_level_select(g, v, l)) {
     level_select_user_chose_a_level(g, v, l);
     return true;
   }
@@ -140,7 +140,7 @@ bool game_event_save(Gamep g)
     return false;
   }
 
-  if (l->level_num != LEVEL_SELECT_ID) {
+  if (! level_is_level_select(g, v, l)) {
     if (g_opt_debug1) {
       //
       // Allow when debugging
@@ -151,6 +151,7 @@ bool game_event_save(Gamep g)
       return true;
     }
   }
+
   if (v->tick_in_progress) {
     game_request_to_save_game_set(g);
   } else {

@@ -119,15 +119,19 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     return;
   }
 
-  //
-  // If we cannot see this tile currently, but it is shown if it the tile has been seen, then show it.
-  //
-  if (t_maybe_null && ! thing_vision_can_see_tile(g, v, l, player, p)) {
+  const auto is_level_select = level_is_level_select(g, v, l);
+
+  if (! is_level_select) {
     //
-    // "has seen" is implied if we get here at all
+    // If we cannot see this tile currently, but it is shown if it the tile has been seen, then show it.
     //
-    if (! thing_is_blit_if_has_seen(t_maybe_null)) {
-      return;
+    if (t_maybe_null && ! thing_vision_can_see_tile(g, v, l, player, p)) {
+      //
+      // "has seen" is implied if we get here at all
+      //
+      if (! thing_is_blit_if_has_seen(t_maybe_null)) {
+        return;
+      }
     }
   }
 
@@ -180,7 +184,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
   }
 
-  if (l->level_num == LEVEL_SELECT_ID) {
+  if (is_level_select) {
     //
     // No lighting
     //

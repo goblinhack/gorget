@@ -31,7 +31,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
         //
         // No cursor path during level selection
         //
-        if (l->level_num == LEVEL_SELECT_ID) {
+        if (level_is_level_select(g, v, l)) {
           return;
         }
 
@@ -104,6 +104,8 @@ void level_display(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
+  const bool is_level_select = level_is_level_select(g, v, l);
+
   //
   // What level is the player on?
   //
@@ -139,7 +141,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
 
         if (g_opt_debug1) {
           display_tile = true;
-        } else if (l->level_num == LEVEL_SELECT_ID) {
+        } else if (is_level_select) {
           //
           // No lighting in level selection
           //

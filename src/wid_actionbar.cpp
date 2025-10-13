@@ -447,12 +447,12 @@ bool wid_actionbar_create_window(Gamep g)
   bool opt_descend   = level_is_exit(g, v, l, player->at);
   bool opt_ascend    = level_is_entrance(g, v, l, player->at);
 
-  if (g_opt_debug1 || (l->level_num == LEVEL_SELECT_ID)) {
+  if (g_opt_debug1 || level_is_level_select(g, v, l)) {
     opt_save = true;
     opt_load = true;
   }
 
-  if (l->level_num == LEVEL_SELECT_ID) {
+  if (level_is_level_select(g, v, l)) {
     opt_wait      = false;
     opt_inventory = false;
     opt_help      = false;

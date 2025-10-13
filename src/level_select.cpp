@@ -747,7 +747,7 @@ void level_select_rightbar_needs_update(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (l->level_num != LEVEL_SELECT_ID) {
+  if (! level_is_level_select(g, v, l)) {
     return;
   }
 
@@ -787,7 +787,7 @@ void level_select_user_chose_a_level(Gamep g, Levelsp v, Levelp l)
     player_level = game_level_get(g, v, player->level_num);
   }
 
-  if (l->level_num != LEVEL_SELECT_ID) {
+  if (! level_is_level_select(g, v, l)) {
     return;
   }
 

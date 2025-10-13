@@ -36,7 +36,7 @@ static bool wid_rightbar_create_window(Gamep g)
   //
   // If in level select mode, we show different contents
   //
-  if (l->level_num == LEVEL_SELECT_ID) {
+  if (level_is_level_select(g, v, l)) {
     level_select_rightbar_show_contents(g, v, l, wid_rightbar);
     return true;
   }

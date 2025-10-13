@@ -11,6 +11,20 @@
 #include "my_wids.hpp"
 
 //
+// Are we on the level selection level?
+//
+bool level_is_level_select(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  if (! g || ! v || ! l) {
+    return false;
+  }
+
+  return l->level_num == LEVEL_SELECT_ID;
+}
+
+//
 // Convert a level into a single string
 //
 static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
@@ -335,7 +349,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   level_scroll_warp_to_focus(g, v, new_level);
   level_debug(g, v, new_level);
 
-  if (level_num == LEVEL_SELECT_ID) {
+  if (level_is_level_select(g, v, new_level)) {
     BOTCON_NEW_LINE();
     TOPCON_NEW_LINE();
     TOPCON(UI_WARNING_FMT_STR "Choose your next level." UI_RESET_FMT);
@@ -380,7 +394,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   //
   // Clean up the level select snake walk
   //
-  if (l->level_num == LEVEL_SELECT_ID) {
+  if (level_is_level_select(g, v, l)) {
     level_select_destroy(g, v, l);
   }
 
@@ -709,7 +723,7 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   //
   // We need to animate all the level tiles in sync, so might as well draw the whole level
   //
-  if (l->level_num == LEVEL_SELECT_ID) {
+  if (level_is_level_select(g, v, l)) {
     v->minx = 0;
     v->miny = 0;
     v->maxx = MAP_WIDTH;

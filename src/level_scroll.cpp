@@ -19,7 +19,7 @@ Thingp level_scroll_target(Gamep g, Levelsp v)
   // If on the select level, do we have a current level?
   //
   auto l = game_level_get(g, v);
-  if (l && (l->level_num == LEVEL_SELECT_ID)) {
+  if (level_is_level_select(g, v, l)) {
     Thingp target = thing_level_select(g);
     if (target) {
       return target;
