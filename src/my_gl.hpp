@@ -239,6 +239,7 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 //
 enum {
   FBO_MAP,
+  FBO_MAP_LIGHT,
   FBO_WID,
   FBO_FINAL,
   MAX_FBO,

@@ -121,7 +121,7 @@ bool tp_load_door_locked(void)
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_door_locked);
-  tp_flag_set(tp, is_light_blocker);
+  tp_flag_set(tp, is_obs_to_vision);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_falling_onto);

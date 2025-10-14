@@ -8,6 +8,7 @@
 #include "my_gl.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
+#include "my_tile.hpp"
 
 static bool in_2d_mode;
 
@@ -486,6 +487,10 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
     case FBO_MAP :
       w = game_map_fbo_width_get(g);
       h = game_map_fbo_height_get(g);
+      break;
+    case FBO_MAP_LIGHT :
+      w = MAP_WIDTH * INNER_TILE_WIDTH;
+      h = MAP_HEIGHT * INNER_TILE_HEIGHT;
       break;
     case FBO_WID :
       w = game_window_pix_width_get(g);

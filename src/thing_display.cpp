@@ -22,25 +22,37 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_m
     //
     // Things
     //
-    *tile_index = t_maybe_null->tile_index;
+    if (tile_index) {
+      *tile_index = t_maybe_null->tile_index;
+    }
   } else if (tp) {
     //
     // Cursor
     //
-    Tilep tile  = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
-    *tile_index = tile_global_index(tile);
+    Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
+    if (tile_index) {
+      *tile_index = tile_global_index(tile);
+    }
   } else {
     static Tilep tile;
     if (! tile) {
       tile = tile_find_mand("none");
     }
-    *tile_index = tile_global_index(tile);
+    if (tile_index) {
+      *tile_index = tile_global_index(tile);
+    }
   }
 
-  auto tile = tile_index_to_tile(*tile_index);
+  Tilep tile = nullptr;
+
+  if (tile_index) {
+    tile = tile_index_to_tile(*tile_index);
+  }
+
   if (! tile) {
     tile = tile_find_mand("none");
   }
+
   auto pix_height = tile_height(tile) * zoom;
   auto pix_width  = tile_width(tile) * zoom;
 

@@ -5,7 +5,9 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
+#include "my_gl.hpp"
 #include "my_level.hpp"
+#include "my_light.hpp"
 #include "my_wids.hpp"
 
 static void level_tick_begin(Gamep, Levelsp, Levelp);
@@ -115,6 +117,10 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     //
     level_tick_idle(g, v, l);
   }
+
+  level_light_calculate(g, v, l);
+
+  player_light_render(g, v, l, WHITE, FBO_MAP_LIGHT);
 
   //
   // Update any tiles that are needed

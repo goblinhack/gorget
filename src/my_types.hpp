@@ -208,5 +208,6 @@ using Widp         = class Wid *;
 using LevelNum     = unsigned char;
 
 #define NULL_THING ((Thingp) nullptr)
+#define NULL_TP    ((Tpp) nullptr)
 
 #endif // _MY_TYPES_HPP_

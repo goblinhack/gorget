@@ -6,9 +6,11 @@
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
+#include "my_tile.hpp"
 #include "my_wid_console.hpp"
 
 void sdl_display(Gamep g)
@@ -29,8 +31,10 @@ void sdl_display(Gamep g)
   glBlendFunc(GL_ONE, GL_ZERO);
 
   if (g) {
-    auto level = game_levels_get(g);
-    if (level) {
+    auto v = game_levels_get(g);
+    if (v) {
+      auto l = game_level_get(g, v);
+
       //
       // Get the pixel extents of the map on screen
       //
@@ -48,6 +52,24 @@ void sdl_display(Gamep g)
       blit_init();
       blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
            visible_map_br_y, c);
+      blit_flush();
+
+      spoint tl1;
+      spoint br1;
+      spoint tl2;
+      spoint br2;
+
+      thing_get_coords(g, v, l, spoint(0, 0), NULL_TP, NULL_THING, &tl1, &br1, nullptr);
+      thing_get_coords(g, v, l, spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, &tl2, &br2, nullptr);
+
+      tl1.x += visible_map_tl_x;
+      tl1.y += visible_map_tl_y;
+      br2.x += visible_map_tl_x;
+      br2.y += visible_map_tl_y;
+
+      blit_init();
+      c.a = 100;
+      blit(g_fbo_tex_id[ FBO_MAP_LIGHT ], 0, 1, 1, 0, tl1.x, tl1.y, br2.x, br2.y, c);
       blit_flush();
     }
   }

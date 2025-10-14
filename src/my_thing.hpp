@@ -478,7 +478,7 @@ bool thing_is_level_next(Thingp);
 bool thing_is_level_not_visited(Thingp);
 bool thing_is_level_visited(Thingp);
 bool thing_is_levitating(Thingp);
-bool thing_is_light_blocker(Thingp);
+bool thing_is_obs_to_vision(Thingp);
 bool thing_is_loggable(Thingp);
 bool thing_is_minion(Thingp);
 bool thing_is_mob(Thingp);

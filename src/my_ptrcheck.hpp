@@ -68,6 +68,7 @@ void  ptrcheck_leak_print(void);
 
 enum {
   MTYPE_SDL,
+  MTYPE_LIGHT,
   MTYPE_MISC,
   MTYPE_TEX,
   MTYPE_TILE,

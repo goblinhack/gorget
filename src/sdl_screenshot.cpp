@@ -117,6 +117,11 @@ void sdl_fbo_load(Gamep g, int fbo, const std::vector< uint8_t > &pixels)
 void sdl_fbo_dump(Gamep g, int fbo, const std::string &name)
 {
   TRACE_AND_INDENT();
+
+  if (g_thread_id != -1) {
+    return;
+  }
+
   int w;
   int h;
   fbo_get_size(g, fbo, w, h);

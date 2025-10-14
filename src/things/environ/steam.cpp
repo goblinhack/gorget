@@ -32,7 +32,7 @@ bool tp_load_steam(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_indestructible);
-  tp_flag_set(tp, is_light_blocker);
+  tp_flag_set(tp, is_obs_to_vision);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_steam);

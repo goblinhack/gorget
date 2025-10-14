@@ -73,7 +73,7 @@ static bool level_fov_light_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, 
       continue;
     }
 
-    if (thing_is_light_blocker(it)) {
+    if (thing_is_obs_to_vision(it)) {
       return true;
     }
   }
@@ -83,7 +83,7 @@ static bool level_fov_light_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, 
 #if 0
     if (me->is_monst()) {
       if (! light_blocker) {
-        light_blocker = is_light_blocker_for_monst(p);
+        light_blocker = is_obs_to_vision_for_monst(p);
       }
 
       if (! light_blocker) {

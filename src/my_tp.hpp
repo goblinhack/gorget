@@ -89,7 +89,7 @@
       list_macro(is_level_not_visited, "is_level_not_visited"),         /* newline */                                \
       list_macro(is_level_visited, "is_level_visited"),                 /* newline */                                \
       list_macro(is_levitating, "is_levitating"),                       /* newline */                                \
-      list_macro(is_light_blocker, "is_light_blocker"),                 /* newline */                                \
+      list_macro(is_obs_to_vision, "is_obs_to_vision"),                 /* newline */                                \
       list_macro(is_light_source, "is_light_source"),                   /* newline */                                \
       list_macro(is_loggable, "is_loggable"),                           /* newline */                                \
       list_macro(is_minion, "is_minion"),                               /* newline */                                \
@@ -574,7 +574,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_level_not_visited(tp)     tp_flag(tp, is_level_not_visited)
 #define tp_is_level_visited(tp)         tp_flag(tp, is_level_visited)
 #define tp_is_levitating(tp)            tp_flag(tp, is_levitating)
-#define tp_is_light_blocker(tp)         tp_flag(tp, is_light_blocker)
+#define tp_is_obs_to_vision(tp)         tp_flag(tp, is_obs_to_vision)
 #define tp_is_light_source(tp)          tp_flag(tp, is_light_source)
 #define tp_is_loggable(tp)              tp_flag(tp, is_loggable)
 #define tp_is_minion(tp)                tp_flag(tp, is_minion)
@@ -689,7 +689,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_level_not_visited(g, v, l, p)     level_afirst_flag(g, v, l, is_level_not_visited, p)
 #define level_afirst_is_level_visited(g, v, l, p)         level_afirst_flag(g, v, l, is_level_visited, p)
 #define level_afirst_is_levitating(g, v, l, p)            level_afirst_flag(g, v, l, is_levitating, p)
-#define level_afirst_is_light_blocker(g, v, l, p)         level_afirst_flag(g, v, l, is_light_blocker, p)
+#define level_afirst_is_obs_to_vision(g, v, l, p)         level_afirst_flag(g, v, l, is_obs_to_vision, p)
 #define level_afirst_is_light_source(g, v, l, p)          level_afirst_flag(g, v, l, is_light_source, p)
 #define level_afirst_is_loggable(g, v, l, p)              level_afirst_flag(g, v, l, is_loggable, p)
 #define level_afirst_is_minion(g, v, l, p)                level_afirst_flag(g, v, l, is_minion, p)
@@ -802,7 +802,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_level_not_visited(g, v, l, p)      level_alive_flag(g, v, l, is_level_not_visited, p)
 #define level_alive_is_level_visited(g, v, l, p)          level_alive_flag(g, v, l, is_level_visited, p)
 #define level_alive_is_levitating(g, v, l, p)             level_alive_flag(g, v, l, is_levitating, p)
-#define level_alive_is_light_blocker(g, v, l, p)          level_alive_flag(g, v, l, is_light_blocker, p)
+#define level_alive_is_obs_to_vision(g, v, l, p)          level_alive_flag(g, v, l, is_obs_to_vision, p)
 #define level_alive_is_light_source(g, v, l, p)           level_alive_flag(g, v, l, is_light_source, p)
 #define level_alive_is_loggable(g, v, l, p)               level_alive_flag(g, v, l, is_loggable, p)
 #define level_alive_is_minion(g, v, l, p)                 level_alive_flag(g, v, l, is_minion, p)
@@ -915,7 +915,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_level_not_visited(g, v, l, p)      level_count_flag(g, v, l, is_level_not_visited, p)
 #define level_count_is_level_visited(g, v, l, p)          level_count_flag(g, v, l, is_level_visited, p)
 #define level_count_is_levitating(g, v, l, p)             level_count_flag(g, v, l, is_levitating, p)
-#define level_count_is_light_blocker(g, v, l, p)          level_count_flag(g, v, l, is_light_blocker, p)
+#define level_count_is_obs_to_vision(g, v, l, p)          level_count_flag(g, v, l, is_obs_to_vision, p)
 #define level_count_is_light_source(g, v, l, p)           level_count_flag(g, v, l, is_light_source, p)
 #define level_count_is_loggable(g, v, l, p)               level_count_flag(g, v, l, is_loggable, p)
 #define level_count_is_minion(g, v, l, p)                 level_count_flag(g, v, l, is_minion, p)
@@ -1028,7 +1028,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_level_not_visited(g, v, l, p)      level_first_flag(g, v, l, is_level_not_visited, p)
 #define level_first_is_level_visited(g, v, l, p)          level_first_flag(g, v, l, is_level_visited, p)
 #define level_first_is_levitating(g, v, l, p)             level_first_flag(g, v, l, is_levitating, p)
-#define level_first_is_light_blocker(g, v, l, p)          level_first_flag(g, v, l, is_light_blocker, p)
+#define level_first_is_obs_to_vision(g, v, l, p)          level_first_flag(g, v, l, is_obs_to_vision, p)
 #define level_first_is_light_source(g, v, l, p)           level_first_flag(g, v, l, is_light_source, p)
 #define level_first_is_loggable(g, v, l, p)               level_first_flag(g, v, l, is_loggable, p)
 #define level_first_is_minion(g, v, l, p)                 level_first_flag(g, v, l, is_minion, p)
@@ -1148,7 +1148,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_level_not_visited(g, v, l, p)            level_flag(g, v, l, is_level_not_visited, p)
 #define level_is_level_visited(g, v, l, p)                level_flag(g, v, l, is_level_visited, p)
 #define level_is_levitating(g, v, l, p)                   level_flag(g, v, l, is_levitating, p)
-#define level_is_light_blocker(g, v, l, p)                level_flag(g, v, l, is_light_blocker, p)
+#define level_is_obs_to_vision(g, v, l, p)                level_flag(g, v, l, is_obs_to_vision, p)
 #define level_is_light_source(g, v, l, p)                 level_flag(g, v, l, is_light_source, p)
 #define level_is_loggable(g, v, l, p)                     level_flag(g, v, l, is_loggable, p)
 #define level_is_minion(g, v, l, p)                       level_flag(g, v, l, is_minion, p)
@@ -1261,7 +1261,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_level_not_visited(g, v, l, p)       level_open_flag(g, v, l, is_level_not_visited, p)
 #define level_open_is_level_visited(g, v, l, p)           level_open_flag(g, v, l, is_level_visited, p)
 #define level_open_is_levitating(g, v, l, p)              level_open_flag(g, v, l, is_levitating, p)
-#define level_open_is_light_blocker(g, v, l, p)           level_open_flag(g, v, l, is_light_blocker, p)
+#define level_open_is_obs_to_vision(g, v, l, p)           level_open_flag(g, v, l, is_obs_to_vision, p)
 #define level_open_is_light_source(g, v, l, p)            level_open_flag(g, v, l, is_light_source, p)
 #define level_open_is_loggable(g, v, l, p)                level_open_flag(g, v, l, is_loggable, p)
 #define level_open_is_minion(g, v, l, p)                  level_open_flag(g, v, l, is_minion, p)
