@@ -430,7 +430,6 @@ WARNING_FLAGS=-Wall -Wextra -Wpedantic
 # Additional warnings for uninitialized variables; seem to be gcc only
 #
 WARNING_FLAGS+=-Wuninitialized
-WARNING_FLAGS+=-Wmaybe-uninitialized
 #
 # When compiling C, give string constants the type const char[length] so that copying the address of
 # one into a non-const char * pointer produces a warning. These warnings help you find at compile time
@@ -465,19 +464,19 @@ WARNING_FLAGS+=-Wno-format-nonliteral
 #
 WARNING_FLAGS+=-Wfloat-conversion
 
-CLANG_COMPILER_WARNINGS+=\${WARNING_FLAGS} -std=c++2a
-
 #
 # Clang specific
 #
-CLANG_WARNING_FLAGS+=-Wconditional-uninitialized 
-
-CLANG_WARNING_FLAGS+=-Wuninitialized=verbose
+CLANG_COMPILER_WARNINGS+=\${WARNING_FLAGS} -std=c++2a
 
 #
 # Don't fail if a compiler option is unknown
 #
 CLANG_WARNING_FLAGS+=-Wno-unknown-warning-option
+
+CLANG_WARNING_FLAGS+=-Wconditional-uninitialized 
+CLANG_WARNING_FLAGS+=-Wmaybe-uninitialized
+CLANG_WARNING_FLAGS+=-Wuninitialized=verbose
 
 #
 # To silence Xcode warning: "variable length arrays are a C99 feature [-Wvla-extension]"?
