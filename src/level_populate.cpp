@@ -225,7 +225,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
       }
 
       if (! g_opt_tests) {
-        if (1) {
+        if (0) {
           if (tp == tp_player) {
             if (1) {
               thing_spawn(g, v, l, tp_random(is_treasure), spoint(x, y) + spoint(3, 0));

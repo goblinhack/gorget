@@ -14,12 +14,20 @@
 
 class Tile;
 
+//
+// This is the actual tile sizw
+//
 #define INNER_TILE_HEIGHT 12
 #define INNER_TILE_WIDTH  12
+
+//
+// This is the tile size with outline padding. Only the actual tile size is used in game.
+//
 #define OUTER_TILE_HEIGHT (INNER_TILE_WIDTH + 2)
 #define OUTER_TILE_WIDTH  (INNER_TILE_HEIGHT + 2)
-#define TILE_HEIGHT_MAX   OUTER_TILE_HEIGHT
-#define TILE_WIDTH_MAX    OUTER_TILE_WIDTH // Largest tile for collisions
+
+#define TILE_HEIGHT_MAX OUTER_TILE_HEIGHT
+#define TILE_WIDTH_MAX  OUTER_TILE_WIDTH // Largest tile for collisions
 
 enum {
   TILE_LAYER_BG_0,

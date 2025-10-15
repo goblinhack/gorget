@@ -54,23 +54,45 @@ void sdl_display(Gamep g)
            visible_map_br_y, c);
       blit_flush();
 
-      spoint tl1;
-      spoint br1;
-      spoint tl2;
-      spoint br2;
-
-      thing_get_coords(g, v, l, spoint(0, 0), NULL_TP, NULL_THING, &tl1, &br1, nullptr);
-      thing_get_coords(g, v, l, spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, &tl2, &br2, nullptr);
-
-      tl1.x += visible_map_tl_x;
-      tl1.y += visible_map_tl_y;
-      br2.x += visible_map_tl_x;
-      br2.y += visible_map_tl_y;
-
-      blit_init();
       c.a = 100;
-      blit(g_fbo_tex_id[ FBO_MAP_LIGHT ], 0, 1, 1, 0, tl1.x, tl1.y, br2.x, br2.y, c);
-      blit_flush();
+      if (game_map_zoom_get(g) == 1) {
+        //
+        // Zoomed out. Full map visible.
+        //
+        blit_init();
+        blit(g_fbo_tex_id[ FBO_MAP_LIGHT ], 0, 1, 1, 0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+             visible_map_br_y, c);
+        blit_flush();
+      } else {
+        //
+        // Zoomed in. Partial map visible.
+        //
+        spoint tl1;
+        spoint br1;
+        spoint tl2;
+        spoint br2;
+        thing_get_coords(g, v, l, spoint(0, 0), NULL_TP, NULL_THING, &tl1, &br1, nullptr);
+        thing_get_coords(g, v, l, spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, &tl2, &br2, nullptr);
+
+        tl1.x += visible_map_tl_x;
+        tl1.y += visible_map_tl_y;
+        br2.x += visible_map_tl_x;
+        br2.y += visible_map_tl_y;
+
+        if (0) {
+          auto single_pix_size = game_map_single_pix_size_get(g);
+          tl1.x -= single_pix_size;
+          tl1.y -= single_pix_size;
+        }
+
+        glEnable(GL_SCISSOR_TEST);
+        glScissor(visible_map_tl_x, visible_map_tl_y, visible_map_br_x - visible_map_tl_x,
+                  visible_map_br_y - visible_map_tl_y);
+        blit_init();
+        blit(g_fbo_tex_id[ FBO_MAP_LIGHT ], 0, 1, 1, 0, tl1.x, tl1.y, br2.x, br2.y, c);
+        blit_flush();
+        glDisable(GL_SCISSOR_TEST);
+      }
     }
   }
 

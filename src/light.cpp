@@ -158,6 +158,11 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  auto ai = thing_ext_struct(g, player);
+  if (! ai) {
+    return;
+  }
+
   float vision_distance = thing_vision_distance(player) * INNER_TILE_WIDTH;
 
   gl_cmds.clear();
@@ -207,6 +212,9 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
       last_y = y;
 
       rp++;
+
+      ai->fov_can_see_tile.can_see[ x ][ y ]        = true;
+      l->player_fov_has_seen_tile.can_see[ x ][ y ] = true;
 
       //
       // This is for foliage so we don't obscure too much where we stand

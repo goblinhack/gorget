@@ -20,7 +20,7 @@ void gfx_init_bridge(void)
         "bridge.IS_JOIN_X1_180",
         "bridge.IS_JOIN_X1",
         "bridge.IS_JOIN_X",
-        "",
+        "none", // intentionally here to get INNER sizes and not OUTER ones
         // ##############################################################################
         "bridge.IS_JOIN_T270_3",
         "bridge.IS_JOIN_BLOCK",
