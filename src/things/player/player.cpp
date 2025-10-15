@@ -88,41 +88,17 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 }
 
-static void tp_player_vision_update(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  if (0) {
-    auto ai = thing_ext_struct(g, t);
-    if (ai) {
-      level_fov(g, v, l, t, &ai->fov_can_see_tile, &l->player_fov_has_seen_tile, t->at, thing_vision_distance(t));
-    }
-  }
-}
-
 static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
   thing_vision_reset(g, v, l, t);
 }
 
-static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-  tp_player_vision_update(g, v, l, t);
-}
+static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }
 
-static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-  tp_player_vision_update(g, v, l, t);
-}
+static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }
 
-static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-  tp_player_vision_update(g, v, l, t);
-}
+static void tp_player_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }
 
 static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -131,8 +107,6 @@ static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
   sound_play(g, "teleport");
 
   game_popup_text_add(g, t->at.x, t->at.y, std::string("Urgh"));
-
-  tp_player_vision_update(g, v, l, t);
 }
 
 static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
