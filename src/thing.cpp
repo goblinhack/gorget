@@ -27,12 +27,12 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   }
 
   if (is_oob(p)) {
-    ERR("out of bounds %d,%d, slot %d", p.x, p.y, slot);
+    ERR("out of bounds thing_get %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
 
   if ((slot < 0) || (slot >= MAP_SLOTS)) {
-    ERR("slot out of bounds %d,%d, slot %d", p.x, p.y, slot);
+    ERR("slot out of bounds thing_get %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
 
@@ -59,12 +59,12 @@ Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp
   }
 
   if (is_oob(p)) {
-    ERR("out of bounds %d,%d, slot %d", p.x, p.y, slot);
+    ERR("out of bounds thing_and_tp_get_at %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
 
   if ((slot < 0) || (slot >= MAP_SLOTS)) {
-    ERR("slot out of bounds %d,%d, slot %d", p.x, p.y, slot);
+    ERR("slot out of bounds thing_and_tp_get_at %d,%d, slot %d", p.x, p.y, slot);
     return nullptr;
   }
 

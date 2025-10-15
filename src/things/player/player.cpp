@@ -6,7 +6,6 @@
 #include "my_game_popups.hpp"
 #include "my_level.hpp"
 #include "my_light.hpp"
-#include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_thing.hpp"
 #include "my_tile.hpp"
@@ -97,14 +96,6 @@ static void tp_player_vision_update(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (ai) {
     level_fov(g, v, l, t, &ai->fov_can_see_tile, &l->player_fov_has_seen_tile, t->at, thing_vision_distance(t));
   }
-
-  //
-  // Update the lighting for all things
-  //
-  level_light_calculate(g, v, l);
-
-  player_light_render(g, v, l, WHITE, FBO_MAP_LIGHT);
-  // sdl_fbo_dump(g, FBO_MAP_LIGHT, "light");
 }
 
 static void tp_player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)

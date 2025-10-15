@@ -92,6 +92,12 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
+  auto player = thing_player(g);
+  if (player) {
+    level_light_calculate(g, v, l);
+    player_light_render(g, v, l, WHITE, FBO_MAP_LIGHT);
+  }
+
   verify(MTYPE_LEVELS, game_levels_get(g));
 
   v->last_time_step = v->time_step;
@@ -117,10 +123,6 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     //
     level_tick_idle(g, v, l);
   }
-
-  level_light_calculate(g, v, l);
-
-  player_light_render(g, v, l, WHITE, FBO_MAP_LIGHT);
 
   //
   // Update any tiles that are needed

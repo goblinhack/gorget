@@ -158,43 +158,14 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  float vision_distance = thing_vision_distance(player);
+  float vision_distance = thing_vision_distance(player) * INNER_TILE_WIDTH;
 
   gl_cmds.clear();
-
-  //
-  // Slighly insane optimization
-  //
-  int last_x;
-  int last_y;
-
-#define AVOID_LOOKING_AT_THE_SAME_TILE()                                                                             \
-  {                                                                                                                  \
-    if (likely((x == last_x) && (y == last_y))) {                                                                    \
-      rp++;                                                                                                          \
-      continue;                                                                                                      \
-    }                                                                                                                \
-    last_x = x;                                                                                                      \
-    last_y = y;                                                                                                      \
-  }
-
-#define AVOID_LOOKING_AT_THE_SAME_TILE2()                                                                            \
-  {                                                                                                                  \
-    if (likely((x == last_x) && (y == last_y))) {                                                                    \
-      rp++;                                                                                                          \
-      step2++;                                                                                                       \
-      continue;                                                                                                      \
-    }                                                                                                                \
-    last_x = x;                                                                                                      \
-    last_y = y;                                                                                                      \
-  }
 
   int scale_x = INNER_TILE_WIDTH;
   int scale_y = INNER_TILE_HEIGHT;
 
-  spoint light_pos = player->at;
-  light_pos.x *= scale_x;
-  light_pos.y *= scale_y;
+  spoint light_pos = player->pix_at;
   light_pos.x += INNER_TILE_WIDTH / 2;
   light_pos.y += INNER_TILE_HEIGHT / 2;
 
@@ -207,13 +178,14 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
     int16_t       step          = 0;
     const int16_t end_of_points = static_cast< uint16_t >(points[ i ].size() - 1);
     auto          rp            = points[ i ].begin();
-    last_x                      = -1;
-    last_y                      = -1;
+    uint8_t       last_x        = -1;
+    uint8_t       last_y        = -1;
 
     for (;; step++) {
       if (unlikely(step >= end_of_points)) {
         break;
       }
+
       if (unlikely(rp->distance > vision_distance)) {
         break;
       }
@@ -223,37 +195,30 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
       int   x   = (int) (p1x / (float) scale_x);
       int   y   = (int) (p1y / (float) scale_y);
 
-      AVOID_LOOKING_AT_THE_SAME_TILE()
+      //
+      // Ignore the same tile
+      //
+      if (likely((x == last_x) && (y == last_y))) {
+        rp++;
+        continue;
+      }
+
+      last_x = x;
+      last_y = y;
+
       rp++;
+
+      //
+      // This is for foliage so we don't obscure too much where we stand
+      //
+      if (step < INNER_TILE_WIDTH / 2) {
+        continue;
+      }
 
       if (level_is_obs_to_vision(g, v, l, spoint(x, y))) {
         //
-        // We hit a wall. Keep walking until we exit the wall or we reach the light limit.
+        // We hit a wall.
         //
-        int16_t step2 = step;
-        for (;;) {
-          if (unlikely(step2 >= end_of_points)) {
-            break;
-          }
-
-          if (rp->distance > step + scale_x) {
-            break;
-          }
-
-          p1x = light_pos.x + rp->p.x;
-          p1y = light_pos.y + rp->p.y;
-          x   = (int) (p1x / (float) scale_x);
-          y   = (int) (p1y / (float) scale_y);
-
-          AVOID_LOOKING_AT_THE_SAME_TILE2()
-          if (! level_is_obs_to_vision(g, v, l, spoint(x, y))) {
-            break;
-          }
-
-          rp++;
-          step2++;
-        }
-        step = step2;
         break;
       }
     }
@@ -286,7 +251,7 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
   if (! gl_cmds.size()) {
     blit_init();
 
-    int i;
+    int16_t i;
 
     //
     // Walk the light rays in a circle.
@@ -361,7 +326,7 @@ void player_light_render(Gamep g, Levelsp v, Levelp l, color col, int fbo)
   if (! light) {
     auto vision_distance = thing_vision_distance(player);
 
-    light = light_new(vision_distance, col, fbo);
+    light = light_new(vision_distance * INNER_TILE_WIDTH, col, fbo);
     if (! light) {
       return;
     }

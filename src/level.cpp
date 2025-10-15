@@ -380,6 +380,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 void level_destroy(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
+
   if (! l || ! l->initialized) {
     return;
   }
@@ -403,6 +404,8 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
 
 bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, ThingId id)
 {
+  TRACE_NO_INDENT();
+
   if (is_oob(p)) {
     return false;
   }
@@ -412,6 +415,8 @@ bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot
 
 ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 {
+  TRACE_NO_INDENT();
+
   if (is_oob(p)) {
     return 0;
   }
@@ -423,6 +428,8 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 //
 static bool level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp it)
 {
+  TRACE_NO_INDENT();
+
   switch (f) {
     case is_obs_to_cursor_path :
     case is_obs_to_explosion :
@@ -448,6 +455,8 @@ static bool level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp 
 
 bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
+  TRACE_NO_INDENT();
+
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
@@ -463,6 +472,8 @@ bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 
 Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
+  TRACE_NO_INDENT();
+
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
@@ -481,6 +492,8 @@ Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 //
 Thingp level_afirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
+  TRACE_NO_INDENT();
+
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
@@ -503,6 +516,8 @@ Thingp level_afirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 //
 Thingp level_ofirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
+  TRACE_NO_INDENT();
+
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
@@ -525,6 +540,8 @@ Thingp level_ofirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 //
 bool level_alive_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
+  TRACE_NO_INDENT();
+
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
@@ -547,6 +564,8 @@ bool level_alive_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 //
 bool level_open_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
+  TRACE_NO_INDENT();
+
   FOR_ALL_THINGS_AT(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
@@ -569,6 +588,8 @@ bool level_open_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 //
 int level_count_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
+  TRACE_NO_INDENT();
+
   int count = 0;
 
   FOR_ALL_THINGS_AT(g, v, l, it, p)
