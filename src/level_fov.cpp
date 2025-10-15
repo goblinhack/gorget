@@ -38,12 +38,13 @@
 // Changed by goblinhack@gmail.com
 //
 
-#include <algorithm>
-#include <math.h>
-
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_thing.hpp"
+
+#include <algorithm>
+#include <math.h>
+#include <string.h>
 
 // Octant transformation matrixes.
 // {xx, xy, yx, yy}
@@ -143,9 +144,9 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
   bool prev_tile_blocked = false;
 
   for (short angle = distance_from_origin; angle >= 0; --angle) { // Polar angle coordinates from high to low.
-    const float tile_slope_high     = (angle + 0.5) / (distance_from_origin - 0.5);
-    const float tile_slope_low      = (angle - 0.5) / (distance_from_origin + 0.5);
-    const float prev_tile_slope_low = (angle + 0.5) / (distance_from_origin + 0.5);
+    const float tile_slope_high     = (angle + 0.5f) / (distance_from_origin - 0.5f);
+    const float tile_slope_low      = (angle - 0.5f) / (distance_from_origin + 0.5f);
+    const float prev_tile_slope_low = (angle + 0.5f) / (distance_from_origin + 0.5f);
 
     if (tile_slope_low > view_slope_high) {
       continue; // Tile is not in the view yet.

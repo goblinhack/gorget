@@ -5,6 +5,8 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 
+#include <string.h>
+
 //
 // Anything in the inventory
 //

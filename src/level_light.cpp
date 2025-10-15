@@ -71,7 +71,7 @@ void level_light_precalculate(Gamep g)
       auto c = light_fade_map[ (MAP_WIDTH * y) + x ];
       if (c == 'x') {
         if (light_fade[ x ] == 0) {
-          light_fade[ x ] = 1.0 - ((float) y / MAP_HEIGHT);
+          light_fade[ x ] = 1.0f - ((float) y / MAP_HEIGHT);
         }
       }
     }

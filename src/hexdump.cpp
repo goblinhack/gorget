@@ -3,8 +3,10 @@
 //
 
 #include "my_string.hpp"
+
 #include <iomanip>
 #include <iostream>
+#include <string.h>
 
 #define HEX_DUMP_WIDTH (16)
 

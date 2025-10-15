@@ -40,7 +40,7 @@ public:
            int vert_scroll_size = -1);
 
 public:
-  Widp log(Gamep, std::string s, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
+  Widp log(Gamep, std::string s, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
   Widp log_empty_line(Gamep);
 
   //

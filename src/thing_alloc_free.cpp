@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <mutex>
+#include <string.h>
 
 static std::mutex thing_mutex;
 

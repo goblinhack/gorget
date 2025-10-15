@@ -134,7 +134,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 //
 // Get the wid on the bottom of the list/screen.
 //
-Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, std::string color)
+Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, std::string col)
 {
   TRACE_NO_INDENT();
 
@@ -188,8 +188,8 @@ Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
     }
   }
 
-  if (! color.empty()) {
-    wid_set_color(text_wid, WID_COLOR_TEXT_FG, color_find(color.c_str()));
+  if (! col.empty()) {
+    wid_set_color(text_wid, WID_COLOR_TEXT_FG, color_find(col.c_str()));
   }
   return text_wid;
 }
@@ -197,7 +197,7 @@ Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
 //
 // Log a message to the text box
 //
-Widp WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std::string color)
+Widp WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std::string col)
 {
   TRACE_NO_INDENT();
 
@@ -211,7 +211,7 @@ Widp WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std:
     // Handles %%fg=...$ with no text due to a split
     //
     if (length_without_format(c)) {
-      w = log_(g, c, format, color);
+      w = log_(g, c, format, col);
     }
   }
   return w;

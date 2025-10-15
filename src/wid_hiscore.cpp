@@ -121,10 +121,10 @@ void wid_hiscores_show(Gamep g)
     if (first) {
       first = false;
 
-      auto color = "red";
+      auto col = "red";
 
       snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%7s %-*s %-*s %-*s %*s", //
-               color, "Score",                                           //
+               col, "Score",                                             //
                name_field_len, capitalize(name).c_str(),                 //
                when_field_len, when,                                     //
                completed_field_len, completed,                           //
@@ -151,9 +151,9 @@ void wid_hiscores_show(Gamep g)
       reason_val = "-";
     }
 
-    auto color = colors[ index++ ];
+    auto col = colors[ index++ ];
     snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u %-*s %-*s %-*u %*s", //
-             color, h->score,                                           //
+             col, h->score,                                             //
              name_field_len, h->name.c_str(),                           //
              when_field_len, when_val.c_str(),                          //
              completed_field_len, h->levels_completed,                  //

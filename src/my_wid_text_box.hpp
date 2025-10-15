@@ -44,10 +44,10 @@ public:
              int scroll_height = -1);
 
 private:
-  Widp log_(Gamep, const std::string &, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
+  Widp log_(Gamep, const std::string &, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
 
 public:
-  Widp log(Gamep, const std::string &, wid_text_format format = TEXT_FORMAT_NONE, std::string color = "");
+  Widp log(Gamep, const std::string &, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
   Widp log_empty_line(Gamep);
 };
 #endif

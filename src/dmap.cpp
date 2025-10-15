@@ -6,6 +6,8 @@
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
 
+#include <array>
+
 void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
 {
   int x;

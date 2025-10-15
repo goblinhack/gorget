@@ -6,7 +6,7 @@
 #include "my_command.hpp"
 #include "my_ui.hpp"
 
-#include <map>
+#include <unordered_map>
 
 /*
  * Simple console expanding code, takes a command input and expands it as

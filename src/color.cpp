@@ -8,7 +8,7 @@
 #include "my_string.hpp"
 #include "my_ui.hpp"
 
-#include <map>
+#include <unordered_map>
 
 using colors = std::unordered_map< std::string, color >;
 

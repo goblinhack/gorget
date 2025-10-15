@@ -81,11 +81,11 @@ WidPopup::WidPopup(Gamep g, const std::string vname, spoint vtl, spoint vbr, Til
 //
 // Log a message to the popup
 //
-Widp WidPopup::log(Gamep g, std::string s, wid_text_format format, std::string color)
+Widp WidPopup::log(Gamep g, std::string s, wid_text_format format, std::string col)
 {
   TRACE_NO_INDENT();
 
-  return wid_text_area->log(g, s, format, color);
+  return wid_text_area->log(g, s, format, col);
 }
 
 //

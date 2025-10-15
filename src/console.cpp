@@ -7,6 +7,8 @@
 #include "my_console.hpp"
 #include "my_main.hpp"
 
+#include <cstring>
+
 static inline void term_puts_fg(unsigned char a)
 {
   TRACE_NO_INDENT();

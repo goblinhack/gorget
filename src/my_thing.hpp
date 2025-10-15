@@ -37,13 +37,13 @@ typedef union {
     unsigned int val : 32;
   } __attribute__((__packed__)) a;
   struct {
-    unsigned int entropy      : THING_ENTROPY_BITS;
+    unsigned int entropy : THING_ENTROPY_BITS;
     unsigned int per_level_id : THING_PER_LEVEL_ID_BITS;
-    unsigned int level_num    : THING_LEVEL_ID_BITS;
+    unsigned int level_num : THING_LEVEL_ID_BITS;
   } __attribute__((__packed__)) b;
   struct {
     unsigned int entropy : THING_ENTROPY_BITS;
-    unsigned int index   : THING_INDEX_BITS;
+    unsigned int index : THING_INDEX_BITS;
   } __attribute__((__packed__)) c;
 } __attribute__((__packed__)) ThingIdPacked;
 
@@ -642,9 +642,6 @@ int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 int thing_weight(Thingp);
 int thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
-
-int thing_vision_distance(Thingp);
-int thing_vision_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
 int thing_temperature(Thingp);
 int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);

@@ -6,6 +6,8 @@
 #include "my_random.hpp"
 #include "my_spoint.hpp"
 
+#include <string.h>
+
 static const int MAP_LEVEL_BLOB_CENTERING = MAP_WIDTH / 4;
 
 void cave_dump(Gamep g, Cave *c)
