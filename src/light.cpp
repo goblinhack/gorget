@@ -3,7 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_light.hpp"
@@ -23,7 +22,7 @@ typedef struct {
 
 typedef struct {
   spoint p;
-  float  distance;
+  double distance;
 } RayPoint;
 
 class Light
@@ -38,9 +37,8 @@ public:
   void calculate(Gamep, Levelsp, Levelp);
   void render(Gamep, Levelsp, Levelp);
 
-  int   light_dist {};
-  int   fbo {-1};
-  color col {WHITE};
+  int light_dist {};
+  int fbo {-1};
 
   Ray ray[ LIGHT_MAX_RAYS_MAX ];
 
@@ -141,11 +139,11 @@ void Light::rays_generate(Gamep g, Levelsp v, Levelp l)
 
   memset(ray, 0, sizeof(ray));
 
-  float dr = RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
+  double dr = RAD_360 / ((double) LIGHT_MAX_RAYS_MAX);
   for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-    float cosr, sinr;
-    sincosf(dr * i, &sinr, &cosr);
-    ray_draw(i, spoint(0, 0), spoint((int) ((float) light_dist * cosr), (int) ((float) light_dist * sinr)));
+    double cosr, sinr;
+    sincos(dr * i, &sinr, &cosr);
+    ray_draw(i, spoint(0, 0), spoint((int) ((double) light_dist * cosr), (int) ((double) light_dist * sinr)));
   }
 }
 
@@ -163,13 +161,16 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  float vision_distance = thing_vision_distance(player) * INNER_TILE_WIDTH;
+  auto vision_distance = thing_vision_distance(player) * INNER_TILE_WIDTH;
 
   gl_cmds.clear();
 
-  int scale_x = INNER_TILE_WIDTH;
-  int scale_y = INNER_TILE_HEIGHT;
+  const int tile_w = INNER_TILE_WIDTH;
+  const int tile_h = INNER_TILE_HEIGHT;
 
+  //
+  // Center the light on the player
+  //
   spoint light_pos = player->pix_at;
   light_pos.x += INNER_TILE_WIDTH / 2;
   light_pos.y += INNER_TILE_HEIGHT / 2;
@@ -179,42 +180,45 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
   // the light leak a little.
   //
   for (int16_t i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-    auto          r             = &ray[ i ];
-    int16_t       step          = 0;
     const int16_t end_of_points = static_cast< uint16_t >(points[ i ].size() - 1);
-    auto          rp            = points[ i ].begin();
-    uint8_t       last_x        = -1;
-    uint8_t       last_y        = -1;
+    auto          r             = &ray[ i ];
+    auto          ray_pixel     = points[ i ].begin();
+    int16_t       step          = 0;
+    uint8_t       prev_tile_x   = -1;
+    uint8_t       prev_tile_y   = -1;
 
     for (;; step++) {
       if (unlikely(step >= end_of_points)) {
         break;
       }
 
-      if (unlikely(rp->distance > vision_distance)) {
+      if (unlikely(ray_pixel->distance > vision_distance)) {
         break;
       }
 
-      float p1x = light_pos.x + rp->p.x;
-      float p1y = light_pos.y + rp->p.y;
-      int   x   = (int) (p1x / (float) scale_x);
-      int   y   = (int) (p1y / (float) scale_y);
+      int16_t p1x    = light_pos.x + ray_pixel->p.x;
+      int16_t p1y    = light_pos.y + ray_pixel->p.y;
+      uint8_t tile_x = p1x / tile_w;
+      uint8_t tile_y = p1y / tile_h;
+      ray_pixel++;
 
       //
       // Ignore the same tile
       //
-      if (likely((x == last_x) && (y == last_y))) {
-        rp++;
+      if (likely((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) {
         continue;
       }
 
-      last_x = x;
-      last_y = y;
+      spoint p(tile_x, tile_y);
+      if (unlikely(is_oob(p))) {
+        break;
+      }
 
-      rp++;
+      prev_tile_x = tile_x;
+      prev_tile_y = tile_y;
 
-      ai->fov_can_see_tile.can_see[ x ][ y ]        = true;
-      l->player_fov_has_seen_tile.can_see[ x ][ y ] = true;
+      ai->fov_can_see_tile.can_see[ tile_x ][ tile_y ]        = true;
+      l->player_fov_has_seen_tile.can_see[ tile_x ][ tile_y ] = true;
 
       //
       // This is for foliage so we don't obscure too much where we stand
@@ -223,10 +227,10 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      if (level_is_obs_to_vision(g, v, l, spoint(x, y))) {
-        //
-        // We hit a wall.
-        //
+      //
+      // Did we hit a wall?
+      //
+      if (level_is_obs_to_vision(g, v, l, p)) {
         break;
       }
     }
@@ -253,7 +257,6 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
 
   glBlendFunc(GL_ONE, GL_ZERO);
   blit_fbo_bind(light->fbo);
-  glcolor(col);
   glClear(GL_COLOR_BUFFER_BIT);
 
   if (! gl_cmds.size()) {
@@ -299,7 +302,7 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
   blit_fbo_unbind();
 }
 
-static Lightp light_new(int light_dist, color col, int fbo)
+static Lightp light_new(int light_dist, int fbo)
 {
   TRACE_NO_INDENT();
 
@@ -310,13 +313,12 @@ static Lightp light_new(int light_dist, color col, int fbo)
     DIE("No light power");
   }
 
-  l->col = col;
   l->fbo = fbo;
 
   return l;
 }
 
-void player_light_render(Gamep g, Levelsp v, Levelp l, color col, int fbo)
+void player_light_render(Gamep g, Levelsp v, Levelp l, int fbo)
 {
   if (! g || ! v || ! l) {
     return;
@@ -334,7 +336,7 @@ void player_light_render(Gamep g, Levelsp v, Levelp l, color col, int fbo)
   if (! light) {
     auto vision_distance = thing_vision_distance(player);
 
-    light = light_new(vision_distance * INNER_TILE_WIDTH, col, fbo);
+    light = light_new(vision_distance * INNER_TILE_WIDTH, fbo);
     if (! light) {
       return;
     }
@@ -342,5 +344,14 @@ void player_light_render(Gamep g, Levelsp v, Levelp l, color col, int fbo)
   }
 
   light->calculate(g, v, l);
-  light->render(g, v, l);
+
+  if (! g_opt_tests) {
+    light->render(g, v, l);
+  }
+}
+
+void player_light_fini(void)
+{
+  delete light;
+  light = nullptr;
 }

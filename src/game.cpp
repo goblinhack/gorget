@@ -11,6 +11,7 @@
 #include "my_gl.hpp"
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
+#include "my_light.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
 #include "my_wid_botcon.hpp"
@@ -503,6 +504,10 @@ void Game::cleanup(void)
   TRACE_NO_INDENT();
   destroy_levels();
 
+  TRACE_NO_INDENT();
+  player_light_fini();
+
+  TRACE_NO_INDENT();
   state_change(STATE_INIT, "init");
 }
 void game_cleanup(Gamep g)

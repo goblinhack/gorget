@@ -95,7 +95,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   auto player = thing_player(g);
   if (player) {
     level_light_calculate(g, v, l);
-    player_light_render(g, v, l, WHITE, FBO_MAP_LIGHT);
+    player_light_render(g, v, l, FBO_MAP_LIGHT);
   }
 
   verify(MTYPE_LEVELS, game_levels_get(g));
