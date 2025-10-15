@@ -161,6 +161,8 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  memset(ai->fov_can_see_tile.can_see, 0, sizeof(ai->fov_can_see_tile.can_see));
+
   auto vision_distance = thing_vision_distance(player) * INNER_TILE_WIDTH;
 
   gl_cmds.clear();
