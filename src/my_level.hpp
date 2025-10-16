@@ -493,6 +493,7 @@ void    level_assign_tiles(Gamep, Levelsp, Levelp);
 void    level_bounds_set(Gamep, Levelsp, Levelp);
 void    level_count_items(Gamep, Levelsp, Levelp);
 void    level_cursor_copy_mouse_path_to_player(Gamep, Levelsp, Levelp);
+void    level_light_calculate_can_see_callback(Gamep, Levelsp, Levelp, Thingp, spoint pov, spoint p, int max_radius);
 void    level_cursor_copy_path_to_player(Gamep, Levelsp, Levelp, std::vector< spoint > &move_path);
 void    level_cursor_describe_clear(Gamep, Levelsp);
 void    level_cursor_describe_update(Gamep, Levelsp);

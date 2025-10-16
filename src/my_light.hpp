@@ -10,7 +10,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 
-void player_light_render(Gamep g, Levelsp v, Levelp l, int fbo);
+void level_light_calculate_for_player(Gamep g, Levelsp v, Levelp l, int fbo);
 void player_light_fini(void);
 
 #endif // LIGHT_H_

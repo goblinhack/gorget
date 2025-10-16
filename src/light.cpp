@@ -25,6 +25,8 @@ typedef struct {
   double distance;
 } RayPoint;
 
+#undef LIGHT_MAX_RAYS_MAX
+#define LIGHT_MAX_RAYS_MAX 720
 class Light
 {
 public:
@@ -34,7 +36,7 @@ public:
   void ray_draw(const int16_t index, const spoint p0, const spoint p1);
   void ray_point_add(const int16_t index, const spoint p0, const spoint p1);
   void rays_generate(Gamep, Levelsp, Levelp);
-  void calculate(Gamep, Levelsp, Levelp);
+  void calculate(Gamep, Levelsp, Levelp, level_fov_can_see_callback_t);
   void render(Gamep, Levelsp, Levelp);
 
   int light_dist {};
@@ -139,15 +141,15 @@ void Light::rays_generate(Gamep g, Levelsp v, Levelp l)
 
   memset(ray, 0, sizeof(ray));
 
-  double dr = RAD_360 / ((double) LIGHT_MAX_RAYS_MAX);
-  for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
+  double dr = (double) RAD_360 / ((double) LIGHT_MAX_RAYS_MAX);
+  for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     double cosr, sinr;
-    sincos(dr * i, &sinr, &cosr);
+    sincos(dr * (double) i, &sinr, &cosr);
     ray_draw(i, spoint(0, 0), spoint((int) ((double) light_dist * cosr), (int) ((double) light_dist * sinr)));
   }
 }
 
-void Light::calculate(Gamep g, Levelsp v, Levelp l)
+void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t can_see)
 {
   TRACE_NO_INDENT();
 
@@ -163,7 +165,9 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
 
   memset(ai->fov_can_see_tile.can_see, 0, sizeof(ai->fov_can_see_tile.can_see));
 
-  auto vision_distance = thing_vision_distance(player) * INNER_TILE_WIDTH;
+  auto max_radius      = thing_vision_distance(player);
+  auto pov             = player->at;
+  auto vision_distance = max_radius * INNER_TILE_WIDTH;
 
   gl_cmds.clear();
 
@@ -181,7 +185,7 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
   // Walk the light rays in a circle. Find the nearest walls and then let
   // the light leak a little.
   //
-  for (int16_t i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
+  for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     const int16_t end_of_points = static_cast< uint16_t >(points[ i ].size() - 1);
     auto          r             = &ray[ i ];
     auto          ray_pixel     = points[ i ].begin();
@@ -219,8 +223,12 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l)
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
 
-      ai->fov_can_see_tile.can_see[ tile_x ][ tile_y ]        = true;
       l->player_fov_has_seen_tile.can_see[ tile_x ][ tile_y ] = true;
+
+      if (! ai->fov_can_see_tile.can_see[ tile_x ][ tile_y ]) {
+        ai->fov_can_see_tile.can_see[ tile_x ][ tile_y ] = true;
+        can_see(g, v, l, player, pov, p, max_radius);
+      }
 
       //
       // This is for foliage so we don't obscure too much where we stand
@@ -264,7 +272,7 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
   if (! gl_cmds.size()) {
     blit_init();
 
-    int16_t i;
+    int i;
 
     //
     // Walk the light rays in a circle.
@@ -295,6 +303,29 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
     gl_cmds.resize(sz);
     std::copy(gl_array_buf, bufp, gl_cmds.begin());
     blit_flush_triangle_fan();
+
+    if (0) {
+      glcolor(WHITE);
+      blit_init();
+      for (i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
+        auto    r   = &ray[ i ];
+        spoint &p   = points[ i ][ r->depth_furthest ].p;
+        int16_t p1x = light_pos.x + p.x;
+        int16_t p1y = light_pos.y + p.y;
+        gl_blitline(p1x, p1y, light_pos.x, light_pos.y);
+      }
+
+      i = 0;
+      {
+        auto    r   = &ray[ i ];
+        spoint &p   = points[ i ][ r->depth_furthest ].p;
+        int16_t p1x = light_pos.x + p.x;
+        int16_t p1y = light_pos.y + p.y;
+        gl_blitline(p1x, p1y, light_pos.x, light_pos.y);
+      }
+      blit_flush();
+    }
+
   } else {
     auto *b = &(*gl_cmds.begin());
     auto *e = &(*gl_cmds.end());
@@ -320,7 +351,7 @@ static Lightp light_new(int light_dist, int fbo)
   return l;
 }
 
-void player_light_render(Gamep g, Levelsp v, Levelp l, int fbo)
+void level_light_calculate_for_player(Gamep g, Levelsp v, Levelp l, int fbo)
 {
   if (! g || ! v || ! l) {
     return;
@@ -345,7 +376,7 @@ void player_light_render(Gamep g, Levelsp v, Levelp l, int fbo)
     light->rays_generate(g, v, l);
   }
 
-  light->calculate(g, v, l);
+  light->calculate(g, v, l, level_light_calculate_can_see_callback);
 
   if (! g_opt_tests) {
     light->render(g, v, l);

@@ -110,6 +110,18 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
   m->can_see[ pov.x ][ pov.y ] = val;
 }
 
+static bool level_fov(FovMap *m, spoint pov)
+{
+#ifdef OPT_DEV
+  if (is_oob(pov)) {
+    ERR("overflow");
+    return;
+  }
+#endif
+
+  return m->can_see[ pov.x ][ pov.y ];
+}
+
 // Cast visiblity using shadowcasting.
 void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
                   FovMap                      *fov_can_see_tile,     //
@@ -171,7 +183,19 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         && (light_walls || ! light_blocker)) {
 
       if (fov_can_see_tile) {
-        level_fov_set(fov_can_see_tile, p, true);
+        //
+        // If not seen already, light it
+        //
+        if (! level_fov(fov_can_see_tile, p)) {
+          level_fov_set(fov_can_see_tile, p, true);
+
+          //
+          // Per tile can see callback check
+          //
+          if (can_see_callback) {
+            (can_see_callback)(g, v, l, me, pov, p, max_radius);
+          }
+        }
       }
 
       //
@@ -179,13 +203,6 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
       //
       if (fov_has_seen_tile) {
         level_fov_set(fov_has_seen_tile, p, true);
-      }
-
-      //
-      // Per tile can see callback check
-      //
-      if (can_see_callback) {
-        (can_see_callback)(g, v, l, me, pov, p, max_radius);
       }
 
 #ifdef TODO
@@ -239,15 +256,23 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
   }
 
   if (fov_can_see_tile) {
-    level_fov_set(fov_can_see_tile, pov, true);
+    //
+    // If not seen already, light it
+    //
+    if (! level_fov(fov_can_see_tile, pov)) {
+      level_fov_set(fov_can_see_tile, pov, true);
+
+      //
+      // Per tile can see callback check
+      //
+      if (can_see_callback) {
+        (can_see_callback)(g, v, l, me, pov, pov, max_radius);
+      }
+    }
   }
 
   if (fov_has_seen_tile) {
     level_fov_set(fov_has_seen_tile, pov, true);
-  }
-
-  if (can_see_callback) {
-    (can_see_callback)(g, v, l, me, pov, pov, max_radius);
   }
 
   // me->can_see_you(point(pov_x, pov_y));

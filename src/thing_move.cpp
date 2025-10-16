@@ -251,6 +251,14 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 
   thing_push(g, v, l, t);
 
+  if (0)
+    if (thing_is_player(t)) {
+      auto ai = thing_ext_struct(g, t);
+      if (ai) {
+        memset(ai->fov_can_see_tile.can_see, 0, sizeof(ai->fov_can_see_tile.can_see));
+      }
+    }
+
   thing_is_moving_set(g, v, l, t);
 
   return true;
