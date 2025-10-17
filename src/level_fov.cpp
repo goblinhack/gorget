@@ -115,7 +115,7 @@ static bool level_fov(FovMap *m, spoint pov)
 #ifdef OPT_DEV
   if (is_oob(pov)) {
     ERR("overflow");
-    return;
+    return false;
   }
 #endif
 

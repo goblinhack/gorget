@@ -25,8 +25,6 @@ typedef struct {
   double distance;
 } RayPoint;
 
-#undef LIGHT_MAX_RAYS_MAX
-#define LIGHT_MAX_RAYS_MAX 720
 class Light
 {
 public:
@@ -42,7 +40,7 @@ public:
   int light_dist {};
   int fbo {-1};
 
-  Ray ray[ LIGHT_MAX_RAYS_MAX ];
+  Ray rays[ LIGHT_MAX_RAYS_MAX ];
 
   std::array< std::vector< RayPoint >, LIGHT_MAX_RAYS_MAX > points;
 
@@ -67,10 +65,10 @@ Light::~Light(void)
 
 void Light::ray_point_add(int16_t index, const spoint p0, const spoint p1)
 {
-  RayPoint r;
-  r.p        = p1;
-  r.distance = DISTANCE(p0.x, p0.y, p1.x, p1.y);
-  points[ index ].push_back(r);
+  RayPoint ray;
+  ray.p        = p1;
+  ray.distance = DISTANCE(p0.x, p0.y, p1.x, p1.y);
+  points[ index ].push_back(ray);
 }
 
 // http://www.edepot.com/linee.html
@@ -139,7 +137,7 @@ void Light::rays_generate(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  memset(ray, 0, sizeof(ray));
+  memset(rays, 0, sizeof(rays));
 
   double dr = (double) RAD_360 / ((double) LIGHT_MAX_RAYS_MAX);
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
@@ -147,6 +145,21 @@ void Light::rays_generate(Gamep g, Levelsp v, Levelp l)
     sincos(dr * (double) i, &sinr, &cosr);
     ray_draw(i, spoint(0, 0), spoint((int) ((double) light_dist * cosr), (int) ((double) light_dist * sinr)));
   }
+}
+
+static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spoint pov, spoint tile, int max_radius,
+                       level_fov_can_see_callback_t can_see)
+{
+  TRACE_NO_INDENT();
+
+  if (ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]) {
+    return;
+  }
+
+  l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
+  ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]        = true;
+
+  can_see(g, v, l, t, pov, tile, max_radius);
 }
 
 void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t can_see)
@@ -187,17 +200,23 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
   //
   for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     const int16_t end_of_points = static_cast< uint16_t >(points[ i ].size() - 1);
-    auto          r             = &ray[ i ];
+    auto          ray           = &rays[ i ];
     auto          ray_pixel     = points[ i ].begin();
     int16_t       step          = 0;
     uint8_t       prev_tile_x   = -1;
     uint8_t       prev_tile_y   = -1;
 
     for (;; step++) {
+      //
+      // oob?
+      //
       if (unlikely(step >= end_of_points)) {
         break;
       }
 
+      //
+      // Beyond vision limits?
+      //
       if (unlikely(ray_pixel->distance > vision_distance)) {
         break;
       }
@@ -209,26 +228,24 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
       ray_pixel++;
 
       //
-      // Ignore the same tile
+      // Ignore the same tile. i.e. do not light it more than once.
       //
       if (likely((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) {
         continue;
       }
 
-      spoint p(tile_x, tile_y);
-      if (unlikely(is_oob(p))) {
+      //
+      // Oob can happen in custom levels with no edges
+      //
+      spoint tile(tile_x, tile_y);
+      if (unlikely(is_oob(tile))) {
         break;
       }
 
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
 
-      l->player_fov_has_seen_tile.can_see[ tile_x ][ tile_y ] = true;
-
-      if (! ai->fov_can_see_tile.can_see[ tile_x ][ tile_y ]) {
-        ai->fov_can_see_tile.can_see[ tile_x ][ tile_y ] = true;
-        can_see(g, v, l, player, pov, p, max_radius);
-      }
+      light_tile(g, v, l, player, ai, pov, tile, max_radius, can_see);
 
       //
       // This is for foliage so we don't obscure too much where we stand
@@ -238,13 +255,81 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
       }
 
       //
+      // Begin penetration into the wall
+      //
+      auto wall_start_distance = ray_pixel->distance;
+      auto wall_end_distance   = wall_start_distance + INNER_TILE_WIDTH / 2;
+
+      //
       // Did we hit a wall?
       //
-      if (level_is_obs_to_vision(g, v, l, p)) {
+      if (level_is_obs_to_vision(g, v, l, tile)) {
+        //
+        // We hit a wall. Keep walking until we exit the wall or we reach the light limit.
+        //
+        int16_t step2 = step;
+
+        for (;;) {
+          //
+          // oob?
+          //
+          if (unlikely(step2 >= end_of_points)) {
+            break;
+          }
+
+          //
+          // Check if we've progressed far enough into the wall
+          //
+          if (unlikely(ray_pixel->distance > wall_end_distance)) {
+            break;
+          }
+
+          p1x    = light_pos.x + ray_pixel->p.x;
+          p1y    = light_pos.y + ray_pixel->p.y;
+          tile_x = p1x / tile_w;
+          tile_y = p1y / tile_h;
+          ray_pixel++;
+
+          //
+          // Ignore the same tile. i.e. do not light it more than once.
+          //
+          if (likely((tile_x == prev_tile_x) && (tile_y == prev_tile_y))) {
+            step2++;
+            continue;
+          }
+
+          //
+          // Oob can happen in custom levels with no edges
+          //
+          tile.x = tile_x;
+          tile.y = tile_y;
+          if (unlikely(is_oob(tile))) {
+            break;
+          }
+
+          prev_tile_x = tile_x;
+          prev_tile_y = tile_y;
+
+          //
+          // If we've left the wall, we're done
+          //
+          if (! level_is_obs_to_vision(g, v, l, tile)) {
+            break;
+          }
+
+          light_tile(g, v, l, player, ai, pov, tile, max_radius, can_see);
+          step2++;
+        }
+
+        //
+        // This is how far the light travelled into the wall
+        //
+        // step = step2;
         break;
       }
     }
-    r->depth_furthest = step;
+
+    ray->depth_furthest = step;
   }
 }
 
@@ -280,8 +365,8 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
     push_point(light_pos.x, light_pos.y);
 
     for (i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-      auto    r   = &ray[ i ];
-      spoint &p   = points[ i ][ r->depth_furthest ].p;
+      auto    ray = &rays[ i ];
+      spoint &p   = points[ i ][ ray->depth_furthest ].p;
       int16_t p1x = light_pos.x + p.x;
       int16_t p1y = light_pos.y + p.y;
       push_point(p1x, p1y);
@@ -292,8 +377,8 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
     //
     i = 0;
     {
-      auto    r   = &ray[ i ];
-      spoint &p   = points[ i ][ r->depth_furthest ].p;
+      auto    ray = &rays[ i ];
+      spoint &p   = points[ i ][ ray->depth_furthest ].p;
       int16_t p1x = light_pos.x + p.x;
       int16_t p1y = light_pos.y + p.y;
       push_point(p1x, p1y);
@@ -308,8 +393,8 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
       glcolor(WHITE);
       blit_init();
       for (i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-        auto    r   = &ray[ i ];
-        spoint &p   = points[ i ][ r->depth_furthest ].p;
+        auto    ray = &rays[ i ];
+        spoint &p   = points[ i ][ ray->depth_furthest ].p;
         int16_t p1x = light_pos.x + p.x;
         int16_t p1y = light_pos.y + p.y;
         gl_blitline(p1x, p1y, light_pos.x, light_pos.y);
@@ -317,8 +402,8 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
 
       i = 0;
       {
-        auto    r   = &ray[ i ];
-        spoint &p   = points[ i ][ r->depth_furthest ].p;
+        auto    ray = &rays[ i ];
+        spoint &p   = points[ i ][ ray->depth_furthest ].p;
         int16_t p1x = light_pos.x + p.x;
         int16_t p1y = light_pos.y + p.y;
         gl_blitline(p1x, p1y, light_pos.x, light_pos.y);
