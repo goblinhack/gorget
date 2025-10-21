@@ -18,6 +18,10 @@ void level_cursor_set(Gamep g, Levelsp v, spoint p)
   v->cursor_moved  = (v->cursor_at != v->old_cursor_at);
   v->old_cursor_at = v->cursor_at;
 
+  if (0) {
+    BOTCON("cursor %d,%d", v->cursor_at.x, v->cursor_at.y);
+  }
+
   if (! is_oob(p)) {
     v->cursor_at       = p;
     v->cursor_at_valid = true;

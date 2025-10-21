@@ -10,7 +10,7 @@
 #define LEVEL_SELECT_ID            (MAX_LEVELS - 1)
 #define LEVELS_ACROSS              (MAP_WIDTH / LEVEL_SCALE)
 #define LEVELS_DOWN                (MAP_HEIGHT / LEVEL_SCALE)
-#define LIGHT_MAX_RAYS_MAX         360
+#define LIGHT_MAX_RAYS_MAX         (360 * 4)
 #define MAP_HEIGHT                 48
 #define MAP_SCROLL_BORDER          0.5
 #define MAP_SCROLL_SPEED           50

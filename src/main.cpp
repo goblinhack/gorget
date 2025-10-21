@@ -219,6 +219,8 @@ int main(int argc, char *argv[])
   g_argv  = argv;
   g_argc  = argc;
 
+  g_thread_id = -1;
+
   //////////////////////////////////////////////////////////////////////////////
   // Call parse_args before any memory allocations, in case debug2 is enabled
   //////////////////////////////////////////////////////////////////////////////
@@ -229,8 +231,6 @@ int main(int argc, char *argv[])
 
   TRACE_NO_INDENT();
   auto appdata = log_dir_create(); // Want this first so we get all logs
-
-  g_thread_id = -1;
 
   TRACE_NO_INDENT();
   redirect_stdout();

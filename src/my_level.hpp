@@ -111,7 +111,7 @@ typedef struct {
   int16_t r;
   int16_t g;
   int16_t b;
-  uint8_t lit : 1;
+  uint8_t lit;
 } LightTile;
 
 //

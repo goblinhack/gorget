@@ -151,6 +151,14 @@ void level_display(Gamep g, Levelsp v, Levelp l)
           // Can see currently
           //
           display_tile = true;
+
+          //
+          // If too few light rays hit this tile, darken it to avoid flicker
+          //
+          auto lit = v->light_map.tile[ p.x ][ p.y ].lit;
+          if (lit < 16) {
+            g_monochrome = true;
+          }
         } else if (thing_vision_has_seen_tile(g, v, l, player, p)) {
           //
           // Has seen previously
@@ -168,6 +176,20 @@ void level_display(Gamep g, Levelsp v, Levelp l)
             g_monochrome = true;
           }
         }
+
+#if 0
+        spoint test(5, 25);
+        if (test == p) {
+          if (player) {
+            auto ext = thing_ext_struct(g, player);
+            if (ext) {
+              LOG("curr: can_see %d lit %d,%d,%d %d", ext->fov_can_see_tile.can_see[ test.x ][ test.y ],
+                  v->light_map.tile[ test.x ][ test.y ].r, v->light_map.tile[ test.x ][ test.y ].g,
+                  v->light_map.tile[ test.x ][ test.y ].b, v->light_map.tile[ test.x ][ test.y ].lit);
+            }
+          }
+        }
+#endif
 
         if (display_tile) {
           for (auto slot = 0; slot < MAP_SLOTS; slot++) {

@@ -54,7 +54,7 @@ void sdl_display(Gamep g)
            visible_map_br_y, c);
       blit_flush();
 
-      c.a = 20;
+      c.a = 100;
       if (game_map_zoom_get(g) == 1) {
         //
         // Zoomed out. Full map visible.

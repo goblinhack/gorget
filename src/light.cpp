@@ -153,7 +153,7 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spo
   TRACE_NO_INDENT();
 
   if (ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]) {
-    return;
+    //    return;
   }
 
   l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
@@ -191,6 +191,7 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
   // Center the light on the player
   //
   spoint light_pos = player->pix_at;
+
   light_pos.x += INNER_TILE_WIDTH / 2;
   light_pos.y += INNER_TILE_HEIGHT / 2;
 
@@ -258,7 +259,7 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
       // Begin penetration into the wall
       //
       auto wall_start_distance = ray_pixel->distance;
-      auto wall_end_distance   = wall_start_distance + INNER_TILE_WIDTH / 2;
+      auto wall_end_distance   = wall_start_distance + INNER_TILE_WIDTH / 4;
 
       //
       // Did we hit a wall?
@@ -343,6 +344,7 @@ void Light::render(Gamep g, Levelsp v, Levelp l)
   }
 
   spoint light_pos = player->pix_at;
+
   light_pos.x += INNER_TILE_WIDTH / 2;
   light_pos.y += INNER_TILE_HEIGHT / 2;
 
