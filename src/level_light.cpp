@@ -107,9 +107,6 @@ void level_light_calculate(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  FovMap *fov_has_seen_tile = nullptr;
-  FovMap *fov_can_see_tile  = nullptr;
-
   memset(&v->light_map, 0, sizeof(v->light_map));
 
   //
@@ -120,21 +117,20 @@ void level_light_calculate(Gamep g, Levelsp v, Levelp l)
   //
   // Calculate all lit tiles for non player things
   //
-  if (0) {
-    FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
-    {
-      int max_radius = thing_is_light_source(t);
-      if (! max_radius) {
-        continue;
-      }
-
-      if (thing_is_player(t)) {
-        continue;
-      }
-
-      level_fov(g, v, l, t, fov_can_see_tile, fov_has_seen_tile, t->at, max_radius,
-                level_light_calculate_can_see_callback);
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    int max_radius = thing_is_light_source(t);
+    if (! max_radius) {
+      continue;
     }
+
+    if (thing_is_player(t)) {
+      continue;
+    }
+
+    auto ext = thing_ext_struct(g, t);
+    level_fov(g, v, l, t, &ext->fov_can_see_tile, &ext->fov_has_seen_tile, t->at, max_radius,
+              level_light_calculate_can_see_callback);
   }
 
   //

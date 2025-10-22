@@ -1,7 +1,8 @@
 zoom return after moving scrolls
+in debug mode cannot click on any tile
+cannot click on map edges
 don't recalculate light all the time
 fixed levels - no random foliage
-cannot click on map edges
 add 2 mini maps
 mobs generating monsters
 monst AI

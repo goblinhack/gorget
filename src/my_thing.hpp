@@ -118,6 +118,10 @@ typedef struct ThingExt_ {
   // What we can currently see
   //
   FovMap fov_can_see_tile;
+  //
+  // What we have ever seen
+  //
+  FovMap fov_has_seen_tile;
 } ThingExt;
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                      \
