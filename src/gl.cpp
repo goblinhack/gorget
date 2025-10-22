@@ -493,10 +493,9 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
       w = MAP_WIDTH * INNER_TILE_WIDTH;
       h = MAP_HEIGHT * INNER_TILE_HEIGHT;
       break;
+    case FBO_MAP_BG_MERGED :
+    case FBO_MAP_FG_MERGED :
     case FBO_WID :
-      w = game_window_pix_width_get(g);
-      h = game_window_pix_height_get(g);
-      break;
     case FBO_FINAL :
       w = game_window_pix_width_get(g);
       h = game_window_pix_height_get(g);

@@ -122,7 +122,7 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_m
 }
 
 void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                   uint16_t tile_index)
+                   uint16_t tile_index, int fbo)
 {
   TRACE_NO_INDENT();
 
@@ -205,7 +205,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
     // Apply lighting to current tiles
     //
-    fg = v->light_map.tile[ p.x ][ p.y ].c;
+    if (fbo == FBO_MAP_FG) {
+      fg = v->light_map.tile[ p.x ][ p.y ].c;
+    } else {
+      fg = WHITE;
+    }
   } else {
     //
     // Default color, which might be monochrome for non visited tiles

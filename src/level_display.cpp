@@ -8,7 +8,7 @@
 #include "my_gl.hpp"
 #include "my_level.hpp"
 
-static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
+static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, int fbo)
 {
   TRACE_NO_INDENT();
 
@@ -73,11 +73,11 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p)
     spoint   tl, br;
     uint16_t tile_index;
     thing_get_coords(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
-    thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index);
+    thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo);
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, int fbo)
 {
   TRACE_NO_INDENT();
 
@@ -98,7 +98,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
   spoint   tl, br;
   uint16_t tile_index;
   thing_get_coords(g, v, l, p, tp, t, &tl, &br, &tile_index);
-  thing_display(g, v, l, p, tp, t, tl, br, tile_index);
+  thing_display(g, v, l, p, tp, t, tl, br, tile_index, fbo);
 }
 
 //
@@ -180,9 +180,13 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
           }
         }
 
+        if (fbo == FBO_MAP_BG) {
+          g_monochrome = true;
+        }
+
         if (display_tile) {
           for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-            level_display_slot(g, v, l, p, slot, z_depth);
+            level_display_slot(g, v, l, p, slot, z_depth, fbo);
           }
         }
 
@@ -197,46 +201,30 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
   for (auto y = v->miny; y < v->maxy; y++) {
     for (auto x = v->minx; x < v->maxx; x++) {
       spoint p(x, y);
-      level_display_cursor(g, v, l, p);
+      level_display_cursor(g, v, l, p, fbo);
     }
   }
 
   blit_flush();
-  blit_fbo_unbind();
 
-  game_popups_display(g, v, l);
+  if (fbo == FBO_MAP_FG) {
+    game_popups_display(g, v, l);
+  }
+
+  blit_fbo_unbind();
 }
 
 void level_display(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  // level_display_fbo(g, v, l, FBO_MAP_BG);
+  level_display_fbo(g, v, l, FBO_MAP_BG);
   level_display_fbo(g, v, l, FBO_MAP_FG);
 }
 
-void level_blit(Gamep g)
+static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
 {
   TRACE_NO_INDENT();
-
-  //
-  // Blit the game map in the middle of the screen as a square
-  //
-  glBlendFunc(GL_ONE, GL_ZERO);
-
-  if (! g) {
-    return;
-  }
-
-  auto v = game_levels_get(g);
-  if (! v) {
-    return;
-  }
-
-  auto l = game_level_get(g, v);
-  if (! l) {
-    return;
-  }
 
   //
   // Get the pixel extents of the map on screen
@@ -247,17 +235,6 @@ void level_blit(Gamep g)
   int visible_map_br_y;
   game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
-  color c = WHITE;
-  c.a     = 255;
-
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-  blit_init();
-  blit(g_fbo_tex_id[ FBO_MAP_FG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-       visible_map_br_y, c);
-  blit_flush();
-
-  c.a = 100;
   if (game_map_zoom_is_full_map_visible(g)) {
     //
     // Zoomed out. Full map visible.
@@ -306,6 +283,76 @@ void level_blit(Gamep g)
     blit_flush();
 
     glDisable(GL_SCISSOR_TEST);
-    glcolor(WHITE);
   }
+}
+
+void level_blit(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  if (! g) {
+    return;
+  }
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return;
+  }
+
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return;
+  }
+
+  //
+  // Blit the game map in the middle of the screen as a square
+  //
+  glBlendFunc(GL_ONE, GL_ZERO);
+
+  //
+  // Get the pixel extents of the map on screen
+  //
+  int visible_map_tl_x;
+  int visible_map_tl_y;
+  int visible_map_br_x;
+  int visible_map_br_y;
+  game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
+
+  {
+    blit_fbo_bind(FBO_MAP_BG_MERGED);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glcolor(WHITE);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    blit_init();
+    blit(g_fbo_tex_id[ FBO_MAP_BG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+         visible_map_br_y, WHITE);
+    blit_flush();
+
+    level_blit_light(g, v, l, BLACK);
+    blit_fbo_unbind();
+  }
+
+  {
+    blit_fbo_bind(FBO_MAP_FG_MERGED);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glcolor(WHITE);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    level_blit_light(g, v, l, WHITE);
+
+    glBlendFunc(GL_DST_ALPHA, GL_ZERO);
+    blit_init();
+    blit(g_fbo_tex_id[ FBO_MAP_FG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+         visible_map_br_y, WHITE);
+    blit_flush();
+    blit_fbo_unbind();
+  }
+
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  blit_fbo_bind(FBO_FINAL);
+  blit_init();
+  blit_fbo(g, FBO_MAP_BG_MERGED);
+  blit_fbo(g, FBO_MAP_FG_MERGED);
+  blit_flush();
 }

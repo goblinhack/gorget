@@ -164,9 +164,9 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spo
   //
   // This is the ray count hitting this tile
   //
-  auto light_tile = &v->light_map.tile[ tile.x ][ tile.y ];
-  if (light_tile->lit < 255) {
-    light_tile->lit++;
+  auto light_map_tile = &v->light_map.tile[ tile.x ][ tile.y ];
+  if (light_map_tile->lit < 255) {
+    light_map_tile->lit++;
   }
 }
 
@@ -267,7 +267,7 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
       // Begin penetration into the wall
       //
       auto wall_start_distance = ray_pixel->distance;
-      auto wall_end_distance   = wall_start_distance + INNER_TILE_WIDTH / 4;
+      auto wall_end_distance   = (wall_start_distance + INNER_TILE_WIDTH) - 1;
 
       //
       // Did we hit a wall?
@@ -333,7 +333,7 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
         //
         // This is how far the light travelled into the wall
         //
-        // step = step2;
+        step = step2;
         break;
       }
     }

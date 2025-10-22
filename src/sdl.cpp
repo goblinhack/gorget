@@ -752,6 +752,12 @@ void config_game_gfx_update(Gamep g)
   int fbo_tmp_w, fbo_tmp_h;
 
   LOG("SDL: FBO sizes:");
+  fbo_get_size(g, FBO_MAP_BG_MERGED, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_BG_MERGED size: %dx%d", fbo_tmp_w, fbo_tmp_h);
+
+  fbo_get_size(g, FBO_MAP_FG_MERGED, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_FG_MERGED size: %dx%d", fbo_tmp_w, fbo_tmp_h);
+
   fbo_get_size(g, FBO_MAP_BG, fbo_tmp_w, fbo_tmp_h);
   LOG("SDL: - FBO_MAP_BG size       : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
