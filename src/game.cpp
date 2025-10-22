@@ -2504,7 +2504,8 @@ static void game_map_zoom_update(Gamep g)
   // Need to resize the map buffers and re-center
   //
   config_game_gfx_update(g);
-  gl_init_fbo(g, FBO_MAP);
+  gl_init_fbo(g, FBO_MAP_FG);
+  gl_init_fbo(g, FBO_MAP_BG);
 
   //
   // If following the player already, then no need to re-center

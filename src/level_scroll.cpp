@@ -61,7 +61,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   // Get the size of the on screen map.
   //
   int w, h;
-  fbo_get_size(g, FBO_MAP, w, h);
+  fbo_get_size(g, FBO_MAP_FG, w, h);
 
   //
   // Where are we as a percentage on that map.

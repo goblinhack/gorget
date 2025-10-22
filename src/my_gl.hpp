@@ -238,7 +238,8 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 // Frame buffer objects
 //
 enum {
-  FBO_MAP,
+  FBO_MAP_BG,
+  FBO_MAP_FG,
   FBO_MAP_LIGHT,
   FBO_WID,
   FBO_FINAL,

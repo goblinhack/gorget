@@ -484,7 +484,8 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
   h = game_map_fbo_height_get(g);
 
   switch (fbo) {
-    case FBO_MAP :
+    case FBO_MAP_BG :
+    case FBO_MAP_FG :
       w = game_map_fbo_width_get(g);
       h = game_map_fbo_height_get(g);
       break;

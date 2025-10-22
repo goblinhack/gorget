@@ -101,7 +101,10 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
   thing_display(g, v, l, p, tp, t, tl, br, tile_index);
 }
 
-void level_display(Gamep g, Levelsp v, Levelp l)
+//
+// Render the level to an FBO
+//
+static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
 {
   TRACE_NO_INDENT();
 
@@ -124,7 +127,6 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glcolor(WHITE);
 
-  int fbo = FBO_MAP;
   blit_fbo_bind(fbo);
   glClear(GL_COLOR_BUFFER_BIT);
   blit_init();
@@ -200,8 +202,17 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   }
 
   blit_flush();
+  blit_fbo_unbind();
 
   game_popups_display(g, v, l);
+}
+
+void level_display(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  // level_display_fbo(g, v, l, FBO_MAP_BG);
+  level_display_fbo(g, v, l, FBO_MAP_FG);
 }
 
 void level_blit(Gamep g)
@@ -242,7 +253,7 @@ void level_blit(Gamep g)
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   blit_init();
-  blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+  blit(g_fbo_tex_id[ FBO_MAP_FG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
        visible_map_br_y, c);
   blit_flush();
 
