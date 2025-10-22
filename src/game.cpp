@@ -2526,7 +2526,7 @@ void game_map_zoom_toggle(Gamep g)
   TRACE_NO_INDENT();
   DBG("Zoom alt");
 
-  if (game_map_zoom_get(g) == 1) {
+  if (game_map_zoom_is_full_map_visible(g)) {
     game_map_zoom_set(g, game_map_zoom_def_get(g));
   } else {
     game_map_zoom_set(g, 1);

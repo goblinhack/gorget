@@ -258,7 +258,7 @@ void level_blit(Gamep g)
   blit_flush();
 
   c.a = 100;
-  if (game_map_zoom_get(g) == 1) {
+  if (game_map_zoom_is_full_map_visible(g)) {
     //
     // Zoomed out. Full map visible.
     //
