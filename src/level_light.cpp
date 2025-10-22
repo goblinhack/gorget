@@ -98,16 +98,6 @@ void level_light_calculate_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp
   light_tile->r += (int) (strength * c.r);
   light_tile->g += (int) (strength * c.g);
   light_tile->b += (int) (strength * c.b);
-  light_tile->r = 255;
-  light_tile->g = 255;
-  light_tile->b = 255;
-
-  //
-  // This is the ray count
-  //
-  if (light_tile->lit < 255) {
-    light_tile->lit++;
-  }
 }
 
 //

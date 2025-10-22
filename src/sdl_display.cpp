@@ -26,88 +26,13 @@ void sdl_display(Gamep g)
   glcolor(WHITE);
 
   //
-  // Blit the game map in the middle of the screen as a square
+  // Blit the game map.
   //
-  glBlendFunc(GL_ONE, GL_ZERO);
+  level_blit(g);
 
-  if (g) {
-    auto v = game_levels_get(g);
-    if (v) {
-      auto l = game_level_get(g, v);
-
-      //
-      // Get the pixel extents of the map on screen
-      //
-      int visible_map_tl_x;
-      int visible_map_tl_y;
-      int visible_map_br_x;
-      int visible_map_br_y;
-      game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
-
-      color c = WHITE;
-      c.a     = 255;
-
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-      blit_init();
-      blit(g_fbo_tex_id[ FBO_MAP ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-           visible_map_br_y, c);
-      blit_flush();
-
-      c.a = 100;
-      if (game_map_zoom_get(g) == 1) {
-        //
-        // Zoomed out. Full map visible.
-        //
-        blit_init();
-        blit(g_fbo_tex_id[ FBO_MAP_LIGHT ], 0, 1, 1, 0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-             visible_map_br_y, c);
-        blit_flush();
-      } else {
-        //
-        // Zoomed in. Partial map visible.
-        //
-        spoint tl1;
-        spoint br1;
-        spoint tl2;
-        spoint br2;
-        //
-        // Get the on screen pixel co-oords of the top left and bottom right tiles
-        //
-        thing_get_coords(g, v, l, spoint(0, 0), NULL_TP, NULL_THING, &tl1, &br1, nullptr);
-        thing_get_coords(g, v, l, spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, &tl2, &br2, nullptr);
-
-        tl1.x += visible_map_tl_x;
-        tl1.y += visible_map_tl_y;
-        br2.x += visible_map_tl_x;
-        br2.y += visible_map_tl_y;
-
-        //
-        // glScissor co-ordinates are inverted
-        //
-        auto y = game_window_pix_height_get(g) - visible_map_br_y;
-        auto w = visible_map_br_x - visible_map_tl_x;
-        auto h = visible_map_br_y - visible_map_tl_y;
-
-        //
-        // As we display the light map zoomed in, we need to clip it
-        //
-        glEnable(GL_SCISSOR_TEST);
-        glScissor(visible_map_tl_x, y, w, h);
-
-        //
-        // Blit the entire light map, scaled to the pixel size of the zoomed in mode
-        //
-        blit_init();
-        blit(g_fbo_tex_id[ FBO_MAP_LIGHT ], 0, 1, 1, 0, tl1.x, tl1.y, br2.x, br2.y, c);
-        blit_flush();
-
-        glDisable(GL_SCISSOR_TEST);
-        glcolor(WHITE);
-      }
-    }
-  }
-
+  //
+  // Blit the widgets
+  //
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   blit_fbo_window_pix(g, FBO_WID);
   blit_fbo_unbind();

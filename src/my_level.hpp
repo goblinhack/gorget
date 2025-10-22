@@ -506,6 +506,7 @@ void    level_debug(Gamep, Levelsp, Levelp);
 void    level_destroy(Gamep, Levelsp, Levelp);
 void    level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);
 void    level_display(Gamep, Levelsp, Levelp);
+void    level_blit(Gamep);
 void    level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
 void    level_enter(Gamep, Levelsp, Levelp);
 void    level_forced_auto_scroll(Gamep, Levelsp, Levelp);

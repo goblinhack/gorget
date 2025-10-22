@@ -152,14 +152,22 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spo
 {
   TRACE_NO_INDENT();
 
-  if (ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]) {
-    //    return;
+  //
+  // Only apply color to the tile once
+  //
+  if (! ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]) {
+    ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]        = true;
+    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
+    can_see(g, v, l, t, pov, tile, max_radius);
   }
 
-  l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
-  ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]        = true;
-
-  can_see(g, v, l, t, pov, tile, max_radius);
+  //
+  // This is the ray count hitting this tile
+  //
+  auto light_tile = &v->light_map.tile[ tile.x ][ tile.y ];
+  if (light_tile->lit < 255) {
+    light_tile->lit++;
+  }
 }
 
 void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t can_see)
