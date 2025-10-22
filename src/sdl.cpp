@@ -749,6 +749,24 @@ void config_game_gfx_update(Gamep g)
   LOG("SDL: - game map fbo sz       : %dx%d", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
   LOG("SDL: - map single pixel size : %d", game_map_single_pix_size_get(g));
 
+  int fbo_tmp_w, fbo_tmp_h;
+
+  LOG("SDL: FBO sizes:");
+  fbo_get_size(g, FBO_MAP_BG, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_BG size       : %dx%d", fbo_tmp_w, fbo_tmp_h);
+
+  fbo_get_size(g, FBO_MAP_FG, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_FG size       : %dx%d", fbo_tmp_w, fbo_tmp_h);
+
+  fbo_get_size(g, FBO_MAP_LIGHT, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_LIGHT size    : %dx%d", fbo_tmp_w, fbo_tmp_h);
+
+  fbo_get_size(g, FBO_WID, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_WID size          : %dx%d", fbo_tmp_w, fbo_tmp_h);
+
+  fbo_get_size(g, FBO_FINAL, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_FINAL size        : %dx%d", fbo_tmp_w, fbo_tmp_h);
+
   LOG("SDL: Map");
   LOG("SDL: - size                  : %dx%d", MAP_WIDTH, MAP_HEIGHT);
   LOG("SDL: - tiles visible         : %dx%d", (int) tiles_across, (int) tiles_down);
