@@ -39,10 +39,12 @@ bool tp_load_teleport(void)
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_indestructible);
+  tp_flag_set(tp, is_light_source, 4);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_teleport);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+  tp_light_color_set(tp, "red");
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
