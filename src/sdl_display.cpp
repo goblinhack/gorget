@@ -34,10 +34,10 @@ void sdl_display(Gamep g)
   // Blit the widgets
   //
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  blit_fbo_window_pix(g, FBO_WID);
+  blit_fbo(g, FBO_WID);
   blit_fbo_unbind();
   glBlendFunc(GL_ONE, GL_ZERO);
-  blit_fbo_window_pix(g, FBO_FINAL);
+  blit_fbo(g, FBO_FINAL);
 
   //
   // Screenshot?

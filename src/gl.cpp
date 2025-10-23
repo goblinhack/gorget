@@ -513,11 +513,10 @@ void blit_fbo(Gamep g, int fbo)
   blit_flush();
 }
 
-void blit_fbo_window_pix(Gamep g, int fbo)
+void blit_fbo(Gamep g, int fbo, int tl_x, int tl_y, int br_x, int br_y)
 {
   blit_init();
-  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, 0, 0, game_window_pix_width_get(g), game_window_pix_height_get(g),
-       WHITE);
+  blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, tl_x, tl_y, br_x, br_y, WHITE);
   blit_flush();
 }
 

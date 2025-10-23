@@ -272,11 +272,11 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           GLushort right, GLushort bottom, const color &color_bl, const color &color_br, const color &color_tl,
           const color &color_tr);
 void blit_fbo(Gamep, int fbo);
+void blit_fbo(Gamep, int fbo, int tl_x, int tl_y, int br_x, int br_y);
 void blit_fbo_push(int fbo);
 void blit_fbo_pop(void);
 void blit_fbo_bind(int fbo);
 void blit_fbo_bind_locked(int fbo);
-void blit_fbo_window_pix(Gamep, int fbo);
 void blit_fbo_unbind(void);
 void blit_fbo_unbind_locked(void);
 void blit_fini(void);

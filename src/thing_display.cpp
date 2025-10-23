@@ -133,7 +133,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
 
   const auto is_level_select = level_is_level_select(g, v, l);
 
-  if (! is_level_select) {
+  if (DEBUG || is_level_select) {
+    //
+    // No hiding of oobjects
+    //
+  } else {
     //
     // If we cannot see this tile currently, but it is shown if it the tile has been seen, then show it.
     //

@@ -305,11 +305,6 @@ void level_blit(Gamep g)
   }
 
   //
-  // Blit the game map in the middle of the screen as a square
-  //
-  glBlendFunc(GL_ONE, GL_ZERO);
-
-  //
   // Get the pixel extents of the map on screen
   //
   int visible_map_tl_x;
@@ -318,7 +313,7 @@ void level_blit(Gamep g)
   int visible_map_br_y;
   game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
-  if (level_is_level_select(g, v, l)) {
+  if (DEBUG || level_is_level_select(g, v, l)) {
     //
     // No lighting for level selection
     //
@@ -326,11 +321,7 @@ void level_blit(Gamep g)
     glClear(GL_COLOR_BUFFER_BIT);
     glcolor(WHITE);
 
-    glBlendFunc(GL_ONE, GL_ZERO);
-    blit_init();
-    blit(g_fbo_tex_id[ FBO_MAP_FG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-         visible_map_br_y, WHITE);
-    blit_flush();
+    blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
     blit_fbo_unbind();
   } else {
     //
@@ -341,10 +332,7 @@ void level_blit(Gamep g)
     glcolor(WHITE);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_init();
-    blit(g_fbo_tex_id[ FBO_MAP_BG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-         visible_map_br_y, WHITE);
-    blit_flush();
+    blit_fbo(g, FBO_MAP_BG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
     level_blit_light(g, v, l, BLACK);
     blit_fbo_unbind();
@@ -363,10 +351,7 @@ void level_blit(Gamep g)
     // Mask out non lit areas of the foreground
     //
     glBlendFunc(GL_DST_ALPHA, GL_ZERO);
-    blit_init();
-    blit(g_fbo_tex_id[ FBO_MAP_FG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
-         visible_map_br_y, WHITE);
-    blit_flush();
+    blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
     blit_fbo_unbind();
   }
 
