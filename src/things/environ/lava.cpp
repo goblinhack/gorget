@@ -32,6 +32,7 @@ bool tp_load_lava(void)
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_lava);
+  tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
@@ -41,6 +42,7 @@ bool tp_load_lava(void)
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
+  tp_light_color_set(tp, "orange");
   tp_long_name_set(tp, name);
   tp_temperature_initial_set(tp, 1000); // celsius
   tp_weight_set(tp, WEIGHT_VVVHEAVY);   // grams
