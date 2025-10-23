@@ -264,15 +264,28 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
       }
 
       //
-      // Begin penetration into the wall
+      // Once we hit an obstacle to vision, how far do we allow the ray of light to penetrate
       //
-      auto wall_start_distance = ray_pixel->distance;
-      auto wall_end_distance   = (wall_start_distance + INNER_TILE_WIDTH) - 1;
+      auto obs_to_vision_start_distance       = ray_pixel->distance;
+      auto obs_to_vision_penetration_distance = (obs_to_vision_start_distance + INNER_TILE_WIDTH) - 1;
 
       //
-      // Did we hit a wall?
+      // Keep track of the type of object we hit
       //
-      if (level_is_obs_to_vision(g, v, l, tile)) {
+      Thingp obs_to_vision;
+      Tpp    tp_obs_to_vision;
+      Thingp next_obs_to_vision;
+
+      //
+      // Did the light ray hit an obstacle?
+      //
+      obs_to_vision = level_is_obs_to_vision(g, v, l, tile);
+      if (obs_to_vision) {
+        //
+        // What type of obstacle?
+        //
+        tp_obs_to_vision = thing_tp(obs_to_vision);
+
         //
         // We hit a wall. Keep walking until we exit the wall or we reach the light limit.
         //
@@ -289,7 +302,7 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
           //
           // Check if we've progressed far enough into the wall
           //
-          if (unlikely(ray_pixel->distance > wall_end_distance)) {
+          if (unlikely(ray_pixel->distance > obs_to_vision_penetration_distance)) {
             break;
           }
 
@@ -322,7 +335,15 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
           //
           // If we've left the wall, we're done
           //
-          if (! level_is_obs_to_vision(g, v, l, tile)) {
+          next_obs_to_vision = level_is_obs_to_vision(g, v, l, tile);
+          if (! next_obs_to_vision) {
+            break;
+          }
+
+          //
+          // If we've hit a different type of object, e.g. wall versus rock
+          //
+          if (thing_tp(next_obs_to_vision) != tp_obs_to_vision) {
             break;
           }
 

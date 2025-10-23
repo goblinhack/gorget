@@ -453,7 +453,7 @@ static bool level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp 
   return false;
 }
 
-bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -464,10 +464,10 @@ bool level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
     }
 
     if (tp_flag(thing_tp(it), f)) {
-      return true;
+      return it;
     }
   }
-  return false;
+  return nullptr;
 }
 
 Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)

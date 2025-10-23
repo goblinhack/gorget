@@ -475,7 +475,7 @@ bool    level_alive_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 bool    level_cursor_describe_add(Gamep, Levelsp, Thingp);
 bool    level_cursor_describe_remove(Gamep, Levelsp, Thingp);
 bool    level_cursor_is_valid(Gamep, Levelsp);
-bool    level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
+Thingp  level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);
 bool    level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint, Tpp);
 bool    level_match_contents(Gamep, Levelsp, Levelp, Testp, int w, int h, const char *in);
 bool    level_open_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
