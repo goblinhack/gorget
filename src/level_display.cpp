@@ -318,7 +318,24 @@ void level_blit(Gamep g)
   int visible_map_br_y;
   game_visible_map_pix_get(g, &visible_map_tl_x, &visible_map_tl_y, &visible_map_br_x, &visible_map_br_y);
 
-  {
+  if (level_is_level_select(g, v, l)) {
+    //
+    // No lighting for level selection
+    //
+    blit_fbo_bind(FBO_MAP_FG_MERGED);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glcolor(WHITE);
+
+    glBlendFunc(GL_ONE, GL_ZERO);
+    blit_init();
+    blit(g_fbo_tex_id[ FBO_MAP_FG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+         visible_map_br_y, WHITE);
+    blit_flush();
+    blit_fbo_unbind();
+  } else {
+    //
+    // Blit the dark background tiles that have been seen previously
+    //
     blit_fbo_bind(FBO_MAP_BG_MERGED);
     glClear(GL_COLOR_BUFFER_BIT);
     glcolor(WHITE);
@@ -331,9 +348,10 @@ void level_blit(Gamep g)
 
     level_blit_light(g, v, l, BLACK);
     blit_fbo_unbind();
-  }
 
-  {
+    //
+    // Blit the light as a mask
+    //
     blit_fbo_bind(FBO_MAP_FG_MERGED);
     glClear(GL_COLOR_BUFFER_BIT);
     glcolor(WHITE);
@@ -341,6 +359,9 @@ void level_blit(Gamep g)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     level_blit_light(g, v, l, WHITE);
 
+    //
+    // Mask out non lit areas of the foreground
+    //
     glBlendFunc(GL_DST_ALPHA, GL_ZERO);
     blit_init();
     blit(g_fbo_tex_id[ FBO_MAP_FG ], 0.0, 1.0, 1.0, 0.0, visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
