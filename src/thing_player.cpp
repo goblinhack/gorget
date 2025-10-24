@@ -815,7 +815,6 @@ static bool player_move_path_destination(Gamep g, Levelsp v, Levelp l, Thingp t,
 bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
-  THING_LOG(t, "Player move to next");
 
   //
   // If already moving, do not pop the next path tile

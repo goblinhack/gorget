@@ -486,6 +486,7 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
   switch (fbo) {
     case FBO_MAP_BG :
     case FBO_MAP_FG :
+    case FBO_MAP_FG_OVERLAY :
       w = game_map_fbo_width_get(g);
       h = game_map_fbo_height_get(g);
       break;

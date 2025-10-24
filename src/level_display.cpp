@@ -162,6 +162,24 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
           if (lit < (LIGHT_MAX_RAYS_MAX / 90)) {
             g_monochrome = true;
           }
+
+          //
+          // If this is the overlay, filter to only things that are always blitted
+          //
+          if (fbo == FBO_MAP_FG_OVERLAY) {
+            if (level_is_blit_colored_always(g, v, l, p)) {
+              //
+              // Always show
+              //
+              display_tile = true;
+              g_monochrome = false;
+            } else {
+              //
+              // Filter all other tiles that were shown in the lower layer FBO anyway
+              //
+              display_tile = false;
+            }
+          }
         } else if (thing_vision_has_seen_tile(g, v, l, player, p)) {
           //
           // Has seen previously
@@ -207,7 +225,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
 
   blit_flush();
 
-  if (fbo == FBO_MAP_FG) {
+  if (fbo == FBO_MAP_FG_OVERLAY) {
     game_popups_display(g, v, l);
   }
 
@@ -220,6 +238,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
 
   level_display_fbo(g, v, l, FBO_MAP_BG);
   level_display_fbo(g, v, l, FBO_MAP_FG);
+  level_display_fbo(g, v, l, FBO_MAP_FG_OVERLAY);
 }
 
 static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
@@ -352,6 +371,12 @@ void level_blit(Gamep g)
     //
     glBlendFunc(GL_DST_ALPHA, GL_ZERO);
     blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+
+    //
+    // Blit things that are always shown once seen (and popups)
+    //
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
     blit_fbo_unbind();
   }
 

@@ -524,11 +524,11 @@ void config_game_gfx_update(Gamep g)
   TERM_HEIGHT = game_window_pix_height_get(g) / font_height;
 
   LOG("SDL: Window:");
-  LOG("SDL: - window pixel size    : %dx%d", game_window_pix_width_get(g), game_window_pix_height_get(g));
-  LOG("SDL: - aspect ratio         : %f", game_aspect_ratio_get(g));
+  LOG("SDL: - window pixel size       : %dx%d", game_window_pix_width_get(g), game_window_pix_height_get(g));
+  LOG("SDL: - aspect ratio            : %f", game_aspect_ratio_get(g));
   LOG("SDL: Initial Terminal");
-  LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
-  LOG("SDL: - ascii gl size        : %ux%u", font_width, font_height);
+  LOG("SDL: - term size               : %dx%d", TERM_WIDTH, TERM_HEIGHT);
+  LOG("SDL: - ascii gl size           : %ux%u", font_width, font_height);
 
   //
   // Adjust the font until it is a reasonable size.
@@ -635,9 +635,9 @@ void config_game_gfx_update(Gamep g)
     break;
   }
 
-  LOG("SDL: Terminal");
-  LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
-  LOG("SDL: - ascii gl size        : %ux%u", font_width, font_height);
+  LOG("SDL: Final terminal");
+  LOG("SDL: - term size               : %dx%d", TERM_WIDTH, TERM_HEIGHT);
+  LOG("SDL: - ascii gl size           : %ux%u", font_width, font_height);
 
   game_ascii_pix_width_set(g, font_width);
   game_ascii_pix_height_set(g, font_height);
@@ -700,12 +700,12 @@ void config_game_gfx_update(Gamep g)
 
   game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
-  LOG("SDL: - map location          : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
+  LOG("SDL: - map location            : %d,%d -> %d,%d", visible_map_tl_x, visible_map_tl_y, visible_map_br_x,
       visible_map_br_y);
-  LOG("SDL: - map onscreen sz       : %dx%d", map_w, map_h);
-  LOG("SDL: - map w to h ratio      : %g", map_w_h_ratio);
-  LOG("SDL: - map pix sz            : %dx%d", fbo_w, fbo_h);
-  LOG("SDL: - map max pix sz        : %dx%d", max_fbo_w, max_fbo_h);
+  LOG("SDL: - map onscreen sz         : %dx%d", map_w, map_h);
+  LOG("SDL: - map w to h ratio        : %g", map_w_h_ratio);
+  LOG("SDL: - map pix sz              : %dx%d", fbo_w, fbo_h);
+  LOG("SDL: - map max pix sz          : %dx%d", max_fbo_w, max_fbo_h);
 
   int zoom = game_map_zoom_get(g);
   if (zoom == 0) {
@@ -746,35 +746,38 @@ void config_game_gfx_update(Gamep g)
   game_tiles_visible_across_set(g, tiles_across);
   game_tiles_visible_down_set(g, tiles_down);
 
-  LOG("SDL: - game map fbo sz       : %dx%d", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
-  LOG("SDL: - map single pixel size : %d", game_map_single_pix_size_get(g));
+  LOG("SDL: - game map fbo sz         : %dx%d", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
+  LOG("SDL: - map single pixel size   : %d", game_map_single_pix_size_get(g));
 
   int fbo_tmp_w, fbo_tmp_h;
 
   LOG("SDL: FBO sizes:");
   fbo_get_size(g, FBO_MAP_BG_MERGED, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_BG_MERGED size: %dx%d", fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_BG_MERGED size  : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
   fbo_get_size(g, FBO_MAP_FG_MERGED, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_FG_MERGED size: %dx%d", fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_FG_MERGED size  : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
   fbo_get_size(g, FBO_MAP_BG, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_BG size       : %dx%d", fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_BG size         : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
   fbo_get_size(g, FBO_MAP_FG, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_FG size       : %dx%d", fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_FG size         : %dx%d", fbo_tmp_w, fbo_tmp_h);
+
+  fbo_get_size(g, FBO_MAP_FG_OVERLAY, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_FG_OVERLAY size : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
   fbo_get_size(g, FBO_MAP_LIGHT, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_LIGHT size    : %dx%d", fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MAP_LIGHT size      : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
   fbo_get_size(g, FBO_WID, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_WID size          : %dx%d", fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_WID size            : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
   fbo_get_size(g, FBO_FINAL, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_FINAL size        : %dx%d", fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_FINAL size          : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
   LOG("SDL: Map");
-  LOG("SDL: - size                  : %dx%d", MAP_WIDTH, MAP_HEIGHT);
-  LOG("SDL: - tiles visible         : %dx%d", (int) tiles_across, (int) tiles_down);
-  LOG("SDL: - tiles zoom            : %d", game_map_zoom_get(g));
+  LOG("SDL: - size                    : %dx%d", MAP_WIDTH, MAP_HEIGHT);
+  LOG("SDL: - tiles visible           : %dx%d", (int) tiles_across, (int) tiles_down);
+  LOG("SDL: - tiles zoom              : %d", game_map_zoom_get(g));
 }

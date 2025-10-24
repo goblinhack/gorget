@@ -2505,6 +2505,7 @@ static void game_map_zoom_update(Gamep g)
   //
   config_game_gfx_update(g);
   gl_init_fbo(g, FBO_MAP_FG);
+  gl_init_fbo(g, FBO_MAP_FG_OVERLAY);
   gl_init_fbo(g, FBO_MAP_BG);
   gl_init_fbo(g, FBO_MAP_BG_MERGED);
   gl_init_fbo(g, FBO_MAP_FG_MERGED);
