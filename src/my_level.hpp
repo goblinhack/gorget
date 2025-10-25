@@ -473,6 +473,7 @@ bool is_oob(int, int);
 
 bool    level_alive_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 bool    level_cursor_describe_add(Gamep, Levelsp, Thingp);
+int     level_cursor_path_size(Gamep);
 bool    level_cursor_describe_remove(Gamep, Levelsp, Thingp);
 bool    level_cursor_is_valid(Gamep, Levelsp);
 Thingp  level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint p);

@@ -30,6 +30,19 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_m
     // Cursor
     //
     Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
+
+    //
+    // Non zero cursor path, change the cursor to a positive color
+    //
+    if (tp_is_cursor(tp)) {
+      auto player_struct = thing_player_struct(g);
+      if (player_struct) {
+        if (level_cursor_path_size(g) || player_struct->move_path.size) {
+          tile = tp_tiles_get(tp, THING_ANIM_OPEN, 0);
+        }
+      }
+    }
+
     if (tile_index) {
       *tile_index = tile_global_index(tile);
     }

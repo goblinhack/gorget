@@ -42,7 +42,7 @@ bool level_cursor_is_valid(Gamep g, Levelsp v)
 //
 // For the first pass, restrict to tiles we have walked on
 // For the first pass, any tiles will do, but no hazards
-// For the last pass, any tiles will do
+// For the last pass, any tiles will do as long as not consecutive hazard tiles.
 //
 static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player,
                                                                  spoint start, spoint end, int attempt)
@@ -122,8 +122,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
     }
   } else if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
     //
-    // Here the cursor is over a hazard. Plot a course that allows travel via other
-    // hazards.
+    // Here the cursor is over a hazard. Plot a course that allows travel via other hazards.
     //
     bool                               got_one = false;
     std::initializer_list< ThingFlag > init    = {is_lava, is_chasm};
@@ -186,18 +185,33 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
     //
     // Normal path. Avoid hazards.
     //
+    bool prev_tile_was_hazard = {};
+
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
         spoint p(x, y);
 
         if (attempt == 3) {
           //
-          // Any tile will do
+          // Any tile will do as long as not consecutive hazard tiles.
           //
-          if (level_is_obs_to_cursor_path(g, v, l, p)) {
-            d.val[ x ][ y ] = DMAP_IS_WALL;
+          if (prev_tile_was_hazard) {
+            if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+              d.val[ x ][ y ] = DMAP_IS_WALL;
+            } else {
+              d.val[ x ][ y ] = DMAP_IS_PASSABLE;
+            }
           } else {
-            d.val[ x ][ y ] = DMAP_IS_PASSABLE;
+            if (level_is_obs_to_cursor_path(g, v, l, p)) {
+              d.val[ x ][ y ] = DMAP_IS_WALL;
+            } else {
+              d.val[ x ][ y ] = DMAP_IS_PASSABLE;
+            }
+
+            //
+            // If a hazard, then don't let the next tile be one too
+            //
+            prev_tile_was_hazard = level_is_cursor_path_hazard(g, v, l, p);
           }
         } else {
           //
@@ -214,11 +228,25 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   }
 
   //
-  // Prune the path
+  // Prune the path. Skip tiles we've never seen. Limit to previously walked tiles in some cases.
   //
   for (auto y = miny; y < maxy; y++) {
     for (auto x = minx; x < maxx; x++) {
       spoint p(x, y);
+
+      if (DEBUG) {
+        //
+        // Allow all tiles in debug mode
+        //
+      } else {
+        //
+        // If we've NEVER seen this tile, skip it
+        //
+        if (! thing_vision_has_seen_tile(g, v, l, player, p)) {
+          d.val[ x ][ y ] = DMAP_IS_WALL;
+          continue;
+        }
+      }
 
       //
       // Limit to previously walked tiles
@@ -228,28 +256,6 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           d.val[ x ][ y ] = DMAP_IS_WALL;
           continue;
         }
-      }
-
-      IF_DEBUG2
-      {
-        //
-        // In debug mode, allow movement everywhere
-        //
-      }
-      else
-      {
-        if (DEBUG) {
-          //
-          // Allow all tiles in debug  mode
-          //
-        } else
-          //
-          // If we've never seen this tile, skip it
-          //
-          if (! thing_vision_has_seen_tile(g, v, l, player, p)) {
-            d.val[ x ][ y ] = DMAP_IS_WALL;
-            continue;
-          }
       }
 
       //
@@ -560,3 +566,5 @@ void level_cursor_copy_mouse_path_to_player(Gamep g, Levelsp v, Levelp l)
   //
   level_select_rightbar_needs_update(g, v, l);
 }
+
+int level_cursor_path_size(Gamep g) { return (int) cursor_path.size(); }
