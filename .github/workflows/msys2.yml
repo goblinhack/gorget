@@ -47,6 +47,7 @@ jobs:
             mingw-w64-ucrt-x86_64-gmp
             mingw-w64-ucrt-x86_64-headers-git
             mingw-w64-ucrt-x86_64-isl
+            mingw-w64-ucrt-x86_64-lz4
             mingw-w64-ucrt-x86_64-libffi
             mingw-w64-ucrt-x86_64-libiconv
             mingw-w64-ucrt-x86_64-libjpeg-turbo
