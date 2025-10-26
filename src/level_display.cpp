@@ -180,7 +180,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
               display_tile = false;
             }
           }
-        } else if (thing_vision_has_seen_tile(g, v, l, player, p)) {
+        } else if (thing_vision_player_has_seen_tile(g, v, l, p)) {
           //
           // Has seen previously
           //

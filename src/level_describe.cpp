@@ -158,6 +158,12 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  auto player = thing_player(g);
+  if (! player) {
+    ERR("No player pointer set");
+    return;
+  }
+
   //
   // Only if over the map
   //
@@ -165,8 +171,15 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  //
+  // Only if seen
+  //
+  auto at = v->cursor_at;
+  if (! thing_vision_can_see_tile(g, v, l, player, at)) {
+    return;
+  }
+
   std::string all_things_description;
-  auto        at = v->cursor_at;
 
   level_cursor_describe_clear(g, v);
 

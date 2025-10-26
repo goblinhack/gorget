@@ -537,7 +537,7 @@ bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool thing_teleport(Gamep, Levelsp, Levelp, Thingp);
 bool thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
-bool thing_vision_has_seen_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
+bool thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
 bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 int  thing_is_light_source(Thingp);
 void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);

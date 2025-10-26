@@ -35,14 +35,9 @@ bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
   return ext->fov_can_see_tile.can_see[ p.x ][ p.y ];
 }
 
-bool thing_vision_has_seen_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
+bool thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p)
 {
   TRACE_NO_INDENT();
-
-  if (thing_is_monst(t)) {
-    ERR("not implemented for monsters");
-    return false;
-  }
 
   if (is_oob(p)) {
     return false;
