@@ -345,7 +345,7 @@ case "$MY_OS_NAME" in
 
         if [[ -f /opt/local/libexec/llvm-devel/lib/libunwind/libunwind.a ]]; then
           echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
-          LDLIBS+=" -L/opt/local/libexec/llvm-devel/lib/libunwind -lunwind"
+          LDLIBS+=" -LSystem -L/opt/local/libexec/llvm-devel/lib/libunwind -lunwind"
           log_info "Have libunwind             : Yes"
         else
           log_info "Have libunwind             : No"
@@ -573,6 +573,11 @@ EXE=$EXE
 DSYM=$DSYM
 LDLIBS=$LDLIBS
 %%
+
+log_info "LDFLAGS                    : $LDFLAGS"
+log_info "LDLIBS                     : $LDLIBS"
+TMP=$(cat $MAKEFILE | grep LDLIBS)
+log_info "LDLIBS                     : $TMP"
 
 #
 # Cleanup pre-build
