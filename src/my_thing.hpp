@@ -52,7 +52,7 @@ typedef union {
 //
 #define THING_EXT_MAX       (MAX_LEVELS * 500) // The size of thing_ext
 #define THING_DESCRIBE_MAX  10                 // The number of things we can show in the rightbar
-#define THING_MOVE_PATH_MAX (MAP_WIDTH * 4)
+#define THING_MOVE_PATH_MAX (MAP_WIDTH * 2)
 #define THING_INVENTORY_MAX 26
 
 //

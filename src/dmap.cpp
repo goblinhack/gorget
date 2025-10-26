@@ -200,6 +200,21 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
     maxy = tl.y;
   }
 
+  //
+  // Need a wall around the dmap or the search will sort of trickle off the map
+  //
+  for (y = miny; y <= maxy; y++) {
+    D->val[ minx ][ y ] = DMAP_IS_WALL;
+    D->val[ maxx ][ y ] = DMAP_IS_WALL;
+  }
+  for (x = minx; x <= maxx; x++) {
+    D->val[ x ][ miny ] = DMAP_IS_WALL;
+    D->val[ x ][ maxy ] = DMAP_IS_WALL;
+  }
+
+  //
+  // Walk inside the above boundary.
+  //
   minx++;
   miny++;
   maxx--;
@@ -208,8 +223,8 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
   do {
     changed = false;
 
-    for (y = miny; y < maxy; y++) {
-      for (x = minx; x < maxx; x++) {
+    for (y = miny; y <= maxy; y++) {
+      for (x = minx; x <= maxx; x++) {
         if (orig.val[ x ][ y ] == DMAP_IS_WALL) {
           continue;
         }
@@ -333,6 +348,21 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
     maxy = tl.y;
   }
 
+  //
+  // Need a wall around the dmap or the search will sort of trickle off the map
+  //
+  for (y = miny; y <= maxy; y++) {
+    D->val[ minx ][ y ] = DMAP_IS_WALL;
+    D->val[ maxx ][ y ] = DMAP_IS_WALL;
+  }
+  for (x = minx; x <= maxx; x++) {
+    D->val[ x ][ miny ] = DMAP_IS_WALL;
+    D->val[ x ][ maxy ] = DMAP_IS_WALL;
+  }
+
+  //
+  // Walk inside the above boundary.
+  //
   minx++;
   miny++;
   maxx--;
@@ -436,21 +466,6 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
     }
   } while (changed);
 }
-
-#if 0
-static bool is_obs_at(const Dmap *D, int x, int y)
-{
-  if ((x >= MAP_WIDTH) || (y >= MAP_HEIGHT) || (x < 0) || (y < 0)) {
-    return true;
-  }
-
-  if (D->val[ x ][ y ] == DMAP_IS_WALL) {
-    return true;
-  }
-
-  return false;
-}
-#endif
 
 static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas,
                                          bool allow_diagonals)

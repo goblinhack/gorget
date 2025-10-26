@@ -13,7 +13,10 @@
 #include <vector>
 
 using Dmap = struct Dmap_ {
-  uint8_t val[ MAP_WIDTH ][ MAP_HEIGHT ];
+  //
+  // memset is used to initialize this, so be careful if changing the size
+  //
+  unsigned char val[ MAP_WIDTH ][ MAP_HEIGHT ];
 };
 
 extern void dmap_process(Dmap *D, spoint tl, spoint br);
