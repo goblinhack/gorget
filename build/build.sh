@@ -399,6 +399,8 @@ if [[ -f /usr/include/lz4.h ]]; then
     OPT_LZ4=1
 fi
 
+find / -name lz4.h 2>/dev/null
+
 if [[ -f /ucrt64/ginclude/lz4.h ]]; then
     C_FLAGS+=" -I/ucrt64/ginclude"
     OPT_LZ4=1
@@ -421,12 +423,15 @@ if [[ $OPT_LZ4 != "" ]]; then
     #
     C_FLAGS+=" -DUSE_LZ4"
     LDFLAGS+=" -llz4"
+    log_info "Using LZ4"
+else
+    log_info "Using LZ0 (slower, legacy)"
 fi
 
 #
 # Hard code on for me
 #
-$(grep -q goblinhack ~/.gitconfig) 2>/dev/null
+$(grep -q goblinhack ~/.gitconfig 2>/dev/null)
 GOBLINHACK=$?
 if [[ $GOBLINHACK ]]; then
   WERROR="-Werror"
