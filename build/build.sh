@@ -399,6 +399,11 @@ if [[ -f /usr/include/lz4.h ]]; then
     OPT_LZ4=1
 fi
 
+if [[ -f /ucrt64/ginclude/lz4.h ]]; then
+    C_FLAGS+=" -I/ucrt64/ginclude"
+    OPT_LZ4=1
+fi
+
 if [[ -f /opt/local/include/lz4.h ]]; then
     C_FLAGS+=" -I/opt/local/include"
     OPT_LZ4=1
