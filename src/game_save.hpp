@@ -1,9 +1,18 @@
 //
 // Copyright goblinhack@gmail.com
 //
+//
+#ifdef USE_LZ4
+#define MALLOC_PAD
+#else
+#define MALLOC_PAD *2
+#endif
 
+#ifdef USE_LZ4
+#include <lz4.h>
+#else
 #include "3rdparty/minilzo.hpp"
-#include "my_alloc.hpp"
+#endif
 #include "my_callstack.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
@@ -158,67 +167,74 @@ bool Game::save(const std::string &file_to_save)
   //
   auto data = s.str();
   s.seekg(0, std::ios::end);
-  lzo_uint uncompressed_len = s.tellg();
+  long src_size = s.tellg();
   s.seekg(0, std::ios::beg);
 
-  HEAP_ALLOC(uncompressed, uncompressed_len);
-  HEAP_ALLOC(compressed, uncompressed_len);
-  memcpy(uncompressed, data.c_str(), uncompressed_len);
+  auto src = malloc(src_size MALLOC_PAD);
+  if (! src) {
+    DIE("malloc %d failed", (int) src_size);
+  }
+  auto dst = malloc(src_size MALLOC_PAD);
+  if (! dst) {
+    DIE("malloc %d failed", (int) src_size);
+  }
+  memcpy(src, data.c_str(), src_size);
 
 #if 0
   IF_DEBUG2 {
     std::cout << "before compression ";
-    (void) hexdump((const unsigned char*)uncompressed, uncompressed_len);
+    (void) hexdump((const unsigned char*)src, src_size);
   }
 #endif
 
+#ifndef USE_LZ4
   if (lzo_init() != LZO_E_OK) {
     ERR("LZO init fail: Enable '-DLZO_DEBUG' for diagnostics)");
   }
-
-  HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
+#endif
 
   if (! game_headers_only) {
     wid_progress_bar(this, "Compressing...", 0.5);
   }
 
-  lzo_uint compressed_len = 0;
-  int      r
-      = lzo1x_1_compress((lzo_bytep) uncompressed, uncompressed_len, (lzo_bytep) compressed, &compressed_len, wrkmem);
-  if (r == LZO_E_OK) {
-    LOG("Compressed %luMb -> %luMb", (unsigned long) uncompressed_len / (1024 * 1024),
-        (unsigned long) compressed_len / (1024 * 1024));
-  } else {
-    ERR("LZO internal error - compression failed: %d", r);
-    wid_progress_bar_destroy(this);
-    return false;
+  auto start    = time_ms();
+  long dst_size = 0;
+
+#ifdef USE_LZ4
+  auto which = "LZ4";
+  dst_size   = LZ4_compress_default((const char *) src, (char *) dst, src_size, src_size);
+  if (dst_size)
+#else
+  auto which  = "LZ0";
+  auto wrkmem = malloc(LZO1X_1_MEM_COMPRESS);
+  if (! wrkmem) {
+    DIE("malloc %ld failed", (long) LZO1X_1_MEM_COMPRESS);
   }
 
-  //
-  // Uncompress and check the data matches
-  //
-  IF_DEBUG2
+  lzo_uint new_len = dst_size;
+  long     r       = lzo1x_1_compress((lzo_bytep) src, src_size, (lzo_bytep) dst, &new_len, wrkmem);
+  dst_size         = new_len;
+  if (r == LZO_E_OK)
+#endif
+
   {
-    HEAP_ALLOC(tmp_compressed, compressed_len);
-    HEAP_ALLOC(tmp_uncompressed, uncompressed_len);
-    memcpy(tmp_compressed, compressed, compressed_len);
-
-    lzo_uint new_len = 0;
-    int check = lzo1x_decompress((lzo_bytep) tmp_compressed, compressed_len, (lzo_bytep) tmp_uncompressed, &new_len,
-                                 nullptr);
-    if (check == LZO_E_OK && new_len == uncompressed_len) {
-      if (memcmp(tmp_uncompressed, uncompressed, uncompressed_len)) {
-        ERR("LZO compress-decompress failed");
-      }
-    } else {
-      /* this should NEVER happen */
-      ERR("LZO internal error - decompression failed: %d", check);
-      wid_progress_bar_destroy(this);
-      return false;
-    }
-
-    free(tmp_uncompressed);
-    free(tmp_compressed);
+    LOG("%s compressed %ldMb (%ld bytes) -> %ldMb (%ld bytes) took %u ms",
+        which,                           // newline
+        (long) src_size / (1024 * 1024), // newline
+        src_size,                        // newline
+        (long) dst_size / (1024 * 1024), // newline
+        dst_size,                        // newline
+        time_ms() - start);
+  } else {
+    ERR("%s compressed failed %ldMb (%ld bytes) -> %ldMb (%ld error code) took %u ms",
+        which,                           // newline
+        (long) src_size / (1024 * 1024), // newline
+        src_size,                        // newline
+        (long) dst_size / (1024 * 1024), // newline
+        dst_size,                        // newline
+        time_ms() - start);
+    wid_progress_bar_destroy(this);
+    return false;
   }
 
   //
@@ -227,7 +243,7 @@ bool Game::save(const std::string &file_to_save)
 #if 0
   IF_DEBUG2 {
     std::cout << "after compression ";
-    (void) hexdump((const unsigned char *)compressed, compressed_len);
+    (void) hexdump((const unsigned char *)dst, dst_size);
   }
 #endif
 
@@ -247,15 +263,17 @@ bool Game::save(const std::string &file_to_save)
 
   LOG("Opened: %s for writing", file_to_save.c_str());
 
-  fwrite((char *) &uncompressed_len, sizeof(uncompressed_len), 1, ofile);
-  fwrite(compressed, compressed_len, 1, ofile);
+  fwrite((char *) &src_size, sizeof(src_size), 1, ofile);
+  fwrite(dst, dst_size, 1, ofile);
   fclose(ofile);
 
   LOG("Wrote: %s", file_to_save.c_str());
 
-  free(uncompressed);
-  free(compressed);
+  free(src);
+  free(dst);
+#ifndef USE_LZ4
   free(wrkmem);
+#endif
 
   if (! game_headers_only) {
     wid_progress_bar(this, "Saved", 1.0);

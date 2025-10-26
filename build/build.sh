@@ -392,6 +392,22 @@ if [[ $OPT_DEV2 != "" ]]; then
     C_FLAGS+=" -DOPT_DEV"
 fi
 
+
+OPT_LZ4=
+if [[ -f /usr/include/lz4.h ]]; then
+    OPT_LZ4=1
+fi
+
+if [[ -f /opt/local/include/lz4.h ]]; then
+    C_FLAGS+=" -I/opt/local/include"
+    OPT_LZ4=1
+fi
+
+if [[ $OPT_LZ4 != "" ]]; then
+    C_FLAGS+=" -DUSE_LZ4"
+    LDFLAGS+=" -llz4"
+fi
+
 #
 # Hard code on for me
 #

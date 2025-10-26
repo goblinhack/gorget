@@ -2,8 +2,17 @@
 // Copyright goblinhack@gmail.com
 //
 
+#ifdef USE_LZ4
+#define MALLOC_PAD
+#else
+#define MALLOC_PAD *2
+#endif
+
+#ifdef USE_LZ4
+#include <lz4.h>
+#else
 #include "3rdparty/minilzo.hpp"
-#include "my_alloc.hpp"
+#endif
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_ptrcheck.hpp"
@@ -249,7 +258,7 @@ std::vector< char > read_file(const std::string filename)
   return bytes;
 }
 
-static std::vector< char > read_lzo_file(const std::string filename, lzo_uint *uncompressed_sz)
+static std::vector< char > read_lzo_file(const std::string filename, long *uncompressed_sz)
 {
   TRACE_NO_INDENT();
   std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
@@ -285,7 +294,7 @@ bool Game::load(const std::string &file_to_load, class Game &target)
   //
   // Read to a vector and then copy to a C buffer for LZO to use
   //
-  lzo_uint uncompressed_len;
+  long dst_size;
 
   TRACE_NO_INDENT();
   if (! game_headers_only) {
@@ -294,7 +303,7 @@ bool Game::load(const std::string &file_to_load, class Game &target)
   }
 
   TRACE_NO_INDENT();
-  auto vec = read_lzo_file(file_to_load, &uncompressed_len);
+  auto vec = read_lzo_file(file_to_load, &dst_size);
 
   TRACE_NO_INDENT();
   if (vec.size() <= 0) {
@@ -307,12 +316,18 @@ bool Game::load(const std::string &file_to_load, class Game &target)
   }
 
   TRACE_NO_INDENT();
-  auto     data           = vec.data();
-  lzo_uint compressed_len = vec.size();
+  auto data     = vec.data();
+  long src_size = vec.size();
 
-  HEAP_ALLOC(compressed, compressed_len);
-  HEAP_ALLOC(uncompressed, uncompressed_len);
-  memcpy(compressed, data, compressed_len);
+  auto src = malloc(src_size MALLOC_PAD);
+  if (! src) {
+    DIE("malloc %ld failed", (long) src_size);
+  }
+  auto dst = malloc(dst_size MALLOC_PAD);
+  if (! dst) {
+    DIE("malloc %ld failed", (long) dst_size);
+  }
+  memcpy(src, data, src_size);
 
   TRACE_NO_INDENT();
   if (! game_headers_only) {
@@ -321,16 +336,44 @@ bool Game::load(const std::string &file_to_load, class Game &target)
   }
 
   TRACE_NO_INDENT();
+  auto start = time_ms();
+
+  LOG("Expect: %s, decompress %ld (%ld bytes) -> %ldMb (%ld bytes)", file_to_load.c_str(),
+      (long) src_size / (1024 * 1024), // newline
+      (long) src_size,                 // newline
+      (long) dst_size / (1024 * 1024), // newline
+      (long) dst_size);
+
+#ifdef USE_LZ4
+  auto which = "LZ4";
+  long new_len;
+  new_len = LZ4_decompress_safe((const char *) src, (char *) dst, src_size, dst_size);
+  if (new_len >= 0)
+#else
+  auto     which   = "LZ0";
   lzo_uint new_len = 0;
-  int      r = lzo1x_decompress((lzo_bytep) compressed, compressed_len, (lzo_bytep) uncompressed, &new_len, nullptr);
-  if (r == LZO_E_OK && new_len == uncompressed_len) {
-    if (! game_headers_only) {
-      LOG("Loading: %s, decompress %luMb -> %luMb", file_to_load.c_str(),
-          (unsigned long) compressed_len / (1024 * 1024), (unsigned long) uncompressed_len / (1024 * 1024));
-    }
+  auto     r       = lzo1x_decompress((lzo_bytep) src, src_size, (lzo_bytep) dst, &new_len, nullptr);
+  if ((r == LZO_E_OK) && ((long) new_len == (long) dst_size))
+#endif
+
+  {
+    LOG("%s decompress %ldMb (%ld bytes) -> %ldMb (%ld bytes) took %u ms (%s)",
+        which,                           // newline
+        (long) src_size / (1024 * 1024), // newline
+        (long) src_size,                 // newline
+        (long) dst_size / (1024 * 1024), // newline
+        (long) dst_size,                 // newline
+        time_ms() - start,               // newline
+        file_to_load.c_str());
   } else {
-    /* this should NEVER happen */
-    ERR("LZO internal error - decompression failed: %d", r);
+    ERR("%s decompress %ldMb (%ld bytes) -> %ldMb (%ld error code) took %u ms (%s)",
+        which,                           // newline
+        (long) src_size / (1024 * 1024), // newline
+        (long) src_size,                 // newline
+        (long) dst_size / (1024 * 1024), // newline
+        (long) dst_size,                 // newline
+        time_ms() - start,               // newline
+        file_to_load.c_str());
     verify(MTYPE_GAME, this);
     wid_progress_bar_destroy(this);
     return false;
@@ -345,11 +388,11 @@ bool Game::load(const std::string &file_to_load, class Game &target)
 #if 0
   IF_DEBUG2 {
     std::cout << "decompressed as ";
-    hexdump((const unsigned char *)uncompressed, uncompressed_len);
+    hexdump((const unsigned char *)dst, dst_size);
   }
 #endif
 
-  std::string        s((const char *) uncompressed, (size_t) uncompressed_len);
+  std::string        s((const char *) dst, (size_t) dst_size);
   std::istringstream in(s);
 
   TRACE_NO_INDENT();
@@ -363,8 +406,8 @@ bool Game::load(const std::string &file_to_load, class Game &target)
     return false;
   }
 
-  free(uncompressed);
-  free(compressed);
+  free(dst);
+  free(src);
 
   if (! game_headers_only) {
     verify(MTYPE_GAME, this);

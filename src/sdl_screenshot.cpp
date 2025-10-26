@@ -6,17 +6,26 @@
 #include "my_callstack.hpp"
 #include "my_gl.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_sdl_event.hpp"
 #include "my_string.hpp"
 
 void sdl_screenshot(Gamep g)
 {
   TRACE_AND_INDENT();
-  g_do_screenshot = 1;
+
+  if (sdl.window) {
+    g_do_screenshot = 1;
+  }
 }
 
 void sdl_screenshot_do(Gamep g)
 {
   TRACE_AND_INDENT();
+
+  if (! sdl.window) {
+    return;
+  }
+
   GL_ERROR_CHECK();
   int fbo = FBO_FINAL;
   int w;
