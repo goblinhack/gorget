@@ -13,6 +13,7 @@
 #define LIGHT_MAX_RAYS_MAX         (360 * 4)
 #define MAP_HEIGHT                 48
 #define MAP_SCROLL_BORDER          0.5
+#define MAP_SCROLL_BORDER_EDGE     0.1
 #define MAP_SCROLL_SPEED           50
 #define MAP_SLOTS                  16
 #define MAP_TILES_ACROSS_DEF       16

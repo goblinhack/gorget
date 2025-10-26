@@ -45,18 +45,6 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  if (v->requested_forced_auto_scroll) {
-    //
-    // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
-    // centered once more.
-    //
-  } else if (! v->requested_auto_scroll) {
-    //
-    // If the player is scrolling the map via the mouse, do not auto scroll.
-    //
-    return;
-  }
-
   //
   // Get the size of the on screen map.
   //
@@ -72,6 +60,29 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
 
   const auto scroll_border = MAP_SCROLL_BORDER;
   const auto scroll_speed  = MAP_SCROLL_SPEED;
+
+  if (v->requested_forced_auto_scroll) {
+    //
+    // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
+    // centered once more.
+    //
+  } else if (! v->requested_auto_scroll) {
+    //
+    // If the player is scrolling the map via the mouse, do not auto scroll.
+    //
+    if ((x < MAP_SCROLL_BORDER_EDGE) || (y < MAP_SCROLL_BORDER_EDGE) || (x > 1 - MAP_SCROLL_BORDER_EDGE)
+        || (y > 1 - MAP_SCROLL_BORDER_EDGE)) {
+      //
+      // Unless the player has wandered off screen
+      //
+      v->requested_auto_scroll = true;
+    } else {
+      //
+      // Ignore auto scroll
+      //
+      return;
+    }
+  }
 
   //
   // Did we scroll any pixels?
