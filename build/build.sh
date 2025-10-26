@@ -356,7 +356,7 @@ case "$MY_OS_NAME" in
         ;;
     *inux*)
         EXE=""
-        LDLIBS+=" -lGL "
+        LDLIBS+=" -lGL"
 
         if [[ $OPT_DEV2 != "" ]]; then
             C_FLAGS+="$EXTRA_CHECKS"

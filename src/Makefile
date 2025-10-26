@@ -97,7 +97,7 @@ clean:
 	rm -f $(TARGET_GAME) ../stdout.txt ../stderr.txt
 	@# safer delete of build dir instead of just 'rm -rf $(BUILD_DIR)'
 	rm -f $(BUILD_DIR)/*.[od]
-	@([ -d "$(BUILD_DIR)" ] && rmdir $(BUILD_DIR)) || true
+	@([ -d "$(BUILD_DIR)" ] && rmdir $(BUILD_DIR) 2>/dev/null) || true
 
 clobber: clean
 	rm -f ramdisk_data.cpp $(wildcard ramdisk_data*.S) $(wildcard *.gch) 
