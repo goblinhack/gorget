@@ -345,7 +345,7 @@ case "$MY_OS_NAME" in
 
         if [[ -f /opt/local/libexec/llvm-devel/lib/libunwind/libunwind.a ]]; then
           echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
-          LDLIBS+=" -lunwind"
+          LDLIBS+=" -L/opt/local/libexec/llvm-devel/lib/libunwind -lunwind"
           log_info "Have libunwind             : Yes"
         else
           log_info "Have libunwind             : No"

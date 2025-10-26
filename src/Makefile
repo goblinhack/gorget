@@ -82,7 +82,7 @@ $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
 # use file list instead of wildcard for link command so we don't accidentally
 # link with old object files for removed source files
 $(TARGET_GAME): $(OBJ_FILES)
-	cd $(BUILD_DIR); $(CC) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $(TARGET_GAME); $(DSYM)
+	cd $(BUILD_DIR); $(CC) $(OBJECTS) $(LDLIBS) $(LDFLAGS) -o $(TARGET_GAME); $(DSYM)
 
 tidy:
 	for src in $(CPP_3RD_PARTY_SOURCES) ; do \
