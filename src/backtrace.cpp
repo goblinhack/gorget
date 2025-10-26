@@ -17,6 +17,7 @@
 #endif
 #include <cxxabi.h>
 #ifdef HAVE_LIBUNWIND
+#include <execinfo.h>
 #include <libunwind.h>
 #endif
 #include <memory>
@@ -26,22 +27,25 @@
 
 void Backtrace::init(void)
 {
+  // clang-format off
 #ifdef HAVE_LIBUNWIND
-#ifdef _WIN32
-  //
-  // Just did not seem to work on mingw
-  //
-  size = 0;
-#else
+#  ifdef _WIN32
+  size = 0; // Just did not seem to work on mingw
+#  else
+#    ifdef LIBUNWIND_HAS_UNW_BACKTRACE
   size = unw_backtrace(&bt[ 0 ], bt.size());
-#endif
-#else
-#ifdef _WIN32
-  size = 0;
-#else
+#    else
   size = backtrace(&bt[ 0 ], bt.size());
+#    endif
+#  endif
+#else
+#  ifdef _WIN32
+  size = 0;
+#  else
+  size = backtrace(&bt[ 0 ], bt.size());
+#  endif
 #endif
-#endif
+  // clang-format on
 }
 
 //

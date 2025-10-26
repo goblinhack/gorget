@@ -281,6 +281,9 @@ rm -f src/precompiled.hpp.gch
 
 EXTRA_CHECKS=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fno-common"
 
+echo "#define MYVER \"$MYVER\"" >> $CONFIG_H
+log_info "Version                    : $MYVER"
+
 case "$MY_OS_NAME" in
     *MSYS*)
         log_err "Please compile for ming64, not msys"
@@ -339,6 +342,14 @@ case "$MY_OS_NAME" in
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
+
+        if [[ -f /opt/local/libexec/llvm-devel/lib/libunwind/libunwind.a ]]; then
+          echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
+          LDLIBS+=" -lunwind"
+          log_info "Have libunwind             : Yes"
+        else
+          log_info "Have libunwind             : No"
+        fi
         ;;
     *inux*)
         EXE=""
@@ -374,10 +385,6 @@ if [[ $OPT_DEV1 != "" ]]; then
     WERROR="-Werror"
 fi
 
-echo "#define MYVER \"$MYVER\"" >> $CONFIG_H
-
-log_info "VERSION (game)             : $MYVER"
-
 cd src || exit
 
 if [[ $OPT_PROF != "" ]]; then
@@ -393,21 +400,19 @@ if [[ $OPT_DEV2 != "" ]]; then
     C_FLAGS+=" -DOPT_DEV"
 fi
 
-
 OPT_LZ4=
 if [[ -f /usr/include/lz4.h ]]; then
     OPT_LZ4=1
 fi
 
-find / -name lz4.h 2>/dev/null
-
-if [[ -f /ucrt64/ginclude/lz4.h ]]; then
-    C_FLAGS+=" -I/ucrt64/ginclude"
-    OPT_LZ4=1
-fi
-
 if [[ -f /opt/local/include/lz4.h ]]; then
     C_FLAGS+=" -I/opt/local/include"
+    OPT_LZ4=1
+elif [[ -f /ucrt64/include/lz4.h ]]; then
+    C_FLAGS+=" -I/ucrt64/include"
+    OPT_LZ4=1
+elif [[ -f $SDL2_INC_PATH/../lz4.h ]]; then
+    C_FLAGS+=" -I$SDL2_INC_PATH/.."
     OPT_LZ4=1
 fi
 
@@ -423,9 +428,9 @@ if [[ $OPT_LZ4 != "" ]]; then
     #
     C_FLAGS+=" -DUSE_LZ4"
     LDFLAGS+=" -llz4"
-    log_info "Using LZ4"
+    log_info "Have LZ4                   : Yes"
 else
-    log_info "Using LZ0 (slower, legacy)"
+    log_info "Have LZ4                   : No"
 fi
 
 #
