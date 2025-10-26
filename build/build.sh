@@ -282,7 +282,8 @@ rm -f src/precompiled.hpp.gch
 EXTRA_CHECKS=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fno-common"
 
 echo "#define MYVER \"$MYVER\"" >> $CONFIG_H
-log_info "Version                    : $MYVER"
+
+LDFLAGS="-rdynamic"
 
 case "$MY_OS_NAME" in
     *MSYS*)
@@ -300,7 +301,7 @@ case "$MY_OS_NAME" in
         LDLIBS+=" -lopengl32"
         LDLIBS+=" -lpthread"
         LDLIBS+=" /${MINGW_TYPE}/lib/libSDL2_mixer.a"
-        LDLIBS+=" -L/${MINGW_TYPE}/lib/binutils -lbfd -lintl -ldbghelp -liberty -lz"
+        LDLIBS+=" -L/${MINGW_TYPE}/lib/binutils -lbfd -lintl -ldbghelp -liberty"
 
         if [ -f /${MINGW_TYPE}/lib/libunwind.a ]; then
           echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
@@ -331,7 +332,6 @@ case "$MY_OS_NAME" in
     *Darwin*)
         EXE=""
         LDLIBS+=" -funwind-tables"
-        LDLIBS+=" -rdynamic"
         LDLIBS+=" -Wl,-framework,Opengl"
         #
         # Run in the background as it is slow and is only needed for debugging
@@ -356,7 +356,6 @@ case "$MY_OS_NAME" in
         ;;
     *inux*)
         EXE=""
-        LDFLAGS+=' -rdynamic'
         LDLIBS+=" -lGL "
 
         if [[ $OPT_DEV2 != "" ]]; then
@@ -585,6 +584,8 @@ log_info "LDLIBS                     : $LDLIBS"
 #
 log_info "Cleaning"
 make clobber | sed 's/^/  /g'
+
+log_info "Game version               : $MYVER"
 
 #
 # How many cores?
