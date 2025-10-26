@@ -142,22 +142,6 @@ int term_color_to_console_color(color c)
     return TERM_COLOR_RESET;
   if (color_eq(c, CYAN))
     return TERM_COLOR_CYAN;
-  if (color_eq(c, DARKBLUE))
-    return TERM_COLOR_BLUE;
-  if (color_eq(c, DARKGRAY))
-    return TERM_COLOR_BLACK;
-  if (color_eq(c, DARKGREEN))
-    return TERM_COLOR_GREEN;
-  if (color_eq(c, DARKOLIVEGREEN2))
-    return TERM_COLOR_GREEN;
-  if (color_eq(c, DARKOLIVEGREEN))
-    return TERM_COLOR_GREEN;
-  if (color_eq(c, DARKRED))
-    return TERM_COLOR_RED;
-  if (color_eq(c, DEEPWATER))
-    return TERM_COLOR_BLUE;
-  if (color_eq(c, FORESTGREEN))
-    return TERM_COLOR_GREEN;
   if (color_eq(c, GOLD))
     return TERM_COLOR_YELLOW;
   if (color_eq(c, GRAY10))
@@ -167,8 +151,6 @@ int term_color_to_console_color(color c)
   if (color_eq(c, GRAY40))
     return TERM_COLOR_BLUE;
   if (color_eq(c, GRAY50))
-    return TERM_COLOR_BLUE;
-  if (color_eq(c, GRAY5))
     return TERM_COLOR_BLUE;
   if (color_eq(c, GRAY60))
     return TERM_COLOR_WHITE;
@@ -182,30 +164,18 @@ int term_color_to_console_color(color c)
     return TERM_COLOR_WHITE;
   if (color_eq(c, GREEN))
     return TERM_COLOR_GREEN;
-  if (color_eq(c, LIGHTBLUE))
-    return TERM_COLOR_BLUE;
-  if (color_eq(c, LIGHTGREEN))
-    return TERM_COLOR_GREEN;
-  if (color_eq(c, LIMEGREEN))
-    return TERM_COLOR_GREEN;
   if (color_eq(c, LIME))
     return TERM_COLOR_GREEN;
   if (color_eq(c, MAGENTA))
     return TERM_COLOR_PINK;
   if (color_eq(c, ORANGE))
     return TERM_COLOR_YELLOW;
-  if (color_eq(c, PEACHPUFF))
-    return TERM_COLOR_RED;
   if (color_eq(c, PINK))
     return TERM_COLOR_RED;
   if (color_eq(c, PURPLE))
     return TERM_COLOR_PINK;
   if (color_eq(c, RED))
     return TERM_COLOR_RED;
-  if (color_eq(c, SILVER))
-    return TERM_COLOR_WHITE;
-  if (color_eq(c, STEELBLUE))
-    return TERM_COLOR_WHITE;
   if (color_eq(c, WATER))
     return TERM_COLOR_CYAN;
   if (color_eq(c, WHITE))

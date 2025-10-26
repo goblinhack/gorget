@@ -12,8 +12,8 @@
 
 using colors = std::unordered_map< std::string, color >;
 
-colors      color_map;
-static bool color_init_done;
+colors color_map;
+bool   color_init_done;
 
 void color_set(std::string name, color *c, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
@@ -27,16 +27,6 @@ void color_set(std::string name, color *c, uint8_t r, uint8_t g, uint8_t b, uint
   if (! result.second) {
     ERR("Color insert name [%s] failed", name.c_str());
   }
-}
-
-void color_init(void)
-{
-  TRACE_NO_INDENT();
-  color_init1();
-  color_init2();
-  color_init3();
-  color_init4();
-  color_init_done = true;
 }
 
 void color_fini(void)
