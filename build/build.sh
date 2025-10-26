@@ -269,7 +269,7 @@ fi
 # But it seemed to help little.
 #
 LDLIBS="$SDL_LIBS"
-LDLIBS="$LDLIBS -lSDL2_mixer"
+LDLIBS+=" -lSDL2_mixer"
 
 #
 # Common config file
@@ -427,7 +427,7 @@ if [[ $OPT_LZ4 != "" ]]; then
     # LZ4 decompress 15Mb (15982242 bytes) -> 1239Mb (1299692095 bytes) took 63 ms (appdata/gorget/saved-slot-0)
     #
     C_FLAGS+=" -DUSE_LZ4"
-    LDFLAGS+=" -llz4"
+    LDLIBS+=" -llz4"
     log_info "Have LZ4                   : Yes"
 else
     log_info "Have LZ4                   : No"
@@ -561,7 +561,7 @@ case "$MY_OS_NAME" in
         #
         # To resolve WinMain, add these at the end again
         #
-        LDLIBS="$LDLIBS -lmingw32 -mwindows /${MINGW_TYPE}/lib/libSDL2main.a -L/${MINGW_TYPE}/lib -lSDL2main -lSDL2"
+        LDLIBS+=" -lmingw32 -mwindows /${MINGW_TYPE}/lib/libSDL2main.a -L/${MINGW_TYPE}/lib -lSDL2main -lSDL2"
     ;;
 esac
 
