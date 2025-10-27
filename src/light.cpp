@@ -267,7 +267,7 @@ void Light::calculate(Gamep g, Levelsp v, Levelp l, level_fov_can_see_callback_t
       // Once we hit an obstacle to vision, how far do we allow the ray of light to penetrate
       //
       auto obs_to_vision_start_distance       = ray_pixel->distance;
-      auto obs_to_vision_penetration_distance = (obs_to_vision_start_distance + INNER_TILE_WIDTH) - 1;
+      auto obs_to_vision_penetration_distance = (obs_to_vision_start_distance + INNER_TILE_WIDTH) - 2;
 
       //
       // Keep track of the type of object we hit
