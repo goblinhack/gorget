@@ -73,7 +73,10 @@ help_full()
       log_warn " "
       log_warn "Install the following for Ubuntu?"
       set -x
-      sudo apt-get install -y build-essential \
+      sudo apt-get install -y \
+                      build-essential \
+                      clang \
+                      clang-format \
                       g++ \
                       git \
                       libegl1 \
@@ -93,10 +96,9 @@ help_full()
                       libsmpeg-dev \
                       libx11-6 \
                       libxext6 \
+                      liblz4-dev \
                       ssh \
                       vim \
-                      clang \
-                      clang-format \
                       xutils-dev
       set +x
       echo "Now re-run RUNME"
@@ -173,7 +175,7 @@ help_full()
       log_warn "  sudo port install libsdl2"
       log_warn "  sudo port install libsdl2_mixer"
       ;;
-  esac
+    esac
 }
 
 MY_OS_NAME=$(uname)
@@ -394,26 +396,23 @@ if [[ $OPT_PROF != "" ]]; then
     LDFLAGS+=" -pg"
 fi
 
-if [[ $OPT_DEV1 != "" ]]; then
-    C_FLAGS+=" -DOPT_DEV"
-fi
-
-if [[ $OPT_DEV2 != "" ]]; then
+if [[ $OPT_DEV1 != "" || $OPT_DEV2 != "" ]]; then
     C_FLAGS+=" -DOPT_DEV"
 fi
 
 OPT_LZ4=
 if [[ -f /usr/include/lz4.h ]]; then
     OPT_LZ4=1
-fi
-
-if [[ -f /opt/local/include/lz4.h ]]; then
+elif [[ -f /opt/local/include/lz4.h ]]; then
     C_FLAGS+=" -I/opt/local/include"
     OPT_LZ4=1
 elif [[ -f /ucrt64/include/lz4.h ]]; then
     C_FLAGS+=" -I/ucrt64/include"
     OPT_LZ4=1
 elif [[ -f $SDL2_INC_PATH/../lz4.h ]]; then
+    #
+    # last resort
+    #
     C_FLAGS+=" -I$SDL2_INC_PATH/.."
     OPT_LZ4=1
 fi
@@ -544,12 +543,12 @@ fi
 # Prefer clang as its faster
 #
 if [[ $OPT_GCC = "" ]]; then
-  clang++ --version > /dev/null 2>/dev/null
-  if [ $? -eq 0 ]; then
-      echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> $MAKEFILE
-      echo "CC=clang++" >> $MAKEFILE
-      GOT_CC=1
-  fi
+    clang++ --version > /dev/null 2>/dev/null
+    if [ $? -eq 0 ]; then
+        echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> $MAKEFILE
+        echo "CC=clang++" >> $MAKEFILE
+        GOT_CC=1
+    fi
 fi
 
 if [[ $GOT_CC = "" ]]; then
