@@ -169,6 +169,15 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     return;
   }
 
+  //
+  // If the thing is falling, do not show it in the overlay, else it appears in front of floor tiles
+  //
+  if (t_maybe_null && (fbo == FBO_MAP_FG_OVERLAY)) {
+    if (thing_is_falling(t_maybe_null)) {
+      return;
+    }
+  }
+
   color fg      = WHITE;
   color outline = BLACK;
   float x1;
