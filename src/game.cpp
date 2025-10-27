@@ -2455,6 +2455,11 @@ void game_map_zoom_set(Gamep g, int val)
     ERR("No game pointer set");
     return;
   }
+
+  if (val >= MAP_ZOOM_MAX) {
+    val = MAP_ZOOM_MAX - 1;
+  }
+
   g->zoom = val;
 }
 bool game_map_zoom_is_full_map_visible(Gamep g)
@@ -2482,6 +2487,10 @@ int game_map_zoom_def_get(Gamep g)
 
   if (zoom < 2) {
     zoom = 2;
+  }
+
+  if (zoom >= MAP_ZOOM_MAX) {
+    zoom = MAP_ZOOM_MAX - 1;
   }
 
   return (int) zoom;
@@ -2536,6 +2545,20 @@ void game_map_zoom_toggle(Gamep g)
   }
 
   game_map_zoom_update(g);
+
+  //
+  // Restore the map pixel offset if we had previously been at this zoom level
+  //
+  auto v = game_levels_get(g);
+  if (v) {
+    auto zoom       = game_map_zoom_get(g);
+    v->pixel_map_at = v->pixel_map_at_for_zoom[ zoom ];
+
+    auto l = game_level_get(g, v);
+    if (l) {
+      level_bounds_set(g, v, l);
+    }
+  }
 }
 
 //

@@ -318,6 +318,10 @@ typedef struct Levels_ {
   //
   spoint pixel_map_at;
   //
+  // Value for the previous zoom level
+  //
+  spoint pixel_map_at_for_zoom[ MAP_ZOOM_MAX ];
+  //
   // Maximum pixel bound
   //
   spoint pixel_max;

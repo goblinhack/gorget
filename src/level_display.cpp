@@ -239,6 +239,11 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   level_display_fbo(g, v, l, FBO_MAP_BG);
   level_display_fbo(g, v, l, FBO_MAP_FG);
   level_display_fbo(g, v, l, FBO_MAP_FG_OVERLAY);
+
+  //
+  // Save the old pixel offset for restoring it after zoom toggling
+  //
+  v->pixel_map_at_for_zoom[ game_map_zoom_get(g) ] = v->pixel_map_at;
 }
 
 static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)

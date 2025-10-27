@@ -18,6 +18,7 @@
 #define MAP_TILES_DOWN_DEF         16
 #define MAP_WIDTH                  48
 #define MAP_ZOOM_DEF               2
+#define MAP_ZOOM_MAX               16
 #define MAX_FALL_TILE_HEIGHT       4
 #define MAX_FALL_TIME_MS           250
 #define MAX_LEVELS                 101
