@@ -7,6 +7,7 @@
 #include "my_game_popups.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
+#include "my_sdl_proto.hpp"
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, int fbo)
 {
@@ -142,64 +143,50 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
         spoint p(x, y);
         auto   display_tile = false;
 
-        if (g_opt_debug1) {
-          display_tile = true;
-        } else if (is_level_select) {
-          //
-          // No lighting in level selection
-          //
-          display_tile = true;
-        } else if (thing_vision_can_see_tile(g, v, l, player, p)) {
-          //
-          // Can see currently
-          //
-          display_tile = true;
-
-          //
-          // If too few light rays hit this tile, darken it to avoid flicker
-          //
-          auto lit = v->light_map.tile[ p.x ][ p.y ].lit;
-          if (lit < (LIGHT_MAX_RAYS_MAX / 90)) {
+        switch (fbo) {
+          case FBO_MAP_BG :
+            display_tile = false;
             g_monochrome = true;
-          }
 
-          //
-          // If this is the overlay, filter to only things that are always blitted
-          //
-          if (fbo == FBO_MAP_FG_OVERLAY) {
-            if (level_is_blit_colored_always(g, v, l, p)) {
+            if (thing_vision_player_has_seen_tile(g, v, l, p)) {
               //
-              // Always show
+              // Has seen previously
               //
               display_tile = true;
-              g_monochrome = false;
-            } else {
-              //
-              // Filter all other tiles that were shown in the lower layer FBO anyway
-              //
-              display_tile = false;
             }
-          }
-        } else if (thing_vision_player_has_seen_tile(g, v, l, p)) {
-          //
-          // Has seen previously
-          //
-          if (level_is_blit_colored_always(g, v, l, p)) {
-            //
-            // Show in normal colors. Implies "is_blit_if_has_seen".
-            //
-            display_tile = true;
-          } else {
-            //
-            // Show in monochrome
-            //
-            display_tile = true;
-            g_monochrome = true;
-          }
-        }
+            break;
+          case FBO_MAP_FG :
+            display_tile = false;
+            g_monochrome = false;
 
-        if (fbo == FBO_MAP_BG) {
-          g_monochrome = true;
+            if (g_opt_debug1) {
+              display_tile = true;
+            } else if (is_level_select) {
+              //
+              // No lighting in level selection
+              //
+              display_tile = true;
+            } else if (thing_vision_can_see_tile(g, v, l, player, p)) {
+              //
+              // Can see currently
+              //
+              display_tile = true;
+            }
+            break;
+
+          case FBO_MAP_FG_OVERLAY :
+            display_tile = false;
+            g_monochrome = false;
+
+            if (thing_vision_player_has_seen_tile(g, v, l, p)) {
+              if (level_is_blit_colored_always(g, v, l, p)) {
+                //
+                // Always show
+                //
+                display_tile = true;
+              }
+            }
+            break;
         }
 
         if (display_tile) {
@@ -237,8 +224,11 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   level_display_fbo(g, v, l, FBO_MAP_BG);
+  // sdl_fbo_dump(g, FBO_MAP_BG, "FBO_MAP_BG");
   level_display_fbo(g, v, l, FBO_MAP_FG);
+  // sdl_fbo_dump(g, FBO_MAP_FG, "FBO_MAP_FG");
   level_display_fbo(g, v, l, FBO_MAP_FG_OVERLAY);
+  // sdl_fbo_dump(g, FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY");
 
   //
   // Save the old pixel offset for restoring it after zoom toggling

@@ -180,11 +180,11 @@ bool tp_load_player(void)
   tp_on_tick_end_set(tp, tp_player_tick_end);
   tp_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_speed_set(tp, 100);
-  tp_temperature_burns_at_set(tp, 100);      // celsius
-  tp_temperature_damage_at_set(tp, 35);      // celsius
-  tp_temperature_initial_set(tp, 20);        // celsius
-  tp_vision_distance_set(tp, MAP_WIDTH / 2); // tiles
-  tp_weight_set(tp, WEIGHT_HUMAN);           // grams
+  tp_temperature_burns_at_set(tp, 100);  // celsius
+  tp_temperature_damage_at_set(tp, 35);  // celsius
+  tp_temperature_initial_set(tp, 20);    // celsius
+  tp_vision_distance_set(tp, MAP_WIDTH); // tiles
+  tp_weight_set(tp, WEIGHT_HUMAN);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_PLAYER);
   // end sort marker1 }
 
