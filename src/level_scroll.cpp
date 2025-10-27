@@ -58,7 +58,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   float x    = ((target->pix_at.x * zoom) - v->pixel_map_at.x) / (float) w;
   float y    = ((target->pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
 
-  const auto scroll_border = MAP_SCROLL_BORDER;
+  const auto scroll_border = MAP_SCROLL_INNER_EDGE;
   const auto scroll_speed  = MAP_SCROLL_SPEED;
 
   if (v->requested_forced_auto_scroll) {
@@ -70,12 +70,52 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
     //
     // If the player is scrolling the map via the mouse, do not auto scroll.
     //
-    if ((x < MAP_SCROLL_BORDER_EDGE) || (y < MAP_SCROLL_BORDER_EDGE) || (x > 1 - MAP_SCROLL_BORDER_EDGE)
-        || (y > 1 - MAP_SCROLL_BORDER_EDGE)) {
+    if ((x < MAP_SCROLL_OUTER_EDGE) || (y < MAP_SCROLL_OUTER_EDGE) || (x > 1 - MAP_SCROLL_OUTER_EDGE)
+        || (y > 1 - MAP_SCROLL_OUTER_EDGE)) {
       //
       // Unless the player has wandered off screen
       //
-      v->requested_auto_scroll = true;
+      switch (player_state(g, v)) {
+        case PLAYER_STATE_INIT :
+          //
+          // Player not initialized yet
+          // Ignore auto scroll
+          //
+          return;
+        case PLAYER_STATE_DEAD :
+          //
+          // Player is dead.
+          // Re-enable auto scroll
+          //
+          v->requested_auto_scroll = true;
+          break;
+        case PLAYER_STATE_NORMAL :
+          //
+          // Replace the mouse path
+          // Ignore auto scroll
+          //
+          return;
+        case PLAYER_STATE_PATH_REQUESTED :
+          //
+          // Player wants to start following or replace the current path.
+          // Re-enable auto scroll
+          //
+          return;
+        case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
+          //
+          // Wait for confirmation.
+          // Re-enable auto scroll
+          //
+          return;
+        case PLAYER_STATE_FOLLOWING_A_PATH :
+          //
+          // Already following a path, stick to it until completion.
+          // Re-enable auto scroll
+          //
+          v->requested_auto_scroll = true;
+          break;
+        case PLAYER_STATE_ENUM_MAX : return;
+      }
     } else {
       //
       // Ignore auto scroll

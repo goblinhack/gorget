@@ -12,8 +12,6 @@
 #define LEVELS_DOWN                (MAP_HEIGHT / LEVEL_SCALE)
 #define LIGHT_MAX_RAYS_MAX         (360 * 4)
 #define MAP_HEIGHT                 48
-#define MAP_SCROLL_BORDER          0.5
-#define MAP_SCROLL_BORDER_EDGE     0.1
 #define MAP_SCROLL_SPEED           50
 #define MAP_SLOTS                  16
 #define MAP_TILES_ACROSS_DEF       16
@@ -30,5 +28,32 @@
 #define POPUP_TEXT_SCALE_DOWN      1.5
 #define TEST_SEED                  "test-seed"
 #define TICK_DURATION_MS           100
+
+//
+// 'x' is the edge of the visible map
+// 'o' is the outer scroll barrier that kicks in if the player moved the mouse
+//     after the character started to move (and disabled auto scrolling).
+//     hitting this will re-enable auto scrolling to attempt to center the
+//     player.
+// 'i' inner is normally where we try and keep scrolling.
+//
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// x..........................x
+// x.oooooooooooooooooooooooo.x
+// x.o......................o.x
+// x.o......................o.x
+// x.o........iiiiii........o.x
+// x.o........i....i........o.x
+// x.o........i.@..i........o.x
+// x.o........i....i........o.x
+// x.o........iiiiii........o.x
+// x.o......................o.x
+// x.o......................o.x
+// x.oooooooooooooooooooooooo.x
+// x..........................x
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//
+#define MAP_SCROLL_INNER_EDGE 0.45
+#define MAP_SCROLL_OUTER_EDGE 0.1
 
 #endif
