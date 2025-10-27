@@ -134,6 +134,9 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_m
   }
 }
 
+//
+// Display a single thing to an FBO
+//
 void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
                    uint16_t tile_index, int fbo)
 {
@@ -144,31 +147,6 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     return;
   }
 
-  const auto is_level_select = level_is_level_select(g, v, l);
-
-  if (DEBUG || is_level_select) {
-    //
-    // No hiding of oobjects
-    //
-  } else {
-    //
-    // If we cannot see this tile currently, but it is shown if it the tile has been seen, then show it.
-    //
-    if (t_maybe_null && ! thing_vision_can_see_tile(g, v, l, player, p)) {
-      //
-      // "has seen" is implied if we get here at all
-      //
-      if (! thing_is_blit_if_has_seen(t_maybe_null)) {
-        return;
-      }
-    }
-  }
-
-  auto tile = tile_index_to_tile(tile_index);
-  if (! tile) {
-    return;
-  }
-
   //
   // If the thing is falling, do not show it in the overlay, else it appears in front of floor tiles
   //
@@ -176,6 +154,38 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     if (thing_is_falling(t_maybe_null)) {
       return;
     }
+  }
+
+  const auto is_level_select = level_is_level_select(g, v, l);
+
+  if (DEBUG || is_level_select) {
+    //
+    // No hiding of oobjects
+    //
+  } else if (t_maybe_null && ! thing_vision_can_see_tile(g, v, l, player, p)) {
+    //
+    // We cannot see this tile currently.
+    //
+    if (thing_is_blit_if_has_seen(t_maybe_null)) {
+      //
+      // But if it has been seen, then show it, if allowed.
+      //
+    } else if (thing_is_falling(t_maybe_null)) {
+      //
+      // The thing is not currently seen and has not been seen previously.
+      // If the thing is falling, always show it in the background, else things appear to vanish.
+      //
+    } else {
+      //
+      // The thing is not currently seen and has not been seen previously. Hide it.
+      //
+      return;
+    }
+  }
+
+  auto tile = tile_index_to_tile(tile_index);
+  if (! tile) {
+    return;
   }
 
   color fg      = WHITE;
