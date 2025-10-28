@@ -26,7 +26,7 @@ typedef struct {
 
 typedef struct {
   spoint p;
-  double distance;
+  float  distance;
 } RayPixel;
 
 class Raycast
@@ -247,13 +247,13 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  double dr = (double) RAD_360 / ((double) LIGHT_MAX_RAYS_MAX);
+  float dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-    double cosr, sinr;
-    sincos(dr * (double) i, &sinr, &cosr);
+    float cosr, sinr;
+    sincosf(dr * (float) i, &sinr, &cosr);
     ray_pixel_line_draw(
         i, spoint(0, 0),
-        spoint((int) ((double) ray_max_length_in_pixels * cosr), (int) ((double) ray_max_length_in_pixels * sinr)));
+        spoint((int) ((float) ray_max_length_in_pixels * cosr), (int) ((float) ray_max_length_in_pixels * sinr)));
   }
 }
 
@@ -314,7 +314,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   // Center the light on the player
   //
-  spoint light_pos = player->pix_at;
+  spoint light_pos = thing_pix_at(player);
 
   light_pos.x += INNER_TILE_WIDTH / 2;
   light_pos.y += INNER_TILE_HEIGHT / 2;
@@ -500,7 +500,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  spoint light_pos = player->pix_at;
+  spoint light_pos = thing_pix_at(player);
 
   light_pos.x += INNER_TILE_WIDTH / 2;
   light_pos.y += INNER_TILE_HEIGHT / 2;
@@ -515,14 +515,12 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
 
   blit_init();
 
-  int i;
-
   //
   // Walk the light rays in a circle.
   //
   push_point(light_pos.x, light_pos.y);
 
-  for (i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
+  for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     auto    ray = &rays[ i ];
     spoint &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
     int16_t p1x = light_pos.x + p.x;
@@ -533,10 +531,9 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
   //
   // Complete the circle with the first point again.
   //
-  i = 0;
   {
-    auto    ray = &rays[ i ];
-    spoint &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
+    auto    ray = &rays[ 0 ];
+    spoint &p   = ray_pixels[ 0 ][ ray->depth_furthest ].p;
     int16_t p1x = light_pos.x + p.x;
     int16_t p1y = light_pos.y + p.y;
     push_point(p1x, p1y);
@@ -568,6 +565,13 @@ static Raycast *raycast_new(int ray_max_length_in_pixels, int fbo)
 
 void level_light_raycast(Gamep g, Levelsp v, Levelp l, int fbo)
 {
+  //
+  // Do not generate open gl stuff on any other thread
+  //
+  if (g_thread_id != -1) {
+    return;
+  }
+
   if (! g || ! v || ! l) {
     return;
   }
@@ -577,10 +581,16 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, int fbo)
     return;
   }
 
-  if (g_thread_id != -1) {
+  //
+  // We only care about pixel moves.
+  //
+  if (thing_pix_at(player) == player->prev_pix_at) {
     return;
   }
 
+  //
+  // First time init
+  //
   if (! player_raycast) {
     //
     // This is how far the light rays reach

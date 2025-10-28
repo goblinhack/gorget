@@ -73,7 +73,7 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_m
     //
     // All things
     //
-    *tl = t_maybe_null->pix_at;
+    *tl = thing_pix_at(t_maybe_null);
     tl->x *= zoom;
     tl->y *= zoom;
   } else {

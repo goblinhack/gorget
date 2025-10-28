@@ -54,9 +54,10 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   //
   // Where are we as a percentage on that map.
   //
-  int   zoom = game_map_zoom_get(g);
-  float x    = ((target->pix_at.x * zoom) - v->pixel_map_at.x) / (float) w;
-  float y    = ((target->pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
+  int    zoom = game_map_zoom_get(g);
+  spoint pix_at(thing_pix_at(target));
+  float  x = ((pix_at.x * zoom) - v->pixel_map_at.x) / (float) w;
+  float  y = ((pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
 
   const auto scroll_border = MAP_SCROLL_INNER_EDGE;
   const auto scroll_speed  = MAP_SCROLL_SPEED;
@@ -229,7 +230,7 @@ void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l)
 
   int zoom = game_map_zoom_get(g);
 
-  v->pixel_map_at = target->pix_at;
+  v->pixel_map_at = thing_pix_at(target);
   v->pixel_map_at.x *= zoom;
   v->pixel_map_at.y *= zoom;
 

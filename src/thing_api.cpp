@@ -7,6 +7,53 @@
 #include "my_level.hpp"
 #include "my_tp_callbacks.hpp"
 
+spoint thing_prev_pix_at(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return t->prev_pix_at;
+}
+
+spoint thing_prev_pix_at_set(Thingp t, const spoint &val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return t->prev_pix_at = val;
+}
+
+spoint thing_pix_at(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return t->curr_pix_at;
+}
+
+spoint thing_pix_at_set(Thingp t, const spoint &val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return t->curr_pix_at = val;
+}
+
+spoint thing_pix_at_set(Thingp t, short x, short y)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  t->curr_pix_at.x = x;
+  t->curr_pix_at.y = y;
+  return t->curr_pix_at;
+}
+
 int thing_speed(Thingp t)
 {
   TRACE_NO_INDENT();

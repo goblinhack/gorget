@@ -344,7 +344,8 @@ typedef struct Thing_ {
   //
   // Interpolated co-ords in pixels
   //
-  spoint pix_at;
+  spoint prev_pix_at;
+  spoint curr_pix_at;
   //
   // Map co-ords.
   //
@@ -826,6 +827,13 @@ int thing_health(Thingp);
 int thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_health_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+spoint thing_prev_pix_at(Thingp);
+spoint thing_prev_pix_at_set(Thingp t, const spoint &);
+
+spoint thing_pix_at(Thingp);
+spoint thing_pix_at_set(Thingp t, const spoint &);
+spoint thing_pix_at_set(Thingp t, short, short);
 
 bool thing_is_immune_to(Thingp, ThingEventType);
 

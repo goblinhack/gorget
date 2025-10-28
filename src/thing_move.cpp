@@ -242,8 +242,10 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 
   thing_pop(g, v, t);
 
-  t->pix_at.x = t->at.x * INNER_TILE_WIDTH;
-  t->pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  spoint pix_at;
+  pix_at.x = t->at.x * INNER_TILE_WIDTH;
+  pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  thing_pix_at_set(t, pix_at);
 
   t->old_at      = t->at;
   t->moving_from = t->at;
@@ -327,8 +329,10 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
     thing_pop(g, v, t);
   }
 
-  t->pix_at.x = t->at.x * INNER_TILE_WIDTH;
-  t->pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  spoint pix_at;
+  pix_at.x = t->at.x * INNER_TILE_WIDTH;
+  pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  thing_pix_at_set(t, pix_at);
 
   t->old_at = t->at;
   t->at     = to;
@@ -356,6 +360,13 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   //
   if (level_changed) {
     tp_on_level_enter(g, v, new_level, t);
+  }
+
+  if (thing_is_player(t)) {
+    //
+    // Lighting update
+    //
+    level_light_fov_all(g, v, new_level);
   }
 
   return true;
@@ -461,6 +472,8 @@ void thing_update_pos(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  t->pix_at.x = t->at.x * INNER_TILE_WIDTH;
-  t->pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  spoint pix_at;
+  pix_at.x = t->at.x * INNER_TILE_WIDTH;
+  pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  thing_pix_at_set(t, pix_at);
 }
