@@ -192,7 +192,6 @@ using Dmapp        = struct Dmap_ *;
 using Fontp        = class Font *;
 using Levelp       = struct Level_ *;
 using Levelsp      = struct Levels_ *;
-using Lightp       = class Light *;
 using Texp         = class Tex *;
 using ThingId      = unsigned int;
 using ThingExtId   = unsigned short;

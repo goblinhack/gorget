@@ -498,7 +498,7 @@ void    level_assign_tiles(Gamep, Levelsp, Levelp);
 void    level_bounds_set(Gamep, Levelsp, Levelp);
 void    level_count_items(Gamep, Levelsp, Levelp);
 void    level_cursor_copy_mouse_path_to_player(Gamep, Levelsp, Levelp);
-void    level_light_calculate_can_see_callback(Gamep, Levelsp, Levelp, Thingp, spoint pov, spoint p, int max_radius);
+void    level_light_fov_all_can_see_callback(Gamep, Levelsp, Levelp, Thingp, spoint pov, spoint p);
 void    level_cursor_copy_path_to_player(Gamep, Levelsp, Levelp, std::vector< spoint > &move_path);
 void    level_cursor_describe_clear(Gamep, Levelsp);
 void    level_cursor_describe_update(Gamep, Levelsp);
@@ -518,7 +518,9 @@ void    level_forced_auto_scroll(Gamep, Levelsp, Levelp);
 void    level_init(Gamep, Levelsp, Levelp, LevelNum);
 void    level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
 void    level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
-void    level_light_calculate(Gamep, Levelsp, Levelp);
+void    level_light_fov_all(Gamep, Levelsp, Levelp);
+void    level_light_raycast(Gamep g, Levelsp v, Levelp l, int fbo);
+void    level_light_raycast_fini(void);
 void    level_mouse_position_get(Gamep, Levelsp, Levelp);
 void    level_populate(Gamep, Levelsp, Levelp, const char *);
 void    level_populate(Gamep, Levelsp, Levelp, int w, int h, const char *);
@@ -545,7 +547,7 @@ void    level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_
 void    level_water_tick(Gamep, Levelsp, Levelp);
 void    level_water_update(Gamep, Levelsp, Levelp);
 
-typedef void (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p, int max_radius);
+typedef void (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p);
 void level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius,
                level_fov_can_see_callback_t = nullptr);
 

@@ -7,7 +7,6 @@
 #include "my_game_popups.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
-#include "my_light.hpp"
 #include "my_wids.hpp"
 
 static void level_tick_begin(Gamep, Levelsp, Levelp);
@@ -94,7 +93,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
 
   auto player = thing_player(g);
   if (player) {
-    level_light_calculate(g, v, l);
+    level_light_fov_all(g, v, l);
   }
 
   verify(MTYPE_LEVELS, game_levels_get(g));

@@ -193,7 +193,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
           // Per tile can see callback check
           //
           if (can_see_callback) {
-            (can_see_callback)(g, v, l, me, pov, p, max_radius);
+            (can_see_callback)(g, v, l, me, pov, p);
           }
         }
       }
@@ -266,7 +266,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
       // Per tile can see callback check
       //
       if (can_see_callback) {
-        (can_see_callback)(g, v, l, me, pov, pov, max_radius);
+        (can_see_callback)(g, v, l, me, pov, pov);
       }
     }
   }
