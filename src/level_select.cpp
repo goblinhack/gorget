@@ -184,7 +184,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
           DIE("ran out of levels to assign to grid, %u", n);
         }
 
-        if (! l->initialized) {
+        if (! l->is_level_initialized) {
           DIE("trying to use a level that is not initialized, %u", n);
         }
 
@@ -564,9 +564,9 @@ void level_select_update_grid_tiles(Gamep g, Levelsp v)
   auto level_num = LEVEL_SELECT_ID;
   auto l         = game_level_get(g, v, level_num);
 
-  l->initialized   = true;
-  l->level_num     = level_num;
-  l->info.seed_num = game_seed_num_get(g);
+  l->is_level_initialized = true;
+  l->level_num            = level_num;
+  l->info.seed_num        = game_seed_num_get(g);
 
   level_select_map_set(g, v);
 }
@@ -596,7 +596,7 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
   LOG("Level select destroy");
   TRACE_AND_INDENT();
 
-  if (! l || ! l->initialized) {
+  if (! l || ! l->is_level_initialized) {
     return;
   }
 

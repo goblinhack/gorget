@@ -229,8 +229,8 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
 
   memset(l, 0, SIZEOF(*l));
 
-  l->initialized = true;
-  l->level_num   = n;
+  l->is_level_initialized = true;
+  l->level_num            = n;
 }
 
 Levelsp levels_memory_alloc(Gamep g)
@@ -381,7 +381,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (! l || ! l->initialized) {
+  if (! l || ! l->is_level_initialized) {
     return;
   }
 

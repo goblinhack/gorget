@@ -151,7 +151,11 @@ typedef struct Level_ {
   //
   // Flags
   //
-  uint8_t initialized : 1;
+  uint8_t is_level_initialized : 1;
+  //
+  // Has it ticked?
+  //
+  uint8_t is_level_active : 1;
   //
   // Booleans that are set whenever something of this type is created on the level
   // and then cleared at end of tick.

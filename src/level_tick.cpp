@@ -91,20 +91,32 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (player) {
-    level_light_fov_all(g, v, l);
-  }
-
   verify(MTYPE_LEVELS, game_levels_get(g));
 
   v->last_time_step = v->time_step;
+
+  //
+  // First time tick for this level?
+  //
+  if (! l->is_level_active) {
+    l->is_level_active = true;
+
+    //
+    // First lighting update
+    //
+    level_light_fov_all(g, v, l);
+  }
 
   if (v->tick_in_progress) {
     //
     // A tick is running
     //
     level_tick_time_step(g, v, l);
+
+    //
+    // Need to update while moving as raycasting can change
+    //
+    level_light_fov_all(g, v, l);
   } else if (v->tick_begin_requested) {
     //
     // Allow temperatures to settle prior to starting
@@ -200,6 +212,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   //
   if (v->tick_end_requested && ! v->tick_wait_on_things && ! v->tick_wait_on_anim) {
     level_tick_end(g, v, l);
+
+    //
+    // Final lighting update now we've stopped moving
+    //
+    level_light_fov_all(g, v, l);
   }
 
   //
