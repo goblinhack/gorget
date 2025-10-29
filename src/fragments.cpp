@@ -735,13 +735,13 @@ void fragments_init(Gamep g)
                      /* alt  */ (const char *) ".DC.",
                      /* alt  */ (const char *) " xx ", nullptr);
     fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
-                     /* alt  */ (const char *) " || ",
+                     /* alt  */ (const char *) " x| ",
                      /* alt  */ (const char *) ".D..",
-                     /* alt  */ (const char *) " || ", nullptr);
+                     /* alt  */ (const char *) " x| ", nullptr);
     fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
-                     /* alt  */ (const char *) " BB ",
+                     /* alt  */ (const char *) " xB ",
                      /* alt  */ (const char *) ".D..",
-                     /* alt  */ (const char *) " BB ", nullptr);
+                     /* alt  */ (const char *) " xB ", nullptr);
   }
 
   if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,

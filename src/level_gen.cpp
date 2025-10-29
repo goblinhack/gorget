@@ -9,6 +9,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_random.hpp"
+#include "my_sprintf.hpp"
 #include "my_time.hpp"
 
 #include <array>
@@ -143,6 +144,8 @@ static int level_no_exit_room;
 // Fixed or proc gen levels
 //
 static std::array< class LevelGen *, MAX_LEVELS > levels_generated = {};
+
+static void level_gen_dump(Gamep, class LevelGen *, const char *msg = nullptr);
 
 class Cell
 {
@@ -1781,6 +1784,11 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
     auto cand = cands[ pcg_rand() % cands.size() ];
     fragment_put(g, l, f, cand);
 
+    if (unlikely(l->debug)) {
+      auto fragment_name = string_sprintf("placed another fragment %s:%d", f->file, f->line);
+      level_gen_dump(g, l, fragment_name.c_str());
+    }
+
     if (l->info.fragment_count++ >= MAX_LEVEL_GEN_FRAGMENTS) {
       return;
     }
@@ -2048,15 +2056,15 @@ static std::string level_gen_string(Gamep g, class LevelGen *o, class LevelFixed
 //
 // Dump a level
 //
-static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg = nullptr)
+static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
 {
   TRACE_NO_INDENT();
 
   level_gen_mutex.lock();
   if (msg) {
-    LOG("Level: %u (%s)", l->level_num, msg);
+    LOG("Level: %u (%s)", l->level_num + 1, msg);
   } else {
-    LOG("Level: %u", l->level_num);
+    LOG("Level: %u", l->level_num + 1);
   }
 
   LOG("Seed              : %u", l->info.seed_num);
