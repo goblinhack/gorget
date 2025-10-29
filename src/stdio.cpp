@@ -26,7 +26,7 @@ FILE *redirect_stdout(void)
 
   std::string out;
   if (g_thread_id != -1) {
-    out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", g_thread_id);
+    out = string_sprintf("%s%s%s%s%s.level.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt", g_thread_id);
     g_log_stdout = fopen(out.c_str(), "w");
   } else {
     out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stdout.txt");
@@ -39,7 +39,7 @@ FILE *redirect_stdout(void)
   //
   if (! g_log_stdout) {
     if (g_thread_id != -1) {
-      out          = string_sprintf("%s.%d", "gorget.stdout.txt", g_thread_id);
+      out          = string_sprintf("%s.level.%d", "gorget.stdout.txt", g_thread_id);
       g_log_stdout = fopen(out.c_str(), "w");
     } else {
       out                   = "gorget.stdout.txt";
@@ -79,7 +79,7 @@ FILE *redirect_stderr(void)
 
   std::string out;
   if (g_thread_id != -1) {
-    out          = string_sprintf("%s%s%s%s%s.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", g_thread_id);
+    out = string_sprintf("%s%s%s%s%s.level.%d", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt", g_thread_id);
     g_log_stderr = fopen(out.c_str(), "w");
   } else {
     out                   = string_sprintf("%s%s%s%s%s", appdata, DIR_SEP, "gorget", DIR_SEP, "stderr.txt");
@@ -92,7 +92,7 @@ FILE *redirect_stderr(void)
   //
   if (! g_log_stderr) {
     if (g_thread_id != -1) {
-      out          = string_sprintf("%s.%d", "gorget.stderr.txt", g_thread_id);
+      out          = string_sprintf("%s.level.%d", "gorget.stderr.txt", g_thread_id);
       g_log_stderr = fopen(out.c_str(), "w");
     } else {
       out                   = "gorget.stderr.txt";

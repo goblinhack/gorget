@@ -4558,7 +4558,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   //
   // Per thread stdout name
   //
-  g_thread_id = level_num;
+  g_thread_id = level_num + 1;
 
   auto v = game_levels_get(g);
   if (! v) {
