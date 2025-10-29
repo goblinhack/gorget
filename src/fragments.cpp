@@ -79,6 +79,18 @@ void fragments_init(Gamep g)
                      /* alt  */ (const char *) "x..$x",
                      /* alt  */ (const char *) "xxxxx", nullptr);
     fragment_alt_add(g, CHANCE_UNLIKELY, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "x.$mx",
+                     /* alt  */ (const char *) "x...x",
+                     /* alt  */ (const char *) "xxTxx",
+                     /* alt  */ (const char *) " xxx ", nullptr);
+    fragment_alt_add(g, CHANCE_UNLIKELY, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "xm$mx",
+                     /* alt  */ (const char *) "x...x",
+                     /* alt  */ (const char *) "xxTxx",
+                     /* alt  */ (const char *) " xxx ", nullptr);
+    fragment_alt_add(g, CHANCE_UNLIKELY, __FUNCTION__, __LINE__,
                      /* alt  */ (const char *) "....m",
                      /* alt  */ (const char *) ".CCC.",
                      /* alt  */ (const char *) ".C$C.",
@@ -188,6 +200,30 @@ void fragments_init(Gamep g)
                      /* alt  */ (const char *) "x$$x.",
                      /* alt  */ (const char *) "xxsx.",
                      /* alt  */ (const char *) "x....", nullptr);
+    fragment_alt_add(g, CHANCE_VV_UNLIKELY, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "xb$x.",
+                     /* alt  */ (const char *) "x..x.",
+                     /* alt  */ (const char *) "xxsx.",
+                     /* alt  */ (const char *) "x....", nullptr);
+    fragment_alt_add(g, CHANCE_VV_UNLIKELY, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "x$Cx.",
+                     /* alt  */ (const char *) "xCCx.",
+                     /* alt  */ (const char *) "xxsx.",
+                     /* alt  */ (const char *) "x....", nullptr);
+    fragment_alt_add(g, CHANCE_VV_UNLIKELY, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "xTCx.",
+                     /* alt  */ (const char *) "xCCx.",
+                     /* alt  */ (const char *) "xxsx.",
+                     /* alt  */ (const char *) "x....", nullptr);
+    fragment_alt_add(g, CHANCE_VV_UNLIKELY, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "xT.x.",
+                     /* alt  */ (const char *) "x..x.",
+                     /* alt  */ (const char *) "xxsx.",
+                     /* alt  */ (const char *) "x....", nullptr);
   }
 
   if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
@@ -213,6 +249,30 @@ void fragments_init(Gamep g)
                      /* alt  */ (const char *) "xx.xx",
                      /* alt  */ (const char *) "x...x",
                      /* alt  */ (const char *) "x...x",
+                     /* alt  */ (const char *) "x...x", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "x|T|x",
+                     /* alt  */ (const char *) "x...x",
+                     /* alt  */ (const char *) "x...x",
+                     /* alt  */ (const char *) "x...x", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "xCTCx",
+                     /* alt  */ (const char *) "xCCCx",
+                     /* alt  */ (const char *) "x...x",
+                     /* alt  */ (const char *) "x...x", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "x.$.x",
+                     /* alt  */ (const char *) "xCCCx",
+                     /* alt  */ (const char *) "xCCCx",
+                     /* alt  */ (const char *) "x...x", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "xxxxx",
+                     /* alt  */ (const char *) "x.$mx",
+                     /* alt  */ (const char *) "xCCCx",
+                     /* alt  */ (const char *) "xCCCx",
                      /* alt  */ (const char *) "x...x", nullptr);
   }
 
@@ -431,6 +491,42 @@ void fragments_init(Gamep g)
                      /* alt  */ (const char *) ".x...",
                      /* alt  */ (const char *) "..m..",
                      /* alt  */ (const char *) "...x.",
+                     /* alt  */ (const char *) ".....", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) ".....",
+                     /* alt  */ (const char *) ".xxx.",
+                     /* alt  */ (const char *) ".xxx.",
+                     /* alt  */ (const char *) ".xxx.",
+                     /* alt  */ (const char *) ".....", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) ".....",
+                     /* alt  */ (const char *) ".xsx.",
+                     /* alt  */ (const char *) ".xTx.",
+                     /* alt  */ (const char *) ".xxx.",
+                     /* alt  */ (const char *) ".....", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) ".....",
+                     /* alt  */ (const char *) ".   .",
+                     /* alt  */ (const char *) ".   .",
+                     /* alt  */ (const char *) ".   .",
+                     /* alt  */ (const char *) ".....", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) ".....",
+                     /* alt  */ (const char *) ".   .",
+                     /* alt  */ (const char *) ". Ts.",
+                     /* alt  */ (const char *) ".   .",
+                     /* alt  */ (const char *) ".....", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) ".....",
+                     /* alt  */ (const char *) ".   .",
+                     /* alt  */ (const char *) ". $s.",
+                     /* alt  */ (const char *) ".   .",
+                     /* alt  */ (const char *) ".....", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) ".....",
+                     /* alt  */ (const char *) ".   .",
+                     /* alt  */ (const char *) ". mD.",
+                     /* alt  */ (const char *) ".   .",
                      /* alt  */ (const char *) ".....", nullptr);
     fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
                      /* alt  */ (const char *) ".....",
