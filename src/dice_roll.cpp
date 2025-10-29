@@ -2,7 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_dice_roll.hpp"
+#include "my_dice_class.hpp"
 #include "my_random.hpp"
 #include "my_string.hpp"
 

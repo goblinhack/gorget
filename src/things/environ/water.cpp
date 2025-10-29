@@ -8,7 +8,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 
 static std::string tp_water_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -25,7 +25,7 @@ bool tp_load_water(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
-  tp_description_set(tp, tp_water_description_get);
+  thing_description_set(tp, tp_water_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);

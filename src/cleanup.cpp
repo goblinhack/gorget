@@ -110,11 +110,5 @@ void cleanup(void)
     g_exec_dir = nullptr;
   }
 
-#ifdef ENABLE_DEBUG_MEM_LEAKS
-  if (! g_die_occurred) {
-    ptrcheck_leak_print();
-  }
-#endif
-
   LOG("Cleanup done");
 }

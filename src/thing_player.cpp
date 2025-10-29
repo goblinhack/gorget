@@ -7,7 +7,7 @@
 #include "my_level.hpp"
 #include "my_line.hpp"
 #include "my_sound.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_wid_warning.hpp"
 
 Thingp thing_player(Gamep g)
@@ -57,7 +57,7 @@ static bool thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l
 
   FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
   {
-    if (tp_mouse_down(g, v, l, it, x, y, button)) {
+    if (thing_mouse_down(g, v, l, it, x, y, button)) {
       //
       // Processed an event, like door closing
       //

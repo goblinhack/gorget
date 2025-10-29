@@ -9,7 +9,7 @@
 #include "my_thing.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 #include "my_ui.hpp"
@@ -147,8 +147,8 @@ bool tp_load_player(void)
 
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
-  tp_description_set(tp, tp_player_description_get);
-  tp_detail_set(tp, tp_player_detail_get);
+  thing_description_set(tp, tp_player_description_get);
+  thing_detail_set(tp, tp_player_detail_get);
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -175,17 +175,17 @@ bool tp_load_player(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
   tp_light_color_set(tp, "white");
-  tp_on_fall_begin_set(tp, tp_player_on_fall_begin);
-  tp_on_fall_end_set(tp, tp_player_on_fall_end);
-  tp_on_jump_end_set(tp, tp_player_on_jump_end);
-  tp_on_level_enter_set(tp, tp_player_level_enter);
-  tp_on_level_leave_set(tp, tp_player_level_leave);
-  tp_on_level_populated_set(tp, tp_player_level_populated);
-  tp_on_moved_set(tp, tp_player_on_moved);
-  tp_on_teleported_set(tp, tp_player_on_teleported);
-  tp_on_tick_begin_set(tp, tp_player_tick_begin);
-  tp_on_tick_end_set(tp, tp_player_tick_end);
-  tp_on_tick_idle_set(tp, tp_player_tick_idle);
+  thing_on_fall_begin_set(tp, tp_player_on_fall_begin);
+  thing_on_fall_end_set(tp, tp_player_on_fall_end);
+  thing_on_jump_end_set(tp, tp_player_on_jump_end);
+  thing_on_level_enter_set(tp, tp_player_level_enter);
+  thing_on_level_leave_set(tp, tp_player_level_leave);
+  thing_on_level_populated_set(tp, tp_player_level_populated);
+  thing_on_moved_set(tp, tp_player_on_moved);
+  thing_on_teleported_set(tp, tp_player_on_teleported);
+  thing_on_tick_begin_set(tp, tp_player_tick_begin);
+  thing_on_tick_end_set(tp, tp_player_tick_end);
+  thing_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 35);  // celsius

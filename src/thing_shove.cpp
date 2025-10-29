@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_string.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_ui.hpp"
 
 //
@@ -66,7 +66,7 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t
     //
     // Callback for shoving
     //
-    tp_on_shoved(g, v, l, t, shover);
+    thing_on_shoved(g, v, l, t, shover);
 
     if (thing_is_player(t)) {
       thing_shoved_player(g, v, l, t, e);
@@ -102,7 +102,7 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
   // Some items, like braziers need to be knocked over first before shoving.
   //
   if (thing_is_dead_on_shoving(t)) {
-    tp_on_shoved(g, v, l, t, shover);
+    thing_on_shoved(g, v, l, t, shover);
     thing_dead(g, v, l, t, e);
     return true;
   }
@@ -117,7 +117,7 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
     //
     // Callback for shoving
     //
-    tp_on_shoved(g, v, l, t, shover);
+    thing_on_shoved(g, v, l, t, shover);
 
     if (thing_is_player(t)) {
       thing_shoved_player(g, v, l, t, e);

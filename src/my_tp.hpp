@@ -6,6 +6,7 @@
 #ifndef _MY_THING_TEMPLATE_H_
 #define _MY_THING_TEMPLATE_H_
 
+#include "my_color.hpp"
 #include "my_enum.hpp"
 #include "my_types.hpp"
 

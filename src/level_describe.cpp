@@ -6,7 +6,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_string.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_ui.hpp"
 #include "my_wid_botcon.hpp"
 
@@ -189,12 +189,12 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
-    auto one_desc = tp_description_get(g, v, l, it);
+    auto one_desc = thing_description_get(g, v, l, it);
     if (one_desc.empty()) {
       continue;
     }
 
-    auto one_detail = tp_detail_get(g, v, l, it);
+    auto one_detail = thing_detail_get(g, v, l, it);
     if (! one_detail.empty()) {
       level_cursor_describe_add(g, v, it);
     }

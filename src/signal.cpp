@@ -168,6 +168,10 @@ static void common_error_handler(std::string &tech_support)
 
 void segv_handler(int sig)
 {
+  if (g_dying) {
+    return;
+  }
+
   TRACE_NO_INDENT();
 
   signal(SIGSEGV, nullptr);

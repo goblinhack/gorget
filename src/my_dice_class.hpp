@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#ifndef _MY_DICE_ROLL_HPP_
-#define _MY_DICE_ROLL_HPP_
+#ifndef _MY_DICE_CLASS_HPP_
+#define _MY_DICE_CLASS_HPP_
 
 #include <string>
 

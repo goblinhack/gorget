@@ -88,18 +88,10 @@ static void die(void)
 
 static void cleanup_wrapper_(const char *fmt, va_list args)
 {
-  static int g_die_occurred;
-  if (g_die_occurred) {
-    std::cerr << string_sprintf("\nPTRCHECK: NESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
-    exit(1);
-  }
-  g_die_occurred = 1;
-
   auto err = "\n" + timestamp();
   err += ": PTRCHECK: FATAL ERROR: ";
   err += string_sprintf(fmt, args);
   std::cerr << err << std::endl;
-  g_die_occurred = true;
   die();
 }
 

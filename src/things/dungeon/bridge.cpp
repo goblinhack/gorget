@@ -6,7 +6,7 @@
 #include "my_level.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -115,7 +115,7 @@ bool tp_load_bridge(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
-  tp_description_set(tp, tp_bridge_description_get);
+  thing_description_set(tp, tp_bridge_description_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -131,9 +131,9 @@ bool tp_load_bridge(void)
   tp_health_set(tp, "1d12");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
-  tp_on_death_set(tp, tp_bridge_on_death);
-  tp_on_fall_begin_set(tp, tp_bridge_on_fall_begin);
-  tp_on_fall_end_set(tp, tp_bridge_on_fall_end);
+  thing_on_death_set(tp, tp_bridge_on_death);
+  thing_on_fall_begin_set(tp, tp_bridge_on_fall_begin);
+  thing_on_fall_end_set(tp, tp_bridge_on_fall_end);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius

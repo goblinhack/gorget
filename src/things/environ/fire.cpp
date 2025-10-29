@@ -3,12 +3,12 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_dice.hpp"
+#include "my_dice_rolls.hpp"
 #include "my_level.hpp"
 #include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_tp_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -133,7 +133,7 @@ bool tp_load_fire(void)
   // begin sort marker1 {
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d6");
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d6");
-  tp_description_set(tp, tp_fire_description_get);
+  thing_description_set(tp, tp_fire_description_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -156,9 +156,9 @@ bool tp_load_fire(void)
   tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
   tp_long_name_set(tp, name);
-  tp_on_death_set(tp, tp_fire_on_death);
-  tp_on_fall_begin_set(tp, tp_fire_on_fall_begin);
-  tp_on_tick_begin_set(tp, tp_fire_tick_begin);
+  thing_on_death_set(tp, tp_fire_on_death);
+  thing_on_fall_begin_set(tp, tp_fire_on_fall_begin);
+  thing_on_tick_begin_set(tp, tp_fire_tick_begin);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);

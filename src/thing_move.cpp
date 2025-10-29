@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_tile.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 
 //
 // Get thing direction
@@ -298,7 +298,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   }
 
   if (level_changed) {
-    tp_on_level_leave(g, v, old_level, t);
+    thing_on_level_leave(g, v, old_level, t);
   }
 
   //
@@ -359,7 +359,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   // Enter the new level callback. Do this after updating position so that light update works.
   //
   if (level_changed) {
-    tp_on_level_enter(g, v, new_level, t);
+    thing_on_level_enter(g, v, new_level, t);
   }
 
   if (thing_is_player(t)) {

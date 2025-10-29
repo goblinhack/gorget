@@ -6,7 +6,7 @@
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_string.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_ui.hpp"
 
 //
@@ -202,7 +202,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   // Per thing callback
   //
-  tp_on_death(g, v, l, t, e);
+  thing_on_death(g, v, l, t, e);
 }
 
 //

@@ -4,7 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 
 //
 // Called at the beginning of each tick
@@ -21,7 +21,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_on_tick_begin(g, v, l, t);
+  thing_on_tick_begin(g, v, l, t);
 
   //
   // Lifespan tick
@@ -51,7 +51,7 @@ void thing_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_on_tick_idle(g, v, l, t);
+  thing_on_tick_idle(g, v, l, t);
 }
 
 //
@@ -64,7 +64,7 @@ void thing_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Per thing callback
   //
-  tp_on_tick_end(g, v, l, t);
+  thing_on_tick_end(g, v, l, t);
 
   //
   // Mark the tick as completed

@@ -4,7 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 
 Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
 {
@@ -27,7 +27,7 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   //
   // Callback upon spawning
   //
-  tp_on_spawn(g, v, l, t);
+  thing_on_spawn(g, v, l, t);
 
   return t;
 }

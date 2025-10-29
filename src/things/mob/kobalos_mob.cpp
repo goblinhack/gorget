@@ -6,7 +6,7 @@
 #include "my_sound.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -38,8 +38,8 @@ bool tp_load_kobalos_mob(void)
 
   // begin sort marker1 {
   tp_apostrophize_name_set(tp, "kobaloss mob's");
-  tp_description_set(tp, tp_kobalos_mob_description_get);
-  tp_detail_set(tp, tp_kobalos_mob_detail_get);
+  thing_description_set(tp, tp_kobalos_mob_description_get);
+  thing_detail_set(tp, tp_kobalos_mob_detail_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
@@ -67,7 +67,7 @@ bool tp_load_kobalos_mob(void)
   tp_health_set(tp, "1d3+3");
   tp_light_color_set(tp, "green");
   tp_long_name_set(tp, "kobalos mob");
-  tp_on_death_set(tp, tp_kobalos_mob_on_death);
+  thing_on_death_set(tp, tp_kobalos_mob_on_death);
   tp_pluralize_name_set(tp, "kobalosy mobs");
   tp_short_name_set(tp, "kobalos den");
   tp_speed_set(tp, 100);

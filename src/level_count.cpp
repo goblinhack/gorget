@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_cave.hpp"
 #include "my_charmap.hpp"
-#include "my_dice.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
 #include "my_random.hpp"

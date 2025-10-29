@@ -4,7 +4,7 @@
 
 #include <string>
 
-bool               g_die_occurred;                      // Fatal error has occurred
+bool               g_dying;
 bool               g_do_screenshot;                     // Grab a screen shot next fram
 bool               g_errored;                           // An error has occurred
 bool               g_grab_next_key;                     // Waiting for key input

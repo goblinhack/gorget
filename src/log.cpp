@@ -164,13 +164,6 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  if (g_die_occurred) {
-    fprintf(stderr, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
-    fprintf(MY_STDERR, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
-    exit(1);
-  }
-  g_die_occurred = true;
-
   callstack_dump();
   backtrace_dump();
 
@@ -211,13 +204,6 @@ static void cleanup_ok_wrapper_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  if (g_die_occurred) {
-    fprintf(stderr, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
-    fprintf(MY_STDERR, "\nNESTED FATAL ERROR %s %s %d ", __FILE__, __FUNCTION__, __LINE__);
-    exit(1);
-  }
-  g_die_occurred = true;
-
   FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 
   cleanup();
@@ -238,7 +224,12 @@ static void dying_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  char buf[ MAXLONGSTR ];
+  if (g_dying) {
+    return;
+  }
+  g_dying = true;
+
+  char buf[ MAXLONGSTR * 10 ];
   buf[ 0 ] = '\0';
   int len  = 0;
 
@@ -249,7 +240,9 @@ static void dying_(const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   fprintf(stderr, "%s\n", buf);
-  fprintf(MY_STDERR, "%s\n", buf);
+  if (MY_STDERR) {
+    fprintf(MY_STDERR, "%s\n", buf);
+  }
 
   FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 }
@@ -268,12 +261,6 @@ void DYING(const char *fmt, ...)
 static void err_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
-
-  static bool nested_error;
-  if (nested_error) {
-    return;
-  }
-  nested_error = true;
 
   callstack_dump();
   backtrace_dump();
@@ -325,8 +312,6 @@ static void err_(const char *fmt, va_list args)
   if (! g_opt_tests) {
     error_handler(error_buf);
   }
-
-  nested_error = false;
 }
 
 void err_wrapper(const char *fmt, ...)
@@ -336,34 +321,15 @@ void err_wrapper(const char *fmt, ...)
   extern Gamep game;
   auto         g = game;
 
-  static bool nested_error;
-  if (nested_error) {
-    return;
-  }
-  bool old_nested_error = nested_error;
-  nested_error          = true;
-
-  if (old_nested_error) {
-    //
-    // Subsequent errors on quitting, avoid error logging
-    //
-    va_list args;
-    va_start(args, fmt);
-    log_(fmt, args);
-    va_end(args);
-  } else {
-    g_errored = true;
-    va_list args;
-    va_start(args, fmt);
-    err_(fmt, args);
-    va_end(args);
-  }
+  g_errored = true;
+  va_list args;
+  va_start(args, fmt);
+  err_(fmt, args);
+  va_end(args);
 
   wid_unset_focus(g);
   wid_unset_focus_lock();
   wid_console_raise(g);
-
-  nested_error = false;
 
   if (g_quitting) {
     DIE("Error while quitting");

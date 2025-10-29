@@ -6,7 +6,7 @@
 #include "my_thing.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -25,7 +25,7 @@ bool tp_load_smoke(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_description_set(tp, tp_smoke_description_get);
+  thing_description_set(tp, tp_smoke_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);

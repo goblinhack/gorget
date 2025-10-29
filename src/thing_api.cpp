@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 
 spoint thing_prev_pix_at(Thingp t)
 {
@@ -176,9 +176,9 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   t->_is_falling = val;
 
   if (val) {
-    tp_on_fall_begin(g, v, l, t);
+    thing_on_fall_begin(g, v, l, t);
   } else {
-    tp_on_fall_end(g, v, l, t);
+    thing_on_fall_end(g, v, l, t);
   }
 }
 
@@ -567,7 +567,7 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_moving = val;
 
   if (val) {
-    tp_on_moved(g, v, l, t);
+    thing_on_moved(g, v, l, t);
   }
 }
 
@@ -601,7 +601,7 @@ void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_teleporting = val;
 
   if (val) {
-    tp_on_teleported(g, v, l, t);
+    thing_on_teleported(g, v, l, t);
   }
 }
 
@@ -635,9 +635,9 @@ void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_jumping = val;
 
   if (val) {
-    tp_on_jump_begin(g, v, l, t);
+    thing_on_jump_begin(g, v, l, t);
   } else {
-    tp_on_jump_end(g, v, l, t);
+    thing_on_jump_end(g, v, l, t);
   }
 }
 
@@ -680,7 +680,7 @@ bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
     //
     // Try to open
     //
-    if (! tp_on_open_request(g, v, l, t, opener)) {
+    if (! thing_on_open_request(g, v, l, t, opener)) {
       //
       // Open failed
       //
@@ -696,7 +696,7 @@ bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
     //
     // Try to close
     //
-    if (! tp_on_close_request(g, v, l, t, opener)) {
+    if (! thing_on_close_request(g, v, l, t, opener)) {
       //
       // Close failed
       //
@@ -761,7 +761,7 @@ bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
     //
     // Try to collect
     //
-    if (! tp_on_carry_request(g, v, l, item, player_or_monst)) {
+    if (! thing_on_carry_request(g, v, l, item, player_or_monst)) {
       //
       // Collect failed
       //
@@ -790,7 +790,7 @@ bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
     //
     // Try to drop
     //
-    if (! tp_on_drop_request(g, v, l, item, player_or_monst)) {
+    if (! thing_on_drop_request(g, v, l, item, player_or_monst)) {
       //
       // Drop failed
       //

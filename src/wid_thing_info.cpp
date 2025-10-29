@@ -7,7 +7,7 @@
 #include "my_game.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_wids.hpp"
 
 //
@@ -61,7 +61,7 @@ static bool wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp
 {
   TRACE_NO_INDENT();
 
-  parent->log(g, tp_detail_get(g, v, l, t), TEXT_FORMAT_LHS);
+  parent->log(g, thing_detail_get(g, v, l, t), TEXT_FORMAT_LHS);
 
   return true;
 }

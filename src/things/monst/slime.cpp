@@ -6,7 +6,7 @@
 #include "my_thing.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_tp_callbacks.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -34,8 +34,8 @@ bool tp_load_slime(void)
 
   // begin sort marker1 {
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
-  tp_description_set(tp, tp_slime_description_get);
-  tp_detail_set(tp, tp_slime_detail_get);
+  thing_description_set(tp, tp_slime_description_get);
+  thing_detail_set(tp, tp_slime_detail_get);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_jump);
