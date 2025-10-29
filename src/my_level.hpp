@@ -432,9 +432,10 @@ typedef struct Levels_ {
 //
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                   \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                          \
-      for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                            \
-        if ((_t_ = thing_get(_g_, _v_, _l_, _p_, _slot_)))
+    if (! is_oob(_p_))                                                                                               \
+      for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                        \
+        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
+          if ((_t_ = thing_find_optional(_g_, _v_, _l_->thing_id[ _p_.x ][ _p_.y ][ _slot_ ])))
 
 #define FOR_ALL_TPS_AT(_g_, _v_, _l_, _tp_, _p_)                                                                     \
   if (_g_ && _v_ && _l_)                                                                                             \

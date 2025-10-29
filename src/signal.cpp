@@ -139,6 +139,14 @@ static void common_error_handler(std::string &tech_support)
 {
   TRACE_NO_INDENT();
 
+  static bool nested_error;
+
+  if (nested_error) {
+    fprintf(stderr, "Nested error\n");
+    exit(1);
+  }
+  nested_error = true;
+
   extern Gamep game;
   auto         g = game;
 
@@ -164,6 +172,7 @@ static void common_error_handler(std::string &tech_support)
   tech_support += "The goblin responsible for this shall be punished!!!\n";
 
   sdl_msg_box("%s", tech_support.c_str());
+  nested_error = false;
 }
 
 void segv_handler(int sig)

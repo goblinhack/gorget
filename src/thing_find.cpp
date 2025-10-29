@@ -8,7 +8,9 @@
 
 Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 {
-  TRACE_NO_INDENT();
+#ifdef OPT_DEV
+  TRACE_NO_INDENT(); // expensive
+#endif
 
   if (! id) {
     return nullptr;
@@ -32,7 +34,9 @@ Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 
 Thingp thing_find(Gamep g, Levelsp v, ThingId id)
 {
-  TRACE_NO_INDENT();
+#ifdef OPT_DEV
+  TRACE_NO_INDENT(); // expensive
+#endif
 
   ThingIdPacked id_packed = {};
   id_packed.a.val         = id;

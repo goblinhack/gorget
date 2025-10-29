@@ -10,6 +10,10 @@
 
 Tpp thing_tp(Thingp t)
 {
+#ifdef OPT_DEV
+  TRACE_NO_INDENT(); // expensive
+#endif
+
   if (t->tp_id) {
     return tp_find(t->tp_id);
   }
@@ -19,7 +23,9 @@ Tpp thing_tp(Thingp t)
 
 Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 {
-  TRACE_NO_INDENT();
+#ifdef OPT_DEV
+  TRACE_NO_INDENT(); // expensive
+#endif
 
   if (! l) {
     ERR("trying to get a thing on a null level");
@@ -51,7 +57,9 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 
 Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out)
 {
-  TRACE_NO_INDENT();
+#ifdef OPT_DEV
+  TRACE_NO_INDENT(); // expensive
+#endif
 
   if (! l) {
     ERR("trying to get a thing on a null level");

@@ -127,7 +127,9 @@ Tpp tp_find_opt(const std::string &val)
 
 Tpp tp_find(TpId id)
 {
-  TRACE_NO_INDENT();
+#ifdef OPT_DEV
+  TRACE_NO_INDENT(); // expensive
+#endif
 
   if ((int) id - 1 >= (int) tp_vec.size()) {
     DIE("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_vec", id);
@@ -145,7 +147,9 @@ Tpp tp_find(TpId id)
 
 TpId tp_id_get(Tpp tp)
 {
-  TRACE_NO_INDENT();
+#ifdef OPT_DEV
+  TRACE_NO_INDENT(); // expensive
+#endif
 
   return tp->id;
 }
@@ -656,7 +660,10 @@ color tp_light_color(Tpp tp)
 
 int tp_flag(Tpp tp, ThingFlag f)
 {
-  TRACE_NO_INDENT();
+#ifdef OPT_DEV
+  TRACE_NO_INDENT(); // expensive
+#endif
+
   if (! tp) {
     ERR("No thing template pointer set");
     return false;
