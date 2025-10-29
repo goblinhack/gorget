@@ -340,7 +340,7 @@ case "$MY_OS_NAME" in
         #
         DSYM="dsymutil \${TARGET_GAME} &"
 
-        if [[ $OPT_DEV2 != "" ]]; then
+        if [[ $OPT_SANITY_BUILD != "" ]]; then
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
@@ -360,7 +360,7 @@ case "$MY_OS_NAME" in
         EXE=""
         LDLIBS+=" -lGL"
 
-        if [[ $OPT_DEV2 != "" ]]; then
+        if [[ $OPT_SANITY_BUILD != "" ]]; then
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
@@ -385,7 +385,7 @@ esac
 # Windows builds also fail due to missing headers
 #
 WERROR=""
-if [[ $OPT_DEV1 != "" ]]; then
+if [[ $OPT_DEBUG_BUILD != "" ]]; then
     WERROR="-Werror"
 fi
 
@@ -396,8 +396,14 @@ if [[ $OPT_PROF != "" ]]; then
     LDFLAGS+=" -pg"
 fi
 
-if [[ $OPT_DEV1 != "" || $OPT_DEV2 != "" ]]; then
-    C_FLAGS+=" -DOPT_DEV"
+if [[ $OPT_SANITY_BUILD != "" ]]; then
+    C_FLAGS+=" -DSANITY_BUILD"
+fi
+
+if [[ $OPT_DEBUG_BUILD != "" || $OPT_SANITY_BUILD != "" ]]; then
+    C_FLAGS+=" -DDEBUG_BUILD"
+else
+    C_FLAGS+=" -DRELEASE_BUILD"
 fi
 
 OPT_LZ4=
@@ -445,13 +451,13 @@ fi
 
 MAKEFILE=../build/Makefile.template
 
-if [[ $OPT_REL != "" ]]; then
+if [[ $OPT_RELEASE_BUILD != "" ]]; then
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 -ffast-math -g" > $MAKEFILE
 else
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -Og -g" > $MAKEFILE
 fi
 
-if [[ $OPT_DEV2 != "" ]]; then
+if [[ $OPT_SANITY_BUILD != "" ]]; then
     GCC_STACK_CHECK="-fstack-protector-all -D_FORTIFY_SOURCE=2"
     GCC_STACK_CHECK="-fstack-protector-all"
 else
@@ -689,7 +695,7 @@ fi
 #
 # Execute unit tests?
 #
-if [[ $OPT_GITHUB != "" ]]; then
+if [[ $OPT_GITHUB_BUILD != "" ]]; then
     log_info "Running tests:"
     ./${TARGET} --tests --debug
     if [[ $? -ne 0 ]]; then

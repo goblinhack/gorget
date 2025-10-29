@@ -127,7 +127,7 @@ Tpp tp_find_opt(const std::string &val)
 
 Tpp tp_find(TpId id)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -147,7 +147,7 @@ Tpp tp_find(TpId id)
 
 TpId tp_id_get(Tpp tp)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -660,7 +660,7 @@ color tp_light_color(Tpp tp)
 
 int tp_flag(Tpp tp, ThingFlag f)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 

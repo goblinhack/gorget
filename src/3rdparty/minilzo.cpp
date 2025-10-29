@@ -1,3 +1,4 @@
+#ifndef USE_LZ4
 /* minilzo.c -- mini subset of the LZO real-time data compression library
 
    This file is part of the LZO real-time data compression library.
@@ -6355,3 +6356,4 @@ lookbehind_overrun:
 #endif
 
 /***** End of minilzo.c *****/
+#endif

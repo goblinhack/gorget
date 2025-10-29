@@ -115,21 +115,21 @@ Build options:
 
 Usage: $0 [options]
 
-  [--rel]    Release build (all optimizations) (default)
-  [--dev]    Enable development warnings (fastest compile)
-  [--dev2]   Enable stack checking (SLOW)
+  [--rel]    Release build (all optimizations) (DEFAULT)
+  [--dev]    Enable debugs
+  [--sanity] Enable stack checking
   [--prof]   Enable gprof
   [--gcc]    Prefer g++ over clang
   [--github] CI/CD build (turns off modification of README)
 %%
 }
 
-OPT_REL=
-OPT_DEV1=
-OPT_DEV2=
+OPT_RELEASE_BUILD="yes"
+OPT_DEBUG_BUILD=
+OPT_SANITY_BUILD=
 OPT_PROF=
 OPT_GCC=
-OPT_GITHUB=
+OPT_GITHUB_BUILD=
 
 read_opts()
 {
@@ -138,26 +138,22 @@ read_opts()
         option=$1
 
         case $option in
-            -*dev2)
-                OPT_REL=
-                OPT_DEV1=
-                OPT_DEV2=
-                OPT_DEV2="yes"
-                OPT_DEV1="yes"
+            -*sanity)
+                OPT_RELEASE_BUILD=
+                OPT_SANITY_BUILD="yes"
+                OPT_DEBUG_BUILD="yes"
                 shift
                 ;;
             -*dev)
-                OPT_REL=
-                OPT_DEV1=
-                OPT_DEV2=
-                OPT_DEV1="yes"
+                OPT_RELEASE_BUILD=
+                OPT_SANITY_BUILD=
+                OPT_DEBUG_BUILD="yes"
                 shift
                 ;;
             -*rel)
-                OPT_REL=
-                OPT_DEV1=
-                OPT_DEV2=
-                OPT_REL="yes"
+                OPT_DEBUG_BUILD=
+                OPT_SANITY_BUILD=
+                OPT_RELEASE_BUILD="yes"
                 shift
                 ;;
             -*prof)
@@ -169,7 +165,7 @@ read_opts()
                 shift
                 ;;
             -*github)
-                OPT_GITHUB="yes"
+                OPT_GITHUB_BUILD="yes"
                 shift
                 ;;
             *)
@@ -182,10 +178,10 @@ read_opts()
     done
 }
 
-export OPT_DEV2
-export OPT_DEV1
-export OPT_REL
-export OPT_GITHUB
+export OPT_SANITY_BUILD
+export OPT_DEBUG_BUILD
+export OPT_RELEASE_BUILD
+export OPT_GITHUB_BUILD
 export OPT_PROF
 export OPT_GCC
 

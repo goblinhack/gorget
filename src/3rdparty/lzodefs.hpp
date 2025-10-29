@@ -1,3 +1,4 @@
+#ifndef USE_LZ4
 /* lzodefs.h -- architecture, OS and compiler specific defines
 
    This file is part of the LZO real-time data compression library.
@@ -3266,3 +3267,4 @@ LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(lzo_int_fast64_t) == sizeof(lzo_uint_fast6
 #endif /* already included */
 
 /* vim:set ts=4 sw=4 et: */
+#endif

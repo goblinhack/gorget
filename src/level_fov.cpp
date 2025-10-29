@@ -100,7 +100,7 @@ static bool level_fov_light_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, 
 
 static void level_fov_set(FovMap *m, spoint pov, bool val)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   if (is_oob(pov)) {
     ERR("overflow");
     return;
@@ -112,7 +112,7 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
 
 static bool level_fov(FovMap *m, spoint pov)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   if (is_oob(pov)) {
     ERR("overflow");
     return false;

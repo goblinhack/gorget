@@ -10,7 +10,7 @@
 
 Tpp thing_tp(Thingp t)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -23,7 +23,7 @@ Tpp thing_tp(Thingp t)
 
 Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -57,7 +57,7 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 
 Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 

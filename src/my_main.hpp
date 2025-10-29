@@ -65,7 +65,7 @@ void        DYING(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
   if (DEBUG2)                                                                                                        \
   LOG
 
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
 #define ERR DIE
 #else
 #define ERR                                                                                                          \

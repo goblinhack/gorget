@@ -1,3 +1,4 @@
+#ifndef USE_LZ4
 /* lzoconf.h -- configuration of the LZO data compression library
 
    This file is part of the LZO real-time data compression library.
@@ -439,3 +440,4 @@ typedef union {
 #endif /* already included */
 
 /* vim:set ts=4 sw=4 et: */
+#endif

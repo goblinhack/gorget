@@ -8,7 +8,7 @@
 
 Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -34,7 +34,7 @@ Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 
 Thingp thing_find(Gamep g, Levelsp v, ThingId id)
 {
-#ifdef OPT_DEV
+#ifdef DEBUG_BUILD
   TRACE_NO_INDENT(); // expensive
 #endif
 
