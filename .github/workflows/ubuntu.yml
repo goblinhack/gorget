@@ -17,4 +17,6 @@ jobs:
         version: 1.0
     - name: configure
       run: ./RUNME --github --sanity
+      run: ./RUNME --github --debug
+      run: ./RUNME --github 
 
