@@ -211,7 +211,7 @@ static int get_escape_char(const char **re)
     case 'S' : res = NONSPACE << 8; break;
     case 's' : res = SPACE << 8; break;
     case 'd' : res = DIGIT << 8; break;
-    default : res = (*re)[ -1 ]; break;
+    default :  res = (*re)[ -1 ]; break;
   }
 
   return res;
@@ -624,7 +624,7 @@ int main(int argc, char *argv[])
   } else if (! slre_compile(&slre, argv[ 1 ])) {
     printf("Error compiling slre: %s\n", slre.err_str);
   } else {
-    slre_dump(&slre, MY_STDERR);
+    slre_dump(&slre, stderr);
 
     (void) memset(caps, 0, sizeof(caps));
 
