@@ -5,9 +5,9 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -96,6 +96,8 @@ bool tp_load_brazier(void)
 
   // begin sort marker1 {
   thing_description_set(tp, tp_brazier_description_get);
+  thing_on_death_set(tp, tp_brazier_on_death);
+  thing_on_shoved_set(tp, tp_brazier_on_shoved);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -118,8 +120,6 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_tickable);
   tp_light_color_set(tp, "orange");
   tp_long_name_set(tp, name);
-  thing_on_death_set(tp, tp_brazier_on_death);
-  thing_on_shoved_set(tp, tp_brazier_on_shoved);
   tp_weight_set(tp, WEIGHT_MEDIUM); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }

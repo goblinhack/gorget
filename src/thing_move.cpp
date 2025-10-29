@@ -4,8 +4,8 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_tile.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_tile.hpp"
 
 //
 // Get thing direction

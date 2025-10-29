@@ -3,9 +3,9 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -23,8 +23,8 @@ bool tp_load_deep_water(void)
   auto tp   = tp_load("deep_water"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
-  tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
   thing_description_set(tp, tp_deep_water_description_get);
+  tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);

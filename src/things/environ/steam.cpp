@@ -4,9 +4,9 @@
 
 #include "my_callstack.hpp"
 #include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -25,8 +25,8 @@ bool tp_load_steam(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   thing_description_set(tp, tp_steam_description_get);
+  tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);

@@ -3,9 +3,9 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
-#include "my_thing_callbacks.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
@@ -23,9 +23,9 @@ bool tp_load_lava(void)
   auto tp   = tp_load("lava"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
+  thing_description_set(tp, tp_lava_description_get);
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d20+20");
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d20+20");
-  thing_description_set(tp, tp_lava_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
