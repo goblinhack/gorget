@@ -49,5 +49,5 @@ void spoint::unit(void)
 
 float distance(const spoint a, const spoint b)
 {
-  return ((float) DISTANCE((float) a.x, (float) a.y, (float) b.x, (float) b.y));
+  return ((float) DISTANCEf((float) a.x, (float) a.y, (float) b.x, (float) b.y));
 }

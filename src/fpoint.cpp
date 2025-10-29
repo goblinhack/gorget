@@ -46,12 +46,7 @@ void fpoint::unit(void)
   y /= len;
 }
 
-float distance(const fpoint &a, const fpoint &b) { return (((float) DISTANCE(a.x, a.y, b.x, b.y))); }
-
-float distance(const fpoint a, const fpoint b)
-{
-  return ((float) DISTANCE((float) a.x, (float) a.y, (float) b.x, (float) b.y));
-}
+float distance(const fpoint &a, const fpoint &b) { return (((float) DISTANCEf(a.x, a.y, b.x, b.y))); }
 
 //
 // Yields an angle between 0 and 360 deg radians - essentially, how much

@@ -177,7 +177,7 @@ void Raycast::ray_pixel_add(int16_t index, const spoint p0, const spoint p1)
 {
   RayPixel ray;
   ray.p        = p1;
-  ray.distance = DISTANCE(p0.x, p0.y, p1.x, p1.y);
+  ray.distance = DISTANCEf(p0.x, p0.y, p1.x, p1.y);
   ray_pixels[ index ].push_back(ray);
 }
 

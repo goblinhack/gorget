@@ -20,12 +20,8 @@
 
 #define ROUNDUP(x, r) ((r) * floor(((x) + (r)) / (r)))
 
-#undef DISTANCE
-#define DISTANCE(xa, ya, xb, yb) sqrt((double) (SQUARED((xb) - (xa)) + SQUARED((yb) - (ya))))
-
-#undef DISTANCE3f
-#define DISTANCE3f(xa, ya, za, xb, yb, zb)                                                                           \
-  sqrt((double) (SQUARED((xb) - (xa)) + SQUARED((yb) - (ya)) + SQUARED((zb) - (za))))
+#define DISTANCEf(xa, ya, xb, yb) sqrtf((float) (SQUARED((xb) - (xa)) + SQUARED((yb) - (ya))))
+#define DISTANCEd(xa, ya, xb, yb) sqrt((double) (SQUARED((xb) - (xa)) + SQUARED((yb) - (ya))))
 
 #define PI      3.14159265358979323846f        // pi
 #define RAD_45  0.78539816339744830962f        // pi/4
