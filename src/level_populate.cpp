@@ -5,7 +5,9 @@
 #include "my_callstack.hpp"
 #include "my_charmap.hpp"
 #include "my_dice_rolls.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 
 #include <string.h>
@@ -41,6 +43,8 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
   auto tp_player     = tp_find_mand("player");
   auto tp_entrance   = tp_find_mand("entrance");
 
+  bool add_extra_deco = ! g_opt_tests && ! l->is_fixed_level;
+
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
       auto   offset = (w * y) + x;
@@ -59,7 +63,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
       switch (c) {
         case CHARMAP_FLOOR :
           need_floor = true;
-          if (! g_opt_tests) {
+          if (add_extra_deco) {
             if (d100() < 5) {
               need_foliage = true;
             }
@@ -67,7 +71,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_DIRT :
           need_dirt = true;
-          if (! g_opt_tests) {
+          if (add_extra_deco) {
             if (d100() < 50) {
               need_foliage = true;
             }
@@ -101,7 +105,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
         case CHARMAP_WATER :
           need_dirt  = true;
           need_water = true;
-          if (! g_opt_tests) {
+          if (add_extra_deco) {
             if (d100() < 5) {
               need_foliage = true;
             }

@@ -340,7 +340,7 @@ case "$MY_OS_NAME" in
         #
         DSYM="dsymutil \${TARGET_GAME} &"
 
-        if [[ $OPT_SANITY_BUILD != "" ]]; then
+        if [[ $OPT_SANITY_BUILD_ != "" ]]; then
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
@@ -360,7 +360,7 @@ case "$MY_OS_NAME" in
         EXE=""
         LDLIBS+=" -lGL"
 
-        if [[ $OPT_SANITY_BUILD != "" ]]; then
+        if [[ $OPT_SANITY_BUILD_ != "" ]]; then
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
@@ -385,25 +385,25 @@ esac
 # Windows builds also fail due to missing headers
 #
 WERROR=""
-if [[ $OPT_DEBUG_BUILD != "" ]]; then
+if [[ $OPT_DEBUG_BUILD_ != "" ]]; then
     WERROR="-Werror"
 fi
 
 cd src || exit
 
-if [[ $OPT_PROF != "" ]]; then
+if [[ $OPT_PROFILE_BUILD != "" ]]; then
     C_FLAGS+=" -pg"
     LDFLAGS+=" -pg"
 fi
 
-if [[ $OPT_SANITY_BUILD != "" ]]; then
-    C_FLAGS+=" -DSANITY_BUILD"
+if [[ $OPT_SANITY_BUILD_ != "" ]]; then
+    C_FLAGS+=" -D_SANITY_BUILD_"
 fi
 
-if [[ $OPT_DEBUG_BUILD != "" || $OPT_SANITY_BUILD != "" ]]; then
-    C_FLAGS+=" -DDEBUG_BUILD"
+if [[ $OPT_DEBUG_BUILD_ != "" || $OPT_SANITY_BUILD_ != "" ]]; then
+    C_FLAGS+=" -D_DEBUG_BUILD_"
 else
-    C_FLAGS+=" -DRELEASE_BUILD"
+    C_FLAGS+=" -D_RELEASE_BUILD_"
 fi
 
 OPT_LZ4=
@@ -451,13 +451,13 @@ fi
 
 MAKEFILE=../build/Makefile.template
 
-if [[ $OPT_RELEASE_BUILD != "" ]]; then
+if [[ $OPT_RELEASE_BUILD_ != "" ]]; then
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 -ffast-math -g" > $MAKEFILE
 else
     echo "COMPILER_FLAGS=$WERROR $C_FLAGS -Og -g" > $MAKEFILE
 fi
 
-if [[ $OPT_SANITY_BUILD != "" ]]; then
+if [[ $OPT_SANITY_BUILD_ != "" ]]; then
     GCC_STACK_CHECK="-fstack-protector-all -D_FORTIFY_SOURCE=2"
     GCC_STACK_CHECK="-fstack-protector-all"
 else

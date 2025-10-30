@@ -5,10 +5,11 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 
 Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -34,7 +35,7 @@ Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 
 Thingp thing_find(Gamep g, Levelsp v, ThingId id)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
 #endif
 

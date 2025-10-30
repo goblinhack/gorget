@@ -13,8 +13,11 @@
 #else
 #include "3rdparty/minilzo.hpp"
 #endif
+
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"

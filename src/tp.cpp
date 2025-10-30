@@ -6,6 +6,8 @@
 #include "my_color_defs.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_gl.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
 #include "my_thing_callbacks.hpp"
@@ -127,7 +129,7 @@ Tpp tp_find_opt(const std::string &val)
 
 Tpp tp_find(TpId id)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -147,7 +149,7 @@ Tpp tp_find(TpId id)
 
 TpId tp_id_get(Tpp tp)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -660,7 +662,7 @@ color tp_light_color(Tpp tp)
 
 int tp_flag(Tpp tp, ThingFlag f)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
 #endif
 

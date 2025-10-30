@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_globals.hpp"
 #include "my_sprintf.hpp"
 
 //

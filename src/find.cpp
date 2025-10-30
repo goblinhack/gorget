@@ -5,6 +5,8 @@
 #include "my_callstack.hpp"
 #include "my_dir.hpp"
 #include "my_file.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 

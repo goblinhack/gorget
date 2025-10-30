@@ -5,6 +5,7 @@
 #include "my_callstack.hpp" // do not remove
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 
 ENUM_DEF_C(THING_FLAG_ENUM, ThingFlag)
 ENUM_DEF_C(THING_ANIM_ENUM, ThingAnim)

@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game_popups.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_sound.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"

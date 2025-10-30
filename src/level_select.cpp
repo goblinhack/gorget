@@ -6,7 +6,9 @@
 #include "my_charmap.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_game.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_sprintf.hpp"
 #include "my_ui.hpp"
@@ -184,7 +186,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
           DIE("ran out of levels to assign to grid, %u", n);
         }
 
-        if (! l->is_level_initialized) {
+        if (! l->is_initialized_level) {
           DIE("trying to use a level that is not initialized, %u", n);
         }
 
@@ -564,7 +566,7 @@ void level_select_update_grid_tiles(Gamep g, Levelsp v)
   auto level_num = LEVEL_SELECT_ID;
   auto l         = game_level_get(g, v, level_num);
 
-  l->is_level_initialized = true;
+  l->is_initialized_level = true;
   l->level_num            = level_num;
   l->info.seed_num        = game_seed_num_get(g);
 
@@ -596,7 +598,7 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
   LOG("Level select destroy");
   TRACE_AND_INDENT();
 
-  if (! l || ! l->is_level_initialized) {
+  if (! l || ! l->is_initialized_level) {
     return;
   }
 

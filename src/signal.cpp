@@ -5,6 +5,8 @@
 #include "my_backtrace.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_string.hpp"
 
 #include <errno.h>

@@ -1,6 +1,10 @@
 //
 // Copyright goblinhack@gmail.com
 //
+//
+#include "my_backtrace.hpp"
+#include "my_main.hpp"
+#include "my_sprintf.hpp"
 
 #include <iostream>
 #include <string.h>
@@ -21,9 +25,6 @@
 #include <libunwind.h>
 #endif
 #include <memory>
-
-#include "my_backtrace.hpp"
-#include "my_sprintf.hpp"
 
 void Backtrace::init(void)
 {

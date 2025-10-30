@@ -3,7 +3,9 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_main.hpp"
 #include "my_tex.hpp"
+#include "my_tile.hpp"
 #include "my_wid_tiles.hpp"
 
 #include <map>

@@ -6,11 +6,9 @@
 #ifndef _MY_WID_TILES_HPP_
 #define _MY_WID_TILES_HPP_
 
-#include "my_main.hpp"
-#include "my_tile.hpp"
+#include "my_types.hpp"
 
 #include <array>
-#include <memory>
 
 typedef class WidTiles *wid_tilesp;
 

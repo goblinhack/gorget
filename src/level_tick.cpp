@@ -6,7 +6,9 @@
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
 #include "my_gl.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_wids.hpp"
 
 static void level_tick_begin(Gamep, Levelsp, Levelp);
@@ -98,8 +100,8 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   //
   // First time tick for this level?
   //
-  if (! l->is_level_active) {
-    l->is_level_active = true;
+  if (! l->is_active_level) {
+    l->is_active_level = true;
 
     //
     // First lighting update

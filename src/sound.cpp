@@ -2,14 +2,16 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <SDL_mixer.h>
-#include <map>
-
 #include "my_callstack.hpp"
 #include "my_file.hpp"
 #include "my_game.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sound.hpp"
+
+#include <SDL_mixer.h>
+#include <map>
 
 class sound
 {
@@ -55,8 +57,9 @@ bool sound_init(void)
 
 void sound_fini(void)
 {
-  LOG("Sound fini");
   TRACE_NO_INDENT();
+
+  LOG("Sound fini");
 
   if (sound_init_done) {
     sound_init_done = false;

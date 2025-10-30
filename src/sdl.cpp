@@ -7,6 +7,8 @@
 #include "my_command.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_wid_console.hpp"

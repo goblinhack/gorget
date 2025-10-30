@@ -6,8 +6,9 @@
 #ifndef _MY_STRING_UTIL_HPP_
 #define _MY_STRING_UTIL_HPP_
 
-#include "my_main.hpp"
+#include "my_types.hpp"
 
+#include <string>
 #include <vector>
 
 extern size_t strlcpy_(char *dst, const char *src, size_t size);

@@ -2,15 +2,17 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <algorithm>
-#include <map>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_command.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_wid_console.hpp"
+
+#include <algorithm>
+#include <map>
 
 static int wid_console_inited;
 static int wid_console_commands_inited;

@@ -6,7 +6,6 @@
 #ifndef _MY_MAIN_HPP_
 #define _MY_MAIN_HPP_
 
-#include "my_globals.hpp"
 #include "my_types.hpp"
 
 #include <string>
@@ -65,7 +64,7 @@ void        DYING(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
   if (DEBUG2)                                                                                                        \
   LOG
 
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
 #define ERR DIE
 #else
 #define ERR                                                                                                          \

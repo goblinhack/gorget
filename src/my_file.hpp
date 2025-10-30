@@ -6,8 +6,6 @@
 #ifndef _MY_FILE_HPP_
 #define _MY_FILE_HPP_
 
-#include "my_main.hpp"
-
 int            file_write(const char *filename, unsigned char *buffer, int len);
 uint8_t        file_exists(const char *filename);
 int            file_size(const char *filename);

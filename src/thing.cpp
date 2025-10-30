@@ -5,12 +5,13 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 
 #include <iostream>
 
 Tpp thing_tp(Thingp t)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -23,7 +24,7 @@ Tpp thing_tp(Thingp t)
 
 Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
 #endif
 
@@ -57,7 +58,7 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 
 Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
 #endif
 

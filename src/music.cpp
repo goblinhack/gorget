@@ -2,14 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <SDL_mixer.h>
-
 #include "my_callstack.hpp"
 #include "my_file.hpp"
 #include "my_game.hpp"
+#include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_ptrcheck.hpp"
 
+#include <SDL_mixer.h>
 #include <map>
 
 class music

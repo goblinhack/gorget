@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_sprintf.hpp"
 
 std::string to_string(Gamep g, Thingp t)

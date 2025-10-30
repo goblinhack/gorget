@@ -124,10 +124,10 @@ Usage: $0 [options]
 %%
 }
 
-OPT_RELEASE_BUILD="yes"
-OPT_DEBUG_BUILD=
-OPT_SANITY_BUILD=
-OPT_PROF=
+OPT_RELEASE_BUILD_="yes"
+OPT_DEBUG_BUILD_=
+OPT_SANITY_BUILD_=
+OPT_PROFILE_BUILD=
 OPT_GCC=
 OPT_GITHUB_BUILD=
 
@@ -139,25 +139,25 @@ read_opts()
 
         case $option in
             -*sanity)
-                OPT_RELEASE_BUILD=
-                OPT_SANITY_BUILD="yes"
-                OPT_DEBUG_BUILD="yes"
+                OPT_RELEASE_BUILD_=
+                OPT_SANITY_BUILD_="yes"
+                OPT_DEBUG_BUILD_="yes"
                 shift
                 ;;
             -*dev)
-                OPT_RELEASE_BUILD=
-                OPT_SANITY_BUILD=
-                OPT_DEBUG_BUILD="yes"
+                OPT_RELEASE_BUILD_=
+                OPT_SANITY_BUILD_=
+                OPT_DEBUG_BUILD_="yes"
                 shift
                 ;;
             -*rel)
-                OPT_DEBUG_BUILD=
-                OPT_SANITY_BUILD=
-                OPT_RELEASE_BUILD="yes"
+                OPT_DEBUG_BUILD_=
+                OPT_SANITY_BUILD_=
+                OPT_RELEASE_BUILD_="yes"
                 shift
                 ;;
             -*prof)
-                OPT_PROF="yes"
+                OPT_PROFILE_BUILD="yes"
                 shift
                 ;;
             -*gcc)
@@ -178,11 +178,11 @@ read_opts()
     done
 }
 
-export OPT_SANITY_BUILD
-export OPT_DEBUG_BUILD
-export OPT_RELEASE_BUILD
+export OPT_SANITY_BUILD_
+export OPT_DEBUG_BUILD_
+export OPT_RELEASE_BUILD_
 export OPT_GITHUB_BUILD
-export OPT_PROF
+export OPT_PROFILE_BUILD
 export OPT_GCC
 
 read_opts "$@"

@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_command.hpp"
+#include "my_main.hpp"
 #include "my_ui.hpp"
 
 #include <unordered_map>

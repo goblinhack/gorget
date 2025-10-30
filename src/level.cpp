@@ -2,13 +2,16 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <format>
-
 #include "my_charmap.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
+#include "my_ptrcheck.hpp"
 #include "my_test.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
+
+#include <format>
 
 //
 // Are we on the level selection level?
@@ -229,7 +232,7 @@ void level_init(Gamep g, Levelsp v, Levelp l, LevelNum n)
 
   memset(l, 0, SIZEOF(*l));
 
-  l->is_level_initialized = true;
+  l->is_initialized_level = true;
   l->level_num            = n;
 }
 
@@ -381,7 +384,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (! l || ! l->is_level_initialized) {
+  if (! l || ! l->is_initialized_level) {
     return;
   }
 

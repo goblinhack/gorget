@@ -7,7 +7,9 @@
 #include "my_charmap.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_game.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_sprintf.hpp"
 #include "my_time.hpp"
@@ -1810,7 +1812,8 @@ void fragments_fini(Gamep g)
 //
 // Add a level
 //
-void level_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line, ...)
+void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line,
+                     ...)
 {
   TRACE_NO_INDENT();
 
@@ -4328,18 +4331,20 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
   LevelSelect *s = &v->level_select;
 
   auto level                  = game_level_get(g, v, l->level_num);
-  level->is_level_initialized = true;
+  level->is_initialized_level = true;
   level->level_num            = l->level_num;
 
   //
   // Create a string holding all the level chars
   //
   std::string level_string;
+  LevelFixed *fixed_level = nullptr;
+
   if (g_opt_level_name != "") {
     //
     // Test level
     //
-    auto fixed_level = level_fixed_find_by_name(g, g_opt_level_name);
+    fixed_level = level_fixed_find_by_name(g, g_opt_level_name);
     if (! fixed_level) {
       ERR("No fixed level \"%s\" created", g_opt_level_name.c_str());
       return;
@@ -4350,7 +4355,7 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
     //
     // Final boss level
     //
-    auto fixed_level = level_random_get(g, LEVEL_TYPE_BOSS);
+    fixed_level = level_random_get(g, LEVEL_TYPE_BOSS);
     if (! fixed_level) {
       ERR("No fixed boss level \"%u\" created", l->level_num);
       return;
@@ -4372,6 +4377,14 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
   // Copy useful level stats for use in level_populate
   //
   level->info = l->info;
+
+  //
+  // Save the fixed level name. Might be useful.
+  //
+  if (fixed_level) {
+    level->is_fixed_level = true;
+    strlcpy(level->info.name, fixed_level->alias.c_str(), sizeof(level->info.name));
+  }
 
   //
   // Create things

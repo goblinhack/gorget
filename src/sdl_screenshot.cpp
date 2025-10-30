@@ -5,6 +5,8 @@
 #include "3rdparty/stb_image_write.hpp"
 #include "my_callstack.hpp"
 #include "my_gl.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_string.hpp"

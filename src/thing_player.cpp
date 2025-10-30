@@ -4,8 +4,10 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_line.hpp"
+#include "my_main.hpp"
 #include "my_sound.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_wid_warning.hpp"

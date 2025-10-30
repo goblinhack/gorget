@@ -2,25 +2,27 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <iostream>
-#include <signal.h>
-#include <string.h>
-#include <strings.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
 #include "my_ascii.hpp"
 #include "my_audio.hpp"
 #include "my_command.hpp"
 #include "my_font.hpp"
 #include "my_gl.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_music.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_test.hpp"
 #include "my_wid_console.hpp"
 #include "my_wid_tiles.hpp"
+
+#include <iostream>
+#include <signal.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 //
 // Free all resources

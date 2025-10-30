@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
 
 Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)

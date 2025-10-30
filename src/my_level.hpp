@@ -8,6 +8,7 @@
 
 #include "my_game_defs.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_string.hpp"
 #include "my_thing.hpp"
 #include "my_types.hpp"
 
@@ -40,6 +41,11 @@ typedef struct LevelInfo_ {
   // Why C types only ? For large data structures it is visibly
   // faster to malloc and memset versus default construction.
   //////////////////////////////////////////////////////////////
+
+  //
+  // For fixed levels
+  //
+  char name[ MAXSHORTSTR ];
 
   //
   // Seed used to generated this level
@@ -151,11 +157,15 @@ typedef struct Level_ {
   //
   // Flags
   //
-  uint8_t is_level_initialized : 1;
+  uint8_t is_initialized_level : 1;
   //
   // Has it ticked?
   //
-  uint8_t is_level_active : 1;
+  uint8_t is_active_level : 1;
+  //
+  // Is this a pre-generated level and non procedurally generated.
+  //
+  uint8_t is_fixed_level : 1;
   //
   // Booleans that are set whenever something of this type is created on the level
   // and then cleared at end of tick.
@@ -564,7 +574,7 @@ typedef enum {
   LEVEL_TYPE_MAX
 } LevelType;
 
-void level_add(Gamep, int chance, LevelType, const std::string &alias, const char *file, int line, ...);
+void level_fixed_add(Gamep, int chance, LevelType, const std::string &alias, const char *file, int line, ...);
 void levels_init(Gamep);
 void levels_fini(Gamep);
 void levels_test(Gamep);

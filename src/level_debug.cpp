@@ -2,13 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <format>
-
 #include "my_charmap.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_test.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
+
+#include <format>
 
 void level_debug_stats(Gamep g)
 {

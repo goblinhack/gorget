@@ -8,6 +8,8 @@
 #include "my_fpoint.hpp"
 #include "my_game.hpp"
 #include "my_gl.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
 #include "my_string.hpp"

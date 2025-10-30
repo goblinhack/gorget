@@ -5,7 +5,9 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_wids.hpp"
 
@@ -25,8 +27,10 @@ static ts_t wid_last_wait_repeat;
 
 static bool wid_actionbar_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
-  LOG("Actionbar save");
   TRACE_NO_INDENT();
+
+  LOG("Actionbar save");
+
   return game_event_save(g);
 }
 

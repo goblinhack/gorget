@@ -40,6 +40,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing.hpp"
 
 #include <algorithm>
@@ -100,7 +101,7 @@ static bool level_fov_light_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, 
 
 static void level_fov_set(FovMap *m, spoint pov, bool val)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   if (is_oob(pov)) {
     ERR("overflow");
     return;
@@ -112,7 +113,7 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
 
 static bool level_fov(FovMap *m, spoint pov)
 {
-#ifdef DEBUG_BUILD
+#ifdef _DEBUG_BUILD_
   if (is_oob(pov)) {
     ERR("overflow");
     return false;

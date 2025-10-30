@@ -6,9 +6,11 @@
 #ifndef _MY_GETPUT_PIXEL_MACROS_HPP_
 #define _MY_GETPUT_PIXEL_MACROS_HPP_
 
-#include <SDL.h>
-
 #include "my_color.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
+
+#include <SDL.h>
 
 #define pixel_ANYw(s, y)             ((y) * (s->pitch / s->format->BytesPerPixel))
 #define pixel_32bpp(s, x, y)         ((uint32_t *) s->pixels + (x) + pixel_ANYw(s, y))

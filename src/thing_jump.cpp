@@ -6,6 +6,7 @@
 #include "my_fpoint.hpp"
 #include "my_level.hpp"
 #include "my_line.hpp"
+#include "my_main.hpp"
 #include "my_tile.hpp"
 
 //
