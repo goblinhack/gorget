@@ -86,7 +86,6 @@ static bool is_plausible_itanium_prefix(char *s)
 // c++filt -n _ZNK3MapI10StringName3RefI8GDScriptE10ComparatorIS0_E16DefaultAllocatorE3hasERKS0_
 // Map<StringName, Ref<GDScript>, Comparator<StringName>, DefaultAllocator>::has(StringName const&) const
 //
-#ifndef _WIN32
 static auto cppDemangle(const char *abiName)
 {
   //
@@ -116,6 +115,7 @@ static auto cppDemangle(const char *abiName)
   std::unique_ptr< char, decltype(deallocator) > retval(ret, deallocator);
   return retval;
 }
+#ifndef _WIN32
 #endif
 
 std::string Backtrace::to_string(void)
