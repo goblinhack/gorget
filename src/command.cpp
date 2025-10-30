@@ -238,12 +238,12 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
         completes_to[ 0 ] = '\0';
 
         for (t = 0; t < longest_match; t++) {
-          strlcat_(completes_to, command->tokens.args[ t ], SIZEOF(completes_to));
-          strlcat_(completes_to, " ", SIZEOF(completes_to));
+          my_strlcat(completes_to, command->tokens.args[ t ], SIZEOF(completes_to));
+          my_strlcat(completes_to, " ", SIZEOF(completes_to));
         }
 
         if (output) {
-          strlcpy_(output, completes_to, MAXSTR);
+          my_strlcpy(output, completes_to, MAXSTR);
         }
       }
 
@@ -291,21 +291,21 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
 
           for (t = 0; t < longest_match; t++) {
             if (strisregexp(command->tokens.args[ t ])) {
-              strlcat_(cand_expand_to, input_tokens.args[ t ], SIZEOF(cand_expand_to));
-              strlcat_(cand_expand_to, " ", SIZEOF(cand_expand_to));
+              my_strlcat(cand_expand_to, input_tokens.args[ t ], SIZEOF(cand_expand_to));
+              my_strlcat(cand_expand_to, " ", SIZEOF(cand_expand_to));
               continue;
             }
 
-            strlcat_(cand_expand_to, command->tokens.args[ t ], SIZEOF(cand_expand_to));
+            my_strlcat(cand_expand_to, command->tokens.args[ t ], SIZEOF(cand_expand_to));
 
-            strlcat_(cand_expand_to, " ", SIZEOF(cand_expand_to));
+            my_strlcat(cand_expand_to, " ", SIZEOF(cand_expand_to));
           }
 
           if (expands_to[ 0 ] != '\0') {
             common_len               = strcommon(expands_to, cand_expand_to);
             expands_to[ common_len ] = '\0';
           } else {
-            strlcpy_(expands_to, cand_expand_to, SIZEOF(expands_to));
+            my_strlcpy(expands_to, cand_expand_to, SIZEOF(expands_to));
           }
         }
       }
@@ -314,7 +314,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
        * Expands to:
        */
       if (output) {
-        strlcpy_(output, expands_to, MAXSTR);
+        my_strlcpy(output, expands_to, MAXSTR);
       }
     }
   }

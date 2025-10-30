@@ -84,14 +84,14 @@ static bool wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp t, Tp
   //
   memset(tmp, 0, sizeof(tmp));
   memset(tmp, ' ', sizeof(tmp) - 1);
-  strncpy(tmp + 1, "Health", sizeof("Health "));
+  my_strlcpy(tmp + 1, "Health", sizeof("Health "));
 
   //
   // "Health         a/b"
   //
   auto        health_max = tp_health_max_get(tp);
   std::string health_str = std::to_string(thing_health(t)) + "/" + std::to_string(health_max);
-  strncpy(tmp + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
+  my_strlcpy(tmp + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
   tmp[ strlen(tmp) ] = ' ';
 
   //

@@ -121,7 +121,7 @@ char *strsub_(const char *in, const char *look_for, const char *replace_with, co
   }
 
   *buf = '\0';
-  strlcpy_(buf, in, at - in + 1);
+  my_strlcpy(buf, in, at - in + 1);
   strcat(buf, replace_with);
   strcat(buf, at + oldlen);
 
@@ -277,7 +277,7 @@ int strisregexp(const char *in)
   return false;
 }
 
-size_t strlcpy_(char *dst, const char *src, size_t max_len)
+size_t my_strlcpy(char *dst, const char *src, size_t max_len)
 {
   TRACE_NO_INDENT();
   size_t srclen = strlen(src);
@@ -289,13 +289,13 @@ size_t strlcpy_(char *dst, const char *src, size_t max_len)
   return srclen;
 }
 
-size_t strlcat_(char *dst, const char *src, size_t max_len)
+size_t my_strlcat(char *dst, const char *src, size_t max_len)
 {
   TRACE_NO_INDENT();
   uint32_t dstlen = strlen(dst);
   uint32_t srclen = strlen(src);
   if (dstlen < max_len) {
-    strlcpy_(dst + dstlen, src, max_len - dstlen);
+    my_strlcpy(dst + dstlen, src, max_len - dstlen);
   }
   return (dstlen + srclen);
 }
@@ -372,17 +372,6 @@ char *dynprintf(const char *fmt, ...)
   return (mydupstr(ret, __FUNCTION__));
 }
 
-char *dynvprintf(const char *fmt, va_list args)
-{
-  TRACE_NO_INDENT();
-  static char buf[ MAXSTR ];
-
-  buf[ 0 ] = '\0';
-  vsnprintf(buf, MAXSTR, fmt, args);
-
-  return (mydupstr(buf, __FUNCTION__));
-}
-
 /*
  * mybasename
  *
@@ -437,7 +426,7 @@ std::string mybasename(const char *in, const char *who)
 /*
  * Find the first occurrence of find in s, ignore case.
  */
-char *strcasestr_(const char *s, const char *find)
+char *my_strcasestr(const char *s, const char *find)
 {
   TRACE_NO_INDENT();
   char   c, sc;

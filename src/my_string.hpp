@@ -11,8 +11,13 @@
 #include <string>
 #include <vector>
 
-extern size_t strlcpy_(char *dst, const char *src, size_t size);
-extern size_t strlcat_(char *dst, const char *src, size_t size);
+#define strlcpy __use_my_strlcpy__
+#define strncpy __use_my_strlcpy__
+#define strncat __use_my_strlcat__
+
+extern size_t my_strlcpy(char *dst, const char *src, size_t size);
+extern size_t my_strlcat(char *dst, const char *src, size_t size);
+extern char  *my_strcasestr(const char *s, const char *find);
 
 //
 // Max long string size
@@ -22,13 +27,10 @@ extern size_t strlcat_(char *dst, const char *src, size_t size);
 #define MAXSHORTSTR 128
 
 char *dynprintf(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-char *dynvprintf(const char *fmt, va_list args);
 char *strappend(const char *in, const char *append);
-char *strcasestr_(const char *s, const char *find);
 char *strprepend(const char *in, const char *prepend);
 
 int length_without_format(const std::string &);
-
 int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...);
 int strisregexp(const char *in);
 

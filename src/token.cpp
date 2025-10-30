@@ -169,11 +169,11 @@ void tokens_print_to(class Tokens *tokens, char *output, int output_size)
   *output = '\0';
 
   while (cnt < tokens->cnt) {
-    strlcat_(output, tokens->args[ cnt ], output_size);
+    my_strlcat(output, tokens->args[ cnt ], output_size);
     cnt++;
 
     if (cnt < tokens->cnt) {
-      strlcat_(output, " ", output_size);
+      my_strlcat(output, " ", output_size);
     }
   }
 }

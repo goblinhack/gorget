@@ -4383,7 +4383,7 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
   //
   if (fixed_level) {
     level->is_fixed_level = true;
-    strlcpy(level->info.name, fixed_level->alias.c_str(), sizeof(level->info.name));
+    my_strlcpy(level->info.name, fixed_level->alias.c_str(), sizeof(level->info.name));
   }
 
   //
