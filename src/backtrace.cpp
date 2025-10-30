@@ -53,7 +53,6 @@ void Backtrace::init(void)
 //
 // Inspired from https://github.com/nico/demumble/issues
 //
-#ifndef _WIN32
 static bool starts_with(const char *s, const char *prefix) { return strncmp(s, prefix, strlen(prefix)) == 0; }
 
 static bool is_mangle_char_posix(char c)
@@ -76,7 +75,6 @@ static bool is_plausible_itanium_prefix(char *s)
   prefix[ N ] = '\0';
   return strstr(prefix, "_Z");
 }
-#endif
 
 //
 // See
