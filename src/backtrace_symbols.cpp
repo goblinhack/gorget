@@ -13,7 +13,7 @@
 static int g_symInitialised;
 static int g_symInitWorked;
 
-char **backtrace_symbols(void *const *array, int size)
+char **backtrace_symbols(void *const *array, size_t size)
 {
   size_t i, symbols_size;
   char **symbols;
@@ -64,8 +64,9 @@ char **backtrace_symbols(void *const *array, int size)
     symbols_size += line_len + 1;
   }
 
-  for (i = 0; i < size; ++i)
-    symbols[ i ] = (char *) symbols + (int) symbols[ i ];
+  for (i = 0; i < size; ++i) {
+    symbols[ i ] = (char *) symbols + symbols[ i ];
+  }
 
   return symbols;
 }

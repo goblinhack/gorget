@@ -16,7 +16,7 @@
 #include <winbase.h> 
 #include <dbghelp.h>
 // clang-format on
-extern char **backtrace_symbols(void *const *array, int size);
+extern char **backtrace_symbols(void *const *array, size_t size);
 #else
 #include <execinfo.h>
 #endif
