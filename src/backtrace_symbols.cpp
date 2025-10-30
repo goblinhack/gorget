@@ -1,4 +1,3 @@
-#ifdef _MSC_VER
 //
 // from https://gist.github.com/tom-seddon/5171093
 //
@@ -10,9 +9,6 @@
 #include <winbase.h> 
 #include <dbghelp.h>
 // clang-format on
-#else
-#include <execinfo.h>
-#endif
 
 static int g_symInitialised;
 static int g_symInitWorked;
@@ -73,4 +69,4 @@ char **backtrace_symbols(void *const *array, int size)
 
   return symbols;
 }
-#endif //_MSC_VER
+#endif
