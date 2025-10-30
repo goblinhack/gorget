@@ -65,7 +65,7 @@ char **backtrace_symbols(void *const *array, size_t size)
   }
 
   for (i = 0; i < size; ++i) {
-    symbols[ i ] = (char *) symbols + symbols[ i ];
+    symbols[ i ] = (char *) symbols + (uintptr_t) symbols[ i ];
   }
 
   return symbols;
