@@ -15,7 +15,7 @@ static int g_symInitWorked;
 
 char **backtrace_symbols(void *const *array, int size)
 {
-  int    i, symbols_size;
+  size_t i, symbols_size;
   char **symbols;
 
   if (! g_symInitialised) {
