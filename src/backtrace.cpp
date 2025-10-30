@@ -115,14 +115,9 @@ static auto cppDemangle(const char *abiName)
   std::unique_ptr< char, decltype(deallocator) > retval(ret, deallocator);
   return retval;
 }
-#ifndef _WIN32
-#endif
 
 std::string Backtrace::to_string(void)
 {
-#ifdef _WIN32
-  return "";
-#else
   auto        addrlist = &bt[ 0 ];
   std::string sout     = "stack trace\n===========\n";
 
@@ -194,14 +189,10 @@ std::string Backtrace::to_string(void)
   free(symbollist);
 
   return sout;
-#endif
 }
 
 void Backtrace::log(void)
 {
-#ifdef _WIN32
-  return;
-#else
   auto addrlist = &bt[ 0 ];
 
   LOG("stack trace");
@@ -273,7 +264,6 @@ void Backtrace::log(void)
   LOG("end-of-stack");
 
   free(symbollist);
-#endif
 }
 
 #ifdef _WIN32
