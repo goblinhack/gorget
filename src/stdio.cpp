@@ -13,8 +13,13 @@
 //
 FILE *redirect_stdout(void)
 {
+#if 0
+  //
+  // Useful if github tests fail
+  //
   g_log_stdout = stdout;
-  return g_log_stdout;
+#endif
+
   if (likely(g_log_stdout != nullptr)) {
     return g_log_stdout;
   }
@@ -68,8 +73,13 @@ FILE *redirect_stdout(void)
 //
 FILE *redirect_stderr(void)
 {
+#if 0
+  //
+  // Useful if github tests fail
+  //
   g_log_stderr = stderr;
-  return g_log_stderr;
+#endif
+
   if (likely(g_log_stderr != nullptr)) {
     return g_log_stderr;
   }
