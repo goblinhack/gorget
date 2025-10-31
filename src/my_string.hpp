@@ -11,16 +11,6 @@
 #include <string>
 #include <vector>
 
-#ifndef WIN32
-//
-// Not enabled for windows due to: msys64/ucrt64/include/io.h: error: use of undeclared identifier
-// '__use_my_strlcpy__' strncpy(_FindData->name,fd.name,260);
-//
-#define strlcpy __use_my_strlcpy__
-#define strncpy __use_my_strlcpy__
-#define strncat __use_my_strlcat__
-#endif
-
 extern size_t my_strlcpy(char *dst, const char *src, size_t size);
 extern size_t my_strlcat(char *dst, const char *src, size_t size);
 extern char  *my_strcasestr(const char *s, const char *find);
