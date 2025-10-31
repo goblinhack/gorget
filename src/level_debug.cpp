@@ -2,12 +2,12 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_charmap.hpp"
+// REMOVED #include "my_charmap.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_test.hpp"
-#include "my_ui.hpp"
-#include "my_wids.hpp"
+// REMOVED #include "my_ui.hpp"
+// REMOVED #include "my_wids.hpp"
 
 #include <format>
 

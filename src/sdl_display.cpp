@@ -11,7 +11,7 @@
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_tile.hpp"
+// REMOVED #include "my_tile.hpp"
 #include "my_wid_console.hpp"
 
 void sdl_display(Gamep g)

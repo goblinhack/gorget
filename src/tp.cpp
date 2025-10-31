@@ -3,14 +3,14 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
+// REMOVED #include "my_color_defs.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_random.hpp"
-#include "my_thing_callbacks.hpp"
+// REMOVED #include "my_thing_callbacks.hpp"
 #include "my_tp_class.hpp"
 #include "my_tps.hpp"
 

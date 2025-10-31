@@ -7,7 +7,7 @@
 #include "my_command.hpp"
 #include "my_font.hpp"
 #include "my_gfx.hpp"
-#include "my_gl.hpp"
+// REMOVED #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"

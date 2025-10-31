@@ -8,7 +8,7 @@
 #include "my_ascii.hpp"
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
-#include "my_gl.hpp"
+// REMOVED #include "my_gl.hpp"
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
 #include "my_random.hpp"

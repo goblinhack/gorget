@@ -3,11 +3,11 @@
 //
 
 #include "my_callstack.hpp"
-#include "my_color_defs.hpp"
+// REMOVED #include "my_color_defs.hpp"
 #include "my_cpp_template.hpp"
-#include "my_fpoint.hpp"
+// REMOVED #include "my_fpoint.hpp"
 #include "my_game.hpp"
-#include "my_gl.hpp"
+// REMOVED #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"

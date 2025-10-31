@@ -3,7 +3,7 @@
 //
 
 #include "my_gfx.hpp"
-#include "my_gl.hpp"
+// REMOVED #include "my_gl.hpp"
 #include "my_ui.hpp"
 
 static void gfx_init_font_ui(void)
