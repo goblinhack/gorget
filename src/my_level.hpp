@@ -515,6 +515,7 @@ void    level_count_items(Gamep, Levelsp, Levelp);
 void    level_cursor_copy_mouse_path_to_player(Gamep, Levelsp, Levelp);
 void    level_light_fov_all_can_see_callback(Gamep, Levelsp, Levelp, Thingp, spoint pov, spoint p);
 void    level_cursor_copy_path_to_player(Gamep, Levelsp, Levelp, std::vector< spoint > &move_path);
+void    level_minimaps_update(Gamep, Levelsp, Levelp);
 void    level_cursor_describe_clear(Gamep, Levelsp);
 void    level_cursor_describe_update(Gamep, Levelsp);
 void    level_cursor_describe(Gamep, Levelsp, Levelp);

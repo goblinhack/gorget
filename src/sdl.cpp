@@ -778,6 +778,12 @@ void config_game_gfx_update(Gamep g)
   fbo_get_size(g, FBO_FINAL, fbo_tmp_w, fbo_tmp_h);
   LOG("SDL: - FBO_FINAL size          : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
+  fbo_get_size(g, FBO_MINIMAP_WORLD, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MINIMAP_WORLD size  : %dx%d", fbo_tmp_w, fbo_tmp_h);
+
+  fbo_get_size(g, FBO_MINIMAP_LEVEL, fbo_tmp_w, fbo_tmp_h);
+  LOG("SDL: - FBO_MINIMAP_LEVEL size  : %dx%d", fbo_tmp_w, fbo_tmp_h);
+
   LOG("SDL: Map");
   LOG("SDL: - size                    : %dx%d", MAP_WIDTH, MAP_HEIGHT);
   LOG("SDL: - tiles visible           : %dx%d", (int) tiles_across, (int) tiles_down);

@@ -5,6 +5,7 @@
 #include "my_backtrace.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
+#include "my_string.hpp"
 
 #include <iostream>
 #include <string.h>

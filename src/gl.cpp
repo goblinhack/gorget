@@ -503,6 +503,11 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
       w = game_window_pix_width_get(g);
       h = game_window_pix_height_get(g);
       break;
+    case FBO_MINIMAP_WORLD :
+    case FBO_MINIMAP_LEVEL :
+      w = MAP_WIDTH;
+      h = MAP_HEIGHT;
+      break;
   }
 }
 

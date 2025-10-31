@@ -107,6 +107,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     // First lighting update
     //
     level_light_fov_all(g, v, l);
+
+    //
+    // Update minimaps
+    //
+    level_minimaps_update(g, v, l);
   }
 
   if (v->tick_in_progress) {
@@ -219,6 +224,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     // Final lighting update now we've stopped moving
     //
     level_light_fov_all(g, v, l);
+
+    //
+    // Update minimaps
+    //
+    level_minimaps_update(g, v, l);
   }
 
   //

@@ -838,6 +838,12 @@ static void gfx_ui_init_health_bar(void)
   tile_load_arr("data/gfx/ui/health_bar.tga", "health_bar", 192, 8, ARRAY_SIZE(tiles), tiles);
 }
 
+static void gfx_ui_init_solid(void)
+{
+  const char *tiles[] = {"solid"};
+  tile_load_arr("data/gfx/ui/solid.tga", "solid", 8, 8, ARRAY_SIZE(tiles), tiles);
+}
+
 static void gfx_init_tiles(void)
 {
   const char *tiles[] = {
@@ -1318,6 +1324,7 @@ void gfx_init(void)
   gfx_ui_init_9();
   gfx_ui_init_health_bar();
   gfx_ui_init_progress_bar();
+  gfx_ui_init_solid();
   // end sort marker1 }
 }
 
