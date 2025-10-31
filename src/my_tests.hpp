@@ -40,6 +40,5 @@ extern bool test_load_save_load();
 extern bool test_load_teleport();
 extern bool test_load_trampled_grass();
 extern bool test_load_wall();
-
-/* end shell marker1 */
+  /* end shell marker1 */
 #endif // _MY_TESTS_HPP_

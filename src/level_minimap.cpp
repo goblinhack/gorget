@@ -11,6 +11,7 @@
 
 static void level_minimap_update(Gamep g, Levelsp v, Levelp l, int fbo)
 {
+  return;
   TRACE_NO_INDENT();
 
   static Texp solid_tex;

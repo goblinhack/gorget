@@ -13,6 +13,7 @@
 //
 FILE *redirect_stdout(void)
 {
+  return g_log_stdout;
   if (likely(g_log_stdout != nullptr)) {
     return g_log_stdout;
   }
@@ -66,6 +67,7 @@ FILE *redirect_stdout(void)
 //
 FILE *redirect_stderr(void)
 {
+  return g_log_stderr;
   if (likely(g_log_stderr != nullptr)) {
     return g_log_stderr;
   }
