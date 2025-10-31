@@ -137,17 +137,9 @@ static void debug_crash_handler(int sig)
 }
 #endif
 
-static void common_error_handler(std::string &tech_support)
+static void error_handler_do(std::string &tech_support)
 {
   TRACE_NO_INDENT();
-
-  static bool nested_error;
-
-  if (nested_error) {
-    fprintf(stderr, "Nested error\n");
-    exit(1);
-  }
-  nested_error = true;
 
   extern Gamep game;
   auto         g = game;
@@ -174,7 +166,6 @@ static void common_error_handler(std::string &tech_support)
   tech_support += "The goblin responsible for this shall be punished!!!\n";
 
   sdl_msg_box("%s", tech_support.c_str());
-  nested_error = false;
 }
 
 void segv_handler(int sig)
@@ -201,9 +192,20 @@ void error_handler(const std::string &error_msg)
 {
   TRACE_NO_INDENT();
 
+  static bool nested_error;
+
+  if (nested_error) {
+    fprintf(stderr, "Nested error in %s:%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
+    exit(1);
+  }
+  nested_error = true;
+
   std::string tech_support = "Sorry, an error has occurred: ";
   tech_support += error_msg;
-  common_error_handler(tech_support);
+
+  error_handler_do(tech_support);
+
+  nested_error = false;
 }
 
 void ctrlc_handler(int sig)

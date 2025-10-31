@@ -269,6 +269,7 @@ extern GLuint g_fbo_id[ MAX_FBO ];
 extern GLuint g_fbo_tex_id[ MAX_FBO ];
 extern GLuint g_render_buf_id[ MAX_FBO ];
 
+void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, const color &c);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
           GLushort right, GLushort bottom, const color &c);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,

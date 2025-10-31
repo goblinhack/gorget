@@ -180,6 +180,7 @@ class Wid;
 class WidPopup;
 
 struct Level_;
+struct LevelSelect_;
 struct Levels_;
 struct Thing_;
 struct ThingExt_;
@@ -191,6 +192,7 @@ using Gamep        = class Game *;
 using Dmapp        = struct Dmap_ *;
 using Fontp        = class Font *;
 using Levelp       = struct Level_ *;
+using LevelSelectp = struct LevelSelect_ *;
 using Levelsp      = struct Levels_ *;
 using Texp         = class Tex *;
 using ThingId      = unsigned int;

@@ -482,9 +482,6 @@ void gl_fini_fbo(Gamep g)
 
 void fbo_get_size(Gamep g, int fbo, int &w, int &h)
 {
-  w = game_map_fbo_width_get(g);
-  h = game_map_fbo_height_get(g);
-
   switch (fbo) {
     case FBO_MAP_BG :
     case FBO_MAP_FG :
@@ -507,6 +504,9 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
     case FBO_MINIMAP_LEVEL :
       w = MAP_WIDTH;
       h = MAP_HEIGHT;
+      break;
+    default : // newline
+      DIE("Need size for fbo %d", fbo);
       break;
   }
 }
@@ -1411,4 +1411,9 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   gl_push(&bufp, bufp_end, first_vertex, texMinX, texMinY, texMaxX, texMaxY, left, top, right, bottom, color_tl.r,
           color_tl.g, color_tl.b, color_tl.a, color_bl.r, color_bl.g, color_bl.b, color_bl.a, color_tr.r, color_tr.g,
           color_tr.b, color_tr.a, color_br.r, color_br.g, color_br.b, color_br.a);
+}
+
+void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, const color &c)
+{
+  return blit(tex, 0.0, 1.0, 1.0, 0.0, left, top, right, bottom, c);
 }

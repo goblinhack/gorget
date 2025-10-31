@@ -219,6 +219,10 @@ typedef struct LevelSelectCell_ {
   //
   uint8_t is_set;
   //
+  // Ultimate boss level
+  //
+  uint8_t final_level : 1;
+  //
   // Back pointer to the level here, if any
   //
   LevelNum level_num;
@@ -605,19 +609,20 @@ void fragment_alts_fini(Gamep);
 bool fragment_add(Gamep, int chance, const char *file, int line, ...);
 bool fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
 
-bool   level_select_is_oob(int x, int y);
-bool   level_select_is_oob(spoint);
-Levelp level_select_get_level(Gamep, Levelsp, Levelp, spoint);
-Levelp level_select_get_next_level_down(Gamep, Levelsp, Levelp);
-Thingp thing_level_select(Gamep);
-void   level_select_assign_levels_to_grid(Gamep, Levelsp);
-void   level_select_destroy(Gamep, Levelsp, Levelp);
-void   level_select_grid_of_empty_levels(Gamep);
-void   level_select_rightbar_needs_update(Gamep, Levelsp, Levelp);
-void   level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, WidPopup *);
-void   level_select_test(Gamep);
-void   level_select_update_grid_tiles(Gamep, Levelsp);
-void   level_select_user_chose_a_level(Gamep, Levelsp, Levelp);
+bool             level_select_is_oob(int x, int y);
+bool             level_select_is_oob(spoint);
+Levelp           level_select_get_level(Gamep, Levelsp, Levelp, spoint);
+Levelp           level_select_get_next_level_down(Gamep, Levelsp, Levelp);
+Thingp           thing_level_select(Gamep);
+void             level_select_assign_levels_to_grid(Gamep, Levelsp);
+void             level_select_destroy(Gamep, Levelsp, Levelp);
+void             level_select_grid_of_empty_levels(Gamep);
+void             level_select_rightbar_needs_update(Gamep, Levelsp, Levelp);
+void             level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, WidPopup *);
+void             level_select_test(Gamep);
+void             level_select_update_grid_tiles(Gamep, Levelsp);
+void             level_select_user_chose_a_level(Gamep, Levelsp, Levelp);
+LevelSelectCell *level_select_get(Gamep, Levelsp, spoint);
 
 std::string player_state_to_string(PlayerState);
 PlayerState player_state(Gamep, Levelsp);

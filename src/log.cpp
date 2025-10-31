@@ -194,12 +194,20 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
 void CLEANUP_ERR(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
+  static bool nested;
+  if (nested) {
+    fprintf(stderr, "Nested error in %s:%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
+    exit(1);
+  }
+  nested = true;
 
   va_list args;
 
   va_start(args, fmt);
   cleanup_err_wrapper_(fmt, args);
   va_end(args);
+
+  nested = false;
 }
 
 static void cleanup_ok_wrapper_(const char *fmt, va_list args)

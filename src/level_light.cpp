@@ -513,7 +513,10 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
 
   glBlendFunc(GL_ONE, GL_ZERO);
   blit_fbo_bind(fbo);
+
+  glClearColor(255, 0, 0, 255);
   glClear(GL_COLOR_BUFFER_BIT);
+  glClearColor(0, 0, 0, 0);
 
   blit_init();
 

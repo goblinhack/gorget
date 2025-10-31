@@ -190,13 +190,39 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
           DIE("trying to use a level that is not initialized, %u", n);
         }
 
-        s->data[ x ][ y ].level_num = l->level_num;
-        l->level_select_at          = spoint(x, y);
+        auto c             = &s->data[ x ][ y ];
+        l->level_select_at = spoint(x, y);
+
+        c->level_num = l->level_num;
+        if ((x == LEVELS_ACROSS - 1) && (y == LEVELS_DOWN - 1)) {
+          c->final_level = true;
+        }
 
         n++;
       }
     }
   }
+}
+
+//
+// Return the level
+//
+LevelSelectCell *level_select_get(Gamep g, Levelsp v, spoint p)
+{
+  TRACE_NO_INDENT();
+
+  LevelSelect *s = &v->level_select;
+  if (! s) {
+    ERR("null level select");
+    return nullptr;
+  }
+
+  if (level_select_is_oob(p)) {
+    ERR("level select out of range");
+    return nullptr;
+  }
+
+  return &s->data[ p.x ][ p.y ];
 }
 
 //

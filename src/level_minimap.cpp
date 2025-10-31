@@ -4,39 +4,110 @@
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
+#include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
+#include "my_sdl_proto.hpp"
 #include "my_tests.hpp"
 #include "my_tex.hpp"
 
-static void level_minimap_update(Gamep g, Levelsp v, Levelp l, int fbo)
+static Texp solid_tex;
+static int  solid_tex_id;
+
+static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  static Texp solid_tex;
-  static int  solid_tex_id;
-  if (! solid_tex) {
-    solid_tex    = tex_load("", "solid", GL_LINEAR);
-    solid_tex_id = tex_get_gl_binding(solid_tex);
-  }
+  const int  fbo = FBO_MINIMAP_WORLD;
+  const auto dx  = LEVEL_SCALE;
+  const auto dy  = LEVEL_SCALE;
 
   int w, h;
-  fbo_get_size(g, FBO_MAP_LIGHT, w, h);
+  fbo_get_size(g, fbo, w, h);
   gl_enter_2d_mode(g, w, h);
 
-  glBlendFunc(GL_ONE, GL_ZERO);
   blit_fbo_bind(fbo);
+  glBlendFunc(GL_ONE, GL_ZERO);
   glClear(GL_COLOR_BUFFER_BIT);
   blit_init();
 
-  const auto dx = 1;
-  const auto dy = 1;
+  // blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, BROWN);
+
+  for (auto x = 0; x < LEVELS_ACROSS; x++) {
+    for (auto y = 0; y < LEVELS_DOWN; y++) {
+      color  c          = BLACK;
+      Levelp level_over = nullptr;
+
+      spoint p(x, y);
+      auto   s = level_select_get(g, v, p);
+
+      if (s->is_set) {
+        level_over = game_level_get(g, v, s->level_num);
+        if (level_over) {
+          if (level_over->player_completed_level_via_exit) {
+            c = GREEN;
+          } else if (level_over->player_fell_out_of_level) {
+            c = GREEN4;
+          } else {
+            c = GRAY50;
+          }
+
+          if (s->final_level) {
+            c = GOLD;
+          }
+
+          if (level_over == l) {
+            c = CYAN;
+          }
+        } else {
+          continue;
+        }
+      } else {
+        continue;
+      }
+
+      auto X   = x;
+      auto Y   = LEVELS_DOWN - y;
+      auto tlx = X * dx;
+      auto tly = Y * dy;
+      auto brx = tlx + (dx - 1);
+      auto bry = tly + (dy - 1);
+
+      tlx += 0;
+      tly -= 3;
+      brx += 0;
+      bry -= 3;
+
+      blit(solid_tex_id, tlx, tly, brx, bry, c);
+    }
+  }
+
+  blit_flush();
+  blit_fbo_unbind();
+}
+
+static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  const int  fbo = FBO_MINIMAP_LEVEL;
+  const auto dx  = 1;
+  const auto dy  = 1;
+
+  int w, h;
+  fbo_get_size(g, fbo, w, h);
+  gl_enter_2d_mode(g, w, h);
+
+  blit_fbo_bind(fbo);
+  glBlendFunc(GL_ONE, GL_ZERO);
+  glClear(GL_COLOR_BUFFER_BIT);
+  blit_init();
 
   for (auto x = 0; x < MAP_WIDTH; x++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
-      color c = BLACK;
-
+      color  c = BLACK;
       spoint p(x, y);
 
       if (level_is_dirt(g, v, l, p)) {
@@ -98,16 +169,10 @@ static void level_minimap_update(Gamep g, Levelsp v, Levelp l, int fbo)
       if (level_is_lava(g, v, l, p)) {
         c = RED;
       }
-      if (level_is_mob1(g, v, l, p)) {
+      if (level_is_mob(g, v, l, p)) {
         c = ORANGE;
       }
-      if (level_is_mob2(g, v, l, p)) {
-        c = ORANGE;
-      }
-      if (level_is_monst_group_easy(g, v, l, p)) {
-        c = ORANGE;
-      }
-      if (level_is_monst_group_hard(g, v, l, p)) {
+      if (level_alive_is_monst(g, v, l, p)) {
         c = ORANGE;
       }
       if (level_is_pillar(g, v, l, p)) {
@@ -148,11 +213,12 @@ static void level_minimap_update(Gamep g, Levelsp v, Levelp l, int fbo)
       auto tly = Y * dy;
       auto brx = tlx + dx;
       auto bry = tly + dy;
-      blit(solid_tex_id, 0, 0, 1, 1, tlx, tly, brx, bry, c);
+
+      blit(solid_tex_id, tlx, tly, brx, bry, c);
     }
   }
 
-  blit_fini();
+  blit_flush();
   blit_fbo_unbind();
 }
 
@@ -164,6 +230,14 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  level_minimap_update(g, v, l, FBO_MINIMAP_WORLD);
-  level_minimap_update(g, v, l, FBO_MINIMAP_LEVEL);
+  if (! solid_tex) {
+    solid_tex    = tex_load("", "solid", GL_LINEAR);
+    solid_tex_id = tex_get_gl_binding(solid_tex);
+  }
+
+  level_minimap_levels_update(g, v, l);
+  //  sdl_fbo_dump(g, FBO_MINIMAP_LEVEL, "level");
+
+  level_minimap_world_update(g, v, l);
+  // sdl_fbo_dump(g, FBO_MINIMAP_WORLD, "world");
 }
