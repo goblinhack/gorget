@@ -41,8 +41,20 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       char   c = CHARMAP_EMPTY;
       spoint p(x, y);
 
+      if (level_is_dirt(g, v, l, p)) {
+        c = CHARMAP_DIRT;
+      }
       if (level_is_floor(g, v, l, p)) {
         c = CHARMAP_FLOOR;
+      }
+      if (level_is_corridor(g, v, l, p)) {
+        c = CHARMAP_CORRIDOR;
+      }
+      if (level_alive_is_foliage(g, v, l, p)) {
+        c = CHARMAP_FOLIAGE;
+      }
+      if (level_alive_is_grass(g, v, l, p)) {
+        c = CHARMAP_GRASS;
       }
       if (level_is_wall(g, v, l, p)) {
         c = CHARMAP_WALL;
@@ -58,15 +70,6 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       }
       if (level_is_chasm(g, v, l, p)) {
         c = CHARMAP_CHASM;
-      }
-      if (level_is_corridor(g, v, l, p)) {
-        c = CHARMAP_CORRIDOR;
-      }
-      if (level_is_deep_water(g, v, l, p)) {
-        c = CHARMAP_DEEP_WATER;
-      }
-      if (level_is_dirt(g, v, l, p)) {
-        c = CHARMAP_DIRT;
       }
       if (level_is_door_unlocked(g, v, l, p)) {
         if (level_open_is_door_unlocked(g, v, l, p)) {
@@ -89,12 +92,6 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
           c = CHARMAP_DOOR_SECRET;
         }
       }
-      if (level_alive_is_foliage(g, v, l, p)) {
-        c = CHARMAP_FOLIAGE;
-      }
-      if (level_alive_is_grass(g, v, l, p)) {
-        c = CHARMAP_GRASS;
-      }
       if (level_is_key(g, v, l, p)) {
         c = CHARMAP_KEY;
       }
@@ -103,6 +100,9 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       }
       if (level_is_water(g, v, l, p)) {
         c = CHARMAP_WATER;
+      }
+      if (level_is_deep_water(g, v, l, p)) {
+        c = CHARMAP_DEEP_WATER;
       }
       if (level_is_mob1(g, v, l, p)) {
         c = CHARMAP_MOB1;
@@ -127,9 +127,6 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       }
       if (level_is_treasure(g, v, l, p)) {
         c = CHARMAP_TREASURE;
-      }
-      if (level_is_wall(g, v, l, p)) {
-        c = CHARMAP_WALL;
       }
       if (level_is_entrance(g, v, l, p)) {
         c = CHARMAP_ENTRANCE;
