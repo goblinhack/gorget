@@ -16,7 +16,7 @@ static WidPopup *wid_rightbar;
 static bool wid_rightbar_create_window(Gamep g)
 {
   TRACE_NO_INDENT();
-  TOPCON("Remake rightbar");
+  DBG2("Remake rightbar");
 
   wid_rightbar_fini(g);
 
@@ -63,7 +63,6 @@ static bool wid_rightbar_create_window(Gamep g)
     wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
   }
 
-  TOPCON("add minimaps");
   auto minimap_size = 14;
 
   {
