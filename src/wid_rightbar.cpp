@@ -17,7 +17,7 @@ static bool wid_rightbar_create_window(Gamep g)
 {
   // TODO
   if (g_opt_tests) {
-    return;
+    return false;
   }
 
   TRACE_NO_INDENT();
