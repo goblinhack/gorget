@@ -769,43 +769,62 @@ void ptrcheck_leak_print(void)
   }
 }
 
-#if 0
-void ptrcheck_usage_cleanup (void)
+static void ptrcheck_fini(int mtype)
 {
-  hash_elem_t //slot;
-  hash_elem_t *elem;
-  hash_elem_t *next;
-  Ptrcheck *pc;
-  int i;
-  int j;
+  hash_elem_t **slot;
+  hash_elem_t  *elem;
+  Ptrcheck     *pc;
+  int           i;
 
-  if (!hash) {
+  if (! hash[ mtype ]) {
     return;
   }
 
-  for (i = 0; i < hash->hash_size; i++) {
-    slot = &hash->elements[i];
+  for (i = 0; i < hash[ mtype ]->hash_size; i++) {
+    slot = &hash[ mtype ]->elements[ i ];
     elem = *slot;
 
     while (elem) {
       pc = elem->pc;
 
-      delete (pc->allocated_by);
-      delete (pc->freed_by);
-
-      for (j=0; j < ENABLE_PTRCHECK_HISTORY; j++) {
-        delete (pc->last_seen[j]);
+      auto a = pc->allocated_by;
+      if (a) {
+        delete a->bt;
+        delete a;
+        pc->allocated_by = nullptr;
       }
 
-      next = elem->next;
-      delete elem;
+      auto f = pc->freed_by;
+      if (f) {
+        delete a->bt;
+        delete f;
+        pc->freed_by = nullptr;
+      }
+
+      for (auto j = 0; j < ENABLE_PTRCHECK_HISTORY; j++) {
+        auto p = pc->last_seen[ j ];
+        if (p) {
+          delete p->bt;
+          delete p;
+          pc->last_seen[ j ] = nullptr;
+        }
+      }
+
+      auto next = elem->next;
+      free(elem);
       elem = next;
     }
   }
 
-  delete hash->elements;
-  delete hash;
+  free(hash[ mtype ]->elements);
+  free(hash[ mtype ]);
 
-  hash = 0;
+  hash[ mtype ] = nullptr;
 }
-#endif
+
+void ptrcheck_fini(void)
+{
+  for (int mtype = 0; mtype < MTYPE_MAX; mtype++) {
+    ptrcheck_fini(mtype);
+  }
+}

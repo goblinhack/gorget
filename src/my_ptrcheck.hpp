@@ -11,6 +11,7 @@
 //
 #define PTRCHECK_AT SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM
 
+void  ptrcheck_fini(void);
 void *myzalloc_(int size, const char *what, const char *func, const char *file, int line);
 void *mymalloc_(int size, const char *what, const char *func, const char *file, int line);
 void *myrealloc_(void *ptr, int size, const char *what, const char *func, const char *file, int line);

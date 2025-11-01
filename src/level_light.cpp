@@ -10,6 +10,8 @@
 #include "my_tile.hpp"
 
 #include <array>
+#include <math.h>
+#include <string.h>
 
 typedef struct {
   int16_t depth_furthest;

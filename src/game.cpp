@@ -489,6 +489,7 @@ void game_fini(Gamep g)
 
   TRACE_NO_INDENT();
   delete g;
+  oldptr(MTYPE_GAME, g);
   game = NULL;
 }
 

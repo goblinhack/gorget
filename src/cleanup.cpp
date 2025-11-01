@@ -112,4 +112,7 @@ void cleanup(void)
   }
 
   LOG("Cleanup done");
+
+  ptrcheck_leak_print();
+  ptrcheck_fini();
 }
