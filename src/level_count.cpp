@@ -3,12 +3,7 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_cave.hpp"
-// REMOVED #include "my_charmap.hpp"
-// REMOVED #include "my_game.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_random.hpp"
-// REMOVED #include "my_time.hpp"
 
 //
 // See what's on the level

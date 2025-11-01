@@ -6,7 +6,6 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-// REMOVED #include "my_ptrcheck.hpp"
 #include "my_test.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
@@ -368,11 +367,9 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
            game_seed_name_get(g));
   }
 
-  //
-  // Enable/disable load and save buttons
-  //
-  wid_actionbar_fini(g);
-  wid_actionbar_init(g);
+  TOPCON("new level, need to remake");
+  level_update_visibility(g, v, l);
+  game_request_to_remake_ui_set(g);
 
   return new_level;
 }

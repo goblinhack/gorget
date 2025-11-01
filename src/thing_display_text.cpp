@@ -6,9 +6,7 @@
 #include "my_color_defs.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_string.hpp"
 #include "my_ui.hpp"
 
 void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::string const &text, color fg,

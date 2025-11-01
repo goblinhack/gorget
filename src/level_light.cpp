@@ -3,22 +3,11 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_cave.hpp"
-// REMOVED #include "my_charmap.hpp"
-// REMOVED #include "my_game.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_math.hpp"
-// REMOVED #include "my_ptrcheck.hpp"
-// REMOVED #include "my_random.hpp"
-// REMOVED #include "my_sdl_event.hpp"
-// REMOVED #include "my_tex.hpp"
-// REMOVED #include "my_thing.hpp"
 #include "my_tile.hpp"
-// REMOVED #include "my_time.hpp"
-// REMOVED #include "my_tp.hpp"
 
 #include <array>
 
@@ -580,13 +569,6 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, int fbo)
 
   auto player = thing_player(g);
   if (! player) {
-    return;
-  }
-
-  //
-  // We only care about pixel moves.
-  //
-  if (thing_pix_at(player) == player->prev_pix_at) {
     return;
   }
 

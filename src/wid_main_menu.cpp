@@ -5,7 +5,6 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"

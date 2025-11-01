@@ -557,6 +557,7 @@ void    level_tick_teleport(Gamep, Levelsp, Levelp);
 void    level_tick_water(Gamep, Levelsp, Levelp);
 void    level_tick(Gamep, Levelsp, Levelp);
 bool    level_is_level_select(Gamep, Levelsp, Levelp);
+void    level_update_visibility(Gamep, Levelsp, Levelp);
 void    level_tile_update_set(Gamep, Levelsp, Levelp, spoint);
 void    level_tile_update(Gamep, Levelsp, Levelp);
 void    levels_destroy(Gamep, Levelsp);

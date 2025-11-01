@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-// REMOVED #include "my_string.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_ui.hpp"
 

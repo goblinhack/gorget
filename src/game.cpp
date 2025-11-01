@@ -8,7 +8,6 @@
 #include "my_ascii.hpp"
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
 #include "my_random.hpp"
@@ -291,6 +290,7 @@ public:
   void state_change(GameState state, const std::string &);
   void state_reset(const std::string &);
   void tick(void);
+  void handle_game_request_to_remake_ui(void);
 
   std::string load_config(void);
 };
@@ -1013,9 +1013,10 @@ void game_state_change(Gamep g, GameState new_state, const char *why)
 //
 // Do something per tick in a given state
 //
-void Game::tick(void)
+void Game::handle_game_request_to_remake_ui(void)
 {
   TRACE_NO_INDENT();
+  TOPCON("handle_game_request_to_remake_ui");
 
   auto g = this;
   auto v = game_levels_get(g);
@@ -1046,6 +1047,22 @@ void Game::tick(void)
     case STATE_GENERATED :         break;
     case GAME_STATE_ENUM_MAX :     break;
   }
+
+  //
+  // Common to all states
+  //
+  game_request_to_remake_ui_unset(g);
+}
+
+//
+// Do something per tick in a given state
+//
+void Game::tick(void)
+{
+  TRACE_NO_INDENT();
+
+  auto g = this;
+  auto v = game_levels_get(g);
 
   switch (state) {
     case STATE_INIT :      break;
@@ -1087,10 +1104,7 @@ void Game::tick(void)
     case GAME_STATE_ENUM_MAX :     break;
   }
 
-  //
-  // Common to all states
-  //
-  game_request_to_remake_ui_unset(g);
+  handle_game_request_to_remake_ui();
 
   //
   // Create the dead widget?

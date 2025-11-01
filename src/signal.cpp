@@ -30,11 +30,14 @@ void callstack_dump(void)
     fflush(MY_STDERR);
   }
 
-  CON("code trace");
-  CON("==========");
-  for (auto depth = 0; depth < g_callframes_depth; depth++) {
-    auto iter = &callframes[ depth ];
-    CON("(con-trace) %d %s, line %u", depth, iter->func, iter->line);
+  if (MY_STDERR != stderr) {
+    fprintf(stderr, "code trace\n");
+    fprintf(stderr, "==========\n");
+    for (auto depth = 0; depth < g_callframes_depth; depth++) {
+      auto iter = &callframes[ depth ];
+      fprintf(stderr, "(trace) %d %s, line %u\n", depth, iter->func, iter->line);
+      fflush(stderr);
+    }
   }
 }
 
@@ -196,6 +199,8 @@ void error_handler(const std::string &error_msg)
 
   if (nested_error) {
     fprintf(stderr, "Nested error in %s:%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
+    callstack_dump();
+    backtrace_dump();
     exit(1);
   }
   nested_error = true;

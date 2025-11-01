@@ -7,7 +7,6 @@
 #include "my_command.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_log.hpp"
 #include "my_main.hpp"
@@ -1569,6 +1568,10 @@ void wid_set_tile(int depth, Widp w, Tilep tile) { w->tiles[ depth ] = tile; }
 void wid_set_tilename(int depth, Widp w, std::string name)
 {
   TRACE_NO_INDENT();
+
+  if (g_opt_tests) {
+    return;
+  }
 
   Tilep tile = tile_find(name);
   if (unlikely(! tile)) {

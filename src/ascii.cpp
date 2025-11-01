@@ -7,7 +7,6 @@
 #include "my_color_defs.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_main.hpp"
 #include "my_string.hpp"
 #include "my_time.hpp"

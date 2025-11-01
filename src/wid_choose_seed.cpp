@@ -6,7 +6,6 @@
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
-// REMOVED #include "my_string.hpp"
 #include "my_ui.hpp"
 #include "my_wid_keyboard.hpp"
 #include "my_wids.hpp"

@@ -6,7 +6,6 @@
 #include "my_audio.hpp"
 #include "my_command.hpp"
 #include "my_font.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"

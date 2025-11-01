@@ -6,7 +6,6 @@
 #include "my_callstack.hpp"
 #include "my_command.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_sdl_event.hpp"

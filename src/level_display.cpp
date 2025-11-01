@@ -9,7 +9,6 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-// REMOVED #include "my_sdl_proto.hpp"
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, int fbo)
 {

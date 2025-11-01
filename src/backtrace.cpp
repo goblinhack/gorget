@@ -270,8 +270,6 @@ void Backtrace::log(void)
 #include <errno.h>
 #include <windows.h>
 
-void backtrace_dump() { fprintf(MY_STDERR, "%s", backtrace_string().c_str()); }
-
 std::string backtrace_string(void)
 {
   char tmp[ 10000 ];
@@ -334,10 +332,15 @@ std::string backtrace_string(void)
   bt->init();
   return bt->to_string();
 }
+#endif
 
 void backtrace_dump(void)
 {
   auto bt = backtrace_string();
+
   fprintf(MY_STDERR, "%s", bt.c_str());
+
+  if (MY_STDERR != stderr) {
+    fprintf(stderr, "%s", bt.c_str());
+  }
 }
-#endif

@@ -16,7 +16,7 @@ static WidPopup *wid_rightbar;
 static bool wid_rightbar_create_window(Gamep g)
 {
   TRACE_NO_INDENT();
-  DBG2("Remake rightbar");
+  TOPCON("Remake rightbar");
 
   wid_rightbar_fini(g);
 
@@ -63,6 +63,7 @@ static bool wid_rightbar_create_window(Gamep g)
     wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
   }
 
+  TOPCON("add minimaps");
   auto minimap_size = 14;
 
   {
@@ -74,6 +75,10 @@ static bool wid_rightbar_create_window(Gamep g)
     wid_set_text_top(w, true);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_color(w, WID_COLOR_BG, WHITE);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_color(w, WID_COLOR_BG, WHITE);
   }
 
   {
@@ -85,6 +90,10 @@ static bool wid_rightbar_create_window(Gamep g)
     wid_set_text_top(w, true);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_color(w, WID_COLOR_BG, WHITE);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_color(w, WID_COLOR_BG, WHITE);
   }
 
   {
@@ -96,6 +105,10 @@ static bool wid_rightbar_create_window(Gamep g)
     wid_set_text_top(w, true);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_color(w, WID_COLOR_BG, WHITE);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_color(w, WID_COLOR_BG, WHITE);
   }
 
   {
@@ -105,7 +118,13 @@ static bool wid_rightbar_create_window(Gamep g)
     wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_WORLD");
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
+    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_color(w, WID_COLOR_BG, WHITE);
+    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_color(w, WID_COLOR_BG, WHITE);
   }
+
+  wid_update(g, wid_rightbar->wid_popup_container);
 
   return true;
 }

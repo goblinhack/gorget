@@ -185,7 +185,7 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
   fprintf(stderr, "%s\n", buf);
   fprintf(MY_STDERR, "%s\n", buf);
 
-  ERR("%s", buf + tslen);
+  CON("%s", buf + tslen);
   FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 
   cleanup();
@@ -194,9 +194,12 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
 void CLEANUP_ERR(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
+
   static bool nested;
   if (nested) {
     fprintf(stderr, "Nested error in %s:%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
+    callstack_dump();
+    backtrace_dump();
     exit(1);
   }
   nested = true;

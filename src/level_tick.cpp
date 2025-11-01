@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
-// REMOVED #include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
@@ -104,14 +103,9 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     l->is_active_level = true;
 
     //
-    // First lighting update
+    // Update minimaps and lighting
     //
-    level_light_fov_all(g, v, l);
-
-    //
-    // Update minimaps
-    //
-    level_minimaps_update(g, v, l);
+    level_update_visibility(g, v, l);
   }
 
   if (v->tick_in_progress) {
@@ -123,7 +117,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     //
     // Need to update while moving as raycasting can change
     //
-    level_light_fov_all(g, v, l);
+    level_update_visibility(g, v, l);
   } else if (v->tick_begin_requested) {
     //
     // Allow temperatures to settle prior to starting
@@ -221,14 +215,9 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_end(g, v, l);
 
     //
-    // Final lighting update now we've stopped moving
+    // Update minimaps and lighting
     //
-    level_light_fov_all(g, v, l);
-
-    //
-    // Update minimaps
-    //
-    level_minimaps_update(g, v, l);
+    level_update_visibility(g, v, l);
   }
 
   //
@@ -398,6 +387,8 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
   if (! p) {
     return;
   }
+
+  game_request_to_remake_ui_set(g);
 
   //
   // Only save once a tick is complete and before the next move is popped below

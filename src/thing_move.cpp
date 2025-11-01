@@ -362,11 +362,14 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
     thing_on_level_enter(g, v, new_level, t);
   }
 
+  //
+  // In case of level change or teleport, need to update things
+  //
   if (thing_is_player(t)) {
     //
-    // Lighting update
+    // Update minimaps and lighting
     //
-    level_light_fov_all(g, v, new_level);
+    level_update_visibility(g, v, new_level);
   }
 
   return true;
