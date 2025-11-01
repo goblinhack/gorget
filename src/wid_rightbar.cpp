@@ -63,6 +63,50 @@ static bool wid_rightbar_create_window(Gamep g)
     wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
   }
 
+  auto minimap_size = 14;
+
+  {
+    auto   w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map text");
+    spoint minimap_tl(1, TERM_HEIGHT - minimap_size);
+    spoint minimap_br(minimap_size + 2, TERM_HEIGHT - minimap_size);
+    wid_set_text(w, "Level:");
+    wid_set_text_lhs(w, true);
+    wid_set_text_top(w, true);
+    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+    wid_set_pos(w, minimap_tl, minimap_br);
+  }
+
+  {
+    auto   w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "world map text");
+    spoint minimap_tl(minimap_size + 3, TERM_HEIGHT - minimap_size);
+    spoint minimap_br(minimap_size + minimap_size + 4, TERM_HEIGHT - minimap_size);
+    wid_set_text(w, "World:");
+    wid_set_text_lhs(w, true);
+    wid_set_text_top(w, true);
+    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+    wid_set_pos(w, minimap_tl, minimap_br);
+  }
+
+  {
+    auto   w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "level map");
+    spoint minimap_tl(1, TERM_HEIGHT - minimap_size + 1);
+    spoint minimap_br(minimap_size + 2, TERM_HEIGHT - 2);
+    wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_LEVEL");
+    wid_set_text_lhs(w, true);
+    wid_set_text_top(w, true);
+    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+    wid_set_pos(w, minimap_tl, minimap_br);
+  }
+
+  {
+    auto   w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "world map");
+    spoint minimap_tl(minimap_size + 3, TERM_HEIGHT - minimap_size + 1);
+    spoint minimap_br(minimap_size + minimap_size + 4, TERM_HEIGHT - 2);
+    wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_WORLD");
+    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+    wid_set_pos(w, minimap_tl, minimap_br);
+  }
+
   return true;
 }
 

@@ -6,7 +6,9 @@
 #ifndef _MY_TEX_HPP_
 #define _MY_TEX_HPP_
 
+#include "my_gl.hpp"
 #include "my_types.hpp"
+
 #include <SDL.h>
 #include <string>
 
@@ -19,6 +21,7 @@ Texp string2tex(std::string &s, int *len);
 Texp tex_find(std::string name);
 Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, int mode);
 Texp tex_load(std::string file, std::string name, int mode);
+Texp tex_from_fbo(Gamep g, FboEnum fbo);
 
 uint32_t tex_get_height(Texp);
 uint32_t tex_get_width(Texp);

@@ -16,7 +16,6 @@ extern void           stbi_image_free(void *retval_from_stbi_load);
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
-// REMOVED #include "my_ui.hpp"
 
 #include <unordered_map>
 
@@ -578,6 +577,35 @@ Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, 
   t->height             = surface->h;
   t->gl_surface_binding = gl_surface_binding;
   t->surface            = surface;
+
+  return t;
+}
+
+//
+// Creae a texture from an FBO
+//
+Texp tex_from_fbo(Gamep g, FboEnum fbo)
+{
+  TRACE_NO_INDENT();
+
+  int w;
+  int h;
+  fbo_get_size(g, fbo, w, h);
+  auto name = FboEnum_to_string(fbo);
+
+  DBG2("Texture: '%s', %dx%d", name.c_str(), w, h);
+
+  Texp t      = new Tex(name);
+  auto result = textures.insert(std::make_pair(name, t));
+
+  if (! result.second) {
+    ERR("Tex insert name '%s' failed", name.c_str());
+  }
+
+  t->width              = w;
+  t->height             = h;
+  t->gl_surface_binding = g_fbo_tex_id[ fbo ];
+  t->surface            = nullptr;
 
   return t;
 }

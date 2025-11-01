@@ -168,7 +168,7 @@ bool ascii_is_empty(int x, int y)
 {
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
-  for (auto depth = 0; depth < TILE_LAYER_MAX; depth++) {
+  for (auto depth = 0; depth < TILE_LAYER_ENUM_MAX; depth++) {
     if (cell->tile[ depth ]) {
       return false;
     }
@@ -910,7 +910,7 @@ static void ascii_blit(Gamep g)
         }
       }
 
-      for (int depth = TILE_LAYER_FG_1; depth < TILE_LAYER_MAX; depth++) {
+      for (int depth = TILE_LAYER_FG_1; depth < TILE_LAYER_ENUM_MAX; depth++) {
         auto tile = cell->tile[ depth ];
         if (tile) {
           color color_tl = cell->color_tl[ depth ];
@@ -1061,7 +1061,7 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
           }
         }
 
-        for (int depth = TILE_LAYER_FG_0; depth < TILE_LAYER_MAX - 1; depth++) {
+        for (int depth = TILE_LAYER_FG_0; depth < TILE_LAYER_ENUM_MAX - 1; depth++) {
           {
             if (tiles_in[ depth ] || color_neq(col_fg, COLOR_NONE)) {
               ascii_set(depth + 1, x, y, tiles_in[ depth ], tx, ty, dx, dy);

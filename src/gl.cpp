@@ -5,12 +5,14 @@
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_gl.hpp"
+#include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
 #include "my_tile.hpp"
+
+ENUM_DEF_C(FBO_ENUM, FboEnum)
 
 static bool in_2d_mode;
 
@@ -19,10 +21,10 @@ float    glapi_last_tex_bottom;
 GLushort glapi_last_right;
 GLushort glapi_last_bottom;
 
-GLuint g_fbo_id[ MAX_FBO ];
-GLuint g_fbo_tex_id[ MAX_FBO ];
-GLuint g_render_buf_id[ MAX_FBO ];
-isize  g_fbo_size[ MAX_FBO ];
+GLuint g_fbo_id[ FBO_ENUM_MAX ];
+GLuint g_fbo_tex_id[ FBO_ENUM_MAX ];
+GLuint g_render_buf_id[ FBO_ENUM_MAX ];
+isize  g_fbo_size[ FBO_ENUM_MAX ];
 
 void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
                      const void *userParam)
@@ -401,7 +403,7 @@ static void gl_fini_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint 
   memset(g_fbo_tex_id, 0, SIZEOF(g_fbo_tex_id));
   memset(g_render_buf_id, 0, SIZEOF(g_render_buf_id));
 
-  for (auto i = 0; i < MAX_FBO; i++) {
+  for (auto i = 0; i < FBO_ENUM_MAX; i++) {
     g_fbo_size[ i ] = isize(0, 0);
   }
 }
@@ -413,7 +415,9 @@ void gl_init_fbo(Gamep g, int fbo)
   LOG("GFX: OpenGL create FBOs");
   GL_ERROR_CHECK();
 
-  for (i = 0; i < MAX_FBO; i++) {
+  static bool first = true;
+
+  for (i = 0; i < FBO_ENUM_MAX; i++) {
     int tex_width;
     int tex_height;
 
@@ -453,10 +457,20 @@ void gl_init_fbo(Gamep g, int fbo)
       glClear(GL_COLOR_BUFFER_BIT);
       blit_fbo_unbind();
     }
+
+    if (fbo == -1) {
+      if (first) {
+        tile_from_fbo(g, (FboEnum) i);
+      }
+    }
   }
 
   LOG("GFX: OpenGL created FBOs");
   GL_ERROR_CHECK();
+
+  if (fbo == -1) {
+    first = false;
+  }
 }
 
 void gl_fini_fbo(Gamep g)
@@ -466,7 +480,7 @@ void gl_fini_fbo(Gamep g)
   LOG("GFX: OpenGL destroy FBOs");
   GL_ERROR_CHECK();
 
-  for (i = 0; i < MAX_FBO; i++) {
+  for (i = 0; i < FBO_ENUM_MAX; i++) {
     int tex_width;
     int tex_height;
 

@@ -8,6 +8,7 @@
 
 #define GL_GLEXT_PROTOTYPES
 
+#include "my_enum.hpp"
 #include "my_game_defs.hpp"
 #include "my_spoint.hpp"
 
@@ -237,19 +238,20 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 //
 // Frame buffer objects
 //
-enum {
-  FBO_MAP_BG,
-  FBO_MAP_FG,
-  FBO_MAP_BG_MERGED,
-  FBO_MAP_FG_MERGED,
-  FBO_MAP_FG_OVERLAY,
-  FBO_MAP_LIGHT,
-  FBO_MINIMAP_LEVEL,
-  FBO_MINIMAP_WORLD,
-  FBO_WID,
-  FBO_FINAL,
-  MAX_FBO,
-};
+#define FBO_ENUM(list_macro)                                                                                         \
+  clang_format_indent()                                     /* dummy line for clang indentation fixup */             \
+      list_macro(FBO_MAP_BG, "FBO_MAP_BG"),                 /* newline */                                            \
+      list_macro(FBO_MAP_FG, "FBO_MAP_FG"),                 /* newline */                                            \
+      list_macro(FBO_MAP_BG_MERGED, "FBO_MAP_BG_MERGED"),   /* newline */                                            \
+      list_macro(FBO_MAP_FG_MERGED, "FBO_MAP_FG_MERGED"),   /* newline */                                            \
+      list_macro(FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY"), /* newline */                                            \
+      list_macro(FBO_MAP_LIGHT, "FBO_MAP_LIGHT"),           /* newline */                                            \
+      list_macro(FBO_MINIMAP_LEVEL, "FBO_MINIMAP_LEVEL"),   /* newline */                                            \
+      list_macro(FBO_MINIMAP_WORLD, "FBO_MINIMAP_WORLD"),   /* newline */                                            \
+      list_macro(FBO_WID, "FBO_WID"),                       /* newline */                                            \
+      list_macro(FBO_FINAL, "FBO_FINAL"),                   /* newline */
+
+ENUM_DEF_H(FBO_ENUM, FboEnum);
 
 extern uint32_t NUMBER_BYTES_PER_VERTICE_2D;
 
@@ -265,9 +267,9 @@ extern float  glapi_last_tex_right;
 
 extern int buf_tex;
 
-extern GLuint g_fbo_id[ MAX_FBO ];
-extern GLuint g_fbo_tex_id[ MAX_FBO ];
-extern GLuint g_render_buf_id[ MAX_FBO ];
+extern GLuint g_fbo_id[ FBO_ENUM_MAX ];
+extern GLuint g_fbo_tex_id[ FBO_ENUM_MAX ];
+extern GLuint g_render_buf_id[ FBO_ENUM_MAX ];
 
 void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, const color &c);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,

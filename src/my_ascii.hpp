@@ -23,20 +23,20 @@
 class AsciiCell
 {
 public:
-  char  ch[ TILE_LAYER_MAX ] {};
-  Tilep tile[ TILE_LAYER_MAX ] {};
+  char  ch[ TILE_LAYER_ENUM_MAX ] {};
+  Tilep tile[ TILE_LAYER_ENUM_MAX ] {};
 
-  Texp tex[ TILE_LAYER_MAX ] {};
+  Texp tex[ TILE_LAYER_ENUM_MAX ] {};
 
-  float tx[ TILE_LAYER_MAX ] {};
-  float ty[ TILE_LAYER_MAX ] {};
-  float dx[ TILE_LAYER_MAX ] {};
-  float dy[ TILE_LAYER_MAX ] {};
+  float tx[ TILE_LAYER_ENUM_MAX ] {};
+  float ty[ TILE_LAYER_ENUM_MAX ] {};
+  float dx[ TILE_LAYER_ENUM_MAX ] {};
+  float dy[ TILE_LAYER_ENUM_MAX ] {};
 
-  color color_tl[ TILE_LAYER_MAX ];
-  color color_bl[ TILE_LAYER_MAX ];
-  color color_tr[ TILE_LAYER_MAX ];
-  color color_br[ TILE_LAYER_MAX ];
+  color color_tl[ TILE_LAYER_ENUM_MAX ];
+  color color_bl[ TILE_LAYER_ENUM_MAX ];
+  color color_tr[ TILE_LAYER_ENUM_MAX ];
+  color color_br[ TILE_LAYER_ENUM_MAX ];
 
   //
   // Is reset each frame, and so although a pointer potentially should be
@@ -51,7 +51,7 @@ using ascii_key_down_callback   = int (*)(int, int, const struct SDL_Keysym *);
 using ascii_mouse_down_callback = int (*)(int, int, int);
 using ascii_mouse_over_callback = int (*)(int, int);
 
-typedef std::array< Tilep, TILE_LAYER_MAX > TileLayers;
+typedef std::array< Tilep, TILE_LAYER_ENUM_MAX > TileLayers;
 
 using button_args = struct {
   int x;

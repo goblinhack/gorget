@@ -648,6 +648,52 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
 }
 
 //
+// Creae a texture from an FBO
+//
+void tile_from_fbo(Gamep g, FboEnum fbo)
+{
+  int w;
+  int h;
+  fbo_get_size(g, fbo, w, h);
+  auto name = FboEnum_to_string(fbo);
+
+  if (tile_find(name)) {
+    DIE("Tile name [%s] already used", name.c_str());
+  }
+
+  auto tex = tex_from_fbo(g, fbo);
+  if (! tex) {
+    DIE("Tile name [%s] failed to create tex", name.c_str());
+  }
+
+  auto t      = new Tile(); // std::make_shared< class Tile >();
+  auto result = all_tiles.insert(std::make_pair(name, t));
+  if (! result.second) {
+    DIE("Tile insert name [%s] failed", name.c_str());
+  }
+
+  //
+  // Global array of all tiles
+  //
+  all_tiles_array.push_back(t);
+  t->global_index = all_tiles_array.size();
+
+  t->name       = name;
+  t->pix_width  = w;
+  t->pix_height = h;
+  t->tex        = tex;
+  t->set_gl_binding(tex_get_gl_binding(t->tex));
+
+  t->x1 = 0;
+  t->y1 = 0;
+  t->x2 = 1;
+  t->y2 = 1;
+
+  t->pct_width  = 1;
+  t->pct_height = 1;
+}
+
+//
 // Find an existing tile.
 //
 Tilep tile_find(std::string name)
