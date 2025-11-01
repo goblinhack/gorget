@@ -15,6 +15,11 @@ static WidPopup *wid_rightbar;
 
 static bool wid_rightbar_create_window(Gamep g)
 {
+  // TODO
+  if (g_opt_tests) {
+    return;
+  }
+
   TRACE_NO_INDENT();
   DBG2("Remake rightbar");
 
@@ -132,6 +137,7 @@ void wid_rightbar_fini(Gamep g)
 {
   TRACE_NO_INDENT();
 
+  LOG("wid_rightbar_fini");
   delete wid_rightbar;
   wid_rightbar = nullptr;
 }

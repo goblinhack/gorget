@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_main.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
 
@@ -13,7 +14,8 @@ WidPopup::~WidPopup()
   extern Gamep game;
   auto         g = game;
 
-  wid_destroy(g, &wid_popup_container);
+  LOG("~WidPopup");
+  wid_destroy_nodelay(g, &wid_popup_container);
   delete wid_text_area;
 }
 
