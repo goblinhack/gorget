@@ -367,8 +367,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
            game_seed_name_get(g));
   }
 
-  TOPCON("new level, need to remake");
-  level_update_visibility(g, v, l);
+  level_update_visibility(g, v, new_level);
   game_request_to_remake_ui_set(g);
 
   return new_level;

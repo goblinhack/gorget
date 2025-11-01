@@ -1016,7 +1016,6 @@ void game_state_change(Gamep g, GameState new_state, const char *why)
 void Game::handle_game_request_to_remake_ui(void)
 {
   TRACE_NO_INDENT();
-  TOPCON("handle_game_request_to_remake_ui");
 
   auto g = this;
   auto v = game_levels_get(g);
