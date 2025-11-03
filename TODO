@@ -9,14 +9,41 @@ damaged door visuals
 kobalos need to steal items
 traps
 
+story
+-----
+You are a dark wizard, once powerful but cast out of your realm by
+the slightly darker wizard <insert name here>
+
+Your aim is to relaim the dungeon of Gorget, defeating on the way
+the other lesser, yellow, green and red wizards that stand in your way.
+
+Fight hoards of enemies, but keep them at a distance, as you are
+physically weak. Use spells, missiles and summon allies each level
+to assist you.
+
+- Allies vanish each level and the life force is returned to you
+- Some allies can be posted as permanent sentries on a level; still
+  not sure how this could be used
+- The game is turn based, but missiles can only travel N tiles per
+  game move. So A missile might only travel half way down a hall
+  in one move, before completing its journey the next move. This
+  allows you to fire a volley of shots. It also introduces the chance
+  of missing and avoiding enemy shots.
+- Life force can be applied to the summoning of allies each level.
+  Each ally that dies in-level, is a permanent loss of life force.
+  Hence you need to balance how many allies to summon with the chance
+  of permanent loss.
+- Allies will follow you around and defend you; also thinking you
+  can set an ally with a basic programmed task - explore/defend/attack
+- Enemy souls can be harvested to add to your life force. Thinking
+  of a pacman like blue ghost you need to hunt down. Only applies to
+  living beings that are toasted.
+- Alternative turn based idea is that the dungeon will force a move
+  after say 10 seconds. Gradually this will increase in speed until
+  the monsters are moving almost real time.
+
 ideas
 -----
-dominion
-  you have dom power over minions and it reduces, the more minions you control
-  each minion can be assigned tasks, guard, roam, protect and upon level end they
-  normally dissipate and your dom power is restored. However some can be left behind.
-  You can also view the level (or other levels) through these minions in some cases.
-
 ogyr (celtic)
 boulders that can crush
 items hiding in bushes
