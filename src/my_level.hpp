@@ -248,6 +248,11 @@ typedef struct LevelSelect_ {
   // Level tiles and grid info
   //
   LevelSelectCell data[ LEVELS_ACROSS ][ LEVELS_DOWN ];
+
+  //
+  // This is a reverse mapping from on screen tile to level
+  //
+  LevelNum tile_to_level[ MAP_WIDTH ][ MAP_HEIGHT ];
 } LevelSelect;
 
 typedef struct Levels_ {
@@ -618,11 +623,11 @@ Thingp           thing_level_select(Gamep);
 void             level_select_assign_levels_to_grid(Gamep, Levelsp);
 void             level_select_destroy(Gamep, Levelsp, Levelp);
 void             level_select_grid_of_empty_levels(Gamep);
-void             level_select_rightbar_needs_update(Gamep, Levelsp, Levelp);
+void             level_select_mouse_motion(Gamep, Levelsp, Levelp);
 void             level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, WidPopup *);
 void             level_select_test(Gamep);
 void             level_select_update_grid_tiles(Gamep, Levelsp);
-void             level_select_user_chose_a_level(Gamep, Levelsp, Levelp);
+void             level_select_mouse_down(Gamep, Levelsp, Levelp);
 LevelSelectCell *level_select_get(Gamep, Levelsp, spoint);
 
 std::string player_state_to_string(PlayerState);

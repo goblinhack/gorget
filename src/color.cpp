@@ -32,16 +32,21 @@ void color_set(std::string name, color *c, uint8_t r, uint8_t g, uint8_t b, uint
 void color_fini(void)
 {
   TRACE_NO_INDENT();
-  color_map.clear();
+  //
+  // Do not clear the color map - else an error during shutdown will fail to find
+  // error colors
+  //
+  // color_map.clear();
 }
 
 color string2color(const char **s)
 {
   TRACE_NO_INDENT();
-  static char        tmp[ MAXSHORTSTR ];
-  static const char *eo_tmp = tmp + SIZEOF(tmp);
-  const char        *c      = *s;
-  char              *t      = tmp;
+
+  char        tmp[ MAXSHORTSTR ];
+  const char *eo_tmp = tmp + SIZEOF(tmp);
+  const char *c      = *s;
+  char       *t      = tmp;
 
   while (t < eo_tmp) {
     if ((*c == '\0') || (*c == '$')) {
@@ -66,7 +71,7 @@ color string2color(const char **s)
 
   if (result == color_map.end()) {
     if (color_init_done) { // avoids color warnings due to very early errors
-      ERR("Unknown color [%s]", tmp);
+      ERR("string2color: unknown color [%s]", tmp);
     }
     return WHITE;
   }
@@ -103,7 +108,7 @@ color string2color(std::string &s, int *len)
 
   if (result == color_map.end()) {
     if (color_init_done) { // avoids color warnings due to very early errors
-      ERR("Unknown color [%s]", out.c_str());
+      ERR("string2color(2): unknown color [%s]", out.c_str());
     }
     return WHITE;
   }
@@ -135,7 +140,7 @@ color string2color(std::string &s)
 
   if (result == color_map.end()) {
     if (color_init_done) { // avoids color warnings due to very early errors
-      ERR("Unknown color [%s]", out.c_str());
+      ERR("string2color(3): unknown color [%s]", out.c_str());
     }
     return WHITE;
   }
@@ -158,7 +163,7 @@ color color_find(const char *s)
 
   if (result == color_map.end()) {
     if (color_init_done) { // avoids color warnings due to very early errors
-      ERR("Unknown color [%s]", s);
+      ERR("color_find: unknown color [%s]", s);
     }
     return WHITE;
   }

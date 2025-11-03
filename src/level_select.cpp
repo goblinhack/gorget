@@ -53,6 +53,37 @@ bool level_select_is_oob(int x, int y)
 }
 
 //
+// If in level select mode, enter the chosen level
+//
+static Levelp level_select_cursor_to_level(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  auto   level_select = game_level_get(g, v, LEVEL_SELECT_ID);
+  Levelp level_over   = nullptr;
+
+  auto tp_is_level_not_visited = tp_random(is_level_not_visited);
+  auto tp_is_level_curr        = tp_random(is_level_curr);
+  auto tp_is_level_final       = tp_random(is_level_final);
+  auto tp_is_level_visited     = tp_random(is_level_visited);
+  auto tp_is_level_next        = tp_random(is_level_next);
+
+  FOR_ALL_THINGS_AT(g, v, level_select, t, v->cursor_at)
+  {
+    auto tp = thing_tp(t);
+
+    if ((tp == tp_is_level_not_visited) || (tp == tp_is_level_curr) || (tp == tp_is_level_final)
+        || (tp == tp_is_level_visited) || (tp == tp_is_level_next)) {
+      auto level_num_over = v->level_select.tile_to_level[ t->at.x ][ t->at.y ];
+      level_over          = game_level_get(g, v, level_num_over);
+      break;
+    }
+  }
+
+  return level_over;
+}
+
+//
 // Given a point in the level select grid, return the corresponding level,
 // if one exists there.
 //
@@ -497,6 +528,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
         }
 
         thing_spawn(g, v, level_select, tp, at);
+        v->level_select.tile_to_level[ at.x ][ at.y ] = l->level_num;
       }
     }
   }
@@ -705,31 +737,16 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
 {
   TRACE_NO_INDENT();
 
-  int x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
-  int y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
-  int dx = (v->cursor_at.x - 1) % LEVEL_SCALE;
-  int dy = (v->cursor_at.y - 1) % LEVEL_SCALE;
-
-  if (dx || dy) {
+  if (! level_is_level_select(g, v, l)) {
     return;
   }
 
-  LevelSelect *s = &v->level_select;
-  Levelp       level_over;
-  if (s->data[ x ][ y ].is_set) {
-    level_over = game_level_get(g, v, s->data[ x ][ y ].level_num);
-  } else {
-    level_over = nullptr;
-  }
-
+  Levelp level_over = level_select_cursor_to_level(g, v);
   if (! level_over) {
     return;
   }
 
   parent->log_empty_line(g);
-
-  LOG("show level contents for level %d,%d mod %d,%d %p level num %u", x, y, dx, dy, (void *) level_over,
-      level_over->level_num);
 
   auto   player       = thing_player(g);
   Levelp player_level = nullptr;
@@ -795,7 +812,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
 //
 // If in level select mode, update what we're hovering over
 //
-void level_select_rightbar_needs_update(Gamep g, Levelsp v, Levelp l)
+void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -803,35 +820,29 @@ void level_select_rightbar_needs_update(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
-  {
-    int x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
-    int y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
-    int dx = (v->cursor_at.x - 1) % LEVEL_SCALE;
-    int dy = (v->cursor_at.y - 1) % LEVEL_SCALE;
-
-    if (! dx && ! dy) {
-      LevelSelect *s = &v->level_select;
-      Levelp       level_over;
-      if (s->data[ x ][ y ].is_set) {
-        level_over = game_level_get(g, v, s->data[ x ][ y ].level_num);
-      } else {
-        level_over = nullptr;
-      }
-
-      if (level_over) {
-        game_request_to_remake_ui_set(g);
-      }
-    }
+  Levelp level_over = level_select_cursor_to_level(g, v);
+  if (! level_over) {
+    return;
   }
+
+  game_request_to_remake_ui_set(g);
 }
 
 //
 // If in level select mode, enter the chosen level
 //
-void level_select_user_chose_a_level(Gamep g, Levelsp v, Levelp l)
+void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
+
+  if (! level_is_level_select(g, v, l)) {
+    return;
+  }
+
+  Levelp level_over = level_select_cursor_to_level(g, v);
+  if (! level_over) {
+    return;
+  }
 
   auto   player       = thing_player(g);
   Levelp player_level = nullptr;
@@ -839,59 +850,36 @@ void level_select_user_chose_a_level(Gamep g, Levelsp v, Levelp l)
     player_level = game_level_get(g, v, player->level_num);
   }
 
-  if (! level_is_level_select(g, v, l)) {
-    return;
+  //
+  // We're hovering over a level and have pressed the mouse
+  //
+  Levelp new_level = nullptr;
+
+  //
+  // Switch to the chosen level if possible; allow going back to the old level to clean up if needed
+  //
+  if ((level_over == player_level) || level_over->player_can_enter_this_level_next) {
+    new_level = level_change(g, v, level_over->level_num);
+  } else {
+    TOPCON("You cannot enter this level. Yet. Choose a flashing level.");
   }
 
-  FOR_ALL_THINGS_AT(g, v, l, it, v->cursor_at)
-  {
-    int          x  = (v->cursor_at.x - 1) / LEVEL_SCALE;
-    int          y  = (v->cursor_at.y - 1) / LEVEL_SCALE;
-    int          dx = (v->cursor_at.x - 1) % LEVEL_SCALE;
-    int          dy = (v->cursor_at.y - 1) % LEVEL_SCALE;
-    LevelSelect *s  = &v->level_select;
-    Levelp       level_over;
-    if (s->data[ x ][ y ].is_set) {
-      level_over = game_level_get(g, v, s->data[ x ][ y ].level_num);
+  //
+  // Move the player also
+  //
+  if (new_level) {
+    if (new_level->player_completed_level_via_exit) {
+      thing_level_warp_to_exit(g, v, new_level, player);
     } else {
-      level_over = nullptr;
+      thing_level_warp_to_entrance(g, v, new_level, player);
     }
+    level_scroll_warp_to_focus(g, v, l);
 
-    if (! dx && ! dy && level_over) {
-      //
-      // We're hovering over a level and have pressed the mouse
-      //
-      Levelp new_level = nullptr;
-
-      //
-      // Switch to the chosen level if possible; allow going back to the old level to clean up if needed
-      //
-      if ((level_over == player_level) || level_over->player_can_enter_this_level_next) {
-        new_level = level_change(g, v, level_over->level_num);
-      } else {
-        TOPCON("You cannot enter this level. Yet. Choose a flashing level.");
-      }
-
-      //
-      // Move the player also
-      //
-      if (new_level) {
-        if (new_level->player_completed_level_via_exit) {
-          thing_level_warp_to_exit(g, v, new_level, player);
-        } else {
-          thing_level_warp_to_entrance(g, v, new_level, player);
-        }
-        level_scroll_warp_to_focus(g, v, l);
-
-        //
-        // Disable load and save buttons
-        //
-        wid_actionbar_fini(g);
-        wid_actionbar_init(g);
-      }
-
-      return;
-    }
+    //
+    // Disable load and save buttons
+    //
+    wid_actionbar_fini(g);
+    wid_actionbar_init(g);
   }
 }
 

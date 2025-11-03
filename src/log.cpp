@@ -275,6 +275,15 @@ static void err_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
+  static bool nested;
+  if (nested) {
+    fprintf(stderr, "Nested error [%s] in %s:%s:%d\n", fmt, __FILE__, __FUNCTION__, __LINE__);
+    callstack_dump();
+    backtrace_dump();
+    exit(1);
+  }
+  nested = true;
+
   callstack_dump();
   backtrace_dump();
 
@@ -325,6 +334,8 @@ static void err_(const char *fmt, va_list args)
   if (! g_opt_tests) {
     error_handler(error_buf);
   }
+
+  nested = false;
 }
 
 void err_wrapper(const char *fmt, ...)
@@ -364,18 +375,19 @@ static void sdl_msgerr_(const char *fmt, va_list args)
   //
   // Fullscreen sometimes hides the error, so create a temp window
   //
-  if (! g_errored) {
-    LOG("Show SDL message box");
+  LOG("Show SDL message box");
 
-    auto window
-        = SDL_CreateWindow("gorget error", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1, 1, SDL_WINDOW_SHOWN);
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, window);
-    LOG("Launched SDL message box");
-    SDL_DestroyWindow(window);
-  }
+  auto window
+      = SDL_CreateWindow("gorget error", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1, 1, SDL_WINDOW_SHOWN);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, window);
+  LOG("Launched SDL message box");
+  SDL_DestroyWindow(window);
 #endif
 
-  ERR("SDL: %s", buf);
+  //
+  // We are inside an error already, so do not call ERR
+  //
+  LOG("SDL: %s", buf);
 }
 
 void sdl_msg_box(const char *fmt, ...)

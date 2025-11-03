@@ -544,7 +544,7 @@ void level_cursor_path_recreate(Gamep g, Levelsp v, Levelp l)
   //
   // If in level select mode, update what we're hovering over
   //
-  level_select_rightbar_needs_update(g, v, l);
+  level_select_mouse_motion(g, v, l);
 }
 
 //
@@ -567,7 +567,7 @@ void level_cursor_copy_mouse_path_to_player(Gamep g, Levelsp v, Levelp l)
   //
   // If in level select mode, update what we're hovering over
   //
-  level_select_rightbar_needs_update(g, v, l);
+  level_select_mouse_motion(g, v, l);
 }
 
 int level_cursor_path_size(Gamep g) { return (int) cursor_path.size(); }

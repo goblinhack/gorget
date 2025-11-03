@@ -65,7 +65,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   // If in level select mode, enter the new level
   //
   if (level_is_level_select(g, v, l)) {
-    level_select_user_chose_a_level(g, v, l);
+    level_select_mouse_down(g, v, l);
     return true;
   }
 
