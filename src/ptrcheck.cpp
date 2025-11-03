@@ -796,7 +796,7 @@ static void ptrcheck_fini(int mtype)
 
       auto f = pc->freed_by;
       if (f) {
-        delete a->bt;
+        delete f->bt;
         delete f;
         pc->freed_by = nullptr;
       }
@@ -809,6 +809,8 @@ static void ptrcheck_fini(int mtype)
           pc->last_seen[ j ] = nullptr;
         }
       }
+
+      delete elem->pc;
 
       auto next = elem->next;
       free(elem);
