@@ -297,6 +297,15 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   }
 }
 
+static spoint car_to_iso(spoint car)
+{
+  spoint iso;
+  iso.y = car.x + car.y;
+  iso.x = car.y - car.x;
+
+  return iso;
+}
+
 //
 // Create a Thing for each level
 //
@@ -324,6 +333,8 @@ static void level_select_map_set(Gamep g, Levelsp v)
   auto tp_is_level_final       = tp_random(is_level_final);
   auto tp_is_level_visited     = tp_random(is_level_visited);
   auto tp_is_level_next        = tp_random(is_level_next);
+
+  spoint map_offset(MAP_WIDTH / 2, 1);
 
   for (auto y = 0; y < LEVELS_DOWN; y++) {
     for (auto x = 0; x < LEVELS_ACROSS; x++) {
@@ -453,7 +464,12 @@ static void level_select_map_set(Gamep g, Levelsp v)
       }
 
       if (tp) {
-        spoint at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + 1);
+        spoint at(x * 2, y * 2);
+        at = car_to_iso(at);
+        at += map_offset;
+        if (is_oob(at)) {
+          continue;
+        }
 
         //
         // Save debugging
@@ -499,12 +515,16 @@ static void level_select_map_set(Gamep g, Levelsp v)
         continue;
       }
 
-      for (auto div = 0; div < LEVEL_SCALE - 1; div++) {
-        spoint at(x * LEVEL_SCALE + div + 2, y * LEVEL_SCALE + 1);
-        level_select->debug[ at.x ][ at.y ] = '-';
-
-        thing_spawn(g, v, level_select, tp_is_level_across, at);
+      spoint at(x * 2 + 1, y * 2);
+      at = car_to_iso(at);
+      at += map_offset;
+      if (is_oob(at)) {
+        continue;
       }
+
+      level_select->debug[ at.x ][ at.y ] = '-';
+
+      thing_spawn(g, v, level_select, tp_is_level_across, at);
     }
   }
 
@@ -522,12 +542,16 @@ static void level_select_map_set(Gamep g, Levelsp v)
         continue;
       }
 
-      for (auto div = 0; div < LEVEL_SCALE - 1; div++) {
-        spoint at(x * LEVEL_SCALE + 1, y * LEVEL_SCALE + div + 2);
-        level_select->debug[ at.x ][ at.y ] = '|';
-
-        thing_spawn(g, v, level_select, tp_is_level_down, at);
+      spoint at(x * 2, y * 2 + 1);
+      at = car_to_iso(at);
+      at += map_offset;
+      if (is_oob(at)) {
+        continue;
       }
+
+      level_select->debug[ at.x ][ at.y ] = '|';
+
+      thing_spawn(g, v, level_select, tp_is_level_down, at);
     }
   }
 
