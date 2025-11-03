@@ -2,9 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <iostream>
-#include <mutex>
-
 #include "my_backtrace.hpp"
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
@@ -13,9 +10,15 @@
 #include "my_sprintf.hpp"
 #include "my_time.hpp"
 
+#include <iostream>
+#include <mutex>
 #include <string.h>
+#include <vector>
 
 static std::mutex ptrcheck_mutex;
+
+class Ptrcheck_history;
+static std::vector< class Ptrcheck_history * > all_Ptrcheck_history {};
 
 //
 // A single event in the life of a pointer.
@@ -29,9 +32,14 @@ public:
   int         line {};
   Backtrace  *bt {};
 
-  Ptrcheck_history() { ts[ 0 ] = '\0'; }
+  Ptrcheck_history()
+  {
+    ts[ 0 ] = '\0';
+    all_Ptrcheck_history.push_back(this);
+  }
   Ptrcheck_history(const Ptrcheck_history &other)
   {
+    all_Ptrcheck_history.push_back(this);
     file = other.file;
     func = other.func;
     line = other.line;
@@ -40,6 +48,7 @@ public:
       bt = new Backtrace(other.bt);
     }
   }
+  ~Ptrcheck_history() { delete bt; }
 };
 
 //
@@ -145,7 +154,7 @@ typedef struct hash_t_ {
   hash_elem_t **elements;
 } hash_t;
 
-static hash_t *hash[ MTYPE_MAX ];
+static hash_t *ptrcheck_hash[ MTYPE_MAX ];
 
 //
 // How many old/freed pointers do we keep track of. We use this when we find
@@ -307,7 +316,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
   //
   // Currently active pointer?
   //
-  auto elem = hash_find(hash[ mtype ], (void *) ptr);
+  auto elem = hash_find(ptrcheck_hash[ mtype ], (void *) ptr);
   if (elem) {
     auto pc = elem->pc;
 
@@ -443,7 +452,7 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
   //
   // Check the robust handle is valid.
   //
-  e = hash_find(hash[ mtype ], (void *) ptr);
+  e = hash_find(ptrcheck_hash[ mtype ], (void *) ptr);
   if (e) {
     pc = e->pc;
 
@@ -531,13 +540,13 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
   //
   // Create a hash table to store pointers.
   //
-  if (! hash[ mtype ]) {
+  if (! ptrcheck_hash[ mtype ]) {
     //
     // Create enough space for lots of pointers.
     //
-    hash[ mtype ] = hash_init(1046527 /* prime */);
+    ptrcheck_hash[ mtype ] = hash_init(1046527 /* prime */);
 
-    if (! hash[ mtype ]) {
+    if (! ptrcheck_hash[ mtype ]) {
       return ((void *) ptr);
     }
 
@@ -552,7 +561,7 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
   //
   // Missing an earlier free?
   //
-  if (hash_find(hash[ mtype ], (void *) ptr)) {
+  if (hash_find(ptrcheck_hash[ mtype ], (void *) ptr)) {
     ERR("Pointer %p already exists and attempting to add again", ptr);
     ptrcheck_describe_pointer(mtype, ptr);
     return ((void *) ptr);
@@ -583,7 +592,7 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
   //
   // Add it to the hash. Not the ring buffer (only when freed).
   //
-  hash_add(hash[ mtype ], pc);
+  hash_add(ptrcheck_hash[ mtype ], pc);
 
   return ((void *) ptr);
 }
@@ -660,7 +669,7 @@ static int ptrcheck_free_(int mtype, void *ptr, const char *func, const char *fi
     ringbuf_current_size[ mtype ]++;
   }
 
-  hash_free(hash[ mtype ], ptr);
+  hash_free(ptrcheck_hash[ mtype ], ptr);
 
   return true;
 }
@@ -703,21 +712,17 @@ void ptrcheck_leak_print(int mtype)
   hash_elem_t  *elem;
   Ptrcheck     *pc;
   int           i;
-  int           leak;
 
-  leak = 0;
-
-  if (! hash[ mtype ]) {
+  if (! ptrcheck_hash[ mtype ]) {
     return;
   }
 
-  for (i = 0; i < hash[ mtype ]->hash_size; i++) {
-    slot = &hash[ mtype ]->elements[ i ];
+  for (i = 0; i < ptrcheck_hash[ mtype ]->hash_size; i++) {
+    slot = &ptrcheck_hash[ mtype ]->elements[ i ];
     elem = *slot;
 
     while (elem) {
       pc = elem->pc;
-      leak++;
 
       auto a = pc->allocated_by;
       if (a) {
@@ -756,10 +761,6 @@ void ptrcheck_leak_print(int mtype)
       elem = elem->next;
     }
   }
-
-  if (! leak) {
-    CON("No memory leaks!");
-  }
 }
 
 void ptrcheck_leak_print(void)
@@ -773,55 +774,33 @@ static void ptrcheck_fini(int mtype)
 {
   hash_elem_t **slot;
   hash_elem_t  *elem;
-  Ptrcheck     *pc;
   int           i;
 
-  if (! hash[ mtype ]) {
+  if (! ptrcheck_hash[ mtype ]) {
     return;
   }
 
-  for (i = 0; i < hash[ mtype ]->hash_size; i++) {
-    slot = &hash[ mtype ]->elements[ i ];
+  for (auto p : all_Ptrcheck_history) {
+    delete p;
+  }
+  all_Ptrcheck_history.clear();
+
+  for (i = 0; i < ptrcheck_hash[ mtype ]->hash_size; i++) {
+    slot = &ptrcheck_hash[ mtype ]->elements[ i ];
     elem = *slot;
 
     while (elem) {
-      pc = elem->pc;
-
-      auto a = pc->allocated_by;
-      if (a) {
-        delete a->bt;
-        delete a;
-        pc->allocated_by = nullptr;
-      }
-
-      auto f = pc->freed_by;
-      if (f) {
-        delete f->bt;
-        delete f;
-        pc->freed_by = nullptr;
-      }
-
-      for (auto j = 0; j < ENABLE_PTRCHECK_HISTORY; j++) {
-        auto p = pc->last_seen[ j ];
-        if (p) {
-          delete p->bt;
-          delete p;
-          pc->last_seen[ j ] = nullptr;
-        }
-      }
-
-      delete elem->pc;
-
       auto next = elem->next;
+      delete elem->pc;
       free(elem);
       elem = next;
     }
   }
 
-  free(hash[ mtype ]->elements);
-  free(hash[ mtype ]);
+  free(ptrcheck_hash[ mtype ]->elements);
+  free(ptrcheck_hash[ mtype ]);
 
-  hash[ mtype ] = nullptr;
+  ptrcheck_hash[ mtype ] = nullptr;
 }
 
 void ptrcheck_fini(void)

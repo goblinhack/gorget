@@ -14,7 +14,6 @@ WidPopup::~WidPopup()
   extern Gamep game;
   auto         g = game;
 
-  LOG("~WidPopup");
   wid_destroy(g, &wid_popup_container);
   delete wid_text_area;
 }
