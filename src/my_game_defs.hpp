@@ -12,6 +12,7 @@
 #define LEVELS_DOWN                (MAP_HEIGHT / LEVEL_SCALE)
 #define LIGHT_MAX_RAYS_MAX         (360 * 4)
 #define MAP_HEIGHT                 48
+#define MAP_WORLD_SCALE            4
 #define MAP_SCROLL_SPEED           50
 #define MAP_SLOTS                  16
 #define MAP_TILES_ACROSS_DEF       16

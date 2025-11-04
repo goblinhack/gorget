@@ -21,8 +21,8 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   const int  fbo = FBO_MINIMAP_WORLD;
-  const auto dx  = LEVEL_SCALE;
-  const auto dy  = LEVEL_SCALE;
+  const auto dx  = MAP_WORLD_SCALE * LEVEL_SCALE;
+  const auto dy  = MAP_WORLD_SCALE * LEVEL_SCALE;
 
   int w, h;
   fbo_get_size(g, fbo, w, h);
@@ -33,7 +33,9 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
   glClear(GL_COLOR_BUFFER_BIT);
   blit_init();
 
-  // blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, BROWN);
+  if (0) {
+    blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, BROWN);
+  }
 
   for (auto x = 0; x < LEVELS_ACROSS; x++) {
     for (auto y = 0; y < LEVELS_DOWN; y++) {
@@ -69,22 +71,50 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
       }
 
       auto X   = x;
-      auto Y   = LEVELS_DOWN - y;
+      auto Y   = LEVELS_DOWN - y - 1;
       auto tlx = X * dx;
       auto tly = Y * dy;
-      auto brx = tlx + (dx - 1);
-      auto bry = tly + (dy - 1);
-
-      tlx += 0;
-      tly -= 3;
-      brx += 0;
-      bry -= 3;
+      auto brx = tlx + dx - 2;
+      auto bry = tly + dy - 2;
 
       blit(solid_tex_id, tlx, tly, brx, bry, c);
     }
   }
 
   blit_flush();
+  blit_fbo_unbind();
+}
+
+static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  const int fbo = FBO_MINIMAP_WORLD_ROTATED;
+
+  int w, h;
+  fbo_get_size(g, fbo, w, h);
+  gl_enter_2d_mode(g, w, h);
+
+  blit_fbo_bind(fbo);
+  {
+    glBlendFunc(GL_ONE, GL_ZERO);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    if (0) {
+      blit_init();
+      blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, BROWN);
+      blit_flush();
+    }
+
+    glPushMatrix();
+    {
+      glTranslatef(0, h / 2, 0);
+      glRotatef(-45.0f, 0.0f, 0.0f, 1.0f);
+      float scale = (1.5);
+      blit_fbo(g, FBO_MINIMAP_WORLD, 0, 0, (int) ((float) w / scale), (int) ((float) h / scale));
+    }
+    glPopMatrix();
+  }
   blit_fbo_unbind();
 }
 
@@ -216,4 +246,7 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
 
   level_minimap_world_update(g, v, l);
   // sdl_fbo_dump(g, FBO_MINIMAP_WORLD, "world");
+
+  level_minimap_world_update_rotated(g, v, l);
+  // sdl_fbo_dump(g, FBO_MINIMAP_WORLD_ROTATED, "world-rotated");
 }

@@ -5,6 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_gl.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
@@ -114,7 +115,7 @@ static bool wid_rightbar_create_window(Gamep g)
     auto   w = wid_new_square_button(g, wid_rightbar->wid_popup_container, "world map");
     spoint minimap_tl(minimap_size + 3, TERM_HEIGHT - minimap_size + 1);
     spoint minimap_br(minimap_size + minimap_size + 4, TERM_HEIGHT - 2);
-    wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_WORLD");
+    wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_WORLD_ROTATED");
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
     wid_set_mode(g, w, WID_MODE_OVER);

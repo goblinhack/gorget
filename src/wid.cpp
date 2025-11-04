@@ -5328,12 +5328,6 @@ void wid_display_all(Gamep g)
 
   ascii_clear_display();
 
-  gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
-  blit_fbo_bind_locked(FBO_WID);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glClear(GL_COLOR_BUFFER_BIT);
-  glcolor(WHITE);
-
   wid_tick_all(g);
 
   // CON("---------------------------------");
