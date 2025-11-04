@@ -32,6 +32,7 @@ extern color GOLD2;
 extern color GOLD3;
 extern color GOLD4;
 extern color GRAY;
+extern color GRAY5;
 extern color GRAY10;
 extern color GRAY20;
 extern color GRAY30;

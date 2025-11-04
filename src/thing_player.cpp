@@ -627,7 +627,6 @@ static void player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
   level_select_update_grid_tiles(g, v);
   level_cursor_path_reset(g, v);
   level_change(g, v, LEVEL_SELECT_ID);
-  TOPCON("LEAVE");
   game_request_to_remake_ui_set(g);
 }
 

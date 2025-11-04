@@ -33,9 +33,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
   glClear(GL_COLOR_BUFFER_BIT);
   blit_init();
 
-  if (0) {
-    blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, BROWN);
-  }
+  blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, GRAY5);
 
   for (auto x = 0; x < LEVELS_ACROSS; x++) {
     for (auto y = 0; y < LEVELS_DOWN; y++) {
@@ -74,9 +72,11 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
       auto Y   = LEVELS_DOWN - y - 1;
       auto tlx = X * dx;
       auto tly = Y * dy;
-      auto brx = tlx + dx - 2;
-      auto bry = tly + dy - 2;
+      auto brx = tlx + dx;
+      auto bry = tly + dy;
 
+      tlx += 2;
+      bry -= 2;
       blit(solid_tex_id, tlx, tly, brx, bry, c);
     }
   }
@@ -100,17 +100,15 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
     glBlendFunc(GL_ONE, GL_ZERO);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    if (0) {
-      blit_init();
-      blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, BROWN);
-      blit_flush();
-    }
+    blit_init();
+    blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, GRAY5);
+    blit_flush();
 
     glPushMatrix();
     {
       glTranslatef(0, h / 2, 0);
       glRotatef(-45.0f, 0.0f, 0.0f, 1.0f);
-      float scale = (1.5);
+      float scale = sqrt(2);
       blit_fbo(g, FBO_MINIMAP_WORLD, 0, 0, (int) ((float) w / scale), (int) ((float) h / scale));
     }
     glPopMatrix();
@@ -145,8 +143,10 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
       color  c = BLACK;
       spoint p(x, y);
 
-      if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
-        continue;
+      if (! g_opt_debug1) {
+        if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
+          continue;
+        }
       }
 
       if (level_is_dirt(g, v, l, p)) {
@@ -160,6 +160,9 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
       }
       if (level_is_wall(g, v, l, p)) {
         c = GRAY50;
+      }
+      if (level_is_rock(g, v, l, p)) {
+        c = BLACK;
       }
       if (level_is_bridge(g, v, l, p)) {
         c = BROWN4;

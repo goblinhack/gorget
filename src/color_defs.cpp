@@ -30,6 +30,7 @@ color GOLD3;
 color GOLD4;
 color GRAY;
 color GRAY10;
+color GRAY5;
 color GRAY20;
 color GRAY30;
 color GRAY40;
@@ -116,6 +117,7 @@ void color_init(void)
   color_set("gold3", &GOLD3, 205, 173, 0, 255);
   color_set("gold4", &GOLD4, 139, 117, 0, 255);
   color_set("gray", &GRAY, 190, 190, 190, 255);
+  color_set("gray5", &GRAY5, 13, 13, 13, 255);
   color_set("gray10", &GRAY10, 26, 26, 26, 255);
   color_set("gray20", &GRAY20, 51, 51, 51, 255);
   color_set("gray30", &GRAY30, 77, 77, 77, 255);

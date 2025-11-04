@@ -73,8 +73,12 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
     //
     // If the player is scrolling the map via the mouse, do not auto scroll.
     //
-    if ((x < MAP_SCROLL_OUTER_EDGE) || (y < MAP_SCROLL_OUTER_EDGE) || (x > 1 - MAP_SCROLL_OUTER_EDGE)
-        || (y > 1 - MAP_SCROLL_OUTER_EDGE)) {
+    if (level_is_level_select(g, v, l)) {
+      //
+      // Allow mouse scrolling always
+      //
+    } else if ((x < MAP_SCROLL_OUTER_EDGE) || (y < MAP_SCROLL_OUTER_EDGE) || (x > 1 - MAP_SCROLL_OUTER_EDGE)
+               || (y > 1 - MAP_SCROLL_OUTER_EDGE)) {
       //
       // Unless the player has wandered off screen
       //
