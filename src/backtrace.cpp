@@ -330,7 +330,9 @@ std::string backtrace_string(void)
 {
   auto bt = new Backtrace();
   bt->init();
-  return bt->to_string();
+  auto ret = bt->to_string();
+  delete bt;
+  return ret;
 }
 #endif
 

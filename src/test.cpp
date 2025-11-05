@@ -242,12 +242,13 @@ void tests_run(Gamep g)
 
   test_fini();
 
+  g_opt_tests = false;
+
   if (failed) {
-    auto s = string_sprintf("Results: %d passed, %d failed", passed, failed);
-    term_log(s.c_str());
+    CON("Results: %d passed, %d failed", passed, failed);
     exit(1);
   } else {
-    term_log("All tests passed");
+    CON("All tests passed");
     DIE_CLEAN("done");
   }
 }
