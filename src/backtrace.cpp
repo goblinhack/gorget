@@ -321,8 +321,9 @@ std::string backtrace_string(void)
 
   // __debugbreak();
 
-  std::string ret(tmp);
-  return tmp;
+  std::string ret = "stack trace\n===========\n";
+  ret += std::string(tmp);
+  return ret;
 }
 
 #else
