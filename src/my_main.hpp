@@ -38,9 +38,18 @@ void        DYING(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #define MY_STDOUT redirect_stdout()
 
 #define DIE(...)                                                                                                     \
-  DYING("Died at %s:%s():%u, thread %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                   \
-  CLEANUP_ERR(__VA_ARGS__);                                                                                          \
-  exit(1);
+  /* Log this now, just in case we crash later */                                                                    \
+  fprintf(stderr, "DIE: " __VA_ARGS__);                                                                              \
+  fprintf(stderr, "\n");                                                                                             \
+  fprintf(MY_STDERR, "DIE: " __VA_ARGS__);                                                                           \
+  fprintf(MY_STDERR, "\n");                                                                                          \
+  if (g_thread_id == -1) {                                                                                           \
+    DYING("Died at %s:%s():%u, thread %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                 \
+    CLEANUP_ERR(__VA_ARGS__);                                                                                        \
+    exit(1);                                                                                                         \
+  } else {                                                                                                           \
+    DYING("Thread died at %s:%s():%u, thread %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);          \
+  }
 
 #define DIE_CLEAN(...)                                                                                               \
   DYING("Exiting at %s:%s():%u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                        \

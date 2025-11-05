@@ -28,6 +28,7 @@ public:
 };
 
 void        backtrace_dump(void);
+void        backtrace_dump_stderr(void);
 void        backtrace_unwind();
 std::string backtrace_string(void);
 #endif

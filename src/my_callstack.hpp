@@ -59,6 +59,7 @@ extern unsigned char    g_callframes_indent;
 #endif
 
 extern void callstack_dump(void);
+extern void callstack_dump_stderr(void);
 
 struct tracer_t {
   inline tracer_t(const char *func, const unsigned short line)

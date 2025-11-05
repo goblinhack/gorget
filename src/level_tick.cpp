@@ -347,7 +347,7 @@ static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
 
   auto p = thing_player(g);
   if (! p) {
-    TOPCON("noplayer");
+    ERR("No player found during level tick");
     return;
   }
 

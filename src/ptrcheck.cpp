@@ -516,6 +516,7 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
   CON("%s%p %s:%s line %u, see below logs", unknown_ptr_warning, ptr, file, func, line);
   ptrcheck_describe_pointer(mtype, ptr);
   DIE("%s%p %s:%s line %u, see above logs", unknown_ptr_warning, ptr, file, func, line);
+  return nullptr;
 }
 
 //

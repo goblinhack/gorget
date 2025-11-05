@@ -2008,7 +2008,8 @@ static class LevelFixed *level_random_get(Gamep g, LevelType level_type)
   TRACE_NO_INDENT();
 
   if (! level_fixed_all[ level_type ].size()) {
-    DIE("no levels of type %d", level_type);
+    ERR("no levels of type %d", level_type);
+    return nullptr;
   }
 
   return level_fixed_all[ level_type ][ pcg_random_range(0, level_fixed_all[ level_type ].size()) ];
@@ -2036,6 +2037,21 @@ static std::string level_gen_string(Gamep g, class LevelGen *o, class LevelFixed
   TRACE_NO_INDENT();
 
   std::string out;
+
+  if (! l) {
+    ERR("No fixed level provided");
+    return "";
+  }
+
+  if (! l->data) {
+    ERR("No fixed level data provided");
+    return "";
+  }
+
+  if (! o) {
+    ERR("No destination level provided");
+    return "";
+  }
 
   //
   // Useful to have the chars in the common LevelGen structure for things like
@@ -4317,14 +4333,14 @@ void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l)
 // Convert the level into a string and then populate all the things onto the
 // real level, assign tiles etc...
 //
-static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelGen *l)
+static bool level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelGen *l)
 {
   TRACE_NO_INDENT();
 
   auto v = game_levels_get(g);
   if (! v) {
     ERR("No levels created");
-    return;
+    return false;
   }
 
   LevelSelect *s = &v->level_select;
@@ -4355,7 +4371,7 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
         // Unknown level
         //
         ERR("No fixed level \"%s\" created", g_opt_level_name.c_str());
-        return;
+        return false;
       } else {
         //
         // Keep the procedurally generated level. Use this level to instead to start the player on.
@@ -4372,7 +4388,7 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
     fixed_level = level_random_get(g, LEVEL_TYPE_BOSS);
     if (! fixed_level) {
       ERR("No fixed boss level \"%u\" created", l->level_num);
-      return;
+      return false;
     }
     level_string = level_gen_string(g, l, fixed_level);
   } else {
@@ -4380,6 +4396,10 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
     // Procedurally generated level
     //
     level_string = level_gen_string(g, l);
+  }
+
+  if (level_string == "") {
+    return false;
   }
 
   //
@@ -4416,6 +4436,8 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
   // Create joined up tiles
   //
   level_assign_tiles(g, v, level);
+
+  return true;
 }
 
 //
@@ -4647,7 +4669,14 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   // Populate the map with things from the level created
   //
   TRACE_NO_INDENT();
-  level_gen_populate_for_fixed_or_proc_gen_level(g, l);
+  if (! level_gen_populate_for_fixed_or_proc_gen_level(g, l)) {
+    if (g_opt_level_name != "") {
+      ERR("No level created for level %s", g_opt_level_name.c_str());
+    } else {
+      ERR("No level created for level num %u", level_num);
+    }
+    return;
+  }
 
   //
   // Final check it worked

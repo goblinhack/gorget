@@ -334,13 +334,16 @@ std::string backtrace_string(void)
 }
 #endif
 
+void backtrace_dump_stderr(void)
+{
+  auto bt = backtrace_string();
+
+  fprintf(stderr, "%s", bt.c_str());
+}
+
 void backtrace_dump(void)
 {
   auto bt = backtrace_string();
 
   fprintf(MY_STDERR, "%s", bt.c_str());
-
-  if (MY_STDERR != stderr) {
-    fprintf(stderr, "%s", bt.c_str());
-  }
 }

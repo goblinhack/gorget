@@ -117,7 +117,6 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
   //
   auto player = thing_player(g);
   if (! player) {
-    ERR("No player");
     return;
   }
 

@@ -134,6 +134,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
   }
 
   DIE("out of things");
+  return nullptr;
 }
 
 void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)

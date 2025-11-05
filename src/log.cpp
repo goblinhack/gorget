@@ -183,29 +183,26 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
 
   CON("%s", buf + tslen);
 
-  cleanup();
+  //
+  // Better to exit than cleanup, as we could crash in cleanup
+  //
+  exit(1);
+  if (g_thread_id == -1) {
+    cleanup();
+  } else {
+    exit(1);
+  }
 }
 
 void CLEANUP_ERR(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  static bool nested;
-  if (nested) {
-    fprintf(stderr, "Nested error in %s:%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
-    callstack_dump();
-    backtrace_dump();
-    exit(1);
-  }
-  nested = true;
-
   va_list args;
 
   va_start(args, fmt);
   cleanup_err_wrapper_(fmt, args);
   va_end(args);
-
-  nested = false;
 }
 
 static void cleanup_ok_wrapper_(const char *fmt, va_list args)
@@ -231,6 +228,10 @@ static void dying_(const char *fmt, va_list args)
   TRACE_NO_INDENT();
 
   if (g_dying) {
+    //
+    // Could be a different thread also crashing.
+    //
+    exit(1);
     return;
   }
   g_dying = true;
@@ -276,15 +277,6 @@ void DYING(const char *fmt, ...)
 static void err_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
-
-  static bool nested;
-  if (nested) {
-    fprintf(stderr, "Nested error [%s] in %s:%s:%d\n", fmt, __FILE__, __FUNCTION__, __LINE__);
-    callstack_dump();
-    backtrace_dump();
-    exit(1);
-  }
-  nested = true;
 
   callstack_dump();
   backtrace_dump();
@@ -334,8 +326,6 @@ static void err_(const char *fmt, va_list args)
   if (! g_opt_tests) {
     error_handler(error_buf);
   }
-
-  nested = false;
 }
 
 void err_wrapper(const char *fmt, ...)

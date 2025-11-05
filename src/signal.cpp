@@ -18,24 +18,23 @@
 #include <time.h>
 #include <unistd.h>
 
+void callstack_dump_stderr(void)
+{
+  fprintf(stderr, "code trace\n");
+  fprintf(stderr, "==========\n");
+  for (auto depth = 0; depth < g_callframes_depth; depth++) {
+    auto iter = &callframes[ depth ];
+    fprintf(stderr, "(trace) %d %s, line %u\n", depth, iter->func, iter->line);
+  }
+}
+
 void callstack_dump(void)
 {
-  TRACE_NO_INDENT();
-
   fprintf(MY_STDERR, "code trace\n");
   fprintf(MY_STDERR, "==========\n");
   for (auto depth = 0; depth < g_callframes_depth; depth++) {
     auto iter = &callframes[ depth ];
     fprintf(MY_STDERR, "(trace) %d %s, line %u\n", depth, iter->func, iter->line);
-  }
-
-  if (MY_STDERR != stderr) {
-    fprintf(stderr, "code trace\n");
-    fprintf(stderr, "==========\n");
-    for (auto depth = 0; depth < g_callframes_depth; depth++) {
-      auto iter = &callframes[ depth ];
-      fprintf(stderr, "(trace) %d %s, line %u\n", depth, iter->func, iter->line);
-    }
   }
 }
 
@@ -171,9 +170,13 @@ static void error_handler_do(std::string &tech_support)
 
 void segv_handler(int sig)
 {
-  if (g_dying) {
+  static bool crashed;
+
+  if (crashed) {
     return;
   }
+
+  crashed = true;
 
   TRACE_NO_INDENT();
 
@@ -181,6 +184,9 @@ void segv_handler(int sig)
   signal(SIGABRT, nullptr);
   signal(SIGFPE, nullptr);
   signal(SIGILL, nullptr);
+
+  callstack_dump_stderr();
+  backtrace_dump_stderr();
 
 #if defined __linux__
   debug_crash_handler(sig);
@@ -191,31 +197,26 @@ void segv_handler(int sig)
 
 void error_handler(const std::string &error_msg)
 {
-  TRACE_NO_INDENT();
-
-  static bool nested_error;
-
-  if (nested_error) {
-    fprintf(stderr, "Nested error in %s:%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
-    callstack_dump();
-    backtrace_dump();
-    exit(1);
+  if (g_thread_id != -1) {
+    return;
   }
-  nested_error = true;
+
+  TRACE_NO_INDENT();
 
   std::string tech_support = "Sorry, an error has occurred: ";
   tech_support += error_msg;
 
   error_handler_do(tech_support);
-
-  nested_error = false;
 }
 
 void ctrlc_handler(int sig)
 {
   TRACE_NO_INDENT();
 
+  callstack_dump_stderr();
+  backtrace_dump_stderr();
+
   fprintf(MY_STDERR, "Interrupted!!!");
-  backtrace_dump();
+
   DIE_CLEAN("Interrupted");
 }
