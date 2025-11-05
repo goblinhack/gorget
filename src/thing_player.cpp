@@ -159,7 +159,7 @@ void thing_player_event_loop(Gamep g, Levelsp v, Levelp l)
           //
           // Player not initialized yet
           //
-          if (g_opt_quick_start_level_select_menu) {
+          if (g_opt_level_select_menu) {
             thing_player_cursor_loop(g, v, l);
           }
           break;
@@ -620,35 +620,59 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right)
 //
 // Handle common level exit interactions
 //
-static void player_level_leave(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void player_level_leave(Gamep g, Levelsp v, LevelNum level_num = LEVEL_SELECT_ID)
 {
   TRACE_NO_INDENT();
 
   level_select_update_grid_tiles(g, v);
   level_cursor_path_reset(g, v);
-  level_change(g, v, LEVEL_SELECT_ID);
+  level_change(g, v, level_num);
   game_request_to_remake_ui_set(g);
+}
+
+//
+// Force move a player to a specific level
+//
+void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num)
+{
+  TRACE_NO_INDENT();
+
+  player_level_leave(g, v, level_num);
+
+  auto player = thing_player(g);
+  if (! player) {
+    ERR("No player found");
+    return;
+  }
+
+  auto new_level = level_change(g, v, level_num);
+  if (! new_level) {
+    THING_ERR(player, "failed to move player to level %u", level_num);
+    return;
+  }
+
+  thing_level_warp_to_entrance(g, v, new_level, player);
 }
 
 //
 // Handle level exit interactions
 //
-void player_reached_exit(Gamep g, Levelsp v, Levelp l, Thingp t)
+void player_reached_exit(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
   level_is_completed_by_player_exiting(g, v, l);
-  player_level_leave(g, v, l, t);
+  player_level_leave(g, v, LEVEL_SELECT_ID);
 }
 
 //
 // Handle level entrance interactions
 //
-void player_reached_entrance(Gamep g, Levelsp v, Levelp l, Thingp t)
+void player_reached_entrance(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  player_level_leave(g, v, l, t);
+  player_level_leave(g, v, LEVEL_SELECT_ID);
 }
 
 //
@@ -722,7 +746,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
         //
         // Descend
         //
-        player_reached_exit(g, v, l, t);
+        player_reached_exit(g, v, l);
         return;
       }
 
@@ -730,7 +754,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
         //
         // Ascend
         //
-        player_reached_entrance(g, v, l, t);
+        player_reached_entrance(g, v, l);
         return;
       }
     }

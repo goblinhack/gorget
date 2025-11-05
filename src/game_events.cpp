@@ -258,7 +258,7 @@ bool game_event_descend(Gamep g)
     return false;
   }
 
-  player_reached_exit(g, v, l, player);
+  player_reached_exit(g, v, l);
 
   return true;
 }
@@ -293,7 +293,7 @@ bool game_event_ascend(Gamep g)
     return false;
   }
 
-  player_reached_entrance(g, v, l, player);
+  player_reached_entrance(g, v, l);
 
   return true;
 }
@@ -367,7 +367,7 @@ bool game_event_quit(Gamep g)
   if (g_opt_quick_start) {
     DIE_CLEAN("Quick quit");
   }
-  if (g_opt_quick_start_level_select_menu) {
+  if (g_opt_level_select_menu) {
     DIE_CLEAN("Quick quit");
   }
 

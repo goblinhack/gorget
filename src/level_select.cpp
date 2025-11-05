@@ -469,7 +469,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
         }
       }
 
-      if (g_opt_quick_start_level_select_menu) {
+      if (g_opt_level_select_menu) {
         l->player_can_enter_this_level_next = true;
       }
 
@@ -523,7 +523,7 @@ static void level_select_map_set(Gamep g, Levelsp v)
         //
         // Show all levels as next when debugging
         //
-        if (g_opt_quick_start_level_select_menu && (tp == tp_is_level_not_visited)) {
+        if (g_opt_level_select_menu && (tp == tp_is_level_not_visited)) {
           tp = tp_is_level_next;
         }
 
@@ -878,8 +878,7 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
     //
     // Disable load and save buttons
     //
-    wid_actionbar_fini(g);
-    wid_actionbar_init(g);
+    game_request_to_remake_ui_set(g);
   }
 }
 

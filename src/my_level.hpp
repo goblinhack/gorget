@@ -34,6 +34,17 @@ enum {
 
 ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
 
+//
+// Used for level selection on the command line
+//
+typedef struct LevelOpt_ {
+  std::string level_name;
+  LevelNum    level_num;
+  bool        is_set;
+} LevelOpt;
+
+extern LevelOpt g_level_opt;
+
 typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay

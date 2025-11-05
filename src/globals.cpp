@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_level.hpp"
+
 #include <string>
 
 bool               g_dying;
@@ -17,7 +19,7 @@ bool               g_opt_do_level_select_gen;           // Test level select gen
 bool               g_opt_do_room_gen;                   // Test room gen
 bool               g_opt_no_slow_log_flush;             // Do not flush after each console log at start
 bool               g_opt_override_debug_level;          // Temporary used to disable debugs on load
-bool               g_opt_quick_start_level_select_menu; // Start in the select menu
+bool               g_opt_level_select_menu; // Start in the select menu
 bool               g_opt_quick_start;                   // Start in the main menu
 bool               g_opt_restarted_in_gfx_menu;         // Post restart
 bool               g_opt_restarted;                     // Post restart
@@ -36,7 +38,6 @@ int                g_argc;
 std::string        g_log_stderr_filename;
 std::string        g_log_stdout_filename;
 std::string        g_need_restart_with_given_arguments; // Need to restart game
-std::string        g_opt_level_name;
 std::string        g_opt_seed_name;
 std::string        g_opt_test_name;
 std::string        g_program_name;
@@ -49,7 +50,7 @@ void reset_globals(void)
   g_opt_no_slow_log_flush             = false;
   g_opt_override_debug_level          = false;
   g_opt_quick_start                   = false;
-  g_opt_quick_start_level_select_menu = false;
+  g_opt_level_select_menu = false;
   g_opt_do_room_gen                   = false;
   g_opt_do_level_select_gen           = false;
   g_opt_do_level_gen                  = false;
@@ -58,4 +59,6 @@ void reset_globals(void)
   g_opt_debug1                        = false;
   g_opt_debug2                        = false;
   g_opt_tests                         = false;
+
+  g_level_opt = {};
 }

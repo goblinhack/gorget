@@ -22,7 +22,7 @@ extern bool               g_opt_do_level_select_gen;           // Test level sel
 extern bool               g_opt_do_room_gen;                   // Test room gen
 extern bool               g_opt_no_slow_log_flush;             // Do not flush after each console log at start
 extern bool               g_opt_override_debug_level;          // Temporary, used to disable existing debugs
-extern bool               g_opt_quick_start_level_select_menu; // Start in the select menu
+extern bool               g_opt_level_select_menu; // Start in the select menu
 extern bool               g_opt_quick_start;                   // Start in the main menu
 extern bool               g_opt_restarted_in_gfx_menu;         // Post restart
 extern bool               g_opt_restarted;                     // Post restart
@@ -41,7 +41,6 @@ extern std::string        g_log_stderr_filename;
 extern std::string        g_log_stdout_filename;
 extern std::string        g_need_restart_with_given_arguments; // Need to restart game with the given arg
 extern std::string        g_program_name;
-extern std::string        g_opt_level_name;
 extern std::string        g_opt_seed_name;
 extern std::string        g_opt_test_name;
 extern thread_local FILE *g_log_stderr;

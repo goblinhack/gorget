@@ -764,26 +764,42 @@ void Game::create_levels(void)
   level_select_assign_levels_to_grid(g, v);
 
   //
+  // Sanity checks
+  //
+  LevelSelect *s = &v->level_select;
+  if (! s) {
+    ERR("No level selection created");
+    return;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    ERR("No player found");
+    return;
+  }
+
+  if (g_level_opt.level_num && g_level_opt.is_set) {
+    //
+    // We want the player to start on a specific level
+    //
+    player_warp_to_specific_level(g, v, g_level_opt.level_num);
+  } else {
+    //
+    // First level
+    //
+    level_change(g, v, 0);
+  }
+
+  //
   // Update the tiles show in level selection
   //
   level_select_update_grid_tiles(g, v);
 
-  //
-  // Check if we want the player to start on a specific level
-  //
-  char *p;
-  auto  num = strtol(g_opt_level_name.c_str(), &p, 10);
-  if (! *p) {
-    level_change(g, v, num);
-  }
-
-  //
-  // Start in level select?
-  //
-  if (g_opt_quick_start_level_select_menu) {
+  if (g_opt_level_select_menu) {
+    //
+    // Start in level select?
+    //
     level_change(g, v, LEVEL_SELECT_ID);
-  } else {
-    level_change(g, v, 0);
   }
 
   level_debug_stats(g);
@@ -952,7 +968,7 @@ void Game::state_change(GameState new_state, const std::string &why)
         //
         // Do nothing
         //
-      } else if (g_opt_quick_start_level_select_menu) {
+      } else if (g_opt_level_select_menu) {
         //
         // Do nothing
         //

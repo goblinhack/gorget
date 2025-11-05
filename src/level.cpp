@@ -12,6 +12,8 @@
 
 #include <format>
 
+LevelOpt g_level_opt;
+
 //
 // Are we on the level selection level?
 //
@@ -331,6 +333,27 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   TRACE_AND_INDENT();
 
   verify(MTYPE_LEVELS, v);
+
+  //
+  // Check we're not trying to jump off the end of the levels
+  //
+  LevelSelect *s = &v->level_select;
+  if (! s) {
+    ERR("No level selection created");
+    return nullptr;
+  }
+
+  if (level_num == LEVEL_SELECT_ID) {
+    //
+    // Enter level selectionm
+    //
+  } else if (level_num > s->level_count) {
+    //
+    // Jump tot the last real level
+    //
+    level_num = s->level_count - 1;
+    LOG("Level change to %u (max level)", level_num);
+  }
 
   Level *old_level = game_level_get(g, v);
   game_level_populate(g, v, level_num);

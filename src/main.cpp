@@ -60,6 +60,13 @@ static void usage(void)
   CON(" --do-level-select-gen             -- Do level select gen only.");
   CON(" --do-room-gen                     -- Generate room files only.");
   CON(" ");
+  CON("Examples");
+  CON(" # start on seed crowcod, level 10");
+  CON(" ./gorget --seed crowcod --level 10");
+  CON(" ");
+  CON(" # start on seed crowcod, last level and at the level select meny");
+  CON(" ./gorget --seed crowcod --level 100 --level-select");
+  CON(" ");
   CON("Written by goblinhack@gmail.com");
 }
 
@@ -120,7 +127,7 @@ static void parse_args(int argc, char *argv[])
     }
 
     if (! strcasecmp(argv[ i ], "--level-select") || ! strcasecmp(argv[ i ], "-level-select")) {
-      g_opt_quick_start_level_select_menu = true;
+      g_opt_level_select_menu = true;
       continue;
     }
 
@@ -129,7 +136,26 @@ static void parse_args(int argc, char *argv[])
         usage();
         DIE("Missing parameter for argument, %s", argv[ i ]);
       }
-      g_opt_level_name  = argv[ i + 1 ];
+
+      //
+      // Check if this is a level number or name
+      //
+      char *p;
+      auto  num = strtol(argv[ i + 1 ], &p, 10);
+      if (*p) {
+        //
+        // Level name
+        //
+        g_level_opt.level_name = argv[ i + 1 ];
+        g_level_opt.is_set     = true;
+      } else if (num > 0) {
+        //
+        // Level number
+        //
+        g_level_opt.level_num = num - 1;
+        g_level_opt.is_set    = true;
+      }
+
       g_opt_quick_start = true;
       i++;
       continue;
@@ -590,7 +616,7 @@ int main(int argc, char *argv[])
       wid_cfg_gfx_select(g);
     } else if (g_opt_quick_start) {
       wid_new_game(g);
-    } else if (g_opt_quick_start_level_select_menu) {
+    } else if (g_opt_level_select_menu) {
       wid_new_game(g);
     } else {
       wid_main_menu_select(g);
