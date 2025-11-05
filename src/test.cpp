@@ -92,15 +92,13 @@ Testp test_find(const char *name_in)
   return nullptr;
 }
 
-bool test_init(void)
+void test_init(void)
 {
   TRACE_NO_INDENT();
 
   test_init_done = true;
 
   tests_init();
-
-  return true;
 }
 
 void test_fini(void)
@@ -242,15 +240,14 @@ void tests_run(Gamep g)
     }
   }
 
-  for (auto &test : test_name_map) {
-    delete test.second;
-  }
+  test_fini();
 
   if (failed) {
-    CON("Results: %d passed, %d failed", passed, failed);
+    auto s = string_sprintf("Results: %d passed, %d failed", passed, failed);
+    term_log(s.c_str());
     exit(1);
   } else {
-    CON("All tests passed");
+    term_log("All tests passed");
     DIE_CLEAN("done");
   }
 }

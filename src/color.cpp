@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
+#include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"

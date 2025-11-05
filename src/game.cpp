@@ -1936,36 +1936,38 @@ Levelp game_level_get(Gamep g, Levelsp v)
   auto n = v->level_num;
   return &v->level[ n ];
 }
+
 Levelp game_level_get(Gamep g, Levelsp v, LevelNum n)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
-    ERR("No game pointer set");
+    ERR("game_level_get: No game pointer set");
     return nullptr;
   }
   if (unlikely(! v)) {
-    ERR("No levels pointer set");
+    ERR("game_level_get: No levels pointer set");
     return nullptr;
   }
   if (n >= MAX_LEVELS) {
-    ERR("Exceeded max level: %u", n);
+    ERR("game_level_get: Exceeded max level: %u", n);
     return nullptr;
   }
   return &v->level[ n ];
 }
+
 Levelp game_level_populate(Gamep g, Levelsp v, LevelNum n)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
-    ERR("No game pointer set");
+    ERR("game_level_populate: No game pointer set");
     return nullptr;
   }
   if (unlikely(! v)) {
-    ERR("No levels pointer set");
+    ERR("game_level_populate: No levels pointer set");
     return nullptr;
   }
   if (n >= MAX_LEVELS) {
-    ERR("Exceeded max level: %u", n);
+    ERR("game_level_populate: Exceeded max level: %u", n);
     return nullptr;
   }
   v->level_num = n;

@@ -183,13 +183,12 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
 
   CON("%s", buf + tslen);
 
-  //
-  // Better to exit than cleanup, as we could crash in cleanup
-  //
-  exit(1);
   if (g_thread_id == -1) {
     cleanup();
   } else {
+    //
+    // Better to exit than cleanup, as we could crash in cleanup
+    //
     exit(1);
   }
 }
@@ -235,6 +234,12 @@ static void dying_(const char *fmt, va_list args)
     return;
   }
   g_dying = true;
+
+  callstack_dump_stderr();
+  backtrace_dump_stderr();
+
+  callstack_dump();
+  backtrace_dump();
 
   char buf[ MAXLONGSTR * 10 ];
   buf[ 0 ] = '\0';

@@ -6,6 +6,7 @@
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
 #include "my_gl.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_time.hpp"

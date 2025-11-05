@@ -44,7 +44,7 @@ void        DYING(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
   fprintf(MY_STDERR, "DIE: " __VA_ARGS__);                                                                           \
   fprintf(MY_STDERR, "\n");                                                                                          \
   if (g_thread_id == -1) {                                                                                           \
-    DYING("Died at %s:%s():%u, thread %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                 \
+    DYING("Died at %s:%s():%u, main thread", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                            \
     CLEANUP_ERR(__VA_ARGS__);                                                                                        \
     exit(1);                                                                                                         \
   } else {                                                                                                           \

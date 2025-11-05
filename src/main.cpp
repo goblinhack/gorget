@@ -572,7 +572,7 @@ int main(int argc, char *argv[])
     fragments_init(g);
 
     if (g_opt_tests) {
-      tests_init();
+      test_init();
 
       CON("Running tests");
       CON("-------------");

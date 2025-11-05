@@ -15,14 +15,6 @@ bool tests_init(void)
   /* shell do */
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
-  if (!test_load_move_ok()) { return false; }
-  if (!test_load_open_door()) { return false; }
-  if (!test_load_player_fall_chasm_into_lava()) { return false; }
-  if (!test_load_player_lava()) { return false; }
-  if (!test_load_teleport()) { return false; }
-  if (!test_load_trampled_grass()) { return false; }
-  if (!test_load_wall()) { return false; }
-  if (!test_load_save_load()) { return false; }
   if (!test_load_barrel_explosion()) { return false; }
   if (!test_load_barrel()) { return false; }
   if (!test_load_brazier_shove_chasm()) { return false; }
@@ -41,7 +33,14 @@ bool tests_init(void)
   if (!test_load_mob_lava()) { return false; }
   if (!test_load_mob_water()) { return false; }
   if (!test_load_mob()) { return false; }
-
+  if (!test_load_move_ok()) { return false; }
+  if (!test_load_open_door()) { return false; }
+  if (!test_load_player_fall_chasm_into_lava()) { return false; }
+  if (!test_load_player_lava()) { return false; }
+  if (!test_load_save_load()) { return false; }
+  if (!test_load_teleport()) { return false; }
+  if (!test_load_trampled_grass()) { return false; }
+  if (!test_load_wall()) { return false; }
   /* end shell marker1 */
   // clang-format on
 

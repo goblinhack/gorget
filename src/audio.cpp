@@ -2,10 +2,11 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <SDL_mixer.h>
-
 #include "my_callstack.hpp"
+#include "my_globals.hpp"
 #include "my_main.hpp"
+
+#include <SDL_mixer.h>
 
 uint8_t audio_init_done;
 

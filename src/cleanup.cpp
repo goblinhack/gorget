@@ -86,6 +86,8 @@ void cleanup(void)
   //
   wid_fini(nullptr);
 
+  test_fini();
+
   if (g_exec_full_path_and_name) {
     myfree(g_exec_full_path_and_name);
     g_exec_full_path_and_name = nullptr;

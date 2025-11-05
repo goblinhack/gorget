@@ -185,9 +185,6 @@ void segv_handler(int sig)
   signal(SIGFPE, nullptr);
   signal(SIGILL, nullptr);
 
-  callstack_dump_stderr();
-  backtrace_dump_stderr();
-
 #if defined __linux__
   debug_crash_handler(sig);
 #endif

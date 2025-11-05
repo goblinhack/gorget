@@ -72,4 +72,7 @@ void tests_run(Gamep);
 
 #define TEST_PROGRESS(test) LOG("Test %s: %s:%u: progress", test_name(test), __FUNCTION__, __LINE__);
 
+void test_init(void);
+void test_fini(void);
+
 #endif // _MY_TEST_H_
