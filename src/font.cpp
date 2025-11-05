@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_font.hpp"
+#include "my_globals.hpp"
 #include "my_main.hpp"
 
 #include <unordered_map>

@@ -323,7 +323,7 @@ void level_is_completed_by_player_falling(Gamep g, Levelsp v, Levelp l)
 }
 
 //
-// Change the current
+// Change the current level
 //
 Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
 {

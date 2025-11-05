@@ -38,7 +38,7 @@ void        DYING(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 #define MY_STDOUT redirect_stdout()
 
 #define DIE(...)                                                                                                     \
-  DYING("Died at %s:%s():%u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                           \
+  DYING("Died at %s:%s():%u, thread %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                   \
   CLEANUP_ERR(__VA_ARGS__);                                                                                          \
   exit(1);
 

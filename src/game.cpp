@@ -768,6 +768,18 @@ void Game::create_levels(void)
   //
   level_select_update_grid_tiles(g, v);
 
+  //
+  // Check if we want the player to start on a specific level
+  //
+  char *p;
+  auto  num = strtol(g_opt_level_name.c_str(), &p, 10);
+  if (! *p) {
+    level_change(g, v, num);
+  }
+
+  //
+  // Start in level select?
+  //
   if (g_opt_quick_start_level_select_menu) {
     level_change(g, v, LEVEL_SELECT_ID);
   } else {

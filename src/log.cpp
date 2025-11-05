@@ -98,8 +98,6 @@ static void warn_(const char *fmt, va_list args)
     putf(stdout, buf);
   }
 
-  FLUSH_TERMINAL();
-
   wid_console_log(buf);
 }
 
@@ -140,8 +138,6 @@ static void con_(const char *fmt, va_list args)
   }
 
   wid_console_log(buf);
-
-  FLUSH_TERMINAL();
 }
 
 void CON(const char *fmt, ...)
@@ -186,7 +182,6 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
   fprintf(MY_STDERR, "%s\n", buf);
 
   CON("%s", buf + tslen);
-  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 
   cleanup();
 }
@@ -216,8 +211,6 @@ void CLEANUP_ERR(const char *fmt, ...)
 static void cleanup_ok_wrapper_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
-
-  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 
   cleanup();
 }
@@ -257,7 +250,16 @@ static void dying_(const char *fmt, va_list args)
     fprintf(MY_STDERR, "%s\n", buf);
   }
 
-  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
+#ifdef _WIN32
+  //
+  // windows is such utter garbage that if the program crashes it does not flush
+  // the goddamned console! So we need this...
+  //
+  fflush(stdout);
+  fflush(stderr);
+  fflush(MY_STDOUT);
+  fflush(MY_STDERR);
+#endif
 }
 
 void DYING(const char *fmt, ...)
@@ -328,8 +330,6 @@ static void err_(const char *fmt, va_list args)
 
     wid_console_log(buf);
   }
-
-  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 
   if (! g_opt_tests) {
     error_handler(error_buf);
@@ -447,7 +447,6 @@ static void topcon_(const char *fmt, va_list args)
 
   wid_topcon_log(buf + len);
   wid_console_log(buf + len);
-  FLUSH_TERMINAL();
 }
 
 void TOPCON(const char *fmt, ...)

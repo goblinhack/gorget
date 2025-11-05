@@ -100,10 +100,12 @@ void con_(Tpp tp, const char *fmt, va_list args)
 
   putf(MY_STDOUT, buf);
 
-  term_log(buf);
-  putchar('\n');
+  if (! g_opt_tests) {
+    term_log(buf);
+    putchar('\n');
+  }
+
   wid_console_log(buf);
-  FLUSH_TERMINAL();
 }
 
 void con(Tpp tp, const char *fmt, ...)
@@ -146,8 +148,6 @@ void err_(Tpp tp, const char *fmt, va_list args)
   fprintf(stderr, "%s\n", buf);
 
   wid_console_log(buf);
-  TRACE_NO_INDENT();
-  FLUSH_TERMINAL_FOR_ALL_PLATFORMS();
 
   nested_error = false;
 }

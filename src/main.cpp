@@ -49,13 +49,11 @@ static void usage(void)
   CON(" --debug2                          -- All debugs. Slow.");
   CON(" ");
   CON("Testing:");
-  CON(" --tests                           -- Run all tests.");
-  CON(" --test foo                        -- Run test foo only.");
-  CON(" --level foo                       -- Start in this level only.");
-  CON(" ");
-  CON("Debugging:");
+  CON(" --level name/<number>             -- Start in this level only.");
+  CON(" --level-select                    -- Start in the level select menu.");
   CON(" --quick-start                     -- Quick start inside level.");
-  CON(" --quick-start-level-select-menu   -- Quick start in the level select menu.");
+  CON(" --test <name>                     -- Run test foo only.");
+  CON(" --tests                           -- Run all tests.");
   CON(" ");
   CON("Code generation:");
   CON(" --do-level-gen                    -- Do level gen only.");
@@ -121,8 +119,7 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--quick-start-level-select-menu")
-        || ! strcasecmp(argv[ i ], "-quick-start-level-select-menu")) {
+    if (! strcasecmp(argv[ i ], "--level-select") || ! strcasecmp(argv[ i ], "-level-select")) {
       g_opt_quick_start_level_select_menu = true;
       continue;
     }

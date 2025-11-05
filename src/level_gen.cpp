@@ -2022,7 +2022,6 @@ static class LevelFixed *level_fixed_find_by_name(Gamep g, const std::string &al
   TRACE_NO_INDENT();
 
   if (level_alias_all.find(alias) == level_alias_all.end()) {
-    DIE("level alias \"%s\" not found", alias.c_str());
     return nullptr;
   }
 
@@ -4346,8 +4345,23 @@ static void level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
     //
     fixed_level = level_fixed_find_by_name(g, g_opt_level_name);
     if (! fixed_level) {
-      ERR("No fixed level \"%s\" created", g_opt_level_name.c_str());
-      return;
+      //
+      // Check if this is a level number
+      //
+      char *p;
+      (void) strtol(g_opt_level_name.c_str(), &p, 10);
+      if (*p) {
+        //
+        // Unknown level
+        //
+        ERR("No fixed level \"%s\" created", g_opt_level_name.c_str());
+        return;
+      } else {
+        //
+        // Keep the procedurally generated level. Use this level to instead to start the player on.
+        //
+        level_string = level_gen_string(g, l);
+      }
     }
 
     level_string = level_gen_string(g, l, fixed_level);
@@ -4581,6 +4595,17 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   //
   g_thread_id = level_num + 1;
 
+  //
+  // We need to create the log files now, even if empty, as if we get a crash we will
+  // not be able to call fopen during the segv signal
+  //
+  TRACE_NO_INDENT();
+  redirect_stdout();
+
+  TRACE_NO_INDENT();
+  redirect_stderr();
+
+  TRACE_NO_INDENT();
   auto v = game_levels_get(g);
   if (! v) {
     if (g_opt_level_name != "") {
@@ -4593,6 +4618,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
 
   LevelGen *l;
 
+  TRACE_NO_INDENT();
   if (level_gen_is_special_level(g, v, level_num)) {
     //
     // Fixed level of some kind
@@ -4620,6 +4646,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   //
   // Populate the map with things from the level created
   //
+  TRACE_NO_INDENT();
   level_gen_populate_for_fixed_or_proc_gen_level(g, l);
 
   //
@@ -4627,6 +4654,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   //
   levels_generated[ level_num ] = l;
 
+  TRACE_NO_INDENT();
   auto level = game_level_get(g, v, level_num);
   if (! level) {
     if (g_opt_level_name != "") {
@@ -4642,6 +4670,8 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
 //
 void level_gen_create_levels(Gamep g, Levelsp v)
 {
+  TRACE_NO_INDENT();
+
   LevelSelect *s           = &v->level_select;
   int          max_threads = s->level_count;
 

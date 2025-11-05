@@ -27,7 +27,6 @@ void callstack_dump(void)
   for (auto depth = 0; depth < g_callframes_depth; depth++) {
     auto iter = &callframes[ depth ];
     fprintf(MY_STDERR, "(trace) %d %s, line %u\n", depth, iter->func, iter->line);
-    fflush(MY_STDERR);
   }
 
   if (MY_STDERR != stderr) {
@@ -36,7 +35,6 @@ void callstack_dump(void)
     for (auto depth = 0; depth < g_callframes_depth; depth++) {
       auto iter = &callframes[ depth ];
       fprintf(stderr, "(trace) %d %s, line %u\n", depth, iter->func, iter->line);
-      fflush(stderr);
     }
   }
 }
