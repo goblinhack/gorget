@@ -320,42 +320,54 @@ std::string backtrace_string(void)
     context.ContextFlags = CONTEXT_FULL;
     RtlCaptureContext(&context);
 
-    DWORD        image;
+    DWORD        imageType;
     STACKFRAME64 stackframe;
-    ZeroMemory(&stackframe, sizeof(STACKFRAME64));
+    memset(&stackframe, 0, sizeof(stackframe));
 
 #ifdef _M_IX86
-    image                       = IMAGE_FILE_MACHINE_I386;
-    stackframe.AddrPC.Offset    = context.Eip;
+    // normally, call ImageNtHeader() and use machine info from PE header
+    imageType                   = IMAGE_FILE_MACHINE_I386;
+    stackframe.AddrPC.Offset    = c.Eip;
     stackframe.AddrPC.Mode      = AddrModeFlat;
-    stackframe.AddrFrame.Offset = context.Ebp;
+    stackframe.AddrFrame.Offset = c.Ebp;
     stackframe.AddrFrame.Mode   = AddrModeFlat;
-    stackframe.AddrStack.Offset = context.Esp;
+    stackframe.AddrStack.Offset = c.Esp;
     stackframe.AddrStack.Mode   = AddrModeFlat;
 #elif _M_X64
-    image                       = IMAGE_FILE_MACHINE_AMD64;
-    stackframe.AddrPC.Offset    = context.Rip;
+    imageType                   = IMAGE_FILE_MACHINE_AMD64;
+    stackframe.AddrPC.Offset    = c.Rip;
     stackframe.AddrPC.Mode      = AddrModeFlat;
-    stackframe.AddrFrame.Offset = context.Rsp;
+    stackframe.AddrFrame.Offset = c.Rsp;
     stackframe.AddrFrame.Mode   = AddrModeFlat;
-    stackframe.AddrStack.Offset = context.Rsp;
+    stackframe.AddrStack.Offset = c.Rsp;
     stackframe.AddrStack.Mode   = AddrModeFlat;
 #elif _M_IA64
-    image                        = IMAGE_FILE_MACHINE_IA64;
-    stackframe.AddrPC.Offset     = context.StIIP;
+    imageType                    = IMAGE_FILE_MACHINE_IA64;
+    stackframe.AddrPC.Offset     = c.StIIP;
     stackframe.AddrPC.Mode       = AddrModeFlat;
-    stackframe.AddrFrame.Offset  = context.IntSp;
+    stackframe.AddrFrame.Offset  = c.IntSp;
     stackframe.AddrFrame.Mode    = AddrModeFlat;
-    stackframe.AddrBStore.Offset = context.RsBSP;
+    stackframe.AddrBStore.Offset = c.RsBSP;
     stackframe.AddrBStore.Mode   = AddrModeFlat;
-    stackframe.AddrStack.Offset  = context.IntSp;
+    stackframe.AddrStack.Offset  = c.IntSp;
     stackframe.AddrStack.Mode    = AddrModeFlat;
+#elif _M_ARM64
+    imageType                   = IMAGE_FILE_MACHINE_ARM64;
+    stackframe.AddrPC.Offset    = c.Pc;
+    stackframe.AddrPC.Mode      = AddrModeFlat;
+    stackframe.AddrFrame.Offset = c.Fp;
+    stackframe.AddrFrame.Mode   = AddrModeFlat;
+    stackframe.AddrStack.Offset = c.Sp;
+    stackframe.AddrStack.Mode   = AddrModeFlat;
+#else
+#error "Platform not supported!"
 #endif
 
     for (int i = 0; i < frames_to_capture; i++) {
-      BOOL result = StackWalk64(image, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64,
+      BOOL result = StackWalk64(imageType, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64,
                                 SymGetModuleBase64, NULL);
       if (! result) {
+        out += string_sprintf("StackWalk[end]");
         break;
       }
 

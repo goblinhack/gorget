@@ -314,8 +314,7 @@ case "$MY_OS_NAME" in
         fi
 
         #
-        # Clang supports PDB debug file creation, but you need to do
-        # the following to enable it.
+        # Clang supports PDB debug file creation, but you need to do the following to enable it.
         #
         C_FLAGS+=" -g -gcodeview"
 
@@ -697,7 +696,6 @@ fi
 #
 if [[ $OPT_GITHUB_BUILD != "" ]]; then
     log_info "Running tests:"
-    find . -name "*.pdb"
     cp .o/${TARGET}.pdb .
     ls -la
     ./${TARGET} --tests --debug
