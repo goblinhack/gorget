@@ -315,12 +315,12 @@ case "$MY_OS_NAME" in
         #
         # Clang supports PDB debug file creation, but you need to do the following to enable it.
         #
-        C_FLAGS+=" -g -gcodeview -fno-emulated-tls -fno-lto"
+        C_FLAGS+=" -g -gcodeview -fno-emulated-tls "
 
         #
         # The space after pdb= is intentional to use the executable name for PDB file generation.
         #
-        LDFLAGS+=" -g -Wl,--pdb= -fuse-ld=lld -fno-emulated-tls -fno-lto"
+        LDFLAGS+=" -g -Wl,--pdb= -fuse-ld=lld -fno-emulated-tls "
         ;;
     *Darwin*)
         EXE=""
