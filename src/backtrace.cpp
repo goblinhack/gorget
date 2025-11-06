@@ -322,10 +322,10 @@ std::string backtrace_string(void)
 
   constexpr int                          kFramesToCapture = 16;
   std::array< void *, kFramesToCapture > frames;
+  int                                    frames_to_skip = 0;
   int frame_count = CaptureStackBackTrace(frames_to_skip, kFramesToCapture, frames.data(), NULL);
 
   bool has_seen_valid_frame = false;
-  int  frames_skipped       = 0;
   for (int i = 0; i < frame_count; i++) {
     DWORD64 addr = (DWORD64) frames[ i ];
 
@@ -344,7 +344,7 @@ std::string backtrace_string(void)
       function_name = symbol->Name;
     }
 
-    out += string_sprintf("Frame %02d: %s (%s:%d)\n", i - frames_skipped, function_name, file, line_number);
+    out += string_sprintf("Frame %02d: %s (%s:%d)\n", i - frames_to_skip, function_name, file, line_number);
   }
 
   SymCleanup(handle);
