@@ -320,6 +320,10 @@ std::string backtrace_string(void)
   IMAGEHLP_LINE64 line = {};
   line.SizeOfStruct    = sizeof(IMAGEHLP_LINE64);
 
+  IMAGEHLP_SYMBOL64 symbol = {};
+  line.SizeOfStruct        = sizeof(IMAGEHLP_SYMBOL64);
+  line.MaxNameLength       = max_symbol_len;
+
   constexpr int                          kFramesToCapture = 16;
   std::array< void *, kFramesToCapture > frames;
   int                                    frames_to_skip = 0;
@@ -329,21 +333,32 @@ std::string backtrace_string(void)
     DWORD64 addr = (DWORD64) frames[ i ];
 
     // Get the file and line info.
+    const char  name         = "<noname>";
     const char *file         = "<unknown>";
     int         line_number  = 0;
     DWORD       displacement = 0;
 
+    if (SymGetSymFromAddr64(handle, addr, &displacement, &symbol)) {
+      name = symbol.Name;
+    } else {
+      out += string_sprintf("SymGetSymFromAddr64: failed, errno = %d: %s\n", (int) error, strerror((int) error));
+    }
+
     if (SymGetLineFromAddr64(handle, addr, &displacement, &line)) {
       file        = line.FileName;
       line_number = (int) line.LineNumber;
+    } else {
+      out += string_sprintf("SymGetLineFromAddr64: failed, errno = %d: %s\n", (int) error, strerror((int) error));
     }
 
     const char *function_name = "<unknown>";
     if (SymFromAddr(handle, addr, nullptr, symbol)) {
       function_name = symbol->Name;
+    } else {
+      out += string_sprintf("SymFromAddr: failed, errno = %d: %s\n", (int) error, strerror((int) error));
     }
 
-    out += string_sprintf("Frame %02d: %s (%s:%d)\n", i - frames_to_skip, function_name, file, line_number);
+    out += string_sprintf("Frame %02d: %s/%s (%s:%d)\n", i - frames_to_skip, name, function_name, file, line_number);
   }
 
   SymCleanup(handle);
