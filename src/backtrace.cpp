@@ -303,9 +303,9 @@ std::string backtrace_string(void)
   HANDLE handle = GetCurrentProcess();
   if (! SymInitialize(handle, nullptr, true)) {
     DWORD error = GetLastError();
-    fprintf(stderr, "SymInitialize: failed, errno = %d: %s\n", (int) error, strerror((int) error));
+    auto  ret   = string_sprintf("SymInitialize: failed, errno = %d: %s\n", (int) error, strerror((int) error));
     backtrace_mutex.unlock();
-    return;
+    return ret.c_str();
   }
 
   SymSetOptions(SYMOPT_LOAD_LINES | SYMOPT_UNDNAME);
@@ -320,10 +320,14 @@ std::string backtrace_string(void)
   IMAGEHLP_LINE64 line = {};
   line.SizeOfStruct    = sizeof(IMAGEHLP_LINE64);
 
+  constexpr int                          kFramesToCapture = 16;
+  std::array< void *, kFramesToCapture > frames;
+  int frame_count = CaptureStackBackTrace(frames_to_skip, kFramesToCapture, frames.data(), NULL);
+
   bool has_seen_valid_frame = false;
   int  frames_skipped       = 0;
   for (int i = 0; i < frame_count; i++) {
-    u64 addr = (u64) frames[ i ];
+    DWORD64 addr = (DWORD64) frames[ i ];
 
     // Get the file and line info.
     const char *file         = "<unknown>";
