@@ -329,7 +329,7 @@ case "$MY_OS_NAME" in
         #
         # The space after pdb= is intentional to use the executable name for PDB file generation.
         #
-        LDFLAGS+=" -g -Wl,--pdb= "
+        LDFLAGS+=" -g -Wl,--pdb= -lDbgHelp"
         ;;
     *Darwin*)
         EXE=""

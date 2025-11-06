@@ -350,7 +350,7 @@ std::string backtrace_string(void)
     stackframe.AddrStack.Mode    = AddrModeFlat;
 #endif
 
-    for (size_t i = 0; i < 25; i++) {
+    for (int i = 0; i < 16; i++) {
 
       BOOL result = StackWalk64(image, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64,
                                 SymGetModuleBase64, NULL);
@@ -366,9 +366,9 @@ std::string backtrace_string(void)
 
       DWORD64 displacement = 0;
       if (SymFromAddr(handle, stackframe.AddrPC.Offset, &displacement, symbol)) {
-        fprintf(stderr, "[%i] %s\n", i, symbol->Name);
+        fprintf(stderr, "[%d] %s\n", i, symbol->Name);
       } else {
-        fprintf(stderr, "[%i] ???\n", i);
+        fprintf(stderr, "[%d] ???\n", i);
       }
     }
   }
