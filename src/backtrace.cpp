@@ -310,6 +310,69 @@ std::string backtrace_string(void)
 
   SymSetOptions(SymGetOptions() | SYMOPT_LOAD_LINES);
 
+  if (1) {
+    HANDLE thread = GetCurrentThread();
+
+    CONTEXT context;
+    memset(&context, 0, sizeof(CONTEXT));
+    context.ContextFlags = CONTEXT_FULL;
+    RtlCaptureContext(&context);
+
+    DWORD        image;
+    STACKFRAME64 stackframe;
+    ZeroMemory(&stackframe, sizeof(STACKFRAME64));
+
+#ifdef _M_IX86
+    image                       = IMAGE_FILE_MACHINE_I386;
+    stackframe.AddrPC.Offset    = context.Eip;
+    stackframe.AddrPC.Mode      = AddrModeFlat;
+    stackframe.AddrFrame.Offset = context.Ebp;
+    stackframe.AddrFrame.Mode   = AddrModeFlat;
+    stackframe.AddrStack.Offset = context.Esp;
+    stackframe.AddrStack.Mode   = AddrModeFlat;
+#elif _M_X64
+    image                       = IMAGE_FILE_MACHINE_AMD64;
+    stackframe.AddrPC.Offset    = context.Rip;
+    stackframe.AddrPC.Mode      = AddrModeFlat;
+    stackframe.AddrFrame.Offset = context.Rsp;
+    stackframe.AddrFrame.Mode   = AddrModeFlat;
+    stackframe.AddrStack.Offset = context.Rsp;
+    stackframe.AddrStack.Mode   = AddrModeFlat;
+#elif _M_IA64
+    image                        = IMAGE_FILE_MACHINE_IA64;
+    stackframe.AddrPC.Offset     = context.StIIP;
+    stackframe.AddrPC.Mode       = AddrModeFlat;
+    stackframe.AddrFrame.Offset  = context.IntSp;
+    stackframe.AddrFrame.Mode    = AddrModeFlat;
+    stackframe.AddrBStore.Offset = context.RsBSP;
+    stackframe.AddrBStore.Mode   = AddrModeFlat;
+    stackframe.AddrStack.Offset  = context.IntSp;
+    stackframe.AddrStack.Mode    = AddrModeFlat;
+#endif
+
+    for (size_t i = 0; i < 25; i++) {
+
+      BOOL result = StackWalk64(image, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64,
+                                SymGetModuleBase64, NULL);
+
+      if (! result) {
+        break;
+      }
+
+      char         buffer[ sizeof(SYMBOL_INFO) + MAX_SYM_NAME * sizeof(TCHAR) ];
+      PSYMBOL_INFO symbol  = (PSYMBOL_INFO) buffer;
+      symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+      symbol->MaxNameLen   = MAX_SYM_NAME;
+
+      DWORD64 displacement = 0;
+      if (SymFromAddr(handle, stackframe.AddrPC.Offset, &displacement, symbol)) {
+        fprintf(stderr, "[%i] %s\n", i, symbol->Name);
+      } else {
+        fprintf(stderr, "[%i] ???\n", i);
+      }
+    }
+  }
+
 #define MAX_SYMBOL_LEN 1024
 
   char         symbol_mem[ SIZEOF(SYMBOL_INFO) + MAX_SYMBOL_LEN * SIZEOF(TCHAR) ];
@@ -335,7 +398,7 @@ std::string backtrace_string(void)
     DWORD       displacement    = 0;
     PDWORD64    pdwDisplacement = 0;
 
-    if (SymGetSymFromAddr64(handle, addr, &pdwDisplacement, (PIMAGEHLP_SYMBOL64) symbol)) {
+    if (SymGetSymFromAddr64(handle, addr, pdwDisplacement, (PIMAGEHLP_SYMBOL64) symbol)) {
       name = symbol->Name;
     } else {
       out += string_sprintf("SymGetSymFromAddr64: failed, errno = %d: %s\n", (int) errno, strerror((int) errno));
