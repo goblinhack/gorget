@@ -300,7 +300,10 @@ std::string backtrace_string(void)
   backtrace_mutex.lock();
   std::string out = "stack trace\n===========\n";
 
-  HANDLE handle = GetCurrentProcess();
+  HANDLE        thread            = GetCurrentThread();
+  HANDLE        handle            = GetCurrentProcess();
+  constexpr int frames_to_capture = 16;
+
   if (! SymInitialize(handle, nullptr, true)) {
     DWORD error = GetLastError();
     auto  ret   = string_sprintf("SymInitialize: failed, errno = %d: %s\n", (int) error, strerror((int) error));
@@ -310,9 +313,8 @@ std::string backtrace_string(void)
 
   SymSetOptions(SymGetOptions() | SYMOPT_LOAD_LINES);
 
-  if (1) {
-    HANDLE thread = GetCurrentThread();
-
+  bool do_stackwalk = true;
+  if (do_stackwalk) {
     CONTEXT context;
     memset(&context, 0, sizeof(CONTEXT));
     context.ContextFlags = CONTEXT_FULL;
@@ -350,11 +352,9 @@ std::string backtrace_string(void)
     stackframe.AddrStack.Mode    = AddrModeFlat;
 #endif
 
-    for (int i = 0; i < 16; i++) {
-
+    for (int i = 0; i < frames_to_capture; i++) {
       BOOL result = StackWalk64(image, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64,
                                 SymGetModuleBase64, NULL);
-
       if (! result) {
         break;
       }
@@ -366,9 +366,7 @@ std::string backtrace_string(void)
 
       DWORD64 displacement = 0;
       if (SymFromAddr(handle, stackframe.AddrPC.Offset, &displacement, symbol)) {
-        fprintf(stderr, "[%d] %s\n", i, symbol->Name);
-      } else {
-        fprintf(stderr, "[%d] ???\n", i);
+        out += string_sprintf("StackWalk[%d]: sym:%s\n", i, symbol->Name);
       }
     }
   }
@@ -383,48 +381,42 @@ std::string backtrace_string(void)
   IMAGEHLP_LINE64 line = {};
   line.SizeOfStruct    = sizeof(IMAGEHLP_LINE64);
 
-  constexpr int                          kFramesToCapture = 16;
-  std::array< void *, kFramesToCapture > frames;
-  int                                    frames_to_skip = 0;
-  int frame_count = CaptureStackBackTrace(frames_to_skip, kFramesToCapture, frames.data(), NULL);
+  std::array< void *, frames_to_capture > frames;
+  int                                     frames_to_skip = 0;
+  int frame_count = CaptureStackBackTrace(frames_to_skip, frames_to_capture, frames.data(), NULL);
 
   for (int i = 0; i < frame_count; i++) {
     DWORD64 addr = (DWORD64) frames[ i ];
 
-    // Get the file and line info.
-    const char *name            = "<noname>";
-    const char *file            = "<unknown>";
-    int         line_number     = 0;
+    const char *name            = "<no-name>";
+    const char *file            = "<no-file>";
+    const char *function_name   = "<no-function>";
+    int         line_number     = -1;
     DWORD       displacement    = 0;
     PDWORD64    pdwDisplacement = 0;
 
     if (SymGetSymFromAddr64(handle, addr, pdwDisplacement, (PIMAGEHLP_SYMBOL64) symbol)) {
       name = symbol->Name;
-    } else {
-      out += string_sprintf("SymGetSymFromAddr64: failed, errno = %d: %s\n", (int) errno, strerror((int) errno));
     }
 
     if (SymGetLineFromAddr64(handle, addr, &displacement, &line)) {
       file        = line.FileName;
       line_number = (int) line.LineNumber;
-    } else {
-      out += string_sprintf("SymGetLineFromAddr64: failed, errno = %d: %s\n", (int) errno, strerror((int) errno));
     }
 
-    const char *function_name = "<unknown>";
     if (SymFromAddr(handle, addr, nullptr, symbol)) {
       function_name = symbol->Name;
-    } else {
-      out += string_sprintf("SymFromAddr: failed, errno = %d: %s\n", (int) errno, strerror((int) errno));
     }
 
-    out += string_sprintf("Frame %02d: %s/%s (%s:%d)\n", i - frames_to_skip, name, function_name, file, line_number);
+    out += string_sprintf("CaptureStackBackTrace[%d]: sym:%s func:%s file:%s line:%d\n", i - frames_to_skip, name,
+                          function_name, file, line_number);
   }
-
-  SymCleanup(handle);
 
   PrintLastError(out.c_str());
   // __debugbreak();
+
+  SymCleanup(handle);
+  CloseHandle(thread);
 
   backtrace_mutex.unlock();
   return out;
