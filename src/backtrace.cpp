@@ -334,24 +334,24 @@ std::string backtrace_string(void)
     int         line_number  = 0;
     DWORD       displacement = 0;
 
-    if (SymGetSymFromAddr64(handle, addr, &displacement, symbol)) {
+    if (SymGetSymFromAddr64(handle, addr, &displacement, (PIMAGEHLP_SYMBOL64) symbol)) {
       name = symbol->Name;
     } else {
-      out += string_sprintf("SymGetSymFromAddr64: failed, errno = %d: %s\n", (int) error, strerror((int) error));
+      out += string_sprintf("SymGetSymFromAddr64: failed, errno = %d: %s\n", (int) errno, strerror((int) errno));
     }
 
     if (SymGetLineFromAddr64(handle, addr, &displacement, &line)) {
       file        = line.FileName;
       line_number = (int) line.LineNumber;
     } else {
-      out += string_sprintf("SymGetLineFromAddr64: failed, errno = %d: %s\n", (int) error, strerror((int) error));
+      out += string_sprintf("SymGetLineFromAddr64: failed, errno = %d: %s\n", (int) errno, strerror((int) errno));
     }
 
     const char *function_name = "<unknown>";
     if (SymFromAddr(handle, addr, nullptr, symbol)) {
       function_name = symbol->Name;
     } else {
-      out += string_sprintf("SymFromAddr: failed, errno = %d: %s\n", (int) error, strerror((int) error));
+      out += string_sprintf("SymFromAddr: failed, errno = %d: %s\n", (int) errno, strerror((int) errno));
     }
 
     out += string_sprintf("Frame %02d: %s/%s (%s:%d)\n", i - frames_to_skip, name, function_name, file, line_number);

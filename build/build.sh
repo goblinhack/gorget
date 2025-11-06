@@ -697,6 +697,8 @@ fi
 #
 if [[ $OPT_GITHUB_BUILD != "" ]]; then
     log_info "Running tests:"
+    find . -name "*.pdb"
+    ls -la
     ./${TARGET} --tests --debug
     if [[ $? -ne 0 ]]; then
         exit 1
