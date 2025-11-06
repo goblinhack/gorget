@@ -151,6 +151,7 @@ help_full()
         ${MINGW_PKG_TYPE}-x86_64-libwebp \
         ${MINGW_PKG_TYPE}-x86_64-libwinpthread-git \
         ${MINGW_PKG_TYPE}-x86_64-lld \
+        ${MINGW_PKG_TYPE}-x86_64-llvm \
         ${MINGW_PKG_TYPE}-x86_64-lz4 \
         ${MINGW_PKG_TYPE}-x86_64-mpc \
         ${MINGW_PKG_TYPE}-x86_64-mpfr \
@@ -317,14 +318,6 @@ case "$MY_OS_NAME" in
         C_FLAGS+=" -g -gcodeview"
 
         #
-        # Needed to create PDB files
-        #
-        if [ -x /${MINGW_TYPE}/bin/lld ]; then
-          LDFLAGS+=" -fuse-ld=lld "
-        fi
-
-        find / -name lld
-        #
         # The space after pdb= is intentional to use the executable name for PDB file generation.
         #
         LDFLAGS+=" -g -Wl,--pdb= -fuse-ld=lld"
@@ -467,10 +460,24 @@ fi
 #
 # LLD is faster
 #
-which -s lld 2>/dev/null
-if [ $? -eq 0 ]; then
+# Needed to create PDB files
+#
+#
+LLVM_PATH=$(clang++ -v 2>&1 | grep InstalledDir | sed 's/^.* //g' | sed 's/\(^.*\)\/.*/\1/g')
+
+find /ucrt64/
+find /a/_temp/msys64
+find D:/a/_temp/msys64
+
+if [ -x $LLVM_PATH/bin/lld ]; then
   LDFLAGS+=" -fuse-ld=lld"
+  log_info "Have lld                   : Yes"
+else
+  log_info "Have lld                   : No"
 fi
+
+log_info "LLVM path                  : $LLVM_PATH"
+exit 0
 
 cat >>$MAKEFILE <<%%
 WARNING_FLAGS=-Wall -Wextra -Wpedantic
