@@ -465,10 +465,6 @@ fi
 #
 LLVM_PATH=$(clang++ -v 2>&1 | grep InstalledDir | sed 's/^.* //g' | sed 's/\(^.*\)\/.*/\1/g')
 
-find /ucrt64/
-find /a/_temp/msys64
-find D:/a/_temp/msys64
-
 if [ -x $LLVM_PATH/bin/lld ]; then
   LDFLAGS+=" -fuse-ld=lld"
   log_info "Have lld                   : Yes"
@@ -477,7 +473,6 @@ else
 fi
 
 log_info "LLVM path                  : $LLVM_PATH"
-exit 0
 
 cat >>$MAKEFILE <<%%
 WARNING_FLAGS=-Wall -Wextra -Wpedantic
