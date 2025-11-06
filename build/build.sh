@@ -32,13 +32,11 @@ TARGET=gorget
 MSYS_PATH=mingw64 	
 MINGW_PKG_TYPE=mingw-w64
 
-if [[ -d /clang64 ]]; then
-  MSYS_PATH=clang64
-  MINGW_PKG_TYPE=mingw-w64-clang
-else
-  MSYS_PATH=ucrt64 	
-  MINGW_PKG_TYPE=mingw-w64-ucrt
-fi
+MSYS_PATH=clang64
+MINGW_PKG_TYPE=mingw-w64-clang
+
+MSYS_PATH=ucrt64 	
+MINGW_PKG_TYPE=mingw-w64-ucrt
 
 # Determine OS platform
 # https://askubuntu.com/questions/459402/how-to-know-if-the-running-platform-is-ubuntu-or-centos-with-help-of-a-bash-scri
