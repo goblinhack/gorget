@@ -472,7 +472,7 @@ else
   log_info "Have lld                   : No"
 fi
 
-log_info "LLVM path                  : $LLVM_PATH"
+log_info "LLVM path                  : $LLVM_PATH/bin"
 
 cat >>$MAKEFILE <<%%
 WARNING_FLAGS=-Wall -Wextra -Wpedantic
@@ -583,7 +583,7 @@ DSYM=$DSYM
 LDLIBS=$LDLIBS
 %%
 
-log_info "LDFLAGS                    : $LDFLAGS"
+log_info "LDFLAGS                    :$LDFLAGS"
 log_info "LDLIBS                     : $LDLIBS"
 
 #
