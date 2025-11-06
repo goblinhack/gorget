@@ -329,12 +329,13 @@ std::string backtrace_string(void)
     DWORD64 addr = (DWORD64) frames[ i ];
 
     // Get the file and line info.
-    const char *name         = "<noname>";
-    const char *file         = "<unknown>";
-    int         line_number  = 0;
-    DWORD       displacement = 0;
+    const char *name            = "<noname>";
+    const char *file            = "<unknown>";
+    int         line_number     = 0;
+    DWORD       displacement    = 0;
+    PDWORD64    pdwDisplacement = 0;
 
-    if (SymGetSymFromAddr64(handle, addr, &displacement, (PIMAGEHLP_SYMBOL64) symbol)) {
+    if (SymGetSymFromAddr64(handle, addr, &pdwDisplacement, (PIMAGEHLP_SYMBOL64) symbol)) {
       name = symbol->Name;
     } else {
       out += string_sprintf("SymGetSymFromAddr64: failed, errno = %d: %s\n", (int) errno, strerror((int) errno));
