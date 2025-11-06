@@ -30,6 +30,10 @@ extern char **backtrace_symbols(void *const *array, size_t size);
 #endif
 #include <memory>
 
+#include <mutex>
+
+static std::recursive_mutex backtrace_mutex;
+
 void Backtrace::init(void)
 {
   // clang-format off
@@ -120,11 +124,13 @@ static auto cppDemangle(const char *abiName)
 
 std::string Backtrace::to_string(void)
 {
+  backtrace_mutex.lock();
   auto        addrlist = &bt[ 0 ];
   std::string sout     = "stack trace\n===========\n";
 
   if (size == 0) {
     sout += "  <empty, possibly corrupt>\n";
+    backtrace_mutex.unlock();
     return sout;
   }
 
@@ -190,11 +196,13 @@ std::string Backtrace::to_string(void)
 
   free(symbollist);
 
+  backtrace_mutex.unlock();
   return sout;
 }
 
 void Backtrace::log(void)
 {
+  backtrace_mutex.lock();
   auto addrlist = &bt[ 0 ];
 
   LOG("stack trace");
@@ -202,6 +210,7 @@ void Backtrace::log(void)
 
   if (size == 0) {
     LOG("  <empty, possibly corrupt>");
+    backtrace_mutex.unlock();
     return;
   }
 
@@ -266,6 +275,7 @@ void Backtrace::log(void)
   LOG("end-of-stack");
 
   free(symbollist);
+  backtrace_mutex.unlock();
 }
 
 #ifdef _WIN32
@@ -287,12 +297,14 @@ static void PrintLastError(const char *msg)
 
 std::string backtrace_string(void)
 {
+  backtrace_mutex.lock();
   std::string out = "stack trace\n===========\n";
 
   HANDLE handle = GetCurrentProcess();
   if (! SymInitialize(handle, nullptr, true)) {
     DWORD error = GetLastError();
-    fprintf(stderr, "SymInitialize: failed, errno = %d: %s\n", error, strerror(error));
+    fprintf(stderr, "SymInitialize: failed, errno = %d: %s\n", (int) error, strerror((int) error));
+    backtrace_mutex.unlock();
     return;
   }
 
@@ -309,18 +321,18 @@ std::string backtrace_string(void)
   line.SizeOfStruct    = sizeof(IMAGEHLP_LINE64);
 
   bool has_seen_valid_frame = false;
-  u32  frames_skipped       = 0;
-  for (u32 i = 0; i < frame_count; i++) {
+  int  frames_skipped       = 0;
+  for (int i = 0; i < frame_count; i++) {
     u64 addr = (u64) frames[ i ];
 
     // Get the file and line info.
     const char *file         = "<unknown>";
-    u32         line_number  = 0;
+    int         line_number  = 0;
     DWORD       displacement = 0;
 
     if (SymGetLineFromAddr64(handle, addr, &displacement, &line)) {
       file        = line.FileName;
-      line_number = (u32) line.LineNumber;
+      line_number = (int) line.LineNumber;
     }
 
     const char *function_name = "<unknown>";
@@ -336,33 +348,36 @@ std::string backtrace_string(void)
   PrintLastError(out.c_str());
   // __debugbreak();
 
+  backtrace_mutex.unlock();
   return out;
 }
-
-DWORD64 addr64 = DWORD64(stack[ i ]);
-SymFromAddr(process, addr64, NULL, symbol);
-
 #else
 std::string backtrace_string(void)
 {
+  backtrace_mutex.lock();
   auto bt = new Backtrace();
   bt->init();
   auto ret = bt->to_string();
   delete bt;
+  backtrace_mutex.unlock();
   return ret;
 }
 #endif
 
 void backtrace_dump_stderr(void)
 {
+  backtrace_mutex.lock();
   auto bt = backtrace_string();
 
   fprintf(stderr, "%s", bt.c_str());
+  backtrace_mutex.unlock();
 }
 
 void backtrace_dump(void)
 {
+  backtrace_mutex.lock();
   auto bt = backtrace_string();
 
   fprintf(MY_STDERR, "%s", bt.c_str());
+  backtrace_mutex.unlock();
 }
