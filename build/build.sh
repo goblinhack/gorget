@@ -21,16 +21,24 @@
 
 TARGET=gorget
 
+#
 # The default MINGW32 and MINGW64 environments build binaries using the older
 #  MSVCRT library that should be present on all Windows systems.
-MINGW_TYPE=mingw64
-MINGW_PKG_TYPE=mingw-w64
-
+#
 # The MINGW UCRT environments build binaries using the newer UCRT library that
 # is only known to be present on Windows 10. It should produce binaries more
 # compatible with MSVC-compiled binaries, but not with the MSVCRT environment.
-MINGW_TYPE=ucrt64
-MINGW_PKG_TYPE=mingw-w64-ucrt
+#
+MSYS_PATH=mingw64 	
+MINGW_PKG_TYPE=mingw-w64
+
+if [[ -d /clang64 ]]; then
+  MSYS_PATH=clang64
+  MINGW_PKG_TYPE=mingw-w64-clang
+else
+  MSYS_PATH=ucrt64 	
+  MINGW_PKG_TYPE=mingw-w64-ucrt
+fi
 
 # Determine OS platform
 # https://askubuntu.com/questions/459402/how-to-know-if-the-running-platform-is-ubuntu-or-centos-with-help-of-a-bash-scri
@@ -101,6 +109,10 @@ help_full()
                       vim \
                       xutils-dev
       set +x
+      if [[ $? -ne 0 ]]; then
+        exit 1
+      fi
+
       echo "Now re-run RUNME"
       exit 0
       ;;
@@ -109,13 +121,6 @@ help_full()
       set -x
       pacman -S git \
         make vim base-devel --needed \
-        ${MINGW_PKG_TYPE}-x86_64-SDL \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2 \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_gfx \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_image \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_mixer \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_net \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_ttf \
         ${MINGW_PKG_TYPE}-x86_64-ag \
         ${MINGW_PKG_TYPE}-x86_64-binutils \
         ${MINGW_PKG_TYPE}-x86_64-bzip2 \
@@ -158,7 +163,15 @@ help_full()
         ${MINGW_PKG_TYPE}-x86_64-ncurses \
         ${MINGW_PKG_TYPE}-x86_64-openssl \
         ${MINGW_PKG_TYPE}-x86_64-portaudio \
+        ${MINGW_PKG_TYPE}-x86_64-python3 \
         ${MINGW_PKG_TYPE}-x86_64-readline \
+        ${MINGW_PKG_TYPE}-x86_64-SDL \
+        ${MINGW_PKG_TYPE}-x86_64-SDL2 \
+        ${MINGW_PKG_TYPE}-x86_64-SDL2_gfx \
+        ${MINGW_PKG_TYPE}-x86_64-SDL2_image \
+        ${MINGW_PKG_TYPE}-x86_64-SDL2_mixer \
+        ${MINGW_PKG_TYPE}-x86_64-SDL2_net \
+        ${MINGW_PKG_TYPE}-x86_64-SDL2_ttf \
         ${MINGW_PKG_TYPE}-x86_64-smpeg2 \
         ${MINGW_PKG_TYPE}-x86_64-speex \
         ${MINGW_PKG_TYPE}-x86_64-speexdsp \
@@ -168,6 +181,11 @@ help_full()
         ${MINGW_PKG_TYPE}-x86_64-xz \
         ${MINGW_PKG_TYPE}-x86_64-zlib
       set +x
+
+      if [[ $? -ne 0 ]]; then
+        exit 1
+      fi
+
       echo "Now re-run RUNME"
       exit 0
       ;;
@@ -184,7 +202,7 @@ case "$MY_OS_NAME" in
     *MING*|*MSYS*)
         for i in \
             $(which sdl2-config) \
-            /${MINGW_TYPE}/bin/sdl2-config
+            /${MSYS_PATH}/bin/sdl2-config
         do
             if [ -x "$i" ]; then
                 SDL2_CONFIG=$i
@@ -292,19 +310,19 @@ case "$MY_OS_NAME" in
         exit 1
         ;;
     *MING*|*MSYS*)
-        PATH=/${MINGW_TYPE}/bin:$PATH
+        PATH=/${MSYS_PATH}/bin:$PATH
         EXE=".exe"
-        C_FLAGS+=" -I/${MINGW_TYPE}/ginclude "
-        LDLIBS+=" -L/${MINGW_TYPE}/glib/"
+        C_FLAGS+=" -I/${MSYS_PATH}/ginclude "
+        LDLIBS+=" -L/${MSYS_PATH}/glib/"
         LDLIBS=$(echo $LDLIBS | sed -e 's/-lmingw32 //g')
         LDLIBS+=" -funwind-tables"
         LDLIBS+=" -lstdc++"
         LDLIBS+=" -lopengl32"
         LDLIBS+=" -lpthread"
-        LDLIBS+=" /${MINGW_TYPE}/lib/libSDL2_mixer.a"
-        LDLIBS+=" -L/${MINGW_TYPE}/lib/binutils -lbfd -lintl -ldbghelp -liberty"
+        LDLIBS+=" /${MSYS_PATH}/lib/libSDL2_mixer.a"
+        LDLIBS+=" -L/${MSYS_PATH}/lib/binutils -lbfd -lintl -ldbghelp -liberty"
 
-        if [ -f /${MINGW_TYPE}/lib/libunwind.a ]; then
+        if [ -f /${MSYS_PATH}/lib/libunwind.a ]; then
           echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
           LDLIBS+=" -lunwind"
           log_info "Have libunwind             : Yes"
@@ -407,8 +425,8 @@ if [[ -f /usr/include/lz4.h ]]; then
 elif [[ -f /opt/local/include/lz4.h ]]; then
     C_FLAGS+=" -I/opt/local/include"
     OPT_LZ4=1
-elif [[ -f /ucrt64/include/lz4.h ]]; then
-    C_FLAGS+=" -I/ucrt64/include"
+elif [[ -f /${MSYS_PATH}/include/lz4.h ]]; then
+    C_FLAGS+=" -I/${MSYS_PATH}/include"
     OPT_LZ4=1
 elif [[ -f $SDL2_INC_PATH/../lz4.h ]]; then
     #
@@ -568,11 +586,11 @@ fi
 
 case "$MY_OS_NAME" in
     *MING*|*MSYS*)
-        echo "CC=/${MINGW_TYPE}/bin/clang++.exe" >> $MAKEFILE
+        echo "CC=/${MSYS_PATH}/bin/clang++.exe" >> $MAKEFILE
         #
         # To resolve WinMain, add these at the end again
         #
-        LDLIBS+=" -lmingw32 -mwindows /${MINGW_TYPE}/lib/libSDL2main.a -L/${MINGW_TYPE}/lib -lSDL2main -lSDL2"
+        LDLIBS+=" -lmingw32 -mwindows /${MSYS_PATH}/lib/libSDL2main.a -L/${MSYS_PATH}/lib -lSDL2main -lSDL2"
     ;;
 esac
 
