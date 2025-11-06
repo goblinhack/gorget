@@ -7,8 +7,10 @@
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
 
+#include <errno.h>
 #include <iostream>
 #include <string.h>
+
 #ifdef _WIN32
 // clang-format off
 #include <stdio.h>   
@@ -267,64 +269,78 @@ void Backtrace::log(void)
 }
 
 #ifdef _WIN32
-#include <errno.h>
-#include <windows.h>
+
+static void PrintLastError(const char *msg)
+{
+  DWORD errCode = GetLastError();
+  char *err;
+  if (! FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, errCode,
+                      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // default language
+                      (LPTSTR) &err, 0, NULL))
+    return;
+
+  static char buffer[ 1024 * 32 ];
+  snprintf(buffer, sizeof(buffer), "ERROR: %s: %s\n", msg, err);
+  OutputDebugString(buffer);
+  LocalFree(err);
+}
 
 std::string backtrace_string(void)
 {
-  char tmp[ 10000 ];
+  std::string out = "stack trace\n===========\n";
 
-  *tmp = '\0';
-
-  {
-    int error = errno;
-    snprintf(tmp + strlen(tmp), SIZEOF(tmp) - strlen(tmp), "errno = %d: %s\n", error, strerror(error));
-  }
-
-  {
+  HANDLE handle = GetCurrentProcess();
+  if (! SymInitialize(handle, nullptr, true)) {
     DWORD error = GetLastError();
-    char  buf[ 1024 ];
-    FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buf,
-                   SIZEOF(buf), NULL);
-    snprintf(tmp + strlen(tmp), SIZEOF(tmp) - strlen(tmp), "GetLastError = %d: %s", (int) error, buf);
+    fprintf(stderr, "SymInitialize: failed, errno = %d: %s\n", error, strerror(error));
+    return;
   }
 
-  const int max_symbol_len = 1024;
+  SymSetOptions(SYMOPT_LOAD_LINES | SYMOPT_UNDNAME);
 
-  HANDLE process = GetCurrentProcess();
-  SymInitialize(process, NULL, TRUE);
+  // Symbol info buffer.
+  const int    max_symbol_len = 1024;
+  char         symbol_mem[ SIZEOF(SYMBOL_INFO) + max_symbol_len * SIZEOF(TCHAR) ];
+  SYMBOL_INFO *symbol  = (SYMBOL_INFO *) symbol_mem;
+  symbol->MaxNameLen   = max_symbol_len;
+  symbol->SizeOfStruct = SIZEOF(SYMBOL_INFO);
 
-  void *stack[ 128 ];
-  WORD  num_frames = CaptureStackBackTrace(0, 128, stack, NULL);
+  IMAGEHLP_LINE64 line = {};
+  line.SizeOfStruct    = sizeof(IMAGEHLP_LINE64);
 
-  for (WORD i = 0; i < num_frames; i++) {
-    char         symbol_mem[ SIZEOF(SYMBOL_INFO) + max_symbol_len * SIZEOF(TCHAR) ];
-    SYMBOL_INFO *symbol  = (SYMBOL_INFO *) symbol_mem;
-    symbol->MaxNameLen   = max_symbol_len;
-    symbol->SizeOfStruct = SIZEOF(SYMBOL_INFO);
+  bool has_seen_valid_frame = false;
+  u32  frames_skipped       = 0;
+  for (u32 i = 0; i < frame_count; i++) {
+    u64 addr = (u64) frames[ i ];
 
-    DWORD64 addr64 = DWORD64(stack[ i ]);
-    SymFromAddr(process, addr64, NULL, symbol);
+    // Get the file and line info.
+    const char *file         = "<unknown>";
+    u32         line_number  = 0;
+    DWORD       displacement = 0;
 
-    IMAGEHLP_LINE64 line;
-    DWORD           col;
-    line.SizeOfStruct  = SIZEOF(line);
-    BOOL has_file_info = SymGetLineFromAddr64(process, addr64, &col, &line);
-
-    if (has_file_info) {
-      snprintf(tmp + strlen(tmp), SIZEOF(tmp) - strlen(tmp), "%s(%s:%d)\n", symbol->Name, line.FileName,
-               (int) line.LineNumber);
-    } else {
-      snprintf(tmp + strlen(tmp), SIZEOF(tmp) - strlen(tmp), "(%s)\n", symbol->Name);
+    if (SymGetLineFromAddr64(handle, addr, &displacement, &line)) {
+      file        = line.FileName;
+      line_number = (u32) line.LineNumber;
     }
+
+    const char *function_name = "<unknown>";
+    if (SymFromAddr(handle, addr, nullptr, symbol)) {
+      function_name = symbol->Name;
+    }
+
+    out += string_sprintf("Frame %02d: %s (%s:%d)\n", i - frames_skipped, function_name, file, line_number);
   }
 
+  SymCleanup(handle);
+
+  PrintLastError(out.c_str());
   // __debugbreak();
 
-  std::string ret = "stack trace\n===========\n";
-  ret += std::string(tmp);
-  return ret;
+  return out;
 }
+
+DWORD64 addr64 = DWORD64(stack[ i ]);
+SymFromAddr(process, addr64, NULL, symbol);
 
 #else
 std::string backtrace_string(void)
