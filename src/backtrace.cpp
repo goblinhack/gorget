@@ -308,21 +308,17 @@ std::string backtrace_string(void)
     return ret.c_str();
   }
 
-  SymSetOptions(SYMOPT_LOAD_LINES | SYMOPT_UNDNAME);
+  SymSetOptions(SymGetOptions() | SYMOPT_LOAD_LINES);
 
-  // Symbol info buffer.
-  const int    max_symbol_len = 1024;
-  char         symbol_mem[ SIZEOF(SYMBOL_INFO) + max_symbol_len * SIZEOF(TCHAR) ];
+#define MAX_SYMBOL_LEN 1024
+
+  char         symbol_mem[ SIZEOF(SYMBOL_INFO) + MAX_SYMBOL_LEN * SIZEOF(TCHAR) ];
   SYMBOL_INFO *symbol  = (SYMBOL_INFO *) symbol_mem;
-  symbol->MaxNameLen   = max_symbol_len;
+  symbol->MaxNameLen   = MAX_SYMBOL_LEN;
   symbol->SizeOfStruct = SIZEOF(SYMBOL_INFO);
 
   IMAGEHLP_LINE64 line = {};
   line.SizeOfStruct    = sizeof(IMAGEHLP_LINE64);
-
-  IMAGEHLP_SYMBOL64 symbol = {};
-  line.SizeOfStruct        = sizeof(IMAGEHLP_SYMBOL64);
-  line.MaxNameLength       = max_symbol_len;
 
   constexpr int                          kFramesToCapture = 16;
   std::array< void *, kFramesToCapture > frames;
@@ -333,13 +329,13 @@ std::string backtrace_string(void)
     DWORD64 addr = (DWORD64) frames[ i ];
 
     // Get the file and line info.
-    const char  name         = "<noname>";
+    const char *name         = "<noname>";
     const char *file         = "<unknown>";
     int         line_number  = 0;
     DWORD       displacement = 0;
 
-    if (SymGetSymFromAddr64(handle, addr, &displacement, &symbol)) {
-      name = symbol.Name;
+    if (SymGetSymFromAddr64(handle, addr, &displacement, symbol)) {
+      name = symbol->Name;
     } else {
       out += string_sprintf("SymGetSymFromAddr64: failed, errno = %d: %s\n", (int) error, strerror((int) error));
     }
