@@ -400,11 +400,10 @@ std::string backtrace_string(void)
   for (int i = 0; i < frame_count; i++) {
     DWORD64 addr = (DWORD64) frames[ i ];
 
-    const char *file            = "<no-file>";
-    const char *function_name   = "<no-function>";
-    int         line_number     = -1;
-    DWORD       displacement    = 0;
-    PDWORD64    pdwDisplacement = 0;
+    const char *file          = "<no-file>";
+    const char *function_name = "<no-function>";
+    int         line_number   = -1;
+    DWORD       displacement  = 0;
 
     if (SymGetLineFromAddr64(handle, addr, &displacement, &line)) {
       file        = line.FileName;
