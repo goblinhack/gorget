@@ -341,6 +341,7 @@ case "$MY_OS_NAME" in
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
+        LDFLAGS+="-rdynamic"
 
         if [[ -f /opt/local/libexec/llvm-devel/lib/libunwind/libunwind.a ]]; then
           echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
@@ -361,6 +362,7 @@ case "$MY_OS_NAME" in
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
+        LDFLAGS+="-rdynamic"
 
         pkg-config --print-provides libunwind >/dev/null 2>/dev/null
         if [[ $? -eq 0 ]]; then
@@ -694,8 +696,13 @@ fi
 #
 if [[ $OPT_GITHUB_BUILD != "" ]]; then
     log_info "Running tests:"
-    cp .o/${TARGET}.pdb .
+
+    if [[ -f .o/${TARGET}.pdb ]]; then
+      cp .o/${TARGET}.pdb .
+    fi
+
     ls -la
+
     ./${TARGET} --tests --debug
     if [[ $? -ne 0 ]]; then
         exit 1
