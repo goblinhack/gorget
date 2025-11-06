@@ -341,7 +341,7 @@ case "$MY_OS_NAME" in
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
-        LDFLAGS+="-rdynamic"
+        LDFLAGS+=" -rdynamic"
 
         if [[ -f /opt/local/libexec/llvm-devel/lib/libunwind/libunwind.a ]]; then
           echo "#define HAVE_LIBUNWIND" >> $CONFIG_H
@@ -362,7 +362,7 @@ case "$MY_OS_NAME" in
             C_FLAGS+="$EXTRA_CHECKS"
             LDFLAGS+="$EXTRA_CHECKS"
         fi
-        LDFLAGS+="-rdynamic"
+        LDFLAGS+=" -rdynamic"
 
         pkg-config --print-provides libunwind >/dev/null 2>/dev/null
         if [[ $? -eq 0 ]]; then
