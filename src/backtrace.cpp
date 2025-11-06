@@ -420,7 +420,7 @@ std::string backtrace_string(void)
       function_name = symbol->Name;
     }
 
-    out += string_sprintf("CaptureStackBackTrace[%d]: %s() %s:%d\n", i - frames_to_skip, name, function_name, file,
+    out += string_sprintf("CaptureStackBackTrace[%d]: %s() %s:%d\n", i - frames_to_skip, function_name, file,
                           line_number);
   }
 
