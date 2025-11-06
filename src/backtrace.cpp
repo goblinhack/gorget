@@ -327,37 +327,37 @@ std::string backtrace_string(void)
 #ifdef _M_IX86
     // normally, call ImageNtHeader() and use machine info from PE header
     imageType                   = IMAGE_FILE_MACHINE_I386;
-    stackframe.AddrPC.Offset    = c.Eip;
+    stackframe.AddrPC.Offset    = context.Eip;
     stackframe.AddrPC.Mode      = AddrModeFlat;
-    stackframe.AddrFrame.Offset = c.Ebp;
+    stackframe.AddrFrame.Offset = context.Ebp;
     stackframe.AddrFrame.Mode   = AddrModeFlat;
-    stackframe.AddrStack.Offset = c.Esp;
+    stackframe.AddrStack.Offset = context.Esp;
     stackframe.AddrStack.Mode   = AddrModeFlat;
 #elif _M_X64
     imageType                   = IMAGE_FILE_MACHINE_AMD64;
-    stackframe.AddrPC.Offset    = c.Rip;
+    stackframe.AddrPC.Offset    = context.Rip;
     stackframe.AddrPC.Mode      = AddrModeFlat;
-    stackframe.AddrFrame.Offset = c.Rsp;
+    stackframe.AddrFrame.Offset = context.Rsp;
     stackframe.AddrFrame.Mode   = AddrModeFlat;
-    stackframe.AddrStack.Offset = c.Rsp;
+    stackframe.AddrStack.Offset = context.Rsp;
     stackframe.AddrStack.Mode   = AddrModeFlat;
 #elif _M_IA64
     imageType                    = IMAGE_FILE_MACHINE_IA64;
-    stackframe.AddrPC.Offset     = c.StIIP;
+    stackframe.AddrPC.Offset     = context.StIIP;
     stackframe.AddrPC.Mode       = AddrModeFlat;
-    stackframe.AddrFrame.Offset  = c.IntSp;
+    stackframe.AddrFrame.Offset  = context.IntSp;
     stackframe.AddrFrame.Mode    = AddrModeFlat;
-    stackframe.AddrBStore.Offset = c.RsBSP;
+    stackframe.AddrBStore.Offset = context.RsBSP;
     stackframe.AddrBStore.Mode   = AddrModeFlat;
-    stackframe.AddrStack.Offset  = c.IntSp;
+    stackframe.AddrStack.Offset  = context.IntSp;
     stackframe.AddrStack.Mode    = AddrModeFlat;
 #elif _M_ARM64
     imageType                   = IMAGE_FILE_MACHINE_ARM64;
-    stackframe.AddrPC.Offset    = c.Pc;
+    stackframe.AddrPC.Offset    = context.Pc;
     stackframe.AddrPC.Mode      = AddrModeFlat;
-    stackframe.AddrFrame.Offset = c.Fp;
+    stackframe.AddrFrame.Offset = context.Fp;
     stackframe.AddrFrame.Mode   = AddrModeFlat;
-    stackframe.AddrStack.Offset = c.Sp;
+    stackframe.AddrStack.Offset = context.Sp;
     stackframe.AddrStack.Mode   = AddrModeFlat;
 #else
 #error "Platform not supported!"
