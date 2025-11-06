@@ -313,7 +313,7 @@ std::string backtrace_string(void)
 
   SymSetOptions(SymGetOptions() | SYMOPT_LOAD_LINES);
 
-  bool do_stackwalk = true;
+  bool do_stackwalk = false;
   if (do_stackwalk) {
     CONTEXT context;
     memset(&context, 0, sizeof(CONTEXT));
@@ -367,7 +367,7 @@ std::string backtrace_string(void)
       BOOL result = StackWalk64(imageType, handle, thread, &stackframe, &context, NULL, SymFunctionTableAccess64,
                                 SymGetModuleBase64, NULL);
       if (! result) {
-        out += string_sprintf("StackWalk[end]");
+        out += string_sprintf("StackWalk[end]\n");
         break;
       }
 
@@ -420,8 +420,8 @@ std::string backtrace_string(void)
       function_name = symbol->Name;
     }
 
-    out += string_sprintf("CaptureStackBackTrace[%d]: sym:%s func:%s file:%s line:%d\n", i - frames_to_skip, name,
-                          function_name, file, line_number);
+    out += string_sprintf("CaptureStackBackTrace[%d]: %s() %s:%d\n", i - frames_to_skip, name, function_name, file,
+                          line_number);
   }
 
   PrintLastError(out.c_str());
