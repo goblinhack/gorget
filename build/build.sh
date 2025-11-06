@@ -285,8 +285,6 @@ EXTRA_CHECKS=" -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -
 
 echo "#define MYVER \"$MYVER\"" >> $CONFIG_H
 
-LDFLAGS="-rdynamic"
-
 case "$MY_OS_NAME" in
     *MSYS*)
         log_err "Please compile for ming64, not msys"
@@ -328,7 +326,7 @@ case "$MY_OS_NAME" in
         #
         # The space after pdb= is intentional to use the executable name for PDB file generation.
         #
-        LDFLAGS+=" -g -Wl,--pdb= -lDbgHelp"
+        LDFLAGS+=" -g -Wl,--pdb= "
         ;;
     *Darwin*)
         EXE=""
