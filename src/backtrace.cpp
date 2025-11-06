@@ -325,7 +325,6 @@ std::string backtrace_string(void)
   int                                    frames_to_skip = 0;
   int frame_count = CaptureStackBackTrace(frames_to_skip, kFramesToCapture, frames.data(), NULL);
 
-  bool has_seen_valid_frame = false;
   for (int i = 0; i < frame_count; i++) {
     DWORD64 addr = (DWORD64) frames[ i ];
 
