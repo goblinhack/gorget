@@ -323,10 +323,11 @@ case "$MY_OS_NAME" in
           LDFLAGS+=" -fuse-ld=lld "
         fi
 
+        find / -name lld
         #
         # The space after pdb= is intentional to use the executable name for PDB file generation.
         #
-        LDFLAGS+=" -g -Wl,--pdb= "
+        LDFLAGS+=" -g -Wl,--pdb= -fuse-ld=lld"
         ;;
     *Darwin*)
         EXE=""
