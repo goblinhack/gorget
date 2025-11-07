@@ -94,13 +94,14 @@ bool thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_
       // Give a chance to open/close doors first.
       //
       if (thing_player_pass_event_to_other_things(g, v, l, x, y, button)) {
-        return true;
+        break;
       }
 
       //
       // Replace the mouse path
       //
-      return thing_player_replace_current_mouse_path(g, v, l);
+      (void) thing_player_replace_current_mouse_path(g, v, l);
+      break;
     case PLAYER_STATE_PATH_REQUESTED :
       //
       // Player wants to start following or replace the current path.
@@ -115,10 +116,14 @@ bool thing_player_mouse_down(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_
       //
       // Already following a path. Allow the player to change the path.
       //
-      return thing_player_replace_current_mouse_path(g, v, l);
+      (void) thing_player_replace_current_mouse_path(g, v, l);
+      break;
     case PLAYER_STATE_ENUM_MAX : break;
   }
 
+  //
+  // Suppress mouse click
+  //
   return false;
 }
 

@@ -367,6 +367,7 @@ bool game_event_quit(Gamep g)
   if (g_opt_quick_start) {
     DIE_CLEAN("Quick quit");
   }
+
   if (g_opt_level_select_menu) {
     DIE_CLEAN("Quick quit");
   }
