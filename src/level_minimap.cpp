@@ -108,7 +108,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
     {
       glTranslatef(0, h / 2, 0);
       glRotatef(-45.0f, 0.0f, 0.0f, 1.0f);
-      float scale = sqrt(2);
+      float scale = sqrtf(2);
       blit_fbo(g, FBO_MINIMAP_WORLD, 0, 0, (int) ((float) w / scale), (int) ((float) h / scale));
     }
     glPopMatrix();
