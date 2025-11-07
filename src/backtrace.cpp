@@ -162,8 +162,7 @@ std::string backtrace_string(void)
   constexpr int frames_to_capture = 16;
 
   if (! SymInitialize(handle, nullptr, true)) {
-    DWORD error = GetLastError();
-    auto  ret   = string_sprintf("SymInitialize: failed, errno = %d: %s\n", (int) error, strerror((int) error));
+    PrintLastError("SymInitialize failed");
     backtrace_mutex.unlock();
     return ret.c_str();
   }
@@ -258,7 +257,7 @@ std::string backtrace_string(void)
     DWORD64 addr = (DWORD64) frames[ i ];
 
     const char *file = "<no-file>";
-    const char *function_name;
+    char       *function_name;
     int         line_number  = -1;
     DWORD       displacement = 0;
 
