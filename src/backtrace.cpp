@@ -7,10 +7,6 @@
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
 
-#include <errno.h>
-#include <iostream>
-#include <string.h>
-
 #ifdef _WIN32
 // clang-format off
 #include <stdio.h>   
@@ -22,14 +18,18 @@
 #else
 #include <execinfo.h>
 #endif
-#include <cxxabi.h>
+
 #ifdef HAVE_LIBUNWIND
 #include <execinfo.h>
 #include <libunwind.h>
 #endif
-#include <memory>
 
+#include <cxxabi.h>
+#include <errno.h>
+#include <iostream>
+#include <memory>
 #include <mutex>
+#include <string.h>
 
 static std::recursive_mutex backtrace_mutex;
 
@@ -38,25 +38,9 @@ static std::recursive_mutex backtrace_mutex;
 //
 static bool starts_with(const char *s, const char *prefix) { return strncmp(s, prefix, strlen(prefix)) == 0; }
 
-static bool is_mangle_char_posix(char c)
-{
-  return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
-}
-
 static bool is_mangle_char_win(char c)
 {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || strchr("?_@$", c);
-}
-
-static bool is_plausible_itanium_prefix(char *s)
-{
-  // Itanium symbols start with 1-4 underscores followed by Z.
-  // strnstr() is BSD, so use a small local buffer and strstr().
-  const int N = 5; // == strlen("____Z")
-  char      prefix[ N + 1 ];
-  my_strlcpy(prefix, s, N);
-  prefix[ N ] = '\0';
-  return strstr(prefix, "_Z");
 }
 
 //
@@ -71,13 +55,16 @@ static bool is_plausible_itanium_prefix(char *s)
 static std::string demangle(const char *name)
 {
 
-  int status = -4; // some arbitrary value to eliminate the compiler warning
-
-  auto p = abi::__cxa_demangle(name, NULL, NULL, &status);
+  int  status = -4; // some arbitrary value to eliminate the compiler warning
+  auto p      = abi::__cxa_demangle(name, NULL, NULL, &status);
 
   if (! status) {
-    return p;
+    auto ret = std::string(p);
+    free(p);
+    return ret;
   }
+
+  free(p);
   return "";
 }
 
@@ -100,10 +87,6 @@ static std::string demangle_symbol(char *name)
     size_t n_sym = 0;
     if (*cur == '?') {
       while (cur + n_sym != end && is_mangle_char_win(cur[ n_sym ])) {
-        ++n_sym;
-      }
-    } else if (is_plausible_itanium_prefix(cur)) {
-      while (cur + n_sym != end && is_mangle_char_posix(cur[ n_sym ])) {
         ++n_sym;
       }
     } else {
@@ -162,9 +145,9 @@ std::string backtrace_string(void)
   constexpr int frames_to_capture = 16;
 
   if (! SymInitialize(handle, nullptr, true)) {
-    PrintLastError("SymInitialize failed");
     backtrace_mutex.unlock();
-    return ret.c_str();
+    PrintLastError("SymInitialize failed");
+    return "<failed to collect backtrace>";
   }
 
   SymSetOptions(SymGetOptions() | SYMOPT_LOAD_LINES);
@@ -256,8 +239,7 @@ std::string backtrace_string(void)
   for (int i = 0; i < frame_count; i++) {
     DWORD64 addr = (DWORD64) frames[ i ];
 
-    const char *file = "<no-file>";
-    char       *function_name;
+    const char *file         = "<no-file>";
     int         line_number  = -1;
     DWORD       displacement = 0;
 
@@ -266,19 +248,16 @@ std::string backtrace_string(void)
       line_number = (int) line.LineNumber;
     }
 
-    std::string sym;
-
     if (SymFromAddr(handle, addr, nullptr, symbol)) {
-      function_name = symbol->Name;
-      sym           = demangle_symbol(function_name);
+      char *function_name = symbol->Name;
+      auto  sym           = demangle_symbol(function_name);
+      out += string_sprintf("CaptureStackBackTrace[%d]: %s() [%s] %s:%d\n", i - frames_to_skip, function_name,
+                            sym.c_str(), file, line_number);
     } else {
-      function_name = "<no-function>";
-      sym           = "<no sym>";
+      out += string_sprintf("CaptureStackBackTrace[%d]: [%s] %s:%d\n", i - frames_to_skip, file, line_number);
     }
-
-    out += string_sprintf("CaptureStackBackTrace[%d]: %s() [%s] %s:%d\n", i - frames_to_skip, function_name,
-                          sym.c_str(), file, line_number);
   }
+  backtrace_mutex.unlock();
 
   PrintLastError(out.c_str());
   // __debugbreak();
@@ -286,7 +265,6 @@ std::string backtrace_string(void)
   SymCleanup(handle);
   CloseHandle(thread);
 
-  backtrace_mutex.unlock();
   return out;
 }
 #else
