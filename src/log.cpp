@@ -210,7 +210,7 @@ void CLEANUP_OK(const char *fmt, ...)
   va_end(args);
 }
 
-static void dying_(const char *fmt, va_list args)
+static void dying_(bool clean, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
@@ -223,11 +223,13 @@ static void dying_(const char *fmt, va_list args)
   }
   g_dying = true;
 
-  callstack_dump_stderr();
-  backtrace_dump_stderr();
+  if (! clean) {
+    callstack_dump_stderr();
+    backtrace_dump_stderr();
 
-  callstack_dump();
-  backtrace_dump();
+    callstack_dump();
+    backtrace_dump();
+  }
 
   char buf[ MAXLONGSTR * 10 ];
   buf[ 0 ] = '\0';
@@ -256,14 +258,14 @@ static void dying_(const char *fmt, va_list args)
 #endif
 }
 
-void DYING(const char *fmt, ...)
+void DYING(bool clean, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   va_list args;
 
   va_start(args, fmt);
-  dying_(fmt, args);
+  dying_(clean, fmt, args);
   va_end(args);
 }
 
