@@ -55,8 +55,9 @@ static bool is_mangle_char_win(char c)
 static std::string demangle(const char *name)
 {
 
-  int  status = -4; // some arbitrary value to eliminate the compiler warning
-  auto p      = abi::__cxa_demangle(name, NULL, NULL, &status);
+  int status = -4; // some arbitrary value to eliminate the compiler warning
+
+  auto p = abi::__cxa_demangle(name, NULL, NULL, &status);
 
   if (! status) {
     auto ret = std::string(p);
@@ -254,7 +255,7 @@ std::string backtrace_string(void)
       out += string_sprintf("CaptureStackBackTrace[%d]: %s() [%s] %s:%d\n", i - frames_to_skip, function_name,
                             sym.c_str(), file, line_number);
     } else {
-      out += string_sprintf("CaptureStackBackTrace[%d]: [%s] %s:%d\n", i - frames_to_skip, file, line_number);
+      out += string_sprintf("CaptureStackBackTrace[%d]: %s:%d\n", i - frames_to_skip, file, line_number);
     }
   }
   backtrace_mutex.unlock();
