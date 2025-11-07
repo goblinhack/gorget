@@ -43,6 +43,22 @@ static bool is_mangle_char_win(char c)
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || strchr("?_@$", c);
 }
 
+static bool is_mangle_char_posix(char c)
+{
+  return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
+}
+
+static bool is_plausible_posix_prefix(char *s)
+{
+  // POSIX symbols start with 1-4 underscores followed by Z.
+  // strnstr() is BSD, so use a small local buffer and strstr().
+  const int N = 5; // == strlen("____Z")
+  char      prefix[ N + 1 ];
+  my_strlcpy(prefix, s, N);
+  prefix[ N ] = '\0';
+  return strstr(prefix, "_Z");
+}
+
 //
 // See
 // https://stackoverflow.com/questions/4939636/function-to-mangle-demangle-functions
@@ -90,6 +106,10 @@ static std::string demangle_symbol(char *name)
       while (cur + n_sym != end && is_mangle_char_win(cur[ n_sym ])) {
         ++n_sym;
       }
+    } else if (is_plausible_posix_prefix(cur)) {
+      while (cur + n_sym != end && is_mangle_char_posix(cur[ n_sym ])) {
+        ++n_sym;
+      }
     } else {
       ++cur;
       continue;
@@ -104,7 +124,7 @@ static std::string demangle_symbol(char *name)
 
     auto was_demangled = demangle(cur);
     if (was_demangled.size()) {
-      sout += string_sprintf("%s\n", was_demangled.c_str());
+      sout += string_sprintf("%s", was_demangled.c_str());
       demangled = true;
       break;
     }
@@ -114,7 +134,7 @@ static std::string demangle_symbol(char *name)
   }
 
   if (! demangled) {
-    sout += string_sprintf("%s (not demangled)\n", p);
+    sout += string_sprintf("%s (not demangled)", p);
   }
 
   return sout;
@@ -252,8 +272,8 @@ std::string backtrace_string(void)
     if (SymFromAddr(handle, addr, nullptr, symbol)) {
       char *function_name = symbol->Name;
       auto  sym           = demangle_symbol(function_name);
-      out += string_sprintf("CaptureStackBackTrace[%d]: %s() [%s] %s:%d\n", i - frames_to_skip, function_name,
-                            sym.c_str(), file, line_number);
+      out += string_sprintf("CaptureStackBackTrace[%d]: %s() %s:%d\n", i - frames_to_skip, sym.c_str(), file,
+                            line_number);
     } else {
       out += string_sprintf("CaptureStackBackTrace[%d]: %s:%d\n", i - frames_to_skip, file, line_number);
     }
@@ -307,7 +327,7 @@ std::string backtrace_string(void)
 
   // address of this function.
   for (int i = size - 1; i >= 0; i--) {
-    sout += prefix + demangle_symbol(symbollist[ i ]);
+    sout += prefix + demangle_symbol(symbollist[ i ]) + "\n";
   }
 
   sout += string_sprintf("end-of-stack\n");
@@ -323,7 +343,6 @@ void backtrace_dump_stderr(void)
 {
   backtrace_mutex.lock();
   auto bt = backtrace_string();
-
   fprintf(stderr, "%s", bt.c_str());
   backtrace_mutex.unlock();
 }
@@ -332,7 +351,6 @@ void backtrace_dump(void)
 {
   backtrace_mutex.lock();
   auto bt = backtrace_string();
-
   fprintf(MY_STDERR, "%s", bt.c_str());
   backtrace_mutex.unlock();
 }

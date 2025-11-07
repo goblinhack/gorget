@@ -722,8 +722,6 @@ if [[ $OPT_GITHUB_BUILD != "" ]]; then
       cp .o/${TARGET}.pdb .
     fi
 
-    ls -la
-
     ./${TARGET} --tests --debug
     if [[ $? -ne 0 ]]; then
         exit 1
