@@ -63,11 +63,7 @@ void log_(const char *fmt, va_list args)
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
-  if (MY_STDOUT) {
-    putf(MY_STDOUT, buf);
-  } else {
-    putf(stdout, buf);
-  }
+  putf(MY_STDOUT, buf);
 }
 
 void LOG(const char *fmt, ...)
@@ -92,11 +88,7 @@ static void warn_(const char *fmt, va_list args)
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
-  if (MY_STDOUT) {
-    putf(MY_STDOUT, buf);
-  } else {
-    putf(stdout, buf);
-  }
+  putf(MY_STDOUT, buf);
 
   wid_console_log(buf);
 }
@@ -126,11 +118,7 @@ static void con_(const char *fmt, va_list args)
     vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   }
 
-  if (MY_STDOUT) {
-    putf(MY_STDOUT, buf);
-  } else {
-    putf(stdout, buf);
-  }
+  putf(MY_STDOUT, buf);
 
   if (! g_opt_tests) {
     term_log(buf);
@@ -252,7 +240,7 @@ static void dying_(const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   fprintf(stderr, "%s\n", buf);
-  if (MY_STDERR) {
+  if (MY_STDERR != stderr) {
     fprintf(MY_STDERR, "%s\n", buf);
   }
 
@@ -310,16 +298,13 @@ static void err_(const char *fmt, va_list args)
       return;
     }
 
-    if (MY_STDERR) {
+    if (MY_STDERR != stderr) {
       putf(MY_STDERR, buf);
-    } else {
-      putf(stderr, buf);
     }
+    putf(stderr, buf);
 
-    if (MY_STDOUT) {
+    if (MY_STDERR != stdout) {
       putf(MY_STDOUT, buf);
-    } else {
-      putf(stdout, buf);
     }
 
     term_log(buf);
@@ -429,11 +414,7 @@ static void topcon_(const char *fmt, va_list args)
     vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   }
 
-  if (MY_STDOUT) {
-    putf(MY_STDOUT, buf);
-  } else {
-    putf(stdout, buf);
-  }
+  putf(MY_STDOUT, buf);
 
   if (! g_opt_tests) {
     term_log(buf);

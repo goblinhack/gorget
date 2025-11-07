@@ -330,8 +330,6 @@ std::string backtrace_string(void)
     sout += prefix + demangle_symbol(symbollist[ i ]) + "\n";
   }
 
-  sout += string_sprintf("end-of-stack\n");
-
   free(symbollist);
 
   backtrace_mutex.unlock();

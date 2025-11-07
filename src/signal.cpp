@@ -38,8 +38,6 @@
 //
 static void debug_crash_handler(int sig)
 {
-  fprintf(stderr, "debug_crash_handler: Error: Signal %d:\n", sig);
-
   std::string pid_str(std::to_string(getpid()));
 
   const size_t max_path = PATH_MAX + 1;
@@ -143,7 +141,9 @@ void segv_handler(int sig)
 
   crashed = true;
 
-  TRACE_NO_INDENT();
+  fprintf(stderr, "\n\nCrashed. Signal %d.. Disabling signal handlers...\n", sig);
+  callstack_dump_stderr();
+  backtrace_dump_stderr();
 
   signal(SIGSEGV, nullptr);
   signal(SIGABRT, nullptr);
@@ -153,6 +153,9 @@ void segv_handler(int sig)
 #if defined __linux__
   debug_crash_handler(sig);
 #endif
+
+  fprintf(stderr, "\n\nCleaning up after crash...\n");
+  fprintf(stderr, "--------------------------\n");
 
   DIE("Crashed");
 }
@@ -173,12 +176,17 @@ void error_handler(const std::string &error_msg)
 
 void ctrlc_handler(int sig)
 {
-  TRACE_NO_INDENT();
-
+  fprintf(stderr, "\n\nInterrupted. Signal %d..\n", sig);
   callstack_dump_stderr();
   backtrace_dump_stderr();
 
-  fprintf(MY_STDERR, "Interrupted!!!");
+  signal(SIGSEGV, nullptr);
+  signal(SIGABRT, nullptr);
+  signal(SIGFPE, nullptr);
+  signal(SIGILL, nullptr);
+
+  fprintf(stderr, "\n\nInterrupted. Cleaning up...\n");
+  fprintf(stderr, "---------------------------\n");
 
   DIE_CLEAN("Interrupted");
 }
