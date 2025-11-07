@@ -68,34 +68,72 @@ static bool is_plausible_itanium_prefix(char *s)
 // c++filt -n _ZNK3MapI10StringName3RefI8GDScriptE10ComparatorIS0_E16DefaultAllocatorE3hasERKS0_
 // Map<StringName, Ref<GDScript>, Comparator<StringName>, DefaultAllocator>::has(StringName const&) const
 //
-static auto cppDemangle(const char *abiName)
+static std::string demangle(const char *name)
 {
-  //
-  // This function allocates and returns storage in ret
-  //
-  int   status;
-  char *ret = abi::__cxa_demangle(abiName, nullptr /* output buffer */, nullptr /* length */, &status);
 
-  auto deallocator = ([](char *mem) {
-    if (mem)
-      free((void *) mem);
-  });
+  int status = -4; // some arbitrary value to eliminate the compiler warning
 
-  if (status) {
-    // 0: The demangling operation succeeded.
-    // -1: A memory allocation failure occurred.
-    // -2: mangled_name is not a valid name under the C++ ABI mangling rules.
-    // -3: One of the arguments is invalid.
-    std::unique_ptr< char, decltype(deallocator) > retval(nullptr, deallocator);
-    return retval;
+  auto p = abi::__cxa_demangle(name, NULL, NULL, &status);
+
+  if (! status) {
+    return p;
+  }
+  return "";
+}
+
+static std::string demangle_symbol(char *name)
+{
+  std::string sout;
+  char       *p         = name;
+  char       *cur       = p;
+  char       *end       = p + strlen(cur);
+  bool        demangled = false;
+
+  while (cur < end) {
+    size_t special = strcspn(cur, "_?");
+    cur += special;
+
+    if (cur >= end) {
+      break;
+    }
+
+    size_t n_sym = 0;
+    if (*cur == '?') {
+      while (cur + n_sym != end && is_mangle_char_win(cur[ n_sym ])) {
+        ++n_sym;
+      }
+    } else if (is_plausible_itanium_prefix(cur)) {
+      while (cur + n_sym != end && is_mangle_char_posix(cur[ n_sym ])) {
+        ++n_sym;
+      }
+    } else {
+      ++cur;
+      continue;
+    }
+
+    char tmp     = cur[ n_sym ];
+    cur[ n_sym ] = '\0';
+
+    if (starts_with(cur, "__Z")) {
+      cur++;
+    }
+
+    auto was_demangled = demangle(cur);
+    if (was_demangled.size()) {
+      sout += string_sprintf("%s\n", was_demangled.c_str());
+      demangled = true;
+      break;
+    }
+
+    cur[ n_sym ] = tmp;
+    cur += n_sym;
   }
 
-  //
-  // Create a unique pointer to take ownership of the returned string so it
-  // is freed when that pointers goes out of scope
-  //
-  std::unique_ptr< char, decltype(deallocator) > retval(ret, deallocator);
-  return retval;
+  if (! demangled) {
+    sout += string_sprintf("%s (not demangled)\n", p);
+  }
+
+  return sout;
 }
 
 #ifdef _WIN32
@@ -219,22 +257,28 @@ std::string backtrace_string(void)
   for (int i = 0; i < frame_count; i++) {
     DWORD64 addr = (DWORD64) frames[ i ];
 
-    const char *file          = "<no-file>";
-    const char *function_name = "<no-function>";
-    int         line_number   = -1;
-    DWORD       displacement  = 0;
+    const char *file = "<no-file>";
+    const char *function_name;
+    int         line_number  = -1;
+    DWORD       displacement = 0;
 
     if (SymGetLineFromAddr64(handle, addr, &displacement, &line)) {
       file        = line.FileName;
       line_number = (int) line.LineNumber;
     }
 
+    std::string sym;
+
     if (SymFromAddr(handle, addr, nullptr, symbol)) {
       function_name = symbol->Name;
+      sym           = demangle_symbol(function_name);
+    } else {
+      function_name = "<no-function>";
+      sym           = "<no sym>";
     }
 
-    out += string_sprintf("CaptureStackBackTrace[%d]: %s() %s:%d\n", i - frames_to_skip, function_name, file,
-                          line_number);
+    out += string_sprintf("CaptureStackBackTrace[%d]: %s() [%s] %s:%d\n", i - frames_to_skip, function_name,
+                          sym.c_str(), file, line_number);
   }
 
   PrintLastError(out.c_str());
@@ -259,15 +303,15 @@ std::string backtrace_string(void)
 
 #ifdef LIBUNWIND_HAS_UNW_BACKTRACE
   size               = unw_backtrace(&bt[ 0 ], max_backtrace);
-  const char *prefix = "(unw_backtrace)";
+  const char *prefix = "(unw_backtrace) ";
 #else
   size               = backtrace(&bt[ 0 ], max_backtrace);
-  const char *prefix = "(backtrace)";
+  const char *prefix = "(backtrace) ";
 #endif
 
 #else
   size               = backtrace(&bt[ 0 ], max_backtrace);
-  const char *prefix = "(backtrace)";
+  const char *prefix = "(backtrace) ";
 #endif
 
   auto        addrlist = &bt[ 0 ];
@@ -285,55 +329,7 @@ std::string backtrace_string(void)
 
   // address of this function.
   for (int i = size - 1; i >= 0; i--) {
-
-    char *p         = symbollist[ i ];
-    char *cur       = p;
-    char *end       = p + strlen(cur);
-    bool  demangled = false;
-
-    while (cur < end) {
-      size_t special = strcspn(cur, "_?");
-      cur += special;
-
-      if (cur >= end) {
-        break;
-      }
-
-      size_t n_sym = 0;
-      if (*cur == '?') {
-        while (cur + n_sym != end && is_mangle_char_win(cur[ n_sym ])) {
-          ++n_sym;
-        }
-      } else if (is_plausible_itanium_prefix(cur)) {
-        while (cur + n_sym != end && is_mangle_char_posix(cur[ n_sym ])) {
-          ++n_sym;
-        }
-      } else {
-        ++cur;
-        continue;
-      }
-
-      char tmp     = cur[ n_sym ];
-      cur[ n_sym ] = '\0';
-
-      if (starts_with(cur, "__Z")) {
-        cur++;
-      }
-
-      auto was_demangled = cppDemangle(cur);
-      if (was_demangled) {
-        sout += string_sprintf("%s %d %s\n", prefix, i, was_demangled.get());
-        demangled = true;
-        break;
-      }
-
-      cur[ n_sym ] = tmp;
-      cur += n_sym;
-    }
-
-    if (! demangled) {
-      sout += string_sprintf("%s %s (not demangled)\n", prefix, p);
-    }
+    sout += prefix + demangle_symbol(symbollist[ i ]);
   }
 
   sout += string_sprintf("end-of-stack\n");
