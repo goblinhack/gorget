@@ -19,7 +19,6 @@
 #include <winbase.h> 
 #include <dbghelp.h>
 // clang-format on
-extern char **backtrace_symbols(void *const *array, size_t size);
 #else
 #include <execinfo.h>
 #endif
@@ -33,29 +32,6 @@ extern char **backtrace_symbols(void *const *array, size_t size);
 #include <mutex>
 
 static std::recursive_mutex backtrace_mutex;
-
-void Backtrace::init(void)
-{
-  // clang-format off
-#ifdef HAVE_LIBUNWIND
-#  ifdef _WIN32
-  size = 0; // Just did not seem to work on mingw
-#  else
-#    ifdef LIBUNWIND_HAS_UNW_BACKTRACE
-  size = unw_backtrace(&bt[ 0 ], bt.size());
-#    else
-  size = backtrace(&bt[ 0 ], bt.size());
-#    endif
-#  endif
-#else
-#  ifdef _WIN32
-  size = 0;
-#  else
-  size = backtrace(&bt[ 0 ], bt.size());
-#  endif
-#endif
-  // clang-format on
-}
 
 //
 // Inspired from https://github.com/nico/demumble/issues
@@ -122,164 +98,7 @@ static auto cppDemangle(const char *abiName)
   return retval;
 }
 
-std::string Backtrace::to_string(void)
-{
-  backtrace_mutex.lock();
-  auto        addrlist = &bt[ 0 ];
-  std::string sout     = "stack trace\n===========\n";
-
-  if (size == 0) {
-    sout += "  <empty, possibly corrupt>\n";
-    backtrace_mutex.unlock();
-    return sout;
-  }
-
-  // resolve addresses into strings containing "filename(function+address)",
-  // this array must be free()-ed
-  char      **symbollist = backtrace_symbols(addrlist, size);
-  const char *prefix     = " >";
-
-  // address of this function.
-  for (int i = size - 1; i >= 0; i--) {
-
-    char *p    = symbollist[ i ];
-    char *cur  = p;
-    char *end  = p + strlen(cur);
-    bool  done = false;
-
-    while (cur < end) {
-      size_t special = strcspn(cur, "_?");
-      cur += special;
-
-      if (cur >= end) {
-        break;
-      }
-
-      size_t n_sym = 0;
-      if (*cur == '?') {
-        while (cur + n_sym != end && is_mangle_char_win(cur[ n_sym ])) {
-          ++n_sym;
-        }
-      } else if (is_plausible_itanium_prefix(cur)) {
-        while (cur + n_sym != end && is_mangle_char_posix(cur[ n_sym ])) {
-          ++n_sym;
-        }
-      } else {
-        ++cur;
-        continue;
-      }
-
-      char tmp     = cur[ n_sym ];
-      cur[ n_sym ] = '\0';
-
-      if (starts_with(cur, "__Z")) {
-        cur++;
-      }
-
-      auto demangled = cppDemangle(cur);
-      if (demangled) {
-        sout += string_sprintf("%s %s\n", prefix, demangled.get());
-        done = true;
-        break;
-      }
-
-      cur[ n_sym ] = tmp;
-      cur += n_sym;
-    }
-
-    if (! done) {
-      sout += string_sprintf("%s%s\n", prefix, p);
-    }
-  }
-
-  sout += string_sprintf("end-of-stack\n");
-
-  free(symbollist);
-
-  backtrace_mutex.unlock();
-  return sout;
-}
-
-void Backtrace::log(void)
-{
-  backtrace_mutex.lock();
-  auto addrlist = &bt[ 0 ];
-
-  LOG("stack trace");
-  LOG("===========");
-
-  if (size == 0) {
-    LOG("  <empty, possibly corrupt>");
-    backtrace_mutex.unlock();
-    return;
-  }
-
-  // resolve addresses into strings containing "filename(function+address)",
-  // this array must be free()-ed
-  char      **symbollist = backtrace_symbols(addrlist, size);
-  const char *prefix     = " >";
-
-  // address of this function.
-  for (int i = 1; i < size; i++) {
-
-    char *p    = symbollist[ i ];
-    char *cur  = p;
-    char *end  = p + strlen(cur);
-    bool  done = false;
-
-    while (cur < end) {
-      size_t special = strcspn(cur, "_?");
-      cur += special;
-
-      if (cur >= end) {
-        break;
-      }
-
-      size_t n_sym = 0;
-      if (*cur == '?') {
-        while (cur + n_sym != end && is_mangle_char_win(cur[ n_sym ])) {
-          ++n_sym;
-        }
-      } else if (is_plausible_itanium_prefix(cur)) {
-        while (cur + n_sym != end && is_mangle_char_posix(cur[ n_sym ])) {
-          ++n_sym;
-        }
-      } else {
-        ++cur;
-        continue;
-      }
-
-      char tmp     = cur[ n_sym ];
-      cur[ n_sym ] = '\0';
-
-      if (starts_with(cur, "__Z")) {
-        cur++;
-      }
-
-      auto demangled = cppDemangle(cur);
-      if (demangled) {
-        LOG("%s%u %s", prefix, i, demangled.get());
-        done = true;
-        break;
-      }
-
-      cur[ n_sym ] = tmp;
-      cur += n_sym;
-    }
-
-    if (! done) {
-      LOG("%s%s", prefix, p);
-    }
-  }
-
-  LOG("end-of-stack");
-
-  free(symbollist);
-  backtrace_mutex.unlock();
-}
-
 #ifdef _WIN32
-
 static void PrintLastError(const char *msg)
 {
   DWORD errCode = GetLastError();
@@ -431,12 +250,98 @@ std::string backtrace_string(void)
 std::string backtrace_string(void)
 {
   backtrace_mutex.lock();
-  auto bt = new Backtrace();
-  bt->init();
-  auto ret = bt->to_string();
-  delete bt;
+
+  static const int                    max_backtrace = 63;
+  std::array< void *, max_backtrace > bt {};
+  int                                 size {};
+
+#ifdef HAVE_LIBUNWIND
+
+#ifdef LIBUNWIND_HAS_UNW_BACKTRACE
+  size               = unw_backtrace(&bt[ 0 ], max_backtrace);
+  const char *prefix = "(unw_backtrace)";
+#else
+  size               = backtrace(&bt[ 0 ], max_backtrace);
+  const char *prefix = "(backtrace)";
+#endif
+
+#else
+  size               = backtrace(&bt[ 0 ], max_backtrace);
+  const char *prefix = "(backtrace)";
+#endif
+
+  auto        addrlist = &bt[ 0 ];
+  std::string sout     = "stack trace\n===========\n";
+
+  if (size == 0) {
+    sout += "  <empty, possibly corrupt>\n";
+    backtrace_mutex.unlock();
+    return sout;
+  }
+
+  // resolve addresses into strings containing "filename(function+address)",
+  // this array must be free()-ed
+  char **symbollist = backtrace_symbols(addrlist, size);
+
+  // address of this function.
+  for (int i = size - 1; i >= 0; i--) {
+
+    char *p         = symbollist[ i ];
+    char *cur       = p;
+    char *end       = p + strlen(cur);
+    bool  demangled = false;
+
+    while (cur < end) {
+      size_t special = strcspn(cur, "_?");
+      cur += special;
+
+      if (cur >= end) {
+        break;
+      }
+
+      size_t n_sym = 0;
+      if (*cur == '?') {
+        while (cur + n_sym != end && is_mangle_char_win(cur[ n_sym ])) {
+          ++n_sym;
+        }
+      } else if (is_plausible_itanium_prefix(cur)) {
+        while (cur + n_sym != end && is_mangle_char_posix(cur[ n_sym ])) {
+          ++n_sym;
+        }
+      } else {
+        ++cur;
+        continue;
+      }
+
+      char tmp     = cur[ n_sym ];
+      cur[ n_sym ] = '\0';
+
+      if (starts_with(cur, "__Z")) {
+        cur++;
+      }
+
+      auto was_demangled = cppDemangle(cur);
+      if (was_demangled) {
+        sout += string_sprintf("%s %d %s\n", prefix, i, was_demangled.get());
+        demangled = true;
+        break;
+      }
+
+      cur[ n_sym ] = tmp;
+      cur += n_sym;
+    }
+
+    if (! demangled) {
+      sout += string_sprintf("%s %s (not demangled)\n", prefix, p);
+    }
+  }
+
+  sout += string_sprintf("end-of-stack\n");
+
+  free(symbollist);
+
   backtrace_mutex.unlock();
-  return ret;
+  return sout;
 }
 #endif
 

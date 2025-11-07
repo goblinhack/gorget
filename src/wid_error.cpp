@@ -85,14 +85,7 @@ void wid_error(Gamep g, std::string error)
   wid_error_window->log(g, "Please send a screenshot to " UI_HIGHLIGHT_FMT_STR "goblinhack@gmail.com");
   wid_error_window->log_empty_line(g);
   sdl_screenshot_do(g);
-
-  {
-    TRACE_NO_INDENT();
-    auto bt = new Backtrace();
-    bt->init();
-    auto s = bt->to_string();
-    wid_error_window->log(g, s, TEXT_FORMAT_LHS);
-  }
+  wid_error_window->log(g, callstack_string(), TEXT_FORMAT_LHS);
 
   wid_update(g, wid_error_window->wid_text_area->wid_text_area);
 }

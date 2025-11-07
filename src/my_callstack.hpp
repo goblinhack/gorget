@@ -40,9 +40,6 @@ extern thread_local struct callframe callframes[ MAXCALLFRAME ];
 extern thread_local unsigned char    g_callframes_depth;
 extern thread_local unsigned char    g_callframes_indent;
 
-extern void callstack_dump(void);
-extern void callstack_dump_stderr(void);
-
 struct tracer_t {
   inline tracer_t(const char *func, const unsigned short line)
   {
@@ -84,4 +81,9 @@ struct tracer_no_indent_t {
 #endif
   }
 };
+
+extern void        callstack_dump_stderr(void);
+extern void        callstack_dump(void);
+extern std::string callstack_string(void);
+
 #endif

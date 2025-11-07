@@ -30,7 +30,7 @@ public:
   const char *func {};
   char        ts[ MY_TIMESTAMP_SIZE ];
   int         line {};
-  Backtrace  *bt {};
+  std::string bt;
 
   Ptrcheck_history()
   {
@@ -44,11 +44,9 @@ public:
     func = other.func;
     line = other.line;
     strcpy(ts, other.ts);
-    if (other.bt) {
-      bt = new Backtrace(other.bt);
-    }
+    bt = other.bt;
   }
-  ~Ptrcheck_history() { delete bt; }
+  ~Ptrcheck_history() {}
 };
 
 //
@@ -325,7 +323,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
       fprintf(stderr, "PTRCHECK: Currently allocated at %p \"%s\" (%u bytes) at %s:%s line %u at %s\n", pc->ptr,
               pc->what, pc->size, a->file, a->func, a->line, a->ts);
 
-      fprintf(stderr, "%s", a->bt->to_string().c_str());
+      fprintf(stderr, "%s", a->bt.c_str());
     }
 
     //
@@ -341,9 +339,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
       auto H = pc->last_seen[ h ];
       if (H) {
         fprintf(stderr, "PTRCHECK: Last seen at [%u] at %s:%s line %u at %s\n", j, H->file, H->func, H->line, H->ts);
-        if (H->bt) {
-          fprintf(stderr, "%s", H->bt->to_string().c_str());
-        }
+        fprintf(stderr, "%s", H->bt.c_str());
       }
     }
 #endif
@@ -361,7 +357,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
 
   ring_ptr_size = ringbuf_current_size[ mtype ];
 
-  CON("vvvvv Pointer history for %p vvvvv (max %u ptrs saved)", ptr, ring_ptr_size);
+  fprintf(stderr, "vvvvv Pointer history for %p vvvvv (max %u ptrs saved)", ptr, ring_ptr_size);
 
   //
   // Walk back through the ring buffer.
@@ -373,25 +369,14 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
     if (pc->ptr == ptr) {
       auto a = pc->allocated_by;
       if (a) {
-        std::cerr << string_sprintf("PTRCHECK: %p allocated at \"%s\" (%u bytes) at %s:%s line %u at %s\n", ptr,
-                                    pc->what, pc->size, a->file, a->func, a->line, a->ts);
-        std::cerr << a->bt->to_string() << std::endl;
-
-        LOG("PTRCHECK:");
-        LOG("PTRCHECK: %p allocated at \"%s\" (%u bytes) at %s:%s line %u at %s", ptr, pc->what, pc->size, a->file,
-            a->func, a->line, a->ts);
-        a->bt->log();
+        fprintf(stderr, "PTRCHECK: %p allocated at \"%s\" (%u bytes) at %s:%s line %u at %s\n%s\n", ptr, pc->what,
+                pc->size, a->file, a->func, a->line, a->ts, a->bt.c_str());
       }
 
       auto f = pc->freed_by;
       if (f) {
-        std::cerr << string_sprintf("PTRCHECK: %p freed at %s:%s line %u at %s\n", ptr, f->file, f->func, f->line,
-                                    f->ts);
-        std::cerr << f->bt->to_string() << std::endl;
-
-        LOG("PTRCHECK:");
-        LOG("PTRCHECK: %p freed at %s:%s line %u at %s", ptr, f->file, f->func, f->line, f->ts);
-        f->bt->log();
+        fprintf(stderr, "PTRCHECK: %p freed at %s:%s line %u at %s\n%s\n", ptr, f->file, f->func, f->line, f->ts,
+                f->bt.c_str());
       }
 
       //
@@ -406,13 +391,8 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
 
         auto H = pc->last_seen[ h ];
         if (H) {
-          std::cerr << string_sprintf("PTRCHECK: %p last seen at [%u] at %s:%s line %u at %s\n", ptr, i, H->file,
-                                      H->func, H->line, H->ts);
-          std::cerr << H->bt->to_string() << std::endl;
-
-          LOG("PTRCHECK:");
-          LOG("PTRCHECK: %p last seen at [%u] at %s:%s line %u at %s", ptr, i, H->file, H->func, H->line, H->ts);
-          H->bt->log();
+          fprintf(stderr, "PTRCHECK: %p last seen at [%u] at %s:%s line %u at %s\n%s\n", ptr, i, H->file, H->func,
+                  H->line, H->ts, H->bt.c_str());
         }
       }
 #endif
@@ -434,7 +414,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
     }
   }
 
-  CON("^^^^^ End of pointer history for %p ^^^^^", ptr);
+  fprintf(stderr, "^^^^^ End of pointer history for %p ^^^^^", ptr);
   return nullptr;
 }
 
@@ -480,10 +460,8 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
       l->file = file;
       l->func = func;
       l->line = line;
-      delete l->bt;
 
-      l->bt = new Backtrace();
-      l->bt->init();
+      l->bt = callstack_string();
       timestamp(l->ts, SIZEOF(l->ts));
 
 #ifdef ENABLE_DEBUG_PTRCHECK
@@ -513,7 +491,7 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
   //
   // We may be about to crash. Complain!
   //
-  CON("%s%p %s:%s line %u, see below logs", unknown_ptr_warning, ptr, file, func, line);
+  fprintf(stderr, "%s%p %s:%s line %u, see below logs", unknown_ptr_warning, ptr, file, func, line);
   ptrcheck_describe_pointer(mtype, ptr);
   DIE("%s%p %s:%s line %u, see above logs", unknown_ptr_warning, ptr, file, func, line);
   return nullptr;
@@ -585,10 +563,8 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
   a->func = func;
   a->file = file;
   a->line = line;
-
   timestamp(a->ts, SIZEOF(a->ts));
-  a->bt = new Backtrace();
-  a->bt->init();
+  a->bt = callstack_string();
 
   //
   // Add it to the hash. Not the ring buffer (only when freed).
@@ -644,10 +620,7 @@ static int ptrcheck_free_(int mtype, void *ptr, const char *func, const char *fi
   f->file = file;
   f->func = func;
   f->line = line;
-
-  f->bt = new Backtrace();
-  f->bt->init();
-
+  f->bt   = callstack_string();
   timestamp(f->ts, SIZEOF(f->ts));
 
   //
@@ -727,10 +700,8 @@ void ptrcheck_leak_print(int mtype)
 
       auto a = pc->allocated_by;
       if (a) {
-        fprintf(stderr, "PTRCHECK: Leak %p \"%s\" (%u bytes) at %s:%s line %u at %s\n", pc->ptr, pc->what, pc->size,
-                a->file, a->func, a->line, a->ts);
-
-        fprintf(stderr, "%s", a->bt->to_string().c_str());
+        fprintf(stderr, "PTRCHECK: Leak %p \"%s\" (%u bytes) at %s:%s line %u at %s\n%s\n", pc->ptr, pc->what,
+                pc->size, a->file, a->func, a->line, a->ts, a->bt.c_str());
       } else {
         fprintf(stderr, "PTRCHECK: Leak \"%s\" (%u bytes)\n", pc->what, pc->size);
       }
@@ -747,11 +718,8 @@ void ptrcheck_leak_print(int mtype)
 
         auto H = pc->last_seen[ h ];
         if (H) {
-          fprintf(stderr, "PTRCHECK: Last seen at [%u] at %s:%s line %u at %s\n", j, H->file, H->func, H->line,
-                  H->ts);
-          if (H->bt) {
-            fprintf(stderr, "%s", H->bt->to_string().c_str());
-          }
+          fprintf(stderr, "PTRCHECK: Last seen at [%u] at %s:%s line %u at %s\n%s\n", j, H->file, H->func, H->line,
+                  H->ts, H->bt.c_str());
         }
       }
 #endif
