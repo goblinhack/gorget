@@ -183,7 +183,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
-  tp_health_set(tp, "100");
+  tp_health_set(tp, "1");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
   tp_light_color_set(tp, "white");

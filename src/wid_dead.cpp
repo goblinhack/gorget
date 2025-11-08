@@ -106,8 +106,8 @@ void wid_dead_select(Gamep g, std::string reason)
   wid_dead_window->log_empty_line(g);
   wid_dead_window->log_empty_line(g);
   wid_dead_window->log_empty_line(g);
-  wid_dead_window->log(g, "   .------------.   ");
-  wid_dead_window->log(g, "  /     Rest     \\  ");
+  wid_dead_window->log(g, " .------------.   ");
+  wid_dead_window->log(g, "/     Rest     \\  ");
   wid_dead_window->log(g, " /       In       \\ ");
   wid_dead_window->log(g, "/      Pieces      \\");
   wid_dead_window->log(g, "|                  |");

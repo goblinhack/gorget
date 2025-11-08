@@ -271,8 +271,8 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         static bool first_motion_event = true;
         if (first_motion_event) {
           first_motion_event = false;
-          if (! time_have_x_tenths_passed_since(1, ts_first_event)) {
-            if (! SDL_GetKeyboardFocus()) {
+          if (! SDL_GetKeyboardFocus()) {
+            if (! time_have_x_tenths_passed_since(1, ts_first_event)) {
               CON("Restart needed due to lack of window focus");
               g_need_restart_with_given_arguments = "--restart";
             }
