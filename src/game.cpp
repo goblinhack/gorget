@@ -936,8 +936,21 @@ void Game::state_change(GameState new_state, const std::string &why)
       wid_main_menu_destroy(g);
       wid_quit_destroy(g);
       wid_save_destroy(g);
+
+      //
+      // Play as normal now
+      //
+      g_opt_level_select_menu = false;
       break;
     case STATE_DEAD_MENU :
+      wid_actionbar_fini(g);
+
+      //
+      // So we can quit the level and play normally
+      //
+      g_opt_quick_start       = false;
+      g_opt_level_select_menu = false;
+      break;
     case STATE_MOVE_WARNING_MENU :
     case STATE_KEYBOARD_MENU :
     case STATE_LOAD_MENU :
@@ -961,11 +974,14 @@ void Game::state_change(GameState new_state, const std::string &why)
         //
         // Do nothing
         //
+        LOG("Do nothing, quick start chosen");
       } else if (g_opt_level_select_menu) {
         //
         // Do nothing
         //
+        LOG("Do nothing, level select menu chosen");
       } else {
+        LOG("Select the main menu");
         wid_main_menu_select(g);
       }
       break;
