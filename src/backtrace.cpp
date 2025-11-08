@@ -6,6 +6,7 @@
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
+#include "my_wid_console.hpp"
 
 #ifdef _WIN32
 // clang-format off
@@ -134,7 +135,10 @@ static std::string demangle_symbol(char *name)
   }
 
   if (! demangled) {
-    sout += string_sprintf("%s (not demangled)", p);
+    //
+    // Not demangled
+    //
+    sout += string_sprintf("%s", p);
   }
 
   return sout;
@@ -350,5 +354,6 @@ void backtrace_dump(void)
   backtrace_mutex.lock();
   auto bt = backtrace_string();
   fprintf(MY_STDERR, "%s", bt.c_str());
+  wid_console_log(bt);
   backtrace_mutex.unlock();
 }

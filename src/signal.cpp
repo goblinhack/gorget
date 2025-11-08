@@ -8,6 +8,7 @@
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_string.hpp"
+#include "my_wid_console.hpp"
 
 #include <errno.h>
 #include <signal.h>
@@ -120,13 +121,13 @@ static void error_handler_do(std::string &tech_support)
   tech_support += g_log_stderr_filename;
   tech_support += "\n";
   tech_support += "\n";
-  tech_support += "Backtrace:";
   tech_support += backtrace_string();
   tech_support += "\n";
-  tech_support += "Trace:";
   tech_support += callstack_string();
   tech_support += "\n";
   tech_support += "The goblin responsible for this shall be punished!!!\n";
+
+  wid_console_raise(g);
 
   sdl_msg_box("%s", tech_support.c_str());
 }

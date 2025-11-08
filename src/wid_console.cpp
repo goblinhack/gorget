@@ -126,7 +126,7 @@ static void wid_console_log_(Gamep g, std::string s)
 //
 void wid_console_log(std::string s)
 {
-  if (g_thread_id != -1) {
+  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != -1)) {
     return;
   }
 
@@ -289,14 +289,11 @@ void wid_console_deserialize(std::vector< std::string > r)
 
 void wid_console_flush(Gamep g)
 {
-  if (g_thread_id != -1) {
+  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != -1)) {
     return;
   }
 
   TRACE_NO_INDENT();
-  if (! wid_console_window) {
-    return;
-  }
 
   //
   // Easier to see progress on windows where there is no console
@@ -309,7 +306,7 @@ void wid_console_flush(Gamep g)
 
 void wid_console_raise(Gamep g)
 {
-  if (g_thread_id != -1) {
+  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != -1)) {
     return;
   }
 
@@ -321,4 +318,5 @@ void wid_console_raise(Gamep g)
   wid_visible(g, wid_console_window);
   wid_raise(g, wid_console_window);
   wid_update(g, wid_console_window);
+  wid_set_do_not_lower(wid_console_window, 1);
 }

@@ -98,9 +98,6 @@ void wid_dead_select(Gamep g, std::string reason)
   wid_set_on_key_down(g, wid_dead_window->wid_popup_container, wid_dead_key_down);
   wid_raise(g, wid_dead_window->wid_popup_container);
 
-  // Want console to be able to be on top
-  // wid_set_do_not_lower(wid_dead_window->wid_popup_container, true);
-
   auto grave_text_width = 18;
 
   wid_dead_window->log_empty_line(g);

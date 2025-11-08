@@ -55,6 +55,7 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
       l->debug[ x ][ y ] = c;
 
       bool need_floor    = false;
+      bool need_entrance = false;
       bool need_corridor = false;
       bool need_water    = false;
       bool need_dirt     = false;
@@ -173,13 +174,29 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           break;
         case CHARMAP_ENTRANCE :
           need_floor = true;
-          if (l->level_num == 0) {
+
+          //
+          // First level. Usually 0 but can be a specified level.
+          //
+          if ((g_level_opt.level_num == l->level_num) && g_level_opt.is_set) {
+            //
+            // This is the chosen start level
+            //
             tp = tp_player;
-          } else {
-            need_floor = true;
-            tp         = tp_entrance;
+          } else if ((l->level_num == 0) && ! g_level_opt.is_set) {
+            //
+            // This is the default start level
+            //
+            tp = tp_player;
           }
-          l->entrance = at;
+
+          //
+          // Every floor except the first needs an entrance
+          //
+          if (g_level_opt.level_num) {
+            need_floor    = true;
+            need_entrance = true;
+          }
           break;
         case CHARMAP_EXIT :
           need_floor = true;
@@ -202,40 +219,46 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 
       if (need_floor) {
         auto tp_add = tp_floor;
-        thing_spawn(g, v, l, tp_add, spoint(x, y));
+        thing_spawn(g, v, l, tp_add, at);
       }
 
       if (need_corridor) {
         auto tp_add = tp_corridor;
-        thing_spawn(g, v, l, tp_add, spoint(x, y));
+        thing_spawn(g, v, l, tp_add, at);
       }
 
       if (need_dirt) {
         auto tp_add = tp_dirt;
-        thing_spawn(g, v, l, tp_add, spoint(x, y));
+        thing_spawn(g, v, l, tp_add, at);
       }
 
       if (need_water) {
-        thing_spawn(g, v, l, tp_water, spoint(x, y));
+        thing_spawn(g, v, l, tp_water, at);
       }
 
       if (need_foliage) {
         auto tp_add = tp_foliage;
-        thing_spawn(g, v, l, tp_add, spoint(x, y));
+        thing_spawn(g, v, l, tp_add, at);
+      }
+
+      if (need_entrance) {
+        auto tp_add = tp_entrance;
+        thing_spawn(g, v, l, tp_add, at);
+        l->entrance = at;
       }
 
       if (tp) {
-        thing_spawn(g, v, l, tp, spoint(x, y));
+        thing_spawn(g, v, l, tp, at);
       }
 
       if (! g_opt_tests) {
         if (0) {
           if (tp == tp_player) {
             if (1) {
-              thing_spawn(g, v, l, tp_random(is_trap), spoint(x, y) + spoint(1, 0));
+              thing_spawn(g, v, l, tp_random(is_trap), at + spoint(1, 0));
             }
             if (1) {
-              thing_spawn(g, v, l, tp_random(is_treasure), spoint(x, y) + spoint(2, 0));
+              thing_spawn(g, v, l, tp_random(is_treasure), at + spoint(2, 0));
             }
           }
         }

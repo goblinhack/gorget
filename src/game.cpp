@@ -778,17 +778,10 @@ void Game::create_levels(void)
     return;
   }
 
-  if (g_level_opt.level_num && g_level_opt.is_set) {
-    //
-    // We want the player to start on a specific level
-    //
-    player_warp_to_specific_level(g, v, g_level_opt.level_num);
-  } else {
-    //
-    // First level
-    //
-    level_change(g, v, 0);
-  }
+  //
+  // First level. Usually 0 but can be a specified level.
+  //
+  level_change(g, v, g_level_opt.level_num);
 
   //
   // Update the tiles show in level selection

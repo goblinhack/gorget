@@ -239,6 +239,13 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 {
   TRACE_NO_INDENT();
 
+#if __APPLE__
+  static uint32_t ts_first_event;
+  if (! ts_first_event) {
+    ts_first_event = time_ms_cached();
+  }
+#endif
+
   SDL_Keysym *key = &event->key.keysym;
   LOG("SDL: Event");
 
@@ -261,12 +268,14 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         //
         // Work around a macos? issue where the focus is not present when starting
         //
-        static bool first = true;
-        if (first) {
-          first = false;
-          if (! SDL_GetKeyboardFocus()) {
-            CON("Restart needed due to lack of window focus");
-            g_need_restart_with_given_arguments = "--restart";
+        static bool first_motion_event = true;
+        if (first_motion_event) {
+          first_motion_event = false;
+          if (! time_have_x_tenths_passed_since(1, ts_first_event)) {
+            if (! SDL_GetKeyboardFocus()) {
+              CON("Restart needed due to lack of window focus");
+              g_need_restart_with_given_arguments = "--restart";
+            }
           }
         }
 #endif

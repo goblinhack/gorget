@@ -410,6 +410,17 @@ Wid::Wid(void) { newptr(MTYPE_WID, this, "wid"); }
 
 Wid::~Wid(void) { oldptr(MTYPE_WID, this); }
 
+//
+// Check if we are on the main thread and not exitting
+//
+static bool wid_safe(void)
+{
+  if (! wid_init_done || wid_exiting || g_dying || g_quitting || (g_thread_id != -1)) {
+    return false;
+  }
+  return true;
+}
+
 bool wid_init(void)
 {
   TRACE_NO_INDENT();
@@ -458,6 +469,10 @@ void wid_dump(Widp w, int depth)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return;
+  }
+
   if (unlikely(! w)) {
     return;
   }
@@ -484,6 +499,10 @@ void wid_dump(Widp w, int depth)
 int wid_count(Widp w, int depth)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return 0;
+  }
 
   if (unlikely(! w)) {
     return 0;
@@ -570,6 +589,10 @@ void wid_set_pos(Widp w, spoint tl, spoint br)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return;
+  }
+
   Widp p {};
 
   wid_tree_detach(w);
@@ -602,6 +625,10 @@ void wid_set_pos(Widp w, spoint tl, spoint br)
 static void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   Widp p {};
 
@@ -962,6 +989,10 @@ static void wid_set_scissors(Gamep g, int tlx, int tly, int brx, int bry)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return;
+  }
+
   ascii_set_scissors(spoint(tlx, tly), spoint(brx, bry));
 }
 
@@ -971,6 +1002,10 @@ static void wid_set_scissors(Gamep g, int tlx, int tly, int brx, int bry)
 bool wid_ignore_events(Widp w)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return true;
+  }
 
   Widp top {};
 
@@ -997,6 +1032,10 @@ bool wid_ignore_events_only(Widp w)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return true;
+  }
+
   if (unlikely(! w)) {
     return true;
   }
@@ -1011,6 +1050,10 @@ bool wid_ignore_events_only(Widp w)
 bool wid_ignore_scroll_events(Widp w)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return true;
+  }
 
   Widp top {};
 
@@ -1037,6 +1080,10 @@ bool wid_ignore_for_focus(Widp w)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return true;
+  }
+
   Widp top {};
 
   if (w->hidden || w->being_destroyed) {
@@ -1061,6 +1108,10 @@ bool wid_ignore_being_destroyed(Widp w)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return true;
+  }
+
   Widp top {};
 
   if (w->being_destroyed) {
@@ -1078,7 +1129,16 @@ bool wid_ignore_being_destroyed(Widp w)
   return false;
 }
 
-Widp wid_get_current_focus(void) { return wid_focus; }
+Widp wid_get_current_focus(void)
+{
+  TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return nullptr;
+  }
+
+  return wid_focus;
+}
 
 //
 // Map an SDL key event to the char the user typed
@@ -1337,6 +1397,10 @@ void wid_set_name(Widp w, std::string name)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return;
+  }
+
   if (name != "") {
     oldptr(MTYPE_WID, w);
     w->name = name;
@@ -1367,6 +1431,10 @@ void wid_set_text_max_len(Widp w, size_t max_len) { w->max_len = max_len; }
 void wid_set_text(Widp w, std::string text)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   if (text == "") {
     w->text = "";
@@ -1432,6 +1500,10 @@ bool wid_get_moveable(Widp w)
 void wid_set_moveable(Gamep g, Widp w, uint8_t val)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   w->moveable     = val;
   w->moveable_set = true;
@@ -2247,6 +2319,10 @@ Widp wid_new_window(Gamep g, std::string name)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return nullptr;
+  }
+
   Widp w = wid_new(g);
 
   w->to_string = string_sprintf("%s[%p]", name.c_str(), (void *) w);
@@ -2276,6 +2352,10 @@ Widp wid_new_window(Gamep g, std::string name)
 Widp wid_new_container(Gamep g, Widp parent, std::string name)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return nullptr;
+  }
 
   Widp w = wid_new(g, parent);
 
@@ -2312,6 +2392,10 @@ Widp wid_new_square_window(Gamep g, std::string name)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return nullptr;
+  }
+
   Widp w = wid_new(g);
 
   w->to_string = string_sprintf("%s[%p]", name.c_str(), (void *) w);
@@ -2337,6 +2421,10 @@ Widp wid_new_square_window(Gamep g, std::string name)
 Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return nullptr;
+  }
 
   if (! parent) {
     ERR("No parent");
@@ -2380,6 +2468,10 @@ Widp wid_new_plain(Gamep g, Widp parent, std::string name)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return nullptr;
+  }
+
   if (! parent) {
     ERR("No parent");
   }
@@ -2422,6 +2514,10 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return nullptr;
+  }
+
   if (! parent) {
     ERR("No parent");
   }
@@ -2463,6 +2559,10 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
 static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrollbar_owner, uint8_t vertical)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return nullptr;
+  }
 
   if (! parent) {
     ERR("No parent");
@@ -2527,6 +2627,10 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return nullptr;
+  }
+
   if (! parent) {
     ERR("No parent");
   }
@@ -2585,6 +2689,10 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return nullptr;
+  }
+
   if (! parent) {
     ERR("No parent");
   }
@@ -2640,6 +2748,10 @@ static void wid_raise_internal(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return;
+  }
+
   if (w->do_not_raise) {
     return;
   }
@@ -2652,6 +2764,10 @@ static void wid_raise_internal(Gamep g, Widp w)
 static void wid_raise_override(Gamep g, Widp parent)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   //
   // If some widget wants to be on top, let it.
@@ -2675,6 +2791,10 @@ static void wid_raise_override(Gamep g, Widp parent)
 void wid_raise(Gamep g, Widp w_in)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   if (! w_in) {
     return;
@@ -2710,6 +2830,10 @@ static void wid_lower_internal(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return;
+  }
+
   if (w->do_not_lower) {
     return;
   }
@@ -2722,6 +2846,10 @@ static void wid_lower_internal(Gamep g, Widp w)
 void wid_lower(Gamep g, Widp w_in)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   if (! w_in) {
     return;
@@ -2754,6 +2882,10 @@ void wid_lower(Gamep g, Widp w_in)
 void wid_toggle_hidden(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   if (w->hidden) {
     wid_visible(g, w);
@@ -2853,6 +2985,10 @@ void wid_set_top_focus(Gamep g)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return;
+  }
+
   Widp best {};
 
   for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
@@ -2907,6 +3043,10 @@ Widp wid_get_focus(Widp w)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return nullptr;
+  }
+
   Widp best {};
 
   if (wid_focus) {
@@ -2930,6 +3070,10 @@ Widp wid_get_focus(Widp w)
 static void wid_set_last_focus(Gamep g)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   Widp best {};
 
@@ -3096,6 +3240,10 @@ void wid_visible(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
+  if (! wid_safe()) {
+    return;
+  }
+
   if (unlikely(! w)) {
     return;
   }
@@ -3126,6 +3274,10 @@ bool wid_is_visible(Widp w)
 void wid_hide(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
+
+  if (! wid_safe()) {
+    return;
+  }
 
   if (unlikely(! w)) {
     return;
@@ -3774,6 +3926,10 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
       // Toggle console on/off
       //
       wid_toggle_hidden(g, wid_console_window);
+
+      if (wid_console_window->visible) {
+        wid_console_raise(g);
+      }
     }
 
     //
@@ -5584,6 +5740,10 @@ void WID_LOG(Widp w, const char *fmt, ...)
 {
   va_list args;
 
+  if (! wid_safe()) {
+    return;
+  }
+
   verify(MTYPE_WID, w);
 
   va_start(args, fmt);
@@ -5594,6 +5754,10 @@ void WID_LOG(Widp w, const char *fmt, ...)
 void WID_DBG(Widp w, const char *fmt, ...)
 {
   va_list args;
+
+  if (! wid_safe()) {
+    return;
+  }
 
   verify(MTYPE_WID, w);
 

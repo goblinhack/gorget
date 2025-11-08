@@ -303,7 +303,6 @@ static void err_(const char *fmt, va_list args)
     if (MY_STDERR != stderr) {
       putf(MY_STDERR, buf);
     }
-    putf(stderr, buf);
 
     if (MY_STDERR != stdout) {
       putf(MY_STDOUT, buf);
