@@ -24,6 +24,15 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
   const auto dx  = MAP_WORLD_SCALE * LEVEL_SCALE;
   const auto dy  = MAP_WORLD_SCALE * LEVEL_SCALE;
 
+  //
+  // The level passed in here could be the level select level, so always look
+  // at the player
+  //
+  auto player = thing_player(g);
+  if (! player) {
+    return;
+  }
+
   int w, h;
   fbo_get_size(g, fbo, w, h);
   gl_enter_2d_mode(g, w, h);
@@ -58,7 +67,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
             c = YELLOW;
           }
 
-          if (level_over == l) {
+          if (level_over->level_num == player->level_num) {
             c = CYAN;
           }
         } else {
@@ -69,7 +78,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
       }
 
       auto X   = x;
-      auto Y   = LEVELS_DOWN - y - 1;
+      auto Y   = y;
       auto tlx = X * dx;
       auto tly = Y * dy;
       auto brx = tlx + dx;
@@ -77,6 +86,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
 
       tlx += 2;
       bry -= 2;
+
       blit(solid_tex_id, tlx, tly, brx, bry, c);
     }
   }
@@ -106,10 +116,22 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
 
     glPushMatrix();
     {
-      glTranslatef(0, h / 2, 0);
-      glRotatef(-45.0f, 0.0f, 0.0f, 1.0f);
-      float scale = sqrtf(2);
-      blit_fbo(g, FBO_MINIMAP_WORLD, 0, 0, (int) ((float) w / scale), (int) ((float) h / scale));
+      //
+      // Center the map then rotate it
+      //
+      float ox = w / 2;
+      float oy = h / 2;
+      glTranslatef(ox, oy, 0);
+      glRotatef((float) -135, 0.0f, 0.0f, 1.0f);
+      glTranslatef(-ox, -oy, 0);
+
+      //
+      // Compensate for the extra size due to rotation
+      //
+      // As we map this into a widget that is composed of text chars, it ends up slightly vertically stretched
+      //
+      int shrink = w / 6;
+      blit_fbo(g, FBO_MINIMAP_WORLD, 0 + shrink, 0 + shrink, w - shrink, h - shrink);
     }
     glPopMatrix();
   }
