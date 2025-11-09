@@ -132,3 +132,25 @@ FILE *redirect_stderr(void)
 
   return g_log_stderr;
 }
+
+//
+// Close the per thread file handle
+//
+void close_stdout(void)
+{
+  if (g_log_stdout && (g_log_stdout != stdout)) {
+    fclose(g_log_stdout);
+    g_log_stdout = nullptr;
+  }
+}
+
+//
+// Close the per thread file handle
+//
+void close_stderr(void)
+{
+  if (g_log_stderr && (g_log_stderr != stderr)) {
+    fclose(g_log_stderr);
+    g_log_stderr = nullptr;
+  }
+}

@@ -4613,69 +4613,74 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   redirect_stdout();
   redirect_stderr();
 
-  auto v = game_levels_get(g);
-  if (! v) {
-    if (g_level_opt.level_name != "") {
-      ERR("No levels generate for level %s", g_level_opt.level_name.c_str());
-    } else {
-      ERR("No levels generate for level num %u", level_num);
+  do {
+    auto v = game_levels_get(g);
+    if (! v) {
+      if (g_level_opt.level_name != "") {
+        ERR("No levels generate for level %s", g_level_opt.level_name.c_str());
+      } else {
+        ERR("No levels generate for level num %u", level_num);
+      }
+      break;
     }
-    return;
-  }
 
-  LevelGen *l;
+    LevelGen *l;
 
-  if (level_gen_is_special_level(g, v, level_num)) {
-    //
-    // Fixed level of some kind
-    //
-    l = level_gen_new_class(g, level_num);
-  } else {
-    //
-    // Procedurally generated levels
-    //
-    l = level_gen_create_proc_gen_level(g, v, level_num);
-  }
-
-  //
-  // Check it was created
-  //
-  if (! l) {
-    if (g_level_opt.level_name != "") {
-      ERR("No level generated for level %s", g_level_opt.level_name.c_str());
+    if (level_gen_is_special_level(g, v, level_num)) {
+      //
+      // Fixed level of some kind
+      //
+      l = level_gen_new_class(g, level_num);
     } else {
-      ERR("No level generated for level num %u", level_num);
+      //
+      // Procedurally generated levels
+      //
+      l = level_gen_create_proc_gen_level(g, v, level_num);
     }
-    return;
-  }
 
-  //
-  // Populate the map with things from the level created
-  //
-  TRACE_NO_INDENT();
-  if (! level_gen_populate_for_fixed_or_proc_gen_level(g, l)) {
-    if (g_level_opt.level_name != "") {
-      ERR("No level created for level %s", g_level_opt.level_name.c_str());
-    } else {
-      ERR("No level created for level num %u", level_num);
+    //
+    // Check it was created
+    //
+    if (! l) {
+      if (g_level_opt.level_name != "") {
+        ERR("No level generated for level %s", g_level_opt.level_name.c_str());
+      } else {
+        ERR("No level generated for level num %u", level_num);
+      }
+      break;
     }
-    return;
-  }
 
-  //
-  // Final check it worked
-  //
-  levels_generated[ level_num ] = l;
-
-  TRACE_NO_INDENT();
-  auto level = game_level_get(g, v, level_num);
-  if (! level) {
-    if (g_level_opt.level_name != "") {
-      ERR("No level populated for level %s", g_level_opt.level_name.c_str());
-    } else {
-      ERR("No level populated for level num %u", level_num);
+    //
+    // Populate the map with things from the level created
+    //
+    TRACE_NO_INDENT();
+    if (! level_gen_populate_for_fixed_or_proc_gen_level(g, l)) {
+      if (g_level_opt.level_name != "") {
+        ERR("No level created for level %s", g_level_opt.level_name.c_str());
+      } else {
+        ERR("No level created for level num %u", level_num);
+      }
+      break;
     }
-  }
+
+    //
+    // Final check it worked
+    //
+    levels_generated[ level_num ] = l;
+
+    TRACE_NO_INDENT();
+    auto level = game_level_get(g, v, level_num);
+    if (! level) {
+      if (g_level_opt.level_name != "") {
+        ERR("No level populated for level %s", g_level_opt.level_name.c_str());
+      } else {
+        ERR("No level populated for level num %u", level_num);
+      }
+    }
+  } while (false);
+
+  close_stdout();
+  close_stderr();
 }
 
 //

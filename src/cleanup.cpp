@@ -28,8 +28,12 @@
 //
 void cleanup(void)
 {
-  LOG("Cleanup called");
+  LOG("Cleanup, thread %d called, g_thread_id", g_thread_id);
   TRACE_AND_INDENT();
+
+  if (g_thread_id != -1) {
+    return;
+  }
 
   if (g_quitting) {
     LOG("Quitting, nested");
@@ -117,4 +121,7 @@ void cleanup(void)
 
   ptrcheck_leak_print();
   ptrcheck_fini();
+
+  close_stdout();
+  close_stderr();
 }

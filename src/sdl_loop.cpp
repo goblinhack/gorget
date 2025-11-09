@@ -34,6 +34,7 @@ void sdl_loop(Gamep g)
   int       frames      = 0;
 
   sdl_mouse_center(g);
+
   SDL_SetEventFilter(sdl_filter_events, nullptr);
 
   //

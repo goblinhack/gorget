@@ -198,9 +198,10 @@ uint8_t sdl_display_init(Gamep g)
     video_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
   }
 
-  if (g_opt_do_level_select_gen || g_opt_do_room_gen || g_opt_do_level_gen) {
-    video_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_ALWAYS_ON_TOP;
-  }
+  LOG("SDL: Set SDL_WINDOW_INPUT_FOCUS");
+  video_flags |= SDL_WINDOW_INPUT_FOCUS;
+  LOG("SDL: Set SDL_WINDOW_ALWAYS_ON_TOP");
+  video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
 
   LOG("SDL: Create window size %ux%u", video_width, video_height);
   sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
@@ -238,34 +239,33 @@ uint8_t sdl_display_init(Gamep g)
 
   SDL_ClearError();
 
-  //
-  // Clear the screen, both buffers
-  //
-  glcolor(WHITE);
-  glClearColor(0, 0, 0, 0);
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  //
-  // Do we really need to do this? it takes a small bit of time.
-  //
-  if (0) {
-    SDL_GL_SwapWindow(sdl.window);
-    glClear(GL_COLOR_BUFFER_BIT);
-    SDL_GL_SwapWindow(sdl.window);
-  }
-
   SDL_SetWindowTitle(sdl.window, "gorget");
+  SDL_SetWindowInputFocus(sdl.window);
 
   //
   // Ensure the window is always in front.
   //
   SDL_RaiseWindow(sdl.window);
-  SDL_SetWindowInputFocus(sdl.window);
-  // SDL_OnWindowFocusLost
 
   LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
   LOG("SDL: OpenGL Renderer : %s", glGetString(GL_RENDERER));
   LOG("SDL: OpenGL Version  : %s", glGetString(GL_VERSION));
+
+  //
+  // Do we really need to do this? it takes a small bit of time.
+  //
+  if (0) {
+    //
+    // Clear the screen, both buffers
+    //
+    glcolor(WHITE);
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    SDL_GL_SwapWindow(sdl.window);
+    glClear(GL_COLOR_BUFFER_BIT);
+    SDL_GL_SwapWindow(sdl.window);
+  }
 
   IF_DEBUG { DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS)); }
 

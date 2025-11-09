@@ -10,8 +10,6 @@
 
 #include <string>
 
-FILE       *redirect_stderr(void);
-FILE       *redirect_stdout(void);
 std::string log_dir_create(void);
 void        BOTCON_NEW_LINE(void);
 void        BOTCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
@@ -34,6 +32,10 @@ void        CLEANUP_ERR(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        CLEANUP_OK(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        DYING(bool clean, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
+FILE *redirect_stderr(void);
+FILE *redirect_stdout(void);
+void  close_stderr(void);
+void  close_stdout(void);
 #define MY_STDERR redirect_stderr()
 #define MY_STDOUT redirect_stdout()
 
