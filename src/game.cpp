@@ -488,8 +488,9 @@ void game_fini(Gamep g)
   g->fini();
 
   TRACE_NO_INDENT();
-  delete g;
   oldptr(MTYPE_GAME, g);
+  delete g;
+  g    = NULL;
   game = NULL;
 }
 
