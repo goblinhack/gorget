@@ -1056,6 +1056,11 @@ void Game::handle_game_request_to_remake_ui(void)
   TRACE_NO_INDENT();
 
   auto g = this;
+
+  if (! game_request_to_remake_ui_get(g)) {
+    return;
+  }
+
   auto v = game_levels_get(g);
 
   switch (state) {
@@ -1066,11 +1071,9 @@ void Game::handle_game_request_to_remake_ui(void)
     case STATE_PLAYING :
     case STATE_INVENTORY :
       if (v) {
-        if (game_request_to_remake_ui_get(game)) {
-          wid_leftbar_init(g);
-          wid_rightbar_init(g);
-          wid_actionbar_init(g);
-        }
+        wid_leftbar_init(g);
+        wid_rightbar_init(g);
+        wid_actionbar_init(g);
       }
       break;
     case STATE_ITEM_MENU :         break;
@@ -1100,45 +1103,47 @@ void Game::tick(void)
 
   auto g = this;
   auto v = game_levels_get(g);
+  if (v) {
+    auto l = game_level_get(g, v);
 
-  switch (state) {
-    case STATE_INIT :      break;
-    case STATE_MAIN_MENU : break;
-    case STATE_QUITTING :  break;
-    case STATE_DEAD_MENU :
-    case STATE_PLAYING :
-      if (v) {
-        auto l = game_level_get(g, v);
+    switch (state) {
+      case STATE_INIT :      break;
+      case STATE_MAIN_MENU : break;
+      case STATE_QUITTING :  break;
+      case STATE_DEAD_MENU :
+      case STATE_PLAYING :
         if (l) {
           level_tick(g, v, l);
-
-          //
-          // Fixed frame counter, 100 per second
-          //
-          static uint32_t level_ts_begin;
-          static uint32_t level_ts_now;
-
-          if (unlikely(! level_ts_begin)) {
-            level_ts_begin = time_ms();
-          }
-
-          level_ts_now = time_ms();
-          v->frame += level_ts_now - level_ts_begin;
-          level_ts_begin = level_ts_now;
         }
+        break;
+      case STATE_MOVE_WARNING_MENU : break;
+      case STATE_KEYBOARD_MENU :     break;
+      case STATE_LOAD_MENU :         break;
+      case STATE_LOADED :            break;
+      case STATE_SAVE_MENU :         break;
+      case STATE_QUIT_MENU :         break;
+      case STATE_INVENTORY :         break;
+      case STATE_ITEM_MENU :         break;
+      case STATE_GENERATING :        break;
+      case STATE_GENERATED :         break;
+      case GAME_STATE_ENUM_MAX :     break;
+    }
+
+    if (l) {
+      //
+      // Fixed frame counter, 100 per second
+      //
+      static uint32_t level_ts_begin;
+      static uint32_t level_ts_now;
+
+      if (unlikely(! level_ts_begin)) {
+        level_ts_begin = time_ms();
       }
-      break;
-    case STATE_MOVE_WARNING_MENU : break;
-    case STATE_KEYBOARD_MENU :     break;
-    case STATE_LOAD_MENU :         break;
-    case STATE_LOADED :            break;
-    case STATE_SAVE_MENU :         break;
-    case STATE_QUIT_MENU :         break;
-    case STATE_INVENTORY :         break;
-    case STATE_ITEM_MENU :         break;
-    case STATE_GENERATING :        break;
-    case STATE_GENERATED :         break;
-    case GAME_STATE_ENUM_MAX :     break;
+
+      level_ts_now = time_ms();
+      v->frame += level_ts_now - level_ts_begin;
+      level_ts_begin = level_ts_now;
+    }
   }
 
   handle_game_request_to_remake_ui();

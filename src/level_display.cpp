@@ -335,6 +335,7 @@ void level_blit(Gamep g)
     glClear(GL_COLOR_BUFFER_BIT);
     glcolor(WHITE);
 
+    glBlendFunc(GL_ONE, GL_ZERO);
     blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
     blit_fbo_unbind();
   } else {
@@ -375,10 +376,13 @@ void level_blit(Gamep g)
     blit_fbo_unbind();
   }
 
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  //
+  // Combine the FBOs into the final map
+  //
   blit_fbo_bind(FBO_FINAL);
-  blit_init();
+  glcolor(WHITE);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   blit_fbo(g, FBO_MAP_BG_MERGED);
   blit_fbo(g, FBO_MAP_FG_MERGED);
-  blit_flush();
+  blit_fbo_unbind();
 }

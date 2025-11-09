@@ -22,20 +22,28 @@ void sdl_display(Gamep g)
   }
 
   blit_fbo_bind(FBO_FINAL);
-  glClear(GL_COLOR_BUFFER_BIT);
-  glcolor(WHITE);
+  {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glcolor(WHITE);
+    glBlendFunc(GL_ONE, GL_ZERO);
+  }
+  blit_fbo_unbind();
 
   //
-  // Blit the game map.
+  // Blit the game map to FBOs
   //
   level_blit(g);
 
-  //
-  // Blit the widgets
-  //
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  blit_fbo(g, FBO_WID);
+  blit_fbo_bind(FBO_FINAL);
+  {
+    //
+    // Blit the widgets
+    //
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    blit_fbo(g, FBO_WID);
+  }
   blit_fbo_unbind();
+
   glBlendFunc(GL_ONE, GL_ZERO);
   blit_fbo(g, FBO_FINAL);
 
@@ -235,14 +243,14 @@ uint8_t sdl_display_init(Gamep g)
   //
   glcolor(WHITE);
   glClearColor(0, 0, 0, 0);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
 
   //
   // Do we really need to do this? it takes a small bit of time.
   //
   if (0) {
     SDL_GL_SwapWindow(sdl.window);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     SDL_GL_SwapWindow(sdl.window);
   }
 
