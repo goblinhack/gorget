@@ -59,6 +59,8 @@ FILE *redirect_stdout(void)
     // Last resort
     //
     if (! g_log_stdout) {
+      fprintf(stderr, "Failed to create stdout log file \"%s\" for thread %d, error: %s\n", out.c_str(), g_thread_id,
+              strerror(errno));
       g_log_stdout = stdout;
     }
   }
@@ -119,6 +121,8 @@ FILE *redirect_stderr(void)
     // Last resort
     //
     if (! g_log_stderr) {
+      fprintf(stderr, "Failed to create stderr log file \"%s\" for thread %d, error: %s\n", out.c_str(), g_thread_id,
+              strerror(errno));
       g_log_stderr = stderr;
     }
   }

@@ -52,6 +52,10 @@ void log_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
+  if (MY_STDOUT == stdout) {
+    return;
+  }
+
   char buf[ MAXLONGSTR ];
   buf[ 0 ] = '\0';
   int len  = 0;

@@ -4610,13 +4610,9 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   // We need to create the log files now, even if empty, as if we get a crash we will
   // not be able to call fopen during the segv signal
   //
-  TRACE_NO_INDENT();
   redirect_stdout();
-
-  TRACE_NO_INDENT();
   redirect_stderr();
 
-  TRACE_NO_INDENT();
   auto v = game_levels_get(g);
   if (! v) {
     if (g_level_opt.level_name != "") {
@@ -4629,7 +4625,6 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
 
   LevelGen *l;
 
-  TRACE_NO_INDENT();
   if (level_gen_is_special_level(g, v, level_num)) {
     //
     // Fixed level of some kind
