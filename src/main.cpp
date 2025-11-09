@@ -396,6 +396,10 @@ int main(int argc, char *argv[])
     SDL_GL_SetSwapInterval(0);
   }
 
+  if (! wid_init()) {
+    ERR("Wid init");
+  }
+
   //
   // Colors
   //
@@ -410,18 +414,6 @@ int main(int argc, char *argv[])
     }
     if (! font_init()) {
       ERR("Font init");
-    }
-  }
-
-  if (! skip_gfx_and_audio) {
-    TRACE_NO_INDENT();
-    if (g_opt_debug1) {
-      CON("Load widgets");
-    } else {
-      LOG("Load widgets");
-    }
-    if (! wid_init()) {
-      ERR("Wid init");
     }
   }
 
