@@ -1,12 +1,20 @@
+bugs
+----
+auto descend
+select zoom on level select, then enter level - zoom is wrong
 falling does not stop burning
 show the damage from falling in topcon
-center minimap
+need to ask if you want to kick over a brazier
+center minimap pixel
 minimap always light certain tiles
 popup over minimaps?
-select zoom on level select, then enter level - zoom is wrong
-chasm see through
-slow fireball
+red level locked graphic looks bad
 damaged door visuals
+chasm see through
+
+features
+--------
+slow fireball
 mobs generating monsters
 monst AI
 ghosts and walls
