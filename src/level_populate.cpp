@@ -176,6 +176,11 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           need_floor = true;
 
           //
+          // Every floor except the first needs an entrance
+          //
+          need_entrance = true;
+
+          //
           // First level. Usually 0 but can be a specified level.
           //
           if ((g_level_opt.level_num == l->level_num) && g_level_opt.is_set) {
@@ -187,15 +192,8 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
             //
             // This is the default start level
             //
-            tp = tp_player;
-          }
-
-          //
-          // Every floor except the first needs an entrance
-          //
-          if (g_level_opt.level_num) {
-            need_floor    = true;
-            need_entrance = true;
+            tp            = tp_player;
+            need_entrance = false;
           }
           break;
         case CHARMAP_EXIT :

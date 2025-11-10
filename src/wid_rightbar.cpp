@@ -148,7 +148,6 @@ void wid_rightbar_fini(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  LOG("wid_rightbar_fini");
   delete wid_rightbar;
   wid_rightbar = nullptr;
 }

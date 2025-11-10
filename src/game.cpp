@@ -999,20 +999,21 @@ void Game::state_change(GameState new_state, const std::string &why)
           wid_botcon_init(g);
           game_map_zoom_update(g);
           break;
+        case STATE_LOAD_MENU :
+        case STATE_SAVE_MENU :
+        case STATE_KEYBOARD_MENU :
         case STATE_MAIN_MENU :
+        case STATE_INVENTORY :     break;
+        case STATE_ITEM_MENU :
+          break;
           wid_leftbar_init(g);
           wid_rightbar_init(g);
           wid_actionbar_init(g);
           break;
         case STATE_DEAD_MENU :
-        case STATE_KEYBOARD_MENU :
         case STATE_PLAYING :
-        case STATE_LOAD_MENU :
-        case STATE_SAVE_MENU :
-        case STATE_INVENTORY :     break;
-        case STATE_ITEM_MENU :     break;
-        case STATE_GENERATING :    break;
-        case STATE_GENERATED :     break;
+        case STATE_GENERATING : break;
+        case STATE_GENERATED :  break;
         case STATE_QUIT_MENU :
           // newline
           wid_actionbar_init(g);

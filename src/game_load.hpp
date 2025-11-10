@@ -551,6 +551,7 @@ static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
                   } else {
                     game->load(slot);
                     wid_load_destroy(game);
+                    game_state_reset(game, "load cancel");
                   }
                   return true;
                 }
@@ -561,6 +562,7 @@ static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
                   TRACE_NO_INDENT();
                   LOG("Load game cancelled");
                   wid_load_destroy(game);
+                  game_state_reset(game, "load cancel");
                   return true;
                 }
             }
@@ -611,6 +613,7 @@ static bool wid_load_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
 
   wid_load_destroy(game);
+  game_state_reset(g, "load cancel");
   return true;
 }
 

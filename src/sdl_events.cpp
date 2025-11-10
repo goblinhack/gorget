@@ -247,7 +247,6 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 #endif
 
   SDL_Keysym *key = &event->key.keysym;
-  LOG("SDL: Event");
 
   wid_mouse_two_clicks = false;
 

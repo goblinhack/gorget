@@ -511,7 +511,7 @@ bool wid_actionbar_create_window(Gamep g)
     spoint tl = spoint(x_at, 0);
     spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_down(g, w, wid_actionbar_descend);
+    wid_set_on_mouse_up(g, w, wid_actionbar_descend);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_descend_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_descend_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g)) + UI_HIGHLIGHT_FMT_STR ""
@@ -528,7 +528,7 @@ bool wid_actionbar_create_window(Gamep g)
     spoint tl = spoint(x_at, 0);
     spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_down(g, w, wid_actionbar_ascend);
+    wid_set_on_mouse_up(g, w, wid_actionbar_ascend);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_ascend_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_ascend_over_end);
     wid_set_text(w,
@@ -545,7 +545,7 @@ bool wid_actionbar_create_window(Gamep g)
     spoint tl = spoint(x_at, 0);
     spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_down(g, w, wid_actionbar_wait);
+    wid_set_on_mouse_up(g, w, wid_actionbar_wait);
     wid_set_on_mouse_held(g, w, wid_actionbar_repeat_wait);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_wait_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_wait_over_end);
@@ -562,7 +562,7 @@ bool wid_actionbar_create_window(Gamep g)
     spoint tl = spoint(x_at, 0);
     spoint br = spoint(x_at + option_width - 1, 0);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_down(g, w, wid_actionbar_inventory);
+    wid_set_on_mouse_up(g, w, wid_actionbar_inventory);
     wid_set_on_mouse_over_begin(g, w, wid_actionbar_inventory_over_begin);
     wid_set_on_mouse_over_end(g, w, wid_actionbar_inventory_over_end);
     wid_set_text(w,
