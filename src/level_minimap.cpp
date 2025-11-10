@@ -39,7 +39,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
 
   blit_fbo_bind(fbo);
   glBlendFunc(GL_ONE, GL_ZERO);
-  glClear(GL_COLOR_BUFFER_BIT);
+  gl_clear();
   blit_init();
 
   blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, GRAY5);
@@ -108,7 +108,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
   blit_fbo_bind(fbo);
   {
     glBlendFunc(GL_ONE, GL_ZERO);
-    glClear(GL_COLOR_BUFFER_BIT);
+    gl_clear();
 
     blit_init();
     blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, GRAY5);
@@ -157,7 +157,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
 
   blit_fbo_bind(fbo);
   glBlendFunc(GL_ONE, GL_ZERO);
-  glClear(GL_COLOR_BUFFER_BIT);
+  gl_clear();
   blit_init();
 
   for (auto x = 0; x < MAP_WIDTH; x++) {

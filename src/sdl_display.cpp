@@ -23,8 +23,7 @@ void sdl_display(Gamep g)
 
   blit_fbo_bind(FBO_FINAL);
   {
-    glClear(GL_COLOR_BUFFER_BIT);
-    glcolor(WHITE);
+    gl_clear();
     glBlendFunc(GL_ONE, GL_ZERO);
   }
   blit_fbo_unbind();
@@ -258,12 +257,9 @@ uint8_t sdl_display_init(Gamep g)
     //
     // Clear the screen, both buffers
     //
-    glcolor(WHITE);
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
-
+    gl_clear();
     SDL_GL_SwapWindow(sdl.window);
-    glClear(GL_COLOR_BUFFER_BIT);
+    gl_clear();
     SDL_GL_SwapWindow(sdl.window);
   }
 

@@ -293,20 +293,23 @@ void blit_flush_triangle_fan(float *begin, float *end);
 void blit_flush_triangle_fan(void);
 void blit_init(void);
 void fbo_get_size(Gamep, int fbo, int &w, int &h);
+
 void gl_blitline(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
-void gl_blitquad(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
 void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint br);
+void gl_blitquad(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
 void gl_blitsquare(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
 void gl_enter_2_5d_mode(Gamep);
 void gl_enter_2d_mode(Gamep, int, int);
 void gl_enter_2d_mode(Gamep);
 void gl_error(GLenum err);
 void gl_ext_init(void);
-void gl_init_2d_mode(Gamep);
 void gl_fini_2d_mode(Gamep);
-void gl_init_fbo(Gamep, int fbo = -1);
 void gl_fini_fbo(Gamep);
+void gl_init_2d_mode(Gamep);
+void gl_init_fbo(Gamep, int fbo = -1);
 void gl_leave_2d_mode(Gamep);
+void gl_clear(void);
+
 void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
              GLushort left, GLushort top, GLushort right, GLushort bottom, uint8_t r1, uint8_t g1, uint8_t b1,
              uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,

@@ -213,6 +213,16 @@ void gl_leave_2d_mode(Gamep g)
   GL_ERROR_CHECK();
 }
 
+void gl_clear(void)
+{
+  TRACE_NO_INDENT();
+
+  glcolor(WHITE);
+  glClearColor(0, 0, 0, 0);
+  // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
+}
+
 static void gl_init_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
                          GLuint tex_height)
 {
@@ -468,8 +478,7 @@ void gl_init_fbo(Gamep g, int fbo)
     if (0) {
       gl_enter_2d_mode(g, tex_width, tex_height);
       blit_fbo_bind(i);
-      glClearColor(0, 0, 0, 0);
-      glClear(GL_COLOR_BUFFER_BIT);
+      gl_clear();
       blit_fbo_unbind();
     }
 

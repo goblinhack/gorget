@@ -129,7 +129,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
   glcolor(WHITE);
 
   blit_fbo_bind(fbo);
-  glClear(GL_COLOR_BUFFER_BIT);
+  gl_clear();
   blit_init();
 
   //
@@ -332,8 +332,7 @@ void level_blit(Gamep g)
     // No lighting for level selection
     //
     blit_fbo_bind(FBO_MAP_FG_MERGED);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glcolor(WHITE);
+    gl_clear();
 
     glBlendFunc(GL_ONE, GL_ZERO);
     blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
@@ -343,8 +342,7 @@ void level_blit(Gamep g)
     // Blit the dark background tiles that have been seen previously
     //
     blit_fbo_bind(FBO_MAP_BG_MERGED);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glcolor(WHITE);
+    gl_clear();
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     blit_fbo(g, FBO_MAP_BG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
@@ -356,8 +354,7 @@ void level_blit(Gamep g)
     // Blit the light as a mask
     //
     blit_fbo_bind(FBO_MAP_FG_MERGED);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glcolor(WHITE);
+    gl_clear();
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     level_blit_light(g, v, l, WHITE);
