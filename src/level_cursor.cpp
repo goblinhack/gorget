@@ -42,9 +42,10 @@ bool level_cursor_is_valid(Gamep g, Levelsp v)
 //
 // Create the cursor path, avoiding things like lava
 //
-// For the first pass, restrict to tiles we have walked on
-// For the first pass, any tiles will do, but no hazards
-// For the last pass, any tiles will do as long as not consecutive hazard tiles.
+// For the 1st pass, restrict to tiles we have walked on
+// For the 2nd pass, any tiles will do, but no hazards
+// For the 3rd pass, any tiles will do as long as not consecutive hazard tiles.
+// For the 4th pass, any tiles will do as long as not walls
 //
 static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levelsp v, Levelp l, Thingp player,
                                                                  spoint start, spoint end, int attempt)
@@ -53,6 +54,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
 
   static std::vector< spoint > empty;
 
+  bool   prev_tile_was_hazard = {};
   Dmap   dmap {};
   spoint dmap_start = start;
   spoint dmap_end   = end;
@@ -101,100 +103,31 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   maxx = MAP_WIDTH - 1;
   maxy = MAP_HEIGHT - 1;
 
-  //
-  // If standing on a hazard, then plot a course that allows travel over hazards.
-  //
-  if (level_is_cursor_path_hazard(g, v, l, player->at)) {
-    //
-    // Just map the shortest path outta here
-    //
-    for (auto y = miny; y < maxy; y++) {
-      for (auto x = minx; x < maxx; x++) {
-        spoint p(x, y);
-
-        //
-        // But we still can't walk through walls to get out of the hazard
-        //
-        if (level_is_obs_to_cursor_path(g, v, l, p)) {
-          dmap.val[ x ][ y ] = DMAP_IS_WALL;
-        } else {
-          dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
-        }
-      }
-    }
-  } else if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
-    //
-    // Here the cursor is over a hazard. Plot a course that allows travel via other hazards.
-    //
-    bool                               got_one = false;
-    std::initializer_list< ThingFlag > init    = {is_lava, is_chasm};
-
-    for (auto i : init) {
-      if (level_flag(g, v, l, i, spoint(v->cursor_at.x, v->cursor_at.y))) {
-        got_one = true;
-
-        //
-        // If the cursor is on a hazard then allow creating a path via hazards.
-        //
-        // However, be careful. If we click on lava, and the shortest path
-        // to that lava is via a chasm, then we do not want to jump into the
-        // chasm.
-        //
-        for (auto y = miny; y < maxy; y++) {
-          for (auto x = minx; x < maxx; x++) {
-            spoint p(x, y);
-
-            //
-            // But we still can't walk through walls to get to the hazard
-            //
-            if (level_is_obs_to_cursor_path(g, v, l, p)) {
-              dmap.val[ x ][ y ] = DMAP_IS_WALL;
-              continue;
-            }
-
-            if (level_is_cursor_path_hazard(g, v, l, p)) {
-              if (! level_flag(g, v, l, i, p)) {
-                dmap.val[ x ][ y ] = DMAP_IS_WALL;
-                continue;
-              }
-              dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
-              continue;
-            }
-
-            dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
-          }
-        }
-      }
-    }
-
-    //
-    // There is a hazard on the cursor path. Default to the normal path to play safe
-    // and avoid more hazards.
-    //
-    if (! got_one) {
+  switch (attempt) {
+    case 4 :
+      //
+      // For the 4th pass, any tiles will do as long as not walls
+      //
       for (auto y = miny; y < maxy; y++) {
         for (auto x = minx; x < maxx; x++) {
           spoint p(x, y);
 
-          if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+          if (level_is_obs_to_cursor_path(g, v, l, p)) {
             dmap.val[ x ][ y ] = DMAP_IS_WALL;
           } else {
             dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
           }
         }
       }
-    }
-  } else {
-    //
-    // Normal path. Avoid hazards.
-    //
-    bool prev_tile_was_hazard = {};
+      break;
+    case 3 :
+      //
+      // For the 3rd pass, any tiles will do as long as not consecutive hazard tiles.
+      //
+      for (auto y = miny; y < maxy; y++) {
+        for (auto x = minx; x < maxx; x++) {
+          spoint p(x, y);
 
-    for (auto y = miny; y < maxy; y++) {
-      for (auto x = minx; x < maxx; x++) {
-        spoint p(x, y);
-
-        if (attempt == 3) {
           //
           // Any tile will do as long as not consecutive hazard tiles.
           //
@@ -216,18 +149,112 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
             //
             prev_tile_was_hazard = level_is_cursor_path_hazard(g, v, l, p);
           }
-        } else {
-          //
-          // Avoid hazards
-          //
-          if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
-            dmap.val[ x ][ y ] = DMAP_IS_WALL;
-          } else {
-            dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+        }
+      }
+      break;
+    case 2 :
+    case 1 :
+      //
+      // Common code for pass 1 and 2
+      //
+      if (level_is_cursor_path_hazard(g, v, l, player->at)) {
+        //
+        // If standing on a hazard, then plot a course that allows travel over hazards.
+        // Any path except through walls.
+        //
+        for (auto y = miny; y < maxy; y++) {
+          for (auto x = minx; x < maxx; x++) {
+            spoint p(x, y);
+
+            if (level_is_obs_to_cursor_path(g, v, l, p)) {
+              dmap.val[ x ][ y ] = DMAP_IS_WALL;
+            } else {
+              dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+            }
+          }
+        }
+      } else if (level_is_cursor_path_hazard(g, v, l, v->cursor_at)) {
+        //
+        // Here the cursor is over a hazard. Plot a course that allows travel via other hazards.
+        //
+        bool                               got_one = false;
+        std::initializer_list< ThingFlag > init    = {is_lava, is_chasm, is_water};
+
+        for (auto i : init) {
+          if (level_flag(g, v, l, i, spoint(v->cursor_at.x, v->cursor_at.y))) {
+            got_one = true;
+
+            //
+            // If the cursor is on a hazard then allow creating a path via hazards.
+            //
+            // However, be careful. If we click on lava, and the shortest path
+            // to that lava is via a chasm, then we do not want to jump into the
+            // chasm.
+            //
+            for (auto y = miny; y < maxy; y++) {
+              for (auto x = minx; x < maxx; x++) {
+                spoint p(x, y);
+
+                //
+                // But we still can't walk through walls to get to the hazard
+                //
+                if (level_is_obs_to_cursor_path(g, v, l, p)) {
+                  dmap.val[ x ][ y ] = DMAP_IS_WALL;
+                  continue;
+                }
+
+                if (level_is_cursor_path_hazard(g, v, l, p)) {
+                  if (! level_flag(g, v, l, i, p)) {
+                    dmap.val[ x ][ y ] = DMAP_IS_WALL;
+                    continue;
+                  }
+                  dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+                  continue;
+                }
+
+                dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+              }
+            }
+          }
+        }
+
+        //
+        // There is a hazard on the cursor path. Default to the normal path to play safe
+        // and avoid more hazards.
+        //
+        if (! got_one) {
+          for (auto y = miny; y < maxy; y++) {
+            for (auto x = minx; x < maxx; x++) {
+              spoint p(x, y);
+
+              if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+                dmap.val[ x ][ y ] = DMAP_IS_WALL;
+              } else {
+                dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+              }
+            }
+          }
+        }
+      } else {
+        //
+        // Normal path. Avoid hazards.
+        //
+        for (auto y = miny; y < maxy; y++) {
+          for (auto x = minx; x < maxx; x++) {
+            spoint p(x, y);
+
+            //
+            // Avoid hazards
+            //
+            if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+              dmap.val[ x ][ y ] = DMAP_IS_WALL;
+            } else {
+              dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+            }
           }
         }
       }
-    }
+      break;
   }
 
   //
@@ -259,41 +286,6 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           dmap.val[ x ][ y ] = DMAP_IS_WALL;
           continue;
         }
-      }
-
-      //
-      // If the tile is really close then just use the shortest path else we can
-      // get things like:
-      //
-      // original path to X:
-      //
-      //     ..@
-      //   ..
-      //  X
-      //
-      // and the return path then looks odd, not taking the shortest path:
-      //
-      //   .
-      //  @ X
-      //
-      //
-      // when we really want:
-      //
-      //  @.X
-      //
-      if (distance(p, player->at) <= 2) {
-        //
-        // Shortcuts cannot go through walls
-        //
-        if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
-          dmap.val[ x ][ y ] = DMAP_IS_WALL;
-          continue;
-        }
-
-        //
-        // Allow the shortcut
-        //
-        continue;
       }
     }
   }
@@ -360,6 +352,9 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
 
   if (! best.size()) {
     best = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 3);
+    if (! best.size()) {
+      best = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 4);
+    }
   }
 
   return best;

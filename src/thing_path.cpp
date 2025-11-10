@@ -2,7 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 
 //
 // Shorten paths, but don't cut corners
@@ -14,6 +16,17 @@
 //
 void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &path)
 {
+  bool debug = false;
+
+  if (debug) {
+    printf("start (player %d,%d)\n", t->at.x, t->at.y);
+    for (auto p : path) {
+      printf("(%d,%d), ", p.x, p.y);
+    }
+    printf("\n");
+    printf("\n");
+  }
+
   //
   // Trim short paths
   //
@@ -104,12 +117,6 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
     }
   }
 
-  if (path.size()) {
-    if (path[ 0 ] == t->at) {
-      path.erase(path.begin());
-    }
-  }
-
   for (; /*ever*/;) {
     auto   modified = false;
     size_t i        = 0;
@@ -117,6 +124,13 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
     for (; /*ever*/;) {
       if (i + 2 >= path.size()) {
         break;
+      }
+
+      if (debug) {
+        for (auto p : path) {
+          printf("(%d,%d), ", p.x, p.y);
+        }
+        printf("\n");
       }
 
       auto p  = path[ i ];
@@ -193,5 +207,20 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
     if (! modified) {
       break;
     }
+  }
+
+  if (path.size()) {
+    if (path[ 0 ] == t->at) {
+      path.erase(path.begin());
+    }
+  }
+
+  if (debug) {
+    printf("final (player %d,%d)\n", t->at.x, t->at.y);
+    for (auto p : path) {
+      printf("(%d,%d), ", p.x, p.y);
+    }
+    printf("\n");
+    printf("\n");
   }
 }

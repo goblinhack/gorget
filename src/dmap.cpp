@@ -475,6 +475,8 @@ static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, cons
   std::vector< spoint >                                   out    = {};
   auto                                                    at     = start;
 
+  out.push_back(start);
+
   for (; /*ever*/;) {
     auto x = at.x;
     auto y = at.y;
