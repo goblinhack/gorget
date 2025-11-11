@@ -1,6 +1,6 @@
 bugs
 ----
-auto descend
+auto descend / need to handle jumping onto tile also
 select zoom on level select, then enter level - zoom is wrong
 falling does not stop burning
 show the damage from falling in topcon
@@ -10,6 +10,7 @@ minimap always light certain tiles
 popup over minimaps?
 red level locked graphic looks bad
 damaged door visuals
+bushes quiver when monster is behind?
 chasm see through
 
 features
@@ -23,7 +24,7 @@ kobalos need to steal items
 traps
 anti magic areas
 anti anti magic areas
-items hiding in bushes / bushes quiver when monster is behind?
+items hiding in bushes 
 ogyr (celtic)
 boulders that can crush
 door mimic

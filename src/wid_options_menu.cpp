@@ -55,7 +55,7 @@ static bool wid_options_menu_keyboard(Gamep g, Widp w, int x, int y, uint32_t bu
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy(g);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
   return true;
 }
 

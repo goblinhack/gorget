@@ -3955,7 +3955,7 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
       if (g_errored) {
         wid_console_raise(g);
       } else {
-        wid_cfg_keyboard_select(g);
+        wid_cfg_help_select(g);
       }
       break;
 

@@ -18,7 +18,7 @@ bool wid_leftbar_init(Gamep);
 bool wid_rightbar_init(Gamep);
 void wid_actionbar_fini(Gamep);
 void wid_cfg_gfx_select(Gamep);
-void wid_cfg_keyboard_select(Gamep);
+void wid_cfg_help_select(Gamep);
 void wid_cfg_mouse_select(Gamep);
 void wid_options_menu_select(Gamep);
 void wid_cfg_sound_select(Gamep);

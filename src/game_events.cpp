@@ -354,7 +354,7 @@ bool game_event_help(Gamep g)
     return false;
   }
 
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 
   return true;
 }

@@ -361,5 +361,5 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
   wid_update(g, wid_inventory_window);
 
-  game_state_change(g, STATE_INVENTORY, "inventory");
+  game_state_change(g, STATE_INVENTORY_MENU, "inventory");
 }

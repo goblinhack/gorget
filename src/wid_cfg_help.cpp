@@ -14,7 +14,7 @@
 #include "my_wids.hpp"
 
 static int       last_vert_scroll_offset = -1;
-static WidPopup *wid_cfg_keyboard_window;
+static WidPopup *wid_cfg_help_window;
 static bool      local_g_config_changed;
 
 static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
@@ -144,24 +144,24 @@ static void wid_cfg_check_for_conflicts(Gamep g, SDL_Keysym code)
   }
 }
 
-void wid_cfg_keyboard_destroy(Gamep g)
+void wid_cfg_help_destroy(Gamep g)
 {
   TRACE_NO_INDENT();
   local_g_config_changed = false;
 
-  if (! wid_cfg_keyboard_window) {
+  if (! wid_cfg_help_window) {
     return;
   }
 
-  auto w                  = wid_cfg_keyboard_window->wid_text_area->wid_vert_scroll;
+  auto w                  = wid_cfg_help_window->wid_text_area->wid_vert_scroll;
   last_vert_scroll_offset = wid_get_tl_y(w) - wid_get_tl_y(wid_get_parent(w));
 
-  delete wid_cfg_keyboard_window;
-  wid_cfg_keyboard_window = nullptr;
+  delete wid_cfg_help_window;
+  wid_cfg_help_window = nullptr;
   game_state_reset(g, "wid keyboard destroy");
 }
 
-static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_help_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   CON("Reload config");
@@ -169,7 +169,7 @@ static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t butt
     local_g_config_changed = false;
     game_load_config(g);
   }
-  wid_cfg_keyboard_destroy(g);
+  wid_cfg_help_destroy(g);
 
   if (game_levels_get(g)) {
     //
@@ -183,14 +183,14 @@ static bool wid_cfg_keyboard_cancel(Gamep g, Widp w, int x, int y, uint32_t butt
   return true;
 }
 
-static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_help_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
 
   CON("Save config for keyboard");
   game_save_config(g);
 
-  wid_cfg_keyboard_destroy(g);
+  wid_cfg_help_destroy(g);
 
   if (game_levels_get(g)) {
     //
@@ -204,10 +204,10 @@ static bool wid_cfg_keyboard_save(Gamep g, Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static bool wid_cfg_keyboard_back(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_help_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
-  wid_cfg_keyboard_destroy(g);
+  wid_cfg_help_destroy(g);
 
   if (game_levels_get(g)) {
     //
@@ -230,7 +230,7 @@ static void wid_cfg_key_move_left_set(Gamep g, SDL_Keysym code)
   game_key_move_left_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_move_left_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_move_right_set(Gamep g, SDL_Keysym code)
@@ -240,7 +240,7 @@ static void wid_cfg_key_move_right_set(Gamep g, SDL_Keysym code)
   game_key_move_right_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_move_right_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_move_up_set(Gamep g, SDL_Keysym code)
@@ -250,7 +250,7 @@ static void wid_cfg_key_move_up_set(Gamep g, SDL_Keysym code)
   game_key_move_up_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_move_up_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_move_down_set(Gamep g, SDL_Keysym code)
@@ -260,7 +260,7 @@ static void wid_cfg_key_move_down_set(Gamep g, SDL_Keysym code)
   game_key_move_down_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_move_down_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_wait_set(Gamep g, SDL_Keysym code)
@@ -270,7 +270,7 @@ static void wid_cfg_key_wait_set(Gamep g, SDL_Keysym code)
   game_key_wait_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_wait_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused1_set(Gamep g, SDL_Keysym code)
@@ -280,7 +280,7 @@ static void wid_cfg_key_unused1_set(Gamep g, SDL_Keysym code)
   game_key_unused1_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused1_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused2_set(Gamep g, SDL_Keysym code)
@@ -290,7 +290,7 @@ static void wid_cfg_key_unused2_set(Gamep g, SDL_Keysym code)
   game_key_unused2_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused2_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused3_set(Gamep g, SDL_Keysym code)
@@ -300,7 +300,7 @@ static void wid_cfg_key_unused3_set(Gamep g, SDL_Keysym code)
   game_key_unused3_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused3_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused4_set(Gamep g, SDL_Keysym code)
@@ -310,7 +310,7 @@ static void wid_cfg_key_unused4_set(Gamep g, SDL_Keysym code)
   game_key_unused4_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused4_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused5_set(Gamep g, SDL_Keysym code)
@@ -320,7 +320,7 @@ static void wid_cfg_key_unused5_set(Gamep g, SDL_Keysym code)
   game_key_unused5_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused5_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused6_set(Gamep g, SDL_Keysym code)
@@ -330,7 +330,7 @@ static void wid_cfg_key_unused6_set(Gamep g, SDL_Keysym code)
   game_key_unused6_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused6_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused7_set(Gamep g, SDL_Keysym code)
@@ -340,7 +340,7 @@ static void wid_cfg_key_unused7_set(Gamep g, SDL_Keysym code)
   game_key_unused7_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused7_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused8_set(Gamep g, SDL_Keysym code)
@@ -350,7 +350,7 @@ static void wid_cfg_key_unused8_set(Gamep g, SDL_Keysym code)
   game_key_unused8_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused8_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused9_set(Gamep g, SDL_Keysym code)
@@ -360,7 +360,7 @@ static void wid_cfg_key_unused9_set(Gamep g, SDL_Keysym code)
   game_key_unused9_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused9_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused10_set(Gamep g, SDL_Keysym code)
@@ -370,7 +370,7 @@ static void wid_cfg_key_unused10_set(Gamep g, SDL_Keysym code)
   game_key_unused10_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused10_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused11_set(Gamep g, SDL_Keysym code)
@@ -380,7 +380,7 @@ static void wid_cfg_key_unused11_set(Gamep g, SDL_Keysym code)
   game_key_unused11_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused11_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused12_set(Gamep g, SDL_Keysym code)
@@ -390,7 +390,7 @@ static void wid_cfg_key_unused12_set(Gamep g, SDL_Keysym code)
   game_key_unused12_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused12_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused13_set(Gamep g, SDL_Keysym code)
@@ -400,7 +400,7 @@ static void wid_cfg_key_unused13_set(Gamep g, SDL_Keysym code)
   game_key_unused13_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused13_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused14_set(Gamep g, SDL_Keysym code)
@@ -410,7 +410,7 @@ static void wid_cfg_key_unused14_set(Gamep g, SDL_Keysym code)
   game_key_unused14_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused14_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_unused15_set(Gamep g, SDL_Keysym code)
@@ -420,7 +420,7 @@ static void wid_cfg_key_unused15_set(Gamep g, SDL_Keysym code)
   game_key_unused15_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_unused15_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_inventory_set(Gamep g, SDL_Keysym code)
@@ -430,7 +430,7 @@ static void wid_cfg_key_inventory_set(Gamep g, SDL_Keysym code)
   game_key_inventory_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_inventory_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_jump_set(Gamep g, SDL_Keysym code)
@@ -440,7 +440,7 @@ static void wid_cfg_key_jump_set(Gamep g, SDL_Keysym code)
   game_key_jump_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_jump_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_ascend_set(Gamep g, SDL_Keysym code)
@@ -450,7 +450,7 @@ static void wid_cfg_key_ascend_set(Gamep g, SDL_Keysym code)
   game_key_ascend_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_ascend_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_descend_set(Gamep g, SDL_Keysym code)
@@ -460,7 +460,7 @@ static void wid_cfg_key_descend_set(Gamep g, SDL_Keysym code)
   game_key_descend_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_descend_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_zoom_set(Gamep g, SDL_Keysym code)
@@ -470,7 +470,7 @@ static void wid_cfg_key_zoom_set(Gamep g, SDL_Keysym code)
   game_key_zoom_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_zoom_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_save_set(Gamep g, SDL_Keysym code)
@@ -480,7 +480,7 @@ static void wid_cfg_key_save_set(Gamep g, SDL_Keysym code)
   game_key_save_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_save_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_load_set(Gamep g, SDL_Keysym code)
@@ -490,7 +490,7 @@ static void wid_cfg_key_load_set(Gamep g, SDL_Keysym code)
   game_key_load_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_load_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_help_set(Gamep g, SDL_Keysym code)
@@ -500,7 +500,7 @@ static void wid_cfg_key_help_set(Gamep g, SDL_Keysym code)
   game_key_help_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_help_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_console_set(Gamep g, SDL_Keysym code)
@@ -510,7 +510,7 @@ static void wid_cfg_key_console_set(Gamep g, SDL_Keysym code)
   game_key_console_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_console_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_quit_set(Gamep g, SDL_Keysym code)
@@ -520,7 +520,7 @@ static void wid_cfg_key_quit_set(Gamep g, SDL_Keysym code)
   game_key_quit_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_quit_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void wid_cfg_key_screenshot_set(Gamep g, SDL_Keysym code)
@@ -530,7 +530,7 @@ static void wid_cfg_key_screenshot_set(Gamep g, SDL_Keysym code)
   game_key_screenshot_set(g, none);
   wid_cfg_check_for_conflicts(g, code);
   game_key_screenshot_set(g, code);
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 }
 
 static void grab_key(Gamep g, const std::string which)
@@ -541,7 +541,7 @@ static void grab_key(Gamep g, const std::string which)
   local_g_config_changed = true;
 }
 
-static bool wid_cfg_keyboard_profile_arrow_keys(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_help_profile_arrow_keys(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   SDL_Keysym k {};
@@ -567,12 +567,12 @@ static bool wid_cfg_keyboard_profile_arrow_keys(Gamep g, Widp w, int x, int y, u
   wid_cfg_check_for_conflicts(g, k);
   game_key_move_right_set(g, k);
 
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 
   return true;
 }
 
-static bool wid_cfg_keyboard_profile_wasd(Gamep g, Widp w, int x, int y, uint32_t button)
+static bool wid_cfg_help_profile_wasd(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   SDL_Keysym k = {};
@@ -598,7 +598,7 @@ static bool wid_cfg_keyboard_profile_wasd(Gamep g, Widp w, int x, int y, uint32_
   wid_cfg_check_for_conflicts(g, k);
   game_key_move_right_set(g, k);
 
-  wid_cfg_keyboard_select(g);
+  wid_cfg_help_select(g);
 
   return true;
 }
@@ -882,7 +882,7 @@ static bool wid_cfg_key_screenshot(Gamep g, Widp w, int x, int y, uint32_t butto
   return true;
 }
 
-static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+static bool wid_cfg_help_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -905,7 +905,7 @@ static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *
               case 'B' :
               case SDLK_ESCAPE :
                 sound_play(g, "keypress");
-                wid_cfg_keyboard_cancel(g, nullptr, 0, 0, 0);
+                wid_cfg_help_cancel(g, nullptr, 0, 0, 0);
                 return true;
             }
           }
@@ -915,13 +915,13 @@ static bool wid_cfg_keyboard_key_down(Gamep g, Widp w, const struct SDL_Keysym *
   return false;
 }
 
-void wid_cfg_keyboard_select(Gamep g)
+void wid_cfg_help_select(Gamep g)
 {
   TRACE_NO_INDENT();
   wid_notice_destroy();
 
-  if (wid_cfg_keyboard_window) {
-    wid_cfg_keyboard_destroy(g);
+  if (wid_cfg_help_window) {
+    wid_cfg_help_destroy(g);
   }
 
   auto m = TERM_WIDTH / 2;
@@ -930,12 +930,12 @@ void wid_cfg_keyboard_select(Gamep g)
   spoint outer_br(m + TERM_WIDTH / 4, TERM_HEIGHT - 10);
   auto   width = outer_br.x - outer_tl.x;
 
-  wid_cfg_keyboard_window = new WidPopup(g, "Keyboard select", outer_tl, outer_br, nullptr, "", false, true);
+  wid_cfg_help_window = new WidPopup(g, "Keyboard select", outer_tl, outer_br, nullptr, "", false, true);
 
   {
     TRACE_NO_INDENT();
-    Widp w = wid_cfg_keyboard_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_cfg_keyboard_key_down);
+    Widp w = wid_cfg_help_window->wid_popup_container;
+    wid_set_on_key_down(g, w, wid_cfg_help_key_down);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
   }
 
@@ -945,7 +945,7 @@ void wid_cfg_keyboard_select(Gamep g)
   int y_at = 0;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Keyboard");
 
     spoint tl(0, y_at);
@@ -958,33 +958,33 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at = 2;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_back_button(g, p, "BACK");
 
     spoint tl(1, y_at);
     spoint br(8, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_keyboard_back);
+    wid_set_on_mouse_up(g, w, wid_cfg_help_back);
     wid_set_pos(w, tl, br);
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_save_button(g, p, "Save");
 
     spoint tl(width - 17, y_at);
     spoint br(width - 12, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_keyboard_save);
+    wid_set_on_mouse_up(g, w, wid_cfg_help_save);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Save");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_cancel_button(g, p, "Cancel");
 
     spoint tl(width - 10, y_at);
     spoint br(width - 3, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_keyboard_cancel);
+    wid_set_on_mouse_up(g, w, wid_cfg_help_cancel);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Cancel");
   }
@@ -996,24 +996,24 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at += 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "");
 
     spoint tl(1, y_at);
     spoint br(width - 3, y_at);
-    wid_set_on_mouse_up(g, w, wid_cfg_keyboard_profile_wasd);
+    wid_set_on_mouse_up(g, w, wid_cfg_help_profile_wasd);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Use W,A,S,D for moving");
   }
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "");
 
     spoint tl(1, y_at);
     spoint br(width - 3, y_at);
-    wid_set_on_mouse_up(g, w, wid_cfg_keyboard_profile_arrow_keys);
+    wid_set_on_mouse_up(g, w, wid_cfg_help_profile_arrow_keys);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Use arrow keys for moving");
   }
@@ -1025,7 +1025,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "save");
 
     spoint tl(1, y_at);
@@ -1037,7 +1037,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1052,7 +1052,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "load");
 
     spoint tl(1, y_at);
@@ -1064,7 +1064,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1080,7 +1080,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at += 2;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "Move up");
 
     spoint tl(1, y_at);
@@ -1092,7 +1092,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1107,7 +1107,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move left");
 
     spoint tl(1, y_at);
@@ -1119,7 +1119,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1134,7 +1134,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move down");
 
     spoint tl(1, y_at);
@@ -1146,7 +1146,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1161,7 +1161,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Move right");
 
     spoint tl(1, y_at);
@@ -1173,7 +1173,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1188,7 +1188,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "jump");
 
     spoint tl(1, y_at);
@@ -1200,7 +1200,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1220,7 +1220,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Wait");
 
     spoint tl(1, y_at);
@@ -1232,7 +1232,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1248,7 +1248,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "inventory");
 
     spoint tl(1, y_at);
@@ -1260,7 +1260,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1276,7 +1276,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Ascend");
 
     spoint tl(1, y_at);
@@ -1288,7 +1288,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1304,7 +1304,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Descend");
 
     spoint tl(1, y_at);
@@ -1316,7 +1316,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1336,7 +1336,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Change zoom");
 
     spoint tl(1, y_at);
@@ -1348,7 +1348,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "Change zoom");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1364,7 +1364,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "Take a screenshot");
 
     spoint tl(1, y_at);
@@ -1376,7 +1376,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1396,7 +1396,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "quit");
 
     spoint tl(1, y_at);
@@ -1408,7 +1408,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1423,7 +1423,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "console");
 
     spoint tl(1, y_at);
@@ -1435,7 +1435,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "console");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1450,7 +1450,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "help");
 
     spoint tl(1, y_at);
@@ -1462,7 +1462,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1479,7 +1479,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused1");
 
     spoint tl(1, y_at);
@@ -1491,7 +1491,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1506,7 +1506,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused2");
 
     spoint tl(1, y_at);
@@ -1518,7 +1518,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1533,7 +1533,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused3");
 
     spoint tl(1, y_at);
@@ -1545,7 +1545,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1560,7 +1560,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused4");
 
     spoint tl(1, y_at);
@@ -1572,7 +1572,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1587,7 +1587,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused5");
 
     spoint tl(1, y_at);
@@ -1599,7 +1599,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1614,7 +1614,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused6");
 
     spoint tl(1, y_at);
@@ -1626,7 +1626,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1641,7 +1641,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused7");
 
     spoint tl(1, y_at);
@@ -1653,7 +1653,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1668,7 +1668,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused8");
 
     spoint tl(1, y_at);
@@ -1680,7 +1680,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1695,7 +1695,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused9");
 
     spoint tl(1, y_at);
@@ -1707,7 +1707,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1722,7 +1722,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused10");
 
     spoint tl(1, y_at);
@@ -1734,7 +1734,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1749,7 +1749,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused11");
 
     spoint tl(1, y_at);
@@ -1761,7 +1761,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1776,7 +1776,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused12");
 
     spoint tl(1, y_at);
@@ -1788,7 +1788,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1803,7 +1803,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused13");
 
     spoint tl(1, y_at);
@@ -1815,7 +1815,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1830,7 +1830,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused14");
 
     spoint tl(1, y_at);
@@ -1842,7 +1842,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1857,7 +1857,7 @@ void wid_cfg_keyboard_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(g, p, "key_unused15");
 
     spoint tl(1, y_at);
@@ -1869,7 +1869,7 @@ void wid_cfg_keyboard_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
+    auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
     auto w = wid_solid_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
@@ -1879,10 +1879,10 @@ void wid_cfg_keyboard_select(Gamep g)
     wid_set_on_mouse_up(g, w, wid_cfg_key_unused15);
   }
 
-  wid_update(g, wid_cfg_keyboard_window->wid_text_area->wid_text_area);
+  wid_update(g, wid_cfg_help_window->wid_text_area->wid_text_area);
 
   if (last_vert_scroll_offset != -1) {
-    auto w = wid_cfg_keyboard_window->wid_text_area->wid_vert_scroll;
+    auto w = wid_cfg_help_window->wid_text_area->wid_vert_scroll;
     wid_move_to_y_off(g, w, last_vert_scroll_offset);
   }
 
