@@ -340,13 +340,13 @@ void Config::reset(void)
   key_help.sym       = SDLK_h;
   key_inventory.sym  = SDLK_i;
   key_jump.sym       = SDLK_j;
-  key_load.sym       = SDLK_F12;
+  key_load.sym       = SDLK_F1;
   key_move_down.sym  = SDLK_s;
   key_move_left.sym  = SDLK_a;
   key_move_right.sym = SDLK_d;
   key_move_up.sym    = SDLK_w;
   key_quit.sym       = SDLK_q;
-  key_save.sym       = SDLK_F1;
+  key_save.sym       = SDLK_F12;
   key_screenshot.sym = SDLK_F10;
   key_wait.sym       = SDLK_PERIOD;
   key_zoom.sym       = SDLK_z;
