@@ -1,8 +1,7 @@
 bugs
 ----
-auto descend / need to handle jumping onto tile also
 level select button over color
-save menu gfx borked
+auto descend / need to handle jumping onto tile also
 select zoom on level select, then enter level - zoom is wrong
 falling does not stop burning
 show the damage from falling in topcon

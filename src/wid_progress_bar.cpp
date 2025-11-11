@@ -4,6 +4,7 @@
 
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
@@ -72,11 +73,13 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
     spoint tl2 = spoint(x_at, y_at);
     spoint br2 = spoint(x_at + progress_steps - 1, y_at + 3);
     wid_set_pos(w, tl2, br2);
-    wid_set_style(w, UI_WID_STYLE_HORIZ_DARK);
-    wid_set_tilename(TILE_LAYER_FG_1, w, tilename);
+    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+    wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
+    wid_set_tilename(TILE_LAYER_BG_0, w, tilename);
   }
 
   wid_update(g, wid_progress_bar_window->wid_text_area->wid_text_area);
 
   sdl_flush_display(g, true /* force */);
+  SDL_Delay(100);
 }
