@@ -804,13 +804,13 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
         Widp b;
 
         if (! strcasecmp(keys[ y ][ x ], "CLEAR")) {
-          b = wid_cancel_button(g, button_container, "wid keyboard button");
+          b = wid_new_cancel_button(g, button_container, "wid keyboard button");
         } else if (! strcasecmp(keys[ y ][ x ], "CANCL")) {
-          b = wid_cancel_button(g, button_container, "wid keyboard button");
+          b = wid_new_cancel_button(g, button_container, "wid keyboard button");
         } else if (! strcasecmp(keys[ y ][ x ], "OK")) {
-          b = wid_green_button(g, button_container, "wid keyboard button");
+          b = wid_new_green_button(g, button_container, "wid keyboard button");
         } else {
-          b = wid_menu_button(g, button_container, "wid keyboard button");
+          b = wid_new_menu_button(g, button_container, "wid keyboard button");
         }
         ctx->buttons[ y ][ x ] = b;
 

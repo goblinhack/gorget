@@ -157,7 +157,7 @@ void wid_cfg_mouse_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_back_button(g, p, "BACK");
+    auto w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(1, y_at);
     spoint br(6, y_at + 2);
@@ -167,7 +167,7 @@ void wid_cfg_mouse_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_save_button(g, p, "Save");
+    auto w = wid_new_save_button(g, p, "Save");
 
     spoint tl(button_width - 15, y_at);
     spoint br(button_width - 10, y_at + 2);
@@ -178,7 +178,7 @@ void wid_cfg_mouse_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_cancel_button(g, p, "Cancel");
+    auto w = wid_new_cancel_button(g, p, "Cancel");
 
     spoint tl(button_width - 8, y_at);
     spoint br(button_width - 1, y_at + 2);
@@ -208,7 +208,7 @@ void wid_cfg_mouse_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Mouse scroll lr invert");
+    auto w = wid_new_menu_button(g, p, "Mouse scroll lr invert");
 
     spoint tl(28, y_at);
     spoint br(34, y_at + 2);
@@ -241,7 +241,7 @@ void wid_cfg_mouse_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Mouse scroll ud invert value");
+    auto w = wid_new_menu_button(g, p, "Mouse scroll ud invert value");
 
     spoint tl(28, y_at);
     spoint br(34, y_at + 2);

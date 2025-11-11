@@ -257,7 +257,7 @@ void wid_dead_select(Gamep g, std::string reason)
   wid_dead_window->log_empty_line(g);
 
   auto p = wid_dead_window->wid_text_area->wid_text_area;
-  auto w = wid_menu_button(g, p, "dead");
+  auto w = wid_new_menu_button(g, p, "dead");
 
   {
     spoint tl2(9, h - 7);

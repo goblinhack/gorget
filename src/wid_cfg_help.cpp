@@ -959,7 +959,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_back_button(g, p, "BACK");
+    auto w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(1, y_at);
     spoint br(8, y_at + 2);
@@ -969,7 +969,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_save_button(g, p, "Save");
+    auto w = wid_new_save_button(g, p, "Save");
 
     spoint tl(width - 17, y_at);
     spoint br(width - 12, y_at + 2);
@@ -980,7 +980,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_cancel_button(g, p, "Cancel");
+    auto w = wid_new_cancel_button(g, p, "Cancel");
 
     spoint tl(width - 10, y_at);
     spoint br(width - 3, y_at + 2);
@@ -997,7 +997,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "");
+    auto w = wid_new_button(g, p, "");
 
     spoint tl(1, y_at);
     spoint br(width - 3, y_at);
@@ -1009,7 +1009,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "");
+    auto w = wid_new_button(g, p, "");
 
     spoint tl(1, y_at);
     spoint br(width - 3, y_at);
@@ -1038,7 +1038,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1065,7 +1065,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1081,7 +1081,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "Move up");
+    auto w = wid_new_button(g, p, "Move up");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at);
@@ -1093,7 +1093,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1120,7 +1120,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1147,7 +1147,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1174,7 +1174,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1201,7 +1201,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1233,7 +1233,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1261,7 +1261,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1289,7 +1289,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1317,7 +1317,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1349,7 +1349,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "Change zoom");
+    auto w = wid_new_button(g, p, "Change zoom");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1377,7 +1377,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1409,7 +1409,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1436,7 +1436,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "console");
+    auto w = wid_new_button(g, p, "console");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1463,7 +1463,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1492,7 +1492,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1519,7 +1519,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1546,7 +1546,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1573,7 +1573,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1600,7 +1600,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1627,7 +1627,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1654,7 +1654,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1681,7 +1681,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1708,7 +1708,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1735,7 +1735,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1762,7 +1762,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1789,7 +1789,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1816,7 +1816,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1843,7 +1843,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);
@@ -1870,7 +1870,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_help_window->wid_text_area->wid_text_area;
-    auto w = wid_solid_button(g, p, "value");
+    auto w = wid_new_button(g, p, "value");
 
     spoint tl(width / 2 + rhs_button_left, y_at);
     spoint br(width / 2 + rhs_button_right, y_at);

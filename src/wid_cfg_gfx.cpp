@@ -427,7 +427,7 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_back_button(g, p, "BACK");
+    auto w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(1, y_at);
     spoint br(6, y_at + 2);
@@ -438,7 +438,7 @@ void wid_cfg_gfx_select(Gamep g)
   if (pending_mode_set) {
     TRACE_NO_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Apply");
+    auto w = wid_new_menu_button(g, p, "Apply");
 
     spoint tl(10, y_at);
     spoint br(16, y_at + 2);
@@ -486,7 +486,7 @@ void wid_cfg_gfx_select(Gamep g)
     {
       TRACE_NO_INDENT();
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_menu_button(g, p, "Resolution value +");
+      auto w = wid_new_menu_button(g, p, "Resolution value +");
 
       spoint tl(width / 2 + 12, y_at);
       spoint br(width / 2 + 14, y_at + 2);
@@ -497,7 +497,7 @@ void wid_cfg_gfx_select(Gamep g)
     {
       TRACE_NO_INDENT();
       auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_menu_button(g, p, "Resolution value -");
+      auto w = wid_new_menu_button(g, p, "Resolution value -");
 
       spoint tl(width / 2 + 16, y_at);
       spoint br(width / 2 + 18, y_at + 2);
@@ -591,7 +591,7 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Fullscreen value");
+    auto w = wid_new_menu_button(g, p, "Fullscreen value");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
@@ -640,7 +640,7 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Fullscreen value");
+    auto w = wid_new_menu_button(g, p, "Fullscreen value");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
@@ -673,7 +673,7 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Borderless");
+    auto w = wid_new_menu_button(g, p, "Borderless");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
@@ -706,7 +706,7 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Vertical sync value");
+    auto w = wid_new_menu_button(g, p, "Vertical sync value");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
@@ -739,7 +739,7 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "FPS counter value");
+    auto w = wid_new_menu_button(g, p, "FPS counter value");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);

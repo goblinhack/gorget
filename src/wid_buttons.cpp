@@ -6,7 +6,20 @@
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 
-Widp wid_back_button(Gamep g, Widp parent, const std::string name)
+void wid_gray_out_button(Gamep g, Widp w)
+{
+  TRACE_NO_INDENT();
+
+  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+  wid_set_color(w, WID_COLOR_BG, GRAY50);
+  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+  wid_set_color(w, WID_COLOR_BG, GRAY40);
+}
+
+Widp wid_new_back_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
@@ -20,7 +33,7 @@ Widp wid_back_button(Gamep g, Widp parent, const std::string name)
   return w;
 }
 
-Widp wid_menu_button(Gamep g, Widp parent, const std::string name)
+Widp wid_new_menu_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
@@ -33,7 +46,7 @@ Widp wid_menu_button(Gamep g, Widp parent, const std::string name)
   return w;
 }
 
-Widp wid_solid_button(Gamep g, Widp parent, const std::string name)
+Widp wid_new_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
@@ -48,21 +61,7 @@ Widp wid_solid_button(Gamep g, Widp parent, const std::string name)
   return w;
 }
 
-Widp wid_save_button(Gamep g, Widp parent, const std::string name)
-{
-  TRACE_NO_INDENT();
-
-  return wid_green_button(g, parent, name);
-}
-
-Widp wid_cancel_button(Gamep g, Widp parent, const std::string name)
-{
-  TRACE_NO_INDENT();
-
-  return wid_red_button(g, parent, name);
-}
-
-Widp wid_green_button(Gamep g, Widp parent, const std::string name)
+Widp wid_new_green_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
@@ -76,7 +75,7 @@ Widp wid_green_button(Gamep g, Widp parent, const std::string name)
   return w;
 }
 
-Widp wid_red_button(Gamep g, Widp parent, const std::string name)
+Widp wid_new_red_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
@@ -88,4 +87,18 @@ Widp wid_red_button(Gamep g, Widp parent, const std::string name)
   wid_set_mode(g, w, WID_MODE_NORMAL);
   wid_set_style(w, UI_WID_STYLE_RED);
   return w;
+}
+
+Widp wid_new_save_button(Gamep g, Widp parent, const std::string name)
+{
+  TRACE_NO_INDENT();
+
+  return wid_new_green_button(g, parent, name);
+}
+
+Widp wid_new_cancel_button(Gamep g, Widp parent, const std::string name)
+{
+  TRACE_NO_INDENT();
+
+  return wid_new_red_button(g, parent, name);
 }

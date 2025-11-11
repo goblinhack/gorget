@@ -167,7 +167,7 @@ void wid_hiscores_show(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_hiscore_window->wid_text_area->wid_text_area;
-    auto w = wid_back_button(g, p, "hiscore");
+    auto w = wid_new_back_button(g, p, "hiscore");
 
     spoint tl(menu_width / 2 - 4, menu_height - 4);
     spoint br(menu_width / 2 + 3, menu_height - 2);

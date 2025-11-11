@@ -205,17 +205,13 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   if (thing_is_item_droppable(item)) {
     TRACE_NO_INDENT();
     auto p = wid_item_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Drop");
+    auto w = wid_new_menu_button(g, p, "Drop");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
 
     if (level_is_level_select(g, v, l)) {
-      wid_set_mode(g, w, WID_MODE_OVER);
-      wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
-      wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-      wid_set_mode(g, w, WID_MODE_NORMAL);
-      wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+      wid_gray_out_button(g, w);
     }
 
     wid_set_on_mouse_up(g, w, wid_item_menu_drop);
@@ -227,7 +223,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   if (thing_is_item_equipable(item)) {
     TRACE_NO_INDENT();
     auto p = wid_item_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Equip");
+    auto w = wid_new_menu_button(g, p, "Equip");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -240,7 +236,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   {
     TRACE_NO_INDENT();
     auto p = wid_item_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_back_button(g, p, "BACK");
+    auto w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);

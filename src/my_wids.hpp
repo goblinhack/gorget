@@ -42,12 +42,13 @@ void wid_rightbar_fini(Gamep);
 void wid_save_destroy(Gamep);
 void wid_save_select(Gamep);
 void wid_seed_select(Gamep);
-Widp wid_back_button(Gamep, Widp parent, const std::string name);
-Widp wid_menu_button(Gamep, Widp parent, const std::string name);
-Widp wid_save_button(Gamep, Widp parent, const std::string name);
-Widp wid_cancel_button(Gamep, Widp parent, const std::string name);
-Widp wid_green_button(Gamep, Widp parent, const std::string name);
-Widp wid_red_button(Gamep, Widp parent, const std::string name);
-Widp wid_solid_button(Gamep, Widp parent, const std::string name);
+void wid_gray_out_button(Gamep, Widp);
+Widp wid_new_back_button(Gamep, Widp parent, const std::string name);
+Widp wid_new_menu_button(Gamep, Widp parent, const std::string name);
+Widp wid_new_save_button(Gamep, Widp parent, const std::string name);
+Widp wid_new_cancel_button(Gamep, Widp parent, const std::string name);
+Widp wid_new_green_button(Gamep, Widp parent, const std::string name);
+Widp wid_new_red_button(Gamep, Widp parent, const std::string name);
+Widp wid_new_button(Gamep, Widp parent, const std::string name);
 
 #endif

@@ -351,7 +351,7 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "New Game");
+    auto w = wid_new_menu_button(g, p, "New Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
@@ -363,7 +363,7 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Load Game");
+    auto w = wid_new_menu_button(g, p, "Load Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
@@ -375,7 +375,7 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Options");
+    auto w = wid_new_menu_button(g, p, "Options");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
@@ -387,7 +387,7 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "More");
+    auto w = wid_new_menu_button(g, p, "More");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
@@ -399,7 +399,7 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_cancel_button(g, p, "Quit Game");
+    auto w = wid_new_cancel_button(g, p, "Quit Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);

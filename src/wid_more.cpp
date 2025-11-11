@@ -118,7 +118,7 @@ void wid_more_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Credits");
+    auto w = wid_new_menu_button(g, p, "Credits");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -130,7 +130,7 @@ void wid_more_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Hiscores");
+    auto w = wid_new_menu_button(g, p, "Hiscores");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -142,7 +142,7 @@ void wid_more_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_back_button(g, p, "BACK");
+    auto w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);

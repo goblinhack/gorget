@@ -326,7 +326,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
       {
         TRACE_NO_INDENT();
-        auto w = wid_solid_button(g, wid_inventory_window, "Item");
+        auto w = wid_new_button(g, wid_inventory_window, "Item");
 
         spoint tl(6, y_at);
         spoint br(button_width, y_at + button_height);
@@ -351,7 +351,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
   {
     TRACE_NO_INDENT();
-    auto w = wid_back_button(g, wid_inventory_window, "BACK");
+    auto w = wid_new_back_button(g, wid_inventory_window, "BACK");
 
     spoint tl(inventory_width / 2 - 4, inventory_height - 4);
     spoint br(inventory_width / 2 + 3, inventory_height - 2);

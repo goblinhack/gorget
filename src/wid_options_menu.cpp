@@ -168,7 +168,7 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Choose seed");
+    auto w = wid_new_menu_button(g, p, "Choose seed");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -180,7 +180,7 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "Choose player name");
+    auto w = wid_new_menu_button(g, p, "Choose player name");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -192,7 +192,7 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "gfx");
+    auto w = wid_new_menu_button(g, p, "gfx");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -204,7 +204,7 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "mouse");
+    auto w = wid_new_menu_button(g, p, "mouse");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -216,7 +216,7 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "sound");
+    auto w = wid_new_menu_button(g, p, "sound");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -228,7 +228,7 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_menu_button(g, p, "keyboard");
+    auto w = wid_new_menu_button(g, p, "keyboard");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -240,7 +240,7 @@ void wid_options_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     auto p = wid_options_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_back_button(g, p, "BACK");
+    auto w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);

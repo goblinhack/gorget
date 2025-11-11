@@ -473,7 +473,7 @@ bool Game::save_select(void)
   {
     TRACE_NO_INDENT();
     auto p = wid_save->wid_text_area->wid_text_area;
-    auto w = wid_back_button(game, p, "back");
+    auto w = wid_new_back_button(game, p, "back");
 
     spoint tl(menu_width / 2 - 4, menu_height - 4);
     spoint br(menu_width / 2 + 3, menu_height - 2);
@@ -497,7 +497,7 @@ bool Game::save_select(void)
     }
 
     auto   p = wid_save->wid_text_area->wid_text_area;
-    auto   w = wid_solid_button(game, p, "save slot");
+    auto   w = wid_new_button(game, p, "save slot");
     spoint tl(0, y_at);
     spoint br(menu_width - 2, y_at);
 
