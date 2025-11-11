@@ -5,6 +5,7 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
@@ -78,6 +79,12 @@ static bool wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button)
     return false;
   }
 
+  if (level_is_level_select(g, v, l)) {
+    TOPCON(UI_WARNING_FMT_STR "You can't drop things here!" UI_RESET_FMT);
+    sound_play(g, "error");
+    return false;
+  }
+
   if (! thing_drop_item(g, v, l, item, player)) {
     sound_play(g, "error");
     return false;
@@ -147,6 +154,16 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   TRACE_NO_INDENT();
   LOG("Item menu");
 
+  auto l = game_level_get(g, v);
+  if (! l) {
+    return;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return;
+  }
+
   g_item = item;
 
   if (wid_item_menu_window) {
@@ -192,6 +209,15 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
+
+    if (level_is_level_select(g, v, l)) {
+      wid_set_mode(g, w, WID_MODE_OVER);
+      wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+      wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+      wid_set_mode(g, w, WID_MODE_NORMAL);
+      wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
+    }
+
     wid_set_on_mouse_up(g, w, wid_item_menu_drop);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_FMT_STR "rop");
