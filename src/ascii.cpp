@@ -986,9 +986,10 @@ void ascii_display(Gamep g)
   mouse_found = false;
 
   gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
+
   blit_fbo_bind_locked(FBO_WID);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   gl_clear();
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   blit_init();
   ascii_blit(g);
@@ -999,6 +1000,8 @@ void ascii_display(Gamep g)
     ascii_display_mouse(mouse_tile_tl, mouse_tile_br, ascii.mouse_at);
   }
 #endif
+
+  blit_fbo_unbind_locked();
 }
 
 void ascii_clear_display(void)

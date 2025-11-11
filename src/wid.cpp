@@ -5553,8 +5553,6 @@ printf("========================================= %d\n", wid_total_count);
 
   ascii_display(g);
 
-  blit_fbo_unbind_locked();
-
   //
   // Need this to reset wid_over after display
   //
