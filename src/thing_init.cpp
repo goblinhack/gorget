@@ -30,11 +30,14 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   //
   if (tp_is_player(tp)) {
     //
+    // MUST come before player_state_change
+    //
+    v->player_id = t->id;
+
+    //
     // Reset the player state
     //
     player_state_change(g, v, PLAYER_STATE_NORMAL);
-
-    v->player_id = t->id;
 
     //
     // First time entering this level?
