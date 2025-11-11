@@ -241,6 +241,14 @@ uint8_t sdl_display_init(Gamep g)
   SDL_SetWindowTitle(sdl.window, "gorget");
   SDL_SetWindowInputFocus(sdl.window);
 
+#if __APPLE__
+  SDL_Event evt;
+  //
+  // Work around macos focus issue, possibly caused by iTerm
+  //
+  while (SDL_PollEvent(&evt)) {}
+#endif
+
   //
   // Ensure the window is always in front.
   //
