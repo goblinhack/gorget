@@ -4,7 +4,7 @@
 
 #pragma once
 
-typedef void (*wid_keyboard_event_t)(Gamep g, Widp, const std::string &text);
+typedef void (*wid_keyboard_event_t)(Gamep, Widp, const std::string &text);
 
 #define WID_KEYBOARD_ACROSS 12
 #define WID_KEYBOARD_DOWN   5

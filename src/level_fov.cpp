@@ -54,51 +54,6 @@ static const int matrix_table[ 8 ][ 4 ] = {
     {-1, 0, 0, -1}, {0, -1, -1, 0}, {0, 1, -1, 0}, {1, 0, 0, -1},
 };
 
-//
-// Something blocking the light?
-//
-static bool level_fov_light_blocker_at(Gamep g, Levelsp v, Levelp l, Thingp me, spoint pov)
-{
-  FOR_ALL_THINGS_AT(g, v, l, it, pov)
-  {
-    //
-    // Dead foliage should not block
-    //
-    if (thing_is_dead(it)) {
-      continue;
-    }
-
-    //
-    // Open doors should not block
-    //
-    if (thing_is_open(it)) {
-      continue;
-    }
-
-    if (thing_is_obs_to_vision(it)) {
-      return true;
-    }
-  }
-
-  return false;
-
-#if 0
-    if (me->is_monst()) {
-      if (! light_blocker) {
-        light_blocker = is_obs_to_vision_for_monst(p);
-      }
-
-      if (! light_blocker) {
-        if (! me->is_player()) {
-          if (! me->is_able_to_see_in_magical_darkness()) {
-            light_blocker = is_darkness(p);
-          }
-        }
-      }
-    }
-#endif
-}
-
 static void level_fov_set(FovMap *m, spoint pov, bool val)
 {
 #ifdef _DEBUG_BUILD_
@@ -178,7 +133,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     //
     // Treat player and monster blocking differently so the player can use cover
     //
-    auto light_blocker = level_fov_light_blocker_at(g, v, l, me, p);
+    auto light_blocker = level_light_blocker_at(g, v, l, p);
 
     if (angle * angle + distance_from_origin * distance_from_origin <= radius_squared
         && (light_walls || ! light_blocker)) {

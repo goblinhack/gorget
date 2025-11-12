@@ -19,7 +19,7 @@ extern Widp wid_console_input_line;
 extern Widp wid_console_window;
 extern Widp wid_console_container;
 
-bool wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key);
+bool wid_console_receive_input(Gamep, Widp, const SDL_Keysym *key);
 
 std::vector< std::string > wid_console_serialize(void);
 

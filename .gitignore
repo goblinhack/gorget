@@ -31,12 +31,18 @@
 *.out
 *.app
 
+.o/
+.o/test-tmp-file
 appdata/
 build.log
-gorget
+build/Makefile
+build/Makefile.template
 data/gfx/
 data/sounds/
-.o/
+gorget
+gorget.dSYM/
+gorget.stderr.txt
+gorget.stdout.txt
 src/cfg.hpp
 src/ramdisk_data_0.S
 src/ramdisk_data_1.S
@@ -49,7 +55,3 @@ src/ramdisk_data_7.S
 src/ramdisk_data_8.S
 src/ramdisk_data_9.S
 src/ramdisk_data.cpp
-build/Makefile.template
-build/Makefile
-gorget.dSYM/
-.o/test-tmp-file

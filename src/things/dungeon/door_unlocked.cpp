@@ -108,6 +108,7 @@ bool tp_load_door_unlocked(void)
   tp_flag_set(tp, is_obs_to_jump_over);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_obs_to_vision);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

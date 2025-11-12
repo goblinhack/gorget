@@ -7,6 +7,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_wid_console.hpp"
+#include "my_wid_private.hpp"
 
 int  wid_mouse_visible = 1;
 bool wid_mouse_two_clicks;

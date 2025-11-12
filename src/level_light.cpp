@@ -272,6 +272,51 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spo
   }
 }
 
+//
+// Something blocking the light?
+//
+Thingp level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov)
+{
+  FOR_ALL_THINGS_AT(g, v, l, it, pov)
+  {
+    //
+    // Dead foliage should not block
+    //
+    if (thing_is_dead(it)) {
+      continue;
+    }
+
+    //
+    // Open doors should not block
+    //
+    if (thing_is_open(it)) {
+      continue;
+    }
+
+    if (thing_is_obs_to_vision(it)) {
+      return it;
+    }
+  }
+
+  return nullptr;
+
+#if 0
+    if (me->is_monst()) {
+      if (! light_blocker) {
+        light_blocker = is_obs_to_vision_for_monst(p);
+      }
+
+      if (! light_blocker) {
+        if (! me->is_player()) {
+          if (! me->is_able_to_see_in_magical_darkness()) {
+            light_blocker = is_darkness(p);
+          }
+        }
+      }
+    }
+#endif
+}
+
 void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
@@ -388,7 +433,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // Did the light ray hit an obstacle?
       //
-      obs_to_vision = level_is_obs_to_vision(g, v, l, tile);
+      obs_to_vision = level_light_blocker_at(g, v, l, tile);
       if (obs_to_vision) {
         //
         // What type of obstacle?
@@ -444,7 +489,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           //
           // If we've left the wall, we're done
           //
-          next_obs_to_vision = level_is_obs_to_vision(g, v, l, tile);
+          next_obs_to_vision = level_light_blocker_at(g, v, l, tile);
           if (! next_obs_to_vision) {
             break;
           }
