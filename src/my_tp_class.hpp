@@ -168,28 +168,29 @@ public:
   //
   // Callbacks
   //
-  thing_description_get_t    description_get    = {};
-  thing_detail_get_t         detail_get         = {};
-  thing_mouse_down_t         mouse_down         = {};
-  thing_on_spawn_t           on_spawn           = {};
-  thing_on_level_populated_t on_level_populated = {};
-  thing_on_level_enter_t     on_level_enter     = {};
-  thing_on_level_leave_t     on_level_leave     = {};
-  thing_on_open_request_t    on_open_request    = {};
-  thing_on_carry_request_t   on_carry_request   = {};
-  thing_on_drop_request_t    on_drop_request    = {};
-  thing_on_close_request_t   on_close_request   = {};
-  thing_on_tick_idle_t       tick_idle          = {};
-  thing_on_tick_begin_t      tick_begin         = {};
-  thing_on_tick_end_t        tick_end           = {};
-  thing_on_death_t           on_death           = {};
-  thing_on_moved_t           on_moved           = {};
-  thing_on_teleported_t      on_teleported      = {};
-  thing_on_shoved_t          on_shoved          = {};
-  thing_on_jump_end_t        on_jump_end        = {};
-  thing_on_jump_begin_t      on_jump_begin      = {};
-  thing_on_fall_begin_t      on_fall_begin      = {};
-  thing_on_fall_end_t        on_fall_end        = {};
+  thing_description_get_t       description_get       = {};
+  thing_detail_get_t            detail_get            = {};
+  thing_mouse_down_t            mouse_down            = {};
+  thing_on_spawn_t              on_spawn              = {};
+  thing_on_level_populated_t    on_level_populated    = {};
+  thing_on_level_enter_t        on_level_enter        = {};
+  thing_on_level_leave_t        on_level_leave        = {};
+  thing_on_open_request_t       on_open_request       = {};
+  thing_on_carry_request_t      on_carry_request      = {};
+  thing_on_drop_request_t       on_drop_request       = {};
+  thing_on_close_request_t      on_close_request      = {};
+  thing_on_tick_idle_t          tick_idle             = {};
+  thing_on_tick_begin_t         tick_begin            = {};
+  thing_on_tick_end_t           tick_end              = {};
+  thing_on_death_t              on_death              = {};
+  thing_on_moved_t              on_moved              = {};
+  thing_on_teleported_t         on_teleported         = {};
+  thing_on_shoved_t             on_shoved             = {};
+  thing_on_jump_end_t           on_jump_end           = {};
+  thing_on_jump_begin_t         on_jump_begin         = {};
+  thing_on_fall_begin_t         on_fall_begin         = {};
+  thing_on_fall_end_t           on_fall_end           = {};
+  thing_display_get_tile_info_t display_get_tile_info = {};
 
   Tp(void);
   ~Tp(void);

@@ -10,17 +10,27 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_math.hpp"
+#include "my_thing_callbacks.hpp"
 
-void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint *tl, spoint *br,
-                      uint16_t *tile_index)
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint *tl,
+                                 spoint *br, uint16_t *tile_index)
 {
   TRACE_NO_INDENT();
 
-  int zoom = game_map_zoom_get(g);
-  int dw   = INNER_TILE_WIDTH * zoom;
-  int dh   = INNER_TILE_HEIGHT * zoom;
+  int   zoom = game_map_zoom_get(g);
+  int   dw   = INNER_TILE_WIDTH * zoom;
+  int   dh   = INNER_TILE_HEIGHT * zoom;
+  Tilep tile = nullptr;
 
-  if (t_maybe_null) {
+  tile = thing_display_get_tile_info(g, v, l, p, tp, t_maybe_null);
+  if (tile) {
+    //
+    // Allow override of the tile
+    //
+    if (tile_index) {
+      *tile_index = tile_global_index(tile);
+    }
+  } else if (t_maybe_null) {
     //
     // Things
     //
@@ -29,36 +39,24 @@ void thing_get_coords(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_m
     }
   } else if (tp) {
     //
-    // Cursor
+    // Cursor usually
     //
-    Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
-
-    //
-    // Non zero cursor path, change the cursor to a positive color
-    //
-    if (tp_is_cursor(tp)) {
-      auto player_struct = thing_player_struct(g);
-      if (player_struct) {
-        if (level_cursor_path_size(g) || player_struct->move_path.size) {
-          tile = tp_tiles_get(tp, THING_ANIM_OPEN, 0);
-        }
-      }
-    }
+    tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
 
     if (tile_index) {
       *tile_index = tile_global_index(tile);
     }
   } else {
-    static Tilep tile;
-    if (! tile) {
-      tile = tile_find_mand("none");
+    static Tilep no_tile;
+    if (! no_tile) {
+      no_tile = tile_find_mand("none");
     }
+    tile = no_tile;
+
     if (tile_index) {
       *tile_index = tile_global_index(tile);
     }
   }
-
-  Tilep tile = nullptr;
 
   if (tile_index) {
     tile = tile_index_to_tile(*tile_index);

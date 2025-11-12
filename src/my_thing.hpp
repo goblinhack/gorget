@@ -839,7 +839,8 @@ spoint thing_pix_at_set(Thingp t, short, short);
 bool thing_is_immune_to(Thingp, ThingEventType);
 
 void thing_display(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index, int fbo);
-void thing_get_coords(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spoint *, uint16_t *tile_index);
+void thing_display_get_tile_info(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spoint *,
+                                 uint16_t *tile_index);
 void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);
 
 void thing_path_shorten(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &path);

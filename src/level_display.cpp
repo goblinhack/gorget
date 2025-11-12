@@ -74,7 +74,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, int fbo
   if (tp) {
     spoint   tl, br;
     uint16_t tile_index;
-    thing_get_coords(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
+    thing_display_get_tile_info(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
     thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo);
   }
 }
@@ -99,7 +99,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
 
   spoint   tl, br;
   uint16_t tile_index;
-  thing_get_coords(g, v, l, p, tp, t, &tl, &br, &tile_index);
+  thing_display_get_tile_info(g, v, l, p, tp, t, &tl, &br, &tile_index);
   thing_display(g, v, l, p, tp, t, tl, br, tile_index, fbo);
 }
 
@@ -268,8 +268,9 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
     //
     // Get the on screen pixel co-oords of the top left and bottom right tiles
     //
-    thing_get_coords(g, v, l, spoint(0, 0), NULL_TP, NULL_THING, &tl1, &br1, nullptr);
-    thing_get_coords(g, v, l, spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, &tl2, &br2, nullptr);
+    thing_display_get_tile_info(g, v, l, spoint(0, 0), NULL_TP, NULL_THING, &tl1, &br1, nullptr);
+    thing_display_get_tile_info(g, v, l, spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, &tl2, &br2,
+                                nullptr);
 
     tl1.x += visible_map_tl_x;
     tl1.y += visible_map_tl_y;

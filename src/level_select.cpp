@@ -14,6 +14,15 @@
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 
+static spoint car_to_iso(spoint car)
+{
+  spoint iso;
+  iso.y = car.x + car.y;
+  iso.x = car.y - car.x;
+
+  return iso;
+}
+
 bool level_select_is_oob(spoint p)
 {
   TRACE_NO_INDENT();
@@ -55,7 +64,7 @@ bool level_select_is_oob(int x, int y)
 //
 // If in level select mode, enter the chosen level
 //
-static Levelp level_select_cursor_to_level(Gamep g, Levelsp v)
+Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -87,7 +96,7 @@ static Levelp level_select_cursor_to_level(Gamep g, Levelsp v)
 // Given a point in the level select grid, return the corresponding level,
 // if one exists there.
 //
-Levelp level_select_get_level(Gamep g, Levelsp v, Levelp l, spoint p)
+static Levelp level_select_get_level_from_grid_coords(Gamep g, Levelsp v, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -129,7 +138,7 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
       p.y = 0;
     }
 
-    auto cand = level_select_get_level(g, v, l, p);
+    auto cand = level_select_get_level_from_grid_coords(g, v, p);
     if (cand && (cand != l)) {
       return cand;
     }
@@ -142,7 +151,7 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
   while (tries++ < LEVELS_DOWN * LEVELS_ACROSS * 2) {
     spoint random_p(pcg_random_range(0, LEVELS_ACROSS), pcg_random_range(0, LEVELS_DOWN));
 
-    auto cand = level_select_get_level(g, v, l, random_p);
+    auto cand = level_select_get_level_from_grid_coords(g, v, random_p);
     if (cand && (cand != l)) {
       return cand;
     }
@@ -326,15 +335,6 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       return;
     }
   }
-}
-
-static spoint car_to_iso(spoint car)
-{
-  spoint iso;
-  iso.y = car.x + car.y;
-  iso.x = car.y - car.x;
-
-  return iso;
 }
 
 //
@@ -741,7 +741,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
     return;
   }
 
-  Levelp level_over = level_select_cursor_to_level(g, v);
+  Levelp level_over = level_select_get_level_at_tile_coords(g, v, v->cursor_at);
   if (! level_over) {
     return;
   }
@@ -820,7 +820,7 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  Levelp level_over = level_select_cursor_to_level(g, v);
+  Levelp level_over = level_select_get_level_at_tile_coords(g, v, v->cursor_at);
   if (! level_over) {
     return;
   }
@@ -839,7 +839,7 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  Levelp level_over = level_select_cursor_to_level(g, v);
+  Levelp level_over = level_select_get_level_at_tile_coords(g, v, v->cursor_at);
   if (! level_over) {
     return;
   }

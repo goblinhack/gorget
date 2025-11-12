@@ -3,12 +3,17 @@
 //
 
 #pragma once
-#ifndef _MY_THING_TEMPLATE_CALLBACKS_H_
-#define _MY_THING_TEMPLATE_CALLBACKS_H_
+#ifndef _MY_THING_CALLBACKS_H_
+#define _MY_THING_CALLBACKS_H_
 
 #include "my_thing.hpp"
+#include "my_tile.hpp"
 #include "my_tp.hpp"
 #include <string>
+
+typedef Tilep (*thing_display_get_tile_info_t)(Gamep, Levelsp, Levelp, spoint p, Tpp tp, Thingp t_maybe_null);
+void  thing_display_get_tile_info_set(Tpp, thing_display_get_tile_info_t);
+Tilep thing_display_get_tile_info(Gamep, Levelsp, Levelp, spoint p, Tpp tp, Thingp t_maybe_null);
 
 typedef std::string (*thing_description_get_t)(Gamep, Levelsp, Levelp, Thingp me);
 void        thing_description_set(Tpp, thing_description_get_t);

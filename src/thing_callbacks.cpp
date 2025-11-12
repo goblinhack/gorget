@@ -566,3 +566,25 @@ void thing_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
   return tp->on_fall_end(g, v, l, me);
 }
+
+void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->display_get_tile_info = callback;
+}
+
+Tilep thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    return nullptr;
+  }
+  if (! tp->display_get_tile_info) {
+    return nullptr;
+  }
+  return tp->display_get_tile_info(g, v, l, p, tp, t_maybe_null);
+}
