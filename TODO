@@ -1,15 +1,13 @@
 bugs
 ----
-level select button over color
-auto descend / need to handle jumping onto tile also
 select zoom on level select, then enter level - zoom is wrong
+auto descend / need to handle jumping onto tile also
 falling does not stop burning
 show the damage from falling in topcon
 need to ask if you want to kick over a brazier
 center minimap pixel
 minimap always light certain tiles
 popup over minimaps?
-red level locked graphic looks bad
 damaged door visuals
 bushes quiver when monster is behind?
 chasm see through
