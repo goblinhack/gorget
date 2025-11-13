@@ -135,7 +135,8 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 
   if (0) {
     if (thing_is_mob(t)) {
-      THING_LOG(t, "anim %s index %d", tile_name_get(tile).c_str(), t->anim_index);
+      THING_LOG(t, "anim %s index %d [%s]", tile_name(tile).c_str(), t->anim_index,
+                ThingAnim_to_string(t->anim_type).c_str());
     }
   }
 

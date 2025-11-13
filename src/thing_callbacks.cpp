@@ -6,6 +6,7 @@
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_tp_class.hpp"
+#include "my_ui.hpp"
 
 void thing_description_set(Tpp tp, thing_description_get_t callback)
 {
@@ -561,9 +562,21 @@ void thing_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
     ERR("No thing template pointer set");
     return;
   }
+
+  //
+  // Falling can be good
+  //
+  if (thing_is_burning(me)) {
+    thing_is_burning_unset(g, v, l, me);
+    if (thing_is_player(me)) {
+      TOPCON(UI_GOOD_FMT_STR "You extinguish the flames as you fall!" UI_RESET_FMT);
+    }
+  }
+
   if (! tp->on_fall_end) {
     return;
   }
+
   return tp->on_fall_end(g, v, l, me);
 }
 

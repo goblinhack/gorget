@@ -727,8 +727,6 @@ Tilep tile_find_mand(std::string name)
   return result->second;
 }
 
-std::string tile_name_get(Tilep tile) { return tile->name; }
-
 int tile_width(Tilep tile) { return tile->pix_width; }
 
 int tile_height(Tilep tile) { return tile->pix_height; }

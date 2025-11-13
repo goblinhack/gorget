@@ -54,7 +54,7 @@ bool        tile_is_open(Tilep);
 int         tile_height(Tilep);
 int         tile_width(Tilep);
 int         tile_gl_binding(Tilep);
-std::string tile_name_get(Tilep);
+std::string tile_name(Tilep);
 Tilep       string2tile(const char **s, int *len = nullptr);
 Tilep       string2tile(std::string &s, int *len = nullptr);
 Tilep       tile_find_mand(std::string name);
