@@ -20,6 +20,17 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  if (! g || ! v || ! l) {
+    return;
+  }
+
+  //
+  // If the player is not on the level being lit, then nothing to do
+  //
+  if (l->level_num != player->level_num) {
+    return;
+  }
+
   if (v->tick_in_progress) {
     //
     // Limit the updates as tick interpolation occurs many times per second.
@@ -45,7 +56,7 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
   //
   // First lighting update
   //
-  level_light_fov_all(g, v, l);
+  level_light_calcuate_all(g, v, l);
 
   //
   // Update minimaps

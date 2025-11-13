@@ -861,7 +861,7 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
   if ((level_over == player_level) || level_over->player_can_enter_this_level_next) {
     new_level = level_change(g, v, level_over->level_num);
   } else {
-    TOPCON("You cannot enter this level. Yet. Choose a flashing level.");
+    TOPCON("You cannot enter this level yet. Choose an open door.");
   }
 
   //

@@ -556,7 +556,7 @@ void    level_forced_auto_scroll(Gamep, Levelsp, Levelp);
 void    level_init(Gamep, Levelsp, Levelp, LevelNum);
 void    level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
 void    level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
-void    level_light_fov_all(Gamep, Levelsp, Levelp);
+void    level_light_calcuate_all(Gamep, Levelsp, Levelp);
 void    level_light_raycast(Gamep, Levelsp, Levelp, int fbo);
 void    level_light_raycast_fini(void);
 void    level_mouse_position_get(Gamep, Levelsp, Levelp);

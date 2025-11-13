@@ -647,9 +647,25 @@ void level_light_raycast_fini(void)
 //
 // All light from all light sources, combined.
 //
-void level_light_fov_all(Gamep g, Levelsp v, Levelp l)
+void level_light_calcuate_all(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
+
+  auto player = thing_player(g);
+  if (! player) {
+    return;
+  }
+
+  if (! g || ! v || ! l) {
+    return;
+  }
+
+  //
+  // If the player is not on the level being lit, then nothing to do
+  //
+  if (l->level_num != player->level_num) {
+    return;
+  }
 
   memset(&v->light_map, 0, sizeof(v->light_map));
 
