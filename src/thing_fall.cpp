@@ -5,7 +5,9 @@
 #include "my_callstack.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_random.hpp"
+#include "my_ui.hpp"
 
 //
 // Ok to land on this spot?
@@ -152,6 +154,16 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   };
 
   thing_damage(g, v, l, t, e);
+
+  //
+  // Falling can be good
+  //
+  if (thing_is_burning(t)) {
+    thing_is_burning_unset(g, v, l, t);
+    if (thing_is_player(t)) {
+      TOPCON(UI_GOOD_FMT_STR "You extinguish the flames as you fall!" UI_RESET_FMT);
+    }
+  }
 }
 
 //

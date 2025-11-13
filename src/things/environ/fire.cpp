@@ -108,13 +108,18 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // I quite like the idea of fire falling to the level below
   //
-  if (0) {
+  // Unless the player is on fire. In which case we want the flames to
+  // die, else they follow them down and they stay on fire.
+  //
+  auto player = thing_player(g);
+  if (player && (t->at == player->at)) {
     ThingEvent e {
         .reason     = "by falling",     //
         .event_type = THING_EVENT_FALL, //
     };
 
     thing_dead(g, v, l, t, e);
+    return;
   }
 
   if (! level_is_smoke(g, v, l, t->at)) {
