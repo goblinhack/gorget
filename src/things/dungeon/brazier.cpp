@@ -101,7 +101,6 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_blit_square_outlined);
   tp_flag_set(tp, is_brazier);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_cursor_path_hazard);

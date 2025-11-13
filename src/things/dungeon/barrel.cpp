@@ -89,6 +89,7 @@ bool tp_load_barrel(void)
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_obs_to_vision);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_shovable);
