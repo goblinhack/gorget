@@ -130,13 +130,12 @@ static bool wid_rightbar_create_window(Gamep g)
 
       wid_thing_info(g, v, l, t, wid_rightbar, UI_RIGHTBAR_WIDTH);
     }
-
-    wid_rightbar_create_minimap_level(g);
   }
 
   //
-  // Always show the world
+  // Always show minimaps
   //
+  wid_rightbar_create_minimap_level(g);
   wid_rightbar_create_minimap_world(g);
 
   wid_update(g, wid_rightbar->wid_popup_container);

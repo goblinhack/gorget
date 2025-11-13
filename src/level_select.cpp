@@ -826,6 +826,8 @@ void level_select_mouse_motion(Gamep g, Levelsp v, Levelp l)
   }
 
   game_request_to_remake_ui_set(g);
+
+  level_minimaps_update(g, v, level_over);
 }
 
 //

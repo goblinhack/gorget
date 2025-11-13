@@ -46,19 +46,23 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
 
   for (auto x = 0; x < LEVELS_ACROSS; x++) {
     for (auto y = 0; y < LEVELS_DOWN; y++) {
-      color  c          = BLACK;
-      Levelp level_over = nullptr;
+      color  c              = BLACK;
+      Levelp level_at_coord = nullptr;
 
       spoint p(x, y);
       auto   s = level_select_get(g, v, p);
 
+      Levelp level_over = level_select_get_level_at_tile_coords(g, v, p);
+
       if (s->is_set) {
-        level_over = game_level_get(g, v, s->level_num);
-        if (level_over) {
-          if (level_over->player_completed_level_via_exit) {
+        level_at_coord = game_level_get(g, v, s->level_num);
+        if (level_at_coord) {
+          if (level_at_coord->player_completed_level_via_exit) {
             c = GREEN;
-          } else if (level_over->player_fell_out_of_level) {
+          } else if (level_at_coord->player_fell_out_of_level) {
             c = GREEN4;
+          } else if (level_at_coord == level_over) {
+            c = GRAY50;
           } else {
             c = GRAY20;
           }
@@ -67,7 +71,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
             c = YELLOW;
           }
 
-          if (level_over->level_num == player->level_num) {
+          if (level_at_coord->level_num == player->level_num) {
             c = CYAN;
           }
         } else {
