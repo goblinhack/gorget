@@ -1,11 +1,11 @@
 bugs
 ----
-if things explode, need a message, e.g. barrel
+show the damage from falling in topcon
 press enter/space to enter levels from level select?
 auto descend / need to handle jumping onto tile also
-show the damage from falling in topcon
+if things explode, need a message, e.g. barrel
+if things fall over, need a message, e.g. barrel
 need to ask if you want to kick over a brazier
-center minimap pixel
 minimap always light certain tiles
 popup over minimaps?
 damaged door visuals

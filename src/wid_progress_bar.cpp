@@ -81,5 +81,4 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
   wid_update(g, wid_progress_bar_window->wid_text_area->wid_text_area);
 
   sdl_flush_display(g, true /* force */);
-  SDL_Delay(100);
 }

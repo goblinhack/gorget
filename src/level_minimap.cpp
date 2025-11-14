@@ -21,8 +21,8 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   const int  fbo = FBO_MINIMAP_WORLD;
-  const auto dx  = MAP_WORLD_SCALE * LEVEL_SCALE;
-  const auto dy  = MAP_WORLD_SCALE * LEVEL_SCALE;
+  const auto dx  = MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * LEVEL_SCALE;
+  const auto dy  = MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * LEVEL_SCALE;
 
   //
   // The level passed in here could be the level select level, so always look
@@ -88,8 +88,11 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
       auto brx = tlx + dx;
       auto bry = tly + dy;
 
-      tlx += 2;
-      bry -= 2;
+      //
+      // Shrink the tile by 1 pixel
+      //
+      tlx += 1;
+      tly += 1;
 
       blit(solid_tex_id, tlx, tly, brx, bry, c);
     }
@@ -134,7 +137,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
       //
       // As we map this into a widget that is composed of text chars, it ends up slightly vertically stretched
       //
-      int shrink = w / 6;
+      int shrink = (int) ((float) w / 6.6); // hack hack
       blit_fbo(g, FBO_MINIMAP_WORLD, 0 + shrink, 0 + shrink, w - shrink, h - shrink);
     }
     glPopMatrix();
@@ -179,16 +182,16 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
         c = GRAY10;
       }
       if (level_is_floor(g, v, l, p)) {
-        c = GRAY20;
+        c = GRAY30;
       }
       if (level_is_corridor(g, v, l, p)) {
-        c = GRAY10;
+        c = GRAY30;
       }
       if (level_is_wall(g, v, l, p)) {
         c = GRAY50;
       }
       if (level_is_rock(g, v, l, p)) {
-        c = BLACK;
+        c = GRAY50;
       }
       if (level_is_bridge(g, v, l, p)) {
         c = BROWN4;
@@ -274,8 +277,8 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
   //  sdl_fbo_dump(g, FBO_MINIMAP_LEVEL, "level");
 
   level_minimap_world_update(g, v, l);
-  // sdl_fbo_dump(g, FBO_MINIMAP_WORLD, "world");
+  //  sdl_fbo_dump(g, FBO_MINIMAP_WORLD, "world");
 
   level_minimap_world_update_rotated(g, v, l);
-  // sdl_fbo_dump(g, FBO_MINIMAP_WORLD_ROTATED, "world-rotated");
+  //  sdl_fbo_dump(g, FBO_MINIMAP_WORLD_ROTATED, "world-rotated");
 }

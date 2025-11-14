@@ -538,12 +538,12 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
       h = game_window_pix_height_get(g);
       break;
     case FBO_MINIMAP_WORLD_ROTATED :
-      w = game_map_fbo_width_get(g);
-      h = game_map_fbo_height_get(g);
+      w = MAP_WIDTH * MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * 2;
+      h = MAP_HEIGHT * MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * 2;
       break;
     case FBO_MINIMAP_WORLD :
-      w = MAP_WIDTH * MAP_WORLD_SCALE;
-      h = MAP_HEIGHT * MAP_WORLD_SCALE;
+      w = MAP_WIDTH * MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL;
+      h = MAP_HEIGHT * MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL;
       break;
     case FBO_MINIMAP_LEVEL :
       w = MAP_WIDTH;

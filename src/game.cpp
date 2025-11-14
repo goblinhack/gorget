@@ -2524,7 +2524,7 @@ bool game_map_zoom_is_full_map_visible(Gamep g)
     ERR("No game pointer set");
     return false;
   }
-  return g->zoom == 1;
+  return g->zoom == MAP_ZOOM_FULL_MAP;
 }
 
 int game_map_zoom_def_get(Gamep g)
@@ -2596,7 +2596,7 @@ void game_map_zoom_toggle(Gamep g)
   if (game_map_zoom_is_full_map_visible(g)) {
     game_map_zoom_set(g, game_map_zoom_def_get(g));
   } else {
-    game_map_zoom_set(g, 1);
+    game_map_zoom_set(g, MAP_ZOOM_FULL_MAP);
   }
 
   game_map_zoom_update(g);
@@ -2636,7 +2636,7 @@ void game_map_zoom_out(Gamep g)
   TRACE_NO_INDENT();
   DBG("Zoom out");
 
-  game_map_zoom_set(g, 1);
+  game_map_zoom_set(g, MAP_ZOOM_FULL_MAP);
   game_map_zoom_update(g);
 }
 

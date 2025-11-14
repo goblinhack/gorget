@@ -13,7 +13,7 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto ext = thing_ext_struct(g, t);
   if (! ext) {
-    ERR("missing ext struct");
+    THING_ERR(t, "missing ext struct");
     return;
   }
 
@@ -26,7 +26,7 @@ bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
 
   auto ext = thing_ext_struct(g, t);
   if (! ext) {
-    ERR("missing ext struct");
+    THING_ERR(t, "missing ext struct");
     return false;
   }
 
