@@ -129,10 +129,6 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  if (thing_is_player(t)) {
-    player_fell(g, v, l, next_level, t);
-  }
-
   //
   // Choose a new landing spot for the thing
   //
@@ -153,6 +149,16 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
       .damage     = thing_fall_damage(g, v, l, t), //
   };
 
+  //
+  // "You tumble into the vuid"
+  //
+  if (thing_is_player(t)) {
+    player_fell(g, v, l, next_level, t);
+  }
+
+  //
+  // "You take n damage from falling"
+  //
   thing_damage(g, v, l, t, e);
 
   //

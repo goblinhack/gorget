@@ -65,7 +65,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   } else {
     switch (e.event_type) {
       case THING_EVENT_FALL : //
-        TOPCON(UI_WARNING_FMT_STR "You fall." UI_RESET_FMT);
+        TOPCON(UI_WARNING_FMT_STR "You took %d damage from falling." UI_RESET_FMT, e.damage);
         break;
       case THING_EVENT_SHOVED : //
         TOPCON(UI_WARNING_FMT_STR "You are shoved." UI_RESET_FMT);
