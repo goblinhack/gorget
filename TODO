@@ -3,12 +3,10 @@ bugs
 auto descend / need to handle jumping onto tile also
 if things explode, need a message, e.g. barrel
 if things fall over, need a message, e.g. barrel
+chasm see through
 need to ask if you want to kick over a brazier
-minimap always light certain tiles
-popup over minimaps?
 damaged door visuals
 bushes quiver when monster is behind?
-chasm see through
 
 features
 --------

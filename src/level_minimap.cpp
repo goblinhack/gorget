@@ -239,7 +239,14 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
         c = CYAN;
       }
 
-      if (! thing_vision_can_see_tile(g, v, l, player, p)) {
+      if (level_is_blit_colored_always(g, v, l, p)) {
+        //
+        // Keep bright colors
+        //
+      } else if (! thing_vision_can_see_tile(g, v, l, player, p)) {
+        //
+        // Dim
+        //
         c.r /= 2;
         c.g /= 2;
         c.b /= 2;
