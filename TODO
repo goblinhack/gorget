@@ -1,6 +1,5 @@
 bugs
 ----
-auto descend / need to handle jumping onto tile also
 if things explode, need a message, e.g. barrel
 if things fall over, need a message, e.g. barrel
 chasm see through

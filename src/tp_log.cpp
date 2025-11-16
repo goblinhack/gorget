@@ -15,7 +15,7 @@
 
 #include <string.h>
 
-void log_(Tpp tp, const char *fmt, va_list args)
+void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 {
   verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
@@ -33,17 +33,17 @@ void log_(Tpp tp, const char *fmt, va_list args)
   putf(MY_STDOUT, buf);
 }
 
-void log(Tpp tp, const char *fmt, ...)
+void TP_LOG(Tpp tp, const char *fmt, ...)
 {
   verify(MTYPE_TP, tp);
 
   va_list args;
   va_start(args, fmt);
-  log_(tp, fmt, args);
+  TP_LOG_(tp, fmt, args);
   va_end(args);
 }
 
-void dbg_(Tpp tp, const char *fmt, ...)
+void TP_DBG_(Tpp tp, const char *fmt, ...)
 {
   IF_NODEBUG { return; }
 
@@ -51,11 +51,11 @@ void dbg_(Tpp tp, const char *fmt, ...)
 
   va_list args;
   va_start(args, fmt);
-  log_(tp, fmt, args);
+  TP_LOG_(tp, fmt, args);
   va_end(args);
 }
 
-void die_(Tpp tp, const char *fmt, va_list args)
+void TP_DIE_(Tpp tp, const char *fmt, va_list args)
 {
   verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
@@ -72,19 +72,17 @@ void die_(Tpp tp, const char *fmt, va_list args)
   DIE("%s", buf);
 }
 
-void die(Tpp tp, const char *fmt, ...)
+void TP_DIE(Tpp tp, const char *fmt, ...)
 {
-  g_errored = true;
-
   verify(MTYPE_TP, tp);
   va_list args;
 
   va_start(args, fmt);
-  die_(tp, fmt, args);
+  TP_DIE_(tp, fmt, args);
   va_end(args);
 }
 
-void con_(Tpp tp, const char *fmt, va_list args)
+void TP_CON_(Tpp tp, const char *fmt, va_list args)
 {
   verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
@@ -108,24 +106,18 @@ void con_(Tpp tp, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void con(Tpp tp, const char *fmt, ...)
+void TP_CON(Tpp tp, const char *fmt, ...)
 {
   verify(MTYPE_TP, tp);
   va_list args;
 
   va_start(args, fmt);
-  con_(tp, fmt, args);
+  TP_CON_(tp, fmt, args);
   va_end(args);
 }
 
-void err_(Tpp tp, const char *fmt, va_list args)
+void TP_ERR_(Tpp tp, const char *fmt, va_list args)
 {
-  static bool nested_error;
-  if (nested_error) {
-    return;
-  }
-  nested_error = true;
-
   verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
@@ -148,34 +140,35 @@ void err_(Tpp tp, const char *fmt, va_list args)
   fprintf(stderr, "%s\n", buf);
 
   wid_console_log(buf);
-
-  nested_error = false;
 }
 
-void err(Tpp tp, const char *fmt, ...)
+void TP_ERR(Tpp tp, const char *fmt, ...)
 {
-  static bool nested_error;
-  if (nested_error) {
+  extern Gamep game;
+  auto         g = game;
+
+  //
+  // If multiple errors are going on, we don't need popups for all of them
+  //
+  if (g_errored) {
+    va_list args;
+    va_start(args, fmt);
+    TP_LOG_(tp, fmt, args);
+    va_end(args);
     return;
   }
-  bool old_nested_error = nested_error;
-  nested_error          = true;
 
-  if (old_nested_error) {
-    //
-    // Subsequent errors on quitting, avoid error logging
-    //
-    va_list args;
-    va_start(args, fmt);
-    log_(tp, fmt, args);
-    va_end(args);
-  } else {
-    g_errored = true;
-    va_list args;
-    va_start(args, fmt);
-    err_(tp, fmt, args);
-    va_end(args);
+  g_errored = true;
+  va_list args;
+  va_start(args, fmt);
+  TP_ERR_(tp, fmt, args);
+  va_end(args);
+
+  wid_unset_focus(g);
+  wid_unset_focus_lock();
+  wid_console_raise(g);
+
+  if (g_quitting) {
+    DIE("Error while quitting");
   }
-
-  nested_error = false;
 }

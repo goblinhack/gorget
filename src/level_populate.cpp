@@ -12,7 +12,7 @@
 
 #include <string.h>
 
-void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
+bool level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 {
   TRACE_NO_INDENT();
 
@@ -217,61 +217,86 @@ void level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
 
       if (need_floor) {
         auto tp_add = tp_floor;
-        thing_spawn(g, v, l, tp_add, at);
+        if (! thing_spawn(g, v, l, tp_add, at)) {
+          return false;
+        }
       }
 
       if (need_corridor) {
         auto tp_add = tp_corridor;
-        thing_spawn(g, v, l, tp_add, at);
+        if (! thing_spawn(g, v, l, tp_add, at)) {
+          return false;
+        }
       }
 
       if (need_dirt) {
         auto tp_add = tp_dirt;
-        thing_spawn(g, v, l, tp_add, at);
+        if (! thing_spawn(g, v, l, tp_add, at)) {
+          return false;
+        }
       }
 
       if (need_water) {
-        thing_spawn(g, v, l, tp_water, at);
+        if (! thing_spawn(g, v, l, tp_water, at)) {
+          return false;
+        }
       }
 
       if (need_foliage) {
         auto tp_add = tp_foliage;
-        thing_spawn(g, v, l, tp_add, at);
+        if (! thing_spawn(g, v, l, tp_add, at)) {
+          return false;
+        }
       }
 
       if (need_entrance) {
         auto tp_add = tp_entrance;
-        thing_spawn(g, v, l, tp_add, at);
+        if (! thing_spawn(g, v, l, tp_add, at)) {
+          return false;
+        }
         l->entrance = at;
       }
 
       if (tp) {
-        thing_spawn(g, v, l, tp, at);
+        if (! thing_spawn(g, v, l, tp, at)) {
+          return false;
+        }
       }
 
       if (! g_opt_tests) {
         if (0) {
           if (tp == tp_player) {
             if (1) {
-              thing_spawn(g, v, l, tp_random(is_trap), at + spoint(1, 0));
+              if (! thing_spawn(g, v, l, tp_random(is_trap), at + spoint(1, 0))) {
+                return false;
+              }
             }
             if (1) {
-              thing_spawn(g, v, l, tp_random(is_treasure), at + spoint(2, 0));
+              if (! thing_spawn(g, v, l, tp_random(is_treasure), at + spoint(2, 0))) {
+                return false;
+              }
             }
           }
         }
       }
     }
   }
+
+  return true;
 }
 
-void level_populate(Gamep g, Levelsp v, Levelp l, const char *in)
+bool level_populate(Gamep g, Levelsp v, Levelp l, const char *in)
 {
   TRACE_NO_INDENT();
 
-  level_populate(g, v, l, MAP_WIDTH, MAP_HEIGHT, in);
+  if (! level_populate(g, v, l, MAP_WIDTH, MAP_HEIGHT, in)) {
+    ERR("level populate failed");
+    return false;
+  }
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_on_level_populated(g, v, l, t); }
 
   level_count_items(g, v, l);
+
+  return true;
 }

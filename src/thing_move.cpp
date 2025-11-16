@@ -251,7 +251,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   t->moving_from = t->at;
   t->at          = to;
 
-  thing_push(g, v, l, t);
+  (void) thing_push(g, v, l, t);
 
   thing_is_moving_set(g, v, l, t);
 
@@ -340,7 +340,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   //
   // Join the level.
   //
-  thing_push(g, v, new_level, t);
+  (void) thing_push(g, v, new_level, t);
 
   //
   // Need to update with the new pixel position

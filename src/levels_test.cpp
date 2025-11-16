@@ -34,7 +34,7 @@ void levels_test(Gamep g)
                   /* line */ (const char *) "xx...CCC.xx",
                   /* line */ (const char *) "xx.@.CCC.xx",
                   /* line */ (const char *) "xx...CCC.xx",
-                  /* line */ (const char *) "xx.......xx",
+                  /* line */ (const char *) "xx.E.....xx",
                   /* line */ (const char *) "xx.......xx",
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* line */ (const char *) "xxxxxxxxxxx",

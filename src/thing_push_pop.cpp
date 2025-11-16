@@ -10,13 +10,13 @@
 //
 // Push the thing onto the level
 //
-void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
+bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   spoint p = t->at;
   if (is_oob(p)) {
-    return;
+    return false;
   }
 
   //
@@ -25,7 +25,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
     if (o_id == t->id) {
-      return;
+      return true;
     }
   }
 
@@ -58,7 +58,7 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       l->thing_id[ p.x ][ p.y ][ slot ] = t->id;
 
       if (0) {
-        LOG("l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp).c_str(), p.x, p.y);
+        THING_LOG(t, "l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp).c_str(), p.x, p.y);
       }
 
 #if 0
@@ -94,19 +94,20 @@ void thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       }
 #endif
 
-      return;
+      return true;
     }
   }
-
-  ERR("out of thing slots");
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     auto dump_id = l->thing_id[ p.x ][ p.y ][ slot ];
     if (dump_id) {
       auto it = thing_find(g, v, dump_id);
-      THING_LOG(it, "is using slot %u", slot);
+      THING_CON(it, "is using slot %u", slot);
     }
   }
+
+  ERR("out of thing slots");
+  return false;
 }
 
 //

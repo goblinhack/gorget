@@ -114,7 +114,7 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   t->moving_from = t->at;
   t->at          = to;
 
-  thing_push(g, v, l, t);
+  (void) thing_push(g, v, l, t);
 
   thing_is_jumping_set(g, v, l, t);
 

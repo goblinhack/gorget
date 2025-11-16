@@ -452,8 +452,11 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   level_init(g, v, l, level_num);
 
   TRACE_NO_INDENT();
-  level_populate(g, v, l, w, h, contents);
+  if (! level_populate(g, v, l, w, h, contents)) {
+    DIE("level populate failed");
+  }
 
+  TRACE_NO_INDENT();
   if (level_num >= LEVELS_DOWN) {
     DIE("too many levels deep");
   }
@@ -461,8 +464,11 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   //
   // Assign the level into the level select grid
   //
+  TRACE_NO_INDENT();
   spoint p(0, level_num);
   l->level_select_at = p;
+
+  TRACE_NO_INDENT();
   auto s             = &v->level_select.data[ p.x ][ p.y ];
   s->level_num       = l->level_num;
   s->is_set          = true;

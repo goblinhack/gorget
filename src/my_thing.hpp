@@ -578,7 +578,7 @@ void thing_level_warp_to_exit(Gamep, Levelsp, Levelp, Thingp);
 void thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
 void thing_player_event_loop(Gamep, Levelsp, Levelp);
 void thing_pop(Gamep, Levelsp, Thingp);
-void thing_push(Gamep, Levelsp, Levelp, Thingp);
+bool thing_push(Gamep, Levelsp, Levelp, Thingp);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
 void thing_temperature_damage_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);

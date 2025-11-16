@@ -4412,7 +4412,9 @@ static bool level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
   //
   // Create things
   //
-  level_populate(g, v, level, level_string.c_str());
+  if (! level_populate(g, v, level, level_string.c_str())) {
+    return false;
+  }
 
   //
   // Dump the level to the per thread output log file

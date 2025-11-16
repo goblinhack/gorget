@@ -357,15 +357,16 @@ Tpp tp_random_monst(int c);
 Tpp tp_random_player(void);
 Tpp tp_random_wall(void);
 
-void con(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void con_(Tpp, const char *fmt, va_list args); // compile error without
-void dbg_(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void die(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void die_(Tpp, const char *fmt, va_list args); // compile error without
-void err(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void err_(Tpp, const char *fmt, va_list args); // compile error without
-void log(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void log_(Tpp, const char *fmt, va_list args); // compile error without
+void TP_CON(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void TP_CON_(Tpp, const char *fmt, va_list args); // compile error without
+void TP_DBG_(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void TP_DIE(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void TP_DIE_(Tpp, const char *fmt, va_list args); // compile error without
+void TP_ERR(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void TP_ERR_(Tpp, const char *fmt, va_list args); // compile error without
+void TP_LOG(Tpp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void TP_LOG_(Tpp, const char *fmt, va_list args); // compile error without
+                                                  //
 void tp_fini(void);
 void tp_get_id(const char *, int *id);
 

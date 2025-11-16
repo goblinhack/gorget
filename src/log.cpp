@@ -330,6 +330,17 @@ void err_wrapper(const char *fmt, ...)
   extern Gamep game;
   auto         g = game;
 
+  //
+  // If multiple errors are going on, we don't need popups for all of them
+  //
+  if (g_errored) {
+    va_list args;
+    va_start(args, fmt);
+    log_(fmt, args);
+    va_end(args);
+    return;
+  }
+
   g_errored = true;
   va_list args;
   va_start(args, fmt);

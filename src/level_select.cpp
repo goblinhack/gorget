@@ -340,7 +340,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 //
 // Create a Thing for each level
 //
-static void level_select_map_set(Gamep g, Levelsp v)
+static bool level_select_map_set(Gamep g, Levelsp v)
 {
   LOG("Level select map");
   TRACE_NO_INDENT();
@@ -354,6 +354,11 @@ static void level_select_map_set(Gamep g, Levelsp v)
   if (player) {
     player_level = game_level_get(g, v, player->level_num);
   }
+
+  //
+  // Clean up all previous things
+  //
+  FOR_ALL_THINGS_ON_LEVEL(g, v, level_select, t) { thing_fini(g, v, level_select, t); }
 
   memset(level_select->debug, ' ', SIZEOF(level_select->debug));
 
@@ -384,13 +389,6 @@ static void level_select_map_set(Gamep g, Levelsp v)
       // Default
       //
       Tpp tp = tp_is_level_not_visited;
-
-      //
-      // Completed levels
-      //
-      if (l->player_completed_level_via_exit || l->player_fell_out_of_level) {
-        tp = tp_is_level_visited;
-      }
 
       //
       // Can we enter this level?
@@ -480,6 +478,13 @@ static void level_select_map_set(Gamep g, Levelsp v)
         tp = tp_is_level_final;
       }
 
+      //
+      // Completed levels
+      //
+      if (l->player_completed_level_via_exit || l->player_fell_out_of_level) {
+        tp = tp_is_level_visited;
+      }
+
       if (player) {
         //
         // Where the player is currently
@@ -527,7 +532,9 @@ static void level_select_map_set(Gamep g, Levelsp v)
           tp = tp_is_level_next;
         }
 
-        thing_spawn(g, v, level_select, tp, at);
+        if (! thing_spawn(g, v, level_select, tp, at)) {
+          return false;
+        }
         v->level_select.tile_to_level[ at.x ][ at.y ] = l->level_num;
       }
     }
@@ -556,7 +563,9 @@ static void level_select_map_set(Gamep g, Levelsp v)
 
       level_select->debug[ at.x ][ at.y ] = '-';
 
-      thing_spawn(g, v, level_select, tp_is_level_across, at);
+      if (! thing_spawn(g, v, level_select, tp_is_level_across, at)) {
+        return false;
+      }
     }
   }
 
@@ -583,7 +592,9 @@ static void level_select_map_set(Gamep g, Levelsp v)
 
       level_select->debug[ at.x ][ at.y ] = '|';
 
-      thing_spawn(g, v, level_select, tp_is_level_down, at);
+      if (! thing_spawn(g, v, level_select, tp_is_level_down, at)) {
+        return false;
+      }
     }
   }
 
@@ -597,7 +608,9 @@ static void level_select_map_set(Gamep g, Levelsp v)
       FOR_ALL_THINGS_AT(g, v, level_select, it, at) { count++; }
       if (! count) {
         auto tp_rock = tp_random(is_dirt);
-        thing_spawn(g, v, level_select, tp_rock, at);
+        if (! thing_spawn(g, v, level_select, tp_rock, at)) {
+          return false;
+        }
       }
     }
   }
@@ -606,6 +619,8 @@ static void level_select_map_set(Gamep g, Levelsp v)
   // Create joined up tiles (for the rocks)
   //
   level_assign_tiles(g, v, level_select);
+
+  return true;
 }
 
 //
