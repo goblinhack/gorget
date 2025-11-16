@@ -98,7 +98,7 @@ void wid_hiscores_show(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_hiscore_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_hiscore_key_down);
+    wid_set_on_key_down(w, wid_hiscore_key_down);
   }
 
   auto hiscores = game_hiscores_get(g);
@@ -172,7 +172,7 @@ void wid_hiscores_show(Gamep g)
     spoint tl(menu_width / 2 - 4, menu_height - 4);
     spoint br(menu_width / 2 + 3, menu_height - 2);
 
-    wid_set_on_mouse_up(g, w, wid_hiscore_mouse_up);
+    wid_set_on_mouse_up(w, wid_hiscore_mouse_up);
     wid_set_pos(w, tl, br);
   }
 

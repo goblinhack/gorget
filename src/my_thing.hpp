@@ -874,6 +874,5 @@ void   wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
 void   wid_set_thing_context(Gamep, Levelsp, Widp, Thingp);
 Thingp wid_get_thing_context(Gamep, Levelsp, Widp, int);
 void   wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp);
-void   wid_clear_thing_contexts(Gamep, Levelsp, Widp);
 
 #endif

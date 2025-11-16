@@ -222,7 +222,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_inventory_window = wid_new_square_window(g, "wid inventory");
     wid_set_pos(wid_inventory_window, tl, br);
     wid_set_style(wid_inventory_window, UI_WID_STYLE_NORMAL);
-    wid_set_on_key_down(g, wid_inventory_window, wid_inventory_key_down);
+    wid_set_on_key_down(wid_inventory_window, wid_inventory_key_down);
     wid_set_text(wid_inventory_window, "Inventory");
     wid_set_text_top(wid_inventory_window, true);
     wid_raise(g, wid_inventory_window);
@@ -265,11 +265,11 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
         if (item) {
           wid_set_thing_context(g, v, w, item);
-          wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
+          wid_set_on_mouse_up(w, wid_inventory_mouse_up);
         }
 
-        wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
-        wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+        wid_set_on_mouse_over_begin(w, wid_inventory_mouse_over_begin);
+        wid_set_on_mouse_over_end(w, wid_inventory_mouse_over_end);
 
         wid_icon[ _n_ ] = w;
       }
@@ -290,7 +290,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       spoint br(6, y_at + button_height);
       wid_set_text_lhs(w, true);
 
-      wid_set_mode(g, w, WID_MODE_NORMAL);
+      wid_set_mode( w, WID_MODE_NORMAL);
       wid_set_color(w, WID_COLOR_TEXT_FG, GRAY50);
       wid_set_style(w, button_style);
       wid_set_pos(w, tl, br);
@@ -298,11 +298,11 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
       if (item) {
         wid_set_thing_context(g, v, w, item);
-        wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
+        wid_set_on_mouse_up(w, wid_inventory_mouse_up);
       }
 
-      wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
-      wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+      wid_set_on_mouse_over_begin(w, wid_inventory_mouse_over_begin);
+      wid_set_on_mouse_over_end(w, wid_inventory_mouse_over_end);
 
       wid_shortcut[ _n_ ] = w;
     }
@@ -336,11 +336,11 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
         if (item) {
           wid_set_thing_context(g, v, w, item);
-          wid_set_on_mouse_up(g, w, wid_inventory_mouse_up);
+          wid_set_on_mouse_up(w, wid_inventory_mouse_up);
         }
 
-        wid_set_on_mouse_over_begin(g, w, wid_inventory_mouse_over_begin);
-        wid_set_on_mouse_over_end(g, w, wid_inventory_mouse_over_end);
+        wid_set_on_mouse_over_begin(w, wid_inventory_mouse_over_begin);
+        wid_set_on_mouse_over_end(w, wid_inventory_mouse_over_end);
 
         wid_item[ _n_ ] = w;
       }
@@ -355,7 +355,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
     spoint tl(inventory_width / 2 - 4, inventory_height - 4);
     spoint br(inventory_width / 2 + 3, inventory_height - 2);
-    wid_set_on_mouse_up(g, w, wid_inventory_back);
+    wid_set_on_mouse_up(w, wid_inventory_back);
     wid_set_pos(w, tl, br);
   }
 

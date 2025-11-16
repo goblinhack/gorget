@@ -98,7 +98,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
       wid_set_pos(child, text_tl, text_br);
       wid_set_text_centerx(child, true);
 
-      wid_set_prev(g, child, prev);
+      wid_set_prev(child, prev);
       prev = child;
 
       if (row == 0) {

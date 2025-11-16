@@ -407,7 +407,7 @@ void wid_cfg_gfx_select(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_cfg_gfx_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_cfg_gfx_key_down);
+    wid_set_on_key_down(w, wid_cfg_gfx_key_down);
   }
 
   int y_at = 0;
@@ -431,7 +431,7 @@ void wid_cfg_gfx_select(Gamep g)
 
     spoint tl(1, y_at);
     spoint br(6, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_gfx_back);
+    wid_set_on_mouse_up(w, wid_cfg_gfx_back);
     wid_set_pos(w, tl, br);
   }
 
@@ -442,7 +442,7 @@ void wid_cfg_gfx_select(Gamep g)
 
     spoint tl(10, y_at);
     spoint br(16, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_gfx_resolution_apply);
+    wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_apply);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Apply");
   }
@@ -491,7 +491,7 @@ void wid_cfg_gfx_select(Gamep g)
       spoint tl(width / 2 + 12, y_at);
       spoint br(width / 2 + 14, y_at + 2);
       wid_set_pos(w, tl, br);
-      wid_set_on_mouse_up(g, w, wid_cfg_gfx_resolution_incr);
+      wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_incr);
       wid_set_text(w, "+");
     }
     {
@@ -502,7 +502,7 @@ void wid_cfg_gfx_select(Gamep g)
       spoint tl(width / 2 + 16, y_at);
       spoint br(width / 2 + 18, y_at + 2);
       wid_set_pos(w, tl, br);
-      wid_set_on_mouse_up(g, w, wid_cfg_gfx_resolution_decr);
+      wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_decr);
       wid_set_text(w, "-");
     }
   }
@@ -596,7 +596,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_gfx_fullscreen_desktop_toggle);
+    wid_set_on_mouse_up(w, wid_cfg_gfx_fullscreen_desktop_toggle);
 
     if (game_gfx_fullscreen_desktop_get(g)) {
       wid_set_text(w, "True");
@@ -645,7 +645,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_gfx_fullscreen_toggle);
+    wid_set_on_mouse_up(w, wid_cfg_gfx_fullscreen_toggle);
 
     if (game_gfx_fullscreen_get(g)) {
       wid_set_text(w, "True");
@@ -678,7 +678,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_gfx_borderless_toggle);
+    wid_set_on_mouse_up(w, wid_cfg_gfx_borderless_toggle);
 
     if (game_gfx_borderless_get(g)) {
       wid_set_text(w, "True");
@@ -711,7 +711,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_gfx_vsync_enable_toggle);
+    wid_set_on_mouse_up(w, wid_cfg_gfx_vsync_enable_toggle);
 
     if (game_gfx_vsync_enable_get(g)) {
       wid_set_text(w, "True");
@@ -744,7 +744,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_other_fps_counter_toggle);
+    wid_set_on_mouse_up(w, wid_cfg_other_fps_counter_toggle);
 
     if (game_fps_counter_get(g)) {
       wid_set_text(w, "True");

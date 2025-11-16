@@ -634,8 +634,8 @@ void Game::load_select(void)
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_load = new WidPopup(game, "Game load", outer_tl, outer_br, nullptr, "", false, false);
 
-  wid_set_on_key_up(game, wid_load->wid_popup_container, wid_load_key_up);
-  wid_set_on_key_down(game, wid_load->wid_popup_container, wid_load_key_down);
+  wid_set_on_key_up(wid_load->wid_popup_container, wid_load_key_up);
+  wid_set_on_key_down(wid_load->wid_popup_container, wid_load_key_down);
 
   {
     TRACE_NO_INDENT();
@@ -646,7 +646,7 @@ void Game::load_select(void)
     spoint br(menu_width / 2 + 3, menu_height - 2);
 
     wid_set_style(w, UI_WID_STYLE_NORMAL);
-    wid_set_on_mouse_up(game, w, wid_load_cancel);
+    wid_set_on_mouse_up(w, wid_load_cancel);
 
     wid_set_pos(w, tl, br);
   }
@@ -689,9 +689,9 @@ void Game::load_select(void)
         s += tmp.save_meta;
       }
       if (slot == UI_WID_SAVE_SLOTS - 1) {
-        wid_set_on_mouse_up(game, w, wid_load_saved_snapshot);
+        wid_set_on_mouse_up(w, wid_load_saved_snapshot);
       } else {
-        wid_set_on_mouse_up(game, w, wid_load_mouse_up);
+        wid_set_on_mouse_up(w, wid_load_mouse_up);
       }
       slot_valid[ slot ] = true;
     }
@@ -731,7 +731,7 @@ bool game_load_last_config(const char *appdata)
     newptr(MTYPE_GAME, game, "game (1)");
     reset_globals();
     game_save_config(game);
-    g_errored = false;
+    g_errored_thread_id = -1;
   } else if (! config_error.empty()) {
     sdl_msg_box("Config error: %s. Will need to reset config.", config_error.c_str());
     oldptr(MTYPE_GAME, game);
@@ -741,7 +741,7 @@ bool game_load_last_config(const char *appdata)
     newptr(MTYPE_GAME, game, "game (2)");
     reset_globals();
     game_save_config(game);
-    g_errored = false;
+    g_errored_thread_id = -1;
   }
 
   return game_load_error == "";

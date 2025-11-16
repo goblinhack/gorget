@@ -10,11 +10,11 @@ void wid_gray_out_button(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode( w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GRAY50);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode( w, WID_MODE_NORMAL);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GRAY40);
 }
@@ -25,11 +25,11 @@ Widp wid_new_back_button(Gamep g, Widp parent, const std::string name)
 
   auto w = wid_new_square_button(g, parent, name);
   wid_set_text(w, "BACK");
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode( w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, RED);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode( w, WID_MODE_NORMAL);
   return w;
 }
 
@@ -38,11 +38,11 @@ Widp wid_new_menu_button(Gamep g, Widp parent, const std::string name)
   TRACE_NO_INDENT();
 
   auto w = wid_new_square_button(g, parent, name);
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode( w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode( w, WID_MODE_NORMAL);
   return w;
 }
 
@@ -51,11 +51,11 @@ Widp wid_new_button(Gamep g, Widp parent, const std::string name)
   TRACE_NO_INDENT();
 
   auto w = wid_new_square_button(g, parent, name);
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode( w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode( w, WID_MODE_NORMAL);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GRAY20);
   return w;
@@ -66,11 +66,11 @@ Widp wid_new_green_button(Gamep g, Widp parent, const std::string name)
   TRACE_NO_INDENT();
 
   auto w = wid_new_square_button(g, parent, name);
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode( w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GREEN);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode( w, WID_MODE_NORMAL);
   wid_set_style(w, UI_WID_STYLE_GREEN);
   return w;
 }
@@ -80,11 +80,11 @@ Widp wid_new_red_button(Gamep g, Widp parent, const std::string name)
   TRACE_NO_INDENT();
 
   auto w = wid_new_square_button(g, parent, name);
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode( w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, RED);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode( w, WID_MODE_NORMAL);
   wid_set_style(w, UI_WID_STYLE_RED);
   return w;
 }

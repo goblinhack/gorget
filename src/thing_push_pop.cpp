@@ -94,6 +94,17 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       }
 #endif
 
+      //
+      // Error testing
+      //
+      if (0) {
+        static int xxx;
+        if (xxx++ == 100) {
+          ERR("out of thing slots");
+          return false;
+        }
+      }
+
       return true;
     }
   }

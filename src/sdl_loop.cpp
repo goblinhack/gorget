@@ -61,16 +61,22 @@ void sdl_loop(Gamep g)
       sdl_tick(g);
     }
 
-    static bool old_g_errored;
-    if (unlikely(g_errored)) {
-      if (g_errored != old_g_errored) {
-        CON(UI_IMPORTANT_FMT_STR "An error occurred. Check the logs." UI_RESET_FMT);
+    static int old_g_errored_thread_id;
+    if (unlikely(AN_ERROR_OCCURRED())) {
+      if (g_errored_thread_id != old_g_errored_thread_id) {
+        if (g_errored_thread_id == 0) {
+          CON(UI_IMPORTANT_FMT_STR "An error occurred on the main thread. Check the logs." UI_RESET_FMT);
+        } else {
+          CON(UI_IMPORTANT_FMT_STR "An error occurred on thread %d. Check the logs." UI_RESET_FMT,
+              g_errored_thread_id);
+        }
+        CON("Last error: %s", g_error_last.c_str());
         auto key = ::to_string(game_key_console_get(g));
         CON("To continue playing at your own risk, 'clear errored' and then press <%s>", key.c_str());
         wid_console_raise(g);
       }
     }
-    old_g_errored = g_errored;
+    old_g_errored_thread_id = g_errored_thread_id;
 
     //
     // Various event frequencies
@@ -191,7 +197,7 @@ void sdl_loop(Gamep g)
       //
       // Per tick state handling
       //
-      if (! g_errored) {
+      if (NO_ERROR_OCCURRED()) {
         game_tick(g);
       }
     }

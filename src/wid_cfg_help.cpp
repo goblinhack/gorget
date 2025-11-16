@@ -935,7 +935,7 @@ void wid_cfg_help_select(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_cfg_help_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_cfg_help_key_down);
+    wid_set_on_key_down(w, wid_cfg_help_key_down);
     wid_set_style(w, UI_WID_STYLE_NORMAL);
   }
 
@@ -963,7 +963,7 @@ void wid_cfg_help_select(Gamep g)
 
     spoint tl(1, y_at);
     spoint br(8, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_help_back);
+    wid_set_on_mouse_up(w, wid_cfg_help_back);
     wid_set_pos(w, tl, br);
   }
   {
@@ -973,7 +973,7 @@ void wid_cfg_help_select(Gamep g)
 
     spoint tl(width - 17, y_at);
     spoint br(width - 12, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_help_save);
+    wid_set_on_mouse_up(w, wid_cfg_help_save);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Save");
   }
@@ -984,7 +984,7 @@ void wid_cfg_help_select(Gamep g)
 
     spoint tl(width - 10, y_at);
     spoint br(width - 3, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_help_cancel);
+    wid_set_on_mouse_up(w, wid_cfg_help_cancel);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Cancel");
   }
@@ -1001,7 +1001,7 @@ void wid_cfg_help_select(Gamep g)
 
     spoint tl(1, y_at);
     spoint br(width - 3, y_at);
-    wid_set_on_mouse_up(g, w, wid_cfg_help_profile_wasd);
+    wid_set_on_mouse_up(w, wid_cfg_help_profile_wasd);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Use W,A,S,D for moving");
   }
@@ -1013,7 +1013,7 @@ void wid_cfg_help_select(Gamep g)
 
     spoint tl(1, y_at);
     spoint br(width - 3, y_at);
-    wid_set_on_mouse_up(g, w, wid_cfg_help_profile_arrow_keys);
+    wid_set_on_mouse_up(w, wid_cfg_help_profile_arrow_keys);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Use arrow keys for moving");
   }
@@ -1044,7 +1044,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_save_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_save);
+    wid_set_on_mouse_up(w, wid_cfg_key_save);
   }
   ///////////////////////////////////////////////////////////////////////
   // load
@@ -1071,7 +1071,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_load_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_load);
+    wid_set_on_mouse_up(w, wid_cfg_key_load);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1099,7 +1099,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_move_up_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_move_up);
+    wid_set_on_mouse_up(w, wid_cfg_key_move_up);
   }
   ///////////////////////////////////////////////////////////////////////
   // Move left
@@ -1126,7 +1126,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_move_left_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_move_left);
+    wid_set_on_mouse_up(w, wid_cfg_key_move_left);
   }
   ///////////////////////////////////////////////////////////////////////
   // Move down
@@ -1153,7 +1153,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_move_down_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_move_down);
+    wid_set_on_mouse_up(w, wid_cfg_key_move_down);
   }
   ///////////////////////////////////////////////////////////////////////
   // Move right
@@ -1180,7 +1180,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_move_right_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_move_right);
+    wid_set_on_mouse_up(w, wid_cfg_key_move_right);
   }
   ///////////////////////////////////////////////////////////////////////
   // jump
@@ -1207,7 +1207,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_jump_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_jump);
+    wid_set_on_mouse_up(w, wid_cfg_key_jump);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1239,7 +1239,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_wait_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_wait);
+    wid_set_on_mouse_up(w, wid_cfg_key_wait);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1267,7 +1267,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_inventory_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_inventory);
+    wid_set_on_mouse_up(w, wid_cfg_key_inventory);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1295,7 +1295,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_ascend_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_ascend);
+    wid_set_on_mouse_up(w, wid_cfg_key_ascend);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1323,7 +1323,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_descend_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_descend);
+    wid_set_on_mouse_up(w, wid_cfg_key_descend);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1355,7 +1355,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_zoom_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_zoom);
+    wid_set_on_mouse_up(w, wid_cfg_key_zoom);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1383,7 +1383,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_screenshot_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_screenshot);
+    wid_set_on_mouse_up(w, wid_cfg_key_screenshot);
   }
 
   ///////////////////////////////////////////////////////////////////////
@@ -1415,7 +1415,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_quit_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_quit);
+    wid_set_on_mouse_up(w, wid_cfg_key_quit);
   }
   ///////////////////////////////////////////////////////////////////////
   // console
@@ -1442,7 +1442,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_console_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_console);
+    wid_set_on_mouse_up(w, wid_cfg_key_console);
   }
   ///////////////////////////////////////////////////////////////////////
   // help
@@ -1469,7 +1469,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_help_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_help);
+    wid_set_on_mouse_up(w, wid_cfg_key_help);
   }
 
   y_at++;
@@ -1498,7 +1498,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused1_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused1);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused1);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused2
@@ -1525,7 +1525,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused2_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused2);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused2);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused3
@@ -1552,7 +1552,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused3_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused3);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused3);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused4
@@ -1579,7 +1579,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused4_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused4);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused4);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused5
@@ -1606,7 +1606,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused5_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused5);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused5);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused6
@@ -1633,7 +1633,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused6_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused6);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused6);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused7
@@ -1660,7 +1660,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused7_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused7);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused7);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused8
@@ -1687,7 +1687,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused8_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused8);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused8);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused9
@@ -1714,7 +1714,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused9_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused9);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused9);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused10
@@ -1741,7 +1741,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused10_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused10);
+    wid_set_on_mouse_up(w, wid_cfg_key_unused10);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused11
@@ -1768,7 +1768,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused11_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused11);
+    wid_set_on_mouse_up( w, wid_cfg_key_unused11);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused12
@@ -1795,7 +1795,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused12_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused12);
+    wid_set_on_mouse_up( w, wid_cfg_key_unused12);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused13
@@ -1822,7 +1822,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused13_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused13);
+    wid_set_on_mouse_up( w, wid_cfg_key_unused13);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused14
@@ -1849,7 +1849,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused14_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused14);
+    wid_set_on_mouse_up( w, wid_cfg_key_unused14);
   }
   ///////////////////////////////////////////////////////////////////////
   // unused15
@@ -1876,7 +1876,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2 + rhs_button_right, y_at);
     wid_set_pos(w, tl, br);
     wid_set_text(w, ::to_string(game_key_unused15_get(g)));
-    wid_set_on_mouse_up(g, w, wid_cfg_key_unused15);
+    wid_set_on_mouse_up( w, wid_cfg_key_unused15);
   }
 
   wid_update(g, wid_cfg_help_window->wid_text_area->wid_text_area);

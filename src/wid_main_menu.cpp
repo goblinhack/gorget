@@ -344,8 +344,8 @@ void wid_main_menu_select(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_main_menu_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_main_menu_key_down);
-    wid_set_on_tick(g, w, wid_main_menu_tick);
+    wid_set_on_key_down(w, wid_main_menu_key_down);
+    wid_set_on_tick(w, wid_main_menu_tick);
   }
 
   {
@@ -355,7 +355,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(g, w, game_menu_new_game);
+    wid_set_on_mouse_up(w, game_menu_new_game);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "ew game" UI_RESET_FMT);
   }
@@ -367,7 +367,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(g, w, wid_main_menu_load);
+    wid_set_on_mouse_up(w, wid_main_menu_load);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "L" UI_FMT_STR "oad game");
   }
@@ -379,7 +379,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(g, w, wid_main_menu_cfg);
+    wid_set_on_mouse_up(w, wid_main_menu_cfg);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "O" UI_FMT_STR "ptions");
   }
@@ -391,7 +391,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(g, w, wid_main_menu_more);
+    wid_set_on_mouse_up(w, wid_main_menu_more);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "M" UI_FMT_STR "ore");
   }
@@ -403,7 +403,7 @@ void wid_main_menu_select(Gamep g)
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
-    wid_set_on_mouse_up(g, w, wid_main_menu_quit);
+    wid_set_on_mouse_up(w, wid_main_menu_quit);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Q" UI_FMT_STR "uit Game");
   }

@@ -123,7 +123,7 @@ void wid_quit_select(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_quit_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_quit_key_down);
+    wid_set_on_key_down(w, wid_quit_key_down);
   }
 
   int y_at = 0;
@@ -147,7 +147,7 @@ void wid_quit_select(Gamep g)
 
     spoint tl(0, y_at);
     spoint br(width / 2 - 2, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_quit_yes);
+    wid_set_on_mouse_up(w, wid_quit_yes);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Y" UI_RESET_FMT "es");
   }
@@ -159,7 +159,7 @@ void wid_quit_select(Gamep g)
 
     spoint tl(width / 2, y_at);
     spoint br(width - 2, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_quit_no);
+    wid_set_on_mouse_up(w, wid_quit_no);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "N" UI_RESET_FMT "o");
   }

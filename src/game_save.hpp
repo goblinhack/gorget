@@ -467,8 +467,8 @@ bool Game::save_select(void)
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_save = new WidPopup(game, "Game save", outer_tl, outer_br, nullptr, "", false, false);
 
-  wid_set_on_key_up(game, wid_save->wid_popup_container, wid_save_key_up);
-  wid_set_on_key_down(game, wid_save->wid_popup_container, wid_save_key_down);
+  wid_set_on_key_up(wid_save->wid_popup_container, wid_save_key_up);
+  wid_set_on_key_down(wid_save->wid_popup_container, wid_save_key_down);
 
   {
     TRACE_NO_INDENT();
@@ -478,7 +478,7 @@ bool Game::save_select(void)
     spoint tl(menu_width / 2 - 4, menu_height - 4);
     spoint br(menu_width / 2 + 3, menu_height - 2);
 
-    wid_set_on_mouse_up(game, w, wid_save_cancel);
+    wid_set_on_mouse_up(w, wid_save_cancel);
     wid_set_pos(w, tl, br);
   }
 
@@ -521,7 +521,7 @@ bool Game::save_select(void)
       // Cannot save over
       //
     } else {
-      wid_set_on_mouse_up(game, w, wid_save_mouse_up);
+      wid_set_on_mouse_up(w, wid_save_mouse_up);
       wid_set_int_context(w, slot);
     }
 

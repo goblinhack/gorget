@@ -78,7 +78,7 @@ void wid_credits_select(Gamep g)
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_credits_window = new WidPopup(g, "Credits", outer_tl, outer_br, nullptr, "", false, false);
 
-  wid_set_on_key_down(g, wid_credits_window->wid_popup_container, wid_credits_key_down);
+  wid_set_on_key_down(wid_credits_window->wid_popup_container, wid_credits_key_down);
 
   wid_credits_window->log(g, UI_HIGHLIGHT_FMT_STR "Development");
   wid_credits_window->log(g, "goblinhack@gmail.com");
@@ -102,7 +102,7 @@ void wid_credits_select(Gamep g)
     spoint tl(menu_width / 2 - 4, menu_height - 4);
     spoint br(menu_width / 2 + 3, menu_height - 2);
 
-    wid_set_on_mouse_up(g, w, wid_credits_mouse_up);
+    wid_set_on_mouse_up(w, wid_credits_mouse_up);
     wid_set_pos(w, tl, br);
   }
 

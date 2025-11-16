@@ -165,7 +165,7 @@ void THING_ERR(Thingp t, const char *fmt, ...)
   //
   // If multiple errors are going on, we don't need popups for all of them
   //
-  if (g_errored) {
+  if (AN_ERROR_OCCURRED()) {
     va_list args;
     va_start(args, fmt);
     thing_log_(t, fmt, args);
@@ -173,7 +173,7 @@ void THING_ERR(Thingp t, const char *fmt, ...)
     return;
   }
 
-  g_errored = true;
+  g_errored_thread_id = g_thread_id;
   va_list args;
   va_start(args, fmt);
   thing_err_(t, fmt, args);

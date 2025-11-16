@@ -122,7 +122,7 @@ void wid_warning(Gamep g, std::string warning, wid_warning_callback_t callback)
   auto   width = br.x - tl.x;
 
   wid_warning_window = new WidPopup(g, "Game warning", tl, br, nullptr, "", false, false);
-  wid_set_on_key_down(g, wid_warning_window->wid_popup_container, wid_warning_key_down);
+  wid_set_on_key_down(wid_warning_window->wid_popup_container, wid_warning_key_down);
   wid_set_do_not_lower(wid_warning_window->wid_popup_container, true);
   wid_set_void_context(wid_warning_window->wid_popup_container, (void *) callback);
 
@@ -138,7 +138,7 @@ void wid_warning(Gamep g, std::string warning, wid_warning_callback_t callback)
 
     spoint tl1(width / 2 - 12, y_at + 2);
     spoint br1(width / 2 - 2, y_at + 4);
-    wid_set_on_mouse_down(g, w, wid_warning_no);
+    wid_set_on_mouse_down(w, wid_warning_no);
     wid_set_void_context(w, (void *) callback);
     wid_set_pos(w, tl1, br1);
     wid_set_text(w, "No");
@@ -151,7 +151,7 @@ void wid_warning(Gamep g, std::string warning, wid_warning_callback_t callback)
 
     spoint tl2(width / 2 + 0, y_at + 2);
     spoint br2(width / 2 + 10, y_at + 4);
-    wid_set_on_mouse_down(g, w, wid_warning_yes);
+    wid_set_on_mouse_down(w, wid_warning_yes);
     wid_set_void_context(w, (void *) callback);
     wid_set_pos(w, tl2, br2);
     wid_set_text(w, "Yes");

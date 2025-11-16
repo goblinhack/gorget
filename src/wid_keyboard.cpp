@@ -679,11 +679,11 @@ static void wid_keyboard_tick(Gamep g, Widp w)
        */
       int mode;
       for (mode = WID_MODE_NORMAL; mode < WID_MODE_LAST; mode++) {
-        wid_set_mode(g, b, (wid_mode) mode);
+        wid_set_mode( b, (wid_mode) mode);
         wid_set_color(b, WID_COLOR_TEXT_FG, c);
       }
 
-      wid_set_mode(g, w, (wid_mode) WID_MODE_NORMAL);
+      wid_set_mode( w, (wid_mode) WID_MODE_NORMAL);
     }
   }
 }
@@ -726,9 +726,9 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
     wid_set_pos(window, tl, br);
     wid_set_style(window, UI_WID_STYLE_NORMAL);
-    wid_set_on_key_down(g, window, wid_keyboard_parent_key_down);
-    wid_set_on_joy_button(g, window, wid_keyboard_parent_joy_button);
-    wid_set_on_destroy(g, window, wid_keyboard_destroy);
+    wid_set_on_key_down(window, wid_keyboard_parent_key_down);
+    wid_set_on_joy_button(window, wid_keyboard_parent_joy_button);
+    wid_set_on_destroy(window, wid_keyboard_destroy);
     wid_set_void_context(window, ctx);
   }
 
@@ -761,7 +761,7 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     wid_set_pos(w, tl, br);
     wid_set_text(w, text);
     wid_set_show_cursor(w, true);
-    wid_set_on_key_down(g, w, wid_keyboard_text_input_key_event);
+    wid_set_on_key_down(w, wid_keyboard_text_input_key_event);
     wid_set_void_context(w, ctx);
     wid_set_style(w, UI_WID_STYLE_RED);
 
@@ -772,12 +772,12 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     wid_set_color(w, WID_COLOR_BG, GRAY20);
     wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
 
-    wid_set_mode(g, w, WID_MODE_OVER);
+    wid_set_mode( w, WID_MODE_OVER);
 
     wid_set_color(w, WID_COLOR_BG, GRAY20);
     wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
 
-    wid_set_mode(g, w, WID_MODE_NORMAL);
+    wid_set_mode( w, WID_MODE_NORMAL);
   }
 
   /*
@@ -786,7 +786,7 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
   {
     Widp button_container = wid_new_square_button(g, window, "wid keyboard buttons");
     wid_set_shape_none(button_container);
-    wid_set_on_tick(g, button_container, wid_keyboard_tick);
+    wid_set_on_tick(button_container, wid_keyboard_tick);
 
     spoint tl = {1, 7};
     spoint br = {width - 1, height - 2};
@@ -816,9 +816,9 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
         wid_set_text(b, keys[ y ][ x ]);
 
-        wid_set_on_key_down(g, b, wid_keyboard_button_key_event);
-        wid_set_on_joy_button(g, b, wid_keyboard_button_joy_button_event);
-        wid_set_on_mouse_down(g, b, wid_keyboard_button_mouse_event);
+        wid_set_on_key_down(b, wid_keyboard_button_key_event);
+        wid_set_on_joy_button(b, wid_keyboard_button_joy_button_event);
+        wid_set_on_mouse_down(b, wid_keyboard_button_mouse_event);
 
         wid_set_void_context(b, ctx);
         int focus = (y << 8) | x;

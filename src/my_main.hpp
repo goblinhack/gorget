@@ -80,7 +80,12 @@ void  close_stdout(void);
 #else
 #define ERR                                                                                                          \
   TRACE_NO_INDENT();                                                                                                 \
-  LOG("Error at %s:%s():%u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                                            \
+  if (g_thread_id == -1) {                                                                                           \
+    LOG("Error at %s:%s():%u on the main thread", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                       \
+  } else {                                                                                                           \
+    CON("Error at %s:%s():%u on thread %d", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                \
+    LOG("Error at %s:%s():%u on thread %d", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM, g_thread_id);                \
+  }                                                                                                                  \
   err_wrapper
 #endif
 

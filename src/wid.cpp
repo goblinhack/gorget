@@ -150,7 +150,7 @@ bool wid_init(void)
   return true;
 }
 
-void wid_fini(Gamep g)
+void wid_fini(Gamep g_maybe_null)
 {
   TRACE_NO_INDENT();
 
@@ -159,7 +159,7 @@ void wid_fini(Gamep g)
 
   wid_on_screen_at = {};
 
-  wid_gc_all(g);
+  wid_gc_all(g_maybe_null);
 
   for (;;) {
     if (! wid_top_level.size()) {
@@ -168,7 +168,7 @@ void wid_fini(Gamep g)
 
     auto iter  = wid_top_level.begin();
     auto child = iter->second;
-    wid_destroy_immediate(g, child);
+    wid_destroy_immediate(g_maybe_null, child);
   }
 
   wid_top_level                = {};
@@ -569,35 +569,9 @@ Thingp wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which)
   return thing_find_optional(g, v, w->thing_id_context[ which ]);
 }
 
-void wid_clear_thing_contexts(Gamep g, Levelsp v, Widp w)
+void wid_set_prev(Widp w, Widp prev)
 {
   TRACE_NO_INDENT();
-
-  if (! g) {
-    ERR("NULL game pointer");
-    return;
-  }
-
-  if (! v) {
-    ERR("NULL levels pointer");
-    return;
-  }
-
-  if (! w) {
-    ERR("NULL pointer");
-    return;
-  }
-
-  std::fill(w->thing_id_context.begin(), w->thing_id_context.end(), 0);
-}
-
-void wid_set_prev(Gamep g, Widp w, Widp prev)
-{
-  TRACE_NO_INDENT();
-
-  if (! g) {
-    return;
-  }
 
   if (unlikely(! w)) {
     DIE("No wid");
@@ -718,14 +692,9 @@ Widp wid_get_scrollbar_horiz(Widp w)
   return w->scrollbar_horiz;
 }
 
-void wid_set_ignore_events(Gamep g, Widp w, uint8_t val)
+void wid_set_ignore_events(Widp w, uint8_t val)
 {
   TRACE_NO_INDENT();
-
-  if (! g) {
-    return;
-  }
-
   w->ignore_events = val;
 }
 
@@ -735,13 +704,9 @@ void wid_set_ignore_scroll_events(Widp w, uint8_t val)
   w->ignore_scroll_events = val;
 }
 
-static void wid_set_scissors(Gamep g, int tlx, int tly, int brx, int bry)
+static void wid_set_scissors(int tlx, int tly, int brx, int bry)
 {
   TRACE_NO_INDENT();
-
-  if (! g) {
-    return;
-  }
 
   if (! wid_safe()) {
     return;
@@ -1098,13 +1063,9 @@ char wid_event_to_char(const struct SDL_Keysym *evt)
 //
 // Widget mode, whether it is active, inactive etc...
 //
-void wid_set_mode(Gamep g, Widp w, wid_mode mode)
+void wid_set_mode(Widp w, wid_mode mode)
 {
   TRACE_NO_INDENT();
-
-  if (! g) {
-    return;
-  }
 
   w->ts_last_mode_change = wid_time;
   w->mode                = mode;
@@ -1129,13 +1090,29 @@ wid_mode wid_get_mode(Widp w)
   return w->mode;
 }
 
-std::string to_string(Widp w) { return (w->to_string); }
+std::string to_string(Widp w)
+{
+  TRACE_NO_INDENT();
+  return w->to_string;
+}
 
-std::string wid_name(Widp w) { return (w->name); }
+std::string wid_name(Widp w)
+{
+  TRACE_NO_INDENT();
+  return w->name;
+}
 
-std::string wid_get_text(Widp w) { return (w->text); }
+std::string wid_get_text(Widp w)
+{
+  TRACE_NO_INDENT();
+  return w->text;
+}
 
-std::string wid_get_name(Widp w) { return (w->name); }
+std::string wid_get_name(Widp w)
+{
+  TRACE_NO_INDENT();
+  return w->name;
+}
 
 static std::string wid_get_text_with_cursor(Widp w)
 {
@@ -1664,11 +1641,6 @@ void wid_set_focus(Gamep g, Widp w)
 void wid_unset_focus(Gamep g)
 {
   TRACE_NO_INDENT();
-
-  if (! g) {
-    return;
-  }
-
   wid_mouse_focus_end(g);
 }
 
@@ -1692,7 +1664,7 @@ void wid_set_active(Gamep g, Widp w)
     return;
   }
 
-  wid_set_mode(g, w, WID_MODE_ACTIVE);
+  wid_set_mode(w, WID_MODE_ACTIVE);
 }
 
 void wid_focus_lock(Gamep g, Widp w)
@@ -1716,70 +1688,45 @@ void wid_unset_focus_lock(void)
   wid_focus_locked = nullptr;
 }
 
-void wid_set_on_key_down(Gamep g, Widp w, on_key_down_t fn)
+void wid_set_on_key_down(Widp w, on_key_down_t fn)
 {
   TRACE_NO_INDENT();
-  if (! g) {
-    ERR("no game pointer");
-    return;
-  }
   w->on_key_down = fn;
 }
 
-void wid_set_on_key_up(Gamep g, Widp w, on_key_up_t fn)
+void wid_set_on_key_up(Widp w, on_key_up_t fn)
 {
   TRACE_NO_INDENT();
-  if (! g) {
-    ERR("no game pointer");
-    return;
-  }
   w->on_key_up = fn;
 }
 
-void wid_set_on_joy_button(Gamep g, Widp w, on_joy_button_t fn)
+void wid_set_on_joy_button(Widp w, on_joy_button_t fn)
 {
   TRACE_NO_INDENT();
-  if (! g) {
-    ERR("no game pointer");
-    return;
-  }
   w->on_joy_button = fn;
 }
 
-void wid_set_on_destroy(Gamep g, Widp w, on_destroy_t fn)
+void wid_set_on_destroy(Widp w, on_destroy_t fn)
 {
   TRACE_NO_INDENT();
-  if (! g) {
-    ERR("no game pointer");
-    return;
-  }
   w->on_destroy = fn;
 }
 
-void wid_set_on_destroy_begin(Gamep g, Widp w, on_destroy_t fn)
+void wid_set_on_destroy_begin(Widp w, on_destroy_t fn)
 {
   TRACE_NO_INDENT();
-  if (! g) {
-    ERR("no game pointer");
-    return;
-  }
   w->on_destroy_begin = fn;
 }
 
-void wid_set_on_display(Gamep g, Widp w, on_display_t fn)
+void wid_set_on_display(Widp w, on_display_t fn)
 {
   TRACE_NO_INDENT();
-  if (! g) {
-    ERR("no game pointer");
-    return;
-  }
   w->on_display = fn;
 }
 
-void wid_set_on_tick(Gamep g, Widp w, on_tick_t fn)
+void wid_set_on_tick(Widp w, on_tick_t fn)
 {
   TRACE_NO_INDENT();
-
   w->on_tick = fn;
   wid_tree5_tick_wids_insert(w);
 }
@@ -1787,7 +1734,11 @@ void wid_set_on_tick(Gamep g, Widp w, on_tick_t fn)
 //
 // Remove this wid from any trees it is in.
 //
-static void wid_tree_detach(Widp w) { wid_tree_remove(w); }
+static void wid_tree_detach(Widp w)
+{
+  TRACE_NO_INDENT();
+  wid_tree_remove(w);
+}
 
 //
 // Add back to all trees.
@@ -2080,7 +2031,7 @@ static Widp wid_new(Gamep g, Widp parent)
   //
   // Give some lame 3d to the wid
   //
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
 
   w->visible = true;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -2104,7 +2055,7 @@ static Widp wid_new(Gamep g)
   //
   // Give some lame 3d to the wid
   //
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
 
   w->visible = true;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -2178,7 +2129,7 @@ static void wid_destroy_immediate_internal(Gamep g, Widp w)
   }
 }
 
-static void wid_destroy_immediate(Gamep g, Widp w)
+static void wid_destroy_immediate(Gamep g_maybe_null, Widp w)
 {
   TRACE_NO_INDENT();
 
@@ -2188,7 +2139,7 @@ static void wid_destroy_immediate(Gamep g, Widp w)
   // If removing a top level widget, choose a new focus.
   //
   if (! w->parent) {
-    wid_set_top_focus(g);
+    wid_set_top_focus(g_maybe_null);
   }
 
   wid_tree_detach(w);
@@ -2196,14 +2147,14 @@ static void wid_destroy_immediate(Gamep g, Widp w)
   wid_tree2_unsorted_remove(w);
   wid_tree_global_unsorted_remove(w);
 
-  wid_destroy_immediate_internal(g, w);
+  wid_destroy_immediate_internal(g_maybe_null, w);
 
   if (w == wid_focus_locked) {
     wid_focus_locked = nullptr;
   }
 
   if (w == wid_focus) {
-    wid_mouse_focus_end(g);
+    wid_mouse_focus_end(g_maybe_null);
   }
 
   if (w == wid_over) {
@@ -2211,7 +2162,7 @@ static void wid_destroy_immediate(Gamep g, Widp w)
     // For actionbar buttons. If they create a popup, we must be called when the actionbar
     // is destroyed, to remove the popup. Else we get a dangling popup.
     //
-    wid_mouse_over_end(g);
+    wid_mouse_over_end(g_maybe_null);
   }
 
   for (auto x = 0; x < TERM_WIDTH; x++) {
@@ -2290,20 +2241,12 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
 void wid_destroy(Gamep g, Widp *wp)
 {
   TRACE_NO_INDENT();
-  if (! g) {
-    ERR("no game pointer");
-    return;
-  }
   wid_destroy_delay(g, wp, wid_destroy_delay_ms);
 }
 
 void wid_destroy_nodelay(Gamep g, Widp *wp)
 {
   TRACE_NO_INDENT();
-  if (! g) {
-    ERR("no game pointer");
-    return;
-  }
   wid_destroy_delay(g, wp, 0);
 }
 
@@ -2335,7 +2278,7 @@ Widp wid_new_window(Gamep g, std::string name)
 
   wid_set_name(w, name);
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_shape_square(w);
@@ -2374,7 +2317,7 @@ Widp wid_new_container(Gamep g, Widp parent, std::string name)
   WID_DBG(w, "%s", __FUNCTION__);
 
   wid_set_name(w, name);
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
   wid_set_shape_square(w);
@@ -2406,7 +2349,7 @@ Widp wid_new_square_window(Gamep g, std::string name)
 
   WID_DBG(w, "%s", __FUNCTION__);
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_name(w, name);
   wid_set_shape_square(w);
   wid_set_color(w, WID_COLOR_BG, WHITE);
@@ -2450,11 +2393,11 @@ Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
   wid_set_name(w, name);
   wid_set_shape_square(w);
 
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode(w, WID_MODE_OVER);
   wid_set_color(w, WID_COLOR_BG, GRAY90);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
@@ -2495,10 +2438,10 @@ Widp wid_new_plain(Gamep g, Widp parent, std::string name)
   wid_set_name(w, name);
   wid_set_shape_square(w);
 
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode(w, WID_MODE_OVER);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
   //
@@ -2533,21 +2476,21 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
 
   WID_DBG(w, "%s", __FUNCTION__);
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   {
     color c = GRAY90;
     wid_set_color(w, WID_COLOR_BG, c);
   }
 
-  wid_set_on_mouse_down(g, w, wid_scroll_trough_mouse_down);
-  wid_set_on_mouse_motion(g, w, wid_scroll_trough_mouse_motion);
+  wid_set_on_mouse_down(w, wid_scroll_trough_mouse_down);
+  wid_set_on_mouse_motion(w, wid_scroll_trough_mouse_motion);
   wid_set_shape_square(w);
 
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode(w, WID_MODE_OVER);
   wid_set_color(w, WID_COLOR_BG, GRAY90);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
@@ -2584,13 +2527,13 @@ static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scro
 
   wid_set_name(w, name);
 
-  wid_set_mode(g, w, WID_MODE_ACTIVE);
+  wid_set_mode(w, WID_MODE_ACTIVE);
   {
     color c = GREEN;
     wid_set_color(w, WID_COLOR_BG, c);
   }
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   {
     color c = GRAY50;
     wid_set_color(w, WID_COLOR_BG, c);
@@ -2613,11 +2556,11 @@ static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scro
 
   wid_set_shape_square(w);
 
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode(w, WID_MODE_OVER);
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
@@ -2677,9 +2620,9 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
     wid_update_internal(g, scrollbar);
     wid_visible(g, wid_get_parent(scrollbar));
     wid_visible(g, scrollbar);
-    wid_set_mode(g, scrollbar, WID_MODE_ACTIVE);
+    wid_set_mode(scrollbar, WID_MODE_ACTIVE);
     wid_set_style(scrollbar, UI_WID_STYLE_VERT_LIGHT);
-    wid_set_mode(g, scrollbar, WID_MODE_NORMAL);
+    wid_set_mode(scrollbar, WID_MODE_NORMAL);
     wid_set_style(scrollbar, UI_WID_STYLE_VERT_DARK);
 
     trough->is_scrollbar_vert_trough = true;
@@ -3410,7 +3353,7 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
       scrollbar->key.br.y = wid_get_tl_y(scrollbar) + (int) scrollbar_height - 1;
       wid_tree_attach(scrollbar);
 
-      wid_set_mode(g, scrollbar, WID_MODE_ACTIVE);
+      wid_set_mode(scrollbar, WID_MODE_ACTIVE);
     }
   }
 
@@ -3435,7 +3378,7 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
       scrollbar->key.br.x = wid_get_tl_x(scrollbar) + (int) scrollbar_width - 1;
       wid_tree_attach(scrollbar);
 
-      wid_set_mode(g, scrollbar, WID_MODE_ACTIVE);
+      wid_set_mode(scrollbar, WID_MODE_ACTIVE);
     }
   }
 }
@@ -3548,7 +3491,7 @@ static void wid_update_internal(Gamep g, Widp w)
     //
     // No, make the clients fix their code.
     //
-    //        wid_set_mode(g, w, WID_MODE_NORMAL);
+    //        wid_set_mode( w, WID_MODE_NORMAL);
   }
 
   //
@@ -3903,7 +3846,7 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
   //
   // Pass to the game first
   //
-  if (! g_errored) {
+  if (NO_ERROR_OCCURRED()) {
     //
     // Unless in an errored condition
     //
@@ -3917,7 +3860,7 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
   if (sdlk_eq(*key, game_key_console_get(g))) {
     LOG("Open console");
 
-    if (g_errored) {
+    if (AN_ERROR_OCCURRED()) {
       //
       // Console is always present until errors are cleared
       //
@@ -3956,7 +3899,7 @@ static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
 
   switch ((int) key->sym) {
     case '?' :
-      if (g_errored) {
+      if (AN_ERROR_OCCURRED()) {
         wid_console_raise(g);
       } else {
         wid_cfg_help_select(g);
@@ -4587,7 +4530,7 @@ void wid_joy_button(Gamep g, int x, int y)
     }
 
     wid_set_focus(g, w);
-    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_set_mode(w, WID_MODE_ACTIVE);
     wid_raise(g, w);
 
     //
@@ -4604,7 +4547,7 @@ void wid_joy_button(Gamep g, int x, int y)
   }
 
   if (wid_get_moveable(w)) {
-    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_set_mode(w, WID_MODE_ACTIVE);
     wid_raise(g, w);
     wid_mouse_motion_begin(g, w, x, y);
     return;
@@ -4935,7 +4878,7 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
 
     if ((wid_focus->on_key_up)(g, wid_focus, key)) {
       if (wid_focus) {
-        wid_set_mode(g, wid_focus, WID_MODE_ACTIVE);
+        wid_set_mode(wid_focus, WID_MODE_ACTIVE);
       }
 
       //
@@ -4959,7 +4902,7 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
   if ((w->on_key_up)(g, w, key)) {
-    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_set_mode(w, WID_MODE_ACTIVE);
 
     //
     // Do not raise, gets in the way of popups the callback creates.
@@ -4978,7 +4921,7 @@ try_parent:
     while (w) {
       if (w->on_key_up) {
         if ((w->on_key_up)(g, w, key)) {
-          wid_set_mode(g, w, WID_MODE_ACTIVE);
+          wid_set_mode(w, WID_MODE_ACTIVE);
 
           //
           // Do not raise, gets in the way of popups the callback
@@ -5185,7 +5128,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   auto mode = wid_get_mode(w);
   if (mode == WID_MODE_ACTIVE) {
     if ((wid_time - w->ts_last_mode_change) > 250) {
-      wid_set_mode(g, w, WID_MODE_NORMAL);
+      wid_set_mode(w, WID_MODE_NORMAL);
     }
   }
 
@@ -5273,7 +5216,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
       p = p->parent;
     }
 
-    wid_set_scissors(g, sciss_tlx, sciss_tly, sciss_brx, sciss_bry);
+    wid_set_scissors(sciss_tlx, sciss_tly, sciss_brx, sciss_bry);
 #if 0
     }
 #endif
@@ -5419,7 +5362,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     // their own bit of scissoring?
     //
     if (! disable_scissor && child_updated_scissors) {
-      wid_set_scissors(g, tlx, tly, brx, bry);
+      wid_set_scissors(tlx, tly, brx, bry);
     }
   }
 }

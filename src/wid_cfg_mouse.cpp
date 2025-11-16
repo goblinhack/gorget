@@ -137,7 +137,7 @@ void wid_cfg_mouse_select(Gamep g)
   {
     TRACE_NO_INDENT();
     Widp w = wid_cfg_mouse_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_cfg_mouse_key_down);
+    wid_set_on_key_down(w, wid_cfg_mouse_key_down);
   }
 
   int y_at = 0;
@@ -161,7 +161,7 @@ void wid_cfg_mouse_select(Gamep g)
 
     spoint tl(1, y_at);
     spoint br(6, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_mouse_back);
+    wid_set_on_mouse_up(w, wid_cfg_mouse_back);
     wid_set_pos(w, tl, br);
   }
   {
@@ -171,7 +171,7 @@ void wid_cfg_mouse_select(Gamep g)
 
     spoint tl(button_width - 15, y_at);
     spoint br(button_width - 10, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_mouse_save);
+    wid_set_on_mouse_up(w, wid_cfg_mouse_save);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "S" UI_RESET_FMT "ave");
   }
@@ -182,7 +182,7 @@ void wid_cfg_mouse_select(Gamep g)
 
     spoint tl(button_width - 8, y_at);
     spoint br(button_width - 1, y_at + 2);
-    wid_set_on_mouse_up(g, w, wid_cfg_mouse_cancel);
+    wid_set_on_mouse_up(w, wid_cfg_mouse_cancel);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "C" UI_RESET_FMT "ancel");
   }
@@ -213,7 +213,7 @@ void wid_cfg_mouse_select(Gamep g)
     spoint tl(28, y_at);
     spoint br(34, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_mouse_wheel_lr_negated);
+    wid_set_on_mouse_up(w, wid_cfg_mouse_wheel_lr_negated);
 
     if (game_mouse_wheel_lr_negated_get(g)) {
       wid_set_text(w, "True");
@@ -246,7 +246,7 @@ void wid_cfg_mouse_select(Gamep g)
     spoint tl(28, y_at);
     spoint br(34, y_at + 2);
     wid_set_pos(w, tl, br);
-    wid_set_on_mouse_up(g, w, wid_cfg_mouse_wheel_ud_negated);
+    wid_set_on_mouse_up(w, wid_cfg_mouse_wheel_ud_negated);
 
     if (game_mouse_wheel_ud_negated_get(g)) {
       wid_set_text(w, "True");

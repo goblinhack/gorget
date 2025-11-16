@@ -150,7 +150,7 @@ void TP_ERR(Tpp tp, const char *fmt, ...)
   //
   // If multiple errors are going on, we don't need popups for all of them
   //
-  if (g_errored) {
+  if (AN_ERROR_OCCURRED()) {
     va_list args;
     va_start(args, fmt);
     TP_LOG_(tp, fmt, args);
@@ -158,7 +158,7 @@ void TP_ERR(Tpp tp, const char *fmt, ...)
     return;
   }
 
-  g_errored = true;
+  g_errored_thread_id = g_thread_id;
   va_list args;
   va_start(args, fmt);
   TP_ERR_(tp, fmt, args);

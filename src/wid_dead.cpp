@@ -95,7 +95,7 @@ void wid_dead_select(Gamep g, std::string reason)
 
   wid_dead_window = new WidPopup(g, "Game dead", tl, br, nullptr, "", false, false);
 
-  wid_set_on_key_down(g, wid_dead_window->wid_popup_container, wid_dead_key_down);
+  wid_set_on_key_down(wid_dead_window->wid_popup_container, wid_dead_key_down);
   wid_raise(g, wid_dead_window->wid_popup_container);
 
   auto grave_text_width = 18;
@@ -264,7 +264,7 @@ void wid_dead_select(Gamep g, std::string reason)
     spoint br2(width - 11, h - 5);
 
     wid_set_pos(w, tl2, br2);
-    wid_set_on_mouse_up(g, w, wid_dead_mouse_up);
+    wid_set_on_mouse_up(w, wid_dead_mouse_up);
     wid_set_text(w, "Continue");
   }
 

@@ -304,11 +304,16 @@ static void err_(const char *fmt, va_list args)
       return;
     }
 
+    static std::mutex m;
+    m.lock();
+    g_error_last = std::string(buf) + "\n " + callstack_string() + "\nLogfile : " + g_log_stderr_filename + " : ";
+    m.unlock();
+
     if (MY_STDERR != stderr) {
       putf(MY_STDERR, buf);
     }
 
-    if (MY_STDERR != stdout) {
+    if (MY_STDOUT != stdout) {
       putf(MY_STDOUT, buf);
     }
 
@@ -333,7 +338,7 @@ void err_wrapper(const char *fmt, ...)
   //
   // If multiple errors are going on, we don't need popups for all of them
   //
-  if (g_errored) {
+  if (AN_ERROR_OCCURRED()) {
     va_list args;
     va_start(args, fmt);
     log_(fmt, args);
@@ -341,7 +346,7 @@ void err_wrapper(const char *fmt, ...)
     return;
   }
 
-  g_errored = true;
+  g_errored_thread_id = g_thread_id;
   va_list args;
   va_start(args, fmt);
   err_(fmt, args);

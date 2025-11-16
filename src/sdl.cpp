@@ -453,10 +453,10 @@ void config_gfx_vsync_update(Gamep g)
 //
 // User has entered a command, run it
 //
-uint8_t config_errored(Gamep g, class Tokens *tokens, void *context)
+uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
 {
   TRACE_NO_INDENT();
-  g_errored = false;
+  g_errored_thread_id = -1;
   CON("SDL: Errored mode cleared.");
   wid_hide(g, wid_console_window);
   sdl_display_reset(g);

@@ -237,7 +237,7 @@ static void wid_botcon_wid_create(Gamep g)
       wid_set_pos(child, tl, br);
       wid_set_text_lhs(child, true);
 
-      wid_set_prev(g, child, prev);
+      wid_set_prev(child, prev);
       prev = child;
 
       if (row == 0) {

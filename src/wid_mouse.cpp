@@ -25,7 +25,7 @@ void wid_mouse_motion_end(Gamep g) {}
 
 void wid_mouse_motion_begin(Gamep g, Widp w, int x, int y) { wid_mouse_motion_end(g); }
 
-void wid_mouse_focus_end(Gamep g)
+void wid_mouse_focus_end(Gamep g_maybe_null)
 {
   TRACE_NO_INDENT();
 
@@ -40,7 +40,7 @@ void wid_mouse_focus_end(Gamep g)
   }
 
   if (w->on_mouse_focus_end) {
-    w->on_mouse_focus_end(g, w);
+    w->on_mouse_focus_end(g_maybe_null, w);
   }
 }
 
@@ -100,7 +100,7 @@ void wid_mouse_over_end(Gamep g)
     return;
   }
 
-  wid_set_mode(g, w, WID_MODE_NORMAL);
+  wid_set_mode( w, WID_MODE_NORMAL);
 
   if (wid_exiting) {
     return;
@@ -166,7 +166,7 @@ static bool wid_mouse_over_begin(Gamep g, Widp w, uint32_t x, uint32_t y, int re
     // DBG("mouse over %s mouse %d,%d.", wid_over->name.c_str(), ascii_mouse_x, ascii_mouse_y);
   }
 
-  wid_set_mode(g, w, WID_MODE_OVER);
+  wid_set_mode( w, WID_MODE_OVER);
 
   if (w->on_mouse_over_begin) {
     (w->on_mouse_over_begin)(g, w, relx, rely, wheelx, wheely);
@@ -174,21 +174,53 @@ static bool wid_mouse_over_begin(Gamep g, Widp w, uint32_t x, uint32_t y, int re
 
   return true;
 }
-void wid_set_on_mouse_down(Gamep g, Widp w, on_mouse_down_t fn) { w->on_mouse_down = fn; }
+void wid_set_on_mouse_down(Widp w, on_mouse_down_t fn)
+{
+  TRACE_NO_INDENT();
+  w->on_mouse_down = fn;
+}
 
-void wid_set_on_mouse_held(Gamep g, Widp w, on_mouse_down_t fn) { w->on_mouse_held = fn; }
+void wid_set_on_mouse_held(Widp w, on_mouse_down_t fn)
+{
+  TRACE_NO_INDENT();
+  w->on_mouse_held = fn;
+}
 
-void wid_set_on_mouse_up(Gamep g, Widp w, on_mouse_up_t fn) { w->on_mouse_up = fn; }
+void wid_set_on_mouse_up(Widp w, on_mouse_up_t fn)
+{
+  TRACE_NO_INDENT();
+  w->on_mouse_up = fn;
+}
 
-void wid_set_on_mouse_motion(Gamep g, Widp w, on_mouse_motion_t fn) { w->on_mouse_motion = fn; }
+void wid_set_on_mouse_motion(Widp w, on_mouse_motion_t fn)
+{
+  TRACE_NO_INDENT();
+  w->on_mouse_motion = fn;
+}
 
-void wid_set_on_mouse_focus_begin(Gamep g, Widp w, on_mouse_focus_begin_t fn) { w->on_mouse_focus_begin = fn; }
+void wid_set_on_mouse_focus_begin(Widp w, on_mouse_focus_begin_t fn)
+{
+  TRACE_NO_INDENT();
+  w->on_mouse_focus_begin = fn;
+}
 
-void wid_set_on_mouse_focus_end(Gamep g, Widp w, on_mouse_focus_end_t fn) { w->on_mouse_focus_end = fn; }
+void wid_set_on_mouse_focus_end(Widp w, on_mouse_focus_end_t fn)
+{
+  TRACE_NO_INDENT();
+  w->on_mouse_focus_end = fn;
+}
 
-void wid_set_on_mouse_over_begin(Gamep g, Widp w, on_mouse_over_begin_t fn) { w->on_mouse_over_begin = fn; }
+void wid_set_on_mouse_over_begin(Widp w, on_mouse_over_begin_t fn)
+{
+  TRACE_NO_INDENT();
+  w->on_mouse_over_begin = fn;
+}
 
-void wid_set_on_mouse_over_end(Gamep g, Widp w, on_mouse_over_end_t fn) { w->on_mouse_over_end = fn; }
+void wid_set_on_mouse_over_end(Widp w, on_mouse_over_end_t fn)
+{
+  TRACE_NO_INDENT();
+  w->on_mouse_over_end = fn;
+}
 
 bool wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button)
 {
@@ -224,7 +256,7 @@ bool wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button
     }
 
     if (dx || dy) {
-      wid_set_mode(g, child, WID_MODE_ACTIVE);
+      wid_set_mode( child, WID_MODE_ACTIVE);
     }
 
     if (! wid_get_moveable_horiz(child)) {
@@ -278,7 +310,7 @@ bool wid_scroll_trough_mouse_motion(Gamep g, Widp w, int x, int y, int relx, int
 
   for (auto &child : worklist) {
     if (dx || dy) {
-      wid_set_mode(g, child, WID_MODE_ACTIVE);
+      wid_set_mode( child, WID_MODE_ACTIVE);
     }
 
     if (! wid_get_moveable_horiz(child)) {
@@ -972,7 +1004,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
     sound_play(g, "click");
 
     wid_set_focus(g, w);
-    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_set_mode( w, WID_MODE_ACTIVE);
     wid_raise(g, w);
 
     //
@@ -993,7 +1025,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
   }
 
   if (wid_get_moveable(w)) {
-    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_set_mode( w, WID_MODE_ACTIVE);
     wid_raise(g, w);
     wid_mouse_motion_begin(g, w, x, y);
     LOG("Wid mouse down, make wid active");
@@ -1032,7 +1064,7 @@ void wid_mouse_held(Gamep g, uint32_t button, int x, int y)
   if ((w->on_mouse_held && (w->on_mouse_held)(g, w, x, y, button)) || wid_get_moveable(w)) {
 
     wid_set_focus(g, w);
-    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_set_mode( w, WID_MODE_ACTIVE);
     wid_raise(g, w);
 
     //
@@ -1047,7 +1079,7 @@ void wid_mouse_held(Gamep g, uint32_t button, int x, int y)
   }
 
   if (wid_get_moveable(w)) {
-    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_set_mode( w, WID_MODE_ACTIVE);
     wid_raise(g, w);
     wid_mouse_motion_begin(g, w, x, y);
     return;
@@ -1077,7 +1109,7 @@ void wid_mouse_up(Gamep g, uint32_t button, int x, int y)
   if ((w->on_mouse_up && (w->on_mouse_up)(g, w, x, y, button)) || wid_get_moveable(w)) {
     sound_play(g, "click");
 
-    wid_set_mode(g, w, WID_MODE_ACTIVE);
+    wid_set_mode( w, WID_MODE_ACTIVE);
     wid_raise(g, w);
     return;
   }

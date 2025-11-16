@@ -197,7 +197,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   {
     TRACE_NO_INDENT();
     Widp w = wid_item_menu_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_item_menu_key_down);
+    wid_set_on_key_down(w, wid_item_menu_key_down);
   }
 
   int y_at = 0;
@@ -214,7 +214,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
       wid_gray_out_button(g, w);
     }
 
-    wid_set_on_mouse_up(g, w, wid_item_menu_drop);
+    wid_set_on_mouse_up(w, wid_item_menu_drop);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "D" UI_FMT_STR "rop");
     y_at += box_step;
@@ -227,7 +227,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(g, w, wid_item_menu_equip);
+    wid_set_on_mouse_up(w, wid_item_menu_equip);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "E" UI_FMT_STR "quip");
     y_at += box_step;
@@ -240,7 +240,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
-    wid_set_on_mouse_up(g, w, wid_item_menu_back);
+    wid_set_on_mouse_up(w, wid_item_menu_back);
     wid_set_pos(w, tl, br);
   }
 

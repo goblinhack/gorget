@@ -55,7 +55,7 @@ void wid_notice(std::string s)
   {
     TRACE_NO_INDENT();
     Widp w = wid_notice_window->wid_popup_container;
-    wid_set_on_key_down(g, w, wid_notice_key_down);
+    wid_set_on_key_down(w, wid_notice_key_down);
   }
 
   int y_at = 0;
@@ -67,7 +67,7 @@ void wid_notice(std::string s)
     spoint tl1(0, y_at);
     spoint br1(width - 1, y_at + 1);
     wid_set_shape_none(w);
-    wid_set_on_mouse_up(g, w, wid_notice_ok);
+    wid_set_on_mouse_up(w, wid_notice_ok);
     wid_set_pos(w, tl1, br1);
     wid_set_text(w, s);
     wid_set_style(w, UI_WID_STYLE_GREEN);
@@ -82,7 +82,7 @@ void wid_notice(std::string s)
     spoint tl2(width / 2 - 4, y_at);
     spoint br2(width / 2 + 4, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
-    wid_set_on_mouse_up(g, w, wid_notice_ok);
+    wid_set_on_mouse_up(w, wid_notice_ok);
     wid_set_pos(w, tl2, br2);
     wid_set_text(w, "Ok!");
   }

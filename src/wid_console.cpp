@@ -52,7 +52,7 @@ bool wid_console_init(Gamep g)
     command_add(g, config_debug_set, "set debug [012]", "set debug level");
     command_add(g, config_fps_counter_set, "set fps [01]", "enable frames per sec counter");
     command_add(g, config_gfx_vsync_enable, "set vsync [01]", "enable vertical sync enable");
-    command_add(g, config_errored, "clear errored", "used to clear a previous error");
+    command_add(g, config_errored_clear, "clear errored", "used to clear a previous error");
     command_add(g, sdl_user_exit, "quit", "exit game");
     wid_console_commands_inited = true;
   }
@@ -216,11 +216,11 @@ static void wid_console_wid_create(Gamep g)
       wid_set_pos(child, tl, br);
       wid_set_text_lhs(child, true);
 
-      wid_set_prev(g, child, prev);
+      wid_set_prev(child, prev);
       prev = child;
 
       if (row == 0) {
-        wid_set_on_key_down(g, child, wid_console_receive_input);
+        wid_set_on_key_down(child, wid_console_receive_input);
 
         wid_set_show_cursor(child, true);
         wid_set_name(child, "console input");
