@@ -99,18 +99,18 @@ const char *HiScores::place_str(int score)
     //
     // Poor player.
     //
-    return ("");
+    return "";
   }
 
   auto h = hiscores.begin();
 
   while (h != hiscores.end()) {
     if (score > h->score) {
-      return (which[ h - hiscores.begin() ]);
+      return which[ h - hiscores.begin() ];
     }
     h++;
   }
-  return ("");
+  return "";
 }
 
 std::istream &operator>>(std::istream &in, Bits< HiScore & > my)

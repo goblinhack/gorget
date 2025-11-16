@@ -60,9 +60,9 @@ float angle_radians(const fpoint &p)
     if (p.y > 0) {
       return theta;
     }
-    return ((float) RAD_360 + theta);
+    return (float) RAD_360 + theta;
   }
-  return ((float) RAD_180 - theta);
+  return (float) RAD_180 - theta;
 }
 
 fpoint rotate_radians(float angle, const fpoint &p, const fpoint &O)
@@ -80,7 +80,7 @@ fpoint rotate_radians(float angle, const fpoint &p, const fpoint &O)
   float ynew = X * s + Y * c;
 
   // translate point back:
-  return (fpoint(xnew + O.x, ynew + O.y));
+  return fpoint(xnew + O.x, ynew + O.y);
 }
 
 fpoint rotate_radians(const fpoint &p, float angle)
@@ -96,19 +96,19 @@ fpoint rotate_radians(const fpoint &p, float angle)
   float xnew = X * c - Y * s;
   float ynew = X * s + Y * c;
 
-  return (fpoint(xnew, ynew));
+  return fpoint(xnew, ynew);
 }
 
 fpoint normal(const fpoint &p)
 {
   float length = sqrt((p.x * p.x) + (p.y * p.y));
-  return (fpoint(p.x / length, p.y / length));
+  return fpoint(p.x / length, p.y / length);
 }
 
 fpoint unit(const fpoint &p)
 {
   float length = sqrt(p.x * p.x + p.y * p.y);
-  return (fpoint(p.x / length, p.y / length));
+  return fpoint(p.x / length, p.y / length);
 }
 
 #ifdef is_unused_flag
@@ -235,6 +235,6 @@ int distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *inter
 
 float dot (const fpoint b
 {
-  return (x * b.x + y * b.y);
+  return x * b.x + y * b.y;
 }
 #endif

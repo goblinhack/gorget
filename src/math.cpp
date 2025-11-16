@@ -12,5 +12,5 @@ unsigned int nextpoweroftwo(unsigned int val)
   val = (val >> 16) | val;
   val++; // Val is now the next highest power of 2
 
-  return (val);
+  return val;
 }

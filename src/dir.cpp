@@ -77,7 +77,7 @@ char *dir_dotdot(char *s)
 
   *(end + 1) = '\0';
 
-  return (dospath2unix(s));
+  return dospath2unix(s);
 }
 
 /*

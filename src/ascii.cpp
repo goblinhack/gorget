@@ -161,7 +161,7 @@ int ascii_ok_for_scissors(int x, int y)
     }
   }
 
-  return (ascii_ok(x, y));
+  return ascii_ok(x, y);
 }
 
 bool ascii_is_empty(int x, int y)
@@ -216,7 +216,7 @@ void *ascii_get_stat_context(int x, int y)
 
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
-  return (cell->context);
+  return cell->context;
 }
 
 void ascii_set(int depth, int x, int y, const Texp tex, float tx, float ty, float dx, float dy)

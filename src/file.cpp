@@ -241,7 +241,7 @@ int file_write(const char *filename, unsigned char *buffer, int len)
   file = fopen(filename, "w");
   if (! file) {
     ERR("Failed to open file \"%s\" for writing: %s\n", filename, strerror(errno));
-    return (-1);
+    return -1;
   }
 
   rc = fwrite(buffer, len, 1, file);
@@ -254,13 +254,13 @@ int file_write(const char *filename, unsigned char *buffer, int len)
   if (! rc) {
     ERR("Failed to write file \"%s\": %s\n", filename, strerror(errno));
     fclose(file);
-    return (-1);
+    return -1;
   }
 
   if (ferror(file)) {
     ERR("Error writing to write file \"%s\": %s\n", filename, strerror(errno));
     fclose(file);
-    return (-1);
+    return -1;
   }
 
   fclose(file);
@@ -320,7 +320,7 @@ unsigned char *file_io_read_if_exists(const char *filename, int *out_len)
 #endif
 
   if (file_exists(filename)) {
-    return (file_io_read(filename, out_len));
+    return file_io_read(filename, out_len);
   }
 
   return nullptr;
@@ -338,7 +338,7 @@ int file_size(const char *filename)
     return int(buf.st_size);
   }
 
-  return (-1);
+  return -1;
 }
 
 /*
@@ -382,12 +382,12 @@ double file_age(const char *filename)
   struct stat buf;
 
   if (stat(filename, &buf) < 0) {
-    return (-1);
+    return -1;
   }
 
   time_t now = time(nullptr);
 
-  return (difftime(now, buf.st_mtime));
+  return difftime(now, buf.st_mtime);
 }
 
 /*
@@ -420,7 +420,7 @@ uint8_t file_exists_and_is_newer_than(const char *filename1, const char *filenam
 
   delta = difftime(buf1.st_mtime, buf2.st_mtime);
 
-  return (delta > 0);
+  return delta > 0;
 }
 
 void FILE_LOG(const char *fmt, ...)

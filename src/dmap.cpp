@@ -563,7 +563,7 @@ std::vector< spoint > dmap_solve_allow_diagonal(const Dmap *D, const spoint star
       spoint(-1, -1), spoint(1, -1), spoint(-1, 1), spoint(1, 1),
       spoint(0, -1),  spoint(-1, 0), spoint(1, 0),  spoint(0, 1),
   };
-  return (dmap_solve_(D, start, all_deltas, true));
+  return dmap_solve_(D, start, all_deltas, true);
 }
 
 std::vector< spoint > dmap_solve_manhattan(const Dmap *D, const spoint start)
@@ -574,7 +574,7 @@ std::vector< spoint > dmap_solve_manhattan(const Dmap *D, const spoint start)
       spoint(1, 0),
       spoint(0, 1),
   };
-  return (dmap_solve_(D, start, all_deltas, false));
+  return dmap_solve_(D, start, all_deltas, false);
 }
 
 //

@@ -104,7 +104,7 @@ bool time_have_x_hundredths_passed_since(ts_t val, ts_t since)
   //
   ts_t delay = time_now - since;
 
-  return ((ts_t) (delay / 10) > (ts_t) val);
+  return (ts_t) (delay / 10) > (ts_t) val;
 }
 
 bool time_have_x_ms_passed_since(ts_t val, ts_t since)
@@ -116,7 +116,7 @@ bool time_have_x_ms_passed_since(ts_t val, ts_t since)
   //
   ts_t delay = time_now - since;
 
-  return ((ts_t) (delay) >= (ts_t) val);
+  return (ts_t) (delay) >= (ts_t) val;
 }
 
 bool time_have_x_tenths_passed_since(ts_t val, ts_t since)
@@ -128,7 +128,7 @@ bool time_have_x_tenths_passed_since(ts_t val, ts_t since)
   //
   ts_t delay = time_now - since;
 
-  return ((ts_t) (delay / 100) >= (ts_t) val);
+  return (ts_t) (delay / 100) >= (ts_t) val;
 }
 
 bool time_have_x_secs_passed_since(ts_t val, ts_t since)
@@ -140,7 +140,7 @@ bool time_have_x_secs_passed_since(ts_t val, ts_t since)
   //
   ts_t delay = time_now - since;
 
-  return ((ts_t) (delay / ONESEC) >= (ts_t) val);
+  return (ts_t) (delay / ONESEC) >= (ts_t) val;
 }
 
 void get_timestamp(char *buf, int len)

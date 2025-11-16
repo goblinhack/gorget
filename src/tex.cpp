@@ -423,7 +423,7 @@ static std::pair< Texp, Texp > tex_sprite(SDL_Surface *in, std::string file, std
   t1 = tex_from_surface(out1, file, n1, mode);
   t2 = tex_from_surface(out2, file, n2, mode);
 
-  return (std::make_pair(t1, t2));
+  return std::make_pair(t1, t2);
 }
 
 void tex_load(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, std::string file, std::string name, int mode)
@@ -480,7 +480,7 @@ Texp tex_find(std::string file)
     return nullptr;
   }
 
-  return (result->second);
+  return result->second;
 }
 
 //
@@ -613,7 +613,7 @@ Texp tex_from_fbo(Gamep g, FboEnum fbo)
 int tex_get_gl_binding(Texp tex)
 {
   TRACE_NO_INDENT();
-  return (tex->gl_surface_binding);
+  return tex->gl_surface_binding;
 }
 
 uint32_t tex_get_width(Texp tex)
@@ -623,7 +623,7 @@ uint32_t tex_get_width(Texp tex)
     ERR("No texture");
   }
 
-  return (tex->width);
+  return tex->width;
 }
 
 uint32_t tex_get_height(Texp tex)
@@ -633,13 +633,13 @@ uint32_t tex_get_height(Texp tex)
     ERR("No texture");
   }
 
-  return (tex->height);
+  return tex->height;
 }
 
 SDL_Surface *tex_get_surface(Texp tex)
 {
   TRACE_NO_INDENT();
-  return (tex->surface);
+  return tex->surface;
 }
 
 Texp string2tex(const char **s)
@@ -670,7 +670,7 @@ Texp string2tex(const char **s)
     ERR("Unknown tex '%s'", tmp);
   }
 
-  return (result->second);
+  return result->second;
 }
 
 Texp string2tex(std::string &s, int *len)
@@ -703,5 +703,5 @@ Texp string2tex(std::string &s, int *len)
     ERR("Unknown tex '%s'", out.c_str());
   }
 
-  return (result->second);
+  return result->second;
 }

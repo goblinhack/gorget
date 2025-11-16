@@ -245,7 +245,7 @@ int wid_get_tl_x(Widp w)
 
   int cx = (w->key.tl.x + w->key.br.x) / 2;
 
-  return (cx - (cx - w->key.tl.x));
+  return cx - (cx - w->key.tl.x);
 }
 
 int wid_get_tl_y(Widp w)
@@ -254,7 +254,7 @@ int wid_get_tl_y(Widp w)
 
   int cy = (w->key.tl.y + w->key.br.y) / 2;
 
-  return (cy - (cy - w->key.tl.y));
+  return cy - (cy - w->key.tl.y);
 }
 
 int wid_get_br_x(Widp w)
@@ -263,7 +263,7 @@ int wid_get_br_x(Widp w)
 
   int cx = (w->key.tl.x + w->key.br.x) / 2;
 
-  return (cx + (w->key.br.x - cx));
+  return cx + (w->key.br.x - cx);
 }
 
 int wid_get_br_y(Widp w)
@@ -272,7 +272,7 @@ int wid_get_br_y(Widp w)
 
   int cy = (w->key.tl.y + w->key.br.y) / 2;
 
-  return (cy + (w->key.br.y - cy));
+  return cy + (w->key.br.y - cy);
 }
 
 void wid_get_tl_x_tl_y_br_x_br_y(Widp w, int *tl_x, int *tl_y, int *br_x, int *br_y)
@@ -422,7 +422,7 @@ std::string wid_get_string_context(Widp w)
     ERR("NULL pointer");
     return "";
   }
-  return (w->string_context);
+  return w->string_context;
 }
 
 void wid_set_int_context(Widp w, int int_context)
@@ -444,7 +444,7 @@ int wid_get_int_context(Widp w)
     ERR("NULL pointer");
     return 0;
   }
-  return (w->int_context);
+  return w->int_context;
 }
 
 void wid_set_void_context(Widp w, void *void_context)
@@ -466,7 +466,7 @@ void *wid_get_void_context(Widp w)
     ERR("NULL pointer");
     return nullptr;
   }
-  return (w->void_context);
+  return w->void_context;
 }
 
 void wid_set_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
@@ -626,7 +626,7 @@ Widp wid_get_prev(Widp w)
     DIE("Wid list get prev loop");
   }
 
-  return (w->prev);
+  return w->prev;
 }
 
 Widp wid_get_next(Widp w)
@@ -641,7 +641,7 @@ Widp wid_get_next(Widp w)
     ERR("Wid list get next loop");
   }
 
-  return (w->next);
+  return w->next;
 }
 
 Widp wid_get_head(Widp w)
@@ -703,19 +703,19 @@ Widp wid_get_parent(Widp w)
 {
   TRACE_NO_INDENT();
 
-  return (w->parent);
+  return w->parent;
 }
 
 Widp wid_get_scrollbar_vert(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->scrollbar_vert);
+  return w->scrollbar_vert;
 }
 
 Widp wid_get_scrollbar_horiz(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->scrollbar_horiz);
+  return w->scrollbar_horiz;
 }
 
 void wid_set_ignore_events(Gamep g, Widp w, uint8_t val)
@@ -903,196 +903,196 @@ char wid_event_to_char(const struct SDL_Keysym *evt)
 
   if ((evt->mod & KMOD_LSHIFT) || (evt->mod & KMOD_RSHIFT)) {
     switch (evt->sym) {
-      case SDLK_a :            return ('A');
-      case SDLK_b :            return ('B');
-      case SDLK_c :            return ('C');
-      case SDLK_d :            return ('D');
-      case SDLK_e :            return ('E');
-      case SDLK_f :            return ('F');
-      case SDLK_g :            return ('G');
-      case SDLK_h :            return ('H');
-      case SDLK_i :            return ('I');
-      case SDLK_j :            return ('J');
-      case SDLK_k :            return ('K');
-      case SDLK_l :            return ('L');
-      case SDLK_m :            return ('M');
-      case SDLK_n :            return ('N');
-      case SDLK_o :            return ('O');
-      case SDLK_p :            return ('P');
-      case SDLK_q :            return ('Q');
-      case SDLK_r :            return ('R');
-      case SDLK_s :            return ('S');
-      case SDLK_t :            return ('T');
-      case SDLK_u :            return ('U');
-      case SDLK_v :            return ('V');
-      case SDLK_w :            return ('W');
-      case SDLK_x :            return ('X');
-      case SDLK_y :            return ('Y');
-      case SDLK_z :            return ('Z');
-      case SDLK_QUOTE :        return ('"');
-      case SDLK_COMMA :        return ('<');
-      case SDLK_MINUS :        return ('_');
-      case SDLK_PERIOD :       return ('>');
-      case SDLK_SLASH :        return ('?');
-      case SDLK_EQUALS :       return ('+');
-      case SDLK_0 :            return (')');
-      case SDLK_1 :            return ('!');
-      case SDLK_2 :            return ('@');
-      case SDLK_3 :            return ('#');
-      case SDLK_4 :            return ('$');
-      case SDLK_5 :            return ('%');
-      case SDLK_6 :            return ('^');
-      case SDLK_7 :            return ('&');
-      case SDLK_8 :            return ('*');
-      case SDLK_9 :            return ('(');
-      case SDLK_SEMICOLON :    return (':');
-      case SDLK_LEFTBRACKET :  return ('{');
-      case SDLK_BACKSLASH :    return ('|');
-      case SDLK_RIGHTBRACKET : return ('}');
-      case SDLK_HASH :         return ('~');
+      case SDLK_a :            return 'A';
+      case SDLK_b :            return 'B';
+      case SDLK_c :            return 'C';
+      case SDLK_d :            return 'D';
+      case SDLK_e :            return 'E';
+      case SDLK_f :            return 'F';
+      case SDLK_g :            return 'G';
+      case SDLK_h :            return 'H';
+      case SDLK_i :            return 'I';
+      case SDLK_j :            return 'J';
+      case SDLK_k :            return 'K';
+      case SDLK_l :            return 'L';
+      case SDLK_m :            return 'M';
+      case SDLK_n :            return 'N';
+      case SDLK_o :            return 'O';
+      case SDLK_p :            return 'P';
+      case SDLK_q :            return 'Q';
+      case SDLK_r :            return 'R';
+      case SDLK_s :            return 'S';
+      case SDLK_t :            return 'T';
+      case SDLK_u :            return 'U';
+      case SDLK_v :            return 'V';
+      case SDLK_w :            return 'W';
+      case SDLK_x :            return 'X';
+      case SDLK_y :            return 'Y';
+      case SDLK_z :            return 'Z';
+      case SDLK_QUOTE :        return '"';
+      case SDLK_COMMA :        return '<';
+      case SDLK_MINUS :        return '_';
+      case SDLK_PERIOD :       return '>';
+      case SDLK_SLASH :        return '?';
+      case SDLK_EQUALS :       return '+';
+      case SDLK_0 :            return ')';
+      case SDLK_1 :            return '!';
+      case SDLK_2 :            return '@';
+      case SDLK_3 :            return '#';
+      case SDLK_4 :            return '$';
+      case SDLK_5 :            return '%';
+      case SDLK_6 :            return '^';
+      case SDLK_7 :            return '&';
+      case SDLK_8 :            return '*';
+      case SDLK_9 :            return '(';
+      case SDLK_SEMICOLON :    return ':';
+      case SDLK_LEFTBRACKET :  return '{';
+      case SDLK_BACKSLASH :    return '|';
+      case SDLK_RIGHTBRACKET : return '}';
+      case SDLK_HASH :         return '~';
     }
   }
 
   switch (evt->sym) {
-    case SDLK_BACKSPACE :    return ('');
-    case SDLK_TAB :          return ('\t');
-    case SDLK_RETURN :       return ('\n');
-    case SDLK_ESCAPE :       return ('');
-    case SDLK_SPACE :        return (' ');
-    case SDLK_EXCLAIM :      return ('!');
-    case SDLK_QUOTEDBL :     return ('"');
-    case SDLK_HASH :         return ('#');
-    case SDLK_DOLLAR :       return ('$');
-    case SDLK_AMPERSAND :    return ('%');
-    case SDLK_QUOTE :        return ('\'');
-    case SDLK_LEFTPAREN :    return ('(');
-    case SDLK_RIGHTPAREN :   return (')');
-    case SDLK_ASTERISK :     return ('*');
-    case SDLK_PLUS :         return ('+');
-    case SDLK_COMMA :        return (',');
-    case SDLK_MINUS :        return ('-');
-    case SDLK_PERIOD :       return ('.');
-    case SDLK_SLASH :        return ('/');
-    case SDLK_0 :            return ('0');
-    case SDLK_1 :            return ('1');
-    case SDLK_2 :            return ('2');
-    case SDLK_3 :            return ('3');
-    case SDLK_4 :            return ('4');
-    case SDLK_5 :            return ('5');
-    case SDLK_6 :            return ('6');
-    case SDLK_7 :            return ('7');
-    case SDLK_8 :            return ('8');
-    case SDLK_9 :            return ('9');
-    case SDLK_COLON :        return (':');
-    case SDLK_SEMICOLON :    return (';');
-    case SDLK_LESS :         return ('<');
-    case SDLK_EQUALS :       return ('=');
-    case SDLK_GREATER :      return ('>');
-    case SDLK_QUESTION :     return ('?');
-    case SDLK_AT :           return ('@');
-    case SDLK_LEFTBRACKET :  return ('[');
-    case SDLK_BACKSLASH :    return ('\\');
-    case SDLK_RIGHTBRACKET : return (']');
-    case SDLK_CARET :        return ('^');
-    case SDLK_UNDERSCORE :   return ('_');
-    case SDLK_BACKQUOTE :    return ('`');
-    case SDLK_a :            return ('a');
-    case SDLK_b :            return ('b');
-    case SDLK_c :            return ('c');
-    case SDLK_d :            return ('d');
-    case SDLK_e :            return ('e');
-    case SDLK_f :            return ('f');
-    case SDLK_g :            return ('g');
-    case SDLK_h :            return ('h');
-    case SDLK_i :            return ('i');
-    case SDLK_j :            return ('j');
-    case SDLK_k :            return ('k');
-    case SDLK_l :            return ('l');
-    case SDLK_m :            return ('m');
-    case SDLK_n :            return ('n');
-    case SDLK_o :            return ('o');
-    case SDLK_p :            return ('p');
-    case SDLK_q :            return ('q');
-    case SDLK_r :            return ('r');
-    case SDLK_s :            return ('s');
-    case SDLK_t :            return ('t');
-    case SDLK_u :            return ('u');
-    case SDLK_v :            return ('v');
-    case SDLK_w :            return ('w');
-    case SDLK_x :            return ('x');
-    case SDLK_y :            return ('y');
-    case SDLK_z :            return ('z');
-    case SDLK_DELETE :       return ('');
+    case SDLK_BACKSPACE :    return '';
+    case SDLK_TAB :          return '\t';
+    case SDLK_RETURN :       return '\n';
+    case SDLK_ESCAPE :       return '';
+    case SDLK_SPACE :        return ' ';
+    case SDLK_EXCLAIM :      return '!';
+    case SDLK_QUOTEDBL :     return '"';
+    case SDLK_HASH :         return '#';
+    case SDLK_DOLLAR :       return '$';
+    case SDLK_AMPERSAND :    return '%';
+    case SDLK_QUOTE :        return '\'';
+    case SDLK_LEFTPAREN :    return '(';
+    case SDLK_RIGHTPAREN :   return ')';
+    case SDLK_ASTERISK :     return '*';
+    case SDLK_PLUS :         return '+';
+    case SDLK_COMMA :        return ',';
+    case SDLK_MINUS :        return '-';
+    case SDLK_PERIOD :       return '.';
+    case SDLK_SLASH :        return '/';
+    case SDLK_0 :            return '0';
+    case SDLK_1 :            return '1';
+    case SDLK_2 :            return '2';
+    case SDLK_3 :            return '3';
+    case SDLK_4 :            return '4';
+    case SDLK_5 :            return '5';
+    case SDLK_6 :            return '6';
+    case SDLK_7 :            return '7';
+    case SDLK_8 :            return '8';
+    case SDLK_9 :            return '9';
+    case SDLK_COLON :        return ':';
+    case SDLK_SEMICOLON :    return ';';
+    case SDLK_LESS :         return '<';
+    case SDLK_EQUALS :       return '=';
+    case SDLK_GREATER :      return '>';
+    case SDLK_QUESTION :     return '?';
+    case SDLK_AT :           return '@';
+    case SDLK_LEFTBRACKET :  return '[';
+    case SDLK_BACKSLASH :    return '\\';
+    case SDLK_RIGHTBRACKET : return ']';
+    case SDLK_CARET :        return '^';
+    case SDLK_UNDERSCORE :   return '_';
+    case SDLK_BACKQUOTE :    return '`';
+    case SDLK_a :            return 'a';
+    case SDLK_b :            return 'b';
+    case SDLK_c :            return 'c';
+    case SDLK_d :            return 'd';
+    case SDLK_e :            return 'e';
+    case SDLK_f :            return 'f';
+    case SDLK_g :            return 'g';
+    case SDLK_h :            return 'h';
+    case SDLK_i :            return 'i';
+    case SDLK_j :            return 'j';
+    case SDLK_k :            return 'k';
+    case SDLK_l :            return 'l';
+    case SDLK_m :            return 'm';
+    case SDLK_n :            return 'n';
+    case SDLK_o :            return 'o';
+    case SDLK_p :            return 'p';
+    case SDLK_q :            return 'q';
+    case SDLK_r :            return 'r';
+    case SDLK_s :            return 's';
+    case SDLK_t :            return 't';
+    case SDLK_u :            return 'u';
+    case SDLK_v :            return 'v';
+    case SDLK_w :            return 'w';
+    case SDLK_x :            return 'x';
+    case SDLK_y :            return 'y';
+    case SDLK_z :            return 'z';
+    case SDLK_DELETE :       return '';
 #if SDL_MAJOR_VERSION == 1 // {
-    case SDLK_KP0 : return ('0');
-    case SDLK_KP1 : return ('1');
-    case SDLK_KP2 : return ('2');
-    case SDLK_KP3 : return ('3');
-    case SDLK_KP4 : return ('4');
-    case SDLK_KP5 : return ('5');
-    case SDLK_KP6 : return ('6');
-    case SDLK_KP7 : return ('7');
-    case SDLK_KP8 : return ('8');
-    case SDLK_KP9 : return ('9');
+    case SDLK_KP0 : return '0';
+    case SDLK_KP1 : return '1';
+    case SDLK_KP2 : return '2';
+    case SDLK_KP3 : return '3';
+    case SDLK_KP4 : return '4';
+    case SDLK_KP5 : return '5';
+    case SDLK_KP6 : return '6';
+    case SDLK_KP7 : return '7';
+    case SDLK_KP8 : return '8';
+    case SDLK_KP9 : return '9';
 #else
-    case SDLK_KP_0 : return ('0');
-    case SDLK_KP_1 : return ('1');
-    case SDLK_KP_2 : return ('2');
-    case SDLK_KP_3 : return ('3');
-    case SDLK_KP_4 : return ('4');
-    case SDLK_KP_5 : return ('5');
-    case SDLK_KP_6 : return ('6');
-    case SDLK_KP_7 : return ('7');
-    case SDLK_KP_8 : return ('8');
-    case SDLK_KP_9 : return ('9');
+    case SDLK_KP_0 : return '0';
+    case SDLK_KP_1 : return '1';
+    case SDLK_KP_2 : return '2';
+    case SDLK_KP_3 : return '3';
+    case SDLK_KP_4 : return '4';
+    case SDLK_KP_5 : return '5';
+    case SDLK_KP_6 : return '6';
+    case SDLK_KP_7 : return '7';
+    case SDLK_KP_8 : return '8';
+    case SDLK_KP_9 : return '9';
 #endif // }
-    case SDLK_KP_PERIOD :   return ('.');
-    case SDLK_KP_DIVIDE :   return ('/');
-    case SDLK_KP_MULTIPLY : return ('*');
-    case SDLK_KP_MINUS :    return ('-');
-    case SDLK_KP_PLUS :     return ('+');
-    case SDLK_KP_ENTER :    return ('\0');
-    case SDLK_KP_EQUALS :   return ('=');
-    case SDLK_UP :          return ('\0');
-    case SDLK_DOWN :        return ('\0');
-    case SDLK_RIGHT :       return ('\0');
-    case SDLK_LEFT :        return ('\0');
-    case SDLK_INSERT :      return ('\0');
-    case SDLK_HOME :        return ('\0');
-    case SDLK_END :         return ('\0');
-    case SDLK_PAGEUP :      return ('\0');
-    case SDLK_PAGEDOWN :    return ('\0');
-    case SDLK_F1 :          return ('\0');
-    case SDLK_F2 :          return ('\0');
-    case SDLK_F3 :          return ('\0');
-    case SDLK_F4 :          return ('\0');
-    case SDLK_F5 :          return ('\0');
-    case SDLK_F6 :          return ('\0');
-    case SDLK_F7 :          return ('\0');
-    case SDLK_F8 :          return ('\0');
-    case SDLK_F9 :          return ('\0');
-    case SDLK_F10 :         return ('\0');
-    case SDLK_F11 :         return ('\0');
-    case SDLK_F12 :         return ('\0');
-    case SDLK_F13 :         return ('\0');
-    case SDLK_F14 :         return ('\0');
-    case SDLK_F15 :         return ('\0');
-    case SDLK_CAPSLOCK :    return ('\0');
-    case SDLK_RSHIFT :      return ('\0');
-    case SDLK_LSHIFT :      return ('\0');
-    case SDLK_RCTRL :       return ('\0');
-    case SDLK_LCTRL :       return ('\0');
-    case SDLK_RALT :        return ('\0');
-    case SDLK_LALT :        return ('\0');
-    case SDLK_MODE :        return ('\0');
-    case SDLK_HELP :        return ('!');
-    case SDLK_SYSREQ :      return ('\0');
-    case SDLK_MENU :        return ('\0');
-    case SDLK_POWER :       return ('\0');
-    case SDLK_UNDO :        return ('\0');
-    default :               return ('\0');
+    case SDLK_KP_PERIOD :   return '.';
+    case SDLK_KP_DIVIDE :   return '/';
+    case SDLK_KP_MULTIPLY : return '*';
+    case SDLK_KP_MINUS :    return '-';
+    case SDLK_KP_PLUS :     return '+';
+    case SDLK_KP_ENTER :    return '\0';
+    case SDLK_KP_EQUALS :   return '=';
+    case SDLK_UP :          return '\0';
+    case SDLK_DOWN :        return '\0';
+    case SDLK_RIGHT :       return '\0';
+    case SDLK_LEFT :        return '\0';
+    case SDLK_INSERT :      return '\0';
+    case SDLK_HOME :        return '\0';
+    case SDLK_END :         return '\0';
+    case SDLK_PAGEUP :      return '\0';
+    case SDLK_PAGEDOWN :    return '\0';
+    case SDLK_F1 :          return '\0';
+    case SDLK_F2 :          return '\0';
+    case SDLK_F3 :          return '\0';
+    case SDLK_F4 :          return '\0';
+    case SDLK_F5 :          return '\0';
+    case SDLK_F6 :          return '\0';
+    case SDLK_F7 :          return '\0';
+    case SDLK_F8 :          return '\0';
+    case SDLK_F9 :          return '\0';
+    case SDLK_F10 :         return '\0';
+    case SDLK_F11 :         return '\0';
+    case SDLK_F12 :         return '\0';
+    case SDLK_F13 :         return '\0';
+    case SDLK_F14 :         return '\0';
+    case SDLK_F15 :         return '\0';
+    case SDLK_CAPSLOCK :    return '\0';
+    case SDLK_RSHIFT :      return '\0';
+    case SDLK_LSHIFT :      return '\0';
+    case SDLK_RCTRL :       return '\0';
+    case SDLK_LCTRL :       return '\0';
+    case SDLK_RALT :        return '\0';
+    case SDLK_LALT :        return '\0';
+    case SDLK_MODE :        return '\0';
+    case SDLK_HELP :        return '!';
+    case SDLK_SYSREQ :      return '\0';
+    case SDLK_MENU :        return '\0';
+    case SDLK_POWER :       return '\0';
+    case SDLK_UNDO :        return '\0';
+    default :               return '\0';
   }
-  return ('\0');
+  return '\0';
 }
 
 //
@@ -1122,11 +1122,11 @@ wid_mode wid_get_mode(Widp w)
   //
   if (w == wid_focus) {
     if ((w->mode == WID_MODE_NORMAL) || (w->mode == WID_MODE_OVER)) {
-      return (WID_MODE_FOCUS);
+      return WID_MODE_FOCUS;
     }
   }
 
-  return (w->mode);
+  return w->mode;
 }
 
 std::string to_string(Widp w) { return (w->to_string); }
@@ -1237,7 +1237,7 @@ void wid_set_text(Widp w, int v)
 bool wid_get_received_input(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->received_input);
+  return w->received_input;
 }
 
 void wid_set_received_input(Widp w, uint8_t val)
@@ -1267,7 +1267,7 @@ int wid_get_height(Widp w)
 bool wid_get_focusable(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->focus_order);
+  return w->focus_order;
 }
 
 void wid_set_focusable(Widp w, uint8_t val)
@@ -1279,7 +1279,7 @@ void wid_set_focusable(Widp w, uint8_t val)
 bool wid_get_show_cursor(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->show_cursor);
+  return w->show_cursor;
 }
 
 void wid_set_show_cursor(Widp w, uint8_t val)
@@ -1291,7 +1291,7 @@ void wid_set_show_cursor(Widp w, uint8_t val)
 bool wid_get_do_not_raise(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->do_not_raise);
+  return w->do_not_raise;
 }
 
 void wid_set_do_not_raise(Widp w, uint8_t val)
@@ -1303,7 +1303,7 @@ void wid_set_do_not_raise(Widp w, uint8_t val)
 bool wid_get_do_not_lower(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->do_not_lower);
+  return w->do_not_lower;
 }
 
 void wid_set_do_not_lower(Widp w, uint8_t val)
@@ -1317,7 +1317,7 @@ bool wid_get_moveable(Widp w)
   TRACE_NO_INDENT();
 
   if (w->moveable_set) {
-    return (w->moveable);
+    return w->moveable;
   }
 
   return false;
@@ -1347,7 +1347,7 @@ bool wid_get_moveable_horiz(Widp w)
   TRACE_NO_INDENT();
 
   if (w->moveable_horiz_set) {
-    return (w->moveable_horiz);
+    return w->moveable_horiz;
   }
 
   return false;
@@ -1370,7 +1370,7 @@ bool wid_get_moveable_vert(Widp w)
   TRACE_NO_INDENT();
 
   if (w->moveable_vert_set) {
-    return (w->moveable_vert);
+    return w->moveable_vert;
   }
 
   return false;
@@ -1393,7 +1393,7 @@ bool wid_get_moveable_bounded(Widp w)
   TRACE_NO_INDENT();
 
   if (w->moveable_bounded_set) {
-    return (w->moveable_bounded);
+    return w->moveable_bounded;
   }
 
   return false;
@@ -1416,7 +1416,7 @@ bool wid_get_moveable_no_user_scroll(Widp w)
   TRACE_NO_INDENT();
 
   if (w->moveable_no_user_scroll_set) {
-    return (w->moveable_no_user_scroll);
+    return w->moveable_no_user_scroll;
   }
 
   return false;
@@ -1437,7 +1437,7 @@ void wid_set_moveable_no_user_scroll(Gamep g, Widp w, uint8_t val)
 bool wid_get_text_lhs(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->text_lhs);
+  return w->text_lhs;
 }
 
 void wid_set_text_lhs(Widp w, uint8_t val)
@@ -1449,7 +1449,7 @@ void wid_set_text_lhs(Widp w, uint8_t val)
 bool wid_get_text_rhs(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->text_rhs);
+  return w->text_rhs;
 }
 
 void wid_set_text_rhs(Widp w, uint8_t val)
@@ -1461,7 +1461,7 @@ void wid_set_text_rhs(Widp w, uint8_t val)
 bool wid_get_text_centerx(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->text_centerx);
+  return w->text_centerx;
 }
 
 void wid_set_text_centerx(Widp w, uint8_t val)
@@ -1473,7 +1473,7 @@ void wid_set_text_centerx(Widp w, uint8_t val)
 bool wid_get_text_top(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->text_top);
+  return w->text_top;
 }
 
 void wid_set_text_top(Widp w, uint8_t val)
@@ -1485,7 +1485,7 @@ void wid_set_text_top(Widp w, uint8_t val)
 bool wid_get_text_bot(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->text_bot);
+  return w->text_bot;
 }
 
 void wid_set_text_bot(Widp w, uint8_t val)
@@ -1497,7 +1497,7 @@ void wid_set_text_bot(Widp w, uint8_t val)
 bool wid_get_text_centery(Widp w)
 {
   TRACE_NO_INDENT();
-  return (w->text_centery);
+  return w->text_centery;
 }
 
 void wid_set_text_centery(Widp w, uint8_t val)
@@ -1570,21 +1570,21 @@ color wid_get_color(Widp w, wid_color which)
   wid_options_menu *cfg  = &w->cfg[ mode ];
 
   if (cfg->color_set[ which ]) {
-    return (cfg->colors[ which ]);
+    return cfg->colors[ which ];
   }
 
   if ((wid_focus == w) && (wid_over == w)) {
     mode = WID_MODE_OVER;
     cfg  = &w->cfg[ mode ];
     if (cfg->color_set[ which ]) {
-      return (cfg->colors[ which ]);
+      return cfg->colors[ which ];
     }
   }
 
   mode = WID_MODE_NORMAL;
   cfg  = &w->cfg[ mode ];
   if (cfg->color_set[ which ]) {
-    return (cfg->colors[ which ]);
+    return cfg->colors[ which ];
   }
 
   return WHITE;
@@ -1598,21 +1598,21 @@ int wid_get_style(Widp w)
   wid_options_menu *cfg  = &w->cfg[ mode ];
 
   if (cfg->style_set) {
-    return (cfg->style);
+    return cfg->style;
   }
 
   if ((wid_focus == w) && (wid_over == w)) {
     mode = WID_MODE_OVER;
     cfg  = &w->cfg[ mode ];
     if (cfg->style_set) {
-      return (cfg->style);
+      return cfg->style;
     }
   }
 
   mode = WID_MODE_NORMAL;
   cfg  = &w->cfg[ mode ];
   if (cfg->style_set) {
-    return (cfg->style);
+    return cfg->style;
   }
 
   return UI_WID_STYLE_NORMAL;
@@ -2021,7 +2021,7 @@ WidKeyType wid_unsorted_get_key(Widp w)
 
   w = result->second;
 
-  return (w->tree_global_key);
+  return w->tree_global_key;
 }
 
 static void wid_tree4_wids_being_destroyed_remove(Widp w)

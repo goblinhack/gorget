@@ -186,7 +186,7 @@ static hash_elem_t **ptr2hash(hash_t *hash_table, void *ptr)
   //
   slot = (int) ((((uintptr_t) (ptr)) >> 2) % hash_table->hash_size);
 
-  return (&hash_table->elements[ slot ]);
+  return &hash_table->elements[ slot ];
 }
 
 //
@@ -526,7 +526,7 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
     ptrcheck_hash[ mtype ] = hash_init(1046527 /* prime */);
 
     if (! ptrcheck_hash[ mtype ]) {
-      return ((void *) ptr);
+      return (void *) ptr;
     }
 
     //
@@ -543,7 +543,7 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
   if (hash_find(ptrcheck_hash[ mtype ], (void *) ptr)) {
     ERR("Pointer %p already exists and attempting to add again", ptr);
     ptrcheck_describe_pointer(mtype, ptr);
-    return ((void *) ptr);
+    return (void *) ptr;
   }
 
   //
@@ -571,7 +571,7 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
   //
   hash_add(ptrcheck_hash[ mtype ], pc);
 
-  return ((void *) ptr);
+  return (void *) ptr;
 }
 
 void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, const char *func, const char *file,

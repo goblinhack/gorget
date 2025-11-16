@@ -223,5 +223,5 @@ wid_tilesp wid_tiles_find(std::string file)
     return nullptr;
   }
 
-  return (result->second);
+  return result->second;
 }

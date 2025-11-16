@@ -168,7 +168,7 @@ bool wid_console_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
   //
   // Feed to the general input handler
   //
-  return (wid_receive_input(g, w, key));
+  return wid_receive_input(g, w, key);
 }
 
 //

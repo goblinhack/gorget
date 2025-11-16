@@ -39,7 +39,7 @@ std::string thing_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFla
   TRACE_NO_INDENT();
 
   if (unlikely(! t)) {
-    return ("<no name>");
+    return "<no name>";
   }
 
   auto tp = thing_tp(t);

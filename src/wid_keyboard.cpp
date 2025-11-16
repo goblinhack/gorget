@@ -276,7 +276,7 @@ static bool wid_keyboard_button_mouse_event(Gamep g, Widp w, int x, int y, uint3
   int focusx = (focus & 0xff);
   int focusy = (focus & 0xff00) >> 8;
 
-  return (wid_keyboard_mouse_event(g, w, focusx, focusy));
+  return wid_keyboard_mouse_event(g, w, focusx, focusy);
 }
 
 static void wid_keyboard_focus_right(Gamep g, wid_keyboard_ctx *ctx)

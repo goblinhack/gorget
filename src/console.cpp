@@ -57,48 +57,48 @@ static term_color term_color_string_to_index(const char **s)
 
   if (! strncmp(*s, "black$", SIZEOF("black$") - 1)) {
     *s += SIZEOF("black$") - 1;
-    return (TERM_COLOR_BLACK);
+    return TERM_COLOR_BLACK;
   }
   if (! strncmp(*s, "red$", SIZEOF("red$") - 1)) {
     *s += SIZEOF("red$") - 1;
-    return (TERM_COLOR_RED);
+    return TERM_COLOR_RED;
   }
   if (! strncmp(*s, "green$", SIZEOF("green$") - 1)) {
     *s += SIZEOF("green$") - 1;
-    return (TERM_COLOR_GREEN);
+    return TERM_COLOR_GREEN;
   }
   if (! strncmp(*s, "yellow$", SIZEOF("yellow$") - 1)) {
     *s += SIZEOF("yellow$") - 1;
-    return (TERM_COLOR_YELLOW);
+    return TERM_COLOR_YELLOW;
   }
   if (! strncmp(*s, "orange$", SIZEOF("orange$") - 1)) {
     *s += SIZEOF("orange$") - 1;
-    return (TERM_COLOR_YELLOW);
+    return TERM_COLOR_YELLOW;
   }
   if (! strncmp(*s, "blue$", SIZEOF("blue$") - 1)) {
     *s += SIZEOF("blue$") - 1;
-    return (TERM_COLOR_BLUE);
+    return TERM_COLOR_BLUE;
   }
   if (! strncmp(*s, "pink$", SIZEOF("pink$") - 1)) {
     *s += SIZEOF("pink$") - 1;
-    return (TERM_COLOR_PINK);
+    return TERM_COLOR_PINK;
   }
   if (! strncmp(*s, "cyan$", SIZEOF("cyan$") - 1)) {
     *s += SIZEOF("cyan$") - 1;
-    return (TERM_COLOR_CYAN);
+    return TERM_COLOR_CYAN;
   }
   if (! strncmp(*s, "white$", SIZEOF("white$") - 1)) {
     *s += SIZEOF("white$") - 1;
-    return (TERM_COLOR_WHITE);
+    return TERM_COLOR_WHITE;
   }
   if (! strncmp(*s, "reset$", SIZEOF("reset$") - 1)) {
     *s += SIZEOF("reset$") - 1;
-    return (TERM_COLOR_RESET);
+    return TERM_COLOR_RESET;
   }
 
   (void) string2color(s);
 
-  return (TERM_COLOR_WHITE);
+  return TERM_COLOR_WHITE;
 }
 
 void term_log(const char *s)

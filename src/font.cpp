@@ -67,7 +67,7 @@ Fontp font_find(std::string file)
     return nullptr;
   }
 
-  return (result->second);
+  return result->second;
 }
 
 Tilep Font::font_get_tile(int u)
@@ -80,12 +80,12 @@ Tilep Font::font_get_tile(int u)
   if ((u < 0) || (u >= FONT_CHAR_MAX)) {
     if (u == '?') {
       DIE("char 0x%X/%d -> bad index", u, u);
-      return (font_get_tile('?'));
+      return font_get_tile('?');
     } else {
       DIE("char 0x%X/%d -> bad index", u, u);
-      return (font_get_tile('?'));
+      return font_get_tile('?');
     }
-    return (font_get_tile('?'));
+    return font_get_tile('?');
   }
 
   auto index = this->u_to_c[ u ];
@@ -93,12 +93,12 @@ Tilep Font::font_get_tile(int u)
   if ((index < 0) || (index >= FONT_CHAR_MAX)) {
     if (u == '?') {
       DIE("char 0x%X/%d -> bad index %d", u, u, index);
-      return (font_get_tile('?'));
+      return font_get_tile('?');
     } else {
       DIE("char 0x%X/%d -> bad index %d", u, u, index);
-      return (font_get_tile('?'));
+      return font_get_tile('?');
     }
-    return (font_get_tile('?'));
+    return font_get_tile('?');
   }
 
   auto tile = this->cache[ index ];
@@ -113,10 +113,10 @@ Tilep Font::font_get_tile(int u)
   if (unlikely(! tile)) {
     if (u == '?') {
       DIE("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
-      return (font_get_tile('?'));
+      return font_get_tile('?');
     }
     DIE("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
-    return (font_get_tile('?'));
+    return font_get_tile('?');
   }
 
   this->cache[ index ] = tile;
