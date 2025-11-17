@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
@@ -39,6 +40,13 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
       if (! level_is_explosion(g, v, l, p)) {
         thing_spawn(g, v, l, tp_random(is_explosion), p);
       }
+    }
+  }
+
+  auto player = thing_player(g);
+  if (player) {
+    if (thing_vision_can_see_tile(g, v, l, player, t->at)) {
+      TOPCON("The barrel explodes!");
     }
   }
 }

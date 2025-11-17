@@ -664,6 +664,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
         case CHARMAP_TREASURE :      break;
         case CHARMAP_WALL :          break;
         case CHARMAP_WATER :         break;
+        case CHARMAP_FIRE :          break;
         case CHARMAP_EXIT :
           if (exit_count++) {
             DIE("room has too many exits in room @ %s:%d", file, line);
@@ -1237,6 +1238,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_TREASURE :      break;
         case CHARMAP_WALL :          break;
         case CHARMAP_WATER :         break;
+        case CHARMAP_FIRE :          break;
         default :
           DIE("fragment_alt has unknown char [%c] in fragment_alt @ %s:%d", fragment_alt_line[ i ], file, line);
           return false;
@@ -1541,6 +1543,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
         case CHARMAP_WALL :          break;
         case CHARMAP_WATER :         break;
         case CHARMAP_WILDCARD :      break;
+        case CHARMAP_FIRE :          break;
         default :
           DIE("fragment has unknown char [%c] in fragment @ %s:%d", fragment_line[ i ], file, line);
           return false;
@@ -1889,6 +1892,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
         case CHARMAP_TREASURE :      break;
         case CHARMAP_WALL :          break;
         case CHARMAP_WATER :         break;
+        case CHARMAP_FIRE :          break;
         case CHARMAP_EXIT :
           if (exit_count++) {
             DIE("level has too many exits in level @ %s:%d", file, line);

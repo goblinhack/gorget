@@ -40,6 +40,20 @@ void levels_test(Gamep g)
                   /* line */ (const char *) "xxxxxxxxxxx",
                   /* end */ nullptr);
 
+  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "fire", __FUNCTION__, __LINE__,
+                  /* line */ (const char *) "xxxxxxxxxxx",
+                  /* line */ (const char *) "xxxxxxxxxxx",
+                  /* line */ (const char *) "xx.......xx",
+                  /* line */ (const char *) "xx..x....xx",
+                  /* line */ (const char *) "xx..x!!!.xx",
+                  /* line */ (const char *) "xx.@x!b!.xx",
+                  /* line */ (const char *) "xx..x!!!.xx",
+                  /* line */ (const char *) "xx.Ex....xx",
+                  /* line */ (const char *) "xx.......xx",
+                  /* line */ (const char *) "xxxxxxxxxxx",
+                  /* line */ (const char *) "xxxxxxxxxxx",
+                  /* end */ nullptr);
+
   level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "bridge1", __FUNCTION__, __LINE__,
                   /* line */ (const char *) "           ",
                   /* line */ (const char *) " xxxxxxxxx ",
