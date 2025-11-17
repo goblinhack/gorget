@@ -679,11 +679,11 @@ static void wid_keyboard_tick(Gamep g, Widp w)
        */
       int mode;
       for (mode = WID_MODE_NORMAL; mode < WID_MODE_LAST; mode++) {
-        wid_set_mode( b, (wid_mode) mode);
+        wid_set_mode(b, (wid_mode) mode);
         wid_set_color(b, WID_COLOR_TEXT_FG, c);
       }
 
-      wid_set_mode( w, (wid_mode) WID_MODE_NORMAL);
+      wid_set_mode(w, (wid_mode) WID_MODE_NORMAL);
     }
   }
 }
@@ -772,12 +772,12 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     wid_set_color(w, WID_COLOR_BG, GRAY20);
     wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
 
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
 
     wid_set_color(w, WID_COLOR_BG, GRAY20);
     wid_set_color(w, WID_COLOR_TEXT_FG, GREEN);
 
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
   }
 
   /*

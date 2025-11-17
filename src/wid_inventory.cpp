@@ -290,7 +290,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       spoint br(6, y_at + button_height);
       wid_set_text_lhs(w, true);
 
-      wid_set_mode( w, WID_MODE_NORMAL);
+      wid_set_mode(w, WID_MODE_NORMAL);
       wid_set_color(w, WID_COLOR_TEXT_FG, GRAY50);
       wid_set_style(w, button_style);
       wid_set_pos(w, tl, br);

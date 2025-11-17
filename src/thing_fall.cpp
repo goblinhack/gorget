@@ -166,6 +166,7 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   if (thing_is_burning(t)) {
     thing_is_burning_unset(g, v, l, t);
+
     if (thing_is_player(t)) {
       TOPCON(UI_GOOD_FMT_STR "You extinguish the flames as you fall!" UI_RESET_FMT);
     }

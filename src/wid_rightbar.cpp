@@ -28,9 +28,9 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     wid_set_text_top(w, true);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_color(w, WID_COLOR_BG, WHITE);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_color(w, WID_COLOR_BG, WHITE);
   }
 
@@ -43,9 +43,9 @@ static void wid_rightbar_create_minimap_level(Gamep g)
     wid_set_text_top(w, true);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_color(w, WID_COLOR_BG, WHITE);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_color(w, WID_COLOR_BG, WHITE);
   }
 }
@@ -63,9 +63,9 @@ static void wid_rightbar_create_minimap_world(Gamep g)
     wid_set_text_top(w, true);
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_color(w, WID_COLOR_BG, WHITE);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_color(w, WID_COLOR_BG, WHITE);
   }
 
@@ -76,9 +76,9 @@ static void wid_rightbar_create_minimap_world(Gamep g)
     wid_set_tilename(TILE_LAYER_FG_0, w, "FBO_MINIMAP_WORLD_ROTATED");
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_pos(w, minimap_tl, minimap_br);
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_color(w, WID_COLOR_BG, WHITE);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_color(w, WID_COLOR_BG, WHITE);
   }
 }

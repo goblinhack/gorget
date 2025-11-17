@@ -516,9 +516,9 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_end(w, wid_actionbar_descend_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_descend_get(g)) + UI_HIGHLIGHT_FMT_STR ""
                         + " Descend");
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     x_at += option_width + 1;
   }
@@ -533,9 +533,9 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_end(w, wid_actionbar_ascend_over_end);
     wid_set_text(w,
                  UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_ascend_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Ascend");
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     x_at += option_width + 1;
   }
@@ -550,9 +550,9 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_begin(w, wid_actionbar_wait_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_wait_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_wait_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Wait");
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     x_at += option_width + 1;
   }
@@ -567,9 +567,9 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_end(w, wid_actionbar_inventory_over_end);
     wid_set_text(w,
                  UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_inventory_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Inv");
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     x_at += option_width + 1;
   }
@@ -583,9 +583,9 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_begin(w, wid_actionbar_load_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_load_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_load_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Load");
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     x_at += option_width + 1;
   }
@@ -599,9 +599,9 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_begin(w, wid_actionbar_save_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_save_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_save_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Save");
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     x_at += option_width + 1;
   }
@@ -615,9 +615,9 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_begin(w, wid_actionbar_help_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_help_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_help_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Help");
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     x_at += option_width + 1;
   }
@@ -631,9 +631,9 @@ bool wid_actionbar_create_window(Gamep g)
     wid_set_on_mouse_over_begin(w, wid_actionbar_quit_over_begin);
     wid_set_on_mouse_over_end(w, wid_actionbar_quit_over_end);
     wid_set_text(w, UI_SHORTCUT_FMT_STR "" + ::to_string(game_key_quit_get(g)) + UI_HIGHLIGHT_FMT_STR "" + " Quit");
-    wid_set_mode( w, WID_MODE_OVER);
+    wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
-    wid_set_mode( w, WID_MODE_NORMAL);
+    wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     x_at += option_width + 1;
   }
