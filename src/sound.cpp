@@ -35,12 +35,19 @@ static std::unordered_map< std::string, class sound * > all_sound;
 
 static bool sound_init_done;
 
-static std::unordered_map< int, std::string > already_playing;
+class Playing
+{
+public:
+  std::string alias;
+  int         volume;
+};
+
+static std::unordered_map< int, Playing > already_playing;
 
 static void sound_finished(int channel)
 {
   if (channel != -1) {
-    already_playing[ channel ] = "";
+    already_playing[ channel ].alias = "";
   }
 }
 
@@ -148,13 +155,13 @@ bool sound_find(const std::string &alias)
   return result != all_sound.end();
 }
 
-static int sound_play_internal(Game *g, int channel, class sound *s, float scale)
+static bool sound_play_internal(Game *g, const std::string &alias, int channel, class sound *s, float scale)
 {
   TRACE_NO_INDENT();
 
   if (! s->chunk) {
     ERR("Cannot find sound chunk %s", s->alias.c_str());
-    return -1;
+    return false;
   }
 
   float volume = s->volume * scale * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
@@ -164,6 +171,15 @@ static int sound_play_internal(Game *g, int channel, class sound *s, float scale
     return false;
   }
 
+  //
+  // Playing already? And louder?
+  //
+  for (auto p : already_playing) {
+    if ((p.second.alias == alias) && (p.second.volume >= volume)) {
+      return true;
+    }
+  }
+
   Mix_VolumeChunk(s->chunk, (int) volume);
 
   auto chan = Mix_PlayChannel(-1, s->chunk, 0 /* loops */);
@@ -171,7 +187,12 @@ static int sound_play_internal(Game *g, int channel, class sound *s, float scale
     return false;
   }
 
-  already_playing[ chan ] = s->alias;
+  Playing p;
+  p.alias                 = s->alias;
+  p.volume                = (int) volume;
+  already_playing[ chan ] = p;
+
+  DBG("Play sound %s volume %d channel %d", alias.c_str(), (int) volume, chan);
 
   return false;
 }
@@ -197,23 +218,7 @@ bool sound_play(Gamep g, const std::string &alias, float scale)
     return false;
   }
 
-  DBG2("Play sound %s", alias.c_str());
-
-  //
-  // Playing already?
-  //
-  for (auto p : already_playing) {
-    if (p.second == alias) {
-      return false;
-    }
-  }
-
-  if (sound_play_internal(g, -1 /* first free channel */, sound->second, scale) == -1) {
-    DBG2("Cannot play sound %s on any channel", alias.c_str());
-    SDL_ClearError();
-  }
-
-  return true;
+  return sound_play_internal(g, alias, -1 /* first free channel */, sound->second, scale);
 }
 
 void sound_halt(void) { TRACE_NO_INDENT(); }
