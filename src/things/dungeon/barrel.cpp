@@ -22,7 +22,7 @@ static std::string tp_barrel_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "A not out of place in a dungeon, barrel of oil.";
+  return "A not-out-of-place-in-a-dungeon, barrel of oil.";
 }
 
 static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)

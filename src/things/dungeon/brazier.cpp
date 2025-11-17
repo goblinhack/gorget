@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
@@ -84,6 +85,15 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 
   if (! level_is_smoke(g, v, l, t->at)) {
     thing_spawn(g, v, l, tp_random(is_smoke), t->at);
+  }
+
+  auto player = thing_player(g);
+  if (player) {
+    if (thing_vision_can_see_tile(g, v, l, player, t->at)) {
+      TOPCON("The brazier falls over!");
+    } else {
+      TOPCON("You hear a distant clatter!");
+    }
   }
 }
 
