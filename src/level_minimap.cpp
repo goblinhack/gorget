@@ -52,7 +52,12 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
       spoint p(x, y);
       auto   s = level_select_get(g, v, p);
 
-      Levelp level_over = level_select_get_level_at_tile_coords(g, v, p);
+      Levelp level_over;
+      if (level_is_level_select(g, v, l)) {
+        level_over = level_select_get_level_at_tile_coords(g, v, p);
+      } else {
+        level_over = nullptr;
+      }
 
       if (s->is_set) {
         level_at_coord = game_level_get(g, v, s->level_num);
