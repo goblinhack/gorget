@@ -16,7 +16,7 @@
 static Texp solid_tex;
 static int  solid_tex_id;
 
-static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
+static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, bool level_select)
 {
   TRACE_NO_INDENT();
 
@@ -51,39 +51,62 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l)
 
       spoint p(x, y);
       auto   s = level_select_get(g, v, p);
+      if (! s->is_set) {
+        //
+        // No level here
+        //
+        continue;
+      }
 
+      level_at_coord = game_level_get(g, v, s->level_num);
+      if (! level_at_coord) {
+        continue;
+      }
+
+      //
+      // Only if in level selection can we be hovering over a level
+      //
       Levelp level_over;
-      if (level_is_level_select(g, v, l)) {
+      if (level_select) {
         level_over = level_select_get_level_at_tile_coords(g, v, p);
       } else {
         level_over = nullptr;
       }
 
-      if (s->is_set) {
-        level_at_coord = game_level_get(g, v, s->level_num);
-        if (level_at_coord) {
-          if (level_at_coord->player_completed_level_via_exit) {
-            c = GREEN;
-          } else if (level_at_coord->player_fell_out_of_level) {
-            c = GREEN4;
-          } else if (level_at_coord == level_over) {
-            c = GRAY50;
-          } else {
-            c = GRAY20;
-          }
-
-          if (s->final_level) {
-            c = YELLOW;
-          }
-
-          if (level_at_coord->level_num == player->level_num) {
-            c = CYAN;
-          }
-        } else {
-          continue;
-        }
+      if (level_at_coord->player_completed_level_via_exit) {
+        //
+        // Completed level
+        //
+        c = GREEN4;
+      } else if (level_at_coord->player_fell_out_of_level) {
+        //
+        // Sort of completed level
+        //
+        c = ORANGE;
+      } else if (level_at_coord == level_over) {
+        //
+        // Hovering over this level
+        //
+        c = GRAY50;
       } else {
-        continue;
+        //
+        // Normal unvisited level
+        //
+        c = GRAY20;
+      }
+
+      //
+      // Final level
+      //
+      if (s->final_level) {
+        c = YELLOW;
+      }
+
+      //
+      // Cureent level
+      //
+      if (level_at_coord->level_num == player->level_num) {
+        c = CYAN;
       }
 
       auto X   = x;
@@ -272,7 +295,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
   blit_fbo_unbind();
 }
 
-void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
+void level_minimaps_update(Gamep g, Levelsp v, Levelp l, bool level_select)
 {
   TRACE_NO_INDENT();
 
@@ -288,7 +311,7 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
   level_minimap_levels_update(g, v, l);
   //  sdl_fbo_dump(g, FBO_MINIMAP_LEVEL, "level");
 
-  level_minimap_world_update(g, v, l);
+  level_minimap_world_update(g, v, l, level_select);
   //  sdl_fbo_dump(g, FBO_MINIMAP_WORLD, "world");
 
   level_minimap_world_update_rotated(g, v, l);

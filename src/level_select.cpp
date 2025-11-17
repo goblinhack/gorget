@@ -823,7 +823,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
   level_select_show_sorted_values(g, v, level_over, parent, monsts, "Monsters");
   level_select_show_sorted_values(g, v, level_over, parent, treasure, "Loot");
 
-  level_minimaps_update(g, v, level_over);
+  level_minimaps_update(g, v, level_over, true);
 }
 
 //
