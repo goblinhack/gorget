@@ -36,7 +36,7 @@ static bool tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp 
     TOPCON("A secret door creaks open!");
   }
 
-  sound_play(g, "door_secret");
+  thing_sound_play(g, v, l, t, "door_secret");
 
   thing_dead(g, v, l, t, e);
 

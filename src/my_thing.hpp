@@ -537,6 +537,7 @@ bool thing_player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t butt
 bool thing_push(Gamep, Levelsp, Levelp, Thingp);
 bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+bool thing_sound_play(Gamep, Levelsp, Levelp, Thingp, const std::string &alias);
 bool thing_teleport(Gamep, Levelsp, Levelp, Thingp);
 bool thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 bool thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);

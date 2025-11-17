@@ -87,7 +87,7 @@ static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp 
     thing_is_unlocked_set(g, v, l, t);
   }
 
-  sound_play(g, "door");
+  thing_sound_play(g, v, l, t, "door");
 
   return true;
 }
@@ -100,7 +100,7 @@ static bool tp_door_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp
     TOPCON("The locked door closes.");
   }
 
-  sound_play(g, "door");
+  thing_sound_play(g, v, l, t, "door");
 
   return true;
 }

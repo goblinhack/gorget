@@ -47,6 +47,8 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (player) {
     if (thing_vision_can_see_tile(g, v, l, player, t->at)) {
       TOPCON("The barrel explodes!");
+    } else {
+      TOPCON("You hear a distant explosion!");
     }
   }
 }

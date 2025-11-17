@@ -28,7 +28,7 @@ static void tp_kobalos_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, Thin
 {
   TRACE_NO_INDENT();
 
-  sound_play(g, "explosion");
+  thing_sound_play(g, v, l, t, "explosion");
 }
 
 bool tp_load_kobalos_mob(void)

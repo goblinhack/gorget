@@ -936,7 +936,7 @@ bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
   }
 
-  sound_play(g, "footstep");
+  thing_sound_play(g, v, l, t, "footstep");
 
   return true;
 }

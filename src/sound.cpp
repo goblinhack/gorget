@@ -148,7 +148,7 @@ bool sound_find(const std::string &alias)
   return result != all_sound.end();
 }
 
-static int sound_play_internal(Game *g, int channel, class sound *s)
+static int sound_play_internal(Game *g, int channel, class sound *s, float scale)
 {
   TRACE_NO_INDENT();
 
@@ -157,22 +157,32 @@ static int sound_play_internal(Game *g, int channel, class sound *s)
     return -1;
   }
 
-  float volume = s->volume * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
+  float volume = s->volume * scale * (((float) game_sound_volume_get(g)) / ((float) MIX_MAX_VOLUME));
   volume *= MIX_MAX_VOLUME;
+
+  if (volume <= 0) {
+    return false;
+  }
+
   Mix_VolumeChunk(s->chunk, (int) volume);
 
   auto chan = Mix_PlayChannel(-1, s->chunk, 0 /* loops */);
   if (chan == -1) {
-    return chan;
+    return false;
   }
 
   already_playing[ chan ] = s->alias;
-  return chan;
+
+  return false;
 }
 
-bool sound_play(Gamep g, const std::string &alias)
+bool sound_play(Gamep g, const std::string &alias, float scale)
 {
   TRACE_NO_INDENT();
+
+  if (scale <= 0) {
+    return false;
+  }
 
   auto sound = all_sound.find(alias);
   if (sound == all_sound.end()) {
@@ -198,7 +208,7 @@ bool sound_play(Gamep g, const std::string &alias)
     }
   }
 
-  if (sound_play_internal(g, -1 /* first free channel */, sound->second) == -1) {
+  if (sound_play_internal(g, -1 /* first free channel */, sound->second, scale) == -1) {
     DBG2("Cannot play sound %s on any channel", alias.c_str());
     SDL_ClearError();
   }

@@ -28,7 +28,7 @@ static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingE
 {
   TRACE_NO_INDENT();
 
-  sound_play(g, "explosion");
+  thing_sound_play(g, v, l, t, "explosion");
 }
 
 bool tp_load_ghost_mob(void)

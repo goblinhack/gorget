@@ -37,9 +37,9 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   if (level_is_water(g, v, l, t->at)) {
-    sound_play(g, "splash");
+    thing_sound_play(g, v, l, t, "splash");
   } else {
-    sound_play(g, "footstep");
+    thing_sound_play(g, v, l, t, "footstep");
   }
 
   v->cursor[ t->at.x ][ t->at.y ] = CURSOR_NONE;
@@ -50,7 +50,7 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   if (level_is_water(g, v, l, t->at)) {
-    sound_play(g, "splash");
+    thing_sound_play(g, v, l, t, "splash");
   }
 
   if (thing_is_falling(t)) {
@@ -64,7 +64,7 @@ static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  sound_play(g, "fall");
+  thing_sound_play(g, v, l, t, "fall");
 
   game_popup_text_add(g, t->at.x, t->at.y, std::string("Aargh!"));
 }
@@ -74,9 +74,9 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   if (level_is_water(g, v, l, t->at)) {
-    sound_play(g, "splash");
+    thing_sound_play(g, v, l, t, "splash");
   } else {
-    sound_play(g, "oof");
+    thing_sound_play(g, v, l, t, "oof");
   }
 }
 
@@ -104,7 +104,7 @@ static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  sound_play(g, "teleport");
+  thing_sound_play(g, v, l, t, "teleport");
 
   game_popup_text_add(g, t->at.x, t->at.y, std::string("Urgh"));
 }
@@ -129,7 +129,7 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   player_move_to_next(g, v, l, t);
 
   if (thing_is_burning(t)) {
-    sound_play(g, "ouch");
+    thing_sound_play(g, v, l, t, "ouch");
   }
 }
 

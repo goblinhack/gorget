@@ -1034,6 +1034,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
 
   if (game_mouse_down(g, x, y, button)) {
     sound_play(g, "click");
+
     if (g) {
       game_last_mouse_down_set(g, time_ms_cached());
     }
