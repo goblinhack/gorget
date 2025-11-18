@@ -25,8 +25,8 @@
 //
 // Default text colors
 //
-#define UI_TEXT_COLOR            GRAY // Default text color
-#define UI_TEXT_COLOR_STR        "gray"
+#define UI_TEXT_COLOR       GRAY // Default text color
+#define UI_TEXT_COLOR_STR   "gray"
 #define UI_HIGHLIGHT_COLOR  WHITE // Default highlight color
 #define UI_POPUP_TEXT_COLOR UI_TEXT_COLOR
 

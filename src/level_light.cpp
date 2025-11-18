@@ -8,6 +8,7 @@
 #include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_tile.hpp"
+#include "my_ui.hpp"
 
 #include <array>
 #include <math.h>

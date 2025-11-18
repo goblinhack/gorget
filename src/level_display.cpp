@@ -223,6 +223,11 @@ void level_display(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
+  //
+  // Get the next level for falling into
+  //
+  (void) level_select_get_next_level_down(g, v, l);
+
   level_display_fbo(g, v, l, FBO_MAP_BG);
   // sdl_fbo_dump(g, FBO_MAP_BG, "FBO_MAP_BG");
   level_display_fbo(g, v, l, FBO_MAP_FG);

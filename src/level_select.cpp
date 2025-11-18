@@ -129,8 +129,13 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto p     = l->level_select_at;
-  int  tries = 0;
+  auto   p         = l->level_select_at;
+  Levelp level_out = nullptr;
+  int    tries     = 0;
+
+  if (l->level_num_next_set) {
+    return game_level_get(g, v, l->level_num_next);
+  }
 
   while (tries++ < LEVELS_DOWN * 2) {
     p.y++;
@@ -140,7 +145,8 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
 
     auto cand = level_select_get_level_from_grid_coords(g, v, p);
     if (cand && (cand != l)) {
-      return cand;
+      level_out = cand;
+      goto got_level;
     }
   }
 
@@ -153,7 +159,8 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
 
     auto cand = level_select_get_level_from_grid_coords(g, v, random_p);
     if (cand && (cand != l)) {
-      return cand;
+      level_out = cand;
+      goto got_level;
     }
   }
 
@@ -164,7 +171,13 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
     DIE("failed to find a next level down");
   }
 
-  return nullptr;
+got_level:
+  if (level_out) {
+    l->level_num_next_set = true;
+    l->level_num_next     = level_out->level_num;
+  }
+
+  return level_out;
 }
 
 //

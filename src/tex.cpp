@@ -16,6 +16,7 @@ extern void           stbi_image_free(void *retval_from_stbi_load);
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
+#include "my_ui.hpp"
 
 #include <unordered_map>
 

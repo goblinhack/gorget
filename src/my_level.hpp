@@ -166,6 +166,11 @@ typedef struct Level_ {
   //
   spoint exit;
   //
+  // This is the next level we would fall onto. It's used to show through chasms.
+  //
+  LevelNum level_num_next;
+  uint8_t  level_num_next_set : 1;
+  //
   // Flags
   //
   uint8_t is_initialized_level : 1;
