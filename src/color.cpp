@@ -65,7 +65,7 @@ color string2color(const char **s)
   *s += (t - tmp);
 
   if (! strcasecmp(tmp, "reset")) {
-    return UI_COLOR;
+    return UI_TEXT_COLOR;
   }
 
   auto result = color_map.find(std::string(tmp));
@@ -102,7 +102,7 @@ color string2color(std::string &s, int *len)
   }
 
   if (out == "reset") {
-    return UI_COLOR;
+    return UI_TEXT_COLOR;
   }
 
   auto result = color_map.find(out);
@@ -134,7 +134,7 @@ color string2color(std::string &s)
   }
 
   if (out == "reset") {
-    return UI_COLOR;
+    return UI_TEXT_COLOR;
   }
 
   auto result = color_map.find(out);

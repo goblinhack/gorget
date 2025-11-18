@@ -384,12 +384,12 @@ static std::pair< Texp, Texp > tex_sprite(SDL_Surface *in, std::string file, std
       //
       // Give an averaged, purpleish color to tiles
       //
-      uint8_t avg = ((int) c1.r + (int) c1.g + (int) c1.b) / 3; // UI_MONOCHROME_SCALE;
+      uint8_t avg = ((int) c1.r + (int) c1.g + (int) c1.b) / UI_LIGHT_BACKGROUND;
       c1.r        = avg;
       c1.g        = avg;
       c1.b        = avg;
-      c1.r /= 2;
-      c1.g /= 2;
+      c1.r /= UI_LIGHT_BACKGROUND;
+      c1.g /= UI_LIGHT_BACKGROUND;
       // c1.b /= 2;
 
       putPixel(out1, ox, oy, c1);

@@ -300,7 +300,7 @@ bool Game::save(int slot)
     return false;
   }
 
-  if (slot >= UI_WID_SAVE_SLOTS) {
+  if (slot >= UI_MAX_SAVE_SLOTS) {
     return false;
   }
 
@@ -461,7 +461,7 @@ bool Game::save_select(void)
     return false;
   }
 
-  int    menu_height = UI_WID_SAVE_SLOTS + 8;
+  int    menu_height = UI_MAX_SAVE_SLOTS + 8;
   int    menu_width  = UI_WID_POPUP_WIDTH_WIDE;
   spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
@@ -488,11 +488,11 @@ bool Game::save_select(void)
   wid_save->log(game, "Choose a save slot.");
 
   int y_at = 3;
-  for (auto slot = 0; slot < UI_WID_SAVE_SLOTS; slot++) {
+  for (auto slot = 0; slot < UI_MAX_SAVE_SLOTS; slot++) {
     Game tmp;
     auto tmp_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
 
-    if (slot == UI_WID_SAVE_SLOTS - 1) {
+    if (slot == UI_MAX_SAVE_SLOTS - 1) {
       tmp_file = saved_dir + "saved-snapshot";
     }
 
@@ -503,20 +503,20 @@ bool Game::save_select(void)
 
     std::string s = std::to_string(slot) + ": ";
     if (! load(tmp_file, tmp)) {
-      if (slot == UI_WID_SAVE_SLOTS - 1) {
+      if (slot == UI_MAX_SAVE_SLOTS - 1) {
         s += "<no snapshot>";
       } else {
         s += "<empty>";
       }
     } else {
-      if (slot == UI_WID_SAVE_SLOTS - 1) {
+      if (slot == UI_MAX_SAVE_SLOTS - 1) {
         s += "snapshot: " + tmp.save_meta;
       } else {
         s += tmp.save_meta;
       }
     }
 
-    if (slot == UI_WID_SAVE_SLOTS - 1) {
+    if (slot == UI_MAX_SAVE_SLOTS - 1) {
       //
       // Cannot save over
       //

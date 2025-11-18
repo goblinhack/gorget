@@ -35,7 +35,7 @@ static std::string                    game_load_error;
 bool                                  game_headers_only;
 extern int                            GAME_SAVE_MARKER_EOL;
 extern int                            GAME_SAVE_MARKER_CONFIG;
-std::array< bool, UI_WID_SAVE_SLOTS > slot_valid;
+std::array< bool, UI_MAX_SAVE_SLOTS > slot_valid;
 
 #define READ_MAGIC(what, m)                                                                                          \
   {                                                                                                                  \
@@ -452,7 +452,7 @@ bool Game::load(int slot)
     return false;
   }
 
-  if (slot >= UI_WID_SAVE_SLOTS) {
+  if (slot >= UI_MAX_SAVE_SLOTS) {
     return false;
   }
 
@@ -466,7 +466,7 @@ bool Game::load(int slot)
 
   auto this_save_file = saved_dir + "saved-slot-" + std::to_string(slot);
 
-  if (slot == UI_WID_SAVE_SLOTS - 1) {
+  if (slot == UI_MAX_SAVE_SLOTS - 1) {
     this_save_file = saved_dir + "saved-snapshot";
   }
 
@@ -628,7 +628,7 @@ void Game::load_select(void)
 
   game_load_error = "";
 
-  int    menu_height = UI_WID_SAVE_SLOTS + 8;
+  int    menu_height = UI_MAX_SAVE_SLOTS + 8;
   int    menu_width  = UI_WID_POPUP_WIDTH_WIDE;
   spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
   spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
@@ -656,11 +656,11 @@ void Game::load_select(void)
   wid_load->log(game, "Choose a load slot.");
 
   int y_at = 3;
-  for (auto slot = 0; slot < UI_WID_SAVE_SLOTS; slot++) {
+  for (auto slot = 0; slot < UI_MAX_SAVE_SLOTS; slot++) {
     Game tmp;
     auto tmp_file = saved_dir + "saved-slot-info-" + std::to_string(slot);
 
-    if (slot == UI_WID_SAVE_SLOTS - 1) {
+    if (slot == UI_MAX_SAVE_SLOTS - 1) {
       tmp_file = saved_dir + "saved-snapshot-info";
     }
 
@@ -675,7 +675,7 @@ void Game::load_select(void)
         s += game_load_error;
         CON("GAME LOADING ERROR: %s", game_load_error.c_str());
       } else {
-        if (slot == UI_WID_SAVE_SLOTS - 1) {
+        if (slot == UI_MAX_SAVE_SLOTS - 1) {
           s += "<no-snapshot>";
         } else {
           s += "<empty>";
@@ -683,12 +683,12 @@ void Game::load_select(void)
       }
       slot_valid[ slot ] = false;
     } else {
-      if (slot == UI_WID_SAVE_SLOTS - 1) {
+      if (slot == UI_MAX_SAVE_SLOTS - 1) {
         s += "snapshot: " + tmp.save_meta;
       } else {
         s += tmp.save_meta;
       }
-      if (slot == UI_WID_SAVE_SLOTS - 1) {
+      if (slot == UI_MAX_SAVE_SLOTS - 1) {
         wid_set_on_mouse_up(w, wid_load_saved_snapshot);
       } else {
         wid_set_on_mouse_up(w, wid_load_mouse_up);

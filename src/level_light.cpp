@@ -131,9 +131,18 @@ void level_light_precalculate(Gamep g)
 //
 void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
 {
-  color light_color      = tp_light_color(thing_tp(t));
-  auto  light_strength   = thing_is_light_source(t);
-  auto  light_fade_index = (int) ((distance(pov, p) / (float) light_strength) * (float) MAP_WIDTH);
+  color light_color    = tp_light_color(thing_tp(t));
+  auto  light_strength = thing_is_light_source(t);
+  float d              = distance(pov, p);
+
+  //
+  // More dramatic lighting. Allows other lights to appear stronger
+  //
+  if (thing_is_player(t)) {
+    d = pow(d, UI_LIGHT_PLAYER_FADE);
+  }
+
+  auto light_fade_index = (int) ((d / (float) light_strength) * (float) MAP_WIDTH);
   if (unlikely(light_fade_index >= MAP_WIDTH)) {
     light_fade_index = MAP_WIDTH - 1;
   }
