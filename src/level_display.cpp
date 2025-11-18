@@ -75,11 +75,11 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, int fbo
     spoint   tl, br;
     uint16_t tile_index;
     thing_display_get_tile_info(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
-    thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo, WHITE);
+    thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo);
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, int fbo, const color &col)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, int fbo)
 {
   TRACE_NO_INDENT();
 
@@ -100,7 +100,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
   spoint   tl, br;
   uint16_t tile_index;
   thing_display_get_tile_info(g, v, l, p, tp, t, &tl, &br, &tile_index);
-  thing_display(g, v, l, p, tp, t, tl, br, tile_index, fbo, col);
+  thing_display(g, v, l, p, tp, t, tl, br, tile_index, fbo);
 }
 
 //
@@ -192,7 +192,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
 
           if (display_tile) {
             for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-              level_display_slot(g, v, l, p, slot, z_depth, fbo, fg);
+              level_display_slot(g, v, l, p, slot, z_depth, fbo);
             }
           }
         }

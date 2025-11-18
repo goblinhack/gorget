@@ -138,7 +138,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
 // Display a single thing to an FBO
 //
 void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                   uint16_t tile_index, int fbo, const color &col)
+                   uint16_t tile_index, int fbo)
 {
   TRACE_NO_INDENT();
 
@@ -240,11 +240,17 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
   }
 
-  if (color_neq(col, WHITE)) {
+  if (player_level != l) {
     //
-    // Could be the level below.
+    // The level below.
     //
-    fg = col;
+    if (fbo == FBO_MAP_FG) {
+      fg = v->light_map.tile[ p.x ][ p.y ].c;
+      fg.g /= 2;
+      fg.b /= 2;
+    } else {
+      fg = RED;
+    }
   } else if (is_level_select) {
     //
     // No lighting
@@ -263,7 +269,6 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
     // Default color, which might be monochrome for non visited tiles
     //
-    fg = col;
   }
 
   if (tp_is_blit_outlined(tp)) {
