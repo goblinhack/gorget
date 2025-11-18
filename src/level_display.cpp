@@ -75,11 +75,11 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, int fbo
     spoint   tl, br;
     uint16_t tile_index;
     thing_display_get_tile_info(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
-    thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo);
+    thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo, WHITE);
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, int fbo)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, int fbo, const color &col)
 {
   TRACE_NO_INDENT();
 
@@ -100,37 +100,27 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
   spoint   tl, br;
   uint16_t tile_index;
   thing_display_get_tile_info(g, v, l, p, tp, t, &tl, &br, &tile_index);
-  thing_display(g, v, l, p, tp, t, tl, br, tile_index, fbo);
+  thing_display(g, v, l, p, tp, t, tl, br, tile_index, fbo, col);
 }
 
 //
 // Render the level to an FBO
 //
-static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
+static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_above, int fbo)
 {
   TRACE_NO_INDENT();
 
   const bool is_level_select = level_is_level_select(g, v, l);
 
-  //
-  // What level is the player on?
-  //
   auto player = thing_player(g);
   if (! player) {
     return;
   }
 
-  //
-  // Soft scroll to the player
-  //
-  level_scroll_to_focus(g, v, l);
-
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glcolor(WHITE);
-
-  blit_fbo_bind(fbo);
-  gl_clear();
-  blit_init();
+  auto player_level = game_level_get(g, v, player->level_num);
+  if (! player_level) {
+    return;
+  }
 
   //
   // Display tiles in z prio order
@@ -190,8 +180,20 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
         }
 
         if (display_tile) {
-          for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-            level_display_slot(g, v, l, p, slot, z_depth, fbo);
+          color fg = WHITE;
+
+          if (level_above) {
+            if (level_is_chasm(g, v, level_above, p)) {
+              fg = RED;
+            } else {
+              display_tile = false;
+            }
+          }
+
+          if (display_tile) {
+            for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+              level_display_slot(g, v, l, p, slot, z_depth, fbo, fg);
+            }
           }
         }
 
@@ -199,6 +201,32 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, int fbo)
       }
     }
   }
+}
+
+//
+// Render the level to an FBO
+//
+static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, int fbo)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // What level is the player on?
+  //
+  auto player = thing_player(g);
+  if (! player) {
+    return;
+  }
+
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glcolor(WHITE);
+
+  blit_fbo_bind(fbo);
+  gl_clear();
+  blit_init();
+
+  level_display_fbo_do(g, v, level_below, l, fbo);
+  level_display_fbo_do(g, v, l, nullptr, fbo);
 
   //
   // Top level cursor
@@ -224,15 +252,20 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   //
-  // Get the next level for falling into
+  // Soft scroll to the player
   //
-  (void) level_select_get_next_level_down(g, v, l);
+  level_scroll_to_focus(g, v, l);
 
-  level_display_fbo(g, v, l, FBO_MAP_BG);
+  //
+  // Get the next level for falling into and displaying under chasms.
+  //
+  auto level_below = level_select_get_next_level_down(g, v, l);
+
+  level_display_fbo(g, v, l, level_below, FBO_MAP_BG);
   // sdl_fbo_dump(g, FBO_MAP_BG, "FBO_MAP_BG");
-  level_display_fbo(g, v, l, FBO_MAP_FG);
+  level_display_fbo(g, v, l, level_below, FBO_MAP_FG);
   // sdl_fbo_dump(g, FBO_MAP_FG, "FBO_MAP_FG");
-  level_display_fbo(g, v, l, FBO_MAP_FG_OVERLAY);
+  level_display_fbo(g, v, l, level_below, FBO_MAP_FG_OVERLAY);
   // sdl_fbo_dump(g, FBO_MAP_FG_OVERLAY, "FBO_MAP_FG_OVERLAY");
 
   //

@@ -138,12 +138,17 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
 // Display a single thing to an FBO
 //
 void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                   uint16_t tile_index, int fbo)
+                   uint16_t tile_index, int fbo, const color &col)
 {
   TRACE_NO_INDENT();
 
   auto player = thing_player(g);
   if (! player) {
+    return;
+  }
+
+  auto player_level = game_level_get(g, v, player->level_num);
+  if (! player_level) {
     return;
   }
 
@@ -156,17 +161,17 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
   }
 
-  const auto is_level_select = level_is_level_select(g, v, l);
+  const auto is_level_select = level_is_level_select(g, v, player_level);
 
   if (DEBUG || is_level_select) {
     //
     // No hiding of oobjects
     //
-  } else if (t_maybe_null && ! thing_vision_can_see_tile(g, v, l, player, p)) {
+  } else if (t_maybe_null && ! thing_vision_can_see_tile(g, v, player_level, player, p)) {
     //
     // We cannot see this tile currently.
     //
-    if (level_is_blit_if_has_seen(g, v, l, p)) {
+    if (level_is_blit_if_has_seen(g, v, player_level, p)) {
       //
       // But if it has been seen, then show it, if allowed.
       //
@@ -235,7 +240,12 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
   }
 
-  if (is_level_select) {
+  if (color_neq(col, WHITE)) {
+    //
+    // Could be the level below.
+    //
+    fg = col;
+  } else if (is_level_select) {
     //
     // No lighting
     //
@@ -253,6 +263,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
     // Default color, which might be monochrome for non visited tiles
     //
+    fg = col;
   }
 
   if (tp_is_blit_outlined(tp)) {
