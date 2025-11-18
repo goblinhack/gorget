@@ -722,7 +722,7 @@ if [[ $OPT_GITHUB_BUILD != "" ]]; then
       cp .o/${TARGET}.pdb .
     fi
 
-    export LSAN_OPTIONS=max_leaks=10 ./${TARGET} --tests --debug
+    LSAN_OPTIONS=max_leaks=10 ./${TARGET} --tests --debug
     if [[ $? -ne 0 ]]; then
         exit 1
     fi

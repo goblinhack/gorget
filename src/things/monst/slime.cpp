@@ -62,6 +62,7 @@ bool tp_load_slime(void)
   tp_light_color_set(tp, "green");
   tp_long_name_set(tp, "sentient slime");
   tp_monst_group_add(tp, MONST_GROUP_HARD);
+  tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius

@@ -61,6 +61,7 @@ bool tp_load_kobalos(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
   tp_monst_group_add(tp, MONST_GROUP_EASY);
+  tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100); // celsius
   tp_temperature_damage_at_set(tp, 50); // celsius

@@ -42,7 +42,17 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
         TOPCON(UI_IMPORTANT_FMT_STR "You die in blast from %s." UI_RESET_FMT, by_the_thing.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE : //
-        TOPCON(UI_IMPORTANT_FMT_STR "You are burnt to death by %s." UI_RESET_FMT, by_the_thing.c_str());
+        if (thing_is_lava(it)) {
+          TOPCON(UI_WARNING_FMT_STR "You are consumed by lava!" UI_RESET_FMT);
+        } else if (thing_is_fire(it)) {
+          TOPCON(UI_WARNING_FMT_STR "The are consumed in flames!" UI_RESET_FMT);
+        } else if (thing_is_water(it)) {
+          TOPCON(UI_WARNING_FMT_STR "You are boiled to death!" UI_RESET_FMT);
+        } else if (thing_is_steam(it)) {
+          TOPCON(UI_WARNING_FMT_STR "You are steamed to death!" UI_RESET_FMT);
+        } else {
+          TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
+        }
         break;
       case THING_EVENT_OPEN :             //
       case THING_EVENT_NONE :             //

@@ -33,6 +33,7 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_obs_to_fire);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_delay_on_spawn);
   tp_flag_set(tp, is_tiled);
@@ -40,11 +41,12 @@ bool tp_load_water(void)
   tp_health_set(tp, "1d10"); // to allow it to be damaged by fire
   tp_light_color_set(tp, "blue");
   tp_long_name_set(tp, name);
+  tp_priority_set(tp, THING_PRIORITY_WATER);
   tp_short_name_set(tp, "shallow water");
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 10);    // celsius
-  tp_weight_set(tp, WEIGHT_VVHEAVY);     // grams
+  tp_weight_set(tp, WEIGHT_VVVHEAVY);    // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   // end sort marker1 }
 

@@ -48,6 +48,10 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
           TOPCON(UI_WARNING_FMT_STR "You are burning in lava!" UI_RESET_FMT);
         } else if (thing_is_fire(it)) {
           TOPCON(UI_WARNING_FMT_STR "The flames wrap around you!" UI_RESET_FMT);
+        } else if (thing_is_water(it)) {
+          TOPCON(UI_WARNING_FMT_STR "You are burnt by scalding %s." UI_RESET_FMT, by_the_thing.c_str());
+        } else if (thing_is_steam(it)) {
+          TOPCON(UI_WARNING_FMT_STR "You scalded by %s." UI_RESET_FMT, by_the_thing.c_str());
         } else {
           TOPCON(UI_WARNING_FMT_STR "You are burnt by %s." UI_RESET_FMT, by_the_thing.c_str());
         }

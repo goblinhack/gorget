@@ -87,7 +87,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   thing_value24_set(g, v, l, t, tp_value24_get(tp));
   thing_value25_set(g, v, l, t, tp_value25_get(tp));
   thing_value26_set(g, v, l, t, tp_value26_get(tp));
-  thing_value27_set(g, v, l, t, tp_value27_get(tp));
+  thing_priority_set(g, v, l, t, tp_priority_get(tp));
 
   //
   // More consistent for tests to use max values

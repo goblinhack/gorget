@@ -40,6 +40,7 @@ bool tp_load_steam(void)
   tp_flag_set(tp, is_tickable);
   tp_lifespan_set(tp, "1d6+3");
   tp_long_name_set(tp, name);
+  tp_priority_set(tp, THING_PRIORITY_STEAM);
   tp_temperature_initial_set(tp, 100); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);

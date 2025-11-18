@@ -60,12 +60,44 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       }
     }
 
-    for (auto pair : pairs) {
-      auto a = pair.first;
-      auto b = pair.second;
+    std::vector< std::pair< Thingp, Thingp > > sorted_pairs;
+    for (auto a_pair : pairs) {
+      sorted_pairs.push_back(a_pair);
+    }
 
-      // THING_CON(a, "A");
-      // THING_CON(b, "B");
+    if (0)
+      for (auto a_pair : sorted_pairs) {
+        auto a = a_pair.first;
+        auto b = a_pair.second;
+
+        THING_CON(a, "A before %d", a->_priority + b->_priority);
+        THING_CON(b, "B before");
+      }
+
+    //
+    // Sort my event priority
+    //
+    std::sort(sorted_pairs.begin(), sorted_pairs.end(),
+              [](const std::pair< Thingp, Thingp > &a, const std::pair< Thingp, Thingp > &b) {
+                auto t1 = a.first;
+                auto t2 = a.second;
+                auto t3 = b.first;
+                auto t4 = b.second;
+                return t1->_priority + t2->_priority < t3->_priority + t4->_priority;
+              });
+
+    if (0)
+      for (auto a_pair : sorted_pairs) {
+        auto a = a_pair.first;
+        auto b = a_pair.second;
+
+        THING_CON(a, "A after %d", a->_priority + b->_priority);
+        THING_CON(b, "B after");
+      }
+
+    for (auto a_pair : sorted_pairs) {
+      auto a = a_pair.first;
+      auto b = a_pair.second;
 
       //
       // It could be dead now.
@@ -79,18 +111,26 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       float Tb = thing_temperature(b);
       float Wb = thing_weight(b);
 
+      if (0) {
+        THING_CON(a, "A Ta %f Wa %f", Ta, Wa);
+        THING_CON(b, "B Tb %f Wb %f", Tb, Wb);
+      }
+
       //
       // Fire has no weight, so give it some so the equations below average the temperatures.
       //
+      // Take care not to give too much weight or you end up with steam able to heat up a
+      // tile of water, which seems wrong.
+      //
       if (thing_is_gaseous(a)) {
         if (! (int) Wa) {
-          Wa = Wb;
+          Wa = WEIGHT_HUMAN;
         }
       }
 
       if (thing_is_gaseous(b)) {
         if (! (int) Wb) {
-          Wb = Wa;
+          Wb = WEIGHT_HUMAN;
         }
       }
 
@@ -123,13 +163,15 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       }
 
       //
-      // Next step is to apply burning damage
+      // Next step is to apply burning damage if the temperature increases
       //
-      if (Ta != Na) {
+      // If it decreases (e.g. cooling in water) then no damage.
+      //
+      if (Na > Ta) {
         thing_temperature_damage_handle(g, v, l, b /* source */, a, Na);
       }
 
-      if (Tb != Nb) {
+      if (Nb > Tb) {
         thing_temperature_damage_handle(g, v, l, a /* source */, b, Nb);
       }
     }

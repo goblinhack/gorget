@@ -164,6 +164,7 @@ bool tp_load_fire(void)
   tp_lifespan_set(tp, "1d6+3");
   tp_light_color_set(tp, "orange");
   tp_long_name_set(tp, name);
+  tp_priority_set(tp, THING_PRIORITY_FIRE);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);

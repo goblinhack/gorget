@@ -85,6 +85,21 @@ public:
   //
   int temperature_damage_at {0};
 
+  //
+  // For event processing. Lower is higher priority.
+  //
+  ThingPriorityType priority {THING_PRIORITY_LOW};
+
+  //
+  // In tiles
+  //
+  int vision_distance {0};
+
+  //
+  // In tiles
+  //
+  int jump_distance {0};
+
   int value1 {0};
   int value2 {0};
   int value3 {0};
@@ -111,9 +126,6 @@ public:
   int value24 {0};
   int value25 {0};
   int value26 {0};
-  int value27 {0};
-  int vision_distance {0};
-  int jump_distance {0};
 
   //
   // Lifespan in ticks. -1 is forever.

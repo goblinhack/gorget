@@ -69,6 +69,7 @@ bool tp_load_kobalos_mob(void)
   tp_light_color_set(tp, "green");
   tp_long_name_set(tp, "kobalos mob");
   tp_pluralize_name_set(tp, "kobalosy mobs");
+  tp_priority_set(tp, THING_PRIORITY_MOB);
   tp_short_name_set(tp, "kobalos den");
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius

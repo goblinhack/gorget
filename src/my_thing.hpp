@@ -179,6 +179,10 @@ typedef struct Thing_ {
   //
   uint8_t anim_index;
   //
+  // For event processing. Lower is better. Player is 0
+  //
+  ThingPriorityType _priority;
+  //
   // Keeps track of counters in the level this thing has modified.
   //
   uint8_t count[ THING_FLAG_ENUM_MAX ];
@@ -296,7 +300,6 @@ typedef struct Thing_ {
   int16_t _value24;
   int16_t _value25;
   int16_t _value26;
-  int16_t _value27;
   //
   // Lifespan remaining in ticks
   //
@@ -795,10 +798,8 @@ int thing_value26_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_value26_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_value26_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value27(Thingp);
-int thing_value27_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value27_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value27_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+ThingPriorityType thing_priority(Thingp);
+ThingPriorityType thing_priority_set(Gamep, Levelsp, Levelp, Thingp, ThingPriorityType val);
 
 int thing_vision_distance(Thingp);
 int thing_vision_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);

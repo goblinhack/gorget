@@ -238,7 +238,7 @@ ENUM_DEF_H(MONST_GROUP_ENUM, ThingMonstGroup)
 ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 
 //
-// Thing damage enum
+// Thing event enum
 //
 #define THING_EVENT_ENUM(list_macro)                                                                                 \
   clang_format_indent()                                         /* dummy line for clang indentation fixup */         \
@@ -264,6 +264,25 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
   for (ThingEventType _iter_ = THING_EVENT_ENUM_FIRST; /* newline */                                                 \
        _iter_ < THING_EVENT_ENUM_MAX;                  /* newline */                                                 \
        _iter_ = static_cast< ThingEventType >(static_cast< int >(_iter_) + 1))
+
+//
+// Thing priority enum
+//
+#define THING_PRIORITY_ENUM(list_macro)                                                                              \
+  clang_format_indent()                               /* dummy line for clang indentation fixup */                   \
+      list_macro(THING_PRIORITY_EXPLOSION, "player"), /* newline */                                                  \
+      list_macro(THING_PRIORITY_LAVA, "lava"),        /* newline */                                                  \
+      list_macro(THING_PRIORITY_FIRE, "lava"),        /* newline */                                                  \
+      list_macro(THING_PRIORITY_STEAM, "steam"),      /* newline */                                                  \
+      list_macro(THING_PRIORITY_PLAYER, "player"),    /* newline */                                                  \
+      list_macro(THING_PRIORITY_MOB, "mob"),          /* newline */                                                  \
+      list_macro(THING_PRIORITY_MONST, "monst"),      /* newline */                                                  \
+      list_macro(THING_PRIORITY_WATER, "water"),      /* newline */                                                  \
+      list_macro(THING_PRIORITY_SMOKE, "smoke"),      /* newline */                                                  \
+      list_macro(THING_PRIORITY_OBJECT, "object"),    /* newline */                                                  \
+      list_macro(THING_PRIORITY_LOW, "low"),          /* newline */
+
+ENUM_DEF_H(THING_PRIORITY_ENUM, ThingPriorityType)
 
 //
 // Thing chance enum
@@ -484,8 +503,8 @@ int  tp_value25_get(Tpp tp);
 void tp_value26_set(Tpp, int val);
 int  tp_value26_get(Tpp tp);
 
-void tp_value27_set(Tpp, int val);
-int  tp_value27_get(Tpp tp);
+void              tp_priority_set(Tpp, ThingPriorityType val);
+ThingPriorityType tp_priority_get(Tpp tp);
 
 void tp_vision_distance_set(Tpp, int val);
 int  tp_vision_distance_get(Tpp tp);

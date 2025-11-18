@@ -44,6 +44,7 @@ bool tp_load_lava(void)
   tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
   tp_light_color_set(tp, "orange");
   tp_long_name_set(tp, name);
+  tp_priority_set(tp, THING_PRIORITY_LAVA);
   tp_temperature_initial_set(tp, 1000); // celsius
   tp_weight_set(tp, WEIGHT_VVVHEAVY);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);

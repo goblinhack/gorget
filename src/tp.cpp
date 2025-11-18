@@ -945,6 +945,7 @@ int tp_value2_get(Tpp tp)
   }
   return tp->value2;
 }
+
 void tp_value3_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -964,6 +965,7 @@ int tp_value3_get(Tpp tp)
   }
   return tp->value3;
 }
+
 void tp_value4_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -983,6 +985,7 @@ int tp_value4_get(Tpp tp)
   }
   return tp->value4;
 }
+
 void tp_value5_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1002,6 +1005,7 @@ int tp_value5_get(Tpp tp)
   }
   return tp->value5;
 }
+
 void tp_value6_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1021,6 +1025,7 @@ int tp_value6_get(Tpp tp)
   }
   return tp->value6;
 }
+
 void tp_value7_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1040,6 +1045,7 @@ int tp_value7_get(Tpp tp)
   }
   return tp->value7;
 }
+
 void tp_value8_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1059,6 +1065,7 @@ int tp_value8_get(Tpp tp)
   }
   return tp->value8;
 }
+
 void tp_value9_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1078,6 +1085,7 @@ int tp_value9_get(Tpp tp)
   }
   return tp->value9;
 }
+
 void tp_value10_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1097,6 +1105,7 @@ int tp_value10_get(Tpp tp)
   }
   return tp->value10;
 }
+
 void tp_value11_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1116,6 +1125,7 @@ int tp_value11_get(Tpp tp)
   }
   return tp->value11;
 }
+
 void tp_value12_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1135,6 +1145,7 @@ int tp_value12_get(Tpp tp)
   }
   return tp->value12;
 }
+
 void tp_value13_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1154,6 +1165,7 @@ int tp_value13_get(Tpp tp)
   }
   return tp->value13;
 }
+
 void tp_value14_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1173,6 +1185,7 @@ int tp_value14_get(Tpp tp)
   }
   return tp->value14;
 }
+
 void tp_value15_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1192,6 +1205,7 @@ int tp_value15_get(Tpp tp)
   }
   return tp->value15;
 }
+
 void tp_value16_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1211,6 +1225,7 @@ int tp_value16_get(Tpp tp)
   }
   return tp->value16;
 }
+
 void tp_value17_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1230,6 +1245,7 @@ int tp_value17_get(Tpp tp)
   }
   return tp->value17;
 }
+
 void tp_value18_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1249,6 +1265,7 @@ int tp_value18_get(Tpp tp)
   }
   return tp->value18;
 }
+
 void tp_value19_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1268,6 +1285,7 @@ int tp_value19_get(Tpp tp)
   }
   return tp->value19;
 }
+
 void tp_value20_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1287,6 +1305,7 @@ int tp_value20_get(Tpp tp)
   }
   return tp->value20;
 }
+
 void tp_value21_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1306,6 +1325,7 @@ int tp_value21_get(Tpp tp)
   }
   return tp->value21;
 }
+
 void tp_value22_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1325,6 +1345,7 @@ int tp_value22_get(Tpp tp)
   }
   return tp->value22;
 }
+
 void tp_value23_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1344,6 +1365,7 @@ int tp_value23_get(Tpp tp)
   }
   return tp->value23;
 }
+
 void tp_value24_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1363,6 +1385,7 @@ int tp_value24_get(Tpp tp)
   }
   return tp->value24;
 }
+
 void tp_value25_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1382,6 +1405,7 @@ int tp_value25_get(Tpp tp)
   }
   return tp->value25;
 }
+
 void tp_value26_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
@@ -1401,25 +1425,27 @@ int tp_value26_get(Tpp tp)
   }
   return tp->value26;
 }
-void tp_value27_set(Tpp tp, int val)
+
+void tp_priority_set(Tpp tp, ThingPriorityType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->value27 = val;
+  tp->priority = val;
 }
 
-int tp_value27_get(Tpp tp)
+ThingPriorityType tp_priority_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
-    return 0;
+    return THING_PRIORITY_LOW;
   }
-  return tp->value27;
+  return tp->priority;
 }
+
 void tp_vision_distance_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();

@@ -20,7 +20,7 @@ static void thing_shoved_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
   if (it) {
     auto by_the_thing = thing_the_long_name(g, v, l, it);
 
-    TOPCON(UI_WARNING_FMT_STR "You are burnt to death by %s." UI_RESET_FMT, by_the_thing.c_str());
+    TOPCON(UI_WARNING_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
   }
 }
 

@@ -20,11 +20,17 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   //
   auto T = tp_temperature_burns_at_get(tp);
   if (T && (n > T)) {
-    if (! level_is_fire(g, v, l, t->at)) {
+    if (thing_is_steam(source) || thing_is_water(source)) {
+      //
+      // You don't continue to burn with steam
+      //
+    } else if (! level_is_fire(g, v, l, t->at)) {
       THING_DBG(t, "set on fire");
       thing_spawn(g, v, l, tp_random(is_fire), t->at);
+      thing_is_burning_set(g, v, l, t);
+    } else {
+      thing_is_burning_set(g, v, l, t);
     }
-    thing_is_burning_set(g, v, l, t);
   }
 
   thing_temperature_set(g, v, l, t, n);
@@ -56,7 +62,10 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
       .source = source, //
   };
 
-  if (level_is_lava(g, v, l, t->at)) {
+  if (thing_is_steam(source)) {
+    e.event_type = THING_EVENT_HEAT_DAMAGE;
+    e.reason     = "by heat damage";
+  } else if (level_is_lava(g, v, l, t->at)) {
     e.event_type = THING_EVENT_FIRE_DAMAGE;
     e.reason     = "by lava";
   } else if (level_is_fire(g, v, l, t->at)) {

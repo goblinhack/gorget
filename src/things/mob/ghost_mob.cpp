@@ -69,6 +69,7 @@ bool tp_load_ghost_mob(void)
   tp_light_color_set(tp, "cyan");
   tp_long_name_set(tp, "ghost mob");
   tp_pluralize_name_set(tp, "ghostly mobs");
+  tp_priority_set(tp, THING_PRIORITY_MOB);
   tp_short_name_set(tp, "pile of bones");
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius

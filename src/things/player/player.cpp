@@ -179,6 +179,7 @@ bool tp_load_player(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
   tp_light_color_set(tp, "white");
+  tp_priority_set(tp, THING_PRIORITY_PLAYER);
   tp_speed_set(tp, 100);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 35);  // celsius
