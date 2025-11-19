@@ -418,7 +418,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
     if (level_is_needs_move_confirm(g, v, l, to)) {
       if (! thing_is_ethereal(player) && ! thing_is_floating(player) && ! thing_is_flying(player)) {
         if (level_is_chasm(g, v, l, to)) {
-          std::string msg = "Do you really want to leap into a chasm.";
+          std::string msg = "Do you really want to leap into a chasm?";
           player_state_change(g, v, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
           game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
           wid_warning(g, msg, player_check_if_target_needs_move_confirm_callback);
@@ -432,7 +432,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
           if (level_is_lava(g, v, l, to)) {
             if (! thing_is_immune_to(player, THING_EVENT_HEAT_DAMAGE)
                 && ! thing_is_immune_to(player, THING_EVENT_FIRE_DAMAGE)) {
-              std::string msg = "Do you really want to leap into lava.";
+              std::string msg = "Do you really want to leap into lava?";
               player_state_change(g, v, PLAYER_STATE_MOVE_CONFIRM_REQUESTED);
               game_state_change(g, STATE_MOVE_WARNING_MENU, "need warning confirmation");
               wid_warning(g, msg, player_check_if_target_needs_move_confirm_callback);
