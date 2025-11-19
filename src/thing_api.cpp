@@ -1818,14 +1818,14 @@ bool thing_is_combustible(Thingp t)
   return tp_flag(thing_tp(t), is_combustible);
 }
 
-bool thing_is_unused4(Thingp t)
+bool thing_is_blit_in_chasm(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused4);
+  return tp_flag(thing_tp(t), is_blit_in_chasm);
 }
 
 bool thing_is_gaseous(Thingp t)

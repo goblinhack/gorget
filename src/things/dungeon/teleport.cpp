@@ -37,6 +37,7 @@ bool tp_load_teleport(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_colored_always);
   tp_flag_set(tp, is_blit_if_has_seen);
+  tp_flag_set(tp, is_blit_in_chasm);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_light_source, 4);

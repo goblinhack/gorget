@@ -29,6 +29,7 @@ bool tp_load_explosion(void)
   tp_damage_set(tp, THING_EVENT_EXPLOSION_DAMAGE, "20+1d20");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_in_chasm);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_explosion);
   tp_flag_set(tp, is_gaseous);

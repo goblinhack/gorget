@@ -180,17 +180,23 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
         }
 
         if (display_tile) {
-          color fg = WHITE;
-
           if (level_above) {
             if (level_is_chasm(g, v, level_above, p)) {
-              fg = RED;
+              //
+              // Only show this tile if the level above is a chasm
+              //
             } else {
+              //
+              // Viewing through a chasm
+              //
               display_tile = false;
             }
           }
 
           if (display_tile) {
+            //
+            // Display all things at this location (for this z depth)
+            //
             for (auto slot = 0; slot < MAP_SLOTS; slot++) {
               level_display_slot(g, v, l, p, slot, z_depth, fbo);
             }

@@ -28,6 +28,7 @@ bool tp_load_smoke(void)
   thing_description_set(tp, tp_smoke_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_in_chasm);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_indestructible);

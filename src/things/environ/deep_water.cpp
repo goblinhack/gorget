@@ -28,6 +28,7 @@ bool tp_load_deep_water(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
+  tp_flag_set(tp, is_blit_in_chasm);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_deep_water);
   tp_flag_set(tp, is_described_cursor);

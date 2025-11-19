@@ -244,12 +244,8 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
     // The level below.
     //
-    if (fbo == FBO_MAP_FG) {
-      fg = v->light_map.tile[ p.x ][ p.y ].c;
-      fg.g /= 2;
-      fg.b /= 2;
-    } else {
-      fg = RED;
+    if (! tp_is_blit_in_chasm(tp)) {
+      return;
     }
   } else if (is_level_select) {
     //
