@@ -14,6 +14,37 @@
 
 LevelOpt g_level_opt;
 
+bool level_request_to_cleanup_things_get(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! l)) {
+    ERR("No level pointer set");
+    return 1;
+  }
+
+  return l->request_to_cleanup_things;
+}
+
+void level_request_to_cleanup_things_set(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! l)) {
+    ERR("No level pointer set");
+    return;
+  }
+  l->request_to_cleanup_things = true;
+}
+
+void level_request_to_cleanup_things_unset(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! l)) {
+    ERR("No level pointer set");
+    return;
+  }
+  l->request_to_cleanup_things = false;
+}
+
 //
 // Are we on the level selection level?
 //

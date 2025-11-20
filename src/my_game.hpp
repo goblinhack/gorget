@@ -263,10 +263,6 @@ bool game_request_to_end_game_get(Gamep);
 void game_request_to_end_game_set(Gamep);
 void game_request_to_end_game_unset(Gamep);
 
-bool game_request_to_cleanup_things_get(Gamep);
-void game_request_to_cleanup_things_set(Gamep);
-void game_request_to_cleanup_things_unset(Gamep);
-
 std::string game_request_to_end_game_reason_get(Gamep);
 void        game_request_to_end_game_reason_set(Gamep, const std::string &);
 

@@ -154,7 +154,7 @@ bool game_event_save(Gamep g)
     }
   }
 
-  if (v->tick_in_progress) {
+  if (l->tick_in_progress) {
     game_request_to_save_game_set(g);
   } else {
     wid_save_select(g);

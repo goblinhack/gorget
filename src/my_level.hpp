@@ -166,6 +166,15 @@ typedef struct Level_ {
   //
   spoint exit;
   //
+  // Animation timestamps
+  //
+  uint32_t ts;
+  uint32_t last_ts;
+  //
+  // Used to keep track if we have ran the temperature checks yet this tick.
+  //
+  uint32_t tick_temperature;
+  //
   // This is the next level we would fall onto. It's used to show through chasms.
   //
   LevelNum level_num_next;
@@ -178,6 +187,10 @@ typedef struct Level_ {
   // Has it ticked?
   //
   uint8_t is_active_level : 1;
+  //
+  // This is the current level that the player is on.
+  //
+  uint8_t is_current_level : 1;
   //
   // Is this a pre-generated level and non procedurally generated.
   //
@@ -204,6 +217,29 @@ typedef struct Level_ {
   // Level needs tiles updated
   //
   uint8_t tile_update_required : 1;
+  //
+  // Free up any things at end of life
+  //
+  uint8_t request_to_cleanup_things : 1;
+  //
+  // We have to interpolate movement and this indicates that is in progress.
+  //
+  uint8_t tick_in_progress : 1;
+  //
+  // Some things like explosions, we want to wait for the explosion to finish before
+  // moving to the next tick.
+  //
+  uint8_t tick_wait_on_anim : 1;
+  //
+  // Ensure things have finished their move before ending the tick
+  //
+  uint8_t tick_wait_on_things : 1;
+  //
+  // Player has moved.
+  //
+  uint8_t tick_begin_requested : 1;
+  uint8_t tick_end_requested   : 1;
+  uint8_t tick_ended           : 1;
   //
   // When a tile is destroyed, we need to update adjacent tiles. This limits the update to only changed tiles.
   //
@@ -279,21 +315,13 @@ typedef struct Levels_ {
   // faster to malloc and memset versus default construction.
   //////////////////////////////////////////////////////////////
   //
-  // Current level being played
+  // Tick increases one per move.
   //
-  LevelNum level_num;
+  uint32_t tick;
   //
   // Increments once per event loop.
   //
   uint32_t frame;
-  //
-  // Tick increases one per player move.
-  //
-  uint32_t tick;
-  //
-  // Used to keep track if we have ran the temperature checks yet this tick.
-  //
-  uint32_t tick_temperature;
   //
   // When the tick began in ms
   //
@@ -303,6 +331,10 @@ typedef struct Levels_ {
   //
   float time_step;
   float last_time_step;
+  //
+  // Current level being played
+  //
+  LevelNum level_num;
   //
   // Flag array of all levels. The levels equate to one tile in the level grid.
   //
@@ -383,24 +415,6 @@ typedef struct Levels_ {
   // Mouse moved?
   //
   uint8_t cursor_moved : 1;
-  //
-  // We have to interpolate movement and this indicates that is in progress.
-  //
-  uint8_t tick_in_progress : 1;
-  //
-  // Some things like explosions, we want to wait for the explosion to finish before
-  // moving to the next tick.
-  //
-  uint8_t tick_wait_on_anim : 1;
-  //
-  // Ensure things have finished their move before ending the tick
-  //
-  uint8_t tick_wait_on_things : 1;
-  //
-  // Player has moved.
-  //
-  uint8_t tick_begin_requested : 1;
-  uint8_t tick_end_requested   : 1;
   //
   // If the player has moved, we need to scroll the map
   //
@@ -590,6 +604,10 @@ void    level_gen_test(Gamep);
 void    level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, int16_t, int16_t);
 void    level_water_tick(Gamep, Levelsp, Levelp);
 void    level_water_update(Gamep, Levelsp, Levelp);
+
+bool level_request_to_cleanup_things_get(Gamep, Levelsp, Levelp);
+void level_request_to_cleanup_things_set(Gamep, Levelsp, Levelp);
+void level_request_to_cleanup_things_unset(Gamep, Levelsp, Levelp);
 
 typedef void (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p);
 void level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius,

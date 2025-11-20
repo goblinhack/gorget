@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 
@@ -457,7 +458,7 @@ void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, 
     THING_DBG(t, "is scheduled for cleanup");
   }
 
-  game_request_to_cleanup_things_set(g);
+  level_request_to_cleanup_things_set(g, v, l);
 }
 
 void thing_is_scheduled_for_cleanup_unset(Gamep g, Levelsp v, Levelp l, Thingp t)

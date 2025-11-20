@@ -4,22 +4,21 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_time.hpp"
 
 void level_anim(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto            ts = time_ms();
-  static uint32_t last_ts;
-
-  if (! last_ts) {
-    last_ts = ts;
+  l->ts = time_ms();
+  if (! l->last_ts) {
+    l->last_ts = l->ts;
     return;
   }
 
-  auto time_step = ts - last_ts;
-  last_ts        = ts;
+  auto time_step = l->ts - l->last_ts;
+  l->last_ts     = l->ts;
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {

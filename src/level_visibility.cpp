@@ -31,7 +31,7 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  if (v->tick_in_progress) {
+  if (l->tick_in_progress) {
     //
     // Limit the updates as tick interpolation occurs many times per second.
     //

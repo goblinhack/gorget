@@ -23,10 +23,10 @@ static void level_cleanup_things(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (! game_request_to_cleanup_things_get(g)) {
+  if (! level_request_to_cleanup_things_get(g, v, l)) {
     return;
   }
-  game_request_to_cleanup_things_unset(g);
+  level_request_to_cleanup_things_unset(g, v, l);
 
   //
   // This can pop the next player move
@@ -47,14 +47,14 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  v->tick_wait_on_things = false;
-  v->tick_wait_on_anim   = false;
+  l->tick_wait_on_things = false;
+  l->tick_wait_on_anim   = false;
 
   //
   // The player has died and the dead menu has been closed
   //
   if (game_request_to_end_game_get(g)) {
-    v->tick_end_requested = true;
+    l->tick_end_requested = true;
     return;
   }
 
@@ -66,7 +66,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     // the lava.
     //
     if (thing_is_moving(t) || thing_is_jumping(t) || thing_is_falling(t)) {
-      v->tick_wait_on_things = true;
+      l->tick_wait_on_things = true;
     }
 
     //
@@ -77,7 +77,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
       if (thing_is_dead(t)) {
         if (! thing_is_scheduled_for_cleanup(t)) {
           if (thing_is_wait_on_dead_anim(t)) {
-            v->tick_wait_on_anim = true;
+            l->tick_wait_on_anim = true;
           }
         }
       }
@@ -94,8 +94,6 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
 
   verify(MTYPE_LEVELS, game_levels_get(g));
 
-  v->last_time_step = v->time_step;
-
   //
   // First time tick for this level?
   //
@@ -108,7 +106,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_update_visibility(g, v, l);
   }
 
-  if (v->tick_in_progress) {
+  if (l->tick_in_progress) {
     //
     // A tick is running
     //
@@ -118,7 +116,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     // Need to update while moving as raycasting can change
     //
     level_update_visibility(g, v, l);
-  } else if (v->tick_begin_requested) {
+  } else if (l->tick_begin_requested) {
     //
     // Allow temperatures to settle prior to starting
     //
@@ -143,7 +141,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   //
   // Move things. Interpolated per frame.
   //
-  if (v->tick_in_progress) {
+  if (l->tick_in_progress) {
     level_tick_body(g, v, l, v->time_step - v->last_time_step);
   }
 
@@ -161,11 +159,11 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   // If things are no longer moving and we have requested the end of the tick, then we can check
   // for temperature interactions.
   //
-  if (v->tick_end_requested && (v->tick != v->tick_temperature) && ! v->tick_wait_on_things) {
+  if (l->tick_end_requested && (v->tick != l->tick_temperature) && ! l->tick_wait_on_things) {
     //
     // Only do this once per tick
     //
-    v->tick_temperature = v->tick;
+    l->tick_temperature = v->tick;
 
     //
     // Need to do the temperature checks after things have moved an also need to give time for death
@@ -211,13 +209,15 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   //
   // Are we done with all checks and ok to end the tick which will trigger thing cleanup.
   //
-  if (v->tick_end_requested && ! v->tick_wait_on_things && ! v->tick_wait_on_anim) {
+  if (l->tick_end_requested && ! l->tick_wait_on_things && ! l->tick_wait_on_anim) {
     level_tick_end(g, v, l);
 
     //
     // Update minimaps and lighting
     //
     level_update_visibility(g, v, l);
+
+    l->tick_ended = true;
   }
 
   //
@@ -250,11 +250,11 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp l)
       //
       v->time_step = 1.0;
 
-      if (! v->tick_end_requested) {
+      if (! l->tick_end_requested) {
         LOG("Tick %u end requested", v->tick);
       }
 
-      v->tick_end_requested = true;
+      l->tick_end_requested = true;
     }
   }
 }
@@ -320,13 +320,17 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  v->tick++;
+  if (l->is_current_level) {
+    v->tick++;
+  }
+
   LOG("Tick %u begin", v->tick);
 
-  v->tick_begin_requested = false;
-  v->frame_begin          = v->frame;
-  v->time_step            = 0.0;
-  v->tick_in_progress     = true;
+  v->frame_begin = v->frame;
+  v->time_step   = 0.0;
+
+  l->tick_begin_requested = false;
+  l->tick_in_progress     = true;
 
   auto p = thing_player(g);
   if (! p) {
@@ -365,7 +369,12 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 
   LOG("Tick requested: %s", why);
 
-  v->tick_begin_requested = true;
+  l->tick_begin_requested = true;
+
+  auto level_below = level_select_get_next_level_down(g, v, l);
+  if (level_below) {
+    level_below->tick_begin_requested = true;
+  }
 
   v->requested_move_up    = false;
   v->requested_move_left  = false;
@@ -379,9 +388,8 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 
   LOG("Tick %u ending", v->tick);
 
-  v->tick_end_requested = false;
-  v->tick_in_progress   = false;
-  v->time_step          = 0;
+  l->tick_end_requested = false;
+  l->tick_in_progress   = false;
 
   auto p = thing_player(g);
   if (! p) {
@@ -416,5 +424,5 @@ bool level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  return v->tick_in_progress;
+  return l->tick_in_progress;
 }

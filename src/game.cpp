@@ -229,11 +229,6 @@ public:
   std::string request_to_end_game_reason {};
 
   //
-  // Free up any things at end of life
-  //
-  bool request_to_cleanup_things {};
-
-  //
   // Temporary. Global states
   //
   GameState state {STATE_INIT};
@@ -936,7 +931,6 @@ void Game::state_change(GameState new_state, const std::string &why)
       game_request_to_remake_ui_unset(g);
       game_request_to_save_game_unset(g);
       game_request_to_update_cursor_unset(g);
-      game_request_to_cleanup_things_unset(g);
       break;
     case STATE_PLAYING :
       wid_load_destroy(g);
@@ -1117,7 +1111,25 @@ void Game::tick(void)
       case STATE_DEAD_MENU :
       case STATE_PLAYING :
         if (l) {
+          v->last_time_step = v->time_step;
+
+          l->tick_ended       = false;
+          l->is_current_level = true;
           level_tick(g, v, l);
+
+          //
+          // Tick the level below also, so we can see things through chasms
+          //
+          auto level_below = level_select_get_next_level_down(g, v, l);
+          if (level_below) {
+            level_below->tick_ended       = false;
+            level_below->is_current_level = false;
+            level_tick(g, v, level_below);
+          }
+
+          if (l->tick_ended) {
+            v->time_step = 0;
+          }
         }
         break;
       case STATE_MOVE_WARNING_MENU : break;
@@ -2806,31 +2818,3 @@ void game_request_to_end_game_reason_set(Gamep g, const std::string &val)
   g->request_to_end_game_reason = val;
 }
 
-bool game_request_to_cleanup_things_get(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return 1;
-  }
-
-  return g->request_to_cleanup_things;
-}
-void game_request_to_cleanup_things_set(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  g->request_to_cleanup_things = true;
-}
-void game_request_to_cleanup_things_unset(Gamep g)
-{
-  TRACE_NO_INDENT();
-  if (unlikely(! g)) {
-    ERR("No game pointer set");
-    return;
-  }
-  g->request_to_cleanup_things = false;
-}
