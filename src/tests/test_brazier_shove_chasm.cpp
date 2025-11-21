@@ -54,7 +54,7 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
   std::string expect3 // second level
       = "......."
         "......."
-        "...!x.." // barrel is on fire
+        "...Bx.." // brazier was on fire
         "....x.."
         "....x.."
         "......."
