@@ -1173,6 +1173,8 @@ uint32_t game_tick_get(Gamep g, Levelsp v)
 //
 bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 {
+  TRACE_NO_INDENT();
+
   auto started = time_ms();
 #ifdef _GITHUB_BUILD_
   auto max_time = 600;
@@ -1180,8 +1182,7 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
   auto max_time = 60;
 #endif
 
-  TRACE_NO_INDENT();
-  if (unlikely(! v)) {
+  if (! v) {
     ERR("No levels pointer set");
     return false;
   }
@@ -1189,19 +1190,22 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
   verify(MTYPE_LEVELS, v);
 
   for (;;) {
+    TRACE_NO_INDENT();
     LEVEL_LOG(l, "Waiting for tick %u to finish", v->tick);
 
     if (time_have_x_secs_passed_since(max_time, started)) {
-      ERR("Test timed out: %usecs", max_time);
+      ERR("Test timed out: %u secs", max_time);
       return false;
     }
 
+    TRACE_NO_INDENT();
     game_tick(g);
 
     if (! v) {
       return true;
     }
 
+    TRACE_NO_INDENT();
     if (! v->level_tick_in_progress_count && ! v->level_tick_request_count) {
       LEVEL_LOG(l, "Tick %u finished, stop waiting", v->tick);
       return true;

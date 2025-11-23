@@ -451,11 +451,10 @@ void levels_tick(Gamep g, Levelsp v, Levelp l)
   LEVEL_LOG(l, "Levels tick %u time_step %f last_time_step %f delta %f", v->tick, v->time_step, v->last_time_step,
             v->time_step - v->last_time_step);
 
-  v->level_tick_end_count         = 0;
-  v->level_tick_in_progress_count = 0;
-  v->level_tick_request_count     = 0;
-  v->last_time_step               = v->time_step;
-  l->is_current_level             = true;
+  v->level_tick_end_count     = 0;
+  v->level_tick_request_count = 0;
+  v->last_time_step           = v->time_step;
+  l->is_current_level         = true;
 
   bool tick_begin_requested = false;
   if (! v->level_tick_in_progress_count) {
@@ -464,7 +463,9 @@ void levels_tick(Gamep g, Levelsp v, Levelp l)
       TRACE_NO_INDENT();
       if (iter->tick_begin_requested) {
         LEVEL_LOG(iter, "Levels tick %u requested", v->tick);
-        tick_begin_requested = true;
+        iter->tick_begin_requested = false;
+        tick_begin_requested       = true;
+
         if (! v->level_tick_request_count) {
           v->tick++;
           v->frame_begin    = v->frame;
@@ -482,6 +483,7 @@ void levels_tick(Gamep g, Levelsp v, Levelp l)
     level_tick(g, v, iter, tick_begin_requested);
   }
 
+  v->level_tick_in_progress_count = 0;
   FOR_ALL_LEVELS(g, v, iter)
   {
     TRACE_NO_INDENT();
@@ -498,7 +500,7 @@ void levels_tick(Gamep g, Levelsp v, Levelp l)
   {
     TRACE_NO_INDENT();
     if (iter->tick_begin_requested) {
-      LEVEL_LOG(iter, "Levels tick %u requested", v->tick);
+      LEVEL_LOG(iter, "Levels tick %u requested during tick", v->tick);
       v->level_tick_request_count++;
     }
   }
