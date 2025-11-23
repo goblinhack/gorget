@@ -65,8 +65,28 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     // run temperature checks. Else it looks odd that it catches fire before it reaches
     // the lava.
     //
-    if (thing_is_moving(t) || thing_is_jumping(t) || thing_is_falling(t)) {
+    if (thing_is_moving(t)) {
       l->tick_wait_on_things = true;
+      if (0)
+        LEVEL_LOG(l, "waiting on moving %s", to_string(g, t).c_str());
+    }
+
+    if (thing_is_jumping(t)) {
+      l->tick_wait_on_things = true;
+      if (0)
+        LEVEL_LOG(l, "waiting on jumping %s", to_string(g, t).c_str());
+    }
+
+    //
+    // Falling complete?
+    //
+    if (thing_is_falling(t)) {
+      thing_fall_end_check(g, v, l, t);
+      if (thing_is_falling(t)) {
+        l->tick_wait_on_things = true;
+        if (0)
+          LEVEL_LOG(l, "waiting on falling %s", to_string(g, t).c_str());
+      }
     }
 
     //
@@ -88,9 +108,11 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
 //
 // Called per frame
 //
-void level_tick(Gamep g, Levelsp v, Levelp l)
+static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
 {
   TRACE_NO_INDENT();
+
+  bool pcg_rand_blocked = false;
 
   verify(MTYPE_LEVELS, game_levels_get(g));
 
@@ -108,6 +130,12 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
 
   if (l->tick_in_progress) {
     //
+    // Block random numbers
+    //
+    g_pcg_rand_blocked++;
+    pcg_rand_blocked = true;
+
+    //
     // A tick is running
     //
     level_tick_time_step(g, v, l);
@@ -116,7 +144,7 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     // Need to update while moving as raycasting can change
     //
     level_update_visibility(g, v, l);
-  } else if (l->tick_begin_requested) {
+  } else if (tick_begin_requested) {
     //
     // Allow temperatures to settle prior to starting
     //
@@ -128,20 +156,24 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
     level_tick_begin(g, v, l);
   } else {
     //
+    // Block random numbers
+    //
+    g_pcg_rand_blocked++;
+    pcg_rand_blocked = true;
+
+    //
     // Idle state
     //
     level_tick_idle(g, v, l);
   }
 
   //
-  // Update any tiles that are needed
-  //
-  level_tile_update(g, v, l);
-
-  //
   // Move things. Interpolated per frame.
   //
   if (l->tick_in_progress) {
+    if (0)
+      LEVEL_LOG(l, "step time_step %f last %f delta %f frame %u frame_begin %u", v->time_step, v->last_time_step,
+                v->time_step - v->last_time_step, v->frame, v->frame_begin);
     level_tick_body(g, v, l, v->time_step - v->last_time_step);
   }
 
@@ -149,6 +181,16 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
   // Animate things Per frame.
   //
   level_anim(g, v, l);
+
+  if (pcg_rand_blocked) {
+    pcg_rand_blocked = false;
+    g_pcg_rand_blocked--;
+  }
+
+  //
+  // Update any tiles that are needed
+  //
+  level_tile_update(g, v, l);
 
   //
   // Check if something fell in lava and now needs to delay the end of the tick
@@ -233,29 +275,22 @@ void level_tick(Gamep g, Levelsp v, Levelp l)
 
 static void level_tick_time_step(Gamep g, Levelsp v, Levelp l)
 {
-  if (! v->frame_begin) {
-    //
-    // First tick
-    //
-    v->frame_begin = v->frame;
-    v->time_step   = 0.0;
-  } else {
-    //
-    // Continue the tick
-    //
-    v->time_step = ((float) (v->frame - v->frame_begin)) / (float) TICK_DURATION_MS;
-    if (v->time_step >= 1.0) {
-      //
-      // Tick has surpassed its time
-      //
-      v->time_step = 1.0;
+  //
+  // Continue the tick
+  //
+  v->time_step = ((float) (v->frame - v->frame_begin)) / (float) TICK_DURATION_MS;
 
-      if (! l->tick_end_requested) {
-        LOG("Tick %u end requested", v->tick);
-      }
+  if (v->time_step >= 1.0) {
+    //
+    // Tick has surpassed its time
+    //
+    v->time_step = 1.0;
 
-      l->tick_end_requested = true;
+    if (! l->tick_end_requested) {
+      LEVEL_LOG(l, "Tick %u end requested", v->tick);
     }
+
+    l->tick_end_requested = true;
   }
 }
 
@@ -266,6 +301,10 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
   auto p = thing_player(g);
   if (! p) {
     return;
+  }
+
+  if (dt < 0) {
+    DIE("negative dt %f", dt);
   }
 
   const int player_speed = thing_speed(p);
@@ -294,9 +333,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     }
 
     if (0) {
-      if (thing_is_player(t)) {
-        THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
-      }
+      THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
     }
 
     thing_interpolate(g, t, t->thing_dt);
@@ -320,22 +357,11 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (l->is_current_level) {
-    v->tick++;
-  }
-
-  LOG("Tick %u begin", v->tick);
-
-  v->frame_begin = v->frame;
-  v->time_step   = 0.0;
+  LEVEL_LOG(l, "Tick %u begin", v->tick);
 
   l->tick_begin_requested = false;
   l->tick_in_progress     = true;
-
-  auto p = thing_player(g);
-  if (! p) {
-    return;
-  }
+  l->tick_ended           = false;
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
@@ -349,12 +375,6 @@ static void level_tick_idle(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto p = thing_player(g);
-  if (! p) {
-    ERR("No player found during level tick");
-    return;
-  }
-
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     if (thing_is_tickable(t)) {
@@ -367,13 +387,12 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 {
   TRACE_NO_INDENT();
 
-  LOG("Tick requested: %s", why);
+  LEVEL_LOG(l, "Tick requested: %s", why);
 
-  l->tick_begin_requested = true;
-
-  auto level_below = level_select_get_next_level_down(g, v, l);
-  if (level_below) {
-    level_below->tick_begin_requested = true;
+  FOR_ALL_LEVELS(g, v, iter)
+  {
+    TRACE_NO_INDENT();
+    iter->tick_begin_requested = true;
   }
 
   v->requested_move_up    = false;
@@ -386,15 +405,10 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  LOG("Tick %u ending", v->tick);
+  LEVEL_LOG(l, "Tick %u ending", v->tick);
 
   l->tick_end_requested = false;
   l->tick_in_progress   = false;
-
-  auto p = thing_player(g);
-  if (! p) {
-    return;
-  }
 
   game_request_to_remake_ui_set(g);
 
@@ -416,7 +430,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     }
   }
 
-  LOG("Tick %u end", v->tick);
+  LEVEL_LOG(l, "Tick %u end", v->tick);
   LOG("-");
 }
 
@@ -425,4 +439,91 @@ bool level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   return l->tick_in_progress;
+}
+
+//
+// Tick all levels
+//
+void levels_tick(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  LEVEL_LOG(l, "Levels tick %u time_step %f last_time_step %f delta %f", v->tick, v->time_step, v->last_time_step,
+            v->time_step - v->last_time_step);
+
+  v->level_tick_end_count         = 0;
+  v->level_tick_in_progress_count = 0;
+  v->level_tick_request_count     = 0;
+  v->last_time_step               = v->time_step;
+  l->is_current_level             = true;
+
+  bool tick_begin_requested = false;
+  if (! v->level_tick_in_progress_count) {
+    FOR_ALL_LEVELS(g, v, iter)
+    {
+      TRACE_NO_INDENT();
+      if (iter->tick_begin_requested) {
+        LEVEL_LOG(iter, "Levels tick %u requested", v->tick);
+        tick_begin_requested = true;
+        if (! v->level_tick_request_count) {
+          v->tick++;
+          v->frame_begin    = v->frame;
+          v->time_step      = 0.0;
+          v->last_time_step = 0.0;
+        }
+        v->level_tick_request_count++;
+      }
+    }
+  }
+
+  FOR_ALL_LEVELS(g, v, iter)
+  {
+    TRACE_NO_INDENT();
+    level_tick(g, v, iter, tick_begin_requested);
+  }
+
+  FOR_ALL_LEVELS(g, v, iter)
+  {
+    TRACE_NO_INDENT();
+    if (iter->tick_ended) {
+      v->level_tick_end_count++;
+    }
+    if (iter->tick_in_progress) {
+      v->level_tick_in_progress_count++;
+    }
+  }
+
+  v->level_tick_request_count = 0;
+  FOR_ALL_LEVELS(g, v, iter)
+  {
+    TRACE_NO_INDENT();
+    if (iter->tick_begin_requested) {
+      LEVEL_LOG(iter, "Levels tick %u requested", v->tick);
+      v->level_tick_request_count++;
+    }
+  }
+
+  LEVEL_LOG(l, "Ticking %u Done %u Req %u", v->level_tick_in_progress_count, v->level_tick_end_count,
+            v->level_tick_request_count);
+  if (v->level_tick_end_count && (v->level_count == v->level_tick_end_count)) {
+    LEVEL_LOG(l, "All %u levels finished ticking", v->level_tick_end_count);
+    v->level_tick_in_progress_count = 0;
+    v->level_tick_end_count         = 0;
+    v->time_step                    = 0;
+    v->last_time_step               = 0;
+  }
+
+  //
+  // Fixed frame counter, 100 per second
+  //
+  static uint32_t level_ts_begin;
+  static uint32_t level_ts_now;
+
+  if (unlikely(! level_ts_begin)) {
+    level_ts_begin = time_ms();
+  }
+
+  level_ts_now = time_ms();
+  v->frame += level_ts_now - level_ts_begin;
+  level_ts_begin = level_ts_now;
 }

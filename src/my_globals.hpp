@@ -36,6 +36,7 @@ extern char       *g_gfx_path;
 extern char       *g_ttf_path;
 extern char      **g_argv;
 extern int         g_argc;
+extern int         g_pcg_rand_blocked;                  // No pcg random numbers allowed here
 extern std::string g_need_restart_with_given_arguments; // Need to restart game with the given arg
 extern std::string g_program_name;
 extern std::string g_opt_seed_name;

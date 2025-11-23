@@ -318,7 +318,7 @@ void game_unset_currently_saving_snapshot(Gamep);
 void game_unset_request_reset_state_change(Gamep);
 void game_unset_request_to_save_snapshot(Gamep);
 void game_unset_request_to_update_same_level(Gamep);
-void game_wait_for_tick_to_finish(Gamep, Levelsp, Levelp);
+bool game_wait_for_tick_to_finish(Gamep, Levelsp, Levelp);
 
 void        game_add_new_hiscore(Gamep, int score, LevelNum, const char *name, const char *reason);
 bool        game_is_new_hiscore(Gamep, int score);

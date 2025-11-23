@@ -55,11 +55,14 @@ static bool test_barrel_explosion(Gamep g, Testp t)
   // Wait for the fire to ignite a barrel
   //
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 4; tries++) {
+  for (auto tries = 0; tries < 5; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
   }
 
   TEST_PROGRESS(t);
@@ -68,7 +71,7 @@ static bool test_barrel_explosion(Gamep g, Testp t)
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
 
   TEST_PASSED(t);
 exit:

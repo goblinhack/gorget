@@ -3,7 +3,9 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_tile.hpp"
 
 //
@@ -14,13 +16,15 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
   TRACE_NO_INDENT();
 
   if (0) {
-    if (thing_is_player(t)) {
-      THING_TOPCON(t, "from %d,%d to %d,%d dt %f", t->moving_from.x, t->moving_from.y, t->at.x, t->at.y, dt);
-    }
+    THING_TOPCON(t, "from %d,%d to %d,%d dt %f", t->moving_from.x, t->moving_from.y, t->at.x, t->at.y, dt);
   }
 
   if (t->moving_from == t->at) {
     return;
+  }
+
+  if (dt < 0) {
+    DIE("negative dt %f", dt);
   }
 
   float pix_x = (float) t->moving_from.x + (((float) (t->at.x - t->moving_from.x)) * dt);

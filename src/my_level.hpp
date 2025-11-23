@@ -332,6 +332,13 @@ typedef struct Levels_ {
   float time_step;
   float last_time_step;
   //
+  // For keeping track of how many levels are ticking/done.
+  //
+  uint32_t level_count;
+  uint32_t level_tick_end_count;
+  uint32_t level_tick_in_progress_count;
+  uint32_t level_tick_request_count;
+  //
   // Current level being played
   //
   LevelNum level_num;
@@ -442,8 +449,10 @@ typedef struct Levels_ {
 
 #define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                \
   if (_g_ && _v_)                                                                                                    \
-    for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                      \
-      if ((_l_ = &v->level[ _n_ ]))
+    for (Levelp _l_ = nullptr, loop1 = (Levelp) 1; loop1 == (Levelp) 1; loop1 = (Levelp) 0)                          \
+      for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                    \
+        if ((_l_ = &v->level[ _n_ ]))                                                                                \
+          if (_l_->is_initialized_level)
 
 //
 // Walk all things, all levels
@@ -540,6 +549,7 @@ Thingp  level_light_blocker_at(Gamep, Levelsp, Levelp, spoint);
 bool    level_match_contents(Gamep, Levelsp, Levelp, Testp, int w, int h, const char *in);
 bool    level_open_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 bool    level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint, int slot, ThingId);
+void    levels_tick(Gamep, Levelsp, Levelp);
 bool    level_tick_is_in_progress(Gamep, Levelsp, Levelp);
 int     level_count_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 Levelp  level_change(Gamep, Levelsp, LevelNum);
@@ -575,6 +585,8 @@ void    level_forced_auto_scroll(Gamep, Levelsp, Levelp);
 void    level_init(Gamep, Levelsp, Levelp, LevelNum);
 void    level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
 void    level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
+void    level_finalize(Gamep, Levelsp, Levelp);
+void    levels_finalize(Gamep, Levelsp);
 void    level_light_calcuate_all(Gamep, Levelsp, Levelp);
 void    level_light_raycast(Gamep, Levelsp, Levelp, int fbo);
 void    level_light_raycast_fini(void);
@@ -592,7 +604,6 @@ void    level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void    level_tick_explosion(Gamep, Levelsp, Levelp);
 void    level_tick_teleport(Gamep, Levelsp, Levelp);
 void    level_tick_water(Gamep, Levelsp, Levelp);
-void    level_tick(Gamep, Levelsp, Levelp);
 bool    level_is_level_select(Gamep, Levelsp, Levelp);
 void    level_update_visibility(Gamep, Levelsp, Levelp);
 void    level_tile_update_set(Gamep, Levelsp, Levelp, spoint);
@@ -604,6 +615,8 @@ void    level_gen_test(Gamep);
 void    level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, int16_t, int16_t);
 void    level_water_tick(Gamep, Levelsp, Levelp);
 void    level_water_update(Gamep, Levelsp, Levelp);
+
+std::string to_string(Gamep, Levelp);
 
 bool level_request_to_cleanup_things_get(Gamep, Levelsp, Levelp);
 void level_request_to_cleanup_things_set(Gamep, Levelsp, Levelp);
@@ -655,6 +668,7 @@ bool             level_select_is_oob(int x, int y);
 bool             level_select_is_oob(spoint);
 Levelp           level_select_get_level(Gamep, Levelsp, Levelp, spoint);
 Levelp           level_select_get_next_level_down(Gamep, Levelsp, Levelp);
+Levelp           level_select_calculate_next_level_down(Gamep, Levelsp, Levelp);
 Thingp           thing_level_select(Gamep);
 void             level_select_assign_levels_to_grid(Gamep, Levelsp);
 void             level_select_destroy(Gamep, Levelsp, Levelp);

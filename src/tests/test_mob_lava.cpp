@@ -113,7 +113,10 @@ static bool test_mob_lava(Gamep g, Testp t)
   TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
-    game_wait_for_tick_to_finish(g, v, l);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
   }
 
   //

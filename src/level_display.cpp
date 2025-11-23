@@ -237,7 +237,10 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
   gl_clear();
   blit_init();
 
-  level_display_fbo_do(g, v, level_below, l, fbo);
+  if (level_below) {
+    level_display_fbo_do(g, v, level_below, l, fbo);
+  }
+
   level_display_fbo_do(g, v, l, nullptr, fbo);
 
   //

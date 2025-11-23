@@ -34,6 +34,7 @@ char       *g_gfx_path;
 char       *g_ttf_path;
 char      **g_argv;
 int         g_argc;
+int         g_pcg_rand_blocked;                  // No pcg random numbers allowed here
 std::string g_need_restart_with_given_arguments; // Need to restart game
 std::string g_opt_seed_name;
 std::string g_opt_test_name;

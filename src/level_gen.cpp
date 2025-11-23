@@ -4349,9 +4349,8 @@ static bool level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
 
   LevelSelect *s = &v->level_select;
 
-  auto level                  = game_level_get(g, v, l->level_num);
-  level->is_initialized_level = true;
-  level->level_num            = l->level_num;
+  auto level = game_level_get(g, v, l->level_num);
+  level_init(g, v, level, l->level_num);
 
   //
   // Create a string holding all the level chars

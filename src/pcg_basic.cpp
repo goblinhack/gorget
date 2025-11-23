@@ -28,7 +28,9 @@
  * your project.
  */
 
+#include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_source_loc.hpp"
 
 struct pcg_state_setseq_64 { // Internals are *Private*.
   uint64_t state;            // RNG state.  All values are possible.
@@ -47,7 +49,7 @@ uint32_t pcg32_random_r(pcg32_random_t *rng)
   uint32_t xorshifted = ((oldstate >> 18u) ^ oldstate) >> 27u;
   uint32_t rot        = oldstate >> 59u;
   uint32_t r          = (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
-  // LOG("r %d", r);
+  //  LOG("r %d", r);
   return r;
 }
 
@@ -71,7 +73,18 @@ void pcg32_srandom(uint64_t seed, uint64_t seq)
 // pcg32_random_r(rng)
 //     Generate a uniformly distributed 32-bit random number
 
-uint32_t pcg32_random() { return pcg32_random_r(&pcg32_global); }
+uint32_t pcg32_random(const char *func, int line)
+{
+  if (unlikely(g_pcg_rand_blocked)) {
+    DIE("Trying to generate a PCG random number when blocked");
+  }
+
+  auto out = pcg32_random_r(&pcg32_global);
+  if (0) {
+    LOG("%s:%u -> %u", func, line, out);
+  }
+  return out;
+}
 
 // pcg32_boundedrand(bound):
 // pcg32_boundedrand_r(rng, bound):
@@ -114,4 +127,15 @@ uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound)
   }
 }
 
-uint32_t pcg32_boundedrand(uint32_t bound) { return pcg32_boundedrand_r(&pcg32_global, bound); }
+uint32_t pcg32_boundedrand(const char *func, int line, uint32_t bound)
+{
+  if (unlikely(g_pcg_rand_blocked)) {
+    DIE("Trying to generate a PCG random number when blocked");
+  }
+
+  auto out = pcg32_boundedrand_r(&pcg32_global, bound);
+  if (0) {
+    LOG("%s:%u -> %u", func, line, out);
+  }
+  return out;
+}

@@ -202,6 +202,8 @@ void sdl_loop(Gamep g)
       }
     }
 
+    g_pcg_rand_blocked++;
+
     //
     // Display the level
     //
@@ -215,6 +217,8 @@ void sdl_loop(Gamep g)
     // Display the FBOs
     //
     sdl_display(g);
+
+    g_pcg_rand_blocked--;
 
     //
     // Config change?

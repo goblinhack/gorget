@@ -571,6 +571,7 @@ void thing_dir_tl_set(Thingp, uint8_t);
 void thing_dir_tr_set(Thingp, uint8_t);
 void thing_dir_up_set(Thingp, uint8_t);
 void thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp me);
+void thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
 void thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_fall(Gamep, Levelsp, Levelp, Thingp);
 void thing_fini(Gamep, Levelsp, Levelp, Thingp);
@@ -854,6 +855,14 @@ void THING_WARN(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_ERR(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_TOPCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void THING_BOTCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+
+void LEVEL_CON(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void LEVEL_DBG(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void LEVEL_LOG(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void LEVEL_WARN(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void LEVEL_ERR(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void LEVEL_TOPCON(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void LEVEL_BOTCON(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
 enum {
   TEXT_INCLUDE_OWNER = 1,

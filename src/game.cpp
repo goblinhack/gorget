@@ -468,6 +468,11 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   s->level_num       = l->level_num;
   s->is_set          = true;
   l->level_select_at = p;
+
+  //
+  // Final level connectivity.
+  //
+  levels_finalize(g, v);
 }
 
 void Game::fini(void)
@@ -475,7 +480,6 @@ void Game::fini(void)
   LOG("Game fini");
   TRACE_AND_INDENT();
 
-  TRACE_NO_INDENT();
   cleanup();
 }
 void game_fini(Gamep g)
@@ -764,6 +768,11 @@ void Game::create_levels(void)
   // Assign level pointers to the level grid
   //
   level_select_assign_levels_to_grid(g, v);
+
+  //
+  // Final level connectivity.
+  //
+  levels_finalize(g, v);
 
   //
   // Sanity checks
@@ -1105,33 +1114,11 @@ void Game::tick(void)
     auto l = game_level_get(g, v);
 
     switch (state) {
-      case STATE_INIT :      break;
-      case STATE_MAIN_MENU : break;
-      case STATE_QUITTING :  break;
-      case STATE_DEAD_MENU :
-      case STATE_PLAYING :
-        if (l) {
-          v->last_time_step = v->time_step;
-
-          l->tick_ended       = false;
-          l->is_current_level = true;
-          level_tick(g, v, l);
-
-          //
-          // Tick the level below also, so we can see things through chasms
-          //
-          auto level_below = level_select_get_next_level_down(g, v, l);
-          if (level_below) {
-            level_below->tick_ended       = false;
-            level_below->is_current_level = false;
-            level_tick(g, v, level_below);
-          }
-
-          if (l->tick_ended) {
-            v->time_step = 0;
-          }
-        }
-        break;
+      case STATE_PLAYING :           levels_tick(g, v, l); break;
+      case STATE_INIT :              break;
+      case STATE_MAIN_MENU :         break;
+      case STATE_QUITTING :          break;
+      case STATE_DEAD_MENU :         break;
       case STATE_MOVE_WARNING_MENU : break;
       case STATE_KEYBOARD_MENU :     break;
       case STATE_LOAD_MENU :         break;
@@ -1143,22 +1130,6 @@ void Game::tick(void)
       case STATE_GENERATING :        break;
       case STATE_GENERATED :         break;
       case GAME_STATE_ENUM_MAX :     break;
-    }
-
-    if (l) {
-      //
-      // Fixed frame counter, 100 per second
-      //
-      static uint32_t level_ts_begin;
-      static uint32_t level_ts_now;
-
-      if (unlikely(! level_ts_begin)) {
-        level_ts_begin = time_ms();
-      }
-
-      level_ts_now = time_ms();
-      v->frame += level_ts_now - level_ts_begin;
-      level_ts_begin = level_ts_now;
     }
   }
 
@@ -1198,26 +1169,37 @@ uint32_t game_tick_get(Gamep g, Levelsp v)
 }
 
 //
-// Wait for completion of the tick
+// Wait for completion of the tick.
 //
-void game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
+bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 {
+  auto started = time_ms();
+
   TRACE_NO_INDENT();
   if (unlikely(! v)) {
     ERR("No levels pointer set");
-    return;
+    return false;
   }
 
   verify(MTYPE_LEVELS, v);
 
-  auto next_tick = v->tick + 1;
+  for (;;) {
+    LEVEL_LOG(l, "Waiting for tick %u to finish", v->tick);
 
-  while ((v->tick != next_tick) || level_tick_is_in_progress(g, v, l)) {
+    if (time_have_x_tenths_passed_since(100, started)) {
+      ERR("Test timed out");
+      return false;
+    }
+
     game_tick(g);
 
-    v = game_levels_get(g);
     if (! v) {
-      return;
+      return true;
+    }
+
+    if (! v->level_tick_in_progress_count && ! v->level_tick_request_count) {
+      LEVEL_LOG(l, "Tick %u finished, stop waiting", v->tick);
+      return true;
     }
   }
 }
@@ -2817,4 +2799,3 @@ void game_request_to_end_game_reason_set(Gamep g, const std::string &val)
   }
   g->request_to_end_game_reason = val;
 }
-

@@ -25,7 +25,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
 
   auto ntiles = tp_tiles_size(tp, t->anim_type);
   if (ntiles) {
-    auto index = pcg_rand() % ntiles;
+    auto index = os_rand() % ntiles;
     auto tile  = tp_tiles_get(tp, t->anim_type, index);
     if (tile) {
       switch (t->anim_type) {

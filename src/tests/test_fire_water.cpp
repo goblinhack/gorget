@@ -78,7 +78,10 @@ static bool test_fire_on_water(Gamep g, Testp t)
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
   }
 
   //

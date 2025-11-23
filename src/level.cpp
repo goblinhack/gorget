@@ -307,15 +307,43 @@ void levels_destroy(Gamep g, Levelsp v)
   LOG("Levels destroy");
   TRACE_AND_INDENT();
 
-  Levelp l;
-
-  FOR_ALL_LEVELS(g, v, l)
+  FOR_ALL_LEVELS(g, v, iter)
   {
     TRACE_NO_INDENT();
-    level_destroy(g, v, l);
+    level_destroy(g, v, iter);
   }
 
   levels_memory_free(g, v);
+}
+
+void level_finalize(Gamep g, Levelsp v, Levelp l)
+{
+  LOG("Level finalize");
+  TRACE_AND_INDENT();
+
+  level_select_calculate_next_level_down(g, v, l);
+  v->level_count++;
+}
+
+void levels_finalize(Gamep g, Levelsp v)
+{
+  LOG("Levels finalize");
+  TRACE_AND_INDENT();
+
+  if (! g) {
+    DIE("no game pointer");
+  }
+
+  if (! v) {
+    DIE("no levels pointer");
+  }
+
+  v->level_count = 0;
+  FOR_ALL_LEVELS(g, v, iter)
+  {
+    TRACE_NO_INDENT();
+    level_finalize(g, v, iter);
+  }
 }
 
 void level_enter(Gamep g, Levelsp v, Levelp l)

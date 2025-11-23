@@ -74,7 +74,10 @@ static bool test_player_on_fire_move_into_water(Gamep g, Testp t)
     thing_spawn(g, v, l, tp_random(is_fire), player->at);
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
 
     TEST_ASSERT(t, thing_is_burning(player), "player is not burning");
     TEST_ASSERT(t, ! thing_is_dead(player), "player is dead");
@@ -95,7 +98,10 @@ static bool test_player_on_fire_move_into_water(Gamep g, Testp t)
       goto exit;
     }
 
-    game_wait_for_tick_to_finish(g, v, l);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
   }
 
   //

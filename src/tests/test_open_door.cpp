@@ -82,7 +82,10 @@ static bool test_open_door(Gamep g, Testp t)
       goto exit;
     }
 
-    game_wait_for_tick_to_finish(g, v, l);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
 
     if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
@@ -103,7 +106,10 @@ static bool test_open_door(Gamep g, Testp t)
       goto exit;
     }
 
-    game_wait_for_tick_to_finish(g, v, l);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
 
     if (! (result = level_match_contents(g, v, l, t, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
@@ -124,7 +130,10 @@ static bool test_open_door(Gamep g, Testp t)
       goto exit;
     }
 
-    game_wait_for_tick_to_finish(g, v, l);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
 
     if (! (result = level_match_contents(g, v, l, t, w, h, expect3.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
@@ -132,7 +141,7 @@ static bool test_open_door(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 3, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 4, "final tick counter value");
 
   TEST_PASSED(t);
 exit:

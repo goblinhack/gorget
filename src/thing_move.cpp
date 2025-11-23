@@ -254,6 +254,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   (void) thing_push(g, v, l, t);
 
   thing_is_moving_set(g, v, l, t);
+  THING_LOG(t, "move to %u,%u", to.x, to.y);
 
   return true;
 }
