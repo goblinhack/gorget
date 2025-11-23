@@ -14,6 +14,40 @@
 
 LevelOpt g_level_opt;
 
+bool is_oob(spoint p)
+{
+  if (p.x < 0) {
+    return true;
+  }
+  if (p.y < 0) {
+    return true;
+  }
+  if (p.x >= MAP_WIDTH) {
+    return true;
+  }
+  if (p.y >= MAP_HEIGHT) {
+    return true;
+  }
+  return false;
+}
+
+bool is_oob(int x, int y)
+{
+  if (x < 0) {
+    return true;
+  }
+  if (y < 0) {
+    return true;
+  }
+  if (x >= MAP_WIDTH) {
+    return true;
+  }
+  if (y >= MAP_HEIGHT) {
+    return true;
+  }
+  return false;
+}
+
 bool level_request_to_cleanup_things_get(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
@@ -681,40 +715,6 @@ int level_count_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
     }
   }
   return count;
-}
-
-bool is_oob(spoint p)
-{
-  if (p.x < 0) {
-    return true;
-  }
-  if (p.y < 0) {
-    return true;
-  }
-  if (p.x >= MAP_WIDTH) {
-    return true;
-  }
-  if (p.y >= MAP_HEIGHT) {
-    return true;
-  }
-  return false;
-}
-
-bool is_oob(int x, int y)
-{
-  if (x < 0) {
-    return true;
-  }
-  if (y < 0) {
-    return true;
-  }
-  if (x >= MAP_WIDTH) {
-    return true;
-  }
-  if (y >= MAP_HEIGHT) {
-    return true;
-  }
-  return false;
 }
 
 bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)

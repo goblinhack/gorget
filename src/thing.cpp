@@ -57,6 +57,34 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   return t;
 }
 
+Thingp thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT(); // expensive
+#endif
+
+  ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
+
+  if (out) {
+    *out = nullptr;
+  }
+
+  if (! id) {
+    return nullptr;
+  }
+
+  auto t = thing_find(g, v, id);
+  if (! t) {
+    return nullptr;
+  }
+
+  if (out) {
+    *out = tp_find(t->tp_id);
+  }
+
+  return t;
+}
+
 Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp *out)
 {
 #ifdef _DEBUG_BUILD_

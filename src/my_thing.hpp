@@ -374,6 +374,7 @@ ThingExtp    thing_ext_struct(Gamep, Thingp);
 Thingp       immediate_owner(Gamep, Levelsp, Levelp, Thingp);
 Thingp       thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, spoint);
 Thingp       thing_and_tp_get_at(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp * = nullptr);
+Thingp       thing_and_tp_get_at_safe(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp * = nullptr);
 Thingp       thing_find_optional(Gamep, Levelsp, ThingId id);
 Thingp       thing_find(Gamep, Levelsp, ThingId id);
 Thingp       thing_get(Gamep, Levelsp, Levelp, spoint p, int slot);

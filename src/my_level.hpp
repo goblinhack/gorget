@@ -474,7 +474,7 @@ typedef struct Levels_ {
       for (_x_ = 0; _x_ < MAP_WIDTH; _x_++)
 
 //
-// For all things at this Z depth
+// For all things on this level
 //
 #define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                  \
   if (_g_ && _v_ && _l_)                                                                                             \
@@ -483,7 +483,7 @@ typedef struct Levels_ {
         for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                 \
           for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                    \
             for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
-              if ((_t_ = thing_and_tp_get_at(_g_, _v_, _l_, spoint(_x_, _y_), _slot_, &_tp_)))
+              if ((_t_ = thing_and_tp_get_at_safe(_g_, _v_, _l_, spoint(_x_, _y_), _slot_, &_tp_)))
 
 //
 // For all things at a specific location
@@ -500,7 +500,7 @@ typedef struct Levels_ {
     for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                     \
       for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                        \
         for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
-          if ((_t_ = thing_and_tp_get_at(_g_, _v_, _l_, _p_, _slot_, &_tp_)))
+          if ((_t_ = thing_and_tp_get_at_safe(_g_, _v_, _l_, _p_, _slot_, &_tp_)))
 
 enum {
   CHANCE_VVV_UNLIKELY = 1,
