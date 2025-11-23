@@ -113,15 +113,11 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
 //
 // Animation time step
 //
-void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
+void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int time_step)
 {
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
-
-  Tpp tp = thing_tp(t);
-
-  if (! tp_is_animated(tp)) {
-    return;
-  }
+#endif
 
   auto tile_index = t->tile_index;
   if (! tile_index) {

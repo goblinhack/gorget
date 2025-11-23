@@ -139,16 +139,6 @@ int thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_health -= val;
 }
 
-int thing_is_falling(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  return t->_is_falling;
-}
-
 void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
@@ -322,16 +312,6 @@ int thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     return 0;
   }
   return t->_keys_carried -= val;
-}
-
-bool thing_is_dead(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return t->_is_dead;
 }
 
 void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
@@ -545,16 +525,6 @@ void thing_is_on_map_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return thing_is_on_map_set(g, v, l, t, false);
 }
 
-bool thing_is_moving(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return t->_is_moving;
-}
-
 void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
   TRACE_NO_INDENT();
@@ -611,16 +581,6 @@ void thing_is_teleporting_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
   return thing_is_teleporting_set(g, v, l, t, false);
-}
-
-bool thing_is_jumping(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return t->_is_jumping;
 }
 
 void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)

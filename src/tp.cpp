@@ -129,18 +129,20 @@ Tpp tp_find(TpId id)
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
-#endif
 
   if ((int) id - 1 >= (int) tp_vec.size()) {
     DIE("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_vec", id);
     return nullptr;
   }
+#endif
 
   auto result = tp_vec[ id - 1 ];
+#ifdef _DEBUG_BUILD_
   if (! result) {
     DIE("tp_find: thing template %" PRIx16 " not found", id);
     return nullptr;
   }
+#endif
 
   return result;
 }

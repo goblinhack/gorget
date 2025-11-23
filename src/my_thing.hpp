@@ -384,7 +384,6 @@ Thingp       thing_player(Gamep);
 Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, spoint);
 Thingp       top_owner(Gamep, Levelsp, Levelp, Thingp);
 ThingPlayerp thing_player_struct(Gamep);
-Tpp          thing_tp(Thingp);
 void         thing_ext_free(Gamep, Levelsp, Levelp, Thingp t);
 void         thing_free(Gamep, Levelsp, Levelp, Thingp t);
 void         thing_stats_dump(Gamep, Levelsp);
@@ -558,7 +557,7 @@ void player_reached_entrance(Gamep, Levelsp, Levelp);
 void player_reached_exit(Gamep, Levelsp, Levelp);
 void player_warp_to_specific_level(Gamep, Levelsp, LevelNum);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
-void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
+void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, Tpp, int time_step);
 void thing_chasm_handle(Gamep, Levelsp, Levelp, Thingp me);
 void thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void thing_continue_to_burn_check(Gamep, Levelsp, Levelp, Thingp);
@@ -597,7 +596,6 @@ void thing_vision_reset(Gamep, Levelsp, Levelp, Thingp);
 void thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
 // end sort marker1 {
 
-bool thing_is_dead(Thingp);
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_dead_unset(Gamep, Levelsp, Levelp, Thingp);
 
@@ -625,7 +623,6 @@ bool thing_is_on_map(Thingp);
 void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_on_map_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_moving(Thingp);
 void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_moving_unset(Gamep, Levelsp, Levelp, Thingp);
 
@@ -633,7 +630,6 @@ bool thing_is_teleporting(Thingp);
 void thing_is_teleporting_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_teleporting_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_jumping(Thingp);
 void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_jumping_unset(Gamep, Levelsp, Levelp, Thingp);
 
@@ -645,7 +641,6 @@ bool thing_is_carried(Thingp);
 bool thing_is_carried_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp carrier, bool val = true);
 bool thing_is_carried_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp dropr);
 
-int  thing_is_falling(Thingp);
 void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int  thing_is_falling_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int  thing_is_falling_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
@@ -887,5 +882,62 @@ void   wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
 void   wid_set_thing_context(Gamep, Levelsp, Widp, Thingp);
 Thingp wid_get_thing_context(Gamep, Levelsp, Widp, int);
 void   wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp);
+
+static inline int thing_is_falling(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+#endif
+  return t->_is_falling;
+}
+
+static inline bool thing_is_jumping(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_jumping;
+}
+
+static inline bool thing_is_moving(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_moving;
+}
+
+static inline bool thing_is_dead(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_dead;
+}
+
+static inline Tpp thing_tp(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT(); // expensive
+#endif
+
+  return tp_find(t->tp_id);
+}
 
 #endif

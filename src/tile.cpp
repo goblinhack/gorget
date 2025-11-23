@@ -829,7 +829,9 @@ std::string tile_name(Tilep t)
 
 uint32_t tile_delay_ms(Tilep t)
 {
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
+#endif
 
   if (! t->delay_ms) {
     return 5000;

@@ -22,7 +22,11 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
-    thing_anim_time_step(g, v, l, t, time_step);
+    Tpp tp = thing_tp(t);
+
+    if (tp_is_animated(tp)) {
+      thing_anim_time_step(g, v, l, t, tp, time_step);
+    }
 
     if (thing_is_falling(t)) {
       thing_fall_time_step(g, v, l, t, time_step);

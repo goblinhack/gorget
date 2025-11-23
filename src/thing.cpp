@@ -10,19 +10,6 @@
 
 #include <iostream>
 
-Tpp thing_tp(Thingp t)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT(); // expensive
-#endif
-
-  if (t->tp_id) {
-    return tp_find(t->tp_id);
-  }
-
-  return nullptr;
-}
-
 Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 {
 #ifdef _DEBUG_BUILD_
