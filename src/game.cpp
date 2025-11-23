@@ -1174,6 +1174,11 @@ uint32_t game_tick_get(Gamep g, Levelsp v)
 bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 {
   auto started = time_ms();
+#ifdef _GITHUB_BUILD_
+  auto max_time = 600;
+#else
+  auto max_time = 60;
+#endif
 
   TRACE_NO_INDENT();
   if (unlikely(! v)) {
@@ -1186,17 +1191,10 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
   for (;;) {
     LEVEL_LOG(l, "Waiting for tick %u to finish", v->tick);
 
-#ifdef _GITHUB_BUILD_
-    if (time_have_x_tenths_passed_since(10000, started)) {
-      ERR("Test timed out");
+    if (time_have_x_secs_passed_since(max_time, started)) {
+      ERR("Test timed out: %usecs", max_time);
       return false;
     }
-#else
-    if (time_have_x_tenths_passed_since(1000, started)) {
-      ERR("Test timed out");
-      return false;
-    }
-#endif
 
     game_tick(g);
 
