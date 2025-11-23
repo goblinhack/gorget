@@ -480,10 +480,9 @@ typedef struct Levels_ {
   if (_g_ && _v_ && _l_)                                                                                             \
     for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                      \
       for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                     \
-        for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                 \
-          for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                    \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
-              if ((_t_ = thing_and_tp_get_at_safe(_g_, _v_, _l_, spoint(_x_, _y_), _slot_, &_tp_)))
+        for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                      \
+          for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                        \
+            if ((_t_ = thing_get_at_safe(_g_, _v_, _l_, spoint(_x_, _y_), _slot_)))
 
 //
 // For all things at a specific location
