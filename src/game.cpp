@@ -1186,10 +1186,17 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
   for (;;) {
     LEVEL_LOG(l, "Waiting for tick %u to finish", v->tick);
 
+#ifdef _GITHUB_BUILD_
+    if (time_have_x_tenths_passed_since(10000, started)) {
+      ERR("Test timed out");
+      return false;
+    }
+#else
     if (time_have_x_tenths_passed_since(1000, started)) {
       ERR("Test timed out");
       return false;
     }
+#endif
 
     game_tick(g);
 

@@ -417,6 +417,10 @@ else
     C_FLAGS+=" -D_RELEASE_BUILD_"
 fi
 
+if [[ $OPT_GITHUB_BUILD != "" ]]; then
+    C_FLAGS+=" -D_GITHUB_BUILD_"
+fi
+
 OPT_LZ4=
 if [[ -f /usr/include/lz4.h ]]; then
     OPT_LZ4=1
