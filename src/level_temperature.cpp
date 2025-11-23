@@ -197,6 +197,10 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
     spoint p(x, y);
     FOR_ALL_THINGS_AT(g, v, l, t, p)
     {
+      if (! thing_is_physics_temperature(t)) {
+        continue;
+      }
+
       //
       // Ignore burnt grass for example
       //
@@ -204,9 +208,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      if (thing_is_physics_temperature(t)) {
-        things.push_back(t);
-      }
+      things.push_back(t);
     }
 
     for (auto i = 0; i < (int) things.size(); i++) {

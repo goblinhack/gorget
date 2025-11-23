@@ -1859,16 +1859,6 @@ bool thing_is_monst_group_mob(Thingp t)
   return tp_flag(thing_tp(t), is_monst_group_mob);
 }
 
-bool thing_is_physics_temperature(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_physics_temperature);
-}
-
 bool thing_is_blit_if_has_seen(Thingp t)
 {
   TRACE_NO_INDENT();

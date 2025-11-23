@@ -12,6 +12,12 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
+#ifdef _DEBUG_BUILD_
+#include "my_callstack.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
+#endif
+
 #include <string>
 #include <vector>
 
@@ -508,7 +514,6 @@ bool thing_is_obs_to_movement(Thingp);
 bool thing_is_obs_to_vision(Thingp);
 bool thing_is_openable(Thingp);
 bool thing_is_physics_explosion(Thingp);
-bool thing_is_physics_temperature(Thingp);
 bool thing_is_physics_water(Thingp);
 bool thing_is_pillar(Thingp);
 bool thing_is_player(Thingp);
@@ -935,9 +940,25 @@ static inline Tpp thing_tp(Thingp t)
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
+  if (! t) {
+    ERR("No thing pointer set");
+    return nullptr;
+  }
 #endif
 
   return tp_find(t->tp_id);
+}
+
+static inline bool thing_is_physics_temperature(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return tp_flag(thing_tp(t), is_physics_temperature);
 }
 
 #endif
