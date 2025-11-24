@@ -369,6 +369,7 @@ Tpp  tp_find_opt(const std::string &);
 Tpp string2tp(const char **s, int *len = nullptr);
 Tpp tp_load(const std::string &);
 Tpp tp_random(ThingFlag);
+Tpp tp_first(ThingFlag);
 Tpp tp_random_dungeon_entrance(void);
 Tpp tp_random_exit(void);
 Tpp tp_random_key(void);

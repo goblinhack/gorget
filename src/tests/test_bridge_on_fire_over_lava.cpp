@@ -70,7 +70,7 @@ static bool test_bridge_on_fire_over_lava(Gamep g, Testp t)
   //
   // Spawn fire twice. This should be enough to destroy the bridge.
   //
-  thing_spawn(g, v, l, tp_random(is_fire), player->at + spoint(2, 0));
+  thing_spawn(g, v, l, tp_first(is_fire), player->at + spoint(2, 0));
 
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 20; tries++) {

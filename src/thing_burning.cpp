@@ -42,7 +42,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
 
     if (! level_is_steam(g, v, l, t->at)) {
-      thing_spawn(g, v, l, tp_random(is_steam), t->at);
+      thing_spawn(g, v, l, tp_first(is_steam), t->at);
     }
     return;
   }
@@ -72,7 +72,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     if (thing_is_combustible(t)) {
       if (level_count_is_fire(g, v, l, t->at) < 2) {
         THING_LOG(t, "spawn additional flames");
-        thing_spawn(g, v, l, tp_random(is_fire), t->at);
+        thing_spawn(g, v, l, tp_first(is_fire), t->at);
 
         if (thing_is_player(t)) {
           TOPCON(UI_IMPORTANT_FMT_STR "The flames intensify!" UI_RESET_FMT);
@@ -95,11 +95,11 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   if (! level_is_fire(g, v, l, t->at)) {
     THING_DBG(t, "spawn flames");
-    thing_spawn(g, v, l, tp_random(is_fire), t->at);
+    thing_spawn(g, v, l, tp_first(is_fire), t->at);
   }
 
   if (! level_is_smoke(g, v, l, t->at)) {
     THING_DBG(t, "spawn smoke");
-    thing_spawn(g, v, l, tp_random(is_smoke), t->at);
+    thing_spawn(g, v, l, tp_first(is_smoke), t->at);
   }
 }

@@ -359,6 +359,17 @@ Tpp tp_random(ThingFlag f)
   return tp_get_with_no_rarity_filter(tp_flag_vec[ f ]);
 }
 
+Tpp tp_first(ThingFlag f)
+{
+  TRACE_NO_INDENT();
+
+  if (unlikely(! tp_flag_vec[ f ].size())) {
+    ERR("tp_first: no tp found for ThingFlag %d/%s", f, ThingFlag_to_c_str(f));
+    return nullptr;
+  }
+  return tp_flag_vec[ f ][ 0 ];
+}
+
 void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
 {
   TRACE_NO_INDENT();

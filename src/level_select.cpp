@@ -71,11 +71,11 @@ Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
   auto   level_select = game_level_get(g, v, LEVEL_SELECT_ID);
   Levelp level_over   = nullptr;
 
-  auto tp_is_level_not_visited = tp_random(is_level_not_visited);
-  auto tp_is_level_curr        = tp_random(is_level_curr);
-  auto tp_is_level_final       = tp_random(is_level_final);
-  auto tp_is_level_visited     = tp_random(is_level_visited);
-  auto tp_is_level_next        = tp_random(is_level_next);
+  auto tp_is_level_not_visited = tp_first(is_level_not_visited);
+  auto tp_is_level_curr        = tp_first(is_level_curr);
+  auto tp_is_level_final       = tp_first(is_level_final);
+  auto tp_is_level_visited     = tp_first(is_level_visited);
+  auto tp_is_level_next        = tp_first(is_level_next);
 
   FOR_ALL_THINGS_AT(g, v, level_select, t, v->cursor_at)
   {
@@ -437,13 +437,13 @@ static bool level_select_map_set(Gamep g, Levelsp v)
 
   memset(level_select->debug, ' ', SIZEOF(level_select->debug));
 
-  auto tp_is_level_not_visited = tp_random(is_level_not_visited);
-  auto tp_is_level_curr        = tp_random(is_level_curr);
-  auto tp_is_level_across      = tp_random(is_level_across);
-  auto tp_is_level_down        = tp_random(is_level_down);
-  auto tp_is_level_final       = tp_random(is_level_final);
-  auto tp_is_level_visited     = tp_random(is_level_visited);
-  auto tp_is_level_next        = tp_random(is_level_next);
+  auto tp_is_level_not_visited = tp_first(is_level_not_visited);
+  auto tp_is_level_curr        = tp_first(is_level_curr);
+  auto tp_is_level_across      = tp_first(is_level_across);
+  auto tp_is_level_down        = tp_first(is_level_down);
+  auto tp_is_level_final       = tp_first(is_level_final);
+  auto tp_is_level_visited     = tp_first(is_level_visited);
+  auto tp_is_level_next        = tp_first(is_level_next);
 
   spoint map_offset(MAP_WIDTH / 2, 1);
 
