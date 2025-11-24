@@ -151,12 +151,52 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l)
     return game_level_get(g, v, l->level_num_next);
   }
 
-  while (tries++ < LEVELS_DOWN * 2) {
+  if (0) {
+    CON("-");
+    CON("level %d at %u,%u", l->level_num, l->level_select_at.x, l->level_select_at.y);
+  }
+
+  //
+  // Try diagonally left first
+  //
+  while (tries++ < LEVELS_ACROSS * 2) {
     p.y++;
-    if (p.y >= LEVELS_DOWN) {
-      p.y = 0;
+    if ((p.x >= LEVELS_DOWN) || (p.y >= LEVELS_ACROSS)) {
+      //
+      // Failed. Try the other direction.
+      //
+      p = l->level_select_at;
+      break;
     }
-    CON("level %d -> next (look at %u,%u)", l->level_num, p.x, p.y);
+
+    if (0) {
+      CON("level %d -> next (look diagonally left at %u,%u)", l->level_num, p.x, p.y);
+    }
+
+    auto cand = level_select_get_level_from_grid_coords(g, v, p);
+    if (cand && (cand != l)) {
+      level_out = cand;
+      goto got_level;
+    }
+  }
+
+  //
+  // Try diagonally right
+  //
+  while (tries++ < LEVELS_ACROSS * 2) {
+    p.x++;
+    p.y++;
+    if ((p.x >= LEVELS_DOWN) || (p.y >= LEVELS_ACROSS)) {
+      //
+      // Failed. Try the other direction.
+      //
+      p = l->level_select_at;
+      break;
+    }
+
+    if (0) {
+      CON("level %d -> next (look diagonally right at %u,%u)", l->level_num, p.x, p.y);
+    }
 
     auto cand = level_select_get_level_from_grid_coords(g, v, p);
     if (cand && (cand != l)) {
@@ -170,7 +210,9 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l)
   //
   tries = 0;
   while (tries++ < LEVELS_DOWN * LEVELS_ACROSS * 2) {
-    CON("level %d -> next (random)", l->level_num);
+    if (0) {
+      CON("level %d -> next (random)", l->level_num);
+    }
     spoint random_p(pcg_random_range(0, LEVELS_ACROSS), pcg_random_range(0, LEVELS_DOWN));
 
     auto cand = level_select_get_level_from_grid_coords(g, v, random_p);
@@ -191,7 +233,10 @@ got_level:
   if (level_out) {
     l->level_num_next_set = true;
     l->level_num_next     = level_out->level_num;
-    CON("level %d -> next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x, l->level_select_at.y);
+    if (0) {
+      CON("level %d -> next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x,
+          l->level_select_at.y);
+    }
   }
 
   return level_out;
