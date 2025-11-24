@@ -44,7 +44,9 @@
 #define MAP_WIDTH  48
 #define MAP_SLOTS  16
 
-#define MAP_SCROLL_SPEED 50
+#define MAP_SCROLL_SPEED          50
+#define MAP_SCROLL_TELEPORT_SPEED 200
+
 //
 // How many on screen tiles we aim to have
 //

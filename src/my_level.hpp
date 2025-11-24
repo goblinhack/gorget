@@ -332,6 +332,10 @@ typedef struct Levels_ {
   float time_step;
   float last_time_step;
   //
+  // For teleporting and movement.
+  //
+  uint32_t scroll_speed;
+  //
   // For keeping track of how many levels are ticking/done.
   //
   uint32_t level_count;
@@ -423,15 +427,6 @@ typedef struct Levels_ {
   //
   uint8_t cursor_moved : 1;
   //
-  // If the player has moved, we need to scroll the map
-  //
-  uint8_t requested_auto_scroll : 1;
-  //
-  // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
-  // centered once more.
-  //
-  uint8_t requested_forced_auto_scroll : 1;
-  //
   // Player move request.
   //
   uint8_t requested_move_left  : 1;
@@ -442,6 +437,15 @@ typedef struct Levels_ {
   // Set when something modifies the map and we need to update caches.
   //
   uint8_t is_map_changed : 1;
+  //
+  // If the player has moved, we need to scroll the map
+  //
+  uint8_t requested_auto_scroll : 1;
+  //
+  // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
+  // centered once more.
+  //
+  uint32_t requested_forced_auto_scroll;
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////

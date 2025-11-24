@@ -8,6 +8,7 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_time.hpp"
 
 //
 // We focus on the current level if on the level select screen.
@@ -62,7 +63,10 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   float  y = ((pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
 
   const auto scroll_border = MAP_SCROLL_INNER_EDGE;
-  const auto scroll_speed  = MAP_SCROLL_SPEED;
+
+  if (! v->scroll_speed) {
+    v->scroll_speed = MAP_SCROLL_SPEED;
+  }
 
   if (v->requested_forced_auto_scroll) {
     //
@@ -142,55 +146,65 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   // If too close to the edges, scroll.
   //
   if (x > 1.0 - scroll_border) {
-    dx = (int) ((x - scroll_border) * scroll_speed);
+    dx = (int) ((x - scroll_border) * v->scroll_speed);
     v->pixel_map_at.x += dx;
   }
   if (x < scroll_border) {
-    dy = (int) ((scroll_border - x) * scroll_speed);
+    dy = (int) ((scroll_border - x) * v->scroll_speed);
     v->pixel_map_at.x -= dy;
   }
   if (y > 1.0 - scroll_border) {
-    dy = (int) ((y - scroll_border) * scroll_speed);
+    dy = (int) ((y - scroll_border) * v->scroll_speed);
     v->pixel_map_at.y += dy;
   }
   if (y < scroll_border) {
-    dx = (int) ((scroll_border - y) * scroll_speed);
+    dx = (int) ((scroll_border - y) * v->scroll_speed);
     v->pixel_map_at.y -= dx;
   }
 
   //
   // Check for overflow
   //
-  bool overflow = false;
   if (v->pixel_map_at.x > v->pixel_max.x) {
     dx                = 0;
-    overflow          = true;
     v->pixel_map_at.x = v->pixel_max.x;
   }
 
   if (v->pixel_map_at.y > v->pixel_max.y) {
     dy                = 0;
-    overflow          = true;
     v->pixel_map_at.y = v->pixel_max.y;
   }
 
   if (v->pixel_map_at.x < 0) {
     dx                = 0;
-    overflow          = true;
     v->pixel_map_at.x = 0;
   }
 
   if (v->pixel_map_at.y < 0) {
     dy                = 0;
-    overflow          = true;
     v->pixel_map_at.y = 0;
+  }
+
+  if (0) {
+    TOPCON("%u [%d,%d] elapsed %u", v->requested_forced_auto_scroll, dx, dy,
+           time_ms() - v->requested_forced_auto_scroll);
   }
 
   //
   // Have we finished scrolling?
   //
-  if (! overflow && (dx == 0) && (dy == 0)) {
-    v->requested_forced_auto_scroll = false;
+  if ((dx == 0) && (dy == 0)) {
+    if (v->requested_forced_auto_scroll) {
+      if (time_have_x_tenths_passed_since(5, v->requested_forced_auto_scroll)) {
+        v->requested_forced_auto_scroll = 0;
+        v->scroll_speed                 = MAP_SCROLL_SPEED;
+      }
+    }
+  } else if (v->requested_forced_auto_scroll) {
+    if (time_have_x_secs_passed_since(1, v->requested_forced_auto_scroll)) {
+      v->requested_forced_auto_scroll = 0;
+      v->scroll_speed                 = MAP_SCROLL_SPEED;
+    }
   }
 
   level_bounds_set(g, v, l);
@@ -217,7 +231,7 @@ void level_forced_auto_scroll(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  v->requested_forced_auto_scroll = true;
+  v->requested_forced_auto_scroll = time_ms();
 
   level_bounds_set(g, v, l);
 }
