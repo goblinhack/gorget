@@ -161,30 +161,35 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   //
   // Check for overflow
   //
+  bool overflow = false;
   if (v->pixel_map_at.x > v->pixel_max.x) {
     dx                = 0;
+    overflow          = true;
     v->pixel_map_at.x = v->pixel_max.x;
   }
 
   if (v->pixel_map_at.y > v->pixel_max.y) {
     dy                = 0;
+    overflow          = true;
     v->pixel_map_at.y = v->pixel_max.y;
   }
 
   if (v->pixel_map_at.x < 0) {
     dx                = 0;
+    overflow          = true;
     v->pixel_map_at.x = 0;
   }
 
   if (v->pixel_map_at.y < 0) {
     dy                = 0;
+    overflow          = true;
     v->pixel_map_at.y = 0;
   }
 
   //
   // Have we finished scrolling?
   //
-  if ((dx == 0) && (dy == 0)) {
+  if (! overflow && (dx == 0) && (dy == 0)) {
     v->requested_forced_auto_scroll = false;
   }
 
