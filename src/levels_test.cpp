@@ -181,11 +181,11 @@ void levels_test(Gamep g)
                   /* end */ nullptr);
 
   level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "teleport", __FUNCTION__, __LINE__,
-                  /* line */ (const char *) "xxxxxxCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-                  /* line */ (const char *) "x....xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-                  /* line */ (const char *) "x....xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-                  /* line */ (const char *) "x...TxCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-                  /* line */ (const char *) "xxxx.xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+                  /* line */ (const char *) "xxxxxxCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCxxxxxxxx",
+                  /* line */ (const char *) "x....xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCx......x",
+                  /* line */ (const char *) "x....xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCx..T...x",
+                  /* line */ (const char *) "x...TxCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCx......x",
+                  /* line */ (const char *) "xxxx.xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCxxxxxxxx",
                   /* line */ (const char *) "CCCC.CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
                   /* line */ (const char *) "CCCC.CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
                   /* line */ (const char *) "CCCC.CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCxxxxxCCCCC",

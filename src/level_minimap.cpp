@@ -286,6 +286,8 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
       auto tly = Y * dy;
       auto brx = tlx + dx;
       auto bry = tly + dy;
+      tly--;
+      bry--;
 
       blit(solid_tex_id, tlx, tly, brx, bry, c);
     }
