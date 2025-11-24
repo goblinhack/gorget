@@ -156,7 +156,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l)
     if (p.y >= LEVELS_DOWN) {
       p.y = 0;
     }
-    CON("level %d -> next (look)", l->level_num);
+    CON("level %d -> next (look at %u,%u)", l->level_num, p.x, p.y);
 
     auto cand = level_select_get_level_from_grid_coords(g, v, p);
     if (cand && (cand != l)) {
@@ -191,7 +191,7 @@ got_level:
   if (level_out) {
     l->level_num_next_set = true;
     l->level_num_next     = level_out->level_num;
-    CON("level %d -> next %d", l->level_num, l->level_num_next);
+    CON("level %d -> next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x, l->level_select_at.y);
   }
 
   return level_out;
