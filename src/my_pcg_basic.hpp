@@ -32,6 +32,10 @@
 #ifndef _MY_PCG_BASIC_HPP_INCLUDED
 #define _MY_PCG_BASIC_HPP_INCLUDED 1
 
+#include "my_globals.hpp"
+#include "my_main.hpp"
+#include "my_source_loc.hpp"
+
 #include <inttypes.h>
 
 using pcg32_random_t = struct pcg_state_setseq_64;
@@ -42,5 +46,17 @@ extern void     pcg32_srandom(uint64_t seed, uint64_t seq);
 extern uint32_t pcg32_random(const char *, int);
 extern uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound);
 extern uint32_t pcg32_boundedrand(const char *, int, uint32_t bound);
+
+extern int pcg_lock_count; // No pcg random numbers allowed here
+                           //
+static inline void game_pcg_lock(void) { pcg_lock_count++; }
+
+static inline void game_pcg_unlock(void)
+{
+  if (! pcg_lock_count) {
+    DIE("pcg lock count error");
+  }
+  pcg_lock_count--;
+}
 
 #endif // PCG_BASIC_HPP_INCLUDED

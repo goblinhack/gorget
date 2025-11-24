@@ -32,6 +32,8 @@
 #include "my_main.hpp"
 #include "my_source_loc.hpp"
 
+int pcg_lock_count; // No pcg random numbers allowed here
+
 struct pcg_state_setseq_64 { // Internals are *Private*.
   uint64_t state;            // RNG state.  All values are possible.
   uint64_t inc;              // Controls which RNG sequence (stream) is
@@ -75,7 +77,7 @@ void pcg32_srandom(uint64_t seed, uint64_t seq)
 
 uint32_t pcg32_random(const char *func, int line)
 {
-  if (unlikely(g_pcg_rand_blocked)) {
+  if (unlikely(pcg_lock_count)) {
     DIE("Trying to generate a PCG random number when blocked");
   }
 
@@ -129,7 +131,7 @@ uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound)
 
 uint32_t pcg32_boundedrand(const char *func, int line, uint32_t bound)
 {
-  if (unlikely(g_pcg_rand_blocked)) {
+  if (unlikely(pcg_lock_count)) {
     DIE("Trying to generate a PCG random number when blocked");
   }
 

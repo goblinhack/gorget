@@ -7,6 +7,7 @@
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_pcg_basic.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
@@ -119,7 +120,9 @@ void sdl_loop(Gamep g)
       //
       // Clean up dead widgets.
       //
+      game_pcg_lock();
       wid_gc_all(g);
+      game_pcg_unlock();
 
       //
       // Read events
@@ -152,7 +155,9 @@ void sdl_loop(Gamep g)
       //
       // Handle key auto repeat
       //
+      game_pcg_lock();
       sdl_key_repeat_events(g);
+      game_pcg_unlock();
 
       //
       // Mouse held?
@@ -191,7 +196,9 @@ void sdl_loop(Gamep g)
       // If the user has moved the mouse, update the widgets.
       //
       if (processed_mouse_motion_event) {
+        game_pcg_lock();
         wid_display_all(g);
+        game_pcg_unlock();
       }
 
       //
@@ -202,7 +209,7 @@ void sdl_loop(Gamep g)
       }
     }
 
-    g_pcg_rand_blocked++;
+    game_pcg_lock();
 
     //
     // Display the level
@@ -217,8 +224,6 @@ void sdl_loop(Gamep g)
     // Display the FBOs
     //
     sdl_display(g);
-
-    g_pcg_rand_blocked--;
 
     //
     // Config change?
@@ -254,6 +259,8 @@ void sdl_loop(Gamep g)
         frames       = 0;
       }
     }
+
+    game_pcg_unlock();
   }
 
   DBG("Exited main loop");

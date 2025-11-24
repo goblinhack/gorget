@@ -8,6 +8,7 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_pcg_basic.hpp"
 #include "my_wids.hpp"
 
 static void level_tick_begin(Gamep, Levelsp, Levelp);
@@ -132,7 +133,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     //
     // Block random numbers
     //
-    g_pcg_rand_blocked++;
+    game_pcg_lock();
     pcg_rand_blocked = true;
 
     //
@@ -158,7 +159,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     //
     // Block random numbers
     //
-    g_pcg_rand_blocked++;
+    game_pcg_lock();
     pcg_rand_blocked = true;
 
     //
@@ -184,7 +185,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
 
   if (pcg_rand_blocked) {
     pcg_rand_blocked = false;
-    g_pcg_rand_blocked--;
+    game_pcg_unlock();
   }
 
   //
