@@ -89,7 +89,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
             // Choose a random first tile. Cannot use animated check here, as things like grass
             // want different tiles, but are not animated.
             //
-            auto i        = pcg_random_range_inclusive(0, ntiles - 1);
+            auto i        = os_random_range_inclusive(0, ntiles - 1);
             t->anim_index = i;
           }
           break;
