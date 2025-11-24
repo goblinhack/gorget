@@ -6,6 +6,7 @@
 #include "../my_level.hpp"
 #include "../my_main.hpp"
 #include "../my_test.hpp"
+#include "../my_thing_inlines.hpp"
 
 static bool test_player_on_fire_move_into_water(Gamep g, Testp t)
 {

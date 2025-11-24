@@ -12,12 +12,6 @@
 #include "my_thing.hpp"
 #include "my_types.hpp"
 
-#ifdef _DEBUG_BUILD_
-#include "my_callstack.hpp"
-#include "my_globals.hpp"
-#include "my_main.hpp"
-#endif
-
 #include <vector>
 
 enum {
@@ -690,27 +684,5 @@ LevelSelectCell *level_select_get(Gamep, Levelsp, spoint);
 std::string player_state_to_string(PlayerState);
 PlayerState player_state(Gamep, Levelsp);
 void        player_state_change(Gamep, Levelsp, PlayerState new_state);
-
-//
-// this belongs in my_thing.hpp but as it is inlined, it needs to access
-// the levels structure
-//
-static inline Thingp thing_find(Gamep g, Levelsp v, ThingId id)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT(); // expensive
-#endif
-
-  ThingIdPacked id_packed = {};
-  id_packed.a.val         = id;
-  auto index              = id_packed.c.index;
-
-  auto t = &v->thing_body[ index ];
-  if (unlikely(! t || (t->id != id))) {
-    thing_find_non_inline(g, v, id);
-  }
-
-  return t;
-}
 
 #endif // _MY_LEVEL_H_

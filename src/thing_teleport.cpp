@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_cpp_template.hpp"
 #include "my_level.hpp"
+#include "my_thing_inlines.hpp"
 
 static bool teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint &out)
 {

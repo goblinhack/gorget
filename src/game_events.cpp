@@ -9,6 +9,7 @@
 #include "my_main.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 

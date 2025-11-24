@@ -12,12 +12,6 @@
 #include "my_tp.hpp"
 #include "my_types.hpp"
 
-#ifdef _DEBUG_BUILD_
-#include "my_callstack.hpp"
-#include "my_globals.hpp"
-#include "my_main.hpp"
-#endif
-
 #include <string>
 #include <vector>
 
@@ -887,78 +881,5 @@ void   wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
 void   wid_set_thing_context(Gamep, Levelsp, Widp, Thingp);
 Thingp wid_get_thing_context(Gamep, Levelsp, Widp, int);
 void   wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp);
-
-static inline int thing_is_falling(Thingp t)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-#endif
-  return t->_is_falling;
-}
-
-static inline bool thing_is_jumping(Thingp t)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-#endif
-  return t->_is_jumping;
-}
-
-static inline bool thing_is_moving(Thingp t)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-#endif
-  return t->_is_moving;
-}
-
-static inline bool thing_is_dead(Thingp t)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-#endif
-  return t->_is_dead;
-}
-
-static inline Tpp thing_tp(Thingp t)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT(); // expensive
-  if (! t) {
-    ERR("No thing pointer set");
-    return nullptr;
-  }
-#endif
-
-  return tp_find(t->tp_id);
-}
-
-static inline bool thing_is_physics_temperature(Thingp t)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-#endif
-  return tp_flag(thing_tp(t), is_physics_temperature);
-}
 
 #endif

@@ -8,6 +8,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
+#include "my_thing_inlines.hpp"
 
 std::string to_string(Gamep g, Thingp t)
 {

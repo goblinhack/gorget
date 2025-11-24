@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_level.hpp"
+#include "my_thing_inlines.hpp"
 
 //
 // First step is to mark things as burning and change temperatures

@@ -10,6 +10,7 @@
 #include "my_main.hpp"
 #include "my_sound.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_wid_warning.hpp"
 
 Thingp thing_player(Gamep g)

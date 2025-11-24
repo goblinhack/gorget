@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_thing_inlines.hpp"
 
 #include "math.h"
 

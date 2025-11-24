@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tp_class.hpp"
 #include "my_ui.hpp"
 

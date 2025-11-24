@@ -8,6 +8,7 @@
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_wids.hpp"
 
 //

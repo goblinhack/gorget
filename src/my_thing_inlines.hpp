@@ -1,0 +1,124 @@
+//
+// Copyright goblinhack@gmail.com
+//
+
+#pragma once
+#ifndef _MY_THING_INLINES_H_
+#define _MY_THING_INLINES_H_
+
+#ifdef _DEBUG_BUILD_
+#include "my_callstack.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
+#endif
+
+#include "my_level.hpp"
+#include "my_thing.hpp"
+
+//
+// this belongs in my_thing.hpp but as it is inlined, it needs to access
+// the levels structure
+//
+static inline Thingp thing_find(Gamep g, Levelsp v, ThingId id)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT(); // expensive
+                     //
+  if (! g) {
+    ERR("No game pointer set");
+    return nullptr;
+  }
+  //
+  if (! v) {
+    ERR("No levels pointer set");
+    return nullptr;
+  }
+#endif
+
+  ThingIdPacked id_packed = {};
+  id_packed.a.val         = id;
+  auto index              = id_packed.c.index;
+
+  auto t = &v->thing_body[ index ];
+  if (unlikely(! t || (t->id != id))) {
+    thing_find_non_inline(g, v, id);
+  }
+
+  return t;
+}
+
+static inline Tpp thing_tp(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT(); // expensive
+                     //
+  if (! t) {
+    ERR("No thing pointer set");
+    return nullptr;
+  }
+#endif
+
+  return tp_find(t->tp_id);
+}
+
+static inline int thing_is_falling(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+#endif
+  return t->_is_falling;
+}
+
+static inline bool thing_is_jumping(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_jumping;
+}
+
+static inline bool thing_is_moving(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_moving;
+}
+
+static inline bool thing_is_dead(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_dead;
+}
+
+static inline bool thing_is_physics_temperature(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return tp_flag(thing_tp(t), is_physics_temperature);
+}
+
+#endif // _MY_THING_INLINES_H_

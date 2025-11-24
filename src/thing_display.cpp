@@ -11,6 +11,7 @@
 #include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 
 void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint *tl,
                                  spoint *br, uint16_t *tile_index)

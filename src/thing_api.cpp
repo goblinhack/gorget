@@ -8,6 +8,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 
 spoint thing_prev_pix_at(Thingp t)
 {
