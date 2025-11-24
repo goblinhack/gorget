@@ -1,18 +1,19 @@
 bugs
 ----
+teleport with mouse movement issue
 do not allow the player to land in an enclosed area; climb? digging / blind jump
 get rid of red pixels
-jump into level
+jump into level at chosen point
 not being warned sometimes about chasms
 outline player when behind bushes
-no bridges across the center
-too much gfreenery around chams
+too much greenery around chams
 need to ask if you want to kick over a brazier
-damaged door visuals
-bushes quiver when monster is behind?
+no bridges across the center
 
 features
 --------
+damaged door visuals
+bushes quiver when monster is behind?
 slow fireball
 mobs generating monsters
 monst AI

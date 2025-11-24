@@ -383,7 +383,7 @@ Thingp       thing_and_tp_get_at(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp
 Thingp       thing_and_tp_get_at_safe(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp *);
 Thingp       thing_get_at_safe(Gamep, Levelsp, Levelp, spoint p, int slot);
 Thingp       thing_find_optional(Gamep, Levelsp, ThingId id);
-Thingp       thing_find(Gamep, Levelsp, ThingId id);
+Thingp       thing_find_non_inline(Gamep, Levelsp, ThingId id);
 Thingp       thing_get(Gamep, Levelsp, Levelp, spoint p, int slot);
 Thingp       thing_init(Gamep, Levelsp, Levelp, Tpp, spoint);
 Thingp       thing_player(Gamep);

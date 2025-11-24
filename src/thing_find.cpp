@@ -34,7 +34,10 @@ Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
   return nullptr;
 }
 
-Thingp thing_find(Gamep g, Levelsp v, ThingId id)
+//
+// Slower version, packed with extra warnigns
+//
+Thingp thing_find_non_inline(Gamep g, Levelsp v, ThingId id)
 {
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT(); // expensive
@@ -45,7 +48,7 @@ Thingp thing_find(Gamep g, Levelsp v, ThingId id)
   auto index              = id_packed.c.index;
 
   auto t = &v->thing_body[ index ];
-  if (! t) {
+  if (unlikely(! t)) {
     DIE("Thing not found for as id 08%" PRIx32 //
         " (level: %" PRIu32                    //
         " id: %08" PRIx32                      //
@@ -57,7 +60,7 @@ Thingp thing_find(Gamep g, Levelsp v, ThingId id)
         id_packed.b.entropy);
   }
 
-  if (t->id != id) {
+  if (unlikely(t->id != id)) {
     ThingIdPacked id_found = {};
     id_found.a.val         = t->id;
 
