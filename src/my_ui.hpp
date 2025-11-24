@@ -110,7 +110,7 @@
 // This is to allow the player light to fade rapidly, which allows other lighting like fire
 // to appear stronger.
 //
-#define UI_LIGHT_PLAYER_FADE 1.3
+#define UI_LIGHT_PLAYER_FADE 1.3f
 
 #define UI_CENTER_WIDTH (TERM_WIDTH - UI_RIGHTBAR_WIDTH - UI_LEFTBAR_WIDTH)
 

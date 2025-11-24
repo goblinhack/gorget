@@ -2,6 +2,11 @@
 // Copyright goblinhack@gmail.com
 //
 
+#pragma once
+
+#ifndef _MY_TPS_HPP_
+#define _MY_TPS_HPP_
+
 bool templates_init(void);
 
 // clang-format off
@@ -55,3 +60,5 @@ bool tp_load_treasure();
 bool tp_load_wall();
 bool tp_load_water();
   /* end shell marker1 */
+
+#endif

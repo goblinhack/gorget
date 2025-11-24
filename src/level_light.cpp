@@ -141,7 +141,7 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
   // More dramatic lighting. Allows other lights to appear stronger
   //
   if (thing_is_player(t)) {
-    d = pow(d, UI_LIGHT_PLAYER_FADE);
+    d = powf(d, UI_LIGHT_PLAYER_FADE);
   }
 
   auto light_fade_index = (int) ((d / (float) light_strength) * (float) MAP_WIDTH);
