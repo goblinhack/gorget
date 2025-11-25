@@ -426,10 +426,7 @@ static bool level_select_map_set(Gamep g, Levelsp v)
   auto         level_select = game_level_get(g, v, level_num);
 
   auto   player       = thing_player(g);
-  Levelp player_level = nullptr;
-  if (player) {
-    player_level = game_level_get(g, v, player->level_num);
-  }
+  Levelp player_level = thing_player_level(g);
 
   //
   // Clean up all previous things
@@ -838,11 +835,7 @@ void level_select_rightbar_show_contents(Gamep g, Levelsp v, Levelp l, WidPopup 
 
   parent->log_empty_line(g);
 
-  auto   player       = thing_player(g);
-  Levelp player_level = nullptr;
-  if (player) {
-    player_level = game_level_get(g, v, player->level_num);
-  }
+  Levelp player_level = thing_player_level(g);
 
   std::map< std::string, int > mobs;
   std::map< std::string, int > monsts;
@@ -937,10 +930,7 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
   }
 
   auto   player       = thing_player(g);
-  Levelp player_level = nullptr;
-  if (player) {
-    player_level = game_level_get(g, v, player->level_num);
-  }
+  Levelp player_level = thing_player_level(g);
 
   //
   // We're hovering over a level and have pressed the mouse

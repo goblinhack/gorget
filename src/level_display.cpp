@@ -118,7 +118,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
     return;
   }
 
-  auto player_level = game_level_get(g, v, player->level_num);
+  auto player_level = thing_player_level(g);
   if (! player_level) {
     return;
   }

@@ -1,8 +1,9 @@
 bugs
 ----
-do not allow the player to land in an enclosed area; climb? digging / blind jump/ emergency teleport
+fewer ticking levels
 get rid of red pixels
 jump into level at chosen point
+do not allow the player to land in an enclosed area; climb? digging / blind jump/ emergency teleport
 not being warned sometimes about chasms
 outline player when behind bushes
 too much greenery around chams
@@ -11,8 +12,8 @@ no bridges across the center
 
 features
 --------
-damaged door visuals
 bushes quiver when monster is behind?
+damaged door visuals
 slow fireball
 mobs generating monsters
 monst AI

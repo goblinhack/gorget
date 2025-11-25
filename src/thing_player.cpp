@@ -29,6 +29,23 @@ Thingp thing_player(Gamep g)
   return thing_find(g, v, v->player_id);
 }
 
+Levelp thing_player_level(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  auto player = thing_player(g);
+  if (! player) {
+    return nullptr;
+  }
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return nullptr;
+  }
+
+  return game_level_get(g, v, player->level_num);
+}
+
 //
 // Replace the mouse path upon mouse down events
 //

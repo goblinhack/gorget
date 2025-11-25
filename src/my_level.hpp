@@ -180,13 +180,17 @@ typedef struct Level_ {
   LevelNum level_num_next;
   uint8_t  level_num_next_set : 1;
   //
-  // Flags
+  // Is this a non null level?
   //
   uint8_t is_initialized_level : 1;
   //
+  // Is this level one of the set that ticks every turn?
+  //
+  uint8_t is_ticking_level : 1;
+  //
   // Has it ticked?
   //
-  uint8_t is_active_level : 1;
+  uint8_t is_initialized_by_ticking : 1;
   //
   // This is the current level that the player is on.
   //
@@ -343,6 +347,10 @@ typedef struct Levels_ {
   uint32_t level_tick_in_progress_count;
   uint32_t level_tick_request_count;
   //
+  // How many levels are ticking
+  //
+  uint32_t level_ticking_count;
+  //
   // Current level being played
   //
   LevelNum level_num;
@@ -458,6 +466,13 @@ typedef struct Levels_ {
         if ((_l_ = &v->level[ _n_ ]))                                                                                \
           if (_l_->is_initialized_level)
 
+#define FOR_ALL_TICKING_LEVELS(_g_, _v_, _l_)                                                                        \
+  if (_g_ && _v_)                                                                                                    \
+    for (Levelp _l_ = nullptr, loop1 = (Levelp) 1; loop1 == (Levelp) 1; loop1 = (Levelp) 0)                          \
+      for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                    \
+        if ((_l_ = &v->level[ _n_ ]))                                                                                \
+          if (_l_->is_ticking_level)
+
 //
 // Walk all things, all levels
 //
@@ -554,7 +569,7 @@ Thingp  level_light_blocker_at(Gamep, Levelsp, Levelp, spoint);
 bool    level_match_contents(Gamep, Levelsp, Levelp, Testp, int w, int h, const char *in);
 bool    level_open_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 bool    level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint, int slot, ThingId);
-void    levels_tick(Gamep, Levelsp, Levelp);
+void    levels_tick(Gamep, Levelsp);
 bool    level_tick_is_in_progress(Gamep, Levelsp, Levelp);
 int     level_count_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 Levelp  level_change(Gamep, Levelsp, LevelNum);

@@ -381,6 +381,7 @@ Thingp       thing_find_non_inline(Gamep, Levelsp, ThingId id);
 Thingp       thing_get(Gamep, Levelsp, Levelp, spoint p, int slot);
 Thingp       thing_init(Gamep, Levelsp, Levelp, Tpp, spoint);
 Thingp       thing_player(Gamep);
+Levelp       thing_player_level(Gamep);
 Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, spoint);
 Thingp       top_owner(Gamep, Levelsp, Levelp, Thingp);
 ThingPlayerp thing_player_struct(Gamep);
