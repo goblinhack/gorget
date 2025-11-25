@@ -16,7 +16,7 @@ static void level_tick_begin(Gamep, Levelsp, Levelp);
 static void level_tick_body(Gamep, Levelsp, Levelp, float dt);
 static void level_tick_end(Gamep, Levelsp, Levelp);
 static void level_tick_idle(Gamep, Levelsp, Levelp);
-static void level_tick_time_step(Gamep, Levelsp, Levelp);
+static void level_tick_check_running_time(Gamep, Levelsp, Levelp);
 
 //
 // Called at the end of the tick and then whenever needed, like at the end of an animation.
@@ -137,7 +137,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     //
     // A tick is running
     //
-    level_tick_time_step(g, v, l);
+    level_tick_check_running_time(g, v, l);
 
     //
     // Need to update while moving as raycasting can change
@@ -170,9 +170,6 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   // Move things. Interpolated per frame.
   //
   if (l->tick_in_progress) {
-    if (0)
-      LEVEL_LOG(l, "step time_step %f last %f delta %f frame %u frame_begin %u", v->time_step, v->last_time_step,
-                v->time_step - v->last_time_step, v->frame, v->frame_begin);
     level_tick_body(g, v, l, v->time_step - v->last_time_step);
   }
 
@@ -272,13 +269,11 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   game_popups_age(g);
 }
 
-static void level_tick_time_step(Gamep g, Levelsp v, Levelp l)
+//
+// If we've ran long enough, we're done
+//
+static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l)
 {
-  //
-  // Continue the tick
-  //
-  v->time_step = ((float) (v->frame - v->frame_begin)) / (float) TICK_DURATION_MS;
-
   if (v->time_step >= 1.0) {
     //
     // Tick has surpassed its time
@@ -441,37 +436,59 @@ bool level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l)
 }
 
 //
+// Reset the levels we need to tick
+//
+static void level_tick_select_reset(Gamep g, Levelsp v, Levelp current_level)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Reset the ticking levels
+  // And set the current level (useful in debugging)
+  //
+  FOR_ALL_LEVELS(g, v, iter)
+  {
+    iter->is_ticking_level = false;
+    iter->is_current_level = false;
+  }
+
+  current_level->is_current_level = true;
+}
+
+//
 // Determine the levels we need to tick
 //
-static uint32_t levels_select_for_ticking(Gamep g, Levelsp v)
+static void level_tick_select(Gamep g, Levelsp v, Levelp current_level)
 {
   TRACE_NO_INDENT();
 
   auto player_level = thing_player_level(g);
-  if (! player_level) {
-    return 0;
-  }
 
-  uint32_t level_count = 0;
+  //
+  // Reset the levels we need to tick
+  //
+  level_tick_select_reset(g, v, current_level);
 
-  FOR_ALL_LEVELS(g, v, iter) { iter->is_ticking_level = false; }
-
+  //
+  // Count the levels to tick
+  //
+  v->level_ticking_count = 0;
   FOR_ALL_LEVELS(g, v, iter)
   {
     if (g_opt_tests) {
       iter->is_ticking_level = true;
-      level_count++;
+      v->level_ticking_count++;
       continue;
     }
 
     if (iter == player_level) {
       iter->is_ticking_level = true;
-      level_count++;
+      v->level_ticking_count++;
 
       auto level_below = level_select_get_next_level_down(g, v, iter);
       if (level_below) {
         level_below->is_ticking_level = true;
-        level_count++;
+        v->level_ticking_count++;
       }
       continue;
     }
@@ -480,8 +497,147 @@ static uint32_t levels_select_for_ticking(Gamep g, Levelsp v)
     // Future wizard levels?
     //
   }
+}
 
-  return level_count;
+//
+// Do any levels want to tick?
+//
+static uint32_t level_tick_process_pending_request(Gamep g, Levelsp v, Levelp current_level)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Reset counters
+  //
+  v->level_tick_request_count = 0;
+
+  if (v->level_tick_in_progress_count) {
+    return 0;
+  }
+
+  FOR_ALL_TICKING_LEVELS(g, v, iter)
+  {
+    if (! iter->tick_begin_requested) {
+      continue;
+    }
+
+    //
+    // We've recorded the request now. Forget it.
+    //
+    iter->tick_begin_requested = false;
+
+    LEVEL_LOG(current_level, "Tick %u: requested by level %u", v->tick, iter->level_num);
+
+    //
+    // If this is the first level requesting a tick, reset the fram counters and move the
+    // tick along
+    //
+    if (! v->level_tick_request_count++) {
+      v->tick++;
+      v->frame_begin    = v->frame;
+      v->time_step      = 0.0;
+      v->last_time_step = 0.0;
+    }
+  }
+
+  return v->level_tick_request_count;
+}
+
+//
+// How many ms have elapsed during processing the tick
+//
+static void level_tick_update_frame_counter(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  static uint32_t level_ts_begin;
+  static uint32_t level_ts_now;
+
+  if (unlikely(! level_ts_begin)) {
+    level_ts_begin = time_ms();
+  }
+
+  level_ts_now = time_ms();
+  v->frame += level_ts_now - level_ts_begin;
+  level_ts_begin = level_ts_now;
+}
+
+//
+// How many ms have elapsed during processing the tick
+//
+static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Calculate the time step, for animation
+  //
+  v->last_time_step = v->time_step;
+  v->time_step      = ((float) (v->frame - v->frame_begin)) / (float) TICK_DURATION_MS;
+
+  IF_DEBUG2 { LEVEL_LOG(current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step); }
+}
+
+//
+// Tick all levels that requested it.
+//
+static void level_tick_all(Gamep g, Levelsp v, Levelp current_level)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Record if a level wants to start ticking, prior to processing the levels in case a level
+  // requests to tick during processing.
+  //
+  bool tick_begin_requested = level_tick_process_pending_request(g, v, current_level) > 0;
+
+  //
+  // Do the actual tick of the levels now
+  //
+  FOR_ALL_TICKING_LEVELS(g, v, iter)
+  {
+    TRACE_NO_INDENT();
+    level_tick(g, v, iter, tick_begin_requested);
+  }
+}
+
+//
+// We need to keep track of how many ticks have ended and how many still run.
+// This is really needed for tests to know when a test is complet.
+//
+static void level_tick_monitor_progress(Gamep g, Levelsp v, Levelp current_level)
+{
+  TRACE_NO_INDENT();
+
+  v->level_tick_done_count        = 0;
+  v->level_tick_in_progress_count = 0;
+  v->level_tick_request_count     = 0;
+
+  FOR_ALL_TICKING_LEVELS(g, v, iter)
+  {
+    if (iter->tick_ended) {
+      v->level_tick_done_count++;
+    }
+    if (iter->tick_in_progress) {
+      v->level_tick_in_progress_count++;
+    }
+    if (iter->tick_begin_requested) {
+      v->level_tick_request_count++;
+    }
+  }
+
+  //
+  // Are all levels finished ticking?
+  //
+  IF_DEBUG2
+  {
+    LEVEL_LOG(current_level, "Tick %u: req %u in-progress %u tick-end %u", v->tick, v->level_tick_request_count,
+              v->level_tick_in_progress_count, v->level_tick_done_count);
+
+    if (v->level_tick_done_count && (v->level_ticking_count == v->level_tick_done_count)) {
+      LEVEL_LOG(current_level, "Tick %u: all %u levels finished ticking", v->tick, v->level_tick_done_count);
+    }
+  }
 }
 
 //
@@ -497,105 +653,28 @@ void levels_tick(Gamep g, Levelsp v)
   }
 
   //
-  // Set the current level flag
+  // Which levels do we need to tick?
   //
-  FOR_ALL_LEVELS(g, v, iter) { current_level->is_current_level = false; }
-  current_level->is_current_level = true;
+  level_tick_select(g, v, current_level);
 
   //
   // Which levels do we need to tick?
   //
-  v->level_ticking_count = levels_select_for_ticking(g, v);
-
-  IF_DEBUG2
-  {
-    LEVEL_LOG(current_level, "Tick %u: tick-count %u time-step %f", v->tick, v->level_ticking_count,
-              v->time_step - v->last_time_step);
-  }
-
-  v->level_tick_end_count     = 0;
-  v->level_tick_request_count = 0;
-  v->last_time_step           = v->time_step;
-
-  bool tick_begin_requested = false;
-  if (! v->level_tick_in_progress_count) {
-    FOR_ALL_TICKING_LEVELS(g, v, iter)
-    {
-      if (iter->tick_begin_requested) {
-        LEVEL_LOG(current_level, "Tick %u: requested by level %u", v->tick, iter->level_num);
-
-        iter->tick_begin_requested = false;
-        tick_begin_requested       = true;
-
-        if (! v->level_tick_request_count) {
-          v->tick++;
-          v->frame_begin    = v->frame;
-          v->time_step      = 0.0;
-          v->last_time_step = 0.0;
-        }
-        v->level_tick_request_count++;
-      }
-    }
-  }
-
-  FOR_ALL_TICKING_LEVELS(g, v, iter)
-  {
-    TRACE_NO_INDENT();
-    level_tick(g, v, iter, tick_begin_requested);
-  }
-
-  v->level_tick_in_progress_count = 0;
-  FOR_ALL_TICKING_LEVELS(g, v, iter)
-  {
-    TRACE_NO_INDENT();
-    if (iter->tick_ended) {
-      v->level_tick_end_count++;
-    }
-    if (iter->tick_in_progress) {
-      v->level_tick_in_progress_count++;
-    }
-  }
-
-  v->level_tick_request_count = 0;
-  FOR_ALL_TICKING_LEVELS(g, v, iter)
-  {
-    TRACE_NO_INDENT();
-    if (iter->tick_begin_requested) {
-      IF_DEBUG { LEVEL_LOG(iter, "Levels tick %u requested during tick", v->tick); }
-      v->level_tick_request_count++;
-    }
-  }
-
-  IF_DEBUG2
-  {
-    LEVEL_LOG(current_level, "Tick %u: req %u in-progress %u tick-end %u", v->tick, v->level_tick_request_count,
-              v->level_tick_in_progress_count, v->level_tick_end_count);
-  }
-
-  if (v->level_tick_end_count && (v->level_ticking_count == v->level_tick_end_count)) {
-
-    IF_DEBUG
-    {
-      LEVEL_LOG(current_level, "Tick %u: all %u levels finished ticking", v->tick, v->level_tick_end_count);
-    }
-
-    v->level_tick_in_progress_count = 0;
-    v->level_tick_end_count         = 0;
-    v->time_step                    = 0;
-    v->last_time_step               = 0;
-  }
+  level_tick_time_step(g, v, current_level);
 
   //
-  // Fixed frame counter, 100 per second
+  // Tick all levels that requested it.
   //
-  static uint32_t level_ts_begin;
-  static uint32_t level_ts_now;
+  level_tick_all(g, v, current_level);
 
-  if (unlikely(! level_ts_begin)) {
-    level_ts_begin = time_ms();
-  }
+  //
+  // We need to keep track of how many ticks have ended and how many still run.
+  // This is really needed for tests to know when a test is complet.
+  //
+  level_tick_monitor_progress(g, v, current_level);
 
-  level_ts_now = time_ms();
-  v->frame += level_ts_now - level_ts_begin;
-  level_ts_begin = level_ts_now;
+  //
+  // How many ms have elapsed during processing the tick
+  //
+  level_tick_update_frame_counter(g, v);
 }

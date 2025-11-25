@@ -343,7 +343,7 @@ typedef struct Levels_ {
   // For keeping track of how many levels are ticking/done.
   //
   uint32_t level_count;
-  uint32_t level_tick_end_count;
+  uint32_t level_tick_done_count;
   uint32_t level_tick_in_progress_count;
   uint32_t level_tick_request_count;
   //
