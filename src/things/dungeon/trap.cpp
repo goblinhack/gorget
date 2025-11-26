@@ -32,11 +32,11 @@ bool tp_load_trap(void)
   thing_description_set(tp, tp_trap_description_get);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_in_chasm);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_flag_set(tp, is_blit_in_chasm);
   tp_flag_set(tp, is_trap);
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);
