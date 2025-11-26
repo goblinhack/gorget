@@ -74,7 +74,7 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     if (d100() < 20 + (thing_age(t) * 10)) {
       THING_DBG(t, "spawn spreading fire");
-      thing_spawn(g, v, l, tp_random(is_fire), p);
+      thing_spawn(g, v, l, tp_first(is_fire), p);
     }
   }
 }
@@ -89,14 +89,14 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent 
   if (level_alive_is_combustible(g, v, l, t->at)) {
     if (! level_is_fire(g, v, l, t->at)) {
       THING_DBG(t, "spawn fire to continue to burn");
-      thing_spawn(g, v, l, tp_random(is_fire), t->at);
+      thing_spawn(g, v, l, tp_first(is_fire), t->at);
     }
   }
 
   if (! level_is_smoke(g, v, l, t->at)) {
     if (level_is_combustible(g, v, l, t->at)) {
       THING_DBG(t, "spawn smoke over dying fire");
-      thing_spawn(g, v, l, tp_random(is_smoke), t->at);
+      thing_spawn(g, v, l, tp_first(is_smoke), t->at);
     }
   }
 }
