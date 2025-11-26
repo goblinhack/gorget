@@ -56,7 +56,6 @@ bool tp_load_treasure(void)
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);

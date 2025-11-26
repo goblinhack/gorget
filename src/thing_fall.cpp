@@ -30,7 +30,7 @@ static bool thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
 }
 
 //
-// Try to find a spot clost to where we landed that is ok to exist in.
+// Try to find a spot close to where we landed that is ok to exist in.
 // i.e. no landing inside walls.
 //
 static spoint thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -47,11 +47,12 @@ static spoint thing_choose_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t)
 
     for (auto dx = -dist; dx <= dist; dx++) {
       for (auto dy = -dist; dy <= dist; dy++) {
-        p.x = t->at.x + dx;
-        p.y = t->at.y + dy;
+        spoint q;
+        q.x = t->at.x + dx;
+        q.y = t->at.y + dy;
 
-        if (thing_ok_landing_spot(g, v, l, t, p)) {
-          return p;
+        if (thing_ok_landing_spot(g, v, l, t, q)) {
+          return q;
         }
       }
     }

@@ -19,7 +19,6 @@ bool tp_load_dirt(void)
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_in_chasm);
   tp_flag_set(tp, is_dirt);
-  tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_teleport_blocked);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);

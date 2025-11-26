@@ -56,7 +56,6 @@ bool tp_load_kobalos_mob(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob2);
-  tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_physics_explosion);
