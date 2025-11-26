@@ -4122,13 +4122,64 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
   }
 
   if (cands.empty()) {
-    return;
+    //
+    // Try again, but less restrictive
+    //
+    for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+      for (int x = 1; x < MAP_WIDTH - 1; x++) {
+        auto c = l->data[ x ][ y ].c;
+
+        //
+        // Only place telports on tiles between the entrance and exit
+        //
+        if (! l->info.on_path_entrance_to_exit[ x ][ y ]) {
+          continue;
+        }
+
+        switch (c) {
+          case CHARMAP_FLOOR :
+            if (/* left      */ l->data[ x - 1 ][ y ].c == CHARMAP_FLOOR &&
+                /* right     */ l->data[ x + 1 ][ y ].c == CHARMAP_FLOOR &&
+                /* top       */ l->data[ x ][ y - 1 ].c == CHARMAP_FLOOR &&
+                /* bot       */ l->data[ x ][ y + 1 ].c == CHARMAP_FLOOR) {
+              cands.push_back(spoint(x, y));
+            }
+            break;
+        }
+      }
+    }
+
+    if (cands.empty()) {
+      //
+      // Try again, but even less restrictive
+      //
+      for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+        for (int x = 1; x < MAP_WIDTH - 1; x++) {
+          auto c = l->data[ x ][ y ].c;
+
+          //
+          // Only place telports on tiles between the entrance and exit
+          //
+          if (! l->info.on_path_entrance_to_exit[ x ][ y ]) {
+            continue;
+          }
+
+          switch (c) {
+            case CHARMAP_FLOOR : cands.push_back(spoint(x, y)); break;
+          }
+        }
+      }
+
+      if (cands.empty()) {
+        return;
+      }
+    }
   }
 
   //
   // Place an additional teleport
   //
-  if ((l->info.teleport_count == 1) || ! reachable_teleports) {
+  if ((l->info.teleport_count > 0) || ! reachable_teleports) {
     auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
     while (tries-- > 0) {
       if (level_gen_add_missing_teleport_do(g, l, cands)) {
