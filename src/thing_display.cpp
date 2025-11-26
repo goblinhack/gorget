@@ -135,6 +135,63 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
   }
 }
 
+void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
+                        Tilep tile, float x1, float x2, float y1, float y2, color fg)
+{
+  TRACE_NO_INDENT();
+
+  const color outline = BLACK;
+
+  //
+  // Outlined?
+  //
+  auto single_pix_size = game_map_single_pix_size_get(g);
+
+  //
+  // Disable outlines when zoomed out
+  //
+  if (game_map_zoom_is_full_map_visible(g)) {
+    single_pix_size = 0;
+  }
+
+  if (tp_is_blit_outlined(tp)) {
+    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);
+  } else if (tp_is_blit_square_outlined(tp)) {
+    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, true);
+  } else {
+    tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
+  }
+}
+
+//
+// Display a spinning falling thing
+//
+void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
+                           Tilep tile, float x1, float x2, float y1, float y2, color fg)
+{
+  TRACE_NO_INDENT();
+
+  int fall_height = thing_is_falling(t_maybe_null);
+
+  int dh = (int) (((0.5 * ((float) (br.y - tl.y))) / MAX_FALL_TIME_MS) * fall_height);
+  tl.x += dh;
+  tl.y += dh;
+  br.x -= dh;
+  br.y -= dh;
+
+  auto mid = (tl + br) / (short) 2;
+  blit_flush();
+  blit_init();
+  glPushMatrix();
+  glTranslatef(mid.x, mid.y, 0);
+  float ang = dh * 10;
+  glRotatef(ang, 0.0f, 0.0f, 1.0f);
+  glTranslatef(-mid.x, -mid.y, 0);
+  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg);
+  blit_flush();
+  glPopMatrix();
+}
+
 //
 // Display a single thing to an FBO
 //
@@ -144,22 +201,27 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
   TRACE_NO_INDENT();
 
   auto player = thing_player(g);
-  if (! player) {
+  if (unlikely(! player)) {
     return;
   }
 
   auto player_level = game_level_get(g, v, player->level_num);
-  if (! player_level) {
+  if (unlikely(! player_level)) {
     return;
   }
 
   //
-  // If the thing is falling, do not show it in the overlay, else it appears in front of floor tiles
+  // If we're blitting the level below, filter to only things we can see through chasms
   //
-  if (t_maybe_null && (fbo == FBO_MAP_FG_OVERLAY)) {
-    if (thing_is_falling(t_maybe_null)) {
+  if (player_level != l) {
+    if (! tp_is_blit_in_chasm(tp)) {
       return;
     }
+  }
+
+  bool is_falling = false;
+  if (t_maybe_null) {
+    is_falling = thing_is_falling(t_maybe_null) > 0;
   }
 
   const auto is_level_select = level_is_level_select(g, v, player_level);
@@ -179,7 +241,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       // Note that we use the level_ version. This is because you could have flames and a mob
       // on the same tile. We would only see the flames without this check.
       //
-    } else if (thing_is_falling(t_maybe_null)) {
+    } else if (is_falling) {
       //
       // The thing is not currently seen and has not been seen previously.
       // If the thing is falling, always show it in the background, else things appear to vanish.
@@ -197,58 +259,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     return;
   }
 
-  color fg      = WHITE;
-  color outline = BLACK;
+  color fg = WHITE;
   float x1;
   float x2;
   float y1;
   float y2;
   tile_coords(tile, &x1, &y1, &x2, &y2);
 
-  //
-  // Outlined?
-  //
-  auto single_pix_size = game_map_single_pix_size_get(g);
-
-  //
-  // Disable outlines when zoomed out
-  //
-  if (game_map_zoom_is_full_map_visible(g)) {
-    single_pix_size = 0;
-  }
-
-  if (t_maybe_null) {
-    //
-    // Handle various effects
-    //
-    int fall_height;
-    int submerged_pct;
-    if ((fall_height = thing_is_falling(t_maybe_null))) {
-      //
-      // Falling
-      //
-      int dh = (int) (((MAX_FALL_TILE_HEIGHT * ((float) (br.y - tl.y))) / MAX_FALL_TIME_MS) * fall_height);
-      tl.y += dh;
-      br.y += dh;
-      // THING_TOPCON(t_maybe_null, "%d", dh);
-    } else if ((submerged_pct = thing_submerged_pct(t_maybe_null))) {
-      //
-      // Submerge the tile if it is over some kind of liquid.
-      //
-      if (submerged_pct) {
-        tile_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t_maybe_null));
-      }
-    }
-  }
-
-  if (player_level != l) {
-    //
-    // The level below.
-    //
-    if (! tp_is_blit_in_chasm(tp)) {
-      return;
-    }
-  } else if (is_level_select) {
+  if (is_level_select) {
     //
     // No lighting
     //
@@ -268,11 +286,25 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
   }
 
-  if (tp_is_blit_outlined(tp)) {
-    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);
-  } else if (tp_is_blit_square_outlined(tp)) {
-    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, true);
-  } else {
-    tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
+  if (t_maybe_null) {
+    //
+    // Handle various effects
+    //
+    if (is_falling) {
+      thing_display_falling(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg);
+      return;
+    }
+
+    int submerged_pct;
+    if ((submerged_pct = thing_submerged_pct(t_maybe_null))) {
+      //
+      // Submerge the tile if it is over some kind of liquid.
+      //
+      if (submerged_pct) {
+        tile_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t_maybe_null));
+      }
+    }
   }
+
+  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg);
 }

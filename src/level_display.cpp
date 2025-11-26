@@ -86,15 +86,11 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
 
   Tpp  tp;
   auto t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
-  if (! tp) {
+  if (unlikely(! tp)) {
     return;
   }
 
-  if (thing_is_falling(t)) {
-    if (depth != MAP_Z_DEPTH_FLOOR) {
-      return;
-    }
-  } else if (tp_z_depth_get(tp) != depth) {
+  if (tp_z_depth_get(tp) != depth) {
     return;
   }
 
