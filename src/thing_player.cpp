@@ -609,9 +609,6 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right)
   // If a move is in progress, do nothing
   //
   if (level_tick_is_in_progress(g, v, l)) {
-    //
-    // But if the player presses the keys again towards the end of the tick, allow that.
-    //
     return false;
   }
 

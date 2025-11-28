@@ -155,9 +155,7 @@ void sdl_loop(Gamep g)
       //
       // Handle key auto repeat
       //
-      game_pcg_lock();
       sdl_key_repeat_events(g);
-      game_pcg_unlock();
 
       //
       // Mouse held?
