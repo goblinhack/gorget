@@ -2022,15 +2022,26 @@ static class LevelFixed *level_random_get(Gamep g, LevelType level_type)
 //
 // Get a random level.
 //
-static class LevelFixed *level_fixed_find_by_name(Gamep g, const std::string &alias)
+static class LevelFixed *level_fixed_find_by_name(Gamep g, const std::string &alias, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
-  if (level_alias_all.find(alias) == level_alias_all.end()) {
-    return nullptr;
+  //
+  // Add the level number to allow specification of specific depths
+  //
+  auto alt = alias + "." + std::to_string((int) level_num);
+  if (level_alias_all.find(alt) != level_alias_all.end()) {
+    return level_alias_all[ alt ];
   }
 
-  return level_alias_all[ alias ];
+  //
+  // Fallback to the level name and use the same level of all depths
+  //
+  if (level_alias_all.find(alias) != level_alias_all.end()) {
+    return level_alias_all[ alias ];
+  }
+
+  return nullptr;
 }
 
 //
@@ -4413,7 +4424,7 @@ static bool level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
     //
     // Test level
     //
-    fixed_level = level_fixed_find_by_name(g, g_level_opt.level_name);
+    fixed_level = level_fixed_find_by_name(g, g_level_opt.level_name, l->level_num);
     if (! fixed_level) {
       //
       // Unknown level
