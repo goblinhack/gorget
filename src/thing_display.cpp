@@ -200,6 +200,8 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
 {
   TRACE_NO_INDENT();
 
+  bool is_falling = false;
+
   auto player = thing_player(g);
   if (unlikely(! player)) {
     return;
@@ -210,47 +212,48 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     return;
   }
 
-  //
-  // If we're blitting the level below, filter to only things we can see through chasms
-  //
-  if (player_level != l) {
-    if (! tp_is_blit_in_chasm(tp)) {
-      return;
-    }
-  }
-
-  bool is_falling = false;
-  if (t_maybe_null) {
-    is_falling = thing_is_falling(t_maybe_null) > 0;
-  }
-
   const auto is_level_select = level_is_level_select(g, v, player_level);
 
   if (DEBUG || is_level_select) {
     //
     // No hiding of oobjects
     //
-  } else if (t_maybe_null && ! thing_vision_can_see_tile(g, v, player_level, player, p)) {
+  } else {
     //
-    // We cannot see this tile currently.
+    // If we're blitting the level below, filter to only things we can see through chasms
     //
-    if (level_is_blit_if_has_seen(g, v, player_level, p)) {
+    if (player_level != l) {
+      if (! tp_is_blit_in_chasm(tp)) {
+        return;
+      }
+    }
+
+    if (t_maybe_null) {
+      is_falling = thing_is_falling(t_maybe_null) > 0;
+    }
+
+    if (t_maybe_null && ! thing_vision_can_see_tile(g, v, player_level, player, p)) {
       //
-      // But if it has been seen, then show it, if allowed.
+      // We cannot see this tile currently.
       //
-      // Note that we use the level_ version. This is because you could have flames and a mob
-      // on the same tile. We would only see the flames without this check.
-      //
-    } else if (is_falling) {
-      //
-      // The thing is not currently seen and has not been seen previously.
-      // If the thing is falling, always show it in the background, else things appear to vanish.
-      //
-    } else {
-      //
-      // The thing is not currently seen and has not been seen previously. Hide it.
-      //
-      return;
+      if (level_is_blit_if_has_seen(g, v, player_level, p)) {
+        //
+        // But if it has been seen, then show it, if allowed.
+        //
+        // Note that we use the level_ version. This is because you could have flames and a mob
+        // on the same tile. We would only see the flames without this check.
+        //
+      } else if (is_falling) {
+        //
+        // The thing is not currently seen and has not been seen previously.
+        // If the thing is falling, always show it in the background, else things appear to vanish.
+        //
+      } else {
+        //
+        // The thing is not currently seen and has not been seen previously. Hide it.
+        //
+        return;
+      }
     }
   }
 

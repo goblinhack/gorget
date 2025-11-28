@@ -680,7 +680,7 @@ static bool level_select_map_set(Gamep g, Levelsp v)
       spoint at(x, y);
       FOR_ALL_THINGS_AT(g, v, level_select, it, at) { count++; }
       if (! count) {
-        auto tp_rock = tp_random(is_dirt);
+        auto tp_rock = tp_first(is_dirt);
         if (! thing_spawn(g, v, level_select, tp_rock, at)) {
           return false;
         }
