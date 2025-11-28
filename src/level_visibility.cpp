@@ -61,5 +61,5 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
   //
   // Update minimaps
   //
-  level_minimaps_update(g, v, l, false);
+  level_minimaps_update(g, v, l);
 }

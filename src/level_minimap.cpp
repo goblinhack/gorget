@@ -16,7 +16,7 @@
 static Texp solid_tex;
 static int  solid_tex_id;
 
-static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, bool level_select)
+static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool level_select)
 {
   TRACE_NO_INDENT();
 
@@ -173,7 +173,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
   blit_fbo_unbind();
 }
 
-static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
+static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool level_select)
 {
   TRACE_NO_INDENT();
 
@@ -219,10 +219,10 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
         c = GRAY50;
       }
       if (level_is_rock(g, v, l, p)) {
-        c = GRAY50;
+        c = BROWN4;
       }
       if (level_is_bridge(g, v, l, p)) {
-        c = BROWN4;
+        c = BROWN;
       }
       if (level_is_chasm(g, v, l, p)) {
         c = BLACK;
@@ -271,6 +271,13 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
         //
         // Keep bright colors
         //
+      } else if (level_select) {
+        //
+        // No vision in level selection
+        //
+        c.r /= 2;
+        c.g /= 2;
+        c.b /= 2;
       } else if (! thing_vision_can_see_tile(g, v, l, player, p)) {
         //
         // Dim
@@ -297,7 +304,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l)
   blit_fbo_unbind();
 }
 
-void level_minimaps_update(Gamep g, Levelsp v, Levelp l, bool level_select)
+void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -305,12 +312,17 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l, bool level_select)
     return;
   }
 
+  //
+  // If in level select mode, avoid certain things, like vision effects
+  //
+  bool level_select = level_is_level_select(g, v, game_level_get(g, v));
+
   if (! solid_tex) {
     solid_tex    = tex_load("", "solid", GL_LINEAR);
     solid_tex_id = tex_get_gl_binding(solid_tex);
   }
 
-  level_minimap_levels_update(g, v, l);
+  level_minimap_levels_update(g, v, l, level_select);
   //  sdl_fbo_dump(g, FBO_MINIMAP_LEVEL, "level");
 
   level_minimap_world_update(g, v, l, level_select);
