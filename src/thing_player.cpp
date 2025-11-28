@@ -929,10 +929,18 @@ bool player_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
         //
         // If could jump, then abort the path walk
         //
-        level_tick_begin_requested(g, v, l, "player to avoid a hazard");
+        level_tick_begin_requested(g, v, l, "player jumped to avoid a hazard");
         player_state_change(g, v, PLAYER_STATE_NORMAL);
         return false;
       }
+
+      //
+      // Something was in the way of jumping. Best to stop rather than accidentally
+      // walk into a chasm.
+      //
+      level_tick_begin_requested(g, v, l, "player fail to jump to avoid a hazard");
+      player_state_change(g, v, PLAYER_STATE_NORMAL);
+      return false;
     }
   }
 

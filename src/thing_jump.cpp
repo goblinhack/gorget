@@ -40,17 +40,18 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &
 //
 // Check if jumping over something we cannot
 //
-static bool thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
+static Thingp thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 {
   auto jump_path = draw_line(t->at, to);
 
   for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {
     spoint intermediate = *i;
-    if (level_is_obs_to_jump_over(g, v, l, intermediate)) {
-      return true;
+    auto   what         = level_is_obs_to_jump_over(g, v, l, intermediate);
+    if (what) {
+      return what;
     }
   }
-  return false;
+  return nullptr;
 }
 
 //
@@ -82,10 +83,12 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   //
   // Check if jumping over something we cannot
   //
-  if (thing_jump_something_in_the_way(g, v, l, t, to)) {
+  auto obs = thing_jump_something_in_the_way(g, v, l, t, to);
+  if (obs) {
     if (thing_is_player(t)) {
       if (warn) {
-        TOPCON("You cannot jump over that.");
+        auto the_thing = thing_the_long_name(g, v, l, obs);
+        TOPCON("You cannot jump over %s.", the_thing.c_str());
       }
     }
     return false;

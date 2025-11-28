@@ -18,6 +18,7 @@ bool tp_load_rock(void)
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_blit_if_has_seen);
+    tp_long_name_set(tp, "rock");
     tp_flag_set(tp, is_blit_in_chasm);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);
