@@ -207,18 +207,24 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     return;
   }
 
-  auto player_level = game_level_get(g, v, player->level_num);
-  if (unlikely(! player_level)) {
-    return;
-  }
-
-  const auto is_level_select = level_is_level_select(g, v, player_level);
+  //
+  // What level are we currently displaying?
+  //
+  const auto is_level_select = level_is_level_select(g, v, l);
 
   if (DEBUG || is_level_select) {
     //
-    // No hiding of oobjects
+    // No hiding of objects
     //
   } else {
+    //
+    // What level is the player on?
+    //
+    auto player_level = game_level_get(g, v, player->level_num);
+    if (unlikely(! player_level)) {
+      return;
+    }
+
     //
     // If we're blitting the level below, filter to only things we can see through chasms
     //

@@ -1,8 +1,10 @@
 bugs
 ----
+three dots in lava
+barrel explodes on wrong level
 pushing barrel into lower level should be visible
 pushing barrel into lower level chasm?
-test levels multi level
+some pixel corruption on the warning popups sometimes
 outline player when behind bushes
 do not allow the player to land in an enclosed area; climb? digging / blind jump/ emergency teleport
 need to ask if you want to kick over a brazier
