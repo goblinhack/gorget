@@ -32,8 +32,13 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
   // If extinguished, do not generate more smoke
   //
   if (thing_is_dead(t)) {
-    if (! level_is_smoke(g, v, l, t->at)) {
-      thing_spawn(g, v, l, tp_first(is_smoke), t->at);
+    //
+    // Only if recently dead
+    //
+    if (v->tick - t->tick_dead < 5) {
+      if (! level_is_smoke(g, v, l, t->at)) {
+        thing_spawn(g, v, l, tp_first(is_smoke), t->at);
+      }
     }
     return;
   }

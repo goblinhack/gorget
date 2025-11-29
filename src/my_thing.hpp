@@ -323,7 +323,11 @@ typedef struct Thing_ {
   //
   // Current game tick this thing has completed
   //
-  uint16_t tick;
+  uint32_t tick;
+  //
+  // When this poor thing died.
+  //
+  uint32_t tick_dead;
   //
   // Unique ID with some entropy built in
   //

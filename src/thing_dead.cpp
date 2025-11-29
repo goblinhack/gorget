@@ -269,4 +269,6 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (thing_is_tiled(t)) {
     level_tile_update_set(g, v, l, t->at);
   }
+
+  t->tick_dead = v->tick;
 }
