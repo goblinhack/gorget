@@ -153,7 +153,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
               // No lighting in level selection
               //
               display_tile = true;
-            } else if (thing_vision_can_see_tile(g, v, l, player, p)) {
+            } else if (thing_vision_can_see_tile(g, v, player_level, player, p)) {
               //
               // Can see currently
               //
