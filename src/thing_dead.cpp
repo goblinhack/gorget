@@ -166,6 +166,14 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   }
 
   //
+  // Where did the thing die? Might not be on the current level.
+  //
+  auto t_level = game_level_get(g, v, t->level_num);
+  if (t_level) {
+    l = t_level;
+  }
+
+  //
   // Log the reason of demise?
   //
   if (thing_is_loggable(t)) {
