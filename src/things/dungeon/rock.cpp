@@ -18,7 +18,6 @@ bool tp_load_rock(void)
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_blit_if_has_seen);
-    tp_long_name_set(tp, "rock");
     tp_flag_set(tp, is_blit_in_chasm);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);
@@ -37,6 +36,7 @@ bool tp_load_rock(void)
     tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+    tp_long_name_set(tp, "rock");
     tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
     // end sort marker1 }

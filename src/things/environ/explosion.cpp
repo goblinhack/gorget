@@ -37,7 +37,7 @@ bool tp_load_explosion(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
-  tp_flag_set(tp, is_tick_delay_on_spawn);
+  tp_flag_set(tp, is_tick_end_delay);
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_light_color_set(tp, "orange");
   tp_priority_set(tp, THING_PRIORITY_EXPLOSION);

@@ -520,7 +520,7 @@ bool thing_is_steam(Thingp);
 bool thing_is_submergible(Thingp);
 bool thing_is_teleport_blocked(Thingp);
 bool thing_is_teleport(Thingp);
-bool thing_is_tick_delay_on_spawn(Thingp);
+bool thing_is_tick_end_delay(Thingp);
 bool thing_is_tickable(Thingp);
 bool thing_is_tiled(Thingp);
 bool thing_is_trap(Thingp);
@@ -594,7 +594,7 @@ void thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
 void thing_update_pos(Gamep, Thingp);
 void thing_vision_reset(Gamep, Levelsp, Levelp, Thingp);
 void thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
-// end sort marker1 {
+// end sort marker1 }
 
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_dead_unset(Gamep, Levelsp, Levelp, Thingp);

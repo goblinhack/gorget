@@ -1520,14 +1520,14 @@ bool thing_is_openable(Thingp t)
   return tp_flag(thing_tp(t), is_openable);
 }
 
-bool thing_is_tick_delay_on_spawn(Thingp t)
+bool thing_is_tick_end_delay(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_tick_delay_on_spawn);
+  return tp_flag(thing_tp(t), is_tick_end_delay);
 }
 
 bool thing_is_damage_capped(Thingp t)

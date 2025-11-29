@@ -302,7 +302,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
           DIE("ran out of levels to assign to grid, %u", n);
         }
 
-        if (! l->is_initialized_level) {
+        if (! l->is_initialized) {
           DIE("trying to use a level that is not initialized, %u", n);
         }
 
@@ -767,7 +767,7 @@ void level_select_destroy(Gamep g, Levelsp v, Levelp l)
   LOG("Level select destroy");
   TRACE_AND_INDENT();
 
-  if (! l || ! l->is_initialized_level) {
+  if (! l || ! l->is_initialized) {
     return;
   }
 

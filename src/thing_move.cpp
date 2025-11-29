@@ -374,6 +374,8 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
     level_update_visibility(g, v, new_level);
   }
 
+  new_level->is_tick_requested = true;
+
   return true;
 }
 

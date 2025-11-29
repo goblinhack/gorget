@@ -26,8 +26,8 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   //
   // This is reset each tick
   //
-  if (thing_is_tick_delay_on_spawn(t)) {
-    l->is_tick_delay_on_spawn = true;
+  if (thing_is_tick_end_delay(t)) {
+    l->is_tick_end_delay = true;
   }
 
   //

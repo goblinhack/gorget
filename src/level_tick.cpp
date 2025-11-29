@@ -118,8 +118,8 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   //
   // First time tick for this level?
   //
-  if (! l->is_initialized_by_ticking) {
-    l->is_initialized_by_ticking = true;
+  if (! l->is_tick_has_occurred) {
+    l->is_tick_has_occurred = true;
 
     //
     // Update minimaps and lighting
@@ -210,7 +210,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     level_tick_end_temperature(g, v, l);
 
     do {
-      l->is_tick_delay_on_spawn = false;
+      l->is_tick_end_delay = false;
 
       //
       // Handle things interacting with explosions
@@ -241,7 +241,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
       // A chasm or explosion or some other event has occurred that we need to handle immediately
       // and delay ending the tick
       //
-    } while (l->is_tick_delay_on_spawn);
+    } while (l->is_tick_end_delay);
   }
 
   //
@@ -448,7 +448,7 @@ static void level_tick_select_reset(Gamep g, Levelsp v, Levelp current_level)
   //
   FOR_ALL_LEVELS(g, v, iter)
   {
-    iter->is_ticking_level = false;
+    iter->is_tick_required = false;
     iter->is_current_level = false;
   }
 
@@ -476,20 +476,30 @@ static void level_tick_select(Gamep g, Levelsp v, Levelp current_level)
   FOR_ALL_LEVELS(g, v, iter)
   {
     if (g_opt_tests) {
-      iter->is_ticking_level = true;
+      iter->is_tick_required = true;
       v->level_ticking_count++;
       continue;
     }
 
     if (iter == player_level) {
-      iter->is_ticking_level = true;
+      iter->is_tick_required = true;
       v->level_ticking_count++;
 
       auto level_below = level_select_get_next_level_down(g, v, iter);
       if (level_below) {
-        level_below->is_ticking_level = true;
+        level_below->is_tick_required = true;
         v->level_ticking_count++;
       }
+      continue;
+    }
+
+    //
+    // Sometimes things will fall into a level beyond what we normally see
+    // and we need to ensure things don't end up hovering over a chasm.
+    //
+    if (iter->is_tick_requested) {
+      iter->is_tick_required = true;
+      v->level_ticking_count++;
       continue;
     }
 

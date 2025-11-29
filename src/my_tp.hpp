@@ -123,7 +123,7 @@
       list_macro(is_submergible, "is_submergible"),                     /* newline */                                \
       list_macro(is_teleport_blocked, "is_teleport_blocked"),           /* newline */                                \
       list_macro(is_teleport, "is_teleport"),                           /* newline */                                \
-      list_macro(is_tick_delay_on_spawn, "is_tick_delay_on_spawn"),     /* newline */                                \
+      list_macro(is_tick_end_delay, "is_tick_end_delay"),               /* newline */                                \
       list_macro(is_tickable, "is_tickable"),                           /* newline */                                \
       list_macro(is_tiled, "is_tiled"),                                 /* newline */                                \
       list_macro(is_trap, "is_trap"),                                   /* newline */                                \
@@ -630,7 +630,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_submergible(tp)           tp_flag(tp, is_submergible)
 #define tp_is_teleport_blocked(tp)      tp_flag(tp, is_teleport_blocked)
 #define tp_is_teleport(tp)              tp_flag(tp, is_teleport)
-#define tp_is_tick_delay_on_spawn(tp)   tp_flag(tp, is_tick_delay_on_spawn)
+#define tp_is_tick_end_delay(tp)        tp_flag(tp, is_tick_end_delay)
 #define tp_is_tickable(tp)              tp_flag(tp, is_tickable)
 #define tp_is_tiled(tp)                 tp_flag(tp, is_tiled)
 #define tp_is_trap(tp)                  tp_flag(tp, is_trap)
@@ -740,7 +740,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_afirst_is_steam(g, v, l, p)                 level_afirst_flag(g, v, l, is_steam, p)
 #define level_afirst_is_teleport_blocked(g, v, l, p)      level_afirst_flag(g, v, l, is_teleport_blocked, p)
 #define level_afirst_is_teleport(g, v, l, p)              level_afirst_flag(g, v, l, is_teleport, p)
-#define level_afirst_is_tick_delay_on_spawn(g, v, l, p)   level_afirst_flag(g, v, l, is_tick_delay_on_spawn, p)
+#define level_afirst_is_tick_end_delay(g, v, l, p)        level_afirst_flag(g, v, l, is_tick_end_delay, p)
 #define level_afirst_is_tickable(g, v, l, p)              level_afirst_flag(g, v, l, is_tickable, p)
 #define level_afirst_is_tiled(g, v, l, p)                 level_afirst_flag(g, v, l, is_tiled, p)
 #define level_afirst_is_trap(g, v, l, p)                  level_afirst_flag(g, v, l, is_trap, p)
@@ -853,7 +853,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_steam(g, v, l, p)                  level_alive_flag(g, v, l, is_steam, p)
 #define level_alive_is_teleport_blocked(g, v, l, p)       level_alive_flag(g, v, l, is_teleport_blocked, p)
 #define level_alive_is_teleport(g, v, l, p)               level_alive_flag(g, v, l, is_teleport, p)
-#define level_alive_is_tick_delay_on_spawn(g, v, l, p)    level_alive_flag(g, v, l, is_tick_delay_on_spawn, p)
+#define level_alive_is_tick_end_delay(g, v, l, p)         level_alive_flag(g, v, l, is_tick_end_delay, p)
 #define level_alive_is_tickable(g, v, l, p)               level_alive_flag(g, v, l, is_tickable, p)
 #define level_alive_is_tiled(g, v, l, p)                  level_alive_flag(g, v, l, is_tiled, p)
 #define level_alive_is_trap(g, v, l, p)                   level_alive_flag(g, v, l, is_trap, p)
@@ -966,7 +966,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_steam(g, v, l, p)                  level_count_flag(g, v, l, is_steam, p)
 #define level_count_is_teleport_blocked(g, v, l, p)       level_count_flag(g, v, l, is_teleport_blocked, p)
 #define level_count_is_teleport(g, v, l, p)               level_count_flag(g, v, l, is_teleport, p)
-#define level_count_is_tick_delay_on_spawn(g, v, l, p)    level_count_flag(g, v, l, is_tick_delay_on_spawn, p)
+#define level_count_is_tick_end_delay(g, v, l, p)         level_count_flag(g, v, l, is_tick_end_delay, p)
 #define level_count_is_tickable(g, v, l, p)               level_count_flag(g, v, l, is_tickable, p)
 #define level_count_is_tiled(g, v, l, p)                  level_count_flag(g, v, l, is_tiled, p)
 #define level_count_is_trap(g, v, l, p)                   level_count_flag(g, v, l, is_trap, p)
@@ -1079,7 +1079,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_first_is_steam(g, v, l, p)                  level_first_flag(g, v, l, is_steam, p)
 #define level_first_is_teleport_blocked(g, v, l, p)       level_first_flag(g, v, l, is_teleport_blocked, p)
 #define level_first_is_teleport(g, v, l, p)               level_first_flag(g, v, l, is_teleport, p)
-#define level_first_is_tick_delay_on_spawn(g, v, l, p)    level_first_flag(g, v, l, is_tick_delay_on_spawn, p)
+#define level_first_is_tick_end_delay(g, v, l, p)         level_first_flag(g, v, l, is_tick_end_delay, p)
 #define level_first_is_tickable(g, v, l, p)               level_first_flag(g, v, l, is_tickable, p)
 #define level_first_is_tiled(g, v, l, p)                  level_first_flag(g, v, l, is_tiled, p)
 #define level_first_is_trap(g, v, l, p)                   level_first_flag(g, v, l, is_trap, p)
@@ -1204,7 +1204,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_submergible(g, v, l, p)                  level_flag(g, v, l, is_submergible, p)
 #define level_is_teleport_blocked(g, v, l, p)             level_flag(g, v, l, is_teleport_blocked, p)
 #define level_is_teleport(g, v, l, p)                     level_flag(g, v, l, is_teleport, p)
-#define level_is_tick_delay_on_spawn(g, v, l, p)          level_flag(g, v, l, is_tick_delay_on_spawn, p)
+#define level_is_tick_end_delay(g, v, l, p)               level_flag(g, v, l, is_tick_end_delay, p)
 #define level_is_tickable(g, v, l, p)                     level_flag(g, v, l, is_tickable, p)
 #define level_is_tiled(g, v, l, p)                        level_flag(g, v, l, is_tiled, p)
 #define level_is_trap(g, v, l, p)                         level_flag(g, v, l, is_trap, p)
@@ -1312,7 +1312,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_steam(g, v, l, p)                   level_open_flag(g, v, l, is_steam, p)
 #define level_open_is_teleport_blocked(g, v, l, p)        level_open_flag(g, v, l, is_teleport_blocked, p)
 #define level_open_is_teleport(g, v, l, p)                level_open_flag(g, v, l, is_teleport, p)
-#define level_open_is_tick_delay_on_spawn(g, v, l, p)     level_open_flag(g, v, l, is_tick_delay_on_spawn, p)
+#define level_open_is_tick_end_delay(g, v, l, p)          level_open_flag(g, v, l, is_tick_end_delay, p)
 #define level_open_is_tickable(g, v, l, p)                level_open_flag(g, v, l, is_tickable, p)
 #define level_open_is_tiled(g, v, l, p)                   level_open_flag(g, v, l, is_tiled, p)
 #define level_open_is_trap(g, v, l, p)                    level_open_flag(g, v, l, is_trap, p)

@@ -182,15 +182,25 @@ typedef struct Level_ {
   //
   // Is this a non null level?
   //
-  uint8_t is_initialized_level : 1;
+  uint8_t is_initialized : 1;
   //
   // Is this level one of the set that ticks every turn?
   //
-  uint8_t is_ticking_level : 1;
+  uint8_t is_tick_required : 1;
   //
-  // Has it ticked?
+  // Sometimes things will fall into a level beyond what we normally see
+  // and we need to ensure things don't end up hovering over a chasm.
   //
-  uint8_t is_initialized_by_ticking : 1;
+  uint8_t is_tick_requested : 1;
+  //
+  // Has it ticked at least once?
+  //
+  uint8_t is_tick_has_occurred : 1;
+  //
+  // Booleans that are set whenever something of this type is created on the level
+  // and then cleared at end of tick.
+  //
+  uint8_t is_tick_end_delay : 1;
   //
   // This is the current level that the player is on.
   //
@@ -199,11 +209,6 @@ typedef struct Level_ {
   // Is this a pre-generated level and non procedurally generated.
   //
   uint8_t is_fixed_level : 1;
-  //
-  // Booleans that are set whenever something of this type is created on the level
-  // and then cleared at end of tick.
-  //
-  uint8_t is_tick_delay_on_spawn : 1;
   //
   // Player has entered level
   //
@@ -464,14 +469,14 @@ typedef struct Levels_ {
     for (Levelp _l_ = nullptr, loop1 = (Levelp) 1; loop1 == (Levelp) 1; loop1 = (Levelp) 0)                          \
       for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                    \
         if ((_l_ = &v->level[ _n_ ]))                                                                                \
-          if (_l_->is_initialized_level)
+          if (_l_->is_initialized)
 
 #define FOR_ALL_TICKING_LEVELS(_g_, _v_, _l_)                                                                        \
   if (_g_ && _v_)                                                                                                    \
     for (Levelp _l_ = nullptr, loop1 = (Levelp) 1; loop1 == (Levelp) 1; loop1 = (Levelp) 0)                          \
       for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                    \
         if ((_l_ = &v->level[ _n_ ]))                                                                                \
-          if (_l_->is_ticking_level)
+          if (_l_->is_tick_required)
 
 //
 // Walk all things, all levels
