@@ -212,6 +212,10 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
   //
   const auto is_level_select = level_is_level_select(g, v, l);
 
+  if (t_maybe_null) {
+    is_falling = thing_is_falling(t_maybe_null) > 0;
+  }
+
   if (DEBUG || is_level_select) {
     //
     // No hiding of objects
@@ -232,10 +236,6 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       if (! tp_is_blit_in_chasm(tp)) {
         return;
       }
-    }
-
-    if (t_maybe_null) {
-      is_falling = thing_is_falling(t_maybe_null) > 0;
     }
 
     if (t_maybe_null && ! thing_vision_can_see_tile(g, v, player_level, player, p)) {
