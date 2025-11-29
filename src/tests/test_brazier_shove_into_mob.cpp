@@ -40,7 +40,7 @@ static bool test_brazier_shove_into_mob(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.;.."
+        "..@.B.."
         "......."
         "......."
         ".......";

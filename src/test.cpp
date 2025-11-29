@@ -219,13 +219,34 @@ void tests_run(Gamep g)
     char buf[ MAXLONGSTR ];
     buf[ 0 ] = '\0';
     get_timestamp(buf, MAXLONGSTR);
-    term_log(buf);
+#ifdef _GITHUB_BUILD_
+    CON(buf);
 
     //
     // Test preamble. We print this after the test has ran to avoid messing up the output.
     //
+    CON(pre.c_str());
+#else
+    term_log(buf);
+    //
+    // Test preamble. We print this after the test has ran to avoid messing up the output.
+    //
     term_log(pre.c_str());
+#endif
 
+#ifdef _GITHUB_BUILD_
+    if (skipped) {
+      CON("%%fg=yellow$skipped%%fg=reset$\n");
+    } else if (result) {
+      passed++;
+      CON("%%fg=green$OK%%fg=reset$\n");
+      LOG("Passed");
+    } else {
+      failed++;
+      CON("%%fg=red$FAILED%%fg=reset$\n");
+      LOG("Failed");
+    }
+#else
     if (skipped) {
       term_log("%%fg=yellow$skipped%%fg=reset$\n");
     } else if (result) {
@@ -237,6 +258,7 @@ void tests_run(Gamep g)
       term_log("%%fg=red$FAILED%%fg=reset$\n");
       LOG("Failed");
     }
+#endif
 
     if (! skipped) {
       LOG("-");
