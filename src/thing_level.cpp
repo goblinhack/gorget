@@ -24,6 +24,28 @@ Levelp thing_level(Gamep g, Levelsp v, Thingp t)
   return game_level_get(g, v, t->level_num);
 }
 
+bool thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto player = thing_player(g);
+  if (! player) {
+    return false;
+  }
+
+  Levelp player_level = thing_player_level(g);
+  if (! player_level) {
+    return false;
+  }
+
+  auto t_level = game_level_get(g, v, t->level_num);
+  if (t_level != player_level) {
+    return false;
+  }
+
+  return true;
+}
+
 //
 // Move the thing immediately to the new level entrance
 //

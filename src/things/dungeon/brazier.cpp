@@ -90,10 +90,14 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 
   auto player = thing_player(g);
   if (player) {
-    if (thing_vision_can_see_tile(g, v, l, player, t->at)) {
-      TOPCON("The brazier falls over!");
+    if (thing_on_same_level_as_player(g, v, t)) {
+      if (thing_vision_can_see_tile(g, v, l, player, t->at)) {
+        TOPCON("The brazier falls over!");
+      } else {
+        TOPCON("You hear a distant clatter!");
+      }
     } else {
-      TOPCON("You hear a distant clatter!");
+      TOPCON("You hear a very distant clatter!");
     }
   }
 }

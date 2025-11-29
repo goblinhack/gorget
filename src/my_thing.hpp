@@ -485,6 +485,7 @@ bool thing_is_level_across(Thingp);
 bool thing_is_level_curr(Thingp);
 bool thing_is_level_down(Thingp);
 bool thing_is_level_final(Thingp);
+bool thing_on_same_level_as_player(Gamep, Levelsp, Thingp);
 bool thing_is_level_next(Thingp);
 bool thing_is_level_not_visited(Thingp);
 bool thing_is_level_visited(Thingp);
