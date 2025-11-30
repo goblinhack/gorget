@@ -123,7 +123,7 @@ static bool test_player_fall_chasm_twice_into_lava(Gamep g, Testp t)
   }
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 2; tries++) {
+  for (auto tries = 0; tries < 5; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
@@ -156,7 +156,7 @@ static bool test_player_fall_chasm_twice_into_lava(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
 
   //
   // Check player is dead.

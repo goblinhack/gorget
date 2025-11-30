@@ -167,10 +167,21 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     player_fell(g, v, l, next_level, t);
   }
 
-  //
-  // "You take n damage from falling"
-  //
-  thing_damage(g, v, l, t, e);
+  auto t_level = game_level_get(g, v, t->level_num);
+  if (! t_level) {
+    THING_ERR(t, "fell into nothing");
+  }
+
+  if (level_is_chasm(g, v, t_level, t->at)) {
+    //
+    // Keep falling with no damage if over a chasm.
+    //
+  } else {
+    //
+    // "You take n damage from falling"
+    //
+    thing_damage(g, v, l, t, e);
+  }
 
   //
   // Falling can be good
