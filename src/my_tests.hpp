@@ -16,6 +16,7 @@ extern bool tests_init(void);
 /* shell done */
 extern bool test_load_barrel_explosion();
 extern bool test_load_barrel();
+extern bool test_load_brazier_shove_chasm_twice();
 extern bool test_load_brazier_shove_chasm();
 extern bool test_load_brazier_shove_fail();
 extern bool test_load_brazier_shove_into_mob();

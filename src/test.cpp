@@ -23,6 +23,7 @@ std::initializer_list< std::string > tests = {
     /* shell done */
     "barrel_explosion",
     "barrel",
+    "brazier_shove_chasm_twice",
     "brazier_shove_chasm",
     "brazier_shove_fail",
     "brazier_shove_into_mob",

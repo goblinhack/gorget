@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-static bool test_brazier_shove_chasm(Gamep g, Testp t)
+static bool test_brazier_shove_chasm_twice(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -47,17 +47,33 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
   std::string level2
       = "......."
         "......."
-        "....x.."
-        "....x.."
-        "....x.."
+        "....C.."
+        "....C.."
+        "....C.."
         "......."
         ".......";
-  std::string expect2 // second level
+  std::string expect2
       = "......."
         "......."
-        "...Bx.." // brazier was on fire
-        "....x.."
-        "....x.."
+        "....C.."
+        "....C.."
+        "....C.."
+        "......."
+        ".......";
+  std::string level3
+      = "......."
+        "......."
+        "......."
+        "......."
+        "......."
+        "......."
+        ".......";
+  std::string expect3
+      = "......."
+        "......."
+        "......."
+        "....B.."
+        "......."
         "......."
         ".......";
 
@@ -66,8 +82,10 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
   //
   Levelp  l1;
   Levelp  l2;
+  Levelp  l3;
   Levelsp v = game_test_init(g, &l1, level_num, w, h, level1.c_str());
   game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
+  game_test_init_level(g, v, &l3, level_num + 2, w, h, level3.c_str());
 
   //
   // The guts of the test
@@ -176,6 +194,14 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
     }
   }
 
+  TEST_PROGRESS(t);
+  {
+    if (! (result = level_match_contents(g, v, l3, t, w, h, expect3.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+  }
+
   TEST_PASSED(t);
 exit:
   TRACE_NO_INDENT();
@@ -184,14 +210,14 @@ exit:
   return result;
 }
 
-bool test_load_brazier_shove_chasm(void)
+bool test_load_brazier_shove_chasm_twice(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("brazier_shove_chasm");
+  Testp test = test_load("brazier_shove_chasm_twice");
 
   // begin sort marker1 {
-  test_callback_set(test, test_brazier_shove_chasm);
+  test_callback_set(test, test_brazier_shove_chasm_twice);
   // end sort marker1 }
 
   return true;

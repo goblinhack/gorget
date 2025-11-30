@@ -2029,7 +2029,7 @@ static class LevelFixed *level_fixed_find_by_name(Gamep g, const std::string &al
   //
   // Add the level number to allow specification of specific depths
   //
-  auto alt = alias + "." + std::to_string((int) level_num);
+  auto alt = alias + "." + std::to_string((int) level_num + 1);
   if (level_alias_all.find(alt) != level_alias_all.end()) {
     return level_alias_all[ alt ];
   }

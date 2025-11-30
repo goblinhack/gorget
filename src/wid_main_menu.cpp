@@ -311,6 +311,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
     switch (game_seed_source_get(g)) {
       case SEED_SOURCE_COMMAND_LINE : seed_text += " (set via cli)"; break;
       case SEED_SOURCE_USER :         seed_text += " (set via user)"; break;
+      case SEED_SOURCE_TEST :         seed_text += " (set via test option)"; break;
       case SEED_SOURCE_RANDOM :       seed_text += " (randomly generated)"; break;
     }
 

@@ -567,7 +567,10 @@ void Game::seed_set(const char *maybe_seed)
 {
   TRACE_NO_INDENT();
 
-  if (maybe_seed && *maybe_seed) {
+  if (g_level_opt.level_name != "") {
+    config.seed_name   = TEST_SEED;
+    config.seed_source = SEED_SOURCE_TEST;
+  } else if (maybe_seed && *maybe_seed) {
     config.seed_name   = std::string(maybe_seed);
     config.seed_source = SEED_SOURCE_USER;
     if (! g_opt_tests) {
@@ -583,6 +586,9 @@ void Game::seed_set(const char *maybe_seed)
     CON("Set random seed '%s', none set in config", config.seed_name.c_str());
   } else {
     switch (config.seed_source) {
+      case SEED_SOURCE_TEST : //
+        CON("Set seed '%s' from testing option", config.seed_name.c_str());
+        break;
       case SEED_SOURCE_COMMAND_LINE : //
         CON("Set seed '%s' from previous save", config.seed_name.c_str());
         break;

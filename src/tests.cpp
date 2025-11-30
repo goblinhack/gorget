@@ -17,6 +17,7 @@ bool tests_init(void)
   /* shell done */
   if (!test_load_barrel_explosion()) { return false; }
   if (!test_load_barrel()) { return false; }
+  if (!test_load_brazier_shove_chasm_twice()) { return false; }
   if (!test_load_brazier_shove_chasm()) { return false; }
   if (!test_load_brazier_shove_fail()) { return false; }
   if (!test_load_brazier_shove_into_mob()) { return false; }
