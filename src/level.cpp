@@ -356,7 +356,7 @@ void level_finalize(Gamep g, Levelsp v, Levelp l)
   LOG("Level finalize");
   TRACE_AND_INDENT();
 
-  level_select_calculate_next_level_down(g, v, l);
+  level_select_calculate_next_level_down(g, v, l, true);
   v->level_count++;
 }
 

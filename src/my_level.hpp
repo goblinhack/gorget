@@ -693,7 +693,7 @@ bool             level_select_is_oob(int x, int y);
 bool             level_select_is_oob(spoint);
 Levelp           level_select_get_level(Gamep, Levelsp, Levelp, spoint);
 Levelp           level_select_get_next_level_down(Gamep, Levelsp, Levelp);
-Levelp           level_select_calculate_next_level_down(Gamep, Levelsp, Levelp);
+Levelp           level_select_calculate_next_level_down(Gamep, Levelsp, Levelp, bool redo = false);
 Thingp           thing_level_select(Gamep);
 void             level_select_assign_levels_to_grid(Gamep, Levelsp);
 void             level_select_destroy(Gamep, Levelsp, Levelp);

@@ -36,6 +36,8 @@ bool tests_init(void)
   if (!test_load_move_ok()) { return false; }
   if (!test_load_open_door()) { return false; }
   if (!test_load_player_fall_chasm_into_lava()) { return false; }
+  if (!test_load_player_fall_chasm_twice_into_lava()) { return false; }
+  if (!test_load_player_fall_chasm_twice()) { return false; }
   if (!test_load_player_fall_while_on_fire()) { return false; }
   if (!test_load_player_lava()) { return false; }
   if (!test_load_player_on_fire_move_into_water()) { return false; }

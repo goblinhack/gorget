@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_dice_rolls.hpp"
+#include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
@@ -206,8 +207,30 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     THING_LOG(t, "fall %u", thing_is_falling(t));
 
   if (thing_is_falling(t) >= MAX_FALL_TIME_MS) {
+
     thing_fall_end(g, v, l, t);
-    thing_is_falling_set(g, v, l, t, false);
+
+    auto t_level = game_level_get(g, v, t->level_num);
+    if (! t_level) {
+      THING_ERR(t, "fell into nothing");
+    }
+
+    thing_is_falling_set(g, v, t_level, t, false);
+
+    if (thing_is_player(t)) {
+      if (level_is_chasm(g, v, t_level, t->at)) {
+        THING_LOG(t, "fell again");
+        level_tick_begin_requested(g, v, t_level, "player fell again");
+      }
+
+      //
+      // This seems rather cruel, but...
+      //
+      if (level_is_lava(g, v, t_level, t->at)) {
+        THING_LOG(t, "fell into lava");
+        level_tick_begin_requested(g, v, t_level, "player fell into lava");
+      }
+    }
   }
 }
 
@@ -232,6 +255,9 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   thing_is_falling_set(g, v, l, t, true);
 
+  //
+  // This is for bridges, so a chasm "appears".
+  //
   if (! level_is_chasm(g, v, l, t->at)) {
     thing_spawn(g, v, l, tp_first(is_chasm), t->at);
   }

@@ -42,6 +42,8 @@ std::initializer_list< std::string > tests = {
     "move_ok",
     "open_door",
     "player_fall_chasm_into_lava",
+    "player_fall_chasm_twice_into_lava",
+    "player_fall_chasm_twice",
     "player_fall_while_on_fire",
     "player_lava",
     "player_on_fire_move_into_water",

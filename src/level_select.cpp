@@ -140,16 +140,26 @@ Levelp level_select_get_next_level_down(Gamep g, Levelsp v, Levelp l)
 //
 // Attempt to find the next level for this thing to fall into
 //
-Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l)
+Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool redo)
 {
   TRACE_NO_INDENT();
+
+  LevelSelect *s = &v->level_select;
+  if (! s) {
+    DIE("missing level select pointer");
+  }
 
   auto   p         = l->level_select_at;
   Levelp level_out = nullptr;
   int    tries     = 0;
 
-  if (l->level_num_next_set) {
-    return game_level_get(g, v, l->level_num_next);
+  //
+  // Tests need to re-reun this each time a new level is added.
+  //
+  if (! redo) {
+    if (l->level_num_next_set) {
+      return game_level_get(g, v, l->level_num_next);
+    }
   }
 
   if (0) {
@@ -203,6 +213,32 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l)
     if (cand && (cand != l)) {
       level_out = cand;
       goto got_level;
+    }
+  }
+
+  //
+  // Get the next sequential level, in terms of level number. This is used for tests.
+  //
+  for (int y = 0; y < LEVELS_DOWN; y++) {
+    for (int x = 0; x < LEVELS_ACROSS; x++) {
+      LevelSelectCell *c = &s->data[ x ][ y ];
+      if (! c->is_set) {
+        continue;
+      }
+
+      auto cand = game_level_get(g, v, c->level_num);
+      if (! cand) {
+        continue;
+      }
+
+      if (0) {
+        CON("level %d -> next %d (sequential)", l->level_num, cand->level_num);
+      }
+
+      if (cand->level_num == l->level_num + 1) {
+        level_out = cand;
+        goto got_level;
+      }
     }
   }
 

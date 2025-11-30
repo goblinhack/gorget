@@ -35,6 +35,8 @@ extern bool test_load_mob();
 extern bool test_load_move_ok();
 extern bool test_load_open_door();
 extern bool test_load_player_fall_chasm_into_lava();
+extern bool test_load_player_fall_chasm_twice_into_lava();
+extern bool test_load_player_fall_chasm_twice();
 extern bool test_load_player_fall_while_on_fire();
 extern bool test_load_player_lava();
 extern bool test_load_player_on_fire_move_into_water();
