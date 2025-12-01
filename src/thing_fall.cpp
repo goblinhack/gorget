@@ -168,7 +168,9 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   auto t_level = game_level_get(g, v, t->level_num);
-  if (! t_level) {
+  if (t_level) {
+    l = t_level;
+  } else {
     THING_ERR(t, "fell into nothing");
   }
 

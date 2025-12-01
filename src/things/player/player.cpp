@@ -37,6 +37,13 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
+  //
+  // If we fell into another chasm, don't make an oof sound
+  //
+  if (level_is_chasm(g, v, l, t->at)) {
+    return;
+  }
+
   if (level_is_water(g, v, l, t->at)) {
     thing_sound_play(g, v, l, t, "splash");
   } else {
@@ -73,6 +80,13 @@ static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
+
+  //
+  // If we fell into another chasm, don't make an oof sound
+  //
+  if (level_is_chasm(g, v, l, t->at)) {
+    return;
+  }
 
   if (level_is_water(g, v, l, t->at)) {
     thing_sound_play(g, v, l, t, "splash");

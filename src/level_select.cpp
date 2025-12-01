@@ -242,6 +242,17 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
     }
   }
 
+  if (l->level_num == v->level_count) {
+    auto cand = game_level_get(g, v, 0);
+    if (cand) {
+      if (0) {
+        CON("level %d -> next (first level)", l->level_num);
+      }
+      level_out = cand;
+      goto got_level;
+    }
+  }
+
   //
   // Nothing to fall onto. Try a random level.
   //
