@@ -66,10 +66,8 @@ Widp wid_new_container(Gamep, Widp, std::string name);
 Widp wid_new_horiz_scroll_bar(Gamep, Widp parent, std::string name, Widp scrollbar_owner);
 Widp wid_new_plain(Gamep, Widp parent, std::string name);
 Widp wid_new_square_button(Gamep, Widp parent, std::string name);
-Widp wid_new_square_window(Gamep, std::string name);
-Widp wid_new_vert_scroll_bar(Gamep, Widp parent, std::string name, Widp scrollbar_owner);
 Widp wid_new_window(Gamep, std::string name);
-
+Widp wid_new_vert_scroll_bar(Gamep, Widp parent, std::string name, Widp scrollbar_owner);
 typedef bool (*on_joy_button_t)(Gamep, Widp, int x, int y);
 typedef bool (*on_key_down_t)(Gamep, Widp, const struct SDL_Keysym *);
 typedef bool (*on_key_up_t)(Gamep, Widp, const struct SDL_Keysym *);

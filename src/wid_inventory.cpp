@@ -220,7 +220,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     spoint tl(TERM_WIDTH / 2 - left_half, TERM_HEIGHT / 2 - top_half);
     spoint br(TERM_WIDTH / 2 + right_half - 1, TERM_HEIGHT / 2 + bot_half - 1);
 
-    wid_inventory_window = wid_new_square_window(g, "wid inventory");
+    wid_inventory_window = wid_new_window(g, "wid inventory");
     wid_set_pos(wid_inventory_window, tl, br);
     wid_set_style(wid_inventory_window, UI_WID_STYLE_NORMAL);
     wid_set_on_key_down(wid_inventory_window, wid_inventory_key_down);

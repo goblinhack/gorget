@@ -50,7 +50,7 @@ WidPopup::WidPopup(Gamep g, const std::string vname, spoint vtl, spoint vbr, Til
   }
 
   {
-    wid_popup_container = wid_new_square_window(g, "wid_popup " + this->name);
+    wid_popup_container = wid_new_window(g, "wid_popup " + this->name);
     wid_set_pos(wid_popup_container, tl, br);
     wid_set_style(wid_popup_container, UI_WID_STYLE_SPARSE_NONE);
     if (background != "") {

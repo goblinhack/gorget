@@ -10,12 +10,14 @@
 
 #include <string>
 
-typedef struct color {
-  unsigned char r;
-  unsigned char g;
-  unsigned char b;
-  unsigned char a;
-} color;
+class color
+{
+public:
+  unsigned char r = {};
+  unsigned char g = {};
+  unsigned char b = {};
+  unsigned char a = {};
+};
 
 color color_change_hue(const color &in, const float fHue);
 color color_find(const char *s);

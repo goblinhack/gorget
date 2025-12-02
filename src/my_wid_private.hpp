@@ -20,15 +20,14 @@
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
-typedef struct {
-  //
-  // Colors
-  //
-  std::array< color, WID_COLOR_MAX >   colors;
-  std::array< uint8_t, WID_COLOR_MAX > color_set;
-  int                                  style;
-  uint8_t                              style_set;
-} wid_options_menu;
+class wid_options_menu
+{
+public:
+  std::array< color, WID_COLOR_MAX >   colors    = {WHITE};
+  std::array< uint8_t, WID_COLOR_MAX > color_set = {};
+  int                                  style     = {};
+  uint8_t                              style_set = {};
+};
 
 class tree_wid_key
 {

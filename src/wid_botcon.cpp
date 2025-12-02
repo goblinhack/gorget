@@ -200,7 +200,7 @@ static void wid_botcon_wid_create(Gamep g)
     spoint tl = spoint(UI_LEFTBAR_WIDTH, TERM_HEIGHT - h);
     spoint br = spoint(UI_LEFTBAR_WIDTH + UI_BOTCON_WIDTH - 1, TERM_HEIGHT - 1);
 
-    wid_botcon_window = wid_new_square_window(g, "wid botcon");
+    wid_botcon_window = wid_new_window(g, "wid botcon");
     wid_set_name(wid_botcon_window, "wid botcon window");
     wid_set_pos(wid_botcon_window, tl, br);
     wid_set_shape_none(wid_botcon_window);

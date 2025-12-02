@@ -183,7 +183,7 @@ static void wid_console_wid_create(Gamep g)
   int    w = outer_br.x - outer_tl.x;
   int    h = outer_br.y - outer_tl.y;
 
-  wid_console_window = wid_new_square_window(g, "wid console");
+  wid_console_window = wid_new_window(g, "wid console");
   wid_set_pos(wid_console_window, outer_tl, outer_br);
   wid_set_color(wid_console_window, WID_COLOR_BG, WHITE);
   wid_set_color(wid_console_window, WID_COLOR_TEXT_FG, WHITE);

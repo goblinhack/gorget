@@ -2028,9 +2028,14 @@ static Widp wid_new(Gamep g, Widp parent)
   wid_tree2_unsorted_insert(w);
   wid_tree_global_unsorted_insert(w);
 
-  //
-  // Give some lame 3d to the wid
-  //
+  wid_set_mode(w, WID_MODE_NORMAL);
+  wid_set_color(w, WID_COLOR_BG, WHITE);
+  wid_set_color(w, WID_COLOR_TEXT_FG, GRAY90);
+
+  wid_set_mode(w, WID_MODE_OVER);
+  wid_set_color(w, WID_COLOR_BG, WHITE);
+  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+
   wid_set_mode(w, WID_MODE_NORMAL);
 
   w->visible = true;
@@ -2051,11 +2056,6 @@ static Widp wid_new(Gamep g)
   wid_tree_insert(w);
   wid_tree2_unsorted_insert(w);
   wid_tree_global_unsorted_insert(w);
-
-  //
-  // Give some lame 3d to the wid
-  //
-  wid_set_mode(w, WID_MODE_NORMAL);
 
   w->visible = true;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
@@ -2262,40 +2262,6 @@ void wid_destroy_in(Gamep g, Widp w, uint32_t ms)
 //
 // Initialize a top level wid with basic settings
 //
-Widp wid_new_window(Gamep g, std::string name)
-{
-  TRACE_NO_INDENT();
-
-  if (! wid_safe()) {
-    return nullptr;
-  }
-
-  Widp w = wid_new(g);
-
-  w->to_string = string_sprintf("%s[%p]", name.c_str(), (void *) w);
-
-  WID_DBG(w, "%s", __FUNCTION__);
-
-  wid_set_name(w, name);
-
-  wid_set_mode(w, WID_MODE_NORMAL);
-  wid_set_color(w, WID_COLOR_BG, WHITE);
-  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
-  wid_set_shape_square(w);
-
-  //
-  // Raise it so if there were other widgets with the same parent
-  // then this will be in front
-  //
-  wid_raise(g, w);
-  WID_DBG(w, "new");
-
-  return w;
-}
-
-//
-// Initialize a top level wid with basic settings
-//
 Widp wid_new_container(Gamep g, Widp parent, std::string name)
 {
   TRACE_NO_INDENT();
@@ -2335,7 +2301,7 @@ Widp wid_new_container(Gamep g, Widp parent, std::string name)
 //
 // Initialize a top level wid with basic settings
 //
-Widp wid_new_square_window(Gamep g, std::string name)
+Widp wid_new_window(Gamep g, std::string name)
 {
   TRACE_NO_INDENT();
 
@@ -5345,7 +5311,11 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ]) {
       ascii_putf__(x, y, WHITE, w_box_args.col_bg, text);
     } else {
-      ascii_putf__(x, y, w_box_args.col_text, COLOR_NONE, text);
+      //
+      // Do not use COLOR_NONE - it leads to other textures leaking in the background.
+      // Not sure why.
+      //
+      ascii_putf__(x, y, w_box_args.col_text, WHITE, text);
     }
   }
 

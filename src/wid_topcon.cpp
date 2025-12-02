@@ -204,7 +204,7 @@ static void wid_topcon_wid_create(Gamep g)
     spoint tl = spoint(UI_LEFTBAR_WIDTH, 0);
     spoint br = spoint(UI_LEFTBAR_WIDTH + UI_TOPCON_WIDTH - 1, h - 1);
 
-    wid_topcon_window = wid_new_square_window(g, "wid topcon");
+    wid_topcon_window = wid_new_window(g, "wid topcon");
     wid_set_name(wid_topcon_window, "wid topcon window");
     wid_set_pos(wid_topcon_window, tl, br);
     wid_set_shape_none(wid_topcon_window);

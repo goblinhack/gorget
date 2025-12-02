@@ -52,7 +52,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
       wid_text_box_container = wid_new_square_button(g, vparent, "wid text box");
       wid_set_shape_none(wid_text_box_container);
     } else {
-      wid_text_box_container = wid_new_square_window(g, "wid text box");
+      wid_text_box_container = wid_new_window(g, "wid text box");
       wid_set_style(wid_text_box_container, UI_WID_STYLE_GREEN);
     }
     wid_set_pos(wid_text_box_container, tl, br);

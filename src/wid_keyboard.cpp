@@ -704,7 +704,7 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
   ctx->cancelled        = cancelled;
   ctx->selected         = selected;
 
-  Widp window  = wid_new_square_window(g, "wid keyboard");
+  Widp window  = wid_new_window(g, "wid keyboard");
   ctx->w       = window;
   ctx->is_new  = true;
   ctx->max_len = max_len;
