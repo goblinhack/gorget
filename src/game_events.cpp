@@ -87,6 +87,16 @@ bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
     return false;
   }
 
+  if (! g) {
+    LOG("Game motion, ignore, no game");
+    return false;
+  }
+
+  if (game_state(g) != STATE_PLAYING) {
+    LOG("Game motion, ignore, not playing");
+    return false;
+  }
+
   auto v = game_levels_get(g);
   if (! v) {
     return false;
