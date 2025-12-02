@@ -42,7 +42,7 @@ bool thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
     //
     // It's the level below. Dampen the sound.
     //
-    scale = 0.01;
+    scale = 0.01f;
   } else if (t_level && (t_level != player_level)) {
     //
     // It's too far away. Ignore the sound.
