@@ -95,6 +95,7 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 
   auto player = thing_player(g);
   if (player) {
+    THING_LOG(t, "brazier is dead");
     if (thing_on_same_level_as_player(g, v, t)) {
       if (thing_vision_can_see_tile(g, v, l, player, t->at)) {
         TOPCON("The brazier falls over!");
@@ -130,6 +131,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_extinguished_on_death);
   tp_flag_set(tp, is_light_source, 4);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);

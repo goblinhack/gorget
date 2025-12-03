@@ -1,13 +1,14 @@
 bugs
 ----
 outline player when behind bushes
-do not allow the player to land in an enclosed area; climb? digging / blind jump/ emergency teleport
-need to ask if you want to kick over a brazier
+bushes quiver when monster is behind?
 no bridges across the center
 
 features
 --------
-bushes quiver when monster is behind?
+do not allow the player to land in an enclosed area; climb? digging / blind jump/ emergency teleport
+shrines that reduce spell points
+spell points to collect
 damaged door visuals
 slow fireball
 mobs generating monsters

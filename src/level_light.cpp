@@ -659,7 +659,7 @@ void level_light_raycast_fini(void)
 //
 // All light from all light sources, combined.
 //
-void level_light_calcuate_all(Gamep g, Levelsp v, Levelp l)
+void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 

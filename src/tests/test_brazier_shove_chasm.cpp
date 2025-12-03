@@ -32,7 +32,7 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
       = "......."
         "......."
         "....C.."
-        "..@;;.."
+        "..@BC.."
         "....C.."
         "......."
         ".......";
@@ -40,7 +40,7 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
       = "......."
         "......."
         "....C.."
-        "..@.C.."
+        "...@C.."
         "....C.."
         "......."
         ".......";
@@ -55,7 +55,7 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
   std::string expect2 // second level
       = "......."
         "......."
-        "...Bx.." // brazier was on fire
+        "...Bx.."
         "....x.."
         "....x.."
         "......."
@@ -72,79 +72,39 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
   //
   // The guts of the test
   //
-  bool result = false;
-  bool up     = false;
-  bool down   = false;
-  bool left   = false;
-  bool right  = false;
+  bool   result = false;
+  bool   up     = false;
+  bool   down   = false;
+  bool   left   = false;
+  bool   right  = false;
+  spoint p;
+  bool   found_it;
+  Thingp player;
+  int    tries;
 
   //
   // Bump into a brazier. It should be knocked over.
   //
   TEST_PROGRESS(t);
-  {
-    TEST_LOG(t, "move right");
-    TRACE_AND_INDENT();
-    up = down = left = right = false;
-    right                    = true;
+  TEST_LOG(t, "move right");
+  TRACE_AND_INDENT();
+  up = down = left = right = false;
+  right                    = true;
 
-    if (! (result = player_move_request(g, up, down, left, right))) {
-      TEST_FAILED(t, "move failed");
-      goto exit;
-    }
-
-    game_wait_for_tick_to_finish(g, v, l1);
-
-    if (! (result = level_match_contents(g, v, l1, t, w, h, expect_1a.c_str()))) {
-      TEST_FAILED(t, "unexpected contents");
-      goto exit;
-    }
-
-    auto player = thing_player(g);
-    if (! player) {
-      TEST_FAILED(t, "no player");
-      goto exit;
-    }
-
-    //
-    // Check the brazier is dead
-    //
-    TEST_LOG(t, "check brazier is dead");
-    auto p        = player->at + spoint(1, 0);
-    bool found_it = false;
-
-    FOR_ALL_THINGS_AT(g, v, l1, it, p)
-    {
-      if (thing_is_brazier(it) && thing_is_dead(it)) {
-        found_it = true;
-        break;
-      }
-    }
-
-    if (! found_it) {
-      TEST_FAILED(t, "no dead brazier");
-      goto exit;
-    }
+  if (! (result = player_move_request(g, up, down, left, right))) {
+    level_dump(g, v, l1, w, h);
+    level_dump(g, v, l2, w, h);
+    TEST_FAILED(t, "move failed");
+    goto exit;
   }
 
+  game_wait_for_tick_to_finish(g, v, l1);
+
   //
-  // Second shove, we should be able to move the dead brazier
+  // Wait for smoke to clear
   //
   TEST_PROGRESS(t);
-  {
-    TEST_LOG(t, "move right");
-    TRACE_AND_INDENT();
-    up = down = left = right = false;
-    right                    = true;
-
-    if (! (result = player_move_request(g, up, down, left, right))) {
-      TEST_FAILED(t, "move failed");
-      goto exit;
-    }
-  }
-
-  TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
+  for (tries = 0; tries < 10; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
@@ -152,25 +112,75 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
     game_wait_for_tick_to_finish(g, v, l1);
   }
 
-  TEST_PROGRESS(t);
-  {
-    if (! (result = level_match_contents(g, v, l1, t, w, h, expect_1b.c_str()))) {
-      TEST_FAILED(t, "unexpected contents");
-      goto exit;
-    }
+  if (! (result = level_match_contents(g, v, l1, t, w, h, expect_1a.c_str()))) {
+    level_dump(g, v, l1, w, h);
+    level_dump(g, v, l2, w, h);
+    TEST_FAILED(t, "unexpected contents");
+    goto exit;
+  }
 
-    auto player = thing_player(g);
-    if (! player) {
-      TEST_FAILED(t, "no player");
-      goto exit;
+  //
+  // Shove it. It should fall in the chasm now.
+  //
+  TEST_PROGRESS(t);
+  TEST_LOG(t, "move right again");
+  up = down = left = right = false;
+  right                    = true;
+
+  if (! (result = player_move_request(g, up, down, left, right))) {
+    level_dump(g, v, l1, w, h);
+    level_dump(g, v, l2, w, h);
+    TEST_FAILED(t, "move failed");
+    goto exit;
+  }
+
+  game_wait_for_tick_to_finish(g, v, l1);
+
+  if (! (result = level_match_contents(g, v, l1, t, w, h, expect_1b.c_str()))) {
+    level_dump(g, v, l1, w, h);
+    level_dump(g, v, l2, w, h);
+    TEST_FAILED(t, "unexpected contents");
+    goto exit;
+  }
+
+  player = thing_player(g);
+  if (! player) {
+    level_dump(g, v, l1, w, h);
+    level_dump(g, v, l2, w, h);
+    TEST_FAILED(t, "no player");
+    goto exit;
+  }
+
+  //
+  // Check the brazier is dead
+  //
+  TEST_LOG(t, "check brazier is dead");
+  p        = player->at + spoint(0, -1);
+  found_it = false;
+
+  TEST_PROGRESS(t);
+  FOR_ALL_THINGS_AT(g, v, l2, it, p)
+  {
+    if (thing_is_brazier(it) && thing_is_dead(it)) {
+      found_it = true;
+      break;
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
+  if (! found_it) {
+    level_dump(g, v, l1, w, h);
+    level_dump(g, v, l2, w, h);
+    TEST_FAILED(t, "no dead brazier");
+    goto exit;
+  }
+
+  TEST_ASSERT(t, game_tick_get(g, v) == 13, "final tick counter value");
 
   TEST_PROGRESS(t);
   {
     if (! (result = level_match_contents(g, v, l2, t, w, h, expect2.c_str()))) {
+      level_dump(g, v, l1, w, h);
+      level_dump(g, v, l2, w, h);
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }

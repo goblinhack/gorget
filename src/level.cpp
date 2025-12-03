@@ -103,6 +103,7 @@ static std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
 
   std::string out;
 
+  LEVEL_LOG(l, "string");
   for (int y = 0; y < h; y++) {
     for (int x = 0; x < w; x++) {
       char   c = CHARMAP_EMPTY;
@@ -228,6 +229,7 @@ static void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h, std::string s
 {
   TRACE_NO_INDENT();
 
+  CON("Level: %u", l->level_num + 1);
   for (int y = 0; y < h; y++) {
     std::string line;
 
@@ -264,6 +266,7 @@ bool level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
 {
   TRACE_NO_INDENT();
 
+  LEVEL_LOG(l, "match");
   std::string found = level_string(g, v, l, w, h);
 
   for (int y = 0; y < h; y++) {

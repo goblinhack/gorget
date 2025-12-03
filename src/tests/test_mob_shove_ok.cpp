@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-static bool test_mob(Gamep g, Testp t)
+static bool test_mob_shove_ok(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -32,7 +32,7 @@ static bool test_mob(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.g.."
+        "...@g.."
         "......."
         "......."
         ".......";
@@ -87,7 +87,7 @@ static bool test_mob(Gamep g, Testp t)
     // Check the mob is alive
     //
     TEST_LOG(t, "check mob is alive");
-    auto p        = player->at + spoint(2, 0);
+    auto p        = player->at + spoint(1, 0);
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
@@ -104,7 +104,7 @@ static bool test_mob(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
@@ -118,10 +118,10 @@ bool test_load_mob(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("mob");
+  Testp test = test_load("mob_shove_ok");
 
   // begin sort marker1 {
-  test_callback_set(test, test_mob);
+  test_callback_set(test, test_mob_shove_ok);
   // end sort marker1 }
 
   return true;

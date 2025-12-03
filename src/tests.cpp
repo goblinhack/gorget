@@ -31,7 +31,7 @@ bool tests_init(void)
   if (!test_load_jump_ok()) { return false; }
   if (!test_load_jump_truncated()) { return false; }
   if (!test_load_large_fire_water()) { return false; }
-  if (!test_load_mob_lava()) { return false; }
+  if (!test_load_mob_shove_into_lava()) { return false; }
   if (!test_load_mob_water()) { return false; }
   if (!test_load_mob()) { return false; }
   if (!test_load_move_ok()) { return false; }

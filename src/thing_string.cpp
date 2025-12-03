@@ -43,7 +43,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* is_scheduled_for_cleanup      */ "%s"
                          /* at                            */ " @%d,%d",
                          /* newline */ t->id,
-                         /* newline */ t->level_num,
+                         /* newline */ t->level_num + 1,
                          /* newline */ t->tick,
                          /* newline */ thing_health(t),
                          /* newline */ name.c_str(),

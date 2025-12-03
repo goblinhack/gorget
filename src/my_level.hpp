@@ -24,13 +24,13 @@ enum {
 // Player state
 //
 #define PLAYER_STATE_ENUM(list_macro)                                                                                \
-  clang_format_indent()                                                /* dummy line for clang indentation fixup */  \
-      list_macro(PLAYER_STATE_INIT, "INIT"),                           /* newline */                                 \
-      list_macro(PLAYER_STATE_DEAD, "DEAD"),                           /* newline */                                 \
-      list_macro(PLAYER_STATE_NORMAL, "NORMAL"),                       /* newline */                                 \
-      list_macro(PLAYER_STATE_PATH_REQUESTED, "PATH-REQUESTED"),       /* newline */                                 \
-      list_macro(PLAYER_STATE_MOVE_CONFIRM_REQUESTED, "MOVE-CONFIRM"), /* newline */                                 \
-      list_macro(PLAYER_STATE_FOLLOWING_A_PATH, "FOLLOW-PATH"),        /* newline */
+  clang_format_indent()                                          /* dummy line for clang indentation fixup */        \
+      list_macro(PLAYER_STATE_INIT, "INIT"),                     /* newline */                                       \
+      list_macro(PLAYER_STATE_DEAD, "DEAD"),                     /* newline */                                       \
+      list_macro(PLAYER_STATE_NORMAL, "NORMAL"),                 /* newline */                                       \
+      list_macro(PLAYER_STATE_PATH_REQUESTED, "PATH-REQUESTED"), /* newline */                                       \
+      list_macro(PLAYER_STATE_MOVE_CONFIRM_REQUESTED, "MOVE-CONFIRM-REQ"), /* newline */                             \
+      list_macro(PLAYER_STATE_FOLLOWING_PATH, "FOLLOWING-PATH"),           /* newline */
 
 ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
 
@@ -612,7 +612,7 @@ void    level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
 void    level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
 void    level_finalize(Gamep, Levelsp, Levelp);
 void    levels_finalize(Gamep, Levelsp);
-void    level_light_calcuate_all(Gamep, Levelsp, Levelp);
+void    level_light_calculate_all(Gamep, Levelsp, Levelp);
 void    level_light_raycast(Gamep, Levelsp, Levelp, int fbo);
 void    level_light_raycast_fini(void);
 void    level_mouse_position_get(Gamep, Levelsp, Levelp);

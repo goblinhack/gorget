@@ -37,7 +37,7 @@ std::initializer_list< std::string > tests = {
     "jump_ok",
     "jump_truncated",
     "large_fire_water",
-    "mob_lava",
+    "mob_shove_into_lava",
     "mob_water",
     "mob",
     "move_ok",

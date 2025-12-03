@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing.hpp"
 
 //
@@ -52,11 +53,7 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
   //
   // We only care about pixel moves.
   //
-
-  //
-  // First lighting update
-  //
-  level_light_calcuate_all(g, v, l);
+  level_light_calculate_all(g, v, l);
 
   //
   // Update minimaps

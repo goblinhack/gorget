@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_mob_lava(Gamep g, Testp t)
+static bool test_mob_shove_into_lava(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -31,7 +31,7 @@ static bool test_mob_lava(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.!.."
+        "...@!.."
         "......."
         "......."
         ".......";
@@ -138,7 +138,7 @@ static bool test_mob_lava(Gamep g, Testp t)
   {
     TRACE_NO_INDENT();
     TEST_LOG(t, "check mob is dead when shoved into lava");
-    p        = player->at + spoint(2, 0);
+    p        = player->at + spoint(1, 0);
     found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
@@ -172,7 +172,7 @@ static bool test_mob_lava(Gamep g, Testp t)
   //
   TEST_PROGRESS(t);
   {
-    TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+    TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick counter value");
   }
 
   TEST_PASSED(t);
@@ -183,14 +183,14 @@ exit:
   return result;
 }
 
-bool test_load_mob_lava(void)
+bool test_load_mob_shove_into_lava(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("mob_lava");
+  Testp test = test_load("mob_shove_into_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_mob_lava);
+  test_callback_set(test, test_mob_shove_into_lava);
   // end sort marker1 }
 
   return true;

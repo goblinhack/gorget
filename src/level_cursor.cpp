@@ -432,14 +432,14 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
       //
       // Player wants to start following or replace the current path.
       //
-      player_state_change(g, v, PLAYER_STATE_FOLLOWING_A_PATH);
+      player_state_change(g, v, PLAYER_STATE_FOLLOWING_PATH);
       break;
     case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
       //
       // Wait for confirmation.
       //
       return;
-    case PLAYER_STATE_FOLLOWING_A_PATH :
+    case PLAYER_STATE_FOLLOWING_PATH :
       //
       // Already following a path, stick to it until completion.
       //

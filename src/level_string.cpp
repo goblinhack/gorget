@@ -19,6 +19,6 @@ std::string to_string(Gamep g, Levelp l)
   }
 
   return (string_sprintf("L%u%s",
-                         /* newline */ l->level_num,
+                         /* newline */ l->level_num + 1,
                          /* newline */ l->is_current_level ? "/curr" : ""));
 }

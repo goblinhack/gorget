@@ -155,12 +155,6 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     level_tick_begin(g, v, l);
   } else {
     //
-    // Block random numbers
-    //
-    game_pcg_lock();
-    pcg_rand_blocked = true;
-
-    //
     // Idle state
     //
     level_tick_idle(g, v, l);

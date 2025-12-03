@@ -473,6 +473,11 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   // Final level connectivity.
   //
   levels_finalize(g, v);
+
+  //
+  // Need this to update visibility.
+  //
+  game_tick(g);
 }
 
 void Game::fini(void)

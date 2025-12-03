@@ -40,7 +40,7 @@ static bool test_brazier_shove_ok(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.B.."
+        "...@B.."
         "......."
         "......."
         ".......";
@@ -154,7 +154,7 @@ static bool test_brazier_shove_ok(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 11, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 12, "final tick counter value");
 
   TEST_PASSED(t);
 exit:

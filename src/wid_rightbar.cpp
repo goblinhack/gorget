@@ -118,6 +118,12 @@ static bool wid_rightbar_create_window(Gamep g)
     auto s = string_sprintf("Level:%u Dungeon:%s", l->level_num + 1, game_seed_name_get(g));
     wid_rightbar->log(g, s);
 
+    IF_DEBUG
+    {
+      s = string_sprintf("Move:%u", v->tick);
+      wid_rightbar->log(g, s);
+    }
+
     for (auto n = 0; n < v->describe_count; n++) {
       auto t = thing_find_optional(g, v, v->describe[ n ]);
       if (! t) {

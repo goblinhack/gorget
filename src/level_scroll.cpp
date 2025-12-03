@@ -119,7 +119,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
           // Re-enable auto scroll
           //
           return;
-        case PLAYER_STATE_FOLLOWING_A_PATH :
+        case PLAYER_STATE_FOLLOWING_PATH :
           //
           // Already following a path, stick to it until completion.
           // Re-enable auto scroll

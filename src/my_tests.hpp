@@ -30,7 +30,7 @@ extern bool test_load_foliage_on_fire();
 extern bool test_load_jump_ok();
 extern bool test_load_jump_truncated();
 extern bool test_load_large_fire_water();
-extern bool test_load_mob_lava();
+extern bool test_load_mob_shove_into_lava();
 extern bool test_load_mob_water();
 extern bool test_load_mob();
 extern bool test_load_move_ok();

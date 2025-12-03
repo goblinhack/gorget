@@ -32,7 +32,7 @@ static bool test_barrel(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@.b.."
+        "...@b.."
         "......."
         "......."
         ".......";
@@ -87,7 +87,7 @@ static bool test_barrel(Gamep g, Testp t)
     // Check the barrel is alive
     //
     TEST_LOG(t, "check barrel is alive");
-    auto p        = player->at + spoint(2, 0);
+    auto p        = player->at + spoint(1, 0);
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)
@@ -104,7 +104,7 @@ static bool test_barrel(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
