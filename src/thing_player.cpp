@@ -527,10 +527,11 @@ static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, b
 
     if (thing_shove_to(g, v, l, t, to)) {
       level_tick_begin_requested(g, v, l, "player shoved");
+
       //
       // Do not step onto the thing we just shoved.
       //
-      if (level_is_brazier(g, v, l, to)) {
+      if (level_is_dead_on_shoving(g, v, l, to)) {
         return false;
       } else {
         return true;
