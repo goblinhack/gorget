@@ -156,7 +156,6 @@ void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t
 
   if (tp_is_player(tp)) {
     color c = CYAN;
-    c.a     = 200;
     tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
   } else if (tp_is_blit_outlined(tp)) {
     tile_blit_outlined(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);

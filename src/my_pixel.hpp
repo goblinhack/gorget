@@ -52,16 +52,9 @@ static void inline putPixel(SDL_Surface *surface, uint16_t x, uint16_t y, const 
 {
   uint32_t rgb;
 
-#if 0
-  //
-  // Optimize these out
-  //
-  if (x >= (uint32_t)surface->w) {
-    ERR("out of range x %u, max %u", x, surface->w);
-  }
-
-  if (y >= (uint32_t)surface->h) {
-    ERR("out of range y %u, max %u", y, surface->h);
+#ifdef _DEBUG_BUILD_
+  if (unlikely((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
+    DIE("putPixel out of range, pix %d,%d in size %d,%d", x, y, surface->w, surface->h);
   }
 #endif
 
@@ -83,30 +76,16 @@ static inline void getPixel(SDL_Surface *surface, uint16_t x, uint16_t y, color 
 {
   uint32_t rgb;
 
+#ifdef _DEBUG_BUILD_
   if (unlikely((x >= (uint32_t) surface->w) || (y >= (uint32_t) surface->h))) {
     DIE("getPixel out of range, pix %d,%d in size %d,%d", x, y, surface->w, surface->h);
   }
+#endif
 
+#if 0 // needed?
   lock(surface);
-  getPixel_32bpp(surface, x, y, &rgb);
-
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-  col.r = (rgb & 0xff000000) >> 24;
-  col.g = (rgb & 0x00ff0000) >> 16;
-  col.b = (rgb & 0x0000ff00) >> 8;
-  col.a = (rgb & 0x000000ff);
-#else
-  col.r = (rgb & 0x000000ff);
-  col.g = (rgb & 0x0000ff00) >> 8;
-  col.b = (rgb & 0x00ff0000) >> 16;
-  col.a = (rgb & 0xff000000) >> 24;
 #endif
-  unlock(surface);
-}
 
-static inline void getPixelFast(SDL_Surface *surface, uint16_t x, uint16_t y, color &col)
-{
-  uint32_t rgb;
   getPixel_32bpp(surface, x, y, &rgb);
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -121,6 +100,9 @@ static inline void getPixelFast(SDL_Surface *surface, uint16_t x, uint16_t y, co
   col.a = (rgb & 0xff000000) >> 24;
 #endif
 
+#if 0 // needed?
   unlock(surface);
+#endif
 }
+
 #endif

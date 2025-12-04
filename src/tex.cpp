@@ -185,13 +185,12 @@ static SDL_Surface *load_image(std::string filename)
   return surf;
 }
 
-static void load_images(SDL_Surface **surf1_out, SDL_Surface **surf2_out, std::string filename)
+static void load_images(SDL_Surface **surf1_out, std::string filename)
 {
   TRACE_NO_INDENT();
   uint32_t       rmask, gmask, bmask, amask;
   unsigned char *image_data;
   SDL_Surface   *surf1 = nullptr;
-  SDL_Surface   *surf2 = nullptr;
   int            x, y, comp;
 
   image_data = load_raw_image(filename, &x, &y, &comp);
@@ -236,33 +235,7 @@ static void load_images(SDL_Surface **surf1_out, SDL_Surface **surf2_out, std::s
     ERR("Could not handle image with %d components", comp);
   }
 
-  if (comp == 4) {
-    surf2 = SDL_CreateRGBSurface(0, x, y, 32, rmask, gmask, bmask, amask);
-    if (! surf2) {
-      ERR("Could not create surface");
-      return;
-    }
-    newptr(MTYPE_SDL, surf2, "SDL_CreateRGBSurface8");
-  } else if (comp == 3) {
-    surf2 = SDL_CreateRGBSurface(0, x, y, 24, rmask, gmask, bmask, 0);
-    if (! surf2) {
-      ERR("Could not create surface");
-      return;
-    }
-    newptr(MTYPE_SDL, surf2, "SDL_CreateRGBSurface9");
-  } else if (comp == 2) {
-    surf2 = SDL_CreateRGBSurface(0, x, y, 32, 0, 0, 0, 0);
-    if (! surf2) {
-      ERR("Could not create surface");
-      return;
-    }
-    newptr(MTYPE_SDL, surf2, "SDL_CreateRGBSurface10");
-  } else {
-    ERR("Could not handle image with %d components", comp);
-  }
-
   memcpy(surf1->pixels, image_data, comp * x * y);
-  memcpy(surf2->pixels, image_data, comp * x * y);
 
   if ((comp == 2) || (comp == 3)) {
     SDL_Surface *old_surf = surf1;
@@ -278,24 +251,9 @@ static void load_images(SDL_Surface **surf1_out, SDL_Surface **surf2_out, std::s
     SDL_SaveBMP(surf1, filename.c_str());
   }
 
-  if ((comp == 2) || (comp == 3)) {
-    SDL_Surface *old_surf = surf2;
-    DBG2("- SDL_ConvertSurfaceFormat");
-    surf2 = SDL_ConvertSurfaceFormat(old_surf, SDL_PIXELFORMAT_RGBA8888, 0);
-    if (! surf2) {
-      ERR("Could not convert surface");
-      return;
-    }
-    newptr(MTYPE_SDL, surf2, "SDL_CreateRGBSurface15");
-    oldptr(MTYPE_SDL, old_surf);
-    SDL_FreeSurface(old_surf);
-    SDL_SaveBMP(surf2, filename.c_str());
-  }
-
   free_raw_image(image_data);
 
   *surf1_out = surf1;
-  *surf2_out = surf2;
 }
 
 //
@@ -335,24 +293,26 @@ Texp tex_load(std::string file, std::string name, int mode)
 }
 
 //
-// Returns two textures
-// 1 - black and white tile used in backgrounds
-// 2 - mask for sprites
-// 3 - outlines
+// Returns textures:
 //
-static std::vector< Texp > tex_sprite(SDL_Surface *in, std::string file, std::string name, int mode)
+// 1 - gray/monochrome
+// 2 - white mask
+// 3 - white outline only
+//
+static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, std::string file, std::string name,
+                                                         uint32_t tile_width, uint32_t tile_height, int mode)
 {
-  auto n1 = name + "_monochrome";
-  auto n2 = name + "_mask";
-  auto n3 = name + "_outline";
+  auto name_monochrome = name + "_monochrome";
+  auto name_mask       = name + "_mask";
+  auto name_outline    = name + "_outline";
 
-  Texp t1 = new Tex(n1);
-  Texp t2 = new Tex(n2);
-  Texp t3 = new Tex(n3);
+  Texp tex_dst_monochrome = new Tex(name_monochrome);
+  Texp tex_dst_mask       = new Tex(name_mask);
+  Texp tex_dst_outline    = new Tex(name_outline);
 
-  textures_monochrome.insert(std::make_pair(n1, t1));
-  textures_mask.insert(std::make_pair(n2, t2));
-  textures_outline.insert(std::make_pair(n3, t3));
+  textures_monochrome.insert(std::make_pair(name_monochrome, tex_dst_monochrome));
+  textures_mask.insert(std::make_pair(name_mask, tex_dst_mask));
+  textures_outline.insert(std::make_pair(name_outline, tex_dst_outline));
 
   uint32_t rmask, gmask, bmask, amask;
 
@@ -368,95 +328,108 @@ static std::vector< Texp > tex_sprite(SDL_Surface *in, std::string file, std::st
   amask = 0xff000000;
 #endif
 
-  uint32_t iwidth  = in->w;
-  uint32_t iheight = in->h;
-  //
-  // Subtract space for the single pixel padding and make a surface to
-  // copy pixels to.
-  //
-  uint32_t owidth  = iwidth;
-  uint32_t oheight = iheight;
+  uint32_t src_width  = src->w;
+  uint32_t src_height = src->h;
+  uint32_t src_x;
+  uint32_t src_y;
 
-  int      ix;
-  int      iy;
-  uint32_t ox;
-  uint32_t oy;
+  SDL_Surface *dst_monochrome = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
+  newptr(MTYPE_SDL, dst_monochrome, "SDL_CreateRGBSurface17");
 
-  SDL_Surface *out1 = SDL_CreateRGBSurface(0, owidth, oheight, 32, rmask, gmask, bmask, amask);
-  newptr(MTYPE_SDL, out1, "SDL_CreateRGBSurface17");
+  SDL_Surface *dst_mask = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
+  newptr(MTYPE_SDL, dst_mask, "SDL_CreateRGBSurface18");
 
-  SDL_Surface *out2 = SDL_CreateRGBSurface(0, owidth, oheight, 32, rmask, gmask, bmask, amask);
-  newptr(MTYPE_SDL, out2, "SDL_CreateRGBSurface18");
+  SDL_Surface *dst_outline = SDL_CreateRGBSurface(0, src_width, src_height, 32, rmask, gmask, bmask, amask);
+  newptr(MTYPE_SDL, dst_outline, "SDL_CreateRGBSurface19");
 
-  SDL_Surface *out3 = SDL_CreateRGBSurface(0, owidth, oheight, 32, rmask, gmask, bmask, amask);
-  newptr(MTYPE_SDL, out3, "SDL_CreateRGBSurface19");
+  color col_white(255, 255, 255, 255);
 
-  color c3(255, 255, 255, 255);
+  for (src_y = 0; src_y < src_height; src_y++) {
+    for (src_x = 0; src_x < src_width; src_x++) {
+      color col_orig;
+      getPixel(src, src_x, src_y, col_orig);
 
-  oy = 0;
-  for (iy = 0; iy < (int) iheight; iy++) {
-    ox = 0;
-    for (ix = 0; ix < (int) iwidth; ix++) {
-      color c1;
-      getPixelFast(in, ix, iy, c1);
-      color c2 = c1;
-
-      if ((c1.a == 255) && (c1.r == 0) && (c1.g == 0) && (c1.b == 0)) {
-        putPixel(out3, ox, oy, c3);
+      //
+      // Only copy solid black pixels for the outline.
+      //
+      if ((col_orig.a == 255) && (col_orig.r == 0) && (col_orig.g == 0) && (col_orig.b == 0)) {
+        putPixel(dst_outline, src_x, src_y, col_white);
       }
 
       //
       // Give an averaged, purpleish color to tiles
       //
-      uint8_t avg = ((int) c1.r + (int) c1.g + (int) c1.b) / UI_LIGHT_BACKGROUND;
-      c1.r        = avg;
-      c1.g        = avg;
-      c1.b        = avg;
-      c1.r /= UI_LIGHT_BACKGROUND;
-      c1.g /= UI_LIGHT_BACKGROUND;
-      // c1.b /= 2;
+      if (col_orig.a > 0) {
+        auto    col_monochrome = col_orig;
+        uint8_t avg
+            = ((int) col_monochrome.r + (int) col_monochrome.g + (int) col_monochrome.b) / UI_LIGHT_BACKGROUND;
+        col_monochrome.r = avg;
+        col_monochrome.g = avg;
+        col_monochrome.b = avg;
+        col_monochrome.r /= UI_LIGHT_BACKGROUND;
+        col_monochrome.g /= UI_LIGHT_BACKGROUND;
 
-      putPixel(out1, ox, oy, c1);
-
-      if (c2.a == 0) {
-        c2.r = 0;
-        c2.g = 0;
-        c2.b = 0;
-        c2.a = 0;
-      } else if ((c2.r > 1) || (c2.g > 1) || (c2.b > 1)) {
-        c2.r = 255;
-        c2.g = 255;
-        c2.b = 255;
-        c2.a = 255;
-      } else {
-        c2.r = 0;
-        c2.g = 0;
-        c2.b = 0;
-        c2.a = 0;
+        putPixel(dst_monochrome, src_x, src_y, col_monochrome);
       }
 
-      putPixel(out2, ox, oy, c2);
-      ox++;
+      //
+      // The mask is set for any non alpha pixel
+      //
+      if ((col_orig.a > 0) && ((col_orig.r > 0) || (col_orig.g > 0) || (col_orig.b > 0))) {
+        color col_mask = col_orig;
+        col_mask.r     = 255;
+        col_mask.g     = 255;
+        col_mask.b     = 255;
+        col_mask.a     = 255;
+        putPixel(dst_mask, src_x, src_y, col_mask);
+      }
     }
-    oy++;
   }
 
-  SDL_FreeSurface(in);
-  oldptr(MTYPE_SDL, in);
+#if 0
+  //
+  // Unused
+  //
+  auto tiles_across = src_width / tile_width;
+  auto tiles_down   = src_height / tile_height;
 
-  t1 = tex_from_surface(out1, file, n1, mode);
-  t2 = tex_from_surface(out2, file, n2, mode);
-  t3 = tex_from_surface(out3, file, n3, mode);
+  for (uint32_t tile_x = 0; tile_x < tiles_across; tile_x++) {
+    for (uint32_t tile_y = 0; tile_y < tiles_down; tile_y++) {
+      for (uint32_t ox = 0; ox < tile_width; ox++) {
+        for (uint32_t oy = 0; oy < tile_height; oy++) {
+          auto px = tile_x * tile_width + ox;
+          auto py = tile_y * tile_height + oy;
+
+          color col_orig;
+          getPixel(src, px, py, col_orig);
+
+          if ((col_orig.a == 255) && (col_orig.r == 0) && (col_orig.g == 0) && (col_orig.b == 0)) {
+            putPixel(dst_outline, px + 0, py - 0, col_white);
+          }
+        }
+      }
+    }
+  }
+#endif
+
+  SDL_FreeSurface(src);
+  oldptr(MTYPE_SDL, src);
+
+  tex_dst_monochrome = tex_from_surface(dst_monochrome, file, name_monochrome, mode);
+  tex_dst_mask       = tex_from_surface(dst_mask, file, name_mask, mode);
+  tex_dst_outline    = tex_from_surface(dst_outline, file, name_outline, mode);
 
   std::vector< Texp > out;
-  out.push_back(t1);
-  out.push_back(t2);
-  out.push_back(t3);
+
+  out.push_back(tex_dst_monochrome);
+  out.push_back(tex_dst_mask);
+  out.push_back(tex_dst_outline);
+
   return out;
 }
 
-void tex_load(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, std::string file, std::string name,
-              int mode)
+void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, std::string file,
+                      std::string name, uint32_t tile_width, uint32_t tile_height, int mode)
 {
   TRACE_NO_INDENT();
   Texp t = tex_find(name);
@@ -474,21 +447,16 @@ void tex_load(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline
   }
 
   DBG2("- create textures '%s', '%s'", file.c_str(), name.c_str());
-  SDL_Surface *surface            = nullptr;
-  SDL_Surface *surface_monochrome = nullptr;
+  SDL_Surface *surface = nullptr;
 
-  load_images(&surface, &surface_monochrome, file);
+  load_images(&surface, file);
 
   if (! surface) {
     ERR("Could not make surface from file '%s'", file.c_str());
   }
 
-  if (! surface_monochrome) {
-    ERR("Could not make black and white surface from file '%s'", file.c_str());
-  }
-
   *tex            = tex_from_surface(surface, file, name, mode);
-  auto p          = tex_sprite(surface_monochrome, file, name, mode);
+  auto p          = tex_create_masks_from_surface(surface, file, name, tile_width, tile_height, mode);
   *tex_monochrome = p[ 0 ];
   *tex_mask       = p[ 1 ];
   *tex_outline    = p[ 2 ];

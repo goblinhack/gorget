@@ -8,6 +8,7 @@
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
+#include "my_pixel.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_size.hpp"
@@ -346,8 +347,8 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
   }
 }
 
-void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, uint32_t height, uint32_t nargs,
-                           const char *arr[], int gl_mode)
+void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_width, uint32_t tile_height,
+                           uint32_t nargs, const char *arr[], int gl_mode)
 {
   TRACE_NO_INDENT();
   Texp tex;
@@ -355,10 +356,10 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
   Texp tex_mask;
   Texp tex_outline;
 
-  tex_load(&tex, &tex_monochrome, &tex_mask, &tex_outline, file, alias, gl_mode);
+  tex_load_sprites(&tex, &tex_monochrome, &tex_mask, &tex_outline, file, alias, tile_width, tile_height, gl_mode);
 
-  float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
-  float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
+  float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) tile_width)));
+  float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) tile_height)));
 
   int x   = 0;
   int y   = 0;
@@ -366,8 +367,8 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
 
   isize pixel_size;
 
-  pixel_size.w = width;
-  pixel_size.h = height;
+  pixel_size.w = tile_width;
+  pixel_size.h = tile_height;
 
   while (nargs--) {
     std::string name = arr[ idx++ ];
@@ -393,8 +394,8 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
 
       t->name           = name;
       t->index          = idx - 1;
-      t->pix_width      = width;
-      t->pix_height     = height;
+      t->pix_width      = tile_width;
+      t->pix_height     = tile_height;
       t->tex            = tex;
       t->tex_monochrome = tex_monochrome;
       t->tex_mask       = tex_mask;
@@ -421,7 +422,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
       t->pct_height = fh;
 
 #ifdef ENABLE_DEBUG_TILE
-      printf("Tile: %-10s %ux%u (%u, %u)", name.c_str(), width, height, x, y);
+      printf("Tile: %-10s %ux%u (%u, %u)", name.c_str(), tile_width, tile_height, x, y);
 #endif
 
 #ifdef ENABLE_TILE_BOUNDS
@@ -490,166 +491,12 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
     //
     // Check the whole tile can be read
     //
-    if ((x * width) + (width - 1) >= tex_get_width(tex)) {
+    if ((x * tile_width) + (tile_width - 1) >= tex_get_width(tex)) {
       x = 0;
       y++;
     }
 
-    if (y * height > tex_get_height(tex)) {
-      if (name != "") {
-        DIE("Overflow reading tile arr[%s]", name.c_str());
-      } else {
-        DIE("Overflow reading tile arr at x %d y %d", x, y);
-      }
-    }
-  }
-}
-
-void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, uint32_t height,
-                           const std::vector< std::string > &arr, int gl_mode)
-{
-  TRACE_NO_INDENT();
-  Texp tex;
-  Texp tex_monochrome;
-  Texp tex_mask;
-  Texp tex_outline;
-
-  tex_load(&tex, &tex_monochrome, &tex_mask, &tex_outline, file, alias, gl_mode);
-
-  float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
-  float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
-
-  int x   = 0;
-  int y   = 0;
-  int idx = 0;
-
-  isize pixel_size;
-
-  pixel_size.w = width;
-  pixel_size.h = height;
-
-  for (auto &name : arr) {
-    if (name != "") {
-      if (tile_find(name)) {
-        DIE("Tile name [%s] already used", name.c_str());
-      }
-
-      auto t      = new Tile(); // std::make_shared< class Tile >();
-      auto result = all_tiles.insert(std::make_pair(name, t));
-      if (! result.second) {
-        DIE("Tile insert name [%s] failed", name.c_str());
-      }
-
-      //
-      // Global array of all tiles
-      //
-      all_tiles_array.push_back(t);
-      t->global_index = all_tiles_array.size();
-
-      t->name           = name;
-      t->index          = idx - 1;
-      t->pix_width      = width;
-      t->pix_height     = height;
-      t->tex            = tex;
-      t->tex_monochrome = tex_monochrome;
-      t->tex_mask       = tex_mask;
-      t->tex_outline    = tex_outline;
-
-      t->set_gl_binding(tex_get_gl_binding(t->tex));
-      t->set_gl_binding_monochrome(tex_get_gl_binding(t->tex_monochrome));
-      t->set_gl_binding_mask(tex_get_gl_binding(t->tex_mask));
-      t->set_gl_binding_outline(tex_get_gl_binding(t->tex_outline));
-
-      t->x1 = fw * ((float) (x));
-      t->y1 = fh * ((float) (y));
-      t->x2 = t->x1 + fw;
-      t->y2 = t->y1 + fh;
-
-#ifdef ENABLE_TILE_BOUNDS
-      t->ox1 = t->x1;
-      t->oy1 = t->y1;
-      t->ox2 = t->x2;
-      t->oy2 = t->y2;
-#endif
-      t->pct_width  = fw;
-      t->pct_height = fh;
-
-#ifdef ENABLE_DEBUG_TILE
-      printf("Tile: %-10s %ux%u (%u, %u)", name.c_str(), width, height, x, y);
-#endif
-
-#ifdef ENABLE_TILE_BOUNDS
-      if ((pixel_size.w <= TILE_WIDTH_MAX) && (pixel_size.h <= TILE_HEIGHT_MAX)) {
-        SDL_Surface *s = tex_get_surface(tex);
-
-        spoint off(pixel_size.w * x, pixel_size.h * y);
-
-        spoint MAX(pixel_size.w * x, pixel_size.h * y);
-
-        spoint MIN((pixel_size.w * x) + pixel_size.w - 1, (pixel_size.h * y) + pixel_size.h - 1);
-
-        int x1, y1;
-
-        for (y1 = pixel_size.h - 1; y1 >= 0; y1--) {
-          for (x1 = 0; x1 < pixel_size.w; x1++) {
-
-            spoint at((pixel_size.w * x) + x1, (pixel_size.h * y) + y1);
-
-            color p;
-            getPixel(s, at.x, at.y, p);
-
-            //
-            // If solid...
-            //
-            if (p.a >= 0xef) {
-              MIN.x = std::min(at.x, MIN.x);
-              MIN.y = std::min(at.y, MIN.y);
-              MAX.x = std::max(at.x, MAX.x);
-              MAX.y = std::max(at.y, MAX.y);
-#ifdef ENABLE_DEBUG_TILE
-              printf("X");
-#endif
-              if ((x1 < TILE_WIDTH_MAX) && (y1 < TILE_HEIGHT_MAX)) {
-                t->pix[ x1 ][ y1 ] = (uint8_t) 1;
-              }
-            } else if (p.a > 0) {
-#ifdef ENABLE_DEBUG_TILE
-              printf(".");
-#endif
-            } else {
-#ifdef ENABLE_DEBUG_TILE
-              printf(" ");
-#endif
-            }
-          }
-#ifdef ENABLE_DEBUG_TILE
-          printf("\n");
-#endif
-        }
-
-        t->px1 = (((float) (MIN.x) - off.x)) / ((float) pixel_size.w);
-        t->px2 = (((float) (MAX.x) - off.x + 1)) / ((float) pixel_size.w);
-        t->py1 = (((float) (MIN.y) - off.y)) / ((float) pixel_size.h);
-        t->py2 = (((float) (MAX.y) - off.y + 1)) / ((float) pixel_size.h);
-      }
-#endif
-
-#ifdef ENABLE_DEBUG_TILE
-      printf("^^^  %s %f %f %f %f\n", name.c_str(), t->px1, t->py1, t->px2, t->py2);
-#endif
-    }
-
-    x++;
-
-    //
-    // Check the whole tile can be read
-    //
-    if ((x * width) + (width - 1) >= tex_get_width(tex)) {
-      x = 0;
-      y++;
-    }
-
-    if (y * height > tex_get_height(tex)) {
+    if (y * tile_height > tex_get_height(tex)) {
       if (name != "") {
         DIE("Overflow reading tile arr[%s]", name.c_str());
       } else {
@@ -1009,6 +856,18 @@ void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &t
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
 
+//
+// Outline only
+//
+void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                       const color &c)
+{
+  blit(tile->gl_binding_outline(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
+}
+
+//
+// Add a black outline
+//
 void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
                         const color &c, const color &outline, int single_pix_size, bool square)
 {
@@ -1067,10 +926,4 @@ void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, fl
   auto  h   = br.y - tl.y;
   tl.y      = (int) (floor((float) tl.y / pix) * pix);
   br.y      = tl.y + h;
-}
-
-void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-                       const color &c)
-{
-  blit(tile->gl_binding_outline(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
