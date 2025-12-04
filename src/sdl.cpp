@@ -750,41 +750,14 @@ void config_game_gfx_update(Gamep g)
   LOG("SDL: - game map fbo sz         : %dx%d", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
   LOG("SDL: - map single pixel size   : %d", game_map_single_pix_size_get(g));
 
-  int fbo_tmp_w, fbo_tmp_h;
-
   LOG("SDL: FBO sizes:");
-  fbo_get_size(g, FBO_MAP_BG_MERGED, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_BG_MERGED size          : %dx%d", fbo_tmp_w, fbo_tmp_h);
 
-  fbo_get_size(g, FBO_MAP_FG_MERGED, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_FG_MERGED size          : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_MAP_BG, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_BG size                 : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_MAP_FG, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_FG size                 : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_MAP_FG_OVERLAY, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_FG_OVERLAY size         : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_MAP_LIGHT, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MAP_LIGHT size              : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_WID, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_WID size                    : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_FINAL, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_FINAL size                  : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_MINIMAP_WORLD, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MINIMAP_WORLD size          : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_MINIMAP_WORLD_ROTATED, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MINIMAP_WORLD_ROTATED size  : %dx%d", fbo_tmp_w, fbo_tmp_h);
-
-  fbo_get_size(g, FBO_MINIMAP_LEVEL, fbo_tmp_w, fbo_tmp_h);
-  LOG("SDL: - FBO_MINIMAP_LEVEL size          : %dx%d", fbo_tmp_w, fbo_tmp_h);
+  FOR_ALL_FBO(fbo)
+  {
+    int fbo_tmp_w, fbo_tmp_h;
+    fbo_get_size(g, fbo, fbo_tmp_w, fbo_tmp_h);
+    LOG("SDL: - %-30s : %ux%u pixels", FboEnum_to_string(fbo).c_str(), fbo_tmp_w, fbo_tmp_h);
+  }
 
   LOG("SDL: Map");
   LOG("SDL: - size                    : %dx%d", MAP_WIDTH, MAP_HEIGHT);

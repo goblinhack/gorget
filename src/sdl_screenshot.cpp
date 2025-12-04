@@ -159,5 +159,5 @@ void sdl_fbo_dump(Gamep g, int fbo, const std::string &name)
   stbi_write_png(png, w, h, components, pixels.data(), 4 * w);
   CON("Screenshot: %s", png);
   myfree(png);
-  count++;
+  //  count++;
 }

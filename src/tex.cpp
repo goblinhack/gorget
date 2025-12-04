@@ -59,6 +59,7 @@ public:
 static std::unordered_map< std::string, Texp > textures;
 static std::unordered_map< std::string, Texp > textures_monochrome;
 static std::unordered_map< std::string, Texp > textures_mask;
+static std::unordered_map< std::string, Texp > textures_outline;
 
 uint8_t tex_init(void)
 {
@@ -78,9 +79,13 @@ void tex_fini(void)
   for (auto &t : textures_mask) {
     delete t.second;
   }
+  for (auto &t : textures_outline) {
+    delete t.second;
+  }
   textures.clear();
   textures_monochrome.clear();
   textures_mask.clear();
+  textures_outline.clear();
 }
 
 void tex_free(Texp tex)
@@ -89,6 +94,7 @@ void tex_free(Texp tex)
   textures.erase(tex->name);
   textures_monochrome.erase(tex->name);
   textures_mask.erase(tex->name);
+  textures_outline.erase(tex->name);
   delete (tex);
 }
 
@@ -332,15 +338,22 @@ Texp tex_load(std::string file, std::string name, int mode)
 // Returns two textures
 // 1 - black and white tile used in backgrounds
 // 2 - mask for sprites
+// 3 - outlines
 //
-static std::pair< Texp, Texp > tex_sprite(SDL_Surface *in, std::string file, std::string name, int mode)
+static std::vector< Texp > tex_sprite(SDL_Surface *in, std::string file, std::string name, int mode)
 {
   auto n1 = name + "_monochrome";
   auto n2 = name + "_mask";
+  auto n3 = name + "_outline";
+
   Texp t1 = new Tex(n1);
   Texp t2 = new Tex(n2);
+  Texp t3 = new Tex(n3);
+
   textures_monochrome.insert(std::make_pair(n1, t1));
   textures_mask.insert(std::make_pair(n2, t2));
+  textures_outline.insert(std::make_pair(n3, t3));
+
   uint32_t rmask, gmask, bmask, amask;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -371,8 +384,14 @@ static std::pair< Texp, Texp > tex_sprite(SDL_Surface *in, std::string file, std
 
   SDL_Surface *out1 = SDL_CreateRGBSurface(0, owidth, oheight, 32, rmask, gmask, bmask, amask);
   newptr(MTYPE_SDL, out1, "SDL_CreateRGBSurface17");
+
   SDL_Surface *out2 = SDL_CreateRGBSurface(0, owidth, oheight, 32, rmask, gmask, bmask, amask);
   newptr(MTYPE_SDL, out2, "SDL_CreateRGBSurface18");
+
+  SDL_Surface *out3 = SDL_CreateRGBSurface(0, owidth, oheight, 32, rmask, gmask, bmask, amask);
+  newptr(MTYPE_SDL, out3, "SDL_CreateRGBSurface19");
+
+  color c3(255, 255, 255, 255);
 
   oy = 0;
   for (iy = 0; iy < (int) iheight; iy++) {
@@ -381,6 +400,10 @@ static std::pair< Texp, Texp > tex_sprite(SDL_Surface *in, std::string file, std
       color c1;
       getPixelFast(in, ix, iy, c1);
       color c2 = c1;
+
+      if ((c1.a == 255) && (c1.r == 0) && (c1.g == 0) && (c1.b == 0)) {
+        putPixel(out3, ox, oy, c3);
+      }
 
       //
       // Give an averaged, purpleish color to tiles
@@ -423,11 +446,17 @@ static std::pair< Texp, Texp > tex_sprite(SDL_Surface *in, std::string file, std
 
   t1 = tex_from_surface(out1, file, n1, mode);
   t2 = tex_from_surface(out2, file, n2, mode);
+  t3 = tex_from_surface(out3, file, n3, mode);
 
-  return std::make_pair(t1, t2);
+  std::vector< Texp > out;
+  out.push_back(t1);
+  out.push_back(t2);
+  out.push_back(t3);
+  return out;
 }
 
-void tex_load(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, std::string file, std::string name, int mode)
+void tex_load(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex_outline, std::string file, std::string name,
+              int mode)
 {
   TRACE_NO_INDENT();
   Texp t = tex_find(name);
@@ -460,8 +489,9 @@ void tex_load(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, std::string file,
 
   *tex            = tex_from_surface(surface, file, name, mode);
   auto p          = tex_sprite(surface_monochrome, file, name, mode);
-  *tex_monochrome = p.first;
-  *tex_mask       = p.second;
+  *tex_monochrome = p[ 0 ];
+  *tex_mask       = p[ 1 ];
+  *tex_outline    = p[ 2 ];
 
   DBG2("- loaded texture '%s', '%s'", file.c_str(), name.c_str());
 }
@@ -571,7 +601,7 @@ Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, 
   auto result = textures.insert(std::make_pair(name, t));
 
   if (! result.second) {
-    ERR("Tex insert name '%s' failed", name.c_str());
+    DIE("Tex insert surface name '%s' failed", name.c_str());
   }
 
   t->width              = surface->w;

@@ -249,9 +249,17 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
       list_macro(FBO_MINIMAP_WORLD, "FBO_MINIMAP_WORLD"),                 /* newline */                              \
       list_macro(FBO_MINIMAP_WORLD_ROTATED, "FBO_MINIMAP_WORLD_ROTATED"), /* newline */                              \
       list_macro(FBO_WID, "FBO_WID"),                                     /* newline */                              \
+      list_macro(FBO_SPRITE1, "FBO_SPRITE1"),                             /* newline */                              \
       list_macro(FBO_FINAL, "FBO_FINAL"),                                 /* newline */
 
 ENUM_DEF_H(FBO_ENUM, FboEnum);
+
+#define FBO_ENUM_FIRST ((FboEnum) 0)
+
+#define FOR_ALL_FBO(_iter_)                                                                                          \
+  for (FboEnum _iter_ = FBO_ENUM_FIRST; /* newline */                                                                \
+       _iter_ < FBO_ENUM_MAX;           /* newline */                                                                \
+       _iter_ = static_cast< FboEnum >(static_cast< int >(_iter_) + 1))
 
 extern uint32_t NUMBER_BYTES_PER_VERTICE_2D;
 
@@ -293,6 +301,7 @@ void blit_flush_triangle_fan(float *begin, float *end);
 void blit_flush_triangle_fan(void);
 void blit_init(void);
 void fbo_get_size(Gamep, int fbo, int &w, int &h);
+void fbo_get_curr_size(Gamep g, int &w, int &h);
 
 void gl_blitline(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
 void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint br);

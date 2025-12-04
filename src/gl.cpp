@@ -26,6 +26,9 @@ GLuint g_fbo_tex_id[ FBO_ENUM_MAX ];
 GLuint g_render_buf_id[ FBO_ENUM_MAX ];
 isize  g_fbo_size[ FBO_ENUM_MAX ];
 
+static int fbo_locked = -1;
+static int fbo_last   = -1;
+
 void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
                      const void *userParam)
 {
@@ -267,6 +270,7 @@ static void gl_init_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint 
     case FBO_WID :
     case FBO_FINAL :
     case FBO_MINIMAP_LEVEL :
+    case FBO_SPRITE1 :
     default :
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -549,11 +553,17 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
       w = MAP_WIDTH;
       h = MAP_HEIGHT;
       break;
+    case FBO_SPRITE1 :
+      w = game_window_pix_width_get(g);
+      h = game_window_pix_height_get(g);
+      break;
     default : // newline
       DIE("Need size for fbo %d", fbo);
       break;
   }
 }
+
+void fbo_get_curr_size(Gamep g, int &w, int &h) { fbo_get_size(g, fbo_last, w, h); }
 
 void blit_fbo(Gamep g, int fbo)
 {
@@ -571,9 +581,6 @@ void blit_fbo(Gamep g, int fbo, int tl_x, int tl_y, int br_x, int br_y)
   blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, tl_x, tl_y, br_x, br_y, WHITE);
   blit_flush();
 }
-
-static int fbo_locked = -1;
-static int fbo_last   = -1;
 
 void blit_fbo_push(int fbo) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]); }
 

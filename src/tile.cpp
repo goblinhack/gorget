@@ -3,11 +3,13 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_color_defs.hpp"
 #include "my_cpp_template.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_sdl_proto.hpp"
 #include "my_size.hpp"
 #include "my_string.hpp"
 #include "my_tex.hpp"
@@ -76,6 +78,7 @@ public:
   class Tex *tex {};
   class Tex *tex_monochrome {};
   class Tex *tex_mask {};
+  class Tex *tex_outline {};
 
   std::array< std::array< uint8_t, TILE_HEIGHT_MAX >, TILE_WIDTH_MAX > pix {};
 
@@ -98,14 +101,18 @@ private:
   int _gl_binding {};
   int _gl_binding_monochrome {};
   int _gl_binding_mask {};
+  int _gl_binding_outline {};
 
 public:
-  int  gl_binding(void) const;
-  int  gl_binding_monochrome(void) const;
-  int  gl_binding_mask(void) const;
+  int gl_binding(void) const;
+  int gl_binding_monochrome(void) const;
+  int gl_binding_mask(void) const;
+  int gl_binding_outline(void) const;
+
   void set_gl_binding(int v);
   void set_gl_binding_monochrome(int v);
   void set_gl_binding_mask(int v);
+  void set_gl_binding_outline(int v);
 };
 
 Tile::Tile(void) { newptr(MTYPE_TILE, this, "Tile"); }
@@ -165,10 +172,12 @@ Tile::Tile(const class Tile *tile)
   set_gl_binding(tile->gl_binding());
   set_gl_binding_monochrome(tile->gl_binding_monochrome());
   set_gl_binding_mask(tile->gl_binding_mask());
+  set_gl_binding_outline(tile->gl_binding_outline());
 
   tex            = tile->tex;
   tex_monochrome = tile->tex_monochrome;
   tex_mask       = tile->tex_mask;
+  tex_outline    = tile->tex_outline;
 
   std::copy(mbegin(tile->pix), mend(tile->pix), mbegin(pix));
 
@@ -344,8 +353,9 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
   Texp tex;
   Texp tex_monochrome;
   Texp tex_mask;
+  Texp tex_outline;
 
-  tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, gl_mode);
+  tex_load(&tex, &tex_monochrome, &tex_mask, &tex_outline, file, alias, gl_mode);
 
   float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
   float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
@@ -387,12 +397,13 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t width, 
       t->pix_height     = height;
       t->tex            = tex;
       t->tex_monochrome = tex_monochrome;
-
-      t->tex_mask = tex_mask;
+      t->tex_mask       = tex_mask;
+      t->tex_outline    = tex_outline;
 
       t->set_gl_binding(tex_get_gl_binding(t->tex));
       t->set_gl_binding_monochrome(tex_get_gl_binding(t->tex_monochrome));
       t->set_gl_binding_mask(tex_get_gl_binding(t->tex_mask));
+      t->set_gl_binding_outline(tex_get_gl_binding(t->tex_outline));
 
       t->x1 = fw * ((float) (x));
       t->y1 = fh * ((float) (y));
@@ -501,8 +512,9 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
   Texp tex;
   Texp tex_monochrome;
   Texp tex_mask;
+  Texp tex_outline;
 
-  tex_load(&tex, &tex_monochrome, &tex_mask, file, alias, gl_mode);
+  tex_load(&tex, &tex_monochrome, &tex_mask, &tex_outline, file, alias, gl_mode);
 
   float fw = (float) 1.0 / ((((float) tex_get_width(tex))) / (((float) width)));
   float fh = (float) 1.0 / ((((float) tex_get_height(tex))) / (((float) height)));
@@ -541,9 +553,12 @@ void tile_load_arr_sprites(std::string file, std::string alias, uint32_t width, 
       t->tex            = tex;
       t->tex_monochrome = tex_monochrome;
       t->tex_mask       = tex_mask;
+      t->tex_outline    = tex_outline;
+
       t->set_gl_binding(tex_get_gl_binding(t->tex));
       t->set_gl_binding_monochrome(tex_get_gl_binding(t->tex_monochrome));
       t->set_gl_binding_mask(tex_get_gl_binding(t->tex_mask));
+      t->set_gl_binding_outline(tex_get_gl_binding(t->tex_outline));
 
       t->x1 = fw * ((float) (x));
       t->y1 = fh * ((float) (y));
@@ -936,6 +951,18 @@ void Tile::set_gl_binding_mask(int v)
   _gl_binding_mask = v;
 }
 
+int Tile::gl_binding_outline(void) const
+{
+  TRACE_NO_INDENT();
+  return _gl_binding_outline;
+}
+
+void Tile::set_gl_binding_outline(int v)
+{
+  TRACE_NO_INDENT();
+  _gl_binding_outline = v;
+}
+
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c)
 {
   float x1, x2, y1, y2;
@@ -955,8 +982,8 @@ void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const 
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
 
-void tile_blit(const Tilep &tile, spoint tl, spoint br, color color_tl, color color_tr, color color_bl,
-               color color_br)
+void tile_blit(const Tilep &tile, spoint tl, spoint br, const color &color_tl, const color &color_tr,
+               const color &color_bl, const color &color_br)
 {
   float x1 = tile->x1;
   float x2 = tile->x2;
@@ -982,8 +1009,8 @@ void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &t
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
 
-void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-                       const color &c, const color &outline, int single_pix_size, bool square)
+void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                        const color &c, const color &outline, int single_pix_size, bool square)
 {
   auto binding = tile->gl_binding_mask();
 
@@ -1018,7 +1045,8 @@ void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2
 // Shift the coordinates of a tile by a given percentage, so the bottom is
 // trimmed and looks submerged.
 //
-void tile_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2, float percent)
+void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2,
+                                  float percent)
 {
   float h1 = br.y - tl.y;
   float h2 = y2 - y1;
@@ -1039,4 +1067,10 @@ void tile_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, float &x2, fl
   auto  h   = br.y - tl.y;
   tl.y      = (int) (floor((float) tl.y / pix) * pix);
   br.y      = tl.y + h;
+}
+
+void tile_blit_outline(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+                       const color &c)
+{
+  blit(tile->gl_binding_outline(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
 }
