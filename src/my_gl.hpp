@@ -255,7 +255,7 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 ENUM_DEF_H(FBO_ENUM, FboEnum);
 
 #define FBO_ENUM_FIRST ((FboEnum) 0)
-#define FBO_NONE       ((FboEnum) (-1))
+#define FBO_NONE       ((FboEnum) (FBO_ENUM_MAX))
 
 #define FOR_ALL_FBO(_iter_)                                                                                          \
   for (FboEnum _iter_ = FBO_ENUM_FIRST; /* newline */                                                                \
