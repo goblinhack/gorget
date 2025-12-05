@@ -73,18 +73,18 @@ void tex_fini(void)
   for (auto &t : textures) {
     delete t.second;
   }
+  textures.clear();
   for (auto &t : textures_monochrome) {
     delete t.second;
   }
+  textures_monochrome.clear();
   for (auto &t : textures_mask) {
     delete t.second;
   }
+  textures_mask.clear();
   for (auto &t : textures_outline) {
     delete t.second;
   }
-  textures.clear();
-  textures_monochrome.clear();
-  textures_mask.clear();
   textures_outline.clear();
 }
 
@@ -411,9 +411,6 @@ static std::vector< Texp > tex_create_masks_from_surface(SDL_Surface *src, std::
     }
   }
 #endif
-
-  SDL_FreeSurface(src);
-  oldptr(MTYPE_SDL, src);
 
   tex_dst_monochrome = tex_from_surface(dst_monochrome, file, name_monochrome, mode);
   tex_dst_mask       = tex_from_surface(dst_mask, file, name_mask, mode);
