@@ -8,6 +8,7 @@
 
 #include "my_color.hpp"
 #include "my_game_defs.hpp"
+#include "my_gl.hpp"
 #include "my_spoint.hpp"
 #include "my_tp.hpp"
 #include "my_types.hpp"
@@ -424,11 +425,13 @@ bool thing_is_animated_sync_first(Thingp);
 bool thing_is_animated(Thingp);
 bool thing_is_barrel(Thingp);
 bool thing_is_blit_centered(Thingp);
-bool thing_is_blit_colored_always(Thingp);
 bool thing_is_blit_if_has_seen(Thingp);
-bool thing_is_blit_in_chasm(Thingp);
+bool thing_is_blit_obscures(Thingp);
 bool thing_is_blit_on_ground(Thingp);
 bool thing_is_blit_outlined(Thingp);
+bool thing_is_blit_when_obscured(Thingp);
+bool thing_is_blit_shown_in_chasms(Thingp);
+bool thing_is_blit_shown_in_overlay(Thingp);
 bool thing_is_blit_square_outlined(Thingp);
 bool thing_is_brazier(Thingp);
 bool thing_is_bridge(Thingp);
@@ -531,8 +534,6 @@ bool thing_is_trap(Thingp);
 bool thing_is_treasure(Thingp);
 bool thing_is_undead(Thingp);
 bool thing_is_unused1(Thingp);
-bool thing_is_unused2(Thingp);
-bool thing_is_unused3(Thingp);
 bool thing_is_wait_on_dead_anim(Thingp);
 bool thing_is_walk_through_walls(Thingp);
 bool thing_is_wall(Thingp);
@@ -843,7 +844,8 @@ spoint thing_pix_at_set(Thingp t, short, short);
 
 bool thing_is_immune_to(Thingp, ThingEventType);
 
-void thing_display(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index, int fbo);
+void thing_display(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index,
+                   FboEnum fbo);
 void thing_display_get_tile_info(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spoint *,
                                  uint16_t *tile_index);
 void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);

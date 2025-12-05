@@ -35,9 +35,9 @@ bool tp_load_teleport(void)
   thing_detail_set(tp, tp_teleport_detail_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_blit_colored_always);
   tp_flag_set(tp, is_blit_if_has_seen);
-  tp_flag_set(tp, is_blit_in_chasm);
+  tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_light_source, 4);

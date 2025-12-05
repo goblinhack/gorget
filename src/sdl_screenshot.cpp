@@ -29,9 +29,9 @@ void sdl_screenshot_do(Gamep g)
   }
 
   GL_ERROR_CHECK();
-  int fbo = FBO_FINAL;
-  int w;
-  int h;
+  FboEnum fbo = FBO_FINAL;
+  int     w;
+  int     h;
   GL_ERROR_CHECK();
   fbo_get_size(g, fbo, w, h);
   GL_ERROR_CHECK();
@@ -74,7 +74,7 @@ void sdl_screenshot_do(Gamep g)
   count++;
 }
 
-std::vector< uint8_t > sdl_fbo_save(Gamep g, int fbo)
+std::vector< uint8_t > sdl_fbo_save(Gamep g, FboEnum fbo)
 {
   TRACE_AND_INDENT();
   int w;
@@ -100,7 +100,7 @@ std::vector< uint8_t > sdl_fbo_save(Gamep g, int fbo)
   return pixels;
 }
 
-void sdl_fbo_load(Gamep g, int fbo, const std::vector< uint8_t > &pixels)
+void sdl_fbo_load(Gamep g, FboEnum fbo, const std::vector< uint8_t > &pixels)
 {
   TRACE_AND_INDENT();
   if (pixels.empty()) {
@@ -125,7 +125,7 @@ void sdl_fbo_load(Gamep g, int fbo, const std::vector< uint8_t > &pixels)
   GL_ERROR_CHECK();
 }
 
-void sdl_fbo_dump(Gamep g, int fbo, const std::string &name)
+void sdl_fbo_dump(Gamep g, FboEnum fbo, const std::string &name)
 {
   TRACE_AND_INDENT();
 

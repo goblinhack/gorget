@@ -136,7 +136,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
 }
 
 void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                        Tilep tile, float x1, float x2, float y1, float y2, color fg)
+                        Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
 {
   TRACE_NO_INDENT();
 
@@ -154,10 +154,34 @@ void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t
     single_pix_size = 0;
   }
 
-  if (tp_is_player(tp)) {
-    color c = CYAN;
-    tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
-  } else if (tp_is_blit_outlined(tp)) {
+  switch (fbo) {
+    case FBO_MAP_FG_OVERLAY :
+
+      //
+      // Things like exits and entrances are shown in color once seen
+      //
+      if (! tp_is_blit_shown_in_overlay(tp)) {
+        return;
+      }
+
+      //
+      // Show an outline if obscured? e.g. foliage and the player hiding in it
+      //
+      if (level_is_blit_obscures(g, v, l, p)) {
+        if (tp_is_blit_when_obscured(tp)) {
+          color c = CYAN;
+          c.a     = 230;
+          tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
+          return;
+        }
+        break;
+      }
+      break;
+
+    default : break;
+  }
+
+  if (tp_is_blit_outlined(tp)) {
     tile_blit_outlined(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);
   } else if (tp_is_blit_square_outlined(tp)) {
     tile_blit_outlined(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, true);
@@ -170,7 +194,7 @@ void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t
 // Display a spinning falling thing
 //
 void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                           Tilep tile, float x1, float x2, float y1, float y2, color fg)
+                           Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
 {
   TRACE_NO_INDENT();
 
@@ -190,7 +214,7 @@ void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thing
   float ang = dh * 10;
   glRotatef(ang, 0.0f, 0.0f, 1.0f);
   glTranslatef(-mid.x, -mid.y, 0);
-  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg);
+  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   blit_flush();
   glPopMatrix();
 }
@@ -199,7 +223,7 @@ void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thing
 // Display a single thing to an FBO
 //
 void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                   uint16_t tile_index, int fbo)
+                   uint16_t tile_index, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 
@@ -236,7 +260,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // If we're blitting the level below, filter to only things we can see through chasms
     //
     if (player_level != l) {
-      if (! tp_is_blit_in_chasm(tp)) {
+      if (! tp_is_blit_shown_in_chasms(tp)) {
         return;
       }
     }
@@ -303,7 +327,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // Handle various effects
     //
     if (is_falling) {
-      thing_display_falling(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg);
+      thing_display_falling(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
       return;
     }
 
@@ -318,5 +342,5 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
   }
 
-  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fg);
+  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
 }

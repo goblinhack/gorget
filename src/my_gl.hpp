@@ -255,6 +255,7 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 ENUM_DEF_H(FBO_ENUM, FboEnum);
 
 #define FBO_ENUM_FIRST ((FboEnum) 0)
+#define FBO_NONE       ((FboEnum) (-1))
 
 #define FOR_ALL_FBO(_iter_)                                                                                          \
   for (FboEnum _iter_ = FBO_ENUM_FIRST; /* newline */                                                                \
@@ -285,12 +286,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
           GLushort right, GLushort bottom, const color &color_bl, const color &color_br, const color &color_tl,
           const color &color_tr);
-void blit_fbo(Gamep, int fbo);
-void blit_fbo(Gamep, int fbo, int tl_x, int tl_y, int br_x, int br_y);
-void blit_fbo_push(int fbo);
+void blit_fbo(Gamep, FboEnum fbo);
+void blit_fbo(Gamep, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y);
+void blit_fbo_push(FboEnum fbo);
 void blit_fbo_pop(void);
-void blit_fbo_bind(int fbo);
-void blit_fbo_bind_locked(int fbo);
+void blit_fbo_bind(FboEnum fbo);
+void blit_fbo_bind_locked(FboEnum fbo);
 void blit_fbo_unbind(void);
 void blit_fbo_unbind_locked(void);
 void blit_fini(void);
@@ -300,7 +301,7 @@ void blit_flush_colored_triangle_fan(void);
 void blit_flush_triangle_fan(float *begin, float *end);
 void blit_flush_triangle_fan(void);
 void blit_init(void);
-void fbo_get_size(Gamep, int fbo, int &w, int &h);
+void fbo_get_size(Gamep, FboEnum fbo, int &w, int &h);
 void fbo_get_curr_size(Gamep g, int &w, int &h);
 
 void gl_blitline(GLushort tlx, GLushort tly, GLushort brx, GLushort bry);
@@ -315,7 +316,7 @@ void gl_ext_init(void);
 void gl_fini_2d_mode(Gamep);
 void gl_fini_fbo(Gamep);
 void gl_init_2d_mode(Gamep);
-void gl_init_fbo(Gamep, int fbo = -1);
+void gl_init_fbo(Gamep, FboEnum fbo = FBO_NONE);
 void gl_leave_2d_mode(Gamep);
 void gl_clear(void);
 

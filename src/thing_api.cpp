@@ -1500,14 +1500,14 @@ bool thing_is_collectable(Thingp t)
   return tp_flag(thing_tp(t), is_collectable);
 }
 
-bool thing_is_unused2(Thingp t)
+bool thing_is_blit_when_obscured(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused2);
+  return tp_flag(thing_tp(t), is_blit_when_obscured);
 }
 
 bool thing_is_openable(Thingp t)
@@ -1630,14 +1630,14 @@ bool thing_is_able_to_jump(Thingp t)
   return tp_flag(thing_tp(t), is_able_to_jump);
 }
 
-bool thing_is_unused3(Thingp t)
+bool thing_is_blit_obscures(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused3);
+  return tp_flag(thing_tp(t), is_blit_obscures);
 }
 
 bool thing_is_flying(Thingp t)
@@ -1780,14 +1780,14 @@ bool thing_is_combustible(Thingp t)
   return tp_flag(thing_tp(t), is_combustible);
 }
 
-bool thing_is_blit_in_chasm(Thingp t)
+bool thing_is_blit_shown_in_chasms(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_blit_in_chasm);
+  return tp_flag(thing_tp(t), is_blit_shown_in_chasms);
 }
 
 bool thing_is_gaseous(Thingp t)
@@ -1970,14 +1970,14 @@ bool thing_is_ethereal(Thingp t)
   return tp_flag(thing_tp(t), is_ethereal);
 }
 
-bool thing_is_blit_colored_always(Thingp t)
+bool thing_is_blit_shown_in_overlay(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_blit_colored_always);
+  return tp_flag(thing_tp(t), is_blit_shown_in_overlay);
 }
 
 bool thing_is_levitating(Thingp t)

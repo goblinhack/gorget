@@ -602,7 +602,7 @@ Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 //
 // Flag + is alive
 //
-Thingp level_afirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+Thingp level_alive_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -698,7 +698,7 @@ bool level_open_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 //
 // Count things
 //
-int level_count_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
 

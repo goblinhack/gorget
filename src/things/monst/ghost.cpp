@@ -35,7 +35,7 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_blit_in_chasm);
+  tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_ethereal);
   tp_flag_set(tp, is_ghost);

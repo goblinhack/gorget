@@ -26,8 +26,8 @@ GLuint g_fbo_tex_id[ FBO_ENUM_MAX ];
 GLuint g_render_buf_id[ FBO_ENUM_MAX ];
 isize  g_fbo_size[ FBO_ENUM_MAX ];
 
-static int fbo_locked = -1;
-static int fbo_last   = -1;
+static FboEnum fbo_locked = FBO_NONE;
+static FboEnum fbo_last   = FBO_NONE;
 
 void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
                      const void *userParam)
@@ -225,7 +225,7 @@ void gl_clear(void)
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
-static void gl_init_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
+static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
                          GLuint tex_height)
 {
   TRACE_AND_INDENT();
@@ -405,7 +405,7 @@ static void gl_init_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint 
   GL_ERROR_CHECK();
 }
 
-static void gl_fini_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
+static void gl_fini_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint *fbo_tex_id, GLuint tex_width,
                          GLuint tex_height)
 {
   TRACE_AND_INDENT();
@@ -436,23 +436,22 @@ static void gl_fini_fbo_(int fbo, GLuint *render_buf_id, GLuint *fbo_id, GLuint 
   }
 }
 
-void gl_init_fbo(Gamep g, int fbo)
+void gl_init_fbo(Gamep g, FboEnum fbo)
 {
-  int i;
-
   LOG("GFX: OpenGL create FBOs");
   GL_ERROR_CHECK();
 
   static bool first = true;
 
-  for (i = 0; i < FBO_ENUM_MAX; i++) {
+  FOR_ALL_FBO(i)
+  {
     int tex_width;
     int tex_height;
 
     //
     // Filter to a specific fbo?
     //
-    if (fbo != -1) {
+    if (fbo != FBO_NONE) {
       if (i != fbo) {
         continue;
       }
@@ -485,7 +484,7 @@ void gl_init_fbo(Gamep g, int fbo)
       blit_fbo_unbind();
     }
 
-    if (fbo == -1) {
+    if (fbo == FBO_NONE) {
       if (first) {
         tile_from_fbo(g, (FboEnum) i);
       }
@@ -495,19 +494,18 @@ void gl_init_fbo(Gamep g, int fbo)
   LOG("GFX: OpenGL created FBOs");
   GL_ERROR_CHECK();
 
-  if (fbo == -1) {
+  if (fbo == FBO_NONE) {
     first = false;
   }
 }
 
 void gl_fini_fbo(Gamep g)
 {
-  int i;
-
   LOG("GFX: OpenGL destroy FBOs");
   GL_ERROR_CHECK();
 
-  for (i = 0; i < FBO_ENUM_MAX; i++) {
+  FOR_ALL_FBO(i)
+  {
     int tex_width;
     int tex_height;
 
@@ -521,7 +519,7 @@ void gl_fini_fbo(Gamep g)
   GL_ERROR_CHECK();
 }
 
-void fbo_get_size(Gamep g, int fbo, int &w, int &h)
+void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
 {
   switch (fbo) {
     case FBO_MAP_BG :
@@ -565,7 +563,7 @@ void fbo_get_size(Gamep g, int fbo, int &w, int &h)
 
 void fbo_get_curr_size(Gamep g, int &w, int &h) { fbo_get_size(g, fbo_last, w, h); }
 
-void blit_fbo(Gamep g, int fbo)
+void blit_fbo(Gamep g, FboEnum fbo)
 {
   int tex_width;
   int tex_height;
@@ -575,21 +573,21 @@ void blit_fbo(Gamep g, int fbo)
   blit_flush();
 }
 
-void blit_fbo(Gamep g, int fbo, int tl_x, int tl_y, int br_x, int br_y)
+void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y)
 {
   blit_init();
   blit(g_fbo_tex_id[ fbo ], 0.0, 1.0, 1.0, 0.0, tl_x, tl_y, br_x, br_y, WHITE);
   blit_flush();
 }
 
-void blit_fbo_push(int fbo) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]); }
+void blit_fbo_push(FboEnum fbo) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]); }
 
 void blit_fbo_pop(void) { glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo_last ]); }
 
-void blit_fbo_bind(int fbo)
+void blit_fbo_bind(FboEnum fbo)
 {
   fbo_last = fbo;
-  if (fbo_locked != -1) {
+  if (fbo_locked != FBO_NONE) {
     DIE("Attempt to bind to another FBO %d when locked", fbo);
   }
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]);
@@ -597,13 +595,13 @@ void blit_fbo_bind(int fbo)
 
 void blit_fbo_unbind(void)
 {
-  if (fbo_locked != -1) {
+  if (fbo_locked != FBO_NONE) {
     DIE("Attempt to unbind when locked");
   }
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, 0);
 }
 
-void blit_fbo_bind_locked(int fbo)
+void blit_fbo_bind_locked(FboEnum fbo)
 {
   fbo_last   = fbo;
   fbo_locked = fbo;
@@ -612,7 +610,7 @@ void blit_fbo_bind_locked(int fbo)
 
 void blit_fbo_unbind_locked(void)
 {
-  fbo_locked = -1;
+  fbo_locked = FBO_NONE;
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, 0);
 }
 

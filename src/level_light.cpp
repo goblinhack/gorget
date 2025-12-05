@@ -44,7 +44,7 @@ public:
   //
   // What FBO to render to
   //
-  int fbo {-1};
+  FboEnum fbo {FBO_NONE};
 
   //
   // The lenght of each ray when it is cast
@@ -597,7 +597,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
   blit_fbo_unbind();
 }
 
-static Raycast *raycast_new(int ray_max_length_in_pixels, int fbo)
+static Raycast *raycast_new(int ray_max_length_in_pixels, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 
@@ -613,7 +613,7 @@ static Raycast *raycast_new(int ray_max_length_in_pixels, int fbo)
   return l;
 }
 
-void level_light_raycast(Gamep g, Levelsp v, Levelp l, int fbo)
+void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 {
   //
   // Do not generate open gl stuff on any other thread

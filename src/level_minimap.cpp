@@ -20,9 +20,9 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool 
 {
   TRACE_NO_INDENT();
 
-  const int  fbo = FBO_MINIMAP_WORLD;
-  const auto dx  = MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * LEVEL_SCALE;
-  const auto dy  = MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * LEVEL_SCALE;
+  const FboEnum fbo = FBO_MINIMAP_WORLD;
+  const auto    dx  = MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * LEVEL_SCALE;
+  const auto    dy  = MAP_WORLD_MAP_PIXEL_SIZE_PER_LEVEL * LEVEL_SCALE;
 
   //
   // The level passed in here could be the level select level, so always look
@@ -134,7 +134,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  const int fbo = FBO_MINIMAP_WORLD_ROTATED;
+  const FboEnum fbo = FBO_MINIMAP_WORLD_ROTATED;
 
   int w, h;
   fbo_get_size(g, fbo, w, h);
@@ -182,9 +182,9 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
     return;
   }
 
-  const int  fbo = FBO_MINIMAP_LEVEL;
-  const auto dx  = 1;
-  const auto dy  = 1;
+  const FboEnum fbo = FBO_MINIMAP_LEVEL;
+  const auto    dx  = 1;
+  const auto    dy  = 1;
 
   int w, h;
   fbo_get_size(g, fbo, w, h);
@@ -267,7 +267,7 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
         c = CYAN;
       }
 
-      if (level_is_blit_colored_always(g, v, l, p)) {
+      if (level_is_blit_shown_in_overlay(g, v, l, p)) {
         //
         // Keep bright colors
         //

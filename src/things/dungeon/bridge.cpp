@@ -73,7 +73,7 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 
     for (auto delta : points) {
       auto p = t->at + delta;
-      auto b = level_afirst_is_bridge(g, v, l, p);
+      auto b = level_alive_first_is_bridge(g, v, l, p);
       if (b) {
         if (level_is_chasm(g, v, l, t->at)) {
           thing_fall(g, v, l, b);
@@ -143,7 +143,7 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
-  tp_flag_set(tp, is_blit_in_chasm);
+  tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_bridge);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire

@@ -11,7 +11,7 @@
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 
-static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, int fbo)
+static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 
@@ -80,7 +80,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, int fbo
   }
 }
 
-static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, int fbo)
+static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot, int depth, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 
@@ -103,7 +103,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
 //
 // Render the level to an FBO
 //
-static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_above, int fbo)
+static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_above, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 
@@ -172,7 +172,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
               //
               // Certain things, like exits, once seen, are always lit above the light
               //
-              if (level_is_blit_colored_always(g, v, l, p)) {
+              if (level_is_blit_shown_in_overlay(g, v, l, p)) {
                 //
                 // Always show
                 //
@@ -180,6 +180,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
               }
             }
             break;
+          default : break;
         }
 
         if (display_tile) {
@@ -215,7 +216,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
 //
 // Render the level to an FBO
 //
-static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, int fbo)
+static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 

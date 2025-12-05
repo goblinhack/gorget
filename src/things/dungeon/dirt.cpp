@@ -17,7 +17,7 @@ bool tp_load_dirt(void)
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
-  tp_flag_set(tp, is_blit_in_chasm);
+  tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_dirt);
   tp_flag_set(tp, is_teleport_blocked);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams

@@ -6,6 +6,7 @@
 #ifndef _MY_SDL_PROTO_HPP_
 #define _MY_SDL_PROTO_HPP_
 
+#include "my_gl.hpp"
 #include "my_types.hpp"
 
 #include <SDL.h>
@@ -23,7 +24,7 @@ SDL_Scancode sdlk_to_scancode(const SDL_Keysym &k);
 std::string to_string(const SDL_Keysym &k);
 std::string to_string_ignoring_mods(const SDL_Keysym &k);
 
-std::vector< uint8_t > sdl_fbo_save(Gamep, int fbo);
+std::vector< uint8_t > sdl_fbo_save(Gamep, FboEnum fbo);
 
 uint8_t config_errored_clear(Gamep, class Tokens *, void *context);
 uint8_t config_fps_counter_set(Gamep, class Tokens *, void *context);
@@ -42,8 +43,8 @@ void    sdl_display(Gamep);
 void    sdl_display_reset(Gamep);
 void    sdl_event(Gamep, SDL_Event *event, bool &processed_mouse_motion_event);
 void    sdl_prepare_to_exit(Gamep);
-void    sdl_fbo_dump(Gamep, int fbo, const std::string &name);
-void    sdl_fbo_load(Gamep, int fbo, const std::vector< uint8_t > &pixels);
+void    sdl_fbo_dump(Gamep, FboEnum fbo, const std::string &name);
+void    sdl_fbo_load(Gamep, FboEnum fbo, const std::vector< uint8_t > &pixels);
 void    sdl_fini(Gamep);
 void    sdl_display_fini(Gamep);
 void    sdl_flush_display(Gamep, bool force = false);
