@@ -228,35 +228,35 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
     return;
   }
 
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glcolor(WHITE);
-
   blit_fbo_bind(fbo);
-  gl_clear();
-  blit_init();
+  {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    gl_clear();
 
-  if (level_below) {
-    level_display_fbo_do(g, v, level_below, l, fbo);
-  }
+    blit_init();
 
-  level_display_fbo_do(g, v, l, nullptr, fbo);
+    if (level_below) {
+      level_display_fbo_do(g, v, level_below, l, fbo);
+    }
 
-  //
-  // Top level cursor
-  //
-  for (auto y = v->miny; y < v->maxy; y++) {
-    for (auto x = v->minx; x < v->maxx; x++) {
-      spoint p(x, y);
-      level_display_cursor(g, v, l, p, fbo);
+    level_display_fbo_do(g, v, l, nullptr, fbo);
+
+    //
+    // Top level cursor
+    //
+    for (auto y = v->miny; y < v->maxy; y++) {
+      for (auto x = v->minx; x < v->maxx; x++) {
+        spoint p(x, y);
+        level_display_cursor(g, v, l, p, fbo);
+      }
+    }
+
+    blit_flush();
+
+    if (fbo == FBO_MAP_FG_OVERLAY) {
+      game_popups_display(g, v, l);
     }
   }
-
-  blit_flush();
-
-  if (fbo == FBO_MAP_FG_OVERLAY) {
-    game_popups_display(g, v, l);
-  }
-
   blit_fbo_unbind();
 }
 
@@ -384,54 +384,67 @@ void level_blit(Gamep g)
     // No lighting for level selection
     //
     blit_fbo_bind(FBO_MAP_FG_MERGED);
-    gl_clear();
+    {
+      gl_clear();
+      glBlendFunc(GL_ONE, GL_ZERO);
 
-    glBlendFunc(GL_ONE, GL_ZERO);
-    blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+      blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+    }
     blit_fbo_unbind();
   } else {
     //
     // Blit the dark background tiles that have been seen previously
     //
     blit_fbo_bind(FBO_MAP_BG_MERGED);
-    gl_clear();
+    {
+      gl_clear();
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_MAP_BG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+      blit_fbo(g, FBO_MAP_BG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
-    level_blit_light(g, v, l, BLACK);
+      level_blit_light(g, v, l, BLACK);
+    }
     blit_fbo_unbind();
 
     //
     // Blit the light as a mask
     //
     blit_fbo_bind(FBO_MAP_FG_MERGED);
-    gl_clear();
+    {
+      gl_clear();
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    level_blit_light(g, v, l, WHITE);
+      level_blit_light(g, v, l, WHITE);
 
-    //
-    // Mask out non lit areas of the foreground
-    //
-    glBlendFunc(GL_DST_ALPHA, GL_ZERO);
-    blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+      //
+      // Mask out non lit areas of the foreground
+      //
+      glBlendFunc(GL_DST_ALPHA, GL_ZERO);
 
-    //
-    // Blit things that are always shown once seen (and popups)
-    //
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+      blit_fbo(g, FBO_MAP_FG, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+    }
     blit_fbo_unbind();
   }
+
+  //
+  // Blit things that are always shown once seen (and popups)
+  //
+  blit_fbo_bind(FBO_MAP_FG_MERGED);
+  {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    blit_fbo(g, FBO_MAP_FG_OVERLAY, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
+  }
+  blit_fbo_unbind();
 
   //
   // Combine the FBOs into the final map
   //
   blit_fbo_bind(FBO_FINAL);
-  glcolor(WHITE);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  blit_fbo(g, FBO_MAP_BG_MERGED);
-  blit_fbo(g, FBO_MAP_FG_MERGED);
+  {
+    glcolor(WHITE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    blit_fbo(g, FBO_MAP_BG_MERGED);
+    blit_fbo(g, FBO_MAP_FG_MERGED);
+  }
   blit_fbo_unbind();
 }

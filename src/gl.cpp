@@ -480,7 +480,9 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
     if (0) {
       gl_enter_2d_mode(g, tex_width, tex_height);
       blit_fbo_bind(i);
-      gl_clear();
+      {
+        gl_clear();
+      }
       blit_fbo_unbind();
     }
 

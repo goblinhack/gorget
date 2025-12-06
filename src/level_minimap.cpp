@@ -38,95 +38,98 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool 
   gl_enter_2d_mode(g, w, h);
 
   blit_fbo_bind(fbo);
-  glBlendFunc(GL_ONE, GL_ZERO);
-  gl_clear();
-  blit_init();
+  {
+    glBlendFunc(GL_ONE, GL_ZERO);
+    gl_clear();
 
-  blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, GRAY5);
+    blit_init();
 
-  for (auto x = 0; x < LEVELS_ACROSS; x++) {
-    for (auto y = 0; y < LEVELS_DOWN; y++) {
-      color  c              = BLACK;
-      Levelp level_at_coord = nullptr;
+    blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, GRAY5);
 
-      spoint p(x, y);
-      auto   s = level_select_get(g, v, p);
-      if (! s->is_set) {
+    for (auto x = 0; x < LEVELS_ACROSS; x++) {
+      for (auto y = 0; y < LEVELS_DOWN; y++) {
+        color  c              = BLACK;
+        Levelp level_at_coord = nullptr;
+
+        spoint p(x, y);
+        auto   s = level_select_get(g, v, p);
+        if (! s->is_set) {
+          //
+          // No level here
+          //
+          continue;
+        }
+
+        level_at_coord = game_level_get(g, v, s->level_num);
+        if (! level_at_coord) {
+          continue;
+        }
+
         //
-        // No level here
+        // Only if in level selection can we be hovering over a level
         //
-        continue;
+        Levelp level_over;
+        if (level_select) {
+          level_over = level_select_get_level_at_tile_coords(g, v, p);
+        } else {
+          level_over = nullptr;
+        }
+
+        if (level_at_coord->player_completed_level_via_exit) {
+          //
+          // Completed level
+          //
+          c = GREEN4;
+        } else if (level_at_coord->player_fell_out_of_level) {
+          //
+          // Sort of completed level
+          //
+          c = ORANGE;
+        } else if (level_at_coord == level_over) {
+          //
+          // Hovering over this level
+          //
+          c = GRAY50;
+        } else {
+          //
+          // Normal unvisited level
+          //
+          c = GRAY20;
+        }
+
+        //
+        // Final level
+        //
+        if (s->final_level) {
+          c = YELLOW;
+        }
+
+        //
+        // Cureent level
+        //
+        if (level_at_coord->level_num == player->level_num) {
+          c = CYAN;
+        }
+
+        auto X   = x;
+        auto Y   = y;
+        auto tlx = X * dx;
+        auto tly = Y * dy;
+        auto brx = tlx + dx;
+        auto bry = tly + dy;
+
+        //
+        // Shrink the tile by 1 pixel
+        //
+        tlx += 1;
+        tly += 1;
+
+        blit(solid_tex_id, tlx, tly, brx, bry, c);
       }
-
-      level_at_coord = game_level_get(g, v, s->level_num);
-      if (! level_at_coord) {
-        continue;
-      }
-
-      //
-      // Only if in level selection can we be hovering over a level
-      //
-      Levelp level_over;
-      if (level_select) {
-        level_over = level_select_get_level_at_tile_coords(g, v, p);
-      } else {
-        level_over = nullptr;
-      }
-
-      if (level_at_coord->player_completed_level_via_exit) {
-        //
-        // Completed level
-        //
-        c = GREEN4;
-      } else if (level_at_coord->player_fell_out_of_level) {
-        //
-        // Sort of completed level
-        //
-        c = ORANGE;
-      } else if (level_at_coord == level_over) {
-        //
-        // Hovering over this level
-        //
-        c = GRAY50;
-      } else {
-        //
-        // Normal unvisited level
-        //
-        c = GRAY20;
-      }
-
-      //
-      // Final level
-      //
-      if (s->final_level) {
-        c = YELLOW;
-      }
-
-      //
-      // Cureent level
-      //
-      if (level_at_coord->level_num == player->level_num) {
-        c = CYAN;
-      }
-
-      auto X   = x;
-      auto Y   = y;
-      auto tlx = X * dx;
-      auto tly = Y * dy;
-      auto brx = tlx + dx;
-      auto bry = tly + dy;
-
-      //
-      // Shrink the tile by 1 pixel
-      //
-      tlx += 1;
-      tly += 1;
-
-      blit(solid_tex_id, tlx, tly, brx, bry, c);
     }
-  }
 
-  blit_flush();
+    blit_flush();
+  }
   blit_fbo_unbind();
 }
 
@@ -191,116 +194,119 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
   gl_enter_2d_mode(g, w, h);
 
   blit_fbo_bind(fbo);
-  glBlendFunc(GL_ONE, GL_ZERO);
-  gl_clear();
-  blit_init();
+  {
+    glBlendFunc(GL_ONE, GL_ZERO);
+    gl_clear();
 
-  for (auto x = 0; x < MAP_WIDTH; x++) {
-    for (auto y = 0; y < MAP_HEIGHT; y++) {
-      color  c = BLACK;
-      spoint p(x, y);
+    blit_init();
 
-      if (! g_opt_debug1) {
-        if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
-          continue;
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      for (auto y = 0; y < MAP_HEIGHT; y++) {
+        color  c = BLACK;
+        spoint p(x, y);
+
+        if (! g_opt_debug1) {
+          if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
+            continue;
+          }
         }
-      }
 
-      if (level_is_dirt(g, v, l, p)) {
-        c = GRAY10;
-      }
-      if (level_is_floor(g, v, l, p)) {
-        c = GRAY30;
-      }
-      if (level_is_corridor(g, v, l, p)) {
-        c = GRAY30;
-      }
-      if (level_is_wall(g, v, l, p)) {
-        c = GRAY50;
-      }
-      if (level_is_rock(g, v, l, p)) {
-        c = BROWN4;
-      }
-      if (level_is_bridge(g, v, l, p)) {
-        c = BROWN;
-      }
-      if (level_is_chasm(g, v, l, p)) {
-        c = BLACK;
-      }
-      if (level_is_water(g, v, l, p)) {
-        c = BLUE;
-      }
-      if (level_is_deep_water(g, v, l, p)) {
-        c = BLUE4;
-      }
-      if (level_is_door_locked(g, v, l, p)) {
-        if (level_open_is_door_locked(g, v, l, p)) {
-          // ignore
-        } else {
+        if (level_is_dirt(g, v, l, p)) {
+          c = GRAY10;
+        }
+        if (level_is_floor(g, v, l, p)) {
+          c = GRAY30;
+        }
+        if (level_is_corridor(g, v, l, p)) {
+          c = GRAY30;
+        }
+        if (level_is_wall(g, v, l, p)) {
+          c = GRAY50;
+        }
+        if (level_is_rock(g, v, l, p)) {
+          c = BROWN4;
+        }
+        if (level_is_bridge(g, v, l, p)) {
           c = BROWN;
         }
-      }
-      if (level_is_door_secret(g, v, l, p)) {
-        if (level_open_is_door_secret(g, v, l, p)) {
-          // ignore
-        } else {
-          c = GRAY40;
+        if (level_is_chasm(g, v, l, p)) {
+          c = BLACK;
         }
-      }
-      if (level_is_lava(g, v, l, p)) {
-        c = ORANGE;
-      }
-      if (level_is_teleport(g, v, l, p)) {
-        // ignore
-        c = RED;
-      }
-      if (level_is_entrance(g, v, l, p)) {
-        c = PINK;
-      }
-      if (level_is_exit(g, v, l, p)) {
-        c = YELLOW;
-      }
-      if (level_is_fire(g, v, l, p)) {
-        c = ORANGE2;
-      }
-      if (level_is_player(g, v, l, p)) {
-        c = CYAN;
-      }
+        if (level_is_water(g, v, l, p)) {
+          c = BLUE;
+        }
+        if (level_is_deep_water(g, v, l, p)) {
+          c = BLUE4;
+        }
+        if (level_is_door_locked(g, v, l, p)) {
+          if (level_open_is_door_locked(g, v, l, p)) {
+            // ignore
+          } else {
+            c = BROWN;
+          }
+        }
+        if (level_is_door_secret(g, v, l, p)) {
+          if (level_open_is_door_secret(g, v, l, p)) {
+            // ignore
+          } else {
+            c = GRAY40;
+          }
+        }
+        if (level_is_lava(g, v, l, p)) {
+          c = ORANGE;
+        }
+        if (level_is_teleport(g, v, l, p)) {
+          // ignore
+          c = RED;
+        }
+        if (level_is_entrance(g, v, l, p)) {
+          c = PINK;
+        }
+        if (level_is_exit(g, v, l, p)) {
+          c = YELLOW;
+        }
+        if (level_is_fire(g, v, l, p)) {
+          c = ORANGE2;
+        }
+        if (level_is_player(g, v, l, p)) {
+          c = CYAN;
+        }
 
-      if (level_is_blit_shown_in_overlay(g, v, l, p)) {
-        //
-        // Keep bright colors
-        //
-      } else if (level_select) {
-        //
-        // No vision in level selection
-        //
-        c.r /= 2;
-        c.g /= 2;
-        c.b /= 2;
-      } else if (! thing_vision_can_see_tile(g, v, l, player, p)) {
-        //
-        // Dim
-        //
-        c.r /= 2;
-        c.g /= 2;
-        c.b /= 2;
+        if (level_is_blit_shown_in_overlay(g, v, l, p)) {
+          //
+          // Keep bright colors
+          //
+        } else if (level_select) {
+          //
+          // No vision in level selection
+          //
+          c.r /= 2;
+          c.g /= 2;
+          c.b /= 2;
+        } else if (! thing_vision_can_see_tile(g, v, l, player, p)) {
+          //
+          // Dim
+          //
+          c.r /= 2;
+          c.g /= 2;
+          c.b /= 2;
+        }
+
+        auto X   = x;
+        auto Y   = MAP_HEIGHT - y;
+        auto tlx = X * dx;
+        auto tly = Y * dy;
+        auto brx = tlx + dx;
+        auto bry = tly + dy;
+        tly--;
+        bry--;
+
+        blit(solid_tex_id, tlx, tly, brx, bry, c);
       }
-
-      auto X   = x;
-      auto Y   = MAP_HEIGHT - y;
-      auto tlx = X * dx;
-      auto tly = Y * dy;
-      auto brx = tlx + dx;
-      auto bry = tly + dy;
-      tly--;
-      bry--;
-
-      blit(solid_tex_id, tlx, tly, brx, bry, c);
     }
-  }
 
-  blit_flush();
+    blit_flush();
+  }
   blit_fbo_unbind();
 }
 

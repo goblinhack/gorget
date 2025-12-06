@@ -212,10 +212,8 @@ void sdl_loop(Gamep g)
     //
     // Display the level
     //
-    glcolor(WHITE);
     gl_enter_2d_mode(g, game_map_fbo_width_get(g), game_map_fbo_height_get(g));
     game_display(g);
-    blit_fbo_unbind();
     gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
 
     //

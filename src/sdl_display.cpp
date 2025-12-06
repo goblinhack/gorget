@@ -24,7 +24,6 @@ void sdl_display(Gamep g)
   blit_fbo_bind(FBO_FINAL);
   {
     gl_clear();
-    glBlendFunc(GL_ONE, GL_ZERO);
   }
   blit_fbo_unbind();
 

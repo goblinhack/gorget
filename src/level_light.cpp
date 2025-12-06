@@ -559,41 +559,42 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
   fbo_get_size(g, FBO_MAP_LIGHT, w, h);
   gl_enter_2d_mode(g, w, h);
 
-  glBlendFunc(GL_ONE, GL_ZERO);
   blit_fbo_bind(fbo);
-  gl_clear();
-
-  blit_init();
-
-  //
-  // Walk the light rays in a circle.
-  //
-  push_point(light_pos.x, light_pos.y);
-
-  for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-    auto    ray = &rays[ i ];
-    spoint &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
-    int16_t p1x = light_pos.x + p.x;
-    int16_t p1y = light_pos.y + p.y;
-    push_point(p1x, p1y);
-  }
-
-  //
-  // Complete the circle with the first point again.
-  //
   {
-    auto    ray = &rays[ 0 ];
-    spoint &p   = ray_pixels[ 0 ][ ray->depth_furthest ].p;
-    int16_t p1x = light_pos.x + p.x;
-    int16_t p1y = light_pos.y + p.y;
-    push_point(p1x, p1y);
+    glBlendFunc(GL_ONE, GL_ZERO);
+    gl_clear();
+
+    blit_init();
+
+    //
+    // Walk the light rays in a circle.
+    //
+    push_point(light_pos.x, light_pos.y);
+
+    for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
+      auto    ray = &rays[ i ];
+      spoint &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
+      int16_t p1x = light_pos.x + p.x;
+      int16_t p1y = light_pos.y + p.y;
+      push_point(p1x, p1y);
+    }
+
+    //
+    // Complete the circle with the first point again.
+    //
+    {
+      auto    ray = &rays[ 0 ];
+      spoint &p   = ray_pixels[ 0 ][ ray->depth_furthest ].p;
+      int16_t p1x = light_pos.x + p.x;
+      int16_t p1y = light_pos.y + p.y;
+      push_point(p1x, p1y);
+    }
+
+    auto sz = bufp - gl_array_buf;
+    ray_gl_cmds.resize(sz);
+    std::copy(gl_array_buf, bufp, ray_gl_cmds.begin());
+    blit_flush_triangle_fan();
   }
-
-  auto sz = bufp - gl_array_buf;
-  ray_gl_cmds.resize(sz);
-  std::copy(gl_array_buf, bufp, ray_gl_cmds.begin());
-  blit_flush_triangle_fan();
-
   blit_fbo_unbind();
 }
 
