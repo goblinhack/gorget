@@ -582,27 +582,10 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return nullptr;
 }
 
-Thingp level_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
-{
-  TRACE_NO_INDENT();
-
-  FOR_ALL_THINGS_AT(g, v, l, it, p)
-  {
-    if (level_flag_filter(g, v, l, f, it)) {
-      continue;
-    }
-
-    if (tp_flag(thing_tp(it), f)) {
-      return it;
-    }
-  }
-  return nullptr;
-}
-
 //
-// Flag + is alive
+// Filter to only alive things
 //
-Thingp level_alive_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -626,7 +609,7 @@ Thingp level_alive_first_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint 
 //
 // Flag + is open
 //
-Thingp level_ofirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
 
@@ -645,54 +628,6 @@ Thingp level_ofirst_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
     }
   }
   return nullptr;
-}
-
-//
-// Filter to only alive things
-//
-bool level_alive_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
-{
-  TRACE_NO_INDENT();
-
-  FOR_ALL_THINGS_AT(g, v, l, it, p)
-  {
-    if (level_flag_filter(g, v, l, f, it)) {
-      continue;
-    }
-
-    if (thing_is_dead(it)) {
-      continue;
-    }
-
-    if (tp_flag(thing_tp(it), f)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-//
-// Filter to only open things
-//
-bool level_open_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
-{
-  TRACE_NO_INDENT();
-
-  FOR_ALL_THINGS_AT(g, v, l, it, p)
-  {
-    if (level_flag_filter(g, v, l, f, it)) {
-      continue;
-    }
-
-    if (! thing_is_open(it)) {
-      continue;
-    }
-
-    if (tp_flag(thing_tp(it), f)) {
-      return true;
-    }
-  }
-  return false;
 }
 
 //

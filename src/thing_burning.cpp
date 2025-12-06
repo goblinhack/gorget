@@ -84,7 +84,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Don't let the fire age out.
     //
-    auto f = level_first_is_fire(g, v, l, t->at);
+    auto f = level_is_fire(g, v, l, t->at);
     if (f) {
       THING_DBG(t, "keep the fire burning");
       thing_lifespan_incr(g, v, l, f, 2);

@@ -73,7 +73,7 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
 
     for (auto delta : points) {
       auto p = t->at + delta;
-      auto b = level_alive_first_is_bridge(g, v, l, p);
+      auto b = level_alive_is_bridge(g, v, l, p);
       if (b) {
         if (level_is_chasm(g, v, l, t->at)) {
           thing_fall(g, v, l, b);

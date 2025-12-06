@@ -15,7 +15,7 @@ void thing_explosion_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   auto p          = t->at;
-  auto source     = level_first_is_explosion(g, v, l, p);
+  auto source     = level_is_explosion(g, v, l, p);
   auto event_type = THING_EVENT_EXPLOSION_DAMAGE;
   auto damage     = tp_damage(thing_tp(source), event_type);
 
