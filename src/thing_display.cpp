@@ -135,8 +135,12 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
   }
 }
 
-void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                        Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+//
+// Solid black outline
+//
+static void thing_display_outlined_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null,
+                                        spoint tl, spoint br, Tilep tile, float x1, float x2, float y1, float y2,
+                                        FboEnum fbo, color fg)
 {
   TRACE_NO_INDENT();
 
@@ -154,6 +158,39 @@ void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t
     single_pix_size = 0;
   }
 
+  if (tp_is_blit_outlined(tp)) {
+    tile_blit_outlined(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);
+  } else if (tp_is_blit_square_outlined(tp)) {
+    tile_blit_outlined(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, true);
+  }
+}
+
+//
+// Show an outline if obscured? e.g. foliage and the player hiding in it
+//
+static bool thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl,
+                                       spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo,
+                                       color fg)
+{
+  TRACE_NO_INDENT();
+
+  if (level_is_blit_obscures(g, v, l, p)) {
+    if (tp_is_blit_when_obscured(tp)) {
+      color c = CYAN;
+      c.a     = 230;
+      tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
+      return true;
+    }
+  }
+
+  return false;
+}
+
+static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl,
+                               spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+{
+  TRACE_NO_INDENT();
+
   switch (fbo) {
     case FBO_MAP_FG_OVERLAY :
 
@@ -164,27 +201,16 @@ void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t
         return;
       }
 
-      //
-      // Show an outline if obscured? e.g. foliage and the player hiding in it
-      //
-      if (level_is_blit_obscures(g, v, l, p)) {
-        if (tp_is_blit_when_obscured(tp)) {
-          color c = CYAN;
-          c.a     = 230;
-          tile_blit_outline(tile, x1, x2, y1, y2, tl, br, c);
-          return;
-        }
-        break;
+      if (thing_display_outline_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg)) {
+        return;
       }
       break;
 
     default : break;
   }
 
-  if (tp_is_blit_outlined(tp)) {
-    tile_blit_outlined(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, false);
-  } else if (tp_is_blit_square_outlined(tp)) {
-    tile_blit_outlined(tile, x1, x2, y1, y2, tl, br, fg, outline, single_pix_size, true);
+  if (tp_is_blit_outlined(tp) || tp_is_blit_square_outlined(tp)) {
+    thing_display_outlined_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   } else {
     tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
   }
@@ -193,8 +219,9 @@ void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t
 //
 // Display a spinning falling thing
 //
-void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl, spoint br,
-                           Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl,
+                                  spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo,
+                                  color fg)
 {
   TRACE_NO_INDENT();
 
