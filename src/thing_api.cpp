@@ -1400,6 +1400,986 @@ bool thing_is_unused1(Thingp t)
   return tp_flag(thing_tp(t), is_unused1);
 }
 
+bool thing_is_unused2(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused2);
+}
+
+bool thing_is_unused3(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused3);
+}
+
+bool thing_is_unused4(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused4);
+}
+
+bool thing_is_unused5(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused5);
+}
+
+bool thing_is_unused6(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused6);
+}
+
+bool thing_is_unused7(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused7);
+}
+
+bool thing_is_unused8(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused8);
+}
+
+bool thing_is_unused9(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused9);
+}
+
+bool thing_is_unused10(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused10);
+}
+
+bool thing_is_unused11(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused11);
+}
+
+bool thing_is_unused12(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused12);
+}
+
+bool thing_is_unused13(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused13);
+}
+
+bool thing_is_unused14(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused14);
+}
+
+bool thing_is_unused15(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused15);
+}
+
+bool thing_is_unused16(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused16);
+}
+
+bool thing_is_unused17(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused17);
+}
+
+bool thing_is_unused18(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused18);
+}
+
+bool thing_is_unused19(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused19);
+}
+
+bool thing_is_unused20(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused20);
+}
+
+bool thing_is_unused21(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused21);
+}
+
+bool thing_is_unused22(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused22);
+}
+
+bool thing_is_unused23(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused23);
+}
+
+bool thing_is_unused24(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused24);
+}
+
+bool thing_is_unused25(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused25);
+}
+
+bool thing_is_unused26(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused26);
+}
+
+bool thing_is_unused27(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused27);
+}
+
+bool thing_is_unused28(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused28);
+}
+
+bool thing_is_unused29(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused29);
+}
+
+bool thing_is_unused30(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused30);
+}
+
+bool thing_is_unused31(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused31);
+}
+
+bool thing_is_unused32(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused32);
+}
+
+bool thing_is_unused33(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused33);
+}
+
+bool thing_is_unused34(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused34);
+}
+
+bool thing_is_unused35(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused35);
+}
+
+bool thing_is_unused36(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused36);
+}
+
+bool thing_is_unused37(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused37);
+}
+
+bool thing_is_unused38(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused38);
+}
+
+bool thing_is_unused39(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused39);
+}
+
+bool thing_is_unused40(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused40);
+}
+
+bool thing_is_unused41(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused41);
+}
+
+bool thing_is_unused42(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused42);
+}
+
+bool thing_is_unused43(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused43);
+}
+
+bool thing_is_unused44(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused44);
+}
+
+bool thing_is_unused45(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused45);
+}
+
+bool thing_is_unused46(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused46);
+}
+
+bool thing_is_unused47(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused47);
+}
+
+bool thing_is_unused48(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused48);
+}
+
+bool thing_is_unused49(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused49);
+}
+
+bool thing_is_unused50(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused50);
+}
+
+bool thing_is_unused51(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused51);
+}
+
+bool thing_is_unused52(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused52);
+}
+
+bool thing_is_unused53(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused53);
+}
+
+bool thing_is_unused54(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused54);
+}
+
+bool thing_is_unused55(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused55);
+}
+
+bool thing_is_unused56(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused56);
+}
+
+bool thing_is_unused57(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused57);
+}
+
+bool thing_is_unused58(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused58);
+}
+
+bool thing_is_unused59(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused59);
+}
+
+bool thing_is_unused60(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused60);
+}
+
+bool thing_is_unused61(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused61);
+}
+
+bool thing_is_unused62(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused62);
+}
+
+bool thing_is_unused63(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused63);
+}
+
+bool thing_is_unused64(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused64);
+}
+
+bool thing_is_unused65(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused65);
+}
+
+bool thing_is_unused66(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused66);
+}
+
+bool thing_is_unused67(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused67);
+}
+
+bool thing_is_unused68(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused68);
+}
+
+bool thing_is_unused69(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused69);
+}
+
+bool thing_is_unused70(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused70);
+}
+
+bool thing_is_unused71(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused71);
+}
+
+bool thing_is_unused72(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused72);
+}
+
+bool thing_is_unused73(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused73);
+}
+
+bool thing_is_unused74(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused74);
+}
+
+bool thing_is_unused75(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused75);
+}
+
+bool thing_is_unused76(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused76);
+}
+
+bool thing_is_unused77(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused77);
+}
+
+bool thing_is_unused78(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused78);
+}
+
+bool thing_is_unused79(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused79);
+}
+
+bool thing_is_unused80(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused80);
+}
+
+bool thing_is_unused81(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused81);
+}
+
+bool thing_is_unused82(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused82);
+}
+
+bool thing_is_unused83(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused83);
+}
+
+bool thing_is_unused84(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused84);
+}
+
+bool thing_is_unused85(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused85);
+}
+
+bool thing_is_unused86(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused86);
+}
+
+bool thing_is_unused87(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused87);
+}
+
+bool thing_is_unused88(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused88);
+}
+
+bool thing_is_unused89(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused89);
+}
+
+bool thing_is_unused90(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused90);
+}
+
+bool thing_is_unused91(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused91);
+}
+
+bool thing_is_unused92(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused92);
+}
+
+bool thing_is_unused93(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused93);
+}
+
+bool thing_is_unused94(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused94);
+}
+
+bool thing_is_unused95(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused95);
+}
+
+bool thing_is_unused96(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused96);
+}
+
+bool thing_is_unused97(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused97);
+}
+
+bool thing_is_unused98(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused98);
+}
+
+bool thing_is_unused99(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+  return tp_flag(thing_tp(t), is_unused99);
+}
+
 bool thing_is_health_bar_shown(Thingp t)
 {
   TRACE_NO_INDENT();
