@@ -365,6 +365,18 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       //
       if (submerged_pct) {
         tile_blit_apply_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t_maybe_null));
+        thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+
+        //
+        // Add a reflection
+        //
+        if (fbo != FBO_MAP_FG_OVERLAY) {
+          fg.a /= 8;
+          auto h = br.y - tl.y;
+          std::swap(br.y, tl.y);
+          tl.y += h;
+          br.y += h;
+        }
       }
     }
   }
