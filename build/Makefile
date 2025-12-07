@@ -9,6 +9,7 @@ FORMAT_DIRS=$(DIRS) \
 	    src/things/player \
 	    src/things/dungeon \
 	    src/things/environ \
+	    src/things/projectiles \
 	    src/things/monst \
 	    src/things/mob \
 	    src/things/treasure \

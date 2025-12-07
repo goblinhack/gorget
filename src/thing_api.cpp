@@ -2360,24 +2360,24 @@ bool thing_is_unused97(Thingp t)
   return tp_flag(thing_tp(t), is_unused97);
 }
 
-bool thing_is_unused98(Thingp t)
+bool thing_is_fireball(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused98);
+  return tp_flag(thing_tp(t), is_fireball);
 }
 
-bool thing_is_unused99(Thingp t)
+bool thing_is_projectile(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused99);
+  return tp_flag(thing_tp(t), is_projectile);
 }
 
 bool thing_is_health_bar_shown(Thingp t)

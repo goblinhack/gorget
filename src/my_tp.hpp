@@ -230,8 +230,8 @@
       list_macro(is_unused95, "is_unused95"),                           /* newline */                                \
       list_macro(is_unused96, "is_unused96"),                           /* newline */                                \
       list_macro(is_unused97, "is_unused97"),                           /* newline */                                \
-      list_macro(is_unused98, "is_unused98"),                           /* newline */                                \
-      list_macro(is_unused99, "is_unused99"),                           /* newline */                                \
+      list_macro(is_fireball, "is_fireball"),                           /* newline */                                \
+      list_macro(is_projectile, "is_projectile"),                       /* newline */                                \
       list_macro(is_wait_on_dead_anim, "is_wait_on_dead_anim"),         /* newline */                                \
       list_macro(is_walk_through_walls, "is_walk_through_walls"),       /* newline */                                \
       list_macro(is_wall, "is_wall"),                                   /* newline */                                \
@@ -367,18 +367,19 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 // Thing priority enum
 //
 #define THING_PRIORITY_ENUM(list_macro)                                                                              \
-  clang_format_indent()                               /* dummy line for clang indentation fixup */                   \
-      list_macro(THING_PRIORITY_EXPLOSION, "player"), /* newline */                                                  \
-      list_macro(THING_PRIORITY_LAVA, "lava"),        /* newline */                                                  \
-      list_macro(THING_PRIORITY_FIRE, "lava"),        /* newline */                                                  \
-      list_macro(THING_PRIORITY_STEAM, "steam"),      /* newline */                                                  \
-      list_macro(THING_PRIORITY_PLAYER, "player"),    /* newline */                                                  \
-      list_macro(THING_PRIORITY_MOB, "mob"),          /* newline */                                                  \
-      list_macro(THING_PRIORITY_MONST, "monst"),      /* newline */                                                  \
-      list_macro(THING_PRIORITY_WATER, "water"),      /* newline */                                                  \
-      list_macro(THING_PRIORITY_SMOKE, "smoke"),      /* newline */                                                  \
-      list_macro(THING_PRIORITY_OBJECT, "object"),    /* newline */                                                  \
-      list_macro(THING_PRIORITY_LOW, "low"),          /* newline */
+  clang_format_indent()                                    /* dummy line for clang indentation fixup */              \
+      list_macro(THING_PRIORITY_EXPLOSION, "player"),      /* newline */                                             \
+      list_macro(THING_PRIORITY_PROJECTILE, "projectile"), /* newline */                                             \
+      list_macro(THING_PRIORITY_LAVA, "lava"),             /* newline */                                             \
+      list_macro(THING_PRIORITY_FIRE, "lava"),             /* newline */                                             \
+      list_macro(THING_PRIORITY_STEAM, "steam"),           /* newline */                                             \
+      list_macro(THING_PRIORITY_PLAYER, "player"),         /* newline */                                             \
+      list_macro(THING_PRIORITY_MOB, "mob"),               /* newline */                                             \
+      list_macro(THING_PRIORITY_MONST, "monst"),           /* newline */                                             \
+      list_macro(THING_PRIORITY_WATER, "water"),           /* newline */                                             \
+      list_macro(THING_PRIORITY_SMOKE, "smoke"),           /* newline */                                             \
+      list_macro(THING_PRIORITY_OBJECT, "object"),         /* newline */                                             \
+      list_macro(THING_PRIORITY_LOW, "low"),               /* newline */
 
 ENUM_DEF_H(THING_PRIORITY_ENUM, ThingPriorityType)
 
@@ -672,6 +673,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_explosion(tp)             tp_flag(tp, is_explosion)
 #define tp_is_extinguished_on_death(tp) tp_flag(tp, is_extinguished_on_death)
 #define tp_is_fire(tp)                  tp_flag(tp, is_fire)
+#define tp_is_fireball(tp)              tp_flag(tp, is_fireball)
 #define tp_is_floating(tp)              tp_flag(tp, is_floating)
 #define tp_is_floor(tp)                 tp_flag(tp, is_floor)
 #define tp_is_flying(tp)                tp_flag(tp, is_flying)
@@ -722,6 +724,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_physics_water(tp)         tp_flag(tp, is_physics_water)
 #define tp_is_pillar(tp)                tp_flag(tp, is_pillar)
 #define tp_is_player(tp)                tp_flag(tp, is_player)
+#define tp_is_projectile(tp)            tp_flag(tp, is_projectile)
 #define tp_is_rock(tp)                  tp_flag(tp, is_rock)
 #define tp_is_shovable(tp)              tp_flag(tp, is_shovable)
 #define tp_is_slime(tp)                 tp_flag(tp, is_slime)
@@ -833,8 +836,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused95(tp)              tp_flag(tp, is_unused95)
 #define tp_is_unused96(tp)              tp_flag(tp, is_unused96)
 #define tp_is_unused97(tp)              tp_flag(tp, is_unused97)
-#define tp_is_unused98(tp)              tp_flag(tp, is_unused98)
-#define tp_is_unused99(tp)              tp_flag(tp, is_unused99)
 #define tp_is_wait_on_dead_anim(tp)     tp_flag(tp, is_wait_on_dead_anim)
 #define tp_is_walk_through_walls(tp)    tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                  tp_flag(tp, is_wall)
@@ -893,6 +894,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_explosion(g, v, l, p)             level_flag(g, v, l, is_explosion, p)
 #define level_is_extinguished_on_death(g, v, l, p) level_flag(g, v, l, is_extinguished_on_death, p)
 #define level_is_fire(g, v, l, p)                  level_flag(g, v, l, is_fire, p)
+#define level_is_fireball(g, v, l, p)              level_flag(g, v, l, is_fireball, p)
 #define level_is_floating(g, v, l, p)              level_flag(g, v, l, is_floating, p)
 #define level_is_floor(g, v, l, p)                 level_flag(g, v, l, is_floor, p)
 #define level_is_flying(g, v, l, p)                level_flag(g, v, l, is_flying, p)
@@ -943,6 +945,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_physics_water(g, v, l, p)         level_flag(g, v, l, is_physics_water, p)
 #define level_is_pillar(g, v, l, p)                level_flag(g, v, l, is_pillar, p)
 #define level_is_player(g, v, l, p)                level_flag(g, v, l, is_player, p)
+#define level_is_projectile(g, v, l, p)            level_flag(g, v, l, is_projectile, p)
 #define level_is_rock(g, v, l, p)                  level_flag(g, v, l, is_rock, p)
 #define level_is_shovable(g, v, l, p)              level_flag(g, v, l, is_shovable, p)
 #define level_is_slime(g, v, l, p)                 level_flag(g, v, l, is_slime, p)
@@ -1054,8 +1057,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused95(g, v, l, p)              level_flag(g, v, l, is_unused95, p)
 #define level_is_unused96(g, v, l, p)              level_flag(g, v, l, is_unused96, p)
 #define level_is_unused97(g, v, l, p)              level_flag(g, v, l, is_unused97, p)
-#define level_is_unused98(g, v, l, p)              level_flag(g, v, l, is_unused98, p)
-#define level_is_unused99(g, v, l, p)              level_flag(g, v, l, is_unused99, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)     level_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_is_walk_through_walls(g, v, l, p)    level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                  level_flag(g, v, l, is_wall, p)
@@ -1114,6 +1115,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_explosion(g, v, l, p)             level_alive(g, v, l, is_explosion, p)
 #define level_alive_is_extinguished_on_death(g, v, l, p) level_alive(g, v, l, is_extinguished_on_death, p)
 #define level_alive_is_fire(g, v, l, p)                  level_alive(g, v, l, is_fire, p)
+#define level_alive_is_fireball(g, v, l, p)              level_alive(g, v, l, is_fireball, p)
 #define level_alive_is_floating(g, v, l, p)              level_alive(g, v, l, is_floating, p)
 #define level_alive_is_floor(g, v, l, p)                 level_alive(g, v, l, is_floor, p)
 #define level_alive_is_flying(g, v, l, p)                level_alive(g, v, l, is_flying, p)
@@ -1164,6 +1166,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_physics_water(g, v, l, p)         level_alive(g, v, l, is_physics_water, p)
 #define level_alive_is_pillar(g, v, l, p)                level_alive(g, v, l, is_pillar, p)
 #define level_alive_is_player(g, v, l, p)                level_alive(g, v, l, is_player, p)
+#define level_alive_is_projectile(g, v, l, p)            level_alive(g, v, l, is_projectile, p)
 #define level_alive_is_rock(g, v, l, p)                  level_alive(g, v, l, is_rock, p)
 #define level_alive_is_shovable(g, v, l, p)              level_alive(g, v, l, is_shovable, p)
 #define level_alive_is_slime(g, v, l, p)                 level_alive(g, v, l, is_slime, p)
@@ -1275,8 +1278,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused95(g, v, l, p)              level_alive(g, v, l, is_unused95, p)
 #define level_alive_is_unused96(g, v, l, p)              level_alive(g, v, l, is_unused96, p)
 #define level_alive_is_unused97(g, v, l, p)              level_alive(g, v, l, is_unused97, p)
-#define level_alive_is_unused98(g, v, l, p)              level_alive(g, v, l, is_unused98, p)
-#define level_alive_is_unused99(g, v, l, p)              level_alive(g, v, l, is_unused99, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)     level_alive(g, v, l, is_wait_on_dead_anim, p)
 #define level_alive_is_walk_through_walls(g, v, l, p)    level_alive(g, v, l, is_walk_through_walls, p)
 #define level_alive_is_wall(g, v, l, p)                  level_alive(g, v, l, is_wall, p)
@@ -1335,6 +1336,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_explosion(g, v, l, p)             level_count(g, v, l, is_explosion, p)
 #define level_count_is_extinguished_on_death(g, v, l, p) level_count(g, v, l, is_extinguished_on_death, p)
 #define level_count_is_fire(g, v, l, p)                  level_count(g, v, l, is_fire, p)
+#define level_count_is_fireball(g, v, l, p)              level_count(g, v, l, is_fireball, p)
 #define level_count_is_floating(g, v, l, p)              level_count(g, v, l, is_floating, p)
 #define level_count_is_floor(g, v, l, p)                 level_count(g, v, l, is_floor, p)
 #define level_count_is_flying(g, v, l, p)                level_count(g, v, l, is_flying, p)
@@ -1385,6 +1387,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_physics_water(g, v, l, p)         level_count(g, v, l, is_physics_water, p)
 #define level_count_is_pillar(g, v, l, p)                level_count(g, v, l, is_pillar, p)
 #define level_count_is_player(g, v, l, p)                level_count(g, v, l, is_player, p)
+#define level_count_is_projectile(g, v, l, p)            level_count(g, v, l, is_projectile, p)
 #define level_count_is_rock(g, v, l, p)                  level_count(g, v, l, is_rock, p)
 #define level_count_is_shovable(g, v, l, p)              level_count(g, v, l, is_shovable, p)
 #define level_count_is_slime(g, v, l, p)                 level_count(g, v, l, is_slime, p)
@@ -1496,8 +1499,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused95(g, v, l, p)              level_count(g, v, l, is_unused95, p)
 #define level_count_is_unused96(g, v, l, p)              level_count(g, v, l, is_unused96, p)
 #define level_count_is_unused97(g, v, l, p)              level_count(g, v, l, is_unused97, p)
-#define level_count_is_unused98(g, v, l, p)              level_count(g, v, l, is_unused98, p)
-#define level_count_is_unused99(g, v, l, p)              level_count(g, v, l, is_unused99, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)     level_count(g, v, l, is_wait_on_dead_anim, p)
 #define level_count_is_walk_through_walls(g, v, l, p)    level_count(g, v, l, is_walk_through_walls, p)
 #define level_count_is_wall(g, v, l, p)                  level_count(g, v, l, is_wall, p)
@@ -1556,6 +1557,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_explosion(g, v, l, p)             level_open(g, v, l, is_explosion, p)
 #define level_open_is_extinguished_on_death(g, v, l, p) level_open(g, v, l, is_extinguished_on_death, p)
 #define level_open_is_fire(g, v, l, p)                  level_open(g, v, l, is_fire, p)
+#define level_open_is_fireball(g, v, l, p)              level_open(g, v, l, is_fireball, p)
 #define level_open_is_floating(g, v, l, p)              level_open(g, v, l, is_floating, p)
 #define level_open_is_floor(g, v, l, p)                 level_open(g, v, l, is_floor, p)
 #define level_open_is_flying(g, v, l, p)                level_open(g, v, l, is_flying, p)
@@ -1606,6 +1608,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_physics_water(g, v, l, p)         level_open(g, v, l, is_physics_water, p)
 #define level_open_is_pillar(g, v, l, p)                level_open(g, v, l, is_pillar, p)
 #define level_open_is_player(g, v, l, p)                level_open(g, v, l, is_player, p)
+#define level_open_is_projectile(g, v, l, p)            level_open(g, v, l, is_projectile, p)
 #define level_open_is_rock(g, v, l, p)                  level_open(g, v, l, is_rock, p)
 #define level_open_is_shovable(g, v, l, p)              level_open(g, v, l, is_shovable, p)
 #define level_open_is_slime(g, v, l, p)                 level_open(g, v, l, is_slime, p)
@@ -1717,8 +1720,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_unused95(g, v, l, p)              level_open(g, v, l, is_unused95, p)
 #define level_open_is_unused96(g, v, l, p)              level_open(g, v, l, is_unused96, p)
 #define level_open_is_unused97(g, v, l, p)              level_open(g, v, l, is_unused97, p)
-#define level_open_is_unused98(g, v, l, p)              level_open(g, v, l, is_unused98, p)
-#define level_open_is_unused99(g, v, l, p)              level_open(g, v, l, is_unused99, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)     level_open(g, v, l, is_wait_on_dead_anim, p)
 #define level_open_is_walk_through_walls(g, v, l, p)    level_open(g, v, l, is_walk_through_walls, p)
 #define level_open_is_wall(g, v, l, p)                  level_open(g, v, l, is_wall, p)

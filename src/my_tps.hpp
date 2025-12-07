@@ -31,6 +31,7 @@ bool tp_load_entrance();
 bool tp_load_exit();
 bool tp_load_explosion();
 bool tp_load_fire();
+bool tp_load_fireball();
 bool tp_load_floor();
 bool tp_load_foliage();
 bool tp_load_ghost_mob();

@@ -31,6 +31,7 @@ bool templates_init(void)
   if (!tp_load_exit()) { return false; }
   if (!tp_load_explosion()) { return false; }
   if (!tp_load_fire()) { return false; }
+  if (!tp_load_fireball()) { return false; }
   if (!tp_load_floor()) { return false; }
   if (!tp_load_foliage()) { return false; }
   if (!tp_load_ghost_mob()) { return false; }

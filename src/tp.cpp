@@ -49,6 +49,7 @@ std::initializer_list< std::string > tps = {
     "exit",
     "explosion",
     "fire",
+    "fireball",
     "floor",
     "foliage",
     "ghost_mob",
