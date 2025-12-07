@@ -1,34 +1,39 @@
 bugs
 ----
 
-features
---------
+basic features
+--------------
+particles / slow fireball
 bushes quiver when monster is behind?
-particles
-slow fireball
-do not allow the player to land in an enclosed area; climb? digging / blind jump/ emergency teleport
-shrines that reduce spell points
-spell points to collect
-damaged door visuals
 mobs generating monsters
 monst AI
 ghosts and walls
 score is hard coded to 666
-kobalos need to steal items
-traps
+damaged door visuals
+traps / gas effects
+
+later features
+--------------
+items hiding in bushes 
+boulders that can crush
+magic
+do not allow the player to land in an enclosed area; climb? digging / blind jump/ emergency teleport
+shrines that reduce spell points
+spell points to collect
 anti magic areas
 anti anti magic areas
-items hiding in bushes 
-ogyr (celtic)
-boulders that can crush
-door mimic
 sacrifice a leg / soul to progress
 sacrifices are to Gods
 sacrificed an arm to a god of fire, would you get a spectral arm of fire with fire damage bonus as replacement
-different parts sacrificed to different gods.
 most players would need to sacrifice something in order to get past the first half of the game
 eyes of ice, heart of fire
 7 chakras
+
+monsters
+--------
+ogyr (celtic)
+door mimic
+kobalos need to steal items
 
 story
 -----
