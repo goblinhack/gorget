@@ -119,6 +119,7 @@ static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_CHASMS       = 30;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_LOCKED_DOORS = 50;
 static const int LEVEL_GEN_CHANCE_OF_FOLIAGE_AROUND_SECRET_DOORS = 80;
 static const int LEVEL_GEN_CHANCE_OF_DOOR_LOCKED                 = 30;
+static const int LEVEL_GEN_CHANCE_OF_CENTRAL_BRIDGE              = 50;
 
 //
 // Chances of creating, tested in the following order, with the default being water
@@ -1714,19 +1715,19 @@ static bool fragment_match(Gamep g, class LevelGen *l, class Fragment *f, spoint
 //
 // Place the fragment
 //
-static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, spoint at)
+static FragmentAlt *fragment_put(Gamep g, class LevelGen *l, class Fragment *f, spoint at)
 {
   TRACE_NO_INDENT();
 
   if (f->fragment_alts.empty()) {
     fragment_dump(g, f);
     DIE("no alternative fragments for fragment");
-    return;
+    return nullptr;
   }
 
   auto a = fragment_alt_random_get(g, l, f);
   if (! a) {
-    return;
+    return nullptr;
   }
 
   for (int ry = 0; ry < f->height; ry++) {
@@ -1755,6 +1756,8 @@ static void fragment_put(Gamep g, class LevelGen *l, class Fragment *f, spoint a
       l->data[ p.x ][ p.y ].c = c;
     }
   }
+
+  return a;
 }
 
 //
@@ -1787,10 +1790,11 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
     }
 
     auto cand = cands[ pcg_rand() % cands.size() ];
-    fragment_put(g, l, f, cand);
+    auto alt  = fragment_put(g, l, f, cand);
 
     if (unlikely(l->debug)) {
-      auto fragment_name = string_sprintf("placed another fragment %s:%d", f->file, f->line);
+      auto fragment_name
+          = string_sprintf("placed another fragment %s:%d with %s:%d", f->file, f->line, alt->file, alt->line);
       level_gen_dump(g, l, fragment_name.c_str());
     }
 
@@ -2579,6 +2583,24 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
     level_gen_dump(g, l);
   }
 
+  //
+  // Add central bridges?
+  //
+  bool add_bridge_across {};
+  bool add_bridge_down {};
+  auto r      = d100();
+  auto chance = LEVEL_GEN_CHANCE_OF_CENTRAL_BRIDGE / 2;
+
+  if (c == CHARMAP_CHASM) {
+    chance *= 2;
+  }
+
+  if (r < chance) {
+    add_bridge_across = true;
+  } else if (r > 100 - chance) {
+    add_bridge_down = true;
+  }
+
   for (x = 0; x < MAP_WIDTH; x++) {
     for (y = 0; y < MAP_HEIGHT; y++) {
       if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
@@ -2615,9 +2637,15 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
             break;
           case CHARMAP_EMPTY :
             //
-            // Perma water
+            // Water / chasm / etc...
             //
-            l->data[ x ][ y ].c = c;
+            if (add_bridge_down && (x == MAP_WIDTH / 2)) {
+              l->data[ x ][ y ].c = CHARMAP_BRIDGE;
+            } else if (add_bridge_across && (y == MAP_HEIGHT / 2)) {
+              l->data[ x ][ y ].c = CHARMAP_BRIDGE;
+            } else {
+              l->data[ x ][ y ].c = c;
+            }
             break;
         }
       }

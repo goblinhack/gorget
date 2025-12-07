@@ -13,6 +13,44 @@ void fragments_init(Gamep g)
   TRACE_NO_INDENT();
 
   if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                   /* frag   */ (const char *) "*****",
+                   /* frag   */ (const char *) "*****",
+                   /* frag   */ (const char *) "**C==",
+                   /* frag   */ (const char *) "*****",
+                   /* frag   */ (const char *) "*****", nullptr)) {
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "  ===",
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "     ", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "  .==",
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "     ", nullptr);
+  }
+  if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                   /* frag   */ (const char *) "*****",
+                   /* frag   */ (const char *) "*****",
+                   /* frag   */ (const char *) "**C**",
+                   /* frag   */ (const char *) "**=**",
+                   /* frag   */ (const char *) "**=**", nullptr)) {
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "  =  ",
+                     /* alt  */ (const char *) "  =  ",
+                     /* alt  */ (const char *) "  =  ", nullptr);
+    fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "     ",
+                     /* alt  */ (const char *) "  .  ",
+                     /* alt  */ (const char *) "  =  ",
+                     /* alt  */ (const char *) "  =  ", nullptr);
+  }
+  if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
                    /* frag   */ (const char *) "     ",
                    /* frag   */ (const char *) "     ",
                    /* frag   */ (const char *) "     ",
@@ -811,9 +849,9 @@ void fragments_init(Gamep g)
   }
 
   if (fragment_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
-                   /* frag   */ (const char *) "?xx?",
+                   /* frag   */ (const char *) "*xx*",
                    /* frag   */ (const char *) ".^^.",
-                   /* frag   */ (const char *) "?xx?", nullptr)) {
+                   /* frag   */ (const char *) "*xx*", nullptr)) {
     fragment_alt_add(g, CHANCE_NORMAL, __FUNCTION__, __LINE__,
                      /* alt  */ (const char *) " xx ",
                      /* alt  */ (const char *) "....",
