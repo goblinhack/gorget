@@ -125,7 +125,7 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_unused12);
   in >> bits(my.t.key_unused13);
   in >> bits(my.t.key_unused14);
-  in >> bits(my.t.key_unused15);
+  in >> bits(my.t.key_fire);
   in >> bits(my.t.key_inventory);
   in >> bits(my.t.key_jump);
   in >> bits(my.t.key_ascend);

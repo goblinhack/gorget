@@ -122,7 +122,7 @@ public:
   SDL_Keysym key_unused12   = {};
   SDL_Keysym key_unused13   = {};
   SDL_Keysym key_unused14   = {};
-  SDL_Keysym key_unused15   = {};
+  SDL_Keysym key_fire       = {};
   SDL_Keysym key_inventory  = {};
   SDL_Keysym key_jump       = {};
   SDL_Keysym key_ascend     = {};
@@ -334,6 +334,7 @@ void Config::reset(void)
   key_descend.sym    = SDLK_GREATER;
   key_help.sym       = SDLK_h;
   key_inventory.sym  = SDLK_i;
+  key_fire.sym       = SDLK_SPACE;
   key_jump.sym       = SDLK_j;
   key_load.sym       = SDLK_F1;
   key_move_down.sym  = SDLK_s;
@@ -2408,21 +2409,21 @@ void game_key_unused14_set(Gamep g, SDL_Keysym key)
   g->config.key_unused14 = key;
 }
 
-SDL_Keysym game_key_unused15_get(Gamep g)
+SDL_Keysym game_key_fire_get(Gamep g)
 {
   TRACE_NO_INDENT();
   if (! g)
     return no_key;
-  return g->config.key_unused15;
+  return g->config.key_fire;
 }
-void game_key_unused15_set(Gamep g, SDL_Keysym key)
+void game_key_fire_set(Gamep g, SDL_Keysym key)
 {
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
     return;
   }
-  g->config.key_unused15 = key;
+  g->config.key_fire = key;
 }
 
 SDL_Keysym game_key_inventory_get(Gamep g)

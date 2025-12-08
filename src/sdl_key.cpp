@@ -898,6 +898,10 @@ std::string to_string_ignoring_mods(const SDL_Keysym &k)
     return "z";
   }
 
+  if (! k.sym) {
+    return "<>";
+  }
+
   return "";
 }
 
