@@ -556,7 +556,7 @@ static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, b
   return false;
 }
 
-void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
+static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
 {
   TRACE_NO_INDENT();
 
@@ -589,6 +589,47 @@ void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
   player_move_reset(g, v, l);
 }
 
+static void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
+{
+  TRACE_NO_INDENT();
+
+  auto player_struct = thing_player_struct(g);
+  if (! player_struct) {
+    return;
+  }
+
+  if (game_state(g) != STATE_PLAYING) {
+    player_move_reset(g, v, l);
+    return;
+  }
+
+  auto t = thing_player(g);
+  if (! t) {
+    return;
+  }
+
+  //
+  // Wait until the end of the tick
+  //
+  if (level_tick_is_in_progress(g, v, l)) {
+    return;
+  }
+
+  thing_set_dir_from_delta(t, dx, dy);
+
+  spoint target;
+
+  if (v->cursor_visible) {
+    target = v->cursor_at;
+  } else {
+    spoint delta = thing_get_delta_from_dir(t);
+    target       = t->at + delta;
+  }
+  TOPCON("target %d,%d", target.x, target.y);
+
+  player_move_reset(g, v, l);
+}
+
 //
 // All keys have been released, forget any accumulation of events
 //
@@ -596,6 +637,7 @@ void player_move_reset(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
+  v->requested_fire       = false;
   v->requested_move_up    = false;
   v->requested_move_left  = false;
   v->requested_move_keft  = false;
@@ -605,9 +647,13 @@ void player_move_reset(Gamep g, Levelsp v, Levelp l)
 //
 // Allow moves to accumulate so we can do diagonal moves.
 //
-void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right)
+void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool left, bool right, bool fire)
 {
   TRACE_NO_INDENT();
+
+  if (fire) {
+    v->requested_fire = fire;
+  }
 
   if (up) {
     v->requested_move_up = up;
@@ -629,7 +675,7 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
 //
 // Attempt to move
 //
-bool player_move_request(Gamep g, bool up, bool down, bool left, bool right)
+bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, bool fire)
 {
   TRACE_NO_INDENT();
 
@@ -648,13 +694,39 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right)
     return false;
   }
 
-  player_move_accum(g, v, l, up, down, left, right);
+  player_move_accum(g, v, l, up, down, left, right, fire);
 
   //
   // If a move is in progress, do nothing
   //
   if (level_tick_is_in_progress(g, v, l)) {
     return false;
+  }
+
+  if (v->requested_fire) {
+    if (v->requested_move_up) {
+      if (v->requested_move_keft) {
+        player_fire(g, v, l, -1, -1, 0);
+      } else if (v->requested_move_right) {
+        player_fire(g, v, l, 1, -1, 0);
+      } else {
+        player_fire(g, v, l, 0, -1, 0);
+      }
+    } else if (v->requested_move_left) {
+      if (v->requested_move_keft) {
+        player_fire(g, v, l, -1, 1, 0);
+      } else if (v->requested_move_right) {
+        player_fire(g, v, l, 1, 1, 0);
+      } else {
+        player_fire(g, v, l, 0, 1, 0);
+      }
+    } else if (v->requested_move_keft) {
+      player_fire(g, v, l, -1, 0, 0);
+    } else if (v->requested_move_right) {
+      player_fire(g, v, l, 1, 0, 0);
+    } else {
+      player_fire(g, v, l, 0, 0, 0);
+    }
   }
 
   if (v->requested_move_up) {

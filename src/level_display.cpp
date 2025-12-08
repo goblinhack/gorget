@@ -67,7 +67,8 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum
         if (! tp_once) {
           tp_once = tp_find_mand("cursor_at");
         }
-        tp = tp_once;
+        tp                = tp_once;
+        v->cursor_visible = true;
         break;
       }
   }
@@ -263,6 +264,11 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
 void level_display(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
+
+  //
+  // Set later
+  //
+  v->cursor_visible = false;
 
   //
   // Soft scroll to the player

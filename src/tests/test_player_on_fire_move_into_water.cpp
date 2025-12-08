@@ -94,7 +94,7 @@ static bool test_player_on_fire_move_into_water(Gamep g, Testp t)
     up = down = left = right = false;
     right                    = true;
 
-    if (! (result = player_move_request(g, up, down, left, right))) {
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
       goto exit;
     }

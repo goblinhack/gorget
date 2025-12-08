@@ -383,6 +383,7 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
     iter->tick_begin_requested = true;
   }
 
+  v->requested_fire       = false;
   v->requested_move_up    = false;
   v->requested_move_left  = false;
   v->requested_move_keft  = false;

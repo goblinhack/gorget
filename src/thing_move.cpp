@@ -227,6 +227,27 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 }
 
 //
+// Get delta from thing direction
+//
+spoint thing_get_delta_from_dir(Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  switch (t->dir) {
+    case THING_DIR_BR :    return spoint(1, 1);
+    case THING_DIR_TR :    return spoint(1, -1);
+    case THING_DIR_BL :    return spoint(-1, 1);
+    case THING_DIR_TL :    return spoint(-1, -1);
+    case THING_DIR_RIGHT : return spoint(1, 0);
+    case THING_DIR_NONE :  return spoint(0, 0);
+    case THING_DIR_DOWN :  return spoint(0, 1);
+    case THING_DIR_UP :    return spoint(0, -1);
+    case THING_DIR_LEFT :  return spoint(-1, 0);
+    default :              return spoint(0, 0);
+  }
+}
+
+//
 // Handles manual and mouse follow moves
 //
 bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)

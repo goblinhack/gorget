@@ -109,7 +109,7 @@ static bool test_brazier_shove_chasm_twice(Gamep g, Testp t)
   up = down = left = right = false;
   right                    = true;
 
-  if (! (result = player_move_request(g, up, down, left, right))) {
+  if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
     level_dump(g, v, l1, w, h);
     level_dump(g, v, l2, w, h);
     level_dump(g, v, l3, w, h);
@@ -147,7 +147,7 @@ static bool test_brazier_shove_chasm_twice(Gamep g, Testp t)
   up = down = left = right = false;
   right                    = true;
 
-  if (! (result = player_move_request(g, up, down, left, right))) {
+  if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
     level_dump(g, v, l1, w, h);
     level_dump(g, v, l2, w, h);
     level_dump(g, v, l3, w, h);

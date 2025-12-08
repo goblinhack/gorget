@@ -65,7 +65,7 @@ static bool test_save_load(Gamep g, Testp t)
     up = down = left = right = false;
     right                    = true;
 
-    if (! (result = player_move_request(g, up, down, left, right))) {
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move fail");
       goto exit;
     }

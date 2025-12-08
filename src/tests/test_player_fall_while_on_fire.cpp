@@ -109,7 +109,7 @@ static bool test_player_fall_while_on_fire(Gamep g, Testp t)
     up = down = left = right = false;
     right                    = true;
 
-    if (! (result = player_move_request(g, up, down, left, right))) {
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
       goto exit;
     }

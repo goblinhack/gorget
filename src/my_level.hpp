@@ -436,6 +436,10 @@ typedef struct Levels_ {
   //
   uint8_t cursor_at_valid : 1;
   //
+  // Can see the cursor currently? It is hidden when moving with the keyboard.
+  //
+  uint8_t cursor_visible : 1;
+  //
   // Mouse moved?
   //
   uint8_t cursor_moved : 1;
@@ -446,6 +450,7 @@ typedef struct Levels_ {
   uint8_t requested_move_keft  : 1;
   uint8_t requested_move_right : 1;
   uint8_t requested_move_up    : 1;
+  uint8_t requested_fire       : 1;
   //
   // Set when something modifies the map and we need to update caches.
   //

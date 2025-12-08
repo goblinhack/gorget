@@ -54,7 +54,7 @@ static bool test_wall(Gamep g, Testp t)
     up = down = left = right = false;
     right                    = true;
 
-    if (! (result = player_move_request(g, up, down, left, right))) {
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
       goto exit;
     }
@@ -80,7 +80,7 @@ static bool test_wall(Gamep g, Testp t)
     up = down = left = right = false;
     down                     = true;
 
-    if (! (result = player_move_request(g, up, down, left, right))) {
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
       goto exit;
     }
@@ -106,7 +106,7 @@ static bool test_wall(Gamep g, Testp t)
     up = down = left = right = false;
     left                     = true;
 
-    if (! (result = player_move_request(g, up, down, left, right))) {
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
       goto exit;
     }
@@ -132,7 +132,7 @@ static bool test_wall(Gamep g, Testp t)
     up = down = left = right = false;
     up                       = true;
 
-    if (! (result = player_move_request(g, up, down, left, right))) {
+    if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
       TEST_FAILED(t, "move failed");
       goto exit;
     }

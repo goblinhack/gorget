@@ -492,6 +492,9 @@ bool game_input(Gamep g, const SDL_Keysym *key)
     return true;
   }
 
+  if (sdlk_eq(*key, game_key_fire_get(g))) {
+    return false;
+  }
   if (sdlk_eq(*key, game_key_move_up_get(g))) {
     return false;
   }

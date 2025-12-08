@@ -91,7 +91,7 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
   up = down = left = right = false;
   right                    = true;
 
-  if (! (result = player_move_request(g, up, down, left, right))) {
+  if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
     level_dump(g, v, l1, w, h);
     level_dump(g, v, l2, w, h);
     TEST_FAILED(t, "move failed");
@@ -127,7 +127,7 @@ static bool test_brazier_shove_chasm(Gamep g, Testp t)
   up = down = left = right = false;
   right                    = true;
 
-  if (! (result = player_move_request(g, up, down, left, right))) {
+  if (! (result = player_move_request(g, up, down, left, right, false /* fire */))) {
     level_dump(g, v, l1, w, h);
     level_dump(g, v, l2, w, h);
     TEST_FAILED(t, "move failed");

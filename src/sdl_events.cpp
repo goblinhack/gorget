@@ -497,11 +497,13 @@ void sdl_key_repeat_events(Gamep g)
 
   const uint8_t *state = SDL_GetKeyboardState(nullptr);
 
+  static bool fire_held_prev;
   static bool up_held_prev;
   static bool down_held_prev;
   static bool left_held_prev;
   static bool right_held_prev;
 
+  bool fire_held  = state[ sdlk_to_scancode(game_key_fire_get(g)) ];
   bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(g)) ];
   bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(g)) ];
   bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(g)) ];
@@ -510,64 +512,74 @@ void sdl_key_repeat_events(Gamep g)
   //
   // Keypad stuff is hardcoded.
   //
+  if (state[ SDL_SCANCODE_KP_5 ] || state[ SDL_SCANCODE_KP_ENTER ]) {
+    // 7 8 9
+    // 4 5 6
+    // 1 2 3
+    fire_held = true;
+  }
   if (state[ SDL_SCANCODE_KP_1 ]) {
     // 7 8 9
-    // 4   6
+    // 4 5 6
     // 1 2 3
     left_held = true;
     down_held = true;
   }
   if (state[ SDL_SCANCODE_KP_2 ]) {
     // 7 8 9
-    // 4   6
+    // 4 5 6
     // 1 2 3
     down_held = true;
   }
   if (state[ SDL_SCANCODE_KP_3 ]) {
     // 7 8 9
-    // 4   6
+    // 4 5 6
     // 1 2 3
     right_held = true;
     down_held  = true;
   }
   if (state[ SDL_SCANCODE_KP_4 ]) {
     // 7 8 9
-    // 4   6
+    // 4 5 6
     // 1 2 3
     left_held = true;
   }
   if (state[ SDL_SCANCODE_KP_6 ]) {
     // 7 8 9
-    // 4   6
+    // 4 5 6
     // 1 2 3
     right_held = true;
   }
   if (state[ SDL_SCANCODE_KP_7 ]) {
     // 7 8 9
-    // 4   6
+    // 4 5 6
     // 1 2 3
     left_held = true;
     up_held   = true;
   }
   if (state[ SDL_SCANCODE_KP_8 ]) {
     // 7 8 9
-    // 4   6
+    // 4 5 6
     // 1 2 3
     up_held = true;
   }
   if (state[ SDL_SCANCODE_KP_9 ]) {
     // 7 8 9
-    // 4   6
+    // 4 5 6
     // 1 2 3
     right_held = true;
     up_held    = true;
   }
 
+  static int fire_pressed  = 0;
   static int up_pressed    = 0;
   static int down_pressed  = 0;
   static int left_pressed  = 0;
   static int right_pressed = 0;
 
+  if (fire_held && (fire_held != fire_held_prev)) {
+    fire_pressed++;
+  }
   if (up_held && (up_held != up_held_prev)) {
     up_pressed++;
   }
@@ -581,11 +593,13 @@ void sdl_key_repeat_events(Gamep g)
     right_pressed++;
   }
 
+  fire_held_prev  = fire_held;
   up_held_prev    = up_held;
   down_held_prev  = down_held;
   right_held_prev = right_held;
   left_held_prev  = left_held;
 
+  bool fire  = fire_pressed || fire_held;
   bool up    = up_pressed || up_held;
   bool down  = down_pressed || down_held;
   bool left  = left_pressed || left_held;
@@ -598,9 +612,12 @@ void sdl_key_repeat_events(Gamep g)
   }
 
   if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_PLAYER, last_movement_keypress)) {
-    if (player_move_request(g, up, down, left, right)) {
+    if (player_move_request(g, up, down, left, right, fire)) {
       last_movement_keypress = time_ms();
 
+      if (fire_pressed > 0) {
+        fire_pressed--;
+      }
       if (up_pressed > 0) {
         up_pressed--;
       }
