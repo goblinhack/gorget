@@ -6,7 +6,7 @@
 #include "my_level.hpp"
 #include "my_thing_callbacks.hpp"
 
-Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
+Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
 {
   TRACE_NO_INDENT();
 
@@ -36,4 +36,9 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   thing_on_spawn(g, v, l, t);
 
   return t;
+}
+
+Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at)
+{
+  return thing_spawn(g, v, l, tp, make_fpoint(at));
 }

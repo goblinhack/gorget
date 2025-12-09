@@ -36,7 +36,7 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     //
     // Limit the updates as tick interpolation occurs many times per second.
     //
-    if (thing_pix_at(player) == player->prev_pix_at) {
+    if (thing_pix_at(player) == thing_prev_pix_at(player)) {
       do_something = true;
     }
   } else {

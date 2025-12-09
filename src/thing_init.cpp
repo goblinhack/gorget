@@ -6,9 +6,11 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 
-Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
+Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
 {
   TRACE_NO_INDENT();
+
+  auto at = make_spoint(real_at);
 
   auto t = thing_alloc(g, v, l, tp, at);
   if (! t) {
@@ -16,6 +18,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   }
 
   t->at          = at;
+  t->real_at     = real_at;
   t->old_at      = at;
   t->moving_from = at;
   t->level_num   = l->level_num;
@@ -111,4 +114,9 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint at)
   }
 
   return t;
+}
+
+Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at)
+{
+  return thing_init(g, v, l, tp, make_fpoint(at));
 }

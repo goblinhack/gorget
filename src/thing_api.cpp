@@ -16,7 +16,7 @@ spoint thing_prev_pix_at(Thingp t)
   if (! t) {
     DIE("No thing pointer set");
   }
-  return t->prev_pix_at;
+  return t->_prev_pix_at;
 }
 
 spoint thing_prev_pix_at_set(Thingp t, const spoint &val)
@@ -25,7 +25,7 @@ spoint thing_prev_pix_at_set(Thingp t, const spoint &val)
   if (! t) {
     DIE("No thing pointer set");
   }
-  return t->prev_pix_at = val;
+  return t->_prev_pix_at = val;
 }
 
 spoint thing_pix_at(Thingp t)
@@ -34,7 +34,7 @@ spoint thing_pix_at(Thingp t)
   if (! t) {
     DIE("No thing pointer set");
   }
-  return t->curr_pix_at;
+  return t->_curr_pix_at;
 }
 
 spoint thing_pix_at_set(Thingp t, const spoint &val)
@@ -43,7 +43,7 @@ spoint thing_pix_at_set(Thingp t, const spoint &val)
   if (! t) {
     DIE("No thing pointer set");
   }
-  return t->curr_pix_at = val;
+  return t->_curr_pix_at = val;
 }
 
 spoint thing_pix_at_set(Thingp t, short x, short y)
@@ -52,9 +52,9 @@ spoint thing_pix_at_set(Thingp t, short x, short y)
   if (! t) {
     DIE("No thing pointer set");
   }
-  t->curr_pix_at.x = x;
-  t->curr_pix_at.y = y;
-  return t->curr_pix_at;
+  t->_curr_pix_at.x = x;
+  t->_curr_pix_at.y = y;
+  return t->_curr_pix_at;
 }
 
 int thing_speed(Thingp t)

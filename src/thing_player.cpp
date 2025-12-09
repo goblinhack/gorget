@@ -556,7 +556,7 @@ static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, b
   return false;
 }
 
-static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
+static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
 {
   TRACE_NO_INDENT();
 
@@ -589,12 +589,19 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy, int 
   player_move_reset(g, v, l);
 }
 
-static void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
+static void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
 {
   TRACE_NO_INDENT();
 
+  auto player = thing_player(g);
+  if (! player) {
+    ERR("No player found");
+    return;
+  }
+
   auto player_struct = thing_player_struct(g);
   if (! player_struct) {
+    ERR("No player struct found");
     return;
   }
 
@@ -628,6 +635,8 @@ static void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, int dz)
   TOPCON("target %d,%d", target.x, target.y);
 
   player_move_reset(g, v, l);
+
+  thing_fire_at(g, v, l, player, "fireball", target);
 }
 
 //
@@ -706,49 +715,49 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
   if (v->requested_fire) {
     if (v->requested_move_up) {
       if (v->requested_move_keft) {
-        player_fire(g, v, l, -1, -1, 0);
+        player_fire(g, v, l, -1, -1);
       } else if (v->requested_move_right) {
-        player_fire(g, v, l, 1, -1, 0);
+        player_fire(g, v, l, 1, -1);
       } else {
-        player_fire(g, v, l, 0, -1, 0);
+        player_fire(g, v, l, 0, -1);
       }
     } else if (v->requested_move_left) {
       if (v->requested_move_keft) {
-        player_fire(g, v, l, -1, 1, 0);
+        player_fire(g, v, l, -1, 1);
       } else if (v->requested_move_right) {
-        player_fire(g, v, l, 1, 1, 0);
+        player_fire(g, v, l, 1, 1);
       } else {
-        player_fire(g, v, l, 0, 1, 0);
+        player_fire(g, v, l, 0, 1);
       }
     } else if (v->requested_move_keft) {
-      player_fire(g, v, l, -1, 0, 0);
+      player_fire(g, v, l, -1, 0);
     } else if (v->requested_move_right) {
-      player_fire(g, v, l, 1, 0, 0);
+      player_fire(g, v, l, 1, 0);
     } else {
-      player_fire(g, v, l, 0, 0, 0);
+      player_fire(g, v, l, 0, 0);
     }
   }
 
   if (v->requested_move_up) {
     if (v->requested_move_keft) {
-      player_move_delta(g, v, l, -1, -1, 0);
+      player_move_delta(g, v, l, -1, -1);
     } else if (v->requested_move_right) {
-      player_move_delta(g, v, l, 1, -1, 0);
+      player_move_delta(g, v, l, 1, -1);
     } else {
-      player_move_delta(g, v, l, 0, -1, 0);
+      player_move_delta(g, v, l, 0, -1);
     }
   } else if (v->requested_move_left) {
     if (v->requested_move_keft) {
-      player_move_delta(g, v, l, -1, 1, 0);
+      player_move_delta(g, v, l, -1, 1);
     } else if (v->requested_move_right) {
-      player_move_delta(g, v, l, 1, 1, 0);
+      player_move_delta(g, v, l, 1, 1);
     } else {
-      player_move_delta(g, v, l, 0, 1, 0);
+      player_move_delta(g, v, l, 0, 1);
     }
   } else if (v->requested_move_keft) {
-    player_move_delta(g, v, l, -1, 0, 0);
+    player_move_delta(g, v, l, -1, 0);
   } else if (v->requested_move_right) {
-    player_move_delta(g, v, l, 1, 0, 0);
+    player_move_delta(g, v, l, 1, 0);
   }
 
   return true;

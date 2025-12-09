@@ -7,6 +7,7 @@
 #define _MY_THING_HPP_
 
 #include "my_color.hpp"
+#include "my_fpoint.hpp"
 #include "my_game_defs.hpp"
 #include "my_gl.hpp"
 #include "my_spoint.hpp"
@@ -322,6 +323,10 @@ typedef struct Thing_ {
   //
   int16_t _is_falling;
   //
+  // Weight in grams. Impacts things like grass being crushed.
+  //
+  int32_t _weight;
+  //
   // Current game tick this thing has completed
   //
   uint32_t tick;
@@ -342,20 +347,12 @@ typedef struct Thing_ {
   //
   ThingExtId ai_id;
   //
-  // Weight in grams. Impacts things like grass being crushed.
-  //
-  int32_t _weight;
-  //
-  // Increases per tick and when it reaches 1, allows the thing to move
-  //
-  float thing_dt;
-  //
   // Interpolated co-ords in pixels
   //
-  spoint prev_pix_at;
-  spoint curr_pix_at;
+  spoint _prev_pix_at;
+  spoint _curr_pix_at;
   //
-  // Map co-ords.
+  // Map co-ords. This is the slot the thing is at.
   //
   spoint at;
   //
@@ -371,6 +368,18 @@ typedef struct Thing_ {
   // Last location we were pushed onto the map.
   //
   spoint last_pushed_at;
+  //
+  // Increases per tick and when it reaches 1, allows the thing to move
+  //
+  float thing_dt;
+  //
+  // Angle of movement.
+  //
+  float angle;
+  //
+  // However some things like missiles can be at fractional positions.
+  //
+  fpoint real_at;
 } Thing;
 
 Levelp       thing_level(Gamep, Levelsp, Thingp);
@@ -384,10 +393,12 @@ Thingp       thing_get_at_safe(Gamep, Levelsp, Levelp, spoint p, int slot);
 Thingp       thing_find_optional(Gamep, Levelsp, ThingId id);
 Thingp       thing_find_non_inline(Gamep, Levelsp, ThingId id);
 Thingp       thing_get(Gamep, Levelsp, Levelp, spoint p, int slot);
-Thingp       thing_init(Gamep, Levelsp, Levelp, Tpp, spoint);
+Thingp       thing_init(Gamep, Levelsp, Levelp, Tpp, const spoint &);
+Thingp       thing_init(Gamep, Levelsp, Levelp, Tpp, const fpoint &);
 Thingp       thing_player(Gamep);
 Levelp       thing_player_level(Gamep);
-Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, spoint);
+Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, const spoint &);
+Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, const fpoint &);
 Thingp       top_owner(Gamep, Levelsp, Levelp, Thingp);
 ThingPlayerp thing_player_struct(Gamep);
 void         thing_ext_free(Gamep, Levelsp, Levelp, Thingp t);
@@ -611,6 +622,7 @@ bool   thing_is_unused75(Thingp);
 bool   thing_is_unused76(Thingp);
 bool   thing_is_unused77(Thingp);
 bool   thing_is_unused78(Thingp);
+void   thing_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const spoint);
 bool   thing_is_unused79(Thingp);
 bool   thing_is_unused8(Thingp);
 bool   thing_is_unused80(Thingp);
