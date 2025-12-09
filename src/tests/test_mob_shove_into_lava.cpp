@@ -83,7 +83,7 @@ static bool test_mob_shove_into_lava(Gamep g, Testp t)
   TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
-    p        = player->at + spoint(1, 0);
+    p        = thing_at(player) + spoint(1, 0);
     found_it = false;
     FOR_ALL_THINGS_AT(g, v, l, it, p)
     {
@@ -138,7 +138,7 @@ static bool test_mob_shove_into_lava(Gamep g, Testp t)
   {
     TRACE_NO_INDENT();
     TEST_LOG(t, "check mob is dead when shoved into lava");
-    p        = player->at + spoint(1, 0);
+    p        = thing_at(player) + spoint(1, 0);
     found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)

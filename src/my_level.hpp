@@ -520,17 +520,21 @@ typedef struct Levels_ {
 //
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                   \
   if (_g_ && _v_ && _l_)                                                                                             \
-    if (! is_oob(_p_))                                                                                               \
-      for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                        \
-        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
-          if ((_t_ = thing_find_optional(_g_, _v_, _l_->thing_id[ _p_.x ][ _p_.y ][ _slot_ ])))
+    for (spoint _at_ = make_spoint(_p_), loop1 = make_spoint(1, 1); loop1 == spoint(1, 1);                           \
+         loop1 = make_spoint(0, 0))                                                                                  \
+      if (! is_oob(_at_))                                                                                            \
+        for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                      \
+          for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                        \
+            if ((_t_ = thing_find_optional(_g_, _v_, _l_->thing_id[ _at_.x ][ _at_.y ][ _slot_ ])))
 
 #define FOR_ALL_TPS_AT(_g_, _v_, _l_, _tp_, _p_)                                                                     \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (Tpp _tp_ = nullptr, loop1 = (Tpp) 1; loop1 == (Tpp) 1; loop1 = (Tpp) 0)                                     \
-      for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                        \
-        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
-          if ((_t_ = thing_and_tp_get_at_safe(_g_, _v_, _l_, _p_, _slot_, &_tp_)))
+    for (spoint _at_ = make_spoint(_p_), loop1 = make_spoint(1, 1); loop1 == spoint(1, 1);                           \
+         loop1 = make_spoint(0, 0))                                                                                  \
+      for (Tpp _tp_ = nullptr, loop2 = (Tpp) 1; loop2 == (Tpp) 1; loop2 = (Tpp) 0)                                   \
+        for (Thingp _t_ = nullptr, loop3 = (Thingp) 1; loop3 == (Thingp) 1; loop3 = (Thingp) 0)                      \
+          for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                        \
+            if ((_t_ = thing_and_tp_get_at_safe(_g_, _v_, _l_, _at_, _slot_, &_tp_)))
 
 enum {
   CHANCE_VVV_UNLIKELY = 1,
@@ -579,12 +583,16 @@ bool    level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint, int slot, Thi
 void    levels_tick(Gamep, Levelsp);
 bool    level_tick_is_in_progress(Gamep, Levelsp, Levelp);
 int     level_count(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+int     level_count(Gamep, Levelsp, Levelp, ThingFlag, Thingp);
 Levelp  level_change(Gamep, Levelsp, LevelNum);
 Levelsp levels_memory_alloc(Gamep);
 ThingId level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);
 Thingp  level_alive(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+Thingp  level_alive(Gamep, Levelsp, Levelp, ThingFlag, Thingp);
 Thingp  level_flag(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+Thingp  level_flag(Gamep, Levelsp, Levelp, ThingFlag, Thingp);
 Thingp  level_open(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+Thingp  level_open(Gamep, Levelsp, Levelp, ThingFlag, Thingp);
 void    level_anim(Gamep, Levelsp, Levelp);
 void    level_assign_tiles(Gamep, Levelsp, Levelp);
 void    level_bounds_set(Gamep, Levelsp, Levelp);

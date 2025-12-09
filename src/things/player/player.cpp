@@ -40,24 +40,25 @@ static void tp_player_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If we fell into another chasm, don't make an oof sound
   //
-  if (level_is_chasm(g, v, l, t->at)) {
+  if (level_is_chasm(g, v, l, t)) {
     return;
   }
 
-  if (level_is_water(g, v, l, t->at)) {
+  if (level_is_water(g, v, l, t)) {
     thing_sound_play(g, v, l, t, "splash");
   } else {
     thing_sound_play(g, v, l, t, "footstep");
   }
 
-  v->cursor[ t->at.x ][ t->at.y ] = CURSOR_NONE;
+  auto at                   = thing_at(t);
+  v->cursor[ at.x ][ at.y ] = CURSOR_NONE;
 }
 
 static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (level_is_water(g, v, l, t->at)) {
+  if (level_is_water(g, v, l, t)) {
     thing_sound_play(g, v, l, t, "splash");
   }
 
@@ -65,7 +66,8 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  game_popup_text_add(g, t->at.x, t->at.y, std::string("Oof!"));
+  auto at = thing_at(t);
+  game_popup_text_add(g, at.x, at.y, std::string("Oof!"));
 }
 
 static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -74,7 +76,8 @@ static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   thing_sound_play(g, v, l, t, "fall");
 
-  game_popup_text_add(g, t->at.x, t->at.y, std::string("Aargh!"));
+  auto at = thing_at(t);
+  game_popup_text_add(g, at.x, at.y, std::string("Aargh!"));
 }
 
 static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -84,11 +87,11 @@ static void tp_player_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If we fell into another chasm, don't make an oof sound
   //
-  if (level_is_chasm(g, v, l, t->at)) {
+  if (level_is_chasm(g, v, l, t)) {
     return;
   }
 
-  if (level_is_water(g, v, l, t->at)) {
+  if (level_is_water(g, v, l, t)) {
     thing_sound_play(g, v, l, t, "splash");
   } else {
     thing_sound_play(g, v, l, t, "oof");
@@ -121,7 +124,8 @@ static void tp_player_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   thing_sound_play(g, v, l, t, "teleport");
 
-  game_popup_text_add(g, t->at.x, t->at.y, std::string("Urgh"));
+  auto at = thing_at(t);
+  game_popup_text_add(g, at.x, at.y, std::string("Urgh"));
 }
 
 static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)

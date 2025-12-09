@@ -140,7 +140,7 @@ bool thing_shove_handle(Gamep g, Levelsp v, Levelp l, Thingp shover, spoint at)
   TRACE_NO_INDENT();
 
   bool   ret       = false;
-  auto   direction = at - shover->at;
+  auto   direction = at - thing_at(shover);
   spoint from      = at;
   spoint to        = at + direction;
 

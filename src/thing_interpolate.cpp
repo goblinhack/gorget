@@ -15,11 +15,13 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
 {
   TRACE_NO_INDENT();
 
+  auto at = thing_at(t);
+
   if (0) {
-    THING_TOPCON(t, "from %d,%d to %d,%d dt %f", t->moving_from.x, t->moving_from.y, t->at.x, t->at.y, dt);
+    THING_TOPCON(t, "from %d,%d to %d,%d dt %f", t->moving_from.x, t->moving_from.y, at.x, at.y, dt);
   }
 
-  if (t->moving_from == t->at) {
+  if (t->moving_from == at) {
     return;
   }
 
@@ -27,8 +29,8 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
     DIE("negative dt %f", dt);
   }
 
-  float pix_x = (float) t->moving_from.x + (((float) (t->at.x - t->moving_from.x)) * dt);
-  float pix_y = (float) t->moving_from.y + (((float) (t->at.y - t->moving_from.y)) * dt);
+  float pix_x = (float) t->moving_from.x + (((float) (at.x - t->moving_from.x)) * dt);
+  float pix_y = (float) t->moving_from.y + (((float) (at.y - t->moving_from.y)) * dt);
 
   spoint pix_at;
   pix_at.x = (int) (pix_x * INNER_TILE_WIDTH);

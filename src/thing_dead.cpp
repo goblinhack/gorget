@@ -267,7 +267,7 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Do adjacent tiles need updating due to the destruction of this tiled thing?
   //
   if (thing_is_tiled(t)) {
-    level_tile_update_set(g, v, l, t->at);
+    level_tile_update_set(g, v, l, thing_at(t));
   }
 
   t->tick_dead = v->tick;

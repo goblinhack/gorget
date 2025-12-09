@@ -157,7 +157,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       //
       // Common code for pass 1 and 2
       //
-      if (level_is_cursor_path_hazard(g, v, l, player->at)) {
+      if (level_is_cursor_path_hazard(g, v, l, player)) {
         //
         // If standing on a hazard, then plot a course that allows travel over hazards.
         // Any path except through walls.
@@ -509,7 +509,7 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   //
   // Draw the path
   //
-  cursor_path = level_cursor_path_draw_line(g, v, l, t->at, v->cursor_at);
+  cursor_path = level_cursor_path_draw_line(g, v, l, thing_at(t), v->cursor_at);
 
   THING_DBG(t, "cursor path size: %d", (int) cursor_path.size());
   for (auto p : cursor_path) {

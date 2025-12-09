@@ -449,8 +449,8 @@ bool wid_actionbar_create_window(Gamep g)
   bool opt_help      = true;
   bool opt_load      = false;
   bool opt_save      = false;
-  bool opt_descend   = level_is_exit(g, v, l, player->at);
-  bool opt_ascend    = level_is_entrance(g, v, l, player->at);
+  bool opt_descend   = level_is_exit(g, v, l, player);
+  bool opt_ascend    = level_is_entrance(g, v, l, player);
 
   if (g_opt_debug1 || level_is_level_select(g, v, l)) {
     opt_save = true;

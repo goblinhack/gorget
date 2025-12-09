@@ -39,7 +39,7 @@ static bool tp_door_unlocked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, 
     return false;
   }
 
-  if (distance(t->at, player->at) <= 1) {
+  if (distance(thing_at(t), thing_at(player)) <= 1) {
     if (thing_is_open(t)) {
       thing_close(g, v, l, t, player /* opener */);
       //

@@ -35,15 +35,15 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Over water?
   //
-  if (level_is_water(g, v, l, t->at)) {
+  if (level_is_water(g, v, l, t)) {
     thing_is_burning_unset(g, v, l, t);
 
     if (thing_is_player(t)) {
       TOPCON(UI_GOOD_FMT_STR "You extinguish the flames in the cool water!" UI_RESET_FMT);
     }
 
-    if (! level_is_steam(g, v, l, t->at)) {
-      thing_spawn(g, v, l, tp_first(is_steam), t->at);
+    if (! level_is_steam(g, v, l, t)) {
+      thing_spawn(g, v, l, tp_first(is_steam), t);
     }
     return;
   }
@@ -71,9 +71,9 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     // Spawn more flames?
     //
     if (thing_is_combustible(t)) {
-      if (level_count_is_fire(g, v, l, t->at) < 2) {
+      if (level_count_is_fire(g, v, l, t) < 2) {
         THING_LOG(t, "spawn additional flames");
-        thing_spawn(g, v, l, tp_first(is_fire), t->at);
+        thing_spawn(g, v, l, tp_first(is_fire), t);
 
         if (thing_is_player(t)) {
           TOPCON(UI_IMPORTANT_FMT_STR "The flames intensify!" UI_RESET_FMT);
@@ -84,7 +84,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Don't let the fire age out.
     //
-    auto f = level_is_fire(g, v, l, t->at);
+    auto f = level_is_fire(g, v, l, t);
     if (f) {
       THING_DBG(t, "keep the fire burning");
       thing_lifespan_incr(g, v, l, f, 2);
@@ -94,13 +94,13 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Continue to burn
   //
-  if (! level_is_fire(g, v, l, t->at)) {
+  if (! level_is_fire(g, v, l, t)) {
     THING_DBG(t, "spawn flames");
-    thing_spawn(g, v, l, tp_first(is_fire), t->at);
+    thing_spawn(g, v, l, tp_first(is_fire), t);
   }
 
-  if (! level_is_smoke(g, v, l, t->at)) {
+  if (! level_is_smoke(g, v, l, t)) {
     THING_DBG(t, "spawn smoke");
-    thing_spawn(g, v, l, tp_first(is_smoke), t->at);
+    thing_spawn(g, v, l, tp_first(is_smoke), t);
   }
 }

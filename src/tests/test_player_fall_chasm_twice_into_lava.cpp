@@ -165,7 +165,7 @@ static bool test_player_fall_chasm_twice_into_lava(Gamep g, Testp t)
   {
     TRACE_NO_INDENT();
     TEST_LOG(t, "check player is dead when in lava");
-    p            = player->at;
+    p            = thing_at(player);
     found_corpse = false;
 
     FOR_ALL_THINGS_AT(g, v, l3, it, p)

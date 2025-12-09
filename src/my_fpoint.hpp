@@ -8,6 +8,8 @@
 
 #include "my_spoint.hpp"
 
+#include <math.h>
+
 typedef struct my_fpoint {
 public:
   float x;
@@ -37,6 +39,6 @@ float angle_radians(const fpoint &p);
 
 static inline fpoint make_fpoint(const spoint f) { return fpoint(f.x, f.y); }
 
-static inline spoint make_spoint(const fpoint &f) { return spoint((int) f.x, (int) f.y); }
+static inline spoint make_spoint(const fpoint &f) { return spoint((int) floor(f.x), (int) floor(f.y)); }
 
 #endif // _MY_FPOINT_HPP_

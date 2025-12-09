@@ -34,8 +34,10 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
       spoint(0, 0),   spoint(-1, 1), spoint(1, 1),  spoint(0, 1),
   };
 
+  auto at = thing_at(t);
+
   for (auto delta : points) {
-    auto p = t->at + delta;
+    auto p = at + delta;
     if (! level_is_obs_to_explosion(g, v, l, p)) {
       if (! level_is_explosion(g, v, l, p)) {
         thing_spawn(g, v, l, tp_first(is_explosion), p);
@@ -46,7 +48,7 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
   auto player = thing_player(g);
   if (player) {
     if (thing_on_same_level_as_player(g, v, t)) {
-      if (thing_vision_can_see_tile(g, v, l, player, t->at)) {
+      if (thing_vision_can_see_tile(g, v, l, player, at)) {
         TOPCON("The barrel explodes!");
       } else {
         TOPCON("You hear a distant explosion!");
@@ -71,7 +73,7 @@ static void tp_barrel_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If we fell into another chasm, don't kill the thing yet
   //
-  if (level_is_chasm(g, v, l, t->at)) {
+  if (level_is_chasm(g, v, l, t)) {
     return;
   }
 

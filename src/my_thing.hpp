@@ -352,14 +352,6 @@ typedef struct Thing_ {
   spoint _prev_pix_at;
   spoint _curr_pix_at;
   //
-  // Map co-ords. This is the slot the thing is at.
-  //
-  spoint at;
-  //
-  // Previous map co-ords. Does not change when the move finishes.
-  //
-  spoint old_at;
-  //
   // Previous map co-ords used for interpolation when moving. Changes when
   // the move finishes.
   //
@@ -377,9 +369,15 @@ typedef struct Thing_ {
   //
   float angle;
   //
+  // Previous map co-ords. Does not change when the move finishes.
+  //
+  fpoint _old_at;
+  //
+  // Map co-ords. This is the slot the thing is at when rounded.
+  //
   // However some things like missiles can be at fractional positions.
   //
-  fpoint real_at;
+  fpoint _at;
 } Thing;
 
 Levelp       thing_level(Gamep, Levelsp, Thingp);
@@ -399,6 +397,7 @@ Thingp       thing_player(Gamep);
 Levelp       thing_player_level(Gamep);
 Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, const spoint &);
 Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, const fpoint &);
+Thingp       thing_spawn(Gamep, Levelsp, Levelp, Tpp, Thingp at);
 Thingp       top_owner(Gamep, Levelsp, Levelp, Thingp);
 ThingPlayerp thing_player_struct(Gamep);
 void         thing_ext_free(Gamep, Levelsp, Levelp, Thingp t);
@@ -440,6 +439,11 @@ bool   thing_is_blit_if_has_seen(Thingp);
 bool   thing_is_blit_obscures(Thingp);
 bool   thing_is_blit_on_ground(Thingp);
 bool   thing_is_blit_outlined(Thingp);
+spoint thing_at(Thingp);
+spoint thing_old_at(Thingp);
+spoint thing_at_set(Thingp, const spoint &);
+fpoint thing_at_set(Thingp, const fpoint &);
+fpoint thing_real_at(Thingp);
 bool   thing_is_blit_shown_in_chasms(Thingp);
 bool   thing_is_blit_shown_in_overlay(Thingp);
 bool   thing_is_blit_square_outlined(Thingp);

@@ -49,7 +49,7 @@ static bool test_barrel_explosion(Gamep g, Testp t)
   // Spawn fire. This should be enough to blow up all the barrels
   //
   TEST_PROGRESS(t);
-  thing_spawn(g, v, l, tp_first(is_fire), player->at + spoint(1, 0));
+  thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(1, 0));
 
   //
   // Wait for the fire to ignite a barrel

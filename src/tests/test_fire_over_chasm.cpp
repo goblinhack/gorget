@@ -70,7 +70,7 @@ static bool test_fire_over_chasm(Gamep g, Testp t)
   //
   // Spawn fire twice. This should be enough to evaporate the chasm.
   //
-  thing_spawn(g, v, l, tp_first(is_fire), player->at + spoint(2, 0));
+  thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0));
 
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 3; tries++) {

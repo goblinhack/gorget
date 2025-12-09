@@ -52,10 +52,6 @@ bool is_oob(int x, int y)
 bool level_request_to_cleanup_things_get(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! l)) {
-    ERR("No level pointer set");
-    return 1;
-  }
 
   return l->request_to_cleanup_things;
 }
@@ -63,20 +59,14 @@ bool level_request_to_cleanup_things_get(Gamep g, Levelsp v, Levelp l)
 void level_request_to_cleanup_things_set(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! l)) {
-    ERR("No level pointer set");
-    return;
-  }
+
   l->request_to_cleanup_things = true;
 }
 
 void level_request_to_cleanup_things_unset(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! l)) {
-    ERR("No level pointer set");
-    return;
-  }
+
   l->request_to_cleanup_things = false;
 }
 
@@ -582,6 +572,18 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return nullptr;
 }
 
+Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
+{
+  TRACE_NO_INDENT();
+
+  if (! at) {
+    ERR("No thing pointer");
+    return nullptr;
+  }
+
+  return level_flag(g, v, l, f, thing_at(at));
+}
+
 //
 // Filter to only alive things
 //
@@ -604,6 +606,18 @@ Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
     }
   }
   return nullptr;
+}
+
+Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
+{
+  TRACE_NO_INDENT();
+
+  if (! at) {
+    ERR("No thing pointer");
+    return nullptr;
+  }
+
+  return level_alive(g, v, l, f, thing_at(at));
 }
 
 //
@@ -630,6 +644,18 @@ Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
   return nullptr;
 }
 
+Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
+{
+  TRACE_NO_INDENT();
+
+  if (! at) {
+    ERR("No thing pointer");
+    return nullptr;
+  }
+
+  return level_open(g, v, l, f, thing_at(at));
+}
+
 //
 // Count things
 //
@@ -654,6 +680,13 @@ int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
     }
   }
   return count;
+}
+
+int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return level_count(g, v, l, f, thing_at(t));
 }
 
 bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)

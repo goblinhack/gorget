@@ -70,12 +70,13 @@ bool thing_can_move_to_by_opening(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
     return false;
   }
 
-  if (to == t->at) {
+  if (to == thing_at(t)) {
     return true;
   }
 
-  auto dx = to.x - t->at.x;
-  auto dy = to.y - t->at.y;
+  auto at = thing_at(t);
+  auto dx = to.x - at.x;
+  auto dy = to.y - at.y;
   thing_set_dir_from_delta(t, dx, dy);
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)

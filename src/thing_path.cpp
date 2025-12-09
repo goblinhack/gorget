@@ -18,8 +18,9 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
 {
   bool debug = false;
 
+  auto at = thing_at(t);
   if (debug) {
-    printf("start (player %d,%d)\n", t->at.x, t->at.y);
+    printf("start (player %d,%d)\n", at.x, at.y);
     for (auto p : path) {
       printf("(%d,%d), ", p.x, p.y);
     }
@@ -31,8 +32,8 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
   // Trim short paths
   //
   if (path.size() == 2) {
-    auto px = t->at.x;
-    auto py = t->at.y;
+    auto px = at.x;
+    auto py = at.y;
 
     auto n  = path[ 0 ];
     auto nx = n.x;
@@ -210,13 +211,13 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
   }
 
   if (path.size()) {
-    if (path[ 0 ] == t->at) {
+    if (path[ 0 ] == at) {
       path.erase(path.begin());
     }
   }
 
   if (debug) {
-    printf("final (player %d,%d)\n", t->at.x, t->at.y);
+    printf("final (player %d,%d)\n", at.x, at.y);
     for (auto p : path) {
       printf("(%d,%d), ", p.x, p.y);
     }

@@ -36,7 +36,8 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
     auto chasm_count = 0;
 
     for (auto delta : points) {
-      auto p = t->at + delta;
+      auto at = thing_at(t);
+      auto p  = at + delta;
       lava_count += level_is_lava(g, v, l, p) ? 1 : 0;
       water_count += level_is_water(g, v, l, p) ? 1 : 0;
       chasm_count += level_is_chasm(g, v, l, p) ? 1 : 0;
@@ -45,16 +46,16 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
     auto max_count = std::max(std::max(lava_count, water_count), chasm_count);
     if (max_count) {
       if (max_count == chasm_count) {
-        if (! level_is_chasm(g, v, l, t->at)) {
-          thing_spawn(g, v, l, tp_first(is_chasm), t->at);
+        if (! level_is_chasm(g, v, l, t)) {
+          thing_spawn(g, v, l, tp_first(is_chasm), t);
         }
       } else if (max_count == water_count) {
-        if (! level_is_water(g, v, l, t->at)) {
-          thing_spawn(g, v, l, tp_first(is_water), t->at);
+        if (! level_is_water(g, v, l, t)) {
+          thing_spawn(g, v, l, tp_first(is_water), t);
         }
       } else if (max_count == lava_count) {
-        if (! level_is_lava(g, v, l, t->at)) {
-          thing_spawn(g, v, l, tp_first(is_lava), t->at);
+        if (! level_is_lava(g, v, l, t)) {
+          thing_spawn(g, v, l, tp_first(is_lava), t);
         }
       }
     }
@@ -72,10 +73,11 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
     };
 
     for (auto delta : points) {
-      auto p = t->at + delta;
-      auto b = level_alive_is_bridge(g, v, l, p);
+      auto at = thing_at(t);
+      auto p  = at + delta;
+      auto b  = level_alive_is_bridge(g, v, l, p);
       if (b) {
-        if (level_is_chasm(g, v, l, t->at)) {
+        if (level_is_chasm(g, v, l, t)) {
           thing_fall(g, v, l, b);
         }
       }
@@ -91,8 +93,9 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
 
   auto player = thing_player(g);
   if (player) {
+    auto at = thing_at(player);
     if (thing_on_same_level_as_player(g, v, t)) {
-      if (thing_vision_can_see_tile(g, v, l, player, t->at)) {
+      if (thing_vision_can_see_tile(g, v, l, player, at)) {
         TOPCON("The bridge collapses!");
       } else {
         TOPCON("You hear a bridge collapse!");
@@ -117,7 +120,7 @@ static void tp_bridge_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If we fell into another chasm, don't kill the thing yet
   //
-  if (level_is_chasm(g, v, l, t->at)) {
+  if (level_is_chasm(g, v, l, t)) {
     return;
   }
 

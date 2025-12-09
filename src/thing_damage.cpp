@@ -20,7 +20,8 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   auto it = e.source;
 
   std::string msg = "-" + std::to_string(e.damage);
-  game_popup_text_add(g, t->at.x, t->at.y, msg, RED);
+  auto        at  = thing_at(t);
+  game_popup_text_add(g, at.x, at.y, msg, RED);
 
   if (it) {
     auto by_the_thing = thing_the_long_name(g, v, l, it);
@@ -113,7 +114,8 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   auto it = e.source;
 
   std::string msg = "-" + std::to_string(e.damage);
-  game_popup_text_add(g, t->at.x, t->at.y, msg, WHITE);
+  auto        at  = thing_at(t);
+  game_popup_text_add(g, at.x, at.y, msg, WHITE);
 
   if (it && thing_is_loggable(t)) {
     auto the_thing = capitalize_first(thing_the_long_name(g, v, l, t));
@@ -301,15 +303,15 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         {
           auto temp_burn = tp_temperature_burns_at_get(tp);
           if (temp_burn && (thing_temperature(t) > temp_burn)) {
-            if (! level_is_fire(g, v, l, t->at)) {
+            if (! level_is_fire(g, v, l, t)) {
               THING_DBG(t, "spawn flames due to heat damage");
-              thing_spawn(g, v, l, tp_first(is_fire), t->at);
+              thing_spawn(g, v, l, tp_first(is_fire), t);
             }
 
-            if (level_is_water(g, v, l, t->at)) {
-              if (! level_is_steam(g, v, l, t->at)) {
+            if (level_is_water(g, v, l, t)) {
+              if (! level_is_steam(g, v, l, t)) {
                 THING_DBG(t, "spawn steam over water due to fire damage");
-                thing_spawn(g, v, l, tp_first(is_steam), t->at);
+                thing_spawn(g, v, l, tp_first(is_steam), t);
               }
             }
 
@@ -318,24 +320,24 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         }
         break;
       case THING_EVENT_FIRE_DAMAGE : //
-        if (! level_is_fire(g, v, l, t->at)) {
+        if (! level_is_fire(g, v, l, t)) {
           THING_DBG(t, "spawn flames due to fire damage");
-          thing_spawn(g, v, l, tp_first(is_fire), t->at);
+          thing_spawn(g, v, l, tp_first(is_fire), t);
         }
 
-        if (level_is_water(g, v, l, t->at)) {
-          if (! level_is_steam(g, v, l, t->at)) {
+        if (level_is_water(g, v, l, t)) {
+          if (! level_is_steam(g, v, l, t)) {
             THING_DBG(t, "spawn steam over water due to fire damage");
-            thing_spawn(g, v, l, tp_first(is_steam), t->at);
+            thing_spawn(g, v, l, tp_first(is_steam), t);
           }
         }
 
         thing_is_burning_set(g, v, l, t);
         break;
       case THING_EVENT_WATER_DAMAGE : //
-        if (! level_is_steam(g, v, l, t->at)) {
+        if (! level_is_steam(g, v, l, t)) {
           THING_DBG(t, "spawn steam due to water damage");
-          thing_spawn(g, v, l, tp_first(is_steam), t->at);
+          thing_spawn(g, v, l, tp_first(is_steam), t);
         }
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //

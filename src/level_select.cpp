@@ -84,7 +84,8 @@ Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
 
     if ((tp == tp_is_level_not_visited) || (tp == tp_is_level_curr) || (tp == tp_is_level_final)
         || (tp == tp_is_level_visited) || (tp == tp_is_level_next)) {
-      auto level_num_over = v->level_select.tile_to_level[ t->at.x ][ t->at.y ];
+      auto at             = thing_at(t);
+      auto level_num_over = v->level_select.tile_to_level[ at.x ][ at.y ];
       level_over          = game_level_get(g, v, level_num_over);
       break;
     }

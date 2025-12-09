@@ -16,7 +16,7 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &
   //
   // Add some random delta for fun and some for diagonals
   //
-  auto  curr_at = t->at;
+  auto  curr_at = thing_at(t);
   float d       = thing_jump_distance(t);
   float dist    = distance(curr_at, to);
 
@@ -42,7 +42,8 @@ static void thing_jump_truncate(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &
 //
 static Thingp thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 {
-  auto jump_path = draw_line(t->at, to);
+  auto at        = thing_at(t);
+  auto jump_path = draw_line(at, to);
 
   for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {
     spoint intermediate = *i;
@@ -65,7 +66,8 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
     return false;
   }
 
-  if (to == t->at) {
+  auto at = thing_at(t);
+  if (to == at) {
     return false;
   }
 
@@ -109,13 +111,12 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   thing_pop(g, v, t);
 
   spoint pix_at;
-  pix_at.x = t->at.x * INNER_TILE_WIDTH;
-  pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  pix_at.x = at.x * INNER_TILE_WIDTH;
+  pix_at.y = at.y * INNER_TILE_HEIGHT;
   thing_pix_at_set(t, pix_at);
 
-  t->old_at      = t->at;
-  t->moving_from = t->at;
-  t->at          = to;
+  t->moving_from = at;
+  thing_at_set(t, to);
 
   (void) thing_push(g, v, l, t);
 

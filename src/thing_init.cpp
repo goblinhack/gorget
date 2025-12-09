@@ -17,9 +17,8 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
     return nullptr;
   }
 
-  t->at          = at;
-  t->real_at     = real_at;
-  t->old_at      = at;
+  thing_at_set(t, real_at);
+
   t->moving_from = at;
   t->level_num   = l->level_num;
 
@@ -110,7 +109,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   // Do adjacent tiles need updating due to the destruction of this tiled thing?
   //
   if (thing_is_tiled(t)) {
-    level_tile_update_set(g, v, l, t->at);
+    level_tile_update_set(g, v, l, at);
   }
 
   return t;

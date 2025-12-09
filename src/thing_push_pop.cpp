@@ -15,8 +15,8 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  spoint p = t->at;
-  if (is_oob(p)) {
+  auto at = thing_at(t);
+  if (is_oob(at)) {
     return false;
   }
 
@@ -24,7 +24,7 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Already at this location?
   //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
+    auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (o_id == t->id) {
       return true;
     }
@@ -39,7 +39,7 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Need to push to the new location.
   //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
+    auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (! o_id) {
       auto tp = thing_tp(t);
 
@@ -47,19 +47,19 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       // Keep track of tiles the player has been on.
       //
       if (tp_is_player(tp)) {
-        l->player_has_walked_tile[ p.x ][ p.y ] = true;
+        l->player_has_walked_tile[ at.x ][ at.y ] = true;
       }
 
       //
       // Save where we were pushed so we can pop the same location
       //
       thing_is_on_map_set(g, v, l, t);
-      t->level_num                      = l->level_num;
-      t->last_pushed_at                 = p;
-      l->thing_id[ p.x ][ p.y ][ slot ] = t->id;
+      t->level_num                        = l->level_num;
+      t->last_pushed_at                   = at;
+      l->thing_id[ at.x ][ at.y ][ slot ] = t->id;
 
       if (0) {
-        THING_LOG(t, "l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp).c_str(), p.x, p.y);
+        THING_LOG(t, "l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp).c_str(), at.x, at.y);
       }
 
 #if 0
@@ -73,7 +73,7 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
         FOR_ALL_Z_LAYER(z_layer)
         {
           for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
-            auto    slotp   = &l->thing_id[ p.x ][ p.y ][ slot_tmp ];
+            auto    slotp   = &l->thing_id[ at.x ][ at.y ][ slot_tmp ];
             ThingId cand_id = *slotp;
             if (cand_id) {
               Thingp o    = thing_find(g, v, cand_id);
@@ -90,7 +90,7 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
         // Copy the new sorted slots.
         //
         for (auto slot_tmp = 0; slot_tmp < MAP_SLOTS; slot_tmp++) {
-          l->thing_id[ p.x ][ p.y ][ slot_tmp ] = slots_sorted[ slot_tmp ];
+          l->thing_id[ at.x ][ at.y ][ slot_tmp ] = slots_sorted[ slot_tmp ];
         }
       }
 #endif
@@ -111,7 +111,7 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto dump_id = l->thing_id[ p.x ][ p.y ][ slot ];
+    auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (dump_id) {
       auto it = thing_find(g, v, dump_id);
       THING_CON(it, "is using slot %u", slot);

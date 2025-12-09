@@ -178,7 +178,7 @@ static bool test_brazier_shove_chasm_twice(Gamep g, Testp t)
   // Check the brazier is dead
   //
   TEST_LOG(t, "check brazier is dead");
-  p        = player->at + spoint(0, -1);
+  p        = thing_at(player) + spoint(0, -1);
   found_it = false;
 
   TEST_PROGRESS(t);

@@ -39,7 +39,8 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Spawn adjacent fire
   //
   for (auto delta : points) {
-    auto p = t->at + delta;
+    auto at = thing_at(t);
+    auto p  = at + delta;
 
     //
     // Rock, for example?
@@ -86,17 +87,17 @@ static void tp_fire_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent 
   //
   // Allow things to continue to burn if we still have some burnable material
   //
-  if (level_alive_is_combustible(g, v, l, t->at)) {
-    if (! level_is_fire(g, v, l, t->at)) {
+  if (level_alive_is_combustible(g, v, l, t)) {
+    if (! level_is_fire(g, v, l, t)) {
       THING_DBG(t, "spawn fire to continue to burn");
-      thing_spawn(g, v, l, tp_first(is_fire), t->at);
+      thing_spawn(g, v, l, tp_first(is_fire), t);
     }
   }
 
-  if (! level_is_smoke(g, v, l, t->at)) {
-    if (level_is_combustible(g, v, l, t->at)) {
+  if (! level_is_smoke(g, v, l, t)) {
+    if (level_is_combustible(g, v, l, t)) {
       THING_DBG(t, "spawn smoke over dying fire");
-      thing_spawn(g, v, l, tp_first(is_smoke), t->at);
+      thing_spawn(g, v, l, tp_first(is_smoke), t);
     }
   }
 }
@@ -112,7 +113,8 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   // die, else they follow them down and they stay on fire.
   //
   auto player = thing_player(g);
-  if (player && (t->at == player->at)) {
+  auto at     = thing_at(t);
+  if (player && (at == thing_at(player))) {
     ThingEvent e {
         .reason     = "by falling",     //
         .event_type = THING_EVENT_FALL, //
@@ -122,9 +124,9 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  if (! level_is_smoke(g, v, l, t->at)) {
+  if (! level_is_smoke(g, v, l, t)) {
     THING_DBG(t, "spawn smoke over falling fire");
-    thing_spawn(g, v, l, tp_random(is_smoke), t->at);
+    thing_spawn(g, v, l, tp_random(is_smoke), t);
   }
 }
 

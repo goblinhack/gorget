@@ -84,7 +84,7 @@ bool thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or
     return false;
   }
 
-  thing_warp_to(g, v, l, item, player_or_monst->at);
+  thing_warp_to(g, v, l, item, thing_at(player_or_monst));
 
   if (thing_is_player(player_or_monst)) {
     auto the_thing = thing_the_long_name(g, v, l, item);

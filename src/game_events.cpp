@@ -263,7 +263,7 @@ bool game_event_descend(Gamep g)
     return false;
   }
 
-  if (! level_is_exit(g, v, l, player->at)) {
+  if (! level_is_exit(g, v, l, player)) {
     TOPCON(UI_WARNING_FMT_STR "There is no level exit here to descend." UI_RESET_FMT);
     sound_play(g, "error");
     return false;
@@ -298,7 +298,7 @@ bool game_event_ascend(Gamep g)
     return false;
   }
 
-  if (! level_is_entrance(g, v, l, player->at)) {
+  if (! level_is_entrance(g, v, l, player)) {
     TOPCON(UI_WARNING_FMT_STR "There is no level entrance here to ascend." UI_RESET_FMT);
     sound_play(g, "error");
     return false;

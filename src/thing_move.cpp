@@ -258,20 +258,20 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
     return false;
   }
 
-  if (to == t->at) {
+  auto at = thing_at(t);
+  if (to == at) {
     return false;
   }
 
   thing_pop(g, v, t);
 
   spoint pix_at;
-  pix_at.x = t->at.x * INNER_TILE_WIDTH;
-  pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  pix_at.x = at.x * INNER_TILE_WIDTH;
+  pix_at.y = at.y * INNER_TILE_HEIGHT;
   thing_pix_at_set(t, pix_at);
 
-  t->old_at      = t->at;
-  t->moving_from = t->at;
-  t->at          = to;
+  t->moving_from = at;
+  thing_at_set(t, to);
 
   (void) thing_push(g, v, l, t);
 
@@ -292,7 +292,8 @@ bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
     return false;
   }
 
-  if (to == t->at) {
+  auto at = thing_at(t);
+  if (to == at) {
     return false;
   }
 
@@ -327,7 +328,8 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   //
   // Check if already present at the destination.
   //
-  if ((new_level == old_level) && (to == t->at)) {
+  auto at = thing_at(t);
+  if ((new_level == old_level) && (to == at)) {
     //
     // No need to pop. If might be an inventory item though, so make sure and push
     // it onto the map after this check.
@@ -353,12 +355,11 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   }
 
   spoint pix_at;
-  pix_at.x = t->at.x * INNER_TILE_WIDTH;
-  pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  pix_at.x = at.x * INNER_TILE_WIDTH;
+  pix_at.y = at.y * INNER_TILE_HEIGHT;
   thing_pix_at_set(t, pix_at);
 
-  t->old_at = t->at;
-  t->at     = to;
+  thing_at_set(t, to);
 
   //
   // Join the level.
@@ -413,7 +414,8 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  t->moving_from = t->at;
+  auto at        = thing_at(t);
+  t->moving_from = at;
 
   thing_is_teleporting_unset(g, v, l, t);
   thing_is_moving_unset(g, v, l, t);
@@ -431,12 +433,13 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
     return false;
   }
 
-  if (to == t->at) {
+  auto at = thing_at(t);
+  if (to == at) {
     return true;
   }
 
-  auto dx = to.x - t->at.x;
-  auto dy = to.y - t->at.y;
+  auto dx = to.x - at.x;
+  auto dy = to.y - at.y;
   thing_set_dir_from_delta(t, dx, dy);
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
@@ -463,12 +466,13 @@ bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
     return false;
   }
 
-  if (to == t->at) {
+  auto at = thing_at(t);
+  if (to == at) {
     return true;
   }
 
-  auto dx = to.x - t->at.x;
-  auto dy = to.y - t->at.y;
+  auto dx = to.x - at.x;
+  auto dy = to.y - at.y;
   thing_set_dir_from_delta(t, dx, dy);
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
@@ -501,7 +505,8 @@ void thing_update_pos(Gamep g, Thingp t)
   TRACE_NO_INDENT();
 
   spoint pix_at;
-  pix_at.x = t->at.x * INNER_TILE_WIDTH;
-  pix_at.y = t->at.y * INNER_TILE_HEIGHT;
+  auto   at = thing_at(t);
+  pix_at.x  = at.x * INNER_TILE_WIDTH;
+  pix_at.y  = at.y * INNER_TILE_HEIGHT;
   thing_pix_at_set(t, pix_at);
 }

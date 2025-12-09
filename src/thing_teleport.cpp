@@ -15,7 +15,7 @@ static bool teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint 
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
-    if (t->at == in) {
+    if (thing_at(t) == in) {
       continue;
     }
 
@@ -28,11 +28,17 @@ static bool teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint 
     return false;
   }
 
-  auto destination = pcg_rand_one_of(teleports);
+  auto other = pcg_rand_one_of(teleports);
 
-  out = destination->at;
+  if (other) {
+    //
+    // Sets reference
+    //
+    out = thing_at(other);
+    return true;
+  }
 
-  return true;
+  return false;
 }
 
 //
@@ -59,7 +65,7 @@ bool thing_teleport(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   spoint to;
-  if (! teleport_find_other(g, v, l, t->at, to)) {
+  if (! teleport_find_other(g, v, l, thing_at(t), to)) {
     return false;
   }
 
@@ -67,11 +73,11 @@ bool thing_teleport(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
 
-  if (to == t->at) {
+  if (to == thing_at(t)) {
     return false;
   }
 
-  THING_LOG(t, "pre teleport");
+  THING_LOG(t, "pre teleport, warp to %d,%d", to.x, to.y);
 
   thing_warp_to(g, v, l, t, to);
 

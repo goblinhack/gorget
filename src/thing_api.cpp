@@ -10,6 +10,59 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
+spoint thing_at(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return make_spoint(t->_at);
+}
+
+spoint thing_at_set(Thingp t, const spoint &val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+
+  t->_old_at = t->_at;
+  t->_at     = make_fpoint(val);
+
+  return make_spoint(t->_at);
+}
+
+fpoint thing_real_at(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return t->_at;
+}
+
+fpoint thing_at_set(Thingp t, const fpoint &val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+
+  t->_old_at = t->_at;
+  t->_at     = val;
+
+  return t->_at;
+}
+
+spoint thing_old_at(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return make_spoint(t->_old_at);
+}
+
 spoint thing_prev_pix_at(Thingp t)
 {
   TRACE_NO_INDENT();

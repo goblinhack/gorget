@@ -30,6 +30,8 @@ std::string to_string(Gamep g, Thingp t)
     name = game_player_name_get(g);
   }
 
+  auto at = thing_at(t);
+
   return (string_sprintf("%08" PRIX32
                          /* level num                     */ " l%u"
                          /* tick                          */ " t%u"
@@ -53,7 +55,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ thing_is_open(t) ? "/opn" : "",
                          /* newline */ thing_is_burning(t) ? "/brn" : "",
                          /* newline */ thing_is_scheduled_for_cleanup(t) ? "/free" : "",
-                         /* newline */ t->at.x, t->at.y));
+                         /* newline */ at.x, at.y));
 }
 
 std::string to_string(Gamep g, ThingEvent &e)
@@ -138,15 +140,15 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   //
   // Add some more spice to the message
   //
-  if (level_is_lava(g, v, l, t->at)) {
+  if (level_is_lava(g, v, l, t)) {
     if (! (source && thing_is_lava(source))) {
       s += " in lava";
     }
-  } else if (level_is_deep_water(g, v, l, t->at)) {
+  } else if (level_is_deep_water(g, v, l, t)) {
     if (! (source && thing_is_water(source))) {
       s += " in the depths";
     }
-  } else if (level_is_water(g, v, l, t->at)) {
+  } else if (level_is_water(g, v, l, t)) {
     if (! (source && thing_is_water(source))) {
       s += " in a puddle";
     }

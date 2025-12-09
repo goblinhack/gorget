@@ -356,7 +356,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   // The light source
   //
-  auto pov = player->at;
+  auto pov = thing_at(player);
 
   const int tile_w = INNER_TILE_WIDTH;
   const int tile_h = INNER_TILE_HEIGHT;
@@ -702,7 +702,7 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     }
 
     auto ext = thing_ext_struct(g, t);
-    level_fov(g, v, l, t, &ext->fov_can_see_tile, &ext->fov_has_seen_tile, t->at, max_radius,
+    level_fov(g, v, l, t, &ext->fov_can_see_tile, &ext->fov_has_seen_tile, thing_at(t), max_radius,
               level_light_fov_all_can_see_callback);
   }
 

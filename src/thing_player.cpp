@@ -465,7 +465,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       //
       // If not already in lava, warn about moving into it
       //
-      if (! level_is_lava(g, v, l, player->at)) {
+      if (! level_is_lava(g, v, l, player)) {
         if (level_is_lava(g, v, l, to)) {
           if (! thing_is_immune_to(player, THING_EVENT_HEAT_DAMAGE)
               && ! thing_is_immune_to(player, THING_EVENT_FIRE_DAMAGE)) {
@@ -582,7 +582,8 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
     return;
   }
 
-  spoint to(t->at.x + dx, t->at.y + dy);
+  auto   at = thing_at(t);
+  spoint to(at.x + dx, at.y + dy);
 
   player_move_try(g, v, l, t, to, true);
 
@@ -630,7 +631,7 @@ static void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
     target = v->cursor_at;
   } else {
     spoint delta = thing_get_delta_from_dir(t);
-    target       = t->at + delta;
+    target       = thing_at(t) + delta;
   }
   TOPCON("target %d,%d", target.x, target.y);
 
@@ -849,7 +850,8 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  FOR_ALL_THINGS_AT(g, v, l, it, t->at)
+  auto at = thing_at(t);
+  FOR_ALL_THINGS_AT(g, v, l, it, at)
   {
     //
     // Open secret doors automatically
@@ -919,7 +921,8 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
     return false;
   }
 
-  auto jump_path = draw_line(t->at, to, thing_jump_distance(t) + 1);
+  auto at        = thing_at(t);
+  auto jump_path = draw_line(at, to, thing_jump_distance(t) + 1);
   bool warn      = true;
 
   for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {

@@ -3,7 +3,9 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 
 Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
@@ -41,4 +43,13 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
 Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at)
 {
   return thing_spawn(g, v, l, tp, make_fpoint(at));
+}
+
+Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp at)
+{
+  if (! at) {
+    ERR("No thing pointer");
+    return nullptr;
+  }
+  return thing_spawn(g, v, l, tp, thing_at(at));
 }

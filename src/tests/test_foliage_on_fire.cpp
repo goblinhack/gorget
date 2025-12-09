@@ -70,7 +70,7 @@ static bool test_foliage_on_fire(Gamep g, Testp t)
   //
   // Spawn fire twice. This should be enough to evaporate the foliage.
   //
-  thing_spawn(g, v, l, tp_first(is_fire), player->at + spoint(2, 0));
+  thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0));
 
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 30; tries++) {

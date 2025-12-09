@@ -87,7 +87,7 @@ static bool test_trampled_grass(Gamep g, Testp t)
     // Check the grass is dead
     //
     TEST_LOG(t, "check grass is dead");
-    auto p        = player->at;
+    auto p        = thing_at(player);
     bool found_it = false;
 
     FOR_ALL_THINGS_AT(g, v, l, it, p)

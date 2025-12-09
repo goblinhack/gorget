@@ -54,11 +54,13 @@ bool thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
   // Dampen sounds on the same level.
   //
   if (t_level == player_level) {
-    if (! thing_vision_can_see_tile(g, v, l, player, t->at)) {
+    auto at = thing_at(t);
+
+    if (! thing_vision_can_see_tile(g, v, l, player, at)) {
       scale /= 5;
     }
 
-    if (! thing_vision_player_has_seen_tile(g, v, l, t->at)) {
+    if (! thing_vision_player_has_seen_tile(g, v, l, at)) {
       scale /= 5;
     }
   }

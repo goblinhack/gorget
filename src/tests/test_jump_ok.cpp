@@ -61,7 +61,7 @@ static bool test_jump_ok(Gamep g, Testp t)
       goto exit;
     }
 
-    if (! (result = player_jump(g, v, l, player, player->at + spoint(2, 0)))) {
+    if (! (result = player_jump(g, v, l, player, thing_at(player) + spoint(2, 0)))) {
       TEST_FAILED(t, "move fail");
       goto exit;
     }
