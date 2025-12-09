@@ -115,7 +115,7 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   pix_at.y = at.y * INNER_TILE_HEIGHT;
   thing_pix_at_set(t, pix_at);
 
-  t->moving_from = at;
+  thing_moving_from_set(t, at);
   thing_at_set(t, to);
 
   (void) thing_push(g, v, l, t);

@@ -18,9 +18,9 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   }
 
   thing_at_set(t, real_at);
+  thing_moving_from_set(t, at);
 
-  t->moving_from = at;
-  t->level_num   = l->level_num;
+  t->level_num = l->level_num;
 
   //
   // Assign an initial tile

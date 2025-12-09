@@ -110,6 +110,24 @@ spoint thing_pix_at_set(Thingp t, short x, short y)
   return t->_curr_pix_at;
 }
 
+spoint thing_moving_from(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return t->_moving_from;
+}
+
+spoint thing_moving_from_set(Thingp t, const spoint &val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+  return t->_moving_from = val;
+}
+
 int thing_speed(Thingp t)
 {
   TRACE_NO_INDENT();

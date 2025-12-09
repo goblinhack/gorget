@@ -355,7 +355,7 @@ typedef struct Thing_ {
   // Previous map co-ords used for interpolation when moving. Changes when
   // the move finishes.
   //
-  spoint moving_from;
+  spoint _moving_from;
   //
   // Last location we were pushed onto the map.
   //
@@ -439,11 +439,6 @@ bool   thing_is_blit_if_has_seen(Thingp);
 bool   thing_is_blit_obscures(Thingp);
 bool   thing_is_blit_on_ground(Thingp);
 bool   thing_is_blit_outlined(Thingp);
-spoint thing_at(Thingp);
-spoint thing_old_at(Thingp);
-spoint thing_at_set(Thingp, const spoint &);
-fpoint thing_at_set(Thingp, const fpoint &);
-fpoint thing_real_at(Thingp);
 bool   thing_is_blit_shown_in_chasms(Thingp);
 bool   thing_is_blit_shown_in_overlay(Thingp);
 bool   thing_is_blit_square_outlined(Thingp);
@@ -626,7 +621,6 @@ bool   thing_is_unused75(Thingp);
 bool   thing_is_unused76(Thingp);
 bool   thing_is_unused77(Thingp);
 bool   thing_is_unused78(Thingp);
-void   thing_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const spoint);
 bool   thing_is_unused79(Thingp);
 bool   thing_is_unused8(Thingp);
 bool   thing_is_unused80(Thingp);
@@ -666,7 +660,15 @@ bool   thing_teleport(Gamep, Levelsp, Levelp, Thingp);
 bool   thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 bool   thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
 bool   thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+fpoint thing_at_set(Thingp, const fpoint &);
+fpoint thing_real_at(Thingp);
 int    thing_is_light_source(Thingp);
+spoint thing_at_set(Thingp, const spoint &);
+spoint thing_at(Thingp);
+spoint thing_get_delta_from_dir(Thingp);
+spoint thing_moving_from_set(Thingp, const spoint &val);
+spoint thing_moving_from(Thingp);
+spoint thing_old_at(Thingp);
 void   player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void   player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
 void   player_map_center(Gamep, Levelsp, Levelp);
@@ -695,6 +697,7 @@ void   thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void   thing_fall(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fini(Gamep, Levelsp, Levelp, Thingp);
+void   thing_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const spoint);
 void   thing_interpolate(Gamep, Thingp, float dt);
 void   thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
 void   thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
@@ -705,7 +708,6 @@ void   thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
 void   thing_player_event_loop(Gamep, Levelsp, Levelp);
 void   thing_pop(Gamep, Levelsp, Thingp);
 void   thing_set_dir_from_delta(Thingp, int dx, int dy);
-spoint thing_get_delta_from_dir(Thingp);
 void   thing_temperature_damage_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void   thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void   thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
