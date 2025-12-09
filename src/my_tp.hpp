@@ -244,7 +244,6 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
 //
 #define MAP_Z_DEPTH_ENUM(list_macro)                                                                                 \
   clang_format_indent()                                    /* dummy line for clang indentation fixup */              \
-      list_macro(MAP_Z_DEPTH_CHASM, "chasm"),              /* newline */                                             \
       list_macro(MAP_Z_DEPTH_FLOOR, "floor"),              /* newline */                                             \
       list_macro(MAP_Z_DEPTH_LIQUID, "e.g. water"),        /* newline */                                             \
       list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"),  /* newline */                                             \
@@ -252,6 +251,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
       list_macro(MAP_Z_DEPTH_OBJ, "monsts"),               /* newline */                                             \
       list_macro(MAP_Z_DEPTH_PLAYER, "monsts"),            /* newline */                                             \
       list_macro(MAP_Z_DEPTH_FOLIAGE, "obscuring plants"), /* newline */                                             \
+      list_macro(MAP_Z_DEPTH_PROJECTILE, "projectile"),    /* newline */                                             \
       list_macro(MAP_Z_DEPTH_GAS, "fire, smoke"),          /* newline */
 
 ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepth)

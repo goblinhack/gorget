@@ -39,7 +39,7 @@ bool tp_load_chasm(void)
   tp_flag_set(tp, is_tiled);
   tp_long_name_set(tp, name);
   tp_weight_set(tp, WEIGHT_NONE); // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_CHASM);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile_find_mand(name + ".IS_JOIN_BL"));

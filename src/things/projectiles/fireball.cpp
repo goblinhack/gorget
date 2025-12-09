@@ -23,10 +23,11 @@ bool tp_load_fireball(void)
 
   // begin sort marker1 {
   thing_description_set(tp, tp_fireball_description_get);
-  tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
+  tp_flag_set(tp, is_blit_shown_in_overlay);
+  tp_flag_set(tp, is_blit_when_obscured);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_ethereal);
   tp_flag_set(tp, is_fireball);
@@ -43,10 +44,10 @@ bool tp_load_fireball(void)
   tp_speed_set(tp, 1000);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_weight_set(tp, WEIGHT_FEATHER);   // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_PROJECTILE);
   // end sort marker1 }
 
-  auto delay = 1000;
+  auto delay = 200;
 
   for (auto frame = 0; frame < 2; frame++) {
     auto tile = tile_find_mand(name + "." + std::to_string(frame));

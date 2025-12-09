@@ -633,7 +633,6 @@ static void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
     spoint delta = thing_get_delta_from_dir(t);
     target       = thing_at(t) + delta;
   }
-  TOPCON("target %d,%d", target.x, target.y);
 
   player_move_reset(g, v, l);
 

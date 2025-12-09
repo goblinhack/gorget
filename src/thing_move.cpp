@@ -504,9 +504,10 @@ void thing_update_pos(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 
+  auto   real_at = thing_real_at(t);
   spoint pix_at;
-  auto   at = thing_at(t);
-  pix_at.x  = at.x * INNER_TILE_WIDTH;
-  pix_at.y  = at.y * INNER_TILE_HEIGHT;
+  pix_at.x = (int) (real_at.x * (float) INNER_TILE_WIDTH);
+  pix_at.y = (int) (real_at.y * (float) INNER_TILE_HEIGHT);
+  thing_pix_at_set(t, pix_at);
   thing_pix_at_set(t, pix_at);
 }

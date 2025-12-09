@@ -697,6 +697,7 @@ void   thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void   thing_fall(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fini(Gamep, Levelsp, Levelp, Thingp);
+void   thing_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const fpoint);
 void   thing_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const spoint);
 void   thing_interpolate(Gamep, Thingp, float dt);
 void   thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
