@@ -11,7 +11,7 @@
 #include "my_math.hpp"
 #include "my_thing.hpp"
 
-void thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const fpoint target)
+void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const fpoint target)
 {
   TRACE_NO_INDENT();
 
@@ -27,10 +27,39 @@ void thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &w
   at.x += c * offset;
   at.y += s * offset;
 
-  thing_spawn(g, v, l, tp_find_mand(what), at);
+  auto projectile = thing_spawn(g, v, l, tp_find_mand(what), at);
+  if (projectile) {
+    projectile->angle = angle;
+  }
 }
 
-void thing_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const spoint target)
+void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const spoint target)
 {
-  thing_fire_at(g, v, l, me, what, make_fpoint(target));
+  thing_projectile_fire_at(g, v, l, me, what, make_fpoint(target));
+}
+
+void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
+{
+  TRACE_NO_INDENT();
+
+  float s;
+  float c;
+  sincosf(t->angle, &s, &c);
+  fpoint at = thing_real_at(t);
+  at.x += c * dt;
+  at.y += s * dt;
+
+  if (is_oob(at)) {
+    ThingEvent e {
+        .reason     = "oob",                        //
+        .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
+    };
+
+    thing_dead(g, v, l, t, e);
+    return;
+  }
+
+  thing_at_set(t, at);
+
+  thing_update_pos(g, v, l, t);
 }

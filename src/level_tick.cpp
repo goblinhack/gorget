@@ -308,12 +308,12 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     // speed 100  tick           tick
     // speed 50   tick
     //
-    if (! thing_is_moving(t) && ! thing_is_jumping(t)) {
+    if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t)) {
       continue;
     }
 
-    float t_speed = thing_speed(t);
-
+    float t_speed      = thing_speed(t);
+    auto  old_thing_dt = t->thing_dt;
     t->thing_dt += dt * (t_speed / (float) player_speed);
 
     if (t->thing_dt >= 1.0) {
@@ -324,7 +324,11 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
     }
 
-    thing_interpolate(g, t, t->thing_dt);
+    if (thing_is_projectile(t)) {
+      thing_projectile_move(g, v, l, t, t->thing_dt - old_thing_dt);
+    } else {
+      thing_interpolate(g, v, l, t, t->thing_dt);
+    }
 
     //
     // If the thing tick has completed, finish its move.

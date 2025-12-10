@@ -697,9 +697,10 @@ void   thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void   thing_fall(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fini(Gamep, Levelsp, Levelp, Thingp);
-void   thing_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const fpoint);
-void   thing_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const spoint);
-void   thing_interpolate(Gamep, Thingp, float dt);
+void   thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const fpoint);
+void   thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const spoint);
+void   thing_interpolate(Gamep, Levelsp, Levelp, Thingp, float dt);
+void   thing_projectile_move(Gamep, Levelsp, Levelp, Thingp, float dt);
 void   thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
 void   thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
 void   thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
@@ -714,7 +715,7 @@ void   thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, in
 void   thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
 void   thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
 void   thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
-void   thing_update_pos(Gamep, Thingp);
+void   thing_update_pos(Gamep, Levelsp, Levelp, Thingp);
 void   thing_vision_reset(Gamep, Levelsp, Levelp, Thingp);
 void   thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
 // end sort marker1 }

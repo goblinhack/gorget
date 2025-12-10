@@ -15,6 +15,23 @@
 
 LevelOpt g_level_opt;
 
+bool is_oob(fpoint p)
+{
+  if (p.x < 0) {
+    return true;
+  }
+  if (p.y < 0) {
+    return true;
+  }
+  if (p.x >= MAP_WIDTH) {
+    return true;
+  }
+  if (p.y >= MAP_HEIGHT) {
+    return true;
+  }
+  return false;
+}
+
 bool is_oob(spoint p)
 {
   if (p.x < 0) {

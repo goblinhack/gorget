@@ -570,6 +570,7 @@ enum {
 };
 
 bool is_oob(spoint);
+bool is_oob(fpoint);
 bool is_oob(int, int);
 
 bool    level_cursor_describe_add(Gamep, Levelsp, Thingp);

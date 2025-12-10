@@ -103,7 +103,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   //
   // Need to update with the new pixel position
   //
-  thing_update_pos(g, t);
+  thing_update_pos(g, v, l, t);
 
   //
   // Do adjacent tiles need updating due to the destruction of this tiled thing?

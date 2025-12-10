@@ -369,7 +369,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   //
   // Need to update with the new pixel position
   //
-  thing_update_pos(g, t);
+  thing_update_pos(g, v, new_level, t);
 
   //
   // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
@@ -500,7 +500,7 @@ bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
 //
 // Post init/warp, we need to update the position so we can determine the level draw bounds
 //
-void thing_update_pos(Gamep g, Thingp t)
+void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -508,6 +508,5 @@ void thing_update_pos(Gamep g, Thingp t)
   spoint pix_at;
   pix_at.x = (int) (real_at.x * (float) INNER_TILE_WIDTH);
   pix_at.y = (int) (real_at.y * (float) INNER_TILE_HEIGHT);
-  thing_pix_at_set(t, pix_at);
   thing_pix_at_set(t, pix_at);
 }

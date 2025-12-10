@@ -11,7 +11,7 @@
 //
 // For things moving between tiles, calculate the pixel they are at based on the timestep
 //
-void thing_interpolate(Gamep g, Thingp t, float dt)
+void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 {
   TRACE_NO_INDENT();
 
@@ -30,6 +30,9 @@ void thing_interpolate(Gamep g, Thingp t, float dt)
     DIE("negative dt %f", dt);
   }
 
+  //
+  // Cannot use thing_update_pos here, as the thing is already at the destination
+  //
   float pix_x = (float) moving_from.x + (((float) (at.x - moving_from.x)) * dt);
   float pix_y = (float) moving_from.y + (((float) (at.y - moving_from.y)) * dt);
 

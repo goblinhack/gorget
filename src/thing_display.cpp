@@ -219,13 +219,12 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, T
 //
 // Display a spinning falling thing
 //
-static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl,
-                                  spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo,
-                                  color fg)
+static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint tl, spoint br,
+                                  Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
 {
   TRACE_NO_INDENT();
 
-  int fall_height = thing_is_falling(t_maybe_null);
+  int fall_height = thing_is_falling(t);
 
   int dh = (int) (((0.5 * ((float) (br.y - tl.y))) / MAX_FALL_TIME_MS) * fall_height);
   tl.x += dh;
@@ -241,7 +240,28 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   float ang = dh * 10;
   glRotatef(ang, 0.0f, 0.0f, 1.0f);
   glTranslatef(-mid.x, -mid.y, 0);
-  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  blit_flush();
+  glPopMatrix();
+}
+
+//
+// Display a spinning thing
+//
+static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t, spoint tl, spoint br,
+                                  Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+{
+  TRACE_NO_INDENT();
+
+  auto mid = (tl + br) / (short) 2;
+  blit_flush();
+  blit_init();
+  glPushMatrix();
+  glTranslatef(mid.x, mid.y, 0);
+  float ang = t->angle * (180.0 / RAD_180);
+  glRotatef(ang, 0.0f, 0.0f, 1.0f);
+  glTranslatef(-mid.x, -mid.y, 0);
+  thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   blit_flush();
   glPopMatrix();
 }
@@ -381,5 +401,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
   }
 
-  thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  if (t_maybe_null && (t_maybe_null->angle != 0.0)) {
+    thing_display_rotated(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  } else {
+    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  }
 }
