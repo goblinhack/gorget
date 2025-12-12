@@ -331,6 +331,10 @@ typedef struct Thing_ {
   //
   uint32_t tick;
   //
+  // Used to only tick things once per loop, even if they move slot
+  //
+  uint32_t iter;
+  //
   // When this poor thing died.
   //
   uint32_t tick_dead;
@@ -954,11 +958,11 @@ int thing_health_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 spoint thing_prev_pix_at(Thingp);
-spoint thing_prev_pix_at_set(Thingp t, const spoint &);
+spoint thing_prev_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);
 
 spoint thing_pix_at(Thingp);
-spoint thing_pix_at_set(Thingp t, const spoint &);
-spoint thing_pix_at_set(Thingp t, short, short);
+spoint thing_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);
+spoint thing_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, short, short);
 
 bool thing_is_immune_to(Thingp, ThingEventType);
 

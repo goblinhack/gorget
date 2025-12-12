@@ -14,8 +14,6 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  bool do_something = false;
-
   auto player = thing_player(g);
   if (! player) {
     return;
@@ -32,21 +30,25 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
+  bool update_visibiliy = false;
+
   if (l->tick_in_progress) {
     //
-    // Limit the updates as tick interpolation occurs many times per second.
+    // Limit the updates unless asked (due to a moving thing likely) as this path
+    // is called many times per second.
     //
-    if (thing_pix_at(player) != thing_prev_pix_at(player)) {
-      do_something = true;
+    if (l->request_to_update_visibility) {
+      l->request_to_update_visibility = false;
+      update_visibiliy                = true;
     }
   } else {
     //
     // Some event, like tick end or teleport occurred.
     //
-    do_something = true;
+    update_visibiliy = true;
   }
 
-  if (! do_something) {
+  if (! update_visibiliy) {
     return;
   }
 

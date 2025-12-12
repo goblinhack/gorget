@@ -111,7 +111,7 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Needed to make sure the light resets as it looks for pixel changes.
   //
-  thing_prev_pix_at_set(t, spoint(-1, -1));
+  thing_prev_pix_at_set(g, v, l, t, spoint(-1, -1));
 }
 
 static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }

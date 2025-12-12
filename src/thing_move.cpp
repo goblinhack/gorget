@@ -268,7 +268,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   spoint pix_at;
   pix_at.x = at.x * INNER_TILE_WIDTH;
   pix_at.y = at.y * INNER_TILE_HEIGHT;
-  thing_pix_at_set(t, pix_at);
+  thing_pix_at_set(g, v, l, t, pix_at);
 
   thing_moving_from_set(t, at);
   thing_at_set(t, to);
@@ -356,7 +356,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   spoint pix_at;
   pix_at.x = at.x * INNER_TILE_WIDTH;
   pix_at.y = at.y * INNER_TILE_HEIGHT;
-  thing_pix_at_set(t, pix_at);
+  thing_pix_at_set(g, v, new_level, t, pix_at);
 
   thing_at_set(t, to);
 
@@ -507,5 +507,5 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp t)
   spoint pix_at;
   pix_at.x = (int) (real_at.x * (float) INNER_TILE_WIDTH);
   pix_at.y = (int) (real_at.y * (float) INNER_TILE_HEIGHT);
-  thing_pix_at_set(t, pix_at);
+  thing_pix_at_set(g, v, l, t, pix_at);
 }

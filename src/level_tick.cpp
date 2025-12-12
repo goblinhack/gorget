@@ -321,7 +321,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     }
 
     if (0) {
-      THING_LOG(t, "dt %f thing_dt %f speed %d v %d", dt, t->thing_dt, thing_speed(t), player_speed);
+      THING_CON(t, "dt %f thing_dt %f speed %d v %d iter %u", dt, t->thing_dt, thing_speed(t), player_speed, t->iter);
     }
 
     if (thing_is_projectile(t)) {
@@ -339,6 +339,11 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 
       //
       // Handle interactions for a thing at its new location
+      //
+      thing_collision_handle(g, v, l, t);
+    } else if (thing_is_projectile(t)) {
+      //
+      // Every pixel change, we want to redo collision detection
       //
       thing_collision_handle(g, v, l, t);
     }

@@ -72,7 +72,7 @@ spoint thing_prev_pix_at(Thingp t)
   return t->_prev_pix_at;
 }
 
-spoint thing_prev_pix_at_set(Thingp t, const spoint &val)
+spoint thing_prev_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -90,24 +90,36 @@ spoint thing_pix_at(Thingp t)
   return t->_curr_pix_at;
 }
 
-spoint thing_pix_at_set(Thingp t, const spoint &val)
+spoint thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     DIE("No thing pointer set");
   }
+
+  if (t->_curr_pix_at != val) {
+    l->request_to_update_visibility = true;
+  }
+
+  t->_prev_pix_at        = t->_curr_pix_at;
   return t->_curr_pix_at = val;
 }
 
-spoint thing_pix_at_set(Thingp t, short x, short y)
+spoint thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y)
 {
   TRACE_NO_INDENT();
   if (! t) {
     DIE("No thing pointer set");
   }
-  t->_curr_pix_at.x = x;
-  t->_curr_pix_at.y = y;
-  return t->_curr_pix_at;
+
+  spoint val(x, y);
+
+  if (t->_curr_pix_at != val) {
+    l->request_to_update_visibility = true;
+  }
+
+  t->_prev_pix_at        = t->_curr_pix_at;
+  return t->_curr_pix_at = val;
 }
 
 spoint thing_moving_from(Thingp t)

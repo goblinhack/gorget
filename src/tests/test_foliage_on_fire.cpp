@@ -30,8 +30,8 @@ static bool test_foliage_on_fire(Gamep g, Testp t)
   std::string expect1
       = "......."
         "......."
-        "......."
-        ".@....."
+        ".....;."
+        ".@...;."
         "......."
         "......."
         ".......";
