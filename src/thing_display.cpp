@@ -259,7 +259,7 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   blit_init();
   glPushMatrix();
   glTranslatef(mid.x, mid.y, 0);
-  float ang = t->angle * (180.0 / RAD_180);
+  float ang = t->angle * (180.0f / RAD_180);
   glRotatef(ang, 0.0f, 0.0f, 1.0f);
   glTranslatef(-mid.x, -mid.y, 0);
   thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
