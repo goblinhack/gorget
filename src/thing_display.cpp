@@ -204,6 +204,7 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, T
       if (thing_display_outline_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg)) {
         return;
       }
+
       break;
 
     default : break;
