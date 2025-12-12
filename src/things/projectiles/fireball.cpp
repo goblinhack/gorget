@@ -9,6 +9,13 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
+static void tp_fireball_spawn(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  thing_sound_play(g, v, l, t, "fireball");
+}
+
 static std::string tp_fireball_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -22,6 +29,7 @@ bool tp_load_fireball(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
+  thing_on_spawn_set(tp, tp_fireball_spawn);
   thing_description_set(tp, tp_fireball_description_get);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

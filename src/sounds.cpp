@@ -21,4 +21,5 @@ void sounds_init(void)
   sound_load(1.0f, "data/sounds/impacts/door_open.wav", "door");
   sound_load(1.0f, "data/sounds/impacts/splash.wav", "splash");
   sound_load(1.0f, "data/sounds/misc/footsteps.wav", "footstep");
+  sound_load(1.0f, "data/sounds/missiles/arrow.wav", "fireball");
 }
