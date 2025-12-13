@@ -26,13 +26,6 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum
     case CURSOR_PATH :
       {
         //
-        // No paths over a chasm
-        //
-        if (level_is_cursor_path_none(g, v, l, p)) {
-          return;
-        }
-
-        //
         // No cursor path during level selection
         //
         if (level_is_level_select(g, v, l)) {
@@ -78,6 +71,25 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum
     uint16_t tile_index;
     thing_display_get_tile_info(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
     thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo);
+  }
+}
+
+//
+// Top level cursor
+//
+static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
+{
+  TRACE_NO_INDENT();
+
+  if (! l->is_current_level) {
+    return;
+  }
+
+  for (auto y = v->miny; y < v->maxy; y++) {
+    for (auto x = v->minx; x < v->maxx; x++) {
+      spoint p(x, y);
+      level_display_cursor(g, v, l, p, fbo);
+    }
   }
 }
 
@@ -242,19 +254,12 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
 
     level_display_fbo_do(g, v, l, nullptr, fbo);
 
-    //
-    // Top level cursor
-    //
-    for (auto y = v->miny; y < v->maxy; y++) {
-      for (auto x = v->minx; x < v->maxx; x++) {
-        spoint p(x, y);
-        level_display_cursor(g, v, l, p, fbo);
-      }
-    }
-
     blit_flush();
 
     if (fbo == FBO_MAP_FG_OVERLAY) {
+      blit_init();
+      level_display_cursor(g, v, l, fbo);
+      blit_flush();
       game_popups_display(g, v, l);
     }
   }

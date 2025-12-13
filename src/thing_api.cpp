@@ -1003,14 +1003,14 @@ bool thing_is_corridor(Thingp t)
   return tp_flag(thing_tp(t), is_corridor);
 }
 
-bool thing_is_cursor_hazard(Thingp t)
+bool thing_is_unused99(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_cursor_hazard);
+  return tp_flag(thing_tp(t), is_unused99);
 }
 
 bool thing_is_obs_to_cursor_path(Thingp t)

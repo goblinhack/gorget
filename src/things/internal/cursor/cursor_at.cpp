@@ -12,14 +12,14 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null)
+static Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null)
 {
   TRACE_NO_INDENT();
 
   //
   // Default tile
   //
-  Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
+  Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
   //
   // Non zero cursor path, change the cursor to a positive color
@@ -29,11 +29,15 @@ Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p,
     return tile;
   }
 
+  if (level_is_cursor_path_hazard(g, v, l, p)) {
+    return tp_tiles_get(tp, THING_ANIM_CURSOR_HAZARD, 0);
+  }
+
   //
   // If we have a path, show the cursor highlighted
   //
   if (level_cursor_path_size(g) || player_struct->move_path.size) {
-    return tp_tiles_get(tp, THING_ANIM_OPEN, 0);
+    return tp_tiles_get(tp, THING_ANIM_CURSOR_NORMAL, 0);
   }
 
   //
@@ -42,7 +46,7 @@ Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p,
   if (level_is_level_select(g, v, l)) {
     auto s = level_select_get_level_at_tile_coords(g, v, p);
     if (s) {
-      return tp_tiles_get(tp, THING_ANIM_OPEN, 0);
+      return tp_tiles_get(tp, THING_ANIM_CURSOR_NORMAL, 0);
     }
   }
 
@@ -56,11 +60,13 @@ bool tp_load_cursor_at(void)
   // begin sort marker1 {
   thing_display_get_tile_info_set(tp, tp_cursor_at_display_get_tile_info);
   tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_cursor);
   // end sort marker1 }
 
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("cursor_at.bad"));
-  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("cursor_at.good"));
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_NOPATH, tile_find_mand("cursor_at.nopath"));
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_NORMAL, tile_find_mand("cursor_at.normal"));
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_HAZARD, tile_find_mand("cursor_at.hazard"));
 
   return true;
 }
