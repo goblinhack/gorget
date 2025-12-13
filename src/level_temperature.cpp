@@ -123,13 +123,13 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       // Take care not to give too much weight or you end up with steam able to heat up a
       // tile of water, which seems wrong.
       //
-      if (thing_is_gaseous(a)) {
+      if (thing_is_gaseous(a) || thing_is_projectile(a)) {
         if (! (int) Wa) {
           Wa = WEIGHT_HUMAN;
         }
       }
 
-      if (thing_is_gaseous(b)) {
+      if (thing_is_gaseous(b) || thing_is_projectile(b)) {
         if (! (int) Wb) {
           Wb = WEIGHT_HUMAN;
         }

@@ -66,6 +66,8 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
+  thing_sound_play(g, v, l, t, "oof");
+
   auto at = thing_at(t);
   game_popup_text_add(g, at.x, at.y, std::string("Oof!"));
 }

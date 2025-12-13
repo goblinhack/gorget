@@ -10,6 +10,7 @@
 #include "my_main.hpp"
 #include "my_math.hpp"
 #include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
 
 void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const fpoint target)
 {
@@ -63,4 +64,6 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   thing_at_set(t, at);
   thing_update_pos(g, v, l, t);
   thing_push(g, v, l, t);
+
+  thing_on_moved(g, v, l, t);
 }

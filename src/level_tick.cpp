@@ -111,8 +111,6 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
 {
   TRACE_NO_INDENT();
 
-  bool pcg_rand_blocked = false;
-
   verify(MTYPE_LEVELS, game_levels_get(g));
 
   //
@@ -128,12 +126,6 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   }
 
   if (l->tick_in_progress) {
-    //
-    // Block random numbers
-    //
-    game_pcg_lock();
-    pcg_rand_blocked = true;
-
     //
     // A tick is running
     //
@@ -171,11 +163,6 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   // Animate things Per frame.
   //
   level_anim(g, v, l);
-
-  if (pcg_rand_blocked) {
-    pcg_rand_blocked = false;
-    game_pcg_unlock();
-  }
 
   //
   // Update any tiles that are needed

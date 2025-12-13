@@ -307,7 +307,7 @@ static void err_(const char *fmt, va_list args)
 
     static std::mutex m;
     m.lock();
-    g_error_last = std::string(buf) + "\n " + callstack_string() + "\nLogfile : " + g_log_stderr_filename + " : ";
+    g_error_last = std::string(buf) + "\n " + callstack_string() + "\nLogfile: " + g_log_stderr_filename + ": ";
     m.unlock();
 
     if (MY_STDERR != stderr) {
