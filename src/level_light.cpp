@@ -196,9 +196,13 @@ void level_light_precalculate(Gamep g)
 //
 void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
 {
-  color light_color    = tp_light_color(thing_tp(t));
-  auto  light_strength = thing_is_light_source(t);
-  float d              = distance(pov, p);
+  color  light_color    = tp_light_color(thing_tp(t));
+  auto   light_strength = thing_is_light_source(t);
+  spoint at             = thing_pix_at(t);
+  spoint src            = spoint(p.x * INNER_TILE_WIDTH, p.y * INNER_TILE_HEIGHT);
+  float  d              = distance(at, src);
+
+  d /= INNER_TILE_HEIGHT;
 
   auto light_fade_index = (int) ((d / (float) light_strength) * (float) MAP_WIDTH);
   if (unlikely(light_fade_index >= MAP_WIDTH)) {
