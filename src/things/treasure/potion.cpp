@@ -57,6 +57,7 @@ bool tp_load_potion(void)
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collectable);
+  tp_flag_set(tp, is_collision_circle_small);
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_inventory_item);

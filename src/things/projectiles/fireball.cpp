@@ -56,8 +56,8 @@ bool tp_load_fireball(void)
   // begin sort marker1 {
   thing_description_set(tp, tp_fireball_description_get);
   thing_on_death_set(tp, tp_fireball_on_death);
-  thing_on_spawn_set(tp, tp_fireball_on_spawn);
   thing_on_moved_set(tp, tp_fireball_on_moved);
+  thing_on_spawn_set(tp, tp_fireball_on_spawn);
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d4");
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
@@ -65,6 +65,7 @@ bool tp_load_fireball(void)
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
+  tp_flag_set(tp, is_collision_circle_small);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_ethereal);
   tp_flag_set(tp, is_fireball);

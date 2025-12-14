@@ -188,6 +188,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_blit_when_obscured);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
+  tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);

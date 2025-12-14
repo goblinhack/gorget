@@ -1003,14 +1003,14 @@ bool thing_is_corridor(Thingp t)
   return tp_flag(thing_tp(t), is_corridor);
 }
 
-bool thing_is_unused99(Thingp t)
+bool thing_is_collision_square(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused99);
+  return tp_flag(thing_tp(t), is_collision_square);
 }
 
 bool thing_is_obs_to_cursor_path(Thingp t)
@@ -2423,24 +2423,24 @@ bool thing_is_unused95(Thingp t)
   return tp_flag(thing_tp(t), is_unused95);
 }
 
-bool thing_is_unused96(Thingp t)
+bool thing_is_collision_circle_large(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused96);
+  return tp_flag(thing_tp(t), is_collision_circle_large);
 }
 
-bool thing_is_unused97(Thingp t)
+bool thing_is_collision_circle_small(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused97);
+  return tp_flag(thing_tp(t), is_collision_circle_small);
 }
 
 bool thing_is_fireball(Thingp t)

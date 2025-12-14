@@ -126,6 +126,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_brazier);
+  tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_dead_on_shoving);
