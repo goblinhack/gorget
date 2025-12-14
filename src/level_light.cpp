@@ -61,6 +61,7 @@ public:
 
 static Raycast *player_raycast;
 
+static float player_light_fade[ MAP_WIDTH ];
 static float light_fade[ MAP_WIDTH ];
 
 void level_light_precalculate(Gamep g)
@@ -116,12 +117,74 @@ void level_light_precalculate(Gamep g)
         "                                                " //
       ;
 
+  static const char player_light_fade_map[]
+      = "xxx                                             " //
+        "   x                                            " //
+        "   x                                            " //
+        "   x                                            " //
+        "   x                                            " //
+        "   x                                            " //
+        "   x                                            " //
+        "   x                                            " //
+        "    x                                           " //
+        "    x                                           " //
+        "    x                                           " //
+        "    x                                           " //
+        "    x                                           " //
+        "    x                                           " //
+        "    x                                           " //
+        "    x                                           " //
+        "     x                                          " //
+        "     x                                          " //
+        "     x                                          " //
+        "      x                                         " //
+        "      x                                         " //
+        "      x                                         " //
+        "       x                                        " //
+        "       x                                        " //
+        "       x                                        " //
+        "        x                                       " //
+        "        x                                       " //
+        "        x                                       " //
+        "         x                                      " //
+        "         x                                      " //
+        "         x                                      " //
+        "          x                                     " //
+        "          x                                     " //
+        "           x                                    " //
+        "            x                                   " //
+        "             xx                                 " //
+        "               xxx                              " //
+        "                  xxxxxx                        " //
+        "                        xxxxxxxxxxxxx           " //
+        "                                     xxxxxxxxxxx" //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+        "                                                " //
+      ;
+
   for (auto x = 0; x < MAP_WIDTH; x++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
-      auto c = light_fade_map[ (MAP_WIDTH * y) + x ];
-      if (c == 'x') {
-        if (light_fade[ x ] == 0) {
-          light_fade[ x ] = 1.0f - ((float) y / MAP_HEIGHT);
+      {
+        auto c = player_light_fade_map[ (MAP_WIDTH * y) + x ];
+        if (c == 'x') {
+          if (player_light_fade[ x ] == 0) {
+            player_light_fade[ x ] = 1.0f - ((float) y / MAP_HEIGHT);
+          }
+        }
+      }
+
+      {
+        auto c = light_fade_map[ (MAP_WIDTH * y) + x ];
+        if (c == 'x') {
+          if (light_fade[ x ] == 0) {
+            light_fade[ x ] = 1.0f - ((float) y / MAP_HEIGHT);
+          }
         }
       }
     }
@@ -137,20 +200,22 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
   auto  light_strength = thing_is_light_source(t);
   float d              = distance(pov, p);
 
-  //
-  // More dramatic lighting. Allows other lights to appear stronger
-  //
-  if (thing_is_player(t)) {
-    d = powf(d, UI_LIGHT_PLAYER_FADE);
-  }
-
   auto light_fade_index = (int) ((d / (float) light_strength) * (float) MAP_WIDTH);
   if (unlikely(light_fade_index >= MAP_WIDTH)) {
     light_fade_index = MAP_WIDTH - 1;
   }
 
-  auto light_tile = &v->light_map.tile[ p.x ][ p.y ];
-  auto fade       = light_fade[ light_fade_index ];
+  auto  light_tile = &v->light_map.tile[ p.x ][ p.y ];
+  float fade;
+
+  //
+  // More dramatic lighting. Allows other lights to appear stronger
+  //
+  if (thing_is_player(t)) {
+    fade = player_light_fade[ light_fade_index ];
+  } else {
+    fade = light_fade[ light_fade_index ];
+  }
 
   light_tile->r += (int) (fade * light_color.r);
   light_tile->g += (int) (fade * light_color.g);
