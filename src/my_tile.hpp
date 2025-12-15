@@ -80,9 +80,13 @@ void tile_blit_apply_submerge_pct(Gamep, spoint &tl, spoint &br, float &x1, floa
 void tile_load_arr_sprites(const char *file, const char *tex, uint32_t w, uint32_t h, uint32_t nargs,
                            const char *arr[], int gl_mode = GL_NEAREST);
 
+struct LightPixels_;
+
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c);
 void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
                const color &c);
+void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
+               const color &c, struct LightPixels_ *light_pixels);
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &color_tl, const color &color_tr,
                const color &color_bl, const color &color_br);
 void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,

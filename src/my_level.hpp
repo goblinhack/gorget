@@ -117,9 +117,11 @@ typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
 } LevelInfo;
 
+#define LIGHT_PIXEL 16
+
 typedef struct {
   //
-  // The color of this tile
+  // The color of this tile pixel
   //
   color c;
   //
@@ -128,7 +130,15 @@ typedef struct {
   int16_t r;
   int16_t g;
   int16_t b;
-  uint8_t lit;
+} LightPixel;
+
+typedef struct LightPixels_ {
+  LightPixel pixel[ LIGHT_PIXEL ][ LIGHT_PIXEL ];
+} LightPixels;
+
+typedef struct {
+  LightPixels pixels;
+  int16_t     lit;
 } LightTile;
 
 //

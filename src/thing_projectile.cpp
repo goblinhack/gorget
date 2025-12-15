@@ -18,6 +18,10 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std
 
   auto delta = target - make_fpoint(thing_at(me));
 
+  if ((delta.x == 0) && (delta.y == 0)) {
+    delta.x = 1;
+  }
+
   auto  angle = angle_radians(delta);
   float s;
   float c;

@@ -198,37 +198,45 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
 {
   color  light_color    = tp_light_color(thing_tp(t));
   auto   light_strength = thing_is_light_source(t);
-  spoint at             = thing_pix_at(t);
-  spoint src            = spoint(p.x * INNER_TILE_WIDTH, p.y * INNER_TILE_HEIGHT);
-  float  d              = distance(at, src);
+  fpoint real_at        = thing_real_at(t);
+  auto   light_tile     = &v->light_map.tile[ p.x ][ p.y ];
 
-  d /= INNER_TILE_HEIGHT;
+  for (auto pixx = 0; pixx < LIGHT_PIXEL; pixx++) {
+    for (auto pixy = 0; pixy < LIGHT_PIXEL; pixy++) {
 
-  auto light_fade_index = (int) ((d / (float) light_strength) * (float) MAP_WIDTH);
-  if (unlikely(light_fade_index >= MAP_WIDTH)) {
-    light_fade_index = MAP_WIDTH - 1;
-  }
+      fpoint src = make_fpoint(p) - fpoint(0.5, 0.5);
+      src.x += (float) (1.0 / LIGHT_PIXEL) * (float) pixx;
+      src.y += (float) (1.0 / LIGHT_PIXEL) * (float) pixy;
 
-  auto  light_tile = &v->light_map.tile[ p.x ][ p.y ];
-  float fade;
+      float d = distance(real_at, src);
 
-  //
-  // More dramatic lighting. Allows other lights to appear stronger
-  //
-  if (thing_is_player(t)) {
-    fade = player_light_fade[ light_fade_index ];
-  } else {
-    fade = light_fade[ light_fade_index ];
-  }
+      int light_fade_index = (int) ((d / (float) light_strength) * (float) MAP_WIDTH);
+      if (unlikely(light_fade_index >= MAP_WIDTH)) {
+        light_fade_index = MAP_WIDTH - 1;
+      }
 
-  light_tile->r += (int) (fade * light_color.r);
-  light_tile->g += (int) (fade * light_color.g);
-  light_tile->b += (int) (fade * light_color.b);
+      float fade;
 
-  if (DEBUG) {
-    light_tile->r = 255;
-    light_tile->g = 255;
-    light_tile->b = 255;
+      if (thing_is_player(t)) {
+        //
+        // More dramatic lighting. Allows other lights to appear stronger
+        //
+        fade = player_light_fade[ light_fade_index ];
+      } else {
+        fade = light_fade[ light_fade_index ];
+      }
+
+      auto light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
+      light_pixel->r += (int) (fade * light_color.r);
+      light_pixel->g += (int) (fade * light_color.g);
+      light_pixel->b += (int) (fade * light_color.b);
+
+      if (DEBUG) {
+        light_pixel->r = 255;
+        light_pixel->g = 255;
+        light_pixel->b = 255;
+      }
+    }
   }
 }
 
@@ -781,25 +789,30 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
   for (auto x = 0; x < MAP_WIDTH; x++) {
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       auto light_tile = &v->light_map.tile[ x ][ y ];
-
       if (light_tile->lit) {
-        auto c_r = light_tile->r;
-        if (c_r > 255) {
-          c_r = 255;
-        }
-        auto c_g = light_tile->g;
-        if (c_g > 255) {
-          c_g = 255;
-        }
-        auto c_b = light_tile->b;
-        if (c_b > 255) {
-          c_b = 255;
-        }
+        for (auto pixx = 0; pixx < LIGHT_PIXEL; pixx++) {
+          for (auto pixy = 0; pixy < LIGHT_PIXEL; pixy++) {
+            auto light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
 
-        light_tile->c.r = (uint8_t) c_r;
-        light_tile->c.g = (uint8_t) c_g;
-        light_tile->c.b = (uint8_t) c_b;
-        light_tile->c.a = 255;
+            auto c_r = light_pixel->r;
+            if (c_r > 255) {
+              c_r = 255;
+            }
+            auto c_g = light_pixel->g;
+            if (c_g > 255) {
+              c_g = 255;
+            }
+            auto c_b = light_pixel->b;
+            if (c_b > 255) {
+              c_b = 255;
+            }
+
+            light_pixel->c.r = (uint8_t) c_r;
+            light_pixel->c.g = (uint8_t) c_g;
+            light_pixel->c.b = (uint8_t) c_b;
+            light_pixel->c.a = 255;
+          }
+        }
       }
     }
   }

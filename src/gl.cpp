@@ -7,6 +7,7 @@
 #include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_globals.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_size.hpp"
@@ -16,10 +17,10 @@ ENUM_DEF_C(FBO_ENUM, FboEnum)
 
 static bool in_2d_mode;
 
-float    glapi_last_tex_right;
-float    glapi_last_tex_bottom;
-GLushort glapi_last_right;
-GLushort glapi_last_bottom;
+float   glapi_last_tex_right;
+float   glapi_last_tex_bottom;
+GLshort glapi_last_right;
+GLshort glapi_last_bottom;
 
 GLuint g_fbo_id[ FBO_ENUM_MAX ];
 GLuint g_fbo_tex_id[ FBO_ENUM_MAX ];
@@ -627,7 +628,7 @@ void blit_fbo_unbind_locked(void)
 #define NUMBER_COMPONENTS_PER_COLOR 4
 
 uint32_t NUMBER_BYTES_PER_VERTICE_2D = SIZEOF(GLfloat) * NUMBER_DIMENSIONS_PER_COORD_2D
-                                     + SIZEOF(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D
+                                     + SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D
                                      + SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
 //
 // Two arrays, xy and uv.
@@ -712,7 +713,7 @@ void blit_flush(void)
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, NUMBER_BYTES_PER_VERTICE_2D,
                  ((char *) gl_array_buf)
-                     + SIZEOF(GLushort) * // skip (x,y)
+                     + SIZEOF(GLshort) * // skip (x,y)
                            NUMBER_DIMENSIONS_PER_COORD_2D
                      + SIZEOF(GLfloat) * // skip (u,v)
                            NUMBER_DIMENSIONS_PER_COORD_2D);
@@ -750,7 +751,7 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
   static long nvertices;
 
   static const GLsizei stride
-      = SIZEOF(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D + SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
+      = SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D + SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
 
   nvertices = ((char *) e - (char *) b) / stride;
 
@@ -760,7 +761,7 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, stride,
                  ((char *) b)
-                     + SIZEOF(GLushort) * // skip (x,y)
+                     + SIZEOF(GLshort) * // skip (x,y)
                            NUMBER_DIMENSIONS_PER_COORD_2D);
 
   GL_ERROR_CHECK();
@@ -779,7 +780,7 @@ void blit_flush_triangle_fan(float *b, float *e)
 
   static long nvertices;
 
-  static const GLsizei stride = SIZEOF(GLushort) * NUMBER_DIMENSIONS_PER_COORD_2D;
+  static const GLsizei stride = SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D;
 
   nvertices = ((char *) e - (char *) b) / stride;
 
@@ -794,10 +795,10 @@ void blit_flush_triangle_fan(float *b, float *e)
   blit_init();
 }
 
-void gl_blitquad(GLushort left, GLushort top, GLushort right, GLushort bottom)
+void gl_blitquad(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
-  GLushort  xy[ 4 * 2 ];
-  GLushort *xyp = xy;
+  GLshort  xy[ 4 * 2 ];
+  GLshort *xyp = xy;
 
   Vertex2(left, top);
   Vertex2(right, top);
@@ -815,8 +816,8 @@ void gl_blitquad(GLushort left, GLushort top, GLushort right, GLushort bottom)
 
 void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint br)
 {
-  GLushort  xy[ 4 * 2 ];
-  GLushort *xyp = xy;
+  GLshort  xy[ 4 * 2 ];
+  GLshort *xyp = xy;
 
   Vertex2(tl.x, tl.y);
   Vertex2(tr.x, tr.y);
@@ -832,10 +833,10 @@ void gl_blitquad(const spoint tl, const spoint tr, const spoint bl, const spoint
   glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void gl_blitsquare(GLushort left, GLushort top, GLushort right, GLushort bottom)
+void gl_blitsquare(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
-  GLushort  xy[ 4 * 2 ];
-  GLushort *xyp = xy;
+  GLshort  xy[ 4 * 2 ];
+  GLshort *xyp = xy;
 
   Vertex2(left, top);
   Vertex2(right, top);
@@ -851,10 +852,10 @@ void gl_blitsquare(GLushort left, GLushort top, GLushort right, GLushort bottom)
   glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void gl_blitline(GLushort left, GLushort top, GLushort right, GLushort bottom)
+void gl_blitline(GLshort left, GLshort top, GLshort right, GLshort bottom)
 {
-  GLushort  xy[ 2 * 2 ];
-  GLushort *xyp = xy;
+  GLshort  xy[ 2 * 2 ];
+  GLshort *xyp = xy;
 
   Vertex2(left, top);
   Vertex2(right, bottom);
@@ -1404,7 +1405,7 @@ void gl_push(float **P, float *p_end, uint8_t first_vertex, float tex_left, floa
 }
 
 void gl_push(float **P, float *p_end, uint8_t blit_flush, float tex_left, float tex_top, float tex_right,
-             float tex_bottom, GLushort left, GLushort top, GLushort right, GLushort bottom, uint8_t r1, uint8_t g1,
+             float tex_bottom, GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1,
              uint8_t b1, uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3,
              uint8_t b3, uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
 {
@@ -1419,8 +1420,8 @@ void gl_push(float **P, float *p_end, uint8_t blit_flush, float tex_left, float 
 
 static uint8_t first_vertex;
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
-          GLushort right, GLushort bottom, const color &c)
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top,
+          GLshort right, GLshort bottom, const color &c)
 {
   if (unlikely(! buf_tex)) {
     blit_init();
@@ -1443,8 +1444,54 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           g, b, a, r, g, b, a, r, g, b, a);
 }
 
-void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
-          GLushort right, GLushort bottom, const color &color_bl, const color &color_br, const color &color_tl,
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY,
+          GLshort pixMaxX, GLshort pixMaxY, const color &c, LightPixels *light_pixels)
+{
+  if (unlikely(! buf_tex)) {
+    blit_init();
+    first_vertex = true;
+  } else if (unlikely(buf_tex != tex)) {
+    blit_flush();
+    first_vertex = true;
+  } else {
+    first_vertex = false;
+  }
+
+  buf_tex = tex;
+
+  double texDiffX = (texMaxX - texMinX) / (double) LIGHT_PIXEL;
+  double texDiffY = (texMinY - texMaxY) / (double) LIGHT_PIXEL;
+  double pixDiffX = (pixMaxX - pixMinX) / (double) LIGHT_PIXEL;
+  double pixDiffY = (pixMinY - pixMaxY) / (double) LIGHT_PIXEL;
+
+  for (auto y = 0; y < LIGHT_PIXEL; y++) {
+    for (auto x = 0; x < LIGHT_PIXEL; x++) {
+
+      auto pixel = &light_pixels->pixel[ x ][ y ];
+
+      uint8_t r = pixel->c.r;
+      uint8_t g = pixel->c.g;
+      uint8_t b = pixel->c.b;
+      uint8_t a = 255;
+
+      double texMinX2 = texMinX + x * texDiffX;
+      double texMaxX2 = texMinX + (x + 1) * texDiffX;
+      double texMaxY2 = texMaxY + y * texDiffY;
+      double texMinY2 = texMaxY + (y + 1) * texDiffY;
+
+      GLshort pixMinX2 = (GLshort) ((double) pixMinX + (double) x * pixDiffX);
+      GLshort pixMaxX2 = (GLshort) ((double) pixMinX + (double) (x + 1) * pixDiffX);
+      GLshort pixMaxY2 = (GLshort) ((double) pixMaxY + (double) y * pixDiffY);
+      GLshort pixMinY2 = (GLshort) ((double) pixMaxY + (double) (y + 1) * pixDiffY);
+
+      gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2,
+              pixMaxY2, r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a);
+    }
+  }
+}
+
+void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top,
+          GLshort right, GLshort bottom, const color &color_bl, const color &color_br, const color &color_tl,
           const color &color_tr)
 {
   if (unlikely(! buf_tex)) {
@@ -1464,7 +1511,7 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           color_tr.b, color_tr.a, color_br.r, color_br.g, color_br.b, color_br.a);
 }
 
-void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom, const color &c)
+void blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c)
 {
   return blit(tex, 0.0, 1.0, 1.0, 0.0, left, top, right, bottom, c);
 }

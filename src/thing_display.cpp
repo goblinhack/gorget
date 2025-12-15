@@ -187,7 +187,8 @@ static bool thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, spoint p, T
 }
 
 static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl,
-                               spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg)
+                               spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo, color fg,
+                               LightPixels *light_pixels)
 {
   TRACE_NO_INDENT();
 
@@ -213,7 +214,7 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, T
   if (tp_is_blit_outlined(tp) || tp_is_blit_square_outlined(tp)) {
     thing_display_outlined_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   } else {
-    tile_blit(tile, x1, x2, y1, y2, tl, br, fg);
+    tile_blit(tile, x1, x2, y1, y2, tl, br, fg, light_pixels);
   }
 }
 
@@ -241,7 +242,7 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   float ang = dh * 10;
   glRotatef(ang, 0.0f, 0.0f, 1.0f);
   glTranslatef(-mid.x, -mid.y, 0);
-  thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr);
   blit_flush();
   glPopMatrix();
 }
@@ -262,7 +263,7 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   float ang = t->angle * (180.0f / RAD_180);
   glRotatef(ang, 0.0f, 0.0f, 1.0f);
   glTranslatef(-mid.x, -mid.y, 0);
-  thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+  thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr);
   blit_flush();
   glPopMatrix();
 }
@@ -350,6 +351,8 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
   float y2;
   tile_coords(tile, &x1, &y1, &x2, &y2);
 
+  LightPixels *light_pixels = nullptr;
+
   if (is_level_select) {
     //
     // No lighting
@@ -360,7 +363,8 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // Apply lighting to current tiles
     //
     if (fbo == FBO_MAP_FG) {
-      fg = v->light_map.tile[ p.x ][ p.y ].c;
+      fg           = v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ].c;
+      light_pixels = &v->light_map.tile[ p.x ][ p.y ].pixels;
     } else {
       fg = WHITE;
     }
@@ -386,7 +390,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       //
       if (submerged_pct) {
         tile_blit_apply_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t_maybe_null));
-        thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+        thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr);
 
         //
         // Add a reflection
@@ -405,6 +409,6 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
   if (t_maybe_null && (t_maybe_null->angle != 0.0)) {
     thing_display_rotated(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   } else {
-    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels);
   }
 }
