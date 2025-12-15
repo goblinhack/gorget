@@ -118,53 +118,53 @@ void level_light_precalculate(Gamep g)
       ;
 
   static const char player_light_fade_map[]
-      = "xxx                                             " //
-        "   x                                            " //
-        "   x                                            " //
-        "   x                                            " //
-        "   x                                            " //
-        "   x                                            " //
-        "   x                                            " //
-        "   x                                            " //
-        "    x                                           " //
-        "    x                                           " //
-        "    x                                           " //
-        "    x                                           " //
-        "    x                                           " //
-        "    x                                           " //
-        "    x                                           " //
+      = "xx                                              " //
+        "  xx                                            " //
         "    x                                           " //
         "     x                                          " //
-        "     x                                          " //
-        "     x                                          " //
         "      x                                         " //
-        "      x                                         " //
-        "      x                                         " //
-        "       x                                        " //
-        "       x                                        " //
         "       x                                        " //
         "        x                                       " //
         "        x                                       " //
-        "        x                                       " //
-        "         x                                      " //
         "         x                                      " //
         "         x                                      " //
         "          x                                     " //
         "          x                                     " //
         "           x                                    " //
+        "           x                                    " //
         "            x                                   " //
-        "             xx                                 " //
-        "               xxx                              " //
-        "                  xxxxxx                        " //
-        "                        xxxxxxxxxxxxx           " //
-        "                                     xxxxxxxxxxx" //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
+        "            x                                   " //
+        "             x                                  " //
+        "             x                                  " //
+        "              x                                 " //
+        "              x                                 " //
+        "               x                                " //
+        "               x                                " //
+        "               x                                " //
+        "                x                               " //
+        "                x                               " //
+        "                x                               " //
+        "                 x                              " //
+        "                 x                              " //
+        "                 x                              " //
+        "                 x                              " //
+        "                 x                              " //
+        "                  x                             " //
+        "                  x                             " //
+        "                  x                             " //
+        "                   x                            " //
+        "                   x                            " //
+        "                   x                            " //
+        "                    x                           " //
+        "                    x                           " //
+        "                     x                          " //
+        "                     x                          " //
+        "                      x                         " //
+        "                       x                        " //
+        "                        x                       " //
+        "                         x                      " //
+        "                          xx                    " //
+        "                            xxxxxxxxxxxxxxxxxxxx" //
         "                                                " //
       ;
 
@@ -235,20 +235,10 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
 
       auto   light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
       double fade        = light_fade_map[ light_fade_index ];
-#if 0
-      fade               = 1.0 - (dist_in_tiles / light_strength_in_tiles);
-      fade               = pow(fade, 5);
-#endif
+
       light_pixel->r += fade * col_r;
       light_pixel->g += fade * col_g;
       light_pixel->b += fade * col_b;
-
-#if 0
-      if (thing_is_projectile(t)) {
-        light_pixel->g = 0;
-        light_pixel->b = 0;
-      }
-#endif
 
 #ifdef _DEBUG_BUILD_
       if (DEBUG) {
