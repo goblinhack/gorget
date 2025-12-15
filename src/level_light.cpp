@@ -196,13 +196,13 @@ void level_light_precalculate(Gamep g)
 //
 void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
 {
-  const color  light_color             = tp_light_color(thing_tp(t));
-  const double light_strength_in_tiles = thing_is_light_source(t);
-  const auto   light_tile              = &v->light_map.tile[ p.x ][ p.y ];
-  spoint       real_at                 = thing_pix_at(t);
-  double       col_r                   = light_color.r;
-  double       col_g                   = light_color.g;
-  double       col_b                   = light_color.b;
+  const color  light_color              = tp_light_color(thing_tp(t));
+  const double light_strength_in_pixels = thing_is_light_source(t) * INNER_TILE_WIDTH;
+  const auto   light_tile               = &v->light_map.tile[ p.x ][ p.y ];
+  spoint       thing_at_in_pixels       = thing_pix_at(t);
+  double       col_r                    = light_color.r;
+  double       col_g                    = light_color.g;
+  double       col_b                    = light_color.b;
   double      *light_fade_map;
 
   if (thing_is_player(t)) {
@@ -216,19 +216,18 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
 
   for (auto pixy = 0; pixy < LIGHT_PIXEL; pixy++) {
 
-    double light_pixel_at_y = (double) p.y * INNER_TILE_WIDTH + (double) (1.0 / (double) LIGHT_PIXEL) * (double) pixy;
-    light_pixel_at_y -= (1.0 / (double) LIGHT_PIXEL * 2);
+    double light_pixel_at_y = (double) p.y * INNER_TILE_WIDTH + (double) pixy;
+    light_pixel_at_y -= INNER_TILE_WIDTH / 2;
 
     for (auto pixx = 0; pixx < LIGHT_PIXEL; pixx++) {
 
-      double light_pixel_at_x
-          = (double) p.x * INNER_TILE_WIDTH + (double) (1.0 / (double) LIGHT_PIXEL) * (double) pixx;
-      light_pixel_at_x -= (1.0 / (double) LIGHT_PIXEL * 2);
+      double light_pixel_at_x = (double) p.x * INNER_TILE_WIDTH + pixx;
+      light_pixel_at_x -= INNER_TILE_WIDTH / 2;
 
-      double dist_in_tiles = DISTANCEd(light_pixel_at_x, light_pixel_at_y, (double) real_at.x, (double) real_at.y);
-      dist_in_tiles /= INNER_TILE_WIDTH;
+      double dist_in_pixels = DISTANCEd(light_pixel_at_x, light_pixel_at_y, (double) thing_at_in_pixels.x,
+                                        (double) thing_at_in_pixels.y);
 
-      int light_fade_index = (int) ((dist_in_tiles / light_strength_in_tiles) * (double) MAP_WIDTH);
+      int light_fade_index = (int) ((dist_in_pixels / light_strength_in_pixels) * (double) MAP_WIDTH);
       if (unlikely(light_fade_index >= MAP_WIDTH)) {
         light_fade_index = MAP_WIDTH - 1;
       }

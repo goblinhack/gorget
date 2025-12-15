@@ -1459,11 +1459,15 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
   buf_tex = tex;
 
-  const double texDiffX = (double) ((double) texMaxX - (double) texMinX) / (double) LIGHT_PIXEL;
-  const double texDiffY = (double) ((double) texMinY - (double) texMaxY) / (double) LIGHT_PIXEL;
-  const double pixDiffX = (double) ((double) pixMaxX - (double) pixMinX) / (double) LIGHT_PIXEL;
-  const double pixDiffY = (double) ((double) pixMinY - (double) pixMaxY) / (double) LIGHT_PIXEL;
+  const double  texDiffX = (double) ((double) texMaxX - (double) texMinX) / (double) LIGHT_PIXEL;
+  const double  texDiffY = (double) ((double) texMinY - (double) texMaxY) / (double) LIGHT_PIXEL;
+  const double  pixDiffX = (double) ((double) pixMaxX - (double) pixMinX) / (double) LIGHT_PIXEL;
+  const double  pixDiffY = (double) ((double) pixMinY - (double) pixMaxY) / (double) LIGHT_PIXEL;
+  const uint8_t a        = 255;
 
+  //
+  // Fewer triangle breaks doing y rows first
+  //
   for (auto y = 0; y < LIGHT_PIXEL; y++) {
 
     const double  texMaxY2 = (double) texMaxY + y * texDiffY;
@@ -1477,7 +1481,6 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
       uint8_t    r     = pixel->c.r;
       uint8_t    g     = pixel->c.g;
       uint8_t    b     = pixel->c.b;
-      uint8_t    a     = 255;
 
       double  texMinX2 = (double) texMinX + x * texDiffX;
       double  texMaxX2 = (double) texMinX + (x + 1) * texDiffX;
