@@ -1,6 +1,9 @@
 bugs
 ----
+tests for collecting items
+is pixel lighting
 fireball distance is framerate bound
+collect key noise
 melting walls and rock
 door damage from fireball
 

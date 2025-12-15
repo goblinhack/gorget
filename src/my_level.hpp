@@ -122,15 +122,11 @@ typedef struct LevelInfo_ {
 
 typedef struct {
   //
-  // The color of this tile pixel
-  //
-  color c;
-  //
   // The total of all lights intersecting here, which is then scaled into the final light
   //
-  double r;
-  double g;
-  double b;
+  float r;
+  float g;
+  float b;
 } LightPixel;
 
 typedef struct LightPixels_ {

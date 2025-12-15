@@ -363,7 +363,10 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // Apply lighting to current tiles
     //
     if (fbo == FBO_MAP_FG) {
-      fg = v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ].c;
+      auto pixel = &v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ];
+      fg.r       = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
+      fg.g       = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
+      fg.b       = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
 
       //
       // Too many tiny tiles

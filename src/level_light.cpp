@@ -800,38 +800,4 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     level_fov(g, v, l, t, &ext->fov_can_see_tile, &ext->fov_has_seen_tile, thing_at(t), max_radius,
               level_light_fov_all_can_see_callback);
   }
-
-  //
-  // Calculate the total light color per tile
-  //
-  for (auto x = 0; x < MAP_WIDTH; x++) {
-    for (auto y = 0; y < MAP_HEIGHT; y++) {
-      auto light_tile = &v->light_map.tile[ x ][ y ];
-      if (light_tile->lit) {
-        for (auto pixx = 0; pixx < LIGHT_PIXEL; pixx++) {
-          for (auto pixy = 0; pixy < LIGHT_PIXEL; pixy++) {
-            auto light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
-
-            auto c_r = light_pixel->r;
-            if (c_r > 255) {
-              c_r = 255;
-            }
-            auto c_g = light_pixel->g;
-            if (c_g > 255) {
-              c_g = 255;
-            }
-            auto c_b = light_pixel->b;
-            if (c_b > 255) {
-              c_b = 255;
-            }
-
-            light_pixel->c.r = (uint8_t) c_r;
-            light_pixel->c.g = (uint8_t) c_g;
-            light_pixel->c.b = (uint8_t) c_b;
-            light_pixel->c.a = 255;
-          }
-        }
-      }
-    }
-  }
 }
