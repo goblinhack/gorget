@@ -10,6 +10,7 @@
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_thing.hpp"
+#include "my_tile.hpp"
 #include "my_types.hpp"
 
 #include <vector>
@@ -117,7 +118,7 @@ typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
 } LevelInfo;
 
-#define LIGHT_PIXEL 16
+#define LIGHT_PIXEL (INNER_TILE_WIDTH)
 
 typedef struct {
   //
@@ -127,9 +128,9 @@ typedef struct {
   //
   // The total of all lights intersecting here, which is then scaled into the final light
   //
-  int16_t r;
-  int16_t g;
-  int16_t b;
+  double r;
+  double g;
+  double b;
 } LightPixel;
 
 typedef struct LightPixels_ {

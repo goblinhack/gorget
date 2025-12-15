@@ -10,6 +10,7 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_wids.hpp"
 
 static WidPopup *wid_rightbar;

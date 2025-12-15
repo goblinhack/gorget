@@ -662,7 +662,7 @@ void blit_init(void)
   // If the screen size has changed or this is the first run, allocate our
   // buffer if our size requirements have changed.
   //
-  gl_array_size_required = 16 * 1024 * 1024;
+  gl_array_size_required = 32 * 1024 * 1024;
 
   gl_array_buf = (__typeof__(gl_array_buf)) myzalloc(gl_array_size_required, "GL xy buffer");
 
@@ -1459,30 +1459,30 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
   buf_tex = tex;
 
-  double texDiffX = (texMaxX - texMinX) / (double) LIGHT_PIXEL;
-  double texDiffY = (texMinY - texMaxY) / (double) LIGHT_PIXEL;
-  double pixDiffX = (pixMaxX - pixMinX) / (double) LIGHT_PIXEL;
-  double pixDiffY = (pixMinY - pixMaxY) / (double) LIGHT_PIXEL;
+  const double texDiffX = (double) ((double) texMaxX - (double) texMinX) / (double) LIGHT_PIXEL;
+  const double texDiffY = (double) ((double) texMinY - (double) texMaxY) / (double) LIGHT_PIXEL;
+  const double pixDiffX = (double) ((double) pixMaxX - (double) pixMinX) / (double) LIGHT_PIXEL;
+  const double pixDiffY = (double) ((double) pixMinY - (double) pixMaxY) / (double) LIGHT_PIXEL;
 
   for (auto y = 0; y < LIGHT_PIXEL; y++) {
+
+    const double  texMaxY2 = (double) texMaxY + y * texDiffY;
+    const double  texMinY2 = (double) texMaxY + (y + 1) * texDiffY;
+    const GLshort pixMaxY2 = (GLshort) ((double) pixMaxY + (double) y * pixDiffY);
+    const GLshort pixMinY2 = (GLshort) ((double) pixMaxY + (double) (y + 1) * pixDiffY);
+
     for (auto x = 0; x < LIGHT_PIXEL; x++) {
 
-      auto pixel = &light_pixels->pixel[ x ][ y ];
+      const auto pixel = &light_pixels->pixel[ x ][ y ];
+      uint8_t    r     = pixel->c.r;
+      uint8_t    g     = pixel->c.g;
+      uint8_t    b     = pixel->c.b;
+      uint8_t    a     = 255;
 
-      uint8_t r = pixel->c.r;
-      uint8_t g = pixel->c.g;
-      uint8_t b = pixel->c.b;
-      uint8_t a = 255;
-
-      double texMinX2 = texMinX + x * texDiffX;
-      double texMaxX2 = texMinX + (x + 1) * texDiffX;
-      double texMaxY2 = texMaxY + y * texDiffY;
-      double texMinY2 = texMaxY + (y + 1) * texDiffY;
-
+      double  texMinX2 = (double) texMinX + x * texDiffX;
+      double  texMaxX2 = (double) texMinX + (x + 1) * texDiffX;
       GLshort pixMinX2 = (GLshort) ((double) pixMinX + (double) x * pixDiffX);
       GLshort pixMaxX2 = (GLshort) ((double) pixMinX + (double) (x + 1) * pixDiffX);
-      GLshort pixMaxY2 = (GLshort) ((double) pixMaxY + (double) y * pixDiffY);
-      GLshort pixMinY2 = (GLshort) ((double) pixMaxY + (double) (y + 1) * pixDiffY);
 
       gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2,
               pixMaxY2, r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a);

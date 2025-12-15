@@ -1383,16 +1383,6 @@ bool thing_is_pillar(Thingp t)
   return tp_flag(thing_tp(t), is_pillar);
 }
 
-bool thing_is_player(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_player);
-}
-
 bool thing_is_rock(Thingp t)
 {
   TRACE_NO_INDENT();

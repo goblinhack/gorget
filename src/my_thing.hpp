@@ -197,6 +197,10 @@ typedef struct Thing_ {
   //
   uint8_t _jump_distance;
   //
+  // Used so often, we cache it
+  //
+  uint8_t _is_player : 1;
+  //
   // Snuffed it.
   //
   uint8_t _is_dead : 1;
@@ -535,7 +539,6 @@ bool   thing_is_openable(Thingp);
 bool   thing_is_physics_explosion(Thingp);
 bool   thing_is_physics_water(Thingp);
 bool   thing_is_pillar(Thingp);
-bool   thing_is_player(Thingp);
 bool   thing_is_projectile(Thingp);
 bool   thing_is_rock(Thingp);
 bool   thing_is_shovable(Thingp);

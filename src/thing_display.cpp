@@ -363,8 +363,14 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // Apply lighting to current tiles
     //
     if (fbo == FBO_MAP_FG) {
-      fg           = v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ].c;
-      light_pixels = &v->light_map.tile[ p.x ][ p.y ].pixels;
+      fg = v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ].c;
+
+      //
+      // Too many tiny tiles
+      //
+      if (! game_map_zoom_is_full_map_visible(g)) {
+        light_pixels = &v->light_map.tile[ p.x ][ p.y ].pixels;
+      }
     } else {
       fg = WHITE;
     }

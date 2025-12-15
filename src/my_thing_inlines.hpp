@@ -121,4 +121,16 @@ static inline bool thing_is_physics_temperature(Thingp t)
   return tp_flag(thing_tp(t), is_physics_temperature);
 }
 
+static inline bool thing_is_player(const Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_player;
+}
+
 #endif // _MY_THING_INLINES_H_

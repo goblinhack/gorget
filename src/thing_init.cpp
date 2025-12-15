@@ -5,6 +5,8 @@
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_thing_inlines.hpp"
+#include "my_tp.hpp"
 
 Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
 {
@@ -15,6 +17,13 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   auto t = thing_alloc(g, v, l, tp, at);
   if (! t) {
     return nullptr;
+  }
+
+  //
+  // Used so often, we cache it
+  //
+  if (tp_flag(thing_tp(t), is_player)) {
+    t->_is_player = true;
   }
 
   thing_at_set(t, real_at);

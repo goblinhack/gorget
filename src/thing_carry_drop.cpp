@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_thing_inlines.hpp"
 
 //
 // Add an item to the things inventory

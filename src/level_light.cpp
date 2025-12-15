@@ -21,7 +21,7 @@ typedef struct {
 
 typedef struct {
   spoint p;
-  float  distance;
+  double distance;
 } RayPixel;
 
 class Raycast
@@ -56,65 +56,65 @@ public:
   //
   std::array< std::vector< RayPixel >, LIGHT_MAX_RAYS_MAX > ray_pixels;
 
-  std::vector< float > ray_gl_cmds;
+  std::vector< double > ray_gl_cmds;
 };
 
 static Raycast *player_raycast;
 
-static float player_light_fade[ MAP_WIDTH ];
-static float light_fade[ MAP_WIDTH ];
+static double player_light_fade[ MAP_WIDTH ];
+static double light_fade[ MAP_WIDTH ];
 
 void level_light_precalculate(Gamep g)
 {
   static const char light_fade_map[]
-      = "xxxx                                            " //
-        "    xx                                          " //
+      = "x                                               " //
+        " x                                              " //
+        "  x                                             " //
+        "   x                                            " //
+        "    x                                           " //
+        "     x                                          " //
         "      x                                         " //
         "       x                                        " //
         "        x                                       " //
-        "        x                                       " //
-        "         x                                      " //
         "         x                                      " //
         "          x                                     " //
-        "          x                                     " //
-        "          x                                     " //
-        "          x                                     " //
-        "          x                                     " //
-        "          x                                     " //
         "           x                                    " //
-        "           x                                    " //
-        "           x                                    " //
-        "           x                                    " //
-        "           x                                    " //
-        "            x                                   " //
-        "            x                                   " //
-        "            x                                   " //
-        "            x                                   " //
         "            x                                   " //
         "             x                                  " //
-        "             x                                  " //
-        "             x                                  " //
         "              x                                 " //
-        "              x                                 " //
-        "              x                                 " //
-        "               x                                " //
         "               x                                " //
         "                x                               " //
         "                 x                              " //
-        "                  xx                            " //
-        "                    xxx                         " //
-        "                       xxxx                     " //
-        "                           xxxxxx               " //
-        "                                 xxxxxxx        " //
-        "                                        xxxxxxxx" //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
-        "                                                " //
+        "                  x                             " //
+        "                   x                            " //
+        "                    x                           " //
+        "                     x                          " //
+        "                      x                         " //
+        "                       x                        " //
+        "                        x                       " //
+        "                         x                      " //
+        "                          x                     " //
+        "                           x                    " //
+        "                            x                   " //
+        "                             x                  " //
+        "                              x                 " //
+        "                               x                " //
+        "                                x               " //
+        "                                 x              " //
+        "                                  x             " //
+        "                                   x            " //
+        "                                    x           " //
+        "                                     x          " //
+        "                                      x         " //
+        "                                       x        " //
+        "                                        x       " //
+        "                                         x      " //
+        "                                          x     " //
+        "                                           x    " //
+        "                                            x   " //
+        "                                             x  " //
+        "                                              x " //
+        "                                               x" //
       ;
 
   static const char player_light_fade_map[]
@@ -174,7 +174,7 @@ void level_light_precalculate(Gamep g)
         auto c = player_light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (player_light_fade[ x ] == 0) {
-            player_light_fade[ x ] = 1.0f - ((float) y / MAP_HEIGHT);
+            player_light_fade[ x ] = 1.0 - ((double) y / (double) MAP_HEIGHT);
           }
         }
       }
@@ -183,7 +183,7 @@ void level_light_precalculate(Gamep g)
         auto c = light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (light_fade[ x ] == 0) {
-            light_fade[ x ] = 1.0f - ((float) y / MAP_HEIGHT);
+            light_fade[ x ] = 1.0 - ((double) y / (double) MAP_HEIGHT);
           }
         }
       }
@@ -196,46 +196,66 @@ void level_light_precalculate(Gamep g)
 //
 void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
 {
-  color  light_color    = tp_light_color(thing_tp(t));
-  auto   light_strength = thing_is_light_source(t);
-  fpoint real_at        = thing_real_at(t);
-  auto   light_tile     = &v->light_map.tile[ p.x ][ p.y ];
+  const color  light_color             = tp_light_color(thing_tp(t));
+  const double light_strength_in_tiles = thing_is_light_source(t);
+  const auto   light_tile              = &v->light_map.tile[ p.x ][ p.y ];
+  fpoint       real_at                 = thing_real_at(t);
+  double       col_r                   = light_color.r;
+  double       col_g                   = light_color.g;
+  double       col_b                   = light_color.b;
+  double      *light_fade_map;
 
-  for (auto pixx = 0; pixx < LIGHT_PIXEL; pixx++) {
-    for (auto pixy = 0; pixy < LIGHT_PIXEL; pixy++) {
+  if (thing_is_player(t)) {
+    //
+    // More dramatic lighting. Allows other lights to appear stronger
+    //
+    light_fade_map = player_light_fade;
+  } else {
+    light_fade_map = light_fade;
+  }
 
-      fpoint src = make_fpoint(p) - fpoint(0.5, 0.5);
-      src.x += (float) (1.0 / LIGHT_PIXEL) * (float) pixx;
-      src.y += (float) (1.0 / LIGHT_PIXEL) * (float) pixy;
+  for (auto pixy = 0; pixy < LIGHT_PIXEL; pixy++) {
 
-      float d = distance(real_at, src);
+    double light_pixel_at_y = (double) p.y + (double) (1.0 / (double) LIGHT_PIXEL) * (double) pixy;
+    light_pixel_at_y -= (1.0 / (double) LIGHT_PIXEL * 2);
 
-      int light_fade_index = (int) ((d / (float) light_strength) * (float) MAP_WIDTH);
+    for (auto pixx = 0; pixx < LIGHT_PIXEL; pixx++) {
+
+      double light_pixel_at_x = (double) p.x + (double) (1.0 / (double) LIGHT_PIXEL) * (double) pixx;
+      light_pixel_at_x -= (1.0 / (double) LIGHT_PIXEL * 2);
+
+      const double dist_in_tiles
+          = DISTANCEd(light_pixel_at_x, light_pixel_at_y, (double) real_at.x, (double) real_at.y);
+
+      int light_fade_index = (int) ((dist_in_tiles / light_strength_in_tiles) * (double) MAP_WIDTH);
       if (unlikely(light_fade_index >= MAP_WIDTH)) {
         light_fade_index = MAP_WIDTH - 1;
       }
 
-      float fade;
+      auto   light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
+      double fade        = light_fade_map[ light_fade_index ];
+#if 0
+      fade               = 1.0 - (dist_in_tiles / light_strength_in_tiles);
+      fade               = pow(fade, 5);
+#endif
+      light_pixel->r += fade * col_r;
+      light_pixel->g += fade * col_g;
+      light_pixel->b += fade * col_b;
 
-      if (thing_is_player(t)) {
-        //
-        // More dramatic lighting. Allows other lights to appear stronger
-        //
-        fade = player_light_fade[ light_fade_index ];
-      } else {
-        fade = light_fade[ light_fade_index ];
+#if 0
+      if (thing_is_projectile(t)) {
+        light_pixel->g = 0;
+        light_pixel->b = 0;
       }
+#endif
 
-      auto light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
-      light_pixel->r += (int) (fade * light_color.r);
-      light_pixel->g += (int) (fade * light_color.g);
-      light_pixel->b += (int) (fade * light_color.b);
-
+#ifdef _DEBUG_BUILD_
       if (DEBUG) {
         light_pixel->r = 255;
         light_pixel->g = 255;
         light_pixel->b = 255;
       }
+#endif
     }
   }
 }
@@ -328,13 +348,13 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  float dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
+  double dr = (double) RAD_360 / ((double) LIGHT_MAX_RAYS_MAX);
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-    float cosr, sinr;
-    sincosf(dr * (float) i, &sinr, &cosr);
+    double cosr, sinr;
+    sincos(dr * (double) i, &sinr, &cosr);
     ray_pixel_line_draw(
         i, spoint(0, 0),
-        spoint((int) ((float) ray_max_length_in_pixels * cosr), (int) ((float) ray_max_length_in_pixels * sinr)));
+        spoint((int) ((double) ray_max_length_in_pixels * cosr), (int) ((double) ray_max_length_in_pixels * sinr)));
   }
 }
 
@@ -779,6 +799,14 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     }
 
     auto ext = thing_ext_struct(g, t);
+
+    //
+    // + here needed for light edges for smoothly moving things
+    //
+    if (thing_is_projectile(t)) {
+      max_radius += 2;
+    }
+
     level_fov(g, v, l, t, &ext->fov_can_see_tile, &ext->fov_has_seen_tile, thing_at(t), max_radius,
               level_light_fov_all_can_see_callback);
   }
