@@ -21,7 +21,7 @@ typedef struct {
 
 typedef struct {
   spoint p;
-  double distance;
+  float  distance;
 } RayPixel;
 
 class Raycast
@@ -56,13 +56,13 @@ public:
   //
   std::array< std::vector< RayPixel >, LIGHT_MAX_RAYS_MAX > ray_pixels;
 
-  std::vector< double > ray_gl_cmds;
+  std::vector< float > ray_gl_cmds;
 };
 
 static Raycast *player_raycast;
 
-static double player_light_fade[ MAP_WIDTH ];
-static double light_fade[ MAP_WIDTH ];
+static float player_light_fade[ MAP_WIDTH ];
+static float light_fade[ MAP_WIDTH ];
 
 void level_light_precalculate(Gamep g)
 {
@@ -174,7 +174,7 @@ void level_light_precalculate(Gamep g)
         auto c = player_light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (player_light_fade[ x ] == 0) {
-            player_light_fade[ x ] = 1.0 - ((double) y / (double) MAP_HEIGHT);
+            player_light_fade[ x ] = 1.0 - ((float) y / (float) MAP_HEIGHT);
           }
         }
       }
@@ -183,7 +183,7 @@ void level_light_precalculate(Gamep g)
         auto c = light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (light_fade[ x ] == 0) {
-            light_fade[ x ] = 1.0 - ((double) y / (double) MAP_HEIGHT);
+            light_fade[ x ] = 1.0 - ((float) y / (float) MAP_HEIGHT);
           }
         }
       }
@@ -196,14 +196,14 @@ void level_light_precalculate(Gamep g)
 //
 void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
 {
-  const color  light_color              = tp_light_color(thing_tp(t));
-  const double light_strength_in_pixels = thing_is_light_source(t) * INNER_TILE_WIDTH;
-  const auto   light_tile               = &v->light_map.tile[ p.x ][ p.y ];
-  spoint       thing_at_in_pixels       = thing_pix_at(t);
-  double       col_r                    = light_color.r;
-  double       col_g                    = light_color.g;
-  double       col_b                    = light_color.b;
-  double      *light_fade_map;
+  const color light_color              = tp_light_color(thing_tp(t));
+  const float light_strength_in_pixels = thing_is_light_source(t) * INNER_TILE_WIDTH;
+  const auto  light_tile               = &v->light_map.tile[ p.x ][ p.y ];
+  spoint      thing_at_in_pixels       = thing_pix_at(t);
+  float       col_r                    = light_color.r;
+  float       col_g                    = light_color.g;
+  float       col_b                    = light_color.b;
+  float      *light_fade_map;
 
   if (thing_is_player(t)) {
     //
@@ -216,24 +216,24 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
 
   for (auto pixy = 0; pixy < LIGHT_PIXEL; pixy++) {
 
-    double light_pixel_at_y = (double) p.y * INNER_TILE_WIDTH + (double) pixy;
+    float light_pixel_at_y = (float) p.y * INNER_TILE_WIDTH + (float) pixy;
     light_pixel_at_y -= INNER_TILE_WIDTH / 2;
 
     for (auto pixx = 0; pixx < LIGHT_PIXEL; pixx++) {
 
-      double light_pixel_at_x = (double) p.x * INNER_TILE_WIDTH + pixx;
+      float light_pixel_at_x = (float) p.x * INNER_TILE_WIDTH + pixx;
       light_pixel_at_x -= INNER_TILE_WIDTH / 2;
 
-      double dist_in_pixels = DISTANCEd(light_pixel_at_x, light_pixel_at_y, (double) thing_at_in_pixels.x,
-                                        (double) thing_at_in_pixels.y);
+      float dist_in_pixels
+          = DISTANCEf(light_pixel_at_x, light_pixel_at_y, (float) thing_at_in_pixels.x, (float) thing_at_in_pixels.y);
 
-      int light_fade_index = (int) ((dist_in_pixels / light_strength_in_pixels) * (double) MAP_WIDTH);
+      int light_fade_index = (int) ((dist_in_pixels / light_strength_in_pixels) * (float) MAP_WIDTH);
       if (unlikely(light_fade_index >= MAP_WIDTH)) {
         light_fade_index = MAP_WIDTH - 1;
       }
 
-      auto   light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
-      double fade        = light_fade_map[ light_fade_index ];
+      auto  light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
+      float fade        = light_fade_map[ light_fade_index ];
 
       light_pixel->r += fade * col_r;
       light_pixel->g += fade * col_g;
@@ -338,13 +338,13 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  double dr = (double) RAD_360 / ((double) LIGHT_MAX_RAYS_MAX);
+  float dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-    double cosr, sinr;
-    sincos(dr * (double) i, &sinr, &cosr);
+    float cosr, sinr;
+    sincosf(dr * (float) i, &sinr, &cosr);
     ray_pixel_line_draw(
         i, spoint(0, 0),
-        spoint((int) ((double) ray_max_length_in_pixels * cosr), (int) ((double) ray_max_length_in_pixels * sinr)));
+        spoint((int) ((float) ray_max_length_in_pixels * cosr), (int) ((float) ray_max_length_in_pixels * sinr)));
   }
 }
 

@@ -1459,10 +1459,10 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
   buf_tex = tex;
 
-  const double  texDiffX = (double) ((double) texMaxX - (double) texMinX) / (double) LIGHT_PIXEL;
-  const double  texDiffY = (double) ((double) texMinY - (double) texMaxY) / (double) LIGHT_PIXEL;
-  const double  pixDiffX = (double) ((double) pixMaxX - (double) pixMinX) / (double) LIGHT_PIXEL;
-  const double  pixDiffY = (double) ((double) pixMinY - (double) pixMaxY) / (double) LIGHT_PIXEL;
+  const float   texDiffX = (float) ((float) texMaxX - (float) texMinX) / (float) LIGHT_PIXEL;
+  const float   texDiffY = (float) ((float) texMinY - (float) texMaxY) / (float) LIGHT_PIXEL;
+  const float   pixDiffX = (float) ((float) pixMaxX - (float) pixMinX) / (float) LIGHT_PIXEL;
+  const float   pixDiffY = (float) ((float) pixMinY - (float) pixMaxY) / (float) LIGHT_PIXEL;
   const uint8_t a        = 255;
 
   //
@@ -1470,10 +1470,10 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   //
   for (auto y = 0; y < LIGHT_PIXEL; y++) {
 
-    const double  texMaxY2 = (double) texMaxY + y * texDiffY;
-    const double  texMinY2 = (double) texMaxY + (y + 1) * texDiffY;
-    const GLshort pixMaxY2 = (GLshort) ((double) pixMaxY + (double) y * pixDiffY);
-    const GLshort pixMinY2 = (GLshort) ((double) pixMaxY + (double) (y + 1) * pixDiffY);
+    const float   texMaxY2 = (float) texMaxY + y * texDiffY;
+    const float   texMinY2 = (float) texMaxY + (y + 1) * texDiffY;
+    const GLshort pixMaxY2 = (GLshort) ((float) pixMaxY + (float) y * pixDiffY);
+    const GLshort pixMinY2 = (GLshort) ((float) pixMaxY + (float) (y + 1) * pixDiffY);
 
     for (auto x = 0; x < LIGHT_PIXEL; x++) {
 
@@ -1482,10 +1482,10 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
       uint8_t    g     = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
       uint8_t    b     = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
 
-      double  texMinX2 = (double) texMinX + x * texDiffX;
-      double  texMaxX2 = (double) texMinX + (x + 1) * texDiffX;
-      GLshort pixMinX2 = (GLshort) ((double) pixMinX + (double) x * pixDiffX);
-      GLshort pixMaxX2 = (GLshort) ((double) pixMinX + (double) (x + 1) * pixDiffX);
+      float   texMinX2 = (float) texMinX + x * texDiffX;
+      float   texMaxX2 = (float) texMinX + (x + 1) * texDiffX;
+      GLshort pixMinX2 = (GLshort) ((float) pixMinX + (float) x * pixDiffX);
+      GLshort pixMaxX2 = (GLshort) ((float) pixMinX + (float) (x + 1) * pixDiffX);
 
       gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2,
               pixMaxY2, r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a);
