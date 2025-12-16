@@ -8,32 +8,6 @@
 #include "my_level.hpp"
 #include "my_main.hpp"
 
-Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
-{
-#ifdef _DEBUG_BUILD_
-  TRACE_NO_INDENT(); // expensive
-#endif
-
-  if (! id) {
-    return nullptr;
-  }
-
-  ThingIdPacked id_packed;
-  id_packed.a.val = id;
-  auto index      = id_packed.c.index;
-
-  auto t = &v->thing_body[ index ];
-  if (! t) {
-    return nullptr;
-  }
-
-  if (t->id == id) {
-    return t;
-  }
-
-  return nullptr;
-}
-
 //
 // Slower version, packed with extra warnigns
 //

@@ -16,6 +16,7 @@
 #include "my_size.hpp"
 #include "my_sound.hpp"
 #include "my_sprintf.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_wid_console.hpp"
 #include "my_wid_private.hpp"
 #include "my_wid_tiles.hpp"

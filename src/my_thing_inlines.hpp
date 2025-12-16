@@ -167,4 +167,30 @@ static inline bool thing_is_open(Thingp t)
 #endif
   return t->_is_open;
 }
+
+static inline Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT(); // expensive
+#endif
+
+  if (! id) {
+    return nullptr;
+  }
+
+  ThingIdPacked id_packed;
+  id_packed.a.val = id;
+  auto index      = id_packed.c.index;
+
+  auto t = &v->thing_body[ index ];
+  if (! t) {
+    return nullptr;
+  }
+
+  if (t->id == id) {
+    return t;
+  }
+
+  return nullptr;
+}
 #endif // _MY_THING_INLINES_H_

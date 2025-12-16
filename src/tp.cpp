@@ -664,11 +664,13 @@ void tp_light_color_apply(Tpp tp)
 
 color tp_light_color(Tpp tp)
 {
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return WHITE;
   }
+#endif
   return tp->light_color;
 }
 
