@@ -81,15 +81,6 @@ spoint thing_prev_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoin
   return t->_prev_pix_at = val;
 }
 
-spoint thing_pix_at(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    DIE("No thing pointer set");
-  }
-  return t->_curr_pix_at;
-}
-
 spoint thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
 {
   TRACE_NO_INDENT();
@@ -691,16 +682,6 @@ void thing_is_jumping_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
   return thing_is_jumping_set(g, v, l, t, false);
-}
-
-bool thing_is_open(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return t->_is_open;
 }
 
 //
@@ -3041,16 +3022,6 @@ bool thing_is_levitating(Thingp t)
     return false;
   }
   return tp_flag(thing_tp(t), is_levitating);
-}
-
-bool thing_is_obs_to_vision(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_obs_to_vision);
 }
 
 bool thing_is_item_equipable(Thingp t)

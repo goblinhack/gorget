@@ -534,7 +534,6 @@ bool   thing_is_obs_to_fire(Thingp);
 bool   thing_is_obs_to_jump_over(Thingp);
 bool   thing_is_obs_to_jumping_onto(Thingp);
 bool   thing_is_obs_to_movement(Thingp);
-bool   thing_is_obs_to_vision(Thingp);
 bool   thing_is_openable(Thingp);
 bool   thing_is_physics_explosion(Thingp);
 bool   thing_is_physics_water(Thingp);
@@ -764,7 +763,6 @@ void thing_is_teleporting_unset(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_jumping_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_open(Thingp);
 bool thing_is_open_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp opener, bool val = true);
 bool thing_is_open_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp closer);
 
@@ -963,7 +961,6 @@ int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 spoint thing_prev_pix_at(Thingp);
 spoint thing_prev_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);
 
-spoint thing_pix_at(Thingp);
 spoint thing_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);
 spoint thing_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, short, short);
 

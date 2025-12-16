@@ -133,4 +133,38 @@ static inline bool thing_is_player(const Thingp t)
   return t->_is_player;
 }
 
+static inline bool thing_is_obs_to_vision(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return tp_flag(thing_tp(t), is_obs_to_vision);
+}
+
+static inline spoint thing_pix_at(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    DIE("No thing pointer set");
+  }
+#endif
+  return t->_curr_pix_at;
+}
+
+static inline bool thing_is_open(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_open;
+}
 #endif // _MY_THING_INLINES_H_
