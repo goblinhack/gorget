@@ -667,7 +667,6 @@ bool   thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
 bool   thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 fpoint thing_at_set(Thingp, const fpoint &);
 fpoint thing_real_at(Thingp);
-int    thing_is_light_source(Thingp);
 spoint thing_at_set(Thingp, const spoint &);
 spoint thing_at(Thingp);
 spoint thing_get_delta_from_dir(Thingp);

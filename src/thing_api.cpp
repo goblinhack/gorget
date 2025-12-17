@@ -1254,16 +1254,6 @@ bool thing_is_level_visited(Thingp t)
   return tp_flag(thing_tp(t), is_level_visited);
 }
 
-int thing_is_light_source(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_light_source);
-}
-
 bool thing_is_minion(Thingp t)
 {
   TRACE_NO_INDENT();

@@ -193,4 +193,16 @@ static inline Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 
   return nullptr;
 }
+
+static inline int thing_is_light_source(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return tp_flag(thing_tp(t), is_light_source);
+}
 #endif // _MY_THING_INLINES_H_
