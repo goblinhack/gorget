@@ -196,14 +196,15 @@ void level_light_precalculate(Gamep g)
 //
 void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
 {
-  const color light_color              = tp_light_color(thing_tp(t));
-  const float light_strength_in_pixels = thing_is_light_source(t) * INNER_TILE_WIDTH;
-  const auto  light_tile               = &v->light_map.tile[ p.x ][ p.y ];
-  spoint      thing_at_in_pixels       = thing_pix_at(t);
-  float       col_r                    = light_color.r;
-  float       col_g                    = light_color.g;
-  float       col_b                    = light_color.b;
-  float      *light_fade_map;
+  const color  light_color              = tp_light_color(thing_tp(t));
+  const float  light_strength_in_pixels = thing_is_light_source(t) * INNER_TILE_WIDTH;
+  const auto   light_tile               = &v->light_map.tile[ p.x ][ p.y ];
+  const float *light_fade_map;
+  const spoint thing_at_in_pixels = thing_pix_at(t);
+
+  float col_r = light_color.r;
+  float col_g = light_color.g;
+  float col_b = light_color.b;
 
   if (thing_is_player(t)) {
     //
@@ -214,20 +215,16 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
     light_fade_map = light_fade;
   }
 
-  for (auto pixy = 0; pixy < LIGHT_PIXEL; pixy++) {
+  uint16_t light_pixel_at_y = p.y * INNER_TILE_WIDTH - INNER_TILE_WIDTH / 2;
+  for (uint8_t pixy = 0; pixy < LIGHT_PIXEL; pixy++, light_pixel_at_y++) {
 
-    float light_pixel_at_y = (float) p.y * INNER_TILE_WIDTH + (float) pixy;
-    light_pixel_at_y -= INNER_TILE_WIDTH / 2;
-
-    for (auto pixx = 0; pixx < LIGHT_PIXEL; pixx++) {
-
-      float light_pixel_at_x = (float) p.x * INNER_TILE_WIDTH + pixx;
-      light_pixel_at_x -= INNER_TILE_WIDTH / 2;
+    uint16_t light_pixel_at_x = p.x * INNER_TILE_WIDTH - INNER_TILE_WIDTH / 2;
+    for (uint8_t pixx = 0; pixx < LIGHT_PIXEL; pixx++, light_pixel_at_x++) {
 
       float dist_in_pixels
           = DISTANCEf(light_pixel_at_x, light_pixel_at_y, (float) thing_at_in_pixels.x, (float) thing_at_in_pixels.y);
 
-      int light_fade_index = (int) ((dist_in_pixels / light_strength_in_pixels) * (float) MAP_WIDTH);
+      uint8_t light_fade_index = (uint8_t) (int) ((dist_in_pixels / light_strength_in_pixels) * (float) MAP_WIDTH);
       if (unlikely(light_fade_index >= MAP_WIDTH)) {
         light_fade_index = MAP_WIDTH - 1;
       }
@@ -359,14 +356,6 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spo
     ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]        = true;
     l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
     level_light_fov_all_can_see_callback(g, v, l, t, pov, tile);
-  }
-
-  //
-  // This is the ray count hitting this tile
-  //
-  auto light_map_tile = &v->light_map.tile[ tile.x ][ tile.y ];
-  if (light_map_tile->lit < 255) {
-    light_map_tile->lit++;
   }
 }
 

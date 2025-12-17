@@ -135,7 +135,6 @@ typedef struct LightPixels_ {
 
 typedef struct {
   LightPixels pixels;
-  int16_t     lit;
 } LightTile;
 
 //
@@ -503,8 +502,8 @@ typedef struct Levels_ {
 //
 #define FOR_ALL_MAP_POINTS(_g_, _v_, _l_, _x_, _y_)                                                                  \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (_y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                           \
-      for (_x_ = 0; _x_ < MAP_WIDTH; _x_++)
+    for (_x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                            \
+      for (_y_ = 0; _y_ < MAP_HEIGHT; _y_++)
 
 //
 // For all things on this level
@@ -512,8 +511,8 @@ typedef struct Levels_ {
 #define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                  \
   if (_g_ && _v_ && _l_)                                                                                             \
     if ((++_v_->iter) || 1)                                                                                          \
-      for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                    \
-        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                   \
+      for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                     \
+        for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                  \
           for (ThingId _id_ = 0, loop1 = (ThingId) 1; loop1 == (ThingId) 1; loop1 = (ThingId) 0)                     \
             for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                  \
               for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                    \
