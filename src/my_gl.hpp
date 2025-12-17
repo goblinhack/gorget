@@ -68,7 +68,7 @@
 //
 #define gl_push_vertex(p, x, y)                                                                                      \
   {                                                                                                                  \
-    auto c = (GLshort *) p;                                                                                         \
+    auto c = (GLshort *) p;                                                                                          \
     *c++   = x;                                                                                                      \
     *c++   = y;                                                                                                      \
     p      = (GLfloat *) c;                                                                                          \
@@ -266,8 +266,8 @@ extern uint32_t NUMBER_BYTES_PER_VERTICE_2D;
 
 extern GLfloat *bufp;
 extern GLfloat *bufp_end;
-extern GLshort glapi_last_bottom;
-extern GLshort glapi_last_right;
+extern GLshort  glapi_last_bottom;
+extern GLshort  glapi_last_right;
 
 extern float *gl_array_buf;
 extern float *gl_array_buf_end;
@@ -325,9 +325,9 @@ void gl_leave_2d_mode(Gamep);
 void gl_clear(void);
 
 void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
-             GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1, uint8_t b1,
-             uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
-             uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4);
+             GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1,
+             uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3,
+             uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4);
 void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
              spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1, uint8_t r2,
              uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3, uint8_t r4,
