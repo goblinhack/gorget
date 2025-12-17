@@ -27,10 +27,12 @@
 
 #include <cxxabi.h>
 #include <errno.h>
+#include <string.h>
+
+#include <array>
 #include <iostream>
 #include <memory>
 #include <mutex>
-#include <string.h>
 
 static std::recursive_mutex backtrace_mutex;
 

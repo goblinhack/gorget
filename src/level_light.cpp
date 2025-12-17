@@ -174,7 +174,7 @@ void level_light_precalculate(Gamep g)
         auto c = player_light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (player_light_fade[ x ] == 0) {
-            player_light_fade[ x ] = 1.0 - ((float) y / (float) MAP_HEIGHT);
+            player_light_fade[ x ] = 1.0f - ((float) y / (float) MAP_HEIGHT);
           }
         }
       }
@@ -183,7 +183,7 @@ void level_light_precalculate(Gamep g)
         auto c = light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (light_fade[ x ] == 0) {
-            light_fade[ x ] = 1.0 - ((float) y / (float) MAP_HEIGHT);
+            light_fade[ x ] = 1.0f - ((float) y / (float) MAP_HEIGHT);
           }
         }
       }
