@@ -2,7 +2,6 @@ bugs
 ----
 tests for collecting items
 projectile collison dt
-is pixel lighting
 fireball distance is framerate bound
 collect key noise
 melting walls and rock
