@@ -31,6 +31,7 @@ bool tp_load_lava(void)
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_cursor_path_hazard);
+  tp_flag_set(tp, is_cursor_path_warning);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_lava);
   tp_flag_set(tp, is_light_source, 2);

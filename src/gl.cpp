@@ -13,8 +13,6 @@
 #include "my_size.hpp"
 #include "my_tile.hpp"
 
-int breaks;
-
 ENUM_DEF_C(FBO_ENUM, FboEnum)
 
 static bool in_2d_mode;
@@ -1373,7 +1371,6 @@ void gl_push(float **P, float *p_end, uint8_t first_vertex, float tex_left, floa
     // If there is a break in the triangle strip then make a degenerate triangle.
     //
     if ((glapi_last_right != bl.x) || (glapi_last_bottom != bl.y)) {
-      breaks++;
       gl_push_texcoord(p, glapi_last_tex_right, glapi_last_tex_bottom);
       gl_push_vertex(p, glapi_last_right, glapi_last_bottom);
       gl_push_rgba(p, r4, g4, b4, a4);

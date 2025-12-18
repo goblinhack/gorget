@@ -226,7 +226,7 @@
       list_macro(is_unused92, "is_unused92"),                           /* newline */                                \
       list_macro(is_unused93, "is_unused93"),                           /* newline */                                \
       list_macro(is_unused94, "is_unused94"),                           /* newline */                                \
-      list_macro(is_unused95, "is_unused95"),                           /* newline */                                \
+      list_macro(is_cursor_path_warning, "is_cursor_path_warning"),     /* newline */                                \
       list_macro(is_collision_circle_large, "is_collision_circle_large"), /* newline */                              \
       list_macro(is_collision_circle_small, "is_collision_circle_small"), /* newline */                              \
       list_macro(is_collision_square, "is_collision_square"),             /* newline */                              \
@@ -278,63 +278,64 @@ ENUM_DEF_H(MONST_GROUP_ENUM, ThingMonstGroup)
 // Thing anim enum
 //
 #define THING_ANIM_ENUM(list_macro)                                                                                  \
-  clang_format_indent()                                         /* dummy line for clang indentation fixup */         \
-      list_macro(THING_ANIM_JOIN_BL, "IS_JOIN_BL"),             /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_BL2, "IS_JOIN_BL2"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_BLOCK, "IS_JOIN_BLOCK"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_BOT, "IS_JOIN_BOT"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_BR, "IS_JOIN_BR"),             /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_BR2, "IS_JOIN_BR2"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_HORIZ, "IS_JOIN_HORIZ"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_HORIZ2, "IS_JOIN_HORIZ"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_LEFT, "IS_JOIN_LEFT"),         /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_NODE, "IS_JOIN_NODE"),         /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_RIGHT, "IS_JOIN_RIGHT"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T_1, "IS_JOIN_T_1"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T_2, "IS_JOIN_T_2"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T_3, "IS_JOIN_T_3"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T, "IS_JOIN_T"),               /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T180_1, "IS_JOIN_T180_"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T180_2, "IS_JOIN_T180_"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T180_3, "IS_JOIN_T180_"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T180, "IS_JOIN_T180"),         /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T270_1, "IS_JOIN_T270_"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T270_2, "IS_JOIN_T270_"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T270_3, "IS_JOIN_T270_"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T270, "IS_JOIN_T270"),         /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T90_1, "IS_JOIN_T90_1"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T90_2, "IS_JOIN_T90_2"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T90_3, "IS_JOIN_T90_3"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_T90, "IS_JOIN_T90"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_TL, "IS_JOIN_TL"),             /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_TL2, "IS_JOIN_TL2"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_TOP, "IS_JOIN_TOP"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_TR, "IS_JOIN_TR"),             /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_TR2, "IS_JOIN_TR2"),           /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_VERT, "IS_JOIN_VERT"),         /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_VERT2, "IS_JOIN_VERT2"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X, "IS_JOIN_X"),               /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X1_180, "IS_JOIN_X1_18"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X1_270, "IS_JOIN_X1_27"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X1_90, "IS_JOIN_X1_90"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X1, "IS_JOIN_X1"),             /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X2_180, "IS_JOIN_X2_18"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X2_270, "IS_JOIN_X2_27"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X2_90, "IS_JOIN_X2_90"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X2, "IS_JOIN_X2"),             /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X3_180, "IS_JOIN_X3_18"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X3, "IS_JOIN_X3"),             /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X4_180, "IS_JOIN_X4_18"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X4_270, "IS_JOIN_X4_27"),      /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X4_90, "IS_JOIN_X4_90"),       /* newline */                                        \
-      list_macro(THING_ANIM_JOIN_X4, "IS_JOIN_X4"),             /* newline */                                        \
-      list_macro(THING_ANIM_IDLE, "idle"),                      /* newline */                                        \
-      list_macro(THING_ANIM_DEAD, "dead"),                      /* newline */                                        \
-      list_macro(THING_ANIM_OPEN, "open"),                      /* newline */                                        \
-      list_macro(THING_ANIM_BURNT, "burnt"),                    /* newline */                                        \
-      list_macro(THING_ANIM_CURSOR_NORMAL, "cursor-at-normal"), /* newline */                                        \
-      list_macro(THING_ANIM_CURSOR_NOPATH, "cursor-at-nopath"), /* newline */                                        \
-      list_macro(THING_ANIM_CURSOR_HAZARD, "cursor-at-hazard"), /* newline */
+  clang_format_indent()                                           /* dummy line for clang indentation fixup */       \
+      list_macro(THING_ANIM_JOIN_BL, "IS_JOIN_BL"),               /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_BL2, "IS_JOIN_BL2"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_BLOCK, "IS_JOIN_BLOCK"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_BOT, "IS_JOIN_BOT"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_BR, "IS_JOIN_BR"),               /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_BR2, "IS_JOIN_BR2"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_HORIZ, "IS_JOIN_HORIZ"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_HORIZ2, "IS_JOIN_HORIZ"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_LEFT, "IS_JOIN_LEFT"),           /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_NODE, "IS_JOIN_NODE"),           /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_RIGHT, "IS_JOIN_RIGHT"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T_1, "IS_JOIN_T_1"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T_2, "IS_JOIN_T_2"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T_3, "IS_JOIN_T_3"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T, "IS_JOIN_T"),                 /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T180_1, "IS_JOIN_T180_"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T180_2, "IS_JOIN_T180_"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T180_3, "IS_JOIN_T180_"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T180, "IS_JOIN_T180"),           /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T270_1, "IS_JOIN_T270_"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T270_2, "IS_JOIN_T270_"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T270_3, "IS_JOIN_T270_"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T270, "IS_JOIN_T270"),           /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T90_1, "IS_JOIN_T90_1"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T90_2, "IS_JOIN_T90_2"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T90_3, "IS_JOIN_T90_3"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_T90, "IS_JOIN_T90"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_TL, "IS_JOIN_TL"),               /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_TL2, "IS_JOIN_TL2"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_TOP, "IS_JOIN_TOP"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_TR, "IS_JOIN_TR"),               /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_TR2, "IS_JOIN_TR2"),             /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_VERT, "IS_JOIN_VERT"),           /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_VERT2, "IS_JOIN_VERT2"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X, "IS_JOIN_X"),                 /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X1_180, "IS_JOIN_X1_18"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X1_270, "IS_JOIN_X1_27"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X1_90, "IS_JOIN_X1_90"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X1, "IS_JOIN_X1"),               /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X2_180, "IS_JOIN_X2_18"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X2_270, "IS_JOIN_X2_27"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X2_90, "IS_JOIN_X2_90"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X2, "IS_JOIN_X2"),               /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X3_180, "IS_JOIN_X3_18"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X3, "IS_JOIN_X3"),               /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X4_180, "IS_JOIN_X4_18"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X4_270, "IS_JOIN_X4_27"),        /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X4_90, "IS_JOIN_X4_90"),         /* newline */                                      \
+      list_macro(THING_ANIM_JOIN_X4, "IS_JOIN_X4"),               /* newline */                                      \
+      list_macro(THING_ANIM_IDLE, "idle"),                        /* newline */                                      \
+      list_macro(THING_ANIM_DEAD, "dead"),                        /* newline */                                      \
+      list_macro(THING_ANIM_OPEN, "open"),                        /* newline */                                      \
+      list_macro(THING_ANIM_BURNT, "burnt"),                      /* newline */                                      \
+      list_macro(THING_ANIM_CURSOR_NORMAL, "cursor-at-normal"),   /* newline */                                      \
+      list_macro(THING_ANIM_CURSOR_NOPATH, "cursor-at-nopath"),   /* newline */                                      \
+      list_macro(THING_ANIM_CURSOR_HAZARD, "cursor-at-hazard"),   /* newline */                                      \
+      list_macro(THING_ANIM_CURSOR_WARNING, "cursor-at-warning"), /* newline */
 
 ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
 
@@ -661,6 +662,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_crushable(tp)              tp_flag(tp, is_crushable)
 #define tp_is_cursor_path_hazard(tp)     tp_flag(tp, is_cursor_path_hazard)
 #define tp_is_cursor_path_none(tp)       tp_flag(tp, is_cursor_path_none)
+#define tp_is_cursor_path_warning(tp)    tp_flag(tp, is_cursor_path_warning)
 #define tp_is_cursor_path(tp)            tp_flag(tp, is_cursor_path)
 #define tp_is_cursor(tp)                 tp_flag(tp, is_cursor)
 #define tp_is_damage_capped(tp)          tp_flag(tp, is_damage_capped)
@@ -838,7 +840,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused92(tp)               tp_flag(tp, is_unused92)
 #define tp_is_unused93(tp)               tp_flag(tp, is_unused93)
 #define tp_is_unused94(tp)               tp_flag(tp, is_unused94)
-#define tp_is_unused95(tp)               tp_flag(tp, is_unused95)
 #define tp_is_wait_on_dead_anim(tp)      tp_flag(tp, is_wait_on_dead_anim)
 #define tp_is_walk_through_walls(tp)     tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                   tp_flag(tp, is_wall)
@@ -882,6 +883,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_crushable(g, v, l, p)              level_flag(g, v, l, is_crushable, p)
 #define level_is_cursor_path_hazard(g, v, l, p)     level_flag(g, v, l, is_cursor_path_hazard, p)
 #define level_is_cursor_path_none(g, v, l, p)       level_flag(g, v, l, is_cursor_path_none, p)
+#define level_is_cursor_path_warning(g, v, l, p)    level_flag(g, v, l, is_cursor_path_warning, p)
 #define level_is_cursor_path(g, v, l, p)            level_flag(g, v, l, is_cursor_path, p)
 #define level_is_cursor(g, v, l, p)                 level_flag(g, v, l, is_cursor, p)
 #define level_is_damage_capped(g, v, l, p)          level_flag(g, v, l, is_damage_capped, p)
@@ -1059,7 +1061,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused92(g, v, l, p)               level_flag(g, v, l, is_unused92, p)
 #define level_is_unused93(g, v, l, p)               level_flag(g, v, l, is_unused93, p)
 #define level_is_unused94(g, v, l, p)               level_flag(g, v, l, is_unused94, p)
-#define level_is_unused95(g, v, l, p)               level_flag(g, v, l, is_unused95, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)      level_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_is_walk_through_walls(g, v, l, p)     level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                   level_flag(g, v, l, is_wall, p)
@@ -1103,6 +1104,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_crushable(g, v, l, p)              level_alive(g, v, l, is_crushable, p)
 #define level_alive_is_cursor_path_hazard(g, v, l, p)     level_alive(g, v, l, is_cursor_path_hazard, p)
 #define level_alive_is_cursor_path_none(g, v, l, p)       level_alive(g, v, l, is_cursor_path_none, p)
+#define level_alive_is_cursor_path_warning(g, v, l, p)    level_alive(g, v, l, is_cursor_path_warning, p)
 #define level_alive_is_cursor_path(g, v, l, p)            level_alive(g, v, l, is_cursor_path, p)
 #define level_alive_is_cursor(g, v, l, p)                 level_alive(g, v, l, is_cursor, p)
 #define level_alive_is_damage_capped(g, v, l, p)          level_alive(g, v, l, is_damage_capped, p)
@@ -1280,7 +1282,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused92(g, v, l, p)               level_alive(g, v, l, is_unused92, p)
 #define level_alive_is_unused93(g, v, l, p)               level_alive(g, v, l, is_unused93, p)
 #define level_alive_is_unused94(g, v, l, p)               level_alive(g, v, l, is_unused94, p)
-#define level_alive_is_unused95(g, v, l, p)               level_alive(g, v, l, is_unused95, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)      level_alive(g, v, l, is_wait_on_dead_anim, p)
 #define level_alive_is_walk_through_walls(g, v, l, p)     level_alive(g, v, l, is_walk_through_walls, p)
 #define level_alive_is_wall(g, v, l, p)                   level_alive(g, v, l, is_wall, p)
@@ -1324,6 +1325,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_crushable(g, v, l, p)              level_count(g, v, l, is_crushable, p)
 #define level_count_is_cursor_path_hazard(g, v, l, p)     level_count(g, v, l, is_cursor_path_hazard, p)
 #define level_count_is_cursor_path_none(g, v, l, p)       level_count(g, v, l, is_cursor_path_none, p)
+#define level_count_is_cursor_path_warning(g, v, l, p)    level_count(g, v, l, is_cursor_path_warning, p)
 #define level_count_is_cursor_path(g, v, l, p)            level_count(g, v, l, is_cursor_path, p)
 #define level_count_is_cursor(g, v, l, p)                 level_count(g, v, l, is_cursor, p)
 #define level_count_is_damage_capped(g, v, l, p)          level_count(g, v, l, is_damage_capped, p)
@@ -1501,7 +1503,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused92(g, v, l, p)               level_count(g, v, l, is_unused92, p)
 #define level_count_is_unused93(g, v, l, p)               level_count(g, v, l, is_unused93, p)
 #define level_count_is_unused94(g, v, l, p)               level_count(g, v, l, is_unused94, p)
-#define level_count_is_unused95(g, v, l, p)               level_count(g, v, l, is_unused95, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)      level_count(g, v, l, is_wait_on_dead_anim, p)
 #define level_count_is_walk_through_walls(g, v, l, p)     level_count(g, v, l, is_walk_through_walls, p)
 #define level_count_is_wall(g, v, l, p)                   level_count(g, v, l, is_wall, p)
@@ -1545,6 +1546,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_crushable(g, v, l, p)              level_open(g, v, l, is_crushable, p)
 #define level_open_is_cursor_path_hazard(g, v, l, p)     level_open(g, v, l, is_cursor_path_hazard, p)
 #define level_open_is_cursor_path_none(g, v, l, p)       level_open(g, v, l, is_cursor_path_none, p)
+#define level_open_is_cursor_path_warning(g, v, l, p)    level_open(g, v, l, is_cursor_path_warning, p)
 #define level_open_is_cursor_path(g, v, l, p)            level_open(g, v, l, is_cursor_path, p)
 #define level_open_is_cursor(g, v, l, p)                 level_open(g, v, l, is_cursor, p)
 #define level_open_is_damage_capped(g, v, l, p)          level_open(g, v, l, is_damage_capped, p)
@@ -1722,7 +1724,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_unused92(g, v, l, p)               level_open(g, v, l, is_unused92, p)
 #define level_open_is_unused93(g, v, l, p)               level_open(g, v, l, is_unused93, p)
 #define level_open_is_unused94(g, v, l, p)               level_open(g, v, l, is_unused94, p)
-#define level_open_is_unused95(g, v, l, p)               level_open(g, v, l, is_unused95, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)      level_open(g, v, l, is_wait_on_dead_anim, p)
 #define level_open_is_walk_through_walls(g, v, l, p)     level_open(g, v, l, is_walk_through_walls, p)
 #define level_open_is_wall(g, v, l, p)                   level_open(g, v, l, is_wall, p)

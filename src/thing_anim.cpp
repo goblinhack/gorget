@@ -97,6 +97,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
         case THING_ANIM_CURSOR_NORMAL :
         case THING_ANIM_CURSOR_NOPATH :
         case THING_ANIM_CURSOR_HAZARD :
+        case THING_ANIM_CURSOR_WARNING :
         case THING_ANIM_OPEN :
         case THING_ANIM_DEAD :
         case THING_ANIM_BURNT :

@@ -1,9 +1,11 @@
 bugs
 ----
-tests for collecting items
+strnge pattern under water
+cannot jump in water
 projectile collison dt
 fireball distance is framerate bound
-collect key noise
+deep water with warning sign / brazier / mob
+tests for collecting items / potions / keys
 melting walls and rock
 door damage from fireball
 

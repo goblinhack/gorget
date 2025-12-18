@@ -151,6 +151,7 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_cursor_path_hazard);
+  tp_flag_set(tp, is_cursor_path_warning);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_fire);
   tp_flag_set(tp, is_gaseous);

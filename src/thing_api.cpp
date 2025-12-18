@@ -2374,14 +2374,14 @@ bool thing_is_unused94(Thingp t)
   return tp_flag(thing_tp(t), is_unused94);
 }
 
-bool thing_is_unused95(Thingp t)
+bool thing_is_cursor_path_warning(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused95);
+  return tp_flag(thing_tp(t), is_cursor_path_warning);
 }
 
 bool thing_is_collision_circle_large(Thingp t)

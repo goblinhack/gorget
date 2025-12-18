@@ -20,11 +20,8 @@ static Tilep tp_cursor_path_display_get_tile_info(Gamep g, Levelsp v, Levelp l, 
   //
   Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
-  //
-  // No paths over a chasm
-  //
-  if (level_is_cursor_path_none(g, v, l, p)) {
-    return tp_tiles_get(tp, THING_ANIM_CURSOR_HAZARD, 0);
+  if (level_is_cursor_path_warning(g, v, l, p)) {
+    return tp_tiles_get(tp, THING_ANIM_CURSOR_WARNING, 0);
   }
 
   if (level_is_cursor_path_hazard(g, v, l, p)) {
@@ -49,6 +46,7 @@ bool tp_load_cursor_path(void)
 
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_NOPATH, tile_find_mand("cursor_path.nopath"));
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_NORMAL, tile_find_mand("cursor_path.normal"));
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_WARNING, tile_find_mand("cursor_path.warning"));
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_HAZARD, tile_find_mand("cursor_path.hazard"));
 
   return true;
