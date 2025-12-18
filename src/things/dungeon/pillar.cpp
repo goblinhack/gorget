@@ -26,10 +26,10 @@ bool tp_load_pillar(void)
   // begin sort marker1 {
   thing_description_set(tp, tp_pillar_description_get);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collision_square);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_falling_onto);

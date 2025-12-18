@@ -94,7 +94,7 @@
 // x..........................x
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 //
-#define MAP_SCROLL_EDGE 0.45
+#define MAP_SCROLL_EDGE       0.45
 #define MAP_SCROLL_OUTER_EDGE 0.1
 
 #endif

@@ -427,8 +427,8 @@ void gfx_init_water(void)
         // ##############################################################################
       /* clang-format on */
   };
-  tile_load_arr_sprites("data/gfx/tiles_water.tga", "tiles_water", TILE_WIDTH, TILE_HEIGHT,
-                        ARRAY_SIZE(water_tiles), water_tiles);
+  tile_load_arr_sprites("data/gfx/tiles_water.tga", "tiles_water", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(water_tiles),
+                        water_tiles);
 
   const char *deep_water_tiles[] = {
       /* clang-format off */

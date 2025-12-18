@@ -63,9 +63,9 @@ bool tp_load_cursor_at(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   thing_display_get_tile_info_set(tp, tp_cursor_at_display_get_tile_info);
+  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_cursor);
-  tp_flag_set(tp, is_blit_centered);
   // end sort marker1 }
 
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_NOPATH, tile_find_mand("cursor_at.nopath"));
