@@ -39,7 +39,6 @@ bool tp_load_cursor_path(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   thing_display_get_tile_info_set(tp, tp_cursor_path_display_get_tile_info);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_cursor_path);
   // end sort marker1 }

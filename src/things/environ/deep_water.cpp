@@ -26,7 +26,6 @@ bool tp_load_deep_water(void)
   thing_description_set(tp, tp_deep_water_description_get);
   tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_cursor_path_hazard);

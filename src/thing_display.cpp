@@ -87,17 +87,17 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
 
   *tl -= v->pixel_map_at;
 
-  if (tp && tp_is_blit_on_ground(tp)) {
-    //
-    // On the ground
-    //
-  } else if (tp && tp_is_blit_centered(tp)) {
-    //
-    // Centered
-    //
-    tl->x -= (pix_width - dw) / 2;
-    tl->y -= (pix_height - dh) / 2;
-  }
+#if unused
+  //
+  // Centered
+  //
+  tl->x -= (pix_width - dw) / 2;
+  tl->y -= (pix_height - dh) / 2;
+
+  auto single_pix_size = game_map_single_pix_size_get(g);
+  tl->x -= single_pix_size / 2;
+  tl->y -= single_pix_size / 2;
+#endif
 
   if (t_maybe_null && thing_is_jumping(t_maybe_null)) {
     auto jump_height = (int) ((sin(PI * t_maybe_null->thing_dt)) * (float) dh);

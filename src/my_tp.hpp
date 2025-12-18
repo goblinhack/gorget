@@ -30,10 +30,10 @@
       list_macro(is_animated_sync_first, "is_animated_sync_first"),     /* newline */                                \
       list_macro(is_animated, "is_animated"),                           /* newline */                                \
       list_macro(is_barrel, "is_barrel"),                               /* newline */                                \
-      list_macro(is_blit_centered, "is_blit_centered"),                 /* newline */                                \
+      list_macro(is_unused95, "is_unused95"),                 /* newline */                                \
       list_macro(is_blit_if_has_seen, "is_blit_if_has_seen"),           /* newline */                                \
       list_macro(is_blit_obscures, "is_blit_obscures"),                 /* newline */                                \
-      list_macro(is_blit_on_ground, "is_blit_on_ground"),               /* newline */                                \
+      list_macro(is_unused96, "is_unused96"),               /* newline */                                \
       list_macro(is_blit_outlined, "is_blit_outlined"),                 /* newline */                                \
       list_macro(is_blit_shown_in_chasms, "is_blit_shown_in_chasms"),   /* newline */                                \
       list_macro(is_blit_shown_in_overlay, "is_blit_shown_in_overlay"), /* newline */                                \
@@ -638,10 +638,10 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_animated_sync_first(tp)    tp_flag(tp, is_animated_sync_first)
 #define tp_is_animated(tp)               tp_flag(tp, is_animated)
 #define tp_is_barrel(tp)                 tp_flag(tp, is_barrel)
-#define tp_is_blit_centered(tp)          tp_flag(tp, is_blit_centered)
+#define tp_is_unused95(tp)          tp_flag(tp, is_unused95)
 #define tp_is_blit_if_has_seen(tp)       tp_flag(tp, is_blit_if_has_seen)
 #define tp_is_blit_obscures(tp)          tp_flag(tp, is_blit_obscures)
-#define tp_is_blit_on_ground(tp)         tp_flag(tp, is_blit_on_ground)
+#define tp_is_unused96(tp)         tp_flag(tp, is_unused96)
 #define tp_is_blit_outlined(tp)          tp_flag(tp, is_blit_outlined)
 #define tp_is_blit_shown_in_chasms(tp)   tp_flag(tp, is_blit_shown_in_chasms)
 #define tp_is_blit_shown_in_overlay(tp)  tp_flag(tp, is_blit_shown_in_overlay)
@@ -859,10 +859,10 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_animated_sync_first(g, v, l, p)    level_flag(g, v, l, is_animated_sync_first, p)
 #define level_is_animated(g, v, l, p)               level_flag(g, v, l, is_animated, p)
 #define level_is_barrel(g, v, l, p)                 level_flag(g, v, l, is_barrel, p)
-#define level_is_blit_centered(g, v, l, p)          level_flag(g, v, l, is_blit_centered, p)
+#define level_is_unused95(g, v, l, p)          level_flag(g, v, l, is_unused95, p)
 #define level_is_blit_if_has_seen(g, v, l, p)       level_flag(g, v, l, is_blit_if_has_seen, p)
 #define level_is_blit_obscures(g, v, l, p)          level_flag(g, v, l, is_blit_obscures, p)
-#define level_is_blit_on_ground(g, v, l, p)         level_flag(g, v, l, is_blit_on_ground, p)
+#define level_is_unused96(g, v, l, p)         level_flag(g, v, l, is_unused96, p)
 #define level_is_blit_outlined(g, v, l, p)          level_flag(g, v, l, is_blit_outlined, p)
 #define level_is_blit_shown_in_chasms(g, v, l, p)   level_flag(g, v, l, is_blit_shown_in_chasms, p)
 #define level_is_blit_shown_in_overlay(g, v, l, p)  level_flag(g, v, l, is_blit_shown_in_overlay, p)
@@ -1080,10 +1080,10 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_animated_sync_first(g, v, l, p)    level_alive(g, v, l, is_animated_sync_first, p)
 #define level_alive_is_animated(g, v, l, p)               level_alive(g, v, l, is_animated, p)
 #define level_alive_is_barrel(g, v, l, p)                 level_alive(g, v, l, is_barrel, p)
-#define level_alive_is_blit_centered(g, v, l, p)          level_alive(g, v, l, is_blit_centered, p)
+#define level_alive_is_unused95(g, v, l, p)          level_alive(g, v, l, is_unused95, p)
 #define level_alive_is_blit_if_has_seen(g, v, l, p)       level_alive(g, v, l, is_blit_if_has_seen, p)
 #define level_alive_is_blit_obscures(g, v, l, p)          level_alive(g, v, l, is_blit_obscures, p)
-#define level_alive_is_blit_on_ground(g, v, l, p)         level_alive(g, v, l, is_blit_on_ground, p)
+#define level_alive_is_unused96(g, v, l, p)         level_alive(g, v, l, is_unused96, p)
 #define level_alive_is_blit_outlined(g, v, l, p)          level_alive(g, v, l, is_blit_outlined, p)
 #define level_alive_is_blit_shown_in_chasms(g, v, l, p)   level_alive(g, v, l, is_blit_shown_in_chasms, p)
 #define level_alive_is_blit_shown_in_overlay(g, v, l, p)  level_alive(g, v, l, is_blit_shown_in_overlay, p)
@@ -1301,10 +1301,10 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_animated_sync_first(g, v, l, p)    level_count(g, v, l, is_animated_sync_first, p)
 #define level_count_is_animated(g, v, l, p)               level_count(g, v, l, is_animated, p)
 #define level_count_is_barrel(g, v, l, p)                 level_count(g, v, l, is_barrel, p)
-#define level_count_is_blit_centered(g, v, l, p)          level_count(g, v, l, is_blit_centered, p)
+#define level_count_is_unused95(g, v, l, p)          level_count(g, v, l, is_unused95, p)
 #define level_count_is_blit_if_has_seen(g, v, l, p)       level_count(g, v, l, is_blit_if_has_seen, p)
 #define level_count_is_blit_obscures(g, v, l, p)          level_count(g, v, l, is_blit_obscures, p)
-#define level_count_is_blit_on_ground(g, v, l, p)         level_count(g, v, l, is_blit_on_ground, p)
+#define level_count_is_unused96(g, v, l, p)         level_count(g, v, l, is_unused96, p)
 #define level_count_is_blit_outlined(g, v, l, p)          level_count(g, v, l, is_blit_outlined, p)
 #define level_count_is_blit_shown_in_chasms(g, v, l, p)   level_count(g, v, l, is_blit_shown_in_chasms, p)
 #define level_count_is_blit_shown_in_overlay(g, v, l, p)  level_count(g, v, l, is_blit_shown_in_overlay, p)
@@ -1522,10 +1522,10 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_animated_sync_first(g, v, l, p)    level_open(g, v, l, is_animated_sync_first, p)
 #define level_open_is_animated(g, v, l, p)               level_open(g, v, l, is_animated, p)
 #define level_open_is_barrel(g, v, l, p)                 level_open(g, v, l, is_barrel, p)
-#define level_open_is_blit_centered(g, v, l, p)          level_open(g, v, l, is_blit_centered, p)
+#define level_open_is_unused95(g, v, l, p)          level_open(g, v, l, is_unused95, p)
 #define level_open_is_blit_if_has_seen(g, v, l, p)       level_open(g, v, l, is_blit_if_has_seen, p)
 #define level_open_is_blit_obscures(g, v, l, p)          level_open(g, v, l, is_blit_obscures, p)
-#define level_open_is_blit_on_ground(g, v, l, p)         level_open(g, v, l, is_blit_on_ground, p)
+#define level_open_is_unused96(g, v, l, p)         level_open(g, v, l, is_unused96, p)
 #define level_open_is_blit_outlined(g, v, l, p)          level_open(g, v, l, is_blit_outlined, p)
 #define level_open_is_blit_shown_in_chasms(g, v, l, p)   level_open(g, v, l, is_blit_shown_in_chasms, p)
 #define level_open_is_blit_shown_in_overlay(g, v, l, p)  level_open(g, v, l, is_blit_shown_in_overlay, p)

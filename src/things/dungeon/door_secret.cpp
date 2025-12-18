@@ -53,7 +53,6 @@ bool tp_load_door_secret(void)
   // begin sort marker1 {
   thing_description_set(tp, tp_door_secret_description_get);
   thing_on_open_request_set(tp, tp_door_secret_on_open_request);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);

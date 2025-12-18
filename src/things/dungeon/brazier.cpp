@@ -123,7 +123,6 @@ bool tp_load_brazier(void)
   thing_on_shoved_set(tp, tp_brazier_on_shoved);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_brazier);
   tp_flag_set(tp, is_collision_circle_large);

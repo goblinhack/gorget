@@ -15,7 +15,6 @@ bool tp_load_corridor(void)
   auto tp   = tp_load("corridor"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_corridor);

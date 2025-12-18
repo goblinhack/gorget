@@ -904,24 +904,24 @@ bool thing_is_barrel(Thingp t)
   return tp_flag(thing_tp(t), is_barrel);
 }
 
-bool thing_is_blit_centered(Thingp t)
+bool thing_is_unused95(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_blit_centered);
+  return tp_flag(thing_tp(t), is_unused95);
 }
 
-bool thing_is_blit_on_ground(Thingp t)
+bool thing_is_unused96(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_blit_on_ground);
+  return tp_flag(thing_tp(t), is_unused96);
 }
 
 bool thing_is_blit_outlined(Thingp t)

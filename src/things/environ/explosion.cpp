@@ -28,7 +28,6 @@ bool tp_load_explosion(void)
   thing_on_spawn_set(tp, tp_explosion_spawn);
   tp_damage_set(tp, THING_EVENT_EXPLOSION_DAMAGE, "20+1d20");
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_explosion);

@@ -144,7 +144,6 @@ bool tp_load_bridge(void)
   thing_on_fall_end_set(tp, tp_bridge_on_fall_end);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_bridge);

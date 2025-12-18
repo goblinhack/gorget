@@ -28,7 +28,6 @@ bool tp_load_steam(void)
   thing_description_set(tp, tp_steam_description_get);
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_indestructible);
