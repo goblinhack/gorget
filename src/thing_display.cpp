@@ -13,17 +13,17 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
-void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint *tl,
-                                 spoint *br, uint16_t *tile_index)
+void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_maybe_null, Thingp t_maybe_null,
+                                 spoint *tl, spoint *br, uint16_t *tile_index)
 {
   TRACE_NO_INDENT();
 
   int   zoom = game_map_zoom_get(g);
-  int   dw   = INNER_TILE_WIDTH * zoom;
-  int   dh   = INNER_TILE_HEIGHT * zoom;
+  int   dw   = TILE_WIDTH * zoom;
+  int   dh   = TILE_HEIGHT * zoom;
   Tilep tile = nullptr;
 
-  tile = thing_display_get_tile_info(g, v, l, p, tp, t_maybe_null);
+  tile = thing_display_get_tile_info(g, v, l, p, tp_maybe_null, t_maybe_null);
   if (tile) {
     //
     // Allow override of the tile
@@ -38,11 +38,11 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
     if (tile_index) {
       *tile_index = t_maybe_null->tile_index;
     }
-  } else if (tp) {
+  } else if (tp_maybe_null) {
     //
     // Cursor usually
     //
-    tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
+    tile = tp_tiles_get(tp_maybe_null, THING_ANIM_IDLE, 0);
 
     if (tile_index) {
       *tile_index = tile_global_index(tile);
@@ -87,17 +87,13 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
 
   *tl -= v->pixel_map_at;
 
-#if unused
   //
   // Centered
   //
-  tl->x -= (pix_width - dw) / 2;
-  tl->y -= (pix_height - dh) / 2;
-
-  auto single_pix_size = game_map_single_pix_size_get(g);
-  tl->x -= single_pix_size / 2;
-  tl->y -= single_pix_size / 2;
-#endif
+  if (tp_maybe_null && tp_is_blit_centered(tp_maybe_null)) {
+    tl->x -= (pix_width - dw) / 2;
+    tl->y -= (pix_height - dh) / 2;
+  }
 
   if (t_maybe_null && thing_is_jumping(t_maybe_null)) {
     auto jump_height = (int) ((sin(PI * t_maybe_null->thing_dt)) * (float) dh);
@@ -114,7 +110,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
   //
   // Flippable?
   //
-  if (t_maybe_null && tp_is_animated_can_hflip(tp)) {
+  if (t_maybe_null && tp_is_animated_can_hflip(tp_maybe_null)) {
     if (thing_is_dir_left(t_maybe_null) || thing_is_dir_tl(t_maybe_null) || thing_is_dir_bl(t_maybe_null)) {
       std::swap(tl->x, br->x);
     }
@@ -123,7 +119,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
   //
   // Update submerged status
   //
-  if (t_maybe_null && tp_is_submergible(tp)) {
+  if (t_maybe_null && tp_is_submergible(tp_maybe_null)) {
     thing_submerged_pct_set(g, v, l, t_maybe_null, 0);
     if (level_is_deep_water(g, v, l, p)) {
       thing_submerged_pct_set(g, v, l, t_maybe_null, 80);
@@ -373,6 +369,13 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       //
       if (! game_map_zoom_is_full_map_visible(g)) {
         light_pixels = &v->light_map.tile[ p.x ][ p.y ].pixels;
+      }
+
+      //
+      // Can only light things that are exactly on pixel boundaries
+      //
+      if (tile_width(tile) != LIGHT_PIXEL) {
+        light_pixels = nullptr;
       }
     } else {
       fg = WHITE;

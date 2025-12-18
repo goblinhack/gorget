@@ -69,6 +69,7 @@ bool tp_load_fireball(void)
   tp_flag_set(tp, is_ethereal);
   tp_flag_set(tp, is_fireball);
   tp_flag_set(tp, is_light_source, 2);
+  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_projectile);

@@ -843,7 +843,7 @@ static void gfx_ui_init_solid(void)
   tile_load_arr("data/gfx/ui/solid.tga", "solid", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_init_tiles(void)
+static void gfx_init_tiles_12x12(void)
 {
   const char *tiles[] = {
       /* clang-format off */
@@ -1055,18 +1055,18 @@ static void gfx_init_tiles(void)
         "player.idle.0",
         "player.idle.1",
         "player.dead.0",
-        "cursor_path.nopath",
-        "cursor_path.normal",
-        "cursor_path.hazard",
-        "cursor_path.warning",
-        "cursor_at.nopath",
-        "cursor_at.normal",
-        "cursor_at.hazard",
-        "cursor_at.warning",
-        "exit.0",
-        "exit.1",
-        "entrance.0",
-        "entrance.1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
         "trap.0",
         // ##############################################################################
         "door_secret.idle.0",
@@ -1085,23 +1085,6 @@ static void gfx_init_tiles(void)
         "",
         "",
         "",
-        // ##############################################################################
-        "pillar.0",
-        "pillar.1",
-        "pillar.2",
-        "pillar.3",
-        "pillar.4",
-        "pillar.5",
-        "pillar.6",
-        "pillar.7",
-        "pillar.8",
-        "pillar.9",
-        "pillar.10",
-        "pillar.11",
-        "pillar.12",
-        "pillar.13",
-        "pillar.14",
-        "pillar.15",
         // ##############################################################################
         "brazier.idle.0",
         "brazier.idle.1",
@@ -1136,6 +1119,101 @@ static void gfx_init_tiles(void)
         "brazier.idle.29",
         "brazier.idle.30",
         "brazier.dead.0",
+        // ##############################################################################
+        "grass.idle.0",
+        "grass.idle.1",
+        "grass.idle.2",
+        "grass.idle.3",
+        "grass.idle.4",
+        "grass.idle.5",
+        "grass.idle.6",
+        "grass.idle.7",
+        "grass.idle.8",
+        "grass.idle.9",
+        "grass.idle.10",
+        "grass.idle.11",
+        "grass.idle.12",
+        "grass.idle.13",
+        "grass.burnt.0",
+        "grass.dead.0",
+        // ##############################################################################
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "chest.closed.0",
+        "chest.open.0",
+        "potion.0",
+        "potion.1",
+        // ##############################################################################
+        "level_not_visited.0",
+        "level_not_visited.1",
+        "level_visited.0",
+        "level_visited.1",
+        "level_next.0",
+        "level_next.1",
+        "level_curr.0",
+        "level_curr.1",
+        "level_final.0",
+        "level_final.1",
+        "level_across.0",
+        "level_across.1",
+        "level_down.0",
+        "level_down.1",
+        "",
+        "",
+        // ##############################################################################
+      /* clang-format on */
+  };
+  tile_load_arr_sprites("data/gfx/tiles_12x12.tga", "tiles_12x12", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+}
+
+static void gfx_init_tiles_14x14(void)
+{
+  const char *tiles[] = {
+      /* clang-format off */
+        // ##############################################################################
+        "",
+        "",
+        "",
+        "cursor_path.nopath",
+        "cursor_path.normal",
+        "cursor_path.hazard",
+        "cursor_path.warning",
+        "cursor_at.nopath",
+        "cursor_at.normal",
+        "cursor_at.hazard",
+        "cursor_at.warning",
+        "exit.0",
+        "exit.1",
+        "entrance.0",
+        "entrance.1",
+        "",
+        // ##############################################################################
+        "pillar.0",
+        "pillar.1",
+        "pillar.2",
+        "pillar.3",
+        "pillar.4",
+        "pillar.5",
+        "pillar.6",
+        "pillar.7",
+        "pillar.8",
+        "pillar.9",
+        "pillar.10",
+        "pillar.11",
+        "pillar.12",
+        "pillar.13",
+        "pillar.14",
+        "pillar.15",
         // ##############################################################################
         "fire.idle.0",
         "fire.idle.1",
@@ -1188,23 +1266,6 @@ static void gfx_init_tiles(void)
         "steam.idle.14",
         "steam.idle.15",
         // ##############################################################################
-        "grass.idle.0",
-        "grass.idle.1",
-        "grass.idle.2",
-        "grass.idle.3",
-        "grass.idle.4",
-        "grass.idle.5",
-        "grass.idle.6",
-        "grass.idle.7",
-        "grass.idle.8",
-        "grass.idle.9",
-        "grass.idle.10",
-        "grass.idle.11",
-        "grass.idle.12",
-        "grass.idle.13",
-        "grass.burnt.0",
-        "grass.dead.0",
-        // ##############################################################################
         "barrel.idle.0",
         "teleport.idle.0",
         "teleport.idle.1",
@@ -1217,10 +1278,10 @@ static void gfx_init_tiles(void)
         "",
         "",
         "",
-        "chest.closed.0",
-        "chest.open.0",
-        "potion.0",
-        "potion.1",
+        "",
+        "",
+        "",
+        "",
         // ##############################################################################
         "ghost_mob.idle.0",
         "ghost_mob.idle.1",
@@ -1273,26 +1334,27 @@ static void gfx_init_tiles(void)
         "",
         "",
         // ##############################################################################
-        "level_not_visited.0",
-        "level_not_visited.1",
-        "level_visited.0",
-        "level_visited.1",
-        "level_next.0",
-        "level_next.1",
-        "level_curr.0",
-        "level_curr.1",
-        "level_final.0",
-        "level_final.1",
-        "level_across.0",
-        "level_across.1",
-        "level_down.0",
-        "level_down.1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
         "",
         "",
         // ##############################################################################
       /* clang-format on */
   };
-  tile_load_arr_sprites("data/gfx/tiles.tga", "tiles", OUTER_TILE_WIDTH, OUTER_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+  tile_load_arr_sprites("data/gfx/tiles_14x14.tga", "tiles_14x14", OUTER_TILE_WIDTH, OUTER_TILE_HEIGHT,
+                        ARRAY_SIZE(tiles), tiles);
 }
 
 void gfx_init(void)
@@ -1303,7 +1365,8 @@ void gfx_init(void)
   gfx_init_bridge();
   gfx_init_chasm();
   gfx_init_lava();
-  gfx_init_tiles();
+  gfx_init_tiles_12x12();
+  gfx_init_tiles_14x14();
   gfx_init_water();
   gfx_ui_init_0();
   gfx_ui_init_1();

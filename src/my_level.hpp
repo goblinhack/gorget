@@ -118,7 +118,7 @@ typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
 } LevelInfo;
 
-#define LIGHT_PIXEL (INNER_TILE_WIDTH)
+#define LIGHT_PIXEL (TILE_WIDTH)
 
 typedef struct {
   //

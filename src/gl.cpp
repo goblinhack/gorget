@@ -532,8 +532,8 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
       h = game_map_fbo_height_get(g);
       break;
     case FBO_MAP_LIGHT :
-      w = MAP_WIDTH * INNER_TILE_WIDTH;
-      h = MAP_HEIGHT * INNER_TILE_HEIGHT;
+      w = MAP_WIDTH * TILE_WIDTH;
+      h = MAP_HEIGHT * TILE_HEIGHT;
       break;
     case FBO_MAP_BG_MERGED :
     case FBO_MAP_FG_MERGED :

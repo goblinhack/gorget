@@ -63,6 +63,6 @@ void gfx_init_bridge(void)
         // ##############################################################################
       /* clang-format on */
   };
-  tile_load_arr_sprites("data/gfx/tiles_bridge.tga", "tiles_bridge", INNER_TILE_WIDTH, INNER_TILE_HEIGHT,
+  tile_load_arr_sprites("data/gfx/tiles_bridge.tga", "tiles_bridge", TILE_WIDTH, TILE_HEIGHT,
                         ARRAY_SIZE(tiles), tiles);
 }

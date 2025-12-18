@@ -68,8 +68,8 @@ void level_mouse_position_get(Gamep g, Levelsp v, Levelp l)
   map_mouse_x += v->pixel_map_at.x;
   map_mouse_y += v->pixel_map_at.y;
 
-  map_mouse_x /= INNER_TILE_WIDTH;
-  map_mouse_y /= INNER_TILE_HEIGHT;
+  map_mouse_x /= TILE_WIDTH;
+  map_mouse_y /= TILE_HEIGHT;
 
   map_mouse_x /= zoom;
   map_mouse_y /= zoom;

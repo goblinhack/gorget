@@ -441,7 +441,7 @@ bool   thing_is_animated_no_dir(Thingp);
 bool   thing_is_animated_sync_first(Thingp);
 bool   thing_is_animated(Thingp);
 bool   thing_is_barrel(Thingp);
-bool   thing_is_unused95(Thingp);
+bool   thing_is_blit_centered(Thingp);
 bool   thing_is_blit_if_has_seen(Thingp);
 bool   thing_is_blit_obscures(Thingp);
 bool   thing_is_unused96(Thingp);

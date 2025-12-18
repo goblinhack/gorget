@@ -32,6 +32,7 @@ bool tp_load_smoke(void)
   tp_flag_set(tp, is_gaseous);
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_obs_to_vision);
+  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_smoke);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);

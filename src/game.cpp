@@ -2558,7 +2558,7 @@ int game_map_zoom_def_get(Gamep g)
 
   float map_pix_width = visible_map_br_x - visible_map_tl_x;
 
-  float zoom = map_pix_width / INNER_TILE_WIDTH / MAP_TILES_ACROSS_DEF;
+  float zoom = map_pix_width / TILE_WIDTH / MAP_TILES_ACROSS_DEF;
 
   if (zoom < 2) {
     zoom = 2;

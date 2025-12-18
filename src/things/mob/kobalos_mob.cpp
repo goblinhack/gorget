@@ -66,6 +66,7 @@ bool tp_load_kobalos_mob(void)
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_wait_on_dead_anim);
   tp_health_set(tp, "1d3+3");
+  tp_flag_set(tp, is_blit_centered);
   tp_light_color_set(tp, "green");
   tp_long_name_set(tp, "kobalos mob");
   tp_pluralize_name_set(tp, "kobalosy mobs");

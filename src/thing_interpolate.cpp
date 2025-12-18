@@ -37,7 +37,7 @@ void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   float pix_y = (float) moving_from.y + (((float) (at.y - moving_from.y)) * dt);
 
   spoint pix_at;
-  pix_at.x = (int) (pix_x * INNER_TILE_WIDTH);
-  pix_at.y = (int) (pix_y * INNER_TILE_HEIGHT);
+  pix_at.x = (int) (pix_x * TILE_WIDTH);
+  pix_at.y = (int) (pix_y * TILE_HEIGHT);
   thing_pix_at_set(g, v, l, t, pix_at);
 }

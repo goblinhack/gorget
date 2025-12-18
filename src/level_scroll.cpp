@@ -63,7 +63,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   float  x = ((pix_at.x * zoom) - v->pixel_map_at.x) / (float) w;
   float  y = ((pix_at.y * zoom) - v->pixel_map_at.y) / (float) h;
 
-  const auto scroll_border = MAP_SCROLL_INNER_EDGE;
+  const auto scroll_border = MAP_SCROLL_EDGE;
 
   if (! v->scroll_speed) {
     v->scroll_speed = MAP_SCROLL_SPEED;

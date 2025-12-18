@@ -197,7 +197,7 @@ void level_light_precalculate(Gamep g)
 void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
 {
   const color  light_color              = tp_light_color(thing_tp(t));
-  const float  light_strength_in_pixels = thing_is_light_source(t) * INNER_TILE_WIDTH;
+  const float  light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
   const auto   light_tile               = &v->light_map.tile[ p.x ][ p.y ];
   const float *light_fade_map;
   const spoint thing_at_in_pixels = thing_pix_at(t);
@@ -215,10 +215,10 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
     light_fade_map = light_fade;
   }
 
-  uint16_t light_pixel_at_y = p.y * INNER_TILE_WIDTH - INNER_TILE_WIDTH / 2;
+  uint16_t light_pixel_at_y = p.y * TILE_WIDTH - TILE_WIDTH / 2;
   for (uint8_t pixy = 0; pixy < LIGHT_PIXEL; pixy++, light_pixel_at_y++) {
 
-    uint16_t light_pixel_at_x = p.x * INNER_TILE_WIDTH - INNER_TILE_WIDTH / 2;
+    uint16_t light_pixel_at_x = p.x * TILE_WIDTH - TILE_WIDTH / 2;
     for (uint8_t pixx = 0; pixx < LIGHT_PIXEL; pixx++, light_pixel_at_x++) {
 
       float dist_in_pixels
@@ -434,16 +434,16 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   auto pov = thing_at(player);
 
-  const int tile_w = INNER_TILE_WIDTH;
-  const int tile_h = INNER_TILE_HEIGHT;
+  const int tile_w = TILE_WIDTH;
+  const int tile_h = TILE_HEIGHT;
 
   //
   // Center the light on the player
   //
   spoint light_pos = thing_pix_at(player);
 
-  light_pos.x += INNER_TILE_WIDTH / 2;
-  light_pos.y += INNER_TILE_HEIGHT / 2;
+  light_pos.x += TILE_WIDTH / 2;
+  light_pos.y += TILE_HEIGHT / 2;
 
   //
   // Walk the light rays in a circle. Find the nearest walls and then let
@@ -501,7 +501,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       //
       // This is for foliage so we don't obscure too much where we stand
       //
-      if (step < INNER_TILE_WIDTH / 2) {
+      if (step < TILE_WIDTH / 2) {
         continue;
       }
 
@@ -509,7 +509,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       // Once we hit an obstacle to vision, how far do we allow the ray of light to penetrate
       //
       auto obs_to_vision_start_distance       = ray_pixel->distance;
-      auto obs_to_vision_penetration_distance = (obs_to_vision_start_distance + INNER_TILE_WIDTH) - 2;
+      auto obs_to_vision_penetration_distance = (obs_to_vision_start_distance + TILE_WIDTH) - 2;
 
       //
       // Keep track of the type of object we hit
@@ -628,8 +628,8 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
 
   spoint light_pos = thing_pix_at(player);
 
-  light_pos.x += INNER_TILE_WIDTH / 2;
-  light_pos.y += INNER_TILE_HEIGHT / 2;
+  light_pos.x += TILE_WIDTH / 2;
+  light_pos.y += TILE_HEIGHT / 2;
 
   int w, h;
   fbo_get_size(g, FBO_MAP_LIGHT, w, h);
@@ -715,7 +715,7 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
     //
     // This is how far the light rays reach
     //
-    auto ray_max_length_in_pixels = thing_vision_distance(player) * INNER_TILE_WIDTH;
+    auto ray_max_length_in_pixels = thing_vision_distance(player) * TILE_WIDTH;
 
     player_raycast = raycast_new(ray_max_length_in_pixels, fbo);
     if (! player_raycast) {
