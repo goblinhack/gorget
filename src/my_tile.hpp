@@ -86,7 +86,7 @@ void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color 
 void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
                const color &c);
 void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
-               const color &c, struct LightPixels_ *light_pixels);
+               const color &c, struct LightPixels_ *light_pixels, bool blit_flush_per_line);
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &color_tl, const color &color_tr,
                const color &color_bl, const color &color_br);
 void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &tile_br, const spoint tl,

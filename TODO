@@ -1,6 +1,5 @@
 bugs
 ----
-strnge pattern under water
 cannot jump in water
 projectile collison dt
 fireball distance is framerate bound
@@ -11,6 +10,7 @@ door damage from fireball
 basic features
 --------------
 particles / slow fireball
+more wall types
 bushes quiver when monster is behind?
 mobs generating monsters
 monst AI

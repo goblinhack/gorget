@@ -257,7 +257,6 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
     blit_flush();
 
     if (fbo == FBO_MAP_FG_OVERLAY) {
-      blit_init();
       level_display_cursor(g, v, l, fbo);
       blit_flush();
       game_popups_display(g, v, l);

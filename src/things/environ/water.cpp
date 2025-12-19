@@ -27,10 +27,10 @@ bool tp_load_water(void)
   thing_description_set(tp, tp_water_description_get);
   tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
   tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_blit_flush_per_line);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_obs_to_fire);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
@@ -38,7 +38,6 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_tiled);
   tp_flag_set(tp, is_water);
   tp_health_set(tp, "1d10"); // to allow it to be damaged by fire
-  tp_light_color_set(tp, "blue");
   tp_long_name_set(tp, name);
   tp_priority_set(tp, THING_PRIORITY_WATER);
   tp_short_name_set(tp, "shallow water");

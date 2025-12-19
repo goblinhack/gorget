@@ -289,7 +289,7 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
           GLshort right, GLshort bottom, const color &color_bl, const color &color_br, const color &color_tl,
           const color &color_tr);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top,
-          GLshort right, GLshort bottom, const color &c, struct LightPixels_ *);
+          GLshort right, GLshort bottom, const color &c, struct LightPixels_ *, bool is_blit_flush_per_line);
 void blit_fbo(Gamep, FboEnum fbo);
 void blit_fbo(Gamep, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y);
 void blit_fbo_push(FboEnum fbo);

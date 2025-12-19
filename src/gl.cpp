@@ -645,7 +645,10 @@ int      buf_tex;
 
 void blit_init(void)
 {
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
+#endif
+
   buf_tex = 0;
 
   if (gl_array_buf) {
@@ -686,8 +689,11 @@ void blit_fini(void)
 
 void blit_flush(void)
 {
+#ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
-  if (gl_array_buf == bufp) {
+#endif
+
+  if (unlikely(gl_array_buf == bufp)) {
     return;
   }
 
@@ -718,9 +724,11 @@ void blit_flush(void)
                      + SIZEOF(GLfloat) * // skip (u,v)
                            NUMBER_DIMENSIONS_PER_COORD_2D);
 
+#ifdef _DEBUG_BUILD_
   GL_ERROR_CHECK();
-  glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei) nvertices);
+#endif
 
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei) nvertices);
   glBindTexture(GL_TEXTURE_2D, 0);
 
   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -1445,7 +1453,7 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 }
 
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort pixMinX, GLshort pixMinY,
-          GLshort pixMaxX, GLshort pixMaxY, const color &c, LightPixels *light_pixels)
+          GLshort pixMaxX, GLshort pixMaxY, const color &c, LightPixels *light_pixels, bool blit_flush_per_line)
 {
   if (unlikely(! buf_tex)) {
     blit_init();
@@ -1489,6 +1497,15 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
       gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2,
               pixMaxY2, r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a);
+    }
+
+    //
+    // If we have alpha values in the texture, the end of one triangle line and the start of another creates
+    // a visible strip
+    //
+    if (blit_flush_per_line) {
+      buf_tex = tex;
+      blit_flush();
     }
   }
 }
