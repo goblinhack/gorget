@@ -225,7 +225,7 @@
       list_macro(is_unused91, "is_unused91"),                           /* newline */                                \
       list_macro(is_unused92, "is_unused92"),                           /* newline */                                \
       list_macro(is_unused93, "is_unused93"),                           /* newline */                                \
-      list_macro(is_unused94, "is_unused94"),                           /* newline */                                \
+      list_macro(is_obs_to_jumping_out_of, "is_obs_to_jumping_out_of"), /* newline */                                \
       list_macro(is_cursor_path_warning, "is_cursor_path_warning"),     /* newline */                                \
       list_macro(is_collision_circle_large, "is_collision_circle_large"), /* newline */                              \
       list_macro(is_collision_circle_small, "is_collision_circle_small"), /* newline */                              \
@@ -723,6 +723,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_obs_to_fire(tp)            tp_flag(tp, is_obs_to_fire)
 #define tp_is_obs_to_jump_over(tp)       tp_flag(tp, is_obs_to_jump_over)
 #define tp_is_obs_to_jumping_onto(tp)    tp_flag(tp, is_obs_to_jumping_onto)
+#define tp_is_obs_to_jumping_out_of(tp)  tp_flag(tp, is_obs_to_jumping_out_of)
 #define tp_is_obs_to_movement(tp)        tp_flag(tp, is_obs_to_movement)
 #define tp_is_obs_to_vision(tp)          tp_flag(tp, is_obs_to_vision)
 #define tp_is_openable(tp)               tp_flag(tp, is_openable)
@@ -839,7 +840,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused91(tp)               tp_flag(tp, is_unused91)
 #define tp_is_unused92(tp)               tp_flag(tp, is_unused92)
 #define tp_is_unused93(tp)               tp_flag(tp, is_unused93)
-#define tp_is_unused94(tp)               tp_flag(tp, is_unused94)
 #define tp_is_wait_on_dead_anim(tp)      tp_flag(tp, is_wait_on_dead_anim)
 #define tp_is_walk_through_walls(tp)     tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                   tp_flag(tp, is_wall)
@@ -944,6 +944,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_obs_to_fire(g, v, l, p)            level_flag(g, v, l, is_obs_to_fire, p)
 #define level_is_obs_to_jump_over(g, v, l, p)       level_flag(g, v, l, is_obs_to_jump_over, p)
 #define level_is_obs_to_jumping_onto(g, v, l, p)    level_flag(g, v, l, is_obs_to_jumping_onto, p)
+#define level_is_obs_to_jumping_out_of(g, v, l, p)  level_flag(g, v, l, is_obs_to_jumping_out_of, p)
 #define level_is_obs_to_movement(g, v, l, p)        level_flag(g, v, l, is_obs_to_movement, p)
 #define level_is_obs_to_vision(g, v, l, p)          level_flag(g, v, l, is_obs_to_vision, p)
 #define level_is_openable(g, v, l, p)               level_flag(g, v, l, is_openable, p)
@@ -1060,7 +1061,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused91(g, v, l, p)               level_flag(g, v, l, is_unused91, p)
 #define level_is_unused92(g, v, l, p)               level_flag(g, v, l, is_unused92, p)
 #define level_is_unused93(g, v, l, p)               level_flag(g, v, l, is_unused93, p)
-#define level_is_unused94(g, v, l, p)               level_flag(g, v, l, is_unused94, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)      level_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_is_walk_through_walls(g, v, l, p)     level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                   level_flag(g, v, l, is_wall, p)
@@ -1165,6 +1165,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_obs_to_fire(g, v, l, p)            level_alive(g, v, l, is_obs_to_fire, p)
 #define level_alive_is_obs_to_jump_over(g, v, l, p)       level_alive(g, v, l, is_obs_to_jump_over, p)
 #define level_alive_is_obs_to_jumping_onto(g, v, l, p)    level_alive(g, v, l, is_obs_to_jumping_onto, p)
+#define level_alive_is_obs_to_jumping_out_of(g, v, l, p)  level_alive(g, v, l, is_obs_to_jumping_out_of, p)
 #define level_alive_is_obs_to_movement(g, v, l, p)        level_alive(g, v, l, is_obs_to_movement, p)
 #define level_alive_is_obs_to_vision(g, v, l, p)          level_alive(g, v, l, is_obs_to_vision, p)
 #define level_alive_is_openable(g, v, l, p)               level_alive(g, v, l, is_openable, p)
@@ -1281,7 +1282,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused91(g, v, l, p)               level_alive(g, v, l, is_unused91, p)
 #define level_alive_is_unused92(g, v, l, p)               level_alive(g, v, l, is_unused92, p)
 #define level_alive_is_unused93(g, v, l, p)               level_alive(g, v, l, is_unused93, p)
-#define level_alive_is_unused94(g, v, l, p)               level_alive(g, v, l, is_unused94, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)      level_alive(g, v, l, is_wait_on_dead_anim, p)
 #define level_alive_is_walk_through_walls(g, v, l, p)     level_alive(g, v, l, is_walk_through_walls, p)
 #define level_alive_is_wall(g, v, l, p)                   level_alive(g, v, l, is_wall, p)
@@ -1386,6 +1386,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_obs_to_fire(g, v, l, p)            level_count(g, v, l, is_obs_to_fire, p)
 #define level_count_is_obs_to_jump_over(g, v, l, p)       level_count(g, v, l, is_obs_to_jump_over, p)
 #define level_count_is_obs_to_jumping_onto(g, v, l, p)    level_count(g, v, l, is_obs_to_jumping_onto, p)
+#define level_count_is_obs_to_jumping_out_of(g, v, l, p)  level_count(g, v, l, is_obs_to_jumping_out_of, p)
 #define level_count_is_obs_to_movement(g, v, l, p)        level_count(g, v, l, is_obs_to_movement, p)
 #define level_count_is_obs_to_vision(g, v, l, p)          level_count(g, v, l, is_obs_to_vision, p)
 #define level_count_is_openable(g, v, l, p)               level_count(g, v, l, is_openable, p)
@@ -1502,7 +1503,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused91(g, v, l, p)               level_count(g, v, l, is_unused91, p)
 #define level_count_is_unused92(g, v, l, p)               level_count(g, v, l, is_unused92, p)
 #define level_count_is_unused93(g, v, l, p)               level_count(g, v, l, is_unused93, p)
-#define level_count_is_unused94(g, v, l, p)               level_count(g, v, l, is_unused94, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)      level_count(g, v, l, is_wait_on_dead_anim, p)
 #define level_count_is_walk_through_walls(g, v, l, p)     level_count(g, v, l, is_walk_through_walls, p)
 #define level_count_is_wall(g, v, l, p)                   level_count(g, v, l, is_wall, p)
@@ -1607,6 +1607,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_obs_to_fire(g, v, l, p)            level_open(g, v, l, is_obs_to_fire, p)
 #define level_open_is_obs_to_jump_over(g, v, l, p)       level_open(g, v, l, is_obs_to_jump_over, p)
 #define level_open_is_obs_to_jumping_onto(g, v, l, p)    level_open(g, v, l, is_obs_to_jumping_onto, p)
+#define level_open_is_obs_to_jumping_out_of(g, v, l, p)  level_open(g, v, l, is_obs_to_jumping_out_of, p)
 #define level_open_is_obs_to_movement(g, v, l, p)        level_open(g, v, l, is_obs_to_movement, p)
 #define level_open_is_obs_to_vision(g, v, l, p)          level_open(g, v, l, is_obs_to_vision, p)
 #define level_open_is_openable(g, v, l, p)               level_open(g, v, l, is_openable, p)
@@ -1723,7 +1724,6 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_unused91(g, v, l, p)               level_open(g, v, l, is_unused91, p)
 #define level_open_is_unused92(g, v, l, p)               level_open(g, v, l, is_unused92, p)
 #define level_open_is_unused93(g, v, l, p)               level_open(g, v, l, is_unused93, p)
-#define level_open_is_unused94(g, v, l, p)               level_open(g, v, l, is_unused94, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)      level_open(g, v, l, is_wait_on_dead_anim, p)
 #define level_open_is_walk_through_walls(g, v, l, p)     level_open(g, v, l, is_walk_through_walls, p)
 #define level_open_is_wall(g, v, l, p)                   level_open(g, v, l, is_wall, p)

@@ -2364,14 +2364,14 @@ bool thing_is_unused93(Thingp t)
   return tp_flag(thing_tp(t), is_unused93);
 }
 
-bool thing_is_unused94(Thingp t)
+bool thing_is_obs_to_jumping_out_of(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused94);
+  return tp_flag(thing_tp(t), is_obs_to_jumping_out_of);
 }
 
 bool thing_is_cursor_path_warning(Thingp t)

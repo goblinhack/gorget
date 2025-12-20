@@ -35,6 +35,7 @@ bool tp_load_lava(void)
   tp_flag_set(tp, is_lava);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_needs_move_confirm);
+  tp_flag_set(tp, is_obs_to_jumping_out_of);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_teleport_blocked);

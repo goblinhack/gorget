@@ -66,10 +66,16 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  thing_sound_play(g, v, l, t, "oof");
+  if (level_is_water(g, v, l, t)) {
+    //
+    // We already have a splash noise
+    //
+  } else {
+    thing_sound_play(g, v, l, t, "oof");
 
-  auto at = thing_at(t);
-  game_popup_text_add(g, at.x, at.y, std::string("Oof!"));
+    auto at = thing_at(t);
+    game_popup_text_add(g, at.x, at.y, std::string("Oof!"));
+  }
 }
 
 static void tp_player_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)

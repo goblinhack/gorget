@@ -32,6 +32,7 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_obs_to_fire);
+  tp_flag_set(tp, is_obs_to_jumping_out_of);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_end_delay);

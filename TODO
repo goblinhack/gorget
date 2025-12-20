@@ -1,6 +1,5 @@
 bugs
 ----
-cannot jump in water
 projectile collison dt
 fireball distance is framerate bound
 tests for collecting items / potions / keys
