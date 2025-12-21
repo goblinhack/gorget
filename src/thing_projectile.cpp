@@ -52,7 +52,8 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   float s;
   float c;
   sincosf(t->angle, &s, &c);
-  fpoint at = thing_real_at(t);
+  fpoint old_at = thing_real_at(t);
+  auto   at     = old_at;
 
   auto player = thing_player(g);
   if (! player) {
@@ -80,4 +81,9 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   thing_push(g, v, l, t);
 
   thing_on_moved(g, v, l, t);
+
+  //
+  // Handle interactions for a thing at its new location
+  //
+  thing_collision_handle_interpolated(g, v, l, t, old_at);
 }

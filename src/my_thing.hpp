@@ -685,6 +685,7 @@ void   thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
 void   thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, Tpp, int time_step);
 void   thing_chasm_handle(Gamep, Levelsp, Levelp, Thingp me);
 void   thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
+void   thing_collision_handle_interpolated(Gamep, Levelsp, Levelp, Thingp, fpoint old_at);
 void   thing_continue_to_burn_check(Gamep, Levelsp, Levelp, Thingp);
 void   thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
 void   thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
