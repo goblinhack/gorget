@@ -1,8 +1,7 @@
 bugs
 ----
-projectile collison dt
-fireball distance is framerate bound
-tests for collecting items / potions / keys
+projectile interpolated collisions
+tests for collecting items / potions
 melting walls and rock
 door damage from fireball
 

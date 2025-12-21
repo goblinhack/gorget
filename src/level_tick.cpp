@@ -284,6 +284,10 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 
   const int player_speed = thing_speed(p);
 
+  if (0) {
+    TOPCON("dt %f", dt);
+  }
+
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     //                   Tick 1              Tick 2
@@ -307,30 +311,41 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       t->thing_dt = 1.0;
     }
 
-    if (0) {
-      THING_CON(t, "dt %f thing_dt %f speed %d v %d iter %u", dt, t->thing_dt, thing_speed(t), player_speed, t->iter);
+    auto thing_dt_change = t->thing_dt - old_thing_dt;
+
+    if (1) {
+      if (thing_is_projectile(t)) {
+        THING_CON(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d iter %u",
+                  dt,              // newline
+                  old_thing_dt,    // newline
+                  t->thing_dt,     // newline
+                  thing_dt_change, // newline
+                  thing_speed(t),  // newline
+                  player_speed,    // newline
+                  t->iter);
+      }
     }
 
     if (thing_is_projectile(t)) {
-      thing_projectile_move(g, v, l, t, t->thing_dt - old_thing_dt);
+      thing_projectile_move(g, v, l, t, dt);
+      //
+      // Every pixel change, we want to redo collision detection
+      //
+      thing_collision_handle(g, v, l, t);
     } else {
       thing_interpolate(g, v, l, t, t->thing_dt);
     }
 
-    //
-    // If the thing tick has completed, finish its move.
-    //
     if (t->thing_dt >= 0.99) { // dt increments can end up very close to 1
       t->thing_dt = 0.0;
+
+      //
+      // Projectiles keep on moving until they hit something
+      //
       thing_move_or_jump_finish(g, v, l, t);
 
       //
       // Handle interactions for a thing at its new location
-      //
-      thing_collision_handle(g, v, l, t);
-    } else if (thing_is_projectile(t)) {
-      //
-      // Every pixel change, we want to redo collision detection
       //
       thing_collision_handle(g, v, l, t);
     }

@@ -136,6 +136,7 @@ bool tp_load_door_locked(void)
   tp_flag_set(tp, is_openable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "200");

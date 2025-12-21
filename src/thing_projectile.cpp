@@ -36,6 +36,8 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std
   if (projectile) {
     projectile->angle = angle;
   }
+
+  thing_is_moving_set(g, v, l, projectile);
 }
 
 void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const spoint target)
@@ -51,8 +53,16 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   float c;
   sincosf(t->angle, &s, &c);
   fpoint at = thing_real_at(t);
-  at.x += c * dt;
-  at.y += s * dt;
+
+  auto player = thing_player(g);
+  if (! player) {
+    ERR("No player struct found");
+    return;
+  }
+
+  auto tile_speed = (float) thing_speed(t) / thing_speed(player);
+  at.x += c * dt * tile_speed;
+  at.y += s * dt * tile_speed;
 
   if (is_oob(at)) {
     ThingEvent e {

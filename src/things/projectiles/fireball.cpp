@@ -80,7 +80,7 @@ bool tp_load_fireball(void)
   tp_light_color_set(tp, "orange");
   tp_long_name_set(tp, name);
   tp_priority_set(tp, THING_PRIORITY_PROJECTILE);
-  tp_speed_set(tp, 1000);
+  tp_speed_set(tp, 800);
   tp_temperature_initial_set(tp, 500); // celsius
   tp_weight_set(tp, WEIGHT_NONE);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_PROJECTILE);
