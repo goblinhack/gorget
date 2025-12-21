@@ -313,7 +313,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
-    if (1) {
+    if (0) {
       if (thing_is_projectile(t)) {
         THING_CON(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d iter %u",
                   dt,              // newline
@@ -327,11 +327,10 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     }
 
     if (thing_is_projectile(t)) {
-      thing_projectile_move(g, v, l, t, dt);
       //
       // Every pixel change, we want to redo collision detection
       //
-      thing_collision_handle(g, v, l, t);
+      thing_projectile_move(g, v, l, t, dt);
     } else {
       thing_interpolate(g, v, l, t, t->thing_dt);
     }

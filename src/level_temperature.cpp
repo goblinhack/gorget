@@ -76,7 +76,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       }
 
     //
-    // Sort my event priority
+    // Sort by event priority
     //
     std::sort(sorted_pairs.begin(), sorted_pairs.end(),
               [](const std::pair< Thingp, Thingp > &a, const std::pair< Thingp, Thingp > &b) {

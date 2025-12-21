@@ -646,7 +646,7 @@ bool   thing_is_unused9(Thingp);
 bool   thing_is_unused90(Thingp);
 bool   thing_is_unused91(Thingp);
 bool   thing_is_unused92(Thingp);
-bool   thing_is_unused93(Thingp);
+bool   thing_is_dead_on_collision(Thingp);
 bool   thing_is_wait_on_dead_anim(Thingp);
 bool   thing_is_walk_through_walls(Thingp);
 bool   thing_is_wall(Thingp);

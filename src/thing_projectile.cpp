@@ -22,13 +22,14 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std
     delta.x = 1;
   }
 
+  THING_CON(me, "fire");
   auto  angle = angle_radians(delta);
   float s;
   float c;
   sincosf(angle, &s, &c);
 
   fpoint at     = thing_real_at(me);
-  float  offset = 0.5;
+  float  offset = 1.0;
   at.x += c * offset;
   at.y += s * offset;
 
@@ -82,8 +83,10 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 
   thing_on_moved(g, v, l, t);
 
-  //
-  // Handle interactions for a thing at its new location
-  //
-  thing_collision_handle_interpolated(g, v, l, t, old_at);
+  if (t->thing_dt > 0) {
+    //
+    // Handle interactions for a thing at its new location
+    //
+    thing_collision_handle_interpolated(g, v, l, t, old_at);
+  }
 }

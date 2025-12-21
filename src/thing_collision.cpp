@@ -46,6 +46,33 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
   if (thing_carry_item(g, v, l, obstacle, me)) {
     return;
   }
+
+  if (thing_is_projectile(me)) {
+    auto source     = me;
+    auto event_type = THING_EVENT_EXPLOSION_DAMAGE;
+    auto damage     = tp_damage(thing_tp(source), event_type);
+
+    ThingEvent e {
+        .reason     = "by explosion damage", //
+        .event_type = event_type,            //
+        .damage     = damage,                //
+        .source     = source,                //
+    };
+
+    THING_CON(me, "collison with");
+    THING_CON(obstacle, "me");
+    thing_damage(g, v, l, obstacle, e);
+  }
+
+  if (thing_is_dead_on_collision(me)) {
+    ThingEvent e {
+        .reason     = "collided",                   //
+        .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
+    };
+
+    thing_dead(g, v, l, me, e);
+    return;
+  }
 }
 
 //
@@ -108,20 +135,29 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 static bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B,
                                                 fpoint B_at)
 {
-  float A_radius = thing_is_collision_circle_small(A) ? 0.5 : 1.0;
-  float B_radius = thing_is_collision_circle_small(B) ? 0.5 : 1.0;
+  float A_radius = thing_is_collision_circle_small(A) ? 0.25 : 0.5;
+  float B_radius = thing_is_collision_circle_small(B) ? 0.25 : 0.5;
 
-  fpoint n             = B_at - A_at;
-  double touching_dist = A_radius + B_radius;
-  double dist_squared  = n.x * n.x + n.y * n.y;
-
-  double diff = dist_squared - touching_dist * touching_dist;
-  if (diff > 0.0) {
-    // Circles are not touching
-    return false;
+  if (! thing_is_projectile(A)) {
+    A_at += fpoint(0.5, 0.5);
+  }
+  if (! thing_is_projectile(B)) {
+    B_at += fpoint(0.5, 0.5);
   }
 
-  return true;
+  float touching_dist = A_radius + B_radius;
+  float dist          = distance(A_at, B_at);
+
+  if (1) {
+    THING_CON(A, "A %f,%f touching_dist %f dist %f ", A_at.x, A_at.y, touching_dist, dist);
+    THING_CON(B, "B %f,%f", B_at.x, B_at.y);
+  }
+
+  if (dist < touching_dist) {
+    // Circles are touching
+    return true;
+  }
+  return false;
 }
 
 static bool thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
@@ -129,7 +165,6 @@ static bool thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, 
 {
   TRACE_NO_INDENT();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
-  return false;
 }
 
 static bool thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
@@ -137,14 +172,13 @@ static bool thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, 
 {
   TRACE_NO_INDENT();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
-  return false;
 }
 
 static bool thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                       fpoint o_at)
 {
   TRACE_NO_INDENT();
-  ERR("TODO");
+  CON("%s", __FUNCTION__);
   return false;
 }
 
@@ -153,14 +187,13 @@ static bool thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, 
 {
   TRACE_NO_INDENT();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
-  return false;
 }
 
 static bool thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                       fpoint o_at)
 {
   TRACE_NO_INDENT();
-  ERR("TODO");
+  CON("%s", __FUNCTION__);
   return false;
 }
 
@@ -168,7 +201,7 @@ static bool thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, Th
                                                 fpoint o_at)
 {
   TRACE_NO_INDENT();
-  ERR("TODO");
+  CON("%s", __FUNCTION__);
   return false;
 }
 
@@ -189,7 +222,8 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
   float stepy = diff.y / steps;
 
   for (auto step = 0; step < steps; step++) {
-    fpoint me_at(old_at.x + stepx * step, old_at.y + stepy * step);
+    std::vector< std::pair< float, Thingp > > pairs;
+    fpoint                                    me_at(old_at.x + stepx * step, old_at.y + stepy * step);
 
     for (auto dx = -1; dx <= 1; dx++) {
       for (auto dy = -1; dy <= 1; dy++) {
@@ -197,6 +231,10 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         spoint collision_at(src.x + dx, src.y + dy);
         FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
         {
+          if (o == me) {
+            continue;
+          }
+
           auto o_at      = thing_real_at(o);
           auto collision = false;
 
@@ -236,9 +274,40 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
           }
 
           if (collision) {
-            thing_collision_handle_thing(g, v, l, o, me);
+            float                      o_dist = distance(at, o_at);
+            std::pair< float, Thingp > p      = std::make_pair(o_dist, o);
+            pairs.push_back(p);
           }
         }
+      }
+    }
+
+    //
+    // Sort by distance
+    //
+    std::sort(pairs.begin(), pairs.end(),
+              [](const std::pair< float, Thingp > &a, const std::pair< float, Thingp > &b) {
+                auto d1 = a.first;
+                auto d2 = b.first;
+                auto t1 = a.second;
+                auto t2 = b.second;
+                return (d1 < d2) && t1->_priority < t2->_priority;
+              });
+
+    for (auto a_pair : pairs) {
+      auto o_dist = a_pair.first;
+      auto o      = a_pair.second;
+
+      THING_CON(o, "distance %f prio %u", o_dist, o->_priority);
+    }
+
+    for (auto a_pair : pairs) {
+      auto o = a_pair.second;
+
+      CON("collision:");
+      thing_collision_handle_thing(g, v, l, o, me);
+      if (thing_is_dead(me)) {
+        return;
       }
     }
   }
