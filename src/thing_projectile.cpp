@@ -64,7 +64,10 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
     return;
   }
 
-  auto tile_speed = (float) thing_speed(t) / TICK_DURATION_MS;
+  const int   player_speed = thing_speed(player);
+  const float t_speed      = thing_speed(t);
+  const auto  tile_speed   = (t_speed / (float) player_speed);
+
   at.x += c * dt * tile_speed;
   at.y += s * dt * tile_speed;
 

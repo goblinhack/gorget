@@ -273,16 +273,15 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 {
   TRACE_NO_INDENT();
 
-  auto p = thing_player(g);
-  if (! p) {
-    return;
-  }
-
   if (dt < 0) {
     DIE("negative dt %f", dt);
   }
 
-  const int player_speed = thing_speed(p);
+  auto player = thing_player(g);
+  if (! player) {
+    return;
+  }
+  const int player_speed = thing_speed(player);
 
   if (1) {
     TOPCON("time_step %f dt %f", v->time_step, dt);
@@ -299,7 +298,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     // speed 100  tick           tick
     // speed 50   tick
     //
-    if (! thing_is_moving(t) && ! thing_is_jumping(t)) {
+    if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t)) {
       continue;
     }
 
