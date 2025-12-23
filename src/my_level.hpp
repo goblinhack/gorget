@@ -533,48 +533,38 @@ struct MyIter {
     for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                       \
       for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                    \
         for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
-          if (ThingId _id_ = 0; true)                                                                                \
-            if (Thingp _t_ = nullptr; true)                                                                          \
-              if ((_id_ = _l_->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                    \
-                if ((_t_ = thing_find(_g_, _v_, _id_)))
+          if (ThingId _id_ = 0; (_id_ = _l_->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                      \
+            if (Thingp _t_ = nullptr; (_t_ = thing_find(_g_, _v_, _id_)))
 
 #define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                  \
   if (_g_ && _v_ && _l_)                                                                                             \
     if (int _iter_index_ = 0; true)                                                                                  \
-      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                        \
+      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                      \
         for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                   \
           for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                \
             for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
-              if (ThingId _id_ = 0; true)                                                                            \
-                if (Thingp _t_ = nullptr; true)                                                                      \
-                  if ((_id_ = _l_->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                \
-                    if ((_t_ = thing_find(_g_, _v_, _id_)))                                                          \
-                      if (_t_->iter[ _iter_index_ ] != _v_->iter[ _iter_index_ ])                                    \
-                        if (((_t_->iter[ _iter_index_ ] = _v_->iter[ _iter_index_ ])) || 1)
+              if (ThingId _id_ = 0; (_id_ = _l_->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                  \
+                if (Thingp _t_ = nullptr; (_t_ = thing_find(_g_, _v_, _id_)))                                        \
+                  if (_t_->iter[ _iter_index_ ] != _v_->iter[ _iter_index_ ])                                        \
+                    if (((_t_->iter[ _iter_index_ ] = _v_->iter[ _iter_index_ ])) || 1)
 
-//
-// For all things at a specific location
-//
-// Unsafe here means that if things move around during processing, we could process
-// them more than once per loop
-//
 #define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                            \
   if (_g_ && _v_ && _l_)                                                                                             \
     if (spoint _at_ = make_spoint(_p_); true)                                                                        \
       if (! is_oob(_at_))                                                                                            \
-        if (Thingp _t_ = nullptr; true)                                                                              \
-          for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                        \
-            if ((_t_ = thing_find_optional(_g_, _v_, _l_->thing_id[ _at_.x ][ _at_.y ][ _slot_ ])))
+        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
+          if (ThingId _id_ = 0; (_id_ = _l_->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                                \
+            if (Thingp _t_ = nullptr; (_t_ = thing_find(_g_, _v_, _id_)))
 
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                   \
   if (_g_ && _v_ && _l_)                                                                                             \
-    if (int _iter_index_ = 0; true)                                                                                  \
-      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                        \
-        if (spoint _at_ = make_spoint(_p_); true)                                                                    \
-          if (! is_oob(_at_))                                                                                        \
-            if (Thingp _t_ = nullptr; true)                                                                          \
-              for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                    \
-                if ((_t_ = thing_find_optional(_g_, _v_, _l_->thing_id[ _at_.x ][ _at_.y ][ _slot_ ])))              \
+    if (spoint _at_ = make_spoint(_p_); true)                                                                        \
+      if (! is_oob(_at_))                                                                                            \
+        if (int _iter_index_ = 0; true)                                                                              \
+          if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                  \
+            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
+              if (ThingId _id_ = 0; (_id_ = _l_->thing_id[ _at_.x ][ _at_.y ][ _slot_ ]))                            \
+                if (Thingp _t_ = nullptr; (_t_ = thing_find(_g_, _v_, _id_)))                                        \
                   if (_t_->iter[ _iter_index_ ] != _v_->iter[ _iter_index_ ])                                        \
                     if (((_t_->iter[ _iter_index_ ] = _v_->iter[ _iter_index_ ])) || 1)
 

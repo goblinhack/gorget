@@ -70,4 +70,3 @@ MyIter::~MyIter()
   fprintf(stderr, "ITER %u %s:%u }\n", iter, func, line);
 #endif
 }
-
