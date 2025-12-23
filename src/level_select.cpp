@@ -479,7 +479,11 @@ static bool level_select_map_set(Gamep g, Levelsp v)
   //
   // Clean up all previous things
   //
-  FOR_ALL_THINGS_ON_LEVEL(g, v, level_select, t) { thing_fini(g, v, level_select, t); }
+  FOR_ALL_THINGS_ON_LEVEL(g, v, level_select, t)
+  {
+    // newline
+    thing_fini(g, v, level_select, t);
+  }
 
   memset(level_select->debug, ' ', SIZEOF(level_select->debug));
 

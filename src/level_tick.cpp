@@ -284,8 +284,8 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 
   const int player_speed = thing_speed(p);
 
-  if (0) {
-    TOPCON("dt %f", dt);
+  if (1) {
+    TOPCON("time_step %f dt %f", v->time_step, dt);
   }
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
@@ -299,13 +299,18 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     // speed 100  tick           tick
     // speed 50   tick
     //
-    if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t)) {
+    if (! thing_is_moving(t) && ! thing_is_jumping(t)) {
       continue;
     }
 
     float t_speed      = thing_speed(t);
     auto  old_thing_dt = t->thing_dt;
-    t->thing_dt += dt * (t_speed / (float) player_speed);
+
+    if (thing_is_projectile(t)) {
+      t->thing_dt = v->time_step;
+    } else {
+      t->thing_dt += dt * (t_speed / (float) player_speed);
+    }
 
     if (t->thing_dt >= 1.0) {
       t->thing_dt = 1.0;
@@ -313,16 +318,16 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
-    if (0) {
+    if (1) {
       if (thing_is_projectile(t)) {
-        THING_CON(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d iter %u",
+        THING_CON(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
                   dt,              // newline
                   old_thing_dt,    // newline
                   t->thing_dt,     // newline
                   thing_dt_change, // newline
                   thing_speed(t),  // newline
-                  player_speed,    // newline
-                  t->iter);
+                  player_speed     // newline
+        );
       }
     }
 
@@ -338,9 +343,6 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     if (t->thing_dt >= 0.99) { // dt increments can end up very close to 1
       t->thing_dt = 0.0;
 
-      //
-      // Projectiles keep on moving until they hit something
-      //
       thing_move_or_jump_finish(g, v, l, t);
 
       //
@@ -349,6 +351,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       thing_collision_handle(g, v, l, t);
     }
   }
+  CON("-");
 }
 
 static void level_tick_begin(Gamep g, Levelsp v, Levelp l)

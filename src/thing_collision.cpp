@@ -115,6 +115,13 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   TRACE_NO_INDENT();
 
   //
+  // Projectiles handled seperately.
+  //
+  if (thing_is_projectile(me)) {
+    return;
+  }
+
+  //
   // Handle player specific actions first, like leaving levels
   //
   if (thing_is_player(me)) {
@@ -135,20 +142,22 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 static bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B,
                                                 fpoint B_at)
 {
-  float A_radius = thing_is_collision_circle_small(A) ? 0.25 : 0.5;
-  float B_radius = thing_is_collision_circle_small(B) ? 0.25 : 0.5;
+  float A_radius = thing_collision_radius(A);
+  float B_radius = thing_collision_radius(B);
 
+#if 0
   if (! thing_is_projectile(A)) {
     A_at += fpoint(0.5, 0.5);
   }
   if (! thing_is_projectile(B)) {
     B_at += fpoint(0.5, 0.5);
   }
+#endif
 
   float touching_dist = A_radius + B_radius;
   float dist          = distance(A_at, B_at);
 
-  if (1) {
+  if (0) {
     THING_CON(A, "A %f,%f touching_dist %f dist %f ", A_at.x, A_at.y, touching_dist, dist);
     THING_CON(B, "B %f,%f", B_at.x, B_at.y);
   }
@@ -178,7 +187,7 @@ static bool thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp
                                                       fpoint o_at)
 {
   TRACE_NO_INDENT();
-  CON("%s", __FUNCTION__);
+  LOG("%s", __FUNCTION__);
   return false;
 }
 
@@ -193,7 +202,7 @@ static bool thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp
                                                       fpoint o_at)
 {
   TRACE_NO_INDENT();
-  CON("%s", __FUNCTION__);
+  LOG("%s", __FUNCTION__);
   return false;
 }
 
@@ -201,7 +210,7 @@ static bool thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, Th
                                                 fpoint o_at)
 {
   TRACE_NO_INDENT();
-  CON("%s", __FUNCTION__);
+  LOG("%s", __FUNCTION__);
   return false;
 }
 
@@ -213,6 +222,9 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 {
   TRACE_NO_INDENT();
 
+  if (0) {
+    THING_CON(me, "thing_collision_handle_interpolated");
+  }
   auto  at    = thing_real_at(me);
   auto  src   = thing_at(me);
   float dist  = distance(at, old_at);
@@ -294,11 +306,13 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
                 return (d1 < d2) && t1->_priority < t2->_priority;
               });
 
-    for (auto a_pair : pairs) {
-      auto o_dist = a_pair.first;
-      auto o      = a_pair.second;
+    if (0) {
+      for (auto a_pair : pairs) {
+        auto o_dist = a_pair.first;
+        auto o      = a_pair.second;
 
-      THING_CON(o, "distance %f prio %u", o_dist, o->_priority);
+        THING_CON(o, "distance %f prio %u", o_dist, o->_priority);
+      }
     }
 
     for (auto a_pair : pairs) {
@@ -310,5 +324,8 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         return;
       }
     }
+  }
+  if (0) {
+    CON("-");
   }
 }

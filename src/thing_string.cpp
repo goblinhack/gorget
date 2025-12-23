@@ -38,6 +38,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* thing_health                  */ " h%d"
                          /* name                          */ " %s"
                          /* is_dead                       */ "%s"
+                         /* is_moving                     */ "%s"
                          /* is_sleeping                   */ "%s"
                          /* is_falling                    */ "%s"
                          /* is_open                       */ "%s"
@@ -49,6 +50,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ t->tick,
                          /* newline */ thing_health(t),
                          /* newline */ name.c_str(),
+                         /* newline */ thing_is_moving(t) ? "/moving" : "",
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
                          /* newline */ thing_is_sleeping(t) ? "/slp" : "",
                          /* newline */ thing_is_falling(t) ? "/fal" : "",

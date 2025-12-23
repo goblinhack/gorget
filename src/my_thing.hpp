@@ -17,6 +17,8 @@
 #include <string>
 #include <vector>
 
+#define MY_ITERS_MAX 4
+
 //
 // Entropy is always > 0 for Thing IDs to distinguish them
 // A thing ID is composed as: [ Entropy bits ] [ ID bits ]
@@ -337,7 +339,7 @@ typedef struct Thing_ {
   //
   // Used to only tick things once per loop, even if they move slot
   //
-  uint32_t iter;
+  uint32_t iter[ MY_ITERS_MAX ];
   //
   // When this poor thing died.
   //
@@ -723,6 +725,7 @@ void   thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
 void   thing_update_pos(Gamep, Levelsp, Levelp, Thingp);
 void   thing_vision_reset(Gamep, Levelsp, Levelp, Thingp);
 void   thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
+float  thing_collision_radius(Thingp);
 // end sort marker1 }
 
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);

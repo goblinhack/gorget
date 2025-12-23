@@ -11,6 +11,7 @@
 #include "my_math.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_tp.hpp"
 
 void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const fpoint target)
 {
@@ -28,12 +29,13 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std
   float c;
   sincosf(angle, &s, &c);
 
-  fpoint at     = thing_real_at(me);
-  float  offset = 1.0;
+  auto   tp_what = tp_find_mand(what);
+  fpoint at      = thing_real_at(me);
+  float  offset  = thing_collision_radius(me) + tp_collision_radius(tp_what);
   at.x += c * offset;
   at.y += s * offset;
 
-  auto projectile = thing_spawn(g, v, l, tp_find_mand(what), at);
+  auto projectile = thing_spawn(g, v, l, tp_what, at);
   if (projectile) {
     projectile->angle = angle;
   }
@@ -62,7 +64,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
     return;
   }
 
-  auto tile_speed = (float) thing_speed(t) / thing_speed(player);
+  auto tile_speed = (float) thing_speed(t) / TICK_DURATION_MS;
   at.x += c * dt * tile_speed;
   at.y += s * dt * tile_speed;
 

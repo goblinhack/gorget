@@ -364,7 +364,7 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spo
 //
 Thingp level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov)
 {
-  FOR_ALL_THINGS_AT(g, v, l, it, pov)
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, pov)
   {
     //
     // Dead foliage should not block

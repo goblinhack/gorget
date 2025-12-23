@@ -25,7 +25,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     // Collect all things at this point into a vector
     //
     spoint p(x, y);
-    FOR_ALL_THINGS_AT(g, v, l, t, p)
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, t, p)
     {
       //
       // Ignore burnt grass for example
@@ -196,7 +196,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
     // Collect all things at this point into a vector
     //
     spoint p(x, y);
-    FOR_ALL_THINGS_AT(g, v, l, t, p)
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, t, p)
     {
       if (! thing_is_physics_temperature(t)) {
         continue;

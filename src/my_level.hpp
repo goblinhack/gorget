@@ -340,7 +340,11 @@ typedef struct Levels_ {
   //
   // Used to only tick things once per loop, even if they move slot
   //
-  uint32_t iter;
+  uint32_t iter[ MY_ITERS_MAX ];
+  //
+  // To catch iter nesting
+  //
+  uint8_t in_iter[ MY_ITERS_MAX ];
   //
   // Increments once per event loop.
   //
@@ -483,16 +487,29 @@ typedef struct Levels_ {
   //////////////////////////////////////////////////////////////
 } Levels;
 
+bool level_iter_begin(Gamep, Levelsp v, int *iter, const char *func, int line);
+bool level_iter_end(Gamep, Levelsp v, int iter, const char *func, int line);
+
+struct MyIter {
+  Levelsp     v;
+  int         iter;
+  const char *func;
+  int         line;
+
+  MyIter(Gamep, Levelsp, int *iter, const char *func, const unsigned short line);
+  ~MyIter();
+};
+
 #define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                \
   if (_g_ && _v_)                                                                                                    \
-    for (Levelp _l_ = nullptr, loop1 = (Levelp) 1; loop1 == (Levelp) 1; loop1 = (Levelp) 0)                          \
+    if (Levelp _l_ = nullptr; true)                                                                                  \
       for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                    \
         if ((_l_ = &v->level[ _n_ ]))                                                                                \
           if (_l_->is_initialized)
 
 #define FOR_ALL_TICKING_LEVELS(_g_, _v_, _l_)                                                                        \
   if (_g_ && _v_)                                                                                                    \
-    for (Levelp _l_ = nullptr, loop1 = (Levelp) 1; loop1 == (Levelp) 1; loop1 = (Levelp) 0)                          \
+    if (Levelp _l_ = nullptr; true)                                                                                  \
       for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                    \
         if ((_l_ = &v->level[ _n_ ]))                                                                                \
           if (_l_->is_tick_required)
@@ -508,45 +525,58 @@ typedef struct Levels_ {
 //
 // For all things on this level
 //
+// Unsafe here means that if things move around during processing, we could process
+// them more than once per loop
+//
+#define FOR_ALL_THINGS_ON_LEVEL_UNSAFE(_g_, _v_, _l_, _t_)                                                           \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                       \
+      for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                    \
+        for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                          \
+          if (ThingId _id_ = 0; true)                                                                                \
+            if (Thingp _t_ = nullptr; true)                                                                          \
+              if ((_id_ = _l_->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                    \
+                if ((_t_ = thing_find(_g_, _v_, _id_)))
+
 #define FOR_ALL_THINGS_ON_LEVEL(_g_, _v_, _l_, _t_)                                                                  \
   if (_g_ && _v_ && _l_)                                                                                             \
-    if ((++_v_->iter) || 1)                                                                                          \
-      for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                     \
-        for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                  \
-          for (ThingId _id_ = 0, loop1 = (ThingId) 1; loop1 == (ThingId) 1; loop1 = (ThingId) 0)                     \
-            for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                  \
-              for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                    \
-                if ((_id_ = _l_->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                  \
-                  if ((_t_ = thing_find(_g_, _v_, _id_)))                                                            \
-                    if (_t_->iter != _v_->iter)                                                                      \
-                      if (((_t_->iter = _v_->iter)) || 1)
+    if (int _iter_index_ = 0; true)                                                                                  \
+      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                        \
+        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                   \
+          for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                \
+            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
+              if (ThingId _id_ = 0; true)                                                                            \
+                if (Thingp _t_ = nullptr; true)                                                                      \
+                  if ((_id_ = _l_->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                                \
+                    if ((_t_ = thing_find(_g_, _v_, _id_)))                                                          \
+                      if (_t_->iter[ _iter_index_ ] != _v_->iter[ _iter_index_ ])                                    \
+                        if (((_t_->iter[ _iter_index_ ] = _v_->iter[ _iter_index_ ])) || 1)
 
 //
 // For all things at a specific location
 //
+// Unsafe here means that if things move around during processing, we could process
+// them more than once per loop
+//
+#define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                            \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    if (spoint _at_ = make_spoint(_p_); true)                                                                        \
+      if (! is_oob(_at_))                                                                                            \
+        if (Thingp _t_ = nullptr; true)                                                                              \
+          for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                        \
+            if ((_t_ = thing_find_optional(_g_, _v_, _l_->thing_id[ _at_.x ][ _at_.y ][ _slot_ ])))
+
 #define FOR_ALL_THINGS_AT(_g_, _v_, _l_, _t_, _p_)                                                                   \
   if (_g_ && _v_ && _l_)                                                                                             \
-    if ((++_v_->iter) || 1)                                                                                          \
-      for (spoint _at_ = make_spoint(_p_), loop1 = make_spoint(1, 1); loop1 == spoint(1, 1);                         \
-           loop1 = make_spoint(0, 0))                                                                                \
-        if (! is_oob(_at_))                                                                                          \
-          for (Thingp _t_ = nullptr, loop2 = (Thingp) 1; loop2 == (Thingp) 1; loop2 = (Thingp) 0)                    \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
-              if ((_t_ = thing_find_optional(_g_, _v_, _l_->thing_id[ _at_.x ][ _at_.y ][ _slot_ ])))                \
-                if (_t_->iter != _v_->iter)                                                                          \
-                  if (((_t_->iter = _v_->iter)) || 1)
-
-#define FOR_ALL_TPS_AT(_g_, _v_, _l_, _tp_, _p_)                                                                     \
-  if (_g_ && _v_ && _l_)                                                                                             \
-    if ((++_v_->iter) || 1)                                                                                          \
-      for (spoint _at_ = make_spoint(_p_), loop1 = make_spoint(1, 1); loop1 == spoint(1, 1);                         \
-           loop1 = make_spoint(0, 0))                                                                                \
-        for (Tpp _tp_ = nullptr, loop2 = (Tpp) 1; loop2 == (Tpp) 1; loop2 = (Tpp) 0)                                 \
-          for (Thingp _t_ = nullptr, loop3 = (Thingp) 1; loop3 == (Thingp) 1; loop3 = (Thingp) 0)                    \
-            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
-              if ((_t_ = thing_and_tp_get_at_safe(_g_, _v_, _l_, _at_, _slot_, &_tp_)))                              \
-                if (_t_->iter != _v_->iter)                                                                          \
-                  if (((_t_->iter = _v_->iter)) || 1)
+    if (int _iter_index_ = 0; true)                                                                                  \
+      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                        \
+        if (spoint _at_ = make_spoint(_p_); true)                                                                    \
+          if (! is_oob(_at_))                                                                                        \
+            if (Thingp _t_ = nullptr; true)                                                                          \
+              for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                    \
+                if ((_t_ = thing_find_optional(_g_, _v_, _l_->thing_id[ _at_.x ][ _at_.y ][ _slot_ ])))              \
+                  if (_t_->iter[ _iter_index_ ] != _v_->iter[ _iter_index_ ])                                        \
+                    if (((_t_->iter[ _iter_index_ ] = _v_->iter[ _iter_index_ ])) || 1)
 
 enum {
   CHANCE_VVV_UNLIKELY = 1,

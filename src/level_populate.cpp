@@ -295,7 +295,11 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, const char *in)
     return false;
   }
 
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_on_level_populated(g, v, l, t); }
+  FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, t)
+  {
+    // newline
+    thing_on_level_populated(g, v, l, t);
+  }
 
   level_count_items(g, v, l);
 

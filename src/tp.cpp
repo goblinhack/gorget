@@ -1530,3 +1530,10 @@ int tp_lifespan_max_get(Tpp tp)
   }
   return tp->lifespan.max_roll();
 }
+
+float tp_collision_radius(Tpp t)
+{
+  TRACE_NO_INDENT();
+
+  return tp_is_collision_circle_small(t) ? 0.25 : 0.5;
+}

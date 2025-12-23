@@ -224,7 +224,7 @@
       list_macro(is_unused90, "is_unused90"),                           /* newline */                                \
       list_macro(is_unused91, "is_unused91"),                           /* newline */                                \
       list_macro(is_unused92, "is_unused92"),                           /* newline */                                \
-      list_macro(is_dead_on_collision, "is_dead_on_collision"),                           /* newline */                                \
+      list_macro(is_dead_on_collision, "is_dead_on_collision"),         /* newline */                                \
       list_macro(is_obs_to_jumping_out_of, "is_obs_to_jumping_out_of"), /* newline */                                \
       list_macro(is_cursor_path_warning, "is_cursor_path_warning"),     /* newline */                                \
       list_macro(is_collision_circle_large, "is_collision_circle_large"), /* newline */                              \
@@ -464,7 +464,7 @@ int  tp_chance(Tpp, ThingChanceType);
 bool tp_chance_success(Tpp, ThingChanceType);
 bool tp_chance_fail(Tpp, ThingChanceType);
 
-TpId tp_id_get(Tpp tp);
+TpId tp_id_get(Tpp);
 Tpp  tp_find(TpId id);
 Tpp  tp_find_mand(const std::string &);
 Tpp  tp_find_opt(const std::string &);
@@ -497,10 +497,10 @@ int  tp_flag(Tpp, ThingFlag);
 void tp_flag_set(Tpp, ThingFlag, int val = 1);
 
 void    tp_z_depth_set(Tpp, MapZDepth val);
-uint8_t tp_z_depth_get(Tpp tp);
+uint8_t tp_z_depth_get(Tpp);
 
 void tp_speed_set(Tpp, int val);
-int  tp_speed_get(Tpp tp);
+int  tp_speed_get(Tpp);
 
 #define ONE_KG          1000
 #define WEIGHT_VVVHEAVY (ONE_KG * 1000)
@@ -514,116 +514,118 @@ int  tp_speed_get(Tpp tp);
 #define WEIGHT_NONE     (0)
 
 void tp_weight_set(Tpp, int val);
-int  tp_weight_get(Tpp tp);
+int  tp_weight_get(Tpp);
 
 void tp_health_set(Tpp, const std::string &val);
-int  tp_health_get(Tpp tp);
-int  tp_health_max_get(Tpp tp);
+int  tp_health_get(Tpp);
+int  tp_health_max_get(Tpp);
 
 void tp_temperature_initial_set(Tpp, int val);
-int  tp_temperature_initial_get(Tpp tp);
+int  tp_temperature_initial_get(Tpp);
 
 void tp_temperature_burns_at_set(Tpp, int val);
-int  tp_temperature_burns_at_get(Tpp tp);
+int  tp_temperature_burns_at_get(Tpp);
 
 void tp_temperature_damage_at_set(Tpp, int val);
-int  tp_temperature_damage_at_get(Tpp tp);
+int  tp_temperature_damage_at_get(Tpp);
 
 void tp_value1_set(Tpp, int val);
-int  tp_value1_get(Tpp tp);
+int  tp_value1_get(Tpp);
 
 void tp_value2_set(Tpp, int val);
-int  tp_value2_get(Tpp tp);
+int  tp_value2_get(Tpp);
 
 void tp_value3_set(Tpp, int val);
-int  tp_value3_get(Tpp tp);
+int  tp_value3_get(Tpp);
 
 void tp_value4_set(Tpp, int val);
-int  tp_value4_get(Tpp tp);
+int  tp_value4_get(Tpp);
 
 void tp_value5_set(Tpp, int val);
-int  tp_value5_get(Tpp tp);
+int  tp_value5_get(Tpp);
 
 void tp_value6_set(Tpp, int val);
-int  tp_value6_get(Tpp tp);
+int  tp_value6_get(Tpp);
 
 void tp_value7_set(Tpp, int val);
-int  tp_value7_get(Tpp tp);
+int  tp_value7_get(Tpp);
 
 void tp_value8_set(Tpp, int val);
-int  tp_value8_get(Tpp tp);
+int  tp_value8_get(Tpp);
 
 void tp_value9_set(Tpp, int val);
-int  tp_value9_get(Tpp tp);
+int  tp_value9_get(Tpp);
 
 void tp_value10_set(Tpp, int val);
-int  tp_value10_get(Tpp tp);
+int  tp_value10_get(Tpp);
 
 void tp_value11_set(Tpp, int val);
-int  tp_value11_get(Tpp tp);
+int  tp_value11_get(Tpp);
 
 void tp_value12_set(Tpp, int val);
-int  tp_value12_get(Tpp tp);
+int  tp_value12_get(Tpp);
 
 void tp_value13_set(Tpp, int val);
-int  tp_value13_get(Tpp tp);
+int  tp_value13_get(Tpp);
 
 void tp_value14_set(Tpp, int val);
-int  tp_value14_get(Tpp tp);
+int  tp_value14_get(Tpp);
 
 void tp_value15_set(Tpp, int val);
-int  tp_value15_get(Tpp tp);
+int  tp_value15_get(Tpp);
 
 void tp_value16_set(Tpp, int val);
-int  tp_value16_get(Tpp tp);
+int  tp_value16_get(Tpp);
 
 void tp_value17_set(Tpp, int val);
-int  tp_value17_get(Tpp tp);
+int  tp_value17_get(Tpp);
 
 void tp_value18_set(Tpp, int val);
-int  tp_value18_get(Tpp tp);
+int  tp_value18_get(Tpp);
 
 void tp_value19_set(Tpp, int val);
-int  tp_value19_get(Tpp tp);
+int  tp_value19_get(Tpp);
 
 void tp_value20_set(Tpp, int val);
-int  tp_value20_get(Tpp tp);
+int  tp_value20_get(Tpp);
 
 void tp_value21_set(Tpp, int val);
-int  tp_value21_get(Tpp tp);
+int  tp_value21_get(Tpp);
 
 void tp_value22_set(Tpp, int val);
-int  tp_value22_get(Tpp tp);
+int  tp_value22_get(Tpp);
 
 void tp_value23_set(Tpp, int val);
-int  tp_value23_get(Tpp tp);
+int  tp_value23_get(Tpp);
 
 void tp_value24_set(Tpp, int val);
-int  tp_value24_get(Tpp tp);
+int  tp_value24_get(Tpp);
 
 void tp_value25_set(Tpp, int val);
-int  tp_value25_get(Tpp tp);
+int  tp_value25_get(Tpp);
 
 void tp_value26_set(Tpp, int val);
-int  tp_value26_get(Tpp tp);
+int  tp_value26_get(Tpp);
 
 void              tp_priority_set(Tpp, ThingPriorityType val);
-ThingPriorityType tp_priority_get(Tpp tp);
+ThingPriorityType tp_priority_get(Tpp);
 
 void tp_vision_distance_set(Tpp, int val);
-int  tp_vision_distance_get(Tpp tp);
+int  tp_vision_distance_get(Tpp);
 
 void tp_jump_distance_set(Tpp, int val);
-int  tp_jump_distance_get(Tpp tp);
+int  tp_jump_distance_get(Tpp);
 
 void tp_lifespan_set(Tpp, const std::string &val);
-int  tp_lifespan_get(Tpp tp);
-int  tp_lifespan_max_get(Tpp tp);
+int  tp_lifespan_get(Tpp);
+int  tp_lifespan_max_get(Tpp);
 
 void tp_is_immunity_add(Tpp, ThingEventType);
 bool tp_is_immune_to(Tpp, ThingEventType);
 
-void tp_monst_group_add(Tpp tp, ThingMonstGroup);
+void tp_monst_group_add(Tpp, ThingMonstGroup);
+
+float tp_collision_radius(Tpp);
 
 // begin sort marker1 {
 #define tp_is_able_to_collect_items(tp)  tp_flag(tp, is_able_to_collect_items)
@@ -839,7 +841,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define tp_is_unused90(tp)               tp_flag(tp, is_unused90)
 #define tp_is_unused91(tp)               tp_flag(tp, is_unused91)
 #define tp_is_unused92(tp)               tp_flag(tp, is_unused92)
-#define tp_is_dead_on_collision(tp)               tp_flag(tp, is_dead_on_collision)
+#define tp_is_dead_on_collision(tp)      tp_flag(tp, is_dead_on_collision)
 #define tp_is_wait_on_dead_anim(tp)      tp_flag(tp, is_wait_on_dead_anim)
 #define tp_is_walk_through_walls(tp)     tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                   tp_flag(tp, is_wall)
@@ -1060,7 +1062,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_is_unused90(g, v, l, p)               level_flag(g, v, l, is_unused90, p)
 #define level_is_unused91(g, v, l, p)               level_flag(g, v, l, is_unused91, p)
 #define level_is_unused92(g, v, l, p)               level_flag(g, v, l, is_unused92, p)
-#define level_is_dead_on_collision(g, v, l, p)               level_flag(g, v, l, is_dead_on_collision, p)
+#define level_is_dead_on_collision(g, v, l, p)      level_flag(g, v, l, is_dead_on_collision, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)      level_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_is_walk_through_walls(g, v, l, p)     level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                   level_flag(g, v, l, is_wall, p)
@@ -1281,7 +1283,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_alive_is_unused90(g, v, l, p)               level_alive(g, v, l, is_unused90, p)
 #define level_alive_is_unused91(g, v, l, p)               level_alive(g, v, l, is_unused91, p)
 #define level_alive_is_unused92(g, v, l, p)               level_alive(g, v, l, is_unused92, p)
-#define level_alive_is_dead_on_collision(g, v, l, p)               level_alive(g, v, l, is_dead_on_collision, p)
+#define level_alive_is_dead_on_collision(g, v, l, p)      level_alive(g, v, l, is_dead_on_collision, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)      level_alive(g, v, l, is_wait_on_dead_anim, p)
 #define level_alive_is_walk_through_walls(g, v, l, p)     level_alive(g, v, l, is_walk_through_walls, p)
 #define level_alive_is_wall(g, v, l, p)                   level_alive(g, v, l, is_wall, p)
@@ -1502,7 +1504,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_count_is_unused90(g, v, l, p)               level_count(g, v, l, is_unused90, p)
 #define level_count_is_unused91(g, v, l, p)               level_count(g, v, l, is_unused91, p)
 #define level_count_is_unused92(g, v, l, p)               level_count(g, v, l, is_unused92, p)
-#define level_count_is_dead_on_collision(g, v, l, p)               level_count(g, v, l, is_dead_on_collision, p)
+#define level_count_is_dead_on_collision(g, v, l, p)      level_count(g, v, l, is_dead_on_collision, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)      level_count(g, v, l, is_wait_on_dead_anim, p)
 #define level_count_is_walk_through_walls(g, v, l, p)     level_count(g, v, l, is_walk_through_walls, p)
 #define level_count_is_wall(g, v, l, p)                   level_count(g, v, l, is_wall, p)
@@ -1723,7 +1725,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup);
 #define level_open_is_unused90(g, v, l, p)               level_open(g, v, l, is_unused90, p)
 #define level_open_is_unused91(g, v, l, p)               level_open(g, v, l, is_unused91, p)
 #define level_open_is_unused92(g, v, l, p)               level_open(g, v, l, is_unused92, p)
-#define level_open_is_dead_on_collision(g, v, l, p)               level_open(g, v, l, is_dead_on_collision, p)
+#define level_open_is_dead_on_collision(g, v, l, p)      level_open(g, v, l, is_dead_on_collision, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)      level_open(g, v, l, is_wait_on_dead_anim, p)
 #define level_open_is_walk_through_walls(g, v, l, p)     level_open(g, v, l, is_walk_through_walls, p)
 #define level_open_is_wall(g, v, l, p)                   level_open(g, v, l, is_wall, p)

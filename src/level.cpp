@@ -509,7 +509,11 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
   //
   // Remove all things
   //
-  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t) { thing_fini(g, v, l, t); }
+  FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
+  {
+    // newline
+    thing_fini(g, v, l, t);
+  }
 
   //
   // Clean up the level select snake walk
@@ -576,7 +580,7 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
 
-  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
       continue;
@@ -586,6 +590,7 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
       return it;
     }
   }
+
   return nullptr;
 }
 
@@ -608,7 +613,7 @@ Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
 
-  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
       continue;
@@ -622,6 +627,7 @@ Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
       return it;
     }
   }
+
   return nullptr;
 }
 
@@ -644,7 +650,7 @@ Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
 
-  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
       continue;
@@ -658,6 +664,7 @@ Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
       return it;
     }
   }
+
   return nullptr;
 }
 
@@ -682,7 +689,7 @@ int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 
   int count = 0;
 
-  FOR_ALL_THINGS_AT(g, v, l, it, p)
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
   {
     if (level_flag_filter(g, v, l, f, it)) {
       continue;
@@ -696,6 +703,7 @@ int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
       count++;
     }
   }
+
   return count;
 }
 

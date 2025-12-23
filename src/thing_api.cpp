@@ -4306,3 +4306,10 @@ int thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_age -= val;
 }
+
+float thing_collision_radius(Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return thing_is_collision_circle_small(t) ? 0.25 : 0.5;
+}
