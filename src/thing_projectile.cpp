@@ -23,7 +23,6 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std
     delta.x = 1;
   }
 
-  THING_CON(me, "fire");
   auto  angle = angle_radians(delta);
   float s;
   float c;
@@ -31,7 +30,12 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std
 
   auto   tp_what = tp_find_mand(what);
   fpoint at      = thing_real_at(me);
-  float  offset  = thing_collision_radius(me) + tp_collision_radius(tp_what);
+
+  //
+  // Need a small fraction to account for comparisons of very similar floats where
+  // we end up shooting the player upon firing
+  //
+  float offset = thing_collision_radius(me) + tp_collision_radius(tp_what) + 0.01;
   at.x += c * offset;
   at.y += s * offset;
 

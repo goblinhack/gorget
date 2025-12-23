@@ -1,12 +1,13 @@
 bugs
 ----
-projectile interpolated collisions
-tests for collecting items / potions
-melting walls and rock
-door damage from fireball
+projectile square 
+projectile damage types
 
 basic features
 --------------
+melting walls and rock
+door damage from fireball
+tests for collecting items / potions
 particles / slow fireball
 more wall types
 bushes quiver when monster is behind?

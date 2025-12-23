@@ -49,7 +49,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
 
   if (thing_is_projectile(me)) {
     auto source     = me;
-    auto event_type = THING_EVENT_EXPLOSION_DAMAGE;
+    auto event_type = THING_EVENT_FIRE_DAMAGE;
     auto damage     = tp_damage(thing_tp(source), event_type);
 
     ThingEvent e {
@@ -162,11 +162,11 @@ static bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Th
     THING_CON(B, "B %f,%f", B_at.x, B_at.y);
   }
 
-  if (dist < touching_dist) {
-    // Circles are touching
-    return true;
+  if (dist >= touching_dist) {
+    return false;
   }
-  return false;
+
+  return true;
 }
 
 static bool thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
@@ -306,7 +306,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
                 return (d1 < d2) && t1->_priority < t2->_priority;
               });
 
-    if (0) {
+    if (1) {
       for (auto a_pair : pairs) {
         auto o_dist = a_pair.first;
         auto o      = a_pair.second;
@@ -318,7 +318,6 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     for (auto a_pair : pairs) {
       auto o = a_pair.second;
 
-      CON("collision:");
       thing_collision_handle_thing(g, v, l, o, me);
       if (thing_is_dead(me)) {
         return;
