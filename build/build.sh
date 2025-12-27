@@ -537,10 +537,12 @@ WARNING_FLAGS+=-Wno-format-nonliteral
 # To silence #emded for clang
 #
 WARNING_FLAGS+=-Wno-c++23-extensions
+WARNING_FLAGS+=-Wno-c23-extensions
 #
 # To silence #emded for gcc
 #
 WARNING_FLAGS+=-Wno-c++26-extensions
+WARNING_FLAGS+=-Wno-c26-extensions
 #
 # A warning is generated if the precision of a value may change.
 #
@@ -576,6 +578,7 @@ if [ $? -eq 0 ]
 then
     echo "COMPILER_WARNINGS=\$(GCC_COMPILER_WARNINGS)" >> $MAKEFILE
     echo "CC=g++" >> $MAKEFILE
+    CC=g++
     GOT_CC=1
 fi
 
@@ -587,6 +590,7 @@ if [[ $OPT_GCC = "" ]]; then
     if [ $? -eq 0 ]; then
         echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> $MAKEFILE
         echo "CC=clang++" >> $MAKEFILE
+        CC=clang++
         GOT_CC=1
     fi
 fi
@@ -599,6 +603,7 @@ fi
 case "$MY_OS_NAME" in
     *MING*|*MSYS*)
         echo "CC=/${MSYS_PATH}/bin/clang++.exe" >> $MAKEFILE
+        CC=/${MSYS_PATH}/bin/clang++.exe
         #
         # To resolve WinMain, add these at the end again
         #
@@ -625,6 +630,9 @@ log_info "Cleaning"
 make clobber | sed 's/^/  /g'
 
 log_info "Game version               : $MYVER"
+
+log_info "Compiler version           :"
+$CC --version
 
 #
 # How many cores?
