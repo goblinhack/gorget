@@ -11,10 +11,15 @@ import re
 import os
 import sys
 import subprocess
+import os
 
 
 def is_old_clang_version():
-    check_clang = "clang++ --version | head -1 | sed -e 's/.* //g' -e 's/\\..*//g'"
+
+    if os.name == 'nt':
+        return False
+
+    check_clang = "clang++ --version | head -1 | sed -e 's/ (.*//g' -e 's/.* //g' -e 's/\\..*//g'"
     try:
         result = subprocess.check_output(check_clang,
                                          shell=True,
