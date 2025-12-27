@@ -534,9 +534,13 @@ WARNING_FLAGS+=-Wformat=2
 #
 WARNING_FLAGS+=-Wno-format-nonliteral
 #
-# To silence #emded
+# To silence #emded for clang
 #
-WARNING_FLAGS+=-Wno-c23-extensions
+WARNING_FLAGS+=-Wno-c++23-extensions
+#
+# To silence #emded for gcc
+#
+WARNING_FLAGS+=-Wno-c++26-extensions
 #
 # A warning is generated if the precision of a value may change.
 #
