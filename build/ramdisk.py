@@ -10,6 +10,27 @@ import pathlib
 import re
 import os
 import sys
+import subprocess
+
+
+def is_old_clang_version():
+    check_clang = "clang++ --version | head -1 | sed -e 's/.* //g' -e 's/\\..*//g'"
+    try:
+        result = subprocess.check_output(check_clang,
+                                         shell=True,
+                                         executable="/bin/bash",
+                                         stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as cpe:
+        result = cpe.output
+    finally:
+        for line in result.splitlines():
+            print(line.decode())
+            version = int(line.decode())
+            if (version < 21):
+                return True
+            else:
+                return False
+
 
 number_of_files_to_add_to_ramdisk = 0
 number_of_ramdisk_files = 10
@@ -98,6 +119,39 @@ for filepath in root.rglob(r"data/music/*.ogg"):
     files[filepath.parent].append(filepath.name)
     number_of_files_to_add_to_ramdisk += 1
 
+if is_old_clang_version():
+    for ram_file in range(number_of_ramdisk_files):
+        with open("src/ramdisk_data_{}.S".format(ram_file), "w") as myfile:
+            myfile.write("// Ramdisk data for files that due to licensing cannot be exposed\n\n")
+
+    asm_count = 0
+    for record_number, (folder, filenames) in enumerate(sorted(files.items())):
+        for filename in enumerate(filenames):
+            ram_file = asm_count % number_of_ramdisk_files
+            asm_count += 1
+
+            rec, orig_filename = filename
+            c_filename = re.sub(r'[\-\.]', "_", orig_filename)
+            rel_path_filename = os.path.join(folder, orig_filename)
+
+            with open("src/ramdisk_data_{}.S".format(ram_file), "a") as myfile:
+                myfile.write(".align 4\n")
+                myfile.write(".globl data_{}_start_\n".format(c_filename))
+                myfile.write("data_{}_start_:\n".format(c_filename))
+                myfile.write('.incbin "../{}"\n'.format(rel_path_filename))
+                myfile.write(".align 4\n")
+                myfile.write(".globl data_{}_end_\n".format(c_filename))
+                myfile.write("data_{}_end_:\n".format(c_filename))
+                myfile.write("\n")
+
+    #
+    # This weird thing appears harmless but is a warning. Not sure how to check for it.
+    #
+    if sys.platform == "linux":
+        for ram_file in range(number_of_ramdisk_files):
+            with open("src/ramdisk_data_{}.S".format(ram_file), "a") as myfile:
+                myfile.write("\n.section .note.GNU-stack,\"\",%progbits\n")
+
 #
 # This file references the assembly above to allow for easy loading of
 # the files
@@ -109,11 +163,11 @@ with open("src/ramdisk_data.cpp", "w") as myfile:
     myfile.write("void ramdisk_init (void)\n")
     myfile.write("{\n")
 
-    count = 0
+    cpp_count = 0
     for record_number, (folder, filenames) in enumerate(sorted(files.items())):
         for filename in enumerate(filenames):
-            ram_file = count % number_of_ramdisk_files
-            count += 1
+            ram_file = cpp_count % number_of_ramdisk_files
+            cpp_count += 1
 
             rec, orig_filename = filename
             c_filename = re.sub(r'[\-\.]', "_", orig_filename)
