@@ -538,14 +538,9 @@ WARNING_FLAGS+=-Wno-format-nonliteral
 #
 WARNING_FLAGS+=-Wno-c23-extensions # needed on macos clang build
 #
-# To silence #emded
-#
-#WARNING_FLAGS+=-Wno-c++26-extensions
-#
 # A warning is generated if the precision of a value may change.
 #
 WARNING_FLAGS+=-Wfloat-conversion
-WARNING_FLAGS+=-Wno-unknown-warning-option
 
 #
 # Clang specific
