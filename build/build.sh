@@ -497,7 +497,7 @@ fi
 log_info "LLVM path                  : $LLVM_PATH/bin"
 
 cat >>$MAKEFILE <<%%
-CPP_STANDARD=-std=c++23
+CPP_STANDARD=-std=c++26
 
 WARNING_FLAGS=-Wall -Wextra -Wpedantic
 #
@@ -568,7 +568,7 @@ CLANG_WARNING_FLAGS+=-Wuninitialized=verbose
 #
 CLANG_WARNING_FLAGS+=-Wno-vla-extension
 
-GCC_COMPILER_WARNINGS=\${WARNING_FLAGS} \${CPP_STANDARD} $GCC_STACK_CHECK
+GCC_COMPILER_WARNINGS=\${CPP_STANDARD} \${WARNING_FLAGS} $GCC_STACK_CHECK
 LDFLAGS=$LDFLAGS
 %%
 
@@ -629,6 +629,12 @@ log_info "LDLIBS                     : $LDLIBS"
 #
 log_info "Cleaning"
 make clobber | sed 's/^/  /g'
+
+log_info "OS version                 :"
+cat /etc/*-release 2>/dev/null
+lsb_release -a 2>/dev/null
+cat /proc/version 2>/dev/null
+uname -a
 
 log_info "Game version               : $MYVER"
 
