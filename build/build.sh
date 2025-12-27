@@ -418,6 +418,7 @@ else
 fi
 
 if [[ $OPT_GITHUB_BUILD != "" ]]; then
+    bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
     C_FLAGS+=" -D_GITHUB_BUILD_"
 fi
 
