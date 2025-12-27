@@ -10,15 +10,15 @@
 
 static int g_iter;
 
-MyIter::MyIter(Gamep g, Levelsp v, int *out_iter, const char *func, const unsigned short line)
+MyIter::MyIter(Gamep g, Levelsp _v, int *out_iter, const char *_func, const unsigned short _line)
 {
   if (g_thread_id != -1) {
     DIE("using iterator, but not on main thread, thread=%d", g_thread_id);
   }
 
-  this->v    = v;
-  this->func = func;
-  this->line = line;
+  this->v    = _v;
+  this->func = _func;
+  this->line = _line;
 
   iter = *out_iter = g_iter++;
 
