@@ -497,6 +497,8 @@ fi
 log_info "LLVM path                  : $LLVM_PATH/bin"
 
 cat >>$MAKEFILE <<%%
+CPP_STANDARD=-std=c++23
+
 WARNING_FLAGS=-Wall -Wextra -Wpedantic
 #
 # Additional warnings for uninitialized variables; seem to be gcc only
@@ -532,6 +534,10 @@ WARNING_FLAGS+=-Wformat=2
 #
 WARNING_FLAGS+=-Wno-format-nonliteral
 #
+# To silence #emded
+#
+WARNING_FLAGS+=-Wno-c23-extensions
+#
 # A warning is generated if the precision of a value may change.
 #
 WARNING_FLAGS+=-Wfloat-conversion
@@ -539,7 +545,7 @@ WARNING_FLAGS+=-Wfloat-conversion
 #
 # Clang specific
 #
-CLANG_COMPILER_WARNINGS+=\${WARNING_FLAGS} -std=c++23
+CLANG_COMPILER_WARNINGS+=\${WARNING_FLAGS} \${CPP_STANDARD}
 
 #
 # Don't fail if a compiler option is unknown
@@ -555,7 +561,7 @@ CLANG_WARNING_FLAGS+=-Wuninitialized=verbose
 #
 CLANG_WARNING_FLAGS+=-Wno-vla-extension
 
-GCC_COMPILER_WARNINGS=\${WARNING_FLAGS} -std=c++23 $GCC_STACK_CHECK
+GCC_COMPILER_WARNINGS=\${WARNING_FLAGS} \${CPP_STANDARD} $GCC_STACK_CHECK
 LDFLAGS=$LDFLAGS
 %%
 

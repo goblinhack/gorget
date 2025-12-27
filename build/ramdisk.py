@@ -17,9 +17,9 @@ number_of_ramdisk_files = 10
 root = pathlib.Path(".")
 
 if sys.platform == 'win32':
-    target="gorget.exe"
+    target = "gorget.exe"
 else:
-    target="gorget"
+    target = "gorget"
 
 #
 # If the make target exists, see if any graphics are newer than the
@@ -98,39 +98,6 @@ for filepath in root.rglob(r"data/music/*.ogg"):
     files[filepath.parent].append(filepath.name)
     number_of_files_to_add_to_ramdisk += 1
 
-
-for ram_file in range(number_of_ramdisk_files):
-    with open("src/ramdisk_data_{}.S".format(ram_file), "w") as myfile:
-        myfile.write("// Ramdisk data for files that due to licensing cannot be exposed\n\n")
-
-count = 0
-for record_number, (folder, filenames) in enumerate(sorted(files.items())):
-    for filename in enumerate(filenames):
-        ram_file = count % number_of_ramdisk_files
-        count += 1
-
-        rec, orig_filename = filename
-        c_filename = re.sub(r'[\-\.]', "_", orig_filename)
-        rel_path_filename = os.path.join(folder, orig_filename)
-
-        with open("src/ramdisk_data_{}.S".format(ram_file), "a") as myfile:
-            myfile.write(".align 4\n")
-            myfile.write(".globl data_{}_start_\n".format(c_filename))
-            myfile.write("data_{}_start_:\n".format(c_filename))
-            myfile.write('.incbin "../{}"\n'.format(rel_path_filename))
-            myfile.write(".align 4\n")
-            myfile.write(".globl data_{}_end_\n".format(c_filename))
-            myfile.write("data_{}_end_:\n".format(c_filename))
-            myfile.write("\n")
-
-#
-# This weird thing appears harmless but is a warning. Not sure how to check for it.
-#
-if sys.platform == "linux":
-    for ram_file in range(number_of_ramdisk_files):
-        with open("src/ramdisk_data_{}.S".format(ram_file), "a") as myfile:
-            myfile.write("\n.section .note.GNU-stack,\"\",%progbits\n")
-
 #
 # This file references the assembly above to allow for easy loading of
 # the files
@@ -153,13 +120,10 @@ with open("src/ramdisk_data.cpp", "w") as myfile:
             rel_path_filename = os.path.join(folder, orig_filename)
 
             myfile.write("    {\n")
-            myfile.write('        extern unsigned char *data_{}_start_\n           asm("data_{}_start_");\n'.format(c_filename, c_filename))
-            myfile.write('        extern unsigned char *data_{}_end_\n           asm("data_{}_end_");\n'.format(c_filename, c_filename))
-            myfile.write("        static const unsigned char *start =\n           (const unsigned char *) (char*)&data_{}_start_;\n".format(c_filename))
-            myfile.write("        static const unsigned char *end   =\n           (const unsigned char *) (char*)&data_{}_end_;\n".format(c_filename))
+            myfile.write("        static const uint8_t start [] = {{\n#embed \"../{}\"\n}};\n".format(rel_path_filename))
             myfile.write("        ramdisk_t r;\n")
             myfile.write("        r.data = start;\n")
-            myfile.write("        r.len = end - start;\n")
+            myfile.write("        r.len = sizeof(start);\n")
             myfile.write('        ramdisk_data["{}"] = r;\n'.format(rel_path_filename))
             myfile.write("    }\n")
             myfile.write("\n")
