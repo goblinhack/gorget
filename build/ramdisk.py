@@ -11,7 +11,6 @@ import re
 import os
 import sys
 import subprocess
-import os
 
 
 def is_old_clang_version():
@@ -184,7 +183,6 @@ with open("src/ramdisk_data.cpp", "w") as myfile:
             myfile.write("        ramdisk_t r;\n")
             myfile.write("        r.data = start;\n")
             myfile.write("        r.len = sizeof(start);\n")
-            myfile.write('        ramdisk_data["{}"] = r;\n'.format(rel_path_filename))
             myfile.write("#else\n")
             myfile.write('        extern unsigned char *data_{}_start_\n           asm("data_{}_start_");\n'.format(c_filename, c_filename))
             myfile.write('        extern unsigned char *data_{}_end_\n           asm("data_{}_end_");\n'.format(c_filename, c_filename))
@@ -193,8 +191,8 @@ with open("src/ramdisk_data.cpp", "w") as myfile:
             myfile.write("        ramdisk_t r;\n")
             myfile.write("        r.data = start;\n")
             myfile.write("        r.len = end - start;\n")
-            myfile.write('        ramdisk_data["{}"] = r;\n'.format(rel_path_filename))
             myfile.write("#endif\n")
+            myfile.write('        ramdisk_data["{}"] = r;\n'.format(rel_path_filename))
             myfile.write("    }\n")
             myfile.write("\n")
 

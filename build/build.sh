@@ -542,7 +542,7 @@ WARNING_FLAGS+=-Wno-c23-extensions
 # To silence #emded
 #
 WARNING_FLAGS+=-Wno-c++26-extensions
-WARNING_FLAGS+=-Wno-c26-extensions
+#WARNING_FLAGS+=-Wno-c26-extensions
 #
 # A warning is generated if the precision of a value may change.
 #
