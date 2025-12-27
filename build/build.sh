@@ -547,6 +547,7 @@ WARNING_FLAGS+=-Wno-c26-extensions
 # A warning is generated if the precision of a value may change.
 #
 WARNING_FLAGS+=-Wfloat-conversion
+WARNING_FLAGS+=-Wno-unknown-warning-option
 
 #
 # Clang specific
