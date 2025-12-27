@@ -27,7 +27,8 @@ obj_name = $(addsuffix .o,$(subst /,__,$(subst ../,,$(basename $1))))
 # recursively search all src/ subdirectories for cpp source files
 CPP_SOURCES := $(subst ./,,$(shell find $(SRC_DIR) -name \*.cpp -not -path "*3rdparty*"))
 CPP_3RD_PARTY_SOURCES := $(subst ./,,$(shell find $(SRC_DIR)/3rdparty -name \*.cpp))
-SOURCES := $(CPP_3RD_PARTY_SOURCES) $(CPP_SOURCES)
+ASM_SOURCES := $(wildcard *.S)
+SOURCES := $(CPP_3RD_PARTY_SOURCES) $(CPP_SOURCES) $(ASM_SOURCES)
 
 OBJECTS := $(call obj_name,$(SOURCES))
 OBJ_FILES := $(addprefix $(BUILD_DIR)/,$(OBJECTS))
@@ -74,6 +75,10 @@ $(foreach x,$(CPP_3RD_PARTY_SOURCES),\
 $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
   $(CC) $(CFLAGS) -c -o $$@ $$<))
 
+$(foreach x,$(ASM_SOURCES),\
+$(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
+  $(CC) $(CFLAGS) -c -o $$@ $$<))
+
 # use file list instead of wildcard for link command so we don't accidentally
 # link with old object files for removed source files
 $(TARGET_GAME): $(OBJ_FILES)
@@ -95,7 +100,7 @@ clean:
 	@([ -d "$(BUILD_DIR)" ] && rmdir $(BUILD_DIR) 2>/dev/null) || true
 
 clobber: clean
-	rm -f ramdisk_data.cpp $(wildcard *.gch) 
+	rm -f ramdisk_data.cpp $(wildcard ramdisk_data*.S) $(wildcard *.gch)
 
 # delete corresponding object file if dependency file needs regeneration
 $(BUILD_DIR)/%.d: ; @rm -f "$(@:.d=.o)"

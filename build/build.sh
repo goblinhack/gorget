@@ -418,7 +418,6 @@ else
 fi
 
 if [[ $OPT_GITHUB_BUILD != "" ]]; then
-    sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
     C_FLAGS+=" -D_GITHUB_BUILD_"
 fi
 
@@ -537,13 +536,13 @@ WARNING_FLAGS+=-Wno-format-nonliteral
 #
 # To silence #emded for clang
 #
-WARNING_FLAGS+=-Wno-c++23-extensions
-WARNING_FLAGS+=-Wno-c23-extensions
+#WARNING_FLAGS+=-Wno-c++23-extensions
+#WARNING_FLAGS+=-Wno-c23-extensions
 #
-# To silence #emded for gcc
+# To silence #emded
 #
 WARNING_FLAGS+=-Wno-c++26-extensions
-WARNING_FLAGS+=-Wno-c26-extensions
+#WARNING_FLAGS+=-Wno-c26-extensions
 #
 # A warning is generated if the precision of a value may change.
 #
