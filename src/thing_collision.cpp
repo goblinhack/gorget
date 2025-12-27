@@ -7,6 +7,8 @@
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 
+#include <algorithm>
+
 //
 // Handle interactions for a thing at its location with a dead thing
 //

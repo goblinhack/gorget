@@ -7,8 +7,8 @@
 #define _MY_CPP_TEMPLATE_HPP_
 
 #include "my_random.hpp"
-#include <algorithm> // for std::transform()
 #include <map>
+#include <stdlib.h>
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
 
@@ -69,36 +69,6 @@ T rand_one_of(C< T > &c)
   }
 
   return *(so + (rand() % sz));
-}
-
-// https://stackoverflow.com/questions/5056645/sorting-stdmap-using-value
-// flips an associative container of A,B pairs to B,A pairs
-template < typename A, typename B > std::pair< B, A > flip_pair(const std::pair< A, B > &p)
-{
-  return std::pair< B, A >(p.second, p.first);
-}
-
-template < typename A, typename B, template < class, class, class... > class M, class... Args >
-std::multimap< B, A > flip_map(const M< A, B, Args... > &src)
-{
-  std::multimap< B, A > dst;
-  std::transform(src.begin(), src.end(), std::inserter(dst, dst.begin()), flip_pair< A, B >);
-  return dst;
-}
-
-template < typename T > size_t len(const T &a)
-{
-  return sizeof(T) / sizeof(typename std::remove_all_extents< T >::type);
-}
-
-// https://stackoverflow.com/questions/26948099/stdcopy-for-multidimensional-arrays
-template < typename T > typename std::remove_all_extents< T >::type *mbegin(T &arr)
-{
-  return reinterpret_cast< typename std::remove_all_extents< T >::type * >(&arr);
-}
-template < typename T > typename std::remove_all_extents< T >::type *mend(T &arr)
-{
-  return reinterpret_cast< typename std::remove_all_extents< T >::type * >(&arr) + len(arr);
 }
 
 #endif

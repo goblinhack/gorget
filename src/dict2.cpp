@@ -5,6 +5,8 @@
 #include "my_callstack.hpp"
 #include "my_random.hpp"
 
+#include <stdlib.h>
+
 //
 // These are the second words in a seed name
 //

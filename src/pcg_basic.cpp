@@ -32,7 +32,9 @@
 #include "my_main.hpp"
 #include "my_source_loc.hpp"
 
-int pcg_lock_count; // No pcg random numbers allowed here
+#include <stdlib.h>
+
+static int pcg_lock_count; // No pcg random numbers allowed here
 
 struct pcg_state_setseq_64 { // Internals are *Private*.
   uint64_t state;            // RNG state.  All values are possible.
@@ -140,4 +142,14 @@ uint32_t pcg32_boundedrand(const char *func, int line, uint32_t bound)
     LOG("%s:%u -> %u", func, line, out);
   }
   return out;
+}
+
+void game_pcg_lock(void) { pcg_lock_count++; }
+
+void game_pcg_unlock(void)
+{
+  if (! pcg_lock_count) {
+    DIE("pcg lock count error");
+  }
+  pcg_lock_count--;
 }

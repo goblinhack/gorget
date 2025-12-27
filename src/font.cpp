@@ -7,6 +7,7 @@
 #include "my_globals.hpp"
 #include "my_main.hpp"
 
+#include <stdlib.h>
 #include <unordered_map>
 
 Fontp font_ui;

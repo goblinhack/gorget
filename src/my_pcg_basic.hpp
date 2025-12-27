@@ -47,16 +47,7 @@ extern uint32_t pcg32_random(const char *, int);
 extern uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound);
 extern uint32_t pcg32_boundedrand(const char *, int, uint32_t bound);
 
-extern int pcg_lock_count; // No pcg random numbers allowed here
-                           //
-static inline void game_pcg_lock(void) { pcg_lock_count++; }
-
-static inline void game_pcg_unlock(void)
-{
-  if (! pcg_lock_count) {
-    DIE("pcg lock count error");
-  }
-  pcg_lock_count--;
-}
+void game_pcg_lock(void);
+void game_pcg_unlock(void);
 
 #endif // PCG_BASIC_HPP_INCLUDED

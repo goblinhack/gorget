@@ -539,7 +539,7 @@ WARNING_FLAGS+=-Wfloat-conversion
 #
 # Clang specific
 #
-CLANG_COMPILER_WARNINGS+=\${WARNING_FLAGS} -std=c++2a
+CLANG_COMPILER_WARNINGS+=\${WARNING_FLAGS} -std=c++23
 
 #
 # Don't fail if a compiler option is unknown
@@ -555,7 +555,7 @@ CLANG_WARNING_FLAGS+=-Wuninitialized=verbose
 #
 CLANG_WARNING_FLAGS+=-Wno-vla-extension
 
-GCC_COMPILER_WARNINGS=\${WARNING_FLAGS} -std=c++2a $GCC_STACK_CHECK
+GCC_COMPILER_WARNINGS=\${WARNING_FLAGS} -std=c++23 $GCC_STACK_CHECK
 LDFLAGS=$LDFLAGS
 %%
 

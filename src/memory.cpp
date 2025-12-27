@@ -7,6 +7,7 @@
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 
+#include <stdlib.h>
 #include <string.h>
 
 void *myzalloc_(int size, const char *what, const char *file, const char *func, int line)

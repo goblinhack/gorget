@@ -8,6 +8,7 @@
 
 #include "math.h"
 
+#include <algorithm>
 #include <set>
 #include <vector>
 

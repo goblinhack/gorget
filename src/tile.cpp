@@ -82,7 +82,7 @@ public:
   class Tex *tex_mask {};
   class Tex *tex_outline {};
 
-  std::array< std::array< uint8_t, TILE_HEIGHT_MAX >, TILE_WIDTH_MAX > pix {};
+  uint8_t pix[ TILE_WIDTH_MAX ][ TILE_HEIGHT_MAX ];
 
   //
   // Delay in ms between frames.
@@ -181,7 +181,7 @@ Tile::Tile(const class Tile *tile)
   tex_mask       = tile->tex_mask;
   tex_outline    = tile->tex_outline;
 
-  std::copy(mbegin(tile->pix), mend(tile->pix), mbegin(pix));
+  memcpy(pix, tile->pix, sizeof(pix));
 
   delay_ms                  = tile->delay_ms;
   dir                       = tile->dir;
