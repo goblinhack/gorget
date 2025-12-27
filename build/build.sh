@@ -536,8 +536,8 @@ WARNING_FLAGS+=-Wno-format-nonliteral
 #
 # To silence #emded for clang
 #
-WARNING_FLAGS+=-Wno-c++23-extensions
-#WARNING_FLAGS+=-Wno-c23-extensions
+#WARNING_FLAGS+=-Wno-c++23-extensions
+WARNING_FLAGS+=-Wno-c23-extensions
 #
 # To silence #emded
 #
