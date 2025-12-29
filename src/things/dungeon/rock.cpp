@@ -16,6 +16,7 @@ bool tp_load_rock(void)
     std::string name = "rock" + std::to_string(variant);
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {
+    tp_variant_set(tp, variant);
     tp_flag_set(tp, is_blit_if_has_seen);
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);

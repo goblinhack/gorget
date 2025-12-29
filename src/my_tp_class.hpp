@@ -125,7 +125,7 @@ public:
   int value23 {0};
   int value24 {0};
   int value25 {0};
-  int value26 {0};
+  int variant {0};
 
   //
   // Lifespan in ticks. -1 is forever.

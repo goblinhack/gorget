@@ -48,42 +48,45 @@ bool tp_load_door_secret(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("door_secret"); // keep as string for scripts
-  auto name = tp_name(tp);
-  // begin sort marker1 {
-  thing_description_set(tp, tp_door_secret_description_get);
-  thing_on_open_request_set(tp, tp_door_secret_on_open_request);
-  tp_flag_set(tp, is_blit_if_has_seen);
-  tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_blit_shown_in_overlay);
-  tp_flag_set(tp, is_collision_square);
-  tp_flag_set(tp, is_described_cursor);
-  tp_flag_set(tp, is_door_secret);
-  tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_obs_to_cursor_path);
-  tp_flag_set(tp, is_obs_to_explosion);
-  tp_flag_set(tp, is_obs_to_falling_onto);
-  tp_flag_set(tp, is_obs_to_fire);
-  tp_flag_set(tp, is_obs_to_jumping_onto);
-  tp_flag_set(tp, is_obs_to_vision);
-  tp_flag_set(tp, is_openable);
-  tp_flag_set(tp, is_physics_explosion);
-  tp_flag_set(tp, is_physics_temperature);
-  tp_flag_set(tp, is_teleport_blocked);
-  tp_flag_set(tp, is_tickable);
-  tp_health_set(tp, "200");
-  tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
-  tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
-  tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
-  tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, "secret door");
-  tp_priority_set(tp, THING_PRIORITY_OBJECT);
-  tp_weight_set(tp, WEIGHT_VHEAVY); // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
-  // end sort marker1 }
+  for (auto variant = 1; variant <= 2; variant++) {
+    std::string name = "door_secret" + std::to_string(variant);
+    auto        tp   = tp_load(name.c_str());
+    // begin sort marker1 {
+    tp_variant_set(tp, variant);
+    thing_description_set(tp, tp_door_secret_description_get);
+    thing_on_open_request_set(tp, tp_door_secret_on_open_request);
+    tp_flag_set(tp, is_blit_if_has_seen);
+    tp_flag_set(tp, is_blit_shown_in_chasms);
+    tp_flag_set(tp, is_blit_shown_in_overlay);
+    tp_flag_set(tp, is_collision_square);
+    tp_flag_set(tp, is_described_cursor);
+    tp_flag_set(tp, is_door_secret);
+    tp_flag_set(tp, is_loggable);
+    tp_flag_set(tp, is_obs_to_cursor_path);
+    tp_flag_set(tp, is_obs_to_explosion);
+    tp_flag_set(tp, is_obs_to_falling_onto);
+    tp_flag_set(tp, is_obs_to_fire);
+    tp_flag_set(tp, is_obs_to_jumping_onto);
+    tp_flag_set(tp, is_obs_to_vision);
+    tp_flag_set(tp, is_openable);
+    tp_flag_set(tp, is_physics_explosion);
+    tp_flag_set(tp, is_physics_temperature);
+    tp_flag_set(tp, is_teleport_blocked);
+    tp_flag_set(tp, is_tickable);
+    tp_health_set(tp, "200");
+    tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
+    tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
+    tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
+    tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
+    tp_long_name_set(tp, "secret door");
+    tp_priority_set(tp, THING_PRIORITY_OBJECT);
+    tp_weight_set(tp, WEIGHT_VHEAVY); // grams
+    tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+    // end sort marker1 }
 
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("door_secret.idle.0"));
-  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("door_secret.open.0"));
+    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand(name + ".idle.0"));
+    tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand(name + ".open.0"));
+  }
 
   return true;
 }

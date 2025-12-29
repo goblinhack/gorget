@@ -24,7 +24,13 @@
 std::initializer_list< std::string > tps = {
     // clang-format off
     "", // ID 0 means unused
+    "floor1",
+    "floor2",
+    "floor3",
+    "door_secret1",
+    "door_secret2",
     "wall1",
+    "wall2",
     "rock1",
     "player",
     /* begin shell marker1 */
@@ -43,14 +49,12 @@ std::initializer_list< std::string > tps = {
     "deep_water",
     "dirt",
     "door_locked",
-    "door_secret",
     "door_unlocked",
     "entrance",
     "exit",
     "explosion",
     "fire",
     "fireball",
-    "floor",
     "foliage",
     "ghost_mob",
     "ghost",
@@ -358,6 +362,21 @@ Tpp tp_random(ThingFlag f)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_flag_vec[ f ]);
+}
+
+Tpp tp_variant(ThingFlag f, int variant)
+{
+  TRACE_NO_INDENT();
+
+  for (auto i = 0; i < (int) tp_flag_vec[ f ].size(); i++) {
+    auto tp = tp_flag_vec[ f ][ i ];
+    if (tp_variant_get(tp) == variant) {
+      return tp;
+    }
+  }
+
+  ERR("tp_variant: failed to find %d/%s variant %d", f, ThingFlag_to_c_str(f), variant);
+  return nullptr;
 }
 
 Tpp tp_first(ThingFlag f)
@@ -1422,24 +1441,24 @@ int tp_value25_get(Tpp tp)
   return tp->value25;
 }
 
-void tp_value26_set(Tpp tp, int val)
+void tp_variant_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->value26 = val;
+  tp->variant = val;
 }
 
-int tp_value26_get(Tpp tp)
+int tp_variant_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return 0;
   }
-  return tp->value26;
+  return tp->variant;
 }
 
 void tp_priority_set(Tpp tp, ThingPriorityType val)

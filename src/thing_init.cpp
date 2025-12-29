@@ -97,7 +97,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   thing_value23_set(g, v, l, t, tp_value23_get(tp));
   thing_value24_set(g, v, l, t, tp_value24_get(tp));
   thing_value25_set(g, v, l, t, tp_value25_get(tp));
-  thing_value26_set(g, v, l, t, tp_value26_get(tp));
+  thing_variant_set(g, v, l, t, tp_variant_get(tp));
   thing_priority_set(g, v, l, t, tp_priority_get(tp));
 
   //

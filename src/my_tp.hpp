@@ -472,6 +472,7 @@ Tpp  tp_find_opt(const std::string &);
 Tpp string2tp(const char **s, int *len = nullptr);
 Tpp tp_load(const std::string &);
 Tpp tp_random(ThingFlag);
+Tpp tp_variant(ThingFlag, int);
 Tpp tp_first(ThingFlag);
 Tpp tp_random_dungeon_entrance(void);
 Tpp tp_random_exit(void);
@@ -604,8 +605,8 @@ int  tp_value24_get(Tpp);
 void tp_value25_set(Tpp, int val);
 int  tp_value25_get(Tpp);
 
-void tp_value26_set(Tpp, int val);
-int  tp_value26_get(Tpp);
+void tp_variant_set(Tpp, int val);
+int  tp_variant_get(Tpp);
 
 void              tp_priority_set(Tpp, ThingPriorityType val);
 ThingPriorityType tp_priority_get(Tpp);

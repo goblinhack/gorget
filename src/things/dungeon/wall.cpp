@@ -12,10 +12,11 @@ bool tp_load_wall(void)
 {
   TRACE_NO_INDENT();
 
-  for (auto variant = 1; variant <= 1; variant++) {
+  for (auto variant = 1; variant <= 2; variant++) {
     std::string name = "wall" + std::to_string(variant);
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {
+    tp_variant_set(tp, variant);
     tp_flag_set(tp, is_blit_if_has_seen);
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);

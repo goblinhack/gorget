@@ -4039,44 +4039,44 @@ int thing_value25_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value25 -= val;
 }
-int thing_value26(Thingp t)
+int thing_variant(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value26;
+  return t->_variant;
 }
 
-int thing_value26_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value26 = val;
+  return t->_variant = val;
 }
 
-int thing_value26_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_variant_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value26 += val;
+  return t->_variant += val;
 }
 
-int thing_value26_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_variant_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value26 -= val;
+  return t->_variant -= val;
 }
 
 ThingPriorityType thing_priority(Thingp t)

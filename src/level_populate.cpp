@@ -38,11 +38,12 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
   auto tp_foliage    = tp_random(is_foliage);
   auto tp_corridor   = tp_random(is_corridor);
   auto tp_grass      = tp_random(is_grass);
-  auto tp_floor      = tp_find_mand("floor");
+  auto tp_floor      = tp_random(is_floor);
   auto tp_dirt       = tp_find_mand("dirt");
   auto tp_exit       = tp_find_mand("exit");
   auto tp_player     = tp_find_mand("player");
   auto tp_entrance   = tp_find_mand("entrance");
+  auto variant       = tp_variant_get(tp_wall);
 
   bool add_extra_deco = ! g_opt_tests && ! l->is_fixed_level;
 
@@ -142,12 +143,12 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
           if (l->info.key_count) {
             tp = tp_random(is_door_locked);
           } else {
-            tp = tp_random(is_door_secret);
+            tp = tp_variant(is_door_secret, variant);
           }
           break;
         case CHARMAP_DOOR_SECRET :
           need_floor = true;
-          tp         = tp_random(is_door_secret);
+          tp         = tp_variant(is_door_secret, variant);
           break;
         case CHARMAP_GRASS :
           need_floor = true;

@@ -307,7 +307,7 @@ typedef struct Thing_ {
   int16_t _value23;
   int16_t _value24;
   int16_t _value25;
-  int16_t _value26;
+  int16_t _variant;
   //
   // Lifespan remaining in ticks
   //
@@ -922,10 +922,10 @@ int thing_value25_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_value25_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_value25_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value26(Thingp);
-int thing_value26_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value26_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value26_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_variant(Thingp);
+int thing_variant_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int thing_variant_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int thing_variant_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 ThingPriorityType thing_priority(Thingp);
 ThingPriorityType thing_priority_set(Gamep, Levelsp, Levelp, Thingp, ThingPriorityType val);
