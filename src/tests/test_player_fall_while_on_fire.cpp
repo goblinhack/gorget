@@ -32,7 +32,7 @@ static bool test_player_fall_while_on_fire(Gamep g, Testp t)
       = "......."
         "......."
         "...C..."
-        "..!;..."
+        "..!C..."
         "...C..."
         "......."
         ".......";
