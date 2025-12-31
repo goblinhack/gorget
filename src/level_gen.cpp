@@ -47,7 +47,8 @@ static const int MAX_LEVEL_GEN_ROOM_PLACE_TRIES = 200;
 //
 // After this length, corridors become bridges
 //
-static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN = 3;
+static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN        = 3;
+static const int MAX_LEVEL_GEN_MIN_BRIDGE_LEN_CHANCE = 30;
 
 //
 // Per level minimums
@@ -3158,6 +3159,12 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
               if (l->rooms_connected.find(conn) == l->rooms_connected.end()) {
                 l->rooms_adj_connected++;
                 l->rooms_connected[ conn ] = true;
+
+                auto fill_char = CHARMAP_CORRIDOR;
+                if (d100() < MAX_LEVEL_GEN_MIN_BRIDGE_LEN_CHANCE) {
+                  fill_char = CHARMAP_BRIDGE;
+                }
+
                 for (auto d = 1; d < dist; d++) {
                   spoint adj(x + direction.x * d, y + direction.y * d);
 
@@ -3165,7 +3172,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
                     l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
                   } else {
                     if (dist > MAX_LEVEL_GEN_MIN_BRIDGE_LEN) {
-                      l->data[ adj.x ][ adj.y ].c = CHARMAP_BRIDGE;
+                      l->data[ adj.x ][ adj.y ].c = fill_char;
                     } else {
                       l->data[ adj.x ][ adj.y ].c = CHARMAP_CORRIDOR;
                     }
