@@ -12,7 +12,7 @@ bool tp_load_wall(void)
 {
   TRACE_NO_INDENT();
 
-  for (auto variant = 1; variant <= 2; variant++) {
+  for (auto variant = 1; variant <= WALL_VARIANTS; variant++) {
     std::string name = "wall" + std::to_string(variant);
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {

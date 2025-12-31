@@ -70,6 +70,8 @@
 #define TEST_SEED                  "test-seed"
 #define TICK_DURATION_MS           100
 
+#define WALL_VARIANTS 3
+
 //
 // 'x' is the edge of the visible map
 // 'o' is the outer scroll barrier that kicks in if the player moved the mouse
