@@ -12,7 +12,7 @@ bool tp_load_floor(void)
 {
   TRACE_NO_INDENT();
 
-  for (auto variant = 1; variant <= 3; variant++) {
+  for (auto variant = 1; variant <= FLOOR_VARIANTS; variant++) {
     std::string name = "floor" + std::to_string(variant);
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {

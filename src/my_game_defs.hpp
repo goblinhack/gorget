@@ -70,7 +70,8 @@
 #define TEST_SEED                  "test-seed"
 #define TICK_DURATION_MS           100
 
-#define WALL_VARIANTS 5
+#define WALL_VARIANTS  10
+#define FLOOR_VARIANTS 10
 
 //
 // 'x' is the edge of the visible map

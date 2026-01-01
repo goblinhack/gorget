@@ -24,19 +24,36 @@
 std::initializer_list< std::string > tps = {
     // clang-format off
     "", // ID 0 means unused
-    "floor1",
-    "floor2",
-    "floor3",
+    "floor1", // Update FLOOR_VARIANTS
+    "floor2", // Update FLOOR_VARIANTS
+    "floor3", // Update FLOOR_VARIANTS
+    "floor4", // Update FLOOR_VARIANTS
+    "floor5", // Update FLOOR_VARIANTS
+    "floor6", // Update FLOOR_VARIANTS
+    "floor7", // Update FLOOR_VARIANTS
+    "floor8", // Update FLOOR_VARIANTS
+    "floor9", // Update FLOOR_VARIANTS
+    "floor10", // Update FLOOR_VARIANTS
     "door_secret1", // Update WALL_VARIANTS
-    "door_secret2",
-    "door_secret3",
-    "door_secret4",
-    "door_secret5",
+    "door_secret2", // Update WALL_VARIANTS
+    "door_secret3", // Update WALL_VARIANTS
+    "door_secret4", // Update WALL_VARIANTS
+    "door_secret5", // Update WALL_VARIANTS
+    "door_secret6", // Update WALL_VARIANTS
+    "door_secret7", // Update WALL_VARIANTS
+    "door_secret8", // Update WALL_VARIANTS
+    "door_secret9", // Update WALL_VARIANTS
+    "door_secret10", // Update WALL_VARIANTS
     "wall1", // Update WALL_VARIANTS
-    "wall2",
-    "wall3",
-    "wall4",
-    "wall5",
+    "wall2", // Update WALL_VARIANTS
+    "wall3", // Update WALL_VARIANTS
+    "wall4", // Update WALL_VARIANTS
+    "wall5", // Update WALL_VARIANTS
+    "wall6", // Update WALL_VARIANTS
+    "wall7", // Update WALL_VARIANTS
+    "wall8", // Update WALL_VARIANTS
+    "wall9", // Update WALL_VARIANTS
+    "wall10", // Update WALL_VARIANTS
     "rock1",
     "player",
     /* begin shell marker1 */
