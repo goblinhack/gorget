@@ -159,12 +159,11 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
   backtrace_dump();
 
   char buf[ MAXLONGSTR ];
-  buf[ 0 ]  = '\0';
-  int len   = 0;
-  int tslen = 0;
+  buf[ 0 ] = '\0';
+  int len  = 0;
 
   get_timestamp(buf, MAXLONGSTR);
-  tslen = len = (int) strlen(buf);
+  len = (int) strlen(buf);
 
   snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
 
@@ -172,9 +171,9 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   fprintf(stderr, "%s\n", buf);
-  fprintf(MY_STDERR, "%s\n", buf);
-
-  CON("%s", buf + tslen);
+  if (MY_STDERR != stderr) {
+    fprintf(MY_STDERR, "%s\n", buf);
+  }
 
   if (g_thread_id == -1) {
     cleanup();

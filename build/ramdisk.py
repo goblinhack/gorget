@@ -28,7 +28,6 @@ def is_old_clang_version():
         result = cpe.output
     finally:
         for line in result.splitlines():
-            print(line.decode())
             version = int(line.decode())
             if (version < 21):
                 return True
