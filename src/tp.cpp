@@ -44,6 +44,8 @@ std::initializer_list< std::string > tps = {
     "door_secret8", // Update WALL_VARIANTS
     "door_secret9", // Update WALL_VARIANTS
     "door_secret10", // Update WALL_VARIANTS
+    "door_secret11", // Update WALL_VARIANTS
+    "door_secret12", // Update WALL_VARIANTS
     "wall1", // Update WALL_VARIANTS
     "wall2", // Update WALL_VARIANTS
     "wall3", // Update WALL_VARIANTS
@@ -54,6 +56,8 @@ std::initializer_list< std::string > tps = {
     "wall8", // Update WALL_VARIANTS
     "wall9", // Update WALL_VARIANTS
     "wall10", // Update WALL_VARIANTS
+    "wall11", // Update WALL_VARIANTS
+    "wall12", // Update WALL_VARIANTS
     "rock1",
     "player",
     /* begin shell marker1 */
