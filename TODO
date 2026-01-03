@@ -2,6 +2,7 @@ bugs
 ----
 seed 1 door to nowhere
 seed 10 odd jump at start
+seed 31 starts with no space, 33
 fall down one level, try to go back up, says choose open door
 possible to try to jump in water and not move
 no foliage in start room
