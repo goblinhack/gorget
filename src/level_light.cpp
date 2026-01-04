@@ -235,14 +235,6 @@ void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t
       light_pixel->r += fade * col_r;
       light_pixel->g += fade * col_g;
       light_pixel->b += fade * col_b;
-
-#ifdef _DEBUG_BUILD_
-      if (DEBUG) {
-        light_pixel->r = 255;
-        light_pixel->g = 255;
-        light_pixel->b = 255;
-      }
-#endif
     }
   }
 }

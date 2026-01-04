@@ -178,6 +178,11 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   //
   auto at = v->cursor_at;
   if (! thing_vision_can_see_tile(g, v, l, player, at)) {
+    BOTCON_NEW_LINE();
+    if (0) {
+      BOTCON("Cannot see here.");
+    }
+    BOTCON("");
     return;
   }
 
@@ -222,6 +227,10 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   BOTCON_NEW_LINE();
 
   if ((int) all_things_description.empty()) {
+    if (0) {
+      BOTCON("Nothing here.");
+    }
+    BOTCON("");
     return;
   }
 
