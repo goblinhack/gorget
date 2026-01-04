@@ -3536,6 +3536,10 @@ bool level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y)
 {
   TRACE_NO_INDENT();
 
+  if (! l) { // tests
+    return false;
+  }
+
   if (is_oob(x, y)) {
     return false;
   }
