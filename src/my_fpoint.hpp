@@ -39,6 +39,10 @@ float angle_radians(const fpoint &p);
 
 static inline fpoint make_fpoint(const spoint f) { return fpoint(f.x, f.y); }
 
-static inline spoint make_spoint(const fpoint &f) { return spoint((int) floor(f.x), (int) floor(f.y)); }
+//
+// round() is better than floor() as if we do a jump on a diagonal, that is 0.707
+// units. We want to round to 1.0 so the diagonal move works and not 0.0.
+//
+static inline spoint make_spoint(const fpoint &f) { return spoint((int) roundf(f.x), (int) roundf(f.y)); }
 
 #endif // _MY_FPOINT_HPP_
