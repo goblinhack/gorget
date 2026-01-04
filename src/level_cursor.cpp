@@ -108,14 +108,32 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       //
       // For the 4th pass, any tiles will do as long as not walls
       //
-      for (auto y = miny; y < maxy; y++) {
-        for (auto x = minx; x < maxx; x++) {
-          spoint p(x, y);
+      if (thing_vision_player_has_seen_tile(g, v, l, end)) {
+        for (auto y = miny; y < maxy; y++) {
+          for (auto x = minx; x < maxx; x++) {
+            spoint p(x, y);
 
-          if (level_is_obs_to_cursor_path(g, v, l, p)) {
-            dmap.val[ x ][ y ] = DMAP_IS_WALL;
-          } else {
-            dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+            if (level_is_obs_to_cursor_path(g, v, l, p)) {
+              dmap.val[ x ][ y ] = DMAP_IS_WALL;
+            } else {
+              dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+            }
+          }
+        }
+      } else {
+        //
+        // However if this is a tile we've not seen, then don't just offer chasms
+        // as a viable path just because we can't perhaps see the way through foliage!
+        //
+        for (auto y = miny; y < maxy; y++) {
+          for (auto x = minx; x < maxx; x++) {
+            spoint p(x, y);
+
+            if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+              dmap.val[ x ][ y ] = DMAP_IS_WALL;
+            } else {
+              dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
+            }
           }
         }
       }
@@ -264,18 +282,12 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
     for (auto x = minx; x < maxx; x++) {
       spoint p(x, y);
 
-      if (DEBUG) {
-        //
-        // Allow all tiles in debug mode
-        //
-      } else {
-        //
-        // If we've NEVER seen this tile, skip it
-        //
-        if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
-          dmap.val[ x ][ y ] = DMAP_IS_WALL;
-          continue;
-        }
+      //
+      // If we've NEVER seen this tile, skip it
+      //
+      if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
+        dmap.val[ x ][ y ] = DMAP_IS_WALL;
+        continue;
       }
 
       //
@@ -313,6 +325,10 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   if (p[ path_size - 1 ] != end) {
     // LOG("did not reach %d,%d", end.x, end.y);
     return empty;
+  }
+
+  if (0) {
+    TOPCON("attempt %d len %d", attempt, (int) p.size());
   }
 
   return p;
