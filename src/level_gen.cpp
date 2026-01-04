@@ -2678,7 +2678,6 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
   for (x = 0; x < MAP_WIDTH; x++) {
     for (y = 0; y < MAP_HEIGHT; y++) {
       if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
-
         switch (l->data[ x ][ y ].c) {
           case CHARMAP_BARREL :
           case CHARMAP_BRAZIER :
@@ -2710,16 +2709,22 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
           case CHARMAP_WALL :
           case CHARMAP_WILDCARD :
             //
-            // No grass
+            // No item
             //
             break;
           case CHARMAP_FLOOR :
           case CHARMAP_DIRT :
           case CHARMAP_WATER :
             //
-            // Grass
+            // Place the item
             //
-            l->data[ x ][ y ].c = c;
+            if (c == CHARMAP_FOLIAGE) {
+              if (! level_gen_is_room_entrance(g, l, x, y)) {
+                l->data[ x ][ y ].c = c;
+              }
+            } else {
+              l->data[ x ][ y ].c = c;
+            }
             break;
         }
       }
@@ -3525,6 +3530,33 @@ static void level_gen_add_walls_around_rooms(Gamep g, class LevelGen *l)
 }
 
 //
+// Is this tile in the entrance?
+//
+bool level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y)
+{
+  TRACE_NO_INDENT();
+
+  if (is_oob(x, y)) {
+    return false;
+  }
+
+  auto r = l->data[ x ][ y ].room;
+  if (r && (l->room_entrance == r)) {
+    return true;
+  }
+
+  return false;
+}
+
+//
+// Is this tile in the entrance?
+//
+bool level_gen_is_room_entrance(Gamep g, class LevelGen *l, spoint at)
+{
+  return level_gen_is_room_entrance(g, l, at.x, at.y);
+}
+
+//
 // Hide secret doors
 //
 static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l)
@@ -3583,6 +3615,13 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
         case CHARMAP_PILLAR :
         case CHARMAP_BARREL :
         case CHARMAP_TREASURE :
+          //
+          // No foliage in starting rooms. Makes it harder to see
+          //
+          if (level_gen_is_room_entrance(g, l, x, y)) {
+            continue;
+          }
+
           for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
@@ -3595,6 +3634,13 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
           }
           break;
         case CHARMAP_DOOR_LOCKED :
+          //
+          // No foliage in starting rooms. Makes it harder to see
+          //
+          if (level_gen_is_room_entrance(g, l, x, y)) {
+            continue;
+          }
+
           for (int dy = -2; dy <= 2; dy++) {
             for (int dx = -2; dx <= 2; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
@@ -3607,6 +3653,13 @@ static void level_gen_add_foliage_around_secret_doors(Gamep g, class LevelGen *l
           }
           break;
         case CHARMAP_CHASM :
+          //
+          // No foliage in starting rooms. Makes it harder to see
+          //
+          if (level_gen_is_room_entrance(g, l, x, y)) {
+            continue;
+          }
+
           for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
               auto d = l->data[ x - dx ][ y - dy ].c;
@@ -4297,14 +4350,11 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
         case CHARMAP_DIRT :
         case CHARMAP_GRASS :
         case CHARMAP_FOLIAGE :
-
-          {
-            for (int dy = -1; dy <= 1; dy++) {
-              for (int dx = -1; dx <= 1; dx++) {
-                switch (l->data[ x + dx ][ y + dy ].c) {
-                  case CHARMAP_CORRIDOR :
-                  case CHARMAP_BRIDGE :   return;
-                }
+          for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+              switch (l->data[ x + dx ][ y + dy ].c) {
+                case CHARMAP_CORRIDOR :
+                case CHARMAP_BRIDGE :   return;
               }
             }
           }
@@ -4329,7 +4379,6 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
         case CHARMAP_DIRT :
         case CHARMAP_GRASS :
         case CHARMAP_FOLIAGE :
-
           for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
               switch (l->data[ x + dx ][ y + dy ].c) {
@@ -4512,7 +4561,7 @@ static bool level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
   //
   // Create things
   //
-  if (! level_populate(g, v, level, level_string.c_str())) {
+  if (! level_populate(g, v, level, l, level_string.c_str())) {
     return false;
   }
 

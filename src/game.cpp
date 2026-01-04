@@ -448,7 +448,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   level_init(g, v, l, level_num);
 
   TRACE_NO_INDENT();
-  if (! level_populate(g, v, l, w, h, contents)) {
+  if (! level_populate(g, v, l, nullptr, w, h, contents)) {
     DIE("level populate failed");
   }
 

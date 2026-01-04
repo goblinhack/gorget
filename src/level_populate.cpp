@@ -13,7 +13,7 @@
 
 #include <string.h>
 
-bool level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
+bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in)
 {
   TRACE_NO_INDENT();
 
@@ -245,9 +245,11 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
       }
 
       if (need_foliage) {
-        auto tp_add = tp_foliage;
-        if (! thing_spawn(g, v, l, tp_add, at)) {
-          return false;
+        if (! level_gen_is_room_entrance(g, level_gen, at)) {
+          auto tp_add = tp_foliage;
+          if (! thing_spawn(g, v, l, tp_add, at)) {
+            return false;
+          }
         }
       }
 
@@ -287,11 +289,11 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, int w, int h, const char *in)
   return true;
 }
 
-bool level_populate(Gamep g, Levelsp v, Levelp l, const char *in)
+bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in)
 {
   TRACE_NO_INDENT();
 
-  if (! level_populate(g, v, l, MAP_WIDTH, MAP_HEIGHT, in)) {
+  if (! level_populate(g, v, l, level_gen, MAP_WIDTH, MAP_HEIGHT, in)) {
     ERR("level populate failed");
     return false;
   }

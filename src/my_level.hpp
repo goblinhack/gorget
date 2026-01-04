@@ -15,6 +15,8 @@
 
 #include <vector>
 
+class LevelGen;
+
 enum {
   CURSOR_NONE,
   CURSOR_PATH,
@@ -659,8 +661,10 @@ void    level_light_calculate_all(Gamep, Levelsp, Levelp);
 void    level_light_raycast(Gamep, Levelsp, Levelp, FboEnum fbo);
 void    level_light_raycast_fini(void);
 void    level_mouse_position_get(Gamep, Levelsp, Levelp);
-bool    level_populate(Gamep, Levelsp, Levelp, const char *);
-bool    level_populate(Gamep, Levelsp, Levelp, int w, int h, const char *);
+bool    level_populate(Gamep, Levelsp, Levelp, class LevelGen *, const char *);
+bool    level_gen_is_room_entrance(Gamep, class LevelGen *, int x, int y);
+bool    level_gen_is_room_entrance(Gamep, class LevelGen *, spoint at);
+bool    level_populate(Gamep, Levelsp, Levelp, class LevelGen *, int w, int h, const char *);
 void    level_scroll_delta(Gamep, Levelsp, Levelp, spoint);
 void    level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void    level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
