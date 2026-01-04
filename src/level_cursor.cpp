@@ -282,12 +282,18 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
     for (auto x = minx; x < maxx; x++) {
       spoint p(x, y);
 
-      //
-      // If we've NEVER seen this tile, skip it
-      //
-      if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
-        dmap.val[ x ][ y ] = DMAP_IS_WALL;
-        continue;
+      if (DEBUG) {
+        //
+        // In debug mode we can see everything and it looks odd if we can't walk to whatever point we see
+        //
+      } else {
+        //
+        // If we've NEVER seen this tile, skip it
+        //
+        if (! thing_vision_player_has_seen_tile(g, v, l, p)) {
+          dmap.val[ x ][ y ] = DMAP_IS_WALL;
+          continue;
+        }
       }
 
       //
