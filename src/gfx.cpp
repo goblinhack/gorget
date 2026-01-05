@@ -843,10 +843,78 @@ static void gfx_ui_init_solid(void)
   tile_load_arr("data/gfx/ui/solid.tga", "solid", 8, 8, ARRAY_SIZE(tiles), tiles);
 }
 
-static void gfx_init_tiles_12x12(void)
+static void gfx_init_tiles(void)
 {
   const char *tiles[] = {
       /* clang-format off */
+        // ##############################################################################
+        "bridge.IS_JOIN_TL2",
+        "bridge.IS_JOIN_T_3",
+        "bridge.IS_JOIN_TR2",
+        "bridge.IS_JOIN_TOP",
+        "bridge.IS_JOIN_X4_180",
+        "bridge.IS_JOIN_X4_270",
+        "bridge.IS_JOIN_X2_270",
+        "bridge.IS_JOIN_X2",
+        "bridge.IS_JOIN_X1_180",
+        "bridge.IS_JOIN_X1",
+        "bridge.IS_JOIN_X",
+        "none", // used if no tile is set, to get sizes
+        "",
+        "",
+        "",
+        "",
+        // ##############################################################################
+        "bridge.IS_JOIN_T270_3",
+        "bridge.IS_JOIN_BLOCK",
+        "bridge.IS_JOIN_T90_3",
+        "bridge.IS_JOIN_VERT",
+        "bridge.IS_JOIN_X4_90",
+        "bridge.IS_JOIN_X4",
+        "bridge.IS_JOIN_X2_180",
+        "bridge.IS_JOIN_X2_90",
+        "bridge.IS_JOIN_X1_90",
+        "bridge.IS_JOIN_X1_270",
+        "bridge.IS_JOIN_X3_180",
+        "bridge.IS_JOIN_X3",
+        "",
+        "",
+        "",
+        "",
+        // ##############################################################################
+        "bridge.IS_JOIN_BL2",
+        "bridge.IS_JOIN_T180_3",
+        "bridge.IS_JOIN_BR2",
+        "bridge.IS_JOIN_BOT",
+        "bridge.IS_JOIN_T_1",
+        "bridge.IS_JOIN_T_2",
+        "bridge.IS_JOIN_T270_2",
+        "bridge.IS_JOIN_T90_1",
+        "bridge.IS_JOIN_T",
+        "bridge.IS_JOIN_T90",
+        "bridge.IS_JOIN_TL",
+        "bridge.IS_JOIN_TR",
+        "",
+        "",
+        "",
+        "",
+        // ##############################################################################
+        "bridge.IS_JOIN_LEFT",
+        "bridge.IS_JOIN_HORIZ",
+        "bridge.IS_JOIN_RIGHT",
+        "bridge.IS_JOIN_NODE",
+        "bridge.IS_JOIN_T180_2",
+        "bridge.IS_JOIN_T180_1",
+        "bridge.IS_JOIN_T270_1",
+        "bridge.IS_JOIN_T90_2",
+        "bridge.IS_JOIN_T270",
+        "bridge.IS_JOIN_T180",
+        "bridge.IS_JOIN_BL",
+        "bridge.IS_JOIN_BR",
+        "",
+        "",
+        "",
+        "",
         // ##############################################################################
         "rock1.IS_JOIN_TL2",
         "rock1.IS_JOIN_T_3",
@@ -2072,16 +2140,6 @@ static void gfx_init_tiles_12x12(void)
         "",
         "",
         // ##############################################################################
-      /* clang-format on */
-  };
-  tile_load_arr_sprites("data/gfx/tiles_12x12.tga", "tiles_12x12", TILE_WIDTH, TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
-}
-
-static void gfx_init_tiles_14x14(void)
-{
-  const char *tiles[] = {
-      /* clang-format off */
-        // ##############################################################################
         "",
         "",
         "",
@@ -2254,8 +2312,7 @@ static void gfx_init_tiles_14x14(void)
         // ##############################################################################
       /* clang-format on */
   };
-  tile_load_arr_sprites("data/gfx/tiles_14x14.tga", "tiles_14x14", OUTER_TILE_WIDTH, OUTER_TILE_HEIGHT,
-                        ARRAY_SIZE(tiles), tiles);
+  tile_load_arr_sprites("data/gfx/tiles.tga", "tiles", OUTER_TILE_WIDTH, OUTER_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
 }
 
 void gfx_init(void)
@@ -2263,11 +2320,9 @@ void gfx_init(void)
   gfx_init_font_ui();
 
   // begin sort marker1 {
-  gfx_init_bridge();
   gfx_init_chasm();
   gfx_init_lava();
-  gfx_init_tiles_12x12();
-  gfx_init_tiles_14x14();
+  gfx_init_tiles();
   gfx_init_water();
   gfx_ui_init_0();
   gfx_ui_init_1();
