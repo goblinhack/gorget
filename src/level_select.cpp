@@ -523,17 +523,16 @@ static bool level_select_map_set(Gamep g, Levelsp v)
       //
       // If not visited, is it a next level for the current level?
       //
-      if (player_level && (player_level->player_completed_level_via_exit || player_level->player_fell_out_of_level)
-          && (tp == tp_is_level_not_visited)) {
+      if (player_level && (player_level->player_completed_level_via_exit || player_level->player_fell_out_of_level)) {
         if (y > 0) {
-          LevelSelectCell *o = &s->data[ x ][ y - 1 ];
+          LevelSelectCell *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x > 0) {
-          LevelSelectCell *o = &s->data[ x - 1 ][ y ];
+          LevelSelectCell *o = &s->data[ x - 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
@@ -541,14 +540,14 @@ static bool level_select_map_set(Gamep g, Levelsp v)
         }
 
         if (y < LEVELS_DOWN - 1) {
-          LevelSelectCell *o = &s->data[ x ][ y + 1 ];
+          LevelSelectCell *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x < LEVELS_ACROSS - 1) {
-          LevelSelectCell *o = &s->data[ x + 1 ][ y ];
+          LevelSelectCell *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
@@ -559,17 +558,16 @@ static bool level_select_map_set(Gamep g, Levelsp v)
       //
       // Allow backwards moves to completed levels
       //
-      if (player_level && (l->player_completed_level_via_exit || l->player_fell_out_of_level)
-          && (tp == tp_is_level_visited)) {
+      if (player_level && (l->player_completed_level_via_exit || l->player_fell_out_of_level)) {
         if (y > 0) {
-          LevelSelectCell *o = &s->data[ x ][ y - 1 ];
+          LevelSelectCell *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x > 0) {
-          LevelSelectCell *o = &s->data[ x - 1 ][ y ];
+          LevelSelectCell *o = &s->data[ x - 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
@@ -577,14 +575,14 @@ static bool level_select_map_set(Gamep g, Levelsp v)
         }
 
         if (y < LEVELS_DOWN - 1) {
-          LevelSelectCell *o = &s->data[ x ][ y + 1 ];
+          LevelSelectCell *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x < LEVELS_ACROSS - 1) {
-          LevelSelectCell *o = &s->data[ x + 1 ][ y ];
+          LevelSelectCell *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
@@ -1003,6 +1001,8 @@ void level_select_mouse_down(Gamep g, Levelsp v, Levelp l)
   //
   if (new_level) {
     if (new_level->player_completed_level_via_exit) {
+      thing_level_warp_to_exit(g, v, new_level, player);
+    } else if (new_level->player_fell_out_of_level) {
       thing_level_warp_to_exit(g, v, new_level, player);
     } else {
       thing_level_warp_to_entrance(g, v, new_level, player);
