@@ -9,6 +9,7 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
+#include "my_sdl_proto.hpp"
 #include "my_thing_inlines.hpp"
 
 static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum fbo)
@@ -329,6 +330,7 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
     //
     // Get the on screen pixel co-oords of the top left and bottom right tiles
     //
+    //    auto single_pix_size = game_map_single_pix_size_get(g);
     thing_display_get_tile_info(g, v, l, spoint(0, 0), NULL_TP, NULL_THING, &tl1, &br1, nullptr);
     thing_display_get_tile_info(g, v, l, spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1), NULL_TP, NULL_THING, &tl2, &br2,
                                 nullptr);
@@ -357,6 +359,7 @@ static void level_blit_light(Gamep g, Levelsp v, Levelp l, color c)
     blit_init();
     blit(g_fbo_tex_id[ FBO_MAP_LIGHT ], 0, 1, 1, 0, tl1.x, tl1.y, br2.x, br2.y, c);
     blit_flush();
+    // sdl_fbo_dump(g, FBO_MAP_LIGHT, "FBO_MAP_LIGHT");
 
     glDisable(GL_SCISSOR_TEST);
   }

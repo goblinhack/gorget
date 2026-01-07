@@ -859,7 +859,7 @@ static void gfx_init_tiles(void)
         "bridge.IS_JOIN_X1_180",
         "bridge.IS_JOIN_X1",
         "bridge.IS_JOIN_X",
-        "none", // used if no tile is set, to get sizes
+        "none", // used for lighting as a fake tile to learn tl and br tile co-oords. must be 12x12
         "",
         "",
         "",
@@ -3774,6 +3774,9 @@ static void gfx_init_tiles(void)
       /* clang-format on */
   };
   tile_load_arr_sprites("data/gfx/tiles.tga", "tiles", OUTER_TILE_WIDTH, OUTER_TILE_HEIGHT, ARRAY_SIZE(tiles), tiles);
+
+  auto tile = tile_find_mand("none");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
 }
 
 void gfx_init(void)
