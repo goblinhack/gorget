@@ -51,9 +51,6 @@ public:
   int pix_width {};
   int pix_height {};
 
-  float pct_width {};
-  float pct_height {};
-
   //
   // Texture co-ordinates within the image.
   //
@@ -61,15 +58,6 @@ public:
   float y1 {};
   float x2 {};
   float y2 {};
-
-  //
-  // As above but not clipped 0.5 pixels. Actually we do not clip anymore,
-  // it didn't help. Best to choose a resolution that works.
-  //
-  float ox1 {};
-  float oy1 {};
-  float ox2 {};
-  float oy2 {};
 
   //
   // Percentage points that indicate the start of the pixels within the tile
@@ -156,18 +144,12 @@ Tile::Tile(const class Tile *tile)
 
   pix_width  = tile->pix_width;
   pix_height = tile->pix_height;
-  pct_width  = tile->pct_width;
-  pct_height = tile->pct_height;
   x1         = tile->x1;
   y1         = tile->y1;
   x2         = tile->x2;
   y2         = tile->y2;
 
 #ifdef ENABLE_TILE_BOUNDS
-  ox1 = tile->ox1;
-  oy1 = tile->oy1;
-  ox2 = tile->ox2;
-  oy2 = tile->oy2;
   px1 = tile->px1;
   py1 = tile->py1;
   px2 = tile->px2;
@@ -255,16 +237,6 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
       t->y1 = fh * ((float) (y));
       t->x2 = t->x1 + fw;
       t->y2 = t->y1 + fh;
-
-#ifdef ENABLE_TILE_BOUNDS
-      t->ox1 = t->x1;
-      t->oy1 = t->y1;
-      t->ox2 = t->x2;
-      t->oy2 = t->y2;
-#endif
-
-      t->pct_width  = fw;
-      t->pct_height = fh;
 
 #ifdef ENABLE_DEBUG_TILE
       printf("Tile: %-10s %ux%u (%u, %u)", name.c_str(), width, height, x, y);
@@ -431,16 +403,6 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
       t->x2 = t->x1 + fw;
       t->y2 = t->y1 + fh;
 
-#ifdef ENABLE_TILE_BOUNDS
-      t->ox1 = t->x1;
-      t->oy1 = t->y1;
-      t->ox2 = t->x2;
-      t->oy2 = t->y2;
-#endif
-
-      t->pct_width  = fw;
-      t->pct_height = fh;
-
 #ifdef ENABLE_DEBUG_TILE
       printf("Tile: %-10s %ux%u (%u, %u)", name.c_str(), tile_width, tile_height, x, y);
 #endif
@@ -578,9 +540,6 @@ void tile_from_fbo(Gamep g, FboEnum fbo)
   t->y1 = 0;
   t->x2 = 1;
   t->y2 = 1;
-
-  t->pct_width  = 1;
-  t->pct_height = 1;
 }
 
 //
@@ -735,6 +694,24 @@ void tile_delay_ms_set(Tilep t, uint32_t val)
 {
   TRACE_NO_INDENT();
   t->delay_ms = val;
+}
+
+void tile_size_set(Tilep t, uint32_t w, uint32_t h)
+{
+  TRACE_NO_INDENT();
+
+  float dx = (t->x2 - t->x1) / (float) t->pix_width;
+  float cx = (t->pix_width - w) / 2;
+  t->x1 += cx * dx;
+  t->x2 -= cx * dx;
+
+  float dy = (t->y2 - t->y1) / (float) t->pix_width;
+  float cy = (t->pix_width - w) / 2;
+  t->y1 += cy * dy;
+  t->y2 -= cy * dy;
+
+  t->pix_width  = w;
+  t->pix_height = h;
 }
 
 uint32_t tile_global_index(Tilep t)

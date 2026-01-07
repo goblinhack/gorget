@@ -32,6 +32,7 @@ bool tp_load_trap(void)
   // begin sort marker1 {
   thing_description_set(tp, tp_trap_description_get);
   tp_flag_set(tp, is_able_to_fall);
+  tp_flag_set(tp, is_blit_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_loggable);
@@ -46,6 +47,7 @@ bool tp_load_trap(void)
 
   for (auto frame = 0; frame < 1; frame++) {
     auto tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 

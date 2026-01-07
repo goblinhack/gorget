@@ -123,6 +123,7 @@ bool tp_load_brazier(void)
   thing_on_shoved_set(tp, tp_brazier_on_shoved);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
+  tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_brazier);
   tp_flag_set(tp, is_collision_circle_large);
@@ -152,12 +153,14 @@ bool tp_load_brazier(void)
 
   for (auto frame = 0; frame < 31; frame++) {
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
   for (auto frame = 0; frame < 1; frame++) {
     auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
   }

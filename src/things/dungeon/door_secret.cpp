@@ -52,7 +52,6 @@ bool tp_load_door_secret(void)
     std::string name = "door_secret" + std::to_string(variant);
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {
-    tp_variant_set(tp, variant);
     thing_description_set(tp, tp_door_secret_description_get);
     thing_on_open_request_set(tp, tp_door_secret_on_open_request);
     tp_flag_set(tp, is_blit_if_has_seen);
@@ -79,12 +78,17 @@ bool tp_load_door_secret(void)
     tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
     tp_long_name_set(tp, "secret door");
     tp_priority_set(tp, THING_PRIORITY_OBJECT);
+    tp_variant_set(tp, variant);
     tp_weight_set(tp, WEIGHT_VHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
     // end sort marker1 }
 
-    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand(name + ".idle.0"));
-    tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand(name + ".open.0"));
+    auto tile = tile_find_mand(name + ".idle.0");
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+    tile = tile_find_mand(name + ".open.0");
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tp_tiles_push_back(tp, THING_ANIM_OPEN, tile);
   }
 
   return true;

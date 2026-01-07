@@ -67,9 +67,6 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
     tile = tile_find_mand("none");
   }
 
-  auto pix_height = tile_height(tile) * zoom;
-  auto pix_width  = tile_width(tile) * zoom;
-
   if (t_maybe_null) {
     //
     // All things
@@ -86,6 +83,9 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
   }
 
   *tl -= v->pixel_map_at;
+
+  auto pix_height = tile_height(tile) * zoom;
+  auto pix_width  = tile_width(tile) * zoom;
 
   //
   // Centered
@@ -372,6 +372,10 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       //
       // Can only light things that are exactly on pixel boundaries
       //
+      if (! tp_is_blit_pixel_lighting(tp)) {
+        light_pixels = nullptr;
+      }
+
       if (tile_width(tile) != LIGHT_PIXEL) {
         light_pixels = nullptr;
       }

@@ -16,6 +16,7 @@ bool tp_load_dirt(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_if_has_seen);
+  tp_flag_set(tp, is_blit_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_dirt);
   tp_flag_set(tp, is_teleport_blocked);
@@ -23,22 +24,54 @@ bool tp_load_dirt(void)
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   // end sort marker1 }
 
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.1"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.2"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.3"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.4"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.5"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.6"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.7"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.8"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.9"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.10"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.11"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.12"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.13"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.14"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.15"));
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("dirt.16"));
+  auto tile = tile_find_mand("dirt.1");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.2");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.3");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.4");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.5");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.6");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.7");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.8");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.9");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.10");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.11");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.12");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.13");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.14");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.15");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("dirt.16");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
 
   return true;
 }

@@ -126,8 +126,12 @@ bool tp_load_door_unlocked(void)
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 
-  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile_find_mand("door_unlocked.idle.0"));
-  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("door_unlocked.open.0"));
+  auto tile = tile_find_mand("door_unlocked.idle.0");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  tile = tile_find_mand("door_unlocked.open.0");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile);
 
   return true;
 }

@@ -77,6 +77,7 @@ bool tp_load_slime(void)
 
   for (auto frame = 0; frame < 2; frame++) {
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }

@@ -154,11 +154,14 @@ bool tp_load_door_locked(void)
 
   for (auto frame = 0; frame < 2; frame++) {
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
-  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile_find_mand("door_locked.open.0"));
+  auto tile = tile_find_mand("door_locked.open.0");
+  tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+  tp_tiles_push_back(tp, THING_ANIM_OPEN, tile);
 
   return true;
 }

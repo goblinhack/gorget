@@ -68,10 +68,14 @@ bool tp_load_cursor_at(void)
   tp_flag_set(tp, is_cursor);
   // end sort marker1 }
 
-  tp_tiles_push_back(tp, THING_ANIM_CURSOR_NOPATH, tile_find_mand("cursor_at.nopath"));
-  tp_tiles_push_back(tp, THING_ANIM_CURSOR_NORMAL, tile_find_mand("cursor_at.normal"));
-  tp_tiles_push_back(tp, THING_ANIM_CURSOR_WARNING, tile_find_mand("cursor_at.warning"));
-  tp_tiles_push_back(tp, THING_ANIM_CURSOR_HAZARD, tile_find_mand("cursor_at.hazard"));
+  auto tile = tile_find_mand("cursor_at.nopath");
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_NOPATH, tile);
+  tile = tile_find_mand("cursor_at.normal");
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_NORMAL, tile);
+  tile = tile_find_mand("cursor_at.warning");
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_WARNING, tile);
+  tile = tile_find_mand("cursor_at.hazard");
+  tp_tiles_push_back(tp, THING_ANIM_CURSOR_HAZARD, tile);
 
   return true;
 }

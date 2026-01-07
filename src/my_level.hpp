@@ -120,8 +120,6 @@ typedef struct LevelInfo_ {
   //////////////////////////////////////////////////////////////
 } LevelInfo;
 
-#define LIGHT_PIXEL (TILE_WIDTH)
-
 typedef struct {
   //
   // The total of all lights intersecting here, which is then scaled into the final light

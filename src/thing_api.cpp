@@ -2344,14 +2344,14 @@ bool thing_is_unused91(Thingp t)
   return tp_flag(thing_tp(t), is_unused91);
 }
 
-bool thing_is_unused92(Thingp t)
+bool thing_is_blit_pixel_lighting(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused92);
+  return tp_flag(thing_tp(t), is_blit_pixel_lighting);
 }
 
 bool thing_is_dead_on_collision(Thingp t)

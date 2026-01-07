@@ -27,6 +27,12 @@ class Tile;
 #define OUTER_TILE_HEIGHT (TILE_WIDTH + 2)
 #define OUTER_TILE_WIDTH  (TILE_HEIGHT + 2)
 
+//
+// The tiles are 14x14 to allow for outlines, however the screen lighting is done in
+// 12x12, ignoring the extra pixel. So all walls and floors etc... are 12x12.
+//
+#define LIGHT_PIXEL (TILE_WIDTH)
+
 #define TILE_HEIGHT_MAX OUTER_TILE_HEIGHT
 #define TILE_WIDTH_MAX  OUTER_TILE_WIDTH // Largest tile for collisions
 
@@ -65,6 +71,7 @@ uint32_t    tile_global_index(Tilep);
 uint32_t    tile_index(Tilep);
 uint32_t    tile_move(Tilep);
 void        tile_coords(Tilep, float *x1, float *y1, float *x2, float *y2);
+void        tile_size_set(Tilep, uint32_t w, uint32_t h);
 void        tile_delay_ms_set(Tilep, uint32_t);
 void        tile_fini(void);
 void        tile_free(Tilep);
