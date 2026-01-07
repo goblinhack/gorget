@@ -24,8 +24,8 @@ class Tile;
 //
 // This is the tile size with outline padding. Only the actual tile size is used in game.
 //
-#define OUTER_TILE_HEIGHT (TILE_WIDTH + 2)
-#define OUTER_TILE_WIDTH  (TILE_HEIGHT + 2)
+#define OUTLINE_TILE_HEIGHT (TILE_WIDTH + 2)
+#define OUTLINE_TILE_WIDTH  (TILE_HEIGHT + 2)
 
 //
 // The tiles are 14x14 to allow for outlines, however the screen lighting is done in
@@ -33,8 +33,8 @@ class Tile;
 //
 #define LIGHT_PIXEL (TILE_WIDTH)
 
-#define TILE_HEIGHT_MAX OUTER_TILE_HEIGHT
-#define TILE_WIDTH_MAX  OUTER_TILE_WIDTH // Largest tile for collisions
+#define TILE_HEIGHT_MAX OUTLINE_TILE_HEIGHT
+#define TILE_WIDTH_MAX  OUTLINE_TILE_WIDTH // Largest tile for collisions
 
 //
 // Frame buffer objects
