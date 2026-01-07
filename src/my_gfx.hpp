@@ -3,13 +3,11 @@
 //
 
 #pragma once
-#ifndef _MY_GFX_H
-#define _MY_GFX_H
+
+#ifndef _MY_GFX_H_
+#define _MY_GFX_H_
 
 extern void gfx_init();
-extern void gfx_init_water();
-extern void gfx_init_lava();
-extern void gfx_init_chasm();
 extern void gfx_fini(void);
 
 #endif

@@ -18,6 +18,9 @@
 #include "my_tile.hpp"
 
 #include <array>
+#ifdef WRITE_TILED
+#include <libgen.h>
+#endif
 #include <vector>
 
 std::unordered_map< std::string, class Tile * > all_tiles;
@@ -366,6 +369,22 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
   int y   = 0;
   int idx = 0;
 
+#ifdef WRITE_TILED
+  uint32_t rmask, gmask, bmask, amask;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  rmask = 0xff000000;
+  gmask = 0x00ff0000;
+  bmask = 0x0000ff00;
+  amask = 0x000000ff;
+#else
+  rmask = 0x000000ff;
+  gmask = 0x0000ff00;
+  bmask = 0x00ff0000;
+  amask = 0xff000000;
+#endif
+  auto tmp = SDL_CreateRGBSurface(0, tex_get_width(tex) * 2, tex_get_height(tex) * 2, 32, rmask, gmask, bmask, amask);
+#endif
+
   isize pixel_size;
 
   pixel_size.w = tile_width;
@@ -446,6 +465,11 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
             color p;
             getPixel(s, at.x, at.y, p);
 
+#ifdef WRITE_TILED
+            spoint at2(((pixel_size.w + 2) * x) + x1, ((pixel_size.h + 2) * y) + y1);
+            putPixel(tmp, at2.x, at2.y, p);
+#endif
+
             //
             // If solid...
             //
@@ -505,6 +529,12 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
       }
     }
   }
+
+#ifdef WRITE_TILED
+  CON("save %s", file);
+  std::string bmp = std::string(basename((char *) file)) + ".bmp";
+  SDL_SaveBMP(tmp, bmp.c_str());
+#endif
 }
 
 //
