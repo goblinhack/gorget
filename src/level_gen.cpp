@@ -2633,7 +2633,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
           case CHARMAP_TREASURE :
           case CHARMAP_WALL :
             //
-            // No water
+            // No water / chasm etc...
             //
             break;
           case CHARMAP_EMPTY :
@@ -4643,31 +4643,49 @@ static class LevelGen *level_gen_create_proc_gen_level(Gamep g, Levelsp v, Level
   // Make bridges dramatic by adding chasms around them
   //
   level_gen_add_chasms_around_bridges(g, l);
+  if (unlikely(l->debug)) {
+    level_gen_dump(g, l, "add chasms around bridges");
+  }
 
   //
   // Add islands of safety
   //
   level_gen_add_islands(g, l);
+  if (unlikely(l->debug)) {
+    level_gen_dump(g, l, "add islands");
+  }
 
   //
   // Grow lakes, chasms etc...
   //
   level_gen_grow_hazards(g, l);
+  if (unlikely(l->debug)) {
+    level_gen_dump(g, l, "grow hazards");
+  }
 
   //
   // Make islands bigger
   //
   level_gen_grow_islands(g, l);
+  if (unlikely(l->debug)) {
+    level_gen_dump(g, l, "grown islands");
+  }
 
   //
   // Add some doors
   //
   level_gen_add_doors(g, l);
+  if (unlikely(l->debug)) {
+    level_gen_dump(g, l, "add doors");
+  }
 
   //
   // Remove some doors!
   //
   level_gen_remove_doors_next_to_each_other(g, l);
+  if (unlikely(l->debug)) {
+    level_gen_dump(g, l, "remove doors next to each other");
+  }
 
   //
   // Add fragments before we add walls
@@ -4678,6 +4696,9 @@ static class LevelGen *level_gen_create_proc_gen_level(Gamep g, Levelsp v, Level
   // Add walls
   //
   level_gen_add_walls_around_rooms(g, l);
+  if (unlikely(l->debug)) {
+    level_gen_dump(g, l, "add walls around rooms");
+  }
 
   //
   // And add again after, in case some can now match

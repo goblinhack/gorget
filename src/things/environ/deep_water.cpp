@@ -53,6 +53,7 @@ bool tp_load_deep_water(void)
   for (auto frame = 0; frame < 2; frame++) {
     auto frame_string = std::to_string(frame);
     auto tile         = tile_find_mand(name + ".IS_JOIN_BL." + frame_string);
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile);
     tile = tile_find_mand(name + ".IS_JOIN_BL2." + frame_string);
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
