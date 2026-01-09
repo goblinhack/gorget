@@ -266,6 +266,12 @@ void tests_run(Gamep g)
     if (! skipped) {
       LOG("-");
     }
+
+    //
+    // github output seems to be buffered.
+    //
+    fflush(stdout);
+    fflush(stderr);
   }
 
   test_fini();

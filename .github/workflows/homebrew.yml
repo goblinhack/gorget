@@ -18,5 +18,5 @@ jobs:
       run: |
          brew install make llvm automake sdl2 sdl2_mixer 
     - name: configure
-      run: ./RUNME --github --sanity
+      run: ./RUNME --github
 
