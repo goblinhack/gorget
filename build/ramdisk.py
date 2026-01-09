@@ -53,6 +53,18 @@ try:
     with open(target) as unused:
         target_ctime = os.path.getctime(target)
         newer = False
+        for filepath in root.rglob(r"data/gfx.tgz"):
+            if target_ctime < os.path.getctime(filepath):
+                print("{} is newer".format(filepath))
+                newer = True
+                break
+
+        for filepath in root.rglob(r"data/sounds.tgz"):
+            if target_ctime < os.path.getctime(filepath):
+                print("{} is newer".format(filepath))
+                newer = True
+                break
+
         for filepath in root.rglob(r"data/fonts/*.tga"):
             if target_ctime < os.path.getctime(filepath):
                 print("{} is newer".format(filepath))
@@ -137,6 +149,7 @@ if is_old_clang_version():
             c_filename = re.sub(r'[\-\.]', "_", orig_filename)
             rel_path_filename = os.path.join(folder, orig_filename)
 
+            print("Write src/ramdisk_data_{}.S".format(ram_file))
             with open("src/ramdisk_data_{}.S".format(ram_file), "a") as myfile:
                 myfile.write(".align 4\n")
                 myfile.write(".globl data_{}_start_\n".format(c_filename))
@@ -160,6 +173,7 @@ if is_old_clang_version():
 # the files
 #
 with open("src/ramdisk_data.cpp", "w") as myfile:
+    print("Write src/ramdisk_data.cpp")
     myfile.write('#include "my_ramdisk.hpp"')
     myfile.write("\n")
     myfile.write("\n")
