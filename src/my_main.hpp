@@ -24,7 +24,7 @@ void        LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        reset_globals(void);
 void        restart(Gamep, const std::string);
 void        sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
-void        segv_handler(int sig);
+void        crash_handler(int sig);
 void        TOPCON_NEW_LINE(void);
 void        TOPCON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        WARN(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);

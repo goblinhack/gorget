@@ -132,24 +132,129 @@ static void error_handler_do(std::string &tech_support)
   sdl_msg_box("%s", tech_support.c_str());
 }
 
-void segv_handler(int sig)
+static const char *signal_str(int sig)
+{
+  switch (sig) {
+#ifdef SIGHUP
+    case SIGHUP : return "SIGHUP";
+#endif
+#ifdef SIGINT
+    case SIGINT : return "SIGINT";
+#endif
+#ifdef SIGQUIT
+    case SIGQUIT : return "SIGQUIT";
+#endif
+#ifdef SIGILL
+    case SIGILL : return "SIGILL";
+#endif
+#ifdef SIGTRAP
+    case SIGTRAP : return "SIGTRAP";
+#endif
+#ifdef SIGABRT
+    case SIGABRT : return "SIGABRT";
+#endif
+#ifdef SIGEMT
+    case SIGEMT : return "SIGEMT";
+#endif
+#ifdef SIGFPE
+    case SIGFPE : return "SIGFPE";
+#endif
+#ifdef SIGKILL
+    case SIGKILL : return "SIGKILL";
+#endif
+#ifdef SIGBUS
+    case SIGBUS : return "SIGBUS";
+#endif
+#ifdef SIGSEGV
+    case SIGSEGV : return "SIGSEGV";
+#endif
+#ifdef SIGSYS
+    case SIGSYS : return "SIGSYS";
+#endif
+#ifdef SIGPIPE
+    case SIGPIPE : return "SIGPIPE";
+#endif
+#ifdef SIGALRM
+    case SIGALRM : return "SIGALRM";
+#endif
+#ifdef SIGTERM
+    case SIGTERM : return "SIGTERM";
+#endif
+#ifdef SIGURG
+    case SIGURG : return "SIGURG";
+#endif
+#ifdef SIGSTOP
+    case SIGSTOP : return "SIGSTOP";
+#endif
+#ifdef SIGTSTP
+    case SIGTSTP : return "SIGTSTP";
+#endif
+#ifdef SIGCONT
+    case SIGCONT : return "SIGCONT";
+#endif
+#ifdef SIGCHLD
+    case SIGCHLD : return "SIGCHLD";
+#endif
+#ifdef SIGTTIN
+    case SIGTTIN : return "SIGTTIN";
+#endif
+#ifdef SIGTTOU
+    case SIGTTOU : return "SIGTTOU";
+#endif
+#ifdef SIGIO
+    case SIGIO : return "SIGIO";
+#endif
+#ifdef SIGXCPU
+    case SIGXCPU : return "SIGXCPU";
+#endif
+#ifdef SIGXFSZ
+    case SIGXFSZ : return "SIGXFSZ";
+#endif
+#ifdef SIGVTALRM
+    case SIGVTALRM : return "SIGVTALRM";
+#endif
+#ifdef SIGPROF
+    case SIGPROF : return "SIGPROF";
+#endif
+#ifdef SIGWINCH
+    case SIGWINCH : return "SIGWINCH";
+#endif
+#ifdef SIGINFO
+    case SIGINFO : return "SIGINFO";
+#endif
+#ifdef SIGUSR1
+    case SIGUSR1 : return "SIGUSR1";
+#endif
+#ifdef SIGUSR2
+    case SIGUSR2 : return "SIGUSR2";
+#endif
+  }
+
+  return "Unknown signal";
+}
+
+void crash_handler(int sig)
 {
   static bool crashed;
 
   if (crashed) {
+    fprintf(stderr, "\n\nNested crash. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
     return;
   }
 
   crashed = true;
 
-  fprintf(stderr, "\n\nCrashed. Signal %d.. Disabling signal handlers...\n", sig);
+  fprintf(stderr, "\n\nCrashed. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
   callstack_dump_stderr();
   backtrace_dump_stderr();
 
   signal(SIGSEGV, nullptr);
+  signal(SIGBUS, nullptr);
   signal(SIGABRT, nullptr);
   signal(SIGFPE, nullptr);
   signal(SIGILL, nullptr);
+  signal(SIGPIPE, nullptr);
+  signal(SIGINT, nullptr);
 
 #if defined __linux__
   debug_crash_handler(sig);
@@ -177,14 +282,17 @@ void error_handler(const std::string &error_msg)
 
 void ctrlc_handler(int sig)
 {
-  fprintf(stderr, "\n\nInterrupted. Signal %d..\n", sig);
+  fprintf(stderr, "\n\nInterrupted. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
   callstack_dump_stderr();
   backtrace_dump_stderr();
 
   signal(SIGSEGV, nullptr);
+  signal(SIGBUS, nullptr);
   signal(SIGABRT, nullptr);
   signal(SIGFPE, nullptr);
   signal(SIGILL, nullptr);
+  signal(SIGPIPE, nullptr);
+  signal(SIGINT, nullptr);
 
   fprintf(stderr, "\n\nInterrupted. Cleaning up...\n");
   fprintf(stderr, "---------------------------\n");

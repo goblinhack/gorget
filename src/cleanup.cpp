@@ -47,6 +47,7 @@ void cleanup(void)
 
 #ifdef ENABLE_CRASH_HANDLER
   signal(SIGSEGV, nullptr); // uninstall our handler
+  signal(SIGBUS, nullptr);  // uninstall our handler
   signal(SIGABRT, nullptr); // uninstall our handler
   signal(SIGINT, nullptr);  // uninstall our handler
 #ifndef _WIN32

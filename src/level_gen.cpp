@@ -4453,7 +4453,11 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
   if (l->walked[ x ][ y ]) {
     return;
   }
-  l->walked[ x ][ y ]                        = true;
+  l->walked[ x ][ y ] = true;
+
+  //
+  // Mark this tile as on the main path
+  //
   l->info.on_path_entrance_to_exit[ x ][ y ] = level_gen_tile_is_traversable(g, l, x, y) ? 1 : 0;
   if (! l->info.on_path_entrance_to_exit[ x ][ y ]) {
     return;
@@ -4476,11 +4480,115 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
 //
 // Recursive flood fill walkable tiles from the start
 //
-void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l)
+static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGen *l)
 {
+  TRACE_NO_INDENT();
+
   memset(l->walked, 0, SIZEOF(l->walked));
   memset(l->info.on_path_entrance_to_exit, 0, SIZEOF(l->info.on_path_entrance_to_exit));
   level_gen_mark_tiles_on_path_entrance_to_exit(g, l, l->info.entrance_at.x, l->info.entrance_at.y);
+}
+
+//
+// Extend bridges that go nowhere
+//
+static void level_gen_extend_bridges(Gamep g, class LevelGen *l, int x, int y)
+{
+  //
+  // Already walked?
+  //
+  if (l->walked[ x ][ y ]) {
+    return;
+  }
+  l->walked[ x ][ y ] = true;
+
+  //
+  // Keep going until we reach a tile on the main path
+  //
+  if (l->info.on_path_entrance_to_exit[ x ][ y ]) {
+    return;
+  }
+
+  switch (l->data[ x ][ y ].c) {
+    case CHARMAP_BARREL :        break;
+    case CHARMAP_BRAZIER :       break;
+    case CHARMAP_CHASM_50 :      break;
+    case CHARMAP_CORRIDOR :      break;
+    case CHARMAP_DEEP_WATER :    break;
+    case CHARMAP_DOOR_LOCKED :   break;
+    case CHARMAP_DOOR_SECRET :   break;
+    case CHARMAP_DOOR_UNLOCKED : break;
+    case CHARMAP_FLOOR :         break;
+    case CHARMAP_FLOOR_50 :      break;
+    case CHARMAP_FOLIAGE :       break;
+    case CHARMAP_GRASS :         break;
+    case CHARMAP_JOIN :          break;
+    case CHARMAP_KEY :           break;
+    case CHARMAP_MOB1 :          break;
+    case CHARMAP_MOB2 :          break;
+    case CHARMAP_MONST1 :        break;
+    case CHARMAP_MONST2 :        break;
+    case CHARMAP_PILLAR :        break;
+    case CHARMAP_TELEPORT :      break;
+    case CHARMAP_TRAP :          break;
+    case CHARMAP_TREASURE :      break;
+    case CHARMAP_FIRE :          break;
+    case CHARMAP_EXIT :          break;
+    case CHARMAP_ENTRANCE :      break;
+    case CHARMAP_WALL :
+    case CHARMAP_WATER :
+    case CHARMAP_LAVA :
+    case CHARMAP_BRIDGE :
+    case CHARMAP_CHASM :
+    case CHARMAP_EMPTY :
+      l->data[ x ][ y ].c = CHARMAP_BRIDGE;
+
+      if (x >= 1) {
+        level_gen_extend_bridges(g, l, x - 1, y);
+      }
+      if (y >= 1) {
+        level_gen_extend_bridges(g, l, x, y - 1);
+      }
+      if (x <= MAP_WIDTH - 1) {
+        level_gen_extend_bridges(g, l, x + 1, y);
+      }
+      if (y <= MAP_HEIGHT - 1) {
+        level_gen_extend_bridges(g, l, x, y + 1);
+      }
+      break;
+  }
+}
+
+//
+// Extend bridges that go nowhere
+//
+static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
+{
+  TRACE_NO_INDENT();
+
+  return;
+  memset(l->walked, 0, SIZEOF(l->walked));
+
+  //
+  // Find bridge tiles not on the main path
+  //
+  for (int y = 1; y < MAP_HEIGHT - 1; y++) {
+    for (int x = 1; x < MAP_WIDTH - 1; x++) {
+      if (l->walked[ x ][ y ]) {
+        continue;
+      }
+
+      if (l->data[ x ][ y ].c != CHARMAP_BRIDGE) {
+        continue;
+      }
+
+      if (l->info.on_path_entrance_to_exit[ x ][ y ]) {
+        continue;
+      }
+
+      level_gen_extend_bridges(g, l, x, y);
+    }
+  }
 }
 
 //
@@ -4724,6 +4832,11 @@ static class LevelGen *level_gen_create_proc_gen_level(Gamep g, Levelsp v, Level
   // Mark walkable tiles prior to adding content; as we want to check teleports are on the main path
   //
   level_gen_mark_tiles_on_path_entrance_to_exit(g, l);
+
+  //
+  // Extend dead end bridges
+  //
+  level_gen_extend_bridges(g, l);
 
   //
   // See how much we generated

@@ -322,11 +322,14 @@ int main(int argc, char *argv[])
 #ifdef ENABLE_CRASH_HANDLER
   //
   // Crash handlers
+  //
   LOG("Install crash handlers");
-  signal(SIGSEGV, segv_handler);
-  signal(SIGABRT, segv_handler);
-  signal(SIGFPE, segv_handler);
-  signal(SIGILL, segv_handler);
+  signal(SIGSEGV, crash_handler);
+  signal(SIGBUS, crash_handler);
+  signal(SIGABRT, crash_handler);
+  signal(SIGFPE, crash_handler);
+  signal(SIGILL, crash_handler);
+
 #ifndef _WIN32
   signal(SIGPIPE, ctrlc_handler);
 #endif
