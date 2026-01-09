@@ -536,21 +536,20 @@ WARNING_FLAGS+=-Wno-format-nonliteral
 #
 # To silence #emded for clang
 #
-WARNING_FLAGS+=-Wno-c23-extensions # needed on macos clang build
+WARNING_FLAGS+=-Wno-c2x-extensions # needed on macos clang build
 #
 # A warning is generated if the precision of a value may change.
 #
 WARNING_FLAGS+=-Wfloat-conversion
+#
+# Don't fail if a compiler option is unknown
+#
+WARNING_FLAGS+=-Wno-unknown-warning-option
 
 #
 # Clang specific
 #
 CLANG_COMPILER_WARNINGS+=\${WARNING_FLAGS} \${CPP_STANDARD}
-
-#
-# Don't fail if a compiler option is unknown
-#
-CLANG_WARNING_FLAGS+=-Wno-unknown-warning-option
 
 CLANG_WARNING_FLAGS+=-Wconditional-uninitialized 
 CLANG_WARNING_FLAGS+=-Wmaybe-uninitialized
