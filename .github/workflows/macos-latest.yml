@@ -1,0 +1,22 @@
+name: macos-latest
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v5
+    - name: Install GitHub CLI
+      run: |
+        brew update
+    - name: Install dependencies
+      run: |
+         brew install make llvm automake sdl2 sdl2_mixer 
+    - name: configure
+      run: ./RUNME --github
+
