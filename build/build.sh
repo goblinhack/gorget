@@ -46,8 +46,8 @@ help_full()
 {
     case $(uname) in
     Linux)
-      if [[ -f /etc/fedora-release ]]; then
-        log_warn "For Fedora, you may need to install:"
+      if [ "$DISTRO" = "fedora" ]; then
+        log_warn "You may need to install:"
         log_warn "  dnf install -y findutils"
         log_warn "  dnf install -y SDL2_mixer-devel SDL2_mixer"
         log_warn "  dnf install -y SDL2 SDL2-devel"
@@ -58,117 +58,101 @@ help_full()
         log_warn "  dnf install -y libfishsound-devel"
       fi
 
-      log_warn " "
-      log_warn "Install the following for Ubuntu?"
-      set -x
-      sudo apt-get install -y \
-                      build-essential \
-                      clang \
-                      clang-format \
-                      g++ \
-                      git \
-                      libegl1 \
-                      libfishsound1-dev \
-                      libflac-dev \
-                      libfluidsynth-dev \
-                      libfreetype6-dev \
-                      libgl1 \
-                      libglvnd0 \
-                      libglx0 \
-                      libmikmod-dev \
-                      liboggz2-dev \
-                      libsdl2-2.0-0 \
-                      libsdl2-dev \
-                      libsdl2-mixer-2.0-0 \
-                      libsdl2-mixer-dev \
-                      libsmpeg-dev \
-                      libx11-6 \
-                      libxext6 \
-                      liblz4-dev \
-                      ssh \
-                      vim \
-                      xutils-dev
-      set +x
-      if [[ $? -ne 0 ]]; then
-        exit 1
+      if [ "$DISTRO" = "ubuntu" ]; then
+        log_warn "You may need to install:"
+        log_warn "  sudo apt-get install -y"
+        log_warn "  sudo apt-get install -y build-essential"
+        log_warn "  sudo apt-get install -y clang"
+        log_warn "  sudo apt-get install -y clang-format"
+        log_warn "  sudo apt-get install -y g++"
+        log_warn "  sudo apt-get install -y git"
+        log_warn "  sudo apt-get install -y libegl1"
+        log_warn "  sudo apt-get install -y libfishsound1-dev"
+        log_warn "  sudo apt-get install -y libflac-dev"
+        log_warn "  sudo apt-get install -y libfluidsynth-dev"
+        log_warn "  sudo apt-get install -y libfreetype6-dev"
+        log_warn "  sudo apt-get install -y libgl1"
+        log_warn "  sudo apt-get install -y libglvnd0"
+        log_warn "  sudo apt-get install -y libglx0"
+        log_warn "  sudo apt-get install -y libmikmod-dev"
+        log_warn "  sudo apt-get install -y liboggz2-dev"
+        log_warn "  sudo apt-get install -y libsdl2-2.0-0"
+        log_warn "  sudo apt-get install -y libsdl2-dev"
+        log_warn "  sudo apt-get install -y libsdl2-mixer-2.0-0"
+        log_warn "  sudo apt-get install -y libsdl2-mixer-dev"
+        log_warn "  sudo apt-get install -y libsmpeg-dev"
+        log_warn "  sudo apt-get install -y libx11-6"
+        log_warn "  sudo apt-get install -y libxext6"
+        log_warn "  sudo apt-get install -y liblz4-dev"
+        log_warn "  sudo apt-get install -y ssh"
+        log_warn "  sudo apt-get install -y vim"
+        log_warn "  sudo apt-get install -y xutils-d"
       fi
-
-      echo "Now re-run RUNME"
-      exit 0
       ;;
     *MING*|*MSYS*)
-      log_warn "Install the following?"
-      set -x
-      pacman -S git \
-        make vim base-devel --needed \
-        ${MINGW_PKG_TYPE}-x86_64-ag \
-        ${MINGW_PKG_TYPE}-x86_64-binutils \
-        ${MINGW_PKG_TYPE}-x86_64-bzip2 \
-        ${MINGW_PKG_TYPE}-x86_64-clang \
-        ${MINGW_PKG_TYPE}-x86_64-clang-tools-extra \
-        ${MINGW_PKG_TYPE}-x86_64-crt-git \
-        ${MINGW_PKG_TYPE}-x86_64-expat \
-        ${MINGW_PKG_TYPE}-x86_64-flac \
-        ${MINGW_PKG_TYPE}-x86_64-fluidsynth \
-        ${MINGW_PKG_TYPE}-x86_64-gcc \
-        ${MINGW_PKG_TYPE}-x86_64-gcc-libs \
-        ${MINGW_PKG_TYPE}-x86_64-gdb \
-        ${MINGW_PKG_TYPE}-x86_64-gdbm \
-        ${MINGW_PKG_TYPE}-x86_64-gettext \
-        ${MINGW_PKG_TYPE}-x86_64-giflib \
-        ${MINGW_PKG_TYPE}-x86_64-glib2 \
-        ${MINGW_PKG_TYPE}-x86_64-gmp \
-        ${MINGW_PKG_TYPE}-x86_64-headers-git \
-        ${MINGW_PKG_TYPE}-x86_64-isl \
-        ${MINGW_PKG_TYPE}-x86_64-libffi \
-        ${MINGW_PKG_TYPE}-x86_64-libiconv \
-        ${MINGW_PKG_TYPE}-x86_64-libjpeg-turbo \
-        ${MINGW_PKG_TYPE}-x86_64-libmad \
-        ${MINGW_PKG_TYPE}-x86_64-libmodplug \
-        ${MINGW_PKG_TYPE}-x86_64-libogg \
-        ${MINGW_PKG_TYPE}-x86_64-libpng \
-        ${MINGW_PKG_TYPE}-x86_64-libsndfile \
-        ${MINGW_PKG_TYPE}-x86_64-libsystre \
-        ${MINGW_PKG_TYPE}-x86_64-libtiff \
-        ${MINGW_PKG_TYPE}-x86_64-libtre-git \
-        ${MINGW_PKG_TYPE}-x86_64-libunwind \
-        ${MINGW_PKG_TYPE}-x86_64-libvorbis \
-        ${MINGW_PKG_TYPE}-x86_64-libwebp \
-        ${MINGW_PKG_TYPE}-x86_64-libwinpthread-git \
-        ${MINGW_PKG_TYPE}-x86_64-lld \
-        ${MINGW_PKG_TYPE}-x86_64-llvm \
-        ${MINGW_PKG_TYPE}-x86_64-lz4 \
-        ${MINGW_PKG_TYPE}-x86_64-mpc \
-        ${MINGW_PKG_TYPE}-x86_64-mpfr \
-        ${MINGW_PKG_TYPE}-x86_64-ncurses \
-        ${MINGW_PKG_TYPE}-x86_64-openssl \
-        ${MINGW_PKG_TYPE}-x86_64-portaudio \
-        ${MINGW_PKG_TYPE}-x86_64-python3 \
-        ${MINGW_PKG_TYPE}-x86_64-readline \
-        ${MINGW_PKG_TYPE}-x86_64-SDL \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2 \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_mixer \
-        ${MINGW_PKG_TYPE}-x86_64-smpeg2 \
-        ${MINGW_PKG_TYPE}-x86_64-speex \
-        ${MINGW_PKG_TYPE}-x86_64-speexdsp \
-        ${MINGW_PKG_TYPE}-x86_64-termcap \
-        ${MINGW_PKG_TYPE}-x86_64-windows-default-manifest \
-        ${MINGW_PKG_TYPE}-x86_64-winpthreads-git \
-        ${MINGW_PKG_TYPE}-x86_64-xz \
-        ${MINGW_PKG_TYPE}-x86_64-zlib
-      set +x
-
-      if [[ $? -ne 0 ]]; then
-        exit 1
-      fi
-
-      echo "Now re-run RUNME"
-      exit 0
+      log_warn "You may need to install:"
+      log_warn "  pacman -S git make vim base-devel --needed"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-ag"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-binutils"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-bzip2"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-clang"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-clang-tools-extra"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-crt-git"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-expat"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-flac"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-fluidsynth"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-gcc"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-gcc-libs"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-gdb"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-gdbm"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-gettext"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-giflib"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-glib2"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-gmp"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-headers-git"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-isl"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libffi"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libiconv"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libjpeg-turbo"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libmad"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libmodplug"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libogg"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libpng"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libsndfile"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libsystre"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libtiff"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libtre-git"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libunwind"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libvorbis"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libwebp"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-libwinpthread-git"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-lld"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-llvm"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-lz4"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-mpc"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-mpfr"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-ncurses"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-openssl"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-portaudio"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-python3"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-readline"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-SDL"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-SDL2"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-SDL2_mixer"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-smpeg2"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-speex"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-speexdsp"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-termcap"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-windows-default-manifest"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-winpthreads-git"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-xz"
+      log_warn "  pacman -Sy ${MINGW_PKG_TYPE}-x86_64-zl"
       ;;
     *Darwin*)
-      log_warn "Install MAC ports then install:"
-      log_warn "  sudo port install libsdl2"
-      log_warn "  sudo port install libsdl2_mixer"
+      log_warn "For MAC ports install:"
+      log_warn "  sudo port install libsdl2 libsdl2_mixer"
+      log_warn "For homebrew install:"
+      log_warn "  brew install make llvm automake sdl2 sdl2_mixer"
       ;;
     esac
 }
@@ -220,7 +204,7 @@ function detect_distro_phase1() {
     for i in "${known_compatible_distros[@]}"; do
         uname -a | grep "${i}" -i > /dev/null
         if [ "$?" = "0" ]; then
-            DISTRO="${i^}"
+            DISTRO="${i}"
             break
         fi
     done
@@ -245,8 +229,6 @@ function detect_distro_phase2() {
             DISTRO="debian"
         fi
     fi
-
-    detect_arm_architecture
 }
 
 detect_distro_phase0

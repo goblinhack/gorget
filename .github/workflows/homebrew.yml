@@ -8,14 +8,15 @@ on:
 
 jobs:
   build:
-    runs-on: mac-latest
+    runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v5
+    - name: Install GitHub CLI
+      run: |
+        brew update
     - name: Install dependencies
       run: |
-         brew install llvm automake sdl2 sdl2_mixer 
+         brew install make llvm automake sdl2 sdl2_mixer 
     - name: configure
       run: ./RUNME --github --sanity
 
