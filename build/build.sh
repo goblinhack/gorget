@@ -38,44 +38,26 @@ MINGW_PKG_TYPE=mingw-w64-clang
 MSYS_PATH=ucrt64 	
 MINGW_PKG_TYPE=mingw-w64-ucrt
 
-# Determine OS platform
-# https://askubuntu.com/questions/459402/how-to-know-if-the-running-platform-is-ubuntu-or-centos-with-help-of-a-bash-scri
-UNAME=$(uname | tr "[:upper:]" "[:lower:]")
-# If Linux, try to determine specific distribution
-if [ "$UNAME" == "linux" ]; then
-    # If available, use LSB to identify distribution
-    if [ -f /etc/lsb-release -o -d /etc/lsb-release.d ]; then
-        export DISTRO=$(lsb_release -i | cut -d: -f2 | sed s/'^\t'//)
-    # Otherwise, use release info file
-    else
-        export DISTRO=$(ls -d /etc/[A-Za-z]*[_-][rv]e[lr]* | grep -v "lsb" | cut -d'/' -f3 | cut -d'-' -f1 | cut -d'_' -f1)
-    fi
-fi
-
-# For everything else (or if above failed), just use generic identifier
-[ "$DISTRO" == "" ] && export DISTRO=$UNAME
-unset UNAME
-
 # Prefer gnu over freebsd coreutils
 PATH=/opt/local/libexec/gnubin:$PATH
-
 export PATH
-log_info "Distro                     : $DISTRO"
 
 help_full()
 {
     case $(uname) in
     Linux)
-      log_warn "For Fedora, you may need to install:"
-      log_warn "  dnf install -y findutils"
-      log_warn "  dnf install -y SDL2_mixer-devel SDL2_mixer"
-      log_warn "  dnf install -y SDL2 SDL2-devel"
-      log_warn "  dnf install -y SDL2_image SDL2_image-devel"
-      log_warn "  dnf install -y git"
-      log_warn "  dnf install -y make automake gcc-c++"
-      log_warn "  dnf install -y vim"
-      log_warn "  dnf install -y libmikmod-devel"
-      log_warn "  dnf install -y libfishsound-devel"
+      if [[ -f /etc/fedora-release ]]; then
+        log_warn "For Fedora, you may need to install:"
+        log_warn "  dnf install -y findutils"
+        log_warn "  dnf install -y SDL2_mixer-devel SDL2_mixer"
+        log_warn "  dnf install -y SDL2 SDL2-devel"
+        log_warn "  dnf install -y git"
+        log_warn "  dnf install -y make automake gcc-c++"
+        log_warn "  dnf install -y vim"
+        log_warn "  dnf install -y libmikmod-devel"
+        log_warn "  dnf install -y libfishsound-devel"
+      fi
+
       log_warn " "
       log_warn "Install the following for Ubuntu?"
       set -x
@@ -165,11 +147,7 @@ help_full()
         ${MINGW_PKG_TYPE}-x86_64-readline \
         ${MINGW_PKG_TYPE}-x86_64-SDL \
         ${MINGW_PKG_TYPE}-x86_64-SDL2 \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_gfx \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_image \
         ${MINGW_PKG_TYPE}-x86_64-SDL2_mixer \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_net \
-        ${MINGW_PKG_TYPE}-x86_64-SDL2_ttf \
         ${MINGW_PKG_TYPE}-x86_64-smpeg2 \
         ${MINGW_PKG_TYPE}-x86_64-speex \
         ${MINGW_PKG_TYPE}-x86_64-speexdsp \
@@ -194,6 +172,87 @@ help_full()
       ;;
     esac
 }
+
+# https://superuser.com/questions/1156036/how-to-tell-whether-it-is-fedora-or-debian-using-a-shell-script
+known_compatible_distros=(
+                        "wifislax"
+                        "kali"
+                        "parrot"
+                        "backbox"
+                        "blackarch"
+                        "cyborg"
+                        "ubuntu"
+                        "debian"
+                        "suse"
+                        "centos"
+                        "gentoo"
+                        "fedora"
+                        "red hat"
+                        "redhat"
+                        "arch"
+                        "openmandriva"
+                        "darwin"
+                    )
+
+# Determine OS platform
+# https://askubuntu.com/questions/459402/how-to-know-if-the-running-platform-is-ubuntu-or-centos-with-help-of-a-bash-scri
+function detect_distro_phase0() {
+  UNAME=$(uname | tr "[:upper:]" "[:lower:]")
+  # If Linux, try to determine specific distribution
+  if [ "$UNAME" == "linux" ]; then
+      # If available, use LSB to identify distribution
+      if [ -f /etc/lsb-release -o -d /etc/lsb-release.d ]; then
+          export DISTRO=$(lsb_release -i | cut -d: -f2 | sed s/'^\t'//)
+      # Otherwise, use release info file
+      else
+          export DISTRO=$(ls -d /etc/[A-Za-z]*[_-][rv]e[lr]* | grep -v "lsb" | cut -d'/' -f3 | cut -d'-' -f1 | cut -d'_' -f1)
+      fi
+  fi
+
+  # For everything else (or if above failed), just use generic identifier
+  [ "$DISTRO" == "" ] && export DISTRO=$UNAME
+  unset UNAME
+}
+
+#First phase of Linux distro detection based on uname output
+function detect_distro_phase1() {
+
+    for i in "${known_compatible_distros[@]}"; do
+        uname -a | grep "${i}" -i > /dev/null
+        if [ "$?" = "0" ]; then
+            DISTRO="${i^}"
+            break
+        fi
+    done
+}
+
+#Second phase of Linux distro detection based on architecture and version file
+function detect_distro_phase2() {
+    osversionfile_dir=/etc
+
+    if [ "${DISTRO}" = "Unknown Linux" ]; then
+        if [ -f ${osversionfile_dir}"fedora-release" ]; then
+            DISTRO="fedora"
+        elif [ -f ${osversionfile_dir}"centos-release" ]; then
+            DISTRO="centos"
+        elif [ -f ${osversionfile_dir}"gentoo-release" ]; then
+            DISTRO="gentoo"
+        elif [ -f ${osversionfile_dir}"redhat-release" ]; then
+            DISTRO="redhat"
+        elif [ -f ${osversionfile_dir}"SuSE-release" ]; then
+            DISTRO="suse"
+        elif [ -f ${osversionfile_dir}"debian_version" ]; then
+            DISTRO="debian"
+        fi
+    fi
+
+    detect_arm_architecture
+}
+
+detect_distro_phase0
+detect_distro_phase1
+detect_distro_phase2
+log_info "Distro/os                  : $DISTRO"
 
 MY_OS_NAME=$(uname)
 case "$MY_OS_NAME" in
