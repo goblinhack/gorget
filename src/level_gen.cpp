@@ -4539,7 +4539,6 @@ static bool level_gen_extend_bridge_direction_check(Gamep g, class LevelGen *l, 
     }
 
     if (l->info.on_path_entrance_to_exit[ x ][ y ]) {
-      LOG("goes somewhere useful %d,%d lr %d ud %d", x, y, lr, ud);
       return true;
     }
   }
