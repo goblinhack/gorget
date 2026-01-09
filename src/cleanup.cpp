@@ -46,15 +46,25 @@ void cleanup(void)
   auto         g = game;
 
 #ifdef ENABLE_CRASH_HANDLER
+#ifdef SIGSEGV
   signal(SIGSEGV, nullptr); // uninstall our handler
-  signal(SIGBUS, nullptr);  // uninstall our handler
+#endif
+#ifdef SIGBUS
+  signal(SIGBUS, nullptr); // uninstall our handler
+#endif
+#ifdef SIGABRT
   signal(SIGABRT, nullptr); // uninstall our handler
-  signal(SIGINT, nullptr);  // uninstall our handler
-#ifndef _WIN32
+#endif
+#ifdef SIGINT
+  signal(SIGINT, nullptr); // uninstall our handler
+#endif
+#ifdef SIGPIPE
   signal(SIGPIPE, nullptr); // uninstall our handler
 #endif
+#ifdef SIGFPE
   signal(SIGFPE, nullptr); // uninstall our handler
 #endif
+#endif // ENABLE_CRASH_HANDLER
 
   sdl_prepare_to_exit(g);
   wid_console_fini(g);

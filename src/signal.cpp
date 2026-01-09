@@ -248,13 +248,27 @@ void crash_handler(int sig)
   callstack_dump_stderr();
   backtrace_dump_stderr();
 
+#ifdef SIGSEGV
   signal(SIGSEGV, nullptr);
+#endif
+#ifdef SIGBUS
   signal(SIGBUS, nullptr);
+#endif
+#ifdef SIGABRT
   signal(SIGABRT, nullptr);
+#endif
+#ifdef SIGFPE
   signal(SIGFPE, nullptr);
+#endif
+#ifdef SIGILL
   signal(SIGILL, nullptr);
+#endif
+#ifdef SIGPIPE
   signal(SIGPIPE, nullptr);
+#endif
+#ifdef SIGINT
   signal(SIGINT, nullptr);
+#endif
 
 #if defined __linux__
   debug_crash_handler(sig);
@@ -286,13 +300,27 @@ void ctrlc_handler(int sig)
   callstack_dump_stderr();
   backtrace_dump_stderr();
 
+#ifdef SIGSEGV
   signal(SIGSEGV, nullptr);
+#endif
+#ifdef SIGBUS
   signal(SIGBUS, nullptr);
+#endif
+#ifdef SIGABRT
   signal(SIGABRT, nullptr);
+#endif
+#ifdef SIGFPE
   signal(SIGFPE, nullptr);
+#endif
+#ifdef SIGILL
   signal(SIGILL, nullptr);
+#endif
+#ifdef SIGPIPE
   signal(SIGPIPE, nullptr);
+#endif
+#ifdef SIGINT
   signal(SIGINT, nullptr);
+#endif
 
   fprintf(stderr, "\n\nInterrupted. Cleaning up...\n");
   fprintf(stderr, "---------------------------\n");

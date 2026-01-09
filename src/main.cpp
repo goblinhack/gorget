@@ -324,17 +324,30 @@ int main(int argc, char *argv[])
   // Crash handlers
   //
   LOG("Install crash handlers");
+#ifdef SIGSEGV
   signal(SIGSEGV, crash_handler);
+#endif
+#ifdef SIGBUS
   signal(SIGBUS, crash_handler);
+#endif
+#ifdef SIGABRT
   signal(SIGABRT, crash_handler);
+#endif
+#ifdef SIGFPE
   signal(SIGFPE, crash_handler);
+#endif
+#ifdef SIGILL
   signal(SIGILL, crash_handler);
+#endif
 
-#ifndef _WIN32
+#ifdef SIGPIPE
   signal(SIGPIPE, ctrlc_handler);
 #endif
+#ifdef SIGINT
   signal(SIGINT, ctrlc_handler);
 #endif
+
+#endif // ENABLE_CRASH_HANDLER
 
   //
   // Create and load the last saved game
