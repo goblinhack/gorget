@@ -424,6 +424,12 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
   }
 
+  IF_DEBUG
+  {
+    light_pixels = nullptr;
+    fg           = WHITE;
+  }
+
   if (t_maybe_null && (t_maybe_null->angle != 0.0)) {
     thing_display_rotated(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   } else {

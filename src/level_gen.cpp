@@ -2118,17 +2118,53 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
     for (int x = 0; x < MAP_WIDTH; x++) {
-      spoint p(x, y);
+      auto c = l->data[ x ][ y ].c;
+      tmp += c;
+    }
+    LOG("[%s]", tmp.c_str());
+  }
 
-      if (l->doors_walked.find(p) != l->doors_walked.end()) {
-        if (l->debug) {
-          tmp += "D";
-        } else {
-          tmp += l->data[ x ][ y ].c;
-        }
-      } else {
-        tmp += l->data[ x ][ y ].c;
+  LOG("-");
+
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+    std::string tmp;
+    for (int x = 0; x < MAP_WIDTH; x++) {
+      auto c = l->data[ x ][ y ].c;
+
+      switch (l->data[ x ][ y ].c) {
+        case CHARMAP_CHASM :
+        case CHARMAP_DOOR_LOCKED :
+        case CHARMAP_DOOR_SECRET :
+        case CHARMAP_DOOR_UNLOCKED :
+        case CHARMAP_ENTRANCE :
+        case CHARMAP_EXIT :
+        case CHARMAP_JOIN :
+        case CHARMAP_KEY :
+        case CHARMAP_BRIDGE :
+        case CHARMAP_LAVA :
+        case CHARMAP_WALL :
+        case CHARMAP_EMPTY :         break;
+        case CHARMAP_MOB1 :
+        case CHARMAP_BARREL :
+        case CHARMAP_BRAZIER :
+        case CHARMAP_CORRIDOR :
+        case CHARMAP_MOB2 :
+        case CHARMAP_PILLAR :
+        case CHARMAP_TELEPORT :
+        case CHARMAP_TRAP :
+        case CHARMAP_MONST1 :
+        case CHARMAP_MONST2 :
+        case CHARMAP_FLOOR :
+        case CHARMAP_TREASURE :
+        case CHARMAP_FOLIAGE :
+        case CHARMAP_GRASS :
+          if (l->info.on_path_entrance_to_exit[ x ][ y ]) {
+            c = '_';
+          }
+          break;
       }
+
+      tmp += c;
     }
     LOG("[%s]", tmp.c_str());
   }
@@ -4490,12 +4526,36 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
 }
 
 //
-// Extend bridges that go nowhere
+// Can this bridge extension reach something useful?
 //
-static void level_gen_extend_bridges(Gamep g, class LevelGen *l, int x, int y, bool lr, bool ud)
+static bool level_gen_extend_bridge_direction_check(Gamep g, class LevelGen *l, int x, int y, int lr, int ud)
+{
+  for (;;) {
+    x += lr;
+    y += ud;
+
+    if (is_oob(x, y)) {
+      return false;
+    }
+
+    if (l->info.on_path_entrance_to_exit[ x ][ y ]) {
+      LOG("goes somewhere useful %d,%d lr %d ud %d", x, y, lr, ud);
+      return true;
+    }
+  }
+}
+
+//
+// Extend a bridge left, right, up down
+//
+static void level_gen_extend_bridges_do(Gamep g, class LevelGen *l, int x, int y, int lr, int ud)
 {
   if (is_oob(x, y)) {
     return;
+  }
+
+  if (unlikely(l->debug)) {
+    level_gen_dump(g, l, "extend bridge");
   }
 
   //
@@ -4514,26 +4574,26 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l, int x, int y, b
   }
 
   switch (l->data[ x ][ y ].c) {
-    case CHARMAP_CHASM_50 :      break;
-    case CHARMAP_CORRIDOR :      break;
-    case CHARMAP_DEEP_WATER :    break;
-    case CHARMAP_DOOR_LOCKED :   break;
-    case CHARMAP_DOOR_SECRET :   break;
-    case CHARMAP_DOOR_UNLOCKED : break;
-    case CHARMAP_FLOOR :         break;
-    case CHARMAP_FLOOR_50 :      break;
-    case CHARMAP_JOIN :          break;
-    case CHARMAP_KEY :           break;
-    case CHARMAP_MOB1 :          break;
-    case CHARMAP_MOB2 :          break;
-    case CHARMAP_MONST1 :        break;
-    case CHARMAP_MONST2 :        break;
-    case CHARMAP_PILLAR :        break;
-    case CHARMAP_TELEPORT :      break;
-    case CHARMAP_TRAP :          break;
-    case CHARMAP_FIRE :          break;
-    case CHARMAP_EXIT :          break;
-    case CHARMAP_ENTRANCE :      break;
+    case CHARMAP_CHASM_50 :   break;
+    case CHARMAP_CORRIDOR :   break;
+    case CHARMAP_DEEP_WATER : break;
+    case CHARMAP_FLOOR :      break;
+    case CHARMAP_FLOOR_50 :   break;
+    case CHARMAP_JOIN :       break;
+    case CHARMAP_KEY :        break;
+    case CHARMAP_MOB1 :       break;
+    case CHARMAP_MOB2 :       break;
+    case CHARMAP_MONST1 :     break;
+    case CHARMAP_MONST2 :     break;
+    case CHARMAP_PILLAR :     break;
+    case CHARMAP_TELEPORT :   break;
+    case CHARMAP_TRAP :       break;
+    case CHARMAP_FIRE :       break;
+    case CHARMAP_EXIT :       break;
+    case CHARMAP_ENTRANCE :   break;
+    case CHARMAP_DOOR_LOCKED :
+    case CHARMAP_DOOR_SECRET :
+    case CHARMAP_DOOR_UNLOCKED :
     case CHARMAP_GRASS :
     case CHARMAP_TREASURE :
     case CHARMAP_FOLIAGE :
@@ -4545,27 +4605,46 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l, int x, int y, b
     case CHARMAP_BRIDGE :
     case CHARMAP_CHASM :
     case CHARMAP_EMPTY :
-      l->data[ x ][ y ].c = CHARMAP_BRIDGE;
 
-      if (lr) {
-        if (x >= 1) {
-          level_gen_extend_bridges(g, l, x - 1, y, lr, ud);
+      if (l->data[ x ][ y ].c != CHARMAP_BRIDGE) {
+        l->data[ x ][ y ].c = CHARMAP_CORRIDOR;
+      }
+
+      if (lr > 0) {
+        if (x >= 3) {
+          level_gen_extend_bridges_do(g, l, x + 1, y, lr, ud);
         }
-        if (x <= MAP_WIDTH - 1) {
-          level_gen_extend_bridges(g, l, x + 1, y, lr, ud);
+      } else if (lr < 0) {
+        if (x <= MAP_WIDTH - 3) {
+          level_gen_extend_bridges_do(g, l, x - 1, y, lr, ud);
         }
       }
 
-      if (ud) {
-        if (y >= 1) {
-          level_gen_extend_bridges(g, l, x, y - 1, lr, ud);
+      if (ud > 0) {
+        if (y >= 3) {
+          level_gen_extend_bridges_do(g, l, x, y + 1, lr, ud);
         }
-        if (y <= MAP_HEIGHT - 1) {
-          level_gen_extend_bridges(g, l, x, y + 1, lr, ud);
+      } else if (ud < 0) {
+        if (y <= MAP_HEIGHT - 3) {
+          level_gen_extend_bridges_do(g, l, x, y - 1, lr, ud);
         }
       }
       break;
   }
+}
+
+//
+// Extend bridges that go nowhere - as long as they can go somewhere
+//
+static void level_gen_extend_bridges(Gamep g, class LevelGen *l, int x, int y, int lr, int ud)
+{
+  TRACE_NO_INDENT();
+
+  if (! level_gen_extend_bridge_direction_check(g, l, x, y, lr, ud)) {
+    return;
+  }
+
+  level_gen_extend_bridges_do(g, l, x, y, lr, ud);
 }
 
 //
@@ -4603,8 +4682,18 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
       bool ud = (l->data[ x ][ y - 1 ].c == CHARMAP_BRIDGE) || // newline
                 (l->data[ x ][ y + 1 ].c == CHARMAP_BRIDGE);
 
-      if (lr || ud) {
-        level_gen_extend_bridges(g, l, x, y, lr, ud);
+      if (lr && ud) {
+        continue;
+      }
+
+      if (lr) {
+        level_gen_extend_bridges(g, l, x, y, 1, 0);
+        level_gen_extend_bridges(g, l, x, y, -1, 0);
+      }
+
+      if (ud) {
+        level_gen_extend_bridges(g, l, x, y, 0, 1);
+        level_gen_extend_bridges(g, l, x, y, 0, -1);
       }
     }
   }
