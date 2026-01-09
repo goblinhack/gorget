@@ -201,6 +201,12 @@ uint8_t sdl_display_init(Gamep g)
   LOG("SDL: Set SDL_WINDOW_ALWAYS_ON_TOP");
   video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
 
+  if (g_skip_audio_and_gfx) {
+    video_width  = 640;
+    video_height = 480;
+    video_flags  = 0;
+  }
+
   LOG("SDL: Create window size %ux%u", video_width, video_height);
   sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
                                 video_flags);

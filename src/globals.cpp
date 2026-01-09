@@ -27,6 +27,7 @@ bool        g_monochrome;                // Ugly hack to switch to monochrome gf
 int         g_memory_allocated;          // We've allocated something
 bool        g_ptrcheck_inited;           // Ptrcheck is active
 bool        g_quitting;                  // Exiting the game
+bool        g_skip_audio_and_gfx;        // For tests
 char       *g_data_path;
 char       *g_exec_dir;
 char       *g_exec_full_path_and_name;

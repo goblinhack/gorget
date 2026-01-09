@@ -29,6 +29,7 @@ extern bool        g_opt_tests;                 // Dungeon tests
 extern int         g_memory_allocated;          // We've allocated something
 extern bool        g_ptrcheck_inited;           // Ptrcheck is active
 extern bool        g_monochrome;                // Ugly hack to switch to monochrome gfx
+extern bool        g_skip_audio_and_gfx;        // For tests
 extern char       *g_data_path;
 extern char       *g_exec_dir;
 extern char       *g_exec_full_path_and_name;

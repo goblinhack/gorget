@@ -8,6 +8,7 @@
 #include "my_ptrcheck.hpp"
 #include "my_ramdisk.hpp"
 
+#include <stdlib.h>
 #include <string.h>
 
 std::unordered_map< std::string, ramdisk_t_ > ramdisk_data;

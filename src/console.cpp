@@ -9,6 +9,7 @@
 #include "my_main.hpp"
 
 #include <cstring>
+#include <stdlib.h>
 
 static inline void term_puts_fg(unsigned char a)
 {

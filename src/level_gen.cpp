@@ -2126,50 +2126,56 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
 
   LOG("-");
 
-  for (int y = 0; y < MAP_HEIGHT; y++) {
-    std::string tmp;
-    for (int x = 0; x < MAP_WIDTH; x++) {
-      auto c = l->data[ x ][ y ].c;
+  //
+  // Sometimes useful to see walkable paths
+  //
+  if (0) {
+    for (int y = 0; y < MAP_HEIGHT; y++) {
+      std::string tmp;
+      for (int x = 0; x < MAP_WIDTH; x++) {
+        auto c = l->data[ x ][ y ].c;
 
-      switch (l->data[ x ][ y ].c) {
-        case CHARMAP_CHASM :
-        case CHARMAP_DOOR_LOCKED :
-        case CHARMAP_DOOR_SECRET :
-        case CHARMAP_DOOR_UNLOCKED :
-        case CHARMAP_ENTRANCE :
-        case CHARMAP_EXIT :
-        case CHARMAP_JOIN :
-        case CHARMAP_KEY :
-        case CHARMAP_BRIDGE :
-        case CHARMAP_LAVA :
-        case CHARMAP_WALL :
-        case CHARMAP_EMPTY :         break;
-        case CHARMAP_MOB1 :
-        case CHARMAP_BARREL :
-        case CHARMAP_BRAZIER :
-        case CHARMAP_CORRIDOR :
-        case CHARMAP_MOB2 :
-        case CHARMAP_PILLAR :
-        case CHARMAP_TELEPORT :
-        case CHARMAP_TRAP :
-        case CHARMAP_MONST1 :
-        case CHARMAP_MONST2 :
-        case CHARMAP_FLOOR :
-        case CHARMAP_TREASURE :
-        case CHARMAP_FOLIAGE :
-        case CHARMAP_GRASS :
-          if (l->info.on_path_entrance_to_exit[ x ][ y ]) {
-            c = '_';
-          }
-          break;
+        switch (l->data[ x ][ y ].c) {
+          case CHARMAP_CHASM :
+          case CHARMAP_DOOR_LOCKED :
+          case CHARMAP_DOOR_SECRET :
+          case CHARMAP_DOOR_UNLOCKED :
+          case CHARMAP_ENTRANCE :
+          case CHARMAP_EXIT :
+          case CHARMAP_JOIN :
+          case CHARMAP_KEY :
+          case CHARMAP_BRIDGE :
+          case CHARMAP_LAVA :
+          case CHARMAP_WALL :
+          case CHARMAP_EMPTY :         break;
+          case CHARMAP_MOB1 :
+          case CHARMAP_BARREL :
+          case CHARMAP_BRAZIER :
+          case CHARMAP_CORRIDOR :
+          case CHARMAP_MOB2 :
+          case CHARMAP_PILLAR :
+          case CHARMAP_TELEPORT :
+          case CHARMAP_TRAP :
+          case CHARMAP_MONST1 :
+          case CHARMAP_MONST2 :
+          case CHARMAP_FLOOR :
+          case CHARMAP_TREASURE :
+          case CHARMAP_FOLIAGE :
+          case CHARMAP_GRASS :
+            if (l->info.on_path_entrance_to_exit[ x ][ y ]) {
+              c = '_';
+            }
+            break;
+        }
+
+        tmp += c;
       }
-
-      tmp += c;
+      LOG("[%s]", tmp.c_str());
     }
-    LOG("[%s]", tmp.c_str());
+
+    LOG("-");
   }
 
-  LOG("-");
   level_gen_mutex.unlock();
 }
 

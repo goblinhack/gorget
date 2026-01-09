@@ -27,8 +27,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-static bool skip_gfx_and_audio; // For tests
-
 static void usage(void)
 {
   TRACE_NO_INDENT();
@@ -169,7 +167,7 @@ static void parse_args(int argc, char *argv[])
       g_opt_test_name    = argv[ i + 1 ];
       g_opt_tests        = true;
       g_opt_debug1       = true;
-      skip_gfx_and_audio = true;
+      g_skip_audio_and_gfx = true;
       i++;
       continue;
     }
@@ -177,25 +175,25 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--tests") || ! strcasecmp(argv[ i ], "-tests")) {
       g_opt_tests        = true;
       g_opt_debug1       = true;
-      skip_gfx_and_audio = true;
+      g_skip_audio_and_gfx = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-room-gen") || ! strcasecmp(argv[ i ], "-do-room-gen")) {
       g_opt_do_room_gen  = true;
-      skip_gfx_and_audio = true;
+      g_skip_audio_and_gfx = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-level-select-gen") || ! strcasecmp(argv[ i ], "-do-level-select-gen")) {
       g_opt_do_level_select_gen = true;
-      skip_gfx_and_audio        = true;
+      g_skip_audio_and_gfx        = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-level-gen") || ! strcasecmp(argv[ i ], "-do-level-gen")) {
       g_opt_do_level_gen = true;
-      skip_gfx_and_audio = true;
+      g_skip_audio_and_gfx = true;
       continue;
     }
 
@@ -376,7 +374,7 @@ int main(int argc, char *argv[])
     sdl_config_update_all(g);
   }
 
-  if (skip_gfx_and_audio) {
+  if (g_skip_audio_and_gfx) {
     //
     // Skip for speed of test setup
     //
@@ -421,7 +419,7 @@ int main(int argc, char *argv[])
   //
   color_init();
 
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load fonts");
@@ -433,7 +431,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load console");
@@ -469,7 +467,7 @@ int main(int argc, char *argv[])
   //
   // Need to preserve spaces for restarting via exec
   //
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     g_program_name = std::string(argv[ 0 ]);
     if (g_opt_debug1) {
@@ -480,7 +478,7 @@ int main(int argc, char *argv[])
     wid_console_flush(g);
   }
 
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load tiles");
@@ -492,7 +490,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     if (! tile_init()) {
       ERR("Tile init");
@@ -500,7 +498,7 @@ int main(int argc, char *argv[])
     wid_console_flush(g);
   }
 
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load textures");
@@ -513,7 +511,7 @@ int main(int argc, char *argv[])
     wid_console_flush(g);
   }
 
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Init audio");
@@ -526,7 +524,7 @@ int main(int argc, char *argv[])
     wid_console_flush(g);
   }
 
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Init music");
@@ -539,7 +537,7 @@ int main(int argc, char *argv[])
     wid_console_flush(g);
   }
 
-  if (! skip_gfx_and_audio) {
+  if (! g_skip_audio_and_gfx) {
     TRACE_NO_INDENT();
     if (g_opt_debug1) {
       CON("Load sounds");
