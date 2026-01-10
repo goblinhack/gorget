@@ -164,35 +164,35 @@ static void parse_args(int argc, char *argv[])
         usage();
         DIE("Missing parameter for argument, %s", argv[ i ]);
       }
-      g_opt_test_name    = argv[ i + 1 ];
-      g_opt_tests        = true;
-      g_opt_debug1       = true;
+      g_opt_test_name      = argv[ i + 1 ];
+      g_opt_tests          = true;
+      g_opt_debug1         = true;
       g_skip_audio_and_gfx = true;
       i++;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--tests") || ! strcasecmp(argv[ i ], "-tests")) {
-      g_opt_tests        = true;
-      g_opt_debug1       = true;
+      g_opt_tests          = true;
+      g_opt_debug1         = true;
       g_skip_audio_and_gfx = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-room-gen") || ! strcasecmp(argv[ i ], "-do-room-gen")) {
-      g_opt_do_room_gen  = true;
+      g_opt_do_room_gen    = true;
       g_skip_audio_and_gfx = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-level-select-gen") || ! strcasecmp(argv[ i ], "-do-level-select-gen")) {
       g_opt_do_level_select_gen = true;
-      g_skip_audio_and_gfx        = true;
+      g_skip_audio_and_gfx      = true;
       continue;
     }
 
     if (! strcasecmp(argv[ i ], "--do-level-gen") || ! strcasecmp(argv[ i ], "-do-level-gen")) {
-      g_opt_do_level_gen = true;
+      g_opt_do_level_gen   = true;
       g_skip_audio_and_gfx = true;
       continue;
     }

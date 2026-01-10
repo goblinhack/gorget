@@ -116,6 +116,11 @@ static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp 
 
   if (shoved) {
     //
+    // Direction is needed to be set for teleporting effectively.
+    //
+    thing_set_dir_from_delta(t, direction.x, direction.y);
+
+    //
     // Callback for shoving
     //
     thing_on_shoved(g, v, l, t, shover);

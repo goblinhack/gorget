@@ -44,6 +44,9 @@ bool tests_init(void)
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }
   if (!test_load_save_load()) { return false; }
+  if (!test_load_teleport_shove_barrel()) { return false; }
+  if (!test_load_teleport_shove_brazier()) { return false; }
+  if (!test_load_teleport_shove_mob()) { return false; }
   if (!test_load_teleport()) { return false; }
   if (!test_load_trampled_grass()) { return false; }
   if (!test_load_wall()) { return false; }

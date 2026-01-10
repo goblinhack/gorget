@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_teleport(Gamep g, Testp t)
+static bool test_teleport_shove_mob(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -21,21 +21,21 @@ static bool test_teleport(Gamep g, Testp t)
   //
   std::string start
       = "xxxxxxxx"
-        "x..CC..x"
-        "x..CC..x"
-        "x..CC..x"
-        "x@TCCT.x"
-        "x..CC..x"
-        "x..CC..x"
+        "x...C..x"
+        "x...C..x"
+        "x...C..x"
+        "x@GTCT.x"
+        "x...C..x"
+        "x...C..x"
         "xxxxxxxx";
   std::string expect1
       = "xxxxxxxx"
-        "x..CC..x"
-        "x..CC..x"
-        "x..CC..x"
-        "x.TCCT@x"
-        "x..CC..x"
-        "x..CC..x"
+        "x...C..x"
+        "x...C..x"
+        "x...C..x"
+        "x.@TCTGx"
+        "x...C..x"
+        "x...C..x"
         "xxxxxxxx";
 
   //
@@ -79,7 +79,7 @@ static bool test_teleport(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 2, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
@@ -89,14 +89,14 @@ exit:
   return result;
 }
 
-bool test_load_teleport(void)
+bool test_load_teleport_shove_mob(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("teleport");
+  Testp test = test_load("teleport_shove_mob");
 
   // begin sort marker1 {
-  test_callback_set(test, test_teleport);
+  test_callback_set(test, test_teleport_shove_mob);
   // end sort marker1 }
 
   return true;

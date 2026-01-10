@@ -560,6 +560,7 @@ static bool level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp 
     case is_obs_to_fire :
     case is_obs_to_jump_over :
     case is_obs_to_jumping_onto :
+    case is_obs_to_teleporting_onto :
     case is_obs_to_movement :
       if (thing_is_open(it)) {
         return true; // filter out

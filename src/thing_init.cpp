@@ -27,6 +27,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   }
 
   thing_at_set(t, real_at);
+  thing_at_set(t, real_at); // Doing it twice sets old_at too
   thing_moving_from_set(t, at);
 
   t->level_num = l->level_num;

@@ -2334,16 +2334,6 @@ bool thing_is_unused90(Thingp t)
   return tp_flag(thing_tp(t), is_unused90);
 }
 
-bool thing_is_unused91(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return false;
-  }
-  return tp_flag(thing_tp(t), is_unused91);
-}
-
 bool thing_is_blit_pixel_lighting(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -2722,6 +2712,26 @@ bool thing_is_obs_to_jumping_onto(Thingp t)
   }
 
   return tp_flag(thing_tp(t), is_obs_to_jumping_onto);
+}
+
+bool thing_is_obs_to_teleporting_onto(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+
+  //
+  // Unless open
+  //
+  if (thing_is_openable(t)) {
+    if (thing_is_open(t)) {
+      return false;
+    }
+  }
+
+  return tp_flag(thing_tp(t), is_obs_to_teleporting_onto);
 }
 
 bool thing_is_submergible(Thingp t)

@@ -160,7 +160,6 @@ bool tp_load_fire(void)
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_physics_water);
   tp_flag_set(tp, is_submergible);
-  tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_end_delay);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d5"); // to allow it to be damaged by water

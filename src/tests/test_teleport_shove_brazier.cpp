@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_teleport(Gamep g, Testp t)
+static bool test_teleport_shove_brazier(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -21,21 +21,21 @@ static bool test_teleport(Gamep g, Testp t)
   //
   std::string start
       = "xxxxxxxx"
-        "x..CC..x"
-        "x..CC..x"
-        "x..CC..x"
-        "x@TCCT.x"
-        "x..CC..x"
-        "x..CC..x"
+        "x...C..x"
+        "x...C..x"
+        "x...C..x"
+        "x@BTCT.x"
+        "x...C..x"
+        "x...C..x"
         "xxxxxxxx";
   std::string expect1
       = "xxxxxxxx"
-        "x..CC..x"
-        "x..CC..x"
-        "x..CC..x"
-        "x.TCCT@x"
-        "x..CC..x"
-        "x..CC..x"
+        "x...C..x"
+        "x...C..x"
+        "x...C..x"
+        "x@;TCT!x"
+        "x...C..x"
+        "x...C..x"
         "xxxxxxxx";
 
   //
@@ -89,14 +89,14 @@ exit:
   return result;
 }
 
-bool test_load_teleport(void)
+bool test_load_teleport_shove_brazier(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("teleport");
+  Testp test = test_load("teleport_shove_brazier");
 
   // begin sort marker1 {
-  test_callback_set(test, test_teleport);
+  test_callback_set(test, test_teleport_shove_brazier);
   // end sort marker1 }
 
   return true;
