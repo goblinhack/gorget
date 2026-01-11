@@ -25,6 +25,12 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
   {
     Tpp tp = thing_tp(t);
 
+    if (0) {
+      if (thing_is_level_curr(t)) {
+        THING_LOG(t, "anim");
+      }
+    }
+
     if (tp_is_animated(tp)) {
       thing_anim_time_step(g, v, l, t, tp, time_step);
     }

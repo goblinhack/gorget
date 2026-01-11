@@ -160,11 +160,6 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   }
 
   //
-  // Animate things Per frame.
-  //
-  level_anim(g, v, l);
-
-  //
   // Update any tiles that are needed
   //
   level_tile_update(g, v, l);
