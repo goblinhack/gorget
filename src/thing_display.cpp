@@ -427,7 +427,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
   IF_DEBUG
   {
     light_pixels = nullptr;
-    fg           = WHITE;
+    fg.r         = 255;
+    fg.g         = 255;
+    fg.b         = 255;
   }
 
   if (t_maybe_null && (t_maybe_null->angle != 0.0)) {
