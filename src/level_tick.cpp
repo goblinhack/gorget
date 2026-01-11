@@ -160,6 +160,14 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   }
 
   //
+  // Normally this is done in level display as we need to also animate other levels.
+  // For tests though, this allows explosions to occur etc..
+  //
+  if (g_opt_tests) {
+    level_anim(g, v, l);
+  }
+
+  //
   // Update any tiles that are needed
   //
   level_tile_update(g, v, l);
