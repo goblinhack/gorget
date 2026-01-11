@@ -5556,46 +5556,35 @@ void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy)
   float x = ox;
   float y = oy;
 
+  int tlx;
+  int tly;
+  int brx;
+  int bry;
+  int ptlx;
+  int ptly;
+  int pbrx;
+  int pbry;
+
   if (! w->parent) {
-    x *= (float) TERM_WIDTH;
-    y *= (float) TERM_HEIGHT;
-  } else {
-    x *= wid_get_width(w->parent);
-    y *= wid_get_height(w->parent);
-  }
-
-  float dx = x - wid_get_tl_x(w);
-  float dy = y - wid_get_tl_y(w);
-
-  dx -= (float) ceil(wid_get_br_x(w) - wid_get_tl_x(w)) / 2;
-  dy -= (float) ceil(wid_get_br_y(w) - wid_get_tl_y(w)) / 2;
-
-  wid_move_delta(g, w, (int) dx, (int) dy);
-
-  //
-  // Account for rounding errors if we can fit the window in the screen and it is
-  // now one character offscreen.
-  //
-  if ((ox == 0.5) && (oy == 0.5)) {
-    int tlx;
-    int tly;
-    int brx;
-    int bry;
-
+    ptlx = 0;
+    ptly = 0;
+    pbrx = TERM_WIDTH - 1;
+    pbry = TERM_HEIGHT - 1;
     wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
-
-    if ((bry >= TERM_HEIGHT - 1) && (tly > 0)) {
-      wid_move_delta(g, w, 0, -1);
-    } else if ((tly < 0) && (bry < TERM_HEIGHT - 1)) {
-      wid_move_delta(g, w, 0, 1);
-    }
-
-    if ((brx >= TERM_WIDTH - 1) && (tlx > 0)) {
-      wid_move_delta(g, w, -1, 0);
-    } else if ((tlx < 0) && (brx < TERM_WIDTH - 1)) {
-      wid_move_delta(g, w, 1, 0);
-    }
+  } else {
+    wid_get_abs_coords(w->parent, &ptlx, &ptly, &pbrx, &pbry);
+    wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
   }
+
+  auto pw     = (pbrx - ptlx) + 1;
+  auto width  = (brx - tlx) + 1;
+  auto ph     = (pbry - ptly) + 1;
+  auto height = (bry - tly) + 1;
+
+  auto nx = ptlx + (int) floor((float) (pw - width) * x);
+  auto ny = ptly + (int) floor((float) (ph - height) * y);
+
+  wid_move_to(g, w, nx, ny);
 }
 
 void wid_move_to_abs_centered(Gamep g, Widp w, int x, int y)
