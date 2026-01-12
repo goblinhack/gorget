@@ -4,10 +4,10 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-#include "my_globals.hpp"
+// REMOVED #include "my_globals.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
-#include "my_thing.hpp"
+// REMOVED #include "my_main.hpp"
+// REMOVED #include "my_thing.hpp"
 
 void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {

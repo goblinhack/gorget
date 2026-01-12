@@ -7,7 +7,7 @@
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp_class.hpp"
-#include "my_ui.hpp"
+// REMOVED #include "my_ui.hpp"
 
 void thing_description_set(Tpp tp, thing_description_get_t callback)
 {

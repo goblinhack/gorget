@@ -6,7 +6,7 @@
 #include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
-#include "my_tile.hpp"
+// REMOVED #include "my_tile.hpp"
 
 //
 // For things moving between tiles, calculate the pixel they are at based on the timestep

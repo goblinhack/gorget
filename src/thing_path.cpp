@@ -2,9 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include "my_callstack.hpp"
+// REMOVED #include "my_callstack.hpp"
 #include "my_level.hpp"
-#include "my_main.hpp"
+// REMOVED #include "my_main.hpp"
 
 //
 // Shorten paths, but don't cut corners
