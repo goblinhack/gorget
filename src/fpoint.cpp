@@ -195,6 +195,12 @@ uint8_t get_line_known_intersection(fpoint p0, fpoint p1, fpoint p2, fpoint p3, 
   return true;
 }
 
+float dot (const fpoint b
+{
+  return x * b.x + y * b.y;
+}
+#endif
+
 int distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out)
 {
   fpoint intersect;
@@ -232,9 +238,3 @@ int distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *inter
 
   return 1;
 }
-
-float dot (const fpoint b
-{
-  return x * b.x + y * b.y;
-}
-#endif

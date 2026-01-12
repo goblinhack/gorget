@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_fpoint.hpp"
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
@@ -147,15 +148,6 @@ static bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Th
   float A_radius = thing_collision_radius(A);
   float B_radius = thing_collision_radius(B);
 
-#if 0
-  if (! thing_is_projectile(A)) {
-    A_at += fpoint(0.5, 0.5);
-  }
-  if (! thing_is_projectile(B)) {
-    B_at += fpoint(0.5, 0.5);
-  }
-#endif
-
   float touching_dist = A_radius + B_radius;
   float dist          = distance(A_at, B_at);
 
@@ -169,6 +161,98 @@ static bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Th
   }
 
   return true;
+}
+
+static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Thingp C, fpoint C_at, Thingp B,
+                                                fpoint B_at)
+{
+  float radius = thing_collision_radius(C);
+
+  fpoint B0(B_at.x - TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+  fpoint B1(B_at.x + TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+  fpoint B2(B_at.x - TILE_WIDTH / 2, B_at.y + TILE_HEIGHT / 2);
+  fpoint B3(B_at.x + TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+
+  //
+  // Circle inside box
+  //
+  if (B_at == C_at) {
+    return true;
+  }
+
+  //
+  // Corner collisions.
+  //
+  if (distance(C_at, B0) < radius) {
+    return true;
+  }
+
+  if (distance(C_at, B1) < radius) {
+    return true;
+  }
+
+  if (distance(C_at, B2) < radius) {
+    return true;
+  }
+
+  if (distance(C_at, B3) < radius) {
+    return true;
+  }
+
+  fpoint *intersect_out = nullptr;
+  float   dist;
+
+  if (distance_to_line(C_at, B0, B1, &dist, intersect_out)) {
+    if (dist < radius) {
+      return true;
+    }
+  }
+
+  if (distance_to_line(C_at, B1, B2, &dist, intersect_out)) {
+    if (dist < radius) {
+      return true;
+    }
+  }
+
+  if (distance_to_line(C_at, B2, B3, &dist, intersect_out)) {
+    if (dist < radius) {
+      return true;
+    }
+  }
+
+  if (distance_to_line(C_at, B3, B0, &dist, intersect_out)) {
+    if (dist < radius) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+static bool thing_collision_check_squares(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at)
+{
+  fpoint A0(B_at.x - TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+  fpoint A1(B_at.x + TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+  fpoint A2(B_at.x - TILE_WIDTH / 2, B_at.y + TILE_HEIGHT / 2);
+  fpoint A3(B_at.x + TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+
+  fpoint tl(B_at.x - TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+  fpoint br(B_at.x + TILE_WIDTH / 2, B_at.y + TILE_HEIGHT / 2);
+
+  if ((A0.x >= tl.x) && (A0.x <= br.x) && (A0.y >= tl.y) && (A0.x <= br.y)) {
+    return true;
+  }
+  if ((A1.x >= tl.x) && (A1.x <= br.x) && (A1.y >= tl.y) && (A1.x <= br.y)) {
+    return true;
+  }
+  if ((A2.x >= tl.x) && (A2.x <= br.x) && (A2.y >= tl.y) && (A2.x <= br.y)) {
+    return true;
+  }
+  if ((A3.x >= tl.x) && (A3.x <= br.x) && (A3.y >= tl.y) && (A3.x <= br.y)) {
+    return true;
+  }
+
+  return false;
 }
 
 static bool thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
@@ -189,8 +273,7 @@ static bool thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp
                                                       fpoint o_at)
 {
   TRACE_NO_INDENT();
-  LOG("%s", __FUNCTION__);
-  return false;
+  return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
 }
 
 static bool thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
@@ -204,16 +287,14 @@ static bool thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp
                                                       fpoint o_at)
 {
   TRACE_NO_INDENT();
-  LOG("%s", __FUNCTION__);
-  return false;
+  return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
 }
 
 static bool thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
                                                 fpoint o_at)
 {
   TRACE_NO_INDENT();
-  LOG("%s", __FUNCTION__);
-  return false;
+  return thing_collision_check_squares(g, v, l, me, me_at, o, o_at);
 }
 
 //

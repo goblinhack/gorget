@@ -36,6 +36,7 @@ fpoint unit(const fpoint &p);
 
 float distance(const fpoint &a, const fpoint &b);
 float angle_radians(const fpoint &p);
+int   distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out);
 
 static inline fpoint make_fpoint(const spoint f) { return fpoint(f.x, f.y); }
 
