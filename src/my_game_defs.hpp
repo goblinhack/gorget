@@ -62,6 +62,7 @@
 
 #define MAX_FALL_TILE_HEIGHT       4
 #define MAX_FALL_TIME_MS           250
+#define MAX_HIT_TIME_MS            250
 #define MAX_TESTED_LEVELS          1000
 #define POPUP_DURATION_MS          2000
 #define POPUP_DURATION_TILE_HEIGHT 6

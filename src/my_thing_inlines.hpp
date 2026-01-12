@@ -70,7 +70,19 @@ static inline int thing_is_falling(Thingp t)
     return 0;
   }
 #endif
-  return t->_is_falling;
+  return t->_is_falling_ms;
+}
+
+static inline int thing_is_hit(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+#endif
+  return t->_is_hit;
 }
 
 static inline bool thing_is_jumping(Thingp t)

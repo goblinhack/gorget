@@ -199,6 +199,10 @@ typedef struct Thing_ {
   //
   uint8_t _jump_distance;
   //
+  // Decrements each frame. Increments if hit.
+  //
+  uint8_t _is_hit;
+  //
   // Used so often, we cache it
   //
   uint8_t _is_player : 1;
@@ -327,7 +331,7 @@ typedef struct Thing_ {
   //
   // Accumulates and holds the amount of time we've been falling.
   //
-  int16_t _is_falling;
+  uint16_t _is_falling_ms;
   //
   // Weight in grams. Impacts things like grass being crushed.
   //
@@ -705,6 +709,7 @@ void   thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void   thing_fall(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fini(Gamep, Levelsp, Levelp, Thingp);
+void   thing_hit_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void   thing_interpolate(Gamep, Levelsp, Levelp, Thingp, float dt);
 void   thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
 void   thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
@@ -772,9 +777,12 @@ bool thing_is_carried(Thingp);
 bool thing_is_carried_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp carrier, bool val = true);
 bool thing_is_carried_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp dropr);
 
-void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, int val);
+void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, bool val);
 int  thing_is_falling_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int  thing_is_falling_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+void thing_is_hit_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int  thing_is_hit_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int  thing_is_hit_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_speed(Thingp);
 int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);

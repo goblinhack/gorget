@@ -62,8 +62,9 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
         .source     = source,                //
     };
 
-    THING_CON(me, "collison with");
-    THING_CON(obstacle, "me");
+    THING_LOG(me, "collison with");
+    THING_LOG(obstacle, "me");
+
     thing_damage(g, v, l, obstacle, e);
   }
 
@@ -168,10 +169,24 @@ static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Th
 {
   float radius = thing_collision_radius(C);
 
-  fpoint B0(B_at.x - TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
-  fpoint B1(B_at.x + TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
-  fpoint B2(B_at.x - TILE_WIDTH / 2, B_at.y + TILE_HEIGHT / 2);
-  fpoint B3(B_at.x + TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+  C_at.x += 0.5;
+  C_at.y += 0.5;
+
+  fpoint tl(B_at.x, B_at.y);
+  fpoint br(B_at.x + 1, B_at.y + 1);
+
+  //
+  // This simpler check seems more accurate
+  //
+  if ((C_at.x >= tl.x) && (C_at.x <= br.x) && (C_at.y >= tl.y) && (C_at.y <= br.y)) {
+    return true;
+  }
+  return false;
+
+  fpoint B0(B_at.x - 0, B_at.y - 0);
+  fpoint B1(B_at.x + 1, B_at.y - 0);
+  fpoint B2(B_at.x - 0, B_at.y + 1);
+  fpoint B3(B_at.x + 1, B_at.y + 1);
 
   //
   // Circle inside box
@@ -231,24 +246,24 @@ static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Th
 
 static bool thing_collision_check_squares(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at)
 {
-  fpoint A0(B_at.x - TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
-  fpoint A1(B_at.x + TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
-  fpoint A2(B_at.x - TILE_WIDTH / 2, B_at.y + TILE_HEIGHT / 2);
-  fpoint A3(B_at.x + TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
+  fpoint A0(A_at.x - 0, A_at.y - 0);
+  fpoint A1(A_at.x + 1, A_at.y - 0);
+  fpoint A2(A_at.x - 0, A_at.y + 1);
+  fpoint A3(A_at.x + 1, A_at.y + 1);
 
-  fpoint tl(B_at.x - TILE_WIDTH / 2, B_at.y - TILE_HEIGHT / 2);
-  fpoint br(B_at.x + TILE_WIDTH / 2, B_at.y + TILE_HEIGHT / 2);
+  fpoint tl(B_at.x - 0, B_at.y - 0);
+  fpoint br(B_at.x + 1, B_at.y + 1);
 
-  if ((A0.x >= tl.x) && (A0.x <= br.x) && (A0.y >= tl.y) && (A0.x <= br.y)) {
+  if ((A0.x >= tl.x) && (A0.x <= br.x) && (A0.y >= tl.y) && (A0.y <= br.y)) {
     return true;
   }
-  if ((A1.x >= tl.x) && (A1.x <= br.x) && (A1.y >= tl.y) && (A1.x <= br.y)) {
+  if ((A1.x >= tl.x) && (A1.x <= br.x) && (A1.y >= tl.y) && (A1.y <= br.y)) {
     return true;
   }
-  if ((A2.x >= tl.x) && (A2.x <= br.x) && (A2.y >= tl.y) && (A2.x <= br.y)) {
+  if ((A2.x >= tl.x) && (A2.x <= br.x) && (A2.y >= tl.y) && (A2.y <= br.y)) {
     return true;
   }
-  if ((A3.x >= tl.x) && (A3.x <= br.x) && (A3.y >= tl.y) && (A3.x <= br.y)) {
+  if ((A3.x >= tl.x) && (A3.x <= br.x) && (A3.y >= tl.y) && (A3.y <= br.y)) {
     return true;
   }
 
@@ -389,7 +404,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
                 return (d1 < d2) && t1->_priority < t2->_priority;
               });
 
-    if (1) {
+    if (0) {
       for (auto a_pair : pairs) {
         auto o_dist = a_pair.first;
         auto o      = a_pair.second;
@@ -401,12 +416,16 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     for (auto a_pair : pairs) {
       auto o = a_pair.second;
 
+      thing_is_hit_set(g, v, l, o, MAX_HIT_TIME_MS);
+
       thing_collision_handle_thing(g, v, l, o, me);
+
       if (thing_is_dead(me)) {
         return;
       }
     }
   }
+
   if (0) {
     CON("-");
   }

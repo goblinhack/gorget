@@ -214,7 +214,7 @@ int thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_health -= val;
 }
 
-void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
 {
   TRACE_NO_INDENT();
   if (! t) {
@@ -229,18 +229,18 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     //
     // Start falling if not doing do
     //
-    if (t->_is_falling) {
+    if (t->_is_falling_ms) {
       return;
     }
   } else {
     //
     // Stop falling
     //
-    if (! t->_is_falling) {
+    if (! t->_is_falling_ms) {
       return;
     }
   }
-  t->_is_falling = val;
+  t->_is_falling_ms = val;
 
   if (val) {
     thing_on_fall_begin(g, v, l, t);
@@ -256,17 +256,85 @@ int thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_is_falling += val;
+
+  if (t->_is_falling_ms + val > MAX_FALL_TIME_MS) {
+    return t->_is_falling_ms = MAX_FALL_TIME_MS;
+  }
+
+  return t->_is_falling_ms += val;
 }
 
-int thing_is_falling_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return;
+  }
+
+  //
+  // Once hit, it is treated as a counter
+  //
+  if (val) {
+    //
+    // Start the hit counter if not doing do
+    //
+    if (t->_is_hit) {
+      return;
+    }
+  } else {
+    //
+    // Stop hit
+    //
+    if (! t->_is_hit) {
+      return;
+    }
+  }
+
+  t->_is_hit = val;
+
+  if (val) {
+    thing_on_hit_begin(g, v, l, t);
+  } else {
+    thing_on_hit_end(g, v, l, t);
+  }
+}
+
+int thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_is_falling -= val;
+
+  if (! t->_is_hit && val) {
+    thing_on_hit_begin(g, v, l, t);
+  }
+
+  if (t->_is_hit + val > 255) {
+    return t->_is_hit = 255;
+  }
+
+  return t->_is_hit += val;
+}
+
+int thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+
+  if ((int) t->_is_hit - val <= 0) {
+    if (t->_is_hit) {
+      thing_on_hit_end(g, v, l, t);
+    }
+    return t->_is_hit = 0;
+  }
+
+  return t->_is_hit -= val;
 }
 
 int thing_temperature(Thingp t)

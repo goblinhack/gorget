@@ -103,4 +103,12 @@ typedef void (*thing_on_fall_end_t)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_fall_end_set(Tpp, thing_on_fall_end_t);
 void thing_on_fall_end(Gamep, Levelsp, Levelp, Thingp me);
 
+typedef void (*thing_on_hit_begin_t)(Gamep, Levelsp, Levelp, Thingp me);
+void thing_on_hit_begin_set(Tpp, thing_on_hit_begin_t);
+void thing_on_hit_begin(Gamep, Levelsp, Levelp, Thingp me);
+
+typedef void (*thing_on_hit_end_t)(Gamep, Levelsp, Levelp, Thingp me);
+void thing_on_hit_end_set(Tpp, thing_on_hit_end_t);
+void thing_on_hit_end(Gamep, Levelsp, Levelp, Thingp me);
+
 #endif

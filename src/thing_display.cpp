@@ -207,6 +207,11 @@ static void thing_display_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, T
     default : break;
   }
 
+  //
+  // light_pixels is set for things like floors and walls, and blits the tile as lots of individual
+  // pixels with their own lighting
+  //
+
   if (tp_is_blit_outlined(tp) || tp_is_blit_square_outlined(tp)) {
     thing_display_outlined_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   } else {
@@ -432,15 +437,53 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     fg.b         = 255;
   }
 
-  if (t_maybe_null && (t_maybe_null->angle != 0.0)) {
-    thing_display_rotated(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
-  } else {
+  if (t_maybe_null) {
+    //
+    // Flash if hit
+    //
+    if (thing_is_hit(t_maybe_null)) {
+      //
+      // Preserve original alpha
+      //
+      color flash  = ORANGE;
+      fg.r         = flash.r;
+      fg.g         = flash.g;
+      fg.b         = flash.b;
+      light_pixels = nullptr;
+    }
+
+    //
+    // Rotate when falling
+    //
+    if (t_maybe_null->angle != 0.0) {
+      thing_display_rotated(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
+      return;
+    }
+
     //
     // If we have alpha values in the texture, the end of one triangle line and the start of another creates
     // a visible strip
     //
-    bool is_blit_flush_per_line = t_maybe_null && thing_is_blit_flush_per_line(t_maybe_null);
+    bool is_blit_flush_per_line = thing_is_blit_flush_per_line(t_maybe_null);
     thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, light_pixels,
                        is_blit_flush_per_line);
+
+    //
+    // Flash red outline if hit
+    //
+    if (thing_is_hit(t_maybe_null)) {
+      color outline = RED;
+      int   a       = (int) (((float) thing_is_hit(t_maybe_null) / (float) MAX_HIT_TIME_MS) * 255.0);
+      if (a > 255) {
+        a = 255;
+      }
+      outline.a = (uint8_t) a;
+      tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
+    }
+  } else {
+    //
+    // Probably the cursor
+    //
+    thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg, nullptr, false);
   }
 }

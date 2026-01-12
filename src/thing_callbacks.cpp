@@ -571,6 +571,56 @@ void thing_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->on_fall_end(g, v, l, me);
 }
 
+void thing_on_hit_begin_set(Tpp tp, thing_on_hit_begin_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->on_hit_begin = callback;
+}
+
+void thing_on_hit_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  if (! tp->on_hit_begin) {
+    return;
+  }
+  return tp->on_hit_begin(g, v, l, me);
+}
+
+void thing_on_hit_end_set(Tpp tp, thing_on_hit_end_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->on_hit_end = callback;
+}
+
+void thing_on_hit_end(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+
+  if (! tp->on_hit_end) {
+    return;
+  }
+
+  return tp->on_hit_end(g, v, l, me);
+}
+
 void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callback)
 {
   TRACE_NO_INDENT();

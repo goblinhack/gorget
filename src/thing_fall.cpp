@@ -204,9 +204,7 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 {
   TRACE_NO_INDENT();
 
-  if (thing_is_falling_incr(g, v, l, t, time_step) >= MAX_FALL_TIME_MS) {
-    thing_is_falling_set(g, v, l, t, MAX_FALL_TIME_MS);
-  }
+  thing_is_falling_incr(g, v, l, t, time_step);
 }
 
 //

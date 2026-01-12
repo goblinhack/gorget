@@ -202,6 +202,8 @@ public:
   thing_on_jump_begin_t         on_jump_begin         = {};
   thing_on_fall_begin_t         on_fall_begin         = {};
   thing_on_fall_end_t           on_fall_end           = {};
+  thing_on_hit_begin_t          on_hit_begin          = {};
+  thing_on_hit_end_t            on_hit_end            = {};
   thing_display_get_tile_info_t display_get_tile_info = {};
 
   Tp(void);
