@@ -83,7 +83,7 @@ static bool test_player_on_fire(Gamep g, Testp t)
   // Wait until the player is dead
   //
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 6; tries++) {
+  for (auto tries = 0; tries < 100; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     game_event_wait(g);
@@ -91,11 +91,15 @@ static bool test_player_on_fire(Gamep g, Testp t)
       TEST_FAILED(t, "wait loop failed");
       goto exit;
     }
+
+    if (thing_is_dead(player)) {
+      break;
+    }
   }
 
   TEST_ASSERT(t, thing_is_burning(player), "player is not burning");
   TEST_ASSERT(t, thing_is_dead(player), "player is alive");
-  TEST_ASSERT(t, game_tick_get(g, v) == 7, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
 
   TEST_PASSED(t);
 

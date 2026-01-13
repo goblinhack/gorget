@@ -391,8 +391,9 @@ ENUM_DEF_H(THING_PRIORITY_ENUM, ThingPriorityType)
 // Thing chance enum
 //
 #define THING_CHANCE_ENUM(list_macro)                                                                                \
-  clang_format_indent()                                  /* dummy line for clang indentation fixup */                \
-      list_macro(THING_CHANCE_CONTINUE_TO_BURN, "burn"), /* newline */
+  clang_format_indent()                                           /* dummy line for clang indentation fixup */       \
+      list_macro(THING_CHANCE_START_BURNING, "start-burn"),       /* newline */                                      \
+      list_macro(THING_CHANCE_CONTINUE_TO_BURN, "continue-burn"), /* newline */
 
 ENUM_DEF_H(THING_CHANCE_ENUM, ThingChanceType)
 

@@ -178,6 +178,7 @@ bool tp_load_player(void)
   thing_on_tick_end_set(tp, tp_player_tick_end);
   thing_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d20");   // roll max to continue burning
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -204,7 +205,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_player);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_tickable);
-  tp_health_set(tp, "1");
+  tp_health_set(tp, "100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
   tp_light_color_set(tp, "white");

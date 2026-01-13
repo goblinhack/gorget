@@ -503,7 +503,12 @@ bool tp_chance_success(Tpp tp, ThingChanceType val)
     return false;
   }
 
-  return tp->chance[ val ].roll() == tp->chance[ val ].max_roll();
+  auto roll = tp->chance[ val ].roll();
+  if (! roll) {
+    return false;
+  }
+
+  return roll == tp->chance[ val ].max_roll();
 }
 
 //

@@ -7,6 +7,7 @@
 #include "my_level.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tps.hpp"
@@ -70,13 +71,36 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
       continue;
     }
 
-    //
-    // Only spawn sometimes
-    //
     if (d100() < 20 + (thing_age(t) * 10)) {
-      THING_DBG(t, "spawn spreading fire");
-      thing_spawn(g, v, l, tp_first(is_fire), p);
+      //
+      // The older the fire gets, the more chance of spreading
+      //
+    } else {
+      //
+      // Too young to spread fire.
+      //
+      continue;
     }
+
+    //
+    // Give things a chance of not catching on fire
+    //
+    bool something_to_burn_here = false;
+
+    FOR_ALL_THINGS_AT(g, v, l, it, p)
+    {
+      if (tp_chance_success(thing_tp(it), THING_CHANCE_START_BURNING)) {
+        THING_LOG(it, "can spawn fire here");
+        something_to_burn_here = true;
+      }
+    }
+
+    if (! something_to_burn_here) {
+      continue;
+    }
+
+    THING_DBG(t, "spawn spreading fire");
+    thing_spawn(g, v, l, tp_first(is_fire), p);
   }
 }
 

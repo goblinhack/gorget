@@ -40,6 +40,7 @@ bool tp_load_kobalos(void)
   thing_description_set(tp, tp_kobalos_description_get);
   thing_detail_set(tp, tp_kobalos_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);

@@ -276,8 +276,8 @@ Dice::Dice(std::string s)
       //
       modifier += std::stoi(sp[ 0 ]);
     }
-    // CON("new dice %dd%d+%d", ndice, sides, modifier);
   }
+  // CON("new dice [%s] %dd%d+%d", s.c_str(), ndice, sides, modifier);
 }
 
 int Dice::roll(void) const
@@ -313,14 +313,4 @@ int Dice::min_roll(void) const
   }
 
   return ndice * 1 + modifier;
-}
-
-bool Dice::crit_roll(void) const
-{
-  if (! initialized) {
-    return false;
-  }
-
-  auto r = roll();
-  return r >= (ndice * sides);
 }
