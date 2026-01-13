@@ -3,7 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_level.hpp"
 #include "my_thing_inlines.hpp"
 
 bool thing_is_immune_to(Thingp t, ThingEventType val)

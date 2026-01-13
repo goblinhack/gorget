@@ -3,11 +3,9 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_level.hpp"
 #include "my_line.hpp"
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
-// REMOVED #include "my_tile.hpp"
 
 //
 // If jumping too far, truncate the jump

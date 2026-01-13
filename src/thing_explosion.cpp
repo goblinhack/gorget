@@ -3,7 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_level.hpp"
 #include "my_thing_inlines.hpp"
 
 void thing_explosion_handle(Gamep g, Levelsp v, Levelp l, Thingp t)

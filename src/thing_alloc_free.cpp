@@ -3,9 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_globals.hpp"
-// REMOVED #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_thing_inlines.hpp"
 

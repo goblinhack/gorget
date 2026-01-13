@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-// REMOVED #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"

@@ -4,9 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_globals.hpp"
-// REMOVED #include "my_level.hpp"
 #include "my_thing_inlines.hpp"
-// REMOVED #include "my_tp.hpp"
 
 Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
 {

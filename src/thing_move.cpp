@@ -3,10 +3,8 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_level.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
-// REMOVED #include "my_tile.hpp"
 
 //
 // Get thing direction

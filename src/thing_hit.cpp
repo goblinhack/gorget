@@ -3,14 +3,7 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_dice_rolls.hpp"
-// REMOVED #include "my_game.hpp"
-// REMOVED #include "my_globals.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_random.hpp"
-// REMOVED #include "my_thing_inlines.hpp"
-// REMOVED #include "my_ui.hpp"
 
 //
 // Hit time step

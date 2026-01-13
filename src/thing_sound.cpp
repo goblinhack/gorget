@@ -3,14 +3,10 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_file.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
-// REMOVED #include "my_main.hpp"
-// REMOVED #include "my_ptrcheck.hpp"
 #include "my_sound.hpp"
-// REMOVED #include "my_thing.hpp"
 
 bool thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias)
 {

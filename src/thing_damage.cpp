@@ -5,7 +5,6 @@
 #include "my_callstack.hpp"
 #include "my_game_popups.hpp"
 #include "my_globals.hpp"
-// REMOVED #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_ui.hpp"

@@ -4,7 +4,6 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
-// REMOVED #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 
 std::string thing_pluralize_name(Thingp t)

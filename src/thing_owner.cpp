@@ -3,8 +3,6 @@
 //
 
 #include "my_callstack.hpp"
-// REMOVED #include "my_level.hpp"
-// REMOVED #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 
 Thingp top_owner(Gamep g, Levelsp v, Levelp l, Thingp t)
