@@ -318,9 +318,6 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 {
   TRACE_NO_INDENT();
 
-  if (0) {
-    THING_CON(me, "thing_collision_handle_interpolated");
-  }
   auto  at    = thing_real_at(me);
   auto  src   = thing_at(me);
   float dist  = distance(at, old_at);

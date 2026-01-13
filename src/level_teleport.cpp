@@ -5,6 +5,7 @@
 #include "math.h"
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 
 #include <unordered_map>

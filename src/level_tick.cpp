@@ -157,6 +157,22 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   //
   if (l->tick_in_progress) {
     level_tick_body(g, v, l, v->time_step - v->last_time_step);
+
+    //
+    // For things like projectiles, we need to handle teleport and water checks
+    // amonst others in the tick body as they move too fast and the projectile
+    // can miss being teleported.
+    //
+
+    //
+    // Handle things interacting with water.
+    //
+    level_tick_water(g, v, l);
+
+    //
+    // Handle things interacting with teleports
+    //
+    level_tick_teleport(g, v, l);
   }
 
   //
@@ -200,16 +216,6 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
       // Handle things interacting with explosions
       //
       level_tick_explosion(g, v, l);
-
-      //
-      // Handle things interacting with water
-      //
-      level_tick_water(g, v, l);
-
-      //
-      // Handle things interacting with teleports
-      //
-      level_tick_teleport(g, v, l);
 
       //
       // Handle things interacting with chasms
