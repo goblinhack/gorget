@@ -29,7 +29,7 @@ std::string to_string(Gamep g, Thingp t)
     name = game_player_name_get(g);
   }
 
-  auto at = thing_at(t);
+  auto at = thing_real_at(t);
 
   return (string_sprintf("%08" PRIX32
                          /* level num                     */ " l%u"
@@ -43,7 +43,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* is_open                       */ "%s"
                          /* is_burning                    */ "%s"
                          /* is_scheduled_for_cleanup      */ "%s"
-                         /* at                            */ " @%d,%d",
+                         /* at                            */ " @%f,%f",
                          /* newline */ t->id,
                          /* newline */ t->level_num + 1,
                          /* newline */ t->tick,

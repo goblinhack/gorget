@@ -225,23 +225,27 @@ void thing_set_dir_from_delta(Thingp t, int dx, int dy)
 }
 
 //
-// Get delta from thing direction
+// Get direction; need to also account for projectiles that move at an angle.
 //
-spoint thing_get_delta_from_dir(Thingp t)
+fpoint thing_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
+  if (thing_is_projectile(t)) {
+    return thing_projectile_get_direction(g, v, l, t);
+  }
+
   switch (t->dir) {
-    case THING_DIR_BR :    return spoint(1, 1);
-    case THING_DIR_TR :    return spoint(1, -1);
-    case THING_DIR_BL :    return spoint(-1, 1);
-    case THING_DIR_TL :    return spoint(-1, -1);
-    case THING_DIR_RIGHT : return spoint(1, 0);
-    case THING_DIR_NONE :  return spoint(0, 0);
-    case THING_DIR_DOWN :  return spoint(0, 1);
-    case THING_DIR_UP :    return spoint(0, -1);
-    case THING_DIR_LEFT :  return spoint(-1, 0);
-    default :              return spoint(0, 0);
+    case THING_DIR_BR :    return fpoint(1, 1);
+    case THING_DIR_TR :    return fpoint(1, -1);
+    case THING_DIR_BL :    return fpoint(-1, 1);
+    case THING_DIR_TL :    return fpoint(-1, -1);
+    case THING_DIR_RIGHT : return fpoint(1, 0);
+    case THING_DIR_NONE :  return fpoint(0, 0);
+    case THING_DIR_DOWN :  return fpoint(0, 1);
+    case THING_DIR_UP :    return fpoint(0, -1);
+    case THING_DIR_LEFT :  return fpoint(-1, 0);
+    default :              return fpoint(0, 0);
   }
 }
 
@@ -274,6 +278,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   (void) thing_push(g, v, l, t);
 
   thing_is_moving_set(g, v, l, t);
+  THING_LOG(t, "move to");
 
   return true;
 }
@@ -303,6 +308,7 @@ bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
 {
   TRACE_NO_INDENT();
+  THING_LOG(t, "pre warp");
 
   if (is_oob(to)) {
     return false;
@@ -394,6 +400,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   }
 
   new_level->is_tick_requested = true;
+  THING_LOG(t, "post warp");
 
   return true;
 }

@@ -628,8 +628,8 @@ static void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   if (v->cursor_visible) {
     target = v->cursor_at;
   } else {
-    spoint delta = thing_get_delta_from_dir(t);
-    target       = thing_at(t) + delta;
+    fpoint delta = thing_get_direction(g, v, l, t);
+    target       = make_spoint(thing_real_at(t) + delta);
   }
 
   player_move_reset(g, v, l);

@@ -229,17 +229,17 @@ void levels_test(Gamep g)
                   /* end */ nullptr);
 
   level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "teleport", __FUNCTION__, __LINE__,
-                  /* line */ (const char *) "           ",
-                  /* line */ (const char *) "xxxxxx     ",
-                  /* line */ (const char *) "x....x     ",
-                  /* line */ (const char *) "x....xxxxxx",
-                  /* line */ (const char *) "x.........x",
-                  /* line */ (const char *) "x..@.T....x",
-                  /* line */ (const char *) "x.........x",
-                  /* line */ (const char *) "x...bT....x",
-                  /* line */ (const char *) "x.........x",
-                  /* line */ (const char *) "xxxxxxxxxxx",
-                  /* line */ (const char *) "           ",
+                  /* line */ (const char *) "             ",
+                  /* line */ (const char *) "xxxxxx       ",
+                  /* line */ (const char *) "x....x       ",
+                  /* line */ (const char *) "x....xxxxxxxx",
+                  /* line */ (const char *) "x...........x",
+                  /* line */ (const char *) "x....T.....@x",
+                  /* line */ (const char *) "x...........x",
+                  /* line */ (const char *) "x...bT......x",
+                  /* line */ (const char *) "x...........x",
+                  /* line */ (const char *) "xxxxxxxxxxxxx",
+                  /* line */ (const char *) "             ",
                   /* end */ nullptr);
 
   level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "teleport-large", __FUNCTION__, __LINE__,

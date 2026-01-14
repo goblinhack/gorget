@@ -47,24 +47,38 @@ static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, s
 {
   TRACE_NO_INDENT();
 
-  spoint to;
-  auto   delta = thing_at(t) - thing_old_at(t);
-  to           = out + delta;
+  auto   outf  = make_fpoint(out);
+  fpoint delta = thing_real_at(t) - make_fpoint(thing_old_at(t));
+  fpoint tof   = outf + delta;
+  spoint to    = make_spoint(tof);
+  LOG("delta %f,%f spoint %d,%d", delta.x, delta.y, to.x, to.y);
 
-  if ((delta == spoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
-    delta = thing_get_delta_from_dir(t);
-    to    = out + delta;
+  //
+  // No need to check for collisions for things like fireballs otherwise we will
+  // not be able to say fire through a teleport and hit a barrel.
+  //
+  if (thing_is_projectile(t)) {
+    out = to;
+    LOG("landing spot %d,%d", out.x, out.y);
+    return true;
   }
 
-  if ((delta == spoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
-    delta = thing_get_delta_from_dir(t);
-    to    = out + delta;
+  if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
+    delta = thing_get_direction(g, v, l, t);
+    tof   = outf + delta;
+    to    = make_spoint(tof);
   }
 
-  if ((delta == spoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
-    const std::initializer_list< spoint > deltas = {
-        spoint(1, 0),   spoint(-1, 0), spoint(0, 1),  spoint(0, -1),
-        spoint(-1, -1), spoint(-1, 1), spoint(1, -1), spoint(1, 1),
+  if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
+    delta = thing_get_direction(g, v, l, t);
+    tof   = outf + delta;
+    to    = make_spoint(tof);
+  }
+
+  if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
+    const std::initializer_list< fpoint > deltas = {
+        fpoint(1, 0),   fpoint(-1, 0), fpoint(0, 1),  fpoint(0, -1),
+        fpoint(-1, -1), fpoint(-1, 1), fpoint(1, -1), fpoint(1, 1),
     };
 
     //
@@ -72,16 +86,18 @@ static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, s
     //
     for (auto d : deltas) {
       delta = d;
-      to    = out + delta;
+      tof   = outf + delta;
+      to    = make_spoint(tof);
       if (! level_is_obs_to_teleporting_onto(g, v, l, to)) {
         break;
       }
     }
   }
 
-  to = out + delta;
+  tof = outf + delta;
+  to  = make_spoint(tof);
 
-  if ((delta == spoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
+  if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
     return false;
   }
 

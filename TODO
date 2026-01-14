@@ -1,5 +1,8 @@
 bugs
 ----
+double teleport issue
+direction change with mouse doesn't occur sometimes when moving right then left
+missed teleport
 melting walls and rock
 door damage from fireball
 

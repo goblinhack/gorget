@@ -9,6 +9,34 @@
 #include "my_math.hpp"
 #include "my_thing_callbacks.hpp"
 
+static fpoint thing_projectile_get_delta_from_dt(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
+{
+  TRACE_NO_INDENT();
+
+  float s;
+  float c;
+  sincosf(t->angle, &s, &c);
+
+  auto player = thing_player(g);
+  if (! player) {
+    DIE("No player struct found");
+    return fpoint(0, 0);
+  }
+
+  const int   player_speed = thing_speed(player);
+  const float t_speed      = thing_speed(t);
+  const auto  tile_speed   = (t_speed / (float) player_speed);
+
+  return fpoint(c * dt * tile_speed, s * dt * tile_speed);
+}
+
+fpoint thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  return unit(thing_projectile_get_delta_from_dt(g, v, l, t, 1.0));
+}
+
 void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const fpoint target)
 {
   TRACE_NO_INDENT();
@@ -52,11 +80,11 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 {
   TRACE_NO_INDENT();
 
-  float s;
-  float c;
-  sincosf(t->angle, &s, &c);
+  THING_LOG(t, "pre move");
   fpoint old_at = thing_real_at(t);
   auto   at     = old_at;
+  THING_LOG(t, "at %f,%f", at.x, at.y);
+  THING_LOG(t, "%d", __LINE__);
 
   auto player = thing_player(g);
   if (! player) {
@@ -64,12 +92,11 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
     return;
   }
 
-  const int   player_speed = thing_speed(player);
-  const float t_speed      = thing_speed(t);
-  const auto  tile_speed   = (t_speed / (float) player_speed);
-
-  at.x += c * dt * tile_speed;
-  at.y += s * dt * tile_speed;
+  THING_LOG(t, "at %f,%f", at.x, at.y);
+  auto delta = thing_projectile_get_delta_from_dt(g, v, l, t, dt);
+  at.x += delta.x;
+  at.y += delta.y;
+  THING_LOG(t, "at %f,%f", at.x, at.y);
 
   if (is_oob(at)) {
     ThingEvent e {
@@ -81,10 +108,15 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
     return;
   }
 
+  THING_LOG(t, "%d", __LINE__);
   thing_pop(g, v, t);
+  THING_LOG(t, "%d", __LINE__);
   thing_at_set(t, at);
+  THING_LOG(t, "%d", __LINE__);
   thing_update_pos(g, v, l, t);
+  THING_LOG(t, "%d", __LINE__);
   thing_push(g, v, l, t);
+  THING_LOG(t, "%d", __LINE__);
 
   thing_on_moved(g, v, l, t);
 
@@ -94,4 +126,5 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
     //
     thing_collision_handle_interpolated(g, v, l, t, old_at);
   }
+  THING_LOG(t, "post move");
 }
