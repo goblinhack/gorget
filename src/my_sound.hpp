@@ -9,6 +9,8 @@
 #ifndef _MY_SOUND_HPP_
 #define _MY_SOUND_HPP_
 
+#include "my_game.hpp"
+
 #include <string>
 
 class sound;
@@ -16,7 +18,7 @@ using soundp = class sound *;
 
 bool sound_init(void);
 void sound_fini(void);
-bool sound_load(float volume, const std::string &file, const std::string &alias);
+bool sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max = 1);
 bool sound_find(const std::string &alias);
 bool sound_play(Gamep, const std::string &alias, float scale = 1.0);
 void sound_halt(void);

@@ -24,7 +24,16 @@ public:
     myfree(data);
   }
 
-  std::string    alias;
+  //
+  // Sound name
+  //
+  std::string alias;
+
+  //
+  // How many instances of this sound are allowed to play at the same time.
+  //
+  int concurrent_max = {1};
+
   Mix_Chunk     *chunk = {};
   unsigned char *data  = {};
   int            len   = {};
@@ -92,7 +101,7 @@ bool sound_load(float volume, const char *file_in, const char *alias_in)
   return sound_load(volume, file, alias);
 }
 
-bool sound_load(float volume, const std::string &file, const std::string &alias)
+bool sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max)
 {
   TRACE_NO_INDENT();
   if (alias == "") {
@@ -104,8 +113,9 @@ bool sound_load(float volume, const std::string &file, const std::string &alias)
 
   auto *s = new sound(alias);
 
-  s->volume = volume;
-  s->data   = file_load(file.c_str(), &s->len);
+  s->volume         = volume;
+  s->concurrent_max = concurrent_max;
+  s->data           = file_load(file.c_str(), &s->len);
   if (! s->data) {
     ERR("Cannot load sound [%s]", file.c_str());
     delete s;
@@ -174,10 +184,16 @@ static bool sound_play_internal(Game *g, const std::string &alias, int channel, 
   //
   // Playing already? And louder?
   //
+  int count = 0;
   for (auto p : already_playing) {
     if ((p.second.alias == alias) && (p.second.volume >= volume)) {
-      return true;
+      count++;
     }
+  }
+
+  // TOPCON("%s count %d concurrent_max %d", alias.c_str(), count, s->concurrent_max);
+  if (count >= s->concurrent_max) {
+    return true;
   }
 
   Mix_VolumeChunk(s->chunk, (int) volume);
