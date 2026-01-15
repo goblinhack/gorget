@@ -152,17 +152,17 @@ void thing_on_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->tick_end(g, v, l, me);
 }
 
-void thing_on_spawn_set(Tpp tp, thing_on_spawn_t callback)
+void thing_on_spawned_set(Tpp tp, thing_on_spawned_t callback)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->on_spawn = callback;
+  tp->on_spawned = callback;
 }
 
-void thing_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me)
+void thing_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
   auto tp = thing_tp(me);
@@ -170,10 +170,10 @@ void thing_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp me)
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_spawn) {
+  if (! tp->on_spawned) {
     return;
   }
-  return tp->on_spawn(g, v, l, me);
+  return tp->on_spawned(g, v, l, me);
 }
 
 void thing_on_level_populated_set(Tpp tp, thing_on_level_populated_t callback)

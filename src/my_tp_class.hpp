@@ -183,7 +183,7 @@ public:
   thing_description_get_t       description_get       = {};
   thing_detail_get_t            detail_get            = {};
   thing_mouse_down_t            mouse_down            = {};
-  thing_on_spawn_t              on_spawn              = {};
+  thing_on_spawned_t            on_spawned            = {};
   thing_on_level_populated_t    on_level_populated    = {};
   thing_on_level_enter_t        on_level_enter        = {};
   thing_on_level_leave_t        on_level_leave        = {};

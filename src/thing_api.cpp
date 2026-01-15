@@ -691,6 +691,33 @@ void thing_is_moving_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
   return thing_is_moving_set(g, v, l, t, false);
 }
 
+void thing_is_spawned_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return;
+  }
+
+  if (t->_is_spawned == val) {
+    return;
+  }
+  t->_is_spawned = val;
+
+  if (val) {
+    //
+    // Callback upon spawning
+    //
+    thing_on_spawned(g, v, l, t);
+  }
+}
+
+void thing_is_spawned_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_spawned_set(g, v, l, t, false);
+}
+
 bool thing_is_teleporting(Thingp t)
 {
   TRACE_NO_INDENT();

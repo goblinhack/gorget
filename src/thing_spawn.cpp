@@ -32,10 +32,7 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
     l->is_tick_end_delay = true;
   }
 
-  //
-  // Callback upon spawning
-  //
-  thing_on_spawn(g, v, l, t);
+  thing_is_spawned_set(g, v, l, t);
 
   return t;
 }

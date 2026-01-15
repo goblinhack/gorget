@@ -27,9 +27,9 @@ typedef bool (*thing_mouse_down_t)(Gamep, Levelsp, Levelp, Thingp me, int x, int
 void thing_mouse_down_set(Tpp, thing_mouse_down_t);
 bool thing_mouse_down(Gamep, Levelsp, Levelp, Thingp me, int x, int y, int button);
 
-typedef void (*thing_on_spawn_t)(Gamep, Levelsp, Levelp, Thingp me);
-void thing_on_spawn_set(Tpp, thing_on_spawn_t);
-void thing_on_spawn(Gamep, Levelsp, Levelp, Thingp me);
+typedef void (*thing_on_spawned_t)(Gamep, Levelsp, Levelp, Thingp me);
+void thing_on_spawned_set(Tpp, thing_on_spawned_t);
+void thing_on_spawned(Gamep, Levelsp, Levelp, Thingp me);
 
 typedef void (*thing_on_level_enter_t)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_level_enter_set(Tpp, thing_on_level_enter_t);

@@ -109,6 +109,18 @@ static inline bool thing_is_moving(Thingp t)
   return t->_is_moving;
 }
 
+static inline bool thing_is_spawned(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+#endif
+  return t->_is_spawned;
+}
+
 static inline bool thing_is_dead(Thingp t)
 {
 #ifdef _DEBUG_BUILD_

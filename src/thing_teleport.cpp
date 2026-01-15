@@ -51,15 +51,17 @@ static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, s
   fpoint delta = thing_real_at(t) - make_fpoint(thing_old_at(t));
   fpoint tof   = outf + delta;
   spoint to    = make_spoint(tof);
-  LOG("delta %f,%f spoint %d,%d", delta.x, delta.y, to.x, to.y);
 
   //
   // No need to check for collisions for things like fireballs otherwise we will
   // not be able to say fire through a teleport and hit a barrel.
   //
   if (thing_is_projectile(t)) {
-    out = to;
-    LOG("landing spot %d,%d", out.x, out.y);
+    delta = thing_get_direction(g, v, l, t);
+    tof   = outf + delta;
+    to    = make_spoint(tof);
+    out   = to;
+    THING_LOG(t, "delta %f,%f spoint %d,%d", delta.x, delta.y, to.x, to.y);
     return true;
   }
 
@@ -108,7 +110,7 @@ static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, s
 //
 // Handles player and monster teleports
 //
-bool thing_teleport(Gamep g, Levelsp v, Levelp l, Thingp t)
+bool thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 

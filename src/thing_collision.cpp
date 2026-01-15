@@ -9,28 +9,65 @@
 #include <algorithm>
 
 //
-// Handle interactions for a thing at its location with a dead thing
+// Handle common interactions for a thing at its location with a thing
 //
-static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me)
+static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
   TRACE_NO_INDENT();
 
   //
-  // TODO
+  // Handle walking into a teleport
   //
+  if (thing_is_teleport(obstacle)) {
+    if (! thing_is_teleport_blocked(me)) {
+      THING_LOG(me, "over teleport");
+      thing_warp_to(g, v, l, me, thing_at(obstacle));
+      thing_teleport_handle(g, v, l, me);
+      stop = true;
+      return;
+    }
+  }
+
+  //
+  // Handle walking onto a chasm
+  //
+  if (thing_is_chasm(obstacle)) {
+    if (thing_is_able_to_fall(me)) {
+      THING_LOG(me, "over chasm");
+      thing_chasm_handle(g, v, l, me);
+      stop = true;
+      return;
+    }
+  }
+}
+
+//
+// Handle interactions for a thing at its location with a dead thing
+//
+static void thing_collision_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
+{
+  TRACE_NO_INDENT();
+
+  thing_collision_handle_common(g, v, l, obstacle, me, stop);
 }
 
 //
 // Handle interactions for a thing at its location with an alive thing
 //
-static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me)
+static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
   TRACE_NO_INDENT();
+
+  thing_collision_handle_common(g, v, l, obstacle, me, stop);
+  if (stop) {
+    return;
+  }
 
   //
   // Crush obstacle
   //
   if (thing_crush(g, v, l, obstacle, me)) {
+    stop = true;
     return;
   }
 
@@ -60,7 +97,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
         .source     = source,                //
     };
 
-    THING_LOG(me, "collison with");
+    THING_LOG(me, "collision with");
     THING_LOG(obstacle, "me");
 
     thing_damage(g, v, l, obstacle, e);
@@ -73,22 +110,21 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
     };
 
     thing_dead(g, v, l, me, e);
-    return;
+    stop = true;
   }
 }
 
 //
 // Handle interactions for a thing at its location
 //
-static void thing_collision_handle_thing(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me)
+// Return true to continue with more collisions, or false to stop.
+// e.g. if we teleport, we want to stop
+//
+static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle, Thingp me, bool &stop)
 {
   TRACE_NO_INDENT();
 
   if (obstacle == me) {
-    return;
-  }
-
-  if (thing_is_dead(me)) {
     return;
   }
 
@@ -100,12 +136,12 @@ static void thing_collision_handle_thing(Gamep g, Levelsp v, Levelp l, Thingp ob
     //
     // Dead things
     //
-    thing_collision_handle_dead_thing(g, v, l, obstacle, me);
+    return thing_collision_handle_dead_thing(g, v, l, obstacle, me, stop);
   } else {
     //
     // Alive things
     //
-    thing_collision_handle_alive_thing(g, v, l, obstacle, me);
+    return thing_collision_handle_alive_thing(g, v, l, obstacle, me, stop);
   }
 }
 
@@ -115,6 +151,8 @@ static void thing_collision_handle_thing(Gamep g, Levelsp v, Levelp l, Thingp ob
 void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
+
+  THING_LOG(me, "thing_collision_handle");
 
   //
   // Projectiles handled seperately.
@@ -136,8 +174,11 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto at = thing_at(me);
   FOR_ALL_THINGS_AT(g, v, l, obstacle, at)
   {
-    // newline
-    thing_collision_handle_thing(g, v, l, obstacle, me);
+    bool stop = {};
+    thing_collision_handle(g, v, l, obstacle, me, stop);
+    if (stop) {
+      return;
+    }
   }
 }
 
@@ -318,6 +359,8 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 {
   TRACE_NO_INDENT();
 
+  // THING_LOG(me, "thing_collision_handle_interpolated");
+
   auto  at    = thing_real_at(me);
   auto  src   = thing_at(me);
   float dist  = distance(at, old_at);
@@ -404,7 +447,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         auto o_dist = a_pair.first;
         auto o      = a_pair.second;
 
-        THING_CON(o, "distance %f prio %u", o_dist, o->_priority);
+        THING_LOG(o, "distance %f prio %u", o_dist, o->_priority);
       }
     }
 
@@ -413,15 +456,12 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 
       thing_is_hit_set(g, v, l, o, MAX_HIT_TIME_MS);
 
-      thing_collision_handle_thing(g, v, l, o, me);
-
-      if (thing_is_dead(me)) {
+      bool stop = {};
+      thing_collision_handle(g, v, l, o, me, stop);
+      if (stop) {
+        // THING_LOG(me, "stop");
         return;
       }
     }
-  }
-
-  if (0) {
-    CON("-");
   }
 }

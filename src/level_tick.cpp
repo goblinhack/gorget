@@ -168,11 +168,6 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
     // Handle things interacting with water.
     //
     level_tick_water(g, v, l);
-
-    //
-    // Handle things interacting with teleports
-    //
-    level_tick_teleport(g, v, l);
   }
 
   //
@@ -218,9 +213,10 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
       level_tick_explosion(g, v, l);
 
       //
-      // Handle things interacting with chasms
+      // Handle special cases that cannot do collision detection
       //
       level_tick_chasm(g, v, l);
+      level_tick_teleport(g, v, l);
 
       //
       // Check if something reacted with lava and is now needing to delay the end of tick
@@ -293,7 +289,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
   const int player_speed = thing_speed(player);
 
   if (0) {
-    TOPCON("time_step %f dt %f", v->time_step, dt);
+    LEVEL_LOG(l, "time_step %f dt %f", v->time_step, dt);
   }
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
@@ -328,7 +324,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
 
     if (0) {
       if (thing_is_projectile(t)) {
-        THING_CON(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
+        THING_LOG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
                   dt,              // newline
                   old_thing_dt,    // newline
                   t->thing_dt,     // newline
@@ -357,6 +353,8 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       // Handle interactions for a thing at its new location
       //
       thing_collision_handle(g, v, l, t);
+
+      thing_is_spawned_unset(g, v, l, t);
     }
   }
 }

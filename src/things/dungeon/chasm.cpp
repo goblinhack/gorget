@@ -28,6 +28,7 @@ bool tp_load_chasm(void)
   tp_flag_set(tp, is_blit_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_chasm);
+  tp_flag_set(tp, is_collision_square);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_cursor_path_none);
   tp_flag_set(tp, is_cursor_path_warning);

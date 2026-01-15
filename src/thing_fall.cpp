@@ -175,6 +175,8 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Keep falling with no damage if over a chasm.
     //
+    THING_LOG(t, "over a chasm again; keep falling");
+    thing_is_spawned_set(g, v, l, t);
   } else {
     //
     // "You take n damage from falling"

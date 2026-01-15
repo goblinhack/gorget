@@ -10,7 +10,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static void tp_explosion_spawn(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_explosion_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -25,7 +25,7 @@ bool tp_load_explosion(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_on_spawn_set(tp, tp_explosion_spawn);
+  thing_on_spawned_set(tp, tp_explosion_spawned);
   tp_damage_set(tp, THING_EVENT_EXPLOSION_DAMAGE, "20+1d20");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

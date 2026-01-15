@@ -11,7 +11,7 @@
 #include "my_tps.hpp"
 #include "my_types.hpp"
 
-static void tp_fireball_on_spawn(Gamep g, Levelsp v, Levelp l, Thingp t)
+static void tp_fireball_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -57,7 +57,7 @@ bool tp_load_fireball(void)
   thing_description_set(tp, tp_fireball_description_get);
   thing_on_death_set(tp, tp_fireball_on_death);
   thing_on_moved_set(tp, tp_fireball_on_moved);
-  thing_on_spawn_set(tp, tp_fireball_on_spawn);
+  thing_on_spawned_set(tp, tp_fireball_on_spawned);
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d4");
   tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);

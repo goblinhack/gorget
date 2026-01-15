@@ -548,6 +548,19 @@ struct MyIter {
                   if (_t_->iter[ _iter_index_ ] != _v_->iter[ _iter_index_ ])                                        \
                     if (((_t_->iter[ _iter_index_ ] = _v_->iter[ _iter_index_ ])) || 1)
 
+#define FOR_ALL_THINGS_ON_LEVEL_DEBUG(_g_, _v_, _l_, _t_)                                                            \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    if (int _iter_index_ = 0; true)                                                                                  \
+      if (MyIter _iter_(_g_, _v_, &_iter_index_, __FUNCTION__, __LINE__); true)                                      \
+        for (auto _x_ = 0; _x_ < MAP_WIDTH; _x_++)                                                                   \
+          for (auto _y_ = 0; _y_ < MAP_HEIGHT; _y_++)                                                                \
+            for (auto _slot_ = 0; _slot_ < MAP_SLOTS; _slot_++)                                                      \
+              if (ThingId _id_ = 0; (_id_ = _l_->thing_id[ _x_ ][ _y_ ][ _slot_ ]))                                  \
+                if (Thingp _t_ = nullptr; (_t_ = thing_find(_g_, _v_, _id_)))                                        \
+                  if (thing_debug(_g_, _v_, _l_, _t_, _iter_index_))                                                 \
+                    if (_t_->iter[ _iter_index_ ] != _v_->iter[ _iter_index_ ])                                      \
+                      if (((_t_->iter[ _iter_index_ ] = _v_->iter[ _iter_index_ ])) || 1)
+
 #define FOR_ALL_THINGS_AT_UNSAFE(_g_, _v_, _l_, _t_, _p_)                                                            \
   if (_g_ && _v_ && _l_)                                                                                             \
     if (spoint _at_ = make_spoint(_p_); true)                                                                        \
@@ -669,10 +682,10 @@ void    level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
 void    level_tick_begin_requested(Gamep, Levelsp, Levelp, const char *);
 void    level_tick_begin_temperature(Gamep, Levelsp, Levelp);
 void    level_tick_chasm(Gamep, Levelsp, Levelp);
+void    level_tick_teleport(Gamep, Levelsp, Levelp);
 void    level_light_precalculate(Gamep);
 void    level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void    level_tick_explosion(Gamep, Levelsp, Levelp);
-void    level_tick_teleport(Gamep, Levelsp, Levelp);
 void    level_tick_water(Gamep, Levelsp, Levelp);
 bool    level_is_level_select(Gamep, Levelsp, Levelp);
 void    level_update_visibility(Gamep, Levelsp, Levelp);

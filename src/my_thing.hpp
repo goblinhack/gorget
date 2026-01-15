@@ -247,6 +247,10 @@ typedef struct Thing_ {
   //
   uint8_t _is_moving : 1;
   //
+  // Temporary flag set when a thing is newly spawned.
+  //
+  uint8_t _is_spawned : 1;
+  //
   // Currently teleporting between tiles. The thing is already at the destination.
   //
   uint8_t _is_teleporting : 1;
@@ -430,6 +434,7 @@ bool   thing_carry_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 bool   thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 bool   thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 bool   thing_crush(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+bool   thing_debug(Gamep, Levelsp, Levelp, Thingp, uint32_t iter_index);
 bool   thing_drop_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 bool   thing_inventory_add(Gamep, Levelsp, Levelp, Thingp player_or_monst, Thingp it);
 bool   thing_inventory_is_empty(Gamep, Levelsp, Levelp, Thingp);
@@ -667,16 +672,17 @@ bool   thing_push(Gamep, Levelsp, Levelp, Thingp);
 bool   thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 bool   thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 bool   thing_sound_play(Gamep, Levelsp, Levelp, Thingp, const std::string &alias);
-bool   thing_teleport(Gamep, Levelsp, Levelp, Thingp);
+bool   thing_teleport_handle(Gamep, Levelsp, Levelp, Thingp);
 bool   thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 bool   thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
 bool   thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 float  thing_collision_radius(Thingp);
 fpoint thing_at_set(Thingp, const fpoint &);
+fpoint thing_get_direction(Gamep, Levelsp, Levelp, Thingp);
+fpoint thing_projectile_get_direction(Gamep, Levelsp, Levelp, Thingp);
 fpoint thing_real_at(Thingp);
 spoint thing_at_set(Thingp, const spoint &);
 spoint thing_at(Thingp);
-fpoint thing_get_direction(Gamep, Levelsp, Levelp, Thingp);
 spoint thing_moving_from_set(Thingp, const spoint &val);
 spoint thing_moving_from(Thingp);
 spoint thing_old_at(Thingp);
@@ -720,7 +726,6 @@ void   thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
 void   thing_player_event_loop(Gamep, Levelsp, Levelp);
 void   thing_pop(Gamep, Levelsp, Thingp);
 void   thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const fpoint);
-fpoint thing_projectile_get_direction(Gamep, Levelsp, Levelp, Thingp);
 void   thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, const std::string &, const spoint);
 void   thing_projectile_move(Gamep, Levelsp, Levelp, Thingp, float dt);
 void   thing_set_dir_from_delta(Thingp, int dx, int dy);
@@ -763,6 +768,9 @@ void thing_is_on_map_unset(Gamep, Levelsp, Levelp, Thingp);
 
 void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_moving_unset(Gamep, Levelsp, Levelp, Thingp);
+
+void thing_is_spawned_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_spawned_unset(Gamep, Levelsp, Levelp, Thingp);
 
 bool thing_is_teleporting(Thingp);
 void thing_is_teleporting_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
