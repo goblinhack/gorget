@@ -10,9 +10,8 @@
 // Handle things interacting with chasms
 //
 // This is needed for special cases that do not normally do collision detection e.g.
-//
-// a bridge that is suddenly over a chasm due to the bridge burning
-// a thing that has fallen through a chasm but has landed on a chasm again
+// - a bridge that is suddenly over a chasm due to the bridge burning
+// - a thing that has fallen through a chasm but has landed on a chasm again
 //
 void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
 {

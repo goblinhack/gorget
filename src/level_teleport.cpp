@@ -10,8 +10,7 @@
 // Handle things interacting with chasms
 //
 // This is needed for special cases that do not normally do collision detection e.g.
-//
-// fire spawned on top of a teleport
+// - fire spawned on top of a teleport
 //
 void level_tick_teleport(Gamep g, Levelsp v, Levelp l)
 {
