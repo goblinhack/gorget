@@ -78,6 +78,10 @@ static int thing_fall_damage(Gamep g, Levelsp v, Levelp l, Thingp t)
     fall_dmg = d4();
   }
 
+  if (thing_is_falling_continues(t)) {
+    fall_dmg *= 2;
+  }
+
   //
   // Landing in lava is bad
   //
@@ -176,12 +180,14 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     // Keep falling with no damage if over a chasm.
     //
     THING_LOG(t, "over a chasm again; keep falling");
+    thing_is_falling_continues_set(g, v, l, t);
     thing_is_spawned_set(g, v, l, t);
   } else {
     //
     // "You take n damage from falling"
     //
     thing_damage(g, v, l, t, e);
+    thing_is_falling_continues_unset(g, v, l, t);
   }
 
   //

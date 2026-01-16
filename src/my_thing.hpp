@@ -223,6 +223,10 @@ typedef struct Thing_ {
   //
   uint8_t _is_scheduled_for_cleanup : 1;
   //
+  // If you've fallen through a chasm twice, more damage.
+  //
+  uint8_t _is_falling_continues : 1;
+  //
   // Zzz
   //
   uint8_t _is_sleeping : 1;
@@ -788,6 +792,10 @@ bool thing_is_carried_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp dropr);
 
 void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, bool val);
 int  thing_is_falling_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+bool thing_is_falling_continues(Thingp);
+void thing_is_falling_continues_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void thing_is_falling_continues_unset(Gamep, Levelsp, Levelp, Thingp);
 
 void thing_is_hit_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int  thing_is_hit_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);

@@ -263,6 +263,43 @@ int thing_is_falling_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_is_falling_ms += val;
 }
 
+bool thing_is_falling_continues(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return false;
+  }
+
+  return t->_is_falling_continues;
+}
+
+void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return;
+  }
+
+  if (t->_is_falling_continues == val) {
+    return;
+  }
+  t->_is_falling_continues = val;
+
+  if (val) {
+    THING_DBG(t, "is scheduled for cleanup");
+  }
+
+  level_request_to_cleanup_things_set(g, v, l);
+}
+
+void thing_is_falling_continues_unset(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+  return thing_is_falling_continues_set(g, v, l, t, false);
+}
+
 void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
