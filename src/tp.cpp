@@ -953,6 +953,26 @@ int tp_temperature_burns_at_get(Tpp tp)
   return tp->temperature_burns_at;
 }
 
+void tp_temperature_melts_at_set(Tpp tp, int val)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->temperature_melts_at = val;
+}
+
+int tp_temperature_melts_at_get(Tpp tp)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return 0;
+  }
+  return tp->temperature_melts_at;
+}
+
 void tp_temperature_damage_at_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();

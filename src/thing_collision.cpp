@@ -91,10 +91,10 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
     auto damage     = tp_damage(thing_tp(source), event_type);
 
     ThingEvent e {
-        .reason     = "by explosion damage", //
-        .event_type = event_type,            //
-        .damage     = damage,                //
-        .source     = source,                //
+        .reason     = "by projectile fire damage", //
+        .event_type = event_type,                  //
+        .damage     = damage,                      //
+        .source     = source,                      //
     };
 
     THING_LOG(me, "collision with");

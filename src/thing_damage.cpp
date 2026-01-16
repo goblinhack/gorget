@@ -63,6 +63,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_FALL :             //
       case THING_EVENT_CARRIED :          //
       case THING_EVENT_CARRIED_MERGED :   //
+      case THING_EVENT_MELT :             //
       case THING_EVENT_ENUM_MAX :         //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -98,6 +99,7 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_LIFESPAN_EXPIRED : //
       case THING_EVENT_CARRIED :          //
       case THING_EVENT_CARRIED_MERGED :   //
+      case THING_EVENT_MELT :             //
       case THING_EVENT_ENUM_MAX :         //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
     }
@@ -148,6 +150,7 @@ static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       case THING_EVENT_FALL :             //
       case THING_EVENT_CARRIED :          //
       case THING_EVENT_CARRIED_MERGED :   //
+      case THING_EVENT_MELT :             //
       case THING_EVENT_ENUM_MAX :         //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
@@ -317,8 +320,15 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
             thing_is_burning_set(g, v, l, t);
           }
         }
+
+        {
+          auto temp_melt = tp_temperature_melts_at_get(tp);
+          if (temp_melt && (thing_temperature(t) > temp_melt)) {
+            thing_melt(g, v, l, t);
+          }
+        }
         break;
-      case THING_EVENT_FIRE_DAMAGE : //
+      case THING_EVENT_FIRE_DAMAGE :
         if (! level_is_fire(g, v, l, t)) {
           THING_DBG(t, "spawn flames due to fire damage");
           thing_spawn(g, v, l, tp_first(is_fire), t);
@@ -344,12 +354,50 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
       case THING_EVENT_OPEN :           //
       case THING_EVENT_CARRIED :        //
       case THING_EVENT_CARRIED_MERGED : //
+      case THING_EVENT_MELT :           //
       case THING_EVENT_ENUM_MAX :       //
         ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
         break;
     }
 
     thing_dead(g, v, l, t, e);
+  } else {
+    //
+    // Damage type specifics
+    //
+    switch (e.event_type) {
+      case THING_EVENT_NONE : //
+        break;
+      case THING_EVENT_LIFESPAN_EXPIRED : //
+        break;
+      case THING_EVENT_FALL : //
+        break;
+      case THING_EVENT_SHOVED : //
+        break;
+      case THING_EVENT_CRUSH : //
+        break;
+      case THING_EVENT_MELEE_DAMAGE : //
+        break;
+      case THING_EVENT_HEAT_DAMAGE : //
+      case THING_EVENT_FIRE_DAMAGE :
+        //
+        // Needed to allow things like projectiles to heat targets
+        //
+        if (e.source) {
+          level_thing_pair_temperature_handle(g, v, l, t, e.source);
+        }
+        break;
+      case THING_EVENT_WATER_DAMAGE :     //
+      case THING_EVENT_EXPLOSION_DAMAGE : //
+      case THING_EVENT_OPEN :             //
+      case THING_EVENT_CARRIED :          //
+      case THING_EVENT_CARRIED_MERGED :   //
+      case THING_EVENT_MELT :             //
+        break;
+      case THING_EVENT_ENUM_MAX : //
+        ERR("unexpected event: %s", ThingEventType_to_string(e.event_type).c_str());
+        break;
+    }
   }
 
   THING_LOG(t, "post damage");

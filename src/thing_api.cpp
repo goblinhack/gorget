@@ -2455,14 +2455,14 @@ bool thing_is_unused89(Thingp t)
   return tp_flag(thing_tp(t), is_unused89);
 }
 
-bool thing_is_unused90(Thingp t)
+bool thing_is_meltable(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused90);
+  return tp_flag(thing_tp(t), is_meltable);
 }
 
 bool thing_is_blit_pixel_lighting(Thingp t)

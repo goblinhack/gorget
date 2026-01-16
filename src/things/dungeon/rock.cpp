@@ -3,10 +3,23 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+
+static void tp_rock_melt(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  ThingEvent e {
+      .reason     = "by melting",     //
+      .event_type = THING_EVENT_MELT, //
+  };
+
+  thing_dead(g, v, l, t, e);
+}
 
 bool tp_load_rock(void)
 {
@@ -16,10 +29,12 @@ bool tp_load_rock(void)
     std::string name = "rock" + std::to_string(variant);
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {
+    thing_on_melt_set(tp, tp_rock_melt);
     tp_flag_set(tp, is_blit_if_has_seen);
     tp_flag_set(tp, is_blit_pixel_lighting);
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);
+    tp_flag_set(tp, is_meltable);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);
     tp_flag_set(tp, is_obs_to_falling_onto);
@@ -27,6 +42,7 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_obs_to_jump_over);
     tp_flag_set(tp, is_obs_to_jumping_onto);
     tp_flag_set(tp, is_obs_to_movement);
+    tp_flag_set(tp, is_physics_temperature);
     tp_flag_set(tp, is_obs_to_teleporting_onto);
     tp_flag_set(tp, is_obs_to_vision);
     tp_flag_set(tp, is_physics_explosion);
@@ -34,11 +50,12 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tiled);
     tp_health_set(tp, "1d500");
-    tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
-    tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
     tp_long_name_set(tp, "rock");
+    tp_temperature_damage_at_set(tp, 50); // celsius
+    tp_temperature_initial_set(tp, 20);   // celsius
+    tp_temperature_melts_at_set(tp, 500); // celsius
     tp_variant_set(tp, variant);
     tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

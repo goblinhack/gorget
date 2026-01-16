@@ -131,14 +131,14 @@ static bool wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp t, Tp
       continue;
     }
 
-    bool skip = true;
+    bool skip_showing_immunity_string = true;
 
     switch (e) {
       case THING_EVENT_SHOVED : //
-        skip = true;
+        skip_showing_immunity_string = true;
         break;
       case THING_EVENT_CRUSH : //
-        skip = true;
+        skip_showing_immunity_string = true;
         break;
       case THING_EVENT_MELEE_DAMAGE : //
         break;
@@ -148,33 +148,20 @@ static bool wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp t, Tp
         break;
       case THING_EVENT_FIRE_DAMAGE : //
         break;
-      case THING_EVENT_WATER_DAMAGE : //
-        skip = true;
-        break;
-      case THING_EVENT_NONE : //
-        skip = true;
-        break;
-      case THING_EVENT_OPEN : //
-        skip = true;
-        break;
+      case THING_EVENT_WATER_DAMAGE :     //
+      case THING_EVENT_NONE :             //
+      case THING_EVENT_MELT :             //
+      case THING_EVENT_OPEN :             //
       case THING_EVENT_LIFESPAN_EXPIRED : //
-        skip = true;
-        break;
-      case THING_EVENT_FALL : //
-        skip = true;
-        break;
-      case THING_EVENT_CARRIED : //
-        skip = true;
-        break;
-      case THING_EVENT_CARRIED_MERGED : //
-        skip = true;
-        break;
-      case THING_EVENT_ENUM_MAX : //
-        skip = true;
+      case THING_EVENT_FALL :             //
+      case THING_EVENT_CARRIED :          //
+      case THING_EVENT_CARRIED_MERGED :   //
+      case THING_EVENT_ENUM_MAX :         //
+        skip_showing_immunity_string = true;
         break;
     }
 
-    if (skip) {
+    if (skip_showing_immunity_string) {
       continue;
     }
 

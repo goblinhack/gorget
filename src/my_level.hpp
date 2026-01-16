@@ -640,6 +640,7 @@ Thingp      level_flag(Gamep, Levelsp, Levelp, ThingFlag, Thingp);
 Thingp      level_open(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 Thingp      level_open(Gamep, Levelsp, Levelp, ThingFlag, Thingp);
 void        level_anim(Gamep, Levelsp, Levelp);
+void        level_thing_pair_temperature_handle(Gamep, Levelsp, Levelp, Thingp, Thingp);
 void        level_assign_tiles(Gamep, Levelsp, Levelp);
 void        level_bounds_set(Gamep, Levelsp, Levelp);
 void        level_count_items(Gamep, Levelsp, Levelp);

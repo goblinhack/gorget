@@ -6,11 +6,91 @@
 #include "my_level.hpp"
 #include "my_thing_inlines.hpp"
 
-#include "math.h"
-
 #include <algorithm>
+#include <math.h>
 #include <set>
 #include <vector>
+
+void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // It could be dead now.
+  //
+  if (thing_is_dead(a) || thing_is_dead(b)) {
+    return;
+  }
+
+  float Ta = thing_temperature(a);
+  float Wa = thing_weight(a);
+  float Tb = thing_temperature(b);
+  float Wb = thing_weight(b);
+
+  if (0) {
+    THING_CON(a, "A Ta %f Wa %f", Ta, Wa);
+    THING_CON(b, "B Tb %f Wb %f", Tb, Wb);
+  }
+
+  //
+  // Fire has no weight, so give it some so the equations below average the temperatures.
+  //
+  // Take care not to give too much weight or you end up with steam able to heat up a
+  // tile of water, which seems wrong.
+  //
+  if (thing_is_gaseous(a) || thing_is_projectile(a)) {
+    if (! (int) Wa) {
+      Wa = WEIGHT_HUMAN;
+    }
+  }
+
+  if (thing_is_gaseous(b) || thing_is_projectile(b)) {
+    if (! (int) Wb) {
+      Wb = WEIGHT_HUMAN;
+    }
+  }
+
+  if (! (int) Wa || ! (int) Wb) {
+    return;
+  }
+
+  //
+  // The new temperatures
+  //
+  int Na = (int) round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
+  int Nb = (int) round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
+
+  if (0) {
+    THING_CON(a, "Ta %f Wa %f Na %d", Ta, Wa, Na);
+    THING_CON(b, "Tb %f Wb %f Nb %d", Tb, Wb, Nb);
+  }
+
+  //
+  // First step is to mark things as burning and change temperatures
+  //
+  if (Ta != Na) {
+    THING_DBG(a, "temperature change (a) %f -> %d degrees", Ta, Na);
+    thing_temperature_handle(g, v, l, b, a, Na);
+  }
+
+  if (Tb != Nb) {
+    THING_DBG(b, "temperature change (b) %f -> %d degrees", Tb, Nb);
+    thing_temperature_handle(g, v, l, a, b, Nb);
+  }
+
+  //
+  // Next step is to apply burning damage if the temperature increases
+  //
+  // If it decreases (e.g. cooling in water) then no damage.
+  //
+  if (Na > Ta) {
+    thing_temperature_damage_handle(g, v, l, b /* source */, a, Na);
+  }
+
+  if (Nb > Tb) {
+    thing_temperature_damage_handle(g, v, l, a /* source */, b, Nb);
+  }
+}
 
 void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
 {
@@ -67,7 +147,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       sorted_pairs.push_back(a_pair);
     }
 
-    if (0)
+    if (1)
       for (auto a_pair : sorted_pairs) {
         auto a = a_pair.first;
         auto b = a_pair.second;
@@ -100,82 +180,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     for (auto a_pair : sorted_pairs) {
       auto a = a_pair.first;
       auto b = a_pair.second;
-
-      //
-      // It could be dead now.
-      //
-      if (thing_is_dead(a) || thing_is_dead(b)) {
-        continue;
-      }
-
-      float Ta = thing_temperature(a);
-      float Wa = thing_weight(a);
-      float Tb = thing_temperature(b);
-      float Wb = thing_weight(b);
-
-      if (0) {
-        THING_CON(a, "A Ta %f Wa %f", Ta, Wa);
-        THING_CON(b, "B Tb %f Wb %f", Tb, Wb);
-      }
-
-      //
-      // Fire has no weight, so give it some so the equations below average the temperatures.
-      //
-      // Take care not to give too much weight or you end up with steam able to heat up a
-      // tile of water, which seems wrong.
-      //
-      if (thing_is_gaseous(a) || thing_is_projectile(a)) {
-        if (! (int) Wa) {
-          Wa = WEIGHT_HUMAN;
-        }
-      }
-
-      if (thing_is_gaseous(b) || thing_is_projectile(b)) {
-        if (! (int) Wb) {
-          Wb = WEIGHT_HUMAN;
-        }
-      }
-
-      if (! (int) Wa || ! (int) Wb) {
-        continue;
-      }
-
-      //
-      // The new temperatures
-      //
-      int Na = (int) round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
-      int Nb = (int) round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
-
-      if (0) {
-        THING_CON(a, "Ta %f Wa %f Na %d", Ta, Wa, Na);
-        THING_CON(b, "Tb %f Wb %f Nb %d", Tb, Wb, Nb);
-      }
-
-      //
-      // First step is to mark things as burning and change temperatures
-      //
-      if (Ta != Na) {
-        THING_DBG(a, "temperature change (a) %f -> %d degrees", Ta, Na);
-        thing_temperature_handle(g, v, l, b, a, Na);
-      }
-
-      if (Tb != Nb) {
-        THING_DBG(b, "temperature change (b) %f -> %d degrees", Tb, Nb);
-        thing_temperature_handle(g, v, l, a, b, Nb);
-      }
-
-      //
-      // Next step is to apply burning damage if the temperature increases
-      //
-      // If it decreases (e.g. cooling in water) then no damage.
-      //
-      if (Na > Ta) {
-        thing_temperature_damage_handle(g, v, l, b /* source */, a, Na);
-      }
-
-      if (Nb > Tb) {
-        thing_temperature_damage_handle(g, v, l, a /* source */, b, Nb);
-      }
+      level_thing_pair_temperature_handle(g, v, l, a, b);
     }
   }
 }

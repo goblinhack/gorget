@@ -99,6 +99,10 @@ typedef void (*thing_on_fall_begin_t)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_fall_begin_set(Tpp, thing_on_fall_begin_t);
 void thing_on_fall_begin(Gamep, Levelsp, Levelp, Thingp me);
 
+typedef void (*thing_on_melt_t)(Gamep, Levelsp, Levelp, Thingp me);
+void thing_on_melt_set(Tpp, thing_on_melt_t);
+void thing_on_melt(Gamep, Levelsp, Levelp, Thingp me);
+
 typedef void (*thing_on_fall_end_t)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_fall_end_set(Tpp, thing_on_fall_end_t);
 void thing_on_fall_end(Gamep, Levelsp, Levelp, Thingp me);

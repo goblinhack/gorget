@@ -222,7 +222,7 @@
       list_macro(is_unused87, "is_unused87"),                               /* newline */                            \
       list_macro(is_unused88, "is_unused88"),                               /* newline */                            \
       list_macro(is_unused89, "is_unused89"),                               /* newline */                            \
-      list_macro(is_unused90, "is_unused90"),                               /* newline */                            \
+      list_macro(is_meltable, "is_meltable"),                               /* newline */                            \
       list_macro(is_blit_pixel_lighting, "is_blit_pixel_lighting"),         /* newline */                            \
       list_macro(is_dead_on_collision, "is_dead_on_collision"),             /* newline */                            \
       list_macro(is_obs_to_jumping_out_of, "is_obs_to_jumping_out_of"),     /* newline */                            \
@@ -346,10 +346,11 @@ ENUM_DEF_H(THING_ANIM_ENUM, ThingAnim)
   clang_format_indent()                                         /* dummy line for clang indentation fixup */         \
       list_macro(THING_EVENT_CRUSH, "crushing"),                /* newline */                                        \
       list_macro(THING_EVENT_FALL, "falling"),                  /* newline */                                        \
-      list_macro(THING_EVENT_FIRE_DAMAGE, "burning"),           /* newline */                                        \
-      list_macro(THING_EVENT_HEAT_DAMAGE, "scalding"),          /* newline */                                        \
+      list_macro(THING_EVENT_FIRE_DAMAGE, "fire"),              /* newline */                                        \
+      list_macro(THING_EVENT_HEAT_DAMAGE, "heat"),              /* newline */                                        \
       list_macro(THING_EVENT_LIFESPAN_EXPIRED, "life"),         /* newline */                                        \
       list_macro(THING_EVENT_MELEE_DAMAGE, "melee"),            /* newline */                                        \
+      list_macro(THING_EVENT_MELT, "melt"),                     /* newline */                                        \
       list_macro(THING_EVENT_OPEN, "open"),                     /* newline */                                        \
       list_macro(THING_EVENT_NONE, "none"),                     /* newline */                                        \
       list_macro(THING_EVENT_SHOVED, "shove"),                  /* newline */                                        \
@@ -527,6 +528,9 @@ int  tp_temperature_initial_get(Tpp);
 
 void tp_temperature_burns_at_set(Tpp, int val);
 int  tp_temperature_burns_at_get(Tpp);
+
+void tp_temperature_melts_at_set(Tpp, int val);
+int  tp_temperature_melts_at_get(Tpp);
 
 void tp_temperature_damage_at_set(Tpp, int val);
 int  tp_temperature_damage_at_get(Tpp);
@@ -714,6 +718,7 @@ float tp_collision_radius(Tpp);
 #define tp_is_levitating(tp)              tp_flag(tp, is_levitating)
 #define tp_is_light_source(tp)            tp_flag(tp, is_light_source)
 #define tp_is_loggable(tp)                tp_flag(tp, is_loggable)
+#define tp_is_meltable(tp)                tp_flag(tp, is_meltable)
 #define tp_is_minion(tp)                  tp_flag(tp, is_minion)
 #define tp_is_mob(tp)                     tp_flag(tp, is_mob)
 #define tp_is_mob1(tp)                    tp_flag(tp, is_mob1)
@@ -843,7 +848,6 @@ float tp_collision_radius(Tpp);
 #define tp_is_unused88(tp)                tp_flag(tp, is_unused88)
 #define tp_is_unused89(tp)                tp_flag(tp, is_unused89)
 #define tp_is_unused9(tp)                 tp_flag(tp, is_unused9)
-#define tp_is_unused90(tp)                tp_flag(tp, is_unused90)
 #define tp_is_wait_on_dead_anim(tp)       tp_flag(tp, is_wait_on_dead_anim)
 #define tp_is_walk_through_walls(tp)      tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                    tp_flag(tp, is_wall)
@@ -935,6 +939,7 @@ float tp_collision_radius(Tpp);
 #define level_is_levitating(g, v, l, p)              level_flag(g, v, l, is_levitating, p)
 #define level_is_light_source(g, v, l, p)            level_flag(g, v, l, is_light_source, p)
 #define level_is_loggable(g, v, l, p)                level_flag(g, v, l, is_loggable, p)
+#define level_is_meltable(g, v, l, p)                level_flag(g, v, l, is_meltable, p)
 #define level_is_minion(g, v, l, p)                  level_flag(g, v, l, is_minion, p)
 #define level_is_mob(g, v, l, p)                     level_flag(g, v, l, is_mob, p)
 #define level_is_mob1(g, v, l, p)                    level_flag(g, v, l, is_mob1, p)
@@ -1064,7 +1069,6 @@ float tp_collision_radius(Tpp);
 #define level_is_unused88(g, v, l, p)                level_flag(g, v, l, is_unused88, p)
 #define level_is_unused89(g, v, l, p)                level_flag(g, v, l, is_unused89, p)
 #define level_is_unused9(g, v, l, p)                 level_flag(g, v, l, is_unused9, p)
-#define level_is_unused90(g, v, l, p)                level_flag(g, v, l, is_unused90, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)       level_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_is_walk_through_walls(g, v, l, p)      level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                    level_flag(g, v, l, is_wall, p)
@@ -1156,6 +1160,7 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_levitating(g, v, l, p)              level_alive(g, v, l, is_levitating, p)
 #define level_alive_is_light_source(g, v, l, p)            level_alive(g, v, l, is_light_source, p)
 #define level_alive_is_loggable(g, v, l, p)                level_alive(g, v, l, is_loggable, p)
+#define level_alive_is_meltable(g, v, l, p)                level_alive(g, v, l, is_meltable, p)
 #define level_alive_is_minion(g, v, l, p)                  level_alive(g, v, l, is_minion, p)
 #define level_alive_is_mob(g, v, l, p)                     level_alive(g, v, l, is_mob, p)
 #define level_alive_is_mob1(g, v, l, p)                    level_alive(g, v, l, is_mob1, p)
@@ -1285,7 +1290,6 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_unused88(g, v, l, p)                level_alive(g, v, l, is_unused88, p)
 #define level_alive_is_unused89(g, v, l, p)                level_alive(g, v, l, is_unused89, p)
 #define level_alive_is_unused9(g, v, l, p)                 level_alive(g, v, l, is_unused9, p)
-#define level_alive_is_unused90(g, v, l, p)                level_alive(g, v, l, is_unused90, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)       level_alive(g, v, l, is_wait_on_dead_anim, p)
 #define level_alive_is_walk_through_walls(g, v, l, p)      level_alive(g, v, l, is_walk_through_walls, p)
 #define level_alive_is_wall(g, v, l, p)                    level_alive(g, v, l, is_wall, p)
@@ -1377,6 +1381,7 @@ float tp_collision_radius(Tpp);
 #define level_count_is_levitating(g, v, l, p)              level_count(g, v, l, is_levitating, p)
 #define level_count_is_light_source(g, v, l, p)            level_count(g, v, l, is_light_source, p)
 #define level_count_is_loggable(g, v, l, p)                level_count(g, v, l, is_loggable, p)
+#define level_count_is_meltable(g, v, l, p)                level_count(g, v, l, is_meltable, p)
 #define level_count_is_minion(g, v, l, p)                  level_count(g, v, l, is_minion, p)
 #define level_count_is_mob(g, v, l, p)                     level_count(g, v, l, is_mob, p)
 #define level_count_is_mob1(g, v, l, p)                    level_count(g, v, l, is_mob1, p)
@@ -1506,7 +1511,6 @@ float tp_collision_radius(Tpp);
 #define level_count_is_unused88(g, v, l, p)                level_count(g, v, l, is_unused88, p)
 #define level_count_is_unused89(g, v, l, p)                level_count(g, v, l, is_unused89, p)
 #define level_count_is_unused9(g, v, l, p)                 level_count(g, v, l, is_unused9, p)
-#define level_count_is_unused90(g, v, l, p)                level_count(g, v, l, is_unused90, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)       level_count(g, v, l, is_wait_on_dead_anim, p)
 #define level_count_is_walk_through_walls(g, v, l, p)      level_count(g, v, l, is_walk_through_walls, p)
 #define level_count_is_wall(g, v, l, p)                    level_count(g, v, l, is_wall, p)
@@ -1598,6 +1602,7 @@ float tp_collision_radius(Tpp);
 #define level_open_is_levitating(g, v, l, p)              level_open(g, v, l, is_levitating, p)
 #define level_open_is_light_source(g, v, l, p)            level_open(g, v, l, is_light_source, p)
 #define level_open_is_loggable(g, v, l, p)                level_open(g, v, l, is_loggable, p)
+#define level_open_is_meltable(g, v, l, p)                level_open(g, v, l, is_meltable, p)
 #define level_open_is_minion(g, v, l, p)                  level_open(g, v, l, is_minion, p)
 #define level_open_is_mob(g, v, l, p)                     level_open(g, v, l, is_mob, p)
 #define level_open_is_mob1(g, v, l, p)                    level_open(g, v, l, is_mob1, p)
@@ -1727,7 +1732,6 @@ float tp_collision_radius(Tpp);
 #define level_open_is_unused88(g, v, l, p)                level_open(g, v, l, is_unused88, p)
 #define level_open_is_unused89(g, v, l, p)                level_open(g, v, l, is_unused89, p)
 #define level_open_is_unused9(g, v, l, p)                 level_open(g, v, l, is_unused9, p)
-#define level_open_is_unused90(g, v, l, p)                level_open(g, v, l, is_unused90, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)       level_open(g, v, l, is_wait_on_dead_anim, p)
 #define level_open_is_walk_through_walls(g, v, l, p)      level_open(g, v, l, is_walk_through_walls, p)
 #define level_open_is_wall(g, v, l, p)                    level_open(g, v, l, is_wall, p)

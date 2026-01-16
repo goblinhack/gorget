@@ -544,6 +544,30 @@ void thing_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
   return tp->on_fall_begin(g, v, l, me);
 }
 
+void thing_on_melt_set(Tpp tp, thing_on_melt_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->on_melt = callback;
+}
+
+void thing_on_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  if (! tp->on_melt) {
+    return;
+  }
+  return tp->on_melt(g, v, l, me);
+}
+
 void thing_on_fall_end_set(Tpp tp, thing_on_fall_end_t callback)
 {
   TRACE_NO_INDENT();
