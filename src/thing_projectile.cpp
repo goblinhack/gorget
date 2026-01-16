@@ -80,7 +80,6 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 {
   TRACE_NO_INDENT();
 
-  THING_LOG(t, "proj move");
   fpoint old_at = thing_real_at(t);
   auto   at     = old_at;
 

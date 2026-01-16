@@ -7,34 +7,34 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_barrel_explosion(Gamep g, Testp t)
+static bool test_projectile(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
 
   LevelNum level_num = 0;
-  auto     w         = 7;
+  auto     w         = 27;
   auto     h         = 7;
 
   //
   // How the dungeon starts out, and how we expect it to change
   //
   std::string start
-      = "xxxxxxx"
-        "xxxbbbx"
-        "xxxbxbx"
-        "x@.bxbx"
-        "xxxxxbx"
-        "xbbbbbx"
-        "xxxxxxx";
+      = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "x.........................x"
+        "x.........................x"
+        "x@........................x"
+        "x.........................x"
+        "x.........................x"
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
   std::string expect1
-      = "xxxxxxx"
-        "xxx.!!x"
-        "xxx!x!x"
-        "x@!!x!x"
-        "xxxxx!x"
-        "x....!x"
-        "xxxxxxx";
+      = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "x.........................x"
+        "x.........................x"
+        "x@........-...............x"
+        "x.........................x"
+        "x.........................x"
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
   Levelp  l;
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool    result = true;
@@ -49,13 +49,13 @@ static bool test_barrel_explosion(Gamep g, Testp t)
   // Spawn fire. This should be enough to blow up all the barrels
   //
   TEST_PROGRESS(t);
-  thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(1, 0));
+  player_fire(g, v, l, 1, 0);
 
   //
-  // Wait for the fire to ignite a barrel
+  // Wait for the projectile to ignite a barrel
   //
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 1; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     game_event_wait(g);
@@ -71,7 +71,7 @@ static bool test_barrel_explosion(Gamep g, Testp t)
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 5, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 1, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
@@ -81,14 +81,14 @@ exit:
   return result;
 }
 
-bool test_load_barrel_explosion(void)
+bool test_load_projectile(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("barrel_explosion");
+  Testp test = test_load("projectile");
 
   // begin sort marker1 {
-  test_callback_set(test, test_barrel_explosion);
+  test_callback_set(test, test_projectile);
   // end sort marker1 }
 
   return true;

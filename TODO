@@ -1,20 +1,16 @@
 bugs
 ----
-projectile tests
-melting walls and rock
-door damage from fireball
 
 basic features
 --------------
+melting walls and rock
+door damage from fireball / damaged door visuals
 tests for collecting items / potions
-particles / slow fireball
-more wall types
 bushes quiver when monster is behind?
 mobs generating monsters
 monst AI
 ghosts and walls
 score is hard coded to 666
-damaged door visuals
 traps / gas effects
 
 later features

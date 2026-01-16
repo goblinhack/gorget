@@ -282,6 +282,14 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     DIE("negative dt %f", dt);
   }
 
+  //
+  // During tests, the loop can spin really fast. Pointless doing work at that rate and
+  // projectiles will not move, so wait until time moves on.
+  //
+  if (dt == 0) {
+    return;
+  }
+
   auto player = thing_player(g);
   if (! player) {
     return;
@@ -289,7 +297,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
   const int player_speed = thing_speed(player);
 
   if (0) {
-    LEVEL_LOG(l, "time_step %f dt %f", v->time_step, dt);
+    LEVEL_LOG(l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
   }
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
@@ -575,12 +583,22 @@ static void level_tick_update_frame_counter(Gamep g, Levelsp v)
 
   static uint32_t level_ts_begin;
   static uint32_t level_ts_now;
+  auto            t = time_ms();
 
-  if (unlikely(! level_ts_begin)) {
-    level_ts_begin = time_ms();
+  //
+  // We need a more consistent tick for tests that does not vary with time
+  //
+  static uint32_t test_t;
+  if (g_opt_tests) {
+    test_t++;
+    t = test_t;
   }
 
-  level_ts_now = time_ms();
+  if (unlikely(! level_ts_begin)) {
+    level_ts_begin = t;
+  }
+
+  level_ts_now = t;
   v->frame += level_ts_now - level_ts_begin;
   level_ts_begin = level_ts_now;
 }

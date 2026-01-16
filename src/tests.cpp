@@ -43,6 +43,10 @@ bool tests_init(void)
   if (!test_load_player_lava()) { return false; }
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }
+  if (!test_load_projectile_barrel_explosion()) { return false; }
+  if (!test_load_projectile_mob()) { return false; }
+  if (!test_load_projectile_over_water()) { return false; }
+  if (!test_load_projectile()) { return false; }
   if (!test_load_save_load()) { return false; }
   if (!test_load_teleport_shove_barrel()) { return false; }
   if (!test_load_teleport_shove_brazier()) { return false; }

@@ -36,6 +36,7 @@ enum {
   CHARMAP_MONST2        = 'M',
   CHARMAP_PILLAR        = '|',
   CHARMAP_PLAYER        = '@',
+  CHARMAP_PROJECTILE    = '-',
   CHARMAP_SMOKE         = ';',
   CHARMAP_STEAM         = ':',
   CHARMAP_TELEPORT      = 'T',

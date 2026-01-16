@@ -588,7 +588,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   player_move_reset(g, v, l);
 }
 
-static void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
+void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
 {
   TRACE_NO_INDENT();
 

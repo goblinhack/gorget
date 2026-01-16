@@ -692,6 +692,7 @@ spoint thing_moving_from(Thingp);
 spoint thing_old_at(Thingp);
 void   player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void   player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
+void   player_fire(Gamep, Levelsp, Levelp, int dx, int dy);
 void   player_map_center(Gamep, Levelsp, Levelp);
 void   player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right, bool fire);
 void   player_move_reset(Gamep, Levelsp, Levelp);
