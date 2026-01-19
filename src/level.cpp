@@ -606,6 +606,13 @@ bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)
       continue;
     }
 
+    //
+    // This check is needed to handle walls that are destroyed, but not yet popped.
+    //
+    if (thing_is_dead(it)) {
+      continue;
+    }
+
     if (it_tp == tp) {
       return true;
     }
