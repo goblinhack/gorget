@@ -118,6 +118,7 @@ bool tp_load_door_unlocked(void)
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
+  tp_flag_set(tp, is_wood);
   tp_health_set(tp, "1d100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_long_name_set(tp, name);

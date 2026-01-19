@@ -197,6 +197,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_damage_capped);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_flesh);
   tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_light_source, MAP_WIDTH / 2);
   tp_flag_set(tp, is_loggable);

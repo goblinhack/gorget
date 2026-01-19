@@ -43,6 +43,7 @@ bool tp_load_teleport(void)
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_light_source, 4);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
+  tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_teleport);

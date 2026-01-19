@@ -2395,64 +2395,64 @@ bool thing_is_unused83(Thingp t)
   return tp_flag(thing_tp(t), is_unused83);
 }
 
-bool thing_is_unused84(Thingp t)
+bool thing_is_glass(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused84);
+  return tp_flag(thing_tp(t), is_glass);
 }
 
-bool thing_is_unused85(Thingp t)
+bool thing_is_plant(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused85);
+  return tp_flag(thing_tp(t), is_plant);
 }
 
-bool thing_is_unused86(Thingp t)
+bool thing_is_wood(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused86);
+  return tp_flag(thing_tp(t), is_wood);
 }
 
-bool thing_is_unused87(Thingp t)
+bool thing_is_metal(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused87);
+  return tp_flag(thing_tp(t), is_metal);
 }
 
-bool thing_is_unused88(Thingp t)
+bool thing_is_flesh(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused88);
+  return tp_flag(thing_tp(t), is_flesh);
 }
 
-bool thing_is_unused89(Thingp t)
+bool thing_is_stone(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused89);
+  return tp_flag(thing_tp(t), is_stone);
 }
 
 bool thing_is_meltable(Thingp t)

@@ -42,11 +42,12 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_obs_to_jump_over);
     tp_flag_set(tp, is_obs_to_jumping_onto);
     tp_flag_set(tp, is_obs_to_movement);
-    tp_flag_set(tp, is_physics_temperature);
     tp_flag_set(tp, is_obs_to_teleporting_onto);
     tp_flag_set(tp, is_obs_to_vision);
     tp_flag_set(tp, is_physics_explosion);
+    tp_flag_set(tp, is_physics_temperature);
     tp_flag_set(tp, is_rock);
+    tp_flag_set(tp, is_stone);
     tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tiled);
     tp_health_set(tp, "1d500");

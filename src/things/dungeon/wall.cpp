@@ -35,6 +35,7 @@ bool tp_load_wall(void)
     tp_flag_set(tp, is_blit_pixel_lighting);
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);
+    tp_flag_set(tp, is_loggable);
     tp_flag_set(tp, is_meltable);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);
@@ -47,7 +48,7 @@ bool tp_load_wall(void)
     tp_flag_set(tp, is_obs_to_vision);
     tp_flag_set(tp, is_physics_explosion);
     tp_flag_set(tp, is_physics_temperature);
-    tp_flag_set(tp, is_loggable);
+    tp_flag_set(tp, is_stone);
     tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tiled);
     tp_flag_set(tp, is_wall);

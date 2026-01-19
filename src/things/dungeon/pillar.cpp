@@ -41,6 +41,7 @@ bool tp_load_pillar(void)
   tp_flag_set(tp, is_obs_to_vision);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_pillar);
+  tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
   tp_flag_set(tp, is_teleport_blocked);
   tp_health_set(tp, "1d500");

@@ -51,6 +51,7 @@ bool tp_load_kobalos(void)
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_flesh);
   tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_kobalos);
   tp_flag_set(tp, is_loggable);
