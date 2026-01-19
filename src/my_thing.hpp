@@ -317,8 +317,6 @@ typedef struct Thing_ {
   int16_t _value21;
   int16_t _value22;
   int16_t _value23;
-  int16_t _value24;
-  int16_t _value25;
   int16_t _variant;
   //
   // Lifespan remaining in ticks
@@ -938,16 +936,6 @@ int thing_value23(Thingp);
 int thing_value23_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int thing_value23_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int thing_value23_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-
-int thing_value24(Thingp);
-int thing_value24_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value24_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value24_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-
-int thing_value25(Thingp);
-int thing_value25_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value25_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value25_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_variant(Thingp);
 int thing_variant_set(Gamep, Levelsp, Levelp, Thingp, int val);

@@ -1453,44 +1453,44 @@ int tp_value23_get(Tpp tp)
   return tp->value23;
 }
 
-void tp_value24_set(Tpp tp, int val)
+void tp_temperature_thermal_conductivity_set(Tpp tp, float val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->value24 = val;
+  tp->temperature_thermal_conductivity = val;
 }
 
-int tp_value24_get(Tpp tp)
+float tp_temperature_thermal_conductivity_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return 0;
   }
-  return tp->value24;
+  return tp->temperature_thermal_conductivity;
 }
 
-void tp_value25_set(Tpp tp, int val)
+void tp_temperature_heat_capacity_set(Tpp tp, float val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->value25 = val;
+  tp->temperature_heat_capacity = val;
 }
 
-int tp_value25_get(Tpp tp)
+float tp_temperature_heat_capacity_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return 0;
   }
-  return tp->value25;
+  return tp->temperature_heat_capacity;
 }
 
 void tp_variant_set(Tpp tp, int val)

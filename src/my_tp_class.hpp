@@ -128,8 +128,29 @@ public:
   int value21 {0};
   int value22 {0};
   int value23 {0};
-  int value24 {0};
-  int value25 {0};
+
+  //
+  // Heat capacity indicates the amount of heat energy required to
+  // change a material's temperature.
+  //
+  // The SI unit for heat capacity is joule per kelvin (J/K). This unit measures the
+  // amount of heat required to change the temperature of an object (one kilogram) by
+  // one degree Kelvin.
+  //
+  float temperature_heat_capacity {0};
+
+  //
+  // Thermal conductivity measures how well a material can conduct heat.
+  //
+  // The SI unit of thermal conductivity is watts per meter-kelvin (W/(m·K)). This unit
+  // measures the amount of heat that passes through a material per unit time and area
+  // for a given temperature difference.
+  //
+  float temperature_thermal_conductivity {0};
+
+  //
+  // Wall or floor variant
+  //
   int variant {0};
 
   //

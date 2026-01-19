@@ -604,11 +604,11 @@ int  tp_value22_get(Tpp);
 void tp_value23_set(Tpp, int val);
 int  tp_value23_get(Tpp);
 
-void tp_value24_set(Tpp, int val);
-int  tp_value24_get(Tpp);
+void  tp_temperature_thermal_conductivity_set(Tpp, float val);
+float tp_temperature_thermal_conductivity_get(Tpp);
 
-void tp_value25_set(Tpp, int val);
-int  tp_value25_get(Tpp);
+void  tp_temperature_heat_capacity_set(Tpp, float val);
+float tp_temperature_heat_capacity_get(Tpp);
 
 void tp_variant_set(Tpp, int val);
 int  tp_variant_get(Tpp);
