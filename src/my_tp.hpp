@@ -215,7 +215,7 @@
       list_macro(is_unused80, "is_unused80"),                               /* newline */                            \
       list_macro(is_unused81, "is_unused81"),                               /* newline */                            \
       list_macro(is_unused82, "is_unused82"),                               /* newline */                            \
-      list_macro(is_unused83, "is_unused83"),                               /* newline */                            \
+      list_macro(is_gold, "is_gold"),                                       /* newline */                            \
       list_macro(is_glass, "is_glass"),                                     /* newline */                            \
       list_macro(is_plant, "is_plant"),                                     /* newline */                            \
       list_macro(is_wood, "is_wood"),                                       /* newline */                            \
@@ -505,20 +505,6 @@ uint8_t tp_z_depth_get(Tpp);
 void tp_speed_set(Tpp, int val);
 int  tp_speed_get(Tpp);
 
-#define ONE_KG          1000
-#define WEIGHT_VVVHEAVY (ONE_KG * 1000)
-#define WEIGHT_VVHEAVY  (ONE_KG * 500)
-#define WEIGHT_VHEAVY   (ONE_KG * 200)
-#define WEIGHT_HEAVY    (ONE_KG * 100)
-#define WEIGHT_HUMAN    (ONE_KG * 50)
-#define WEIGHT_MEDIUM   (ONE_KG * 10)
-#define WEIGHT_LIGHT    (ONE_KG * 1)
-#define WEIGHT_FEATHER  (1)
-#define WEIGHT_NONE     (0)
-
-void tp_weight_set(Tpp, int val);
-int  tp_weight_get(Tpp);
-
 void tp_health_set(Tpp, const std::string &val);
 int  tp_health_get(Tpp);
 int  tp_health_max_get(Tpp);
@@ -534,6 +520,67 @@ int  tp_temperature_melts_at_get(Tpp);
 
 void tp_temperature_damage_at_set(Tpp, int val);
 int  tp_temperature_damage_at_get(Tpp);
+
+//
+// Thermal conductivity measures how well a material can conduct heat.
+//
+// Heat capacity indicates the amount of heat energy required to
+// change a material's temperature.
+//
+// Both properties are essential for understanding heat transfer in materials.
+//
+
+//
+// Unit is in joules per kelvin per gram
+//
+#define HEAT_CAPACITY_AIR   1.0
+#define HEAT_CAPACITY_FLESH 3.0
+#define HEAT_CAPACITY_GAS   14.0
+#define HEAT_CAPACITY_GEL   0.02
+#define HEAT_CAPACITY_GLASS 0.8
+#define HEAT_CAPACITY_GOLD  0.1
+#define HEAT_CAPACITY_STEEL 0.5
+#define HEAT_CAPACITY_STONE 0.8
+#define HEAT_CAPACITY_WATER 4.0
+#define HEAT_CAPACITY_WOOD  2.0
+#define HEAT_CAPACITY_MAX   15.0
+
+//
+// Unit is weight per mass per kelvin
+//
+#define THERMAL_CONDUCTIVITY_AIR   0.025
+#define THERMAL_CONDUCTIVITY_FLESH 0.2
+#define THERMAL_CONDUCTIVITY_GAS   0.01
+#define THERMAL_CONDUCTIVITY_GEL   0.2
+#define THERMAL_CONDUCTIVITY_GLASS 1.1
+#define THERMAL_CONDUCTIVITY_STEEL 32.0
+#define THERMAL_CONDUCTIVITY_STONE 4.0
+#define THERMAL_CONDUCTIVITY_WATER 0.6
+#define THERMAL_CONDUCTIVITY_WOOD  0.1
+#define THERMAL_CONDUCTIVITY_GOLD  310.0
+
+//
+// Unit is in grams
+//
+#define ONE_KG          1000
+#define WEIGHT_VVVHEAVY (ONE_KG * 1000)
+#define WEIGHT_VVHEAVY  (ONE_KG * 500)
+#define WEIGHT_VHEAVY   (ONE_KG * 200)
+#define WEIGHT_HEAVY    (ONE_KG * 100)
+#define WEIGHT_HUMAN    (ONE_KG * 50)
+#define WEIGHT_MEDIUM   (ONE_KG * 10)
+#define WEIGHT_LIGHT    (ONE_KG * 1)
+#define WEIGHT_FEATHER  (1)
+#define WEIGHT_NONE     (0)
+
+void tp_weight_set(Tpp, int val);
+int  tp_weight_get(Tpp);
+
+void  tp_temperature_thermal_conductivity_set(Tpp, float val);
+float tp_temperature_thermal_conductivity_get(Tpp);
+
+void  tp_temperature_heat_capacity_set(Tpp, float val);
+float tp_temperature_heat_capacity_get(Tpp);
 
 void tp_value1_set(Tpp, int val);
 int  tp_value1_get(Tpp);
@@ -603,12 +650,6 @@ int  tp_value22_get(Tpp);
 
 void tp_value23_set(Tpp, int val);
 int  tp_value23_get(Tpp);
-
-void  tp_temperature_thermal_conductivity_set(Tpp, float val);
-float tp_temperature_thermal_conductivity_get(Tpp);
-
-void  tp_temperature_heat_capacity_set(Tpp, float val);
-float tp_temperature_heat_capacity_get(Tpp);
 
 void tp_variant_set(Tpp, int val);
 int  tp_variant_get(Tpp);
@@ -699,6 +740,7 @@ float tp_collision_radius(Tpp);
 #define tp_is_gaseous(tp)                 tp_flag(tp, is_gaseous)
 #define tp_is_ghost(tp)                   tp_flag(tp, is_ghost)
 #define tp_is_glass(tp)                   tp_flag(tp, is_glass)
+#define tp_is_gold(tp)                    tp_flag(tp, is_gold)
 #define tp_is_grass(tp)                   tp_flag(tp, is_grass)
 #define tp_is_health_bar_shown(tp)        tp_flag(tp, is_health_bar_shown)
 #define tp_is_indestructible(tp)          tp_flag(tp, is_indestructible)
@@ -845,7 +887,6 @@ float tp_collision_radius(Tpp);
 #define tp_is_unused80(tp)                tp_flag(tp, is_unused80)
 #define tp_is_unused81(tp)                tp_flag(tp, is_unused81)
 #define tp_is_unused82(tp)                tp_flag(tp, is_unused82)
-#define tp_is_unused83(tp)                tp_flag(tp, is_unused83)
 #define tp_is_unused9(tp)                 tp_flag(tp, is_unused9)
 #define tp_is_wait_on_dead_anim(tp)       tp_flag(tp, is_wait_on_dead_anim)
 #define tp_is_walk_through_walls(tp)      tp_flag(tp, is_walk_through_walls)
@@ -920,6 +961,7 @@ float tp_collision_radius(Tpp);
 #define level_is_gaseous(g, v, l, p)                 level_flag(g, v, l, is_gaseous, p)
 #define level_is_ghost(g, v, l, p)                   level_flag(g, v, l, is_ghost, p)
 #define level_is_glass(g, v, l, p)                   level_flag(g, v, l, is_glass, p)
+#define level_is_gold(g, v, l, p)                    level_flag(g, v, l, is_gold, p)
 #define level_is_grass(g, v, l, p)                   level_flag(g, v, l, is_grass, p)
 #define level_is_health_bar_shown(g, v, l, p)        level_flag(g, v, l, is_health_bar_shown, p)
 #define level_is_indestructible(g, v, l, p)          level_flag(g, v, l, is_indestructible, p)
@@ -1066,7 +1108,6 @@ float tp_collision_radius(Tpp);
 #define level_is_unused80(g, v, l, p)                level_flag(g, v, l, is_unused80, p)
 #define level_is_unused81(g, v, l, p)                level_flag(g, v, l, is_unused81, p)
 #define level_is_unused82(g, v, l, p)                level_flag(g, v, l, is_unused82, p)
-#define level_is_unused83(g, v, l, p)                level_flag(g, v, l, is_unused83, p)
 #define level_is_unused9(g, v, l, p)                 level_flag(g, v, l, is_unused9, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)       level_flag(g, v, l, is_wait_on_dead_anim, p)
 #define level_is_walk_through_walls(g, v, l, p)      level_flag(g, v, l, is_walk_through_walls, p)
@@ -1141,6 +1182,7 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_gaseous(g, v, l, p)                 level_alive(g, v, l, is_gaseous, p)
 #define level_alive_is_ghost(g, v, l, p)                   level_alive(g, v, l, is_ghost, p)
 #define level_alive_is_glass(g, v, l, p)                   level_alive(g, v, l, is_glass, p)
+#define level_alive_is_gold(g, v, l, p)                    level_alive(g, v, l, is_gold, p)
 #define level_alive_is_grass(g, v, l, p)                   level_alive(g, v, l, is_grass, p)
 #define level_alive_is_health_bar_shown(g, v, l, p)        level_alive(g, v, l, is_health_bar_shown, p)
 #define level_alive_is_indestructible(g, v, l, p)          level_alive(g, v, l, is_indestructible, p)
@@ -1287,7 +1329,6 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_unused80(g, v, l, p)                level_alive(g, v, l, is_unused80, p)
 #define level_alive_is_unused81(g, v, l, p)                level_alive(g, v, l, is_unused81, p)
 #define level_alive_is_unused82(g, v, l, p)                level_alive(g, v, l, is_unused82, p)
-#define level_alive_is_unused83(g, v, l, p)                level_alive(g, v, l, is_unused83, p)
 #define level_alive_is_unused9(g, v, l, p)                 level_alive(g, v, l, is_unused9, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)       level_alive(g, v, l, is_wait_on_dead_anim, p)
 #define level_alive_is_walk_through_walls(g, v, l, p)      level_alive(g, v, l, is_walk_through_walls, p)
@@ -1362,6 +1403,7 @@ float tp_collision_radius(Tpp);
 #define level_count_is_gaseous(g, v, l, p)                 level_count(g, v, l, is_gaseous, p)
 #define level_count_is_ghost(g, v, l, p)                   level_count(g, v, l, is_ghost, p)
 #define level_count_is_glass(g, v, l, p)                   level_count(g, v, l, is_glass, p)
+#define level_count_is_gold(g, v, l, p)                    level_count(g, v, l, is_gold, p)
 #define level_count_is_grass(g, v, l, p)                   level_count(g, v, l, is_grass, p)
 #define level_count_is_health_bar_shown(g, v, l, p)        level_count(g, v, l, is_health_bar_shown, p)
 #define level_count_is_indestructible(g, v, l, p)          level_count(g, v, l, is_indestructible, p)
@@ -1508,7 +1550,6 @@ float tp_collision_radius(Tpp);
 #define level_count_is_unused80(g, v, l, p)                level_count(g, v, l, is_unused80, p)
 #define level_count_is_unused81(g, v, l, p)                level_count(g, v, l, is_unused81, p)
 #define level_count_is_unused82(g, v, l, p)                level_count(g, v, l, is_unused82, p)
-#define level_count_is_unused83(g, v, l, p)                level_count(g, v, l, is_unused83, p)
 #define level_count_is_unused9(g, v, l, p)                 level_count(g, v, l, is_unused9, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)       level_count(g, v, l, is_wait_on_dead_anim, p)
 #define level_count_is_walk_through_walls(g, v, l, p)      level_count(g, v, l, is_walk_through_walls, p)
@@ -1583,6 +1624,7 @@ float tp_collision_radius(Tpp);
 #define level_open_is_gaseous(g, v, l, p)                 level_open(g, v, l, is_gaseous, p)
 #define level_open_is_ghost(g, v, l, p)                   level_open(g, v, l, is_ghost, p)
 #define level_open_is_glass(g, v, l, p)                   level_open(g, v, l, is_glass, p)
+#define level_open_is_gold(g, v, l, p)                    level_open(g, v, l, is_gold, p)
 #define level_open_is_grass(g, v, l, p)                   level_open(g, v, l, is_grass, p)
 #define level_open_is_health_bar_shown(g, v, l, p)        level_open(g, v, l, is_health_bar_shown, p)
 #define level_open_is_indestructible(g, v, l, p)          level_open(g, v, l, is_indestructible, p)
@@ -1729,7 +1771,6 @@ float tp_collision_radius(Tpp);
 #define level_open_is_unused80(g, v, l, p)                level_open(g, v, l, is_unused80, p)
 #define level_open_is_unused81(g, v, l, p)                level_open(g, v, l, is_unused81, p)
 #define level_open_is_unused82(g, v, l, p)                level_open(g, v, l, is_unused82, p)
-#define level_open_is_unused83(g, v, l, p)                level_open(g, v, l, is_unused83, p)
 #define level_open_is_unused9(g, v, l, p)                 level_open(g, v, l, is_unused9, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)       level_open(g, v, l, is_wait_on_dead_anim, p)
 #define level_open_is_walk_through_walls(g, v, l, p)      level_open(g, v, l, is_walk_through_walls, p)

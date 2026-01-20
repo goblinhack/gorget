@@ -2385,14 +2385,14 @@ bool thing_is_unused82(Thingp t)
   return tp_flag(thing_tp(t), is_unused82);
 }
 
-bool thing_is_unused83(Thingp t)
+bool thing_is_gold(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused83);
+  return tp_flag(thing_tp(t), is_gold);
 }
 
 bool thing_is_glass(Thingp t)

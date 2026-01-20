@@ -304,6 +304,47 @@ static void tp_fixup(void)
       if (tp->flag[ f ]) {
         tp_flag_vec[ f ].push_back(tp);
       }
+
+      if (tp_is_stone(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_STONE);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_STONE);
+      }
+      if (tp_is_glass(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_GLASS);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_GLASS);
+      }
+      if (tp_is_gold(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_GOLD);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_GOLD);
+      }
+      if (tp_is_gold(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_GOLD);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_GOLD);
+      }
+      if (tp_is_metal(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_STEEL);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_STEEL);
+      }
+      if (tp_is_water(tp) || tp_is_deep_water(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_WATER);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_WATER);
+      }
+      if (tp_is_gaseous(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_GAS);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_GAS);
+      }
+      if (tp_is_wood(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_WOOD);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_WOOD);
+      }
+      if (tp_is_flesh(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_FLESH);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_FLESH);
+      }
+      if (tp_is_slime(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, HEAT_CAPACITY_GEL);
+        tp_temperature_heat_capacity_set(tp, THERMAL_CONDUCTIVITY_GEL);
+      }
     }
   }
 }
