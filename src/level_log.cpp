@@ -151,6 +151,11 @@ void LEVEL_ERR(Levelp l, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
+  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
+    DIE("too many errors");
+    exit(1);
+  }
+
   extern Gamep game;
   auto         g = game;
 

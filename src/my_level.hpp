@@ -216,6 +216,10 @@ typedef struct Level_ {
   //
   uint8_t is_fixed_level : 1;
   //
+  // Avoid recursion with temperature events.
+  //
+  uint8_t is_handling_temperature_changes : 1;
+  //
   // Player has entered level
   //
   uint8_t player_has_entered_level : 1;

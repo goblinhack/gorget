@@ -66,18 +66,23 @@ static bool test_player_on_fire(Gamep g, Testp t)
   // Spawn fire on the player
   //
   TEST_PROGRESS(t);
-  {
-    thing_spawn(g, v, l, tp_first(is_fire), player);
+  thing_spawn(g, v, l, tp_first(is_fire), player);
+  thing_spawn(g, v, l, tp_first(is_fire), player);
+
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 3; tries++) {
+    TEST_LOG(t, "try: %d", tries);
+    TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
     }
-
-    TEST_ASSERT(t, thing_is_burning(player), "player is not burning");
-    TEST_ASSERT(t, ! thing_is_dead(player), "player is dead");
   }
+
+  TEST_ASSERT(t, thing_is_burning(player), "player is not burning");
+  TEST_ASSERT(t, ! thing_is_dead(player), "player is dead");
 
   //
   // Wait until the player is dead
@@ -86,6 +91,7 @@ static bool test_player_on_fire(Gamep g, Testp t)
   for (auto tries = 0; tries < 100; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
+    // level_dump(g, v, l, w, h);
     game_event_wait(g);
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
@@ -99,7 +105,7 @@ static bool test_player_on_fire(Gamep g, Testp t)
 
   TEST_ASSERT(t, thing_is_burning(player), "player is not burning");
   TEST_ASSERT(t, thing_is_dead(player), "player is alive");
-  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 7, "final tick counter value");
 
   TEST_PASSED(t);
 

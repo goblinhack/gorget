@@ -32,7 +32,7 @@ static bool test_player_fall_while_on_fire(Gamep g, Testp t)
       = "......."
         "......."
         "...C..."
-        "..!C..."
+        "..!;..."
         "...C..."
         "......."
         ".......";
@@ -90,6 +90,7 @@ static bool test_player_fall_while_on_fire(Gamep g, Testp t)
   //
   TEST_PROGRESS(t);
   {
+    thing_spawn(g, v, l1, tp_first(is_fire), player);
     thing_spawn(g, v, l1, tp_first(is_fire), player);
     // level_dump(g, v, l, w, h);
     game_event_wait(g);

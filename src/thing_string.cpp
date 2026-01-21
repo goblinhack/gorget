@@ -29,12 +29,13 @@ std::string to_string(Gamep g, Thingp t)
     name = game_player_name_get(g);
   }
 
-  auto at = thing_real_at(t);
+  auto at = thing_at(t);
 
   return (string_sprintf("%08" PRIX32
                          /* level num                     */ " l%u"
                          /* tick                          */ " t%u"
-                         /* thing_health                  */ " h%d"
+                         /* thing_health                  */ " h%-3d"
+                         /* at                            */ " @%d,%d"
                          /* name                          */ " %s"
                          /* is_dead                       */ "%s"
                          /* is_moving                     */ "%s"
@@ -42,12 +43,12 @@ std::string to_string(Gamep g, Thingp t)
                          /* is_falling                    */ "%s"
                          /* is_open                       */ "%s"
                          /* is_burning                    */ "%s"
-                         /* is_scheduled_for_cleanup      */ "%s"
-                         /* at                            */ " @%f,%f",
+                         /* is_scheduled_for_cleanup      */ "%s",
                          /* newline */ t->id,
                          /* newline */ t->level_num + 1,
                          /* newline */ t->tick,
                          /* newline */ thing_health(t),
+                         /* newline */ at.x, at.y,
                          /* newline */ name.c_str(),
                          /* newline */ thing_is_moving(t) ? "/moving" : "",
                          /* newline */ thing_is_dead(t) ? "/dead" : "",
@@ -55,8 +56,7 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ thing_is_falling(t) ? "/fal" : "",
                          /* newline */ thing_is_open(t) ? "/opn" : "",
                          /* newline */ thing_is_burning(t) ? "/brn" : "",
-                         /* newline */ thing_is_scheduled_for_cleanup(t) ? "/free" : "",
-                         /* newline */ at.x, at.y));
+                         /* newline */ thing_is_scheduled_for_cleanup(t) ? "/free" : ""));
 }
 
 std::string to_string(Gamep g, ThingEvent &e)

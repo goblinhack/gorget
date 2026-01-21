@@ -76,7 +76,7 @@ static bool test_bridge_on_fire_over_lava(Gamep g, Testp t)
   for (auto tries = 0; tries < 20; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
-    // level_dump(g, v, l, w, h);
+    level_dump(g, v, l, w, h);
     game_event_wait(g);
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");

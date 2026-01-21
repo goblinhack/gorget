@@ -31,7 +31,7 @@ static bool test_bridge_on_fire(Gamep g, Testp t)
       = "......."
         "......."
         "...CCC."
-        "..@C;C."
+        "..@C;;."
         "...CCC."
         "......."
         ".......";

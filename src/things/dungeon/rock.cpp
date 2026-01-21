@@ -51,13 +51,13 @@ bool tp_load_rock(void)
     tp_flag_set(tp, is_stone);
     tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tiled);
-    tp_health_set(tp, "1d500");
+    tp_health_set(tp, "1d200+200");
     tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
     tp_long_name_set(tp, "rock");
     tp_temperature_damage_at_set(tp, 50); // celsius
     tp_temperature_initial_set(tp, 20);   // celsius
-    tp_temperature_melts_at_set(tp, 500); // celsius
+    tp_temperature_melts_at_set(tp, 300); // celsius
     tp_variant_set(tp, variant);
     tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

@@ -212,7 +212,7 @@ bool tp_load_player(void)
   tp_light_color_set(tp, "white");
   tp_priority_set(tp, THING_PRIORITY_PLAYER);
   tp_speed_set(tp, 100);
-  tp_temperature_burns_at_set(tp, 100);      // celsius
+  tp_temperature_burns_at_set(tp, 50);       // celsius
   tp_temperature_damage_at_set(tp, 35);      // celsius
   tp_temperature_initial_set(tp, 20);        // celsius
   tp_vision_distance_set(tp, MAP_WIDTH / 2); // tiles

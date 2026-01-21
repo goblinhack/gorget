@@ -155,6 +155,11 @@ static void cleanup_err_wrapper_(const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
+  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
+    DIE("too many errors");
+    exit(1);
+  }
+
   callstack_dump();
   backtrace_dump();
 
@@ -331,6 +336,11 @@ static void err_(const char *fmt, va_list args)
 void err_wrapper(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
+
+  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
+    DIE("too many errors");
+    exit(1);
+  }
 
   extern Gamep game;
   auto         g = game;

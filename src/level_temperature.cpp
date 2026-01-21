@@ -4,12 +4,149 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing_inlines.hpp"
 
 #include <algorithm>
 #include <math.h>
 #include <set>
 #include <vector>
+
+//
+// Allow things to return to the initial temperature
+//
+void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
+{
+  TRACE_NO_INDENT();
+
+  int x, y;
+
+  FOR_ALL_MAP_POINTS(g, v, l, x, y)
+  {
+    std::vector< Thingp > things;
+
+    //
+    // Collect all things at this point into a vector
+    //
+    spoint p(x, y);
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, t, p)
+    {
+      if (! thing_is_physics_temperature(t)) {
+        continue;
+      }
+
+      //
+      // Ignore burnt grass for example
+      //
+      if (thing_is_dead(t)) {
+        continue;
+      }
+
+      things.push_back(t);
+    }
+
+    //
+    // This is emulating returning to ambient temperature
+    //
+    for (auto i = 0; i < (int) things.size(); i++) {
+      auto t = things[ i ];
+
+      //
+      // It could be dead now.
+      //
+      if (thing_is_dead(t)) {
+        continue;
+      }
+
+      //
+      // Only cool down if not being actively heated.
+      //
+      if (v->tick - t->tick_temperature_last_change < 5) {
+        continue;
+      }
+
+      auto  tp            = thing_tp(t);
+      float Ta            = thing_temperature(t);
+      float To            = tp_temperature_initial_get(thing_tp(t));
+      float heat_capacity = tp_temperature_heat_capacity_get(tp);
+      float diff          = Ta - To;
+      float ndiff         = diff * (1.0 - ((HEAT_CAPACITY_MAX - heat_capacity) / 10.0));
+      int   Tn            = (int) Ta - (int) ndiff;
+
+      //
+      // No need to handle return to temperature
+      //
+      if (Tn != Ta) {
+        THING_DBG(t, "temperature return %f -> %d degrees", Ta, Tn);
+        thing_temperature_set(g, v, l, t, Tn);
+      }
+    }
+  }
+}
+
+//
+// Q is the heat transfer                           watts
+// K is the thermal conductivity of the material
+// A is the cross-sectional area in                 meters squared
+// Thot Tcold the temperatures on either side       degrees
+// d is the thickness of the material in meters     meters
+//
+// For example, if you have a wall with a thermal conductivity of 70 W/m·K, an area of 1 m²,
+// a temperature difference of 50°C, and a thickness of 0.05m, the heat transfer would be
+// calculated as follows:
+//
+// Q = K * A * (Thot - Tcold)
+//     ----------------------
+//              d
+//
+// Now for the change in temperature:
+//
+// dT is the change in temperature
+// m  is the mass in g
+// c  is the heat capacity in units per g
+//
+// dT = q / (c * m)
+// Tfinal = Tinitial + (Q / (m * c))
+//
+static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b, int &finalT)
+{
+  auto  tpA = thing_tp(a);
+  float Ta  = thing_temperature(a);
+  float Tb  = thing_temperature(b);
+
+  finalT = (int) Ta;
+  if (a->tick_temperature == v->tick) {
+    return;
+  }
+
+  float K  = tp_temperature_thermal_conductivity_get(tpA);
+  float c  = tp_temperature_heat_capacity_get(tpA);
+  float A  = 1;
+  float dT = Tb - Ta;
+  float d  = 0.01;
+  float Q  = (K * A * dT) / d;
+  float m  = thing_weight(a);
+
+  //
+  // Fire has no weight, so give it some so the equations below average the temperatures.
+  //
+  // Take care not to give too much weight or you end up with steam able to heat up a
+  // tile of water, which seems wrong.
+  //
+  if (! (int) m) {
+    if (thing_is_gaseous(a) || thing_is_projectile(a)) {
+      m = 1;
+    }
+    if (! (int) m) {
+      return;
+    }
+  }
+
+  float final_dT = (Q / (m * c));
+  finalT         = (int) ceilf(((float) Ta) + final_dT);
+
+  THING_DBG(a, "A Ta %f Tb %f dT %f K %f m %f c %f Q %f final dT %f => %d", Ta, Tb, dT, K, m, c, Q, final_dT, finalT);
+}
 
 void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b)
 {
@@ -22,59 +159,35 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
     return;
   }
 
-  float Ta = thing_temperature(a);
-  float Wa = thing_weight(a);
-  float Tb = thing_temperature(b);
-  float Wb = thing_weight(b);
+  int Ta = thing_temperature(a);
+  int Tb = thing_temperature(b);
 
   if (0) {
-    THING_CON(a, "A Ta %f Wa %f", Ta, Wa);
-    THING_CON(b, "B Tb %f Wb %f", Tb, Wb);
-  }
-
-  //
-  // Fire has no weight, so give it some so the equations below average the temperatures.
-  //
-  // Take care not to give too much weight or you end up with steam able to heat up a
-  // tile of water, which seems wrong.
-  //
-  if (thing_is_gaseous(a) || thing_is_projectile(a)) {
-    if (! (int) Wa) {
-      Wa = WEIGHT_HUMAN;
-    }
-  }
-
-  if (thing_is_gaseous(b) || thing_is_projectile(b)) {
-    if (! (int) Wb) {
-      Wb = WEIGHT_HUMAN;
-    }
-  }
-
-  if (! (int) Wa || ! (int) Wb) {
-    return;
+    THING_LOG(a, "a Ta %d", Ta);
+    THING_LOG(b, "b Tb %d", Tb);
   }
 
   //
   // The new temperatures
   //
-  int Na = (int) round(Ta + ((Tb - Ta) / (Wa + Wb)) * Wb);
-  int Nb = (int) round(Tb + ((Ta - Tb) / (Wa + Wb)) * Wa);
+  int Na;
+  thing_heat_exchange(g, v, l, a, b, Na);
 
-  if (0) {
-    THING_CON(a, "Ta %f Wa %f Na %d", Ta, Wa, Na);
-    THING_CON(b, "Tb %f Wb %f Nb %d", Tb, Wb, Nb);
-  }
+  int Nb;
+  thing_heat_exchange(g, v, l, b, a, Nb);
 
   //
   // First step is to mark things as burning and change temperatures
   //
   if (Ta != Na) {
-    THING_DBG(a, "temperature change (a) %f -> %d degrees", Ta, Na);
+    a->tick_temperature_last_change = v->tick;
+    THING_DBG(a, "temperature change (a) %d -> %d degrees", Ta, Na);
     thing_temperature_handle(g, v, l, b, a, Na);
   }
 
   if (Tb != Nb) {
-    THING_DBG(b, "temperature change (b) %f -> %d degrees", Tb, Nb);
+    b->tick_temperature_last_change = v->tick;
+    THING_DBG(b, "temperature change (b) %d -> %d degrees", Tb, Nb);
     thing_temperature_handle(g, v, l, a, b, Nb);
   }
 
@@ -97,6 +210,11 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   int x, y;
+
+  if (l->is_handling_temperature_changes) {
+    return;
+  }
+  l->is_handling_temperature_changes = true;
 
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
@@ -147,14 +265,15 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       sorted_pairs.push_back(a_pair);
     }
 
-    if (1)
+    if (0) {
       for (auto a_pair : sorted_pairs) {
         auto a = a_pair.first;
         auto b = a_pair.second;
 
-        THING_CON(a, "A before %d", a->_priority + b->_priority);
-        THING_CON(b, "B before");
+        THING_LOG(a, "A before prio %d", a->_priority + b->_priority);
+        THING_LOG(b, "B before");
       }
+    }
 
     //
     // Sort by event priority
@@ -168,77 +287,27 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
                 return t1->_priority + t2->_priority < t3->_priority + t4->_priority;
               });
 
-    if (0)
+    if (0) {
       for (auto a_pair : sorted_pairs) {
         auto a = a_pair.first;
         auto b = a_pair.second;
 
-        THING_CON(a, "A after %d", a->_priority + b->_priority);
-        THING_CON(b, "B after");
+        THING_LOG(a, "A after prio %d", a->_priority + b->_priority);
+        THING_LOG(b, "B after");
       }
+    }
 
     for (auto a_pair : sorted_pairs) {
       auto a = a_pair.first;
       auto b = a_pair.second;
       level_thing_pair_temperature_handle(g, v, l, a, b);
     }
-  }
-}
-
-//
-// Allow things to return to the initial temperature
-//
-void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  int x, y;
-
-  FOR_ALL_MAP_POINTS(g, v, l, x, y)
-  {
-    std::vector< Thingp > things;
-
-    //
-    // Collect all things at this point into a vector
-    //
-    spoint p(x, y);
-    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, t, p)
-    {
-      if (! thing_is_physics_temperature(t)) {
-        continue;
-      }
-
-      //
-      // Ignore burnt grass for example
-      //
-      if (thing_is_dead(t)) {
-        continue;
-      }
-
-      things.push_back(t);
-    }
 
     for (auto i = 0; i < (int) things.size(); i++) {
-      auto t = things[ i ];
-
-      //
-      // It could be dead now.
-      //
-      if (thing_is_dead(t)) {
-        continue;
-      }
-
-      float Ta = thing_temperature(t);
-      float To = tp_temperature_initial_get(thing_tp(t));
-      int   Tn = (int) ((Ta + To) / 2.0);
-
-      //
-      // No need to handle return to temperature
-      //
-      if (Tn != Ta) {
-        THING_DBG(t, "temperature return %f -> %d degrees", Ta, Tn);
-        thing_temperature_set(g, v, l, t, Tn);
-      }
+      auto t              = things[ i ];
+      t->tick_temperature = v->tick;
     }
   }
+
+  l->is_handling_temperature_changes = false;
 }

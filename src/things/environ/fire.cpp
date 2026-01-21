@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_dice_rolls.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
@@ -75,10 +76,12 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
       //
       // The older the fire gets, the more chance of spreading
       //
+      // LOG("fire spread check: ok");
     } else {
       //
       // Too young to spread fire.
       //
+      // LOG("fire spread check; too young");
       continue;
     }
 

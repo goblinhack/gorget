@@ -17,6 +17,8 @@
 
 void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 {
+  TRACE_NO_INDENT();
+
   verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
@@ -35,6 +37,8 @@ void TP_LOG_(Tpp tp, const char *fmt, va_list args)
 
 void TP_LOG(Tpp tp, const char *fmt, ...)
 {
+  TRACE_NO_INDENT();
+
   verify(MTYPE_TP, tp);
 
   va_list args;
@@ -45,6 +49,8 @@ void TP_LOG(Tpp tp, const char *fmt, ...)
 
 void TP_DBG_(Tpp tp, const char *fmt, ...)
 {
+  TRACE_NO_INDENT();
+
   IF_NODEBUG { return; }
 
   verify(MTYPE_TP, tp);
@@ -57,6 +63,8 @@ void TP_DBG_(Tpp tp, const char *fmt, ...)
 
 void TP_DIE_(Tpp tp, const char *fmt, va_list args)
 {
+  TRACE_NO_INDENT();
+
   verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
@@ -74,6 +82,8 @@ void TP_DIE_(Tpp tp, const char *fmt, va_list args)
 
 void TP_DIE(Tpp tp, const char *fmt, ...)
 {
+  TRACE_NO_INDENT();
+
   verify(MTYPE_TP, tp);
   va_list args;
 
@@ -84,6 +94,8 @@ void TP_DIE(Tpp tp, const char *fmt, ...)
 
 void TP_CON_(Tpp tp, const char *fmt, va_list args)
 {
+  TRACE_NO_INDENT();
+
   verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
@@ -108,6 +120,8 @@ void TP_CON_(Tpp tp, const char *fmt, va_list args)
 
 void TP_CON(Tpp tp, const char *fmt, ...)
 {
+  TRACE_NO_INDENT();
+
   verify(MTYPE_TP, tp);
   va_list args;
 
@@ -118,6 +132,13 @@ void TP_CON(Tpp tp, const char *fmt, ...)
 
 void TP_ERR_(Tpp tp, const char *fmt, va_list args)
 {
+  TRACE_NO_INDENT();
+
+  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
+    DIE("too many errors");
+    exit(1);
+  }
+
   verify(MTYPE_TP, tp);
   char buf[ MAXLONGSTR ];
   int  len = 0;
@@ -144,6 +165,8 @@ void TP_ERR_(Tpp tp, const char *fmt, va_list args)
 
 void TP_ERR(Tpp tp, const char *fmt, ...)
 {
+  TRACE_NO_INDENT();
+
   extern Gamep game;
   auto         g = game;
 

@@ -522,10 +522,10 @@ void tp_temperature_damage_at_set(Tpp, int val);
 int  tp_temperature_damage_at_get(Tpp);
 
 //
-// Thermal conductivity measures how well a material can conduct heat.
-//
 // Heat capacity indicates the amount of heat energy required to
 // change a material's temperature.
+//
+// Thermal conductivity measures how well a material can conduct heat.
 //
 // Both properties are essential for understanding heat transfer in materials.
 //
@@ -541,6 +541,7 @@ int  tp_temperature_damage_at_get(Tpp);
 #define HEAT_CAPACITY_GOLD  0.1
 #define HEAT_CAPACITY_STEEL 0.5
 #define HEAT_CAPACITY_STONE 0.8
+#define HEAT_CAPACITY_WALL  0.8
 #define HEAT_CAPACITY_WATER 4.0
 #define HEAT_CAPACITY_WOOD  2.0
 #define HEAT_CAPACITY_MAX   15.0
@@ -549,24 +550,26 @@ int  tp_temperature_damage_at_get(Tpp);
 // Unit is weight per mass per kelvin
 //
 #define THERMAL_CONDUCTIVITY_AIR   0.025
-#define THERMAL_CONDUCTIVITY_FLESH 0.2
+#define THERMAL_CONDUCTIVITY_FLESH 10.0
 #define THERMAL_CONDUCTIVITY_GAS   0.01
 #define THERMAL_CONDUCTIVITY_GEL   0.2
 #define THERMAL_CONDUCTIVITY_GLASS 1.1
 #define THERMAL_CONDUCTIVITY_STEEL 32.0
-#define THERMAL_CONDUCTIVITY_STONE 4.0
+#define THERMAL_CONDUCTIVITY_STONE 70.0
+#define THERMAL_CONDUCTIVITY_WALL  70.0
 #define THERMAL_CONDUCTIVITY_WATER 0.6
 #define THERMAL_CONDUCTIVITY_WOOD  0.1
 #define THERMAL_CONDUCTIVITY_GOLD  310.0
+#define THERMAL_CONDUCTIVITY_HIGH  70.0
 
 //
 // Unit is in grams
 //
 #define ONE_KG          1000
-#define WEIGHT_VVVHEAVY (ONE_KG * 1000)
-#define WEIGHT_VVHEAVY  (ONE_KG * 500)
-#define WEIGHT_VHEAVY   (ONE_KG * 200)
-#define WEIGHT_HEAVY    (ONE_KG * 100)
+#define WEIGHT_VVVHEAVY (ONE_KG * 500)
+#define WEIGHT_VVHEAVY  (ONE_KG * 200)
+#define WEIGHT_VHEAVY   (ONE_KG * 100)
+#define WEIGHT_HEAVY    (ONE_KG * 50)
 #define WEIGHT_HUMAN    (ONE_KG * 50)
 #define WEIGHT_MEDIUM   (ONE_KG * 10)
 #define WEIGHT_LIGHT    (ONE_KG * 1)

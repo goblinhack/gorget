@@ -26,7 +26,7 @@ static void thing_log_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%-50s: %*s", to_string(nullptr, t).c_str(), g_callframes_indent, "");
+  snprintf(buf + len, MAXLONGSTR - len, "[%-45s]: %*s", to_string(nullptr, t).c_str(), g_callframes_indent, "");
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -129,6 +129,11 @@ static void thing_err_(Thingp t, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
+  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
+    DIE("too many errors");
+    exit(1);
+  }
+
   callstack_dump();
   backtrace_dump();
 
@@ -158,6 +163,11 @@ static void thing_err_(Thingp t, const char *fmt, va_list args)
 void THING_ERR(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
+
+  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
+    DIE("too many errors");
+    exit(1);
+  }
 
   extern Gamep game;
   auto         g = game;

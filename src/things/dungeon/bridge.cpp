@@ -142,8 +142,8 @@ bool tp_load_bridge(void)
   thing_on_death_set(tp, tp_bridge_on_death);
   thing_on_fall_begin_set(tp, tp_bridge_on_fall_begin);
   thing_on_fall_end_set(tp, tp_bridge_on_fall_end);
-  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
-  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1"); // roll max to continue burning
+  tp_chance_set(tp, THING_CHANCE_START_BURNING, "1");    // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_pixel_lighting);
@@ -166,7 +166,7 @@ bool tp_load_bridge(void)
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
   tp_temperature_initial_set(tp, 20);    // celsius
-  tp_weight_set(tp, WEIGHT_HEAVY);       // grams
+  tp_weight_set(tp, WEIGHT_MEDIUM);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   // end sort marker1 }
 

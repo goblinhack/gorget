@@ -347,6 +347,11 @@ typedef struct Thing_ {
   //
   uint32_t tick;
   //
+  // Used to keep track if we have ran the temperature checks yet this tick.
+  //
+  uint32_t tick_temperature;
+  uint32_t tick_temperature_last_change;
+  //
   // Used to only tick things once per loop, even if they move slot
   //
   uint32_t iter[ MY_ITERS_MAX ];

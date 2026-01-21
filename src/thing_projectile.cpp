@@ -27,7 +27,12 @@ static fpoint thing_projectile_get_delta_from_dt(Gamep g, Levelsp v, Levelp l, T
   const float t_speed      = thing_speed(t);
   const auto  tile_speed   = (t_speed / (float) player_speed);
 
-  return fpoint(c * dt * tile_speed, s * dt * tile_speed);
+  auto delta = fpoint(c * dt * tile_speed, s * dt * tile_speed);
+  if ((delta.x == 0) && (delta.y == 0)) {
+    DIE("No delta for projectile sin %f cos %f dt %f tile_speed %f", s, c, dt, tile_speed);
+  }
+
+  return delta;
 }
 
 fpoint thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)

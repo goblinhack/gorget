@@ -384,7 +384,11 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         // Needed to allow things like projectiles to heat targets
         //
         if (e.source) {
-          level_thing_pair_temperature_handle(g, v, l, t, e.source);
+          if (! l->is_handling_temperature_changes) {
+            l->is_handling_temperature_changes = true;
+            level_thing_pair_temperature_handle(g, v, l, t, e.source);
+            l->is_handling_temperature_changes = false;
+          }
         }
         break;
       case THING_EVENT_WATER_DAMAGE :     //

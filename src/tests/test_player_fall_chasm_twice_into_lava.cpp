@@ -124,7 +124,7 @@ static bool test_player_fall_chasm_twice_into_lava(Gamep g, Testp t)
   }
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 6; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);

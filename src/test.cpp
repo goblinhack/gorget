@@ -195,9 +195,9 @@ void tests_run(Gamep g)
     //
     // Test name
     //
-    auto name = test.first;
+    auto name = "test_" + test.first;
     auto t    = test.second;
-    auto pre  = string_sprintf("Test %-70s", name.c_str());
+    auto pre  = string_sprintf("Running %-70s", name.c_str());
 
     //
     // Skip the test if needed
