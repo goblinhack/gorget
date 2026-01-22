@@ -13,6 +13,7 @@ monst AI
 ghosts and walls
 score is hard coded to 666
 traps / gas effects
+chests need to contain something and those items destroyed when the chest is
 
 later features
 --------------
