@@ -70,7 +70,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
       float To            = tp_temperature_initial_get(thing_tp(t));
       float heat_capacity = tp_temperature_heat_capacity_get(tp);
       float diff          = Ta - To;
-      float ndiff         = diff * (1.0 - ((HEAT_CAPACITY_MAX - heat_capacity) / 10.0));
+      float ndiff         = diff * (1.0f - ((HEAT_CAPACITY_MAX - heat_capacity) / 10.0f));
       int   Tn            = (int) Ta - (int) ndiff;
 
       //
@@ -144,9 +144,9 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
 
   float K  = tp_temperature_thermal_conductivity_get(tpA);
   float c  = tp_temperature_heat_capacity_get(tpA);
-  float A  = 1;
+  float A  = 1.0f;
   float dT = Tb - Ta;
-  float d  = 0.01;
+  float d  = 0.01f;
   float Q  = (K * A * dT) / d;
   float m  = thing_weight(a);
 

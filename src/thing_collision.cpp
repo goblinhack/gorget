@@ -208,8 +208,8 @@ static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Th
 {
   float radius = thing_collision_radius(C);
 
-  C_at.x += 0.5;
-  C_at.y += 0.5;
+  C_at.x += 0.5f;
+  C_at.y += 0.5f;
 
   fpoint tl(B_at.x, B_at.y);
   fpoint br(B_at.x + 1, B_at.y + 1);

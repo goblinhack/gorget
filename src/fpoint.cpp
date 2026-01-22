@@ -114,17 +114,17 @@ fpoint unit(const fpoint &p)
 #ifdef is_unused_flag
 uint8_t get_line_intersection(fpoint p0, fpoint p1, fpoint p2, fpoint p3, fpoint *intersect)
 {
-  double denominator = ((p3.y - p2.y) * (p1.x - p0.x)) - ((p3.x - p2.x) * (p1.y - p0.y));
+  float denominator = ((p3.y - p2.y) * (p1.x - p0.x)) - ((p3.x - p2.x) * (p1.y - p0.y));
 
   if (denominator == 0) {
     return false;
   }
 
-  double a = p0.y - p2.y;
-  double b = p0.x - p2.x;
+  float a = p0.y - p2.y;
+  float b = p0.x - p2.x;
 
-  double numerator1 = ((p3.x - p2.x) * a) - ((p3.y - p2.y) * b);
-  double numerator2 = ((p1.x - p0.x) * a) - ((p1.y - p0.y) * b);
+  float numerator1 = ((p3.x - p2.x) * a) - ((p3.y - p2.y) * b);
+  float numerator2 = ((p1.x - p0.x) * a) - ((p1.y - p0.y) * b);
 
   a = numerator1 / denominator;
   b = numerator2 / denominator;
@@ -144,17 +144,17 @@ uint8_t get_line_intersection(fpoint p0, fpoint p1, fpoint p2, fpoint p3, fpoint
 
 uint8_t get_line_intersection(fpoint p0, fpoint p1, fpoint p2, fpoint p3)
 {
-  double denominator = ((p3.y - p2.y) * (p1.x - p0.x)) - ((p3.x - p2.x) * (p1.y - p0.y));
+  float denominator = ((p3.y - p2.y) * (p1.x - p0.x)) - ((p3.x - p2.x) * (p1.y - p0.y));
 
   if (denominator == 0) {
     return false;
   }
 
-  double a = p0.y - p2.y;
-  double b = p0.x - p2.x;
+  float a = p0.y - p2.y;
+  float b = p0.x - p2.x;
 
-  double numerator1 = ((p3.x - p2.x) * a) - ((p3.y - p2.y) * b);
-  double numerator2 = ((p1.x - p0.x) * a) - ((p1.y - p0.y) * b);
+  float numerator1 = ((p3.x - p2.x) * a) - ((p3.y - p2.y) * b);
+  float numerator2 = ((p1.x - p0.x) * a) - ((p1.y - p0.y) * b);
 
   a = numerator1 / denominator;
   b = numerator2 / denominator;
@@ -172,17 +172,17 @@ uint8_t get_line_intersection(fpoint p0, fpoint p1, fpoint p2, fpoint p3)
 //
 uint8_t get_line_known_intersection(fpoint p0, fpoint p1, fpoint p2, fpoint p3, fpoint *intersect)
 {
-  double denominator = ((p3.y - p2.y) * (p1.x - p0.x)) - ((p3.x - p2.x) * (p1.y - p0.y));
+  float denominator = ((p3.y - p2.y) * (p1.x - p0.x)) - ((p3.x - p2.x) * (p1.y - p0.y));
 
   if (denominator == 0) {
     return false;
   }
 
-  double a = p0.y - p2.y;
-  double b = p0.x - p2.x;
+  float a = p0.y - p2.y;
+  float b = p0.x - p2.x;
 
-  double numerator1 = ((p3.x - p2.x) * a) - ((p3.y - p2.y) * b);
-  double numerator2 = ((p1.x - p0.x) * a) - ((p1.y - p0.y) * b);
+  float numerator1 = ((p3.x - p2.x) * a) - ((p3.y - p2.y) * b);
+  float numerator2 = ((p1.x - p0.x) * a) - ((p1.y - p0.y) * b);
 
   a = numerator1 / denominator;
   b = numerator2 / denominator;
@@ -204,8 +204,8 @@ float dot (const fpoint b
 int distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *intersect_out)
 {
   fpoint intersect;
-  double mag;
-  double U;
+  float  mag;
+  float  U;
 
   //
   // Can get the squared distance to avoid this.
