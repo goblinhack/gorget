@@ -366,6 +366,12 @@ static void tp_fixup(void)
           TP_ERR(tp, "tp has heat physics set but no conductivity set");
         }
       }
+
+      if (tp_is_collision_circle_small(tp) || // newline
+          tp_is_collision_circle_large(tp) || // newline
+          tp_is_collision_square(tp)) {
+        tp_flag_set(tp, is_collision_detection_enabled);
+      }
     }
   }
 }

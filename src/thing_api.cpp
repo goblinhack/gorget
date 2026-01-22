@@ -390,6 +390,21 @@ int thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+
+  if (! thing_is_physics_temperature(t)) {
+    return 0;
+  }
+
+  //
+  // Don't keep on heating up forever!
+  //
+  auto tp    = thing_tp(t);
+  auto limit = std::max(tp_temperature_burns_at_get(tp), tp_temperature_melts_at_get(tp));
+  if (limit && (val > limit)) {
+    val = limit;
+  }
+
+  THING_DBG(t, "temperature set to %u degrees", val);
   return t->_temperature = val;
 }
 
@@ -400,7 +415,7 @@ int thing_temperature_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_temperature += val;
+  return thing_temperature_set(g, v, l, t, t->_temperature + val);
 }
 
 int thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
@@ -410,7 +425,7 @@ int thing_temperature_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_temperature -= val;
+  return thing_temperature_set(g, v, l, t, t->_temperature - val);
 }
 
 int thing_damage_this_tick(Thingp t)
@@ -543,7 +558,15 @@ void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
   t->_is_burning = val;
 
   if (val) {
-    THING_DBG(t, "is burning");
+    THING_DBG(t, "is burning, %u degrees", thing_temperature(t));
+  } else {
+    //
+    // Reset the temperature
+    //
+    auto tp = thing_tp(t);
+    thing_temperature_set(g, v, l, t, tp_temperature_initial_get(tp));
+
+    THING_DBG(t, "is no longer burning, %u degrees", thing_temperature(t));
   }
 
   thing_is_burning_handle(g, v, l, t);
@@ -2375,14 +2398,14 @@ bool thing_is_unused81(Thingp t)
   return tp_flag(thing_tp(t), is_unused81);
 }
 
-bool thing_is_unused82(Thingp t)
+bool thing_is_collision_detection_enabled(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused82);
+  return tp_flag(thing_tp(t), is_collision_detection_enabled);
 }
 
 bool thing_is_gold(Thingp t)

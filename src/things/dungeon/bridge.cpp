@@ -149,10 +149,10 @@ bool tp_load_bridge(void)
   tp_flag_set(tp, is_blit_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_bridge);
-  tp_flag_set(tp, is_burnable); // is capable of being burned by fire
-  tp_flag_set(tp, is_collision_square);
+  tp_flag_set(tp, is_burnable);    // is capable of being burned by fire
   tp_flag_set(tp, is_combustible); // will continue to burn once on fire
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_teleport_blocked);

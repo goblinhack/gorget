@@ -131,7 +131,7 @@ static bool test_player_fall_chasm_into_lava(Gamep g, Testp t)
     game_wait_for_tick_to_finish(g, v, l2);
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 6, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 7, "final tick counter value");
 
   //
   // Check player is dead when shoved into lava. It should be popped off the level.

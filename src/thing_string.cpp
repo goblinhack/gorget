@@ -33,9 +33,9 @@ std::string to_string(Gamep g, Thingp t)
 
   return (string_sprintf("%08" PRIX32
                          /* level num                     */ " l%u"
-                         /* tick                          */ " t%u"
+                         /* tick                          */ " t%3u"
                          /* thing_health                  */ " h%-3d"
-                         /* at                            */ " @%d,%d"
+                         /* at                            */ " @%2d,%2d"
                          /* name                          */ " %s"
                          /* is_dead                       */ "%s"
                          /* is_moving                     */ "%s"
@@ -50,13 +50,13 @@ std::string to_string(Gamep g, Thingp t)
                          /* newline */ thing_health(t),
                          /* newline */ at.x, at.y,
                          /* newline */ name.c_str(),
-                         /* newline */ thing_is_moving(t) ? "/moving" : "",
-                         /* newline */ thing_is_dead(t) ? "/dead" : "",
-                         /* newline */ thing_is_sleeping(t) ? "/slp" : "",
-                         /* newline */ thing_is_falling(t) ? "/fal" : "",
-                         /* newline */ thing_is_open(t) ? "/opn" : "",
-                         /* newline */ thing_is_burning(t) ? "/brn" : "",
-                         /* newline */ thing_is_scheduled_for_cleanup(t) ? "/free" : ""));
+                         /* newline */ thing_is_moving(t) ? "/mv" : "",
+                         /* newline */ thing_is_dead(t) ? "/de" : "",
+                         /* newline */ thing_is_sleeping(t) ? "/sl" : "",
+                         /* newline */ thing_is_falling(t) ? "/fl" : "",
+                         /* newline */ thing_is_open(t) ? "/op" : "",
+                         /* newline */ thing_is_burning(t) ? "/bn" : "",
+                         /* newline */ thing_is_scheduled_for_cleanup(t) ? "/fre" : ""));
 }
 
 std::string to_string(Gamep g, ThingEvent &e)

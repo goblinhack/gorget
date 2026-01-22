@@ -147,3 +147,72 @@ std::string thing_the_long_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTex
 
   return "the " + thing_long_name(g, v, l, t, f);
 }
+
+std::string thing_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f)
+{
+  TRACE_NO_INDENT();
+
+  if (unlikely(! t)) {
+    return "<no name>";
+  }
+
+  auto tp = thing_tp(t);
+
+  std::string out;
+
+#if 0
+  //
+  // Tamed?
+  //
+  auto l = leader();
+  if (l && (l == level->player)) {
+    out = "your ";
+  }
+
+#endif
+  //
+  // "the kobalos's short sword" for example
+  //
+  auto t_o = top_owner(g, v, l, t);
+  if (f & TEXT_INCLUDE_OWNER) {
+    if (t_o && ! thing_is_player(t_o)) {
+
+      out += tp_short_name(thing_tp(t_o));
+      out += "'s ";
+    }
+  }
+
+  if (! (f & TEXT_EXCLUDE_DEATH)) {
+    if (thing_is_dead(t)) {
+      if (thing_is_player(t) || thing_is_monst(t)) {
+        if (thing_is_undead(t)) {
+          out += "extra dead ";
+        } else {
+          out += "dead ";
+        }
+      }
+    }
+  }
+
+  if (f & TEXT_APOSTROPHIZE) {
+    out += thing_apostrophize_name(t);
+  } else if (f & TEXT_APOSTROPHIZE) {
+    out += thing_pluralize_name(t);
+  } else {
+    auto name = tp_short_name(tp);
+    if (g && thing_is_player(t)) {
+      name = game_player_name_get(g);
+    }
+
+    out += name;
+  }
+
+  return out;
+}
+
+std::string thing_the_short_name(Gamep g, Levelsp v, Levelp l, Thingp t, ThingTextFlags f)
+{
+  TRACE_NO_INDENT();
+
+  return "the " + thing_short_name(g, v, l, t, f);
+}

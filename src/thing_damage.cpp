@@ -112,37 +112,56 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_AND_INDENT();
-  auto it = e.source;
+  auto the_player = e.source;
 
   std::string msg = "-" + std::to_string(e.damage);
   auto        at  = thing_at(t);
   game_popup_text_add(g, at.x, at.y, msg, WHITE);
 
-  if (it && thing_is_loggable(t)) {
-    auto the_thing = capitalize_first(thing_the_long_name(g, v, l, t));
-    auto by_player = thing_long_name(g, v, l, it);
+  if (the_player && thing_is_loggable(t)) {
+    auto the_thing_long_name  = capitalize_first(thing_the_long_name(g, v, l, t));
+    auto the_thing_short_name = capitalize_first(thing_the_short_name(g, v, l, t));
+    auto by_player            = thing_long_name(g, v, l, the_player);
 
     switch (e.event_type) {
       case THING_EVENT_SHOVED : //
-        TOPCON("%s is shoved by %s.", the_thing.c_str(), by_player.c_str());
+        TOPCON("%s is shoved by %s.", the_thing_long_name.c_str(), by_player.c_str());
         break;
       case THING_EVENT_CRUSH : //
-        TOPCON("%s is crushed by %s.", the_thing.c_str(), by_player.c_str());
+        TOPCON("%s is crushed by %s.", the_thing_long_name.c_str(), by_player.c_str());
         break;
       case THING_EVENT_MELEE_DAMAGE : //
-        TOPCON("%s is hit by %s.", the_thing.c_str(), by_player.c_str());
+        TOPCON("%s is hit by %s.", the_thing_long_name.c_str(), by_player.c_str());
         break;
       case THING_EVENT_HEAT_DAMAGE : //
-        TOPCON("%s suffers heat damage from %s.", the_thing.c_str(), by_player.c_str());
+        TOPCON("%s suffers heat damage from %s.", the_thing_long_name.c_str(), by_player.c_str());
         break;
       case THING_EVENT_WATER_DAMAGE : //
-        TOPCON("%s suffers water damage from %s.", the_thing.c_str(), by_player.c_str());
+        TOPCON("%s suffers water damage from %s.", the_thing_long_name.c_str(), by_player.c_str());
         break;
       case THING_EVENT_EXPLOSION_DAMAGE : //
-        TOPCON("%s suffers blast damage from %s.", the_thing.c_str(), by_player.c_str());
+        TOPCON("%s suffers blast damage from %s.", the_thing_long_name.c_str(), by_player.c_str());
         break;
       case THING_EVENT_FIRE_DAMAGE : //
-        TOPCON("%s is burnt by %s.", the_thing.c_str(), by_player.c_str());
+        if (thing_is_burning(the_player)) {
+          //
+          // The player is burning.
+          //
+          if (thing_is_burning(t)) {
+            TOPCON("Your burning body burns %s", the_thing_short_name.c_str());
+          } else {
+            TOPCON("Your burning body sets fire to %s", the_thing_short_name.c_str());
+          }
+        } else {
+          //
+          // The player is not burning.
+          //
+          if (thing_is_burning(t)) {
+            TOPCON("You burn %s", the_thing_short_name.c_str());
+          } else {
+            TOPCON("You set fire to %s", the_thing_short_name.c_str());
+          }
+        }
         break;
       case THING_EVENT_NONE :             //
       case THING_EVENT_OPEN :             //

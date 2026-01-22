@@ -30,12 +30,12 @@ bool tp_load_lava(void)
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
-  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_cursor_path_hazard);
   tp_flag_set(tp, is_cursor_path_warning);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_lava);
   tp_flag_set(tp, is_light_source, 2);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_needs_move_confirm);
   tp_flag_set(tp, is_obs_to_jumping_out_of);
   tp_flag_set(tp, is_physics_temperature);

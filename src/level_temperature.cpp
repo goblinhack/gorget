@@ -74,10 +74,17 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
       int   Tn            = (int) Ta - (int) ndiff;
 
       //
+      // No ice yet
+      //
+      if (Tn > Ta) {
+        continue;
+      }
+
+      //
       // No need to handle return to temperature
       //
       if (Tn != Ta) {
-        THING_DBG(t, "temperature return %f -> %d degrees", Ta, Tn);
+        THING_DBG(t, "temperature return Ta %f To %f -> %d degrees", Ta, To, Tn);
         thing_temperature_set(g, v, l, t, Tn);
       }
     }
@@ -110,9 +117,25 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
 //
 static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b, int &finalT)
 {
+  TRACE_NO_INDENT();
+
   auto  tpA = thing_tp(a);
   float Ta  = thing_temperature(a);
   float Tb  = thing_temperature(b);
+
+  //
+  // Projectiles only heat up things they hit.
+  //
+  // Steam over water is handles as a special case.
+  //
+  // If we do turn on collision detection, for say water, then the water ends up boiling
+  // off too soon. So the hack is just to ignore this case.
+  //
+  if (thing_is_projectile(b)) {
+    if (! thing_is_collision_detection_enabled(a)) {
+      return;
+    }
+  }
 
   finalT = (int) Ta;
   if (a->tick_temperature == v->tick) {
@@ -126,6 +149,13 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
   float d  = 0.01;
   float Q  = (K * A * dT) / d;
   float m  = thing_weight(a);
+
+  //
+  // We don't have ice yet
+  //
+  if (Q < 0) {
+    return;
+  }
 
   //
   // Fire has no weight, so give it some so the equations below average the temperatures.
@@ -145,7 +175,9 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
   float final_dT = (Q / (m * c));
   finalT         = (int) ceilf(((float) Ta) + final_dT);
 
-  THING_DBG(a, "A Ta %f Tb %f dT %f K %f m %f c %f Q %f final dT %f => %d", Ta, Tb, dT, K, m, c, Q, final_dT, finalT);
+  //  THING_DBG(a, "b");
+  // THING_DBG(b, "b");
+  THING_DBG(a, "Ta %f Tb %f dT %f K %f m %f c %f Q %f final dT %f => %d", Ta, Tb, dT, K, m, c, Q, final_dT, finalT);
 }
 
 void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b)
