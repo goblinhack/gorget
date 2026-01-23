@@ -388,9 +388,9 @@ static void sdl_msgerr_(const char *fmt, va_list args)
   //
   LOG("Show SDL message box");
 
-  auto window
-      = SDL_CreateWindow("gorget error", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1, 1, SDL_WINDOW_SHOWN);
-  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "gorget", buf, window);
+  auto window = SDL_CreateWindow("gorget error", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 100, 100,
+                                 SDL_WINDOW_SHOWN | SDL_WINDOW_ALWAYS_ON_TOP);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Gorget", buf, window);
   LOG("Launched SDL message box");
   SDL_DestroyWindow(window);
 #endif
