@@ -364,6 +364,10 @@ typedef struct Thing_ {
   //
   uint32_t tick_dead;
   //
+  // Avoid fast teleport loops
+  //
+  uint32_t tick_teleport;
+  //
   // Unique ID with some entropy built in
   //
   ThingId id;

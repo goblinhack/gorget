@@ -786,6 +786,7 @@ if [[ $OPT_GITHUB_BUILD != "" ]]; then
 
     LSAN_OPTIONS=max_leaks=10 ./${TARGET} --tests --debug
     if [[ $? -ne 0 ]]; then
+        cat appdata/${TARGET}/stdout.txt
         exit 1
     fi
 fi

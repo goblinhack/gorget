@@ -48,6 +48,7 @@ bool tests_init(void)
   if (!test_load_projectile_over_water()) { return false; }
   if (!test_load_projectile()) { return false; }
   if (!test_load_save_load()) { return false; }
+  if (!test_load_teleport_chasm()) { return false; }
   if (!test_load_teleport_shove_barrel()) { return false; }
   if (!test_load_teleport_shove_brazier()) { return false; }
   if (!test_load_teleport_shove_mob()) { return false; }

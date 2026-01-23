@@ -61,7 +61,7 @@ static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, s
     tof   = outf + delta;
     to    = make_spoint(tof);
     out   = to;
-    THING_LOG(t, "delta %f,%f spoint %d,%d", delta.x, delta.y, to.x, to.y);
+    THING_LOG(t, "teleport projectile, delta %f,%f spoint %d,%d", delta.x, delta.y, to.x, to.y);
     return true;
   }
 
@@ -99,7 +99,18 @@ static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, s
   tof = outf + delta;
   to  = make_spoint(tof);
 
-  if ((delta == fpoint(0, 0)) || level_is_obs_to_teleporting_onto(g, v, l, to)) {
+  THING_LOG(t, "delta %f,%f spoint %d,%d out %d,%d", delta.x, delta.y, to.x, to.y, out.x, out.y);
+  if (level_is_obs_to_teleporting_onto(g, v, l, to)) {
+    //
+    // Not sure how this happens, but we need the teleport to take us somewhere.
+    //
+    return false;
+  }
+
+  if (delta == fpoint(0, 0)) {
+    //
+    // This can happen if the teleport is surrounded by chasms
+    //
     return false;
   }
 
@@ -115,20 +126,30 @@ bool thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   THING_LOG(t, "teleport, try");
+
+  if (t->tick_teleport == v->tick) {
+    THING_LOG(t, "teleport, no; too frequent");
+    return false;
+  }
+
   if (thing_is_teleporting(t)) {
+    THING_LOG(t, "teleport, no; already teleporting");
     return false;
   }
 
   if (thing_is_teleport_blocked(t)) {
+    THING_LOG(t, "teleport, no; blocked");
     return false;
   }
 
   spoint to;
   if (! teleport_find_other(g, v, l, thing_at(t), to)) {
+    THING_LOG(t, "teleport, no; none found");
     return false;
   }
 
   if (is_oob(to)) {
+    THING_LOG(t, "teleport, no; oob");
     return false;
   }
 
@@ -136,10 +157,11 @@ bool thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Where do we spawn?
   //
   if (! teleport_find_landing_spot(g, v, l, t, to)) {
-    return false;
+    THING_LOG(t, "failed to find landing spot next to chosen teleport");
   }
 
   if (to == thing_at(t)) {
+    THING_LOG(t, "teleport, no; same location");
     return false;
   }
 
@@ -156,6 +178,8 @@ bool thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   THING_LOG(t, "post teleport");
 
   thing_sound_play(g, v, l, t, "teleport");
+
+  t->tick_teleport = v->tick;
 
   return true;
 }

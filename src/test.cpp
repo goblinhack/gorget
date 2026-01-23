@@ -54,6 +54,7 @@ std::initializer_list< std::string > tests = {
     "projectile_over_water",
     "projectile",
     "save_load",
+    "teleport_chasm",
     "teleport_shove_barrel",
     "teleport_shove_brazier",
     "teleport_shove_mob",

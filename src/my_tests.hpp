@@ -47,6 +47,7 @@ extern bool test_load_projectile_mob();
 extern bool test_load_projectile_over_water();
 extern bool test_load_projectile();
 extern bool test_load_save_load();
+extern bool test_load_teleport_chasm();
 extern bool test_load_teleport_shove_barrel();
 extern bool test_load_teleport_shove_brazier();
 extern bool test_load_teleport_shove_mob();
