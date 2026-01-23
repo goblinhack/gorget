@@ -16,6 +16,7 @@ bool templates_init(void)
   /* shell echo "  if (!$i()) { return false; }" */
   /* shell done */
   if (!tp_load_barrel()) { return false; }
+  if (!tp_load_border()) { return false; }
   if (!tp_load_brazier()) { return false; }
   if (!tp_load_bridge()) { return false; }
   if (!tp_load_chasm()) { return false; }

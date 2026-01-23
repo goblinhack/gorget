@@ -25,6 +25,7 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   }
 
   auto tp_wall       = tp_random(is_wall);
+  auto tp_border     = tp_first(is_border);
   auto tp_rock       = tp_random(is_rock);
   auto tp_water      = tp_random(is_water);
   auto tp_lava       = tp_random(is_lava);
@@ -43,9 +44,14 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   auto tp_exit       = tp_find_mand("exit");
   auto tp_player     = tp_find_mand("player");
   auto tp_entrance   = tp_find_mand("entrance");
-  auto variant       = tp_variant_get(tp_wall);
 
-  bool add_extra_deco = ! g_opt_tests && ! l->is_fixed_level;
+  //
+  // We need secret doors to match the style of walls
+  //
+  auto wall_variant = tp_variant_get(tp_wall);
+
+  bool is_test_level = g_opt_tests || l->is_fixed_level;
+  bool need_deco     = ! is_test_level;
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
@@ -62,159 +68,164 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       bool need_water    = false;
       bool need_dirt     = false;
       bool need_foliage  = false;
+      bool need_border   = ! is_test_level && ((x == 0) || (x == MAP_WIDTH - 1) || (y == 0) || (y == MAP_HEIGHT - 1));
 
-      switch (c) {
-        case CHARMAP_FLOOR :
-          need_floor = true;
-          if (add_extra_deco) {
-            if (d100() < 5) {
-              need_foliage = true;
+      if (need_border) {
+        tp = tp_border;
+      } else {
+        switch (c) {
+          case CHARMAP_FLOOR :
+            need_floor = true;
+            if (need_deco) {
+              if (d100() < 5) {
+                need_foliage = true;
+              }
             }
-          }
-          break;
-        case CHARMAP_DIRT :
-          need_dirt = true;
-          if (add_extra_deco) {
-            if (d100() < 50) {
-              need_foliage = true;
+            break;
+          case CHARMAP_DIRT :
+            need_dirt = true;
+            if (need_deco) {
+              if (d100() < 50) {
+                need_foliage = true;
+              }
             }
-          }
-          break;
-        case CHARMAP_CHASM :    tp = tp_chasm; break;
-        case CHARMAP_JOIN :     need_corridor = true; break;
-        case CHARMAP_CORRIDOR : tp = tp_corridor; break;
-        case CHARMAP_BRIDGE :   tp = tp_bridge; break;
-        case CHARMAP_WALL :
-          need_floor = true;
-          tp         = tp_wall;
-          break;
-        case CHARMAP_TREASURE :
-          need_floor = true;
-          tp         = tp_random(is_treasure);
-          break;
-        case CHARMAP_TELEPORT :
-          need_floor = true;
-          tp         = tp_teleport;
-          break;
-        case CHARMAP_FOLIAGE :
-          need_floor   = true;
-          need_foliage = true;
-          break;
-        case CHARMAP_DEEP_WATER :
-          need_dirt  = true;
-          tp         = tp_deep_water;
-          need_water = true;
-          break;
-        case CHARMAP_WATER :
-          need_dirt  = true;
-          need_water = true;
-          if (add_extra_deco) {
-            if (d100() < 5) {
-              need_foliage = true;
+            break;
+          case CHARMAP_CHASM :    tp = tp_chasm; break;
+          case CHARMAP_JOIN :     need_corridor = true; break;
+          case CHARMAP_CORRIDOR : tp = tp_corridor; break;
+          case CHARMAP_BRIDGE :   tp = tp_bridge; break;
+          case CHARMAP_WALL :
+            need_floor = true;
+            tp         = tp_wall;
+            break;
+          case CHARMAP_TREASURE :
+            need_floor = true;
+            tp         = tp_random(is_treasure);
+            break;
+          case CHARMAP_TELEPORT :
+            need_floor = true;
+            tp         = tp_teleport;
+            break;
+          case CHARMAP_FOLIAGE :
+            need_floor   = true;
+            need_foliage = true;
+            break;
+          case CHARMAP_DEEP_WATER :
+            need_dirt  = true;
+            tp         = tp_deep_water;
+            need_water = true;
+            break;
+          case CHARMAP_WATER :
+            need_dirt  = true;
+            need_water = true;
+            if (need_deco) {
+              if (d100() < 5) {
+                need_foliage = true;
+              }
             }
-          }
-          break;
-        case CHARMAP_BARREL :
-          need_floor = true;
-          tp         = tp_barrel;
-          break;
-        case CHARMAP_PILLAR :
-          need_floor = true;
-          tp         = tp_pillar;
-          break;
-        case CHARMAP_TRAP :
-          need_floor = true;
-          tp         = tp_random(is_trap);
-          break;
-        case CHARMAP_LAVA :
-          need_floor = true;
-          tp         = tp_lava;
-          break;
-        case CHARMAP_BRAZIER :
-          need_floor = true;
-          tp         = tp_brazier;
-          break;
-        case CHARMAP_DOOR_UNLOCKED :
-          need_floor = true;
-          tp         = tp_random(is_door_unlocked);
-          break;
-        case CHARMAP_DOOR_LOCKED :
-          need_floor = true;
-          if (l->info.key_count) {
-            tp = tp_random(is_door_locked);
-          } else {
-            tp = tp_variant(is_door_secret, variant);
-          }
-          break;
-        case CHARMAP_DOOR_SECRET :
-          need_floor = true;
-          tp         = tp_variant(is_door_secret, variant);
-          break;
-        case CHARMAP_GRASS :
-          need_floor = true;
-          tp         = tp_grass;
-          break;
-        case CHARMAP_MONST1 :
-          need_floor = true;
-          tp         = tp_random_monst(1);
-          break;
-        case CHARMAP_MONST2 :
-          need_floor = true;
-          tp         = tp_random_monst(2);
-          break;
-        case CHARMAP_MOB1 :
-          need_floor = true;
-          tp         = tp_random(is_mob1);
-          break;
-        case CHARMAP_MOB2 :
-          need_floor = true;
-          tp         = tp_random(is_mob2);
-          break;
-        case CHARMAP_FIRE :
-          need_floor = true;
-          tp         = tp_random(is_fire);
-          break;
-        case CHARMAP_ENTRANCE :
-          need_floor = true;
+            break;
+          case CHARMAP_BARREL :
+            need_floor = true;
+            tp         = tp_barrel;
+            break;
+          case CHARMAP_PILLAR :
+            need_floor = true;
+            tp         = tp_pillar;
+            break;
+          case CHARMAP_TRAP :
+            need_floor = true;
+            tp         = tp_random(is_trap);
+            break;
+          case CHARMAP_LAVA :
+            need_floor = true;
+            tp         = tp_lava;
+            break;
+          case CHARMAP_BRAZIER :
+            need_floor = true;
+            tp         = tp_brazier;
+            break;
+          case CHARMAP_DOOR_UNLOCKED :
+            need_floor = true;
+            tp         = tp_random(is_door_unlocked);
+            break;
+          case CHARMAP_DOOR_LOCKED :
+            need_floor = true;
+            if (l->info.key_count) {
+              tp = tp_random(is_door_locked);
+            } else {
+              tp = tp_variant(is_door_secret, wall_variant);
+            }
+            break;
+          case CHARMAP_DOOR_SECRET :
+            need_floor = true;
+            tp         = tp_variant(is_door_secret, wall_variant);
+            break;
+          case CHARMAP_GRASS :
+            need_floor = true;
+            tp         = tp_grass;
+            break;
+          case CHARMAP_MONST1 :
+            need_floor = true;
+            tp         = tp_random_monst(1);
+            break;
+          case CHARMAP_MONST2 :
+            need_floor = true;
+            tp         = tp_random_monst(2);
+            break;
+          case CHARMAP_MOB1 :
+            need_floor = true;
+            tp         = tp_random(is_mob1);
+            break;
+          case CHARMAP_MOB2 :
+            need_floor = true;
+            tp         = tp_random(is_mob2);
+            break;
+          case CHARMAP_FIRE :
+            need_floor = true;
+            tp         = tp_random(is_fire);
+            break;
+          case CHARMAP_ENTRANCE :
+            need_floor = true;
 
-          //
-          // Every floor except the first needs an entrance
-          //
-          need_entrance = true;
+            //
+            // Every floor except the first needs an entrance
+            //
+            need_entrance = true;
 
-          //
-          // First level. Usually 0 but can be a specified level.
-          //
-          if ((g_level_opt.level_num == l->level_num) && g_level_opt.is_set) {
             //
-            // This is the chosen start level
+            // First level. Usually 0 but can be a specified level.
             //
-            tp = tp_player;
-          } else if ((l->level_num == 0) && ! g_level_opt.is_set) {
-            //
-            // This is the default start level
-            //
-            tp            = tp_player;
-            need_entrance = false;
-          }
-          break;
-        case CHARMAP_EXIT :
-          need_floor = true;
-          tp         = tp_exit;
-          l->exit    = at;
-          break;
-        case CHARMAP_KEY :
-          need_floor = true;
-          tp         = tp_random(is_key);
-          break;
-        case CHARMAP_EMPTY :
-          need_dirt = true;
-          tp        = tp_rock;
-          break;
-        default :
-          if (! g_opt_do_level_gen) {
-            DIE("unexpected map char '%c'", c);
-          }
+            if ((g_level_opt.level_num == l->level_num) && g_level_opt.is_set) {
+              //
+              // This is the chosen start level
+              //
+              tp = tp_player;
+            } else if ((l->level_num == 0) && ! g_level_opt.is_set) {
+              //
+              // This is the default start level
+              //
+              tp            = tp_player;
+              need_entrance = false;
+            }
+            break;
+          case CHARMAP_EXIT :
+            need_floor = true;
+            tp         = tp_exit;
+            l->exit    = at;
+            break;
+          case CHARMAP_KEY :
+            need_floor = true;
+            tp         = tp_random(is_key);
+            break;
+          case CHARMAP_EMPTY :
+            need_dirt = true;
+            tp        = tp_rock;
+            break;
+          default :
+            if (! g_opt_do_level_gen) {
+              DIE("unexpected map char '%c'", c);
+            }
+        }
       }
 
       if (need_floor) {

@@ -203,6 +203,10 @@ typedef struct Thing_ {
   //
   uint8_t _is_hit;
   //
+  // Decrements each frame. Resets if still too hot when we reach zero.
+  //
+  uint8_t _is_hot;
+  //
   // Used so often, we cache it
   //
   uint8_t _is_player : 1;
@@ -469,6 +473,7 @@ bool   thing_is_blit_shown_in_chasms(Thingp);
 bool   thing_is_blit_shown_in_overlay(Thingp);
 bool   thing_is_blit_square_outlined(Thingp);
 bool   thing_is_blit_when_obscured(Thingp);
+bool   thing_is_border(Thingp);
 bool   thing_is_brazier(Thingp);
 bool   thing_is_bridge(Thingp);
 bool   thing_is_broken_on_death(Thingp);
@@ -662,7 +667,6 @@ bool   thing_is_unused78(Thingp);
 bool   thing_is_unused79(Thingp);
 bool   thing_is_unused8(Thingp);
 bool   thing_is_unused80(Thingp);
-bool   thing_is_unused81(Thingp);
 bool   thing_is_unused9(Thingp);
 bool   thing_is_wait_on_dead_anim(Thingp);
 bool   thing_is_walk_through_walls(Thingp);
@@ -724,6 +728,7 @@ void   thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void   thing_fall(Gamep, Levelsp, Levelp, Thingp);
 void   thing_fini(Gamep, Levelsp, Levelp, Thingp);
 void   thing_hit_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
+void   thing_hot_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void   thing_interpolate(Gamep, Levelsp, Levelp, Thingp, float dt);
 void   thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
 void   thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
@@ -805,6 +810,10 @@ void thing_is_falling_continues_unset(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_hit_set(Gamep, Levelsp, Levelp, Thingp, int val);
 int  thing_is_hit_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 int  thing_is_hit_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+
+void thing_is_hot_set(Gamep, Levelsp, Levelp, Thingp, int val);
+int  thing_is_hot_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+int  thing_is_hot_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 int thing_speed(Thingp);
 int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);

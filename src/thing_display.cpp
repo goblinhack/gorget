@@ -450,6 +450,22 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       light_pixels = nullptr;
     }
 
+    if (thing_is_hot(t_maybe_null)) {
+      //
+      // Preserve original alpha
+      //
+      auto  pulse = thing_is_hot(t_maybe_null);
+      color flash = RED;
+      fg.r        = flash.r;
+      if (pulse < 128) {
+        pulse = 255 - pulse;
+      }
+      fg.g = pulse;
+      fg.b = pulse;
+
+      light_pixels = nullptr;
+    }
+
     //
     // Rotate when falling
     //

@@ -85,6 +85,18 @@ static inline int thing_is_hit(Thingp t)
   return t->_is_hit;
 }
 
+static inline int thing_is_hot(Thingp t)
+{
+#ifdef _DEBUG_BUILD_
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+#endif
+  return t->_is_hot;
+}
+
 static inline bool thing_is_jumping(Thingp t)
 {
 #ifdef _DEBUG_BUILD_

@@ -31,6 +31,8 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
       }
     }
 
+    thing_hot_time_step(g, v, l, t, time_step);
+
     if (tp_is_animated(tp)) {
       thing_anim_time_step(g, v, l, t, tp, time_step);
     }

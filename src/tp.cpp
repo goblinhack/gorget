@@ -59,6 +59,7 @@ std::initializer_list< std::string > tps = {
     "wall11", // Update WALL_VARIANTS
     "wall12", // Update WALL_VARIANTS
     "rock1",
+    "border",
     "player",
     /* begin shell marker1 */
     /* shell for i in $(find . -name "*.cpp" | xargs grep -h "tp_load(\"" | sort | awk '{print $4}' | cut -d\" -f2) */

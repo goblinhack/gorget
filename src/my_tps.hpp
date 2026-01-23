@@ -16,6 +16,7 @@ bool templates_init(void);
 /* shell echo "bool $i();" */
 /* shell done */
 bool tp_load_barrel();
+bool tp_load_border();
 bool tp_load_brazier();
 bool tp_load_bridge();
 bool tp_load_chasm();

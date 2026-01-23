@@ -373,6 +373,66 @@ int thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_is_hit -= val;
 }
 
+void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return;
+  }
+
+  //
+  // Once hot, it is treated as a counter
+  //
+  if (val) {
+    //
+    // Start the hot counter if not doing do
+    //
+    if (t->_is_hot) {
+      return;
+    }
+  } else {
+    //
+    // Stop hot
+    //
+    if (! t->_is_hot) {
+      return;
+    }
+  }
+
+  t->_is_hot = val;
+}
+
+int thing_is_hot_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+
+  if (t->_is_hot + val > 255) {
+    return t->_is_hot = 255;
+  }
+
+  return t->_is_hot += val;
+}
+
+int thing_is_hot_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+
+  if ((int) t->_is_hot - val <= 0) {
+    return t->_is_hot = 0;
+  }
+
+  return t->_is_hot -= val;
+}
+
 int thing_temperature(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -2388,14 +2448,14 @@ bool thing_is_unused80(Thingp t)
   return tp_flag(thing_tp(t), is_unused80);
 }
 
-bool thing_is_unused81(Thingp t)
+bool thing_is_border(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused81);
+  return tp_flag(thing_tp(t), is_border);
 }
 
 bool thing_is_collision_detection_enabled(Thingp t)
