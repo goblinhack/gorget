@@ -235,7 +235,7 @@ void levels_destroy(Gamep g, Levelsp v)
 
 void level_finalize(Gamep g, Levelsp v, Levelp l)
 {
-  LOG("Level finalize");
+  LEVEL_LOG(l, "Level finalize");
   TRACE_AND_INDENT();
 
   level_select_calculate_next_level_down(g, v, l, true);
@@ -265,7 +265,7 @@ void levels_finalize(Gamep g, Levelsp v)
 
 void level_enter(Gamep g, Levelsp v, Levelp l)
 {
-  LOG("Level entered: %u", l->level_num);
+  LEVEL_LOG(l, "Level entered");
   TRACE_AND_INDENT();
 
   l->player_has_entered_level = true;
@@ -283,7 +283,7 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)
   }
   l->player_completed_level_via_exit = true;
 
-  LOG("Level completed: %u", l->level_num);
+  LEVEL_LOG(l, "Level completed");
   TRACE_AND_INDENT();
 
   auto player_struct = thing_player_struct(g);
