@@ -123,6 +123,8 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
   float Ta  = thing_temperature(a);
   float Tb  = thing_temperature(b);
 
+  finalT = (int) Ta;
+
   //
   // Projectiles only heat up things they hit.
   //
@@ -137,7 +139,10 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
     }
   }
 
-  finalT = (int) Ta;
+  if (Ta == Tb) {
+    return;
+  }
+
   if (a->tick_temperature == v->tick) {
     return;
   }
