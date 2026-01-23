@@ -70,7 +70,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
       float To            = tp_temperature_initial_get(thing_tp(t));
       float heat_capacity = tp_temperature_heat_capacity_get(tp);
       float diff          = Ta - To;
-      float ndiff         = diff * (1.0f - ((HEAT_CAPACITY_MAX - heat_capacity) / 10.0f));
+      float ndiff         = diff * (1.0f - ((HEAT_CAPACITY_MAX - heat_capacity) / HEAT_CAPACITY_MAX));
       int   Tn            = (int) Ta - (int) ndiff;
 
       //

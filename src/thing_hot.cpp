@@ -38,7 +38,4 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
       thing_is_hot_set(g, v, l, t, 255);
     }
   }
-  if (is_hot) {
-    THING_TOPCON(t, "temp %d", thing_temperature(t));
-  }
 }
