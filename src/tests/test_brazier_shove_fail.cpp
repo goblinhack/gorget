@@ -32,7 +32,7 @@ static bool test_brazier_shove_fail(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@;x.."
+        "..@!x.."
         "......."
         "......."
         ".......";
@@ -40,7 +40,7 @@ static bool test_brazier_shove_fail(Gamep g, Testp t)
       = "......."
         "......."
         "......."
-        "..@;x.."
+        "..@!x.."
         "......."
         "......."
         ".......";

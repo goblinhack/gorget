@@ -31,7 +31,7 @@ static bool test_projectile_over_water(Gamep g, Testp t)
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@::::::::-:::::::-:::::::x"
+        "x@::::::::-:::::::-:::::::!"
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
@@ -44,11 +44,6 @@ static bool test_projectile_over_water(Gamep g, Testp t)
     TEST_FAILED(t, "no player");
     goto exit;
   }
-
-  //
-  // Spawn fire. This should be enough to blow up all the barrels
-  //
-  TEST_PROGRESS(t);
 
   //
   // Wait for the projectile to ignite a barrel

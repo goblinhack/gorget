@@ -31,7 +31,7 @@ static bool test_projectile_locked_door(Gamep g, Testp t)
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@....x"
+        "x@....."
         "x..x..x"
         "x..x..x"
         "xxxxxxx";
@@ -45,13 +45,18 @@ static bool test_projectile_locked_door(Gamep g, Testp t)
     goto exit;
   }
 
-  //
-  // Wait for the projectile to destroy the door
-  //
-  TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 20; tries++) {
-    TEST_LOG(t, "try: %d", tries);
+  for (auto tries = 0; tries < 5; tries++) {
     player_fire(g, v, l, 1, 0);
+    game_event_wait(g);
+    if (! game_wait_for_tick_to_finish(g, v, l)) {
+      TEST_FAILED(t, "wait loop failed");
+      goto exit;
+    }
+  }
+
+  TEST_PROGRESS(t);
+  for (auto tries = 0; tries < 10; tries++) {
+    TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     game_event_wait(g);
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -66,7 +71,7 @@ static bool test_projectile_locked_door(Gamep g, Testp t)
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 20, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
 
   TEST_PASSED(t);
 exit:

@@ -64,7 +64,7 @@ static bool test_player_fall_chasm_twice_into_lava(Gamep g, Testp t)
       = "......."
         "......."
         "...L..."
-        "...;..."
+        "...@..."
         "...L..."
         "......."
         ".......";

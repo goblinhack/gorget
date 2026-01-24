@@ -33,7 +33,7 @@ static bool test_teleport_shove_brazier(Gamep g, Testp t)
         "x...C..x"
         "x...C..x"
         "x...C..x"
-        "x@;TCT!x"
+        "x@BTCT!x"
         "x...C..x"
         "x...C..x"
         "xxxxxxxx";
