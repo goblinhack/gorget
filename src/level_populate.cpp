@@ -150,7 +150,9 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
             break;
           case CHARMAP_DOOR_LOCKED :
             need_floor = true;
-            if (l->info.key_count) {
+            if (is_test_level) {
+              tp = tp_random(is_door_locked);
+            } else if (l->info.key_count) {
               tp = tp_random(is_door_locked);
             } else {
               tp = tp_variant(is_door_secret, wall_variant);

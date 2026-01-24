@@ -17,8 +17,8 @@ void sounds_init(void)
   sound_load(0.2f, "data/sounds/misc/teleport.wav", "teleport");
   sound_load(0.5f, "data/sounds/interface/error.wav", "error");
   sound_load(1.0f, "data/sounds/impacts/explosion.wav", "explosion", 3 /* concurrent_max */);
-  sound_load(1.0f, "data/sounds/impacts/door_stone.wav", "door_secret");
-  sound_load(1.0f, "data/sounds/impacts/door_open.wav", "door");
+  sound_load(1.0f, "data/sounds/impacts/door_stone.wav", "door_secret", 2);
+  sound_load(1.0f, "data/sounds/impacts/door_open.wav", "door", 2);
   sound_load(1.0f, "data/sounds/impacts/splash.wav", "splash");
   sound_load(1.0f, "data/sounds/misc/footsteps.wav", "footstep");
   sound_load(1.0f, "data/sounds/missiles/arrow.wav", "fireball");

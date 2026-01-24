@@ -276,7 +276,13 @@ bool thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp playe
     THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_open_request(g, v, l, me, player_or_monst);
+  auto ret = tp->on_open_request(g, v, l, me, player_or_monst);
+  if (ret) {
+    THING_LOG(me, "opens");
+  } else {
+    THING_LOG(me, "fails to open");
+  }
+  return ret;
 }
 
 void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback)
@@ -307,7 +313,13 @@ bool thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp play
     THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return false;
   }
-  return tp->on_close_request(g, v, l, me, player_or_monst);
+  auto ret = tp->on_close_request(g, v, l, me, player_or_monst);
+  if (ret) {
+    THING_LOG(me, "closes");
+  } else {
+    THING_LOG(me, "fails to close");
+  }
+  return ret;
 }
 
 void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
