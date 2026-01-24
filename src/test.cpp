@@ -228,7 +228,7 @@ void tests_run(Gamep g)
       result = t->callback(g, t);
     }
     auto elapsed  = time_ms() - started;
-    auto how_long = std ::to_string(elapsed);
+    auto how_long = string_sprintf("(took %.2f secs)", (float) elapsed / 1000.0);
 
     //
     // Print the timestamp
@@ -249,11 +249,10 @@ void tests_run(Gamep g)
       out += "skipped";
     } else if (result) {
       passed++;
-      out += "OK (";
+      out += "OK ";
       out += how_long;
-      out += " ms)";
 
-      LOG("Passed (%s ms)", how_long.c_str());
+      LOG("Passed %s", how_long.c_str());
     } else {
       failed++;
       out += "FAILED";
@@ -271,10 +270,10 @@ void tests_run(Gamep g)
       term_log("%%fg=yellow$skipped%%fg=reset$\n");
     } else if (result) {
       passed++;
-      term_log("%%fg=green$OK%%fg=reset$ (");
+      term_log("%%fg=green$OK%%fg=reset$ ");
       term_log(how_long.c_str());
-      term_log(" ms)\n");
-      LOG("Passed (%s ms)", how_long.c_str());
+      term_log("\n");
+      LOG("Passed %s", how_long.c_str());
     } else {
       failed++;
       term_log("%%fg=red$FAILED%%fg=reset$\n");
