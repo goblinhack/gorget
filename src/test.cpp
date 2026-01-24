@@ -50,8 +50,11 @@ std::initializer_list< std::string > tests = {
     "player_on_fire_move_into_water",
     "player_on_fire",
     "projectile_barrel_explosion",
+    "projectile_locked_door",
     "projectile_mob",
     "projectile_over_water",
+    "projectile_secret_door",
+    "projectile_unlocked_door",
     "projectile",
     "save_load",
     "teleport_chasm",
@@ -220,9 +223,12 @@ void tests_run(Gamep g)
     //
     // Run the test
     //
+    auto started = time_ms();
     if (! skipped) {
       result = t->callback(g, t);
     }
+    auto elapsed  = time_ms() - started;
+    auto how_long = std ::to_string(elapsed);
 
     //
     // Print the timestamp
@@ -243,8 +249,11 @@ void tests_run(Gamep g)
       out += "skipped";
     } else if (result) {
       passed++;
-      out += "OK";
-      LOG("Passed");
+      out += "OK (";
+      out += how_long;
+      out += " ms)";
+
+      LOG("Passed (%s ms)", how_long.c_str());
     } else {
       failed++;
       out += "FAILED";
@@ -262,8 +271,10 @@ void tests_run(Gamep g)
       term_log("%%fg=yellow$skipped%%fg=reset$\n");
     } else if (result) {
       passed++;
-      term_log("%%fg=green$OK%%fg=reset$\n");
-      LOG("Passed");
+      term_log("%%fg=green$OK%%fg=reset$ (");
+      term_log(how_long.c_str());
+      term_log(" ms)\n");
+      LOG("Passed (%s ms)", how_long.c_str());
     } else {
       failed++;
       term_log("%%fg=red$FAILED%%fg=reset$\n");

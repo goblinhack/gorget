@@ -180,10 +180,11 @@ bool tp_load_door_locked(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_door_locked_description_get);
+  thing_display_get_tile_info_set(tp, tp_door_locked_at_display_get_tile_info);
   thing_mouse_down_set(tp, tp_door_locked_mouse_down);
   thing_on_close_request_set(tp, tp_door_locked_on_close_request);
-  thing_on_open_request_set(tp, tp_door_locked_on_open_request);
   thing_on_death_set(tp, tp_door_locked_on_death);
+  thing_on_open_request_set(tp, tp_door_locked_on_open_request);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_flag_set(tp, is_animated);
@@ -215,9 +216,8 @@ bool tp_load_door_locked(void)
   tp_priority_set(tp, THING_PRIORITY_OBJECT);
   tp_temperature_burns_at_set(tp, 100);  // celsius
   tp_temperature_damage_at_set(tp, 100); // celsius
-  thing_display_get_tile_info_set(tp, tp_door_locked_at_display_get_tile_info);
-  tp_temperature_initial_set(tp, 20); // celsius
-  tp_weight_set(tp, WEIGHT_HEAVY);    // grams
+  tp_temperature_initial_set(tp, 20);    // celsius
+  tp_weight_set(tp, WEIGHT_HEAVY);       // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 

@@ -74,9 +74,6 @@ bool tp_load_door_secret(void)
     tp_flag_set(tp, is_teleport_blocked);
     tp_flag_set(tp, is_tickable);
     tp_health_set(tp, "200");
-    tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
-    tp_is_immunity_add(tp, THING_EVENT_HEAT_DAMAGE);
-    tp_is_immunity_add(tp, THING_EVENT_MELEE_DAMAGE);
     tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
     tp_long_name_set(tp, "secret door");
     tp_priority_set(tp, THING_PRIORITY_OBJECT);
