@@ -137,6 +137,7 @@ void wid_fini(Gamep);
 void wid_focus_lock(Gamep, Widp);
 void wid_gc_all_force(Gamep);
 void wid_gc_all(Gamep);
+void wid_sanity_check(Gamep);
 void wid_get_abs_coords_unclipped(Widp w, int *tlx, int *tly, int *brx, int *bry);
 void wid_get_abs_coords(Widp w, int *tlx, int *tly, int *brx, int *bry);
 void wid_get_abs(Widp w, int *x, int *y);

@@ -1153,6 +1153,16 @@ void Game::tick(void)
     game_request_to_end_game_unset(g);
     wid_dead_select(g, game_request_to_end_game_reason_get(g));
   }
+
+  //
+  // Clean up dead widgets
+  //
+  wid_gc_all(g);
+
+  //
+  // Check widgets are not getting too numerous
+  //
+  wid_sanity_check(g);
 }
 
 void game_tick(Gamep g)
@@ -1212,13 +1222,6 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 
     TRACE_NO_INDENT();
     game_tick(g);
-
-    //
-    // Clean up dead widgets.
-    //
-    game_pcg_lock();
-    wid_gc_all(g);
-    game_pcg_unlock();
 
     if (! v) {
       return true;

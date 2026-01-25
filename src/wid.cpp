@@ -5358,13 +5358,55 @@ static void wid_gc(Gamep g, Widp w)
 }
 
 //
+// Check widgets are not getting out of hand
+//
+void wid_sanity_check(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  if (0) {
+    CON("wid counts");
+    CON("----------");
+    CON("wid_top_level                %d", (int) wid_top_level.size());
+    CON("wid_global                   %d", (int) wid_global.size());
+    CON("wid_top_level2               %d", (int) wid_top_level2.size());
+    CON("wid_top_level3               %d", (int) wid_top_level3.size());
+    CON("wid_top_level4               %d", (int) wid_top_level4.size());
+    CON("wid_tick_top_level           %d", (int) wid_tick_top_level.size());
+  }
+
+  //
+  // Sanity check widgets lists are not getting large
+  //
+  IF_DEBUG
+  {
+    if ((int) wid_top_level.size() > 1000) {
+      DIE("Widget size getting large for: wid_top_level %d", (int) wid_top_level.size());
+    }
+    if ((int) wid_global.size() > 1000) {
+      DIE("Widget size getting large for: wid_global %d", (int) wid_global.size());
+    }
+    if ((int) wid_top_level2.size() > 1000) {
+      DIE("Widget size getting large for: wid_top_level2 %d", (int) wid_top_level2.size());
+    }
+    if ((int) wid_top_level3.size() > 1000) {
+      DIE("Widget size getting large for: wid_top_level3 %d", (int) wid_top_level3.size());
+    }
+    if ((int) wid_top_level4.size() > 1000) {
+      DIE("Widget size getting large for: wid_top_level4 %d", (int) wid_top_level4.size());
+    }
+    if ((int) wid_tick_top_level.size() > 1000) {
+      DIE("Widget size getting large for: wid_tick_top_level %d", (int) wid_tick_top_level.size());
+    }
+  }
+}
+
+//
 // Do stuff for all widgets.
 //
 void wid_gc_all(Gamep g)
 {
   TRACE_NO_INDENT();
-
-  std::vector< Widp > to_gc;
 
   for (;;) {
     if (! wid_top_level4.size()) {

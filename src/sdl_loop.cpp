@@ -118,13 +118,6 @@ void sdl_loop(Gamep g)
       ui_ts_fast_last = ts_now;
 
       //
-      // Clean up dead widgets.
-      //
-      game_pcg_lock();
-      wid_gc_all(g);
-      game_pcg_unlock();
-
-      //
       // Read events
       //
       SDL_PumpEvents();
