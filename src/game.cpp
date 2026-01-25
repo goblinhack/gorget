@@ -12,6 +12,7 @@
 #include "my_level.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
+#include "my_wid.hpp"
 #include "my_wid_botcon.hpp"
 #include "my_wid_topcon.hpp"
 #include "my_wids.hpp"
@@ -1211,6 +1212,13 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 
     TRACE_NO_INDENT();
     game_tick(g);
+
+    //
+    // Clean up dead widgets.
+    //
+    game_pcg_lock();
+    wid_gc_all(g);
+    game_pcg_unlock();
 
     if (! v) {
       return true;
