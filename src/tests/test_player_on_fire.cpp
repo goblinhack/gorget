@@ -28,14 +28,6 @@ static bool test_player_on_fire(Gamep g, Testp t)
         "......."
         "......."
         ".......";
-  std::string expect // first level
-      = "......."
-        "......."
-        "......."
-        "...!..."
-        "......."
-        "......."
-        ".......";
 
   //
   // Create the level and start playing

@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-static bool test_player_on_steam(Gamep g, Testp t)
+static bool test_player_in_steam(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -17,22 +17,11 @@ static bool test_player_on_steam(Gamep g, Testp t)
   auto     w         = 7;
   auto     h         = 7;
 
-  //
-  // How the dungeon starts out, and how we expect it to change
-  //
   std::string level // first level
       = "......."
         "......."
         "......."
         "...@..."
-        "......."
-        "......."
-        ".......";
-  std::string expect // first level
-      = "......."
-        "......."
-        "......."
-        "...!..."
         "......."
         "......."
         ".......";
@@ -117,14 +106,14 @@ exit:
   return result;
 }
 
-bool test_load_player_on_steam(void)
+bool test_load_player_in_steam(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("player_on_steam");
+  Testp test = test_load("player_in_steam");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_on_steam);
+  test_callback_set(test, test_player_in_steam);
   // end sort marker1 }
 
   return true;

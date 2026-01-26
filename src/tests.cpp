@@ -41,10 +41,10 @@ bool tests_init(void)
   if (!test_load_player_fall_chasm_twice_into_lava()) { return false; }
   if (!test_load_player_fall_chasm_twice()) { return false; }
   if (!test_load_player_fall_while_on_fire()) { return false; }
+  if (!test_load_player_in_steam()) { return false; }
   if (!test_load_player_lava()) { return false; }
   if (!test_load_player_on_fire_move_into_water()) { return false; }
   if (!test_load_player_on_fire()) { return false; }
-  if (!test_load_player_on_steam()) { return false; }
   if (!test_load_projectile_barrel_explosion()) { return false; }
   if (!test_load_projectile_border_turns_to_lava()) { return false; }
   if (!test_load_projectile_locked_door()) { return false; }
