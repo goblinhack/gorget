@@ -41,7 +41,6 @@ static bool test_projectile_over_water(Gamep g, Testp t)
 
   auto tp_fireball = tp_find_mand("fireball");
   tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "100");
-  tp_damage_set(tp_fireball, THING_EVENT_HEAT_DAMAGE, "100");
 
   auto player = thing_player(g);
   if (! player) {

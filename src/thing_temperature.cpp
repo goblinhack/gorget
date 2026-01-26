@@ -73,7 +73,7 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
 
   if (thing_is_steam(source)) {
     e.event_type = THING_EVENT_HEAT_DAMAGE;
-    e.reason     = "by heat damage";
+    e.reason     = "by steam";
   } else if (level_is_lava(g, v, l, t)) {
     e.event_type = THING_EVENT_FIRE_DAMAGE;
     e.reason     = "by lava";

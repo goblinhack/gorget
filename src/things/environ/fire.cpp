@@ -170,7 +170,6 @@ bool tp_load_fire(void)
   thing_on_fall_begin_set(tp, tp_fire_on_fall_begin);
   thing_on_tick_begin_set(tp, tp_fire_tick_begin);
   tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d6");
-  tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d6");
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);

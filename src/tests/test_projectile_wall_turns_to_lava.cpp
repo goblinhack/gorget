@@ -41,7 +41,6 @@ static bool test_projectile_wall_turns_to_lava(Gamep g, Testp t)
 
   auto tp_fireball = tp_find_mand("fireball");
   tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "1d4");
-  tp_damage_set(tp_fireball, THING_EVENT_HEAT_DAMAGE, "1d4");
 
   auto player = thing_player(g);
   if (! player) {
