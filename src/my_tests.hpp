@@ -43,6 +43,7 @@ extern bool test_load_player_fall_while_on_fire();
 extern bool test_load_player_lava();
 extern bool test_load_player_on_fire_move_into_water();
 extern bool test_load_player_on_fire();
+extern bool test_load_player_on_steam();
 extern bool test_load_projectile_barrel_explosion();
 extern bool test_load_projectile_border_turns_to_lava();
 extern bool test_load_projectile_locked_door();

@@ -8,7 +8,7 @@
 #include "../my_test.hpp"
 #include "../my_thing_inlines.hpp"
 
-static bool test_player_on_fire(Gamep g, Testp t)
+static bool test_player_on_steam(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -63,14 +63,16 @@ static bool test_player_on_fire(Gamep g, Testp t)
   }
 
   //
-  // Spawn fire on the player
+  // Spawn steam on the player
   //
   TEST_PROGRESS(t);
-  thing_spawn(g, v, l, tp_first(is_fire), player);
-  thing_spawn(g, v, l, tp_first(is_fire), player);
+  thing_spawn(g, v, l, tp_first(is_steam), player);
+  thing_spawn(g, v, l, tp_first(is_steam), player);
+  thing_spawn(g, v, l, tp_first(is_steam), player);
+  thing_spawn(g, v, l, tp_first(is_steam), player);
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 3; tries++) {
+  for (auto tries = 0; tries < 7; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
@@ -81,7 +83,6 @@ static bool test_player_on_fire(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, thing_is_burning(player), "player is not burning");
   TEST_ASSERT(t, ! thing_is_dead(player), "player is dead");
 
   //
@@ -103,9 +104,8 @@ static bool test_player_on_fire(Gamep g, Testp t)
     }
   }
 
-  TEST_ASSERT(t, thing_is_burning(player), "player is not burning");
   TEST_ASSERT(t, thing_is_dead(player), "player is expected to be dead");
-  TEST_ASSERT(t, game_tick_get(g, v) == 7, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 8, "final tick counter value");
 
   TEST_PASSED(t);
 
@@ -117,14 +117,14 @@ exit:
   return result;
 }
 
-bool test_load_player_on_fire(void)
+bool test_load_player_on_steam(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("player_on_fire");
+  Testp test = test_load("player_on_steam");
 
   // begin sort marker1 {
-  test_callback_set(test, test_player_on_fire);
+  test_callback_set(test, test_player_on_steam);
   // end sort marker1 }
 
   return true;

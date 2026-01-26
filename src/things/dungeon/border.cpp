@@ -19,18 +19,18 @@ bool tp_load_border(void)
   tp_flag_set(tp, is_blit_if_has_seen);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
+  tp_flag_set(tp, is_border);
+  tp_flag_set(tp, is_collision_square);
+  tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_obs_to_cursor_path);
   tp_flag_set(tp, is_obs_to_explosion);
   tp_flag_set(tp, is_obs_to_falling_onto);
-  tp_flag_set(tp, is_collision_square);
   tp_flag_set(tp, is_obs_to_fire);
   tp_flag_set(tp, is_obs_to_jump_over);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_obs_to_vision);
-  tp_flag_set(tp, is_border);
-  tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams

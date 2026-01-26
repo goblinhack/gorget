@@ -50,6 +50,7 @@ std::initializer_list< std::string > tests = {
     "player_lava",
     "player_on_fire_move_into_water",
     "player_on_fire",
+    "player_on_steam",
     "projectile_barrel_explosion",
     "projectile_border_turns_to_lava",
     "projectile_locked_door",
