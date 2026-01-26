@@ -39,6 +39,10 @@ static bool test_projectile_over_water(Gamep g, Testp t)
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool    result = true;
 
+  auto tp_fireball = tp_find_mand("fireball");
+  tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "100");
+  tp_damage_set(tp_fireball, THING_EVENT_HEAT_DAMAGE, "100");
+
   auto player = thing_player(g);
   if (! player) {
     TEST_FAILED(t, "no player");
@@ -51,7 +55,7 @@ static bool test_projectile_over_water(Gamep g, Testp t)
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 5; tries++) {
     TEST_LOG(t, "try: %d", tries);
-    player_fire(g, v, l, 1, 0);
+    player_fire(g, v, l, 1, 0, tp_fireball);
     TRACE_NO_INDENT();
     game_event_wait(g);
     if (! game_wait_for_tick_to_finish(g, v, l)) {

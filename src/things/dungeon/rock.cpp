@@ -31,10 +31,12 @@ bool tp_load_rock(void)
     auto        tp   = tp_load(name.c_str());
     // begin sort marker1 {
     thing_on_melt_set(tp, tp_rock_melt);
+    tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_blit_if_has_seen);
     tp_flag_set(tp, is_blit_pixel_lighting);
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);
+    tp_flag_set(tp, is_loggable);
     tp_flag_set(tp, is_meltable);
     tp_flag_set(tp, is_obs_to_cursor_path);
     tp_flag_set(tp, is_obs_to_explosion);

@@ -38,16 +38,17 @@ bool tp_load_smoke(void)
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);
-  if (g_opt_tests) {
-    tp_lifespan_set(tp, "1");
-  } else {
-    tp_lifespan_set(tp, "1d6+3");
-  }
   tp_long_name_set(tp, name);
   tp_priority_set(tp, THING_PRIORITY_SMOKE);
   tp_weight_set(tp, WEIGHT_NONE); // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_GAS);
   // end sort marker1 }
+
+  if (g_opt_tests) {
+    tp_lifespan_set(tp, "1");
+  } else {
+    tp_lifespan_set(tp, "1d6+3");
+  }
 
   auto delay = 200;
 

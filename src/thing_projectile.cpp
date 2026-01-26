@@ -42,7 +42,7 @@ fpoint thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)
   return unit(thing_projectile_get_delta_from_dt(g, v, l, t, 1.0));
 }
 
-void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const fpoint target)
+void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
 {
   TRACE_NO_INDENT();
 
@@ -57,18 +57,17 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std
   float c;
   sincosf(angle, &s, &c);
 
-  auto   tp_what = tp_find_mand(what);
   fpoint proj_at = thing_real_at(me);
 
   //
   // Need a small fraction to account for comparisons of very similar floats where
   // we end up shooting the player upon firing
   //
-  float offset = thing_collision_radius(me) + tp_collision_radius(tp_what) + 0.01f;
+  float offset = thing_collision_radius(me) + tp_collision_radius(what) + 0.01f;
   proj_at.x += c * offset;
   proj_at.y += s * offset;
 
-  auto projectile = thing_spawn(g, v, l, tp_what, proj_at);
+  auto projectile = thing_spawn(g, v, l, what, proj_at);
   if (projectile) {
     projectile->angle = angle;
   }
@@ -83,7 +82,7 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std
   thing_is_moving_set(g, v, l, projectile);
 }
 
-void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, const std::string &what, const spoint target)
+void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const spoint target)
 {
   thing_projectile_fire_at(g, v, l, me, what, make_fpoint(target));
 }

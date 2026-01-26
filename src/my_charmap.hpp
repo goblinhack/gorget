@@ -9,6 +9,7 @@
 enum {
   // begin sort marker1 {
   CHARMAP_BARREL        = 'b',
+  CHARMAP_BORDER        = 'X',
   CHARMAP_BRAZIER       = 'B',
   CHARMAP_BRIDGE        = '=',
   CHARMAP_CHASM         = 'C',
@@ -37,6 +38,7 @@ enum {
   CHARMAP_PILLAR        = '|',
   CHARMAP_PLAYER        = '@',
   CHARMAP_PROJECTILE    = '-',
+  CHARMAP_ROCK          = 'R',
   CHARMAP_SMOKE         = ';',
   CHARMAP_STEAM         = ':',
   CHARMAP_TELEPORT      = 'T',

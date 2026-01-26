@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_projectile_secret_door(Gamep g, Testp t)
+static bool test_projectile_rock_turns_to_lava(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -23,7 +23,7 @@ static bool test_projectile_secret_door(Gamep g, Testp t)
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@.s..x"
+        "x@.R..x"
         "x..x..x"
         "x..x..x"
         "xxxxxxx";
@@ -31,7 +31,7 @@ static bool test_projectile_secret_door(Gamep g, Testp t)
       = "xxxxxxx"
         "x..x..x"
         "x..x..x"
-        "x@....."
+        "x@.L..x"
         "x..x..x"
         "x..x..x"
         "xxxxxxx";
@@ -40,8 +40,8 @@ static bool test_projectile_secret_door(Gamep g, Testp t)
   bool    result = true;
 
   auto tp_fireball = tp_find_mand("fireball");
-  tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "100");
-  tp_damage_set(tp_fireball, THING_EVENT_HEAT_DAMAGE, "100");
+  tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "1d4");
+  tp_damage_set(tp_fireball, THING_EVENT_HEAT_DAMAGE, "1d4");
 
   auto player = thing_player(g);
   if (! player) {
@@ -49,7 +49,7 @@ static bool test_projectile_secret_door(Gamep g, Testp t)
     goto exit;
   }
 
-  for (auto tries = 0; tries < 5; tries++) {
+  for (auto tries = 0; tries < 50; tries++) {
     player_fire(g, v, l, 1, 0, tp_fireball);
     game_event_wait(g);
     if (! game_wait_for_tick_to_finish(g, v, l)) {
@@ -59,7 +59,7 @@ static bool test_projectile_secret_door(Gamep g, Testp t)
   }
 
   TEST_PROGRESS(t);
-  for (auto tries = 0; tries < 10; tries++) {
+  for (auto tries = 0; tries < 1; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     game_event_wait(g);
@@ -75,7 +75,7 @@ static bool test_projectile_secret_door(Gamep g, Testp t)
     goto exit;
   }
 
-  TEST_ASSERT(t, game_tick_get(g, v) == 15, "final tick counter value");
+  TEST_ASSERT(t, game_tick_get(g, v) == 51, "final tick counter value");
 
   TEST_PASSED(t);
 exit:
@@ -85,14 +85,14 @@ exit:
   return result;
 }
 
-bool test_load_projectile_secret_door(void)
+bool test_load_projectile_rock_turns_to_lava(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("projectile_secret_door");
+  Testp test = test_load("projectile_rock_turns_to_lava");
 
   // begin sort marker1 {
-  test_callback_set(test, test_projectile_secret_door);
+  test_callback_set(test, test_projectile_rock_turns_to_lava);
   // end sort marker1 }
 
   return true;

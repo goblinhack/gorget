@@ -147,6 +147,12 @@ std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
       if (level_is_projectile(g, v, l, p)) {
         c = CHARMAP_PROJECTILE;
       }
+      if (level_is_border(g, v, l, p)) {
+        c = CHARMAP_BORDER;
+      }
+      if (level_is_rock(g, v, l, p)) {
+        c = CHARMAP_ROCK;
+      }
 
       out += c;
     }

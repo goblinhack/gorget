@@ -39,6 +39,10 @@ static bool test_projectile_barrel_explosion(Gamep g, Testp t)
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool    result = true;
 
+  auto tp_fireball = tp_find_mand("fireball");
+  tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "100");
+  tp_damage_set(tp_fireball, THING_EVENT_HEAT_DAMAGE, "100");
+
   auto player = thing_player(g);
   if (! player) {
     TEST_FAILED(t, "no player");
@@ -49,7 +53,7 @@ static bool test_projectile_barrel_explosion(Gamep g, Testp t)
   // Spawn fire. This should be enough to blow up all the barrels
   //
   TEST_PROGRESS(t);
-  player_fire(g, v, l, 1, 0);
+  player_fire(g, v, l, 1, 0, tp_fireball);
 
   //
   // Wait for the projectile to ignite a barrel

@@ -59,13 +59,8 @@ bool tp_load_fireball(void)
   thing_on_death_set(tp, tp_fireball_on_death);
   thing_on_moved_set(tp, tp_fireball_on_moved);
   thing_on_spawned_set(tp, tp_fireball_on_spawned);
-  if (g_opt_tests) {
-    tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "100");
-    tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "100");
-  } else {
-    tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d4");
-    tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
-  }
+  tp_damage_set(tp, THING_EVENT_FIRE_DAMAGE, "1d4");
+  tp_damage_set(tp, THING_EVENT_HEAT_DAMAGE, "1d4");
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);

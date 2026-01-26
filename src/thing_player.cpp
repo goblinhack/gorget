@@ -588,7 +588,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   player_move_reset(g, v, l);
 }
 
-void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
+void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 {
   TRACE_NO_INDENT();
 
@@ -601,6 +601,11 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   auto player_struct = thing_player_struct(g);
   if (! player_struct) {
     ERR("No player struct found");
+    return;
+  }
+
+  if (! fire_what) {
+    ERR("Nothing to fire");
     return;
   }
 
@@ -634,7 +639,7 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy)
 
   player_move_reset(g, v, l);
 
-  thing_projectile_fire_at(g, v, l, player, "fireball", target);
+  thing_projectile_fire_at(g, v, l, player, fire_what, target);
 
   level_tick_begin_requested(g, v, l, "player fired");
 }
@@ -712,29 +717,37 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
     return false;
   }
 
+  //
+  // TODO
+  //
+  static Tpp tp_fireball;
+  if (! tp_fireball) {
+    tp_fireball = tp_find_mand("fireball");
+  }
+
   if (v->requested_fire) {
     if (v->requested_move_up) {
       if (v->requested_move_keft) {
-        player_fire(g, v, l, -1, -1);
+        player_fire(g, v, l, -1, -1, tp_fireball);
       } else if (v->requested_move_right) {
-        player_fire(g, v, l, 1, -1);
+        player_fire(g, v, l, 1, -1, tp_fireball);
       } else {
-        player_fire(g, v, l, 0, -1);
+        player_fire(g, v, l, 0, -1, tp_fireball);
       }
     } else if (v->requested_move_left) {
       if (v->requested_move_keft) {
-        player_fire(g, v, l, -1, 1);
+        player_fire(g, v, l, -1, 1, tp_fireball);
       } else if (v->requested_move_right) {
-        player_fire(g, v, l, 1, 1);
+        player_fire(g, v, l, 1, 1, tp_fireball);
       } else {
-        player_fire(g, v, l, 0, 1);
+        player_fire(g, v, l, 0, 1, tp_fireball);
       }
     } else if (v->requested_move_keft) {
-      player_fire(g, v, l, -1, 0);
+      player_fire(g, v, l, -1, 0, tp_fireball);
     } else if (v->requested_move_right) {
-      player_fire(g, v, l, 1, 0);
+      player_fire(g, v, l, 1, 0, tp_fireball);
     } else {
-      player_fire(g, v, l, 0, 0);
+      player_fire(g, v, l, 0, 0, tp_fireball);
     }
   }
 

@@ -219,6 +219,14 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
             need_floor = true;
             tp         = tp_random(is_key);
             break;
+          case CHARMAP_BORDER :
+            need_dirt = true;
+            tp        = tp_border;
+            break;
+          case CHARMAP_ROCK :
+            need_dirt = true;
+            tp        = tp_rock;
+            break;
           case CHARMAP_EMPTY :
             need_dirt = true;
             tp        = tp_rock;

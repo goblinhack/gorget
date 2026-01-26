@@ -1897,6 +1897,8 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
         case CHARMAP_TREASURE :      break;
         case CHARMAP_WALL :          break;
         case CHARMAP_WATER :         break;
+        case CHARMAP_ROCK :          break;
+        case CHARMAP_BORDER :        break;
         case CHARMAP_FIRE :          break;
         case CHARMAP_EXIT :
           if (exit_count++) {

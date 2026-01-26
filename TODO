@@ -1,12 +1,11 @@
 bugs
 ----
-static tests
 key collect sound
+display keys
 
 basic features
 --------------
-display keys
-door damage from fireball / damaged door visuals
+hard coded to fire fireball
 tests for collecting items / potions
 bushes quiver when monster is behind?
 mobs generating monsters
