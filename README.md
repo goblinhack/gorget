@@ -16,4 +16,3 @@ Sound effects
 - Oof sound buy xtragmr [found here](https://freesound.org/people/xtrgamr/sounds/257780/)
 - Falling sound [found here](https://freesound.org/people/nomiqbomi/sounds/578808/)
 - 8 bit sounds [found here](https://soundsbydane.itch.io/8-bit-sound-pack)
-- key sound [found here](https://freesound.org/people/anational/)
