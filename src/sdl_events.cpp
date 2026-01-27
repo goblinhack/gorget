@@ -11,6 +11,7 @@
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_ui.hpp"
+#include "my_wid_class.hpp"
 #include "my_wid_console.hpp"
 
 static struct SDL_Keysym last_key_pressed;
@@ -496,6 +497,10 @@ void sdl_key_repeat_events(Gamep g)
   }
 
   if (AN_ERROR_OCCURRED()) {
+    return;
+  }
+
+  if (wid_console_window && wid_console_window->visible) {
     return;
   }
 
