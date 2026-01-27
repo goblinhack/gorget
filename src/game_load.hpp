@@ -19,6 +19,7 @@
 #include "my_globals.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_serialize.hpp"
 #include "my_sound.hpp"
@@ -748,11 +749,11 @@ bool Game::load(const std::string &file_to_load, class Game &target)
 
   auto src = malloc(src_size MALLOC_PAD);
   if (! src) {
-    DIE("malloc %ld failed", (long) src_size);
+    CROAK("malloc %ld failed", (long) src_size);
   }
   auto dst = malloc(dst_size MALLOC_PAD);
   if (! dst) {
-    DIE("malloc %ld failed", (long) dst_size);
+    CROAK("malloc %ld failed", (long) dst_size);
   }
   memcpy(src, data, src_size);
 
@@ -1147,8 +1148,13 @@ bool game_load_last_config(const char *appdata)
   std::string version = "" MYVER "";
 
   if (game->config.version != version) {
-    sdl_msg_box("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
-                game->config.version.c_str(), version.c_str());
+    if (sdl.window) {
+      WARN("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
+           game->config.version.c_str(), version.c_str());
+    } else {
+      sdl_msg_box("Config version change. Will need to reset config. Found version [%s]. Expected version [%s].",
+                  game->config.version.c_str(), version.c_str());
+    }
     oldptr(MTYPE_GAME, game);
     delete game;
     game = new Game(std::string(appdata));
@@ -1157,7 +1163,11 @@ bool game_load_last_config(const char *appdata)
     game_save_config(game);
     g_errored_thread_id = -1;
   } else if (! config_error.empty()) {
-    sdl_msg_box("Config error: %s. Will need to reset config.", config_error.c_str());
+    if (sdl.window) {
+      WARN("Config error: %s. Will need to reset config.", config_error.c_str());
+    } else {
+      sdl_msg_box("Config error: %s. Will need to reset config.", config_error.c_str());
+    }
     oldptr(MTYPE_GAME, game);
     delete game;
     game = nullptr;

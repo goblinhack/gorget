@@ -53,6 +53,7 @@ bool wid_console_init(Gamep g)
     command_add(g, config_fps_counter_set, "set fps [01]", "enable frames per sec counter");
     command_add(g, config_gfx_vsync_enable, "set vsync [01]", "enable vertical sync enable");
     command_add(g, config_errored_clear, "clear errored", "used to clear a previous error");
+    command_add(g, show_error, "show error", "show last error");
     command_add(g, sdl_user_exit, "quit", "exit game");
     wid_console_commands_inited = true;
   }
@@ -102,7 +103,7 @@ static void wid_console_log_(Gamep g, std::string s)
     auto result = wid_console_lines.insert(std::make_pair(log_wid_console_buffered_lines++, s));
 
     if (! result.second) {
-      DIE("Wid console lines insert name [%s] failed", s.c_str());
+      CROAK("Wid console lines insert name [%s] failed", s.c_str());
     }
 
     return;
@@ -126,7 +127,7 @@ static void wid_console_log_(Gamep g, std::string s)
 //
 void wid_console_log(std::string s)
 {
-  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != -1)) {
+  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return;
   }
 
@@ -289,7 +290,7 @@ void wid_console_deserialize(std::vector< std::string > r)
 
 void wid_console_flush(Gamep g)
 {
-  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != -1)) {
+  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return;
   }
 
@@ -306,7 +307,7 @@ void wid_console_flush(Gamep g)
 
 void wid_console_raise(Gamep g)
 {
-  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != -1)) {
+  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return;
   }
 

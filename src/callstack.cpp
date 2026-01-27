@@ -31,6 +31,7 @@ void callstack_dump_stderr(void)
 {
   auto bt = callstack_string();
   fprintf(stderr, "%s", bt.c_str());
+  fprintf(stderr, "\n");
 }
 
 void callstack_dump(void)
@@ -38,4 +39,5 @@ void callstack_dump(void)
   auto bt = callstack_string();
   fprintf(MY_STDERR, "%s", bt.c_str());
   wid_console_log(bt);
+  fprintf(stderr, "\n");
 }

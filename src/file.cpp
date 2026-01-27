@@ -401,11 +401,11 @@ uint8_t file_exists_and_is_newer_than(const char *filename1, const char *filenam
   double      delta;
 
   if (! filename1) {
-    DIE("expected two filenames");
+    CROAK("expected two filenames");
   }
 
   if (! filename2) {
-    DIE("expected two filenames");
+    CROAK("expected two filenames");
   }
 
   // fprintf(stdout, "%s/%s\n", filename1, filename2);

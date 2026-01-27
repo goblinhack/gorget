@@ -211,7 +211,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
 
     if (name != "") {
       if (tile_find(name)) {
-        DIE("Tile name [%s] already used", name.c_str());
+        CROAK("Tile name [%s] already used", name.c_str());
       }
 
       auto t      = new Tile(); // std::make_shared< class Tile >();
@@ -315,7 +315,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
 
     if (y * height > tex_get_height(tex)) {
       if (name != "") {
-        DIE("Overflow reading tile arr[%s]", name.c_str());
+        CROAK("Overflow reading tile arr[%s]", name.c_str());
       } else {
         ERR("Overflow reading tile arr at x %d y %d", x, y);
       }
@@ -367,7 +367,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
 
     if (name != "") {
       if (tile_find(name)) {
-        DIE("Tile name [%s] already used", name.c_str());
+        CROAK("Tile name [%s] already used", name.c_str());
       }
 
       IF_DEBUG2 { LOG("Add tile name [%s]", name.c_str()); }
@@ -375,7 +375,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
       auto t      = new Tile(); // std::make_shared< class Tile >();
       auto result = all_tiles.insert(std::make_pair(name, t));
       if (! result.second) {
-        DIE("Tile insert name [%s] failed", name.c_str());
+        CROAK("Tile insert name [%s] failed", name.c_str());
       }
 
       //
@@ -485,9 +485,9 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
 
     if (y * tile_height > tex_get_height(tex)) {
       if (name != "") {
-        DIE("Overflow reading tile arr[%s]", name.c_str());
+        CROAK("Overflow reading tile arr[%s]", name.c_str());
       } else {
-        DIE("Overflow reading tile arr at x %d y %d", x, y);
+        CROAK("Overflow reading tile arr at x %d y %d", x, y);
       }
     }
   }
@@ -510,18 +510,18 @@ void tile_from_fbo(Gamep g, FboEnum fbo)
   auto name = FboEnum_to_string(fbo);
 
   if (tile_find(name)) {
-    DIE("Tile name [%s] already used", name.c_str());
+    CROAK("Tile name [%s] already used", name.c_str());
   }
 
   auto tex = tex_from_fbo(g, fbo);
   if (! tex) {
-    DIE("Tile name [%s] failed to create tex", name.c_str());
+    CROAK("Tile name [%s] failed to create tex", name.c_str());
   }
 
   auto t      = new Tile(); // std::make_shared< class Tile >();
   auto result = all_tiles.insert(std::make_pair(name, t));
   if (! result.second) {
-    DIE("Tile insert name [%s] failed", name.c_str());
+    CROAK("Tile insert name [%s] failed", name.c_str());
   }
 
   //
@@ -572,7 +572,7 @@ Tilep tile_find_mand(std::string name)
 
   auto result = all_tiles.find(name);
   if (result == all_tiles.end()) {
-    DIE("Tile name %s not found", name.c_str());
+    CROAK("Tile name %s not found", name.c_str());
     return nullptr;
   }
 

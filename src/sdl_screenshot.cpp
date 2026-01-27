@@ -129,7 +129,7 @@ void sdl_fbo_dump(Gamep g, FboEnum fbo, const std::string &name)
 {
   TRACE_AND_INDENT();
 
-  if (g_thread_id != -1) {
+  if (g_thread_id != MAIN_THREAD) {
     return;
   }
 

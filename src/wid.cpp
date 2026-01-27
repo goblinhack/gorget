@@ -136,7 +136,7 @@ Wid::~Wid(void) { oldptr(MTYPE_WID, this); }
 //
 static bool wid_safe(void)
 {
-  if (! wid_init_done || wid_exiting || g_dying || g_quitting || (g_thread_id != -1)) {
+  if (! wid_init_done || wid_exiting || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return false;
   }
   return true;
@@ -575,11 +575,11 @@ void wid_set_prev(Widp w, Widp prev)
   TRACE_NO_INDENT();
 
   if (unlikely(! w)) {
-    DIE("No wid");
+    CROAK("No wid");
   }
 
   if (w == prev) {
-    DIE("Wid list loop");
+    CROAK("Wid list loop");
   }
 
   w->prev = prev;
@@ -594,11 +594,11 @@ Widp wid_get_prev(Widp w)
   TRACE_NO_INDENT();
 
   if (unlikely(! w)) {
-    DIE("No wid");
+    CROAK("No wid");
   }
 
   if (w->prev == w) {
-    DIE("Wid list get prev loop");
+    CROAK("Wid list get prev loop");
   }
 
   return w->prev;
@@ -609,7 +609,7 @@ Widp wid_get_next(Widp w)
   TRACE_NO_INDENT();
 
   if (unlikely(! w)) {
-    DIE("No wid");
+    CROAK("No wid");
   }
 
   if (w->next == w) {
@@ -1531,7 +1531,7 @@ void wid_set_tilename(int depth, Widp w, std::string name)
   }
 
   if (unlikely(! w)) {
-    DIE("Widget does not exist to set tile %s", name.c_str());
+    CROAK("Widget does not exist to set tile %s", name.c_str());
   }
 
   w->tiles[ depth ] = tile;
@@ -1751,7 +1751,7 @@ static void wid_tree_attach(Widp w)
   wid_key_map_location *root;
 
   if (w->in_tree_root) {
-    DIE("Wid is already attached");
+    CROAK("Wid is already attached");
   }
 
   if (! w->parent) {
@@ -1761,12 +1761,12 @@ static void wid_tree_attach(Widp w)
   }
 
   if (! root) {
-    DIE("No root");
+    CROAK("No root");
   }
 
   auto result = root->insert(std::make_pair(w->key, w));
   if (result.second == false) {
-    DIE("Wid insert name [%s] failed", wid_get_name(w).c_str());
+    CROAK("Wid insert name [%s] failed", wid_get_name(w).c_str());
   }
 
   w->in_tree_root = root;
@@ -1777,7 +1777,7 @@ static void wid_tree_insert(Widp w)
   TRACE_NO_INDENT();
 
   if (w->in_tree_root) {
-    DIE("Wid is already inserted");
+    CROAK("Wid is already inserted");
   }
 
   wid_key_map_location *root;
@@ -1794,12 +1794,12 @@ static void wid_tree_insert(Widp w)
   }
 
   if (! root) {
-    DIE("No root");
+    CROAK("No root");
   }
 
   auto result = root->insert(std::make_pair(w->key, w));
   if (result.second == false) {
-    DIE("Wid insert name [%s] failed", wid_get_name(w).c_str());
+    CROAK("Wid insert name [%s] failed", wid_get_name(w).c_str());
   }
 
   w->in_tree_root = root;
@@ -1812,7 +1812,7 @@ static void wid_tree_global_unsorted_insert(Widp w)
   static WidKeyType key;
 
   if (w->in_tree_global_unsorted_root) {
-    DIE("Wid is already in the global tree");
+    CROAK("Wid is already in the global tree");
   }
 
   auto root = &wid_global;
@@ -1822,7 +1822,7 @@ static void wid_tree_global_unsorted_insert(Widp w)
   w->tree_global_key = key;
   auto result        = root->insert(std::make_pair(w->tree_global_key, w));
   if (result.second == false) {
-    DIE("Wid insert name [%s] tree_global failed", wid_get_name(w).c_str());
+    CROAK("Wid insert name [%s] tree_global failed", wid_get_name(w).c_str());
   }
 
   w->in_tree_global_unsorted_root = root;
@@ -1833,7 +1833,7 @@ static void wid_tree2_unsorted_insert(Widp w)
   TRACE_NO_INDENT();
 
   if (w->in_tree2_unsorted_root) {
-    DIE("Wid is already in the in_tree2_unsorted_root");
+    CROAK("Wid is already in the in_tree2_unsorted_root");
   }
 
   wid_key_map_int *root;
@@ -1847,7 +1847,7 @@ static void wid_tree2_unsorted_insert(Widp w)
   w->tree2_key = ++wid_unique_key;
   auto result  = root->insert(std::make_pair(w->tree2_key, w));
   if (result.second == false) {
-    DIE("Wid insert name [%s] tree2 failed", wid_get_name(w).c_str());
+    CROAK("Wid insert name [%s] tree2 failed", wid_get_name(w).c_str());
   }
 
   w->in_tree2_unsorted_root = root;
@@ -1872,7 +1872,7 @@ static void wid_tree4_wids_being_destroyed_insert(Widp w)
   w->tree4_key = ++wid_unique_key;
   auto result  = root->insert(std::make_pair(w->tree4_key, w));
   if (result.second == false) {
-    DIE("Wid insert name [%s] tree4 failed", wid_get_name(w).c_str());
+    CROAK("Wid insert name [%s] tree4 failed", wid_get_name(w).c_str());
   }
 
   w->in_tree4_wids_being_destroyed = root;
@@ -1897,7 +1897,7 @@ static void wid_tree5_tick_wids_insert(Widp w)
   w->tree5_key = ++wid_unique_key;
   auto result  = root->insert(std::make_pair(w->tree5_key, w));
   if (result.second == false) {
-    DIE("Wid insert name [%s] tree5 failed", wid_get_name(w).c_str());
+    CROAK("Wid insert name [%s] tree5 failed", wid_get_name(w).c_str());
   }
 
   w->in_tree5_tick_wids = root;
@@ -1916,7 +1916,7 @@ static void wid_tree_remove(Widp w)
 
   auto result = root->find(w->key);
   if (result == root->end()) {
-    DIE("Wid tree did not find wid %s hence cannot remove it", wid_get_name(w).c_str());
+    CROAK("Wid tree did not find wid %s hence cannot remove it", wid_get_name(w).c_str());
   }
 
   root->erase(w->key);
@@ -1935,7 +1935,7 @@ static void wid_tree2_unsorted_remove(Widp w)
 
   auto result = root->find(w->tree2_key);
   if (result == root->end()) {
-    DIE("Wid tree2 did not find wid");
+    CROAK("Wid tree2 did not find wid");
   }
   root->erase(w->tree2_key);
 
@@ -1953,7 +1953,7 @@ static void wid_tree_global_unsorted_remove(Widp w)
 
   auto result = root->find(w->tree_global_key);
   if (result == root->end()) {
-    DIE("Wid tree_global did not find wid");
+    CROAK("Wid tree_global did not find wid");
   }
   root->erase(w->tree_global_key);
 
@@ -1968,7 +1968,7 @@ WidKeyType wid_unsorted_get_key(Widp w)
 
   auto result = root->find(w->tree_global_key);
   if (result == root->end()) {
-    DIE("Wid unsorted did not find wid");
+    CROAK("Wid unsorted did not find wid");
   }
 
   w = result->second;
@@ -1987,7 +1987,7 @@ static void wid_tree4_wids_being_destroyed_remove(Widp w)
 
   auto result = root->find(w->tree4_key);
   if (result == root->end()) {
-    DIE("Wid tree4 did not find wid");
+    CROAK("Wid tree4 did not find wid");
   }
   root->erase(w->tree4_key);
 
@@ -2005,7 +2005,7 @@ static void wid_tree5_tick_wids_remove(Widp w)
 
   auto result = root->find(w->tree5_key);
   if (result == root->end()) {
-    DIE("Wid tree5 did not find wid");
+    CROAK("Wid tree5 did not find wid");
   }
   root->erase(w->tree5_key);
 
@@ -5381,22 +5381,22 @@ void wid_sanity_check(Gamep g)
   IF_DEBUG
   {
     if ((int) wid_top_level.size() > 1000) {
-      DIE("Widget size getting large for: wid_top_level %d", (int) wid_top_level.size());
+      CROAK("Widget size getting large for: wid_top_level %d", (int) wid_top_level.size());
     }
     if ((int) wid_global.size() > 1000) {
-      DIE("Widget size getting large for: wid_global %d", (int) wid_global.size());
+      CROAK("Widget size getting large for: wid_global %d", (int) wid_global.size());
     }
     if ((int) wid_top_level2.size() > 1000) {
-      DIE("Widget size getting large for: wid_top_level2 %d", (int) wid_top_level2.size());
+      CROAK("Widget size getting large for: wid_top_level2 %d", (int) wid_top_level2.size());
     }
     if ((int) wid_top_level3.size() > 1000) {
-      DIE("Widget size getting large for: wid_top_level3 %d", (int) wid_top_level3.size());
+      CROAK("Widget size getting large for: wid_top_level3 %d", (int) wid_top_level3.size());
     }
     if ((int) wid_top_level4.size() > 1000) {
-      DIE("Widget size getting large for: wid_top_level4 %d", (int) wid_top_level4.size());
+      CROAK("Widget size getting large for: wid_top_level4 %d", (int) wid_top_level4.size());
     }
     if ((int) wid_tick_top_level.size() > 1000) {
-      DIE("Widget size getting large for: wid_tick_top_level %d", (int) wid_tick_top_level.size());
+      CROAK("Widget size getting large for: wid_tick_top_level %d", (int) wid_tick_top_level.size());
     }
   }
 }

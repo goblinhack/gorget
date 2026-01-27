@@ -92,7 +92,7 @@ bool music_load(uint32_t rate, const char *file, const char *name_alias)
   m->rate = rate;
   m->data = file_load(file, &m->len);
   if (! m->data) {
-    DIE("Cannot load music [%s]", file);
+    CROAK("Cannot load music [%s]", file);
     return false;
   }
 
@@ -158,7 +158,7 @@ bool music_play(Gamep g, const char *name)
 
   auto music = all_music.find(name);
   if (music == all_music.end()) {
-    DIE("Cannot find music %s: %s", name, Mix_GetError());
+    CROAK("Cannot find music %s: %s", name, Mix_GetError());
     SDL_ClearError();
     return false;
   }

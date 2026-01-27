@@ -17,7 +17,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
   TRACE_NO_INDENT();
 
   if (unlikely(! tp)) {
-    DIE("no template set for thing allocation");
+    CROAK("no template set for thing allocation");
   }
 
   const auto tp_id                       = tp_id_get(tp);
@@ -131,7 +131,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
     return t;
   }
 
-  DIE("out of things");
+  CROAK("out of things");
   return nullptr;
 }
 
@@ -141,7 +141,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto o = thing_find(g, v, t->id);
   if (t != o) {
-    DIE("Thing mismatch found for id, %08" PRIx32 "", t->id);
+    CROAK("Thing mismatch found for id, %08" PRIx32 "", t->id);
   }
 
   auto tp = thing_tp(t);

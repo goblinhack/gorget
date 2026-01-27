@@ -279,7 +279,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
   TRACE_NO_INDENT();
 
   if (dt < 0) {
-    DIE("negative dt %f", dt);
+    CROAK("negative dt %f", dt);
   }
 
   //

@@ -19,7 +19,7 @@ static fpoint thing_projectile_get_delta_from_dt(Gamep g, Levelsp v, Levelp l, T
 
   auto player = thing_player(g);
   if (! player) {
-    DIE("No player struct found");
+    CROAK("No player struct found");
     return fpoint(0, 0);
   }
 
@@ -29,7 +29,7 @@ static fpoint thing_projectile_get_delta_from_dt(Gamep g, Levelsp v, Levelp l, T
 
   auto delta = fpoint(c * dt * tile_speed, s * dt * tile_speed);
   if ((delta.x == 0) && (delta.y == 0)) {
-    DIE("No delta for projectile sin %f cos %f dt %f tile_speed %f", s, c, dt, tile_speed);
+    CROAK("No delta for projectile sin %f cos %f dt %f tile_speed %f", s, c, dt, tile_speed);
   }
 
   return delta;

@@ -459,7 +459,7 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
   auto line_end   = text_start;
 
   if (max_line_len < 0) {
-    DIE("bad max line len");
+    CROAK("bad max line len");
   }
 
   // printf("SPLIT1 [%s] max_line_len %d\n", text.c_str(), max_line_len);

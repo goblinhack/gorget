@@ -12,8 +12,8 @@ static int g_iter;
 
 MyIter::MyIter(Gamep g, Levelsp _v, int *out_iter, const char *_func, const unsigned short _line)
 {
-  if (g_thread_id != -1) {
-    DIE("using iterator, but not on main thread, thread=%d", g_thread_id);
+  if (g_thread_id != MAIN_THREAD) {
+    CROAK("using iterator, but not on main thread, thread=%d", g_thread_id);
   }
 
   this->v    = _v;
@@ -23,11 +23,11 @@ MyIter::MyIter(Gamep g, Levelsp _v, int *out_iter, const char *_func, const unsi
   iter = *out_iter = g_iter++;
 
   if (g_iter >= MY_ITERS_MAX) {
-    DIE("%s:%u exceeded number of iterators", func, line);
+    CROAK("%s:%u exceeded number of iterators", func, line);
   }
 
   if (v->in_iter[ iter ]) {
-    DIE("%s:%u nested loop for iter %d", func, line, iter);
+    CROAK("%s:%u nested loop for iter %d", func, line, iter);
   }
 
   v->in_iter[ iter ] = true;
@@ -51,19 +51,19 @@ MyIter::MyIter(Gamep g, Levelsp _v, int *out_iter, const char *_func, const unsi
 
 MyIter::~MyIter()
 {
-  if (g_thread_id != -1) {
-    DIE("%s:%u using iterator, but not on main thread, thread=%d", func, line, g_thread_id);
+  if (g_thread_id != MAIN_THREAD) {
+    CROAK("%s:%u using iterator, but not on main thread, thread=%d", func, line, g_thread_id);
   }
 
   if (! v->in_iter[ iter ]) {
-    DIE("%s:%u bad loop end for iter %d", func, line, iter);
+    CROAK("%s:%u bad loop end for iter %d", func, line, iter);
   }
   v->in_iter[ iter ] = false;
 
   g_iter--;
 
   if (g_iter < 0) {
-    DIE("%s:%u underflow for number of iterators", func, line);
+    CROAK("%s:%u underflow for number of iterators", func, line);
   }
 
 #if 0

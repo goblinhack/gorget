@@ -65,15 +65,15 @@ void sdl_loop(Gamep g)
     static int old_g_errored_thread_id;
     if (unlikely(AN_ERROR_OCCURRED())) {
       if (g_errored_thread_id != old_g_errored_thread_id) {
-        if (g_errored_thread_id == 0) {
+        if (g_errored_thread_id == MAIN_THREAD) {
           CON(UI_IMPORTANT_FMT_STR "An error occurred on the main thread. Check the logs." UI_RESET_FMT);
         } else {
           CON(UI_IMPORTANT_FMT_STR "An error occurred on thread %d. Check the logs." UI_RESET_FMT,
               g_errored_thread_id);
         }
-        CON("Last error: %s", g_error_last.c_str());
         auto key = ::to_string(game_key_console_get(g));
         CON("To continue playing at your own risk, 'clear errored' and then press <%s>", key.c_str());
+        CON("For more info 'show error'");
         wid_console_raise(g);
       }
     }

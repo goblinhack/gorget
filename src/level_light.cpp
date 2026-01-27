@@ -674,7 +674,7 @@ static Raycast *raycast_new(int ray_max_length_in_pixels, FboEnum fbo)
 
   l->ray_max_length_in_pixels = ray_max_length_in_pixels;
   if (! ray_max_length_in_pixels) {
-    DIE("No light power");
+    CROAK("No light power");
   }
 
   l->fbo = fbo;
@@ -687,7 +687,7 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
   //
   // Do not generate open gl stuff on any other thread
   //
-  if (g_thread_id != -1) {
+  if (g_thread_id != MAIN_THREAD) {
     return;
   }
 

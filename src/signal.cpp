@@ -101,37 +101,6 @@ static void debug_crash_handler(int sig)
 }
 #endif
 
-static void error_handler_do(std::string &tech_support)
-{
-  TRACE_NO_INDENT();
-
-  extern Gamep game;
-  auto         g = game;
-
-  tech_support += "\n";
-
-  auto seed_name = game_seed_name_get(g);
-  if (*seed_name) {
-    tech_support += "Seed name: " + std::string(seed_name) + "\n";
-  }
-
-  tech_support += "Could you please email goblinhack@gmail.com and attach the following files and trace info?\n";
-  tech_support += g_log_stdout_filename;
-  tech_support += "\n";
-  tech_support += g_log_stderr_filename;
-  tech_support += "\n";
-  tech_support += "\n";
-  tech_support += backtrace_string();
-  tech_support += "\n";
-  tech_support += callstack_string();
-  tech_support += "\n";
-  tech_support += "The goblin responsible for this shall be punished!!!\n";
-
-  wid_console_raise(g);
-
-  sdl_msg_box("%s", tech_support.c_str());
-}
-
 static const char *signal_str(int sig)
 {
   switch (sig) {
@@ -238,15 +207,23 @@ void crash_handler(int sig)
   static bool crashed;
 
   if (crashed) {
-    fprintf(stderr, "\n\nNested crash. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
+    fprintf(stderr, "\nNested crash. Signal %d(%s)\n", sig, signal_str(sig));
+    callstack_dump_stderr();
+    backtrace_dump_stderr();
     return;
   }
 
   crashed = true;
 
-  fprintf(stderr, "\n\nCrashed. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
-  callstack_dump_stderr();
-  backtrace_dump_stderr();
+  fprintf(stderr, "\nCrashed. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
+
+  if (0) {
+    //
+    // Show in error_message
+    //
+    callstack_dump_stderr();
+    backtrace_dump_stderr();
+  }
 
 #ifdef SIGSEGV
   signal(SIGSEGV, nullptr);
@@ -274,24 +251,7 @@ void crash_handler(int sig)
   debug_crash_handler(sig);
 #endif
 
-  fprintf(stderr, "\n\nCleaning up after crash...\n");
-  fprintf(stderr, "--------------------------\n");
-
-  DIE("Crashed");
-}
-
-void error_handler(const std::string &error_msg)
-{
-  if (g_thread_id != -1) {
-    return;
-  }
-
-  TRACE_NO_INDENT();
-
-  std::string tech_support = "Sorry, an error has occurred: ";
-  tech_support += error_msg;
-
-  error_handler_do(tech_support);
+  CROAK("Crashed due to signal %d(%s)\n", sig, signal_str(sig));
 }
 
 void ctrlc_handler(int sig)
@@ -322,7 +282,7 @@ void ctrlc_handler(int sig)
   signal(SIGINT, nullptr);
 #endif
 
-  fprintf(stderr, "\n\nInterrupted. Cleaning up...\n");
+  fprintf(stderr, "\nInterrupted. Cleaning up...\n");
   fprintf(stderr, "---------------------------\n");
 
   DIE_CLEAN("Interrupted");

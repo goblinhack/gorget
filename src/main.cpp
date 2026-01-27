@@ -98,7 +98,7 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--seed") || ! strcasecmp(argv[ i ], "-seed")) {
       if (i == argc - 1) {
         usage();
-        DIE("Missing parameter for argument, %s", argv[ i ]);
+        CROAK("Missing parameter for argument, %s", argv[ i ]);
       }
       g_opt_seed_name = argv[ i + 1 ];
       i++;
@@ -132,7 +132,7 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--level") || ! strcasecmp(argv[ i ], "-level")) {
       if (i == argc - 1) {
         usage();
-        DIE("Missing parameter for argument, %s", argv[ i ]);
+        CROAK("Missing parameter for argument, %s", argv[ i ]);
       }
 
       //
@@ -162,7 +162,7 @@ static void parse_args(int argc, char *argv[])
     if (! strcasecmp(argv[ i ], "--test") || ! strcasecmp(argv[ i ], "-test")) {
       if (i == argc - 1) {
         usage();
-        DIE("Missing parameter for argument, %s", argv[ i ]);
+        CROAK("Missing parameter for argument, %s", argv[ i ]);
       }
       g_opt_test_name      = argv[ i + 1 ];
       g_opt_tests          = true;
@@ -241,7 +241,7 @@ int main(int argc, char *argv[])
   g_argv  = argv;
   g_argc  = argc;
 
-  g_thread_id = -1;
+  g_thread_id = MAIN_THREAD;
 
   //////////////////////////////////////////////////////////////////////////////
   // Call parse_args before any memory allocations, in case debug2 is enabled
@@ -617,21 +617,23 @@ int main(int argc, char *argv[])
     // Main menu
     //
     TRACE_NO_INDENT();
-    if (g_opt_restarted_in_gfx_menu) {
+    if (AN_ERROR_OCCURRED()) {
+      wid_console_raise(g);
+    } else if (g_opt_restarted_in_gfx_menu) {
       g_opt_restarted_in_gfx_menu = false;
+      wid_hide(g, wid_console_window);
       wid_cfg_gfx_select(g);
     } else if (g_opt_quick_start) {
+      wid_hide(g, wid_console_window);
       wid_new_game(g);
     } else if (g_opt_level_select_menu) {
+      wid_hide(g, wid_console_window);
       wid_new_game(g);
     } else {
+      wid_hide(g, wid_console_window);
       wid_main_menu_select(g);
     }
-
-    wid_console_flush(g);
   }
-
-  wid_hide(g, wid_console_window);
 
   {
     glEnable(GL_TEXTURE_2D);

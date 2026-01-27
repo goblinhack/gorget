@@ -495,6 +495,10 @@ void sdl_key_repeat_events(Gamep g)
     return;
   }
 
+  if (AN_ERROR_OCCURRED()) {
+    return;
+  }
+
   const uint8_t *state = SDL_GetKeyboardState(nullptr);
 
   static bool fire_held_prev;

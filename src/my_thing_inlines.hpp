@@ -186,7 +186,7 @@ static inline spoint thing_pix_at(Thingp t)
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
 #endif
   return t->_curr_pix_at;

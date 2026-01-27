@@ -107,12 +107,12 @@ static unsigned char *load_raw_image(std::string filename, int *x, int *y, int *
 
   file_data = file_load(filename.c_str(), &len);
   if (! file_data) {
-    DIE("Could not read file, '%s'", filename.c_str());
+    CROAK("Could not read file, '%s'", filename.c_str());
   }
 
   image_data = stbi_load_from_memory(file_data, len, x, y, comp, 0);
   if (! image_data) {
-    DIE("Could not read memory for file, '%s'", filename.c_str());
+    CROAK("Could not read memory for file, '%s'", filename.c_str());
   }
 
   DBG2("loaded '%s', %ux%u", filename.c_str(), *x, *y);
@@ -566,7 +566,7 @@ Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, 
   auto result = textures.insert(std::make_pair(name, t));
 
   if (! result.second) {
-    DIE("Tex insert surface name '%s' failed", name.c_str());
+    CROAK("Tex insert surface name '%s' failed", name.c_str());
   }
 
   t->width              = surface->w;

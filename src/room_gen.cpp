@@ -607,7 +607,7 @@ static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const
 
   FILE *out = fopen(f.c_str(), "w+");
   if (! out) {
-    DIE("could not write to %s", f.c_str());
+    CROAK("could not write to %s", f.c_str());
   }
 
   fprintf(out, "//\n");

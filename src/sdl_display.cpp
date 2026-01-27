@@ -154,7 +154,7 @@ uint8_t sdl_display_init(Gamep g)
 
     LOG("SDL: Init display");
     if (SDL_GetCurrentDisplayMode(0, &mode) < 0) {
-      DIE("SDL_GetCurrentDisplayMode couldn't set windowed display: '%s'", SDL_GetError());
+      CROAK("SDL_GetCurrentDisplayMode couldn't set windowed display: '%s'", SDL_GetError());
       return false;
     }
 
@@ -181,25 +181,33 @@ uint8_t sdl_display_init(Gamep g)
   //
   // video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
 
-  if (game_gfx_borderless_get(g)) {
-    LOG("SDL: Set SDL_WINDOW_BORDERLESS");
-    video_flags |= SDL_WINDOW_BORDERLESS;
-  }
+  if (AN_ERROR_OCCURRED()) {
+    //
+    // Safe mode
+    //
+    video_width  = 1024;
+    video_height = 768;
+  } else {
+    if (game_gfx_borderless_get(g)) {
+      LOG("SDL: Set SDL_WINDOW_BORDERLESS");
+      video_flags |= SDL_WINDOW_BORDERLESS;
+    }
 
-  if (game_gfx_fullscreen_get(g)) {
-    LOG("SDL: Set SDL_WINDOW_FULLSCREEN");
-    video_flags |= SDL_WINDOW_FULLSCREEN;
-  }
+    if (game_gfx_fullscreen_get(g)) {
+      LOG("SDL: Set SDL_WINDOW_FULLSCREEN");
+      video_flags |= SDL_WINDOW_FULLSCREEN;
+    }
 
-  if (game_gfx_fullscreen_desktop_get(g)) {
-    LOG("SDL: Set SDL_WINDOW_FULLSCREEN_DESKTOP");
-    video_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-  }
+    if (game_gfx_fullscreen_desktop_get(g)) {
+      LOG("SDL: Set SDL_WINDOW_FULLSCREEN_DESKTOP");
+      video_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+    }
 
-  LOG("SDL: Set SDL_WINDOW_INPUT_FOCUS");
-  video_flags |= SDL_WINDOW_INPUT_FOCUS;
-  LOG("SDL: Set SDL_WINDOW_ALWAYS_ON_TOP");
-  video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
+    LOG("SDL: Set SDL_WINDOW_INPUT_FOCUS");
+    video_flags |= SDL_WINDOW_INPUT_FOCUS;
+    LOG("SDL: Set SDL_WINDOW_ALWAYS_ON_TOP");
+    video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
+  }
 
   if (g_skip_audio_and_gfx) {
     video_width  = 640;
@@ -207,9 +215,15 @@ uint8_t sdl_display_init(Gamep g)
     video_flags  = 0;
   }
 
-  LOG("SDL: Create window size %ux%u", video_width, video_height);
+  if (AN_ERROR_OCCURRED()) {
+    LOG("SDL: Create safe mode window size %ux%u", video_width, video_height);
+  } else {
+    LOG("SDL: Create window size %ux%u", video_width, video_height);
+  }
+
   sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
                                 video_flags);
+
   if (! sdl.window) {
     ERR("SDL_CreateWindow couldn't set windowed display %ux%u: '%s'", video_width, video_height, SDL_GetError());
     game_config_reset(g);
@@ -243,7 +257,12 @@ uint8_t sdl_display_init(Gamep g)
 
   SDL_ClearError();
 
-  SDL_SetWindowTitle(sdl.window, "gorget");
+  if (AN_ERROR_OCCURRED()) {
+    SDL_SetWindowTitle(sdl.window, "gorget (safe mode)");
+  } else {
+    SDL_SetWindowTitle(sdl.window, "gorget");
+  }
+
   SDL_SetWindowInputFocus(sdl.window);
 
 #if __APPLE__
@@ -286,6 +305,11 @@ void sdl_display_fini(Gamep g)
   LOG("SDL: Video fini");
   TRACE_AND_INDENT();
 
+  if (! sdl.init_video) {
+    return;
+  }
+  sdl.init_video = 0;
+
   gl_fini_2d_mode(g);
 
 #ifdef ENABLE_UI_ASCII_MOUSE
@@ -293,11 +317,8 @@ void sdl_display_fini(Gamep g)
   SDL_ShowCursor(1);
 #endif
 
-  if (sdl.init_video) {
-    LOG("SDL: Video quit");
-    sdl.init_video = 0;
-    SDL_VideoQuit();
-  }
+  LOG("SDL: Video quit");
+  SDL_VideoQuit();
 
   LOG("SDL: Delete GL context");
   SDL_GL_DeleteContext(sdl.context);

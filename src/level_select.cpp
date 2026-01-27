@@ -147,7 +147,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
 
   LevelSelect *s = &v->level_select;
   if (! s) {
-    DIE("missing level select pointer");
+    CROAK("missing level select pointer");
   }
 
   auto   p         = l->level_select_at;
@@ -275,7 +275,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   // Some tests have only 1 level
   //
   if (! g_opt_tests) {
-    DIE("failed to find a next level down");
+    CROAK("failed to find a next level down");
   }
 
 got_level:
@@ -347,11 +347,11 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
       if (s->data[ x ][ y ].is_set) {
         auto l = game_level_get(g, v, n);
         if (! l) {
-          DIE("ran out of levels to assign to grid, %u", n);
+          CROAK("ran out of levels to assign to grid, %u", n);
         }
 
         if (! l->is_initialized) {
-          DIE("trying to use a level that is not initialized, %u", n);
+          CROAK("trying to use a level that is not initialized, %u", n);
         }
 
         auto c             = &s->data[ x ][ y ];

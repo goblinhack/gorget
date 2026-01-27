@@ -46,6 +46,14 @@ if [[ $COUNT -gt 0 ]];
 then
     echo $0: Need to retar graphics tarball due to updates
     make_tar data/gfx.tgz data/gfx
+else
+    COUNT=$(find data/gfx.tgz -newer data/gfx -type f | wc -l)
+    if [[ $COUNT -gt 0 ]];
+    then
+        echo $0: Need to extract data/gfx.tgz as it is newer
+        untar data/gfx.tgz
+        touch data/gfx
+    fi
 fi
 
 COUNT=$(find data/sounds -newer data/sounds.tgz -type f | wc -l)
@@ -53,6 +61,14 @@ if [[ $COUNT -gt 0 ]];
 then
     echo $0: Need to retar sounds tarball due to updates
     make_tar data/sounds.tgz data/sounds
+else
+    COUNT=$(find data/sounds.tgz -newer data/sounds -type f | wc -l)
+    if [[ $COUNT -gt 0 ]];
+    then
+        echo $0: Need to extract data/sounds.tgz as it is newer
+        untar data/sounds.tgz
+        touch data/sounds
+    fi
 fi
 
 #

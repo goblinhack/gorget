@@ -88,7 +88,7 @@ public:
   int last_seen_size {};
 };
 
-#ifndef DIE
+#ifndef CROAK
 static void die(void)
 {
   std::cerr << "exit(1) error" << std::endl;
@@ -129,7 +129,7 @@ void ERROR(const char *fmt, ...)
   va_end(args);
 }
 
-#define DIE(args...)                                                                                                 \
+#define CROAK(args...)                                                                                               \
   std::cerr << string_sprintf("Died at %s:%s line %u", SRC_FILE_NAME, SRC_FUNC_NAME, SRC_LINE_NUM);                  \
   CLEANUP(args);
 
@@ -215,7 +215,7 @@ static void hash_add(hash_t *hash_table, Ptrcheck *pc)
 
   if (! g_ptrcheck_inited) {
     if (g_memory_allocated > 0) {
-      DIE("memory has already been allocated prior to invoking ptrcheck (%d times)", g_memory_allocated);
+      CROAK("memory has already been allocated prior to invoking ptrcheck (%d times)", g_memory_allocated);
     }
     g_ptrcheck_inited = true;
   }
@@ -493,7 +493,7 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
   //
   fprintf(stderr, "%s%p %s:%s line %u, see below logs", unknown_ptr_warning, ptr, file, func, line);
   ptrcheck_describe_pointer(mtype, ptr);
-  DIE("%s%p %s:%s line %u, see above logs", unknown_ptr_warning, ptr, file, func, line);
+  CROAK("%s%p %s:%s line %u, see above logs", unknown_ptr_warning, ptr, file, func, line);
   return nullptr;
 }
 
@@ -607,7 +607,7 @@ static int ptrcheck_free_(int mtype, void *ptr, const char *func, const char *fi
 
   pc = ptrcheck_verify_pointer(mtype, ptr, file, func, line, true /* don't store */);
   if (! pc) {
-    DIE("Failed to save pointer history");
+    CROAK("Failed to save pointer history");
     return false;
   }
 

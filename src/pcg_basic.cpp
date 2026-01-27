@@ -80,7 +80,7 @@ void pcg32_srandom(uint64_t seed, uint64_t seq)
 uint32_t pcg32_random(const char *func, int line)
 {
   if (unlikely(pcg_lock_count)) {
-    DIE("Trying to generate a PCG random number when blocked");
+    CROAK("Trying to generate a PCG random number when blocked");
   }
 
   auto out = pcg32_random_r(&pcg32_global);
@@ -134,7 +134,7 @@ uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound)
 uint32_t pcg32_boundedrand(const char *func, int line, uint32_t bound)
 {
   if (unlikely(pcg_lock_count)) {
-    DIE("Trying to generate a PCG random number when blocked");
+    CROAK("Trying to generate a PCG random number when blocked");
   }
 
   auto out = pcg32_boundedrand_r(&pcg32_global, bound);
@@ -149,7 +149,7 @@ void game_pcg_lock(void) { pcg_lock_count++; }
 void game_pcg_unlock(void)
 {
   if (! pcg_lock_count) {
-    DIE("pcg lock count error");
+    CROAK("pcg lock count error");
   }
   pcg_lock_count--;
 }

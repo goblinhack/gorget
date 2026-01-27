@@ -75,15 +75,15 @@ Tilep Font::font_get_tile(int u)
 {
   Font *me = this;
   if (unlikely(! me)) {
-    DIE("No font");
+    CROAK("No font");
   }
 
   if ((u < 0) || (u >= FONT_CHAR_MAX)) {
     if (u == '?') {
-      DIE("char 0x%X/%d -> bad index", u, u);
+      CROAK("char 0x%X/%d -> bad index", u, u);
       return font_get_tile('?');
     } else {
-      DIE("char 0x%X/%d -> bad index", u, u);
+      CROAK("char 0x%X/%d -> bad index", u, u);
       return font_get_tile('?');
     }
     return font_get_tile('?');
@@ -93,10 +93,10 @@ Tilep Font::font_get_tile(int u)
 
   if ((index < 0) || (index >= FONT_CHAR_MAX)) {
     if (u == '?') {
-      DIE("char 0x%X/%d -> bad index %d", u, u, index);
+      CROAK("char 0x%X/%d -> bad index %d", u, u, index);
       return font_get_tile('?');
     } else {
-      DIE("char 0x%X/%d -> bad index %d", u, u, index);
+      CROAK("char 0x%X/%d -> bad index %d", u, u, index);
       return font_get_tile('?');
     }
     return font_get_tile('?');
@@ -113,10 +113,10 @@ Tilep Font::font_get_tile(int u)
   tile = tile_find(tile_name);
   if (unlikely(! tile)) {
     if (u == '?') {
-      DIE("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
+      CROAK("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
       return font_get_tile('?');
     }
-    DIE("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
+    CROAK("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
     return font_get_tile('?');
   }
 

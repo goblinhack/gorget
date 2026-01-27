@@ -347,11 +347,11 @@ bool Game::save(const std::string &file_to_save)
 
   auto src = malloc(src_size MALLOC_PAD);
   if (! src) {
-    DIE("malloc %d failed", (int) src_size);
+    CROAK("malloc %d failed", (int) src_size);
   }
   auto dst = malloc(src_size MALLOC_PAD);
   if (! dst) {
-    DIE("malloc %d failed", (int) src_size);
+    CROAK("malloc %d failed", (int) src_size);
   }
   memcpy(src, data.c_str(), src_size);
 
@@ -383,7 +383,7 @@ bool Game::save(const std::string &file_to_save)
   auto which  = "LZ0";
   auto wrkmem = malloc(LZO1X_1_MEM_COMPRESS);
   if (! wrkmem) {
-    DIE("malloc %ld failed", (long) LZO1X_1_MEM_COMPRESS);
+    CROAK("malloc %ld failed", (long) LZO1X_1_MEM_COMPRESS);
   }
 
   lzo_uint new_len = dst_size;

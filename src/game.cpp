@@ -450,12 +450,12 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
 
   TRACE_NO_INDENT();
   if (! level_populate(g, v, l, nullptr, w, h, contents)) {
-    DIE("level populate failed");
+    CROAK("level populate failed");
   }
 
   TRACE_NO_INDENT();
   if (level_num >= LEVELS_DOWN) {
-    DIE("too many levels deep");
+    CROAK("too many levels deep");
   }
 
   //

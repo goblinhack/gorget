@@ -13,7 +13,7 @@ spoint thing_at(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
   return make_spoint(t->_at);
 }
@@ -22,7 +22,7 @@ spoint thing_at_set(Thingp t, const spoint &val)
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
 
   t->_old_at = t->_at;
@@ -35,7 +35,7 @@ fpoint thing_real_at(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
   return t->_at;
 }
@@ -44,7 +44,7 @@ fpoint thing_at_set(Thingp t, const fpoint &val)
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
 
   t->_old_at = t->_at;
@@ -57,7 +57,7 @@ spoint thing_old_at(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
   return make_spoint(t->_old_at);
 }
@@ -66,7 +66,7 @@ spoint thing_prev_pix_at(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
   return t->_prev_pix_at;
 }
@@ -75,7 +75,7 @@ spoint thing_prev_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoin
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
   return t->_prev_pix_at = val;
 }
@@ -84,7 +84,7 @@ spoint thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &va
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
 
   if (t->_curr_pix_at != val) {
@@ -99,7 +99,7 @@ spoint thing_pix_at_set(Gamep g, Levelsp v, Levelp l, Thingp t, short x, short y
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
 
   spoint val(x, y);
@@ -116,7 +116,7 @@ spoint thing_moving_from(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
   return t->_moving_from;
 }
@@ -125,7 +125,7 @@ spoint thing_moving_from_set(Thingp t, const spoint &val)
 {
   TRACE_NO_INDENT();
   if (! t) {
-    DIE("No thing pointer set");
+    CROAK("No thing pointer set");
   }
   return t->_moving_from = val;
 }

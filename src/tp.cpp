@@ -140,7 +140,7 @@ Tpp tp_find_mand(const std::string &val)
     return result->second;
   }
 
-  DIE("tp_find_mand: thing template %s not found", val.c_str());
+  CROAK("tp_find_mand: thing template %s not found", val.c_str());
   return nullptr;
 }
 
@@ -164,7 +164,7 @@ Tpp tp_find(TpId id)
   TRACE_NO_INDENT(); // expensive
 
   if ((int) id - 1 >= (int) tp_vec.size()) {
-    DIE("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_vec", id);
+    CROAK("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_vec", id);
     return nullptr;
   }
 #endif
@@ -172,7 +172,7 @@ Tpp tp_find(TpId id)
   auto result = tp_vec[ id - 1 ];
 #ifdef _DEBUG_BUILD_
   if (! result) {
-    DIE("tp_find: thing template %" PRIx16 " not found", id);
+    CROAK("tp_find: thing template %" PRIx16 " not found", id);
     return nullptr;
   }
 #endif

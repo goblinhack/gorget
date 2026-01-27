@@ -89,7 +89,7 @@ int stat_to_bonus(int stat)
     for (auto i = -30; i <= 30; i++) {
       printf("Roll %d -> bonus %d\n", i, stat_to_bonus(i));
     }
-    DIE("See above rolls");
+    CROAK("See above rolls");
   }
 #endif
 

@@ -20,8 +20,8 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   auto expected_len = w * h;
 
   if ((int) strlen(in) != expected_len) {
-    DIE("bad map size, expected %d chars, got %d chars for map of expected size %dx%d", (int) expected_len,
-        (int) strlen(in), w, h);
+    CROAK("bad map size, expected %d chars, got %d chars for map of expected size %dx%d", (int) expected_len,
+          (int) strlen(in), w, h);
   }
 
   auto tp_wall       = tp_random(is_wall);
@@ -233,7 +233,7 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
             break;
           default :
             if (! g_opt_do_level_gen) {
-              DIE("unexpected map char '%c'", c);
+              CROAK("unexpected map char '%c'", c);
             }
         }
       }

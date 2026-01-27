@@ -23,38 +23,38 @@ Thingp thing_find_non_inline(Gamep g, Levelsp v, ThingId id)
 
   auto t = &v->thing_body[ index ];
   if (unlikely(! t)) {
-    DIE("Thing not found for as id 08%" PRIx32 //
-        " (level: %" PRIu32                    //
-        " id: %08" PRIx32                      //
-        " entropy: %08" PRIx32                 //
-        ")",                                   //
-        id,                                    //
-        id_packed.b.level_num,                 //
-        id_packed.b.per_level_id,              //
-        id_packed.b.entropy);
+    CROAK("Thing not found for as id 08%" PRIx32 //
+          " (level: %" PRIu32                    //
+          " id: %08" PRIx32                      //
+          " entropy: %08" PRIx32                 //
+          ")",                                   //
+          id,                                    //
+          id_packed.b.level_num,                 //
+          id_packed.b.per_level_id,              //
+          id_packed.b.entropy);
   }
 
   if (unlikely(t->id != id)) {
     ThingIdPacked id_found = {};
     id_found.a.val         = t->id;
 
-    DIE("Thing found as id 08%" PRIx32                         //
-        " (level: %" PRIu32                                    //
-        " id: %08" PRIx32                                      //
-        " entropy: %08" PRIx32                                 //
-        "), but entropy mismatch with expected id, 08%" PRIx32 //
-        " (level: %" PRIu32                                    //
-        " id: %08" PRIx32                                      //
-        " entropy: %08" PRIx32                                 //
-        ")",                                                   //
-        t->id,                                                 //
-        id_found.b.level_num,                                  //
-        id_found.b.per_level_id,                               //
-        id_found.b.entropy,                                    //
-        id,                                                    //
-        id_packed.b.level_num,                                 //
-        id_packed.b.per_level_id,                              //
-        id_packed.b.entropy);
+    CROAK("Thing found as id 08%" PRIx32                         //
+          " (level: %" PRIu32                                    //
+          " id: %08" PRIx32                                      //
+          " entropy: %08" PRIx32                                 //
+          "), but entropy mismatch with expected id, 08%" PRIx32 //
+          " (level: %" PRIu32                                    //
+          " id: %08" PRIx32                                      //
+          " entropy: %08" PRIx32                                 //
+          ")",                                                   //
+          t->id,                                                 //
+          id_found.b.level_num,                                  //
+          id_found.b.per_level_id,                               //
+          id_found.b.entropy,                                    //
+          id,                                                    //
+          id_packed.b.level_num,                                 //
+          id_packed.b.per_level_id,                              //
+          id_packed.b.entropy);
   }
 
   return t;

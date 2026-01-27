@@ -112,7 +112,7 @@ static void wid_botcon_log_(std::string s)
     auto result = wid_botcon_lines.insert(std::make_pair(log_wid_botcon_buffered_lines++, s));
 
     if (! result.second) {
-      DIE("Wid botcon lines insert name [%s] failed", s.c_str());
+      CROAK("Wid botcon lines insert name [%s] failed", s.c_str());
     }
 
     return;
@@ -168,7 +168,7 @@ void wid_botcon_log(std::string s)
   int chars_per_line = UI_BOTCON_WIDTH;
 
   if (! TERM_WIDTH) {
-    DIE("No TERM_WIDTH set");
+    CROAK("No TERM_WIDTH set");
   }
 
   if (s.empty()) {

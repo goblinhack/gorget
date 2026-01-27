@@ -145,75 +145,25 @@ void THING_CON(Thingp t, const char *fmt, ...)
 
 static void thing_err_(Thingp t, const char *fmt, va_list args)
 {
-  TRACE_NO_INDENT();
-
-  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
-    DIE("too many errors");
-    exit(1);
-  }
-
-  callstack_dump();
-  backtrace_dump();
-
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
   buf[ 0 ] = '\0';
-  get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
   snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, t).c_str());
-  len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "ERROR: ");
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
-  error_handler(buf);
-
-  putf(MY_STDERR, buf);
-  putf(MY_STDOUT, buf);
-
-  term_log(buf);
-  putchar('\n');
-
-  wid_console_log(buf);
+  ERR("%s", buf);
 }
 
 void THING_ERR(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
-    DIE("too many errors");
-    exit(1);
-  }
-
-  extern Gamep game;
-  auto         g = game;
-
-  //
-  // If multiple errors are going on, we don't need popups for all of them
-  //
-  if (AN_ERROR_OCCURRED()) {
-    va_list args;
-    va_start(args, fmt);
-    thing_log_(t, fmt, args);
-    va_end(args);
-    return;
-  }
-
-  g_errored_thread_id = g_thread_id;
   va_list args;
   va_start(args, fmt);
   thing_err_(t, fmt, args);
   va_end(args);
-
-  wid_unset_focus(g);
-  wid_unset_focus_lock();
-  wid_console_raise(g);
-
-  if (g_quitting) {
-    DIE("Error while quitting");
-  }
 }
 
 static void thing_topcon_(Thingp t, const char *fmt, va_list args)

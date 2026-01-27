@@ -28,10 +28,10 @@
 //
 void cleanup(void)
 {
-  LOG("Cleanup, thread %d called, g_thread_id", g_thread_id);
+  LOG("Cleanup, thread %d", g_thread_id);
   TRACE_AND_INDENT();
 
-  if (g_thread_id != -1) {
+  if (g_thread_id != MAIN_THREAD) {
     return;
   }
 

@@ -49,7 +49,13 @@ extern thread_local std::string g_log_stderr_filename;
 extern thread_local std::string g_log_stdout_filename;
 extern thread_local FILE       *g_log_stderr;
 extern thread_local FILE       *g_log_stdout;
-extern thread_local int         g_thread_id;
+
+//
+// Main thread is 0
+// Game threads > 0
+//
+#define MAIN_THREAD 0
+extern thread_local int g_thread_id;
 
 static inline bool AN_ERROR_OCCURRED(void) { return g_errored_thread_id != -1; }
 static inline bool NO_ERROR_OCCURRED(void) { return g_errored_thread_id == -1; }

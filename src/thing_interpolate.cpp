@@ -26,7 +26,7 @@ void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   }
 
   if (dt < 0) {
-    DIE("negative dt %f", dt);
+    CROAK("negative dt %f", dt);
   }
 
   //

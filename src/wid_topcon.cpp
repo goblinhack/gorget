@@ -112,7 +112,7 @@ static void wid_topcon_log_(std::string s)
     auto result = wid_topcon_lines.insert(std::make_pair(log_wid_topcon_buffered_lines++, s));
 
     if (! result.second) {
-      DIE("Wid topcon lines insert name [%s] failed", s.c_str());
+      CROAK("Wid topcon lines insert name [%s] failed", s.c_str());
     }
 
     return;
@@ -172,7 +172,7 @@ void wid_topcon_log(std::string s)
   int chars_per_line = UI_TOPCON_WIDTH;
 
   if (! TERM_WIDTH) {
-    DIE("No TERM_WIDTH set");
+    CROAK("No TERM_WIDTH set");
   }
 
   if (s.empty()) {

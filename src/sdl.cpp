@@ -11,6 +11,7 @@
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_wid_console.hpp"
+#include "my_wids.hpp"
 
 SDL sdl;
 
@@ -128,13 +129,13 @@ uint8_t sdl_init(void)
 
   LOG("SDL: Init audio and video");
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
-    DIE("SDL_Init failed %s", SDL_GetError());
+    CROAK("SDL_Init failed %s", SDL_GetError());
     return false;
   }
 
   LOG("SDL: Init video");
   if (SDL_VideoInit(nullptr) != 0) {
-    DIE("SDL_VideoInit failed %s", SDL_GetError());
+    CROAK("SDL_VideoInit failed %s", SDL_GetError());
     return false;
   }
 
@@ -456,11 +457,37 @@ void config_gfx_vsync_update(Gamep g)
 uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
 {
   TRACE_NO_INDENT();
+
   g_errored_thread_id = -1;
   g_err_count         = 0;
-  CON("SDL: Errored mode cleared.");
+
+  CON("Errored cleared.");
   wid_hide(g, wid_console_window);
   sdl_display_reset(g);
+
+  //
+  // If we died during startup, we need to recreate the main menu if we can
+  //
+  if (game_state(g) != STATE_PLAYING) {
+    wid_main_menu_select(g);
+  }
+
+  return true;
+}
+
+uint8_t show_error(Gamep g, class Tokens *tokens, void *context)
+{
+  TRACE_NO_INDENT();
+
+  if (AN_ERROR_OCCURRED()) {
+    CON("Last error: %s", g_error_last.c_str());
+    auto key = ::to_string(game_key_console_get(g));
+    CON("To continue playing at your own risk, 'clear errored' and then press <%s>", key.c_str());
+    wid_console_raise(g);
+  } else {
+    CON("No error.");
+  }
+
   return true;
 }
 

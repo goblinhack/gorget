@@ -151,94 +151,21 @@ void CON_NEW_LINE(void)
   con_(nullptr, args);
 }
 
-static void cleanup_err_wrapper_(const char *fmt, va_list args)
+static void croak_handle(bool clean, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
-    DIE("too many errors");
-    exit(1);
-  }
-
-  callstack_dump();
-  backtrace_dump();
-
-  char buf[ MAXLONGSTR ];
-  buf[ 0 ] = '\0';
-  int len  = 0;
-
-  get_timestamp(buf, MAXLONGSTR);
-  len = (int) strlen(buf);
-
-  snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
-
-  len = (int) strlen(buf);
-  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
-
-  fprintf(stderr, "%s\n", buf);
-  if (MY_STDERR != stderr) {
-    fprintf(MY_STDERR, "%s\n", buf);
-  }
-
-  if (g_thread_id == -1) {
-    cleanup();
-  } else {
-    //
-    // Better to exit than cleanup, as we could crash in cleanup
-    //
-    exit(1);
-  }
-}
-
-void CLEANUP_ERR(const char *fmt, ...)
-{
-  TRACE_NO_INDENT();
-
-  va_list args;
-
-  va_start(args, fmt);
-  cleanup_err_wrapper_(fmt, args);
-  va_end(args);
-}
-
-static void cleanup_ok_wrapper_(const char *fmt, va_list args)
-{
-  TRACE_NO_INDENT();
-
-  cleanup();
-}
-
-void CLEANUP_OK(const char *fmt, ...)
-{
-  TRACE_NO_INDENT();
-
-  va_list args;
-
-  va_start(args, fmt);
-  cleanup_ok_wrapper_(fmt, args);
-  va_end(args);
-}
-
-static void dying_(bool clean, const char *fmt, va_list args)
-{
-  TRACE_NO_INDENT();
+  extern Gamep game;
+  auto         g = game;
 
   if (g_dying) {
     //
     // Could be a different thread also crashing.
     //
+    fprintf(stderr, "Nested dying loop, exiting\n");
     exit(1);
-    return;
   }
   g_dying = true;
-
-  if (! clean) {
-    callstack_dump_stderr();
-    backtrace_dump_stderr();
-
-    callstack_dump();
-    backtrace_dump();
-  }
 
   char buf[ MAXLONGSTR * 10 ];
   buf[ 0 ] = '\0';
@@ -246,169 +173,66 @@ static void dying_(bool clean, const char *fmt, va_list args)
 
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "DIE: ");
+  snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
-  fprintf(stderr, "%s\n", buf);
-  if (MY_STDERR != stderr) {
-    fprintf(MY_STDERR, "%s\n", buf);
+  if (clean) {
+    fprintf(stderr, "%s\n", buf);
+  } else {
+    if (MY_STDERR != stderr) {
+      fprintf(MY_STDERR, "%s\n", buf);
+    }
+    error_message(g, buf);
   }
-
-#ifdef _WIN32
-  //
-  // windows is such utter garbage that if the program crashes it does not flush
-  // the goddamned console! So we need this...
-  //
-  fflush(stdout);
-  fflush(stderr);
-  fflush(MY_STDOUT);
-  fflush(MY_STDERR);
-#endif
 }
 
-void DYING(bool clean, const char *fmt, ...)
+void CROAK_HANDLE(bool clean, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   va_list args;
 
+  g_errored_thread_id = g_thread_id;
+
   va_start(args, fmt);
-  dying_(clean, fmt, args);
+  croak_handle(clean, fmt, args);
   va_end(args);
 }
 
-static void err_(const char *fmt, va_list args)
+static void err_handle(Gamep g, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  callstack_dump();
-  backtrace_dump();
+  char buf[ MAXLONGSTR * 10 ];
+  buf[ 0 ] = '\0';
+  int len  = 0;
 
-  char error_buf[ MAXLONGSTR ];
-  {
-    int len;
+  get_timestamp(buf, MAXLONGSTR);
+  len = (int) strlen(buf);
+  snprintf(buf + len, MAXLONGSTR - len, "ERROR: ");
+  len = (int) strlen(buf);
+  vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
-    error_buf[ 0 ] = '\0';
-    len            = (int) strlen(error_buf);
-    vsnprintf(error_buf + len, MAXLONGSTR - len, fmt, args);
-  }
-
-  {
-    char buf[ MAXLONGSTR ];
-    buf[ 0 ] = '\0';
-    int len  = 0;
-
-    {
-      get_timestamp(buf, MAXLONGSTR);
-      len = (int) strlen(buf);
-    }
-
-    if (snprintf(buf + len, MAXLONGSTR - len, "ERROR: " UI_IMPORTANT_FMT_STR "%s" UI_RESET_FMT "", error_buf) < 0) {
-      ERR("truncation");
-      return;
-    }
-
-    static std::mutex m;
-    m.lock();
-    g_error_last = std::string(buf) + "\n " + callstack_string() + "\nLogfile: " + g_log_stderr_filename + ": ";
-    m.unlock();
-
-    if (MY_STDERR != stderr) {
-      putf(MY_STDERR, buf);
-    }
-
-    if (MY_STDOUT != stdout) {
-      putf(MY_STDOUT, buf);
-    }
-
-    term_log(buf);
-    putchar('\n');
-
-    wid_console_log(buf);
-  }
-
-  if (! g_opt_tests) {
-    error_handler(error_buf);
-  }
+  error_message(g, buf);
 }
 
-void err_wrapper(const char *fmt, ...)
+void ERR_HANDLE(const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
-    DIE("too many errors");
+    CROAK("Too many errors");
     exit(1);
   }
 
   extern Gamep game;
-  auto         g = game;
-
-  //
-  // If multiple errors are going on, we don't need popups for all of them
-  //
-  if (AN_ERROR_OCCURRED()) {
-    va_list args;
-    va_start(args, fmt);
-    log_(fmt, args);
-    va_end(args);
-    return;
-  }
-
+  auto         g      = game;
   g_errored_thread_id = g_thread_id;
-  va_list args;
-  va_start(args, fmt);
-  err_(fmt, args);
-  va_end(args);
-
-  wid_unset_focus(g);
-  wid_unset_focus_lock();
-  wid_console_raise(g);
-
-  if (g_quitting) {
-    DIE("Error while quitting");
-  }
-}
-
-static void sdl_msgerr_(const char *fmt, va_list args)
-{
-  TRACE_NO_INDENT();
-
-  char buf[ MAXLONGSTR ];
-  buf[ 0 ] = '\0';
-
-  vsnprintf(buf, MAXLONGSTR, fmt, args);
-
-#if SDL_MAJOR_VERSION >= 2
-  SDL_Log("%s", buf);
-
-  //
-  // Fullscreen sometimes hides the error, so create a temp window
-  //
-  LOG("Show SDL message box");
-
-  auto window = SDL_CreateWindow("gorget error", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 100, 100,
-                                 SDL_WINDOW_SHOWN | SDL_WINDOW_ALWAYS_ON_TOP);
-  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Gorget", buf, window);
-  LOG("Launched SDL message box");
-  SDL_DestroyWindow(window);
-#endif
-
-  //
-  // We are inside an error already, so do not call ERR
-  //
-  LOG("SDL: %s", buf);
-}
-
-void sdl_msg_box(const char *fmt, ...)
-{
-  TRACE_NO_INDENT();
 
   va_list args;
-
   va_start(args, fmt);
-  sdl_msgerr_(fmt, args);
+  err_handle(g, fmt, args);
   va_end(args);
 }
 

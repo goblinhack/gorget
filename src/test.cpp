@@ -158,7 +158,7 @@ Testp test_load(const char *name_in)
   LOG("Load test '%s'", name_in);
 
   if (test_find(name_in)) {
-    DIE("test_load: test name [%s] already loaded", name_in);
+    CROAK("test_load: test name [%s] already loaded", name_in);
   }
 
   auto test  = new Test();
@@ -166,7 +166,7 @@ Testp test_load(const char *name_in)
 
   auto result = test_name_map.insert(std::make_pair(name, test));
   if (! result.second) {
-    DIE("Test insert name [%s] failed", name_in);
+    CROAK("Test insert name [%s] failed", name_in);
   }
 
   return test;
@@ -195,6 +195,8 @@ void tests_run(Gamep g)
   if (! TERM_WIDTH) {
     TERM_WIDTH = TERM_WIDTH_DEF;
   }
+
+  term_log("Running tests\n");
 
   for (auto &test : test_name_map) {
 

@@ -294,7 +294,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   //
 #ifdef _WIN32
   if (! glFramebufferTexture2D_EXT) {
-    DIE("GlGenRenderbuffers_EXT is not present; fatal");
+    CROAK("GlGenRenderbuffers_EXT is not present; fatal");
     return;
   }
 #endif
@@ -559,7 +559,7 @@ void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h)
       h = game_window_pix_height_get(g);
       break;
     default : // newline
-      DIE("Need size for fbo %d", fbo);
+      CROAK("Need size for fbo %d", fbo);
       break;
   }
 }
@@ -591,7 +591,7 @@ void blit_fbo_bind(FboEnum fbo)
 {
   fbo_last = fbo;
   if (fbo_locked != FBO_NONE) {
-    DIE("Attempt to bind to another FBO %d when locked", fbo);
+    CROAK("Attempt to bind to another FBO %d when locked", fbo);
   }
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, g_fbo_id[ fbo ]);
 }
@@ -599,7 +599,7 @@ void blit_fbo_bind(FboEnum fbo)
 void blit_fbo_unbind(void)
 {
   if (fbo_locked != FBO_NONE) {
-    DIE("Attempt to unbind when locked");
+    CROAK("Attempt to unbind when locked");
   }
   glBindFramebuffer_EXT(GL_FRAMEBUFFER, 0);
 }

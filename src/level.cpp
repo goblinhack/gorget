@@ -248,11 +248,11 @@ void levels_finalize(Gamep g, Levelsp v)
   TRACE_AND_INDENT();
 
   if (! g) {
-    DIE("no game pointer");
+    CROAK("no game pointer");
   }
 
   if (! v) {
-    DIE("no levels pointer");
+    CROAK("no levels pointer");
   }
 
   v->level_count = 0;
