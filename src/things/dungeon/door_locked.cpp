@@ -15,6 +15,7 @@
 
 static Tilep door_locked_idle_damaged;
 static Tilep door_locked_open_damaged;
+static Tilep door_locked_open;
 
 static std::string tp_door_locked_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -42,15 +43,20 @@ static Tilep tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp 
     return nullptr;
   }
 
-  Tilep alt_tile = nullptr;
-  if (thing_is_open(t_maybe_null)) {
-    alt_tile = door_locked_idle_damaged;
-  } else {
-    alt_tile = door_locked_open_damaged;
+  if (thing_health(t_maybe_null) < tp_health_max_get(tp)) {
+    if (thing_is_open(t_maybe_null)) {
+      return door_locked_idle_damaged;
+    } else {
+      return door_locked_open_damaged;
+    }
   }
 
-  if (thing_health(t_maybe_null) < tp_health_max_get(tp)) {
-    return alt_tile;
+  if (thing_is_open(t_maybe_null)) {
+    return nullptr;
+  }
+
+  if (thing_is_unlocked(t_maybe_null)) {
+    return door_locked_open;
   }
 
   return nullptr;
@@ -251,6 +257,9 @@ bool tp_load_door_locked(void)
 
   door_locked_open_damaged = tile_find_mand("door_locked.open.damaged");
   tile_size_set(door_locked_open_damaged, TILE_WIDTH, TILE_HEIGHT);
+
+  door_locked_open = tile_find_mand("door_locked.idle.1");
+  tile_size_set(door_locked_open, TILE_WIDTH, TILE_HEIGHT);
 
   return true;
 }
