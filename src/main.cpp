@@ -461,7 +461,9 @@ int main(int argc, char *argv[])
     CON(UI_INFO_FMT_STR "                          ." UI_RESET_FMT);
     CON(UI_INFO_FMT_STR "Version: " MYVER UI_RESET_FMT);
     CON("Press " UI_WARNING_FMT_STR "<tab>" UI_RESET_FMT " to complete commands.");
-    CON("Press " UI_WARNING_FMT_STR "?" UI_RESET_FMT " to show command options.");
+    CON("Press " UI_WARNING_FMT_STR "?" UI_RESET_FMT "     to show command options.");
+    auto key = ::to_string(game_key_console_get(g));
+    CON("Press " UI_WARNING_FMT_STR "<%s>" UI_RESET_FMT "   to hide this console", key.c_str());
   }
 
   //

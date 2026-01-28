@@ -1,4 +1,5 @@
 //
+//
 // Copyright goblinhack@gmail.com
 //
 
@@ -8,6 +9,16 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+
+static void tp_key_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
+{
+  TRACE_NO_INDENT();
+
+  if ((e.event_type == THING_EVENT_CARRIED) || // newline
+      (e.event_type == THING_EVENT_CARRIED_MERGED)) {
+    thing_sound_play(g, v, l, t, "key");
+  }
+}
 
 static std::string tp_key_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -25,6 +36,7 @@ bool tp_load_key(void)
 
   // begin sort marker1 {
   thing_description_set(tp, tp_key_description_get);
+  thing_on_death_set(tp, tp_key_on_death);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_shown_in_chasms);

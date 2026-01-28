@@ -12,13 +12,13 @@ void sounds_init(void)
   if (! sound_load(0.1f, "data/sounds/interface/keypress.ogg", "keypress")) {
     return;
   }
-  if (! sound_load(0.2f, "data/sounds/interface/click2.ogg", "click")) {
+  if (! sound_load(0.2f, "data/sounds/interface/mouse-click.ogg", "click")) {
     return;
   }
-  if (! sound_load(0.1f, "data/sounds/impacts/oof.ogg", "oof")) {
+  if (! sound_load(0.1f, "data/sounds/impacts/player-oof.ogg", "oof")) {
     return;
   }
-  if (! sound_load(0.5f, "data/sounds/impacts/ouch.ogg", "ouch")) {
+  if (! sound_load(0.5f, "data/sounds/impacts/player-ouch.ogg", "ouch")) {
     return;
   }
   if (! sound_load(0.2f, "data/sounds/misc/fall.ogg", "fall")) {
@@ -46,6 +46,9 @@ void sounds_init(void)
     return;
   }
   if (! sound_load(1.0f, "data/sounds/missiles/arrow.ogg", "fireball")) {
+    return;
+  }
+  if (! sound_load(1.0f, "data/sounds/treasure/key.ogg", "key")) {
     return;
   }
 }

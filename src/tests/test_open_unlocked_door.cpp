@@ -7,7 +7,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_open_door(Gamep g, Testp t)
+static bool test_open_unlocked_door(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();
@@ -23,7 +23,7 @@ static bool test_open_door(Gamep g, Testp t)
       = "xxxxxxx"
         "x...x.x"
         "x...x.x"
-        "x.@kD.x"
+        "x.@.D.x"
         "x...x.x"
         "x...x.x"
         "xxxxxxx";
@@ -151,14 +151,14 @@ exit:
   return result;
 }
 
-bool test_load_open_door(void)
+bool test_load_open_unlocked_door(void)
 {
   TRACE_NO_INDENT();
 
-  Testp test = test_load("open_door");
+  Testp test = test_load("open_unlocked_door");
 
   // begin sort marker1 {
-  test_callback_set(test, test_open_door);
+  test_callback_set(test, test_open_unlocked_door);
   // end sort marker1 }
 
   return true;
