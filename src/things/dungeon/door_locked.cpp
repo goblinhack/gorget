@@ -111,9 +111,12 @@ static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp 
   // Doors need keys
   //
   if (! thing_keys_carried(opener)) {
+    //
+    // No keys are carried
+    //
     if (thing_is_unlocked(t)) {
       //
-      // Door was unlocked already
+      // Door was unlocked already. No need to decrement keys.
       //
     } else {
       //
@@ -127,7 +130,16 @@ static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp 
     }
   }
 
-  thing_keys_carried_decr(g, v, l, opener, 1);
+  if (thing_is_unlocked(t)) {
+    //
+    // No need to decrement keys
+    //
+  } else {
+    //
+    // Remove a key permanently
+    //
+    thing_keys_carried_decr(g, v, l, opener, 1);
+  }
 
   if (thing_is_player(opener)) {
     TOPCON("The locked door opens.");
