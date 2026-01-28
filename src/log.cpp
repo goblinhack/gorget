@@ -173,7 +173,11 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
 
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
+  if (clean) {
+    snprintf(buf + len, MAXLONGSTR - len, "EXITED: ");
+  } else {
+    snprintf(buf + len, MAXLONGSTR - len, "FATAL ERROR: ");
+  }
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
