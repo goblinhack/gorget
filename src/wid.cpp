@@ -2362,11 +2362,11 @@ Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
 
   wid_set_mode(w, WID_MODE_OVER);
   wid_set_color(w, WID_COLOR_BG, GRAY90);
-  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+  wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
 
   wid_set_mode(w, WID_MODE_NORMAL);
   wid_set_color(w, WID_COLOR_BG, WHITE);
-  wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
+  wid_set_color(w, WID_COLOR_TEXT_FG, UI_TEXT_COLOR);
 
   //
   // Raise it so if there were other widgets with the same parent

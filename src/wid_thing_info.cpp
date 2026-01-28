@@ -18,8 +18,9 @@ static bool wid_thing_info_icon(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, 
 {
   TRACE_NO_INDENT();
 
-  auto  text = parent->wid_text_area;
-  auto  b    = parent->wid_text_area->wid_text_area;
+  auto text = parent->wid_text_area;
+  auto b    = parent->wid_text_area->wid_text_area;
+
   Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
   if (! tile) {
     return false;
@@ -31,6 +32,46 @@ static bool wid_thing_info_icon(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, 
   wid_set_tile(TILE_LAYER_BG_0, w, tile);
   wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
   wid_set_pos(w, tl, br);
+
+  return true;
+}
+
+static bool wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent, int width)
+{
+  TRACE_NO_INDENT();
+
+  auto text = parent->wid_text_area;
+  auto b    = parent->wid_text_area->wid_text_area;
+
+  auto key_count = thing_keys_carried(t);
+  if (! key_count) {
+    return false;
+  }
+
+  {
+    auto   tile = tile_find_mand("key.0");
+    auto   w    = wid_new_square_button(g, b, "Keys");
+    spoint tl(UI_LEFTBAR_WIDTH - 8, text->line_count);
+    spoint br(UI_LEFTBAR_WIDTH - 5, text->line_count + 2);
+    wid_set_tile(TILE_LAYER_BG_0, w, tile);
+    wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
+    wid_set_pos(w, tl, br);
+  }
+
+  {
+    auto        w = wid_new_square_button(g, b, "Key count");
+    spoint      tl(UI_LEFTBAR_WIDTH - 4, text->line_count);
+    spoint      br(UI_LEFTBAR_WIDTH - 2, text->line_count + 2);
+    std::string how_many_keys = "x" + std::to_string(key_count);
+
+    if (key_count > 9) {
+      how_many_keys = std::to_string(key_count);
+    }
+
+    wid_set_text(w, how_many_keys.c_str());
+    wid_set_shape_none(w);
+    wid_set_pos(w, tl, br);
+  }
 
   return true;
 }
@@ -214,6 +255,8 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
   if (wid_thing_info_icon(g, v, l, t, tp, parent, width)) {
     parent->log_empty_line(g);
   }
+
+  (void) wid_thing_info_keys(g, v, l, t, tp, parent, width);
 
   if (wid_thing_info_name(g, v, l, t, tp, parent, width)) {
     parent->log_empty_line(g);
