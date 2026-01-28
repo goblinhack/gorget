@@ -74,6 +74,314 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     return in;
   }
 
+  //
+  // Check various structure sizes prior to reading the data
+  //
+  {
+    uint32_t tmp;
+
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, seed_name)) {
+      game_load_error = "Config structure changed: offsetof(Config, seed_name))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, seed_num)) {
+      game_load_error = "Config structure changed: offsetof(Config, seed_num))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, seed_source)) {
+      game_load_error = "Config structure changed: offsetof(Config, seed_source))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, player_name)) {
+      game_load_error = "Config structure changed: offsetof(Config, player_name))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, aspect_ratio)) {
+      game_load_error = "Config structure changed: offsetof(Config, aspect_ratio))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, ui_term_height)) {
+      game_load_error = "Config structure changed: offsetof(Config, ui_term_height))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, ui_term_width)) {
+      game_load_error = "Config structure changed: offsetof(Config, ui_term_width))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, debug_mode)) {
+      game_load_error = "Config structure changed: offsetof(Config, debug_mode))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, fps_counter)) {
+      game_load_error = "Config structure changed: offsetof(Config, fps_counter))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, gfx_borderless)) {
+      game_load_error = "Config structure changed: offsetof(Config, gfx_borderless))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, gfx_fullscreen)) {
+      game_load_error = "Config structure changed: offsetof(Config, gfx_fullscreen))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, gfx_fullscreen_desktop)) {
+      game_load_error = "Config structure changed: offsetof(Config, gfx_fullscreen_desktop))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, gfx_vsync_enable)) {
+      game_load_error = "Config structure changed: offsetof(Config, gfx_vsync_enable))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, mouse_wheel_lr_negated)) {
+      game_load_error = "Config structure changed: offsetof(Config, mouse_wheel_lr_negated))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, mouse_wheel_ud_negated)) {
+      game_load_error = "Config structure changed: offsetof(Config, mouse_wheel_ud_negated))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, config_pix_height)) {
+      game_load_error = "Config structure changed: offsetof(Config, config_pix_height))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, config_pix_width)) {
+      game_load_error = "Config structure changed: offsetof(Config, config_pix_width))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, map_fbo_height)) {
+      game_load_error = "Config structure changed: offsetof(Config, map_fbo_height))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, map_fbo_width)) {
+      game_load_error = "Config structure changed: offsetof(Config, map_fbo_width))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, window_pix_height)) {
+      game_load_error = "Config structure changed: offsetof(Config, window_pix_height))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, window_pix_width)) {
+      game_load_error = "Config structure changed: offsetof(Config, window_pix_width))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, tiles_visible_across)) {
+      game_load_error = "Config structure changed: offsetof(Config, tiles_visible_across))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, tiles_visible_down)) {
+      game_load_error = "Config structure changed: offsetof(Config, tiles_visible_down))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, ascii_pix_height)) {
+      game_load_error = "Config structure changed: offsetof(Config, ascii_pix_height))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, ascii_pix_width)) {
+      game_load_error = "Config structure changed: offsetof(Config, ascii_pix_width))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, music_volume)) {
+      game_load_error = "Config structure changed: offsetof(Config, music_volume))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, sdl_delay)) {
+      game_load_error = "Config structure changed: offsetof(Config, sdl_delay))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, sound_volume)) {
+      game_load_error = "Config structure changed: offsetof(Config, sound_volume))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_wait)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_wait))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_console)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_console))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_help)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_help))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_load)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_load))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_move_down)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_move_down))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_move_left)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_move_left))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_move_right)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_move_right))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_move_up)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_move_up))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_quit)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_quit))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_save)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_save))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_screenshot)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_screenshot))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused1)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused1))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused2)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused2))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused3)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused3))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused4)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused4))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused5)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused5))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused6)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused6))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused7)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused7))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused8)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused8))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused9)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused9))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused10)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused10))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused11)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused11))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused12)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused12))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused13)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused13))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_unused14)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_unused14))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_fire)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_fire))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_inventory)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_inventory))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_jump)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_jump))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_ascend)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_ascend))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_descend)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_descend))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, key_zoom)) {
+      game_load_error = "Config structure changed: offsetof(Config, key_zoom))";
+      return in;
+    }
+    in >> bits(tmp);
+    if (tmp != offsetof(Config, hiscores)) {
+      game_load_error = "Config structure changed: offsetof(Config, hiscores))";
+      return in;
+    }
+  }
+
   in >> bits(my.t.seed_name);
   in >> bits(my.t.seed_num);
 
@@ -226,7 +534,7 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   }
 
   //
-  // Check various structure sizes
+  // Check various structure sizes prior to reading the data
   //
   {
     uint32_t tmp;
