@@ -1,13 +1,13 @@
 bugs
 ----
-check mouse open on locked door
+tests for max things
+monst AI
 
 basic features
 --------------
-tests for collecting items / potions
-mobs generating monsters
-monst AI
 ghosts and walls
+mobs generating monsters
+tests for collecting items / potions
 score is hard coded to 666
 chests need to contain something and those items destroyed when the chest is
 hard coded to fire fireball
