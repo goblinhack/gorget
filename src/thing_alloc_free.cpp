@@ -38,11 +38,11 @@ static std::mutex thing_mutex;
     thing_mutex.unlock();
 
     t->ai_id = ai_id;
-    return &v->thing_ext[ ai_id ];
+    return true;
   }
 
   ERR("out of Thing AI IDs");
-  return 0;
+  return false;
 }
 
 static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)

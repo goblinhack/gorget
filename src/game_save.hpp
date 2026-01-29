@@ -467,7 +467,7 @@ bool Game::save(const std::string &file_to_save)
   bool need_larger_src_buffer = false;
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Serializing...", 0.2);
+    wid_progress_bar(this, "Serializing...", 0.2f);
   }
 
   std::stringstream s(std::ios::in | std::ios::out | std::ios::binary);
@@ -479,7 +479,7 @@ bool Game::save(const std::string &file_to_save)
   // Get the pre compress buffer
   //
   if (! game_headers_only) {
-    wid_progress_bar(this, "Stringifying...", 0.4);
+    wid_progress_bar(this, "Stringifying...", 0.4f);
   }
 
   auto data = s.str(); // This is a bit slow, but the buffere may not be contiguous
@@ -490,7 +490,7 @@ bool Game::save(const std::string &file_to_save)
   void *src;
   if (need_larger_src_buffer) {
     if (! game_headers_only) {
-      wid_progress_bar(this, "Allocating src buffer...", 0.5);
+      wid_progress_bar(this, "Allocating src buffer...", 0.5f);
     }
 
     src = malloc(src_size MALLOC_PAD);
@@ -500,7 +500,7 @@ bool Game::save(const std::string &file_to_save)
   }
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Allocating dst buffer...", 0.6);
+    wid_progress_bar(this, "Allocating dst buffer...", 0.6f);
   }
 
   auto dst = malloc(src_size MALLOC_PAD);
@@ -510,7 +510,7 @@ bool Game::save(const std::string &file_to_save)
 
   if (need_larger_src_buffer) {
     if (! game_headers_only) {
-      wid_progress_bar(this, "Copying data...", 0.7);
+      wid_progress_bar(this, "Copying data...", 0.7f);
     }
 
     memcpy(src, data.c_str(), src_size);
@@ -532,7 +532,7 @@ bool Game::save(const std::string &file_to_save)
 #endif
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Compressing...", 0.8);
+    wid_progress_bar(this, "Compressing...", 0.8f);
   }
 
   auto start    = time_ms();
@@ -586,7 +586,7 @@ bool Game::save(const std::string &file_to_save)
 #endif
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Writing...", 0.9);
+    wid_progress_bar(this, "Writing...", 0.9f);
   }
 
   //
@@ -617,7 +617,7 @@ bool Game::save(const std::string &file_to_save)
 #endif
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Saved", 1.0);
+    wid_progress_bar(this, "Saved", 1.0f);
   }
 
   wid_progress_bar_destroy(this);
