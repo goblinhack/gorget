@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_thing_inlines.hpp"
 
@@ -12,12 +13,85 @@
 
 static std::mutex thing_mutex;
 
+[[nodiscard]] static bool thing_ext_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Continue from the last successful allocation
+  //
+  for (auto tries = 0; tries < THING_EXT_MAX; tries++) {
+    ThingExtId ai_id = os_random_range(1, THING_EXT_MAX - 1);
+    if (v->thing_ext[ ai_id ].in_use) {
+      continue;
+    }
+
+    thing_mutex.lock();
+    {
+      if (unlikely(v->thing_ext[ ai_id ].in_use)) {
+        thing_mutex.unlock();
+        continue;
+      }
+      v->thing_ext[ ai_id ].in_use = true;
+      v->thing_ext_count++;
+    }
+    thing_mutex.unlock();
+
+    t->ai_id = ai_id;
+    return &v->thing_ext[ ai_id ];
+  }
+
+  ERR("out of Thing AI IDs");
+  return 0;
+}
+
+static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto ai_id = t->ai_id;
+  if (! ai_id) {
+    return;
+  }
+
+  if (! v->thing_ext[ ai_id ].in_use) {
+    ERR("freeing unused Thing AI ID is not in use, %" PRIx32 "", ai_id);
+  }
+
+  v->thing_ext[ ai_id ].in_use = false;
+  v->thing_ext_count--;
+  if (v->thing_ext_count < 0) {
+    CROAK("bad thing_ext count");
+  }
+
+  t->ai_id = 0;
+}
+
 Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
 {
   TRACE_NO_INDENT();
 
   if (unlikely(! tp)) {
     CROAK("no template set for thing allocation");
+  }
+
+  //
+  // Check we cannot overflow on things
+  //
+  if (v->thing_count >= THING_MAX - 1) {
+    TP_LOG(tp, "out of thing memory");
+    return nullptr;
+  }
+
+  //
+  // Check we cannot overflow on monsters
+  //
+  auto needs_ext_memory = tp_is_monst(tp) || tp_is_player(tp) || tp_is_light_source(tp);
+  if (needs_ext_memory) {
+    if (v->thing_ext_count >= THING_EXT_MAX - 1) {
+      TP_LOG(tp, "out of ext thing memory");
+      return nullptr;
+    }
   }
 
   const auto tp_id                       = tp_id_get(tp);
@@ -81,6 +155,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
       // We safely have this slot
       //
       t->tp_id = tp_id;
+      v->thing_count++;
       thing_mutex.unlock();
     } else {
       //
@@ -89,6 +164,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
       if (unlikely(t->tp_id)) {
         continue;
       }
+      v->thing_count++;
       t->tp_id = tp_id;
     }
 
@@ -124,8 +200,11 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint)
           index_packed.b.entropy);
     }
 
-    if (thing_is_monst(t) || thing_is_player(t) || thing_is_light_source(t)) {
-      thing_ext_alloc(g, v, l, t);
+    if (needs_ext_memory) {
+      if (! thing_ext_alloc(g, v, l, t)) {
+        thing_free(g, v, l, t);
+        return nullptr;
+      }
     }
 
     return t;
@@ -166,53 +245,11 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_mutex.lock();
   thing_ext_free(g, v, l, t);
   memset((void *) t, 0, SIZEOF(*t));
+
+  v->thing_count--;
+  if (v->thing_count < 0) {
+    CROAK("bad thing count %d", v->thing_count);
+  }
+
   thing_mutex.unlock();
-}
-
-ThingExtp thing_ext_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  //
-  // Continue from the last successful allocation
-  //
-  for (auto tries = 0; tries < THING_EXT_MAX; tries++) {
-    ThingExtId ai_id = os_random_range(1, THING_EXT_MAX - 1);
-    if (v->thing_ext[ ai_id ].in_use) {
-      continue;
-    }
-
-    thing_mutex.lock();
-    {
-      if (unlikely(v->thing_ext[ ai_id ].in_use)) {
-        thing_mutex.unlock();
-        continue;
-      }
-      v->thing_ext[ ai_id ].in_use = true;
-    }
-    thing_mutex.unlock();
-
-    t->ai_id = ai_id;
-    return &v->thing_ext[ ai_id ];
-  }
-
-  ERR("out of Thing AI IDs");
-  return 0;
-}
-
-void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  auto ai_id = t->ai_id;
-  if (! ai_id) {
-    return;
-  }
-
-  if (! v->thing_ext[ ai_id ].in_use) {
-    ERR("freeing unused Thing AI ID is not in use, %" PRIx32 "", ai_id);
-  }
-
-  v->thing_ext[ ai_id ].in_use = false;
-  t->ai_id                     = 0;
 }

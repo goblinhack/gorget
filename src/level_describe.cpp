@@ -203,7 +203,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 
     auto one_detail = thing_detail_get(g, v, l, it);
     if (! one_detail.empty()) {
-      level_cursor_describe_add(g, v, it);
+      (void) level_cursor_describe_add(g, v, it);
     }
 
     //

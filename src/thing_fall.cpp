@@ -149,7 +149,9 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Move the thing there
   //
-  thing_warp_to(g, v, next_level, t, new_location);
+  if (! thing_warp_to(g, v, next_level, t, new_location)) {
+    TOPCON("You fail to find the ground!");
+  }
 
   if (thing_is_player(t)) {
     level_scroll_warp_to_focus(g, v, l);
@@ -275,6 +277,6 @@ void thing_fall(Gamep g, Levelsp v, Levelp l, Thingp t)
   // This is for bridges, so a chasm "appears".
   //
   if (! level_is_chasm(g, v, l, t)) {
-    thing_spawn(g, v, l, tp_first(is_chasm), t);
+    (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
   }
 }

@@ -47,15 +47,15 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
     if (max_count) {
       if (max_count == chasm_count) {
         if (! level_is_chasm(g, v, l, t)) {
-          thing_spawn(g, v, l, tp_first(is_chasm), t);
+          (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
         }
       } else if (max_count == water_count) {
         if (! level_is_water(g, v, l, t)) {
-          thing_spawn(g, v, l, tp_first(is_water), t);
+          (void) thing_spawn(g, v, l, tp_first(is_water), t);
         }
       } else if (max_count == lava_count) {
         if (! level_is_lava(g, v, l, t)) {
-          thing_spawn(g, v, l, tp_first(is_lava), t);
+          (void) thing_spawn(g, v, l, tp_first(is_lava), t);
         }
       }
     }

@@ -43,7 +43,7 @@ static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (level_is_water(g, v, l, t)) {
     if (! level_is_steam(g, v, l, t)) {
       if (d100() < 50) {
-        thing_spawn(g, v, l, tp_first(is_steam), thing_at(t));
+        (void) thing_spawn(g, v, l, tp_first(is_steam), thing_at(t));
       }
     }
   }

@@ -55,10 +55,22 @@ static bool test_player_in_steam(Gamep g, Testp t)
   // Spawn steam on the player
   //
   TEST_PROGRESS(t);
-  thing_spawn(g, v, l, tp_first(is_steam), player);
-  thing_spawn(g, v, l, tp_first(is_steam), player);
-  thing_spawn(g, v, l, tp_first(is_steam), player);
-  thing_spawn(g, v, l, tp_first(is_steam), player);
+  if (! thing_spawn(g, v, l, tp_first(is_steam), player)) {
+    TEST_FAILED(t, "spawn failed");
+    goto exit;
+  }
+  if (! thing_spawn(g, v, l, tp_first(is_steam), player)) {
+    TEST_FAILED(t, "spawn failed");
+    goto exit;
+  }
+  if (! thing_spawn(g, v, l, tp_first(is_steam), player)) {
+    TEST_FAILED(t, "spawn failed");
+    goto exit;
+  }
+  if (! thing_spawn(g, v, l, tp_first(is_steam), player)) {
+    TEST_FAILED(t, "spawn failed");
+    goto exit;
+  }
 
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 7; tries++) {

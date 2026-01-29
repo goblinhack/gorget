@@ -461,8 +461,13 @@ bool Game::save(const std::string &file_to_save)
   LOG("Save: %s", file_to_save.c_str());
   TRACE_AND_INDENT();
 
+  //
+  // Not sur why I needed this
+  //
+  bool need_larger_src_buffer = false;
+
   if (! game_headers_only) {
-    wid_progress_bar(this, "Saving...", 0.25);
+    wid_progress_bar(this, "Serializing...", 0.2);
   }
 
   std::stringstream s(std::ios::in | std::ios::out | std::ios::binary);
@@ -473,20 +478,45 @@ bool Game::save(const std::string &file_to_save)
   //
   // Get the pre compress buffer
   //
-  auto data = s.str();
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Stringifying...", 0.4);
+  }
+
+  auto data = s.str(); // This is a bit slow, but the buffere may not be contiguous
   s.seekg(0, std::ios::end);
   long src_size = s.tellg();
   s.seekg(0, std::ios::beg);
 
-  auto src = malloc(src_size MALLOC_PAD);
-  if (! src) {
-    CROAK("malloc %d failed", (int) src_size);
+  void *src;
+  if (need_larger_src_buffer) {
+    if (! game_headers_only) {
+      wid_progress_bar(this, "Allocating src buffer...", 0.5);
+    }
+
+    src = malloc(src_size MALLOC_PAD);
+    if (! src) {
+      CROAK("malloc %d failed", (int) src_size);
+    }
   }
+
+  if (! game_headers_only) {
+    wid_progress_bar(this, "Allocating dst buffer...", 0.6);
+  }
+
   auto dst = malloc(src_size MALLOC_PAD);
   if (! dst) {
     CROAK("malloc %d failed", (int) src_size);
   }
-  memcpy(src, data.c_str(), src_size);
+
+  if (need_larger_src_buffer) {
+    if (! game_headers_only) {
+      wid_progress_bar(this, "Copying data...", 0.7);
+    }
+
+    memcpy(src, data.c_str(), src_size);
+  } else {
+    src = (void *) data.c_str();
+  }
 
 #if 0
   IF_DEBUG2 {
@@ -502,7 +532,7 @@ bool Game::save(const std::string &file_to_save)
 #endif
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Compressing...", 0.5);
+    wid_progress_bar(this, "Compressing...", 0.8);
   }
 
   auto start    = time_ms();
@@ -556,7 +586,7 @@ bool Game::save(const std::string &file_to_save)
 #endif
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Writing...", 0.75);
+    wid_progress_bar(this, "Writing...", 0.9);
   }
 
   //
@@ -577,8 +607,11 @@ bool Game::save(const std::string &file_to_save)
 
   LOG("Wrote: %s", file_to_save.c_str());
 
-  free(src);
+  if (need_larger_src_buffer) {
+    free(src);
+  }
   free(dst);
+
 #ifndef USE_LZ4
   free(wrkmem);
 #endif

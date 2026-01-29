@@ -21,7 +21,7 @@ std::string callstack_string(void)
 
   for (auto depth = 0; depth < g_callframes_depth; depth++) {
     auto iter = &callframes[ depth ];
-    sout += string_sprintf("(callstack) %d %s, line %u\n", depth, iter->func, iter->line);
+    sout += string_sprintf("(callstack) %s, line %u\n", iter->func, iter->line);
   }
 
   return sout;

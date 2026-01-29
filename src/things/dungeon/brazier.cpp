@@ -37,7 +37,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
     //
     if (v->tick - t->tick_dead < 5) {
       if (! level_is_smoke(g, v, l, t)) {
-        thing_spawn(g, v, l, tp_first(is_smoke), t);
+        (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
       }
     }
     return;
@@ -56,15 +56,15 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
       // If we can't, then spawn over the brazier
       //
       if (! level_is_fire(g, v, l, t)) {
-        thing_spawn(g, v, l, tp_first(is_fire), t);
+        (void) thing_spawn(g, v, l, tp_first(is_fire), t);
       }
     } else {
       if (! level_is_fire(g, v, l, fire_at)) {
-        thing_spawn(g, v, l, tp_first(is_fire), fire_at);
+        (void) thing_spawn(g, v, l, tp_first(is_fire), fire_at);
       }
 
       if (! level_is_smoke(g, v, l, t)) {
-        thing_spawn(g, v, l, tp_first(is_smoke), t);
+        (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
       }
     }
   } else {
@@ -72,7 +72,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
     // Spawn over the brazier
     //
     if (! level_is_fire(g, v, l, t)) {
-      thing_spawn(g, v, l, tp_first(is_fire), t);
+      (void) thing_spawn(g, v, l, tp_first(is_fire), t);
     }
   }
 }
@@ -86,12 +86,12 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
   //
   if (e.event_type != THING_EVENT_SHOVED) {
     if (! level_is_fire(g, v, l, t)) {
-      thing_spawn(g, v, l, tp_first(is_fire), t);
+      (void) thing_spawn(g, v, l, tp_first(is_fire), t);
     }
   }
 
   if (! level_is_smoke(g, v, l, t)) {
-    thing_spawn(g, v, l, tp_first(is_smoke), t);
+    (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
   }
 
   auto player = thing_player(g);

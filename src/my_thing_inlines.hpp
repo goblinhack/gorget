@@ -41,7 +41,7 @@ static inline Thingp thing_find(Gamep g, Levelsp v, ThingId id)
 
   auto t = &v->thing_body[ index ];
   if (unlikely(! t || (t->id != id))) {
-    thing_find_non_inline(g, v, id);
+    t = thing_find_non_inline(g, v, id);
   }
 
   return t;

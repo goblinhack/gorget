@@ -58,8 +58,14 @@ static bool test_player_on_fire(Gamep g, Testp t)
   // Spawn fire on the player
   //
   TEST_PROGRESS(t);
-  thing_spawn(g, v, l, tp_first(is_fire), player);
-  thing_spawn(g, v, l, tp_first(is_fire), player);
+  if (! thing_spawn(g, v, l, tp_first(is_fire), player)) {
+    TEST_FAILED(t, "spawn failed");
+    goto exit;
+  }
+  if (! thing_spawn(g, v, l, tp_first(is_fire), player)) {
+    TEST_FAILED(t, "spawn failed");
+    goto exit;
+  }
 
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 3; tries++) {

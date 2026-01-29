@@ -84,7 +84,14 @@ bool thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or
     return false;
   }
 
-  thing_warp_to(g, v, l, item, thing_at(player_or_monst));
+  //
+  // Drop the thing where the player is
+  //
+  if (! thing_warp_to(g, v, l, item, thing_at(player_or_monst))) {
+    auto the_thing = thing_the_long_name(g, v, l, item);
+    TOPCON("You fail to place %s.", the_thing.c_str());
+    return false;
+  }
 
   if (thing_is_player(player_or_monst)) {
     auto the_thing = thing_the_long_name(g, v, l, item);

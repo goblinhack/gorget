@@ -485,6 +485,9 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
   return true;
 }
 
+//
+// Return true on a successful move (or a popup asking more info)
+//
 static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool need_path)
 {
   TRACE_NO_INDENT();
@@ -500,7 +503,11 @@ static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, b
       move_path.push_back(to);
       player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
       level_cursor_copy_path_to_player(g, v, l, move_path);
-      player_check_if_target_needs_move_confirm(g, v, l, to);
+      if (! player_check_if_target_needs_move_confirm(g, v, l, to)) {
+        //
+        // A popup is present
+        //
+      }
     }
     return true;
   } else if (thing_can_move_to_by_shoving(g, v, l, t, to)) {
@@ -519,6 +526,9 @@ static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, b
       // If this needs confirmation, then do not continue onto shoving.
       //
       if (! player_check_if_target_needs_move_confirm(g, v, l, to)) {
+        //
+        // A popup is present
+        //
         return true;
       }
     }
@@ -785,7 +795,7 @@ static void player_level_leave(Gamep g, Levelsp v, LevelNum level_num = LEVEL_SE
 
   level_select_update_grid_tiles(g, v);
   level_cursor_path_reset(g, v);
-  level_change(g, v, level_num);
+  (void) level_change(g, v, level_num);
   game_request_to_remake_ui_set(g);
 }
 

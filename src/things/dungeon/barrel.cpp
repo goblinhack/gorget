@@ -40,7 +40,7 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
     auto p = at + delta;
     if (! level_is_obs_to_explosion(g, v, l, p)) {
       if (! level_is_explosion(g, v, l, p)) {
-        thing_spawn(g, v, l, tp_first(is_explosion), p);
+        (void) thing_spawn(g, v, l, tp_first(is_explosion), p);
       }
     }
   }

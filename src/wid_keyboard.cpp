@@ -206,7 +206,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
   }
 
   if (key_in) {
-    wid_receive_input(g, ctx->input, key_in);
+    (void) wid_receive_input(g, ctx->input, key_in);
   } else if (! strcasecmp(add, "OK")) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
   } else if (! strcasecmp(add, "CANCL")) {
@@ -220,21 +220,21 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
       if (tmp.empty()) {
         break;
       }
-      wid_receive_input(g, ctx->input, &key);
+      (void) wid_receive_input(g, ctx->input, &key);
     }
 
   } else if (! strcasecmp(add, "DEL")) {
     SDL_Keysym key = {};
     key.sym        = SDLK_BACKSPACE;
-    wid_receive_input(g, ctx->input, &key);
+    (void) wid_receive_input(g, ctx->input, &key);
   } else if (! strcasecmp(add, "SPACE")) {
     SDL_Keysym key = {};
     key.sym        = ' ';
-    wid_receive_input(g, ctx->input, &key);
+    (void) wid_receive_input(g, ctx->input, &key);
   } else {
     SDL_Keysym key = {};
     key.sym        = add[ 0 ];
-    wid_receive_input(g, ctx->input, &key);
+    (void) wid_receive_input(g, ctx->input, &key);
   }
 
   if (key_in && (focusx == -1) && (focusy == -1)) {
@@ -573,7 +573,7 @@ static bool wid_keyboard_button_joy_button_event(Gamep g, Widp w, int x, int y)
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ]) {
     SDL_Keysym key = {};
     key.sym        = SDLK_BACKSPACE;
-    wid_receive_input(g, ctx->input, &key);
+    (void) wid_receive_input(g, ctx->input, &key);
     ret = true;
   }
   if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ]) {
@@ -617,7 +617,7 @@ static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym 
     case SDLK_UP :
     case SDLK_DOWN :
     case SDLK_HOME :
-    case SDLK_END :       wid_receive_input(g, ctx->input, key); return true;
+    case SDLK_END :       (void) wid_receive_input(g, ctx->input, key); return true;
 
     default :             wid_keyboard_event(g, w, -1, -1, key); return true;
   }

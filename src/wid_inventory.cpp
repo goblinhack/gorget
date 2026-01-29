@@ -50,7 +50,7 @@ static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, 
     return;
   }
 
-  level_cursor_describe_add(g, v, t);
+  (void) level_cursor_describe_add(g, v, t);
 }
 
 static void wid_inventory_mouse_over_end(Gamep g, Widp w)
@@ -67,7 +67,7 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
     return;
   }
 
-  level_cursor_describe_remove(g, v, t);
+  (void) level_cursor_describe_remove(g, v, t);
 }
 
 static bool wid_inventory_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)

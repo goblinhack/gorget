@@ -90,8 +90,14 @@ static bool test_player_fall_while_on_fire(Gamep g, Testp t)
   //
   TEST_PROGRESS(t);
   {
-    thing_spawn(g, v, l1, tp_first(is_fire), player);
-    thing_spawn(g, v, l1, tp_first(is_fire), player);
+    if (! thing_spawn(g, v, l1, tp_first(is_fire), player)) {
+      TEST_FAILED(t, "spawn failed");
+      goto exit;
+    }
+    if (! thing_spawn(g, v, l1, tp_first(is_fire), player)) {
+      TEST_FAILED(t, "spawn failed");
+      goto exit;
+    }
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
     game_wait_for_tick_to_finish(g, v, l1);

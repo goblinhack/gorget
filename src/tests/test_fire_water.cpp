@@ -70,7 +70,10 @@ static bool test_fire_on_water(Gamep g, Testp t)
   //
   // Spawn fire twice. This should be enough to evaporate the water.
   //
-  thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0));
+  if (! thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0))) {
+    TEST_FAILED(t, "spawn failed");
+    goto exit;
+  }
 
   TEST_PROGRESS(t);
   for (auto tries = 0; tries < 3; tries++) {

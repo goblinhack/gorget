@@ -21,10 +21,11 @@ static void thing_collision_handle_common(Gamep g, Levelsp v, Levelp l, Thingp o
   if (thing_is_teleport(obstacle)) {
     if (! thing_is_teleport_blocked(me)) {
       THING_LOG(me, "over teleport");
-      thing_warp_to(g, v, l, me, thing_at(obstacle));
-      thing_teleport_handle(g, v, l, me);
-      stop = true;
-      return;
+      if (thing_warp_to(g, v, l, me, thing_at(obstacle))) {
+        (void) thing_teleport_handle(g, v, l, me);
+        stop = true;
+        return;
+      }
     }
   }
 

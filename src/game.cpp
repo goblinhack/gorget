@@ -805,7 +805,10 @@ void Game::create_levels(void)
   //
   // First level. Usually 0 but can be a specified level.
   //
-  level_change(g, v, g_level_opt.level_num);
+  if (! level_change(g, v, g_level_opt.level_num)) {
+    ERR("failed to change to chosen level %d", g_level_opt.level_num);
+    return;
+  }
 
   //
   // Update the tiles show in level selection
@@ -816,7 +819,10 @@ void Game::create_levels(void)
     //
     // Start in level select?
     //
-    level_change(g, v, LEVEL_SELECT_ID);
+    if (! level_change(g, v, LEVEL_SELECT_ID)) {
+      ERR("failed to change to level selection");
+      return;
+    }
   }
 
   level_debug_stats(g);

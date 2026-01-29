@@ -167,7 +167,10 @@ bool thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   THING_LOG(t, "pre teleport, warp to %d,%d", to.x, to.y);
 
-  thing_warp_to(g, v, l, t, to);
+  if (! thing_warp_to(g, v, l, t, to)) {
+    THING_LOG(t, "pre teleport, warp to %d,%d failed", to.x, to.y);
+    return false;
+  }
 
   thing_is_teleporting_set(g, v, l, t);
 

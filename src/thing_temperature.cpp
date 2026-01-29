@@ -26,7 +26,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
       //
     } else if (! level_is_fire(g, v, l, t)) {
       THING_DBG(t, "set on fire");
-      thing_spawn(g, v, l, tp_random(is_fire), t);
+      (void) thing_spawn(g, v, l, tp_random(is_fire), t);
       thing_is_burning_set(g, v, l, t);
     } else {
       thing_is_burning_set(g, v, l, t);

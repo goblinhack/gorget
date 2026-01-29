@@ -8,22 +8,22 @@
 #include "my_level.hpp"
 #include "my_sound.hpp"
 
-bool thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias)
+void thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string &alias)
 {
   TRACE_NO_INDENT();
 
   if (g_opt_tests) {
-    return false;
+    return;
   }
 
   auto player = thing_player(g);
   if (! player) {
-    return false;
+    return;
   }
 
   Levelp player_level = thing_player_level(g);
   if (! player_level) {
-    return false;
+    return;
   }
 
   auto next_level_down = level_select_get_next_level_down(g, v, player_level);
@@ -43,7 +43,7 @@ bool thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
     //
     // It's too far away. Ignore the sound.
     //
-    return false;
+    return;
   }
 
   //
@@ -62,8 +62,8 @@ bool thing_sound_play(Gamep g, Levelsp v, Levelp l, Thingp t, const std::string 
   }
 
   if (scale <= 0) {
-    return false;
+    return;
   }
 
-  return sound_play(g, alias, scale);
+  (void) sound_play(g, alias, scale);
 }

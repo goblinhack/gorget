@@ -72,8 +72,14 @@ static bool test_player_on_fire_move_into_water(Gamep g, Testp t)
   //
   TEST_PROGRESS(t);
   {
-    thing_spawn(g, v, l, tp_first(is_fire), player);
-    thing_spawn(g, v, l, tp_first(is_fire), player);
+    if (! thing_spawn(g, v, l, tp_first(is_fire), player)) {
+      TEST_FAILED(t, "spawn failed");
+      goto exit;
+    }
+    if (! thing_spawn(g, v, l, tp_first(is_fire), player)) {
+      TEST_FAILED(t, "spawn failed");
+      goto exit;
+    }
     // level_dump(g, v, l, w, h);
     game_event_wait(g);
     if (! game_wait_for_tick_to_finish(g, v, l)) {

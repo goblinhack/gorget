@@ -141,7 +141,7 @@ static void tp_player_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If asked to follow the mouse path, start walking
   //
-  player_move_to_next(g, v, l, t);
+  (void) player_move_to_next(g, v, l, t);
 }
 
 static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
@@ -151,7 +151,7 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // If asked to follow the mouse path, start walking
   //
-  player_move_to_next(g, v, l, t);
+  (void) player_move_to_next(g, v, l, t);
 
   if (thing_is_burning(t)) {
     thing_sound_play(g, v, l, t, "ouch");

@@ -62,6 +62,9 @@ static Tilep tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp 
   return nullptr;
 }
 
+//
+// Return trun on processing the mouse event
+//
 static bool tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button)
 {
   TRACE_NO_INDENT();
@@ -77,19 +80,22 @@ static bool tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, in
 
   if (distance(thing_at(t), thing_at(player)) <= 1) {
     if (thing_is_open(t)) {
-      thing_close(g, v, l, t, player /* opener */);
-      //
-      // Processed the mouse event
-      //
-      return true;
+      if (thing_close(g, v, l, t, player /* opener */)) {
+        TOPCON("The door closes.");
+      } else {
+        TOPCON("The door wont close!");
+      }
     } else {
-      thing_open(g, v, l, t, player /* opener */);
-      //
-      // Processed the mouse event
-      //
-      return true;
+      if (thing_open(g, v, l, t, player /* opener */)) {
+        TOPCON("The door opens.");
+      } else {
+        TOPCON("The door wont open!");
+      }
     }
+
+    return true;
   }
+
   return false;
 }
 
