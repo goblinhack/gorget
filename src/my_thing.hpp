@@ -692,7 +692,6 @@ void                    thing_stats_dump(Gamep, Levelsp);
 [[nodiscard]] bool thing_push(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 [[nodiscard]] bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-void               thing_sound_play(Gamep, Levelsp, Levelp, Thingp, const std::string &alias);
 [[nodiscard]] bool thing_teleport_handle(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] bool thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 [[nodiscard]] bool thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
@@ -753,6 +752,7 @@ void               thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp 
 void               thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const spoint);
 void               thing_projectile_move(Gamep, Levelsp, Levelp, Thingp, float dt);
 void               thing_set_dir_from_delta(Thingp, int dx, int dy);
+void               thing_sound_play(Gamep, Levelsp, Levelp, Thingp, const std::string &alias);
 void               thing_temperature_damage_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void               thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void               thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
