@@ -41,7 +41,8 @@ extern int         g_argc;
 extern std::string g_need_restart_with_given_arguments; // Need to restart game with the given arg
 extern std::string g_program_name;
 extern std::string g_opt_seed_name;
-extern std::string g_opt_test_name;
+extern std::string g_opt_test_name_filter;
+extern std::string g_opt_test_current;
 
 extern int                      g_errored_thread_id; // An error has occurred
 extern std::string              g_error_last;        // The last error cause

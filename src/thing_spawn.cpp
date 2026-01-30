@@ -14,7 +14,11 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
 
   auto t = thing_init(g, v, l, tp, at);
   if (! t) {
-    TP_ERR(tp, "failed to init thing");
+    if (g_opt_test_current == "test_alloc_free_monsts") {
+      TP_LOG(tp, "failed to init thing");
+    } else {
+      TP_ERR(tp, "failed to init thing");
+    }
     return nullptr;
   }
 

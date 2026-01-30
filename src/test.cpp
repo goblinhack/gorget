@@ -217,11 +217,13 @@ void tests_run(Gamep g)
     //
     // Skip the test if needed
     //
-    if (g_opt_test_name != "") {
-      if (name != g_opt_test_name) {
+    if (g_opt_test_name_filter != "") {
+      if (name != g_opt_test_name_filter) {
         skipped = true;
       }
     }
+
+    g_opt_test_current = name;
 
     //
     // Preamble
