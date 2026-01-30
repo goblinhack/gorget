@@ -34,10 +34,10 @@ bool level_select_is_oob(spoint p)
   if (p.y < 0) {
     return true;
   }
-  if (p.x >= LEVELS_ACROSS) {
+  if (p.x >= LEVEL_ACROSS) {
     return true;
   }
-  if (p.y >= LEVELS_DOWN) {
+  if (p.y >= LEVEL_DOWN) {
     return true;
   }
   return false;
@@ -53,10 +53,10 @@ bool level_select_is_oob(int x, int y)
   if (y < 0) {
     return true;
   }
-  if (x >= LEVELS_ACROSS) {
+  if (x >= LEVEL_ACROSS) {
     return true;
   }
-  if (y >= LEVELS_DOWN) {
+  if (y >= LEVEL_DOWN) {
     return true;
   }
   return false;
@@ -171,9 +171,9 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   //
   // Try diagonally left first
   //
-  while (tries++ < LEVELS_ACROSS * 2) {
+  while (tries++ < LEVEL_ACROSS * 2) {
     p.y++;
-    if ((p.x >= LEVELS_DOWN) || (p.y >= LEVELS_ACROSS)) {
+    if ((p.x >= LEVEL_DOWN) || (p.y >= LEVEL_ACROSS)) {
       //
       // Failed. Try the other direction.
       //
@@ -195,10 +195,10 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   //
   // Try diagonally right
   //
-  while (tries++ < LEVELS_ACROSS * 2) {
+  while (tries++ < LEVEL_ACROSS * 2) {
     p.x++;
     p.y++;
-    if ((p.x >= LEVELS_DOWN) || (p.y >= LEVELS_ACROSS)) {
+    if ((p.x >= LEVEL_DOWN) || (p.y >= LEVEL_ACROSS)) {
       //
       // Failed. Try the other direction.
       //
@@ -220,8 +220,8 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   //
   // Get the next sequential level, in terms of level number. This is used for tests.
   //
-  for (int y = 0; y < LEVELS_DOWN; y++) {
-    for (int x = 0; x < LEVELS_ACROSS; x++) {
+  for (int y = 0; y < LEVEL_DOWN; y++) {
+    for (int x = 0; x < LEVEL_ACROSS; x++) {
       LevelSelectCell *c = &s->data[ x ][ y ];
       if (! c->is_set) {
         continue;
@@ -258,11 +258,11 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   // Nothing to fall onto. Try a random level.
   //
   tries = 0;
-  while (tries++ < LEVELS_DOWN * LEVELS_ACROSS * 2) {
+  while (tries++ < LEVEL_DOWN * LEVEL_ACROSS * 2) {
     if (0) {
       CON("level %d -> next (random)", l->level_num);
     }
-    spoint random_p(pcg_random_range(0, LEVELS_ACROSS), pcg_random_range(0, LEVELS_DOWN));
+    spoint random_p(pcg_random_range(0, LEVEL_ACROSS), pcg_random_range(0, LEVEL_DOWN));
 
     auto cand = level_select_get_level_from_grid_coords(g, v, random_p);
     if (cand && (cand != l)) {
@@ -321,9 +321,9 @@ static void level_select_dump(Gamep g, Levelsp v, LevelSelect *s)
 
   LOG("LevelSelect, level count %d", s->level_count);
 
-  for (int y = 0; y < LEVELS_DOWN; y++) {
+  for (int y = 0; y < LEVEL_DOWN; y++) {
     std::string out;
-    for (int x = 0; x < LEVELS_ACROSS; x++) {
+    for (int x = 0; x < LEVEL_ACROSS; x++) {
       out += s->data[ x ][ y ].is_set ? CHARMAP_FLOOR : CHARMAP_EMPTY;
     }
     LOG("%s", out.c_str());
@@ -342,8 +342,8 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
 
   auto n = 0;
 
-  for (int y = 0; y < LEVELS_DOWN; y++) {
-    for (int x = 0; x < LEVELS_ACROSS; x++) {
+  for (int y = 0; y < LEVEL_DOWN; y++) {
+    for (int x = 0; x < LEVEL_ACROSS; x++) {
       if (s->data[ x ][ y ].is_set) {
         auto l = game_level_get(g, v, n);
         if (! l) {
@@ -358,7 +358,7 @@ void level_select_assign_levels_to_grid(Gamep g, Levelsp v)
         l->level_select_at = spoint(x, y);
 
         c->level_num = l->level_num;
-        if ((x == LEVELS_ACROSS - 1) && (y == LEVELS_DOWN - 1)) {
+        if ((x == LEVEL_ACROSS - 1) && (y == LEVEL_DOWN - 1)) {
           c->final_level = true;
         }
 
@@ -398,8 +398,8 @@ static int level_select_count_levels(Gamep g, Levelsp v, LevelSelect *s)
 
   s->level_count = 0;
 
-  for (int y = 0; y < LEVELS_DOWN; y++) {
-    for (int x = 0; x < LEVELS_ACROSS; x++) {
+  for (int y = 0; y < LEVEL_DOWN; y++) {
+    for (int x = 0; x < LEVEL_ACROSS; x++) {
       if (s->data[ x ][ y ].is_set) {
         s->level_count++;
       }
@@ -412,7 +412,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, spoint at, int dive_c
 {
   TRACE_NO_INDENT();
 
-  spoint end(LEVELS_ACROSS - 1, LEVELS_DOWN - 1);
+  spoint end(LEVEL_ACROSS - 1, LEVEL_DOWN - 1);
 
   while (at != end) {
     //
@@ -434,11 +434,11 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, spoint at, int dive_c
       at.x++;
     }
 
-    if (at.x > LEVELS_ACROSS - 1) {
-      at.x = LEVELS_ACROSS - 1;
+    if (at.x > LEVEL_ACROSS - 1) {
+      at.x = LEVEL_ACROSS - 1;
     }
-    if (at.y > LEVELS_DOWN - 1) {
-      at.y = LEVELS_DOWN - 1;
+    if (at.y > LEVEL_DOWN - 1) {
+      at.y = LEVEL_DOWN - 1;
     }
   }
 
@@ -450,8 +450,8 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
   TRACE_NO_INDENT();
 
   while (true) {
-    auto x = pcg_random_range(0, LEVELS_ACROSS);
-    auto y = pcg_random_range(0, LEVELS_DOWN);
+    auto x = pcg_random_range(0, LEVEL_ACROSS);
+    auto y = pcg_random_range(0, LEVEL_DOWN);
 
     if (s->data[ x ][ y ].is_set) {
       snake_dive(g, v, s, spoint(x, y), dive_chance);
@@ -497,8 +497,8 @@ static bool level_select_map_set(Gamep g, Levelsp v)
 
   spoint map_offset(MAP_WIDTH / 2, 1);
 
-  for (auto y = 0; y < LEVELS_DOWN; y++) {
-    for (auto x = 0; x < LEVELS_ACROSS; x++) {
+  for (auto y = 0; y < LEVEL_DOWN; y++) {
+    for (auto x = 0; x < LEVEL_ACROSS; x++) {
       LevelSelectCell *c = &s->data[ x ][ y ];
       if (! c->is_set) {
         continue;
@@ -539,14 +539,14 @@ static bool level_select_map_set(Gamep g, Levelsp v)
           }
         }
 
-        if (y < LEVELS_DOWN - 1) {
+        if (y < LEVEL_DOWN - 1) {
           LevelSelectCell *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
           }
         }
-        if (x < LEVELS_ACROSS - 1) {
+        if (x < LEVEL_ACROSS - 1) {
           LevelSelectCell *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
@@ -574,14 +574,14 @@ static bool level_select_map_set(Gamep g, Levelsp v)
           }
         }
 
-        if (y < LEVELS_DOWN - 1) {
+        if (y < LEVEL_DOWN - 1) {
           LevelSelectCell *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
             l->player_can_enter_this_level_next = true;
           }
         }
-        if (x < LEVELS_ACROSS - 1) {
+        if (x < LEVEL_ACROSS - 1) {
           LevelSelectCell *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
             tp                                  = tp_is_level_next;
@@ -597,7 +597,7 @@ static bool level_select_map_set(Gamep g, Levelsp v)
       //
       // Final level
       //
-      if ((x == LEVELS_ACROSS - 1) && (y == LEVELS_DOWN - 1)) {
+      if ((x == LEVEL_ACROSS - 1) && (y == LEVEL_DOWN - 1)) {
         tp = tp_is_level_final;
       }
 
@@ -666,8 +666,8 @@ static bool level_select_map_set(Gamep g, Levelsp v)
   //
   // Add horizontal level connector
   //
-  for (auto y = 0; y < LEVELS_DOWN; y++) {
-    for (auto x = 0; x < LEVELS_ACROSS - 1; x++) {
+  for (auto y = 0; y < LEVEL_DOWN; y++) {
+    for (auto x = 0; x < LEVEL_ACROSS - 1; x++) {
       LevelSelectCell *c = &s->data[ x ][ y ];
       if (! c->is_set) {
         continue;
@@ -695,8 +695,8 @@ static bool level_select_map_set(Gamep g, Levelsp v)
   //
   // Add vertical level connector
   //
-  for (auto y = 0; y < LEVELS_DOWN - 1; y++) {
-    for (auto x = 0; x < LEVELS_ACROSS; x++) {
+  for (auto y = 0; y < LEVEL_DOWN - 1; y++) {
+    for (auto x = 0; x < LEVEL_ACROSS; x++) {
       LevelSelectCell *c = &s->data[ x ][ y ];
       if (! c->is_set) {
         continue;

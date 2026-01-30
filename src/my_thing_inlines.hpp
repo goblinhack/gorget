@@ -37,9 +37,9 @@ static inline Thingp thing_find(Gamep g, Levelsp v, ThingId id)
 
   ThingIdPacked id_packed = {};
   id_packed.a.val         = id;
-  auto index              = id_packed.c.index;
+  auto arr_index          = id_packed.c.arr_index;
 
-  auto t = &v->thing_body[ index ];
+  auto t = &v->thing_body[ arr_index ];
   if (unlikely(! t || (t->id != id))) {
     t = thing_find_non_inline(g, v, id);
   }
@@ -216,9 +216,9 @@ static inline Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
 
   ThingIdPacked id_packed;
   id_packed.a.val = id;
-  auto index      = id_packed.c.index;
+  auto arr_index  = id_packed.c.arr_index;
 
-  auto t = &v->thing_body[ index ];
+  auto t = &v->thing_body[ arr_index ];
   if (! t) {
     return nullptr;
   }

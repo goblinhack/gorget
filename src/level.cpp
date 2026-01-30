@@ -235,8 +235,7 @@ void levels_destroy(Gamep g, Levelsp v)
 
 void level_finalize(Gamep g, Levelsp v, Levelp l)
 {
-  LEVEL_LOG(l, "Level finalize");
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   (void) level_select_calculate_next_level_down(g, v, l, true);
   v->level_count++;

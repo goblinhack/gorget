@@ -7,6 +7,7 @@
 #define _MY_GAME_HPP_
 
 #include "my_enum.hpp"
+#include "my_spoint.hpp"
 #include "my_types.hpp"
 
 #include <SDL.h>
@@ -314,6 +315,7 @@ void game_start_playing(Gamep);
 void game_state_change(Gamep, GameState state, const char *);
 void game_state_reset(Gamep, const char *);
 void game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, int w, int h, const char *contents);
+void game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, spoint, int w, int h, const char *contents);
 void game_tick(Gamep);
 void game_unset_currently_saving_snapshot(Gamep);
 void game_unset_request_reset_state_change(Gamep);

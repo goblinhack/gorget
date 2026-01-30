@@ -343,11 +343,11 @@ std::string backtrace_string(void)
 }
 #endif
 
-void backtrace_dump_stderr(void)
+void backtrace_dump(FILE *fp)
 {
   backtrace_mutex.lock();
   auto bt = backtrace_string();
-  fprintf(stderr, "%s", bt.c_str());
+  fprintf(fp, "%s", bt.c_str());
   backtrace_mutex.unlock();
 }
 

@@ -18,6 +18,7 @@ void        CON_NEW_LINE(void);
 void        CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        ctrlc_handler(int sig);
 void        error_message(Gamep, const std::string &error);
+void        error_clear(Gamep);
 void        find_file_locations(void);
 void        LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        reset_globals(void);

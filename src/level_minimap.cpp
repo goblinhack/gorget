@@ -46,8 +46,8 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool 
 
     blit(solid_tex_id, 0, 1, 1, 0, 0, 0, w, h, GRAY5);
 
-    for (auto y = 0; y < LEVELS_DOWN; y++) {
-      for (auto x = 0; x < LEVELS_ACROSS; x++) {
+    for (auto y = 0; y < LEVEL_DOWN; y++) {
+      for (auto x = 0; x < LEVEL_ACROSS; x++) {
         color  c              = BLACK;
         Levelp level_at_coord = nullptr;
 

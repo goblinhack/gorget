@@ -2,13 +2,14 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_test.hpp"
 
 #include <format>
 
-void level_debug_stats(Gamep g)
+void game_debug_info(Gamep g)
 {
   TRACE_NO_INDENT();
 
@@ -17,13 +18,64 @@ void level_debug_stats(Gamep g)
     return;
   }
 
-  LOG("Level stats:");
-  LOG("- Total memory:         %" PRI_SIZE_T " Mb", sizeof(Levels) / (1024 * 1024));
-  LOG("- Per level memory:     %" PRI_SIZE_T " Kb", sizeof(Level) / (1024));
-  LOG("- Levels:               %" PRI_SIZE_T " Mb", sizeof(v->level) / (1024 * 1024));
-  LOG("- Max things:           %u", 1 << THING_INDEX_BITS);
+  LOG("Level info:");
+  LOG("- Levels memory:                   %" PRI_SIZE_T " b %" PRI_SIZE_T " Mb", sizeof(Levels),
+      sizeof(Levels) / (1024 * 1024));
+  LOG("- Level memory:                    %" PRI_SIZE_T " b %" PRI_SIZE_T " Kb", sizeof(Level),
+      sizeof(Level) / (1024));
+  LOG("- Thing memory:                    %" PRI_SIZE_T " b", sizeof(Thing));
+  LOG("- Thing inventory memory:          %" PRI_SIZE_T " b", sizeof(ThingInventory));
+  LOG("- Thing ext memory:                %" PRI_SIZE_T " b", sizeof(ThingExt));
+  LOG("- Thing player memory:             %" PRI_SIZE_T " b", sizeof(ThingPlayer));
+  LOG("- MAP_HEIGHT                       %u", MAP_HEIGHT);
+  LOG("- MAP_WIDTH                        %u", MAP_WIDTH);
+  LOG("- MAP_SLOTS                        %u", MAP_SLOTS);
+  LOG("- LEVEL_SCALE                      %u", LEVEL_SCALE);
+  LOG("- LEVEL_ACROSS                     %u", LEVEL_ACROSS);
+  LOG("- LEVEL_DOWN                       %u", LEVEL_DOWN);
+  LOG("- LEVEL_SELECT_ID                  %u", LEVEL_SELECT_ID);
+  LOG("- LEVEL_MAX                        %u", LEVEL_MAX);
+  LOG("- LEVEL_ID_MAX                     %u", THING_ID_PER_LEVEL_MAX);
+  LOG("- THING_LEVEL_ID_BITS              %u (%u indices)", THING_LEVEL_ID_BITS, (1 << THING_LEVEL_ID_BITS) - 1);
+  LOG("- THING_PER_LEVEL_THING_ID_BITS    %u (%u indices)", THING_PER_LEVEL_THING_ID_BITS,
+      (1 << THING_PER_LEVEL_THING_ID_BITS) - 1);
+  LOG("- THING_ARR_INDEX_BITS             %u (%u total indices)", THING_ARR_INDEX_BITS,
+      (1 << THING_ARR_INDEX_BITS) - 1);
+  LOG("- THING_ENTROPY_BITS               %u", THING_ENTROPY_BITS);
+  LOG("- THING_ID_PER_LEVEL_REQ           %u", THING_ID_PER_LEVEL_REQ);
+  LOG("- THING_ID_PER_LEVEL_MAX           %u", THING_ID_PER_LEVEL_MAX);
+  LOG("- THING_ID_MAX                     %u", THING_ID_MAX);
+
+  if (LEVEL_ID_REQ > LEVEL_ID_MAX) {
+    CROAK("You need more bits for level IDs as the level will use too many");
+  }
+
+  if (THING_ID_PER_LEVEL_REQ > THING_ID_PER_LEVEL_MAX) {
+    CROAK("You need more bits for thing IDs as the level will use too many");
+  }
 
   thing_stats_dump(g, v);
+}
+
+int levels_thing_count(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  int thing_count = 0;
+  for (auto i = 0; i < THING_ID_MAX; i++) {
+    if (v->thing_body[ i ].tp_id) {
+      thing_count++;
+    }
+  }
+
+  return thing_count;
+}
+
+int levels_thing_ext_count(Gamep g, Levelsp v)
+{
+  TRACE_NO_INDENT();
+
+  return v->thing_ext_count;
 }
 
 void level_debug(Gamep g, Levelsp v, Levelp l)

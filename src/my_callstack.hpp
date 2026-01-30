@@ -82,7 +82,7 @@ struct tracer_no_indent_t {
   }
 };
 
-extern void        callstack_dump_stderr(void);
+extern void        callstack_dump(FILE *);
 extern void        callstack_dump(void);
 extern std::string callstack_string(void);
 

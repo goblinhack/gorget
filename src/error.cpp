@@ -76,6 +76,12 @@ static void error_message_do(Gamep g, std::string &tech_support)
 
 void error_message(Gamep g, const std::string &error_msg)
 {
+  if (! g_opt_tests) {
+    if (MY_STDOUT != stdout) {
+      fprintf(MY_STDOUT, "%s\n", error_msg.c_str());
+    }
+  }
+
   fprintf(stderr, "%s\n", error_msg.c_str());
   if (MY_STDERR != stderr) {
     fprintf(MY_STDERR, "%s\n", error_msg.c_str());
@@ -92,14 +98,14 @@ void error_message(Gamep g, const std::string &error_msg)
   m.unlock();
 
   if (g_thread_id != MAIN_THREAD) {
-    callstack_dump_stderr();
-    backtrace_dump_stderr();
+    callstack_dump(stderr);
+    backtrace_dump(stderr);
     return;
   }
 
   if (g_opt_tests) {
-    callstack_dump_stderr();
-    backtrace_dump_stderr();
+    callstack_dump(MY_STDERR);
+    backtrace_dump(MY_STDERR);
     return;
   }
 
@@ -109,4 +115,12 @@ void error_message(Gamep g, const std::string &error_msg)
   tech_support += error_msg;
 
   error_message_do(g, tech_support);
+}
+
+void error_clear(Gamep g)
+{
+  TRACE_NO_INDENT();
+
+  g_errored_thread_id = -1;
+  g_err_count         = 0;
 }

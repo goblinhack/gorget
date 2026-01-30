@@ -14,6 +14,8 @@ extern bool tests_init(void);
 /* shell do */
 /* shell echo "extern bool $i();" */
 /* shell done */
+extern bool test_load_alloc_free_monsts();
+extern bool test_load_alloc_free_walls();
 extern bool test_load_barrel_explosion();
 extern bool test_load_barrel();
 extern bool test_load_brazier_shove_chasm_twice();

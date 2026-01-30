@@ -20,45 +20,27 @@
 
 #define MY_ITERS_MAX 4
 
-//
-// Entropy is always > 0 for Thing IDs to distinguish them
-// A thing ID is composed as: [ Entropy bits ] [ ID bits ]
-//
-//                       31      |       |       |      0
-//                       +-------------------------------
-//                       LLLLLLLLIIIIIIIIIIIIEEEEEEEEEEEE
-//
-// E Entropy
-// I Per level ID
-// L Level
-//
-#define THING_LEVEL_ID_BITS     8
-#define THING_PER_LEVEL_ID_BITS 14
-#define THING_INDEX_BITS        (THING_LEVEL_ID_BITS + THING_PER_LEVEL_ID_BITS)
-#define THING_ENTROPY_BITS      10
-#define THING_MAX               (1 << THING_INDEX_BITS)
-
 typedef union {
   struct {
     unsigned int val : 32;
   } __attribute__((__packed__)) a;
   struct {
     unsigned int entropy      : THING_ENTROPY_BITS;
-    unsigned int per_level_id : THING_PER_LEVEL_ID_BITS;
+    unsigned int per_level_id : THING_PER_LEVEL_THING_ID_BITS;
     unsigned int level_num    : THING_LEVEL_ID_BITS;
   } __attribute__((__packed__)) b;
   struct {
-    unsigned int entropy : THING_ENTROPY_BITS;
-    unsigned int index   : THING_INDEX_BITS;
+    unsigned int entropy   : THING_ENTROPY_BITS;
+    unsigned int arr_index : THING_ARR_INDEX_BITS;
   } __attribute__((__packed__)) c;
 } __attribute__((__packed__)) ThingIdPacked;
 
 //
 // Essentially equates to the max number of monsters+light sources per level
 //
-#define MONSTS_PER_LEVEL    100                             // monst(t) + is_player + is_light_source(t)
-#define THING_EXT_MAX       (MAX_LEVELS * MONSTS_PER_LEVEL) // The size of thing_ext
-#define THING_DESCRIBE_MAX  10                              // The number of things we can show in the rightbar
+#define MONSTS_PER_LEVEL    200                            // monst(t) + is_player + is_light_source(t)
+#define THING_EXT_MAX       (LEVEL_MAX * MONSTS_PER_LEVEL) // The size of thing_ext
+#define THING_DESCRIBE_MAX  10                             // The number of things we can show in the rightbar
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 2)
 #define THING_INVENTORY_MAX 26
 
@@ -386,7 +368,7 @@ typedef struct Thing_ {
   //
   // For players and monsters
   //
-  ThingExtId ai_id;
+  ThingExtId ext_id;
   //
   // Interpolated co-ords in pixels
   //

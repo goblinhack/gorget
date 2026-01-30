@@ -21,6 +21,8 @@ std::initializer_list< std::string > tests = {
     /* shell do */
     /* shell echo "    \"$i\"", */
     /* shell done */
+    "alloc_free_monsts",
+    "alloc_free_walls",
     "barrel_explosion",
     "barrel",
     "brazier_shove_chasm_twice",

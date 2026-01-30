@@ -322,7 +322,7 @@ typedef struct LevelSelect_ {
   //
   // Level tiles and grid info
   //
-  LevelSelectCell data[ LEVELS_ACROSS ][ LEVELS_DOWN ];
+  LevelSelectCell data[ LEVEL_ACROSS ][ LEVEL_DOWN ];
 
   //
   // This is a reverse mapping from on screen tile to level
@@ -384,7 +384,7 @@ typedef struct Levels_ {
   //
   // Flag array of all levels. The levels equate to one tile in the level grid.
   //
-  Level level[ MAX_LEVELS ];
+  Level level[ LEVEL_MAX ];
   //
   // Level lighting
   //
@@ -396,8 +396,7 @@ typedef struct Levels_ {
   //
   // All things structure memory.
   //
-  Thing thing_body[ THING_MAX ];
-  int   thing_count;
+  Thing thing_body[ THING_ID_MAX ];
   //
   // Space for monster AI
   //
@@ -509,14 +508,14 @@ struct MyIter {
 #define FOR_ALL_LEVELS(_g_, _v_, _l_)                                                                                \
   if (_g_ && _v_)                                                                                                    \
     if (Levelp _l_ = nullptr; true)                                                                                  \
-      for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                    \
+      for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                     \
         if ((_l_ = &v->level[ _n_ ]))                                                                                \
           if (_l_->is_initialized)
 
 #define FOR_ALL_TICKING_LEVELS(_g_, _v_, _l_)                                                                        \
   if (_g_ && _v_)                                                                                                    \
     if (Levelp _l_ = nullptr; true)                                                                                  \
-      for (auto _n_ = 0; _n_ < MAX_LEVELS; _n_++)                                                                    \
+      for (auto _n_ = 0; _n_ < LEVEL_MAX; _n_++)                                                                     \
         if ((_l_ = &v->level[ _n_ ]))                                                                                \
           if (_l_->is_tick_required)
 
@@ -663,7 +662,9 @@ void                  level_cursor_describe(Gamep, Levelsp, Levelp);
 void                  level_cursor_path_recreate(Gamep, Levelsp, Levelp);
 void                  level_cursor_path_reset(Gamep, Levelsp);
 void                  level_cursor_set(Gamep, Levelsp, spoint);
-void                  level_debug_stats(Gamep);
+void                  game_debug_info(Gamep);
+int                   levels_thing_count(Gamep, Levelsp);
+int                   levels_thing_ext_count(Gamep, Levelsp);
 void                  level_debug(Gamep, Levelsp, Levelp);
 void                  level_destroy(Gamep, Levelsp, Levelp);
 void                  level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);

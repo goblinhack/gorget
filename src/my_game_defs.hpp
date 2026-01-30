@@ -7,25 +7,46 @@
 #define _MY_GAME_DEFS_HPP_
 
 //
+// The level map dimensions
+//
+#define MAP_HEIGHT 48
+#define MAP_WIDTH  48
+#define MAP_SLOTS  14
+
+//
 // The world map is smaller than the level map by a factor.
 //
-#define LEVEL_SCALE 6
+#define LEVEL_SCALE     6
+#define LEVEL_ACROSS    (MAP_WIDTH / LEVEL_SCALE)
+#define LEVEL_DOWN      (MAP_HEIGHT / LEVEL_SCALE)
+#define LEVEL_SELECT_ID (LEVEL_MAX - 1) // The level select level
+#define LEVEL_MAX       ((LEVEL_ACROSS * LEVEL_DOWN) + 1)
 
 //
-// The world map dimentions
+// Entropy is always > 0 for Thing IDs to distinguish them
+// A thing ID is composed as: [ Entropy bits ] [ ID bits ]
 //
-#define LEVELS_ACROSS (MAP_WIDTH / LEVEL_SCALE)
-#define LEVELS_DOWN   (MAP_HEIGHT / LEVEL_SCALE)
+//                       31      |       |       |      0
+//                       +-------------------------------
+//                       0LLLLLLIIIIIIIIIIIIIIIEEEEEEEEEE
+//
+// E Entropy
+// I Per level ID (enough for THING_ID_PER_LEVEL_REQ)
+// L Level        (enough for LEVEL_MAX - 1)
+//
+#define THING_LEVEL_ID_BITS           6
+#define THING_PER_LEVEL_THING_ID_BITS 15
+#define THING_ENTROPY_BITS            10
 
-//
-// The level select level
-//
-#define LEVEL_SELECT_ID (MAX_LEVELS - 1)
+#define THING_ARR_INDEX_BITS (THING_LEVEL_ID_BITS + THING_PER_LEVEL_THING_ID_BITS)
 
-//
-// If the world map is full populated, this is all the space we need
-//
-#define MAX_LEVELS ((LEVELS_ACROSS * LEVELS_DOWN) + 1)
+#define THING_ID_MAX (1 << THING_ARR_INDEX_BITS)
+
+#define THING_ID_PER_LEVEL_REQ (MAP_SLOTS * MAP_WIDTH * MAP_HEIGHT)
+#define THING_ID_PER_LEVEL_MAX (1 << THING_PER_LEVEL_THING_ID_BITS)
+
+#define LEVEL_ID_REQ (LEVEL_ACROSS * LEVEL_DOWN)
+#define LEVEL_ID_MAX (1 << THING_LEVEL_ID_BITS)
 
 //
 // In the world minimap, this is how large each level tile is
@@ -36,13 +57,6 @@
 // Number of light rays the player casts
 //
 #define LIGHT_MAX_RAYS_MAX (360 * 4)
-
-//
-// The level map dimensions
-//
-#define MAP_HEIGHT 48
-#define MAP_WIDTH  48
-#define MAP_SLOTS  16
 
 #define MAP_SCROLL_SPEED          50
 #define MAP_SCROLL_TELEPORT_SPEED 200

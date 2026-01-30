@@ -226,7 +226,7 @@ void ERR_HANDLE(const char *fmt, ...)
   TRACE_NO_INDENT();
 
   if (g_err_count++ > ENABLE_MAX_ERR_COUNT) {
-    CROAK("Too many errors");
+    CROAK("Too many errors: %d, max %d", g_err_count, ENABLE_MAX_ERR_COUNT);
     exit(1);
   }
 

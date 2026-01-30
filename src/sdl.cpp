@@ -458,8 +458,7 @@ uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
 {
   TRACE_NO_INDENT();
 
-  g_errored_thread_id = -1;
-  g_err_count         = 0;
+  error_clear(g);
 
   CON("Errored cleared.");
   wid_hide(g, wid_console_window);

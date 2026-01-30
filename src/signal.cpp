@@ -208,22 +208,14 @@ void crash_handler(int sig)
 
   if (crashed) {
     fprintf(stderr, "\nNested crash. Signal %d(%s)\n", sig, signal_str(sig));
-    callstack_dump_stderr();
-    backtrace_dump_stderr();
+    callstack_dump(stderr);
+    backtrace_dump(stderr);
     return;
   }
 
   crashed = true;
 
   fprintf(stderr, "\nCrashed. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
-
-  if (0) {
-    //
-    // Show in error_message
-    //
-    callstack_dump_stderr();
-    backtrace_dump_stderr();
-  }
 
 #ifdef SIGSEGV
   signal(SIGSEGV, nullptr);
@@ -257,8 +249,8 @@ void crash_handler(int sig)
 void ctrlc_handler(int sig)
 {
   fprintf(stderr, "\n\nInterrupted. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
-  callstack_dump_stderr();
-  backtrace_dump_stderr();
+  callstack_dump(stderr);
+  backtrace_dump(stderr);
 
 #ifdef SIGSEGV
   signal(SIGSEGV, nullptr);

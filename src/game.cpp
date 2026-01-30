@@ -437,9 +437,11 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
 //
 // Create an additional level with the given contents and start the game into playing state
 //
-void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents)
+void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, spoint level_at, int w, int h,
+                          const char *contents)
 {
   TRACE_NO_INDENT();
+
   auto l = game_level_get(g, v, level_num);
   if (l_out) {
     *l_out = l;
@@ -454,22 +456,31 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   }
 
   TRACE_NO_INDENT();
-  if (level_num >= LEVELS_DOWN) {
-    CROAK("too many levels deep");
+  if (level_num >= LEVEL_MAX) {
+    CROAK("too many levels deep, level_num %d", level_num);
+  }
+
+  TRACE_NO_INDENT();
+  if (level_at.x >= LEVEL_ACROSS) {
+    CROAK("level oob (%d,%d)", level_at.x, level_at.y);
+  }
+
+  TRACE_NO_INDENT();
+  if (level_at.y >= LEVEL_DOWN) {
+    CROAK("level oob (%d,%d)", level_at.x, level_at.y);
   }
 
   //
   // Assign the level into the level select grid
   //
   TRACE_NO_INDENT();
-  spoint p(0, level_num);
-  l->level_select_at = p;
+  l->level_select_at = level_at;
 
   TRACE_NO_INDENT();
-  auto s             = &v->level_select.data[ p.x ][ p.y ];
+  auto s             = &v->level_select.data[ level_at.x ][ level_at.y ];
   s->level_num       = l->level_num;
   s->is_set          = true;
-  l->level_select_at = p;
+  l->level_select_at = level_at;
 
   //
   // Final level connectivity.
@@ -480,6 +491,13 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   // Need this to update visibility.
   //
   game_tick(g);
+}
+
+void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents)
+{
+  TRACE_NO_INDENT();
+
+  game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents);
 }
 
 void Game::fini(void)
@@ -522,6 +540,14 @@ void Game::cleanup(void)
 
   TRACE_NO_INDENT();
   state_change(STATE_INIT, "init");
+
+  //
+  // Clear previous test error
+  //
+  if (g_opt_tests) {
+    TRACE_NO_INDENT();
+    error_clear(this);
+  }
 }
 void game_cleanup(Gamep g)
 {
@@ -825,7 +851,7 @@ void Game::create_levels(void)
     }
   }
 
-  level_debug_stats(g);
+  game_debug_info(g);
 
   state_change(STATE_GENERATED, "generated levels");
 }
@@ -1997,7 +2023,7 @@ Levelp game_level_get(Gamep g, Levelsp v, LevelNum n)
     ERR("game_level_get: No levels pointer set");
     return nullptr;
   }
-  if (n >= MAX_LEVELS) {
+  if (n >= LEVEL_MAX) {
     ERR("game_level_get: Exceeded max level: %u", n);
     return nullptr;
   }
@@ -2015,7 +2041,7 @@ Levelp game_level_populate(Gamep g, Levelsp v, LevelNum n)
     ERR("game_level_populate: No levels pointer set");
     return nullptr;
   }
-  if (n >= MAX_LEVELS) {
+  if (n >= LEVEL_MAX) {
     ERR("game_level_populate: Exceeded max level: %u", n);
     return nullptr;
   }

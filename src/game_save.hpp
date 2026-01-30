@@ -391,7 +391,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
     out << bits(tmp);
     tmp = offsetof(Thing, owner_id);
     out << bits(tmp);
-    tmp = offsetof(Thing, ai_id);
+    tmp = offsetof(Thing, ext_id);
     out << bits(tmp);
     tmp = offsetof(Thing, _prev_pix_at);
     out << bits(tmp);

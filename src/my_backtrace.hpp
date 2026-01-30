@@ -9,7 +9,7 @@
 #include <string>
 
 void        backtrace_dump(void);
-void        backtrace_dump_stderr(void);
+void        backtrace_dump(FILE *);
 std::string backtrace_string(void);
 
 #endif

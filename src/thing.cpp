@@ -134,7 +134,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
   int in_use_things = 0;
   int free_things   = 0;
 
-  for (ThingId index = 0; index < (1 << THING_INDEX_BITS); index++) {
+  for (ThingId index = 0; index < (1 << THING_ARR_INDEX_BITS); index++) {
     auto t = &v->thing_body[ index ];
     if (t->id) {
       in_use_things++;
@@ -144,9 +144,10 @@ void thing_stats_dump(Gamep g, Levelsp v)
   }
 
   LOG("Thing stats:");
-  LOG("- Total things        %u", in_use_things + free_things);
+  LOG("- Total things        %u out of max %u", in_use_things + free_things, THING_ID_MAX);
   LOG("- In use things       %u", in_use_things);
   LOG("- Free things         %u", free_things);
+  LOG("- Ext mem things      %u out of max %u", v->thing_ext_count, THING_EXT_MAX);
 }
 
 ThingExtp thing_ext_struct(Gamep g, Thingp t)
@@ -158,12 +159,12 @@ ThingExtp thing_ext_struct(Gamep g, Thingp t)
     return nullptr;
   }
 
-  auto ai_id = t->ai_id;
-  if (! ai_id) {
+  auto ext_id = t->ext_id;
+  if (! ext_id) {
     return nullptr;
   }
 
-  return &v->thing_ext[ ai_id ];
+  return &v->thing_ext[ ext_id ];
 }
 
 ThingPlayerp thing_player_struct(Gamep g)
