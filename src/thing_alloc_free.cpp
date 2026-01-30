@@ -53,7 +53,7 @@ static std::mutex thing_mutex;
   //
   // Last resort
   //
-  for (auto ext_id = 0; ext_id < THING_EXT_MAX; ext_id++) {
+  for (auto ext_id = THING_EXT_MAX - 1; ext_id > 0; ext_id--) {
     if (v->thing_ext[ ext_id ].in_use) {
       continue;
     }
@@ -245,10 +245,14 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     id.b.level_num    = l->level_num;
     id.b.per_level_id = tries;
 
-    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, true /* mutex */);
+    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, false /* mutex */);
     if (t) {
       return t;
     }
+  }
+
+  if (v->is_generating_levels) {
+    CROAK("ran out of thing IDs while doing multi threaded level gen");
   }
 
   //

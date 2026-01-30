@@ -481,6 +481,10 @@ typedef struct Levels_ {
   //
   // If the player has moved, we need to scroll the map
   //
+  uint8_t is_generating_levels : 1;
+  //
+  // If the player has moved, we need to scroll the map
+  //
   uint8_t requested_auto_scroll : 1;
   //
   // For a time period e.g. post teleport, we want to ignore mouse moves until the player is

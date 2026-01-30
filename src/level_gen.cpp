@@ -5110,9 +5110,11 @@ void level_gen_create_levels(Gamep g, Levelsp v)
     threads.push_back(std::thread(level_gen_create_fixed_or_proc_gen_level, g, i));
   }
 
+  v->is_generating_levels = true;
   for (auto i = 0; i < max_threads; i++) {
     threads[ i ].join();
   }
+  v->is_generating_levels = false;
 
   if (g_opt_debug2) {
     for (auto i = 0; i < max_threads; i++) {
@@ -5152,6 +5154,7 @@ void level_gen_test(Gamep g)
     // Create the levels
     //
     level_gen_create_levels(g, v);
+    thing_stats_dump(g, v);
 
     CON("Created %u levels for dungeon seed %u (took %u ms)", s->level_count, seed, s->create_time);
     LOG("------------------------------------------------------");
