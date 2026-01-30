@@ -63,10 +63,12 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
   }
 #endif
 
-  m->can_see[ pov.x ][ pov.y ] = val;
+  if (m) {
+    m->can_see[ pov.x ][ pov.y ] = val;
+  }
 }
 
-static bool level_fov(FovMap *m, spoint pov)
+static bool level_fov_get(FovMap *m, spoint pov)
 {
 #ifdef _DEBUG_BUILD_
   if (is_oob(pov)) {
@@ -74,6 +76,9 @@ static bool level_fov(FovMap *m, spoint pov)
     return false;
   }
 #endif
+  if (! m) {
+    return false;
+  }
 
   return m->can_see[ pov.x ][ pov.y ];
 }
@@ -142,7 +147,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         //
         // If not seen already, light it
         //
-        if (! level_fov(fov_can_see_tile, p)) {
+        if (! level_fov_get(fov_can_see_tile, p)) {
           level_fov_set(fov_can_see_tile, p, true);
 
           //
@@ -151,6 +156,10 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
           if (can_see_callback) {
             (can_see_callback)(g, v, l, me, pov, p);
           }
+        }
+      } else {
+        if (can_see_callback) {
+          (can_see_callback)(g, v, l, me, pov, p);
         }
       }
 
@@ -215,7 +224,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
     //
     // If not seen already, light it
     //
-    if (! level_fov(fov_can_see_tile, pov)) {
+    if (! level_fov_get(fov_can_see_tile, pov)) {
       level_fov_set(fov_can_see_tile, pov, true);
 
       //

@@ -174,13 +174,6 @@ uint8_t sdl_display_init(Gamep g)
   LOG("SDL: Set SDL_WINDOW_OPENGL");
   video_flags = SDL_WINDOW_OPENGL;
 
-  //
-  // SDL_WINDOW_ALWAYS_ON_TOP is meant to help with focus
-  //
-  // but does it cause issues with debugging, where the debugger window is always behind?
-  //
-  // video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
-
   if (AN_ERROR_OCCURRED()) {
     //
     // Safe mode
@@ -205,8 +198,14 @@ uint8_t sdl_display_init(Gamep g)
 
     LOG("SDL: Set SDL_WINDOW_INPUT_FOCUS");
     video_flags |= SDL_WINDOW_INPUT_FOCUS;
-    LOG("SDL: Set SDL_WINDOW_ALWAYS_ON_TOP");
-    video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
+
+    //
+    // SDL_WINDOW_ALWAYS_ON_TOP is meant to help with focus
+    //
+    // but does it cause issues with debugging, where the debugger window is always behind?
+    //
+    // LOG("SDL: Set SDL_WINDOW_ALWAYS_ON_TOP");
+    // video_flags |= SDL_WINDOW_ALWAYS_ON_TOP;
   }
 
   if (g_skip_audio_and_gfx) {

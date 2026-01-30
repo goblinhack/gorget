@@ -341,6 +341,11 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spo
 {
   TRACE_NO_INDENT();
 
+  if (! ai) {
+    CROAK("missing ThingExtp for player");
+    return;
+  }
+
   //
   // Only apply color to the tile once
   //
@@ -778,7 +783,11 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
       max_radius += 2;
     }
 
-    level_fov(g, v, l, t, &ext->fov_can_see_tile, &ext->fov_has_seen_tile, thing_at(t), max_radius,
-              level_light_fov_all_can_see_callback);
+    if (ext) {
+      level_fov(g, v, l, t, &ext->fov_can_see_tile, &ext->fov_has_seen_tile, thing_at(t), max_radius,
+                level_light_fov_all_can_see_callback);
+    } else {
+      level_fov(g, v, l, t, nullptr, nullptr, thing_at(t), max_radius, level_light_fov_all_can_see_callback);
+    }
   }
 }
