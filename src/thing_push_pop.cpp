@@ -57,7 +57,9 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       t->last_pushed_at                   = at;
       l->thing_id[ at.x ][ at.y ][ slot ] = t->id;
 
-      THING_DBG(t, "pushed to %u,%u slot %u", at.x, at.y, slot);
+      if (0) {
+        THING_DBG(t, "pushed to %u,%u slot %u", at.x, at.y, slot);
+      }
 
 #if 0
       if (0) {

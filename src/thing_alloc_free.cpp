@@ -17,56 +17,37 @@ static std::mutex thing_mutex;
 static bool memory_test = true;
 #endif
 
-[[nodiscard]] static bool thing_ext_alloc_do(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtId ext_id)
-{
-  TRACE_NO_INDENT();
-
-  thing_mutex.lock();
-  {
-    if (unlikely(v->thing_ext[ ext_id ].in_use)) {
-      thing_mutex.unlock();
-      return false;
-    }
-    v->thing_ext[ ext_id ].in_use = true;
-    v->thing_ext_count++;
-  }
-  thing_mutex.unlock();
-
-  t->ext_id = ext_id;
-  return true;
-}
-
 [[nodiscard]] static bool thing_ext_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
+  static uint32_t last_ext_id;
+
   //
   // Continue from the last successful allocation
   //
+  thing_mutex.lock();
   for (auto tries = 0; tries < THING_EXT_MAX; tries++) {
-    ThingExtId ext_id = os_random_range(1, THING_EXT_MAX - 1);
-    if (v->thing_ext[ ext_id ].in_use) {
+    ThingExtId ext_id = last_ext_id + tries;
+    ext_id %= THING_EXT_MAX;
+    if (unlikely(! ext_id)) {
       continue;
     }
 
-    if (thing_ext_alloc_do(g, v, l, t, ext_id)) {
-      return true;
-    }
-  }
-
-  //
-  // Last resort
-  //
-  for (auto ext_id = THING_EXT_MAX - 1; ext_id > 0; ext_id--) {
-    if (v->thing_ext[ ext_id ].in_use) {
+    if (unlikely(v->thing_ext[ ext_id ].in_use)) {
       continue;
     }
 
-    if (thing_ext_alloc_do(g, v, l, t, ext_id)) {
-      return true;
-    }
+    v->thing_ext[ ext_id ].in_use = true;
+    v->thing_ext_count++;
+    t->ext_id   = ext_id;
+    last_ext_id = ext_id;
+
+    thing_mutex.unlock();
+    return true;
   }
 
+  thing_mutex.unlock();
   CROAK("out of Thing ext IDs: max is %d", THING_EXT_MAX);
 
   return false;
@@ -240,33 +221,26 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     }
   }
 
+  static uint32_t last_per_level_id[ LEVEL_MAX ];
+
   //
-  // Repeatedly try to allocate an ID.
-  //
+  // Sequentially try to allocate an ID from the last ID allocated.
   // Use the level_num as scoping so that we do not need to use a mutex as different
   // levels will allocate from different regions of the array.
   //
-  for (uint32_t tries = 0; tries < (1 << THING_PER_LEVEL_THING_ID_BITS) / 2; tries++) {
-    ThingIdPacked id  = {};
-    id.b.level_num    = l->level_num;
-    id.b.per_level_id = os_random_range(1, (1 << THING_PER_LEVEL_THING_ID_BITS) - 1);
-
-    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, false /* no mutex */);
-    if (t) {
-      return t;
+  for (uint32_t tries = 0; tries < (1 << THING_PER_LEVEL_THING_ID_BITS); tries++) {
+    uint32_t per_level_id = tries + last_per_level_id[ level_num ] + 1;
+    if (! per_level_id) {
+      per_level_id = 1;
     }
-  }
 
-  //
-  // The level is getting full. Try a linear search of that level's IDs.
-  //
-  for (uint32_t tries = 1; tries < (1 << THING_PER_LEVEL_THING_ID_BITS); tries++) {
     ThingIdPacked id  = {};
-    id.b.level_num    = l->level_num;
-    id.b.per_level_id = tries;
+    id.b.level_num    = level_num;
+    id.b.per_level_id = per_level_id;
 
     auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, false /* mutex */);
     if (t) {
+      last_per_level_id[ level_num ] = per_level_id;
       return t;
     }
   }
@@ -280,33 +254,17 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
   }
 
   //
-  // Last resort, allocate from the last ID towards the front.
+  // Last resort, allocate from the end backwards.
   //
-  static uint32_t last_id;
-
-  if (last_id) {
-    for (uint32_t tries = last_id; tries > 0; tries--) {
-      ThingIdPacked id = {};
-      id.c.arr_index   = tries;
-
-      auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, true /* mutex */);
-      if (t) {
-        last_id = tries;
-        return t;
-      }
-    }
-  }
-
-  //
-  // Last lasst resort, allocate from the end as less likely to be used.
-  //
-  for (uint32_t tries = THING_ID_MAX - 1; tries > 0; tries--) {
+  static uint32_t last_arr_index = THING_ID_MAX - 1;
+  for (uint32_t arr_index = last_arr_index - 1; arr_index > 0; arr_index--) {
     ThingIdPacked id = {};
-    id.c.arr_index   = tries;
+    id.c.arr_index   = arr_index;
+    CON("B %d / %d", level_num, arr_index);
 
     auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, true /* mutex */);
     if (t) {
-      last_id = tries;
+      last_arr_index = arr_index;
       return t;
     }
   }

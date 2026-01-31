@@ -3205,7 +3205,7 @@ bool thing_is_loggable(Thingp t)
     return true;
   }
 
-  IF_DEBUG
+  IF_DEBUG2
   {
     //
     // Everything is logged
