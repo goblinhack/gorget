@@ -197,7 +197,9 @@ void CROAK_HANDLE(bool clean, const char *fmt, ...)
 
   va_list args;
 
-  g_errored_thread_id = g_thread_id;
+  if (! clean) {
+    g_errored_thread_id = g_thread_id;
+  }
 
   va_start(args, fmt);
   croak_handle(clean, fmt, args);

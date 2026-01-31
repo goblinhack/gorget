@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 
 void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
 {

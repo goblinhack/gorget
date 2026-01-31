@@ -118,6 +118,10 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
     level_tile_update_set(g, v, l, at);
   }
 
+  if (0) {
+    THING_DBG(t, "init");
+  }
+
   return t;
 }
 

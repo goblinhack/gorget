@@ -3192,10 +3192,27 @@ bool thing_is_shovable(Thingp t)
 bool thing_is_loggable(Thingp t)
 {
   TRACE_NO_INDENT();
+
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
+
+  if (g_opt_tests) {
+    //
+    // Everything is logged
+    //
+    return true;
+  }
+
+  IF_DEBUG
+  {
+    //
+    // Everything is logged
+    //
+    return true;
+  }
+
   return tp_flag(thing_tp(t), is_loggable);
 }
 

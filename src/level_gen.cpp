@@ -1792,6 +1792,9 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
 
     auto cand = cands[ pcg_rand() % cands.size() ];
     auto alt  = fragment_put(g, l, f, cand);
+    if (! alt) {
+      continue;
+    }
 
     if (unlikely(l->debug)) {
       auto fragment_name
@@ -5010,6 +5013,10 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   //
   g_thread_id = level_num + 1;
 
+  if (level_num >= LEVEL_SELECT_ID) {
+    CROAK("this will exceed the number of level bits");
+  }
+
   //
   // We need to create the log files now, even if empty, as if we get a crash we will
   // not be able to call fopen during the segv signal
@@ -5148,12 +5155,16 @@ void level_gen_test(Gamep g)
     // Generate the maximum number of levels
     //
     LevelSelect *s = &v->level_select;
-    s->level_count = LEVEL_MAX;
+    s->level_count = LEVEL_SELECT_ID - 1;
 
     //
     // Create the levels
     //
     level_gen_create_levels(g, v);
+    if (AN_ERROR_OCCURRED()) {
+      CROAK("failed");
+    }
+
     thing_stats_dump(g, v);
 
     CON("Created %u levels for dungeon seed %u (took %u ms)", s->level_count, seed, s->create_time);
@@ -5163,5 +5174,8 @@ void level_gen_test(Gamep g)
     // Free the levels memory
     //
     levels_destroy(g, v);
+    if (AN_ERROR_OCCURRED()) {
+      CROAK("failed");
+    }
   }
 }

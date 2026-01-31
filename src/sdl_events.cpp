@@ -114,7 +114,7 @@ static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key
 
   sdl.event_count++;
 
-  LOG("SDL: Keyboard: Key pressed keycode 0x%08" PRIx32 " = %s %d", event->key.keysym.sym,
+  LOG("SDL: Keyboard: Key pressed keycode 0x%08" PRIX32 " = %s %d", event->key.keysym.sym,
       to_string(event->key.keysym).c_str(), key->mod);
 
   //
@@ -138,7 +138,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
 
   sdl.event_count++;
   if (g_grab_next_key) {
-    LOG("SDL: Keyboard: Grabbed 0x%08" PRIx32 " = %s / %s", event->key.keysym.sym,
+    LOG("SDL: Keyboard: Grabbed 0x%08" PRIX32 " = %s / %s", event->key.keysym.sym,
         to_string(event->key.keysym).c_str(), SDL_GetScancodeName(event->key.keysym.scancode));
 
     g_grab_next_key = false;
@@ -155,7 +155,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
 
   memset(&last_key_pressed, 0, SIZEOF(last_key_pressed));
 
-  LOG("SDL: Keyboard: Key released keycode 0x%08" PRIx32 " = %s", event->key.keysym.sym,
+  LOG("SDL: Keyboard: Key released keycode 0x%08" PRIX32 " = %s", event->key.keysym.sym,
       to_string(event->key.keysym).c_str());
 
   key = &event->key.keysym;

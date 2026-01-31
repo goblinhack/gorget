@@ -36,7 +36,12 @@ void cleanup(void)
   }
 
   if (g_quitting) {
-    LOG("Quitting, nested");
+    CON("Quitting, nested");
+    return;
+  }
+
+  if (AN_ERROR_OCCURRED()) {
+    CON("Quitting, errored");
     return;
   }
 

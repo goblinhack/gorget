@@ -17,7 +17,7 @@ Levelp thing_level(Gamep g, Levelsp v, Thingp t)
 
   auto o = thing_find(g, v, t->id);
   if (t != o) {
-    CROAK("Thing mismatch found for id, 08%" PRIx32 "", t->id);
+    CROAK("Thing mismatch found for id, %p 08%" PRIX32 "", (void *) t, t->id);
   }
 
   return game_level_get(g, v, t->level_num);

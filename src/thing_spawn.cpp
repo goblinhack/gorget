@@ -27,7 +27,9 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
     return nullptr;
   }
 
-  THING_DBG(t, "spawned");
+  if (0) {
+    THING_DBG(t, "spawned");
+  }
 
   //
   // This is reset each tick

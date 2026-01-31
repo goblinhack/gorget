@@ -13,6 +13,10 @@
 
 static std::mutex thing_mutex;
 
+#ifdef ENABLE_PER_THING_MEMORY
+static bool memory_test = true;
+#endif
+
 [[nodiscard]] static bool thing_ext_alloc_do(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtId ext_id)
 {
   TRACE_NO_INDENT();
@@ -78,7 +82,7 @@ static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (! v->thing_ext[ ext_id ].in_use) {
-    ERR("freeing unused Thing AI ID is not in use, %" PRIx32 "", ext_id);
+    ERR("freeing unused Thing AI ID is not in use, %" PRIX32 "", ext_id);
   }
 
   v->thing_ext[ ext_id ].in_use = false;
@@ -111,14 +115,17 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   //
   auto arr_index = id.c.arr_index;
   auto t         = &v->thing_body[ arr_index ];
-  if (t->tp_id) {
+  if (unlikely(t->tp_id)) {
+    //
+    // Some other thread grabbed it already?
+    //
     return nullptr;
   }
 
   //
   // If we need a mutex, lock the thing population for this slot
   //
-  if (need_mutex) {
+  if (unlikely(need_mutex)) {
     thing_mutex.lock();
 
     //
@@ -166,10 +173,10 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   t->id = id.a.val;
 
   if (0) {
-    LOG("Thing alloc %08" PRIx32 //
+    LOG("Thing alloc %08" PRIX32 //
         " (level: %" PRIu32      //
-        " id: %08" PRIx32        //
-        " entropy: %08" PRIx32   //
+        " id: %08" PRIX32        //
+        " entropy: %08" PRIX32   //
         ")",                     //
         t->id,                   //
         id.b.level_num,          //
@@ -183,6 +190,15 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
       return nullptr;
     }
   }
+
+#ifdef ENABLE_PER_THING_MEMORY
+  if (memory_test) {
+    auto tmp = malloc(sizeof(*t));
+    memcpy(tmp, t, sizeof(*t));
+    t                                = (Thingp) tmp;
+    v->thing_body_debug[ arr_index ] = t;
+  }
+#endif
 
   return t;
 }
@@ -212,6 +228,10 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
   //
   auto level_num = l->level_num;
   if (level_num == LEVEL_SELECT_ID) {
+    if (v->is_generating_levels) {
+      CROAK("cannot allocate level select while mutexes are off");
+    }
+
     for (auto i = 0; i < LEVEL_MAX; i++) {
       if (! v->level[ i ].is_initialized) {
         level_num = i;
@@ -251,6 +271,10 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     }
   }
 
+  //
+  // If we hit this, it turns out we should have been using mutexes. We have no idea
+  // if this will collide with something else not using a mutex.
+  //
   if (v->is_generating_levels) {
     CROAK("ran out of thing IDs while doing multi threaded level gen");
   }
@@ -297,7 +321,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto o = thing_find(g, v, t->id);
   if (t != o) {
-    CROAK("Thing mismatch found for id, %08" PRIx32 "", t->id);
+    CROAK("Thing mismatch found for id, %p %08" PRIX32 "", (void *) t, t->id);
   }
 
   auto tp = thing_tp(t);
@@ -317,11 +341,18 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
     THING_LOG(t, "free");
   }
 
+  if (v->is_generating_levels) {
+    CROAK("unexpected to be freeing things during creation");
+  }
+
   thing_pop(g, v, t);
 
-  thing_mutex.lock();
   thing_ext_free(g, v, l, t);
   memset((void *) t, 0, SIZEOF(*t));
 
-  thing_mutex.unlock();
+#ifdef ENABLE_PER_THING_MEMORY
+  if (memory_test) {
+    free(t);
+  }
+#endif
 }

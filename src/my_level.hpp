@@ -397,6 +397,9 @@ typedef struct Levels_ {
   // All things structure memory.
   //
   Thing thing_body[ THING_ID_MAX ];
+#ifdef ENABLE_PER_THING_MEMORY
+  Thingp thing_body_debug[ THING_ID_MAX ];
+#endif
   //
   // Space for monster AI
   //

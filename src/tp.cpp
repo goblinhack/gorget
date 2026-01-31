@@ -164,7 +164,7 @@ Tpp tp_find(TpId id)
   TRACE_NO_INDENT(); // expensive
 
   if ((int) id - 1 >= (int) tp_vec.size()) {
-    CROAK("tp_find: thing template %" PRIx16 " bad id, beyond size of tp_vec", id);
+    CROAK("tp_find: thing template %" PRIX16 " bad id, beyond size of tp_vec", id);
     return nullptr;
   }
 #endif
@@ -172,7 +172,7 @@ Tpp tp_find(TpId id)
   auto result = tp_vec[ id - 1 ];
 #ifdef _DEBUG_BUILD_
   if (! result) {
-    CROAK("tp_find: thing template %" PRIx16 " not found", id);
+    CROAK("tp_find: thing template %" PRIX16 " not found", id);
     return nullptr;
   }
 #endif
@@ -495,7 +495,7 @@ void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
   }
 
   if (ev >= THING_EVENT_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, ev);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, ev);
     return;
   }
 
@@ -514,7 +514,7 @@ int tp_damage(Tpp tp, ThingEventType val)
   }
 
   if (val >= THING_EVENT_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return 0;
   }
 
@@ -530,7 +530,7 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
   }
 
   if (ev >= THING_CHANCE_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, ev);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, ev);
     return;
   }
 
@@ -549,7 +549,7 @@ int tp_chance(Tpp tp, ThingChanceType val)
   }
 
   if (val >= THING_CHANCE_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return 0;
   }
 
@@ -568,7 +568,7 @@ bool tp_chance_success(Tpp tp, ThingChanceType val)
   }
 
   if (val >= THING_CHANCE_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return false;
   }
 
@@ -592,7 +592,7 @@ bool tp_chance_fail(Tpp tp, ThingChanceType val)
   }
 
   if (val >= THING_CHANCE_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return false;
   }
 
@@ -603,9 +603,14 @@ Tilep tp_tiles_get(Tpp tp, ThingAnim val, int index)
 {
   TRACE_NO_INDENT();
 
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return nullptr;
+  }
+
   if (index >= (int) tp->tiles[ val ].size()) {
-    ERR("tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(), ThingAnim_to_string(val).c_str(),
-        val, index);
+    TP_ERR(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(),
+           ThingAnim_to_string(val).c_str(), val, index);
   }
 
   return tp->tiles[ val ][ index ];
@@ -620,7 +625,7 @@ void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile)
   }
 
   if (val >= THING_ANIM_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
 
@@ -885,7 +890,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
   }
 
   if ((int) val >= (int) MONST_GROUP_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
 
@@ -912,7 +917,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
       break;
     case MONST_GROUP_EASY : tp_flag_set(tp, is_monst_group_easy); break;
     case MONST_GROUP_HARD : tp_flag_set(tp, is_monst_group_hard); break;
-    default :               ERR("bad value in tp for %s, %d", __FUNCTION__, val); return;
+    default :               TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val); return;
   }
 }
 
@@ -925,7 +930,7 @@ void tp_is_immunity_add(Tpp tp, ThingEventType val)
   }
 
   if ((int) val >= (int) THING_EVENT_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return;
   }
 
@@ -945,7 +950,7 @@ bool tp_is_immune_to(Tpp tp, ThingEventType val)
   }
 
   if ((int) val >= (int) THING_EVENT_ENUM_MAX) {
-    ERR("bad value in tp for %s, %d", __FUNCTION__, val);
+    TP_ERR(tp, "bad value in tp for %s, %d", __FUNCTION__, val);
     return false;
   }
 

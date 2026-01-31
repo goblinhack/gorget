@@ -13,7 +13,13 @@
 //
 void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type)
 {
+  TRACE_NO_INDENT();
+
   Tpp tp = thing_tp(t);
+
+  if (0) {
+    THING_DBG(t, "thing_anim_init: anim class %s/%d", ThingAnim_to_string(anim_type).c_str(), anim_type);
+  }
 
   t->anim_index        = 0;
   t->anim_ms_remaining = 0;
@@ -104,8 +110,10 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
         case THING_ANIM_ENUM_MAX : ERR("unexpected enum"); break;
       }
 
-      tile          = tp_tiles_get(tp, t->anim_type, t->anim_index);
-      t->tile_index = tile_global_index(tile);
+      tile = tp_tiles_get(tp, t->anim_type, t->anim_index);
+      if (tile) {
+        t->tile_index = tile_global_index(tile);
+      }
     }
   }
 }
@@ -166,11 +174,13 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
     t->anim_index = 0;
   }
 
-  tile          = tp_tiles_get(tp, t->anim_type, t->anim_index);
-  t->tile_index = tile_global_index(tile);
+  tile = tp_tiles_get(tp, t->anim_type, t->anim_index);
+  if (tile) {
+    t->tile_index = tile_global_index(tile);
 
-  t->anim_ms_remaining += tile_delay_ms(tile);
-  if (t->anim_ms_remaining < 0) {
-    t->anim_ms_remaining = tile_delay_ms(tile);
+    t->anim_ms_remaining += tile_delay_ms(tile);
+    if (t->anim_ms_remaining < 0) {
+      t->anim_ms_remaining = tile_delay_ms(tile);
+    }
   }
 }

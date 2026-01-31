@@ -22,5 +22,7 @@
 #undef ENABLE_DEBUG_UI2          // User interface logs with inheritance (verbose)
 #undef ENABLE_LOG_TIMESTAMPS     // Full timestamps with date in logs
 #undef ENABLE_UI_ASCII_MOUSE     // Show an in-game mouse, not system mouse
+#undef ENABLE_PER_THING_MEMORY   // Use malloc for things (for sanity checking memory access)
+                                 // Will not work with save/load
 
 #endif

@@ -37,17 +37,11 @@ void THING_LOG(Thingp t, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
-  if (g_opt_tests) {
-    //
-    // Everything is logged
-    //
-  } else {
-    //
-    // Filter to interesting things
-    //
-    if (! thing_is_loggable(t)) {
-      return;
-    }
+  //
+  // Filter to interesting things
+  //
+  if (! thing_is_loggable(t)) {
+    return;
   }
 
   va_list args;
@@ -62,17 +56,11 @@ void THING_DBG(Thingp t, const char *fmt, ...)
 
   IF_NODEBUG return;
 
-  if (g_opt_tests) {
-    //
-    // Everything is logged
-    //
-  } else {
-    //
-    // Filter to interesting things
-    //
-    if (! thing_is_loggable(t)) {
-      return;
-    }
+  //
+  // Filter to interesting things
+  //
+  if (! thing_is_loggable(t)) {
+    return;
   }
 
   va_list args;

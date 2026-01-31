@@ -606,7 +606,7 @@ void Game::seed_set(const char *maybe_seed)
   } else if (maybe_seed && *maybe_seed) {
     config.seed_name   = std::string(maybe_seed);
     config.seed_source = SEED_SOURCE_USER;
-    if (! g_opt_tests) {
+    if (! g_opt_tests && ! g_opt_do_level_gen) {
       CON("Set fixed seed '%s' from ui", config.seed_name.c_str());
     }
   } else if (g_opt_seed_name != "") {
@@ -736,7 +736,7 @@ void Game::player_name_set(const char *maybe_player_name)
 
   if (maybe_player_name) {
     config.player_name = std::string(maybe_player_name);
-    if (! g_opt_tests) {
+    if (! g_opt_tests && ! g_opt_do_level_gen) {
       CON("Set player name '%s' from ui", config.player_name.c_str());
     }
   } else if (config.player_name != "") {

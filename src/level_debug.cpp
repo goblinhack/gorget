@@ -62,8 +62,19 @@ int levels_thing_count(Gamep g, Levelsp v)
   TRACE_NO_INDENT();
 
   int thing_count = 0;
-  for (auto i = 0; i < THING_ID_MAX; i++) {
-    if (v->thing_body[ i ].tp_id) {
+  for (auto arr_index = 0; arr_index < THING_ID_MAX; arr_index++) {
+    auto t = &v->thing_body[ arr_index ];
+
+#ifdef ENABLE_PER_THING_MEMORY
+    if (v->thing_body_debug[ arr_index ]) {
+      t = v->thing_body_debug[ arr_index ];
+      if (! t) {
+        continue;
+      }
+    }
+#endif
+
+    if (t->tp_id) {
       thing_count++;
     }
   }

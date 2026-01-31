@@ -57,9 +57,7 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
       t->last_pushed_at                   = at;
       l->thing_id[ at.x ][ at.y ][ slot ] = t->id;
 
-      if (0) {
-        THING_LOG(t, "l %p(%u) %s %d,%d", (void *) l, l->level_num, tp_name(tp).c_str(), at.x, at.y);
-      }
+      THING_DBG(t, "pushed to %u,%u slot %u", at.x, at.y, slot);
 
 #if 0
       if (0) {
@@ -109,11 +107,14 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
   }
 
+  //
+  // Dump the contents here
+  //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (dump_id) {
       auto it = thing_find(g, v, dump_id);
-      THING_CON(it, "is using slot %u", slot);
+      THING_CON(it, "DUMP: is using slot %u", slot);
     }
   }
 
@@ -139,20 +140,39 @@ void thing_pop(Gamep g, Levelsp v, Thingp t)
   if (! thing_is_on_map(t)) {
     return;
   }
-  spoint p = t->last_pushed_at;
 
-  if (is_oob(p)) {
+  spoint at = t->last_pushed_at;
+
+  if (0) {
+    THING_DBG(t, "is on the map, last pushed %u,%u", at.x, at.y);
+  }
+
+  if (is_oob(at)) {
     return;
   }
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o_id = l->thing_id[ p.x ][ p.y ][ slot ];
+    auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (o_id == t->id) {
-      l->thing_id[ p.x ][ p.y ][ slot ] = 0;
+      l->thing_id[ at.x ][ at.y ][ slot ] = 0;
+      if (0) {
+        THING_DBG(t, "popped from slot %u", slot);
+      }
       thing_is_on_map_unset(g, v, l, t);
       return;
     }
   }
 
-  ERR("could not pop thing that is on the map");
+  //
+  // Dump the contents here
+  //
+  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+    auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
+    if (dump_id) {
+      auto it = thing_find(g, v, dump_id);
+      THING_CON(it, "DUMP: is using slot %u", slot);
+    }
+  }
+
+  THING_ERR(t, "could not pop thing that is on the map");
 }

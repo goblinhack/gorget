@@ -62,6 +62,7 @@ void  close_stdout(void);
               g_thread_id);                                                                                          \
     }                                                                                                                \
     CROAK_HANDLE(false, __VA_ARGS__);                                                                                \
+    exit(1);                                                                                                         \
   }
 
 #define DIE_CLEAN(...)                                                                                               \
