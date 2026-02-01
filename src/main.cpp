@@ -164,10 +164,10 @@ static void parse_args(int argc, char *argv[])
         usage();
         CROAK("Missing parameter for argument, %s", argv[ i ]);
       }
-      g_opt_test_name_filter      = argv[ i + 1 ];
-      g_opt_tests          = true;
-      g_opt_debug1         = true;
-      g_skip_audio_and_gfx = true;
+      g_opt_test_name_filter = argv[ i + 1 ];
+      g_opt_tests            = true;
+      g_opt_debug1           = true;
+      g_skip_audio_and_gfx   = true;
       i++;
       continue;
     }

@@ -195,8 +195,8 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     return;
   }
 
-  auto ai_struct = thing_ext_struct(g, player);
-  if (! ai_struct) {
+  auto ext_struct = thing_ext_struct(g, player);
+  if (! ext_struct) {
     return;
   }
 

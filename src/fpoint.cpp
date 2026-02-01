@@ -3,6 +3,7 @@
 //
 
 #include "my_fpoint.hpp"
+#include "my_main.hpp"
 #include "my_math.hpp"
 
 #include <math.h>
@@ -233,8 +234,14 @@ int distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *inter
   }
 
   if ((U < 0.0f) || (U > 1.0f)) {
+    if (0) {
+      LOG("%f  miss", *dist);
+    }
     return 0; // closest P0 does not fall within the line segment
   }
 
+  if (0) {
+    LOG("%f  intersect %f,%f", *dist, intersect.x, intersect.y);
+  }
   return 1;
 }

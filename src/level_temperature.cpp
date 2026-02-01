@@ -85,7 +85,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
       //
       if (Tn != Ta) {
         THING_DBG(t, "temperature return Ta %f To %f -> %d degrees", Ta, To, Tn);
-        thing_temperature_set(g, v, l, t, Tn);
+        (void) thing_temperature_set(g, v, l, t, Tn);
       }
     }
   }

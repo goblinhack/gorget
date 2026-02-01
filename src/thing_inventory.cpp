@@ -60,8 +60,8 @@ bool thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp p
     return false;
   }
 
-  auto ai_struct = thing_ext_struct(g, player_or_monst);
-  if (! ai_struct) {
+  auto ext_struct = thing_ext_struct(g, player_or_monst);
+  if (! ext_struct) {
     return false;
   }
 
@@ -128,8 +128,8 @@ bool thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thin
     return false;
   }
 
-  auto ai_struct = thing_ext_struct(g, player_or_monst);
-  if (! ai_struct) {
+  auto ext_struct = thing_ext_struct(g, player_or_monst);
+  if (! ext_struct) {
     return false;
   }
 
@@ -167,8 +167,8 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
     return;
   }
 
-  auto ai_struct = thing_ext_struct(g, player_or_monst);
-  if (! ai_struct) {
+  auto ext_struct = thing_ext_struct(g, player_or_monst);
+  if (! ext_struct) {
     return;
   }
 

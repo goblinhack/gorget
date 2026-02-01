@@ -118,13 +118,13 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
   // Update submerged status
   //
   if (t_maybe_null && tp_is_submergible(tp_maybe_null)) {
-    thing_submerged_pct_set(g, v, l, t_maybe_null, 0);
+    (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 0);
     if (level_is_deep_water(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t_maybe_null, 80);
+      (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 80);
     } else if (level_is_water(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t_maybe_null, 50);
+      (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 50);
     } else if (level_is_lava(g, v, l, p)) {
-      thing_submerged_pct_set(g, v, l, t_maybe_null, 40);
+      (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 40);
     }
   }
 }

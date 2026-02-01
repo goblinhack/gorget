@@ -211,7 +211,7 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 {
   TRACE_NO_INDENT();
 
-  thing_is_falling_incr(g, v, l, t, time_step);
+  (void) thing_is_falling_incr(g, v, l, t, time_step);
 }
 
 //

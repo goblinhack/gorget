@@ -42,7 +42,9 @@ fpoint thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)
   return unit(thing_projectile_get_delta_from_dt(g, v, l, t, 1.0));
 }
 
-void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
+extern bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B,
+                                                fpoint B_at);
+void        thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
 {
   TRACE_NO_INDENT();
 
@@ -64,6 +66,9 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   // we end up shooting the player upon firing
   //
   float offset = thing_collision_radius(me) + tp_collision_radius(what) + 0.01f;
+  if (0) {
+    LOG("fire at dist %f", offset);
+  }
   proj_at.x += c * offset;
   proj_at.y += s * offset;
 
@@ -71,6 +76,10 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   if (projectile) {
     projectile->angle = angle;
   }
+  if (0) {
+    LOG("real dist %f", distance(thing_real_at(projectile), thing_real_at(me)));
+  }
+  (void) thing_collision_check_circle_circle(g, v, l, projectile, thing_real_at(projectile), me, thing_real_at(me));
 
   //
   // Set my direction based on where I fire
@@ -115,7 +124,7 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   }
 
   thing_pop(g, v, t);
-  thing_at_set(t, at);
+  (void) thing_at_set(t, at);
   thing_update_pos(g, v, l, t);
   if (! thing_push(g, v, l, t)) {
     return;

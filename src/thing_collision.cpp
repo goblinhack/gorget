@@ -183,8 +183,7 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 }
 
-static bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B,
-                                                fpoint B_at)
+bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at)
 {
   float A_radius = thing_collision_radius(A);
   float B_radius = thing_collision_radius(B);
@@ -209,24 +208,21 @@ static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Th
 {
   float radius = thing_collision_radius(C);
 
-  C_at.x += 0.5f;
-  C_at.y += 0.5f;
+  C_at.x += 0.5;
+  C_at.y += 0.5;
 
   fpoint tl(B_at.x, B_at.y);
   fpoint br(B_at.x + 1, B_at.y + 1);
 
-  //
-  // This simpler check seems more accurate
-  //
-  if ((C_at.x >= tl.x) && (C_at.x <= br.x) && (C_at.y >= tl.y) && (C_at.y <= br.y)) {
-    return true;
+  if (0) {
+    THING_LOG(C, "circle %f,%f", C_at.x, C_at.y);
+    THING_LOG(B, "box %f,%f -> %f,%f", tl.x, tl.y, br.x, br.y);
   }
-  return false;
 
   fpoint B0(B_at.x - 0, B_at.y - 0);
   fpoint B1(B_at.x + 1, B_at.y - 0);
-  fpoint B2(B_at.x - 0, B_at.y + 1);
-  fpoint B3(B_at.x + 1, B_at.y + 1);
+  fpoint B2(B_at.x + 1, B_at.y + 1);
+  fpoint B3(B_at.x + 0, B_at.y + 1);
 
   //
   // Circle inside box
@@ -387,6 +383,10 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
           auto o_at      = thing_real_at(o);
           auto collision = false;
 
+          if (0) {
+            THING_LOG(o, "cand");
+          }
+
           if (thing_is_collision_circle_small(me)) {
             if (thing_is_collision_circle_small(o)) {
               collision = thing_collision_check_circle_small_circle_small(g, v, l, me, me_at, o, o_at);
@@ -443,7 +443,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
                 return (d1 < d2) && t1->_priority < t2->_priority;
               });
 
-    if (0) {
+    if (1) {
       for (auto a_pair : pairs) {
         auto o_dist = a_pair.first;
         auto o      = a_pair.second;

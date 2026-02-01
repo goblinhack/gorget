@@ -16,7 +16,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Reset damage counts.
   //
-  thing_damage_this_tick_set(g, v, l, t, 0);
+  (void) thing_damage_this_tick_set(g, v, l, t, 0);
 
   //
   // Per thing callback
@@ -36,7 +36,7 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
   }
 
-  thing_age_incr(g, v, l, t);
+  (void) thing_age_incr(g, v, l, t);
 
   thing_continue_to_burn_check(g, v, l, t);
 }

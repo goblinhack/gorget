@@ -33,7 +33,7 @@ bool thing_collect_key(Gamep g, Levelsp v, Levelp l, Thingp it, Thingp player_or
 
   thing_dead(g, v, l, it, e);
 
-  thing_keys_carried_incr(g, v, l, player_or_monst, 1);
+  (void) thing_keys_carried_incr(g, v, l, player_or_monst, 1);
 
   return true;
 }

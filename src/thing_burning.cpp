@@ -86,7 +86,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     auto f = level_is_fire(g, v, l, t);
     if (f) {
       THING_DBG(t, "keep the fire burning");
-      thing_lifespan_incr(g, v, l, f, 2);
+      (void) thing_lifespan_incr(g, v, l, f, 2);
     }
   }
 

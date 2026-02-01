@@ -42,7 +42,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
     thing_melt(g, v, l, t);
   }
 
-  thing_temperature_set(g, v, l, t, n);
+  (void) thing_temperature_set(g, v, l, t, n);
 }
 
 static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp source, Thingp t, int n)

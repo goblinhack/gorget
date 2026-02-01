@@ -43,6 +43,7 @@ typedef union {
 #define THING_DESCRIBE_MAX  10                             // The number of things we can show in the rightbar
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 2)
 #define THING_INVENTORY_MAX 26
+#define THING_MINION_MAX    100
 
 //
 // Field of view for a monster or player
@@ -81,7 +82,7 @@ typedef struct ThingSlot_ {
   //
   // How many of this identical item are there?
   //
-  int count;
+  int8_t count;
 } ThingSlot;
 
 //
@@ -95,6 +96,21 @@ typedef struct ThingInventory_ {
 } ThingInventory;
 
 //
+// Minions
+//
+typedef struct ThingMinion_ {
+  ThingId minion_id;
+} ThingMinion;
+
+//
+// Per mob minions
+//
+typedef struct ThingMinions_ {
+  ThingMinion minion[ THING_MINION_MAX ];
+  int8_t      count;
+} ThingMinions;
+
+//
 // Per thing AI memory
 //
 typedef struct ThingExt_ {
@@ -103,6 +119,10 @@ typedef struct ThingExt_ {
   // What we're carrying
   //
   ThingInventory inventory;
+  //
+  // All minions for this mob
+  //
+  ThingMinions minions;
   //
   // Can be per monster or shared per mob memory of the preferred target,
   // usually the player.
@@ -120,18 +140,33 @@ typedef struct ThingExt_ {
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                      \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ai_ = thing_ext_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                 \
+    for (auto _ext_ = thing_ext_struct(_g_, _player_or_monst_); _ext_; _ext_ = nullptr)                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (ThingSlotp _slot_ = &_ai_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                            \
-          for (Thingp _it_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
+        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
+          for (auto _it_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;      \
                loop2 = (Thingp) 0)
 
 #define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _player_or_monst_, _it_)                                              \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ai_ = thing_ext_struct(_g_, _player_or_monst_); _ai_; _ai_ = nullptr)                                 \
+    for (auto _ext_ = thing_ext_struct(_g_, _player_or_monst_); _ext_; _ext_ = nullptr)                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (ThingSlotp _slot_ = &_ai_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                            \
-          for (Thingp _it_ = thing_find_optional(g, v, _slot_->item_id); _it_; _it_ = nullptr)
+        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
+          for (auto _it_ = thing_find_optional(g, v, _slot_->item_id); _it_; _it_ = nullptr)
+
+#define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                         \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _ext_ = thing_ext_struct(_g_, _player_or_monst_); _ext_; _ext_ = nullptr)                              \
+      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
+        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
+          for (auto _it_ = thing_find_optional(g, v, _slot_->minion_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
+               loop2 = (Thingp) 0)
+
+#define FOR_ALL_MINION_ITEMS(_g_, _v_, _l_, _player_or_monst_, _it_)                                                 \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _ext_ = thing_ext_struct(_g_, _player_or_monst_); _ext_; _ext_ = nullptr)                              \
+      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
+        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
+          for (Thingp _it_ = thing_find_optional(g, v, _slot_->minion_id); _it_; _it_ = nullptr)
 
 //
 // Player specific memory
@@ -366,6 +401,10 @@ typedef struct Thing_ {
   //
   ThingId owner_id;
   //
+  // If a mob spawned me, whom
+  //
+  ThingId mob_id;
+  //
   // For players and monsters
   //
   ThingExtId ext_id;
@@ -418,359 +457,363 @@ typedef struct Thing_ {
 [[nodiscard]] Levelp    thing_player_level(Gamep);
 [[nodiscard]] Thingp    thing_spawn(Gamep, Levelsp, Levelp, Tpp, const spoint &);
 [[nodiscard]] Thingp    thing_spawn(Gamep, Levelsp, Levelp, Tpp, const fpoint &);
-[[nodiscard]] Thingp    thing_spawn(Gamep, Levelsp, Levelp, Tpp, Thingp at);
+[[nodiscard]] Thingp    thing_spawn(Gamep, Levelsp, Levelp, Tpp, Thingp thing_at);
 [[nodiscard]] Thingp    top_owner(Gamep, Levelsp, Levelp, Thingp);
 ThingPlayerp            thing_player_struct(Gamep);
 void                    thing_free(Gamep, Levelsp, Levelp, Thingp t);
 void                    thing_stats_dump(Gamep, Levelsp);
 
 // begin sort marker1 {
-[[nodiscard]] bool player_check_if_target_needs_move_confirm(Gamep, Levelsp, Levelp, spoint);
-[[nodiscard]] bool player_jump(Gamep, Levelsp, Levelp, Thingp, spoint);
-[[nodiscard]] bool player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
-[[nodiscard]] bool player_move_request(Gamep, bool up, bool down, bool left, bool right, bool fire);
-[[nodiscard]] bool player_move_to_next(Gamep, Levelsp, Levelp, Thingp);
-[[nodiscard]] bool thing_can_move_to_by_opening(Gamep, Levelsp, Levelp, Thingp, spoint);
-[[nodiscard]] bool thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
-[[nodiscard]] bool thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-[[nodiscard]] bool thing_carry_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
-[[nodiscard]] bool thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
-[[nodiscard]] bool thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
-[[nodiscard]] bool thing_crush(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
-[[nodiscard]] bool thing_debug(Gamep, Levelsp, Levelp, Thingp, uint32_t iter_index);
-[[nodiscard]] bool thing_drop_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
-[[nodiscard]] bool thing_inventory_add(Gamep, Levelsp, Levelp, Thingp player_or_monst, Thingp it);
-[[nodiscard]] bool thing_inventory_is_empty(Gamep, Levelsp, Levelp, Thingp);
-[[nodiscard]] bool thing_inventory_item_mergeable(Gamep, Levelsp, Levelp, Thingp a, Thingp b);
-[[nodiscard]] bool thing_inventory_remove(Gamep, Levelsp, Levelp, Thingp player_or_monst, Thingp it);
-[[nodiscard]] bool thing_is_able_to_collect_items(Thingp);
-[[nodiscard]] bool thing_is_able_to_collect_keys(Thingp);
-[[nodiscard]] bool thing_is_able_to_crush_grass(Thingp);
-[[nodiscard]] bool thing_is_able_to_fall(Thingp);
-[[nodiscard]] bool thing_is_able_to_jump(Thingp);
-[[nodiscard]] bool thing_is_able_to_open(Thingp);
-[[nodiscard]] bool thing_is_able_to_shove(Thingp);
-[[nodiscard]] bool thing_is_animated_can_hflip(Thingp);
-[[nodiscard]] bool thing_is_animated_no_dir(Thingp);
-[[nodiscard]] bool thing_is_animated_sync_first(Thingp);
-[[nodiscard]] bool thing_is_animated(Thingp);
-[[nodiscard]] bool thing_is_barrel(Thingp);
-[[nodiscard]] bool thing_is_blit_centered(Thingp);
-[[nodiscard]] bool thing_is_blit_flush_per_line(Thingp);
-[[nodiscard]] bool thing_is_blit_if_has_seen(Thingp);
-[[nodiscard]] bool thing_is_blit_obscures(Thingp);
-[[nodiscard]] bool thing_is_blit_outlined(Thingp);
-[[nodiscard]] bool thing_is_blit_pixel_lighting(Thingp);
-[[nodiscard]] bool thing_is_blit_shown_in_chasms(Thingp);
-[[nodiscard]] bool thing_is_blit_shown_in_overlay(Thingp);
-[[nodiscard]] bool thing_is_blit_square_outlined(Thingp);
-[[nodiscard]] bool thing_is_blit_when_obscured(Thingp);
-[[nodiscard]] bool thing_is_border(Thingp);
-[[nodiscard]] bool thing_is_brazier(Thingp);
-[[nodiscard]] bool thing_is_bridge(Thingp);
-[[nodiscard]] bool thing_is_broken_on_death(Thingp);
-[[nodiscard]] bool thing_is_burnable(Thingp);
-[[nodiscard]] bool thing_is_chasm(Thingp);
-[[nodiscard]] bool thing_is_collectable(Thingp);
-[[nodiscard]] bool thing_is_collision_circle_large(Thingp);
-[[nodiscard]] bool thing_is_collision_circle_small(Thingp);
-[[nodiscard]] bool thing_is_collision_detection_enabled(Thingp);
-[[nodiscard]] bool thing_is_collision_square(Thingp);
-[[nodiscard]] bool thing_is_combustible(Thingp);
-[[nodiscard]] bool thing_is_corpse_on_death(Thingp);
-[[nodiscard]] bool thing_is_corridor(Thingp);
-[[nodiscard]] bool thing_is_crushable(Thingp);
-[[nodiscard]] bool thing_is_cursor_path_hazard(Thingp);
-[[nodiscard]] bool thing_is_cursor_path_none(Thingp);
-[[nodiscard]] bool thing_is_cursor_path_warning(Thingp);
-[[nodiscard]] bool thing_is_cursor_path(Thingp);
-[[nodiscard]] bool thing_is_cursor(Thingp);
-[[nodiscard]] bool thing_is_damage_capped(Thingp);
-[[nodiscard]] bool thing_is_dead_on_collision(Thingp);
-[[nodiscard]] bool thing_is_dead_on_shoving(Thingp);
-[[nodiscard]] bool thing_is_deep_water(Thingp);
-[[nodiscard]] bool thing_is_described_cursor(Thingp);
-[[nodiscard]] bool thing_is_dir_bl(Thingp);
-[[nodiscard]] bool thing_is_dir_br(Thingp);
-[[nodiscard]] bool thing_is_dir_down(Thingp);
-[[nodiscard]] bool thing_is_dir_left(Thingp);
-[[nodiscard]] bool thing_is_dir_right(Thingp);
-[[nodiscard]] bool thing_is_dir_tl(Thingp);
-[[nodiscard]] bool thing_is_dir_tr(Thingp);
-[[nodiscard]] bool thing_is_dir_up(Thingp);
-[[nodiscard]] bool thing_is_dirt(Thingp);
-[[nodiscard]] bool thing_is_door_locked(Thingp);
-[[nodiscard]] bool thing_is_door_secret(Thingp);
-[[nodiscard]] bool thing_is_door_unlocked(Thingp);
-[[nodiscard]] bool thing_is_dungeon_entrance(Thingp);
-[[nodiscard]] bool thing_is_entrance(Thingp);
-[[nodiscard]] bool thing_is_ethereal(Thingp);
-[[nodiscard]] bool thing_is_exit(Thingp);
-[[nodiscard]] bool thing_is_explosion(Thingp);
-[[nodiscard]] bool thing_is_extinguished_on_death(Thingp);
-[[nodiscard]] bool thing_is_fire(Thingp);
-[[nodiscard]] bool thing_is_fireball(Thingp);
-[[nodiscard]] bool thing_is_flesh(Thingp);
-[[nodiscard]] bool thing_is_floating(Thingp);
-[[nodiscard]] bool thing_is_floor(Thingp);
-[[nodiscard]] bool thing_is_flying(Thingp);
-[[nodiscard]] bool thing_is_foliage(Thingp);
-[[nodiscard]] bool thing_is_gaseous(Thingp);
-[[nodiscard]] bool thing_is_ghost(Thingp);
-[[nodiscard]] bool thing_is_glass(Thingp);
-[[nodiscard]] bool thing_is_gold(Thingp);
-[[nodiscard]] bool thing_is_grass(Thingp);
-[[nodiscard]] bool thing_is_health_bar_shown(Thingp);
-[[nodiscard]] bool thing_is_indestructible(Thingp);
-[[nodiscard]] bool thing_is_inventory_item(Thingp);
-[[nodiscard]] bool thing_is_item_droppable(Thingp);
-[[nodiscard]] bool thing_is_item_equipable(Thingp);
-[[nodiscard]] bool thing_is_item_mergeable(Thingp);
-[[nodiscard]] bool thing_is_item(Thingp);
-[[nodiscard]] bool thing_is_key(Thingp);
-[[nodiscard]] bool thing_is_kobalos(Thingp);
-[[nodiscard]] bool thing_is_lava(Thingp);
-[[nodiscard]] bool thing_is_level_across(Thingp);
-[[nodiscard]] bool thing_is_level_curr(Thingp);
-[[nodiscard]] bool thing_is_level_down(Thingp);
-[[nodiscard]] bool thing_is_level_final(Thingp);
-[[nodiscard]] bool thing_is_level_next(Thingp);
-[[nodiscard]] bool thing_is_level_not_visited(Thingp);
-[[nodiscard]] bool thing_is_level_visited(Thingp);
-[[nodiscard]] bool thing_is_levitating(Thingp);
-[[nodiscard]] bool thing_is_loggable(Thingp);
-[[nodiscard]] bool thing_is_meltable(Thingp);
-[[nodiscard]] bool thing_is_metal(Thingp);
-[[nodiscard]] bool thing_is_minion(Thingp);
-[[nodiscard]] bool thing_is_mob(Thingp);
-[[nodiscard]] bool thing_is_mob1(Thingp);
-[[nodiscard]] bool thing_is_mob2(Thingp);
-[[nodiscard]] bool thing_is_monst_group_easy(Thingp);
-[[nodiscard]] bool thing_is_monst_group_hard(Thingp);
-[[nodiscard]] bool thing_is_monst_group_mob(Thingp);
-[[nodiscard]] bool thing_is_monst(Thingp);
-[[nodiscard]] bool thing_is_needs_move_confirm(Thingp);
-[[nodiscard]] bool thing_is_obs_to_cursor_path(Thingp);
-[[nodiscard]] bool thing_is_obs_to_explosion(Thingp);
-[[nodiscard]] bool thing_is_obs_to_falling_onto(Thingp);
-[[nodiscard]] bool thing_is_obs_to_fire(Thingp);
-[[nodiscard]] bool thing_is_obs_to_jump_over(Thingp);
-[[nodiscard]] bool thing_is_obs_to_jumping_onto(Thingp);
-[[nodiscard]] bool thing_is_obs_to_jumping_out_of(Thingp);
-[[nodiscard]] bool thing_is_obs_to_movement(Thingp);
-[[nodiscard]] bool thing_is_obs_to_teleporting_onto(Thingp);
-[[nodiscard]] bool thing_is_openable(Thingp);
-[[nodiscard]] bool thing_is_physics_explosion(Thingp);
-[[nodiscard]] bool thing_is_physics_water(Thingp);
-[[nodiscard]] bool thing_is_pillar(Thingp);
-[[nodiscard]] bool thing_is_plant(Thingp);
-[[nodiscard]] bool thing_is_projectile(Thingp);
-[[nodiscard]] bool thing_is_rock(Thingp);
-[[nodiscard]] bool thing_is_shovable(Thingp);
-[[nodiscard]] bool thing_is_slime(Thingp);
-[[nodiscard]] bool thing_is_smoke(Thingp);
-[[nodiscard]] bool thing_is_steam(Thingp);
-[[nodiscard]] bool thing_is_stone(Thingp);
-[[nodiscard]] bool thing_is_submergible(Thingp);
-[[nodiscard]] bool thing_is_teleport_blocked(Thingp);
-[[nodiscard]] bool thing_is_teleport(Thingp);
-[[nodiscard]] bool thing_is_tick_end_delay(Thingp);
-[[nodiscard]] bool thing_is_tickable(Thingp);
-[[nodiscard]] bool thing_is_tiled(Thingp);
-[[nodiscard]] bool thing_is_trap(Thingp);
-[[nodiscard]] bool thing_is_treasure(Thingp);
-[[nodiscard]] bool thing_is_undead(Thingp);
-[[nodiscard]] bool thing_is_unused1(Thingp);
-[[nodiscard]] bool thing_is_unused10(Thingp);
-[[nodiscard]] bool thing_is_unused11(Thingp);
-[[nodiscard]] bool thing_is_unused12(Thingp);
-[[nodiscard]] bool thing_is_unused13(Thingp);
-[[nodiscard]] bool thing_is_unused14(Thingp);
-[[nodiscard]] bool thing_is_unused15(Thingp);
-[[nodiscard]] bool thing_is_unused16(Thingp);
-[[nodiscard]] bool thing_is_unused17(Thingp);
-[[nodiscard]] bool thing_is_unused18(Thingp);
-[[nodiscard]] bool thing_is_unused19(Thingp);
-[[nodiscard]] bool thing_is_unused2(Thingp);
-[[nodiscard]] bool thing_is_unused20(Thingp);
-[[nodiscard]] bool thing_is_unused21(Thingp);
-[[nodiscard]] bool thing_is_unused22(Thingp);
-[[nodiscard]] bool thing_is_unused23(Thingp);
-[[nodiscard]] bool thing_is_unused24(Thingp);
-[[nodiscard]] bool thing_is_unused25(Thingp);
-[[nodiscard]] bool thing_is_unused26(Thingp);
-[[nodiscard]] bool thing_is_unused27(Thingp);
-[[nodiscard]] bool thing_is_unused28(Thingp);
-[[nodiscard]] bool thing_is_unused29(Thingp);
-[[nodiscard]] bool thing_is_unused3(Thingp);
-[[nodiscard]] bool thing_is_unused30(Thingp);
-[[nodiscard]] bool thing_is_unused31(Thingp);
-[[nodiscard]] bool thing_is_unused32(Thingp);
-[[nodiscard]] bool thing_is_unused33(Thingp);
-[[nodiscard]] bool thing_is_unused34(Thingp);
-[[nodiscard]] bool thing_is_unused35(Thingp);
-[[nodiscard]] bool thing_is_unused36(Thingp);
-[[nodiscard]] bool thing_is_unused37(Thingp);
-[[nodiscard]] bool thing_is_unused38(Thingp);
-[[nodiscard]] bool thing_is_unused39(Thingp);
-[[nodiscard]] bool thing_is_unused4(Thingp);
-[[nodiscard]] bool thing_is_unused40(Thingp);
-[[nodiscard]] bool thing_is_unused41(Thingp);
-[[nodiscard]] bool thing_is_unused42(Thingp);
-[[nodiscard]] bool thing_is_unused43(Thingp);
-[[nodiscard]] bool thing_is_unused44(Thingp);
-[[nodiscard]] bool thing_is_unused45(Thingp);
-[[nodiscard]] bool thing_is_unused46(Thingp);
-[[nodiscard]] bool thing_is_unused47(Thingp);
-[[nodiscard]] bool thing_is_unused48(Thingp);
-[[nodiscard]] bool thing_is_unused49(Thingp);
-[[nodiscard]] bool thing_is_unused5(Thingp);
-[[nodiscard]] bool thing_is_unused50(Thingp);
-[[nodiscard]] bool thing_is_unused51(Thingp);
-[[nodiscard]] bool thing_is_unused52(Thingp);
-[[nodiscard]] bool thing_is_unused53(Thingp);
-[[nodiscard]] bool thing_is_unused54(Thingp);
-[[nodiscard]] bool thing_is_unused55(Thingp);
-[[nodiscard]] bool thing_is_unused56(Thingp);
-[[nodiscard]] bool thing_is_unused57(Thingp);
-[[nodiscard]] bool thing_is_unused58(Thingp);
-[[nodiscard]] bool thing_is_unused59(Thingp);
-[[nodiscard]] bool thing_is_unused6(Thingp);
-[[nodiscard]] bool thing_is_unused60(Thingp);
-[[nodiscard]] bool thing_is_unused61(Thingp);
-[[nodiscard]] bool thing_is_unused62(Thingp);
-[[nodiscard]] bool thing_is_unused63(Thingp);
-[[nodiscard]] bool thing_is_unused64(Thingp);
-[[nodiscard]] bool thing_is_unused65(Thingp);
-[[nodiscard]] bool thing_is_unused66(Thingp);
-[[nodiscard]] bool thing_is_unused67(Thingp);
-[[nodiscard]] bool thing_is_unused68(Thingp);
-[[nodiscard]] bool thing_is_unused69(Thingp);
-[[nodiscard]] bool thing_is_unused7(Thingp);
-[[nodiscard]] bool thing_is_unused70(Thingp);
-[[nodiscard]] bool thing_is_unused71(Thingp);
-[[nodiscard]] bool thing_is_unused72(Thingp);
-[[nodiscard]] bool thing_is_unused73(Thingp);
-[[nodiscard]] bool thing_is_unused74(Thingp);
-[[nodiscard]] bool thing_is_unused75(Thingp);
-[[nodiscard]] bool thing_is_unused76(Thingp);
-[[nodiscard]] bool thing_is_unused77(Thingp);
-[[nodiscard]] bool thing_is_unused78(Thingp);
-[[nodiscard]] bool thing_is_unused79(Thingp);
-[[nodiscard]] bool thing_is_unused8(Thingp);
-[[nodiscard]] bool thing_is_unused80(Thingp);
-[[nodiscard]] bool thing_is_unused9(Thingp);
-[[nodiscard]] bool thing_is_wait_on_dead_anim(Thingp);
-[[nodiscard]] bool thing_is_walk_through_walls(Thingp);
-[[nodiscard]] bool thing_is_wall(Thingp);
-[[nodiscard]] bool thing_is_water(Thingp);
-[[nodiscard]] bool thing_is_wood(Thingp);
-[[nodiscard]] bool thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to, bool warn = true);
-[[nodiscard]] bool thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
-[[nodiscard]] bool thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-[[nodiscard]] bool thing_on_same_level_as_player(Gamep, Levelsp, Thingp);
-[[nodiscard]] bool thing_open(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
-[[nodiscard]] bool thing_player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
-[[nodiscard]] bool thing_push(Gamep, Levelsp, Levelp, Thingp);
-[[nodiscard]] bool thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
-[[nodiscard]] bool thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-[[nodiscard]] bool thing_teleport_handle(Gamep, Levelsp, Levelp, Thingp);
-[[nodiscard]] bool thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
-[[nodiscard]] bool thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
-[[nodiscard]] bool thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-float              thing_collision_radius(Thingp);
-fpoint             thing_at_set(Thingp, const fpoint &);
-fpoint             thing_get_direction(Gamep, Levelsp, Levelp, Thingp);
-fpoint             thing_projectile_get_direction(Gamep, Levelsp, Levelp, Thingp);
-fpoint             thing_real_at(Thingp);
-spoint             thing_at_set(Thingp, const spoint &);
-spoint             thing_at(Thingp);
-spoint             thing_moving_from_set(Thingp, const spoint &val);
-spoint             thing_moving_from(Thingp);
-spoint             thing_old_at(Thingp);
-void               player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
-void               player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
-void               player_fire(Gamep, Levelsp, Levelp, int dx, int dy, Tpp what);
-void               player_map_center(Gamep, Levelsp, Levelp);
-void               player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right, bool fire);
-void               player_move_reset(Gamep, Levelsp, Levelp);
-void               player_reached_entrance(Gamep, Levelsp, Levelp);
-void               player_reached_exit(Gamep, Levelsp, Levelp);
-void               player_warp_to_specific_level(Gamep, Levelsp, LevelNum);
-void               thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
-void               thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, Tpp, int time_step);
-void               thing_chasm_handle(Gamep, Levelsp, Levelp, Thingp me);
-void               thing_collision_handle_interpolated(Gamep, Levelsp, Levelp, Thingp, fpoint old_at);
-void               thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
-void               thing_continue_to_burn_check(Gamep, Levelsp, Levelp, Thingp);
-void               thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
-void               thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
-void               thing_dir_bl_set(Thingp, uint8_t);
-void               thing_dir_br_set(Thingp, uint8_t);
-void               thing_dir_down_set(Thingp, uint8_t);
-void               thing_dir_left_set(Thingp, uint8_t);
-void               thing_dir_right_set(Thingp, uint8_t);
-void               thing_dir_tl_set(Thingp, uint8_t);
-void               thing_dir_tr_set(Thingp, uint8_t);
-void               thing_dir_up_set(Thingp, uint8_t);
-void               thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp me);
-void               thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
-void               thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
-void               thing_fall(Gamep, Levelsp, Levelp, Thingp);
-void               thing_fini(Gamep, Levelsp, Levelp, Thingp);
-void               thing_hit_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
-void               thing_hot_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
-void               thing_interpolate(Gamep, Levelsp, Levelp, Thingp, float dt);
-void               thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
-void               thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
-void               thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
-void               thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
-void               thing_level_warp_to_exit(Gamep, Levelsp, Levelp, Thingp);
-void               thing_melt(Gamep, Levelsp, Levelp, Thingp);
-void               thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
-void               thing_player_event_loop(Gamep, Levelsp, Levelp);
-void               thing_pop(Gamep, Levelsp, Thingp);
-void               thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const fpoint);
-void               thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const spoint);
-void               thing_projectile_move(Gamep, Levelsp, Levelp, Thingp, float dt);
-void               thing_set_dir_from_delta(Thingp, int dx, int dy);
-void               thing_sound_play(Gamep, Levelsp, Levelp, Thingp, const std::string &alias);
-void               thing_temperature_damage_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
-void               thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
-void               thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
-void               thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
-void               thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
-void               thing_update_pos(Gamep, Levelsp, Levelp, Thingp);
-void               thing_vision_reset(Gamep, Levelsp, Levelp, Thingp);
-void               thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
+[[nodiscard]] bool   player_check_if_target_needs_move_confirm(Gamep, Levelsp, Levelp, spoint);
+[[nodiscard]] bool   player_jump(Gamep, Levelsp, Levelp, Thingp, spoint);
+[[nodiscard]] bool   player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
+[[nodiscard]] bool   player_move_request(Gamep, bool up, bool down, bool left, bool right, bool fire);
+[[nodiscard]] bool   player_move_to_next(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool   thing_can_move_to_by_opening(Gamep, Levelsp, Levelp, Thingp, spoint);
+[[nodiscard]] bool   thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] bool   thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] bool   thing_carry_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+[[nodiscard]] bool   thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+[[nodiscard]] bool   thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+[[nodiscard]] bool   thing_crush(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+[[nodiscard]] bool   thing_debug(Gamep, Levelsp, Levelp, Thingp, uint32_t iter_index);
+[[nodiscard]] bool   thing_drop_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
+[[nodiscard]] bool   thing_inventory_add(Gamep, Levelsp, Levelp, Thingp player_or_monst, Thingp it);
+[[nodiscard]] bool   thing_inventory_is_empty(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool   thing_inventory_item_mergeable(Gamep, Levelsp, Levelp, Thingp a, Thingp b);
+[[nodiscard]] bool   thing_inventory_remove(Gamep, Levelsp, Levelp, Thingp player_or_monst, Thingp it);
+[[nodiscard]] bool   thing_is_able_to_collect_items(Thingp);
+[[nodiscard]] bool   thing_is_able_to_collect_keys(Thingp);
+[[nodiscard]] bool   thing_is_able_to_crush_grass(Thingp);
+[[nodiscard]] bool   thing_is_able_to_fall(Thingp);
+[[nodiscard]] bool   thing_is_able_to_jump(Thingp);
+[[nodiscard]] bool   thing_is_able_to_open(Thingp);
+[[nodiscard]] bool   thing_is_able_to_shove(Thingp);
+[[nodiscard]] bool   thing_is_animated_can_hflip(Thingp);
+[[nodiscard]] bool   thing_is_animated_no_dir(Thingp);
+[[nodiscard]] bool   thing_is_animated_sync_first(Thingp);
+[[nodiscard]] bool   thing_is_animated(Thingp);
+[[nodiscard]] bool   thing_is_barrel(Thingp);
+[[nodiscard]] bool   thing_is_blit_centered(Thingp);
+[[nodiscard]] bool   thing_is_blit_flush_per_line(Thingp);
+[[nodiscard]] bool   thing_is_blit_if_has_seen(Thingp);
+[[nodiscard]] bool   thing_is_blit_obscures(Thingp);
+[[nodiscard]] bool   thing_is_blit_outlined(Thingp);
+[[nodiscard]] bool   thing_is_blit_pixel_lighting(Thingp);
+[[nodiscard]] bool   thing_is_blit_shown_in_chasms(Thingp);
+[[nodiscard]] bool   thing_is_blit_shown_in_overlay(Thingp);
+[[nodiscard]] bool   thing_is_blit_square_outlined(Thingp);
+[[nodiscard]] bool   thing_is_blit_when_obscured(Thingp);
+[[nodiscard]] bool   thing_is_border(Thingp);
+[[nodiscard]] bool   thing_is_brazier(Thingp);
+[[nodiscard]] bool   thing_is_bridge(Thingp);
+[[nodiscard]] bool   thing_is_broken_on_death(Thingp);
+[[nodiscard]] bool   thing_is_burnable(Thingp);
+[[nodiscard]] bool   thing_is_chasm(Thingp);
+[[nodiscard]] bool   thing_is_collectable(Thingp);
+[[nodiscard]] bool   thing_is_collision_circle_large(Thingp);
+[[nodiscard]] bool   thing_is_collision_circle_small(Thingp);
+[[nodiscard]] bool   thing_is_collision_detection_enabled(Thingp);
+[[nodiscard]] bool   thing_is_collision_square(Thingp);
+[[nodiscard]] bool   thing_is_combustible(Thingp);
+[[nodiscard]] bool   thing_is_corpse_on_death(Thingp);
+[[nodiscard]] bool   thing_is_corridor(Thingp);
+[[nodiscard]] bool   thing_is_crushable(Thingp);
+[[nodiscard]] bool   thing_is_cursor_path_hazard(Thingp);
+[[nodiscard]] bool   thing_is_cursor_path_none(Thingp);
+[[nodiscard]] bool   thing_is_cursor_path_warning(Thingp);
+[[nodiscard]] bool   thing_is_cursor_path(Thingp);
+[[nodiscard]] bool   thing_is_cursor(Thingp);
+[[nodiscard]] bool   thing_is_damage_capped(Thingp);
+[[nodiscard]] bool   thing_is_dead_on_collision(Thingp);
+[[nodiscard]] bool   thing_is_dead_on_shoving(Thingp);
+[[nodiscard]] bool   thing_is_deep_water(Thingp);
+[[nodiscard]] bool   thing_is_described_cursor(Thingp);
+[[nodiscard]] bool   thing_is_dir_bl(Thingp);
+[[nodiscard]] bool   thing_is_dir_br(Thingp);
+[[nodiscard]] bool   thing_is_dir_down(Thingp);
+[[nodiscard]] bool   thing_is_dir_left(Thingp);
+[[nodiscard]] bool   thing_is_dir_right(Thingp);
+[[nodiscard]] bool   thing_is_dir_tl(Thingp);
+[[nodiscard]] bool   thing_is_dir_tr(Thingp);
+[[nodiscard]] bool   thing_is_dir_up(Thingp);
+[[nodiscard]] bool   thing_is_dirt(Thingp);
+[[nodiscard]] bool   thing_is_door_locked(Thingp);
+[[nodiscard]] bool   thing_is_door_secret(Thingp);
+[[nodiscard]] bool   thing_is_door_unlocked(Thingp);
+[[nodiscard]] bool   thing_is_dungeon_entrance(Thingp);
+[[nodiscard]] bool   thing_is_entrance(Thingp);
+[[nodiscard]] bool   thing_is_ethereal(Thingp);
+[[nodiscard]] bool   thing_is_exit(Thingp);
+[[nodiscard]] bool   thing_is_explosion(Thingp);
+[[nodiscard]] bool   thing_is_extinguished_on_death(Thingp);
+[[nodiscard]] bool   thing_is_fire(Thingp);
+[[nodiscard]] bool   thing_is_fireball(Thingp);
+[[nodiscard]] bool   thing_is_flesh(Thingp);
+[[nodiscard]] bool   thing_is_floating(Thingp);
+[[nodiscard]] bool   thing_is_floor(Thingp);
+[[nodiscard]] bool   thing_is_flying(Thingp);
+[[nodiscard]] bool   thing_is_foliage(Thingp);
+[[nodiscard]] bool   thing_is_gaseous(Thingp);
+[[nodiscard]] bool   thing_is_ghost(Thingp);
+[[nodiscard]] bool   thing_is_glass(Thingp);
+[[nodiscard]] bool   thing_is_gold(Thingp);
+[[nodiscard]] bool   thing_is_grass(Thingp);
+[[nodiscard]] bool   thing_is_health_bar_shown(Thingp);
+[[nodiscard]] bool   thing_is_indestructible(Thingp);
+[[nodiscard]] bool   thing_is_inventory_item(Thingp);
+[[nodiscard]] bool   thing_is_item_droppable(Thingp);
+[[nodiscard]] bool   thing_is_item_equipable(Thingp);
+[[nodiscard]] bool   thing_is_item_mergeable(Thingp);
+[[nodiscard]] bool   thing_is_item(Thingp);
+[[nodiscard]] bool   thing_is_key(Thingp);
+[[nodiscard]] bool   thing_is_kobalos(Thingp);
+[[nodiscard]] bool   thing_is_lava(Thingp);
+[[nodiscard]] bool   thing_is_level_across(Thingp);
+[[nodiscard]] bool   thing_is_level_curr(Thingp);
+[[nodiscard]] bool   thing_is_level_down(Thingp);
+[[nodiscard]] bool   thing_is_level_final(Thingp);
+[[nodiscard]] bool   thing_is_level_next(Thingp);
+[[nodiscard]] bool   thing_is_level_not_visited(Thingp);
+[[nodiscard]] bool   thing_is_level_visited(Thingp);
+[[nodiscard]] bool   thing_is_levitating(Thingp);
+[[nodiscard]] bool   thing_is_loggable(Thingp);
+[[nodiscard]] bool   thing_is_meltable(Thingp);
+[[nodiscard]] bool   thing_is_metal(Thingp);
+[[nodiscard]] bool   thing_is_minion(Thingp);
+[[nodiscard]] bool   thing_is_mob(Thingp);
+[[nodiscard]] bool   thing_is_mob1(Thingp);
+[[nodiscard]] bool   thing_is_mob2(Thingp);
+[[nodiscard]] bool   thing_is_monst_group_easy(Thingp);
+[[nodiscard]] bool   thing_is_monst_group_hard(Thingp);
+[[nodiscard]] bool   thing_is_monst_group_mob(Thingp);
+[[nodiscard]] bool   thing_is_monst(Thingp);
+[[nodiscard]] bool   thing_is_needs_move_confirm(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_cursor_path(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_explosion(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_falling_onto(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_fire(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_jump_over(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_jumping_onto(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_jumping_out_of(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_movement(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_teleporting_onto(Thingp);
+[[nodiscard]] bool   thing_is_openable(Thingp);
+[[nodiscard]] bool   thing_is_physics_explosion(Thingp);
+[[nodiscard]] bool   thing_is_physics_water(Thingp);
+[[nodiscard]] bool   thing_is_pillar(Thingp);
+[[nodiscard]] bool   thing_is_plant(Thingp);
+[[nodiscard]] bool   thing_is_projectile(Thingp);
+[[nodiscard]] bool   thing_is_rock(Thingp);
+[[nodiscard]] bool   thing_is_shovable(Thingp);
+[[nodiscard]] bool   thing_is_slime(Thingp);
+[[nodiscard]] bool   thing_is_smoke(Thingp);
+[[nodiscard]] bool   thing_is_steam(Thingp);
+[[nodiscard]] bool   thing_is_stone(Thingp);
+[[nodiscard]] bool   thing_is_submergible(Thingp);
+[[nodiscard]] bool   thing_is_teleport_blocked(Thingp);
+[[nodiscard]] bool   thing_is_teleport(Thingp);
+[[nodiscard]] bool   thing_is_tick_end_delay(Thingp);
+[[nodiscard]] bool   thing_is_tickable(Thingp);
+[[nodiscard]] bool   thing_is_tiled(Thingp);
+[[nodiscard]] bool   thing_is_trap(Thingp);
+[[nodiscard]] bool   thing_is_treasure(Thingp);
+[[nodiscard]] bool   thing_is_undead(Thingp);
+[[nodiscard]] bool   thing_is_unused1(Thingp);
+[[nodiscard]] bool   thing_is_unused10(Thingp);
+[[nodiscard]] bool   thing_is_unused11(Thingp);
+[[nodiscard]] bool   thing_is_unused12(Thingp);
+[[nodiscard]] bool   thing_is_unused13(Thingp);
+[[nodiscard]] bool   thing_is_unused14(Thingp);
+[[nodiscard]] bool   thing_is_unused15(Thingp);
+[[nodiscard]] bool   thing_is_unused16(Thingp);
+[[nodiscard]] bool   thing_is_unused17(Thingp);
+[[nodiscard]] bool   thing_is_unused18(Thingp);
+[[nodiscard]] bool   thing_is_unused19(Thingp);
+[[nodiscard]] bool   thing_is_unused2(Thingp);
+[[nodiscard]] bool   thing_is_unused20(Thingp);
+[[nodiscard]] bool   thing_is_unused21(Thingp);
+[[nodiscard]] bool   thing_is_unused22(Thingp);
+[[nodiscard]] bool   thing_is_unused23(Thingp);
+[[nodiscard]] bool   thing_is_unused24(Thingp);
+[[nodiscard]] bool   thing_is_unused25(Thingp);
+[[nodiscard]] bool   thing_is_unused26(Thingp);
+[[nodiscard]] bool   thing_is_unused27(Thingp);
+[[nodiscard]] bool   thing_is_unused28(Thingp);
+[[nodiscard]] bool   thing_is_unused29(Thingp);
+[[nodiscard]] bool   thing_is_unused3(Thingp);
+[[nodiscard]] bool   thing_is_unused30(Thingp);
+[[nodiscard]] bool   thing_is_unused31(Thingp);
+[[nodiscard]] bool   thing_is_unused32(Thingp);
+[[nodiscard]] bool   thing_is_unused33(Thingp);
+[[nodiscard]] bool   thing_is_unused34(Thingp);
+[[nodiscard]] bool   thing_is_unused35(Thingp);
+[[nodiscard]] bool   thing_is_unused36(Thingp);
+[[nodiscard]] bool   thing_is_unused37(Thingp);
+[[nodiscard]] bool   thing_is_unused38(Thingp);
+[[nodiscard]] bool   thing_is_unused39(Thingp);
+[[nodiscard]] bool   thing_is_unused4(Thingp);
+[[nodiscard]] bool   thing_is_unused40(Thingp);
+[[nodiscard]] bool   thing_is_unused41(Thingp);
+[[nodiscard]] bool   thing_is_unused42(Thingp);
+[[nodiscard]] bool   thing_is_unused43(Thingp);
+[[nodiscard]] bool   thing_is_unused44(Thingp);
+[[nodiscard]] bool   thing_is_unused45(Thingp);
+[[nodiscard]] bool   thing_is_unused46(Thingp);
+[[nodiscard]] bool   thing_is_unused47(Thingp);
+[[nodiscard]] bool   thing_is_unused48(Thingp);
+[[nodiscard]] bool   thing_is_unused49(Thingp);
+[[nodiscard]] bool   thing_is_unused5(Thingp);
+[[nodiscard]] bool   thing_is_unused50(Thingp);
+[[nodiscard]] bool   thing_is_unused51(Thingp);
+[[nodiscard]] bool   thing_is_unused52(Thingp);
+[[nodiscard]] bool   thing_is_unused53(Thingp);
+[[nodiscard]] bool   thing_is_unused54(Thingp);
+[[nodiscard]] bool   thing_is_unused55(Thingp);
+[[nodiscard]] bool   thing_is_unused56(Thingp);
+[[nodiscard]] bool   thing_is_unused57(Thingp);
+[[nodiscard]] bool   thing_is_unused58(Thingp);
+[[nodiscard]] bool   thing_is_unused59(Thingp);
+[[nodiscard]] bool   thing_is_unused6(Thingp);
+[[nodiscard]] bool   thing_is_unused60(Thingp);
+[[nodiscard]] bool   thing_is_unused61(Thingp);
+[[nodiscard]] bool   thing_is_unused62(Thingp);
+[[nodiscard]] bool   thing_is_unused63(Thingp);
+[[nodiscard]] bool   thing_is_unused64(Thingp);
+[[nodiscard]] bool   thing_is_unused65(Thingp);
+[[nodiscard]] bool   thing_is_unused66(Thingp);
+[[nodiscard]] bool   thing_is_unused67(Thingp);
+[[nodiscard]] bool   thing_is_unused68(Thingp);
+[[nodiscard]] bool   thing_is_unused69(Thingp);
+[[nodiscard]] bool   thing_is_unused7(Thingp);
+[[nodiscard]] bool   thing_is_unused70(Thingp);
+[[nodiscard]] bool   thing_is_unused71(Thingp);
+[[nodiscard]] bool   thing_is_unused72(Thingp);
+[[nodiscard]] bool   thing_is_unused73(Thingp);
+[[nodiscard]] bool   thing_is_unused74(Thingp);
+[[nodiscard]] bool   thing_is_unused75(Thingp);
+[[nodiscard]] bool   thing_is_unused76(Thingp);
+[[nodiscard]] bool   thing_is_unused77(Thingp);
+[[nodiscard]] bool   thing_is_unused78(Thingp);
+[[nodiscard]] bool   thing_is_unused79(Thingp);
+[[nodiscard]] bool   thing_is_unused8(Thingp);
+[[nodiscard]] bool   thing_is_unused80(Thingp);
+[[nodiscard]] bool   thing_is_unused9(Thingp);
+[[nodiscard]] bool   thing_is_wait_on_dead_anim(Thingp);
+[[nodiscard]] bool   thing_is_walk_through_walls(Thingp);
+[[nodiscard]] bool   thing_is_wall(Thingp);
+[[nodiscard]] bool   thing_is_water(Thingp);
+[[nodiscard]] bool   thing_is_wood(Thingp);
+[[nodiscard]] bool   thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to, bool warn = true);
+[[nodiscard]] bool   thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool   thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] bool   thing_on_same_level_as_player(Gamep, Levelsp, Thingp);
+[[nodiscard]] bool   thing_open(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
+[[nodiscard]] bool   thing_player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
+[[nodiscard]] bool   thing_push(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool   thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
+[[nodiscard]] bool   thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] bool   thing_teleport_handle(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool   thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
+[[nodiscard]] bool   thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
+[[nodiscard]] bool   thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] bool   thing_minion_detach(Gamep, Levelsp, Levelp, Thingp mob, Thingp minion);
+[[nodiscard]] float  thing_collision_radius(Thingp);
+[[nodiscard]] fpoint thing_at_set(Thingp, const fpoint &);
+[[nodiscard]] fpoint thing_get_direction(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] fpoint thing_projectile_get_direction(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] fpoint thing_real_at(Thingp);
+[[nodiscard]] int    thing_minion_count(Gamep, Levelsp, Levelp, Thingp mob);
+[[nodiscard]] spoint thing_at_set(Thingp, const spoint &);
+[[nodiscard]] spoint thing_at(Thingp);
+[[nodiscard]] spoint thing_moving_from_set(Thingp, const spoint &val);
+[[nodiscard]] spoint thing_moving_from(Thingp);
+[[nodiscard]] spoint thing_old_at(Thingp);
+[[nodiscard]] Thingp thing_minion_spawn(Gamep, Levelsp, Levelp, Thingp mob, Tpp tp_minion);
+void                 player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
+void                 player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
+void                 player_fire(Gamep, Levelsp, Levelp, int dx, int dy, Tpp what);
+void                 player_map_center(Gamep, Levelsp, Levelp);
+void                 player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bool right, bool fire);
+void                 player_move_reset(Gamep, Levelsp, Levelp);
+void                 player_reached_entrance(Gamep, Levelsp, Levelp);
+void                 player_reached_exit(Gamep, Levelsp, Levelp);
+void                 player_warp_to_specific_level(Gamep, Levelsp, LevelNum);
+void                 thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
+void                 thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, Tpp, int time_step);
+void                 thing_chasm_handle(Gamep, Levelsp, Levelp, Thingp me);
+void                 thing_collision_handle_interpolated(Gamep, Levelsp, Levelp, Thingp, fpoint old_at);
+void                 thing_collision_handle(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_continue_to_burn_check(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_damage(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
+void                 thing_dead(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
+void                 thing_dir_bl_set(Thingp, uint8_t);
+void                 thing_dir_br_set(Thingp, uint8_t);
+void                 thing_dir_down_set(Thingp, uint8_t);
+void                 thing_dir_left_set(Thingp, uint8_t);
+void                 thing_dir_right_set(Thingp, uint8_t);
+void                 thing_dir_tl_set(Thingp, uint8_t);
+void                 thing_dir_tr_set(Thingp, uint8_t);
+void                 thing_dir_up_set(Thingp, uint8_t);
+void                 thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp me);
+void                 thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
+void                 thing_fall(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_fini(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_hit_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
+void                 thing_hot_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
+void                 thing_interpolate(Gamep, Levelsp, Levelp, Thingp, float dt);
+void                 thing_inventory_dump(Gamep, Levelsp, Levelp, Thingp player_or_monst);
+void                 thing_is_burning_handle(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_level_warp_to_exit(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_melt(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_minions_dump(Gamep, Levelsp, Levelp, Thingp mob);
+void                 thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_player_event_loop(Gamep, Levelsp, Levelp);
+void                 thing_pop(Gamep, Levelsp, Thingp);
+void                 thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const fpoint);
+void                 thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const spoint);
+void                 thing_projectile_move(Gamep, Levelsp, Levelp, Thingp, float dt);
+void                 thing_set_dir_from_delta(Thingp, int dx, int dy);
+void                 thing_sound_play(Gamep, Levelsp, Levelp, Thingp, const std::string &alias);
+void                 thing_temperature_damage_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
+void                 thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
+void                 thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_update_pos(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_vision_reset(Gamep, Levelsp, Levelp, Thingp);
+void                 thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
 // end sort marker1 }
 
 void thing_is_dead_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_dead_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_burning(Thingp);
-void thing_is_burning_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_burning_unset(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool thing_is_burning(Thingp);
+void               thing_is_burning_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void               thing_is_burning_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_scheduled_for_cleanup(Thingp);
-void thing_is_scheduled_for_cleanup_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_scheduled_for_cleanup_unset(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool thing_is_scheduled_for_cleanup(Thingp);
+void               thing_is_scheduled_for_cleanup_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void               thing_is_scheduled_for_cleanup_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_corpse(Thingp);
-void thing_is_corpse_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_corpse_unset(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool thing_is_corpse(Thingp);
+void               thing_is_corpse_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void               thing_is_corpse_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_sleeping(Thingp);
-void thing_is_sleeping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_sleeping_unset(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool thing_is_sleeping(Thingp);
+void               thing_is_sleeping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void               thing_is_sleeping_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_unlocked(Thingp);
-void thing_is_unlocked_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_unlocked_unset(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool thing_is_unlocked(Thingp);
+void               thing_is_unlocked_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void               thing_is_unlocked_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_on_map(Thingp);
-void thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_on_map_unset(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool thing_is_on_map(Thingp);
+void               thing_is_on_map_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void               thing_is_on_map_unset(Gamep, Levelsp, Levelp, Thingp);
 
 void thing_is_moving_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_moving_unset(Gamep, Levelsp, Levelp, Thingp);
@@ -778,208 +821,208 @@ void thing_is_moving_unset(Gamep, Levelsp, Levelp, Thingp);
 void thing_is_spawned_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_spawned_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_teleporting(Thingp);
-void thing_is_teleporting_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_teleporting_unset(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool thing_is_teleporting(Thingp);
+void               thing_is_teleporting_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void               thing_is_teleporting_unset(Gamep, Levelsp, Levelp, Thingp);
 
 void thing_is_jumping_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
 void thing_is_jumping_unset(Gamep, Levelsp, Levelp, Thingp);
 
-bool thing_is_open_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp opener, bool val = true);
-bool thing_is_open_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp closer);
+[[nodiscard]] bool thing_is_open_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp opener, bool val = true);
+[[nodiscard]] bool thing_is_open_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp closer);
 
-bool thing_is_carried(Thingp);
-bool thing_is_carried_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp carrier, bool val = true);
-bool thing_is_carried_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp dropr);
+[[nodiscard]] bool thing_is_carried(Thingp);
+[[nodiscard]] bool thing_is_carried_try_set(Gamep, Levelsp, Levelp, Thingp, Thingp carrier, bool val = true);
+[[nodiscard]] bool thing_is_carried_try_unset(Gamep, Levelsp, Levelp, Thingp, Thingp dropr);
 
-void thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, bool val);
-int  thing_is_falling_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+void              thing_is_falling_set(Gamep, Levelsp, Levelp, Thingp, bool val);
+[[nodiscard]] int thing_is_falling_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-bool thing_is_falling_continues(Thingp);
-void thing_is_falling_continues_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
-void thing_is_falling_continues_unset(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool thing_is_falling_continues(Thingp);
+void               thing_is_falling_continues_set(Gamep, Levelsp, Levelp, Thingp, bool val = true);
+void               thing_is_falling_continues_unset(Gamep, Levelsp, Levelp, Thingp);
 
-void thing_is_hit_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int  thing_is_hit_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int  thing_is_hit_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+void              thing_is_hit_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_is_hit_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_is_hit_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-void thing_is_hot_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int  thing_is_hot_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int  thing_is_hot_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+void              thing_is_hot_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_is_hot_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_is_hot_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_speed(Thingp);
-int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_speed(Thingp);
+[[nodiscard]] int thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
-int thing_weight(Thingp);
-int thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_weight(Thingp);
+[[nodiscard]] int thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
 
-int thing_temperature(Thingp);
-int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_temperature_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_temperature_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_temperature(Thingp);
+[[nodiscard]] int thing_temperature_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_temperature_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_temperature_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_damage_this_tick(Thingp);
-int thing_damage_this_tick_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_damage_this_tick_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_damage_this_tick_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_damage_this_tick(Thingp);
+[[nodiscard]] int thing_damage_this_tick_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_damage_this_tick_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_damage_this_tick_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_keys_carried(Thingp);
-int thing_keys_carried_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_keys_carried_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_keys_carried_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_keys_carried(Thingp);
+[[nodiscard]] int thing_keys_carried_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_keys_carried_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_keys_carried_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value1(Thingp);
-int thing_value1_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value1_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value1_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value1(Thingp);
+[[nodiscard]] int thing_value1_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value1_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value1_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value2(Thingp);
-int thing_value2_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value2_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value2_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value2(Thingp);
+[[nodiscard]] int thing_value2_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value2_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value2_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value3(Thingp);
-int thing_value3_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value3_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value3_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value3(Thingp);
+[[nodiscard]] int thing_value3_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value3_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value3_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value4(Thingp);
-int thing_value4_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value4_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value4_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value4(Thingp);
+[[nodiscard]] int thing_value4_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value4_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value4_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value5(Thingp);
-int thing_value5_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value5_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value5_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value5(Thingp);
+[[nodiscard]] int thing_value5_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value5_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value5_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value6(Thingp);
-int thing_value6_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value6_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value6_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value6(Thingp);
+[[nodiscard]] int thing_value6_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value6_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value6_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value7(Thingp);
-int thing_value7_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value7_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value7_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value7(Thingp);
+[[nodiscard]] int thing_value7_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value7_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value7_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value8(Thingp);
-int thing_value8_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value8_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value8_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value8(Thingp);
+[[nodiscard]] int thing_value8_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value8_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value8_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value9(Thingp);
-int thing_value9_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value9_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value9_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value9(Thingp);
+[[nodiscard]] int thing_value9_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value9_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value9_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value10(Thingp);
-int thing_value10_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value10_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value10_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value10(Thingp);
+[[nodiscard]] int thing_value10_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value10_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value10_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value11(Thingp);
-int thing_value11_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value11_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value11_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value11(Thingp);
+[[nodiscard]] int thing_value11_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value11_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value11_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value12(Thingp);
-int thing_value12_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value12_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value12_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value12(Thingp);
+[[nodiscard]] int thing_value12_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value12_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value12_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value13(Thingp);
-int thing_value13_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value13_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value13_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value13(Thingp);
+[[nodiscard]] int thing_value13_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value13_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value13_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value14(Thingp);
-int thing_value14_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value14_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value14_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value14(Thingp);
+[[nodiscard]] int thing_value14_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value14_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value14_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value15(Thingp);
-int thing_value15_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value15_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value15_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value15(Thingp);
+[[nodiscard]] int thing_value15_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value15_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value15_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value16(Thingp);
-int thing_value16_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value16_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value16_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value16(Thingp);
+[[nodiscard]] int thing_value16_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value16_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value16_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value17(Thingp);
-int thing_value17_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value17_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value17_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value17(Thingp);
+[[nodiscard]] int thing_value17_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value17_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value17_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value18(Thingp);
-int thing_value18_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value18_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value18_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value18(Thingp);
+[[nodiscard]] int thing_value18_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value18_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value18_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value19(Thingp);
-int thing_value19_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value19_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value19_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value19(Thingp);
+[[nodiscard]] int thing_value19_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value19_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value19_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value20(Thingp);
-int thing_value20_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value20_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value20_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value20(Thingp);
+[[nodiscard]] int thing_value20_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value20_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value20_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value21(Thingp);
-int thing_value21_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value21_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value21_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value21(Thingp);
+[[nodiscard]] int thing_value21_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value21_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value21_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value22(Thingp);
-int thing_value22_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value22_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value22_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value22(Thingp);
+[[nodiscard]] int thing_value22_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value22_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value22_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_value23(Thingp);
-int thing_value23_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_value23_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_value23_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value23(Thingp);
+[[nodiscard]] int thing_value23_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_value23_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_value23_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_variant(Thingp);
-int thing_variant_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_variant_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_variant_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_variant(Thingp);
+[[nodiscard]] int thing_variant_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_variant_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_variant_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 ThingPriorityType thing_priority(Thingp);
 ThingPriorityType thing_priority_set(Gamep, Levelsp, Levelp, Thingp, ThingPriorityType val);
 
-int thing_vision_distance(Thingp);
-int thing_vision_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_vision_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_vision_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_vision_distance(Thingp);
+[[nodiscard]] int thing_vision_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_vision_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_vision_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_jump_distance(Thingp);
-int thing_jump_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_jump_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_jump_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_jump_distance(Thingp);
+[[nodiscard]] int thing_jump_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_jump_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_jump_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_lifespan(Thingp);
-int thing_lifespan_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_lifespan_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_lifespan_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_lifespan(Thingp);
+[[nodiscard]] int thing_lifespan_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_lifespan_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_lifespan_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_submerged_pct(Thingp);
-int thing_submerged_pct_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_submerged_pct_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_submerged_pct_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_submerged_pct(Thingp);
+[[nodiscard]] int thing_submerged_pct_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_submerged_pct_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_submerged_pct_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_age(Thingp);
-int thing_age_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_age_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_age_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_age(Thingp);
+[[nodiscard]] int thing_age_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_age_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_age_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-int thing_health(Thingp);
-int thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
-int thing_health_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_health(Thingp);
+[[nodiscard]] int thing_health_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_health_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_health_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 spoint thing_prev_pix_at(Thingp);
 spoint thing_prev_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);
@@ -987,7 +1030,7 @@ spoint thing_prev_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);
 spoint thing_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);
 spoint thing_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, short, short);
 
-bool thing_is_immune_to(Thingp, ThingEventType);
+[[nodiscard]] bool thing_is_immune_to(Thingp, ThingEventType);
 
 void thing_display(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index,
                    FboEnum fbo);

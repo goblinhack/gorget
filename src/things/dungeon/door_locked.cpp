@@ -150,7 +150,7 @@ static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp 
     //
     // Remove a key permanently
     //
-    thing_keys_carried_decr(g, v, l, opener, 1);
+    (void) thing_keys_carried_decr(g, v, l, opener, 1);
   }
 
   if (thing_is_player(opener)) {

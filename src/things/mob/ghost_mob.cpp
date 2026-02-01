@@ -3,6 +3,8 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_dice_rolls.hpp"
+#include "my_level.hpp"
 #include "my_sound.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_tile.hpp"
@@ -31,6 +33,19 @@ static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingE
   thing_sound_play(g, v, l, t, "explosion");
 }
 
+static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (d100() < 90) {
+    return;
+  }
+
+  if (! level_is_monst(g, v, l, t)) {
+    (void) thing_minion_spawn(g, v, l, t, tp_first(is_ghost));
+  }
+}
+
 bool tp_load_ghost_mob(void)
 {
   auto tp   = tp_load("ghost_mob"); // keep as string for scripts
@@ -40,6 +55,7 @@ bool tp_load_ghost_mob(void)
   thing_description_set(tp, tp_ghost_mob_description_get);
   thing_detail_set(tp, tp_ghost_mob_detail_get);
   thing_on_death_set(tp, tp_ghost_mob_on_death);
+  thing_on_tick_begin_set(tp, tp_ghost_mob_tick_begin);
   tp_apostrophize_name_set(tp, "ghosts mob's");
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);

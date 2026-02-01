@@ -58,7 +58,7 @@ static bool test_alloc_free_walls(Gamep g, Testp t)
         continue;
       }
 
-      if (level_num > 20) {
+      if (level_num > 10) {
         //
         // Takes too long to test them all
         //

@@ -195,7 +195,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
   //
   // Check we cannot overflow on monsters
   //
-  auto needs_ext_memory = tp_is_monst(tp) || tp_is_player(tp);
+  auto needs_ext_memory = tp_is_mob(tp) || tp_is_monst(tp) || tp_is_player(tp);
   if (needs_ext_memory) {
     if (v->thing_ext_count >= THING_EXT_MAX - 1) {
       TP_LOG(tp, "out of ext thing memory");

@@ -272,8 +272,8 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
   pix_at.y = at.y * TILE_HEIGHT;
   thing_pix_at_set(g, v, l, t, pix_at);
 
-  thing_moving_from_set(t, at);
-  thing_at_set(t, to);
+  (void) thing_moving_from_set(t, at);
+  (void) thing_at_set(t, to);
 
   (void) thing_push(g, v, l, t);
 
@@ -362,7 +362,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   pix_at.y = at.y * TILE_HEIGHT;
   thing_pix_at_set(g, v, new_level, t, pix_at);
 
-  thing_at_set(t, to);
+  (void) thing_at_set(t, to);
 
   //
   // Join the level.
@@ -419,7 +419,7 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   auto at = thing_at(t);
-  thing_moving_from_set(t, at);
+  (void) thing_moving_from_set(t, at);
 
   thing_is_teleporting_unset(g, v, l, t);
   thing_is_moving_unset(g, v, l, t);
