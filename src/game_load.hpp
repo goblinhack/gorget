@@ -1182,15 +1182,20 @@ bool Game::load(int slot)
   TRACE_AND_INDENT();
 
   if (slot < 0) {
+    CON("No game at that slot; bad slot.");
+    sound_play(this, "error");
     return false;
   }
 
   if (slot >= UI_MAX_SAVE_SLOTS) {
+    CON("No game at that slot; bad slot.");
+    sound_play(this, "error");
     return false;
   }
 
   if (! slot_valid[ slot ]) {
-    LOG("No game at that slot.");
+    CON("No game at that slot.");
+    sound_play(this, "error");
     return false;
   }
 
@@ -1211,7 +1216,12 @@ bool Game::load(int slot)
   state_change(STATE_LOADED, "reset");
   state_change(STATE_PLAYING, "loaded game");
 
-  TOPCON("Loaded the game from %s", this_save_file.c_str());
+  if (game_load_error != "") {
+    sound_play(this, "error");
+    TOPCON("Failed to load the game from %s", this_save_file.c_str());
+  } else {
+    TOPCON("Loaded the game from %s", this_save_file.c_str());
+  }
 
   return game_load_error == "";
 }
@@ -1280,7 +1290,8 @@ static bool wid_load_key_up(Gamep g, Widp w, const struct SDL_Keysym *key)
                 {
                   int slot = c - '0';
                   if (! slot_valid[ slot ]) {
-                    LOG("No game at that slot.");
+                    sound_play(g, "error");
+                    CON("No game at that slot.");
                   } else {
                     game->load(slot);
                     wid_load_destroy(game);
