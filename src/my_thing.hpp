@@ -38,9 +38,8 @@ typedef union {
 //
 // Essentially equates to the max number of monsters+light sources per level
 //
-#define MONSTS_PER_LEVEL    200                            // monst(t) + is_player + is_light_source(t)
-#define THING_EXT_MAX       (LEVEL_MAX * MONSTS_PER_LEVEL) // The size of thing_ext
-#define THING_DESCRIBE_MAX  10                             // The number of things we can show in the rightbar
+#define THING_EXT_MAX       (LEVEL_MAX * 1000) // The size of thing_ext
+#define THING_DESCRIBE_MAX  10                 // The number of things we can show in the rightbar
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 2)
 #define THING_INVENTORY_MAX 26
 #define THING_MINION_MAX    100

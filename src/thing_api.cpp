@@ -4476,5 +4476,5 @@ float thing_collision_radius(Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return thing_is_collision_circle_small(t) ? 0.25 : 0.5;
+  return thing_is_collision_circle_small(t) ? 0.025 : 0.5;
 }
