@@ -116,10 +116,6 @@ typedef struct ThingMinions_ {
 typedef struct ThingExt_ {
   uint8_t in_use : 1;
   //
-  // What we're carrying
-  //
-  ThingInventory inventory;
-  //
   // All minions for this mob
   //
   ThingMinions minions;
@@ -147,7 +143,7 @@ typedef struct ThingFov_ {
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                              \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_ext_struct(_g_, _owner_); _ext_; _ext_ = nullptr)                                        \
+    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
           for (auto _item_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
@@ -155,7 +151,7 @@ typedef struct ThingFov_ {
 
 #define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                      \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_ext_struct(_g_, _owner_); _ext_; _ext_ = nullptr)                                        \
+    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
           for (auto _item_ = thing_find_optional(g, v, _slot_->item_id); _item_; _item_ = nullptr)
@@ -183,6 +179,10 @@ typedef struct ThingPlayer_ {
   // For hiscores
   //
   int16_t levels_completed;
+  //
+  // What we're carrying
+  //
+  ThingInventory inventory;
   //
   // Holds the cursor path as we walk it
   //
