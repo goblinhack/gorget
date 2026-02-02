@@ -137,35 +137,35 @@ typedef struct ThingExt_ {
   FovMap fov_has_seen_tile;
 } ThingExt;
 
-#define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                      \
+#define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                              \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_ext_struct(_g_, _player_or_monst_); _ext_; _ext_ = nullptr)                              \
+    for (auto _ext_ = thing_ext_struct(_g_, _owner_); _ext_; _ext_ = nullptr)                                        \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
-          for (auto _it_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;      \
+          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
                loop2 = (Thingp) 0)
 
-#define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _player_or_monst_, _it_)                                              \
+#define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                      \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_ext_struct(_g_, _player_or_monst_); _ext_; _ext_ = nullptr)                              \
+    for (auto _ext_ = thing_ext_struct(_g_, _owner_); _ext_; _ext_ = nullptr)                                        \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
-          for (auto _it_ = thing_find_optional(g, v, _slot_->item_id); _it_; _it_ = nullptr)
+          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id); _item_; _item_ = nullptr)
 
-#define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _player_or_monst_, _slot_, _it_)                                         \
+#define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                 \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_ext_struct(_g_, _player_or_monst_); _ext_; _ext_ = nullptr)                              \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
         for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
-          for (auto _it_ = thing_find_optional(g, v, _slot_->minion_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
-               loop2 = (Thingp) 0)
+          for (auto _minion_ = thing_find_optional(g, v, _slot_->minion_id), loop2 = (Thingp) 1;                     \
+               loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
-#define FOR_ALL_MINION_ITEMS(_g_, _v_, _l_, _player_or_monst_, _it_)                                                 \
+#define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                              \
   if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_ext_struct(_g_, _player_or_monst_); _ext_; _ext_ = nullptr)                              \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
         for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
-          for (Thingp _it_ = thing_find_optional(g, v, _slot_->minion_id); _it_; _it_ = nullptr)
+          for (Thingp _minion_ = thing_find_optional(g, v, _slot_->minion_id); _minion_; _minion_ = nullptr)
 
 //
 // Player specific memory
@@ -580,6 +580,7 @@ void                    thing_stats_dump(Gamep, Levelsp);
 [[nodiscard]] bool   thing_is_meltable(Thingp);
 [[nodiscard]] bool   thing_is_metal(Thingp);
 [[nodiscard]] bool   thing_is_minion(Thingp);
+[[nodiscard]] bool   thing_is_mob_kill_minions_on_death(Thingp);
 [[nodiscard]] bool   thing_is_mob(Thingp);
 [[nodiscard]] bool   thing_is_mob1(Thingp);
 [[nodiscard]] bool   thing_is_mob2(Thingp);
@@ -596,6 +597,7 @@ void                    thing_stats_dump(Gamep, Levelsp);
 [[nodiscard]] bool   thing_is_obs_to_jumping_onto(Thingp);
 [[nodiscard]] bool   thing_is_obs_to_jumping_out_of(Thingp);
 [[nodiscard]] bool   thing_is_obs_to_movement(Thingp);
+[[nodiscard]] bool   thing_is_obs_to_spawning(Thingp);
 [[nodiscard]] bool   thing_is_obs_to_teleporting_onto(Thingp);
 [[nodiscard]] bool   thing_is_openable(Thingp);
 [[nodiscard]] bool   thing_is_physics_explosion(Thingp);
@@ -694,9 +696,7 @@ void                    thing_stats_dump(Gamep, Levelsp);
 [[nodiscard]] bool   thing_is_unused76(Thingp);
 [[nodiscard]] bool   thing_is_unused77(Thingp);
 [[nodiscard]] bool   thing_is_unused78(Thingp);
-[[nodiscard]] bool   thing_is_unused79(Thingp);
 [[nodiscard]] bool   thing_is_unused8(Thingp);
-[[nodiscard]] bool   thing_is_unused80(Thingp);
 [[nodiscard]] bool   thing_is_unused9(Thingp);
 [[nodiscard]] bool   thing_is_wait_on_dead_anim(Thingp);
 [[nodiscard]] bool   thing_is_walk_through_walls(Thingp);
@@ -704,6 +704,10 @@ void                    thing_stats_dump(Gamep, Levelsp);
 [[nodiscard]] bool   thing_is_water(Thingp);
 [[nodiscard]] bool   thing_is_wood(Thingp);
 [[nodiscard]] bool   thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to, bool warn = true);
+[[nodiscard]] bool   thing_minion_detach_me_from_mob(Gamep, Levelsp, Levelp, Thingp minion);
+[[nodiscard]] bool   thing_mob_detach_all_minions(Gamep, Levelsp, Levelp, Thingp mob);
+[[nodiscard]] bool   thing_mob_detach_minion(Gamep, Levelsp, Levelp, Thingp mob, Thingp minion);
+[[nodiscard]] bool   thing_mob_kill_all_minions(Gamep, Levelsp, Levelp, Thingp mob, ThingEvent &e);
 [[nodiscard]] bool   thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] bool   thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 [[nodiscard]] bool   thing_on_same_level_as_player(Gamep, Levelsp, Thingp);
@@ -716,19 +720,19 @@ void                    thing_stats_dump(Gamep, Levelsp);
 [[nodiscard]] bool   thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 [[nodiscard]] bool   thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
 [[nodiscard]] bool   thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
-[[nodiscard]] bool   thing_minion_detach(Gamep, Levelsp, Levelp, Thingp mob, Thingp minion);
 [[nodiscard]] float  thing_collision_radius(Thingp);
 [[nodiscard]] fpoint thing_at_set(Thingp, const fpoint &);
 [[nodiscard]] fpoint thing_get_direction(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] fpoint thing_projectile_get_direction(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] fpoint thing_real_at(Thingp);
-[[nodiscard]] int    thing_minion_count(Gamep, Levelsp, Levelp, Thingp mob);
+[[nodiscard]] int    thing_mob_minion_count_get(Gamep, Levelsp, Levelp, Thingp mob);
 [[nodiscard]] spoint thing_at_set(Thingp, const spoint &);
 [[nodiscard]] spoint thing_at(Thingp);
 [[nodiscard]] spoint thing_moving_from_set(Thingp, const spoint &val);
 [[nodiscard]] spoint thing_moving_from(Thingp);
 [[nodiscard]] spoint thing_old_at(Thingp);
-[[nodiscard]] Thingp thing_minion_spawn(Gamep, Levelsp, Levelp, Thingp mob, Tpp tp_minion);
+[[nodiscard]] Thingp thing_minion_mob_get(Gamep, Levelsp, Levelp, Thingp minion);
+[[nodiscard]] Thingp thing_mob_spawn_a_minion(Gamep, Levelsp, Levelp, Thingp mob, Tpp tp_minion);
 void                 player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void                 player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
 void                 player_fire(Gamep, Levelsp, Levelp, int dx, int dy, Tpp what);
@@ -768,7 +772,7 @@ void                 thing_is_dead_handle(Gamep, Levelsp, Levelp, Thingp);
 void                 thing_level_warp_to_entrance(Gamep, Levelsp, Levelp, Thingp);
 void                 thing_level_warp_to_exit(Gamep, Levelsp, Levelp, Thingp);
 void                 thing_melt(Gamep, Levelsp, Levelp, Thingp);
-void                 thing_minions_dump(Gamep, Levelsp, Levelp, Thingp mob);
+void                 thing_mob_dump_minions(Gamep, Levelsp, Levelp, Thingp mob);
 void                 thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
 void                 thing_player_event_loop(Gamep, Levelsp, Levelp);
 void                 thing_pop(Gamep, Levelsp, Thingp);

@@ -42,7 +42,7 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (! level_is_monst(g, v, l, t)) {
-    (void) thing_minion_spawn(g, v, l, t, tp_first(is_ghost));
+    (void) thing_mob_spawn_a_minion(g, v, l, t, tp_first(is_ghost));
   }
 }
 
@@ -71,6 +71,7 @@ bool tp_load_ghost_mob(void)
   tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_light_source, 3);
   tp_flag_set(tp, is_loggable);
+  tp_flag_set(tp, is_mob_kill_minions_on_death);
   tp_flag_set(tp, is_mob);
   tp_flag_set(tp, is_mob1);
   tp_flag_set(tp, is_obs_to_jumping_onto);

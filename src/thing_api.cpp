@@ -2429,24 +2429,24 @@ bool thing_is_unused78(Thingp t)
   return tp_flag(thing_tp(t), is_unused78);
 }
 
-bool thing_is_unused79(Thingp t)
+bool thing_is_obs_to_spawning(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused79);
+  return tp_flag(thing_tp(t), is_obs_to_spawning);
 }
 
-bool thing_is_unused80(Thingp t)
+bool thing_is_mob_kill_minions_on_death(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused80);
+  return tp_flag(thing_tp(t), is_mob_kill_minions_on_death);
 }
 
 bool thing_is_border(Thingp t)

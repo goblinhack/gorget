@@ -139,6 +139,7 @@ bool tp_load_brazier(void)
   tp_flag_set(tp, is_obs_to_falling_onto);
   tp_flag_set(tp, is_obs_to_jumping_onto);
   tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_obs_to_spawning);
   tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_water);

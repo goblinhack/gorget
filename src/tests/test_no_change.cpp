@@ -24,7 +24,7 @@ static bool test_no_change(Gamep g, Testp t)
         "xbB=C#x"
         "xW~,+sx"
         "x.@..`x"
-        "x.kGMmx"
+        "x.k.Mmx"
         "x|.Tt#x"
         "xxxxxxx";
   std::string expect
@@ -32,7 +32,7 @@ static bool test_no_change(Gamep g, Testp t)
         "xbB=C#x"
         "xW~,+sx"
         "x.@..`x"
-        "x.kGMmx"
+        "x.k.Mmx"
         "x|.Tt#x"
         "xxxxxxx";
 

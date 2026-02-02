@@ -299,7 +299,14 @@ bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
     return false;
   }
 
-  return thing_shove_handle(g, v, l, t, to);
+  auto ret = thing_shove_handle(g, v, l, t, to);
+  if (ret) {
+    THING_LOG(t, "shoved");
+  } else {
+    THING_LOG(t, "failed to shove");
+  }
+
+  return ret;
 }
 
 //
@@ -308,11 +315,12 @@ bool thing_shove_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
 {
   TRACE_NO_INDENT();
-  THING_LOG(t, "pre warp");
 
   if (is_oob(to)) {
     return false;
   }
+
+  THING_LOG(t, "pre teleport");
 
   bool level_changed = false;
   auto old_level     = thing_level(g, v, t);
@@ -400,7 +408,8 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
   }
 
   new_level->is_tick_requested = true;
-  THING_LOG(t, "post warp");
+
+  THING_LOG(t, "teleported");
 
   return true;
 }

@@ -225,6 +225,21 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Per thing callback
   //
   thing_on_death(g, v, l, t, e);
+
+  //
+  // If the mob dies, so do the minions
+  //
+  if (thing_is_mob(t)) {
+    if (thing_is_mob_kill_minions_on_death(t)) {
+      (void) thing_mob_kill_all_minions(g, v, l, t, e);
+    } else {
+      (void) thing_mob_detach_all_minions(g, v, l, t);
+    }
+  }
+
+  if (thing_is_minion(t)) {
+    (void) thing_minion_detach_me_from_mob(g, v, l, t);
+  }
 }
 
 //
