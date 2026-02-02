@@ -648,11 +648,11 @@ int  tp_value20_get(Tpp);
 void tp_value21_set(Tpp, int val);
 int  tp_value21_get(Tpp);
 
-void tp_value22_set(Tpp, int val);
-int  tp_value22_get(Tpp);
+void tp_distance_minion_from_mob_max_set(Tpp, int val);
+int  tp_distance_minion_from_mob_max_get(Tpp);
 
-void tp_can_see_distance_set(Tpp, int val);
-int  tp_can_see_distance_get(Tpp);
+void tp_distance_vision_set(Tpp, int val);
+int  tp_distance_vision_get(Tpp);
 
 void tp_variant_set(Tpp, int val);
 int  tp_variant_get(Tpp);

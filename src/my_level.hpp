@@ -409,7 +409,7 @@ typedef struct Levels_ {
   // For lighting memory
   //
   ThingFov thing_fov[ THING_FOV_MAX ];
-  int        thing_fov_count;
+  int      thing_fov_count;
   //
   // Space for player memory
   //

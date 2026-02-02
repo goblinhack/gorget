@@ -126,8 +126,8 @@ public:
   int value19 {0};
   int value20 {0};
   int value21 {0};
-  int value22 {0};
-  int can_see_distance {0};
+  int distance_minion_from_mob_max {0};
+  int distance_vision {0};
 
   //
   // Heat capacity indicates the amount of heat energy required to

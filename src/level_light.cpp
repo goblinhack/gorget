@@ -772,7 +772,7 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
   {
     int max_radius = thing_is_light_source(t);
     if (! max_radius) {
-      max_radius = thing_can_see_distance(t);
+      max_radius = thing_distance_vision(t);
       if (! max_radius) {
         continue;
       }

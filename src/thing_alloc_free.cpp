@@ -270,7 +270,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     }
   }
 
-  auto needs_fov_memory = tp_is_light_source(tp) || tp_is_player(tp) || tp_can_see_distance_get(tp);
+  auto needs_fov_memory = tp_is_light_source(tp) || tp_is_player(tp) || tp_distance_vision_get(tp);
   if (needs_fov_memory) {
     if (v->thing_fov_count >= THING_FOV_MAX - 1) {
       TP_LOG(tp, "out of fov thing memory");

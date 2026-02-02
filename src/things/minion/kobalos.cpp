@@ -41,12 +41,13 @@ bool tp_load_kobalos(void)
   thing_detail_set(tp, tp_kobalos_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_distance_minion_from_mob_max_set(tp, 10);
+  tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_can_see_distance_set(tp, 10);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_circle_large);

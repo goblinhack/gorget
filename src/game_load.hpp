@@ -752,13 +752,13 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Thing, _value22)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value22)";
+    if (tmp != offsetof(Thing, _distance_minion_from_mob_max)) {
+      game_load_error = "Thing strcture changed: offsetof(Thing, _distance_minion_from_mob_max)";
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Thing, _can_see_distance)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _can_see_distance)";
+    if (tmp != offsetof(Thing, _distance_vision)) {
+      game_load_error = "Thing strcture changed: offsetof(Thing, _distance_vision)";
       return in;
     }
     in >> bits(tmp);

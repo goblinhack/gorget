@@ -4125,83 +4125,83 @@ int thing_value21_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value21 -= val;
 }
-int thing_value22(Thingp t)
+int thing_distance_minion_from_mob_max(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value22;
+  return t->_distance_minion_from_mob_max;
 }
 
-int thing_value22_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_distance_minion_from_mob_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value22 = val;
+  return t->_distance_minion_from_mob_max = val;
 }
 
-int thing_value22_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_distance_minion_from_mob_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value22 += val;
+  return t->_distance_minion_from_mob_max += val;
 }
 
-int thing_value22_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_distance_minion_from_mob_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value22 -= val;
+  return t->_distance_minion_from_mob_max -= val;
 }
-int thing_can_see_distance(Thingp t)
+int thing_distance_vision(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_can_see_distance;
-}
-
-int thing_can_see_distance_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  return t->_can_see_distance = val;
+  return t->_distance_vision;
 }
 
-int thing_can_see_distance_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_distance_vision_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_can_see_distance += val;
+  return t->_distance_vision = val;
 }
 
-int thing_can_see_distance_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_distance_vision_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_can_see_distance -= val;
+  return t->_distance_vision += val;
+}
+
+int thing_distance_vision_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+  return t->_distance_vision -= val;
 }
 
 int thing_variant(Thingp t)

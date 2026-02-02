@@ -38,11 +38,11 @@ bool tp_load_slime(void)
   thing_detail_set(tp, tp_slime_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
+  tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_jump);
   tp_flag_set(tp, is_animated_can_hflip);
-  tp_can_see_distance_set(tp, 10);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);

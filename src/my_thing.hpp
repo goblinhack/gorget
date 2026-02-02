@@ -351,8 +351,8 @@ typedef struct Thing_ {
   int16_t _value19;
   int16_t _value20;
   int16_t _value21;
-  int16_t _value22;
-  int16_t _can_see_distance;
+  int16_t _distance_minion_from_mob_max;
+  int16_t _distance_vision;
   int16_t _variant;
   //
   // Lifespan remaining in ticks
@@ -992,15 +992,15 @@ void              thing_is_hot_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int thing_value21_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int thing_value21_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-[[nodiscard]] int thing_value22(Thingp);
-[[nodiscard]] int thing_value22_set(Gamep, Levelsp, Levelp, Thingp, int val);
-[[nodiscard]] int thing_value22_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int thing_value22_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_distance_minion_from_mob_max(Thingp);
+[[nodiscard]] int thing_distance_minion_from_mob_max_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_distance_minion_from_mob_max_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_distance_minion_from_mob_max_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-[[nodiscard]] int thing_can_see_distance(Thingp);
-[[nodiscard]] int thing_can_see_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
-[[nodiscard]] int thing_can_see_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int thing_can_see_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_distance_vision(Thingp);
+[[nodiscard]] int thing_distance_vision_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_distance_vision_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_distance_vision_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 [[nodiscard]] int thing_variant(Thingp);
 [[nodiscard]] int thing_variant_set(Gamep, Levelsp, Levelp, Thingp, int val);

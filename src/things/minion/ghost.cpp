@@ -32,6 +32,8 @@ bool tp_load_ghost(void)
   // begin sort marker1 {
   thing_description_set(tp, tp_ghost_description_get);
   thing_detail_set(tp, tp_ghost_detail_get);
+  tp_distance_minion_from_mob_max_set(tp, 10);
+  tp_distance_vision_set(tp, 10);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
@@ -45,7 +47,6 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_light_source, 1);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
-  tp_can_see_distance_set(tp, 10);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_undead);

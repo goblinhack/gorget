@@ -1487,44 +1487,44 @@ int tp_value21_get(Tpp tp)
   return tp->value21;
 }
 
-void tp_value22_set(Tpp tp, int val)
+void tp_distance_minion_from_mob_max_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->value22 = val;
+  tp->distance_minion_from_mob_max = val;
 }
 
-int tp_value22_get(Tpp tp)
+int tp_distance_minion_from_mob_max_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return 0;
   }
-  return tp->value22;
+  return tp->distance_minion_from_mob_max;
 }
 
-void tp_can_see_distance_set(Tpp tp, int val)
+void tp_distance_vision_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->can_see_distance = val;
+  tp->distance_vision = val;
 }
 
-int tp_can_see_distance_get(Tpp tp)
+int tp_distance_vision_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return 0;
   }
-  return tp->can_see_distance;
+  return tp->distance_vision;
 }
 
 void tp_temperature_thermal_conductivity_set(Tpp tp, float val)

@@ -357,9 +357,9 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
     out << bits(tmp);
     tmp = offsetof(Thing, _value21);
     out << bits(tmp);
-    tmp = offsetof(Thing, _value22);
+    tmp = offsetof(Thing, _distance_minion_from_mob_max);
     out << bits(tmp);
-    tmp = offsetof(Thing, _can_see_distance);
+    tmp = offsetof(Thing, _distance_vision);
     out << bits(tmp);
     tmp = offsetof(Thing, _variant);
     out << bits(tmp);
