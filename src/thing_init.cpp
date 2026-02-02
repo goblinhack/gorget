@@ -93,7 +93,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   (void) thing_value20_set(g, v, l, t, tp_value20_get(tp));
   (void) thing_value21_set(g, v, l, t, tp_value21_get(tp));
   (void) thing_value22_set(g, v, l, t, tp_value22_get(tp));
-  (void) thing_value23_set(g, v, l, t, tp_value23_get(tp));
+  (void) thing_can_see_distance_set(g, v, l, t, tp_can_see_distance_get(tp));
   (void) thing_variant_set(g, v, l, t, tp_variant_get(tp));
   (void) thing_priority_set(g, v, l, t, tp_priority_get(tp));
 

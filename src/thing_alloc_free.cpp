@@ -63,7 +63,7 @@ static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (! v->thing_ext[ ext_id ].in_use) {
-    ERR("freeing unused Thing AI ID is not in use, %" PRIX32 "", ext_id);
+    ERR("freeing unused Thing ext ID is not in use, %" PRIX32 "", ext_id);
   }
 
   v->thing_ext[ ext_id ].in_use = false;
@@ -75,8 +75,66 @@ static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   t->ext_id = 0;
 }
 
+[[nodiscard]] static bool thing_fov_alloc(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  static uint32_t last_fov_id;
+
+  //
+  // Continue from the last successful allocation
+  //
+  thing_mutex.lock();
+  for (auto tries = 0; tries < THING_FOV_MAX; tries++) {
+    ThingFovId fov_id = last_fov_id + tries;
+    fov_id %= THING_FOV_MAX;
+    if (unlikely(! fov_id)) {
+      continue;
+    }
+
+    if (unlikely(v->thing_fov[ fov_id ].in_use)) {
+      continue;
+    }
+
+    v->thing_fov[ fov_id ].in_use = true;
+    v->thing_fov_count++;
+    t->fov_id   = fov_id;
+    last_fov_id = fov_id;
+
+    thing_mutex.unlock();
+    return true;
+  }
+
+  thing_mutex.unlock();
+  CROAK("out of Thing fov IDs: max is %d", THING_FOV_MAX);
+
+  return false;
+}
+
+static void thing_fov_free(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto fov_id = t->fov_id;
+  if (! fov_id) {
+    return;
+  }
+
+  if (! v->thing_fov[ fov_id ].in_use) {
+    ERR("freeing unused Thing fov ID is not in use, %" PRIX32 "", fov_id);
+  }
+
+  v->thing_fov[ fov_id ].in_use = false;
+  v->thing_fov_count--;
+  if (v->thing_fov_count < 0) {
+    CROAK("bad thing_fov count");
+  }
+
+  t->fov_id = 0;
+}
+
 static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, ThingIdPacked id, bool needs_ext_memory,
-                             bool need_mutex)
+                             bool needs_fov_memory, bool need_mutex)
 {
   TRACE_NO_INDENT();
 
@@ -172,6 +230,13 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
     }
   }
 
+  if (needs_fov_memory) {
+    if (! thing_fov_alloc(g, v, l, t)) {
+      thing_free(g, v, l, t);
+      return nullptr;
+    }
+  }
+
 #ifdef ENABLE_PER_THING_MEMORY
   if (memory_test) {
     auto tmp = malloc(sizeof(*t));
@@ -195,12 +260,20 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
   //
   // Check we cannot overflow on monsters
   //
-  // Light source need to avoid lighting the same cell more than once, hence their presence.
+  // Light source need to avoid foving the same cell more than once, hence their presence.
   //
-  auto needs_ext_memory = tp_is_light_source(tp) || tp_is_mob(tp) || tp_is_monst(tp) || tp_is_player(tp);
+  auto needs_ext_memory = tp_is_mob(tp) || tp_is_monst(tp) || tp_is_player(tp);
   if (needs_ext_memory) {
     if (v->thing_ext_count >= THING_EXT_MAX - 1) {
       TP_LOG(tp, "out of ext thing memory");
+      return nullptr;
+    }
+  }
+
+  auto needs_fov_memory = tp_is_light_source(tp) || tp_is_player(tp) || tp_can_see_distance_get(tp);
+  if (needs_fov_memory) {
+    if (v->thing_fov_count >= THING_FOV_MAX - 1) {
+      TP_LOG(tp, "out of fov thing memory");
       return nullptr;
     }
   }
@@ -240,7 +313,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     id.b.level_num    = level_num;
     id.b.per_level_id = per_level_id;
 
-    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, false /* mutex */);
+    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, needs_fov_memory, false /* mutex */);
     if (t) {
       last_per_level_id[ level_num ] = per_level_id;
       return t;
@@ -262,9 +335,8 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
   for (uint32_t arr_index = last_arr_index - 1; arr_index > 0; arr_index--) {
     ThingIdPacked id = {};
     id.c.arr_index   = arr_index;
-    CON("B %d / %d", level_num, arr_index);
 
-    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, true /* mutex */);
+    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, needs_fov_memory, true /* mutex */);
     if (t) {
       last_arr_index = arr_index;
       return t;
@@ -308,6 +380,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_pop(g, v, t);
 
   thing_ext_free(g, v, l, t);
+  thing_fov_free(g, v, l, t);
   memset((void *) t, 0, SIZEOF(*t));
 
 #ifdef ENABLE_PER_THING_MEMORY

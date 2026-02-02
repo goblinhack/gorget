@@ -174,6 +174,23 @@ ThingExtp thing_ext_struct(Gamep g, Thingp t)
   return &v->thing_ext[ ext_id ];
 }
 
+ThingFovp thing_fov_struct(Gamep g, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto v = game_levels_get(g);
+  if (! v) {
+    return nullptr;
+  }
+
+  auto fov_id = t->fov_id;
+  if (! fov_id) {
+    return nullptr;
+  }
+
+  return &v->thing_fov[ fov_id ];
+}
+
 ThingPlayerp thing_player_struct(Gamep g)
 {
   TRACE_NO_INDENT();

@@ -4164,44 +4164,44 @@ int thing_value22_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value22 -= val;
 }
-int thing_value23(Thingp t)
+int thing_can_see_distance(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value23;
+  return t->_can_see_distance;
 }
 
-int thing_value23_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_can_see_distance_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value23 = val;
+  return t->_can_see_distance = val;
 }
 
-int thing_value23_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_can_see_distance_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value23 += val;
+  return t->_can_see_distance += val;
 }
 
-int thing_value23_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_can_see_distance_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value23 -= val;
+  return t->_can_see_distance -= val;
 }
 
 int thing_variant(Thingp t)

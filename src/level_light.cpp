@@ -337,27 +337,27 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingExtp ai, spoint pov, spoint tile)
+static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, spoint pov, spoint tile)
 {
   TRACE_NO_INDENT();
 
-  if (! ai) {
-    CROAK("missing ThingExtp for player");
+  if (! fov) {
+    CROAK("missing ThingFovp for player");
     return;
   }
 
   //
   // Only apply color to the tile once
   //
-  if (! ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]) {
-    ai->fov_can_see_tile.can_see[ tile.x ][ tile.y ]        = true;
+  if (! fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]) {
+    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = true;
     l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
     level_light_fov_all_can_see_callback(g, v, l, t, pov, tile);
   }
 }
 
 //
-// Something blocking the light?
+// Something blocking the fov?
 //
 Thingp level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov)
 {
@@ -411,20 +411,25 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto ai = thing_ext_struct(g, player);
-  if (! ai) {
+  auto ext = thing_ext_struct(g, player);
+  if (! ext) {
+    return;
+  }
+
+  auto fov = thing_fov_struct(g, player);
+  if (! fov) {
     return;
   }
 
   //
-  // Reset the light ray lengths
+  // Reset the fov ray lengths
   //
   memset(rays, 0, sizeof(rays));
 
   //
   // Reset what we can see
   //
-  memset(ai->fov_can_see_tile.can_see, 0, sizeof(ai->fov_can_see_tile.can_see));
+  memset(fov->fov_can_see_tile.can_see, 0, sizeof(fov->fov_can_see_tile.can_see));
 
   //
   // The light source
@@ -493,7 +498,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       prev_tile_x = tile_x;
       prev_tile_y = tile_y;
 
-      light_tile(g, v, l, player, ai, pov, tile);
+      light_tile(g, v, l, player, fov, pov, tile);
 
       //
       // This is for foliage so we don't obscure too much where we stand
@@ -586,7 +591,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
             break;
           }
 
-          light_tile(g, v, l, player, ai, pov, tile);
+          light_tile(g, v, l, player, fov, pov, tile);
           step_inside_wall++;
         }
 
@@ -767,7 +772,10 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
   {
     int max_radius = thing_is_light_source(t);
     if (! max_radius) {
-      continue;
+      max_radius = thing_can_see_distance(t);
+      if (! max_radius) {
+        continue;
+      }
     }
 
     if (thing_is_player(t)) {
@@ -775,6 +783,7 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     }
 
     auto ext = thing_ext_struct(g, t);
+    auto fov = thing_fov_struct(g, t);
 
     //
     // + here needed for light edges for smoothly moving things
@@ -783,11 +792,9 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
       max_radius += 2;
     }
 
-    if (ext) {
-      level_fov(g, v, l, t, &ext->fov_can_see_tile, &ext->fov_has_seen_tile, thing_at(t), max_radius,
-                level_light_fov_all_can_see_callback);
-    } else {
-      level_fov(g, v, l, t, nullptr, nullptr, thing_at(t), max_radius, level_light_fov_all_can_see_callback);
-    }
+    level_fov(g, v, l, t,                              // newline
+              fov ? &fov->fov_can_see_tile : nullptr,  // newline
+              ext ? &ext->fov_has_seen_tile : nullptr, // newline
+              thing_at(t), max_radius, level_light_fov_all_can_see_callback);
   }
 }

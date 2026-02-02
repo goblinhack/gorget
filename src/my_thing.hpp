@@ -38,8 +38,9 @@ typedef union {
 //
 // Essentially equates to the max number of monsters+light sources per level
 //
-#define THING_EXT_MAX       (LEVEL_MAX * 1000) // The size of thing_ext
-#define THING_DESCRIBE_MAX  10                 // The number of things we can show in the rightbar
+#define THING_EXT_MAX       (LEVEL_MAX * 500) // The size of thing_ext
+#define THING_FOV_MAX       (LEVEL_MAX * 500) // The size of thing_ext
+#define THING_DESCRIBE_MAX  10                // The number of things we can show in the rightbar
 #define THING_MOVE_PATH_MAX (MAP_WIDTH * 2)
 #define THING_INVENTORY_MAX 26
 #define THING_MINION_MAX    100
@@ -110,7 +111,7 @@ typedef struct ThingMinions_ {
 } ThingMinions;
 
 //
-// Per thing AI memory
+// Per thing extended memory
 //
 typedef struct ThingExt_ {
   uint8_t in_use : 1;
@@ -128,14 +129,21 @@ typedef struct ThingExt_ {
   //
   Dmap dmap;
   //
-  // What we can currently see
-  //
-  FovMap fov_can_see_tile;
-  //
   // What we have ever seen
   //
   FovMap fov_has_seen_tile;
 } ThingExt;
+
+//
+// Per thing lighting memory
+//
+typedef struct ThingFov_ {
+  uint8_t in_use : 1;
+  //
+  // What we can currently see (monst) or is lit (light source)
+  //
+  FovMap fov_can_see_tile;
+} ThingFov;
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                              \
   if (_g_ && _v_ && _l_)                                                                                             \
@@ -344,7 +352,7 @@ typedef struct Thing_ {
   int16_t _value20;
   int16_t _value21;
   int16_t _value22;
-  int16_t _value23;
+  int16_t _can_see_distance;
   int16_t _variant;
   //
   // Lifespan remaining in ticks
@@ -404,9 +412,13 @@ typedef struct Thing_ {
   //
   ThingId mob_id;
   //
-  // For players and monsters
+  // For player and monsters
   //
   ThingExtId ext_id;
+  //
+  // For light sources and player and monsters
+  //
+  ThingFovId fov_id;
   //
   // Interpolated co-ords in pixels
   //
@@ -443,6 +455,7 @@ typedef struct Thing_ {
 
 [[nodiscard]] Levelp    thing_level(Gamep, Levelsp, Thingp);
 [[nodiscard]] ThingExtp thing_ext_struct(Gamep, Thingp);
+[[nodiscard]] ThingFovp thing_fov_struct(Gamep, Thingp);
 [[nodiscard]] Thingp    immediate_owner(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] Thingp    thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, spoint);
 [[nodiscard]] Thingp    thing_and_tp_get_at(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp *);
@@ -984,10 +997,10 @@ void              thing_is_hot_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int thing_value22_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int thing_value22_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
-[[nodiscard]] int thing_value23(Thingp);
-[[nodiscard]] int thing_value23_set(Gamep, Levelsp, Levelp, Thingp, int val);
-[[nodiscard]] int thing_value23_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int thing_value23_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_can_see_distance(Thingp);
+[[nodiscard]] int thing_can_see_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int thing_can_see_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int thing_can_see_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 
 [[nodiscard]] int thing_variant(Thingp);
 [[nodiscard]] int thing_variant_set(Gamep, Levelsp, Levelp, Thingp, int val);

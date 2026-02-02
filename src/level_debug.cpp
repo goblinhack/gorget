@@ -19,14 +19,14 @@ void game_debug_info(Gamep g)
   }
 
   LOG("Level info:");
-  LOG("- Levels memory:                   %" PRI_SIZE_T " b %" PRI_SIZE_T " Mb", sizeof(Levels),
-      sizeof(Levels) / (1024 * 1024));
-  LOG("- Level memory:                    %" PRI_SIZE_T " b %" PRI_SIZE_T " Kb", sizeof(Level),
-      sizeof(Level) / (1024));
-  LOG("- Thing memory:                    %" PRI_SIZE_T " b", sizeof(Thing));
-  LOG("- Thing inventory memory:          %" PRI_SIZE_T " b", sizeof(ThingInventory));
-  LOG("- Thing ext memory:                %" PRI_SIZE_T " b", sizeof(ThingExt));
-  LOG("- Thing player memory:             %" PRI_SIZE_T " b", sizeof(ThingPlayer));
+  LOG("- Levels memory:                   %" PRI_SIZE_T " Mb", sizeof(Levels) / (1024 * 1024));
+  LOG("- Thing ext memory:                %" PRI_SIZE_T " Mb", sizeof(v->thing_ext) / (1024 * 1024));
+  LOG("- Thing fov memory:                %" PRI_SIZE_T " Mb", sizeof(v->thing_fov) / (1024 * 1024));
+  LOG("- sizeof(Thing):                   %" PRI_SIZE_T " b", sizeof(Thing));
+  LOG("- sizeof(ThingInventory):          %" PRI_SIZE_T " b", sizeof(ThingInventory));
+  LOG("- sizeof(ThingExt)                 %" PRI_SIZE_T " b", sizeof(ThingExt));
+  LOG("- sizeof(ThingFov)                 %" PRI_SIZE_T " b", sizeof(ThingFov));
+  LOG("- sizeof(ThingPlayer):             %" PRI_SIZE_T " b", sizeof(ThingPlayer));
   LOG("- MAP_HEIGHT                       %u", MAP_HEIGHT);
   LOG("- MAP_WIDTH                        %u", MAP_WIDTH);
   LOG("- MAP_SLOTS                        %u", MAP_SLOTS);

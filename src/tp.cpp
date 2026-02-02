@@ -1507,24 +1507,24 @@ int tp_value22_get(Tpp tp)
   return tp->value22;
 }
 
-void tp_value23_set(Tpp tp, int val)
+void tp_can_see_distance_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return;
   }
-  tp->value23 = val;
+  tp->can_see_distance = val;
 }
 
-int tp_value23_get(Tpp tp)
+int tp_can_see_distance_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     ERR("No thing template pointer set");
     return 0;
   }
-  return tp->value23;
+  return tp->can_see_distance;
 }
 
 void tp_temperature_thermal_conductivity_set(Tpp tp, float val)

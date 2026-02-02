@@ -651,8 +651,8 @@ int  tp_value21_get(Tpp);
 void tp_value22_set(Tpp, int val);
 int  tp_value22_get(Tpp);
 
-void tp_value23_set(Tpp, int val);
-int  tp_value23_get(Tpp);
+void tp_can_see_distance_set(Tpp, int val);
+int  tp_can_see_distance_get(Tpp);
 
 void tp_variant_set(Tpp, int val);
 int  tp_variant_get(Tpp);

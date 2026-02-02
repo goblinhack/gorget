@@ -401,12 +401,17 @@ typedef struct Levels_ {
   Thingp thing_body_debug[ THING_ID_MAX ];
 #endif
   //
-  // Space for monster AI
+  // Space for monster memory
   //
   ThingExt thing_ext[ THING_EXT_MAX ];
   int      thing_ext_count;
   //
-  // Space for player AI
+  // For lighting memory
+  //
+  ThingFov thing_fov[ THING_FOV_MAX ];
+  int        thing_fov_count;
+  //
+  // Space for player memory
   //
   ThingPlayer thing_player;
   //

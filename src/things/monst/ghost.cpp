@@ -45,6 +45,7 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_light_source, 1);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
+  tp_can_see_distance_set(tp, 10);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_undead);

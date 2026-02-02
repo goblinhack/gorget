@@ -127,7 +127,7 @@ public:
   int value20 {0};
   int value21 {0};
   int value22 {0};
-  int value23 {0};
+  int can_see_distance {0};
 
   //
   // Heat capacity indicates the amount of heat energy required to

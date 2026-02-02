@@ -11,21 +11,23 @@ void thing_vision_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   auto ext = thing_ext_struct(g, t);
-  if (! ext) {
-    THING_ERR(t, "missing ext struct");
-    return;
+  if (ext) {
+    ext->fov_has_seen_tile = {{{0}}};
   }
 
-  ext->fov_can_see_tile = {{{0}}};
+  auto fov = thing_fov_struct(g, t);
+  if (fov) {
+    fov->fov_can_see_tile = {{{0}}};
+  }
 }
 
 bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
 {
   TRACE_NO_INDENT();
 
-  auto ext = thing_ext_struct(g, t);
-  if (! ext) {
-    THING_ERR(t, "missing ext struct");
+  auto fov = thing_fov_struct(g, t);
+  if (! fov) {
+    THING_ERR(t, "missing fov struct");
     return false;
   }
 
@@ -41,7 +43,7 @@ bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
     return false;
   }
 
-  return ext->fov_can_see_tile.can_see[ p.x ][ p.y ];
+  return fov->fov_can_see_tile.can_see[ p.x ][ p.y ];
 }
 
 bool thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p)

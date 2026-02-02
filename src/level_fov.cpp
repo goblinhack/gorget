@@ -163,9 +163,6 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         }
       }
 
-      //
-      // Monsters do not have this
-      //
       if (fov_has_seen_tile) {
         level_fov_set(fov_has_seen_tile, p, true);
       }
