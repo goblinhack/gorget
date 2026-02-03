@@ -24,20 +24,6 @@ enum {
 };
 
 //
-// Player state
-//
-#define PLAYER_STATE_ENUM(list_macro)                                                                                \
-  clang_format_indent()                                          /* dummy line for clang indentation fixup */        \
-      list_macro(PLAYER_STATE_INIT, "INIT"),                     /* newline */                                       \
-      list_macro(PLAYER_STATE_DEAD, "DEAD"),                     /* newline */                                       \
-      list_macro(PLAYER_STATE_NORMAL, "NORMAL"),                 /* newline */                                       \
-      list_macro(PLAYER_STATE_PATH_REQUESTED, "PATH-REQUESTED"), /* newline */                                       \
-      list_macro(PLAYER_STATE_MOVE_CONFIRM_REQUESTED, "MOVE-CONFIRM-REQ"), /* newline */                             \
-      list_macro(PLAYER_STATE_FOLLOWING_PATH, "FOLLOWING-PATH"),           /* newline */
-
-ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
-
-//
 // Used for level selection on the command line
 //
 typedef struct LevelOpt_ {

@@ -24,9 +24,9 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
     t->_is_player = true;
   }
 
-  (void) thing_at_set(t, real_at); // INTENTIONAL
-  (void) thing_at_set(t, real_at); // INTENTIONAL Doing it twice sets old_at too
-  (void) thing_moving_from_set(t, at);
+  thing_at_set(t, real_at); // INTENTIONAL
+  thing_at_set(t, real_at); // INTENTIONAL Doing it twice sets old_at too
+  thing_moving_from_set(t, at);
 
   t->level_num = l->level_num;
 

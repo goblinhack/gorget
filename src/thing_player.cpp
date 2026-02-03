@@ -305,7 +305,7 @@ void player_state_change(Gamep g, Levelsp v, PlayerState new_state)
   //
   // Why oh why change state
   //
-  THING_LOG(player, "Player state change: %s -> %s", player_state_to_string(old_state).c_str(),
+  THING_LOG(player, "state change: %s -> %s", player_state_to_string(old_state).c_str(),
             player_state_to_string(new_state).c_str());
 
   switch (new_state) {
