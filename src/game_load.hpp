@@ -931,8 +931,8 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Level, _tile_update_required)) {
-      game_load_error = "Level structure changed: offsetof(Level, _tile_update_required)";
+    if (tmp != offsetof(Level, is_modified_tile)) {
+      game_load_error = "Level structure changed: offsetof(Level, is_modified_tile)";
       return in;
     }
     in >> bits(tmp);

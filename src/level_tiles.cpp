@@ -201,39 +201,15 @@ void level_assign_tiles(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-void level_tile_update_set(Gamep g, Levelsp v, Levelp l, spoint p)
+void level_update_tiles(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
-
-  l->tile_update_required = true;
-
-  for (auto dx = -1; dx <= 1; dx++) {
-    for (auto dy = -1; dy <= 1; dy++) {
-      auto x = p.x + dx;
-      auto y = p.y + dy;
-      if (! is_oob(x, y)) {
-        l->_tile_update_required[ x ][ y ] = true;
-      }
-    }
-  }
-}
-
-void level_tile_update(Gamep g, Levelsp v, Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  if (! l->tile_update_required) {
-    return;
-  }
-  l->tile_update_required = false;
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      if (l->_tile_update_required[ x ][ y ]) {
+      if (l->is_modified_tile[ x ][ y ]) {
         level_assign_tiles_at(g, v, l, spoint(x, y));
       }
     }
   }
-
-  memset(l->_tile_update_required, 0, SIZEOF(l->_tile_update_required));
 }

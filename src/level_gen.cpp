@@ -4807,6 +4807,11 @@ static bool level_gen_populate_for_fixed_or_proc_gen_level(Gamep g, class LevelG
   //
   level_assign_tiles(g, v, level);
 
+  //
+  // Create paths to all objects needed
+  //
+  level_dmap(g, v, level);
+
   return true;
 }
 

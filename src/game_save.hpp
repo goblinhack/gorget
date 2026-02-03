@@ -431,7 +431,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
     out << bits(tmp);
     tmp = offsetof(Level, level_num_next);
     out << bits(tmp);
-    tmp = offsetof(Level, _tile_update_required);
+    tmp = offsetof(Level, is_modified_tile);
     out << bits(tmp);
     tmp = offsetof(Level, thing_id);
     out << bits(tmp);

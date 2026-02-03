@@ -58,6 +58,7 @@ bool tp_load_door_secret(void)
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);
     tp_flag_set(tp, is_described_cursor);
+    tp_flag_set(tp, is_dmap);
     tp_flag_set(tp, is_door_secret);
     tp_flag_set(tp, is_loggable);
     tp_flag_set(tp, is_obs_to_cursor_path);

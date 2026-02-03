@@ -235,7 +235,7 @@ typedef struct Level_ {
   //
   // Level needs tiles updated
   //
-  uint8_t tile_update_required : 1;
+  uint8_t request_to_update_paths : 1;
   //
   // Free up any things at end of life
   //
@@ -266,7 +266,7 @@ typedef struct Level_ {
   //
   // When a tile is destroyed, we need to update adjacent tiles. This limits the update to only changed tiles.
   //
-  uint8_t _tile_update_required[ MAP_WIDTH ][ MAP_HEIGHT ];
+  uint8_t is_modified_tile[ MAP_WIDTH ][ MAP_HEIGHT ];
   //
   // What things are where? Each Id points to a thing structure.
   //
@@ -707,10 +707,13 @@ void                  level_tick_begin_temperature(Gamep, Levelsp, Levelp);
 void                  level_tick_chasm(Gamep, Levelsp, Levelp);
 void                  level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void                  level_tick_explosion(Gamep, Levelsp, Levelp);
+void                  level_dmap(Gamep, Levelsp, Levelp);
+void                  levels_dmap(Gamep, Levelsp);
 void                  level_tick_teleport(Gamep, Levelsp, Levelp);
 void                  level_tick_water(Gamep, Levelsp, Levelp);
-void                  level_tile_update_set(Gamep, Levelsp, Levelp, spoint);
-void                  level_tile_update(Gamep, Levelsp, Levelp);
+void                  level_update_paths_set(Gamep, Levelsp, Levelp, spoint);
+void                  level_update_paths(Gamep, Levelsp, Levelp);
+void                  level_update_tiles(Gamep, Levelsp, Levelp);
 void                  level_update_visibility(Gamep, Levelsp, Levelp);
 void                  level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, int16_t, int16_t);
 void                  level_water_tick(Gamep, Levelsp, Levelp);

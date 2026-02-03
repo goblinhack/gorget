@@ -433,6 +433,7 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
   thing_is_teleporting_unset(g, v, l, t);
   thing_is_moving_unset(g, v, l, t);
   thing_is_jumping_unset(g, v, l, t);
+  thing_dmap(g, v, l, t);
 }
 
 //

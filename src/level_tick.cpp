@@ -181,7 +181,7 @@ static void level_tick(Gamep g, Levelsp v, Levelp l, bool tick_begin_requested)
   //
   // Update any tiles that are needed
   //
-  level_tile_update(g, v, l);
+  level_update_paths(g, v, l);
 
   //
   // Check if something fell in lava and now needs to delay the end of the tick

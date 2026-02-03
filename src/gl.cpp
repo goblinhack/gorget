@@ -96,7 +96,9 @@ void gl_fini_2d_mode(Gamep g)
 
 void gl_enter_2d_mode(Gamep g)
 {
-  // LOG("SDL: enter 2d mode");
+  if (0) {
+    LOG("SDL: enter 2d mode");
+  }
   TRACE_AND_INDENT();
   GL_ERROR_CHECK();
 
@@ -149,7 +151,9 @@ void gl_enter_2d_mode(Gamep g)
 
 void gl_enter_2d_mode(Gamep g, int w, int h)
 {
-  // LOG("SDL: enter 2d mode %ux%u", w, h);
+  if (0) {
+    LOG("SDL: enter 2d mode %ux%u", w, h);
+  }
   TRACE_AND_INDENT();
   GL_ERROR_CHECK();
 
@@ -203,7 +207,9 @@ void gl_leave_2d_mode(Gamep g)
   if (! in_2d_mode) {
     return;
   }
-  // LOG("SDL: leave 2d mode");
+  if (0) {
+    LOG("SDL: leave 2d mode");
+  }
   in_2d_mode = false;
   TRACE_AND_INDENT();
   glMatrixMode(GL_MODELVIEW);

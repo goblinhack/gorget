@@ -314,9 +314,13 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   dmap.val[ end.x ][ end.y ]     = DMAP_IS_GOAL;
   dmap.val[ start.x ][ start.y ] = DMAP_IS_PASSABLE;
 
-  // dmap_print(&dmap, start, dmap_start, dmap_end);
+  if (0) {
+    dmap_print(&dmap, end, dmap_start, dmap_end);
+  }
   dmap_process(&dmap, dmap_start, dmap_end);
-  // dmap_print(&dmap, start, dmap_start, dmap_end);
+  if (0) {
+    dmap_print(&dmap, end, dmap_start, dmap_end);
+  }
 
   auto p         = dmap_solve(g, v, l, player, &dmap, start);
   auto path_size = p.size();
@@ -329,7 +333,9 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   // we want.
   //
   if (p[ path_size - 1 ] != end) {
-    // LOG("did not reach %d,%d", end.x, end.y);
+    if (0) {
+      LOG("did not reach %d,%d", end.x, end.y);
+    }
     return empty;
   }
 

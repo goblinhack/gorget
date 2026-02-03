@@ -40,8 +40,10 @@ bool tp_load_entrance(void)
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_blit_shown_in_overlay);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_dmap);
   tp_flag_set(tp, is_entrance);
   tp_flag_set(tp, is_indestructible);
+  tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_stone);
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);

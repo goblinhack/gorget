@@ -356,7 +356,9 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 {
   TRACE_NO_INDENT();
 
-  // THING_LOG(me, "thing_collision_handle_interpolated");
+  if (0) {
+    THING_LOG(me, "thing_collision_handle_interpolated");
+  }
 
   auto  at    = thing_real_at(me);
   auto  src   = thing_at(me);
@@ -443,7 +445,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
                 return (d1 < d2) && t1->_priority < t2->_priority;
               });
 
-    if (1) {
+    if (0) {
       for (auto a_pair : pairs) {
         auto o_dist = a_pair.first;
         auto o      = a_pair.second;
@@ -460,7 +462,9 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
       bool stop = {};
       thing_collision_handle(g, v, l, o, me, stop);
       if (stop) {
-        // THING_LOG(me, "stop");
+        if (0) {
+          THING_LOG(me, "stop");
+        }
         return;
       }
     }

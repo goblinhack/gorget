@@ -31,7 +31,7 @@ static bool test_projectile_mob(Gamep g, Testp t)
       = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
         "x.........................x"
         "x.........................x"
-        "x@........-.......-......!x"
+        "x@........-.......-......;x"
         "x.........................x"
         "x.........................x"
         "xxxxxxxxxxxxxxxxxxxxxxxxxxx";

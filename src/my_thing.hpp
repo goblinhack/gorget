@@ -75,27 +75,6 @@ typedef struct ThingEvent_ {
 } ThingEvent;
 
 //
-// Inventory items
-//
-typedef struct ThingSlot_ {
-  ThingId item_id;
-  //
-  // How many of this identical item are there?
-  //
-  int8_t count;
-} ThingSlot;
-
-//
-// Per thing inventory memory
-//
-typedef struct ThingInventory_ {
-  //
-  // This is the max any player or monster can carry
-  //
-  ThingSlot slots[ THING_INVENTORY_MAX ];
-} ThingInventory;
-
-//
 // Minions
 //
 typedef struct ThingMinion_ {
@@ -141,35 +120,26 @@ typedef struct ThingFov_ {
   FovMap fov_can_see_tile;
 } ThingFov;
 
-#define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                              \
-  if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
-      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
-          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
-               loop2 = (Thingp) 0)
+//
+// Inventory items
+//
+typedef struct ThingSlot_ {
+  ThingId item_id;
+  //
+  // How many of this identical item are there?
+  //
+  int8_t count;
+} ThingSlot;
 
-#define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                      \
-  if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
-      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
-          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id); _item_; _item_ = nullptr)
-
-#define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                 \
-  if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
-      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
-        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
-          for (auto _minion_ = thing_find_optional(g, v, _slot_->minion_id), loop2 = (Thingp) 1;                     \
-               loop2 == (Thingp) 1; loop2 = (Thingp) 0)
-
-#define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                              \
-  if (_g_ && _v_ && _l_)                                                                                             \
-    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
-      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
-        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
-          for (Thingp _minion_ = thing_find_optional(g, v, _slot_->minion_id); _minion_; _minion_ = nullptr)
+//
+// Per thing inventory memory
+//
+typedef struct ThingInventory_ {
+  //
+  // This is the max any player or monster can carry
+  //
+  ThingSlot slots[ THING_INVENTORY_MAX ];
+} ThingInventory;
 
 //
 // Player specific memory
@@ -550,6 +520,7 @@ void                    thing_stats_dump(Gamep, Levelsp);
 [[nodiscard]] bool   thing_is_dir_tr(Thingp);
 [[nodiscard]] bool   thing_is_dir_up(Thingp);
 [[nodiscard]] bool   thing_is_dirt(Thingp);
+[[nodiscard]] bool   thing_is_dmap(Thingp);
 [[nodiscard]] bool   thing_is_door_locked(Thingp);
 [[nodiscard]] bool   thing_is_door_secret(Thingp);
 [[nodiscard]] bool   thing_is_door_unlocked(Thingp);
@@ -708,7 +679,6 @@ void                    thing_stats_dump(Gamep, Levelsp);
 [[nodiscard]] bool   thing_is_unused75(Thingp);
 [[nodiscard]] bool   thing_is_unused76(Thingp);
 [[nodiscard]] bool   thing_is_unused77(Thingp);
-[[nodiscard]] bool   thing_is_unused78(Thingp);
 [[nodiscard]] bool   thing_is_unused8(Thingp);
 [[nodiscard]] bool   thing_is_unused9(Thingp);
 [[nodiscard]] bool   thing_is_wait_on_dead_anim(Thingp);
@@ -771,6 +741,7 @@ void                 thing_dir_right_set(Thingp, uint8_t);
 void                 thing_dir_tl_set(Thingp, uint8_t);
 void                 thing_dir_tr_set(Thingp, uint8_t);
 void                 thing_dir_up_set(Thingp, uint8_t);
+void                 thing_dmap(Gamep, Levelsp, Levelp, Thingp);
 void                 thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp me);
 void                 thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
 void                 thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
@@ -1095,5 +1066,35 @@ void                 wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, 
 void                 wid_set_thing_context(Gamep, Levelsp, Widp, Thingp);
 [[nodiscard]] Thingp wid_get_thing_context(Gamep, Levelsp, Widp, int);
 void                 wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp);
+
+#define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                 \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
+      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
+        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
+          for (auto _minion_ = thing_find_optional(g, v, _slot_->minion_id), loop2 = (Thingp) 1;                     \
+               loop2 == (Thingp) 1; loop2 = (Thingp) 0)
+
+#define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                              \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
+      for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
+        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
+          for (Thingp _minion_ = thing_find_optional(g, v, _slot_->minion_id); _minion_; _minion_ = nullptr)
+
+#define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                              \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
+      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
+        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
+          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
+               loop2 = (Thingp) 0)
+
+#define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                      \
+  if (_g_ && _v_ && _l_)                                                                                             \
+    for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
+      for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
+        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
+          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id); _item_; _item_ = nullptr)
 
 #endif

@@ -2419,14 +2419,14 @@ bool thing_is_unused77(Thingp t)
   return tp_flag(thing_tp(t), is_unused77);
 }
 
-bool thing_is_unused78(Thingp t)
+bool thing_is_dmap(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused78);
+  return tp_flag(thing_tp(t), is_dmap);
 }
 
 bool thing_is_obs_to_spawning(Thingp t)

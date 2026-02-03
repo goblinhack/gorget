@@ -210,7 +210,7 @@
       list_macro(is_unused75, "is_unused75"),                                       /* newline */                    \
       list_macro(is_unused76, "is_unused76"),                                       /* newline */                    \
       list_macro(is_unused77, "is_unused77"),                                       /* newline */                    \
-      list_macro(is_unused78, "is_unused78"),                                       /* newline */                    \
+      list_macro(is_dmap, "is_dmap"),                                               /* newline */                    \
       list_macro(is_obs_to_spawning, "is_obs_to_spawning"),                         /* newline */                    \
       list_macro(is_mob_kill_minions_on_death, "is_mob_kill_minions_on_death"),     /* newline */                    \
       list_macro(is_border, "is_border"),                                           /* newline */                    \
@@ -726,6 +726,7 @@ float tp_collision_radius(Tpp);
 #define tp_is_deep_water(tp)                  tp_flag(tp, is_deep_water)
 #define tp_is_described_cursor(tp)            tp_flag(tp, is_described_cursor)
 #define tp_is_dirt(tp)                        tp_flag(tp, is_dirt)
+#define tp_is_dmap(tp)                        tp_flag(tp, is_dmap)
 #define tp_is_door_locked(tp)                 tp_flag(tp, is_door_locked)
 #define tp_is_door_secret(tp)                 tp_flag(tp, is_door_secret)
 #define tp_is_door_unlocked(tp)               tp_flag(tp, is_door_unlocked)
@@ -888,7 +889,6 @@ float tp_collision_radius(Tpp);
 #define tp_is_unused75(tp)                    tp_flag(tp, is_unused75)
 #define tp_is_unused76(tp)                    tp_flag(tp, is_unused76)
 #define tp_is_unused77(tp)                    tp_flag(tp, is_unused77)
-#define tp_is_unused78(tp)                    tp_flag(tp, is_unused78)
 #define tp_is_unused8(tp)                     tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                     tp_flag(tp, is_unused9)
 #define tp_is_wait_on_dead_anim(tp)           tp_flag(tp, is_wait_on_dead_anim)
@@ -947,6 +947,7 @@ float tp_collision_radius(Tpp);
 #define level_is_deep_water(g, v, l, p)                  level_flag(g, v, l, is_deep_water, p)
 #define level_is_described_cursor(g, v, l, p)            level_flag(g, v, l, is_described_cursor, p)
 #define level_is_dirt(g, v, l, p)                        level_flag(g, v, l, is_dirt, p)
+#define level_is_dmap(g, v, l, p)                        level_flag(g, v, l, is_dmap, p)
 #define level_is_door_locked(g, v, l, p)                 level_flag(g, v, l, is_door_locked, p)
 #define level_is_door_secret(g, v, l, p)                 level_flag(g, v, l, is_door_secret, p)
 #define level_is_door_unlocked(g, v, l, p)               level_flag(g, v, l, is_door_unlocked, p)
@@ -1109,7 +1110,6 @@ float tp_collision_radius(Tpp);
 #define level_is_unused75(g, v, l, p)                    level_flag(g, v, l, is_unused75, p)
 #define level_is_unused76(g, v, l, p)                    level_flag(g, v, l, is_unused76, p)
 #define level_is_unused77(g, v, l, p)                    level_flag(g, v, l, is_unused77, p)
-#define level_is_unused78(g, v, l, p)                    level_flag(g, v, l, is_unused78, p)
 #define level_is_unused8(g, v, l, p)                     level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                     level_flag(g, v, l, is_unused9, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)           level_flag(g, v, l, is_wait_on_dead_anim, p)
@@ -1168,6 +1168,7 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_deep_water(g, v, l, p)                  level_alive(g, v, l, is_deep_water, p)
 #define level_alive_is_described_cursor(g, v, l, p)            level_alive(g, v, l, is_described_cursor, p)
 #define level_alive_is_dirt(g, v, l, p)                        level_alive(g, v, l, is_dirt, p)
+#define level_alive_is_dmap(g, v, l, p)                        level_alive(g, v, l, is_dmap, p)
 #define level_alive_is_door_locked(g, v, l, p)                 level_alive(g, v, l, is_door_locked, p)
 #define level_alive_is_door_secret(g, v, l, p)                 level_alive(g, v, l, is_door_secret, p)
 #define level_alive_is_door_unlocked(g, v, l, p)               level_alive(g, v, l, is_door_unlocked, p)
@@ -1330,7 +1331,6 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_unused75(g, v, l, p)                    level_alive(g, v, l, is_unused75, p)
 #define level_alive_is_unused76(g, v, l, p)                    level_alive(g, v, l, is_unused76, p)
 #define level_alive_is_unused77(g, v, l, p)                    level_alive(g, v, l, is_unused77, p)
-#define level_alive_is_unused78(g, v, l, p)                    level_alive(g, v, l, is_unused78, p)
 #define level_alive_is_unused8(g, v, l, p)                     level_alive(g, v, l, is_unused8, p)
 #define level_alive_is_unused9(g, v, l, p)                     level_alive(g, v, l, is_unused9, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)           level_alive(g, v, l, is_wait_on_dead_anim, p)
@@ -1389,6 +1389,7 @@ float tp_collision_radius(Tpp);
 #define level_count_is_deep_water(g, v, l, p)                  level_count(g, v, l, is_deep_water, p)
 #define level_count_is_described_cursor(g, v, l, p)            level_count(g, v, l, is_described_cursor, p)
 #define level_count_is_dirt(g, v, l, p)                        level_count(g, v, l, is_dirt, p)
+#define level_count_is_dmap(g, v, l, p)                        level_count(g, v, l, is_dmap, p)
 #define level_count_is_door_locked(g, v, l, p)                 level_count(g, v, l, is_door_locked, p)
 #define level_count_is_door_secret(g, v, l, p)                 level_count(g, v, l, is_door_secret, p)
 #define level_count_is_door_unlocked(g, v, l, p)               level_count(g, v, l, is_door_unlocked, p)
@@ -1551,7 +1552,6 @@ float tp_collision_radius(Tpp);
 #define level_count_is_unused75(g, v, l, p)                    level_count(g, v, l, is_unused75, p)
 #define level_count_is_unused76(g, v, l, p)                    level_count(g, v, l, is_unused76, p)
 #define level_count_is_unused77(g, v, l, p)                    level_count(g, v, l, is_unused77, p)
-#define level_count_is_unused78(g, v, l, p)                    level_count(g, v, l, is_unused78, p)
 #define level_count_is_unused8(g, v, l, p)                     level_count(g, v, l, is_unused8, p)
 #define level_count_is_unused9(g, v, l, p)                     level_count(g, v, l, is_unused9, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)           level_count(g, v, l, is_wait_on_dead_anim, p)
@@ -1610,6 +1610,7 @@ float tp_collision_radius(Tpp);
 #define level_open_is_deep_water(g, v, l, p)                  level_open(g, v, l, is_deep_water, p)
 #define level_open_is_described_cursor(g, v, l, p)            level_open(g, v, l, is_described_cursor, p)
 #define level_open_is_dirt(g, v, l, p)                        level_open(g, v, l, is_dirt, p)
+#define level_open_is_dmap(g, v, l, p)                        level_open(g, v, l, is_dmap, p)
 #define level_open_is_door_locked(g, v, l, p)                 level_open(g, v, l, is_door_locked, p)
 #define level_open_is_door_secret(g, v, l, p)                 level_open(g, v, l, is_door_secret, p)
 #define level_open_is_door_unlocked(g, v, l, p)               level_open(g, v, l, is_door_unlocked, p)
@@ -1772,7 +1773,6 @@ float tp_collision_radius(Tpp);
 #define level_open_is_unused75(g, v, l, p)                    level_open(g, v, l, is_unused75, p)
 #define level_open_is_unused76(g, v, l, p)                    level_open(g, v, l, is_unused76, p)
 #define level_open_is_unused77(g, v, l, p)                    level_open(g, v, l, is_unused77, p)
-#define level_open_is_unused78(g, v, l, p)                    level_open(g, v, l, is_unused78, p)
 #define level_open_is_unused8(g, v, l, p)                     level_open(g, v, l, is_unused8, p)
 #define level_open_is_unused9(g, v, l, p)                     level_open(g, v, l, is_unused9, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)           level_open(g, v, l, is_wait_on_dead_anim, p)
