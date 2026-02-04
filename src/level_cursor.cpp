@@ -393,8 +393,8 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
 //
 void level_cursor_path_reset(Gamep g, Levelsp v)
 {
-  auto t = thing_player(g);
-  if (! t) {
+  auto player = thing_player(g);
+  if (! player) {
     //
     // If no player, clear the cursor
     //
@@ -402,8 +402,8 @@ void level_cursor_path_reset(Gamep g, Levelsp v)
     return;
   }
 
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto ext_struct = thing_ext_struct(g, player);
+  if (! ext_struct) {
     //
     // If no player, clear the cursor
     //
@@ -412,7 +412,7 @@ void level_cursor_path_reset(Gamep g, Levelsp v)
   }
 
   player_state_change(g, v, PLAYER_STATE_NORMAL);
-  player_struct->move_path.size = 0;
+  ext_struct->move_path.size = 0;
   memset(v->cursor, 0, SIZEOF(v->cursor));
 }
 
@@ -430,8 +430,8 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
     return;
   }
 
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto ext_struct = thing_ext_struct(g, player);
+  if (! ext_struct) {
     //
     // If no player, clear the cursor
     //
@@ -478,8 +478,8 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
   //
   // Copy the latest mouse path to the player
   //
-  int index                     = 0;
-  player_struct->move_path.size = 0;
+  int index                  = 0;
+  ext_struct->move_path.size = 0;
 
   THING_DBG(player, "apply cursor path size: %d", (int) move_path.size());
   for (auto p : move_path) {
@@ -487,10 +487,10 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
   }
 
   for (auto p : move_path) {
-    player_struct->move_path.points[ index ].x = p.x;
-    player_struct->move_path.points[ index ].y = p.y;
-    player_struct->move_path.size              = ++index;
-    if (index >= ARRAY_SIZE(player_struct->move_path.points)) {
+    ext_struct->move_path.points[ index ].x = p.x;
+    ext_struct->move_path.points[ index ].y = p.y;
+    ext_struct->move_path.size              = ++index;
+    if (index >= ARRAY_SIZE(ext_struct->move_path.points)) {
       break;
     }
   }
@@ -503,8 +503,8 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
 //
 static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
 {
-  auto t = thing_player(g);
-  if (! t) {
+  auto player = thing_player(g);
+  if (! player) {
     //
     // If no player, clear the cursor
     //
@@ -516,7 +516,7 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   // Only create the cursor path if the player is on this level. The level
   // select level for example, has no player.
   //
-  if (t->level_num != l->level_num) {
+  if (player->level_num != l->level_num) {
     memset(v->cursor, 0, SIZEOF(v->cursor));
 
     //
@@ -537,12 +537,12 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   //
   // Draw the path
   //
-  cursor_path = level_cursor_path_draw_line(g, v, l, thing_at(t), v->cursor_at);
+  cursor_path = level_cursor_path_draw_line(g, v, l, thing_at(player), v->cursor_at);
 
-  THING_DBG(t, "cursor path size: %d", (int) cursor_path.size());
+  THING_DBG(player, "cursor path size: %d", (int) cursor_path.size());
   for (auto p : cursor_path) {
     v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
-    THING_DBG(t, " - cursor path: %d,%d", p.x, p.y);
+    THING_DBG(player, " - cursor path: %d,%d", p.x, p.y);
   }
   v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;
 }

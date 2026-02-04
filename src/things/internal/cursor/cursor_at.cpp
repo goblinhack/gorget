@@ -21,11 +21,16 @@ static Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, sp
   //
   Tilep tile = tp_tiles_get(tp, THING_ANIM_CURSOR_NOPATH, 0);
 
+  auto player = thing_player(g);
+  if (! player) {
+    return tile;
+  }
+
   //
   // Non zero cursor path, change the cursor to a positive color
   //
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto ext_struct = thing_ext_struct(g, player);
+  if (! ext_struct) {
     return tile;
   }
 
@@ -40,7 +45,7 @@ static Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, sp
   //
   // If we have a path, show the cursor highlighted
   //
-  if (level_cursor_path_size(g) || player_struct->move_path.size) {
+  if (level_cursor_path_size(g) || ext_struct->move_path.size) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_NORMAL, 0);
   }
 

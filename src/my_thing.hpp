@@ -143,6 +143,13 @@ typedef struct ThingExt_ {
   // What we have ever seen
   //
   FovMap fov_has_seen_tile;
+  //
+  // Holds the path as we or the monster walk it
+  //
+  struct {
+    spoint  points[ THING_MOVE_PATH_MAX ];
+    int16_t size;
+  } move_path;
 } ThingExt;
 
 //
@@ -189,13 +196,6 @@ typedef struct ThingPlayer_ {
   // What we're carrying
   //
   ThingInventory inventory;
-  //
-  // Holds the cursor path as we walk it
-  //
-  struct {
-    spoint  points[ THING_MOVE_PATH_MAX ];
-    int16_t size;
-  } move_path;
 } ThingPlayer;
 
 typedef struct Thing_ {

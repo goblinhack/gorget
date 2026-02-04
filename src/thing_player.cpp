@@ -614,8 +614,8 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
     return;
   }
 
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto ext_struct = thing_ext_struct(g, player);
+  if (! ext_struct) {
     ERR("No player struct found");
     return;
   }
@@ -868,8 +868,8 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp player)
 {
   TRACE_NO_INDENT();
 
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto ext_struct = thing_ext_struct(g, player);
+  if (! ext_struct) {
     return;
   }
 
@@ -890,7 +890,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp player)
     //
     // At the end of the popped path or not?
     //
-    if (player_struct->move_path.size) {
+    if (ext_struct->move_path.size) {
       //
       // If still more tiles to pop, do not descend automatically
       //
@@ -941,6 +941,7 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp player, spoint to)
 
   auto player_struct = thing_player_struct(g);
   if (! player_struct) {
+    ERR("No player struct found");
     return false;
   }
 
@@ -968,21 +969,21 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp player, spoint to)
 {
   TRACE_NO_INDENT();
 
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto ext_struct = thing_ext_struct(g, player);
+  if (! ext_struct) {
     return false;
   }
 
-  if (! player_struct->move_path.size) {
+  if (! ext_struct->move_path.size) {
     return false;
   }
 
-  *out = player_struct->move_path.points[ 0 ];
+  *out = ext_struct->move_path.points[ 0 ];
 
-  for (int index = 0; index < player_struct->move_path.size - 1; index++) {
-    player_struct->move_path.points[ index ] = player_struct->move_path.points[ index + 1 ];
+  for (int index = 0; index < ext_struct->move_path.size - 1; index++) {
+    ext_struct->move_path.points[ index ] = ext_struct->move_path.points[ index + 1 ];
   }
-  player_struct->move_path.size--;
+  ext_struct->move_path.size--;
 
   return true;
 }
@@ -994,16 +995,16 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp player, spoint to)
 {
   TRACE_NO_INDENT();
 
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto ext_struct = thing_ext_struct(g, player);
+  if (! ext_struct) {
     return false;
   }
 
-  if (! player_struct->move_path.size) {
+  if (! ext_struct->move_path.size) {
     return false;
   }
 
-  *out = player_struct->move_path.points[ player_struct->move_path.size - 1 ];
+  *out = ext_struct->move_path.points[ ext_struct->move_path.size - 1 ];
 
   return true;
 }
