@@ -98,7 +98,7 @@ std::initializer_list< std::string > tps = {
     "level_next",
     "level_not_visited",
     "level_visited",
-    "mantilid",
+    "mantisman",
     "pillar",
     "player",
     "potion",

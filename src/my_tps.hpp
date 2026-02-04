@@ -49,7 +49,7 @@ bool tp_load_level_final();
 bool tp_load_level_next();
 bool tp_load_level_not_visited();
 bool tp_load_level_visited();
-bool tp_load_mantilid();
+bool tp_load_mantisman();
 bool tp_load_pillar();
 bool tp_load_player();
 bool tp_load_potion();

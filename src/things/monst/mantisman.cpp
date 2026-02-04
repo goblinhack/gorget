@@ -10,33 +10,36 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
-static std::string tp_mantilid_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_mantisman_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   if (thing_is_dead(t)) {
-    return "dead mantilid";
+    return "dead mantisman";
   }
-  return "living mantilid";
+  return "living mantisman";
 }
 
-static std::string tp_mantilid_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "Mantilids are bipedal mantids. They do little more than hunger for human flesh and hang around in groups. "
+  return "MantisMan: half-mantis, half-man but which half?\n" UI_HIGHLIGHT_FMT_STR
+         "These tall bipedal insectoids linger in the spaces that nature forgets.\n" UI_INFO_FMT_STR
+         "They hunger for human flesh especially and hang around in chittering groups.\n" //
          "The one thing they do not do... is pray.";
 }
 
-bool tp_load_mantilid(void)
+bool tp_load_mantisman(void)
 {
-  auto tp   = tp_load("mantilid"); // keep as string for scripts
+  auto tp   = tp_load("mantisman"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_mantilid_description_get);
-  thing_detail_set(tp, tp_mantilid_detail_get);
+  thing_description_set(tp, tp_mantisman_description_get);
+  thing_detail_set(tp, tp_mantisman_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_distance_vision_set(tp, 10);
@@ -52,7 +55,7 @@ bool tp_load_mantilid(void)
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_mantilid);
+  tp_flag_set(tp, is_mantisman);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
@@ -60,7 +63,7 @@ bool tp_load_mantilid(void)
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1d6");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_long_name_set(tp, "mantilid");
+  tp_long_name_set(tp, "mantisman");
   tp_monst_group_add(tp, MONST_GROUP_EASY);
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 100);

@@ -209,7 +209,7 @@
       list_macro(is_unused74, "is_unused74"),                                       /* newline */                    \
       list_macro(is_unused75, "is_unused75"),                                       /* newline */                    \
       list_macro(is_insectoid, "is_insectoid"),                                     /* newline */                    \
-      list_macro(is_mantilid, "is_mantilid"),                                       /* newline */                    \
+      list_macro(is_mantisman, "is_mantisman"),                                     /* newline */                    \
       list_macro(is_dmap, "is_dmap"),                                               /* newline */                    \
       list_macro(is_obs_to_spawning, "is_obs_to_spawning"),                         /* newline */                    \
       list_macro(is_mob_kill_minions_on_death, "is_mob_kill_minions_on_death"),     /* newline */                    \
@@ -769,7 +769,7 @@ float tp_collision_radius(Tpp);
 #define tp_is_levitating(tp)                  tp_flag(tp, is_levitating)
 #define tp_is_light_source(tp)                tp_flag(tp, is_light_source)
 #define tp_is_loggable(tp)                    tp_flag(tp, is_loggable)
-#define tp_is_mantilid(tp)                    tp_flag(tp, is_mantilid)
+#define tp_is_mantisman(tp)                   tp_flag(tp, is_mantisman)
 #define tp_is_meltable(tp)                    tp_flag(tp, is_meltable)
 #define tp_is_metal(tp)                       tp_flag(tp, is_metal)
 #define tp_is_minion(tp)                      tp_flag(tp, is_minion)
@@ -990,7 +990,7 @@ float tp_collision_radius(Tpp);
 #define level_is_levitating(g, v, l, p)                  level_flag(g, v, l, is_levitating, p)
 #define level_is_light_source(g, v, l, p)                level_flag(g, v, l, is_light_source, p)
 #define level_is_loggable(g, v, l, p)                    level_flag(g, v, l, is_loggable, p)
-#define level_is_mantilid(g, v, l, p)                    level_flag(g, v, l, is_mantilid, p)
+#define level_is_mantisman(g, v, l, p)                   level_flag(g, v, l, is_mantisman, p)
 #define level_is_meltable(g, v, l, p)                    level_flag(g, v, l, is_meltable, p)
 #define level_is_metal(g, v, l, p)                       level_flag(g, v, l, is_metal, p)
 #define level_is_minion(g, v, l, p)                      level_flag(g, v, l, is_minion, p)
@@ -1211,7 +1211,7 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_levitating(g, v, l, p)                  level_alive(g, v, l, is_levitating, p)
 #define level_alive_is_light_source(g, v, l, p)                level_alive(g, v, l, is_light_source, p)
 #define level_alive_is_loggable(g, v, l, p)                    level_alive(g, v, l, is_loggable, p)
-#define level_alive_is_mantilid(g, v, l, p)                    level_alive(g, v, l, is_mantilid, p)
+#define level_alive_is_mantisman(g, v, l, p)                   level_alive(g, v, l, is_mantisman, p)
 #define level_alive_is_meltable(g, v, l, p)                    level_alive(g, v, l, is_meltable, p)
 #define level_alive_is_metal(g, v, l, p)                       level_alive(g, v, l, is_metal, p)
 #define level_alive_is_minion(g, v, l, p)                      level_alive(g, v, l, is_minion, p)
@@ -1432,7 +1432,7 @@ float tp_collision_radius(Tpp);
 #define level_count_is_levitating(g, v, l, p)                  level_count(g, v, l, is_levitating, p)
 #define level_count_is_light_source(g, v, l, p)                level_count(g, v, l, is_light_source, p)
 #define level_count_is_loggable(g, v, l, p)                    level_count(g, v, l, is_loggable, p)
-#define level_count_is_mantilid(g, v, l, p)                    level_count(g, v, l, is_mantilid, p)
+#define level_count_is_mantisman(g, v, l, p)                   level_count(g, v, l, is_mantisman, p)
 #define level_count_is_meltable(g, v, l, p)                    level_count(g, v, l, is_meltable, p)
 #define level_count_is_metal(g, v, l, p)                       level_count(g, v, l, is_metal, p)
 #define level_count_is_minion(g, v, l, p)                      level_count(g, v, l, is_minion, p)
@@ -1653,7 +1653,7 @@ float tp_collision_radius(Tpp);
 #define level_open_is_levitating(g, v, l, p)                  level_open(g, v, l, is_levitating, p)
 #define level_open_is_light_source(g, v, l, p)                level_open(g, v, l, is_light_source, p)
 #define level_open_is_loggable(g, v, l, p)                    level_open(g, v, l, is_loggable, p)
-#define level_open_is_mantilid(g, v, l, p)                    level_open(g, v, l, is_mantilid, p)
+#define level_open_is_mantisman(g, v, l, p)                   level_open(g, v, l, is_mantisman, p)
 #define level_open_is_meltable(g, v, l, p)                    level_open(g, v, l, is_meltable, p)
 #define level_open_is_metal(g, v, l, p)                       level_open(g, v, l, is_metal, p)
 #define level_open_is_minion(g, v, l, p)                      level_open(g, v, l, is_minion, p)

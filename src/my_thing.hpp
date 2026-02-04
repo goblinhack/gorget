@@ -587,7 +587,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_level_visited(Thingp);
 [[nodiscard]] bool        thing_is_levitating(Thingp);
 [[nodiscard]] bool        thing_is_loggable(Thingp);
-[[nodiscard]] bool        thing_is_mantilid(Thingp);
+[[nodiscard]] bool        thing_is_mantisman(Thingp);
 [[nodiscard]] bool        thing_is_meltable(Thingp);
 [[nodiscard]] bool        thing_is_metal(Thingp);
 [[nodiscard]] bool        thing_is_minion(Thingp);

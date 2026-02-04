@@ -2405,14 +2405,14 @@ bool thing_is_insectoid(Thingp t)
   return tp_flag(thing_tp(t), is_insectoid);
 }
 
-bool thing_is_mantilid(Thingp t)
+bool thing_is_mantisman(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_mantilid);
+  return tp_flag(thing_tp(t), is_mantisman);
 }
 
 bool thing_is_dmap(Thingp t)

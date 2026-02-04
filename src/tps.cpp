@@ -49,7 +49,7 @@ bool templates_init(void)
   if (!tp_load_level_next()) { return false; }
   if (!tp_load_level_not_visited()) { return false; }
   if (!tp_load_level_visited()) { return false; }
-  if (!tp_load_mantilid()) { return false; }
+  if (!tp_load_mantisman()) { return false; }
   if (!tp_load_pillar()) { return false; }
   if (!tp_load_player()) { return false; }
   if (!tp_load_potion()) { return false; }
