@@ -2395,24 +2395,24 @@ bool thing_is_unused75(Thingp t)
   return tp_flag(thing_tp(t), is_unused75);
 }
 
-bool thing_is_unused76(Thingp t)
+bool thing_is_insectoid(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused76);
+  return tp_flag(thing_tp(t), is_insectoid);
 }
 
-bool thing_is_unused77(Thingp t)
+bool thing_is_mantilid(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused77);
+  return tp_flag(thing_tp(t), is_mantilid);
 }
 
 bool thing_is_dmap(Thingp t)

@@ -111,7 +111,7 @@ static void room_gen_clear(Gamep g, RoomGen *grid)
 //
 // Get the top left and bottom right bounds of the room
 //
-static bool room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
+static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 {
   Cave cave = {};
   int  x, y;
@@ -144,14 +144,12 @@ static bool room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
       }
     }
   }
-
-  return true;
 }
 
 //
 // Get the top left and bottom right bounds of the room
 //
-static bool room_gen_get_bounds(Gamep g, class RoomGen *grid)
+[[nodiscard]] static bool room_gen_get_bounds(Gamep g, class RoomGen *grid)
 {
   int x, y;
 
@@ -524,7 +522,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 //
 // Dump a random room of the given type
 //
-static bool rooms_dump_one(Gamep g, FILE *out, int which)
+[[nodiscard]] static bool rooms_dump_one(Gamep g, FILE *out, int which)
 {
   TRACE_NO_INDENT();
 
@@ -627,7 +625,7 @@ static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const
   fprintf(out, "\n");
 
   for (auto r = 0; r < n; r++) {
-    rooms_dump_one(g, out, which);
+    (void) rooms_dump_one(g, out, which);
   }
 
   fprintf(out, "}\n");

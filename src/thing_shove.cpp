@@ -43,8 +43,8 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 //
 // Handle interactions for a thing at its location with a dead thing
 //
-static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, spoint from,
-                                          spoint to, spoint direction)
+[[nodiscard]] static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover,
+                                                        spoint from, spoint to, spoint direction)
 {
   TRACE_NO_INDENT();
 
@@ -85,8 +85,8 @@ static bool thing_shove_handle_dead_thing(Gamep g, Levelsp v, Levelp l, Thingp t
 //
 // Handle interactions for a thing at its location with an alive thing
 //
-static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover, spoint from,
-                                           spoint to, spoint direction)
+[[nodiscard]] static bool thing_shove_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp shover,
+                                                         spoint from, spoint to, spoint direction)
 {
   TRACE_NO_INDENT();
 

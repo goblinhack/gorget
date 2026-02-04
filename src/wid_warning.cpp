@@ -21,7 +21,7 @@ static void wid_warning_destroy(void)
   wid_warning_window = nullptr;
 }
 
-static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   DBG("Key press for wid warning");
   TRACE_AND_INDENT();
@@ -81,7 +81,7 @@ static bool wid_warning_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   return true;
 }
 
-static bool wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   DBG("Wid warning: yes");
   TRACE_AND_INDENT();
@@ -94,7 +94,7 @@ static bool wid_warning_yes(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_warning_no(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_warning_no(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   DBG("Wid warning: no");
   TRACE_AND_INDENT();

@@ -19,7 +19,7 @@ static void wid_options_menu_destroy(Gamep g)
   wid_options_menu_window = nullptr;
 }
 
-static bool wid_options_menu_gfx(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_options_menu_gfx(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy(g);
@@ -27,7 +27,7 @@ static bool wid_options_menu_gfx(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_options_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_options_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy(g);
@@ -35,7 +35,7 @@ static bool wid_options_menu_seed(Gamep g, Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static bool wid_options_menu_player_name(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_options_menu_player_name(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy(g);
@@ -43,7 +43,7 @@ static bool wid_options_menu_player_name(Gamep g, Widp w, int x, int y, uint32_t
   return true;
 }
 
-static bool wid_options_menu_mouse(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_options_menu_mouse(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy(g);
@@ -51,7 +51,7 @@ static bool wid_options_menu_mouse(Gamep g, Widp w, int x, int y, uint32_t butto
   return true;
 }
 
-static bool wid_options_menu_keyboard(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_options_menu_keyboard(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy(g);
@@ -59,7 +59,7 @@ static bool wid_options_menu_keyboard(Gamep g, Widp w, int x, int y, uint32_t bu
   return true;
 }
 
-static bool wid_options_menu_sound(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_options_menu_sound(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy(g);
@@ -67,7 +67,7 @@ static bool wid_options_menu_sound(Gamep g, Widp w, int x, int y, uint32_t butto
   return true;
 }
 
-static bool wid_options_menu_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_options_menu_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_options_menu_destroy(g);
@@ -75,7 +75,7 @@ static bool wid_options_menu_back(Gamep g, Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static bool wid_options_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_options_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -97,38 +97,38 @@ static bool wid_options_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *
               case 'g' :
               case 'G' :
                 sound_play(g, "keypress");
-                wid_options_menu_gfx(g, nullptr, 0, 0, 0);
+                (void) wid_options_menu_gfx(g, nullptr, 0, 0, 0);
                 return true;
               case 'm' :
               case 'M' :
                 sound_play(g, "keypress");
-                wid_options_menu_mouse(g, nullptr, 0, 0, 0);
+                (void) wid_options_menu_mouse(g, nullptr, 0, 0, 0);
                 return true;
               case 's' :
               case 'S' :
                 sound_play(g, "keypress");
-                wid_options_menu_sound(g, nullptr, 0, 0, 0);
+                (void) wid_options_menu_sound(g, nullptr, 0, 0, 0);
                 return true;
               case 'k' :
               case 'K' :
                 sound_play(g, "keypress");
-                wid_options_menu_keyboard(g, nullptr, 0, 0, 0);
+                (void) wid_options_menu_keyboard(g, nullptr, 0, 0, 0);
                 return true;
               case 'c' :
               case 'C' :
                 sound_play(g, "keypress");
-                wid_options_menu_seed(g, nullptr, 0, 0, 0);
+                (void) wid_options_menu_seed(g, nullptr, 0, 0, 0);
                 return true;
               case 'p' :
               case 'P' :
                 sound_play(g, "keypress");
-                wid_options_menu_player_name(g, nullptr, 0, 0, 0);
+                (void) wid_options_menu_player_name(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 sound_play(g, "keypress");
-                wid_options_menu_back(g, nullptr, 0, 0, 0);
+                (void) wid_options_menu_back(g, nullptr, 0, 0, 0);
                 return true;
             }
           }

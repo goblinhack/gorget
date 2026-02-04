@@ -15,17 +15,17 @@ void wid_notice_destroy(void)
   wid_notice_window = nullptr;
 }
 
-static bool wid_notice_ok(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_notice_ok(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_notice_destroy();
   return true;
 }
 
-static bool wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_notice_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
-  wid_notice_ok(g, nullptr, 0, 0, 0);
+  (void) wid_notice_ok(g, nullptr, 0, 0, 0);
   return true;
 }
 

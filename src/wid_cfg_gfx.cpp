@@ -27,7 +27,7 @@ static void wid_cfg_gfx_destroy(Gamep g)
   wid_cfg_gfx_window = nullptr;
 }
 
-static bool wid_cfg_gfx_save(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
 
@@ -42,7 +42,7 @@ static bool wid_cfg_gfx_save(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_gfx_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   CON("Reload config");
@@ -51,7 +51,7 @@ static bool wid_cfg_gfx_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_gfx_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_cfg_gfx_destroy(g);
@@ -59,7 +59,7 @@ static bool wid_cfg_gfx_back(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   CON("Toggle vsync");
@@ -70,11 +70,11 @@ static bool wid_cfg_gfx_vsync_enable_toggle(Gamep g, Widp w, int x, int y, uint3
   }
   config_gfx_vsync_update(g);
 
-  wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+  (void) wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   return true;
 }
 
-static bool wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   CON("Toggle gfx fullscreen");
@@ -96,11 +96,11 @@ static bool wid_cfg_gfx_fullscreen_toggle(Gamep g, Widp w, int x, int y, uint32_
     SDL_SetWindowFullscreen(sdl.window, 0);
   }
 
-  wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+  (void) wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   return true;
 }
 
-static bool wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   CON("Toggle gfx fullscreen desktop");
@@ -123,11 +123,11 @@ static bool wid_cfg_gfx_fullscreen_desktop_toggle(Gamep g, Widp w, int x, int y,
     SDL_SetWindowFullscreen(sdl.window, 0);
   }
 
-  wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+  (void) wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   return true;
 }
 
-static bool wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   CON("Toggle gfx borderless");
@@ -140,11 +140,11 @@ static bool wid_cfg_gfx_borderless_toggle(Gamep g, Widp w, int x, int y, uint32_
 
   SDL_SetWindowBordered(sdl.window, game_gfx_borderless_get(g) ? SDL_TRUE : SDL_FALSE);
 
-  wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+  (void) wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   return true;
 }
 
-static bool wid_cfg_other_fps_counter_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_other_fps_counter_toggle(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   CON("Toggle fps counter");
@@ -156,11 +156,11 @@ static bool wid_cfg_other_fps_counter_toggle(Gamep g, Widp w, int x, int y, uint
     game_fps_counter_set(g);
   }
 
-  wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+  (void) wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
   return true;
 }
 
-static bool wid_cfg_gfx_resolution_apply(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_resolution_apply(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
 
@@ -172,7 +172,7 @@ static bool wid_cfg_gfx_resolution_apply(Gamep g, Widp w, int x, int y, uint32_t
   game_config_pix_width_set(g, mode.w);
   game_config_pix_height_set(g, mode.h);
   SDL_SetWindowSize(sdl.window, mode.w, mode.h);
-  wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+  (void) wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
 
   return true;
 }
@@ -234,7 +234,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
   return best_cand;
 }
 
-static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
 
@@ -290,7 +290,7 @@ static bool wid_cfg_gfx_resolution_incr(Gamep g, Widp w, int x, int y, uint32_t 
   return true;
 }
 
-static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
 
@@ -346,7 +346,7 @@ static bool wid_cfg_gfx_resolution_decr(Gamep g, Widp w, int x, int y, uint32_t 
   return true;
 }
 
-static bool wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -368,18 +368,18 @@ static bool wid_cfg_gfx_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'c' :
               case 'C' :
                 sound_play(g, "keypress");
-                wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0);
+                (void) wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0);
                 return true;
               case 's' :
               case 'S' :
                 sound_play(g, "keypress");
-                wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
+                (void) wid_cfg_gfx_save(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 sound_play(g, "keypress");
-                wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0);
+                (void) wid_cfg_gfx_cancel(g, nullptr, 0, 0, 0);
                 return true;
             }
           }

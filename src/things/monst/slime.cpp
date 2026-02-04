@@ -53,7 +53,6 @@ bool tp_load_slime(void)
   tp_flag_set(tp, is_health_bar_shown);
   tp_flag_set(tp, is_light_source, 2);
   tp_flag_set(tp, is_loggable);
-  tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
@@ -67,7 +66,7 @@ bool tp_load_slime(void)
   tp_long_name_set(tp, "sentient slime");
   tp_monst_group_add(tp, MONST_GROUP_HARD);
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_speed_set(tp, 100);
+  tp_speed_set(tp, 50);
   tp_temperature_burns_at_set(tp, 30);  // celsius
   tp_temperature_damage_at_set(tp, 30); // celsius
   tp_temperature_initial_set(tp, 20);   // celsius

@@ -24,7 +24,7 @@ static std::string tp_door_secret_description_get(Gamep g, Levelsp v, Levelp l, 
   return "odd looking rock";
 }
 
-static bool tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+[[nodiscard]] static bool tp_door_secret_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 

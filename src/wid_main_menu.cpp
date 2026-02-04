@@ -32,14 +32,14 @@ void wid_main_menu_hide(Gamep g)
   wid_hide(g, wid_main_menu_window->wid_popup_container);
 }
 
-static bool wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_main_menu_load(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_load_select(g);
   return true;
 }
 
-static bool wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_options_menu_select(g);
@@ -47,7 +47,7 @@ static bool wid_main_menu_cfg(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_more_select(g);
@@ -55,7 +55,7 @@ static bool wid_main_menu_more(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_main_menu_hide(g);
@@ -64,7 +64,7 @@ static bool game_menu_new_game(Gamep g, Widp w, int x, int y, uint32_t button)
   return false; // suppress mouse click
 }
 
-static bool wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_quit_select(g);
@@ -72,7 +72,7 @@ static bool wid_main_menu_quit(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -96,27 +96,27 @@ static bool wid_main_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
               case 'n' :
               case 'N' :
                 sound_play(g, "keypress");
-                game_menu_new_game(g, nullptr, 0, 0, 0);
+                (void) game_menu_new_game(g, nullptr, 0, 0, 0);
                 return true;
               case 'l' :
               case 'L' :
                 sound_play(g, "keypress");
-                wid_main_menu_load(g, nullptr, 0, 0, 0);
+                (void) wid_main_menu_load(g, nullptr, 0, 0, 0);
                 return true;
               case 'o' :
               case 'O' :
                 sound_play(g, "keypress");
-                wid_main_menu_cfg(g, nullptr, 0, 0, 0);
+                (void) wid_main_menu_cfg(g, nullptr, 0, 0, 0);
                 return true;
               case 'm' :
               case 'M' :
                 sound_play(g, "keypress");
-                wid_main_menu_more(g, nullptr, 0, 0, 0);
+                (void) wid_main_menu_more(g, nullptr, 0, 0, 0);
                 return true;
               case 'q' :
               case 'Q' :
                 sound_play(g, "keypress");
-                wid_main_menu_quit(g, nullptr, 0, 0, 0);
+                (void) wid_main_menu_quit(g, nullptr, 0, 0, 0);
                 return true;
             }
           }

@@ -39,19 +39,22 @@ static std::recursive_mutex backtrace_mutex;
 //
 // Inspired from https://github.com/nico/demumble/issues
 //
-static bool starts_with(const char *s, const char *prefix) { return strncmp(s, prefix, strlen(prefix)) == 0; }
+[[nodiscard]] static bool starts_with(const char *s, const char *prefix)
+{
+  return strncmp(s, prefix, strlen(prefix)) == 0;
+}
 
-static bool is_mangle_char_win(char c)
+[[nodiscard]] static bool is_mangle_char_win(char c)
 {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || strchr("?_@$", c);
 }
 
-static bool is_mangle_char_posix(char c)
+[[nodiscard]] static bool is_mangle_char_posix(char c)
 {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
 }
 
-static bool is_plausible_posix_prefix(char *s)
+[[nodiscard]] static bool is_plausible_posix_prefix(char *s)
 {
   // POSIX symbols start with 1-4 underscores followed by Z.
   // strnstr() is BSD, so use a small local buffer and strstr().

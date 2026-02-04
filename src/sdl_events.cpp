@@ -74,7 +74,7 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keys
   sdl.key_repeat_this_key = time_ms();
 }
 
-static bool __attribute__((noinline)) sdl_event_keydown_same_key(Gamep g, SDL_Keysym *key)
+[[nodiscard]] static bool __attribute__((noinline)) sdl_event_keydown_same_key(Gamep g, SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 

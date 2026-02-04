@@ -134,7 +134,7 @@ Wid::~Wid(void) { oldptr(MTYPE_WID, this); }
 //
 // Check if we are on the main thread and not exitting
 //
-static bool wid_safe(void)
+[[nodiscard]] static bool wid_safe(void)
 {
   if (! wid_init_done || wid_exiting || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return false;
@@ -3804,7 +3804,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
 //
 // Handle keys no one grabbed.
 //
-static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
+[[nodiscard]] static bool wid_receive_unhandled_input(Gamep g, const SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -4779,7 +4779,7 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
     // If no-one handles it, feed it to the default handler, the console.
     //
     DBG("SDL: Keyboard: no one handled the event");
-    wid_receive_unhandled_input(g, key);
+    (void) wid_receive_unhandled_input(g, key);
     return;
   }
 
@@ -4824,7 +4824,7 @@ try_parent:
   //
   {
     DBG("WID: key is unhandled");
-    wid_receive_unhandled_input(g, key);
+    (void) wid_receive_unhandled_input(g, key);
   }
 }
 

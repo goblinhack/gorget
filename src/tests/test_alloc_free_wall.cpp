@@ -8,7 +8,7 @@
 #include "../my_main.hpp"
 #include "../my_test.hpp"
 
-static bool test_alloc_free_walls(Gamep g, Testp t)
+[[nodiscard]] static bool test_alloc_free_walls(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();

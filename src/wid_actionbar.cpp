@@ -28,7 +28,7 @@ static WidPopup *wid_actionbar_popup {};
 static ts_t wid_last_wait;
 static ts_t wid_last_wait_repeat;
 
-static bool wid_actionbar_save(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
 
@@ -75,7 +75,7 @@ static void wid_actionbar_save_over_end(Gamep g, Widp w)
   wid_over_save = nullptr;
 }
 
-static bool wid_actionbar_load(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_load(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar load");
   TRACE_NO_INDENT();
@@ -120,7 +120,7 @@ static void wid_actionbar_load_over_end(Gamep g, Widp w)
   wid_over_load = nullptr;
 }
 
-static bool wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar wait");
   TRACE_NO_INDENT();
@@ -130,7 +130,7 @@ static bool wid_actionbar_wait(Gamep g, Widp w, int x, int y, uint32_t button)
   return game_event_wait(g);
 }
 
-static bool wid_actionbar_repeat_wait(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_repeat_wait(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar wait");
   TRACE_NO_INDENT();
@@ -187,7 +187,7 @@ static void wid_actionbar_wait_over_end(Gamep g, Widp w)
   wid_over_wait = nullptr;
 }
 
-static bool wid_actionbar_inventory(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_inventory(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar inventory");
   TRACE_NO_INDENT();
@@ -272,7 +272,7 @@ static void wid_actionbar_fire_over_end(Gamep g, Widp w)
   wid_over_fire = nullptr;
 }
 
-static bool wid_actionbar_ascend(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_ascend(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar ascend");
   TRACE_NO_INDENT();
@@ -318,7 +318,7 @@ static void wid_actionbar_ascend_over_end(Gamep g, Widp w)
   wid_over_ascend = nullptr;
 }
 
-static bool wid_actionbar_descend(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_descend(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar descend");
   TRACE_NO_INDENT();
@@ -364,7 +364,7 @@ static void wid_actionbar_descend_over_end(Gamep g, Widp w)
   wid_over_descend = nullptr;
 }
 
-static bool wid_actionbar_quit(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_quit(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar quit");
   TRACE_NO_INDENT();
@@ -409,7 +409,7 @@ static void wid_actionbar_quit_over_end(Gamep g, Widp w)
   wid_over_quit = nullptr;
 }
 
-static bool wid_actionbar_help(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_actionbar_help(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   LOG("Actionbar help");
   TRACE_NO_INDENT();

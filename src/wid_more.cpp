@@ -19,7 +19,7 @@ static void wid_more_destroy(Gamep g)
   wid_more_window = nullptr;
 }
 
-static bool wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_more_destroy(g);
@@ -27,7 +27,7 @@ static bool wid_more_credits(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_more_destroy(g);
@@ -35,7 +35,7 @@ static bool wid_more_hiscores(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_more_destroy(g);
@@ -43,7 +43,7 @@ static bool wid_more_back(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -65,18 +65,18 @@ static bool wid_more_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'c' :
               case 'C' :
                 sound_play(g, "keypress");
-                wid_more_credits(g, nullptr, 0, 0, 0);
+                (void) wid_more_credits(g, nullptr, 0, 0, 0);
                 return true;
               case 'h' :
               case 'H' :
                 sound_play(g, "keypress");
-                wid_more_hiscores(g, nullptr, 0, 0, 0);
+                (void) wid_more_hiscores(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 sound_play(g, "keypress");
-                wid_more_back(g, nullptr, 0, 0, 0);
+                (void) wid_more_back(g, nullptr, 0, 0, 0);
                 return true;
             }
           }

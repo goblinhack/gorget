@@ -12,7 +12,7 @@
 //
 // Ok to land on this spot?
 //
-static bool thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
+[[nodiscard]] static bool thing_ok_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
 {
   TRACE_NO_INDENT();
 

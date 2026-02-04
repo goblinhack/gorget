@@ -65,7 +65,7 @@ static Tilep tp_door_locked_at_display_get_tile_info(Gamep g, Levelsp v, Levelp 
 //
 // Return trun on processing the mouse event
 //
-static bool tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button)
+[[nodiscard]] static bool tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, int x, int y, int button)
 {
   TRACE_NO_INDENT();
 
@@ -99,7 +99,7 @@ static bool tp_door_locked_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp t, in
   return false;
 }
 
-static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+[[nodiscard]] static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 
@@ -164,7 +164,7 @@ static bool tp_door_locked_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp 
   return true;
 }
 
-static bool tp_door_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
+[[nodiscard]] static bool tp_door_locked_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener)
 {
   TRACE_NO_INDENT();
 

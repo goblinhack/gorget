@@ -165,7 +165,8 @@ bool sound_find(const std::string &alias)
   return result != all_sound.end();
 }
 
-static bool sound_play_internal(Game *g, const std::string &alias, int channel, class sound *s, float scale)
+[[nodiscard]] static bool sound_play_internal(Game *g, const std::string &alias, int channel, class sound *s,
+                                              float scale)
 {
   TRACE_NO_INDENT();
 

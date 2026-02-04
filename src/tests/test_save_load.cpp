@@ -9,7 +9,7 @@
 
 extern Gamep game;
 
-static bool test_save_load(Gamep g, Testp t)
+[[nodiscard]] static bool test_save_load(Gamep g, Testp t)
 {
   TEST_LOG(t, "begin");
   TRACE_AND_INDENT();

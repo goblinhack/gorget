@@ -52,6 +52,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
   dmap_process(&ext->dmap, dmap_start, dmap_end);
   if (0) {
+    THING_LOG(t, "thing dmap");
     dmap_print(&ext->dmap, target, dmap_start, dmap_end);
   }
 }

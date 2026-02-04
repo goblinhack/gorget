@@ -5,6 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 
 //
 // Called at the beginning of each tick
@@ -22,6 +23,9 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Per thing callback
   //
   thing_on_tick_begin(g, v, l, t);
+  if (thing_is_dead(t)) {
+    return;
+  }
 
   //
   // Lifespan tick
@@ -33,12 +37,20 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
           .event_type = THING_EVENT_LIFESPAN_EXPIRED, //
       };
       thing_dead(g, v, l, t, e);
+      return;
     }
   }
 
   (void) thing_age_incr(g, v, l, t);
 
   thing_continue_to_burn_check(g, v, l, t);
+  if (thing_is_dead(t)) {
+    return;
+  }
+
+  if (thing_is_monst(t)) {
+    thing_monst_event_loop(g, v, l, t);
+  }
 }
 
 //

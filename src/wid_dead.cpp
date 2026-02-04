@@ -34,7 +34,7 @@ static void wid_dead_selected(Gamep g)
   game_state_reset(g, "finished game");
 }
 
-static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -72,7 +72,7 @@ static bool wid_dead_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static bool wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_dead_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_dead_selected(g);

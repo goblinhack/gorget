@@ -84,7 +84,7 @@ static void wid_rightbar_create_minimap_world(Gamep g)
   }
 }
 
-static bool wid_rightbar_create_window(Gamep g)
+[[nodiscard]] static bool wid_rightbar_create_window(Gamep g)
 {
   TRACE_NO_INDENT();
   DBG2("Remake rightbar");

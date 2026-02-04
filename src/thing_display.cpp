@@ -162,9 +162,9 @@ static void thing_display_outlined_blit(Gamep g, Levelsp v, Levelp l, spoint p, 
 //
 // Show an outline if obscured? e.g. foliage and the player hiding in it
 //
-static bool thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null, spoint tl,
-                                       spoint br, Tilep tile, float x1, float x2, float y1, float y2, FboEnum fbo,
-                                       color fg)
+[[nodiscard]] static bool thing_display_outline_blit(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp,
+                                                     Thingp t_maybe_null, spoint tl, spoint br, Tilep tile, float x1,
+                                                     float x2, float y1, float y2, FboEnum fbo, color fg)
 {
   TRACE_NO_INDENT();
 

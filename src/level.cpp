@@ -438,7 +438,7 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 //
 // Additional level flag filters e.g. open doors are not obstacles
 //
-static bool level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp it)
+[[nodiscard]] static bool level_flag_filter(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp it)
 {
   TRACE_NO_INDENT();
 

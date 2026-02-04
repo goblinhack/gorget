@@ -98,6 +98,7 @@ std::initializer_list< std::string > tps = {
     "level_next",
     "level_not_visited",
     "level_visited",
+    "mantilid",
     "pillar",
     "player",
     "potion",
@@ -357,6 +358,11 @@ static void tp_fixup(void)
         tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_FLESH);
         heat_exchange_set = true;
       }
+      if (tp_is_insectoid(tp)) {
+        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_HIGH);
+        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_FLESH);
+        heat_exchange_set = true;
+      }
       if (tp_is_slime(tp)) {
         tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_GEL);
         tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_GEL);
@@ -364,7 +370,7 @@ static void tp_fixup(void)
       }
       if (tp_is_physics_temperature(tp)) {
         if (! heat_exchange_set) {
-          TP_ERR(tp, "tp has heat physics set but no conductivity set");
+          TP_ERR(tp, "tp has heat physics set but no conductivity type set");
         }
       }
 

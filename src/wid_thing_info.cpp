@@ -14,7 +14,8 @@
 //
 // The thing icon
 //
-static bool wid_thing_info_icon(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent, int width)
+[[nodiscard]] static bool wid_thing_info_icon(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
+                                              int width)
 {
   TRACE_NO_INDENT();
 
@@ -36,7 +37,8 @@ static bool wid_thing_info_icon(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, 
   return true;
 }
 
-static bool wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent, int width)
+[[nodiscard]] static bool wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
+                                              int width)
 {
   TRACE_NO_INDENT();
 
@@ -79,7 +81,8 @@ static bool wid_thing_info_keys(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, 
 //
 // The thing name
 //
-static bool wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent, int width)
+[[nodiscard]] static bool wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
+                                              int width)
 {
   TRACE_NO_INDENT();
 
@@ -99,7 +102,8 @@ static bool wid_thing_info_name(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, 
 //
 // The thing description
 //
-static bool wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent, int width)
+[[nodiscard]] static bool wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
+                                                int width)
 {
   TRACE_NO_INDENT();
 
@@ -111,7 +115,8 @@ static bool wid_thing_info_detail(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp
 //
 // Health bar
 //
-static bool wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent, int width)
+[[nodiscard]] static bool wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
+                                                    int width)
 {
   TRACE_NO_INDENT();
 
@@ -160,7 +165,8 @@ static bool wid_thing_info_health_bar(Gamep g, Levelsp v, Levelp l, Thingp t, Tp
 //
 // Add immunities
 //
-static bool wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent, int width)
+[[nodiscard]] static bool wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent,
+                                                    int width)
 {
   TRACE_NO_INDENT();
 
@@ -217,7 +223,8 @@ static bool wid_thing_info_immunities(Gamep g, Levelsp v, Levelp l, Thingp t, Tp
 //
 // Add special damage
 //
-static bool wid_thing_info_special_damage(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, WidPopup *parent, int width)
+[[nodiscard]] static bool wid_thing_info_special_damage(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp,
+                                                        WidPopup *parent, int width)
 {
   TRACE_NO_INDENT();
 
@@ -270,6 +277,6 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
     parent->log_empty_line(g);
   }
 
-  wid_thing_info_immunities(g, v, l, t, tp, parent, width);
-  wid_thing_info_special_damage(g, v, l, t, tp, parent, width);
+  (void) wid_thing_info_immunities(g, v, l, t, tp, parent, width);
+  (void) wid_thing_info_special_damage(g, v, l, t, tp, parent, width);
 }

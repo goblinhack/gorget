@@ -6,7 +6,7 @@
 #include "my_cpp_template.hpp"
 #include "my_thing_inlines.hpp"
 
-static bool teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint &out)
+[[nodiscard]] static bool teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint &out)
 {
   TRACE_NO_INDENT();
 
@@ -43,7 +43,7 @@ static bool teleport_find_other(Gamep g, Levelsp v, Levelp l, spoint in, spoint 
 //
 // Find a spot next to the teleport where we can land.
 //
-static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
+[[nodiscard]] static bool teleport_find_landing_spot(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
 {
   TRACE_NO_INDENT();
 

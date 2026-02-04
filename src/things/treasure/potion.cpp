@@ -24,14 +24,14 @@ static std::string tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return "A mysterious purple potion.";
 }
 
-static bool tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collecter)
+[[nodiscard]] static bool tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collecter)
 {
   TRACE_NO_INDENT();
 
   return true;
 }
 
-static bool tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper)
+[[nodiscard]] static bool tp_potion_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp dropper)
 {
   TRACE_NO_INDENT();
 

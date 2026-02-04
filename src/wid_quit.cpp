@@ -23,7 +23,7 @@ void wid_quit_destroy(Gamep g)
   }
 }
 
-static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   LOG("Quit, yes");
@@ -43,7 +43,7 @@ static bool wid_quit_yes(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   LOG("Quit, no");
@@ -56,7 +56,7 @@ static bool wid_quit_no(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -78,18 +78,18 @@ static bool wid_quit_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'y' :
               case 'Y' :
                 sound_play(g, "keypress");
-                wid_quit_yes(g, nullptr, 0, 0, 0);
+                (void) wid_quit_yes(g, nullptr, 0, 0, 0);
                 return true;
               case 'n' :
               case 'N' :
                 sound_play(g, "keypress");
-                wid_quit_no(g, nullptr, 0, 0, 0);
+                (void) wid_quit_no(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 sound_play(g, "keypress");
-                wid_quit_no(g, nullptr, 0, 0, 0);
+                (void) wid_quit_no(g, nullptr, 0, 0, 0);
                 return true;
             }
           }

@@ -47,7 +47,7 @@ Levelp thing_player_level(Gamep g)
 //
 // Replace the mouse path upon mouse down events
 //
-static bool thing_player_replace_current_mouse_path(Gamep g, Levelsp v, Levelp l)
+[[nodiscard]] static bool thing_player_replace_current_mouse_path(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -69,7 +69,8 @@ static bool thing_player_replace_current_mouse_path(Gamep g, Levelsp v, Levelp l
 //
 // Pass the event to things for consumption e.g. doors
 //
-static bool thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y, uint32_t button)
+[[nodiscard]] static bool thing_player_pass_event_to_other_things(Gamep g, Levelsp v, Levelp l, int x, int y,
+                                                                  uint32_t button)
 {
   TRACE_NO_INDENT();
 
@@ -493,7 +494,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
 //
 // Return true on a successful move (or a popup asking more info)
 //
-static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp player, spoint to, bool need_path)
+[[nodiscard]] static bool player_move_try(Gamep g, Levelsp v, Levelp l, Thingp player, spoint to, bool need_path)
 {
   THING_LOG(player, "Player move try");
   TRACE_NO_INDENT();
@@ -598,7 +599,7 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
   auto   at = thing_at(player);
   spoint to(at.x + dx, at.y + dy);
 
-  player_move_try(g, v, l, player, to, true);
+  (void) player_move_try(g, v, l, player, to, true);
 
   player_move_reset(g, v, l);
 }
@@ -963,7 +964,7 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp player, spoint to)
 //
 // Return true if there is a move to pop.
 //
-static bool player_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp player, spoint *out)
+[[nodiscard]] static bool player_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp player, spoint *out)
 {
   TRACE_NO_INDENT();
 
@@ -989,7 +990,7 @@ static bool player_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp player, sp
 //
 // Return true if there is a move to pop.
 //
-static bool player_move_path_destination(Gamep g, Levelsp v, Levelp l, Thingp player, spoint *out)
+[[nodiscard]] static bool player_move_path_destination(Gamep g, Levelsp v, Levelp l, Thingp player, spoint *out)
 {
   TRACE_NO_INDENT();
 

@@ -18,7 +18,7 @@ static WidPopup *wid_item_menu_window;
 //
 static Thingp g_item;
 
-static bool wid_item_menu_destroy(Gamep g)
+[[nodiscard]] static bool wid_item_menu_destroy(Gamep g)
 {
   TRACE_NO_INDENT();
 
@@ -55,7 +55,7 @@ static bool wid_item_menu_destroy(Gamep g)
   return true;
 }
 
-static bool wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
 
@@ -93,20 +93,20 @@ static bool wid_item_menu_drop(Gamep g, Widp w, int x, int y, uint32_t button)
   return wid_item_menu_destroy(g);
 }
 
-static bool wid_item_menu_equip(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_item_menu_equip(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   TOPCON("TODO equip");
   return wid_item_menu_destroy(g);
 }
 
-static bool wid_item_menu_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_item_menu_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   return wid_item_menu_destroy(g);
 }
 
-static bool wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -128,18 +128,18 @@ static bool wid_item_menu_key_down(Gamep g, Widp w, const struct SDL_Keysym *key
               case 'd' :
               case 'D' :
                 sound_play(g, "keypress");
-                wid_item_menu_drop(g, nullptr, 0, 0, 0);
+                (void) wid_item_menu_drop(g, nullptr, 0, 0, 0);
                 return true;
               case 'e' :
               case 'E' :
                 sound_play(g, "keypress");
-                wid_item_menu_equip(g, nullptr, 0, 0, 0);
+                (void) wid_item_menu_equip(g, nullptr, 0, 0, 0);
                 return true;
               case 'b' :
               case 'B' :
               case SDLK_ESCAPE :
                 sound_play(g, "keypress");
-                wid_item_menu_back(g, nullptr, 0, 0, 0);
+                (void) wid_item_menu_back(g, nullptr, 0, 0, 0);
                 return true;
             }
           }
@@ -167,7 +167,7 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   g_item = item;
 
   if (wid_item_menu_window) {
-    wid_item_menu_destroy(g);
+    (void) wid_item_menu_destroy(g);
   }
 
   auto box_height  = 2;

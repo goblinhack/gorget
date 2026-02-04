@@ -23,7 +23,7 @@ static void wid_error_destroy(Gamep g)
   CON("It all went dark briefly. What happened?");
 }
 
-static bool wid_error_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_error_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 

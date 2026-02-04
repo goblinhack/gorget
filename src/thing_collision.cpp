@@ -203,8 +203,8 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   return true;
 }
 
-static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Thingp C, fpoint C_at, Thingp B,
-                                                fpoint B_at)
+[[nodiscard]] static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Thingp C, fpoint C_at,
+                                                              Thingp B, fpoint B_at)
 {
   float radius = thing_collision_radius(C);
 
@@ -280,7 +280,8 @@ static bool thing_collision_check_circle_square(Gamep g, Levelsp v, Levelp l, Th
   return false;
 }
 
-static bool thing_collision_check_squares(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B, fpoint B_at)
+[[nodiscard]] static bool thing_collision_check_squares(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B,
+                                                        fpoint B_at)
 {
   fpoint A0(A_at.x - 0, A_at.y - 0);
   fpoint A1(A_at.x + 1, A_at.y - 0);
@@ -306,43 +307,43 @@ static bool thing_collision_check_squares(Gamep g, Levelsp v, Levelp l, Thingp A
   return false;
 }
 
-static bool thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
-                                                            Thingp o, fpoint o_at)
+[[nodiscard]] static bool thing_collision_check_circle_small_circle_small(Gamep g, Levelsp v, Levelp l, Thingp me,
+                                                                          fpoint me_at, Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
 }
 
-static bool thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
-                                                            Thingp o, fpoint o_at)
+[[nodiscard]] static bool thing_collision_check_circle_small_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me,
+                                                                          fpoint me_at, Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
 }
 
-static bool thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                      fpoint o_at)
+[[nodiscard]] static bool thing_collision_check_circle_small_square(Gamep g, Levelsp v, Levelp l, Thingp me,
+                                                                    fpoint me_at, Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
   return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
 }
 
-static bool thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
-                                                            Thingp o, fpoint o_at)
+[[nodiscard]] static bool thing_collision_check_circle_large_circle_large(Gamep g, Levelsp v, Levelp l, Thingp me,
+                                                                          fpoint me_at, Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
   return thing_collision_check_circle_circle(g, v, l, me, me_at, o, o_at);
 }
 
-static bool thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                      fpoint o_at)
+[[nodiscard]] static bool thing_collision_check_circle_large_square(Gamep g, Levelsp v, Levelp l, Thingp me,
+                                                                    fpoint me_at, Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
   return thing_collision_check_circle_square(g, v, l, me, me_at, o, o_at);
 }
 
-static bool thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at, Thingp o,
-                                                fpoint o_at)
+[[nodiscard]] static bool thing_collision_check_square_square(Gamep g, Levelsp v, Levelp l, Thingp me, fpoint me_at,
+                                                              Thingp o, fpoint o_at)
 {
   TRACE_NO_INDENT();
   return thing_collision_check_squares(g, v, l, me, me_at, o, o_at);

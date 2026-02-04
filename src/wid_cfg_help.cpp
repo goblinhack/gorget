@@ -161,7 +161,7 @@ void wid_cfg_help_destroy(Gamep g)
   game_state_reset(g, "wid keyboard destroy");
 }
 
-static bool wid_cfg_help_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_help_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   CON("Reload config");
@@ -183,7 +183,7 @@ static bool wid_cfg_help_cancel(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_help_save(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_help_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
 
@@ -204,7 +204,7 @@ static bool wid_cfg_help_save(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_help_back(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_help_back(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_cfg_help_destroy(g);
@@ -541,7 +541,7 @@ static void grab_key(Gamep g, const std::string which)
   local_g_config_changed = true;
 }
 
-static bool wid_cfg_help_profile_arrow_keys(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_help_profile_arrow_keys(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   SDL_Keysym k {};
@@ -572,7 +572,7 @@ static bool wid_cfg_help_profile_arrow_keys(Gamep g, Widp w, int x, int y, uint3
   return true;
 }
 
-static bool wid_cfg_help_profile_wasd(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_help_profile_wasd(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   SDL_Keysym k = {};
@@ -603,7 +603,7 @@ static bool wid_cfg_help_profile_wasd(Gamep g, Widp w, int x, int y, uint32_t bu
   return true;
 }
 
-static bool wid_cfg_key_move_left(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_move_left(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "move left");
@@ -612,7 +612,7 @@ static bool wid_cfg_key_move_left(Gamep g, Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static bool wid_cfg_key_move_right(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_move_right(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "move right");
@@ -621,7 +621,7 @@ static bool wid_cfg_key_move_right(Gamep g, Widp w, int x, int y, uint32_t butto
   return true;
 }
 
-static bool wid_cfg_key_move_up(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_move_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "move up");
@@ -630,7 +630,7 @@ static bool wid_cfg_key_move_up(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_move_down(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_move_down(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "move down");
@@ -639,7 +639,7 @@ static bool wid_cfg_key_move_down(Gamep g, Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static bool wid_cfg_key_wait(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_wait(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "attack");
@@ -648,7 +648,7 @@ static bool wid_cfg_key_wait(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused1(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused1(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused1");
@@ -657,7 +657,7 @@ static bool wid_cfg_key_unused1(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused2(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused2(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused2");
@@ -666,7 +666,7 @@ static bool wid_cfg_key_unused2(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused3(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused3(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused3");
@@ -675,7 +675,7 @@ static bool wid_cfg_key_unused3(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused4(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused4(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused4");
@@ -684,7 +684,7 @@ static bool wid_cfg_key_unused4(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused5(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused5(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused5");
@@ -693,7 +693,7 @@ static bool wid_cfg_key_unused5(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused6(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused6(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused6");
@@ -702,7 +702,7 @@ static bool wid_cfg_key_unused6(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused7(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused7(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused7");
@@ -711,7 +711,7 @@ static bool wid_cfg_key_unused7(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused8(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused8(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused8");
@@ -720,7 +720,7 @@ static bool wid_cfg_key_unused8(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused9(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused9(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused9");
@@ -729,7 +729,7 @@ static bool wid_cfg_key_unused9(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused10(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused10(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused10");
@@ -738,7 +738,7 @@ static bool wid_cfg_key_unused10(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused11(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused11(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused11");
@@ -747,7 +747,7 @@ static bool wid_cfg_key_unused11(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused12(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused12(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused12");
@@ -756,7 +756,7 @@ static bool wid_cfg_key_unused12(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused13(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused13(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused13");
@@ -765,7 +765,7 @@ static bool wid_cfg_key_unused13(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_unused14(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_unused14(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_unused14");
@@ -774,7 +774,7 @@ static bool wid_cfg_key_unused14(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_fire(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_fire(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_fire");
@@ -783,7 +783,7 @@ static bool wid_cfg_key_fire(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_inventory(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_inventory(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "key_inventory");
@@ -792,7 +792,7 @@ static bool wid_cfg_key_inventory(Gamep g, Widp w, int x, int y, uint32_t button
   return true;
 }
 
-static bool wid_cfg_key_jump(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_jump(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "jump");
@@ -801,7 +801,7 @@ static bool wid_cfg_key_jump(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_ascend(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_ascend(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "ascend");
@@ -810,7 +810,7 @@ static bool wid_cfg_key_ascend(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_descend(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_descend(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "descend");
@@ -819,7 +819,7 @@ static bool wid_cfg_key_descend(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_zoom(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_zoom(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "zoom toggle");
@@ -828,7 +828,7 @@ static bool wid_cfg_key_zoom(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_save(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_save(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "save game");
@@ -837,7 +837,7 @@ static bool wid_cfg_key_save(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_load(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_load(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "load game");
@@ -846,7 +846,7 @@ static bool wid_cfg_key_load(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_help(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_help(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "help");
@@ -855,7 +855,7 @@ static bool wid_cfg_key_help(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_console(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_console(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "toggle console");
@@ -864,7 +864,7 @@ static bool wid_cfg_key_console(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_quit(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_quit(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "quit");
@@ -873,7 +873,7 @@ static bool wid_cfg_key_quit(Gamep g, Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static bool wid_cfg_key_screenshot(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_cfg_key_screenshot(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   grab_key(g, "screenshot grab");
@@ -882,7 +882,7 @@ static bool wid_cfg_key_screenshot(Gamep g, Widp w, int x, int y, uint32_t butto
   return true;
 }
 
-static bool wid_cfg_help_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_cfg_help_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -905,7 +905,7 @@ static bool wid_cfg_help_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
               case 'B' :
               case SDLK_ESCAPE :
                 sound_play(g, "keypress");
-                wid_cfg_help_cancel(g, nullptr, 0, 0, 0);
+                (void) wid_cfg_help_cancel(g, nullptr, 0, 0, 0);
                 return true;
             }
           }

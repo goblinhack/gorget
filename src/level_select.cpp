@@ -464,7 +464,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 //
 // Create a Thing for each level
 //
-static bool level_select_map_set(Gamep g, Levelsp v)
+[[nodiscard]] static bool level_select_map_set(Gamep g, Levelsp v)
 {
   LOG("Level select map");
   TRACE_NO_INDENT();
@@ -789,7 +789,7 @@ void level_select_update_grid_tiles(Gamep g, Levelsp v)
   level_init(g, v, l, level_num);
   l->info.seed_num = game_seed_num_get(g);
 
-  level_select_map_set(g, v);
+  (void) level_select_map_set(g, v);
 }
 
 //

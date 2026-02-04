@@ -569,6 +569,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_health_bar_shown(Thingp);
 [[nodiscard]] bool        thing_is_immune_to(Thingp, ThingEventType);
 [[nodiscard]] bool        thing_is_indestructible(Thingp);
+[[nodiscard]] bool        thing_is_insectoid(Thingp);
 [[nodiscard]] bool        thing_is_inventory_item(Thingp);
 [[nodiscard]] bool        thing_is_item_droppable(Thingp);
 [[nodiscard]] bool        thing_is_item_equipable(Thingp);
@@ -586,6 +587,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_level_visited(Thingp);
 [[nodiscard]] bool        thing_is_levitating(Thingp);
 [[nodiscard]] bool        thing_is_loggable(Thingp);
+[[nodiscard]] bool        thing_is_mantilid(Thingp);
 [[nodiscard]] bool        thing_is_meltable(Thingp);
 [[nodiscard]] bool        thing_is_metal(Thingp);
 [[nodiscard]] bool        thing_is_minion(Thingp);
@@ -709,8 +711,6 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_unused73(Thingp);
 [[nodiscard]] bool        thing_is_unused74(Thingp);
 [[nodiscard]] bool        thing_is_unused75(Thingp);
-[[nodiscard]] bool        thing_is_unused76(Thingp);
-[[nodiscard]] bool        thing_is_unused77(Thingp);
 [[nodiscard]] bool        thing_is_unused8(Thingp);
 [[nodiscard]] bool        thing_is_unused9(Thingp);
 [[nodiscard]] bool        thing_is_wait_on_dead_anim(Thingp);
@@ -900,14 +900,6 @@ typedef struct Thing_ {
 [[nodiscard]] std::string to_string(Gamep, Thingp);
 [[nodiscard]] ThingExtp   thing_ext_struct(Gamep, Thingp);
 [[nodiscard]] ThingFovp   thing_fov_struct(Gamep, Thingp);
-[[nodiscard]] Thingp      thing_minion_mob_get(Gamep, Levelsp, Levelp, Thingp minion);
-[[nodiscard]] Thingp      thing_mob_spawn_a_minion(Gamep, Levelsp, Levelp, Thingp mob, Tpp tp_minion);
-[[nodiscard]] Thingp      thing_player(Gamep);
-[[nodiscard]] Thingp      thing_spawn(Gamep, Levelsp, Levelp, Tpp, const fpoint &);
-[[nodiscard]] Thingp      thing_spawn(Gamep, Levelsp, Levelp, Tpp, const spoint &);
-[[nodiscard]] Thingp      thing_spawn(Gamep, Levelsp, Levelp, Tpp, Thingp thing_at);
-[[nodiscard]] Thingp      top_owner(Gamep, Levelsp, Levelp, Thingp);
-[[nodiscard]] Thingp      wid_get_thing_context(Gamep, Levelsp, Widp, int);
 [[nodiscard]] Thingp      immediate_owner(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] Thingp      thing_alloc(Gamep, Levelsp, Levelp, Tpp tp, spoint);
 [[nodiscard]] Thingp      thing_and_tp_get_at_safe(Gamep, Levelsp, Levelp, spoint p, int slot, Tpp *);
@@ -917,6 +909,14 @@ typedef struct Thing_ {
 [[nodiscard]] Thingp      thing_get(Gamep, Levelsp, Levelp, spoint p, int slot);
 [[nodiscard]] Thingp      thing_init(Gamep, Levelsp, Levelp, Tpp, const fpoint &);
 [[nodiscard]] Thingp      thing_init(Gamep, Levelsp, Levelp, Tpp, const spoint &);
+[[nodiscard]] Thingp      thing_minion_mob_get(Gamep, Levelsp, Levelp, Thingp minion);
+[[nodiscard]] Thingp      thing_mob_spawn_a_minion(Gamep, Levelsp, Levelp, Thingp mob, Tpp tp_minion);
+[[nodiscard]] Thingp      thing_player(Gamep);
+[[nodiscard]] Thingp      thing_spawn(Gamep, Levelsp, Levelp, Tpp, const fpoint &);
+[[nodiscard]] Thingp      thing_spawn(Gamep, Levelsp, Levelp, Tpp, const spoint &);
+[[nodiscard]] Thingp      thing_spawn(Gamep, Levelsp, Levelp, Tpp, Thingp thing_at);
+[[nodiscard]] Thingp      top_owner(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] Thingp      wid_get_thing_context(Gamep, Levelsp, Widp, int);
 [[nodiscard]] ThingPriorityType thing_priority_set(Gamep, Levelsp, Levelp, Thingp, ThingPriorityType val);
 [[nodiscard]] ThingPriorityType thing_priority(Thingp);
 ThingPlayerp                    thing_player_struct(Gamep);

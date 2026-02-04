@@ -111,7 +111,8 @@ void wid_mouse_over_end(Gamep g)
   }
 }
 
-static bool wid_mouse_over_begin(Gamep g, Widp w, uint32_t x, uint32_t y, int relx, int rely, int wheelx, int wheely)
+[[nodiscard]] static bool wid_mouse_over_begin(Gamep g, Widp w, uint32_t x, uint32_t y, int relx, int rely,
+                                               int wheelx, int wheely)
 {
   TRACE_NO_INDENT();
 

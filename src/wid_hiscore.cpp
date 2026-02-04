@@ -21,7 +21,7 @@ static void wid_hiscore_destroy(Gamep g)
   wid_main_menu_select(g);
 }
 
-static bool wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
+[[nodiscard]] static bool wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
 
@@ -61,7 +61,7 @@ static bool wid_hiscore_key_down(Gamep g, Widp w, const struct SDL_Keysym *key)
   return false;
 }
 
-static bool wid_hiscore_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
+[[nodiscard]] static bool wid_hiscore_mouse_up(Gamep g, Widp w, int x, int y, uint32_t button)
 {
   TRACE_NO_INDENT();
   wid_hiscore_destroy(g);
