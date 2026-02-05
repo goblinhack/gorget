@@ -42,11 +42,11 @@ fpoint thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)
   return unit(thing_projectile_get_delta_from_dt(g, v, l, t, 1.0));
 }
 
-extern bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A, fpoint A_at, Thingp B,
-                                                fpoint B_at);
-void        thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
+void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
 {
   TRACE_NO_INDENT();
+
+  THING_LOG(me, "fire projectile");
 
   auto delta = target - make_fpoint(thing_at(me));
 
@@ -66,9 +66,6 @@ void        thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tp
   // we end up shooting the player upon firing
   //
   float offset = thing_collision_radius(me) + tp_collision_radius(what) + 0.01f;
-  if (0) {
-    LOG("fire at dist %f", offset);
-  }
   proj_at.x += c * offset;
   proj_at.y += s * offset;
 
@@ -76,10 +73,6 @@ void        thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tp
   if (projectile) {
     projectile->angle = angle;
   }
-  if (0) {
-    LOG("real dist %f", distance(thing_real_at(projectile), thing_real_at(me)));
-  }
-  (void) thing_collision_check_circle_circle(g, v, l, projectile, thing_real_at(projectile), me, thing_real_at(me));
 
   //
   // Set my direction based on where I fire
@@ -89,6 +82,12 @@ void        thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tp
   thing_set_dir_from_delta(me, dir.x - source.x, dir.y - source.y);
 
   thing_is_moving_set(g, v, l, projectile);
+
+  auto real_at = thing_real_at(projectile);
+
+  if (0) {
+    THING_LOG(projectile, "%f,%f", real_at.x, real_at.y);
+  }
 }
 
 void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const spoint target)
@@ -132,11 +131,6 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
 
   thing_on_moved(g, v, l, t);
 
-  if (t->thing_dt > 0) {
-    //
-    // Handle interactions for a thing at its new location
-    //
-    thing_collision_handle_interpolated(g, v, l, t, old_at);
-  }
-  THING_LOG(t, "post move of delta %f,%f", delta.x, delta.y);
+  thing_collision_handle_interpolated(g, v, l, t, old_at);
+  THING_LOG(t, "post move of delta %f,%f dt %f", delta.x, delta.y, t->thing_dt);
 }

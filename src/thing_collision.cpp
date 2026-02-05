@@ -153,7 +153,9 @@ void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  THING_LOG(me, "thing_collision_handle");
+  if (0) {
+    THING_LOG(me, "thing_collision_handle");
+  }
 
   //
   // Projectiles handled seperately.
@@ -192,8 +194,8 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   float dist          = distance(A_at, B_at);
 
   if (0) {
-    THING_CON(A, "A %f,%f touching_dist %f dist %f ", A_at.x, A_at.y, touching_dist, dist);
-    THING_CON(B, "B %f,%f", B_at.x, B_at.y);
+    THING_LOG(A, "A %f,%f touching_dist %f dist %f ", A_at.x, A_at.y, touching_dist, dist);
+    THING_LOG(B, "B %f,%f", B_at.x, B_at.y);
   }
 
   if (dist >= touching_dist) {
@@ -227,7 +229,7 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   //
   // Circle inside box
   //
-  if (B_at == C_at) {
+  if ((C_at.x >= B0.x) && (C_at.y >= B0.y) && (C_at.x <= B2.x) && (C_at.y <= B2.y)) {
     return true;
   }
 
@@ -371,12 +373,17 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 
   for (auto step = 0; step < steps; step++) {
     std::vector< std::pair< float, Thingp > > pairs;
-    fpoint                                    me_at(old_at.x + stepx * step, old_at.y + stepy * step);
+    fpoint                                    interp_at(old_at.x + stepx * step, old_at.y + stepy * step);
+
+    if (0) {
+      THING_LOG(me, "interp collision at %f,%f", interp_at.x, interp_at.y);
+    }
 
     for (auto dx = -1; dx <= 1; dx++) {
       for (auto dy = -1; dy <= 1; dy++) {
 
         spoint collision_at(src.x + dx, src.y + dy);
+
         FOR_ALL_THINGS_AT(g, v, l, o, collision_at)
         {
           if (o == me) {
@@ -392,31 +399,58 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 
           if (thing_is_collision_circle_small(me)) {
             if (thing_is_collision_circle_small(o)) {
-              collision = thing_collision_check_circle_small_circle_small(g, v, l, me, me_at, o, o_at);
+              collision = thing_collision_check_circle_small_circle_small(g, v, l, me, interp_at, o, o_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else if (thing_is_collision_circle_large(o)) {
-              collision = thing_collision_check_circle_small_circle_large(g, v, l, me, me_at, o, o_at);
+              collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at, o, o_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else if (thing_is_collision_square(o)) {
-              collision = thing_collision_check_circle_small_square(g, v, l, me, me_at, o, o_at);
+              collision = thing_collision_check_circle_small_square(g, v, l, me, interp_at, o, o_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else {
               continue;
             }
           } else if (thing_is_collision_circle_large(me)) {
             if (thing_is_collision_circle_small(o)) {
-              collision = thing_collision_check_circle_small_circle_large(g, v, l, me, me_at, o, o_at);
+              collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at, o, o_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else if (thing_is_collision_circle_large(o)) {
-              collision = thing_collision_check_circle_large_circle_large(g, v, l, me, me_at, o, o_at);
+              collision = thing_collision_check_circle_large_circle_large(g, v, l, me, interp_at, o, o_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else if (thing_is_collision_square(o)) {
-              collision = thing_collision_check_circle_large_square(g, v, l, me, me_at, o, o_at);
+              collision = thing_collision_check_circle_large_square(g, v, l, me, interp_at, o, o_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else {
               continue;
             }
           } else if (thing_is_collision_square(me)) {
             if (thing_is_collision_circle_small(o)) {
-              collision = thing_collision_check_circle_small_square(g, v, l, o, o_at, me, me_at);
+              collision = thing_collision_check_circle_small_square(g, v, l, o, o_at, me, interp_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else if (thing_is_collision_circle_large(o)) {
-              collision = thing_collision_check_circle_large_square(g, v, l, o, o_at, me, me_at);
+              collision = thing_collision_check_circle_large_square(g, v, l, o, o_at, me, interp_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else if (thing_is_collision_square(o)) {
-              collision = thing_collision_check_square_square(g, v, l, o, o_at, me, me_at);
+              collision = thing_collision_check_square_square(g, v, l, o, o_at, me, interp_at);
+              if (0) {
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+              }
             } else {
               continue;
             }
@@ -446,7 +480,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
                 return (d1 < d2) && t1->_priority < t2->_priority;
               });
 
-    if (1) {
+    if (0) {
       for (auto a_pair : pairs) {
         auto o_dist = a_pair.first;
         auto o      = a_pair.second;
@@ -469,6 +503,9 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         return;
       }
     }
+  }
+  if (0) {
+    THING_LOG(me, "-");
   }
 }
 
