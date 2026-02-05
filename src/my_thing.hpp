@@ -498,6 +498,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_blit_flush_per_line(Thingp);
 [[nodiscard]] bool        thing_is_blit_if_has_seen(Thingp);
 [[nodiscard]] bool        thing_is_blit_obscures(Thingp);
+[[nodiscard]] bool        thing_is_blit_on_ground(Thingp);
 [[nodiscard]] bool        thing_is_blit_outlined(Thingp);
 [[nodiscard]] bool        thing_is_blit_pixel_lighting(Thingp);
 [[nodiscard]] bool        thing_is_blit_shown_in_chasms(Thingp);
@@ -710,7 +711,6 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_unused72(Thingp);
 [[nodiscard]] bool        thing_is_unused73(Thingp);
 [[nodiscard]] bool        thing_is_unused74(Thingp);
-[[nodiscard]] bool        thing_is_unused75(Thingp);
 [[nodiscard]] bool        thing_is_unused8(Thingp);
 [[nodiscard]] bool        thing_is_unused9(Thingp);
 [[nodiscard]] bool        thing_is_wait_on_dead_anim(Thingp);

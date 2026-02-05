@@ -61,7 +61,7 @@ bool tp_load_kobalos_mob(void)
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
-  tp_flag_set(tp, is_blit_centered);
+  tp_flag_set(tp, is_blit_on_ground);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_burnable); // is capable of being burned by fire
   tp_flag_set(tp, is_collision_square);
@@ -106,6 +106,7 @@ bool tp_load_kobalos_mob(void)
     auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
   }
 
   delay = 100;
@@ -114,6 +115,7 @@ bool tp_load_kobalos_mob(void)
     auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
+    tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
 
     if (frame == 5) {
       tile_is_cleanup_on_end_of_anim_set(tile);

@@ -47,7 +47,6 @@ bool tp_load_mantisman(void)
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
-  tp_flag_set(tp, is_insectoid);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
@@ -55,6 +54,7 @@ bool tp_load_mantisman(void)
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_health_bar_shown);
+  tp_flag_set(tp, is_insectoid);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mantisman);
   tp_flag_set(tp, is_monst);

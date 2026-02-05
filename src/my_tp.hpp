@@ -207,7 +207,7 @@
       list_macro(is_unused72, "is_unused72"),                                       /* newline */                    \
       list_macro(is_unused73, "is_unused73"),                                       /* newline */                    \
       list_macro(is_unused74, "is_unused74"),                                       /* newline */                    \
-      list_macro(is_unused75, "is_unused75"),                                       /* newline */                    \
+      list_macro(is_blit_on_ground, "is_blit_on_ground"),                           /* newline */                    \
       list_macro(is_insectoid, "is_insectoid"),                                     /* newline */                    \
       list_macro(is_mantisman, "is_mantisman"),                                     /* newline */                    \
       list_macro(is_dmap, "is_dmap"),                                               /* newline */                    \
@@ -694,6 +694,7 @@ float tp_collision_radius(Tpp);
 #define tp_is_blit_flush_per_line(tp)         tp_flag(tp, is_blit_flush_per_line)
 #define tp_is_blit_if_has_seen(tp)            tp_flag(tp, is_blit_if_has_seen)
 #define tp_is_blit_obscures(tp)               tp_flag(tp, is_blit_obscures)
+#define tp_is_blit_on_ground(tp)              tp_flag(tp, is_blit_on_ground)
 #define tp_is_blit_outlined(tp)               tp_flag(tp, is_blit_outlined)
 #define tp_is_blit_pixel_lighting(tp)         tp_flag(tp, is_blit_pixel_lighting)
 #define tp_is_blit_shown_in_chasms(tp)        tp_flag(tp, is_blit_shown_in_chasms)
@@ -888,7 +889,6 @@ float tp_collision_radius(Tpp);
 #define tp_is_unused72(tp)                    tp_flag(tp, is_unused72)
 #define tp_is_unused73(tp)                    tp_flag(tp, is_unused73)
 #define tp_is_unused74(tp)                    tp_flag(tp, is_unused74)
-#define tp_is_unused75(tp)                    tp_flag(tp, is_unused75)
 #define tp_is_unused8(tp)                     tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                     tp_flag(tp, is_unused9)
 #define tp_is_wait_on_dead_anim(tp)           tp_flag(tp, is_wait_on_dead_anim)
@@ -915,6 +915,7 @@ float tp_collision_radius(Tpp);
 #define level_is_blit_flush_per_line(g, v, l, p)         level_flag(g, v, l, is_blit_flush_per_line, p)
 #define level_is_blit_if_has_seen(g, v, l, p)            level_flag(g, v, l, is_blit_if_has_seen, p)
 #define level_is_blit_obscures(g, v, l, p)               level_flag(g, v, l, is_blit_obscures, p)
+#define level_is_blit_on_ground(g, v, l, p)              level_flag(g, v, l, is_blit_on_ground, p)
 #define level_is_blit_outlined(g, v, l, p)               level_flag(g, v, l, is_blit_outlined, p)
 #define level_is_blit_pixel_lighting(g, v, l, p)         level_flag(g, v, l, is_blit_pixel_lighting, p)
 #define level_is_blit_shown_in_chasms(g, v, l, p)        level_flag(g, v, l, is_blit_shown_in_chasms, p)
@@ -1109,7 +1110,6 @@ float tp_collision_radius(Tpp);
 #define level_is_unused72(g, v, l, p)                    level_flag(g, v, l, is_unused72, p)
 #define level_is_unused73(g, v, l, p)                    level_flag(g, v, l, is_unused73, p)
 #define level_is_unused74(g, v, l, p)                    level_flag(g, v, l, is_unused74, p)
-#define level_is_unused75(g, v, l, p)                    level_flag(g, v, l, is_unused75, p)
 #define level_is_unused8(g, v, l, p)                     level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                     level_flag(g, v, l, is_unused9, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)           level_flag(g, v, l, is_wait_on_dead_anim, p)
@@ -1136,6 +1136,7 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_blit_flush_per_line(g, v, l, p)         level_alive(g, v, l, is_blit_flush_per_line, p)
 #define level_alive_is_blit_if_has_seen(g, v, l, p)            level_alive(g, v, l, is_blit_if_has_seen, p)
 #define level_alive_is_blit_obscures(g, v, l, p)               level_alive(g, v, l, is_blit_obscures, p)
+#define level_alive_is_blit_on_ground(g, v, l, p)              level_alive(g, v, l, is_blit_on_ground, p)
 #define level_alive_is_blit_outlined(g, v, l, p)               level_alive(g, v, l, is_blit_outlined, p)
 #define level_alive_is_blit_pixel_lighting(g, v, l, p)         level_alive(g, v, l, is_blit_pixel_lighting, p)
 #define level_alive_is_blit_shown_in_chasms(g, v, l, p)        level_alive(g, v, l, is_blit_shown_in_chasms, p)
@@ -1330,7 +1331,6 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_unused72(g, v, l, p)                    level_alive(g, v, l, is_unused72, p)
 #define level_alive_is_unused73(g, v, l, p)                    level_alive(g, v, l, is_unused73, p)
 #define level_alive_is_unused74(g, v, l, p)                    level_alive(g, v, l, is_unused74, p)
-#define level_alive_is_unused75(g, v, l, p)                    level_alive(g, v, l, is_unused75, p)
 #define level_alive_is_unused8(g, v, l, p)                     level_alive(g, v, l, is_unused8, p)
 #define level_alive_is_unused9(g, v, l, p)                     level_alive(g, v, l, is_unused9, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)           level_alive(g, v, l, is_wait_on_dead_anim, p)
@@ -1357,6 +1357,7 @@ float tp_collision_radius(Tpp);
 #define level_count_is_blit_flush_per_line(g, v, l, p)         level_count(g, v, l, is_blit_flush_per_line, p)
 #define level_count_is_blit_if_has_seen(g, v, l, p)            level_count(g, v, l, is_blit_if_has_seen, p)
 #define level_count_is_blit_obscures(g, v, l, p)               level_count(g, v, l, is_blit_obscures, p)
+#define level_count_is_blit_on_ground(g, v, l, p)              level_count(g, v, l, is_blit_on_ground, p)
 #define level_count_is_blit_outlined(g, v, l, p)               level_count(g, v, l, is_blit_outlined, p)
 #define level_count_is_blit_pixel_lighting(g, v, l, p)         level_count(g, v, l, is_blit_pixel_lighting, p)
 #define level_count_is_blit_shown_in_chasms(g, v, l, p)        level_count(g, v, l, is_blit_shown_in_chasms, p)
@@ -1551,7 +1552,6 @@ float tp_collision_radius(Tpp);
 #define level_count_is_unused72(g, v, l, p)                    level_count(g, v, l, is_unused72, p)
 #define level_count_is_unused73(g, v, l, p)                    level_count(g, v, l, is_unused73, p)
 #define level_count_is_unused74(g, v, l, p)                    level_count(g, v, l, is_unused74, p)
-#define level_count_is_unused75(g, v, l, p)                    level_count(g, v, l, is_unused75, p)
 #define level_count_is_unused8(g, v, l, p)                     level_count(g, v, l, is_unused8, p)
 #define level_count_is_unused9(g, v, l, p)                     level_count(g, v, l, is_unused9, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)           level_count(g, v, l, is_wait_on_dead_anim, p)
@@ -1578,6 +1578,7 @@ float tp_collision_radius(Tpp);
 #define level_open_is_blit_flush_per_line(g, v, l, p)         level_open(g, v, l, is_blit_flush_per_line, p)
 #define level_open_is_blit_if_has_seen(g, v, l, p)            level_open(g, v, l, is_blit_if_has_seen, p)
 #define level_open_is_blit_obscures(g, v, l, p)               level_open(g, v, l, is_blit_obscures, p)
+#define level_open_is_blit_on_ground(g, v, l, p)              level_open(g, v, l, is_blit_on_ground, p)
 #define level_open_is_blit_outlined(g, v, l, p)               level_open(g, v, l, is_blit_outlined, p)
 #define level_open_is_blit_pixel_lighting(g, v, l, p)         level_open(g, v, l, is_blit_pixel_lighting, p)
 #define level_open_is_blit_shown_in_chasms(g, v, l, p)        level_open(g, v, l, is_blit_shown_in_chasms, p)
@@ -1772,7 +1773,6 @@ float tp_collision_radius(Tpp);
 #define level_open_is_unused72(g, v, l, p)                    level_open(g, v, l, is_unused72, p)
 #define level_open_is_unused73(g, v, l, p)                    level_open(g, v, l, is_unused73, p)
 #define level_open_is_unused74(g, v, l, p)                    level_open(g, v, l, is_unused74, p)
-#define level_open_is_unused75(g, v, l, p)                    level_open(g, v, l, is_unused75, p)
 #define level_open_is_unused8(g, v, l, p)                     level_open(g, v, l, is_unused8, p)
 #define level_open_is_unused9(g, v, l, p)                     level_open(g, v, l, is_unused9, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)           level_open(g, v, l, is_wait_on_dead_anim, p)

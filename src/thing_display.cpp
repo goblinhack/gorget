@@ -93,6 +93,11 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
     tl->y -= (pix_height - dh) / 2;
   }
 
+  if (tp_maybe_null && tp_is_blit_on_ground(tp_maybe_null)) {
+    tl->x -= (pix_width - dw) / 2;
+    tl->y -= (pix_height - dh);
+  }
+
   if (t_maybe_null && thing_is_jumping(t_maybe_null)) {
     auto jump_height = (int) ((sin(PI * t_maybe_null->thing_dt)) * (float) dh);
     tl->y -= jump_height;

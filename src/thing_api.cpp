@@ -2385,14 +2385,14 @@ bool thing_is_unused74(Thingp t)
   return tp_flag(thing_tp(t), is_unused74);
 }
 
-bool thing_is_unused75(Thingp t)
+bool thing_is_blit_on_ground(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused75);
+  return tp_flag(thing_tp(t), is_blit_on_ground);
 }
 
 bool thing_is_insectoid(Thingp t)
