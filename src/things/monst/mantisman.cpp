@@ -59,6 +59,9 @@ bool tp_load_mantisman(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_mantisman);
   tp_flag_set(tp, is_monst);
+  tp_flag_set(tp, is_obs_to_jumping_onto);
+  tp_flag_set(tp, is_obs_to_movement);
+  tp_flag_set(tp, is_obs_to_teleporting_onto);
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_submergible); // is seen submerged when in water
