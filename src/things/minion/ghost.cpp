@@ -8,6 +8,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static std::string tp_ghost_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -20,8 +21,11 @@ static std::string tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "The spirit of one less fortunate than you. Beware, such spirits can traverse chasms and float through "
-         "solid rock.";
+  return                                           // newline
+      UI_INFO1_FMT_STR                             // newline
+      "The spirit of one less fortunate than you." // newline
+      UI_INFO2_FMT_STR                             // newline
+      "Beware, such spirits can traverse chasms and float through solid rock.";
 }
 
 bool tp_load_ghost(void)

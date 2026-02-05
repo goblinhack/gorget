@@ -10,6 +10,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static std::string tp_chest_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -29,12 +30,12 @@ static std::string tp_chest_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   if (thing_is_open(t)) {
-    return "An open chest.";
+    return UI_INFO1_FMT_STR "An open chest.";
   }
   if (thing_is_dead(t)) {
-    return "A broken chest.";
+    return UI_INFO1_FMT_STR "A broken chest.";
   }
-  return "A closed chest. What wonders might it contain? Probably none.";
+  return UI_INFO1_FMT_STR "A closed chest. What wonders might it contain? Probably none.";
 }
 
 bool tp_load_treasure(void)

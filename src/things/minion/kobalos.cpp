@@ -10,6 +10,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static std::string tp_kobalos_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -25,10 +26,11 @@ static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  std::string s;
-  s += "Kobalos are small green-skinned creatures that are identical in every possible way to a goblin. ";
-  s += "They are vindictive, greedy little things and have a habit of thievery...";
-  return s;
+  return // newline
+      UI_INFO1_FMT_STR
+      "Kobalos are small green-skinned creatures that are identical in every possible way to a goblin.\n" // newline
+      UI_INFO2_FMT_STR                                                                                    // newline
+      "Kobalos are vindictive, greedy little things and have a habit of thievery...";
 }
 
 bool tp_load_kobalos(void)

@@ -9,6 +9,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static std::string tp_potion_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -21,7 +22,7 @@ static std::string tp_potion_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "A mysterious purple potion.";
+  return UI_INFO1_FMT_STR "A mysterious purple potion.";
 }
 
 [[nodiscard]] static bool tp_potion_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp collecter)

@@ -80,6 +80,30 @@ color string2color(const char **s)
   return result->second;
 }
 
+std::string string2colorname(std::string &s, int *len)
+{
+  TRACE_NO_INDENT();
+  auto        iter = s.begin();
+  std::string out;
+
+  while (iter != s.end()) {
+    auto c = *iter;
+
+    if ((c == '\0') || (c == '$')) {
+      break;
+    }
+
+    out += c;
+    iter++;
+  }
+
+  if (len) {
+    *len = iter - s.begin();
+  }
+
+  return out;
+}
+
 color string2color(std::string &s, int *len)
 {
   TRACE_NO_INDENT();

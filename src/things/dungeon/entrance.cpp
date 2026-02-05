@@ -8,6 +8,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 #include <string>
 
@@ -22,7 +23,7 @@ static std::string tp_entrance_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t
 {
   TRACE_NO_INDENT();
 
-  return "Enter here to cowardly return to level selection.";
+  return UI_INFO1_FMT_STR "Enter here to cowardly return to level selection.";
 }
 
 bool tp_load_entrance(void)

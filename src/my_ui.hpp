@@ -40,6 +40,8 @@
 // Format strings
 //
 #define UI_FMT_STR           "%%fg=" UI_TEXT_COLOR_STR "$"
+#define UI_INFO1_FMT_STR     "%%fg=gray70$"
+#define UI_INFO2_FMT_STR     "%%fg=gray90$"
 #define UI_GOOD_FMT_STR      "%%fg=gold$"
 #define UI_GREEN_FMT_STR     "%%fg=green$"
 #define UI_HIGHLIGHT_FMT_STR "%%fg=white$"

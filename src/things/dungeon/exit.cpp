@@ -8,6 +8,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 #include <string>
 
@@ -22,7 +23,7 @@ static std::string tp_exit_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "Exit here to exit the level.";
+  return UI_INFO1_FMT_STR "Exit here to exit the level.";
 }
 
 bool tp_load_exit(void)

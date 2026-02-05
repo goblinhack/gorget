@@ -10,6 +10,7 @@
 #include "my_tp.hpp"
 #include "my_tps.hpp"
 #include "my_types.hpp"
+#include "my_ui.hpp"
 
 static std::string tp_slime_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
@@ -25,7 +26,7 @@ static std::string tp_slime_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return "A voracious mass of sentient slime that hungers constantly.";
+  return UI_INFO1_FMT_STR "A voracious mass of sentient slime that hungers constantly.";
 }
 
 bool tp_load_slime(void)
