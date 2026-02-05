@@ -279,4 +279,9 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
 
   (void) wid_thing_info_immunities(g, v, l, t, tp, parent, width);
   (void) wid_thing_info_special_damage(g, v, l, t, tp, parent, width);
+
+  //
+  // Needed so that subsequent things are not on top of each other
+  //
+  parent->log_empty_line(g);
 }

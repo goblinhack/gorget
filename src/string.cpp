@@ -462,6 +462,7 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
   // the format onto subsequent lines.
   //
   std::string saved_format_string;
+  std::string this_saved_format_string;
 
   if (max_line_len < 0) {
     CROAK("bad max line len");
@@ -519,9 +520,9 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
           line_len -= 2; /* for the %% */
           auto tmp = std::string(text_iter, text.end());
 
-          int  len            = 0;
-          auto color_name     = string2colorname(tmp, &len);
-          saved_format_string = "%%fg=" + color_name + "$";
+          int  len                 = 0;
+          auto color_name          = string2colorname(tmp, &len);
+          this_saved_format_string = "%%fg=" + color_name + "$";
           text_iter += len + 1;
 
           found_format_string = false;
@@ -532,9 +533,9 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
           line_len -= 2; /* for the %% */
           auto tmp = std::string(text_iter, text.end());
 
-          int  len            = 0;
-          auto color_name     = string2colorname(tmp, &len);
-          saved_format_string = "%%bg=" + color_name + "$";
+          int  len                 = 0;
+          auto color_name          = string2colorname(tmp, &len);
+          this_saved_format_string = "%%bg=" + color_name + "$";
           text_iter += len + 1;
 
           found_format_string = false;
@@ -636,7 +637,8 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
     // printf("OUT [%s] max_line_len %d\n", tmp.c_str(), line_len);
     //
     result.push_back(saved_format_string + tmp);
-    first_line = false;
+    saved_format_string = this_saved_format_string;
+    first_line          = false;
 
     text_iter = line_end;
     if (! *text_iter) {
