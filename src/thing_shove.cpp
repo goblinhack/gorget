@@ -74,9 +74,9 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       thing_shoved_by_player(g, v, l, t, e);
     }
 
-    THING_DBG(shover, "shove success of %s", to_string(g, t).c_str());
+    THING_DBG(shover, "shove success of %s", to_string(g, v, l, t).c_str());
   } else {
-    THING_DBG(shover, "shove fail of %s", to_string(g, t).c_str());
+    THING_DBG(shover, "shove fail of %s", to_string(g, v, l, t).c_str());
   }
 
   return shoved;

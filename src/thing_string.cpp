@@ -9,7 +9,7 @@
 #include "my_sprintf.hpp"
 #include "my_thing_inlines.hpp"
 
-std::string to_string(Gamep g, Thingp t)
+std::string to_string(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
@@ -59,7 +59,7 @@ std::string to_string(Gamep g, Thingp t)
                                       /* newline */ thing_is_scheduled_for_cleanup(t) ? "/fre" : ""));
 }
 
-std::string to_string(Gamep g, ThingEvent &e)
+std::string to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 {
   TRACE_NO_INDENT();
 
@@ -83,7 +83,7 @@ std::string to_string(Gamep g, ThingEvent &e)
 
   if (e.source) {
     s += " src:(";
-    s += to_string(g, e.source);
+    s += to_string(g, v, l, e.source);
     s += ")";
   }
 

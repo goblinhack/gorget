@@ -25,7 +25,7 @@ bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
   if (success) {
     if (thing_is_player(player_or_monst)) {
       level_tick_begin_requested(g, v, l, "player opened something");
-      THING_LOG(player_or_monst, "opened %s", to_string(g, t).c_str());
+      THING_LOG(player_or_monst, "opened %s", to_string(g, v, l, t).c_str());
     }
   }
 
@@ -52,7 +52,7 @@ bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
   if (success) {
     if (thing_is_player(player_or_monst)) {
       level_tick_begin_requested(g, v, l, "player closed something");
-      THING_LOG(player_or_monst, "closed %s", to_string(g, t).c_str());
+      THING_LOG(player_or_monst, "closed %s", to_string(g, v, l, t).c_str());
     }
   }
 

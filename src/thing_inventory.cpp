@@ -179,7 +179,7 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
       continue;
     }
 
-    auto s = to_string(g, item);
+    auto s = to_string(g, v, l, item);
     if (slot->count) {
       THING_LOG(player_or_monst, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
     } else {

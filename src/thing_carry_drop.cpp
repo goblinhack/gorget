@@ -26,7 +26,7 @@ bool thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_o
     return false;
   }
 
-  auto s = to_string(g, item);
+  auto s = to_string(g, v, l, item);
   THING_LOG(player_or_monst, "carry: %s", s.c_str());
 
   if (! thing_is_carried_try_set(g, v, l, item, player_or_monst)) {
@@ -71,7 +71,7 @@ bool thing_drop_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_or
     return false;
   }
 
-  auto s = to_string(g, item);
+  auto s = to_string(g, v, l, item);
   THING_LOG(player_or_monst, "drop: %s", s.c_str());
 
   if (! thing_is_carried_try_unset(g, v, l, item, player_or_monst)) {

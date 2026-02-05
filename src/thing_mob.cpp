@@ -96,7 +96,7 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
     new_minion->mob_id = mob->id;
     ext_struct->minions.count++;
 
-    THING_LOG(mob, "spawned minion %s", thing_short_name(g, v, l, new_minion).c_str());
+    THING_LOG(mob, "spawned minion %s", to_string(g, v, l, new_minion).c_str());
     THING_LOG(new_minion, "new born minion");
 
     return new_minion;
@@ -144,12 +144,12 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
     }
 
     if (! minion->mob_id) {
-      THING_ERR(mob, "mob found detached minion: %s", thing_short_name(g, v, l, minion).c_str());
+      THING_ERR(mob, "mob found detached minion: %s", to_string(g, v, l, minion).c_str());
       return false;
     }
 
     if (ext_struct->minions.count <= 0) {
-      THING_ERR(mob, "mob has unexpected minion count when detaching: %s", thing_short_name(g, v, l, minion).c_str());
+      THING_ERR(mob, "mob has unexpected minion count when detaching: %s", to_string(g, v, l, minion).c_str());
       return false;
     }
 
@@ -158,10 +158,10 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
     minion->mob_id = 0;
 
     if (e.event_type != THING_EVENT_NONE) {
-      THING_LOG(mob, "kill minion %s", thing_short_name(g, v, l, minion).c_str());
+      THING_LOG(mob, "kill minion %s", to_string(g, v, l, minion).c_str());
       thing_dead(g, v, l, minion, e);
     } else {
-      THING_LOG(mob, "detach minion %s", thing_short_name(g, v, l, minion).c_str());
+      THING_LOG(mob, "detach minion %s", to_string(g, v, l, minion).c_str());
     }
   }
 
@@ -228,7 +228,7 @@ void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
       continue;
     }
 
-    auto s = to_string(g, existing_minion);
+    auto s = to_string(g, v, l, existing_minion);
     THING_LOG(mob, "slot %d: %s", _n_, s.c_str());
   }
 }

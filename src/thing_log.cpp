@@ -26,7 +26,8 @@ static void thing_log_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(nullptr, t).c_str(), g_callframes_indent, "");
+  snprintf(buf + len, MAXLONGSTR - len, "[%-50s]: %*s", to_string(nullptr, nullptr, nullptr, t).c_str(),
+           g_callframes_indent, "");
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -79,7 +80,7 @@ static void thing_warn_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -108,7 +109,7 @@ static void thing_con_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   putf(MY_STDOUT, buf);
@@ -137,7 +138,7 @@ static void thing_err_(Thingp t, const char *fmt, va_list args)
   int  len = 0;
 
   buf[ 0 ] = '\0';
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -164,7 +165,7 @@ static void thing_topcon_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -200,7 +201,7 @@ static void thing_botcon_(Thingp t, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, t).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, nullptr, nullptr, t).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 

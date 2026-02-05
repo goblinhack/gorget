@@ -18,7 +18,9 @@
 
   auto mob = thing_minion_mob_get(g, v, l, t);
   if (! mob) {
-    THING_ERR(t, "minion has no mob");
+    //
+    // Acceptable when the minion is detached
+    //
     return false;
   }
 

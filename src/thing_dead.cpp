@@ -179,7 +179,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Log the reason of demise?
   //
   if (thing_is_loggable(t)) {
-    THING_LOG(t, "%s: dead", to_string(g, e).c_str());
+    THING_LOG(t, "%s: dead", to_string(g, v, l, e).c_str());
   }
 
   //

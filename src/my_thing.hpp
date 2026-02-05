@@ -896,8 +896,8 @@ typedef struct Thing_ {
 [[nodiscard]] std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 [[nodiscard]] std::string thing_the_short_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 [[nodiscard]] std::string to_death_reason_string(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
-[[nodiscard]] std::string to_string(Gamep, ThingEvent &);
-[[nodiscard]] std::string to_string(Gamep, Thingp);
+[[nodiscard]] std::string to_string(Gamep, Levelsp, Levelp, ThingEvent &);
+[[nodiscard]] std::string to_string(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] ThingExtp   thing_ext_struct(Gamep, Thingp);
 [[nodiscard]] ThingFovp   thing_fov_struct(Gamep, Thingp);
 [[nodiscard]] Thingp      immediate_owner(Gamep, Levelsp, Levelp, Thingp);

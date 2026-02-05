@@ -198,7 +198,7 @@ static void thing_damage_cap_for_this_event(Gamep g, Levelsp v, Levelp l, Thingp
   if (e.damage > max_damage_this_time) {
     auto old_d = e.damage;
     e.damage   = max_damage_this_time;
-    THING_LOG(t, "%s: limit damage %d -> %d", to_string(g, e).c_str(), old_d, e.damage);
+    THING_LOG(t, "%s: limit damage %d -> %d", to_string(g, v, l, e).c_str(), old_d, e.damage);
   }
 }
 
@@ -224,7 +224,7 @@ static void thing_damage_cap_for_this_tick(Gamep g, Levelsp v, Levelp l, Thingp 
   if (d_total > max_damage_per_tick) {
     auto old_d = e.damage;
     e.damage -= d_total - max_damage_per_tick;
-    THING_LOG(t, "%s: limit per tick damage %d -> %d", to_string(g, e).c_str(), old_d, e.damage);
+    THING_LOG(t, "%s: limit per tick damage %d -> %d", to_string(g, v, l, e).c_str(), old_d, e.damage);
   }
 }
 
@@ -256,7 +256,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Indestructible?
   //
   if (thing_is_indestructible(t)) {
-    THING_LOG(t, "%s: no damage as indestructible", to_string(g, e).c_str());
+    THING_LOG(t, "%s: no damage as indestructible", to_string(g, v, l, e).c_str());
     return;
   }
 
@@ -264,7 +264,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Already dead?
   //
   if (thing_is_dead(t)) {
-    THING_LOG(t, "%s: no damage as already dead", to_string(g, e).c_str());
+    THING_LOG(t, "%s: no damage as already dead", to_string(g, v, l, e).c_str());
     return;
   }
 
@@ -272,7 +272,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // Immune to this attack?
   //
   if (thing_is_immune_to(t, e.event_type)) {
-    THING_LOG(t, "%s: no damage as immune", to_string(g, e).c_str());
+    THING_LOG(t, "%s: no damage as immune", to_string(g, v, l, e).c_str());
     return;
   }
 
@@ -285,14 +285,14 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   // No damage?
   //
   if (e.damage <= 0) {
-    THING_LOG(t, "%s: no damage to apply", to_string(g, e).c_str());
+    THING_LOG(t, "%s: no damage to apply", to_string(g, v, l, e).c_str());
     return;
   }
 
   //
   // Log the reason for attack?
   //
-  THING_LOG(t, "%s: apply damage", to_string(g, e).c_str());
+  THING_LOG(t, "%s: apply damage", to_string(g, v, l, e).c_str());
 
   if (thing_is_player(t)) {
     thing_damage_to_player(g, v, l, t, e);
