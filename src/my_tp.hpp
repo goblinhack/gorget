@@ -373,14 +373,14 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 //
 #define THING_PRIORITY_ENUM(list_macro)                                                                              \
   clang_format_indent()                                    /* dummy line for clang indentation fixup */              \
-      list_macro(THING_PRIORITY_EXPLOSION, "player"),      /* newline */                                             \
+      list_macro(THING_PRIORITY_EXPLOSION, "explosion"),   /* newline */                                             \
       list_macro(THING_PRIORITY_PROJECTILE, "projectile"), /* newline */                                             \
       list_macro(THING_PRIORITY_LAVA, "lava"),             /* newline */                                             \
-      list_macro(THING_PRIORITY_FIRE, "lava"),             /* newline */                                             \
+      list_macro(THING_PRIORITY_FIRE, "fire"),             /* newline */                                             \
       list_macro(THING_PRIORITY_STEAM, "steam"),           /* newline */                                             \
       list_macro(THING_PRIORITY_PLAYER, "player"),         /* newline */                                             \
-      list_macro(THING_PRIORITY_MOB, "mob"),               /* newline */                                             \
       list_macro(THING_PRIORITY_MONST, "monst"),           /* newline */                                             \
+      list_macro(THING_PRIORITY_MOB, "mob"),               /* newline */                                             \
       list_macro(THING_PRIORITY_WATER, "water"),           /* newline */                                             \
       list_macro(THING_PRIORITY_SMOKE, "smoke"),           /* newline */                                             \
       list_macro(THING_PRIORITY_OBJECT, "object"),         /* newline */                                             \

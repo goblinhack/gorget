@@ -1035,6 +1035,8 @@ void thing_update_pos(Gamep, Levelsp, Levelp, Thingp);
 void thing_vision_reset(Gamep, Levelsp, Levelp, Thingp);
 void THING_WARN(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_water_handle(Gamep, Levelsp, Levelp, Thingp me);
+void tp_collision_init(Tpp);
+void tp_temperature_init(Tpp);
 void wid_set_thing_context(Gamep, Levelsp, Widp, Thingp);
 void wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
 void wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp);

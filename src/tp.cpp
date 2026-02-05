@@ -307,78 +307,8 @@ static void tp_fixup(void)
         tp_flag_vec[ f ].push_back(tp);
       }
 
-      bool heat_exchange_set {};
-      if (tp_is_stone(tp) || tp_is_lava(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_STONE);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_STONE);
-        heat_exchange_set = true;
-      }
-      if (tp_is_wall(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_WALL);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_WALL);
-        heat_exchange_set = true;
-      }
-      if (tp_is_glass(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_GLASS);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_GLASS);
-        heat_exchange_set = true;
-      }
-      if (tp_is_gold(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_GOLD);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_GOLD);
-        heat_exchange_set = true;
-      }
-      if (tp_is_gold(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_GOLD);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_GOLD);
-        heat_exchange_set = true;
-      }
-      if (tp_is_metal(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_STEEL);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_STEEL);
-        heat_exchange_set = true;
-      }
-      if (tp_is_water(tp) || tp_is_deep_water(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_WATER);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_WATER);
-        heat_exchange_set = true;
-      }
-      if (tp_is_gaseous(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_GAS);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_GAS);
-        heat_exchange_set = true;
-      }
-      if (tp_is_wood(tp) || tp_is_plant(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_HIGH);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_WOOD);
-        heat_exchange_set = true;
-      }
-      if (tp_is_flesh(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_HIGH);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_FLESH);
-        heat_exchange_set = true;
-      }
-      if (tp_is_insectoid(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_HIGH);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_FLESH);
-        heat_exchange_set = true;
-      }
-      if (tp_is_slime(tp)) {
-        tp_temperature_thermal_conductivity_set(tp, THERMAL_CONDUCTIVITY_GEL);
-        tp_temperature_heat_capacity_set(tp, HEAT_CAPACITY_GEL);
-        heat_exchange_set = true;
-      }
-      if (tp_is_physics_temperature(tp)) {
-        if (! heat_exchange_set) {
-          TP_ERR(tp, "tp has heat physics set but no conductivity type set");
-        }
-      }
-
-      if (tp_is_collision_circle_small(tp) || // newline
-          tp_is_collision_circle_large(tp) || // newline
-          tp_is_collision_square(tp)) {
-        tp_flag_set(tp, is_collision_detection_enabled);
-      }
+      tp_temperature_init(tp);
+      tp_collision_init(tp);
     }
   }
 }

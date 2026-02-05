@@ -446,7 +446,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
                 return (d1 < d2) && t1->_priority < t2->_priority;
               });
 
-    if (0) {
+    if (1) {
       for (auto a_pair : pairs) {
         auto o_dist = a_pair.first;
         auto o      = a_pair.second;
@@ -469,5 +469,16 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
         return;
       }
     }
+  }
+}
+
+void tp_collision_init(Tpp tp)
+{
+  TRACE_NO_INDENT();
+
+  if (tp_is_collision_circle_small(tp) || // newline
+      tp_is_collision_circle_large(tp) || // newline
+      tp_is_collision_square(tp)) {
+    tp_flag_set(tp, is_collision_detection_enabled);
   }
 }
