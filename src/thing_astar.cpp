@@ -2,15 +2,54 @@
 // Copyright goblinhack@gmail.com
 //
 
-#if 0
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
+#include "my_thing_callbacks.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 
 #include <limits> // do not remove
+#include <map>
 
 static std::array< std::array< char, MAP_HEIGHT >, MAP_WIDTH > astar_debug {};
+
+class Goal
+{
+public:
+  int         prio  = {0};
+  int         score = {0};
+  spoint      at;
+  std::string msg;
+  Thingp      what {};
+  bool        avoid {};
+
+  Goal() = default;
+  Goal(int prio, int score, spoint at, const std::string &msg) : prio(prio), score(score), at(at), msg(msg) {}
+  Goal(int prio, int score, spoint at, const std::string &msg, bool avoid)
+      : prio(prio), score(score), at(at), msg(msg), avoid(avoid)
+  {
+  }
+  Goal(int prio, int score, spoint at, const std::string &msg, Thingp what)
+      : prio(prio), score(score), at(at), msg(msg), what(what)
+  {
+  }
+  Goal(int prio, int score, spoint at, const std::string &msg, Thingp what, bool avoid)
+      : prio(prio), score(score), at(at), msg(msg), what(what), avoid(avoid)
+  {
+  }
+};
+
+class Path
+{
+public:
+  Path() = default;
+  Path(std::vector< spoint > &p, int c, const Goal &g) : path(p), cost(c), goal(g) {}
+
+  std::vector< spoint > path;
+  int                   cost {};
+  Goal                  goal;
+};
 
 class Nodecost
 {
@@ -41,7 +80,7 @@ class Node
 {
 public:
   Node(void) = default;
-  Node(Thingp me, spoint p, Nodecost c) : cost(c), at(p) { is_disliked = me->is_disliked_by_me(p); }
+  Node(Thingp t, spoint p, Nodecost c) : cost(c), at(p) {}
 
   class Node *came_from {};
   Nodecost    cost;
@@ -64,44 +103,44 @@ public:
   spoint                                                    goal;
   const Dmap                                               *dmap {};
 
-  void add_to_open(Node *n)
+  void add_to_open(Gamep g, Levelsp v, Levelp l, Thingp t, Node *n)
   {
     auto p = n->at;
-    auto o = &getref(open, p.x, p.y);
+    auto o = &open[ p.x ][ p.y ];
     if (*o) {
-      ERR("Already in open");
+      THING_ERR(t, "Already in open");
       return;
     }
     *o          = n;
     auto result = open_nodes.insert(std::make_pair(n->cost, n));
     if (! result.second) {
-      ERR("Open insert fail");
+      THING_ERR(t, "Open insert fail");
       return;
     }
   }
 
-  void add_to_closed(Node *n)
+  void add_to_closed(Gamep g, Levelsp v, Levelp l, Thingp t, Node *n)
   {
     auto p = n->at;
-    auto o = &getref(closed, p.x, p.y);
+    auto o = &closed[ p.x ][ p.y ];
     if (*o) {
-      ERR("Already in closed");
+      THING_ERR(t, "Already in closed");
       return;
     }
     *o          = n;
     auto result = closed_nodes.insert(std::make_pair(n->cost, n));
     if (! result.second) {
-      ERR("Closed insert fail");
+      THING_ERR(t, "Closed insert fail");
       return;
     }
   }
 
-  void remove_from_open(Node *n)
+  void remove_from_open(Gamep g, Levelsp v, Levelp l, Thingp t, Node *n)
   {
     auto p = n->at;
-    auto o = &getref(open, p.x, p.y);
+    auto o = &open[ p.x ][ p.y ];
     if (! *o) {
-      ERR("Not in open");
+      THING_ERR(t, "Not in open");
       return;
     }
     *o = nullptr;
@@ -109,14 +148,14 @@ public:
   }
 
   // Manhattan distance.
-  int heuristic(const spoint at)
+  int heuristic(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint at)
   {
     // return (abs(goal.x - at.x) + abs(goal.y - at.y));
     return 1;
   }
 
   // Evaluate a neighbor for adding to the open set
-  void eval_neighbor(Thingp me, Node *current, spoint delta)
+  void eval_neighbor(Gamep g, Levelsp v, Levelp l, Thingp t, Node *current, spoint delta)
   {
     auto next_hop = current->at + delta;
 
@@ -125,7 +164,7 @@ public:
     }
 
     // Ignore walls.
-    if (get(dmap->val, next_hop.x, next_hop.y) == DMAP_IS_WALL) {
+    if (dmap->val[ next_hop.x ][ next_hop.y ] == DMAP_IS_WALL) {
       return;
     }
 
@@ -134,26 +173,26 @@ public:
       return;
     }
 
-    int distance_to_next_hop = get(dmap->val, next_hop.x, next_hop.y);
+    int distance_to_next_hop = dmap->val[ next_hop.x ][ next_hop.y ];
     if (distance_to_next_hop == DMAP_IS_PASSABLE) {
       distance_to_next_hop = 0;
     }
 
-    int  cost     = current->cost.cost + distance_to_next_hop + heuristic(next_hop);
-    auto neighbor = get(open, next_hop.x, next_hop.y);
+    int  cost     = current->cost.cost + distance_to_next_hop + heuristic(g, v, l, t, next_hop);
+    auto neighbor = open[ next_hop.x ][ next_hop.y ];
     if (! neighbor) {
-      auto ncost          = Nodecost(cost + heuristic(next_hop));
-      neighbor            = new Node(me, next_hop, ncost);
+      auto ncost          = Nodecost(cost + heuristic(g, v, l, t, next_hop));
+      neighbor            = new Node(t, next_hop, ncost);
       neighbor->came_from = current;
-      add_to_open(neighbor);
+      add_to_open(g, v, l, t, neighbor);
       return;
     }
 
     if (cost < neighbor->cost.cost) {
-      remove_from_open(neighbor);
+      remove_from_open(g, v, l, t, neighbor);
       neighbor->came_from = current;
       neighbor->cost      = cost;
-      add_to_open(neighbor);
+      add_to_open(g, v, l, t, neighbor);
     }
   }
 
@@ -162,34 +201,35 @@ public:
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       for (auto x = 0; x < MAP_WIDTH; x++) {
         if (open[ x ][ y ]) {
-          delete (open[ x ][ y ]);
+          delete open[ x ][ y ];
         }
         if (closed[ x ][ y ]) {
-          delete (closed[ x ][ y ]);
+          delete closed[ x ][ y ];
         }
       }
     }
   }
 
-  std::tuple< std::vector< spoint >, int > create_path(const Dmap *dmap, const Node *came_from)
+  std::tuple< std::vector< spoint >, int > create_path(Gamep g, Levelsp v, Levelp l, Thingp t, const Node *came_from)
   {
-    std::vector< spoint > l;
+    std::vector< spoint > out;
     int                   cost               = came_from->cost.cost;
     int                   consecutive_hazard = 0;
 
     while (came_from) {
       if (came_from->came_from) {
-        l.push_back(came_from->at);
+        auto p = came_from->at;
+        out.push_back(p);
 
         //
         // If we pass over too many consecutive things we do not like, like chasms
         // then we cannot use this path.
         //
-        if (came_from->is_disliked) {
+        if (thing_assess_tile(g, v, l, p, t) == THING_ENVIRON_DISLIKES) {
           consecutive_hazard++;
           if (consecutive_hazard > 2) {
-            l.clear();
-            return {l, std::numeric_limits< int >::max()};
+            out.clear();
+            return {out, std::numeric_limits< int >::max()};
           }
         } else {
           consecutive_hazard = 0;
@@ -198,15 +238,16 @@ public:
       came_from = came_from->came_from;
     }
 
-    return {l, cost};
+    return {out, cost};
   }
 
-  std::pair< Path, Path > solve(Thingp me, const Goal *goalp, char *path_debug, bool allow_diagonal)
+  std::pair< Path, Path > solve(Gamep g, Levelsp v, Levelp l, Thingp t, const Goal *goalp, char *path_debug,
+                                bool allow_diagonal)
   {
     auto distance_to_next_hop = 0;
-    auto ncost                = Nodecost(distance_to_next_hop + heuristic(start));
-    auto neighbor             = new Node(me, start, ncost);
-    add_to_open(neighbor);
+    auto ncost                = Nodecost(distance_to_next_hop + heuristic(g, v, l, t, start));
+    auto neighbor             = new Node(t, start, ncost);
+    add_to_open(g, v, l, t, neighbor);
     Path best;
     best.cost = std::numeric_limits< int >::max();
     Path fallback;
@@ -218,10 +259,10 @@ public:
       auto  c       = open_nodes.begin();
       Node *current = c->second;
 
-      auto at = current->at;
-      set(astar_debug, at.x, at.y, (char) ('?'));
+      auto at                     = current->at;
+      astar_debug[ at.x ][ at.y ] = (char) ('?');
       if (at == goal) {
-        auto [ path, cost ] = create_path(dmap, current);
+        auto [ path, cost ] = create_path(g, v, l, t, current);
 
         if (cost < best.cost) {
           if (goalp) {
@@ -243,8 +284,8 @@ public:
           (*path_debug)++;
 #endif
         }
-        remove_from_open(current);
-        add_to_closed(current);
+        remove_from_open(g, v, l, t, current);
+        add_to_closed(g, v, l, t, current);
         continue;
       } else {
         //
@@ -253,7 +294,7 @@ public:
         float dist = distance(goal, current->at);
         if (dist < fallback_dist) {
           fallback_dist       = dist;
-          auto [ path, cost ] = create_path(dmap, current);
+          auto [ path, cost ] = create_path(g, v, l, t, current);
           if (goalp) {
             fallback.goal = *goalp;
           }
@@ -262,31 +303,31 @@ public:
         }
       }
 
-      remove_from_open(current);
-      add_to_closed(current);
+      remove_from_open(g, v, l, t, current);
+      add_to_closed(g, v, l, t, current);
 
-      eval_neighbor(me, current, spoint(-1, 0));
-      eval_neighbor(me, current, spoint(1, 0));
-      eval_neighbor(me, current, spoint(0, -1));
-      eval_neighbor(me, current, spoint(0, 1));
+      eval_neighbor(g, v, l, t, current, spoint(-1, 0));
+      eval_neighbor(g, v, l, t, current, spoint(1, 0));
+      eval_neighbor(g, v, l, t, current, spoint(0, -1));
+      eval_neighbor(g, v, l, t, current, spoint(0, 1));
 
       //
       // This leads to the robot taking diagonals across lava which looks like cheating.
       //
       // Also leads to zig zag paths over chasms that would need optimized.
       //
-      if (allow_diagonal || me->is_able_to_move_diagonally()) {
-        if ((get(dmap->val, at.x - 1, at.y) == DMAP_IS_WALL) || (get(dmap->val, at.x, at.y - 1) == DMAP_IS_WALL)) {
-          eval_neighbor(me, current, spoint(-1, -1));
+      if (allow_diagonal) {
+        if ((dmap->val[ at.x - 1 ][ at.y ] == DMAP_IS_WALL) || dmap->val[ at.x ][ at.y - 1 ] == DMAP_IS_WALL) {
+          eval_neighbor(g, v, l, t, current, spoint(-1, -1));
         }
-        if ((get(dmap->val, at.x - 1, at.y) == DMAP_IS_WALL) || (get(dmap->val, at.x, at.y + 1) == DMAP_IS_WALL)) {
-          eval_neighbor(me, current, spoint(-1, 1));
+        if ((dmap->val[ at.x - 1 ][ at.y ] == DMAP_IS_WALL) || dmap->val[ at.x ][ at.y + 1 ] == DMAP_IS_WALL) {
+          eval_neighbor(g, v, l, t, current, spoint(-1, 1));
         }
-        if ((get(dmap->val, at.x + 1, at.y) == DMAP_IS_WALL) || (get(dmap->val, at.x, at.y - 1) == DMAP_IS_WALL)) {
-          eval_neighbor(me, current, spoint(1, -1));
+        if ((dmap->val[ at.x + 1 ][ at.y ] == DMAP_IS_WALL) || dmap->val[ at.x ][ at.y - 1 ] == DMAP_IS_WALL) {
+          eval_neighbor(g, v, l, t, current, spoint(1, -1));
         }
-        if ((get(dmap->val, at.x + 1, at.y) == DMAP_IS_WALL) || (get(dmap->val, at.x, at.y + 1) == DMAP_IS_WALL)) {
-          eval_neighbor(me, current, spoint(1, 1));
+        if ((dmap->val[ at.x + 1 ][ at.y ] == DMAP_IS_WALL) || dmap->val[ at.x ][ at.y + 1 ] == DMAP_IS_WALL) {
+          eval_neighbor(g, v, l, t, current, spoint(1, 1));
         }
       }
     }
@@ -297,7 +338,7 @@ public:
   }
 };
 
-void astar_dump(const Dmap *dmap, const spoint at, const spoint start, const spoint end)
+void astar_dump(Gamep g, Levelsp v, Levelp l, const Dmap *dmap, const spoint at, const spoint start, const spoint end)
 {
   int x;
   int y;
@@ -321,7 +362,7 @@ void astar_dump(const Dmap *dmap, const spoint at, const spoint start, const spo
         continue;
       }
 
-      uint16_t e = get(dmap->val, x, y);
+      uint16_t e = dmap->val[ x ][ y ];
 
       std::string buf;
       if (e == DMAP_IS_WALL) {
@@ -349,15 +390,14 @@ void astar_dump(const Dmap *dmap, const spoint at, const spoint start, const spo
   }
 }
 
-std::pair< Path, Path > Thing::astar_solve(const Goal *goal, char path_debug, spoint s, spoint g, const Dmap *d,
-                                           bool allow_diagonal)
+void thing_astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, char path_debug, spoint src, spoint dst, const Dmap *d,
+                       bool allow_diagonal)
 {
+  Goal goal;
   char tmp = path_debug;
-  auto a   = Astar(s, g, d);
-  auto ret = (a.solve(this, goal, &tmp, allow_diagonal));
+  auto a   = Astar(src, dst, d);
+  auto ret = a.solve(g, v, l, t, &goal, &tmp, allow_diagonal);
 #ifdef ENABLE_DEBUG_AI_ASTAR
   astar_dump(d, s, s, g);
 #endif
-  return ret;
 }
-#endif
