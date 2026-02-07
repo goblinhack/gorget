@@ -12,11 +12,12 @@
 #include "my_thing_inlines.hpp"
 #include "my_wid_warning.hpp"
 
-[[nodiscard]] static bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &target)
+[[nodiscard]] static bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp minion,
+                                                              spoint &target)
 {
   TRACE_NO_INDENT();
 
-  auto mob = thing_minion_mob_get(g, v, l, t);
+  auto mob = thing_minion_mob_get(g, v, l, minion);
   if (! mob) {
     //
     // Acceptable when the minion is detached
@@ -26,11 +27,11 @@
 
   auto mob_ext = thing_ext_struct(g, mob);
   if (! mob_ext) {
-    THING_ERR(t, "mob has no ext memory");
+    THING_ERR(minion, "mob has no ext memory");
     return false;
   }
 
-  auto                  minion_at = thing_at(t);
+  auto                  minion_at = thing_at(minion);
   auto                  mob_at    = thing_at(mob);
   std::vector< spoint > cands;
 
@@ -38,7 +39,7 @@
   THING_LOG(mob, "mob");
   dmap_print(dmap, mob_at, spoint(0, 0), spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1));
 
-  auto distance_minion_from_mob_max = thing_distance_minion_from_mob_max(t);
+  auto distance_minion_from_mob_max = thing_distance_minion_from_mob_max(minion);
   for (int x = -distance_minion_from_mob_max; x <= distance_minion_from_mob_max; x++) {
     for (int y = -distance_minion_from_mob_max; y <= distance_minion_from_mob_max; y++) {
       spoint p(x + mob_at.x, y + mob_at.y);
@@ -78,6 +79,7 @@
   while (tries--) {
     target = pcg_rand_one_of(cands);
 
+    thing_astar_solve(g, v, l, minion, '\0', minion_at, target, dmap, false /* diag */);
 #if 0
     auto p         = dmap_solve(g, v, l, minon, dmap, minion_at);
     auto path_size = p.size();
@@ -99,7 +101,7 @@
   }
 
   if (0) {
-    THING_LOG(t, "%s", __FUNCTION__);
+    THING_LOG(minion, "%s", __FUNCTION__);
     for (auto y = 0; y < MAP_HEIGHT; y++) {
       std::string out;
       for (auto x = 0; x < MAP_WIDTH; x++) {
@@ -139,7 +141,7 @@
         }
         out += c;
       }
-      THING_LOG(t, "%s", out.c_str());
+      THING_LOG(minion, "%s", out.c_str());
     }
   }
   TOPCON(".");
