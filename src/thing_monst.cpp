@@ -30,8 +30,8 @@
     return false;
   }
 
-  auto                  at     = thing_at(t);
-  auto                  mob_at = thing_at(mob);
+  auto                  minion_at = thing_at(t);
+  auto                  mob_at    = thing_at(mob);
   std::vector< spoint > cands;
 
   auto dmap = &mob_ext->dmap;
@@ -46,7 +46,7 @@
         continue;
       }
 
-      if (p == at) {
+      if (p == minion_at) {
         continue;
       }
 
@@ -74,7 +74,29 @@
     return false;
   }
 
-  target = pcg_rand_one_of(cands);
+  auto tries = cands.size();
+  while (tries--) {
+    target = pcg_rand_one_of(cands);
+
+#if 0
+    auto p         = dmap_solve(g, v, l, minon, dmap, minion_at);
+    auto path_size = p.size();
+    if (! path_size) {
+      return empty;
+    }
+
+    //
+    // If we could not reach the target, then the path will just plot the distance from the start, which is not what
+    // we want.
+    //
+    if (p[ path_size - 1 ] != end) {
+      if (0) {
+        LOG("did not reach %d,%d", end.x, end.y);
+      }
+      return empty;
+    }
+#endif
+  }
 
   if (0) {
     THING_LOG(t, "%s", __FUNCTION__);
@@ -97,7 +119,7 @@
           }
         }
 
-        if (! c && (p == at)) {
+        if (! c && (p == minion_at)) {
           c = '@';
         }
         if (! c && (p == mob_at)) {

@@ -12,31 +12,54 @@
 #include "my_types.hpp"
 #include "my_ui.hpp"
 
-static std::string tp_slime_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_glorp_description_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
   if (thing_is_dead(t)) {
-    return "dead slime";
+    return "dead glorp";
   }
-  return "living slime";
+  return "living mass of slime known as a glorp";
 }
 
-static std::string tp_slime_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+static std::string tp_glorp_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return UI_INFO1_FMT_STR "A voracious mass of sentient slime that hungers constantly.";
+  return                                                                                                 // newline
+      UI_INFO1_FMT_STR "Glorps are voracious masses of sentient slime.\n"                                // newline
+      UI_INFO2_FMT_STR "Luckily, glorps move slowly and should hence be avoided easily.\n"               // newline
+      UI_INFO3_FMT_STR "Although they look like lime jelly, no one has yet confirmed how they taste..."; // newline
 }
 
-bool tp_load_slime(void)
+ThingEnviron tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
 {
-  auto tp   = tp_load("slime"); // keep as string for scripts
+  TRACE_NO_INDENT();
+
+  if (level_is_lava(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_chasm(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_water(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
+}
+
+bool tp_load_glorp(void)
+{
+  auto tp   = tp_load("glorp"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
-  thing_description_set(tp, tp_slime_description_get);
-  thing_detail_set(tp, tp_slime_detail_get);
+  thing_assess_tile_set(tp, tp_glorp_assess_tile);
+  thing_description_set(tp, tp_glorp_description_get);
+  thing_detail_set(tp, tp_glorp_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d2"); // roll max to continue burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d2");    // roll max to continue burning
   tp_distance_vision_set(tp, 10);
@@ -67,7 +90,7 @@ bool tp_load_slime(void)
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_jump_distance_set(tp, 3);
   tp_light_color_set(tp, "green");
-  tp_long_name_set(tp, "sentient slime");
+  tp_long_name_set(tp, "glorp");
   tp_monst_group_add(tp, MONST_GROUP_HARD);
   tp_priority_set(tp, THING_PRIORITY_MONST);
   tp_speed_set(tp, 50);

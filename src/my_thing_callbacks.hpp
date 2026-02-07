@@ -15,6 +15,10 @@ typedef Tilep (*thing_display_get_tile_info_t)(Gamep, Levelsp, Levelp, spoint p,
 void  thing_display_get_tile_info_set(Tpp, thing_display_get_tile_info_t);
 Tilep thing_display_get_tile_info(Gamep, Levelsp, Levelp, spoint p, Tpp tp, Thingp t_maybe_null);
 
+typedef ThingEnviron (*thing_assess_tile_t)(Gamep, Levelsp, Levelp, spoint p, Thingp me);
+void         thing_assess_tile_set(Tpp, thing_assess_tile_t);
+ThingEnviron thing_assess_tile(Gamep, Levelsp, Levelp, spoint p, Thingp me);
+
 typedef std::string (*thing_description_get_t)(Gamep, Levelsp, Levelp, Thingp me);
 void        thing_description_set(Tpp, thing_description_get_t);
 std::string thing_description_get(Gamep, Levelsp, Levelp, Thingp me);

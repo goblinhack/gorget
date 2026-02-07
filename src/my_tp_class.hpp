@@ -232,6 +232,7 @@ public:
   thing_on_hit_begin_t          on_hit_begin          = {};
   thing_on_hit_end_t            on_hit_end            = {};
   thing_display_get_tile_info_t display_get_tile_info = {};
+  thing_assess_tile_t           assess_tile           = {};
 
   Tp(void);
   ~Tp(void);

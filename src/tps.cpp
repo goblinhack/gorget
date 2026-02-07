@@ -37,6 +37,7 @@ bool templates_init(void)
   if (!tp_load_foliage()) { return false; }
   if (!tp_load_ghost_mob()) { return false; }
   if (!tp_load_ghost()) { return false; }
+  if (!tp_load_glorp()) { return false; }
   if (!tp_load_grass()) { return false; }
   if (!tp_load_key()) { return false; }
   if (!tp_load_kobalos_mob()) { return false; }
@@ -54,7 +55,6 @@ bool templates_init(void)
   if (!tp_load_player()) { return false; }
   if (!tp_load_potion()) { return false; }
   if (!tp_load_rock()) { return false; }
-  if (!tp_load_slime()) { return false; }
   if (!tp_load_smoke()) { return false; }
   if (!tp_load_steam()) { return false; }
   if (!tp_load_teleport()) { return false; }

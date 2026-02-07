@@ -29,8 +29,27 @@ static std::string tp_mantisman_detail_get(Gamep g, Levelsp v, Levelp l, Thingp 
   return                                                                                                // newline
       UI_INFO1_FMT_STR "MantisMan: half-mantis, half-man but which half?\n"                             // newline
       UI_INFO2_FMT_STR "These tall bipedal insectoids linger in the spaces that nature forgets.\n"      // newline
-      UI_INFO1_FMT_STR "They hunger for human flesh especially and hang around in chittering groups.\n" // newline
-      UI_INFO2_FMT_STR "The one thing they do not do... is pray.";
+      UI_INFO3_FMT_STR "They hunger for human flesh especially and hang around in chittering groups.\n" // newline
+      UI_INFO4_FMT_STR "The one thing they do not do... is pray.";
+}
+
+ThingEnviron tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (level_is_lava(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_chasm(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_water(g, v, l, at)) {
+    return THING_ENVIRON_DISLIKES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
 }
 
 bool tp_load_mantisman(void)
@@ -39,6 +58,7 @@ bool tp_load_mantisman(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
+  thing_assess_tile_set(tp, tp_mantisman_assess_tile);
   thing_description_set(tp, tp_mantisman_description_get);
   thing_detail_set(tp, tp_mantisman_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning

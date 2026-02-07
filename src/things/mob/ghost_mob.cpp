@@ -24,11 +24,10 @@ static std::string tp_ghost_mob_detail_get(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  return                                                                                      // newline
-      UI_INFO1_FMT_STR                                                                        // newline
+  return // newline
+      UI_INFO1_FMT_STR
       "This large pile of bones, whispers and moans as spectral creations dance around it.\n" // newline
-      UI_INFO2_FMT_STR                                                                        // newline
-      "When such devices are destroyed, all that they summoned will also vanish into oblivion.";
+      UI_INFO2_FMT_STR "When such devices are destroyed, all that they summoned will also vanish into oblivion.";
 }
 
 static void tp_ghost_mob_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)

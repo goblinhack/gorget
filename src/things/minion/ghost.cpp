@@ -21,11 +21,9 @@ static std::string tp_ghost_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  return                                             // newline
-      UI_INFO1_FMT_STR                               // newline
-      "The spirit of one less fortunate than you.\n" // newline
-      UI_INFO2_FMT_STR                               // newline
-      "Beware, such spirits can traverse chasms and float through solid rock.";
+  return                                                              // newline
+      UI_INFO1_FMT_STR "The spirit of one less fortunate than you.\n" // newline
+      UI_INFO2_FMT_STR "Beware, such spirits can traverse chasms and float through solid rock.";
 }
 
 bool tp_load_ghost(void)

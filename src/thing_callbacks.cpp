@@ -677,3 +677,27 @@ Tilep thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   }
   return tp->display_get_tile_info(g, v, l, p, tp, t_maybe_null);
 }
+
+void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback)
+{
+  TRACE_NO_INDENT();
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return;
+  }
+  tp->assess_tile = callback;
+}
+
+ThingEnviron thing_assess_tile(Gamep g, Levelsp v, Levelp l, spoint p, Thingp me)
+{
+  TRACE_NO_INDENT();
+  auto tp = thing_tp(me);
+  if (! tp) {
+    ERR("No thing template pointer set");
+    return THING_ENVIRON_NEUTRAL;
+  }
+  if (! tp->assess_tile) {
+    return THING_ENVIRON_NEUTRAL;
+  }
+  return tp->assess_tile(g, v, l, p, me);
+}

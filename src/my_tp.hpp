@@ -369,6 +369,25 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
        _iter_ = static_cast< ThingEventType >(static_cast< int >(_iter_) + 1))
 
 //
+// Thing environ enum
+//
+#define THING_ENVIRON_ENUM(list_macro)                                                                               \
+  clang_format_indent()                             /* dummy line for clang indentation fixup */                     \
+      list_macro(THING_ENVIRON_HATES, "hates"),     /* newline */                                                    \
+      list_macro(THING_ENVIRON_DISLIKES, "hates"),  /* newline */                                                    \
+      list_macro(THING_ENVIRON_NEUTRAL, "neutral"), /* newline */                                                    \
+      list_macro(THING_ENVIRON_LIKES, "likes"),     /* newline */
+
+ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnviron)
+
+#define THING_ENVIRON_ENUM_FIRST ((ThingEnviron) 0)
+
+#define FOR_ALL_THING_ENVIRON(_iter_)                                                                                \
+  for (ThingEnviron _iter_ = THING_ENVIRON_ENUM_FIRST; /* newline */                                                 \
+       _iter_ < THING_ENVIRON_ENUM_MAX;                /* newline */                                                 \
+       _iter_ = static_cast< ThingEnviron >(static_cast< int >(_iter_) + 1))
+
+//
 // Thing priority enum
 //
 #define THING_PRIORITY_ENUM(list_macro)                                                                              \

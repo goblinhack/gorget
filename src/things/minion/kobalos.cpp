@@ -29,8 +29,22 @@ static std::string tp_kobalos_detail_get(Gamep g, Levelsp v, Levelp l, Thingp t)
   return // newline
       UI_INFO1_FMT_STR
       "Kobalos are small green-skinned creatures that are identical in every possible way to a goblin.\n" // newline
-      UI_INFO2_FMT_STR                                                                                    // newline
-      "Kobalos are vindictive, greedy little things and have a habit of thievery...";
+      UI_INFO2_FMT_STR "Kobalos are vindictive, greedy little things and have a habit of thievery...";
+}
+
+ThingEnviron tp_kobalos_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (level_is_lava(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  if (level_is_chasm(g, v, l, at)) {
+    return THING_ENVIRON_HATES;
+  }
+
+  return THING_ENVIRON_NEUTRAL;
 }
 
 bool tp_load_kobalos(void)
@@ -39,6 +53,7 @@ bool tp_load_kobalos(void)
   auto name = tp_name(tp);
 
   // begin sort marker1 {
+  thing_assess_tile_set(tp, tp_kobalos_assess_tile);
   thing_description_set(tp, tp_kobalos_description_get);
   thing_detail_set(tp, tp_kobalos_detail_get);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to continue burning
