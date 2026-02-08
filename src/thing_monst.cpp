@@ -79,7 +79,10 @@
   while (tries--) {
     target = pcg_rand_one_of(cands);
 
-    thing_astar_solve(g, v, l, minion, '\0', minion_at, target, dmap, false /* diag */);
+    THING_LOG(minion, "allow diag");
+    thing_astar_solve(g, v, l, minion, minion_at, target, dmap, true /* diag */);
+    THING_LOG(minion, "block diag");
+    thing_astar_solve(g, v, l, minion, minion_at, target, dmap, false /* diag */);
 #if 0
     auto p         = dmap_solve(g, v, l, minon, dmap, minion_at);
     auto path_size = p.size();

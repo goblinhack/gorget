@@ -942,7 +942,7 @@ void player_reached_exit(Gamep, Levelsp, Levelp);
 void player_warp_to_specific_level(Gamep, Levelsp, LevelNum);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
 void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, Tpp, int time_step);
-void thing_astar_solve(Gamep, Levelsp, Levelp, Thingp, char path_debug, spoint, spoint, const Dmap *d, bool diag);
+void thing_astar_solve(Gamep, Levelsp, Levelp, Thingp, spoint, spoint, const Dmap *d, bool diag);
 void thing_at_set(Thingp, const fpoint &);
 void thing_at_set(Thingp, const spoint &);
 void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);
