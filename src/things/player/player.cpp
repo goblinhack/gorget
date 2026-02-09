@@ -184,6 +184,7 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_able_to_crush_grass);
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_able_to_jump);
+  tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_open);
   tp_flag_set(tp, is_able_to_shove);
   tp_flag_set(tp, is_animated_can_hflip);

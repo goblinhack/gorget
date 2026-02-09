@@ -2365,24 +2365,24 @@ bool thing_is_unused72(Thingp t)
   return tp_flag(thing_tp(t), is_unused72);
 }
 
-bool thing_is_unused73(Thingp t)
+bool thing_is_able_to_move_through_walls(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused73);
+  return tp_flag(thing_tp(t), is_able_to_move_through_walls);
 }
 
-bool thing_is_unused74(Thingp t)
+bool thing_is_able_to_move_diagonally(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused74);
+  return tp_flag(thing_tp(t), is_able_to_move_diagonally);
 }
 
 bool thing_is_blit_on_ground(Thingp t)

@@ -205,8 +205,8 @@
       list_macro(is_unused70, "is_unused70"),                                       /* newline */                    \
       list_macro(is_unused71, "is_unused71"),                                       /* newline */                    \
       list_macro(is_unused72, "is_unused72"),                                       /* newline */                    \
-      list_macro(is_unused73, "is_unused73"),                                       /* newline */                    \
-      list_macro(is_unused74, "is_unused74"),                                       /* newline */                    \
+      list_macro(is_able_to_move_through_walls, "is_able_to_move_through_walls"),   /* newline */                    \
+      list_macro(is_able_to_move_diagonally, "is_able_to_move_diagonally"),         /* newline */                    \
       list_macro(is_blit_on_ground, "is_blit_on_ground"),                           /* newline */                    \
       list_macro(is_insectoid, "is_insectoid"),                                     /* newline */                    \
       list_macro(is_mantisman, "is_mantisman"),                                     /* newline */                    \
@@ -702,6 +702,8 @@ float tp_collision_radius(Tpp);
 #define tp_is_able_to_crush_grass(tp)         tp_flag(tp, is_able_to_crush_grass)
 #define tp_is_able_to_fall(tp)                tp_flag(tp, is_able_to_fall)
 #define tp_is_able_to_jump(tp)                tp_flag(tp, is_able_to_jump)
+#define tp_is_able_to_move_diagonally(tp)     tp_flag(tp, is_able_to_move_diagonally)
+#define tp_is_able_to_move_through_walls(tp)  tp_flag(tp, is_able_to_move_through_walls)
 #define tp_is_able_to_open(tp)                tp_flag(tp, is_able_to_open)
 #define tp_is_able_to_shove(tp)               tp_flag(tp, is_able_to_shove)
 #define tp_is_animated_can_hflip(tp)          tp_flag(tp, is_animated_can_hflip)
@@ -906,8 +908,6 @@ float tp_collision_radius(Tpp);
 #define tp_is_unused70(tp)                    tp_flag(tp, is_unused70)
 #define tp_is_unused71(tp)                    tp_flag(tp, is_unused71)
 #define tp_is_unused72(tp)                    tp_flag(tp, is_unused72)
-#define tp_is_unused73(tp)                    tp_flag(tp, is_unused73)
-#define tp_is_unused74(tp)                    tp_flag(tp, is_unused74)
 #define tp_is_unused8(tp)                     tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                     tp_flag(tp, is_unused9)
 #define tp_is_wait_on_dead_anim(tp)           tp_flag(tp, is_wait_on_dead_anim)
@@ -923,6 +923,8 @@ float tp_collision_radius(Tpp);
 #define level_is_able_to_crush_grass(g, v, l, p)         level_flag(g, v, l, is_able_to_crush_grass, p)
 #define level_is_able_to_fall(g, v, l, p)                level_flag(g, v, l, is_able_to_fall, p)
 #define level_is_able_to_jump(g, v, l, p)                level_flag(g, v, l, is_able_to_jump, p)
+#define level_is_able_to_move_diagonally(g, v, l, p)     level_flag(g, v, l, is_able_to_move_diagonally, p)
+#define level_is_able_to_move_through_walls(g, v, l, p)  level_flag(g, v, l, is_able_to_move_through_walls, p)
 #define level_is_able_to_open(g, v, l, p)                level_flag(g, v, l, is_able_to_open, p)
 #define level_is_able_to_shove(g, v, l, p)               level_flag(g, v, l, is_able_to_shove, p)
 #define level_is_animated_can_hflip(g, v, l, p)          level_flag(g, v, l, is_animated_can_hflip, p)
@@ -1127,8 +1129,6 @@ float tp_collision_radius(Tpp);
 #define level_is_unused70(g, v, l, p)                    level_flag(g, v, l, is_unused70, p)
 #define level_is_unused71(g, v, l, p)                    level_flag(g, v, l, is_unused71, p)
 #define level_is_unused72(g, v, l, p)                    level_flag(g, v, l, is_unused72, p)
-#define level_is_unused73(g, v, l, p)                    level_flag(g, v, l, is_unused73, p)
-#define level_is_unused74(g, v, l, p)                    level_flag(g, v, l, is_unused74, p)
 #define level_is_unused8(g, v, l, p)                     level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                     level_flag(g, v, l, is_unused9, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)           level_flag(g, v, l, is_wait_on_dead_anim, p)
@@ -1144,6 +1144,8 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_able_to_crush_grass(g, v, l, p)         level_alive(g, v, l, is_able_to_crush_grass, p)
 #define level_alive_is_able_to_fall(g, v, l, p)                level_alive(g, v, l, is_able_to_fall, p)
 #define level_alive_is_able_to_jump(g, v, l, p)                level_alive(g, v, l, is_able_to_jump, p)
+#define level_alive_is_able_to_move_diagonally(g, v, l, p)     level_alive(g, v, l, is_able_to_move_diagonally, p)
+#define level_alive_is_able_to_move_through_walls(g, v, l, p)  level_alive(g, v, l, is_able_to_move_through_walls, p)
 #define level_alive_is_able_to_open(g, v, l, p)                level_alive(g, v, l, is_able_to_open, p)
 #define level_alive_is_able_to_shove(g, v, l, p)               level_alive(g, v, l, is_able_to_shove, p)
 #define level_alive_is_animated_can_hflip(g, v, l, p)          level_alive(g, v, l, is_animated_can_hflip, p)
@@ -1348,8 +1350,6 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_unused70(g, v, l, p)                    level_alive(g, v, l, is_unused70, p)
 #define level_alive_is_unused71(g, v, l, p)                    level_alive(g, v, l, is_unused71, p)
 #define level_alive_is_unused72(g, v, l, p)                    level_alive(g, v, l, is_unused72, p)
-#define level_alive_is_unused73(g, v, l, p)                    level_alive(g, v, l, is_unused73, p)
-#define level_alive_is_unused74(g, v, l, p)                    level_alive(g, v, l, is_unused74, p)
 #define level_alive_is_unused8(g, v, l, p)                     level_alive(g, v, l, is_unused8, p)
 #define level_alive_is_unused9(g, v, l, p)                     level_alive(g, v, l, is_unused9, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)           level_alive(g, v, l, is_wait_on_dead_anim, p)
@@ -1365,6 +1365,8 @@ float tp_collision_radius(Tpp);
 #define level_count_is_able_to_crush_grass(g, v, l, p)         level_count(g, v, l, is_able_to_crush_grass, p)
 #define level_count_is_able_to_fall(g, v, l, p)                level_count(g, v, l, is_able_to_fall, p)
 #define level_count_is_able_to_jump(g, v, l, p)                level_count(g, v, l, is_able_to_jump, p)
+#define level_count_is_able_to_move_diagonally(g, v, l, p)     level_count(g, v, l, is_able_to_move_diagonally, p)
+#define level_count_is_able_to_move_through_walls(g, v, l, p)  level_count(g, v, l, is_able_to_move_through_walls, p)
 #define level_count_is_able_to_open(g, v, l, p)                level_count(g, v, l, is_able_to_open, p)
 #define level_count_is_able_to_shove(g, v, l, p)               level_count(g, v, l, is_able_to_shove, p)
 #define level_count_is_animated_can_hflip(g, v, l, p)          level_count(g, v, l, is_animated_can_hflip, p)
@@ -1569,8 +1571,6 @@ float tp_collision_radius(Tpp);
 #define level_count_is_unused70(g, v, l, p)                    level_count(g, v, l, is_unused70, p)
 #define level_count_is_unused71(g, v, l, p)                    level_count(g, v, l, is_unused71, p)
 #define level_count_is_unused72(g, v, l, p)                    level_count(g, v, l, is_unused72, p)
-#define level_count_is_unused73(g, v, l, p)                    level_count(g, v, l, is_unused73, p)
-#define level_count_is_unused74(g, v, l, p)                    level_count(g, v, l, is_unused74, p)
 #define level_count_is_unused8(g, v, l, p)                     level_count(g, v, l, is_unused8, p)
 #define level_count_is_unused9(g, v, l, p)                     level_count(g, v, l, is_unused9, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)           level_count(g, v, l, is_wait_on_dead_anim, p)
@@ -1586,6 +1586,8 @@ float tp_collision_radius(Tpp);
 #define level_open_is_able_to_crush_grass(g, v, l, p)         level_open(g, v, l, is_able_to_crush_grass, p)
 #define level_open_is_able_to_fall(g, v, l, p)                level_open(g, v, l, is_able_to_fall, p)
 #define level_open_is_able_to_jump(g, v, l, p)                level_open(g, v, l, is_able_to_jump, p)
+#define level_open_is_able_to_move_diagonally(g, v, l, p)     level_open(g, v, l, is_able_to_move_diagonally, p)
+#define level_open_is_able_to_move_through_walls(g, v, l, p)  level_open(g, v, l, is_able_to_move_through_walls, p)
 #define level_open_is_able_to_open(g, v, l, p)                level_open(g, v, l, is_able_to_open, p)
 #define level_open_is_able_to_shove(g, v, l, p)               level_open(g, v, l, is_able_to_shove, p)
 #define level_open_is_animated_can_hflip(g, v, l, p)          level_open(g, v, l, is_animated_can_hflip, p)
@@ -1790,8 +1792,6 @@ float tp_collision_radius(Tpp);
 #define level_open_is_unused70(g, v, l, p)                    level_open(g, v, l, is_unused70, p)
 #define level_open_is_unused71(g, v, l, p)                    level_open(g, v, l, is_unused71, p)
 #define level_open_is_unused72(g, v, l, p)                    level_open(g, v, l, is_unused72, p)
-#define level_open_is_unused73(g, v, l, p)                    level_open(g, v, l, is_unused73, p)
-#define level_open_is_unused74(g, v, l, p)                    level_open(g, v, l, is_unused74, p)
 #define level_open_is_unused8(g, v, l, p)                     level_open(g, v, l, is_unused8, p)
 #define level_open_is_unused9(g, v, l, p)                     level_open(g, v, l, is_unused9, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)           level_open(g, v, l, is_wait_on_dead_anim, p)

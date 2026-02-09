@@ -469,9 +469,10 @@ typedef struct Thing_ {
 [[nodiscard]] bool        player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
 [[nodiscard]] bool        player_move_request(Gamep, bool up, bool down, bool left, bool right, bool fire);
 [[nodiscard]] bool        player_move_to_next(Gamep, Levelsp, Levelp, Thingp);
-[[nodiscard]] bool        thing_can_move_to_by_opening(Gamep, Levelsp, Levelp, Thingp, spoint);
-[[nodiscard]] bool        thing_can_move_to_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
-[[nodiscard]] bool        thing_can_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] bool        thing_can_move_to_attempt_by_opening(Gamep, Levelsp, Levelp, Thingp, spoint);
+[[nodiscard]] bool        thing_can_move_to_attempt_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] bool        thing_can_move_to_attempt(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] bool        thing_can_move_to_check_only(Gamep, Levelsp, Levelp, Thingp, spoint);
 [[nodiscard]] bool        thing_carry_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 [[nodiscard]] bool        thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 [[nodiscard]] bool        thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
@@ -487,6 +488,8 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_able_to_crush_grass(Thingp);
 [[nodiscard]] bool        thing_is_able_to_fall(Thingp);
 [[nodiscard]] bool        thing_is_able_to_jump(Thingp);
+[[nodiscard]] bool        thing_is_able_to_move_diagonally(Thingp);
+[[nodiscard]] bool        thing_is_able_to_move_through_walls(Thingp);
 [[nodiscard]] bool        thing_is_able_to_open(Thingp);
 [[nodiscard]] bool        thing_is_able_to_shove(Thingp);
 [[nodiscard]] bool        thing_is_animated_can_hflip(Thingp);
@@ -709,8 +712,6 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_unused70(Thingp);
 [[nodiscard]] bool        thing_is_unused71(Thingp);
 [[nodiscard]] bool        thing_is_unused72(Thingp);
-[[nodiscard]] bool        thing_is_unused73(Thingp);
-[[nodiscard]] bool        thing_is_unused74(Thingp);
 [[nodiscard]] bool        thing_is_unused8(Thingp);
 [[nodiscard]] bool        thing_is_unused9(Thingp);
 [[nodiscard]] bool        thing_is_wait_on_dead_anim(Thingp);
@@ -719,6 +720,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_water(Thingp);
 [[nodiscard]] bool        thing_is_wood(Thingp);
 [[nodiscard]] bool        thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to, bool warn = true);
+[[nodiscard]] bool        thing_minion_choose_target_near_mob(Gamep, Levelsp, Levelp, Thingp minion, spoint &target);
 [[nodiscard]] bool        thing_minion_detach_me_from_mob(Gamep, Levelsp, Levelp, Thingp minion);
 [[nodiscard]] bool        thing_mob_detach_all_minions(Gamep, Levelsp, Levelp, Thingp mob);
 [[nodiscard]] bool        thing_mob_detach_minion(Gamep, Levelsp, Levelp, Thingp mob, Thingp minion);
@@ -942,7 +944,7 @@ void player_reached_exit(Gamep, Levelsp, Levelp);
 void player_warp_to_specific_level(Gamep, Levelsp, LevelNum);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
 void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, Tpp, int time_step);
-void thing_astar_solve(Gamep, Levelsp, Levelp, Thingp, spoint, spoint, const Dmap *d, bool diag);
+void thing_astar_solve(Gamep, Levelsp, Levelp, Thingp, spoint, spoint);
 void thing_at_set(Thingp, const fpoint &);
 void thing_at_set(Thingp, const spoint &);
 void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);

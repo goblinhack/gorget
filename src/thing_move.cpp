@@ -417,7 +417,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
 // Move to the next tile is completed. Need to stop interpolating.
 // There could be more tiles to pop.
 //
-void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
@@ -426,19 +426,19 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
-  auto at = thing_at(t);
-  (void) thing_moving_from_set(t, at);
+  auto at = thing_at(me);
+  (void) thing_moving_from_set(me, at);
 
-  thing_is_teleporting_unset(g, v, l, t);
-  thing_is_moving_unset(g, v, l, t);
-  thing_is_jumping_unset(g, v, l, t);
-  thing_dmap(g, v, l, t);
+  thing_is_teleporting_unset(g, v, l, me);
+  thing_is_moving_unset(g, v, l, me);
+  thing_is_jumping_unset(g, v, l, me);
+  thing_dmap(g, v, l, me);
 }
 
 //
 // Returns true if the thing can move to this location
 //
-bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
+bool thing_can_move_to_attempt(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -446,17 +446,42 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
     return false;
   }
 
-  auto at = thing_at(t);
+  auto at = thing_at(me);
   if (to == at) {
     return true;
   }
 
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
-  thing_set_dir_from_delta(t, dx, dy);
+  thing_set_dir_from_delta(me, dx, dy);
+
+  return thing_can_move_to_check_only(g, v, l, me, to);
+}
+
+//
+// Returns true if the thing can move to this location
+//
+// We do not change direction upon this attempt; purely a check only
+//
+bool thing_can_move_to_check_only(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
+{
+  TRACE_NO_INDENT();
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
   {
+    //
+    // Walls are not always obstacles
+    //
+    if (thing_is_wall(it)) {
+      if (thing_is_able_to_move_through_walls(me)) {
+        continue;
+      }
+    }
+
+    if (unlikely(it == me)) {
+      continue;
+    }
+
     //
     // A wall or pillar or somesuch?
     //
@@ -471,7 +496,7 @@ bool thing_can_move_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
 //
 // Returns true if we can move to this location by shoving
 //
-bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
+bool thing_can_move_to_attempt_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -479,14 +504,14 @@ bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
     return false;
   }
 
-  auto at = thing_at(t);
+  auto at = thing_at(me);
   if (to == at) {
     return true;
   }
 
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
-  thing_set_dir_from_delta(t, dx, dy);
+  thing_set_dir_from_delta(me, dx, dy);
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
   {
@@ -497,7 +522,7 @@ bool thing_can_move_to_by_shoving(Gamep g, Levelsp v, Levelp l, Thingp t, spoint
       //
       // But make exceptions for things like braziers
       //
-      if (thing_is_able_to_shove(t)) {
+      if (thing_is_able_to_shove(me)) {
         if (thing_is_shovable(it)) {
           continue;
         }

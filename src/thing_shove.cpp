@@ -56,7 +56,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
       .source     = shover              //
   };
 
-  if (thing_can_move_to(g, v, l, t, to)) {
+  if (thing_can_move_to_attempt(g, v, l, t, to)) {
     if (thing_move_to(g, v, l, t, to)) {
       shoved = true;
     }
@@ -107,7 +107,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     return true;
   }
 
-  if (thing_can_move_to(g, v, l, t, to)) {
+  if (thing_can_move_to_attempt(g, v, l, t, to)) {
     if (thing_move_to(g, v, l, t, to)) {
       shoved = true;
     }

@@ -499,7 +499,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
   THING_LOG(player, "Player move try");
   TRACE_NO_INDENT();
 
-  if (thing_can_move_to(g, v, l, player, to)) {
+  if (thing_can_move_to_attempt(g, v, l, player, to)) {
     //
     // Fake a mouse path for movement
     //
@@ -516,7 +516,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       }
     }
     return true;
-  } else if (thing_can_move_to_by_shoving(g, v, l, player, to)) {
+  } else if (thing_can_move_to_attempt_by_shoving(g, v, l, player, to)) {
     //
     // Can we shove it out of the way to move?
     //
@@ -553,7 +553,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
     } else {
       level_tick_begin_requested(g, v, l, "player failed to shove");
     }
-  } else if (thing_can_move_to_by_opening(g, v, l, player, to)) {
+  } else if (thing_can_move_to_attempt_by_opening(g, v, l, player, to)) {
     //
     // Can we open it allow movement?
     //

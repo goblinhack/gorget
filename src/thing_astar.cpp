@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include "my_callstack.hpp"
+#include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
@@ -75,32 +77,60 @@ class Astar
 public:
   Astar() {}
 
-  Gamep       g = {};
-  Levelsp     v = {};
-  Levelp      l = {};
-  Thingp      t = {};
-  const Dmap *dmap {};
+  Gamep   g = {};
+  Levelsp v = {};
+  Levelp  l = {};
+  Thingp  t = {};
 
-  std::array< std::array< Node *, MAP_HEIGHT >, MAP_WIDTH > open   = {};
-  std::array< std::array< Node *, MAP_HEIGHT >, MAP_WIDTH > closed = {};
-  std::array< std::array< Node, MAP_HEIGHT >, MAP_WIDTH >   nodes;
-
+  //
+  // These are the nodes still to evaluate
+  //
   Nodemap open_nodes;
-  Nodemap closed_nodes;
-  spoint  src;
-  spoint  dst;
 
-  void  add_to_open(Node *n);
-  void  add_to_closed(Node *n);
-  void  remove_from_open(Node *n);
-  Node *node_init(const spoint next_hop, Nodecost cost);
+  //
+  // These are the nodes we have evaluated
+  //
+  Nodemap closed_nodes;
+
+  //
+  // Start and desired end of the search
+  //
+  spoint src;
+  spoint dst;
+
+  //
+  // Indicates which nodes in the grid we've searched and added to the open list
+  //
+  std::array< std::array< Node *, MAP_HEIGHT >, MAP_WIDTH > open = {};
+
+  //
+  // Indicates which nodes in the grid we've searched and added to the closed list
+  //
+  std::array< std::array< Node *, MAP_HEIGHT >, MAP_WIDTH > closed = {};
+
+  //
+  // A node per grid element. Avoids needing to allocate memory
+  //
+  std::array< std::array< Node, MAP_HEIGHT >, MAP_WIDTH > nodes;
+
+  //
+  // Cache of where this thing can move to
+  //
+  std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile;
+
+  bool  can_move_to(const spoint &to);
   Cost  heuristic(const spoint at);
-  void  eval_neighbor(Node *current, spoint delta);
+  Node *node_init(const spoint next_hop, Nodecost cost);
+  Path  solve(bool allow_diagonal);
+  void  add_to_closed(Node *n);
+  void  add_to_open(Node *n);
   void  dump(void);
+  void  eval_neighbor(Node *current, spoint delta);
+  void  init(void);
+  void  precalculate_can_move_to(void);
+  void  remove_from_open(Node *n);
 
   std::tuple< std::vector< spoint >, Cost > create_path(const Node *came_from, Cost);
-
-  Path solve(bool allow_diagonal);
 };
 
 void Astar::add_to_open(Node *n)
@@ -170,21 +200,14 @@ void Astar::eval_neighbor(Node *current, spoint delta)
 {
   auto next_hop = current->at + delta;
 
-  if ((next_hop.x <= 0) || (next_hop.y <= 0) || (next_hop.x >= MAP_WIDTH - 1) || (next_hop.y >= MAP_HEIGHT - 1)) {
-    return;
-  }
-
-  //
-  // Ignore walls.
-  //
-  if (dmap->val[ next_hop.x ][ next_hop.y ] == DMAP_IS_WALL) {
-    return;
-  }
-
   //
   // If in the closed set already, ignore.
   //
   if (closed[ next_hop.x ][ next_hop.y ]) {
+    return;
+  }
+
+  if (! can_move_to(next_hop)) {
     return;
   }
 
@@ -249,6 +272,26 @@ std::tuple< std::vector< spoint >, Cost > Astar::create_path(const Node *came_fr
   return {out, cost};
 }
 
+void Astar::init(void)
+{
+#ifdef ENABLE_DEBUG_AI_ASTAR
+  astar_debug = {};
+#endif
+
+  precalculate_can_move_to();
+}
+
+void Astar::precalculate_can_move_to(void)
+{
+  for (auto y = 0; y < MAP_HEIGHT; y++) {
+    for (auto x = 0; x < MAP_WIDTH; x++) {
+      can_move_to_tile[ x ][ y ] = thing_can_move_to_check_only(g, v, l, t, spoint(x, y));
+    }
+  }
+}
+
+bool Astar::can_move_to(const spoint &to) { return can_move_to_tile[ to.x ][ to.y ]; }
+
 Path Astar::solve(bool allow_diagonal)
 {
   auto distance_to_next_hop = 0;
@@ -258,9 +301,7 @@ Path Astar::solve(bool allow_diagonal)
   Path best;
   best.cost = std::numeric_limits< float >::max();
 
-#ifdef ENABLE_DEBUG_AI_ASTAR
-  astar_debug = {};
-#endif
+  init();
 
   while (! open_nodes.empty()) {
     auto  c       = open_nodes.begin();
@@ -283,13 +324,20 @@ Path Astar::solve(bool allow_diagonal)
     remove_from_open(current);
     add_to_closed(current);
 
+    //
+    // No moving into the border
+    //
+    if ((at.x == 0) || (at.x == MAP_WIDTH - 1) || (at.y == 0) || (at.y == MAP_HEIGHT - 1)) {
+      continue;
+    }
+
     eval_neighbor(current, spoint(-1, 0));
     eval_neighbor(current, spoint(1, 0));
     eval_neighbor(current, spoint(0, -1));
     eval_neighbor(current, spoint(0, 1));
 
     if (allow_diagonal) {
-      if (thing_is_ethereal(t)) {
+      if (thing_is_able_to_move_through_walls(t)) {
         //
         // Can move through walls in any direction
         //
@@ -301,7 +349,7 @@ Path Astar::solve(bool allow_diagonal)
         //
         // Don't allow shortcuts through diagonal walls
         //
-        if ((dmap->val[ at.x - 1 ][ at.y ] == DMAP_IS_WALL) || (dmap->val[ at.x ][ at.y - 1 ] == DMAP_IS_WALL)) {
+        if (! can_move_to(spoint(at.x - 1, at.y)) || ! can_move_to(spoint(at.x, at.y - 1))) {
           //
           // Block these paths
           //
@@ -321,7 +369,7 @@ Path Astar::solve(bool allow_diagonal)
           eval_neighbor(current, spoint(-1, -1));
         }
 
-        if ((dmap->val[ at.x - 1 ][ at.y ] == DMAP_IS_WALL) || (dmap->val[ at.x ][ at.y + 1 ] == DMAP_IS_WALL)) {
+        if (! can_move_to(spoint(at.x - 1, at.y)) || ! can_move_to(spoint(at.x, at.y + 1))) {
           //
           // Block these paths
           //
@@ -341,7 +389,7 @@ Path Astar::solve(bool allow_diagonal)
           eval_neighbor(current, spoint(-1, 1));
         }
 
-        if ((dmap->val[ at.x + 1 ][ at.y ] == DMAP_IS_WALL) || (dmap->val[ at.x ][ at.y - 1 ] == DMAP_IS_WALL)) {
+        if (! can_move_to(spoint(at.x + 1, at.y)) || ! can_move_to(spoint(at.x, at.y - 1))) {
           //
           // Block these paths
           //
@@ -361,7 +409,7 @@ Path Astar::solve(bool allow_diagonal)
           eval_neighbor(current, spoint(1, -1));
         }
 
-        if ((dmap->val[ at.x + 1 ][ at.y ] == DMAP_IS_WALL) || (dmap->val[ at.x ][ at.y + 1 ] == DMAP_IS_WALL)) {
+        if (! can_move_to(spoint(at.x + 1, at.y)) || ! can_move_to(spoint(at.x, at.y + 1))) {
           //
           // Block these paths
           //
@@ -401,14 +449,12 @@ void Astar::dump(void)
     std::string s;
     for (auto x = 0; x < MAP_WIDTH; x++) {
 
-      auto        e = dmap->val[ x ][ y ];
       std::string buf;
-      if (e == DMAP_IS_WALL) {
-        buf = "#";
-      } else if (e == DMAP_IS_PASSABLE) {
+
+      if (can_move_to(spoint(x, y))) {
         buf = ".";
       } else {
-        buf = " ";
+        buf = "#";
       }
 
 #ifdef ENABLE_DEBUG_AI_ASTAR
@@ -430,21 +476,20 @@ void Astar::dump(void)
   }
 }
 
-void thing_astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst, const Dmap *dmap,
-                       bool allow_diagonal)
+void thing_astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst)
 {
   TRACE_NO_INDENT();
 
-  auto a  = new Astar();
-  a->g    = g;
-  a->v    = v;
-  a->l    = l;
-  a->t    = t;
-  a->src  = src;
-  a->dst  = dst;
-  a->dmap = dmap;
+  auto a = new Astar();
+  a->g   = g;
+  a->v   = v;
+  a->l   = l;
+  a->t   = t;
+  a->src = src;
+  a->dst = dst;
 
-  auto path = a->solve(allow_diagonal);
+  auto allow_diagonal = thing_is_able_to_move_diagonally(t);
+  auto path           = a->solve(allow_diagonal);
 
   a->dump();
 

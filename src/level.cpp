@@ -421,6 +421,7 @@ bool level_populate_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot
   if (is_oob(p)) {
     return false;
   }
+
   l->thing_id[ p.x ][ p.y ][ slot ] = id;
   return true;
 }
@@ -432,6 +433,7 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   if (is_oob(p)) {
     return 0;
   }
+
   return l->thing_id[ p.x ][ p.y ][ slot ];
 }
 
