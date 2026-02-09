@@ -65,7 +65,7 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   // Need a small fraction to account for comparisons of very similar floats where
   // we end up shooting the player upon firing
   //
-  float offset = thing_collision_radius(me) + tp_collision_radius(what) + 0.01f;
+  float offset = thing_collision_radius(me) + tp_collision_radius(what) + THING_COLLISION_FIRING_OFFSET;
   proj_at.x += c * offset;
   proj_at.y += s * offset;
 

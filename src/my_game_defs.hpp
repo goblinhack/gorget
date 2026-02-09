@@ -115,4 +115,16 @@
 #define MAP_SCROLL_EDGE       0.45
 #define MAP_SCROLL_OUTER_EDGE 0.1
 
+//
+// Collision detection radii
+//
+#define THING_COLLISION_CIRCLE_SMALL_RADIUS 0.025f
+#define THING_COLLISION_CIRCLE_LARGE_RADIUS 0.5f
+
+//
+// Need a small fraction to account for comparisons of very similar floats where
+// we end up shooting the player upon firing
+//
+#define THING_COLLISION_FIRING_OFFSET 0.01f
+
 #endif

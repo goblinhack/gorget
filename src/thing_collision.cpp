@@ -210,8 +210,14 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
 {
   float radius = thing_collision_radius(C);
 
-  C_at.x += 0.5;
-  C_at.y += 0.5;
+  //
+  // Need to perform calculations from the center of the circle as the
+  // circle is really inside a tile with the top left co-ords being the
+  // blit point for the tile. The radius then is used from this cental
+  // point for collision.s
+  //
+  C_at.x += 0.5f;
+  C_at.y += 0.5f;
 
   fpoint tl(B_at.x, B_at.y);
   fpoint br(B_at.x + 1, B_at.y + 1);

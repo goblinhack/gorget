@@ -35,9 +35,9 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   switch (monst_state(g, v, l, t)) {
     case MONST_STATE_INIT : // newline
-      monst_state_change(g, v, t, MONST_STATE_NORMAL);
-    case MONST_STATE_NORMAL :
-      // newline
+      monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
+      [[fallthrough]];
+    case MONST_STATE_NORMAL : // newline
       (void) thing_monst_choose_target(g, v, l, t);
       break;
     case MONST_STATE_DEAD :
@@ -65,7 +65,7 @@ MonstState monst_state(Gamep g, Levelsp v, Levelp l, Thingp t)
   return t->_monst_state;
 }
 
-void monst_state_change(Gamep g, Levelsp v, Thingp t, MonstState new_state)
+void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp t, MonstState new_state)
 {
   TRACE_NO_INDENT();
 

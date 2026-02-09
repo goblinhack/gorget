@@ -25,12 +25,12 @@ typedef union {
     unsigned int val : 32;
   } __attribute__((__packed__)) a;
   struct {
-    unsigned int entropy      : THING_ENTROPY_BITS;
+    unsigned int entropy : THING_ENTROPY_BITS;
     unsigned int per_level_id : THING_PER_LEVEL_THING_ID_BITS;
-    unsigned int level_num    : THING_LEVEL_ID_BITS;
+    unsigned int level_num : THING_LEVEL_ID_BITS;
   } __attribute__((__packed__)) b;
   struct {
-    unsigned int entropy   : THING_ENTROPY_BITS;
+    unsigned int entropy : THING_ENTROPY_BITS;
     unsigned int arr_index : THING_ARR_INDEX_BITS;
   } __attribute__((__packed__)) c;
 } __attribute__((__packed__)) ThingIdPacked;
@@ -932,7 +932,7 @@ void LEVEL_ERR(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void LEVEL_LOG(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void LEVEL_TOPCON(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void LEVEL_WARN(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void monst_state_change(Gamep g, Levelsp v, Thingp t, MonstState new_state);
+void monst_state_change(Gamep, Levelsp, Levelp, Thingp, MonstState new_state);
 void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);
 void player_fire(Gamep, Levelsp, Levelp, int dx, int dy, Tpp what);
