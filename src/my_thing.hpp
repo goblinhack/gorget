@@ -503,7 +503,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_blit_obscures(Thingp);
 [[nodiscard]] bool        thing_is_blit_on_ground(Thingp);
 [[nodiscard]] bool        thing_is_blit_outlined(Thingp);
-[[nodiscard]] bool        thing_is_blit_pixel_lighting(Thingp);
+[[nodiscard]] bool        thing_is_blit_per_pixel_lighting(Thingp);
 [[nodiscard]] bool        thing_is_blit_shown_in_chasms(Thingp);
 [[nodiscard]] bool        thing_is_blit_shown_in_overlay(Thingp);
 [[nodiscard]] bool        thing_is_blit_square_outlined(Thingp);

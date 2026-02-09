@@ -380,7 +380,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       //
       // Can only light things that are exactly on pixel boundaries
       //
-      if (! tp_is_blit_pixel_lighting(tp)) {
+      if (! tp_is_blit_per_pixel_lighting(tp)) {
         light_pixels = nullptr;
       }
 

@@ -223,7 +223,7 @@
       list_macro(is_flesh, "is_flesh"),                                             /* newline */                    \
       list_macro(is_stone, "is_stone"),                                             /* newline */                    \
       list_macro(is_meltable, "is_meltable"),                                       /* newline */                    \
-      list_macro(is_blit_pixel_lighting, "is_blit_pixel_lighting"),                 /* newline */                    \
+      list_macro(is_blit_per_pixel_lighting, "is_blit_per_pixel_lighting"),                 /* newline */                    \
       list_macro(is_dead_on_collision, "is_dead_on_collision"),                     /* newline */                    \
       list_macro(is_obs_to_jumping_out_of, "is_obs_to_jumping_out_of"),             /* newline */                    \
       list_macro(is_cursor_path_warning, "is_cursor_path_warning"),                 /* newline */                    \
@@ -717,7 +717,7 @@ float tp_collision_radius(Tpp);
 #define tp_is_blit_obscures(tp)               tp_flag(tp, is_blit_obscures)
 #define tp_is_blit_on_ground(tp)              tp_flag(tp, is_blit_on_ground)
 #define tp_is_blit_outlined(tp)               tp_flag(tp, is_blit_outlined)
-#define tp_is_blit_pixel_lighting(tp)         tp_flag(tp, is_blit_pixel_lighting)
+#define tp_is_blit_per_pixel_lighting(tp)         tp_flag(tp, is_blit_per_pixel_lighting)
 #define tp_is_blit_shown_in_chasms(tp)        tp_flag(tp, is_blit_shown_in_chasms)
 #define tp_is_blit_shown_in_overlay(tp)       tp_flag(tp, is_blit_shown_in_overlay)
 #define tp_is_blit_square_outlined(tp)        tp_flag(tp, is_blit_square_outlined)
@@ -938,7 +938,7 @@ float tp_collision_radius(Tpp);
 #define level_is_blit_obscures(g, v, l, p)               level_flag(g, v, l, is_blit_obscures, p)
 #define level_is_blit_on_ground(g, v, l, p)              level_flag(g, v, l, is_blit_on_ground, p)
 #define level_is_blit_outlined(g, v, l, p)               level_flag(g, v, l, is_blit_outlined, p)
-#define level_is_blit_pixel_lighting(g, v, l, p)         level_flag(g, v, l, is_blit_pixel_lighting, p)
+#define level_is_blit_per_pixel_lighting(g, v, l, p)         level_flag(g, v, l, is_blit_per_pixel_lighting, p)
 #define level_is_blit_shown_in_chasms(g, v, l, p)        level_flag(g, v, l, is_blit_shown_in_chasms, p)
 #define level_is_blit_shown_in_overlay(g, v, l, p)       level_flag(g, v, l, is_blit_shown_in_overlay, p)
 #define level_is_blit_square_outlined(g, v, l, p)        level_flag(g, v, l, is_blit_square_outlined, p)
@@ -1159,7 +1159,7 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_blit_obscures(g, v, l, p)               level_alive(g, v, l, is_blit_obscures, p)
 #define level_alive_is_blit_on_ground(g, v, l, p)              level_alive(g, v, l, is_blit_on_ground, p)
 #define level_alive_is_blit_outlined(g, v, l, p)               level_alive(g, v, l, is_blit_outlined, p)
-#define level_alive_is_blit_pixel_lighting(g, v, l, p)         level_alive(g, v, l, is_blit_pixel_lighting, p)
+#define level_alive_is_blit_per_pixel_lighting(g, v, l, p)         level_alive(g, v, l, is_blit_per_pixel_lighting, p)
 #define level_alive_is_blit_shown_in_chasms(g, v, l, p)        level_alive(g, v, l, is_blit_shown_in_chasms, p)
 #define level_alive_is_blit_shown_in_overlay(g, v, l, p)       level_alive(g, v, l, is_blit_shown_in_overlay, p)
 #define level_alive_is_blit_square_outlined(g, v, l, p)        level_alive(g, v, l, is_blit_square_outlined, p)
@@ -1380,7 +1380,7 @@ float tp_collision_radius(Tpp);
 #define level_count_is_blit_obscures(g, v, l, p)               level_count(g, v, l, is_blit_obscures, p)
 #define level_count_is_blit_on_ground(g, v, l, p)              level_count(g, v, l, is_blit_on_ground, p)
 #define level_count_is_blit_outlined(g, v, l, p)               level_count(g, v, l, is_blit_outlined, p)
-#define level_count_is_blit_pixel_lighting(g, v, l, p)         level_count(g, v, l, is_blit_pixel_lighting, p)
+#define level_count_is_blit_per_pixel_lighting(g, v, l, p)         level_count(g, v, l, is_blit_per_pixel_lighting, p)
 #define level_count_is_blit_shown_in_chasms(g, v, l, p)        level_count(g, v, l, is_blit_shown_in_chasms, p)
 #define level_count_is_blit_shown_in_overlay(g, v, l, p)       level_count(g, v, l, is_blit_shown_in_overlay, p)
 #define level_count_is_blit_square_outlined(g, v, l, p)        level_count(g, v, l, is_blit_square_outlined, p)
@@ -1601,7 +1601,7 @@ float tp_collision_radius(Tpp);
 #define level_open_is_blit_obscures(g, v, l, p)               level_open(g, v, l, is_blit_obscures, p)
 #define level_open_is_blit_on_ground(g, v, l, p)              level_open(g, v, l, is_blit_on_ground, p)
 #define level_open_is_blit_outlined(g, v, l, p)               level_open(g, v, l, is_blit_outlined, p)
-#define level_open_is_blit_pixel_lighting(g, v, l, p)         level_open(g, v, l, is_blit_pixel_lighting, p)
+#define level_open_is_blit_per_pixel_lighting(g, v, l, p)         level_open(g, v, l, is_blit_per_pixel_lighting, p)
 #define level_open_is_blit_shown_in_chasms(g, v, l, p)        level_open(g, v, l, is_blit_shown_in_chasms, p)
 #define level_open_is_blit_shown_in_overlay(g, v, l, p)       level_open(g, v, l, is_blit_shown_in_overlay, p)
 #define level_open_is_blit_square_outlined(g, v, l, p)        level_open(g, v, l, is_blit_square_outlined, p)

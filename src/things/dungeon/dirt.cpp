@@ -16,7 +16,7 @@ bool tp_load_dirt(void)
   auto name = tp_name(tp);
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_if_has_seen);
-  tp_flag_set(tp, is_blit_pixel_lighting);
+  tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_dirt);
   tp_flag_set(tp, is_teleport_blocked);

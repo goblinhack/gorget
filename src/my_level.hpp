@@ -678,7 +678,7 @@ void                  level_init(Gamep, Levelsp, Levelp, LevelNum);
 void                  level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
 void                  level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
 void                  level_light_calculate_all(Gamep, Levelsp, Levelp);
-void                  level_light_fov_all_can_see_callback(Gamep, Levelsp, Levelp, Thingp, spoint pov, spoint p);
+void                  level_light_per_pixel_lighting(Gamep, Levelsp, Levelp, Thingp, spoint pov, spoint p);
 void                  level_light_precalculate(Gamep);
 void                  level_light_raycast_fini(void);
 void                  level_light_raycast(Gamep, Levelsp, Levelp, FboEnum fbo);

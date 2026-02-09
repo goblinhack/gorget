@@ -25,7 +25,7 @@ bool tp_load_chasm(void)
   // begin sort marker1 {
   thing_description_set(tp, tp_chasm_description_get);
   tp_flag_set(tp, is_blit_if_has_seen);
-  tp_flag_set(tp, is_blit_pixel_lighting);
+  tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_chasm);
   tp_flag_set(tp, is_cursor_path_hazard);

@@ -146,7 +146,7 @@ bool tp_load_bridge(void)
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1");    // roll max to continue burning
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_blit_if_has_seen);
-  tp_flag_set(tp, is_blit_pixel_lighting);
+  tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_bridge);
   tp_flag_set(tp, is_burnable);    // is capable of being burned by fire

@@ -29,7 +29,7 @@ bool tp_load_water(void)
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_flush_per_line);
   tp_flag_set(tp, is_blit_if_has_seen);
-  tp_flag_set(tp, is_blit_pixel_lighting);
+  tp_flag_set(tp, is_blit_per_pixel_lighting);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_obs_to_fire);

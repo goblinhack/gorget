@@ -194,13 +194,17 @@ void level_light_precalculate(Gamep g)
 //
 // All light from all light sources, combined.
 //
-void level_light_fov_all_can_see_callback(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
+void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoint pov, spoint p)
 {
   const color  light_color              = tp_light_color(thing_tp(t));
   const float  light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
   const auto   light_tile               = &v->light_map.tile[ p.x ][ p.y ];
   const float *light_fade_map;
   const spoint thing_at_in_pixels = thing_pix_at(t);
+
+  if (light_strength_in_pixels == 0.0f) {
+    THING_ERR(t, "thing has no light source");
+  }
 
   float col_r = light_color.r;
   float col_g = light_color.g;
@@ -352,7 +356,7 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, sp
   if (! fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]) {
     fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = true;
     l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
-    level_light_fov_all_can_see_callback(g, v, l, t, pov, tile);
+    level_light_per_pixel_lighting(g, v, l, t, pov, tile);
   }
 }
 
@@ -794,9 +798,16 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
       max_radius += 2;
     }
 
+    level_fov_can_see_callback_t callback;
+    if (thing_is_light_source(t)) {
+      callback = level_light_per_pixel_lighting;
+    } else {
+      callback = nullptr;
+    }
+
     level_fov(g, v, l, t,                              // newline
               fov ? &fov->fov_can_see_tile : nullptr,  // newline
               ext ? &ext->fov_has_seen_tile : nullptr, // newline
-              thing_at(t), max_radius, level_light_fov_all_can_see_callback);
+              thing_at(t), max_radius, callback);
   }
 }

@@ -33,7 +33,7 @@ bool tp_load_wall(void)
     thing_on_melt_set(tp, tp_wall_melt);
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_blit_if_has_seen);
-    tp_flag_set(tp, is_blit_pixel_lighting);
+    tp_flag_set(tp, is_blit_per_pixel_lighting);
     tp_flag_set(tp, is_blit_shown_in_chasms);
     tp_flag_set(tp, is_collision_square);
     tp_flag_set(tp, is_meltable);

@@ -83,7 +83,9 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
   return m->can_see[ pov.x ][ pov.y ];
 }
 
+//
 // Cast visiblity using shadowcasting.
+//
 void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
                   FovMap                      *fov_can_see_tile,     //
                   FovMap                      *fov_has_seen_tile,    //
@@ -145,7 +147,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
 
       if (fov_can_see_tile) {
         //
-        // If not seen already, light it
+        // Can see tile. If not seen already, light it
         //
         if (! level_fov_get(fov_can_see_tile, p)) {
           level_fov_set(fov_can_see_tile, p, true);
@@ -158,12 +160,18 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
           }
         }
       } else {
+        //
+        // Can see tile. Could be a repeat of this tile.
+        //
         if (can_see_callback) {
           (can_see_callback)(g, v, l, me, pov, p);
         }
       }
 
       if (fov_has_seen_tile) {
+        //
+        // Has seen this tile
+        //
         level_fov_set(fov_has_seen_tile, p, true);
       }
 

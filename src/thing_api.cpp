@@ -2545,14 +2545,14 @@ bool thing_is_meltable(Thingp t)
   return tp_flag(thing_tp(t), is_meltable);
 }
 
-bool thing_is_blit_pixel_lighting(Thingp t)
+bool thing_is_blit_per_pixel_lighting(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_blit_pixel_lighting);
+  return tp_flag(thing_tp(t), is_blit_per_pixel_lighting);
 }
 
 bool thing_is_dead_on_collision(Thingp t)
