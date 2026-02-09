@@ -737,6 +737,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 [[nodiscard]] bool        thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
 [[nodiscard]] bool        thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] Dmap       *thing_minion_get_mob_dmap(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] float       thing_collision_radius(Thingp);
 [[nodiscard]] fpoint      thing_get_direction(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] fpoint      thing_projectile_get_direction(Gamep, Levelsp, Levelp, Thingp);
@@ -895,7 +896,6 @@ typedef struct Thing_ {
 [[nodiscard]] std::string thing_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 [[nodiscard]] std::string thing_pluralize_name(Thingp, ThingTextFlags);
 [[nodiscard]] std::string thing_short_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
-[[nodiscard]] Dmap       *thing_minion_get_mob_dmap(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 [[nodiscard]] std::string thing_the_short_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 [[nodiscard]] std::string to_death_reason_string(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
@@ -942,7 +942,6 @@ void player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bo
 void player_move_reset(Gamep, Levelsp, Levelp);
 void player_reached_entrance(Gamep, Levelsp, Levelp);
 void player_reached_exit(Gamep, Levelsp, Levelp);
-void thing_monst_apply_path(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
 void player_warp_to_specific_level(Gamep, Levelsp, LevelNum);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
 void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, Tpp, int time_step);
@@ -1014,6 +1013,7 @@ void thing_level_warp_to_exit(Gamep, Levelsp, Levelp, Thingp);
 void THING_LOG(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_melt(Gamep, Levelsp, Levelp, Thingp);
 void thing_mob_dump_minions(Gamep, Levelsp, Levelp, Thingp mob);
+void thing_monst_apply_path(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
 void thing_monst_event_loop(Gamep, Levelsp, Levelp, Thingp);
 void thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
 void thing_moving_from_set(Thingp, const spoint &val);
