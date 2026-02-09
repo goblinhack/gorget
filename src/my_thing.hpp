@@ -25,12 +25,12 @@ typedef union {
     unsigned int val : 32;
   } __attribute__((__packed__)) a;
   struct {
-    unsigned int entropy : THING_ENTROPY_BITS;
+    unsigned int entropy      : THING_ENTROPY_BITS;
     unsigned int per_level_id : THING_PER_LEVEL_THING_ID_BITS;
-    unsigned int level_num : THING_LEVEL_ID_BITS;
+    unsigned int level_num    : THING_LEVEL_ID_BITS;
   } __attribute__((__packed__)) b;
   struct {
-    unsigned int entropy : THING_ENTROPY_BITS;
+    unsigned int entropy   : THING_ENTROPY_BITS;
     unsigned int arr_index : THING_ARR_INDEX_BITS;
   } __attribute__((__packed__)) c;
 } __attribute__((__packed__)) ThingIdPacked;
@@ -895,6 +895,7 @@ typedef struct Thing_ {
 [[nodiscard]] std::string thing_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 [[nodiscard]] std::string thing_pluralize_name(Thingp, ThingTextFlags);
 [[nodiscard]] std::string thing_short_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
+[[nodiscard]] Dmap       *thing_minion_get_mob_dmap(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] std::string thing_the_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 [[nodiscard]] std::string thing_the_short_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
 [[nodiscard]] std::string to_death_reason_string(Gamep, Levelsp, Levelp, Thingp, ThingEvent &);
@@ -941,10 +942,10 @@ void player_move_accum(Gamep, Levelsp, Levelp, bool up, bool down, bool left, bo
 void player_move_reset(Gamep, Levelsp, Levelp);
 void player_reached_entrance(Gamep, Levelsp, Levelp);
 void player_reached_exit(Gamep, Levelsp, Levelp);
+void thing_monst_apply_path(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
 void player_warp_to_specific_level(Gamep, Levelsp, LevelNum);
 void thing_anim_init(Gamep, Levelsp, Levelp, Thingp, ThingAnim);
 void thing_anim_time_step(Gamep, Levelsp, Levelp, Thingp, Tpp, int time_step);
-void thing_astar_solve(Gamep, Levelsp, Levelp, Thingp, spoint, spoint);
 void thing_at_set(Thingp, const fpoint &);
 void thing_at_set(Thingp, const spoint &);
 void thing_blit_text(Gamep, Levelsp, Levelp, spoint tl, spoint br, std::string const &text, color fg, bool outline);
@@ -1044,6 +1045,8 @@ void wid_set_thing_context(Gamep, Levelsp, Widp, Thingp);
 void wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
 void wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp);
 // end sort marker2 }
+
+std::vector< spoint > thing_astar_solve(Gamep, Levelsp, Levelp, Thingp, spoint, spoint);
 
 #define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                 \
   if (_g_ && _v_ && _l_)                                                                                             \

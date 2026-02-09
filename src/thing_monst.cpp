@@ -12,6 +12,37 @@
 #include "my_thing_inlines.hpp"
 #include "my_wid_warning.hpp"
 
+//
+// Copy the given path to the thing
+//
+void thing_monst_apply_path(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path)
+{
+  auto ext_struct = thing_ext_struct(g, t);
+  if (! ext_struct) {
+    THING_ERR(t, "no ext struct");
+    return;
+  }
+
+  monst_state_change(g, v, l, t, MONST_STATE_FOLLOWING_PATH);
+
+  int index                  = 0;
+  ext_struct->move_path.size = 0;
+
+  THING_DBG(t, "apply path size: %d", (int) move_path.size());
+  for (auto p : move_path) {
+    THING_DBG(t, " - path: %d,%d", p.x, p.y);
+  }
+
+  for (auto p : move_path) {
+    ext_struct->move_path.points[ index ].x = p.x;
+    ext_struct->move_path.points[ index ].y = p.y;
+    ext_struct->move_path.size              = ++index;
+    if (index >= ARRAY_SIZE(ext_struct->move_path.points)) {
+      break;
+    }
+  }
+}
+
 [[nodiscard]] static bool thing_monst_choose_target(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -38,7 +69,10 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp t)
       monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
       [[fallthrough]];
     case MONST_STATE_NORMAL : // newline
-      (void) thing_monst_choose_target(g, v, l, t);
+      monst_state_change(g, v, l, t, MONST_STATE_PATH_REQUESTED);
+      if (! thing_monst_choose_target(g, v, l, t)) {
+        monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
+      }
       break;
     case MONST_STATE_DEAD :
       // newline

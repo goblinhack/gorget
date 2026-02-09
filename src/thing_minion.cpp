@@ -17,94 +17,102 @@
 //
 // Is this minion attached to a mob?
 //
-Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp minion)
+Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
-  if (! minion) {
+  if (! t) {
     return nullptr;
   }
 
-  if (! thing_is_minion(minion)) {
+  if (! thing_is_minion(t)) {
     return nullptr;
   }
 
-  if (! minion->mob_id) {
+  if (! t->mob_id) {
     return nullptr;
   }
 
-  return thing_find(g, v, minion->mob_id);
+  return thing_find(g, v, t->mob_id);
+}
+
+//
+// Get the dmap associated with the mob
+//
+Dmap *thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // Acceptable to fail when the minion is detached
+  //
+  auto mob = thing_minion_mob_get(g, v, l, t);
+  if (! mob) {
+    return nullptr;
+  }
+
+  auto mob_ext = thing_ext_struct(g, mob);
+  if (! mob_ext) {
+    THING_ERR(t, "mob has no ext memory");
+    return nullptr;
+  }
+
+  return &mob_ext->dmap;
 }
 
 //
 // Detach a minion from its mob
 //
-bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp minion)
+bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! minion) {
+  if (! t) {
     return false;
   }
 
-  if (! thing_is_minion(minion)) {
-    THING_ERR(minion, "non minion trying to detach itself");
+  if (! thing_is_minion(t)) {
+    THING_ERR(t, "non minion trying to detach itself");
     return false;
   }
 
-  auto mob = thing_minion_mob_get(g, v, l, minion);
+  auto mob = thing_minion_mob_get(g, v, l, t);
   if (! mob) {
     return false;
   }
 
-  THING_LOG(minion, "detach me from mob");
+  THING_LOG(t, "detach me from mob");
 
-  return thing_mob_detach_minion(g, v, l, mob, minion);
+  return thing_mob_detach_minion(g, v, l, mob, t);
 }
 
-bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp minion, spoint &target)
+//
+// Collect all possible points we could wander to in the given dmap.
+// The points are arranged in a radius around the dmap goal, which was
+// what was presumably used to create the dmap.
+//
+[[nodiscard]] static std::vector< spoint > thing_minion_get_mob_dmap_target_cands(Gamep g, Levelsp v, Levelp l,
+                                                                                  Thingp t, spoint dmap_goal,
+                                                                                  Dmap *dmap, int radius)
 {
   TRACE_NO_INDENT();
 
-  auto mob = thing_minion_mob_get(g, v, l, minion);
-  if (! mob) {
-    //
-    // Acceptable when the minion is detached
-    //
-    return false;
-  }
-
-  auto mob_ext = thing_ext_struct(g, mob);
-  if (! mob_ext) {
-    THING_ERR(minion, "mob has no ext memory");
-    return false;
-  }
-
-  auto                  minion_at = thing_at(minion);
-  auto                  mob_at    = thing_at(mob);
   std::vector< spoint > cands;
-
-  auto dmap = &mob_ext->dmap;
-
-  if (0) {
-    THING_LOG(mob, "mob");
-    dmap_print(dmap, mob_at, spoint(0, 0), spoint(MAP_WIDTH - 1, MAP_HEIGHT - 1));
-  }
+  auto                  at = thing_at(t);
 
   //
-  // Look at tiles surrounding the mob, for somewhere to wander to
+  // Look at tiles surrounding the mob for somewhere to wander to
   //
-  auto distance_minion_from_mob_max = thing_distance_minion_from_mob_max(minion);
-  for (int x = -distance_minion_from_mob_max; x <= distance_minion_from_mob_max; x++) {
-    for (int y = -distance_minion_from_mob_max; y <= distance_minion_from_mob_max; y++) {
-      spoint p(x + mob_at.x, y + mob_at.y);
+  for (int x = -radius; x <= radius; x++) {
+    for (int y = -radius; y <= radius; y++) {
+      spoint p(x + dmap_goal.x, y + dmap_goal.y);
       if (is_oob(p)) {
         continue;
       }
 
-      if (p == minion_at) {
+      if (p == at) {
         continue;
       }
 
-      if (p == mob_at) {
+      if (p == dmap_goal) {
         continue;
       }
 
@@ -116,86 +124,53 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp mi
         continue;
       }
 
-      if (dmap->val[ p.x ][ p.y ] >= distance_minion_from_mob_max) {
+      if (dmap->val[ p.x ][ p.y ] >= radius) {
         continue;
       }
 
       cands.push_back(p);
     }
   }
+  return cands;
+}
 
-  if (! cands.size()) {
+//
+// Given a mob, choose somewhere to wander, near the mob.
+//
+bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &target)
+{
+  TRACE_NO_INDENT();
+
+  auto mob = thing_minion_mob_get(g, v, l, t);
+  if (! mob) {
     return false;
   }
 
-  auto tries = cands.size();
-  while (tries--) {
-    target = pcg_rand_one_of(cands);
-
-    thing_astar_solve(g, v, l, minion, minion_at, target);
-#if 0
-    auto p         = dmap_solve(g, v, l, minon, dmap, minion_at);
-    auto path_size = p.size();
-    if (! path_size) {
-      return empty;
-    }
-
-    //
-    // If we could not reach the target, then the path will just plot the distance from the start, which is not what
-    // we want.
-    //
-    if (p[ path_size - 1 ] != end) {
-      if (0) {
-        LOG("did not reach %d,%d", end.x, end.y);
-      }
-      return empty;
-    }
-#endif
+  auto dmap = thing_minion_get_mob_dmap(g, v, l, t);
+  if (! dmap) {
+    return false;
   }
 
-  if (0) {
-    THING_LOG(minion, "%s", __FUNCTION__);
-    for (auto y = 0; y < MAP_HEIGHT; y++) {
-      std::string out;
-      for (auto x = 0; x < MAP_WIDTH; x++) {
-        char   c = {};
-        spoint p(x, y);
+  auto minion_at = thing_at(t);
+  auto mob_at    = thing_at(mob);
+  auto radius    = thing_distance_minion_from_mob_max(t);
+  auto cands     = thing_minion_get_mob_dmap_target_cands(g, v, l, t, mob_at, dmap, radius);
+  auto tries     = cands.size();
 
-        if (! c && (p == target)) {
-          c = '*';
-        }
+  while (tries-- > 0) {
+    target = pcg_rand_one_of(cands);
 
-        if (! c) {
-          for (auto cand : cands) {
-            if (p == cand) {
-              c = '_';
-              break;
-            }
-          }
-        }
-
-        if (! c && (p == minion_at)) {
-          c = '@';
-        }
-        if (! c && (p == mob_at)) {
-          c = 'G';
-        }
-        if (! c && level_is_obs_to_movement(g, v, l, p)) {
-          c = 'X';
-        }
-        if (! c && level_is_monst(g, v, l, p)) {
-          c = 'm';
-        }
-        if ((p == mob_at)) {
-          c = 'G';
-        }
-        if (! c) {
-          c = '.';
-        }
-        out += c;
-      }
-      THING_LOG(minion, "%s", out.c_str());
+    auto p = thing_astar_solve(g, v, l, t, minion_at, target);
+    if (! p.size()) {
+      continue;
     }
+
+    thing_monst_apply_path(g, v, l, t, p);
+    break;
+  }
+
+  if (tries <= 0) {
+    return false;
   }
 
   return true;

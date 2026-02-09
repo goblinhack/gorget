@@ -476,22 +476,24 @@ void Astar::dump(void)
   }
 }
 
-void thing_astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst)
+std::vector< spoint > thing_astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst)
 {
   TRACE_NO_INDENT();
 
-  auto a = new Astar();
-  a->g   = g;
-  a->v   = v;
-  a->l   = l;
-  a->t   = t;
-  a->src = src;
-  a->dst = dst;
+  Astar a;
+  a.g   = g;
+  a.v   = v;
+  a.l   = l;
+  a.t   = t;
+  a.src = src;
+  a.dst = dst;
 
   auto allow_diagonal = thing_is_able_to_move_diagonally(t);
-  auto path           = a->solve(allow_diagonal);
+  auto p              = a.solve(allow_diagonal);
 
-  a->dump();
+#ifdef ENABLE_DEBUG_AI_ASTAR
+  a.dump();
+#endif
 
-  delete a;
+  return p.path;
 }
