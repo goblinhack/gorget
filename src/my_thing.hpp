@@ -725,6 +725,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_mob_detach_all_minions(Gamep, Levelsp, Levelp, Thingp mob);
 [[nodiscard]] bool        thing_mob_detach_minion(Gamep, Levelsp, Levelp, Thingp mob, Thingp minion);
 [[nodiscard]] bool        thing_mob_kill_all_minions(Gamep, Levelsp, Levelp, Thingp mob, ThingEvent &e);
+[[nodiscard]] bool        thing_monst_apply_path(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
 [[nodiscard]] bool        thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] bool        thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 [[nodiscard]] bool        thing_on_same_level_as_player(Gamep, Levelsp, Thingp);
@@ -1013,7 +1014,6 @@ void thing_level_warp_to_exit(Gamep, Levelsp, Levelp, Thingp);
 void THING_LOG(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_melt(Gamep, Levelsp, Levelp, Thingp);
 void thing_mob_dump_minions(Gamep, Levelsp, Levelp, Thingp mob);
-void thing_monst_apply_path(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
 void thing_monst_event_loop(Gamep, Levelsp, Levelp, Thingp);
 void thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
 void thing_moving_from_set(Thingp, const spoint &val);

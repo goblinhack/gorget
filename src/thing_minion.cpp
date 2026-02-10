@@ -41,12 +41,9 @@ Dmap *thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  //
-  // Acceptable to fail when the minion is detached
-  //
   auto mob = thing_minion_mob_get(g, v, l, t);
   if (! mob) {
-    return nullptr;
+    return nullptr; // can be normal if detached
   }
 
   auto mob_ext = thing_ext_struct(g, mob);
@@ -76,7 +73,7 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   auto mob = thing_minion_mob_get(g, v, l, t);
   if (! mob) {
-    return false;
+    return false; // can be normal if detached
   }
 
   THING_LOG(t, "detach me from mob");
@@ -89,49 +86,43 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp t)
 // The points are arranged in a radius around the dmap goal, which was
 // what was presumably used to create the dmap.
 //
-[[nodiscard]] static std::vector< spoint > thing_minion_get_mob_dmap_target_cands(Gamep g, Levelsp v, Levelp l,
-                                                                                  Thingp t, spoint dmap_goal,
-                                                                                  Dmap *dmap, int radius)
+[[nodiscard]] static bool thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp t,
+                                                                spoint dmap_goal, Dmap *dmap, int radius,
+                                                                spoint &target)
 {
   TRACE_NO_INDENT();
-
-  std::vector< spoint > cands;
-  auto                  at = thing_at(t);
 
   //
   // Look at tiles surrounding the mob for somewhere to wander to
   //
-  for (int x = -radius; x <= radius; x++) {
-    for (int y = -radius; y <= radius; y++) {
-      spoint p(x + dmap_goal.x, y + dmap_goal.y);
-      if (is_oob(p)) {
-        continue;
-      }
+  target.x = dmap_goal.x - radius + pcg_random_range(0, radius * 2);
+  target.y = dmap_goal.y - radius + pcg_random_range(0, radius * 2);
 
-      if (p == at) {
-        continue;
-      }
-
-      if (p == dmap_goal) {
-        continue;
-      }
-
-      if (level_is_obs_to_movement(g, v, l, p)) {
-        continue;
-      }
-
-      if (level_is_monst(g, v, l, p)) {
-        continue;
-      }
-
-      if (dmap->val[ p.x ][ p.y ] >= radius) {
-        continue;
-      }
-
-      cands.push_back(p);
-    }
+  if (is_oob(target)) {
+    return false;
   }
-  return cands;
+
+  if (target == thing_at(t)) {
+    return false;
+  }
+
+  if (target == dmap_goal) {
+    return false;
+  }
+
+  if (level_is_obs_to_movement(g, v, l, target)) {
+    return false;
+  }
+
+  if (level_is_monst(g, v, l, target)) {
+    return false;
+  }
+
+  if (dmap->val[ target.x ][ target.y ] >= radius) {
+    return false;
+  }
+
+  return true;
 }
 
 //
@@ -143,35 +134,46 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp t,
 
   auto mob = thing_minion_mob_get(g, v, l, t);
   if (! mob) {
-    return false;
+    return false; // can be normal if detached
   }
 
   auto dmap = thing_minion_get_mob_dmap(g, v, l, t);
   if (! dmap) {
+    THING_ERR(t, "attached minion has no mob");
     return false;
   }
 
   auto minion_at = thing_at(t);
   auto mob_at    = thing_at(mob);
-  auto radius    = thing_distance_minion_from_mob_max(t);
-  auto cands     = thing_minion_get_mob_dmap_target_cands(g, v, l, t, mob_at, dmap, radius);
-  auto tries     = cands.size();
 
+  //
+  // How far to look for a target?
+  //
+  auto radius = thing_distance_minion_from_mob_max(t);
+  if (! radius) {
+    THING_ERR(t, "unexpected value for radius");
+    return false;
+  }
+
+  //
+  // Keep trying to find a target
+  //
+  int tries = (radius * radius) / 2;
   while (tries-- > 0) {
-    target = pcg_rand_one_of(cands);
+    if (! thing_minion_get_mob_dmap_target_cand(g, v, l, t, mob_at, dmap, radius, target)) {
+      continue;
+    }
 
     auto p = thing_astar_solve(g, v, l, t, minion_at, target);
     if (! p.size()) {
       continue;
     }
 
-    thing_monst_apply_path(g, v, l, t, p);
-    break;
+    if (! thing_monst_apply_path(g, v, l, t, p)) {
+      continue;
+    }
+    return true;
   }
 
-  if (tries <= 0) {
-    return false;
-  }
-
-  return true;
+  return false;
 }

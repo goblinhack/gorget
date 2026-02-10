@@ -15,12 +15,12 @@
 //
 // Copy the given path to the thing
 //
-void thing_monst_apply_path(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path)
+bool thing_monst_apply_path(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path)
 {
   auto ext_struct = thing_ext_struct(g, t);
   if (! ext_struct) {
     THING_ERR(t, "no ext struct");
-    return;
+    return false;
   }
 
   monst_state_change(g, v, l, t, MONST_STATE_FOLLOWING_PATH);
@@ -41,6 +41,8 @@ void thing_monst_apply_path(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector<
       break;
     }
   }
+
+  return true;
 }
 
 [[nodiscard]] static bool thing_monst_choose_target(Gamep g, Levelsp v, Levelp l, Thingp t)
