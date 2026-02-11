@@ -20,26 +20,11 @@ static std::array< std::array< char, MAP_HEIGHT >, MAP_WIDTH > astar_debug;
 
 typedef float Cost;
 
-class Path
-{
-public:
-  Path() = default;
-  Path(std::vector< spoint > &p, Cost c) : path(p), cost(c) {}
-
-  std::vector< spoint > path;
-
-  Cost cost {};
-};
-
 class Nodecost
 {
 public:
   Nodecost(void) = default;
-  Nodecost(Cost c) : cost(c)
-  {
-    static int tiebreak_;
-    tiebreak = tiebreak_++;
-  }
+  Nodecost(Cost c, int t) : cost(c), tiebreak(t) {}
 
   bool operator<(const Nodecost &rhs) const
   {
@@ -49,7 +34,8 @@ public:
     if (cost > rhs.cost) {
       return false;
     }
-    return (tiebreak < rhs.tiebreak);
+
+    return tiebreak < rhs.tiebreak;
   }
 
   Cost cost {};
@@ -62,15 +48,16 @@ public:
   Node(void) = default;
 
   class Node *came_from {};
-  Nodecost    cost;
+  Nodecost    cost {};
   spoint      at;
-  bool        is_disliked {};
 };
 
 //
-// The nodemap needs to be sorted by distance, so std::map must be used
+// The nodemap needs to be sorted by distance, and we can have multiple
+// identical costs, so std::multimap must be used
 //
-typedef std::map< Nodecost, Node * > Nodemap;
+//
+typedef std::multimap< Nodecost, Node * > Nodemap;
 
 class Astar
 {
@@ -81,6 +68,7 @@ public:
   Levelsp v = {};
   Levelp  l = {};
   Thingp  t = {};
+  int     tiebreak;
 
   //
   // These are the nodes still to evaluate
@@ -118,19 +106,19 @@ public:
   //
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile;
 
-  bool  can_move_to(const spoint &to);
-  Cost  heuristic(const spoint at);
-  Node *node_init(const spoint next_hop, Nodecost cost);
-  Path  solve(bool allow_diagonal);
-  void  add_to_closed(Node *n);
-  void  add_to_open(Node *n);
-  void  dump(void);
-  void  eval_neighbor(Node *current, spoint delta);
-  void  init(void);
-  void  precalculate_can_move_to(void);
-  void  remove_from_open(Node *n);
+  bool                  can_move_to(const spoint &to);
+  Cost                  heuristic(const spoint at);
+  Node                 *node_init(const spoint next_hop, Nodecost cost);
+  std::vector< spoint > solve(bool allow_diagonal);
+  void                  add_to_closed(Node *n);
+  void                  add_to_open(Node *n);
+  void                  dump(void);
+  void                  eval_neighbor(Node *current, spoint delta);
+  void                  init(void);
+  void                  precalculate_can_move_to(void);
+  void                  remove_from_open(Node *n);
 
-  std::tuple< std::vector< spoint >, Cost > create_path(const Node *came_from, Cost);
+  std::vector< spoint > create_path(const Node *came_from);
 };
 
 void Astar::add_to_open(Node *n)
@@ -143,9 +131,11 @@ void Astar::add_to_open(Node *n)
   }
   *o = n;
 
-  auto result = open_nodes.insert(std::make_pair(n->cost, n));
-  if (! result.second) {
-    THING_ERR(t, "Open insert fail");
+  auto old_size = open_nodes.size();
+  open_nodes.insert(std::make_pair(n->cost, n));
+  auto new_size = open_nodes.size();
+  if (old_size != new_size - 1) {
+    THING_ERR(t, "open insert fail, old size %d, new size %d", (int) old_size, (int) new_size);
     return;
   }
 }
@@ -160,9 +150,11 @@ void Astar::add_to_closed(Node *n)
   }
   *o = n;
 
-  auto result = closed_nodes.insert(std::make_pair(n->cost, n));
-  if (! result.second) {
-    THING_ERR(t, "Closed insert fail");
+  auto old_size = closed_nodes.size();
+  closed_nodes.insert(std::make_pair(n->cost, n));
+  auto new_size = closed_nodes.size();
+  if (old_size != new_size - 1) {
+    THING_ERR(t, "closed insert fail");
     return;
   }
 }
@@ -180,15 +172,35 @@ void Astar::remove_from_open(Node *n)
   open_nodes.erase(n->cost);
 }
 
-Cost Astar::heuristic(const spoint at) { return distance(dst, at); }
+Cost Astar::heuristic(const spoint at)
+{
+  //
+  // This can create wiggles in the path as we're always looking at the distance
+  // to the end point, and sometimes a diagonal move is closer.
+  //
+  return distance(dst, at);
+}
 
 Node *Astar::node_init(const spoint next_hop, Nodecost cost)
 {
   auto n = &nodes[ next_hop.x ][ next_hop.y ];
 
-  n->at          = next_hop;
-  n->cost        = cost;
-  n->is_disliked = thing_assess_tile(g, v, l, next_hop, t) == THING_ENVIRON_DISLIKES;
+  n->at = next_hop;
+
+  switch (thing_assess_tile(g, v, l, next_hop, t)) {
+    case THING_ENVIRON_HATES :    cost.cost += 10; break;
+    case THING_ENVIRON_DISLIKES : cost.cost += 5; break;
+    case THING_ENVIRON_NEUTRAL :  cost.cost += 1; break;
+    case THING_ENVIRON_LIKES :    break;
+    case THING_ENVIRON_ENUM_MAX : break;
+  }
+
+  n->cost = cost;
+
+  //
+  // Cost tiebreaker
+  //
+  tiebreak++;
 
   return n;
 }
@@ -211,10 +223,11 @@ void Astar::eval_neighbor(Node *current, spoint delta)
     return;
   }
 
-  Cost  cost     = current->cost.cost + heuristic(next_hop);
+  Cost cost = current->cost.cost + heuristic(next_hop);
+
   Node *neighbor = open[ next_hop.x ][ next_hop.y ];
   if (! neighbor) {
-    auto ncost          = Nodecost(cost);
+    auto ncost          = Nodecost(cost, tiebreak);
     neighbor            = node_init(next_hop, ncost);
     neighbor->came_from = current;
     add_to_open(neighbor);
@@ -222,54 +235,28 @@ void Astar::eval_neighbor(Node *current, spoint delta)
   }
 
   if (cost < neighbor->cost.cost) {
+    auto ncost = Nodecost(cost, tiebreak);
     remove_from_open(neighbor);
     neighbor->came_from = current;
-    neighbor->cost      = cost;
+    neighbor->cost      = ncost;
     add_to_open(neighbor);
   }
 }
 
-std::tuple< std::vector< spoint >, Cost > Astar::create_path(const Node *came_from, Cost best_cost)
+std::vector< spoint > Astar::create_path(const Node *came_from)
 {
   static const std::vector< spoint > empty;
 
   std::vector< spoint > out;
-  Cost                  cost               = came_from->cost.cost;
-  int                   consecutive_hazard = 0;
 
   while (came_from) {
-    //
-    // No point continuing if the path is going to exceed the best.
-    //
-    if (cost >= best_cost) {
-      return {empty, std::numeric_limits< int >::max()};
-    }
-
     if (came_from->came_from) {
       out.push_back(came_from->at);
-
-      //
-      // If we pass over too many consecutive things we do not like, like chasms
-      // then we cannot use this path.
-      //
-      if (came_from->is_disliked) {
-        consecutive_hazard++;
-        if (consecutive_hazard > 2) {
-          return {empty, std::numeric_limits< int >::max()};
-        }
-
-        //
-        // Not sure on the best value for this. We need something to increase the apparent cost.
-        //
-        cost += 5;
-      } else {
-        consecutive_hazard = 0;
-      }
     }
     came_from = came_from->came_from;
   }
 
-  return {out, cost};
+  return out;
 }
 
 void Astar::init(void)
@@ -292,14 +279,12 @@ void Astar::precalculate_can_move_to(void)
 
 bool Astar::can_move_to(const spoint &to) { return can_move_to_tile[ to.x ][ to.y ]; }
 
-Path Astar::solve(bool allow_diagonal)
+std::vector< spoint > Astar::solve(bool allow_diagonal)
 {
-  auto distance_to_next_hop = 0;
-  auto ncost                = Nodecost(distance_to_next_hop + heuristic(src));
-  auto neighbor             = node_init(src, ncost);
+  auto ncost    = Nodecost(heuristic(src), tiebreak);
+  auto neighbor = node_init(src, ncost);
+
   add_to_open(neighbor);
-  Path best;
-  best.cost = std::numeric_limits< float >::max();
 
   init();
 
@@ -309,17 +294,9 @@ Path Astar::solve(bool allow_diagonal)
 
     auto at = current->at;
     if (at == dst) {
-      auto [ path, cost ] = create_path(current, best.cost);
-
-      if (cost < best.cost) {
-        best.path = path;
-        best.cost = cost;
-      }
-
-      remove_from_open(current);
-      add_to_closed(current);
-      continue;
+      return create_path(current);
     }
+    astar_debug[ at.x ][ at.y ] = '?';
 
     remove_from_open(current);
     add_to_closed(current);
@@ -432,13 +409,8 @@ Path Astar::solve(bool allow_diagonal)
     }
   }
 
-#ifdef ENABLE_DEBUG_AI_ASTAR
-  for (const auto &p : best.path) {
-    astar_debug[ p.x ][ p.y ] = 'b';
-  }
-#endif
-
-  return best;
+  static const std::vector< spoint > empty;
+  return empty;
 }
 
 void Astar::dump(void)
@@ -448,7 +420,6 @@ void Astar::dump(void)
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     std::string s;
     for (auto x = 0; x < MAP_WIDTH; x++) {
-
       std::string buf;
 
       if (can_move_to(spoint(x, y))) {
@@ -489,11 +460,15 @@ std::vector< spoint > thing_astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, 
   a.dst = dst;
 
   auto allow_diagonal = thing_is_able_to_move_diagonally(t);
-  auto p              = a.solve(allow_diagonal);
+  auto path           = a.solve(allow_diagonal);
 
 #ifdef ENABLE_DEBUG_AI_ASTAR
+  for (const auto &p : path) {
+    astar_debug[ p.x ][ p.y ] = '^';
+  }
+
   a.dump();
 #endif
 
-  return p.path;
+  return path;
 }
