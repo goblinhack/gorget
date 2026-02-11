@@ -173,6 +173,12 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
 
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
+
+  if (g_opt_test_current != "") {
+    snprintf(buf + len, MAXLONGSTR - len, "Test %s: ", g_opt_test_current.c_str());
+    len = (int) strlen(buf);
+  }
+
   if (clean) {
     snprintf(buf + len, MAXLONGSTR - len, "EXITED: ");
   } else {
@@ -216,6 +222,12 @@ static void err_handle(Gamep g, const char *fmt, va_list args)
 
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
+
+  if (g_opt_test_current != "") {
+    snprintf(buf + len, MAXLONGSTR - len, "Test %s: ", g_opt_test_current.c_str());
+    len = (int) strlen(buf);
+  }
+
   snprintf(buf + len, MAXLONGSTR - len, "ERROR: ");
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);

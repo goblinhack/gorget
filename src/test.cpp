@@ -47,6 +47,9 @@ std::initializer_list< std::string > tests = {
     "open_locked_door_fail",
     "open_locked_door_success",
     "open_unlocked_door",
+    "path_astar",
+    "path_dmap_reverse",
+    "path_dmap",
     "player_fall_chasm_into_lava",
     "player_fall_chasm_twice_into_lava",
     "player_fall_chasm_twice",
@@ -220,6 +223,7 @@ void tests_run(Gamep g)
     if (g_opt_test_name_filter != "") {
       if (name != g_opt_test_name_filter) {
         skipped = true;
+        continue;
       }
     }
 
@@ -241,7 +245,7 @@ void tests_run(Gamep g)
       result = t->callback(g, t);
     }
     auto elapsed  = time_ms() - started;
-    auto how_long = string_sprintf("(took %.2f secs)", (float) elapsed / 1000.0);
+    auto how_long = string_sprintf("(took %.2f secs, %u ms)", (float) elapsed / 1000.0, elapsed);
 
     //
     // Print the timestamp

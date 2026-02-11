@@ -9,10 +9,26 @@
 #include "my_main.hpp"
 
 //
+// Get the dmap associated with the thing
+//
+Dmap *thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  auto ext = thing_ext_struct(g, t);
+  if (! ext) {
+    THING_ERR(t, "mob has no ext memory");
+    return nullptr;
+  }
+
+  return &ext->dmap;
+}
+
+//
 // Create a dmap for a player, mob, monst etc... with the thing itself being the target.
 // This serves as a way for monsters to reach the player, mob etc...
 //
-void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
+void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t, bool reverse)
 {
   TRACE_AND_INDENT();
 
@@ -41,8 +57,12 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
   }
 
-  auto target                           = thing_at(t);
-  ext->dmap.val[ target.x ][ target.y ] = DMAP_IS_GOAL;
+  auto target = thing_at(t);
+  if (reverse) {
+    ext->dmap.val[ target.x ][ target.y ] = DMAP_IS_GOAL_REVERSE;
+  } else {
+    ext->dmap.val[ target.x ][ target.y ] = DMAP_IS_GOAL;
+  }
 
   auto dmap_start = spoint(minx, miny);
   auto dmap_end   = spoint(maxx, maxy);
@@ -50,7 +70,13 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (0) {
     dmap_print(&ext->dmap, target, dmap_start, dmap_end);
   }
-  dmap_process(&ext->dmap, dmap_start, dmap_end);
+
+  if (reverse) {
+    dmap_process_reverse(&ext->dmap, dmap_start, dmap_end);
+  } else {
+    dmap_process(&ext->dmap, dmap_start, dmap_end);
+  }
+
   if (0) {
     THING_LOG(t, "thing dmap");
     dmap_print(&ext->dmap, target, dmap_start, dmap_end);

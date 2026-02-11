@@ -738,6 +738,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_vision_can_see_tile(Gamep, Levelsp, Levelp, Thingp, spoint p);
 [[nodiscard]] bool        thing_vision_player_has_seen_tile(Gamep, Levelsp, Levelp, spoint p);
 [[nodiscard]] bool        thing_warp_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
+[[nodiscard]] Dmap       *thing_get_dmap(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] Dmap       *thing_minion_get_mob_dmap(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] float       thing_collision_radius(Thingp);
 [[nodiscard]] fpoint      thing_get_direction(Gamep, Levelsp, Levelp, Thingp);
@@ -968,7 +969,7 @@ void thing_dir_tr_set(Thingp, uint8_t);
 void thing_dir_up_set(Thingp, uint8_t);
 void thing_display_get_tile_info(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint *, spoint *, uint16_t *);
 void thing_display(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index, FboEnum);
-void thing_dmap(Gamep, Levelsp, Levelp, Thingp);
+void thing_dmap(Gamep, Levelsp, Levelp, Thingp, bool reverse = false);
 void THING_ERR(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp me);
 void thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
@@ -1046,7 +1047,7 @@ void wid_thing_info(Gamep, Levelsp, Levelp, Thingp, WidPopup *, int width);
 void wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp);
 // end sort marker2 }
 
-std::vector< spoint > thing_astar_solve(Gamep, Levelsp, Levelp, Thingp, spoint, spoint);
+std::vector< spoint > astar_solve(Gamep, Levelsp, Levelp, Thingp, spoint, spoint);
 
 #define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                 \
   if (_g_ && _v_ && _l_)                                                                                             \

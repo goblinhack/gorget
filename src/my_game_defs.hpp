@@ -83,6 +83,7 @@
 #define POPUP_TEXT_SCALE_ACROSS    3
 #define POPUP_TEXT_SCALE_DOWN      1.5
 #define TEST_SEED                  "test-seed"
+#define TEST_ITERATIONS            1000
 #define TICK_DURATION_MS           100
 
 #define WALL_VARIANTS  12

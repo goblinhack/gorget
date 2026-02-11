@@ -459,7 +459,7 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
           highest = i;
         }
 
-        if (highest - *e >= 2) {
+        if (*e - highest >= 2) {
           *e      = highest - 1;
           changed = true;
         }

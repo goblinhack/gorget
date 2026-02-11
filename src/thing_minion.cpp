@@ -164,7 +164,7 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp t,
       continue;
     }
 
-    auto p = thing_astar_solve(g, v, l, t, minion_at, target);
+    auto p = astar_solve(g, v, l, t, minion_at, target);
     if (! p.size()) {
       continue;
     }

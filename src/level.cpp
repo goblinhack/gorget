@@ -468,6 +468,46 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   return false;
 }
 
+std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f)
+{
+  TRACE_NO_INDENT();
+
+  std::vector< Thingp > out;
+
+  FOR_ALL_THINGS_ON_LEVEL_UNSAFE(g, v, l, it)
+  {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
+    if (tp_flag(thing_tp(it), f)) {
+      out.push_back(it);
+    }
+  }
+
+  return out;
+}
+
+std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
+{
+  TRACE_NO_INDENT();
+
+  std::vector< Thingp > out;
+
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, p)
+  {
+    if (level_flag_filter(g, v, l, f, it)) {
+      continue;
+    }
+
+    if (tp_flag(thing_tp(it), f)) {
+      out.push_back(it);
+    }
+  }
+
+  return out;
+}
+
 Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
 {
   TRACE_NO_INDENT();
