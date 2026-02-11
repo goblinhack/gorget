@@ -459,8 +459,13 @@ std::vector< spoint > thing_astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, 
 
   a.dump();
 
-  if (! path.size()) {
-    CROAK("no path");
+  //
+  // Tests don't have floors everywhere
+  //
+  if (level_is_floor(g, v, l, dst)) {
+    if (! path.size()) {
+      CROAK("no path");
+    }
   }
 #endif
 
