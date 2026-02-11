@@ -3,6 +3,7 @@
 //
 
 #include "my_callstack.hpp"
+#include "my_globals.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
@@ -53,11 +54,9 @@ public:
 };
 
 //
-// The nodemap needs to be sorted by distance, and we can have multiple
-// identical costs, so std::multimap must be used
+// The nodemap needs to be sorted by distance so std::map must be used
 //
-//
-typedef std::multimap< Nodecost, Node * > Nodemap;
+typedef std::map< Nodecost, Node * > Nodemap;
 
 class Astar
 {
@@ -185,16 +184,7 @@ Node *Astar::node_init(const spoint next_hop, Nodecost cost)
 {
   auto n = &nodes[ next_hop.x ][ next_hop.y ];
 
-  n->at = next_hop;
-
-  switch (thing_assess_tile(g, v, l, next_hop, t)) {
-    case THING_ENVIRON_HATES :    cost.cost += 10; break;
-    case THING_ENVIRON_DISLIKES : cost.cost += 5; break;
-    case THING_ENVIRON_NEUTRAL :  cost.cost += 1; break;
-    case THING_ENVIRON_LIKES :    break;
-    case THING_ENVIRON_ENUM_MAX : break;
-  }
-
+  n->at   = next_hop;
   n->cost = cost;
 
   //
@@ -468,6 +458,10 @@ std::vector< spoint > thing_astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, 
   }
 
   a.dump();
+
+  if (! path.size()) {
+    CROAK("no path");
+  }
 #endif
 
   return path;
