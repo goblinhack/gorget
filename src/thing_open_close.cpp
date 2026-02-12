@@ -8,7 +8,7 @@
 //
 // Open doors
 //
-bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
+bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
 
@@ -17,15 +17,15 @@ bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
     return false;
   }
 
-  if (! thing_is_openable(t)) {
+  if (! thing_is_openable(me)) {
     return false;
   }
 
-  bool success = thing_is_open_try_set(g, v, l, t, player_or_monst);
+  bool success = thing_is_open_try_set(g, v, l, me, player_or_monst);
   if (success) {
     if (thing_is_player(player_or_monst)) {
       level_tick_begin_requested(g, v, l, "player opened something");
-      THING_LOG(player_or_monst, "opened %s", to_string(g, v, l, t).c_str());
+      THING_LOG(player_or_monst, "opened %s", to_string(g, v, l, me).c_str());
     }
   }
 
@@ -35,7 +35,7 @@ bool thing_open(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
 //
 // Close doors
 //
-bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
+bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
 
@@ -44,15 +44,15 @@ bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
     return false;
   }
 
-  if (! thing_is_openable(t)) {
+  if (! thing_is_openable(me)) {
     return false;
   }
 
-  bool success = thing_is_open_try_unset(g, v, l, t, player_or_monst);
+  bool success = thing_is_open_try_unset(g, v, l, me, player_or_monst);
   if (success) {
     if (thing_is_player(player_or_monst)) {
       level_tick_begin_requested(g, v, l, "player closed something");
-      THING_LOG(player_or_monst, "closed %s", to_string(g, v, l, t).c_str());
+      THING_LOG(player_or_monst, "closed %s", to_string(g, v, l, me).c_str());
     }
   }
 
@@ -62,7 +62,7 @@ bool thing_close(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp player_or_monst)
 //
 // Returns true if we can move to this location by opening a door
 //
-bool thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to)
+bool thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 {
   TRACE_NO_INDENT();
 
@@ -70,14 +70,18 @@ bool thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp t
     return false;
   }
 
-  if (to == thing_at(t)) {
+  if (to == thing_at(me)) {
     return true;
   }
 
-  auto at = thing_at(t);
+  auto at = thing_at(me);
   auto dx = to.x - at.x;
   auto dy = to.y - at.y;
-  thing_set_dir_from_delta(t, dx, dy);
+  thing_set_dir_from_delta(me, dx, dy);
+
+  if (! thing_is_able_to_open(me)) {
+    return false;
+  }
 
   FOR_ALL_THINGS_AT(g, v, l, it, to)
   {
@@ -88,11 +92,9 @@ bool thing_can_move_to_attempt_by_opening(Gamep g, Levelsp v, Levelp l, Thingp t
       //
       // But make exceptions for things like doors
       //
-      if (thing_is_able_to_open(t)) {
-        if (thing_is_openable(it)) {
-          if (thing_open(g, v, l, it, t)) {
-            return true;
-          }
+      if (thing_is_openable(it)) {
+        if (thing_open(g, v, l, it, me)) {
+          return true;
         }
       }
 

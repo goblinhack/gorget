@@ -12,6 +12,107 @@
 #include "my_thing_inlines.hpp"
 #include "my_wid_warning.hpp"
 
+//
+// Return true on a successful move (or a popup asking more info)
+//
+[[nodiscard]] static bool thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool need_path)
+{
+  THING_LOG(t, "move try");
+
+  TRACE_AND_INDENT();
+
+  if (thing_can_move_to_attempt(g, v, l, t, to)) {
+    return true;
+  }
+
+  if (thing_can_move_to_attempt_by_shoving(g, v, l, t, to)) {
+    //
+    // Can we shove it out of the way to move?
+    //
+    THING_LOG(t, "move try: can move to by shoving");
+
+    if (thing_shove_to(g, v, l, t, to)) {
+      //
+      // Do not step onto the thing we just shoved.
+      //
+      if (level_is_dead_on_shoving(g, v, l, to)) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+  if (thing_can_move_to_attempt_by_opening(g, v, l, t, to)) {
+    //
+    // Can we open it allow movement?
+    //
+    THING_LOG(t, "move try: can move to by opening");
+
+    if (thing_move_to(g, v, l, t, to)) {
+      return true;
+    }
+  }
+
+  //
+  // Bumped into obstacle
+  //
+  return false;
+}
+
+//
+// Move to the next path on the popped path if it exits.
+//
+bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  //
+  // If already moving, do not pop the next path tile
+  //
+  if (thing_is_moving(t)) {
+    return false;
+  }
+
+  //
+  // Get the next tile to move to
+  //
+  spoint move_next = {};
+  if (! thing_move_path_pop(g, v, l, t, move_next)) {
+    //
+    // If could not pop, then no path is left
+    //
+    return false;
+  }
+
+  spoint move_destination = {};
+  if (thing_move_path_target(g, v, l, t, move_destination)) {
+    if (level_is_cursor_path_hazard(g, v, l, move_next)) {
+      if (thing_jump_to(g, v, l, t, move_destination)) {
+        //
+        // If could jump, then abort the path walk
+        //
+        return false;
+      }
+
+      //
+      // Something was in the way of jumping. Best to stop rather than accidentally
+      // walk into a chasm.
+      //
+      return false;
+    }
+  }
+
+  if (! thing_monst_move_try(g, v, l, t, move_next, false)) {
+    //
+    // If could not move, then abort the path walk
+    //
+    return false;
+  }
+
+  return thing_move_to(g, v, l, t, move_next);
+}
+
 [[nodiscard]] static bool thing_monst_choose_target(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
@@ -39,7 +140,10 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp t)
       [[fallthrough]];
     case MONST_STATE_NORMAL : // newline
       monst_state_change(g, v, l, t, MONST_STATE_PATH_REQUESTED);
-      if (! thing_monst_choose_target(g, v, l, t)) {
+      if (thing_monst_choose_target(g, v, l, t)) {
+        monst_state_change(g, v, l, t, MONST_STATE_FOLLOWING_PATH);
+        (void) thing_monst_move_to_next(g, v, l, t);
+      } else {
         monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
       }
       break;
@@ -50,6 +154,10 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp t)
       // newline
       break;
     case MONST_STATE_FOLLOWING_PATH :
+      if (! thing_monst_move_to_next(g, v, l, t)) {
+        monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
+      }
+
       // newline
       break;
     case MONST_STATE_ENUM_MAX : break;
