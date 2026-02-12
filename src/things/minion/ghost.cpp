@@ -60,7 +60,7 @@ bool tp_load_ghost(void)
   tp_light_color_set(tp, "cyan");
   tp_long_name_set(tp, name);
   tp_priority_set(tp, THING_PRIORITY_MONST);
-  tp_speed_set(tp, 100);
+  tp_speed_set(tp, 200);
   tp_temperature_initial_set(tp, -10); // celsius
   tp_weight_set(tp, WEIGHT_FEATHER);   // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);

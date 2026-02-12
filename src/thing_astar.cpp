@@ -12,7 +12,8 @@
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
 
-#include <limits> // do not remove
+#include <algorithm> // do not remove
+#include <limits>    // do not remove
 #include <map>
 
 #ifdef ENABLE_DEBUG_AI_ASTAR
@@ -242,6 +243,7 @@ std::vector< spoint > Astar::create_path(const Node *came_from)
     came_from = came_from->came_from;
   }
 
+  std::reverse(out.begin(), out.end());
   return out;
 }
 

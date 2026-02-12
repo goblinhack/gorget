@@ -1,12 +1,13 @@
 bugs
 ----
-monst AI
+ghosts not walking over chasms
+ghost speed
+monst chasing
+monst wandering
 need mob distance and lunging
 
 basic features
 --------------
-ghosts and walls
-mobs generating monsters
 tests for collecting items / potions
 score is hard coded to 666
 chests need to contain something and those items destroyed when the chest is

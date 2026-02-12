@@ -483,6 +483,15 @@ bool thing_can_move_to_check_only(Gamep g, Levelsp v, Levelp l, Thingp me, spoin
     }
 
     //
+    // No stacking of ghosts
+    //
+    if (thing_is_ethereal(me)) {
+      if (thing_is_ethereal(it)) {
+        return false;
+      }
+    }
+
+    //
     // A wall or pillar or somesuch?
     //
     if (thing_is_obs_to_movement(it)) {
