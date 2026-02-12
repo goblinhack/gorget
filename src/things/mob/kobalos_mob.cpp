@@ -57,7 +57,7 @@ bool tp_load_kobalos_mob(void)
   thing_detail_set(tp, tp_kobalos_mob_detail_get);
   thing_on_death_set(tp, tp_kobalos_mob_on_death);
   thing_on_tick_begin_set(tp, tp_kobalos_mob_tick_begin);
-  tp_apostrophize_name_set(tp, "kobalos mobs");
+  tp_apostrophize_name_set(tp, "kobalos' mobs");
   tp_flag_set(tp, is_able_to_fall);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);

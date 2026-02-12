@@ -63,14 +63,17 @@
 //
 // Move to the next path on the popped path if it exits.
 //
-bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
+[[nodiscard]] static bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
+
+  THING_LOG(t, "move to next");
 
   //
   // If already moving, do not pop the next path tile
   //
   if (thing_is_moving(t)) {
+    THING_LOG(t, "move to next: already moving");
     return false;
   }
 
@@ -82,6 +85,7 @@ bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // If could not pop, then no path is left
     //
+    THING_LOG(t, "move to next: no move path to pop");
     return false;
   }
 
@@ -92,6 +96,7 @@ bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
         //
         // If could jump, then abort the path walk
         //
+        THING_LOG(t, "move to next: jump");
         return false;
       }
 
@@ -99,6 +104,7 @@ bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
       // Something was in the way of jumping. Best to stop rather than accidentally
       // walk into a chasm.
       //
+      THING_LOG(t, "move to next: something in the way");
       return false;
     }
   }
@@ -107,6 +113,7 @@ bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // If could not move, then abort the path walk
     //
+    THING_LOG(t, "move to next: could not move");
     return false;
   }
 
@@ -120,10 +127,15 @@ bool thing_monst_move_to_next(Gamep g, Levelsp v, Levelp l, Thingp t)
   if (thing_is_minion(t)) {
     spoint target;
     if (thing_minion_choose_target_near_mob(g, v, l, t, target)) {
+      THING_LOG(t, "minion chose target");
       return true;
     }
+
+    THING_LOG(t, "minion has no target");
+    return false;
   }
 
+  THING_LOG(t, "monst has no target");
   return false;
 }
 
@@ -134,6 +146,9 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
+  //
+  // Early state check
+  //
   switch (monst_state(g, v, l, t)) {
     case MONST_STATE_INIT : // newline
       monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
@@ -142,7 +157,6 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp t)
       monst_state_change(g, v, l, t, MONST_STATE_PATH_REQUESTED);
       if (thing_monst_choose_target(g, v, l, t)) {
         monst_state_change(g, v, l, t, MONST_STATE_FOLLOWING_PATH);
-        (void) thing_monst_move_to_next(g, v, l, t);
       } else {
         monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
       }
@@ -154,11 +168,30 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp t)
       // newline
       break;
     case MONST_STATE_FOLLOWING_PATH :
+      // newline
+      break;
+    case MONST_STATE_ENUM_MAX : break;
+  }
+
+  //
+  // Post thinking state check
+  //
+  switch (monst_state(g, v, l, t)) {
+    case MONST_STATE_INIT : // newline
+      break;
+    case MONST_STATE_NORMAL : // newline
+      break;
+    case MONST_STATE_DEAD :
+      // newline
+      break;
+    case MONST_STATE_PATH_REQUESTED :
+      // newline
+      break;
+    case MONST_STATE_FOLLOWING_PATH :
       if (! thing_monst_move_to_next(g, v, l, t)) {
+        THING_LOG(t, "end of move");
         monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
       }
-
-      // newline
       break;
     case MONST_STATE_ENUM_MAX : break;
   }
