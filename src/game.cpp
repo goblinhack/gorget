@@ -1245,7 +1245,10 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
   for (;;) {
     TRACE_NO_INDENT();
 
-    IF_DEBUG2 { LEVEL_LOG(l, "Test: waiting for tick %u to finish", v->tick); }
+    IF_DEBUG2
+    { // newline
+      LEVEL_LOG(l, "Test: waiting for tick %u to finish", v->tick);
+    }
 
     if (time_have_x_secs_passed_since(max_time, started)) {
       ERR("Test timed out: %u secs", max_time);

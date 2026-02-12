@@ -726,6 +726,8 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_mob_detach_minion(Gamep, Levelsp, Levelp, Thingp mob, Thingp minion);
 [[nodiscard]] bool        thing_mob_kill_all_minions(Gamep, Levelsp, Levelp, Thingp mob, ThingEvent &e);
 [[nodiscard]] bool        thing_move_path_apply(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
+[[nodiscard]] bool        thing_move_path_pop(Gamep, Levelsp, Levelp, Thingp, spoint &out);
+[[nodiscard]] bool        thing_move_path_target(Gamep, Levelsp, Levelp, Thingp, spoint &out);
 [[nodiscard]] bool        thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] bool        thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 [[nodiscard]] bool        thing_on_same_level_as_player(Gamep, Levelsp, Thingp);
@@ -782,6 +784,7 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_lifespan_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_lifespan(Thingp);
 [[nodiscard]] int         thing_mob_minion_count_get(Gamep, Levelsp, Levelp, Thingp mob);
+[[nodiscard]] int         thing_move_path_size(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] int         thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_speed(Thingp);
 [[nodiscard]] int         thing_submerged_pct_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
@@ -837,10 +840,7 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_value19_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_value19(Thingp);
 [[nodiscard]] int         thing_value2_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] bool        thing_move_path_pop(Gamep, Levelsp, Levelp, Thingp, spoint &out);
-[[nodiscard]] bool        thing_move_path_target(Gamep, Levelsp, Levelp, Thingp, spoint &out);
 [[nodiscard]] int         thing_value2_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_move_path_size(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] int         thing_value2_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_value2(Thingp);
 [[nodiscard]] int         thing_value20_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
@@ -975,7 +975,6 @@ void thing_display(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint tl, spoin
 void thing_dmap(Gamep, Levelsp, Levelp, Thingp, bool reverse = false);
 void THING_ERR(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp);
-void thing_move_path_reset(Gamep, Levelsp, Levelp, Thingp);
 void thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
 void thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_fall(Gamep, Levelsp, Levelp, Thingp);
@@ -1021,6 +1020,7 @@ void thing_melt(Gamep, Levelsp, Levelp, Thingp);
 void thing_mob_dump_minions(Gamep, Levelsp, Levelp, Thingp mob);
 void thing_monst_event_loop(Gamep, Levelsp, Levelp, Thingp);
 void thing_move_or_jump_finish(Gamep, Levelsp, Levelp, Thingp);
+void thing_move_path_reset(Gamep, Levelsp, Levelp, Thingp);
 void thing_moving_from_set(Thingp, const spoint &val);
 void thing_path_shorten(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &path);
 void thing_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);

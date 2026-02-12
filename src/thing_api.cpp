@@ -460,7 +460,10 @@ int thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     val = limit;
   }
 
-  IF_DEBUG2 { THING_DBG(t, "temperature set to %u degrees", val); }
+  IF_DEBUG2
+  { // newline
+    THING_DBG(t, "temperature set to %u degrees", val);
+  }
 
   return t->_temperature = val;
 }

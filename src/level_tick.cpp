@@ -69,12 +69,18 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     //
     if (thing_is_moving(t)) {
       l->tick_wait_on_things = true;
-      IF_DEBUG2 { LEVEL_LOG(l, "waiting on moving %s", to_string(g, v, l, t).c_str()); }
+      IF_DEBUG2
+      { // newline
+        LEVEL_LOG(l, "waiting on moving %s", to_string(g, v, l, t).c_str());
+      }
     }
 
     if (thing_is_jumping(t)) {
       l->tick_wait_on_things = true;
-      IF_DEBUG2 { LEVEL_LOG(l, "waiting on jumping %s", to_string(g, v, l, t).c_str()); }
+      IF_DEBUG2
+      { // newline
+        LEVEL_LOG(l, "waiting on jumping %s", to_string(g, v, l, t).c_str());
+      }
     }
 
     //
@@ -84,7 +90,10 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
       thing_fall_end_check(g, v, l, t);
       if (thing_is_falling(t)) {
         l->tick_wait_on_things = true;
-        IF_DEBUG2 { LEVEL_LOG(l, "waiting on falling %s", to_string(g, v, l, t).c_str()); }
+        IF_DEBUG2
+        { // newline
+          LEVEL_LOG(l, "waiting on falling %s", to_string(g, v, l, t).c_str());
+        }
       }
     }
 
@@ -616,7 +625,10 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
   v->last_time_step = v->time_step;
   v->time_step      = ((float) (v->frame - v->frame_begin)) / (float) TICK_DURATION_MS;
 
-  IF_DEBUG2 { LEVEL_LOG(current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step); }
+  IF_DEBUG2
+  { // newline
+    LEVEL_LOG(current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step);
+  }
 }
 
 //

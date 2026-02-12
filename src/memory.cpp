@@ -20,7 +20,10 @@ void *myzalloc_(int size, const char *what, const char *file, const char *func, 
     CROAK("No memory, %s:%s:%u, size %u", file, func, line, size);
   }
 
-  IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
+  IF_DEBUG2
+  { // newline
+    ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
+  }
 
   // callstack_dump();
   g_memory_allocated++;
@@ -38,7 +41,10 @@ void *mymalloc_(int size, const char *what, const char *file, const char *func, 
     CROAK("No memory, %s:%s:%u", file, func, line);
   }
 
-  IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
+  IF_DEBUG2
+  { // newline
+    ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
+  }
 
   // callstack_dump();
   g_memory_allocated++;
@@ -49,14 +55,20 @@ void *mymalloc_(int size, const char *what, const char *file, const char *func, 
 void *myrealloc_(void *ptr, int size, const char *what, const char *file, const char *func, int line)
 {
   TRACE_NO_INDENT();
-  IF_DEBUG2 { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
+  IF_DEBUG2
+  { // newline
+    ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
+  }
 
   ptr = realloc(ptr, size);
   if (unlikely(! ptr)) {
     CROAK("No memory, %s:%s:%u", file, func, line);
   }
 
-  IF_DEBUG2 { ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line); }
+  IF_DEBUG2
+  { // newline
+    ptrcheck_alloc(MTYPE_MISC, ptr, what, size, file, func, line);
+  }
 
   // callstack_dump();
   g_memory_allocated++;
@@ -68,7 +80,10 @@ void myfree_(void *ptr, const char *file, const char *func, int line)
 {
   TRACE_NO_INDENT();
 
-  IF_DEBUG2 { ptrcheck_free(MTYPE_MISC, ptr, file, func, line); }
+  IF_DEBUG2
+  { // newline
+    ptrcheck_free(MTYPE_MISC, ptr, file, func, line);
+  }
 
   // callstack_dump();
   g_memory_allocated++;

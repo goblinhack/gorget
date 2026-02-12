@@ -294,7 +294,10 @@ uint8_t sdl_display_init(Gamep g)
     SDL_GL_SwapWindow(sdl.window);
   }
 
-  IF_DEBUG { DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS)); }
+  IF_DEBUG
+  { // newline
+    DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS));
+  }
 
   return true;
 }
