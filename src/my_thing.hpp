@@ -38,10 +38,10 @@ typedef union {
 //
 // Essentially equates to the max number of monsters+light sources per level
 //
-#define THING_EXT_MAX       (LEVEL_MAX * 500) // The size of thing_ext
-#define THING_FOV_MAX       (LEVEL_MAX * 500) // The size of thing_ext
-#define THING_DESCRIBE_MAX  10                // The number of things we can show in the rightbar
-#define THING_MOVE_PATH_MAX (MAP_WIDTH * 2)
+#define THING_EXT_MAX       (LEVEL_MAX * 500)        // The size of thing_ext
+#define THING_FOV_MAX       (LEVEL_MAX * 500)        // The size of thing_ext
+#define THING_DESCRIBE_MAX  10                       // The number of things we can show in the rightbar
+#define THING_MOVE_PATH_MAX (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
 #define THING_INVENTORY_MAX 26
 #define THING_MINION_MAX    100
 
@@ -147,8 +147,8 @@ typedef struct ThingExt_ {
   // Holds the path as we or the monster walk it
   //
   struct {
-    spoint  points[ THING_MOVE_PATH_MAX ];
-    int16_t size;
+    spoint points[ THING_MOVE_PATH_MAX ];
+    int8_t size;
   } move_path;
 } ThingExt;
 
@@ -725,7 +725,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_mob_detach_all_minions(Gamep, Levelsp, Levelp, Thingp mob);
 [[nodiscard]] bool        thing_mob_detach_minion(Gamep, Levelsp, Levelp, Thingp mob, Thingp minion);
 [[nodiscard]] bool        thing_mob_kill_all_minions(Gamep, Levelsp, Levelp, Thingp mob, ThingEvent &e);
-[[nodiscard]] bool        thing_monst_apply_path(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
+[[nodiscard]] bool        thing_move_path_apply(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
 [[nodiscard]] bool        thing_move_to_next(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] bool        thing_move_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
 [[nodiscard]] bool        thing_on_same_level_as_player(Gamep, Levelsp, Thingp);
@@ -837,7 +837,10 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_value19_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_value19(Thingp);
 [[nodiscard]] int         thing_value2_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] bool        thing_move_path_pop(Gamep, Levelsp, Levelp, Thingp, spoint &out);
+[[nodiscard]] bool        thing_move_path_target(Gamep, Levelsp, Levelp, Thingp, spoint &out);
 [[nodiscard]] int         thing_value2_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int         thing_move_path_size(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] int         thing_value2_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_value2(Thingp);
 [[nodiscard]] int         thing_value20_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
@@ -971,7 +974,8 @@ void thing_display_get_tile_info(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, sp
 void thing_display(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp, spoint tl, spoint br, uint16_t tile_index, FboEnum);
 void thing_dmap(Gamep, Levelsp, Levelp, Thingp, bool reverse = false);
 void THING_ERR(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp me);
+void thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp);
+void thing_move_path_reset(Gamep, Levelsp, Levelp, Thingp);
 void thing_fall_end_check(Gamep, Levelsp, Levelp, Thingp);
 void thing_fall_time_step(Gamep, Levelsp, Levelp, Thingp, int time_step);
 void thing_fall(Gamep, Levelsp, Levelp, Thingp);

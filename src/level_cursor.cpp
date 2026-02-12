@@ -391,7 +391,7 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
 //
 // Stop following the current path
 //
-void level_cursor_path_reset(Gamep g, Levelsp v)
+void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 {
   auto player = thing_player(g);
   if (! player) {
@@ -411,8 +411,8 @@ void level_cursor_path_reset(Gamep g, Levelsp v)
     return;
   }
 
-  player_state_change(g, v, PLAYER_STATE_NORMAL);
-  ext_struct->move_path.size = 0;
+  player_state_change(g, v, l, PLAYER_STATE_NORMAL);
+  thing_move_path_reset(g, v, l, player);
   memset(v->cursor, 0, SIZEOF(v->cursor));
 }
 
@@ -460,7 +460,7 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
       //
       // Player wants to start following or replace the current path.
       //
-      player_state_change(g, v, PLAYER_STATE_FOLLOWING_PATH);
+      player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);
       break;
     case PLAYER_STATE_MOVE_CONFIRM_REQUESTED :
       //
@@ -478,24 +478,10 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
   //
   // Copy the latest mouse path to the player
   //
-  int index                  = 0;
-  ext_struct->move_path.size = 0;
-
-  THING_DBG(player, "apply cursor path size: %d", (int) move_path.size());
-  for (auto p : move_path) {
-    THING_DBG(player, " - cursor path: %d,%d", p.x, p.y);
+  IF_DEBUG2 { THING_DBG(player, "apply cursor path size: %d", (int) move_path.size()); }
+  if (thing_move_path_apply(g, v, l, player, move_path)) {
+    move_path.clear();
   }
-
-  for (auto p : move_path) {
-    ext_struct->move_path.points[ index ].x = p.x;
-    ext_struct->move_path.points[ index ].y = p.y;
-    ext_struct->move_path.size              = ++index;
-    if (index >= ARRAY_SIZE(ext_struct->move_path.points)) {
-      break;
-    }
-  }
-
-  move_path.clear();
 }
 
 //
@@ -539,10 +525,10 @@ static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
   //
   cursor_path = level_cursor_path_draw_line(g, v, l, thing_at(player), v->cursor_at);
 
-  THING_DBG(player, "cursor path size: %d", (int) cursor_path.size());
+  IF_DEBUG2 { THING_DBG(player, "cursor path size: %d", (int) cursor_path.size()); }
   for (auto p : cursor_path) {
     v->cursor[ p.x ][ p.y ] = CURSOR_PATH;
-    THING_DBG(player, " - cursor path: %d,%d", p.x, p.y);
+    IF_DEBUG2 { THING_DBG(player, " - cursor path: %d,%d", p.x, p.y); }
   }
   v->cursor[ v->cursor_at.x ][ v->cursor_at.y ] = CURSOR_AT;
 }

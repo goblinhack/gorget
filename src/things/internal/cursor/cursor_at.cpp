@@ -45,7 +45,7 @@ static Tilep tp_cursor_at_display_get_tile_info(Gamep g, Levelsp v, Levelp l, sp
   //
   // If we have a path, show the cursor highlighted
   //
-  if (level_cursor_path_size(g) || ext_struct->move_path.size) {
+  if (level_cursor_path_size(g) || thing_move_path_size(g, v, l, player)) {
     return tp_tiles_get(tp, THING_ANIM_CURSOR_NORMAL, 0);
   }
 

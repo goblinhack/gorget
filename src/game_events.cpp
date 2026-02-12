@@ -339,7 +339,7 @@ bool game_event_jump(Gamep g)
     // code which will walk up to the edge of the chasm and then jump, and
     // can offer a confirm box.
     //
-    player_state_change(g, v, PLAYER_STATE_PATH_REQUESTED);
+    player_state_change(g, v, l, PLAYER_STATE_PATH_REQUESTED);
     level_cursor_copy_mouse_path_to_player(g, v, l);
     return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
   } else {

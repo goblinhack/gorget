@@ -47,7 +47,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
     //
     // Reset the player state
     //
-    player_state_change(g, v, PLAYER_STATE_NORMAL);
+    player_state_change(g, v, l, PLAYER_STATE_NORMAL);
 
     //
     // First time entering this level?

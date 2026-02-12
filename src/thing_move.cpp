@@ -350,7 +350,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp t, spoint to)
     // following that path.
     //
     if (thing_is_player(t)) {
-      player_state_change(g, v, PLAYER_STATE_NORMAL);
+      player_state_change(g, v, old_level, PLAYER_STATE_NORMAL);
     }
 
     //

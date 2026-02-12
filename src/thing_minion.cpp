@@ -169,9 +169,11 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp t,
       continue;
     }
 
-    if (! thing_monst_apply_path(g, v, l, t, p)) {
+    if (thing_move_path_apply(g, v, l, t, p)) {
+      monst_state_change(g, v, l, t, MONST_STATE_FOLLOWING_PATH);
       continue;
     }
+
     return true;
   }
 

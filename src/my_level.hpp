@@ -663,7 +663,7 @@ void level_cursor_describe_clear(Gamep, Levelsp);
 void level_cursor_describe_update(Gamep, Levelsp);
 void level_cursor_describe(Gamep, Levelsp, Levelp);
 void level_cursor_path_recreate(Gamep, Levelsp, Levelp);
-void level_cursor_path_reset(Gamep, Levelsp);
+void level_cursor_path_reset(Gamep, Levelsp, Levelp);
 void level_cursor_set(Gamep, Levelsp, spoint);
 void game_debug_info(Gamep);
 void level_debug(Gamep, Levelsp, Levelp);
@@ -778,6 +778,6 @@ void level_select_mouse_down(Gamep, Levelsp, Levelp);
 
 [[nodiscard]] std::string player_state_to_string(PlayerState);
 [[nodiscard]] PlayerState player_state(Gamep, Levelsp);
-void                      player_state_change(Gamep, Levelsp, PlayerState new_state);
+void                      player_state_change(Gamep, Levelsp, Levelp, PlayerState new_state);
 
 #endif // _MY_LEVEL_H_
