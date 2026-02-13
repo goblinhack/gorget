@@ -41,7 +41,7 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (d100() < 10) {
+  if (d100() < 50) {
     return;
   }
 

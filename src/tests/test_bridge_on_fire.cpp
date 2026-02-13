@@ -31,16 +31,34 @@
       = "......."
         "......."
         "...CCC."
-        "..@C;;."
+        "..@CCC."
         "...CCC."
+        "......."
+        ".......";
+  std::string level2
+      = "......."
+        "......."
+        "......."
+        "......."
+        "......."
+        "......."
+        ".......";
+  std::string expect2 // second level
+      = "......."
+        "......."
+        "......."
+        "....!.."
+        "......."
         "......."
         ".......";
 
   //
   // Create the level and start playing
   //
-  Levelp  l;
-  Levelsp v = game_test_init(g, &l, level_num, w, h, start.c_str());
+  Levelp  l1;
+  Levelp  l2;
+  Levelsp v = game_test_init(g, &l1, level_num, w, h, start.c_str());
+  game_test_init_level(g, v, &l2, level_num + 1, w, h, level2.c_str());
 
   //
   // The guts of the test
@@ -70,7 +88,7 @@
   //
   // Spawn fire twice. This should be enough to destroy the bridge.
   //
-  if (! thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0))) {
+  if (! thing_spawn(g, v, l1, tp_first(is_fire), thing_at(player) + spoint(2, 0))) {
     TEST_FAILED(t, "spawn failed");
     goto exit;
   }
@@ -79,9 +97,9 @@
   for (auto tries = 0; tries < 3; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
-    // level_dump(g, v, l, w, h);
+    // level_dump(g, v, l1, w, h);
     game_event_wait(g);
-    if (! game_wait_for_tick_to_finish(g, v, l)) {
+    if (! game_wait_for_tick_to_finish(g, v, l1)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
     }
@@ -93,7 +111,16 @@
   TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
-    if (! (result = level_match_contents(g, v, l, t, w, h, expect1.c_str()))) {
+    if (! (result = level_match_contents(g, v, l1, t, w, h, expect1.c_str()))) {
+      TEST_FAILED(t, "unexpected contents");
+      goto exit;
+    }
+  }
+
+  TEST_PROGRESS(t);
+  {
+    TRACE_NO_INDENT();
+    if (! (result = level_match_contents(g, v, l2, t, w, h, expect2.c_str()))) {
       TEST_FAILED(t, "unexpected contents");
       goto exit;
     }

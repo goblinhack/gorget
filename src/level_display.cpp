@@ -288,10 +288,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   // Animate both levels
   //
-  level_anim(g, v, l);
-  if (level_below) {
-    level_anim(g, v, level_below);
-  }
+  FOR_ALL_TICKING_LEVELS(g, v, iter) { level_anim(g, v, iter); }
 
   level_display_fbo(g, v, l, level_below, FBO_MAP_BG);
   // sdl_fbo_dump(g, FBO_MAP_BG, "FBO_MAP_BG");

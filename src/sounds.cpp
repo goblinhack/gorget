@@ -30,7 +30,7 @@ void sounds_init(void)
   if (! sound_load(0.5f, "data/sounds/interface/error.ogg", "error")) {
     return;
   }
-  if (! sound_load(1.0f, "data/sounds/impacts/explosion.ogg", "explosion", 3 /* concurrent_max */)) {
+  if (! sound_load(1.0f, "data/sounds/impacts/explosion.ogg", "explosion", 10 /* concurrent_max */)) {
     return;
   }
   if (! sound_load(1.0f, "data/sounds/impacts/door_stone.ogg", "door_secret", 2)) {
@@ -45,7 +45,7 @@ void sounds_init(void)
   if (! sound_load(1.0f, "data/sounds/misc/footsteps.ogg", "footstep")) {
     return;
   }
-  if (! sound_load(1.0f, "data/sounds/missiles/arrow.ogg", "fireball")) {
+  if (! sound_load(1.0f, "data/sounds/missiles/arrow.ogg", "fireball", 5)) {
     return;
   }
   if (! sound_load(1.0f, "data/sounds/treasure/key.ogg", "key")) {

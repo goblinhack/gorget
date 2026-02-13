@@ -486,6 +486,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_able_to_collect_items(Thingp);
 [[nodiscard]] bool        thing_is_able_to_collect_keys(Thingp);
 [[nodiscard]] bool        thing_is_able_to_crush_grass(Thingp);
+[[nodiscard]] bool        thing_is_able_to_fall_repeatedly(Thingp);
 [[nodiscard]] bool        thing_is_able_to_fall(Thingp);
 [[nodiscard]] bool        thing_is_able_to_jump(Thingp);
 [[nodiscard]] bool        thing_is_able_to_move_diagonally(Thingp);
@@ -712,7 +713,6 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_unused7(Thingp);
 [[nodiscard]] bool        thing_is_unused70(Thingp);
 [[nodiscard]] bool        thing_is_unused71(Thingp);
-[[nodiscard]] bool        thing_is_unused72(Thingp);
 [[nodiscard]] bool        thing_is_unused8(Thingp);
 [[nodiscard]] bool        thing_is_unused9(Thingp);
 [[nodiscard]] bool        thing_is_wait_on_dead_anim(Thingp);
@@ -733,6 +733,8 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_on_same_level_as_player(Gamep, Levelsp, Thingp);
 [[nodiscard]] bool        thing_open(Gamep, Levelsp, Levelp, Thingp, Thingp opener);
 [[nodiscard]] bool        thing_player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
+[[nodiscard]] bool        thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const fpoint);
+[[nodiscard]] bool        thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const spoint);
 [[nodiscard]] bool        thing_push(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] bool        thing_shove_handle(Gamep, Levelsp, Levelp, Thingp, spoint at);
 [[nodiscard]] bool        thing_shove_to(Gamep, Levelsp, Levelp, Thingp, spoint to);
@@ -894,8 +896,6 @@ typedef struct Thing_ {
 [[nodiscard]] MonstState  monst_state(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] spoint      thing_at(Thingp);
 [[nodiscard]] spoint      thing_moving_from(Thingp);
-[[nodiscard]] bool        thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const fpoint);
-[[nodiscard]] bool        thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const spoint);
 [[nodiscard]] spoint      thing_old_at(Thingp);
 [[nodiscard]] spoint      thing_prev_pix_at(Thingp);
 [[nodiscard]] std::string monst_state_to_string(MonstState state);

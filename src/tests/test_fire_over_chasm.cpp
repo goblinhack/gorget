@@ -31,7 +31,7 @@
       = "......."
         "......."
         "...CCC."
-        "..@C;C."
+        "..@CCC."
         "...CCC."
         "......."
         ".......";
@@ -68,7 +68,7 @@
   }
 
   //
-  // Spawn fire twice. This should be enough to evaporate the chasm.
+  // Spawn fire.
   //
   if (! thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0))) {
     TEST_FAILED(t, "spawn failed");

@@ -141,6 +141,16 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     return;
   }
 
+  if (next_level == l) {
+    ThingEvent e {
+        .reason     = "by falling into nothing",     //
+        .event_type = THING_EVENT_FALL,              //
+        .damage     = thing_fall_damage(g, v, l, t), //
+    };
+    thing_dead(g, v, l, t, e);
+    return;
+  }
+
   //
   // Choose a new landing spot for the thing
   //
@@ -179,6 +189,17 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   if (level_is_chasm(g, v, t_level, t)) {
     //
+    // If we keep on falling through chasms again and again though,
+    // we need to break the potential fall loop.
+    //
+    if (thing_is_falling_continues(t)) {
+      if (! thing_is_able_to_fall_repeatedly(t)) {
+        e.reason = "repeated falling";
+        thing_dead(g, v, l, t, e);
+      }
+    }
+
+    //
     // Keep falling with no damage if over a chasm.
     //
     THING_LOG(t, "over a chasm again; keep falling");
@@ -212,6 +233,9 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   TRACE_NO_INDENT();
 
   (void) thing_is_falling_incr(g, v, l, t, time_step);
+
+  if (0)
+    THING_LOG(t, "fall incr %u", thing_is_falling(t));
 }
 
 //

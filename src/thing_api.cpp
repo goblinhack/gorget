@@ -2358,14 +2358,14 @@ bool thing_is_unused71(Thingp t)
   return tp_flag(thing_tp(t), is_unused71);
 }
 
-bool thing_is_unused72(Thingp t)
+bool thing_is_able_to_fall_repeatedly(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused72);
+  return tp_flag(thing_tp(t), is_able_to_fall_repeatedly);
 }
 
 bool thing_is_able_to_move_through_walls(Thingp t)
