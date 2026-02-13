@@ -1247,7 +1247,7 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 
     IF_DEBUG2
     { // newline
-      LEVEL_LOG(l, "Test: waiting for tick %u to finish", v->tick);
+      LEVEL_LOG(g, v, l, "Test: waiting for tick %u to finish", v->tick);
     }
 
     if (time_have_x_secs_passed_since(max_time, started)) {
@@ -1264,7 +1264,7 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
 
     TRACE_NO_INDENT();
     if (! v->level_tick_in_progress_count && ! v->level_tick_request_count) {
-      LEVEL_LOG(l, "Test: tick %u finished, stop waiting", v->tick);
+      LEVEL_LOG(g, v, l, "Test: tick %u finished, stop waiting", v->tick);
       return true;
     }
   }

@@ -66,27 +66,6 @@ bool is_oob(int x, int y)
   return false;
 }
 
-bool level_request_to_cleanup_things_get(Gamep g, Levelsp v, Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  return l->request_to_cleanup_things;
-}
-
-void level_request_to_cleanup_things_set(Gamep g, Levelsp v, Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  l->request_to_cleanup_things = true;
-}
-
-void level_request_to_cleanup_things_unset(Gamep g, Levelsp v, Levelp l)
-{
-  TRACE_NO_INDENT();
-
-  l->request_to_cleanup_things = false;
-}
-
 //
 // Are we on the level selection level?
 //
@@ -145,7 +124,7 @@ bool level_match_contents(Gamep g, Levelsp v, Levelp l, Testp t, int w, int h, c
 {
   TRACE_NO_INDENT();
 
-  LEVEL_LOG(l, "match");
+  LEVEL_LOG(g, v, l, "match");
   std::string found = level_string(g, v, l, w, h);
 
   for (int y = 0; y < h; y++) {
@@ -264,7 +243,7 @@ void levels_finalize(Gamep g, Levelsp v)
 
 void level_enter(Gamep g, Levelsp v, Levelp l)
 {
-  LEVEL_LOG(l, "Level entered");
+  LEVEL_LOG(g, v, l, "Level entered");
   TRACE_AND_INDENT();
 
   l->player_has_entered_level = true;
@@ -282,7 +261,7 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)
   }
   l->player_completed_level_via_exit = true;
 
-  LEVEL_LOG(l, "Level completed");
+  LEVEL_LOG(g, v, l, "Level completed");
   TRACE_AND_INDENT();
 
   auto player_struct = thing_player_struct(g);

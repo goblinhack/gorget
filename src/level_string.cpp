@@ -10,7 +10,7 @@
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
 
-std::string to_string(Gamep g, Levelp l)
+std::string to_string(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
@@ -21,7 +21,7 @@ std::string to_string(Gamep g, Levelp l)
 
   return (string_sprintf("L%u%s",
                          /* newline */ l->level_num + 1,
-                         /* newline */ l->is_current_level ? "/curr" : ""));
+                         /* newline */ level_is_player_level(g, v, l) ? "/curr" : ""));
 }
 
 //
@@ -33,7 +33,7 @@ std::string level_string(Gamep g, Levelsp v, Levelp l, int w, int h)
 
   std::string out;
 
-  LEVEL_LOG(l, "string");
+  LEVEL_LOG(g, v, l, "string");
   for (int y = 0; y < h; y++) {
     for (int x = 0; x < w; x++) {
       char   c = CHARMAP_EMPTY;

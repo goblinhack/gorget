@@ -1398,14 +1398,14 @@ bool thing_is_lava(Thingp t)
   return tp_flag(thing_tp(t), is_lava);
 }
 
-bool thing_is_level_across(Thingp t)
+bool thing_is_level_across_icon(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_level_across);
+  return tp_flag(thing_tp(t), is_level_across_icon);
 }
 
 bool thing_is_level_curr(Thingp t)
@@ -1418,54 +1418,54 @@ bool thing_is_level_curr(Thingp t)
   return tp_flag(thing_tp(t), is_level_curr);
 }
 
-bool thing_is_level_down(Thingp t)
+bool thing_is_level_down_icon(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_level_down);
+  return tp_flag(thing_tp(t), is_level_down_icon);
 }
 
-bool thing_is_level_final(Thingp t)
+bool thing_is_level_final_icon(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_level_final);
+  return tp_flag(thing_tp(t), is_level_final_icon);
 }
 
-bool thing_is_level_next(Thingp t)
+bool thing_is_level_next_icon(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_level_next);
+  return tp_flag(thing_tp(t), is_level_next_icon);
 }
 
-bool thing_is_level_not_visited(Thingp t)
+bool thing_is_level_not_visited_icon(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_level_not_visited);
+  return tp_flag(thing_tp(t), is_level_not_visited_icon);
 }
 
-bool thing_is_level_visited(Thingp t)
+bool thing_is_level_visited_icon(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_level_visited);
+  return tp_flag(thing_tp(t), is_level_visited_icon);
 }
 
 bool thing_is_minion(Thingp t)

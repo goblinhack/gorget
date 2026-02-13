@@ -19,7 +19,7 @@ bool tp_load_level_visited(void)
   tp_flag_set(tp, is_animated_sync_first);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_level_visited);
+  tp_flag_set(tp, is_level_visited_icon);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 

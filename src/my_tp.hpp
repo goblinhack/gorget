@@ -85,31 +85,31 @@
       list_macro(is_key, "is_key"),                                     /* newline */                                \
       list_macro(is_kobalos, "is_kobalos"),                             /* newline */                                \
       list_macro(is_lava, "is_lava"),                                   /* newline */                                \
-      list_macro(is_level_across, "is_level_across"),                   /* newline */                                \
+      list_macro(is_level_across_icon, "is_level_across_icon"),         /* newline */                                \
       list_macro(is_level_curr, "is_level_curr"),                       /* newline */                                \
-      list_macro(is_level_down, "is_level_down"),                       /* newline */                                \
-      list_macro(is_level_final, "is_level_final"),                     /* newline */                                \
-      list_macro(is_level_next, "is_level_next"),                       /* newline */                                \
-      list_macro(is_level_not_visited, "is_level_not_visited"),         /* newline */                                \
-      list_macro(is_level_visited, "is_level_visited"),                 /* newline */                                \
-      list_macro(is_levitating, "is_levitating"),                       /* newline */                                \
-      list_macro(is_light_source, "is_light_source"),                   /* newline */                                \
-      list_macro(is_loggable, "is_loggable"),                           /* newline */                                \
-      list_macro(is_minion, "is_minion"),                               /* newline */                                \
-      list_macro(is_mob, "is_mob"),                                     /* newline */                                \
-      list_macro(is_mob1, "is_mob1"),                                   /* newline */                                \
-      list_macro(is_mob2, "is_mob2"),                                   /* newline */                                \
-      list_macro(is_monst_group_easy, "is_monst_group_easy"),           /* newline */                                \
-      list_macro(is_monst_group_hard, "is_monst_group_hard"),           /* newline */                                \
-      list_macro(is_monst_group_mob, "is_monst_group_mob"),             /* newline */                                \
-      list_macro(is_monst, "is_monst"),                                 /* newline */                                \
-      list_macro(is_needs_move_confirm, "is_needs_move_confirm"),       /* newline */                                \
-      list_macro(is_obs_to_cursor_path, "is_obs_to_cursor_path"),       /* newline */                                \
-      list_macro(is_obs_to_explosion, "is_obs_to_explosion"),           /* newline */                                \
-      list_macro(is_obs_to_falling_onto, "is_obs_to_falling_onto"),     /* newline */                                \
-      list_macro(is_obs_to_fire, "is_obs_to_fire"),                     /* newline */                                \
-      list_macro(is_obs_to_jump_over, "is_obs_to_jump_over"),           /* newline */                                \
-      list_macro(is_obs_to_jumping_onto, "is_obs_to_jumping_onto"),     /* newline */                                \
+      list_macro(is_level_down_icon, "is_level_down_icon"),             /* newline */                                \
+      list_macro(is_level_final_icon, "is_level_final_icon"),           /* newline */                                \
+      list_macro(is_level_next_icon, "is_level_next_icon"),             /* newline */                                \
+      list_macro(is_level_not_visited_icon, "is_level_not_visited_icon"),           /* newline */                    \
+      list_macro(is_level_visited_icon, "is_level_visited_icon"),                   /* newline */                    \
+      list_macro(is_levitating, "is_levitating"),                                   /* newline */                    \
+      list_macro(is_light_source, "is_light_source"),                               /* newline */                    \
+      list_macro(is_loggable, "is_loggable"),                                       /* newline */                    \
+      list_macro(is_minion, "is_minion"),                                           /* newline */                    \
+      list_macro(is_mob, "is_mob"),                                                 /* newline */                    \
+      list_macro(is_mob1, "is_mob1"),                                               /* newline */                    \
+      list_macro(is_mob2, "is_mob2"),                                               /* newline */                    \
+      list_macro(is_monst_group_easy, "is_monst_group_easy"),                       /* newline */                    \
+      list_macro(is_monst_group_hard, "is_monst_group_hard"),                       /* newline */                    \
+      list_macro(is_monst_group_mob, "is_monst_group_mob"),                         /* newline */                    \
+      list_macro(is_monst, "is_monst"),                                             /* newline */                    \
+      list_macro(is_needs_move_confirm, "is_needs_move_confirm"),                   /* newline */                    \
+      list_macro(is_obs_to_cursor_path, "is_obs_to_cursor_path"),                   /* newline */                    \
+      list_macro(is_obs_to_explosion, "is_obs_to_explosion"),                       /* newline */                    \
+      list_macro(is_obs_to_falling_onto, "is_obs_to_falling_onto"),                 /* newline */                    \
+      list_macro(is_obs_to_fire, "is_obs_to_fire"),                                 /* newline */                    \
+      list_macro(is_obs_to_jump_over, "is_obs_to_jump_over"),                       /* newline */                    \
+      list_macro(is_obs_to_jumping_onto, "is_obs_to_jumping_onto"),                 /* newline */                    \
       list_macro(is_obs_to_teleporting_onto, "is_obs_to_teleporting_onto"),         /* newline */                    \
       list_macro(is_obs_to_movement, "is_obs_to_movement"),                         /* newline */                    \
       list_macro(is_obs_to_vision, "is_obs_to_vision"),                             /* newline */                    \
@@ -784,13 +784,13 @@ float tp_collision_radius(Tpp);
 #define tp_is_key(tp)                         tp_flag(tp, is_key)
 #define tp_is_kobalos(tp)                     tp_flag(tp, is_kobalos)
 #define tp_is_lava(tp)                        tp_flag(tp, is_lava)
-#define tp_is_level_across(tp)                tp_flag(tp, is_level_across)
+#define tp_is_level_across_icon(tp)           tp_flag(tp, is_level_across_icon)
 #define tp_is_level_curr(tp)                  tp_flag(tp, is_level_curr)
-#define tp_is_level_down(tp)                  tp_flag(tp, is_level_down)
-#define tp_is_level_final(tp)                 tp_flag(tp, is_level_final)
-#define tp_is_level_next(tp)                  tp_flag(tp, is_level_next)
-#define tp_is_level_not_visited(tp)           tp_flag(tp, is_level_not_visited)
-#define tp_is_level_visited(tp)               tp_flag(tp, is_level_visited)
+#define tp_is_level_down_icon(tp)             tp_flag(tp, is_level_down_icon)
+#define tp_is_level_final_icon(tp)            tp_flag(tp, is_level_final_icon)
+#define tp_is_level_next_icon(tp)             tp_flag(tp, is_level_next_icon)
+#define tp_is_level_not_visited_icon(tp)      tp_flag(tp, is_level_not_visited_icon)
+#define tp_is_level_visited_icon(tp)          tp_flag(tp, is_level_visited_icon)
 #define tp_is_levitating(tp)                  tp_flag(tp, is_levitating)
 #define tp_is_light_source(tp)                tp_flag(tp, is_light_source)
 #define tp_is_loggable(tp)                    tp_flag(tp, is_loggable)
@@ -1005,13 +1005,13 @@ float tp_collision_radius(Tpp);
 #define level_is_key(g, v, l, p)                         level_flag(g, v, l, is_key, p)
 #define level_is_kobalos(g, v, l, p)                     level_flag(g, v, l, is_kobalos, p)
 #define level_is_lava(g, v, l, p)                        level_flag(g, v, l, is_lava, p)
-#define level_is_level_across(g, v, l, p)                level_flag(g, v, l, is_level_across, p)
+#define level_is_level_across_icon(g, v, l, p)           level_flag(g, v, l, is_level_across_icon, p)
 #define level_is_level_curr(g, v, l, p)                  level_flag(g, v, l, is_level_curr, p)
-#define level_is_level_down(g, v, l, p)                  level_flag(g, v, l, is_level_down, p)
-#define level_is_level_final(g, v, l, p)                 level_flag(g, v, l, is_level_final, p)
-#define level_is_level_next(g, v, l, p)                  level_flag(g, v, l, is_level_next, p)
-#define level_is_level_not_visited(g, v, l, p)           level_flag(g, v, l, is_level_not_visited, p)
-#define level_is_level_visited(g, v, l, p)               level_flag(g, v, l, is_level_visited, p)
+#define level_is_level_down_icon(g, v, l, p)             level_flag(g, v, l, is_level_down_icon, p)
+#define level_is_level_final_icon(g, v, l, p)            level_flag(g, v, l, is_level_final_icon, p)
+#define level_is_level_next_icon(g, v, l, p)             level_flag(g, v, l, is_level_next_icon, p)
+#define level_is_level_not_visited_icon(g, v, l, p)      level_flag(g, v, l, is_level_not_visited_icon, p)
+#define level_is_level_visited_icon(g, v, l, p)          level_flag(g, v, l, is_level_visited_icon, p)
 #define level_is_levitating(g, v, l, p)                  level_flag(g, v, l, is_levitating, p)
 #define level_is_light_source(g, v, l, p)                level_flag(g, v, l, is_light_source, p)
 #define level_is_loggable(g, v, l, p)                    level_flag(g, v, l, is_loggable, p)
@@ -1226,13 +1226,13 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_key(g, v, l, p)                         level_alive(g, v, l, is_key, p)
 #define level_alive_is_kobalos(g, v, l, p)                     level_alive(g, v, l, is_kobalos, p)
 #define level_alive_is_lava(g, v, l, p)                        level_alive(g, v, l, is_lava, p)
-#define level_alive_is_level_across(g, v, l, p)                level_alive(g, v, l, is_level_across, p)
+#define level_alive_is_level_across_icon(g, v, l, p)           level_alive(g, v, l, is_level_across_icon, p)
 #define level_alive_is_level_curr(g, v, l, p)                  level_alive(g, v, l, is_level_curr, p)
-#define level_alive_is_level_down(g, v, l, p)                  level_alive(g, v, l, is_level_down, p)
-#define level_alive_is_level_final(g, v, l, p)                 level_alive(g, v, l, is_level_final, p)
-#define level_alive_is_level_next(g, v, l, p)                  level_alive(g, v, l, is_level_next, p)
-#define level_alive_is_level_not_visited(g, v, l, p)           level_alive(g, v, l, is_level_not_visited, p)
-#define level_alive_is_level_visited(g, v, l, p)               level_alive(g, v, l, is_level_visited, p)
+#define level_alive_is_level_down_icon(g, v, l, p)             level_alive(g, v, l, is_level_down_icon, p)
+#define level_alive_is_level_final_icon(g, v, l, p)            level_alive(g, v, l, is_level_final_icon, p)
+#define level_alive_is_level_next_icon(g, v, l, p)             level_alive(g, v, l, is_level_next_icon, p)
+#define level_alive_is_level_not_visited_icon(g, v, l, p)      level_alive(g, v, l, is_level_not_visited_icon, p)
+#define level_alive_is_level_visited_icon(g, v, l, p)          level_alive(g, v, l, is_level_visited_icon, p)
 #define level_alive_is_levitating(g, v, l, p)                  level_alive(g, v, l, is_levitating, p)
 #define level_alive_is_light_source(g, v, l, p)                level_alive(g, v, l, is_light_source, p)
 #define level_alive_is_loggable(g, v, l, p)                    level_alive(g, v, l, is_loggable, p)
@@ -1447,13 +1447,13 @@ float tp_collision_radius(Tpp);
 #define level_count_is_key(g, v, l, p)                         level_count(g, v, l, is_key, p)
 #define level_count_is_kobalos(g, v, l, p)                     level_count(g, v, l, is_kobalos, p)
 #define level_count_is_lava(g, v, l, p)                        level_count(g, v, l, is_lava, p)
-#define level_count_is_level_across(g, v, l, p)                level_count(g, v, l, is_level_across, p)
+#define level_count_is_level_across_icon(g, v, l, p)           level_count(g, v, l, is_level_across_icon, p)
 #define level_count_is_level_curr(g, v, l, p)                  level_count(g, v, l, is_level_curr, p)
-#define level_count_is_level_down(g, v, l, p)                  level_count(g, v, l, is_level_down, p)
-#define level_count_is_level_final(g, v, l, p)                 level_count(g, v, l, is_level_final, p)
-#define level_count_is_level_next(g, v, l, p)                  level_count(g, v, l, is_level_next, p)
-#define level_count_is_level_not_visited(g, v, l, p)           level_count(g, v, l, is_level_not_visited, p)
-#define level_count_is_level_visited(g, v, l, p)               level_count(g, v, l, is_level_visited, p)
+#define level_count_is_level_down_icon(g, v, l, p)             level_count(g, v, l, is_level_down_icon, p)
+#define level_count_is_level_final_icon(g, v, l, p)            level_count(g, v, l, is_level_final_icon, p)
+#define level_count_is_level_next_icon(g, v, l, p)             level_count(g, v, l, is_level_next_icon, p)
+#define level_count_is_level_not_visited_icon(g, v, l, p)      level_count(g, v, l, is_level_not_visited_icon, p)
+#define level_count_is_level_visited_icon(g, v, l, p)          level_count(g, v, l, is_level_visited_icon, p)
 #define level_count_is_levitating(g, v, l, p)                  level_count(g, v, l, is_levitating, p)
 #define level_count_is_light_source(g, v, l, p)                level_count(g, v, l, is_light_source, p)
 #define level_count_is_loggable(g, v, l, p)                    level_count(g, v, l, is_loggable, p)
@@ -1668,13 +1668,13 @@ float tp_collision_radius(Tpp);
 #define level_open_is_key(g, v, l, p)                         level_open(g, v, l, is_key, p)
 #define level_open_is_kobalos(g, v, l, p)                     level_open(g, v, l, is_kobalos, p)
 #define level_open_is_lava(g, v, l, p)                        level_open(g, v, l, is_lava, p)
-#define level_open_is_level_across(g, v, l, p)                level_open(g, v, l, is_level_across, p)
+#define level_open_is_level_across_icon(g, v, l, p)           level_open(g, v, l, is_level_across_icon, p)
 #define level_open_is_level_curr(g, v, l, p)                  level_open(g, v, l, is_level_curr, p)
-#define level_open_is_level_down(g, v, l, p)                  level_open(g, v, l, is_level_down, p)
-#define level_open_is_level_final(g, v, l, p)                 level_open(g, v, l, is_level_final, p)
-#define level_open_is_level_next(g, v, l, p)                  level_open(g, v, l, is_level_next, p)
-#define level_open_is_level_not_visited(g, v, l, p)           level_open(g, v, l, is_level_not_visited, p)
-#define level_open_is_level_visited(g, v, l, p)               level_open(g, v, l, is_level_visited, p)
+#define level_open_is_level_down_icon(g, v, l, p)             level_open(g, v, l, is_level_down_icon, p)
+#define level_open_is_level_final_icon(g, v, l, p)            level_open(g, v, l, is_level_final_icon, p)
+#define level_open_is_level_next_icon(g, v, l, p)             level_open(g, v, l, is_level_next_icon, p)
+#define level_open_is_level_not_visited_icon(g, v, l, p)      level_open(g, v, l, is_level_not_visited_icon, p)
+#define level_open_is_level_visited_icon(g, v, l, p)          level_open(g, v, l, is_level_visited_icon, p)
 #define level_open_is_levitating(g, v, l, p)                  level_open(g, v, l, is_levitating, p)
 #define level_open_is_light_source(g, v, l, p)                level_open(g, v, l, is_light_source, p)
 #define level_open_is_loggable(g, v, l, p)                    level_open(g, v, l, is_loggable, p)

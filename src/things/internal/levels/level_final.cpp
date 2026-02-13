@@ -19,7 +19,7 @@ bool tp_load_level_final(void)
   tp_flag_set(tp, is_animated_sync_first);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
-  tp_flag_set(tp, is_level_final);
+  tp_flag_set(tp, is_level_final_icon);
   tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
   // end sort marker1 }
 

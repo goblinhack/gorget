@@ -584,13 +584,13 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_key(Thingp);
 [[nodiscard]] bool        thing_is_kobalos(Thingp);
 [[nodiscard]] bool        thing_is_lava(Thingp);
-[[nodiscard]] bool        thing_is_level_across(Thingp);
+[[nodiscard]] bool        thing_is_level_across_icon(Thingp);
 [[nodiscard]] bool        thing_is_level_curr(Thingp);
-[[nodiscard]] bool        thing_is_level_down(Thingp);
-[[nodiscard]] bool        thing_is_level_final(Thingp);
-[[nodiscard]] bool        thing_is_level_next(Thingp);
-[[nodiscard]] bool        thing_is_level_not_visited(Thingp);
-[[nodiscard]] bool        thing_is_level_visited(Thingp);
+[[nodiscard]] bool        thing_is_level_down_icon(Thingp);
+[[nodiscard]] bool        thing_is_level_final_icon(Thingp);
+[[nodiscard]] bool        thing_is_level_next_icon(Thingp);
+[[nodiscard]] bool        thing_is_level_not_visited_icon(Thingp);
+[[nodiscard]] bool        thing_is_level_visited_icon(Thingp);
 [[nodiscard]] bool        thing_is_levitating(Thingp);
 [[nodiscard]] bool        thing_is_loggable(Thingp);
 [[nodiscard]] bool        thing_is_mantisman(Thingp);
@@ -933,13 +933,13 @@ ThingPlayerp                    thing_player_struct(Gamep);
 // end sort marker1 }
 
 // begin sort marker2 {
-void LEVEL_BOTCON(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void LEVEL_CON(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void LEVEL_DBG(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void LEVEL_ERR(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void LEVEL_LOG(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void LEVEL_TOPCON(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void LEVEL_WARN(Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void LEVEL_BOTCON(Gamep, Levelsp, Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void LEVEL_CON(Gamep, Levelsp, Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void LEVEL_DBG(Gamep, Levelsp, Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void LEVEL_ERR(Gamep, Levelsp, Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void LEVEL_LOG(Gamep, Levelsp, Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void LEVEL_TOPCON(Gamep, Levelsp, Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
+void LEVEL_WARN(Gamep, Levelsp, Levelp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);
 void monst_state_change(Gamep, Levelsp, Levelp, Thingp, MonstState new_state);
 void player_collision_handle(Gamep, Levelsp, Levelp, Thingp);
 void player_fell(Gamep, Levelsp, Levelp, Levelp, Thingp);

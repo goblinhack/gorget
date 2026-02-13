@@ -82,7 +82,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 
-  if (! l->is_current_level) {
+  if (! level_is_player_level(g, v, l)) {
     return;
   }
 

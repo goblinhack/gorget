@@ -72,18 +72,18 @@ Levelp level_select_get_level_at_tile_coords(Gamep g, Levelsp v, spoint p)
   auto   level_select = game_level_get(g, v, LEVEL_SELECT_ID);
   Levelp level_over   = nullptr;
 
-  auto tp_is_level_not_visited = tp_first(is_level_not_visited);
-  auto tp_is_level_curr        = tp_first(is_level_curr);
-  auto tp_is_level_final       = tp_first(is_level_final);
-  auto tp_is_level_visited     = tp_first(is_level_visited);
-  auto tp_is_level_next        = tp_first(is_level_next);
+  auto tp_is_level_not_visited_icon = tp_first(is_level_not_visited_icon);
+  auto tp_is_level_curr             = tp_first(is_level_curr);
+  auto tp_is_level_final_icon       = tp_first(is_level_final_icon);
+  auto tp_is_level_visited_icon     = tp_first(is_level_visited_icon);
+  auto tp_is_level_next_icon        = tp_first(is_level_next_icon);
 
   FOR_ALL_THINGS_AT(g, v, level_select, t, v->cursor_at)
   {
     auto tp = thing_tp(t);
 
-    if ((tp == tp_is_level_not_visited) || (tp == tp_is_level_curr) || (tp == tp_is_level_final)
-        || (tp == tp_is_level_visited) || (tp == tp_is_level_next)) {
+    if ((tp == tp_is_level_not_visited_icon) || (tp == tp_is_level_curr) || (tp == tp_is_level_final_icon)
+        || (tp == tp_is_level_visited_icon) || (tp == tp_is_level_next_icon)) {
       auto at             = thing_at(t);
       auto level_num_over = v->level_select.tile_to_level[ at.x ][ at.y ];
       level_over          = game_level_get(g, v, level_num_over);
@@ -487,13 +487,13 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 
   memset(level_select->debug, ' ', SIZEOF(level_select->debug));
 
-  auto tp_is_level_not_visited = tp_first(is_level_not_visited);
-  auto tp_is_level_curr        = tp_first(is_level_curr);
-  auto tp_is_level_across      = tp_first(is_level_across);
-  auto tp_is_level_down        = tp_first(is_level_down);
-  auto tp_is_level_final       = tp_first(is_level_final);
-  auto tp_is_level_visited     = tp_first(is_level_visited);
-  auto tp_is_level_next        = tp_first(is_level_next);
+  auto tp_is_level_not_visited_icon = tp_first(is_level_not_visited_icon);
+  auto tp_is_level_curr             = tp_first(is_level_curr);
+  auto tp_is_level_across_icon      = tp_first(is_level_across_icon);
+  auto tp_is_level_down_icon        = tp_first(is_level_down_icon);
+  auto tp_is_level_final_icon       = tp_first(is_level_final_icon);
+  auto tp_is_level_visited_icon     = tp_first(is_level_visited_icon);
+  auto tp_is_level_next_icon        = tp_first(is_level_next_icon);
 
   spoint map_offset(MAP_WIDTH / 2, 1);
 
@@ -513,7 +513,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       //
       // Default
       //
-      Tpp tp = tp_is_level_not_visited;
+      Tpp tp = tp_is_level_not_visited_icon;
 
       //
       // Can we enter this level?
@@ -527,14 +527,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         if (y > 0) {
           LevelSelectCell *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
-            tp                                  = tp_is_level_next;
+            tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x > 0) {
           LevelSelectCell *o = &s->data[ x - 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
-            tp                                  = tp_is_level_next;
+            tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
@@ -542,14 +542,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         if (y < LEVEL_DOWN - 1) {
           LevelSelectCell *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
-            tp                                  = tp_is_level_next;
+            tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x < LEVEL_ACROSS - 1) {
           LevelSelectCell *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
-            tp                                  = tp_is_level_next;
+            tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
@@ -562,14 +562,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         if (y > 0) {
           LevelSelectCell *o = &s->data[ x ][ y - 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
-            tp                                  = tp_is_level_next;
+            tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x > 0) {
           LevelSelectCell *o = &s->data[ x - 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
-            tp                                  = tp_is_level_next;
+            tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
@@ -577,14 +577,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         if (y < LEVEL_DOWN - 1) {
           LevelSelectCell *o = &s->data[ x ][ y + 1 ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
-            tp                                  = tp_is_level_next;
+            tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
         if (x < LEVEL_ACROSS - 1) {
           LevelSelectCell *o = &s->data[ x + 1 ][ y ]; // limit to adjacent levels
           if (o && o->is_set && (o->level_num == player_level->level_num)) {
-            tp                                  = tp_is_level_next;
+            tp                                  = tp_is_level_next_icon;
             l->player_can_enter_this_level_next = true;
           }
         }
@@ -598,14 +598,14 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
       // Final level
       //
       if ((x == LEVEL_ACROSS - 1) && (y == LEVEL_DOWN - 1)) {
-        tp = tp_is_level_final;
+        tp = tp_is_level_final_icon;
       }
 
       //
       // Completed levels
       //
       if (l->player_completed_level_via_exit || l->player_fell_out_of_level) {
-        tp = tp_is_level_visited;
+        tp = tp_is_level_visited_icon;
       }
 
       if (player) {
@@ -635,24 +635,24 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
         //
         level_select->debug[ at.x ][ at.y ] = '#';
 
-        if (tp == tp_is_level_not_visited) {
+        if (tp == tp_is_level_not_visited_icon) {
           level_select->debug[ at.x ][ at.y ] = '?';
         }
         if (tp == tp_is_level_curr) {
           level_select->debug[ at.x ][ at.y ] = '@';
         }
-        if (tp == tp_is_level_final) {
+        if (tp == tp_is_level_final_icon) {
           level_select->debug[ at.x ][ at.y ] = 'E';
         }
-        if (tp == tp_is_level_next) {
+        if (tp == tp_is_level_next_icon) {
           level_select->debug[ at.x ][ at.y ] = '?';
         }
 
         //
         // Show all levels as next when debugging
         //
-        if (g_opt_level_select_menu && (tp == tp_is_level_not_visited)) {
-          tp = tp_is_level_next;
+        if (g_opt_level_select_menu && (tp == tp_is_level_not_visited_icon)) {
+          tp = tp_is_level_next_icon;
         }
 
         if (! thing_spawn(g, v, level_select, tp, at)) {
@@ -686,7 +686,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 
       level_select->debug[ at.x ][ at.y ] = '-';
 
-      if (! thing_spawn(g, v, level_select, tp_is_level_across, at)) {
+      if (! thing_spawn(g, v, level_select, tp_is_level_across_icon, at)) {
         return false;
       }
     }
@@ -715,7 +715,7 @@ static void snake_dive(Gamep g, Levelsp v, LevelSelect *s, int dive_chance)
 
       level_select->debug[ at.x ][ at.y ] = '|';
 
-      if (! thing_spawn(g, v, level_select, tp_is_level_down, at)) {
+      if (! thing_spawn(g, v, level_select, tp_is_level_down_icon, at)) {
         return false;
       }
     }

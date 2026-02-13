@@ -196,7 +196,7 @@ typedef struct Level_ {
   //
   // This is the current level that the player is on.
   //
-  uint8_t is_current_level : 1;
+  uint8_t _is_player_level : 1;
   //
   // Is this a pre-generated level and non procedurally generated.
   //
@@ -711,11 +711,15 @@ void levels_destroy(Gamep, Levelsp);
 void levels_finalize(Gamep, Levelsp);
 void levels_tick(Gamep, Levelsp);
 
-[[nodiscard]] std::string to_string(Gamep, Levelp);
+[[nodiscard]] std::string to_string(Gamep, Levelsp, Levelp);
 
-bool level_request_to_cleanup_things_get(Gamep, Levelsp, Levelp);
-void level_request_to_cleanup_things_set(Gamep, Levelsp, Levelp);
-void level_request_to_cleanup_things_unset(Gamep, Levelsp, Levelp);
+[[nodiscard]] bool level_request_to_cleanup_things(Gamep, Levelsp, Levelp);
+void               level_request_to_cleanup_things_set(Gamep, Levelsp, Levelp);
+void               level_request_to_cleanup_things_unset(Gamep, Levelsp, Levelp);
+
+[[nodiscard]] bool level_is_player_level(Gamep, Levelsp, Levelp);
+void               level_is_player_level_set(Gamep, Levelsp, Levelp);
+void               level_is_player_level_unset(Gamep, Levelsp, Levelp);
 
 typedef void (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p);
 void level_fov(Gamep, Levelsp, Levelp, Thingp, FovMap *curr, FovMap *ever, spoint pov, int max_radius,

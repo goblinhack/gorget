@@ -49,7 +49,9 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   }
 
   if (thing_is_monst(t)) {
-    thing_monst_event_loop(g, v, l, t);
+    if (level_is_player_level(g, v, l)) {
+      thing_monst_event_loop(g, v, l, t);
+    }
   }
 }
 

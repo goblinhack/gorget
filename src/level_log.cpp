@@ -16,7 +16,7 @@
 
 #include <string.h>
 
-static void level_log_(Levelp l, const char *fmt, va_list args)
+static void level_log_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
@@ -26,24 +26,24 @@ static void level_log_(Levelp l, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, l).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   putf(MY_STDOUT, buf);
 }
 
-void LEVEL_LOG(Levelp l, const char *fmt, ...)
+void LEVEL_LOG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   va_list args;
   va_start(args, fmt);
-  level_log_(l, fmt, args);
+  level_log_(g, v, l, fmt, args);
   va_end(args);
 }
 
-void LEVEL_DBG(Levelp l, const char *fmt, ...)
+void LEVEL_DBG(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
@@ -51,11 +51,11 @@ void LEVEL_DBG(Levelp l, const char *fmt, ...)
 
   va_list args;
   va_start(args, fmt);
-  level_log_(l, fmt, args);
+  level_log_(g, v, l, fmt, args);
   va_end(args);
 }
 
-static void level_warn_(Levelp l, const char *fmt, va_list args)
+static void level_warn_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
@@ -65,7 +65,7 @@ static void level_warn_(Levelp l, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, l).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -73,18 +73,18 @@ static void level_warn_(Levelp l, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void LEVEL_WARN(Levelp l, const char *fmt, ...)
+void LEVEL_WARN(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   va_list args;
 
   va_start(args, fmt);
-  level_warn_(l, fmt, args);
+  level_warn_(g, v, l, fmt, args);
   va_end(args);
 }
 
-static void level_con_(Levelp l, const char *fmt, va_list args)
+static void level_con_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
@@ -94,7 +94,7 @@ static void level_con_(Levelp l, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, l).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   putf(MY_STDOUT, buf);
@@ -107,40 +107,40 @@ static void level_con_(Levelp l, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void LEVEL_CON(Levelp l, const char *fmt, ...)
+void LEVEL_CON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   va_list args;
   va_start(args, fmt);
-  level_con_(l, fmt, args);
+  level_con_(g, v, l, fmt, args);
   va_end(args);
 }
 
-static void level_err_(Levelp l, const char *fmt, va_list args)
+static void level_err_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list args)
 {
   char buf[ MAXLONGSTR ];
   int  len = 0;
 
   buf[ 0 ] = '\0';
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, l).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   ERR("%s", buf);
 }
 
-void LEVEL_ERR(Levelp l, const char *fmt, ...)
+void LEVEL_ERR(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   va_list args;
   va_start(args, fmt);
-  level_err_(l, fmt, args);
+  level_err_(g, v, l, fmt, args);
   va_end(args);
 }
 
-static void level_topcon_(Levelp l, const char *fmt, va_list args)
+static void level_topcon_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
@@ -150,7 +150,7 @@ static void level_topcon_(Levelp l, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, l).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
@@ -165,18 +165,18 @@ static void level_topcon_(Levelp l, const char *fmt, va_list args)
   wid_console_log(buf);
 }
 
-void LEVEL_TOPCON(Levelp l, const char *fmt, ...)
+void LEVEL_TOPCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   va_list args;
 
   va_start(args, fmt);
-  level_topcon_(l, fmt, args);
+  level_topcon_(g, v, l, fmt, args);
   va_end(args);
 }
 
-static void level_botcon_(Levelp l, const char *fmt, va_list args)
+static void level_botcon_(Gamep g, Levelsp v, Levelp l, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
@@ -186,20 +186,20 @@ static void level_botcon_(Levelp l, const char *fmt, va_list args)
   buf[ 0 ] = '\0';
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(nullptr, l).c_str());
+  snprintf(buf + len, MAXLONGSTR - len, "%s: ", to_string(g, v, l).c_str());
   len = (int) strlen(buf);
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   wid_botcon_log(buf);
 }
 
-void LEVEL_BOTCON(Levelp l, const char *fmt, ...)
+void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...)
 {
   TRACE_NO_INDENT();
 
   va_list args;
 
   va_start(args, fmt);
-  level_botcon_(l, fmt, args);
+  level_botcon_(g, v, l, fmt, args);
   va_end(args);
 }
