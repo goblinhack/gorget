@@ -467,13 +467,26 @@ bool thing_can_move_to_check_only(Gamep g, Levelsp v, Levelp l, Thingp me, spoin
 {
   TRACE_NO_INDENT();
 
-  FOR_ALL_THINGS_AT(g, v, l, it, to)
+  FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, to)
   {
     //
     // Walls are not always obstacles
     //
     if (thing_is_wall(it)) {
       if (thing_is_able_to_move_through_walls(me)) {
+        continue;
+      }
+    }
+
+    //
+    // Chasms are obstacles only if you can fall into them
+    //
+    if (thing_is_chasm(it)) {
+      if (! thing_is_able_to_fall(me)) {
+        continue;
+      }
+
+      if (thing_is_floating(me)) {
         continue;
       }
     }

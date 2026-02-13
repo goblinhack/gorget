@@ -492,6 +492,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_able_to_move_through_walls(Thingp);
 [[nodiscard]] bool        thing_is_able_to_open(Thingp);
 [[nodiscard]] bool        thing_is_able_to_shove(Thingp);
+[[nodiscard]] bool        thing_is_able_to_walk_through_walls(Thingp);
 [[nodiscard]] bool        thing_is_animated_can_hflip(Thingp);
 [[nodiscard]] bool        thing_is_animated_no_dir(Thingp);
 [[nodiscard]] bool        thing_is_animated_sync_first(Thingp);
@@ -715,7 +716,6 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_unused8(Thingp);
 [[nodiscard]] bool        thing_is_unused9(Thingp);
 [[nodiscard]] bool        thing_is_wait_on_dead_anim(Thingp);
-[[nodiscard]] bool        thing_is_walk_through_walls(Thingp);
 [[nodiscard]] bool        thing_is_wall(Thingp);
 [[nodiscard]] bool        thing_is_water(Thingp);
 [[nodiscard]] bool        thing_is_wood(Thingp);
@@ -894,6 +894,8 @@ typedef struct Thing_ {
 [[nodiscard]] MonstState  monst_state(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] spoint      thing_at(Thingp);
 [[nodiscard]] spoint      thing_moving_from(Thingp);
+[[nodiscard]] bool        thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const fpoint);
+[[nodiscard]] bool        thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const spoint);
 [[nodiscard]] spoint      thing_old_at(Thingp);
 [[nodiscard]] spoint      thing_prev_pix_at(Thingp);
 [[nodiscard]] std::string monst_state_to_string(MonstState state);
@@ -1028,8 +1030,6 @@ void thing_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, short, short);
 void thing_player_event_loop(Gamep, Levelsp, Levelp);
 void thing_pop(Gamep, Levelsp, Thingp);
 void thing_prev_pix_at_set(Gamep, Levelsp, Levelp, Thingp t, const spoint &);
-void thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const fpoint);
-void thing_projectile_fire_at(Gamep, Levelsp, Levelp, Thingp, Tpp what, const spoint);
 void thing_projectile_move(Gamep, Levelsp, Levelp, Thingp, float dt);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
 void thing_sound_play(Gamep, Levelsp, Levelp, Thingp, const std::string &alias);

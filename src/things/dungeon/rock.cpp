@@ -62,7 +62,7 @@ bool tp_load_rock(void)
     tp_temperature_melts_at_set(tp, 300); // celsius
     tp_variant_set(tp, variant);
     tp_weight_set(tp, WEIGHT_VVVHEAVY); // grams
-    tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+    tp_z_depth_set(tp, MAP_Z_DEPTH_WALL);
     // end sort marker1 }
 
     auto tile = tile_find_mand(name + ".IS_JOIN_BL");

@@ -657,7 +657,9 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 
   player_move_reset(g, v, l);
 
-  thing_projectile_fire_at(g, v, l, me, fire_what, target);
+  if (! thing_projectile_fire_at(g, v, l, me, fire_what, target)) {
+    return;
+  }
 
   level_tick_begin_requested(g, v, l, "me fired");
 }

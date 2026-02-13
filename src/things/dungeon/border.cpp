@@ -35,7 +35,7 @@ bool tp_load_border(void)
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tiled);
   tp_weight_set(tp, WEIGHT_VVHEAVY); // grams
-  tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
+  tp_z_depth_set(tp, MAP_Z_DEPTH_WALL);
   // end sort marker1 }
 
   auto tile = tile_find_mand(name + ".IS_JOIN_BL");

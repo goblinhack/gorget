@@ -320,7 +320,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       //
       // We cannot see this tile currently.
       //
-      if (level_is_blit_if_has_seen(g, v, player_level, p)) {
+      if (thing_is_blit_if_has_seen(t_maybe_null)) {
         //
         // But if it has been seen, then show it, if allowed.
         //

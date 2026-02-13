@@ -233,7 +233,7 @@
       list_macro(is_fireball, "is_fireball"),                                       /* newline */                    \
       list_macro(is_projectile, "is_projectile"),                                   /* newline */                    \
       list_macro(is_wait_on_dead_anim, "is_wait_on_dead_anim"),                     /* newline */                    \
-      list_macro(is_walk_through_walls, "is_walk_through_walls"),                   /* newline */                    \
+      list_macro(is_able_to_walk_through_walls, "is_able_to_walk_through_walls"),   /* newline */                    \
       list_macro(is_wall, "is_wall"),                                               /* newline */                    \
       list_macro(is_water, "is_water"),                                             /* newline */
 
@@ -249,6 +249,7 @@ ENUM_DEF_H(THING_FLAG_ENUM, ThingFlag)
       list_macro(MAP_Z_DEPTH_LIQUID2, "e.g. deep water"),  /* newline */                                             \
       list_macro(MAP_Z_DEPTH_GRASS, "grass"),              /* newline */                                             \
       list_macro(MAP_Z_DEPTH_OBJ, "monsts"),               /* newline */                                             \
+      list_macro(MAP_Z_DEPTH_WALL, "wall"),                /* newline */                                             \
       list_macro(MAP_Z_DEPTH_PLAYER, "monsts"),            /* newline */                                             \
       list_macro(MAP_Z_DEPTH_FOLIAGE, "obscuring plants"), /* newline */                                             \
       list_macro(MAP_Z_DEPTH_PROJECTILE, "projectile"),    /* newline */                                             \
@@ -706,6 +707,7 @@ float tp_collision_radius(Tpp);
 #define tp_is_able_to_move_through_walls(tp)  tp_flag(tp, is_able_to_move_through_walls)
 #define tp_is_able_to_open(tp)                tp_flag(tp, is_able_to_open)
 #define tp_is_able_to_shove(tp)               tp_flag(tp, is_able_to_shove)
+#define tp_is_able_to_walk_through_walls(tp)  tp_flag(tp, is_able_to_walk_through_walls)
 #define tp_is_animated_can_hflip(tp)          tp_flag(tp, is_animated_can_hflip)
 #define tp_is_animated_no_dir(tp)             tp_flag(tp, is_animated_no_dir)
 #define tp_is_animated_sync_first(tp)         tp_flag(tp, is_animated_sync_first)
@@ -911,7 +913,6 @@ float tp_collision_radius(Tpp);
 #define tp_is_unused8(tp)                     tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                     tp_flag(tp, is_unused9)
 #define tp_is_wait_on_dead_anim(tp)           tp_flag(tp, is_wait_on_dead_anim)
-#define tp_is_walk_through_walls(tp)          tp_flag(tp, is_walk_through_walls)
 #define tp_is_wall(tp)                        tp_flag(tp, is_wall)
 #define tp_is_water(tp)                       tp_flag(tp, is_water)
 #define tp_is_wood(tp)                        tp_flag(tp, is_wood)
@@ -927,6 +928,7 @@ float tp_collision_radius(Tpp);
 #define level_is_able_to_move_through_walls(g, v, l, p)  level_flag(g, v, l, is_able_to_move_through_walls, p)
 #define level_is_able_to_open(g, v, l, p)                level_flag(g, v, l, is_able_to_open, p)
 #define level_is_able_to_shove(g, v, l, p)               level_flag(g, v, l, is_able_to_shove, p)
+#define level_is_able_to_walk_through_walls(g, v, l, p)  level_flag(g, v, l, is_able_to_walk_through_walls, p)
 #define level_is_animated_can_hflip(g, v, l, p)          level_flag(g, v, l, is_animated_can_hflip, p)
 #define level_is_animated_no_dir(g, v, l, p)             level_flag(g, v, l, is_animated_no_dir, p)
 #define level_is_animated_sync_first(g, v, l, p)         level_flag(g, v, l, is_animated_sync_first, p)
@@ -1132,7 +1134,6 @@ float tp_collision_radius(Tpp);
 #define level_is_unused8(g, v, l, p)                     level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                     level_flag(g, v, l, is_unused9, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)           level_flag(g, v, l, is_wait_on_dead_anim, p)
-#define level_is_walk_through_walls(g, v, l, p)          level_flag(g, v, l, is_walk_through_walls, p)
 #define level_is_wall(g, v, l, p)                        level_flag(g, v, l, is_wall, p)
 #define level_is_water(g, v, l, p)                       level_flag(g, v, l, is_water, p)
 #define level_is_wood(g, v, l, p)                        level_flag(g, v, l, is_wood, p)
@@ -1148,6 +1149,7 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_able_to_move_through_walls(g, v, l, p)  level_alive(g, v, l, is_able_to_move_through_walls, p)
 #define level_alive_is_able_to_open(g, v, l, p)                level_alive(g, v, l, is_able_to_open, p)
 #define level_alive_is_able_to_shove(g, v, l, p)               level_alive(g, v, l, is_able_to_shove, p)
+#define level_alive_is_able_to_walk_through_walls(g, v, l, p)  level_alive(g, v, l, is_able_to_walk_through_walls, p)
 #define level_alive_is_animated_can_hflip(g, v, l, p)          level_alive(g, v, l, is_animated_can_hflip, p)
 #define level_alive_is_animated_no_dir(g, v, l, p)             level_alive(g, v, l, is_animated_no_dir, p)
 #define level_alive_is_animated_sync_first(g, v, l, p)         level_alive(g, v, l, is_animated_sync_first, p)
@@ -1353,7 +1355,6 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_unused8(g, v, l, p)                     level_alive(g, v, l, is_unused8, p)
 #define level_alive_is_unused9(g, v, l, p)                     level_alive(g, v, l, is_unused9, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)           level_alive(g, v, l, is_wait_on_dead_anim, p)
-#define level_alive_is_walk_through_walls(g, v, l, p)          level_alive(g, v, l, is_walk_through_walls, p)
 #define level_alive_is_wall(g, v, l, p)                        level_alive(g, v, l, is_wall, p)
 #define level_alive_is_water(g, v, l, p)                       level_alive(g, v, l, is_water, p)
 #define level_alive_is_wood(g, v, l, p)                        level_alive(g, v, l, is_wood, p)
@@ -1369,6 +1370,7 @@ float tp_collision_radius(Tpp);
 #define level_count_is_able_to_move_through_walls(g, v, l, p)  level_count(g, v, l, is_able_to_move_through_walls, p)
 #define level_count_is_able_to_open(g, v, l, p)                level_count(g, v, l, is_able_to_open, p)
 #define level_count_is_able_to_shove(g, v, l, p)               level_count(g, v, l, is_able_to_shove, p)
+#define level_count_is_able_to_walk_through_walls(g, v, l, p)  level_count(g, v, l, is_able_to_walk_through_walls, p)
 #define level_count_is_animated_can_hflip(g, v, l, p)          level_count(g, v, l, is_animated_can_hflip, p)
 #define level_count_is_animated_no_dir(g, v, l, p)             level_count(g, v, l, is_animated_no_dir, p)
 #define level_count_is_animated_sync_first(g, v, l, p)         level_count(g, v, l, is_animated_sync_first, p)
@@ -1574,7 +1576,6 @@ float tp_collision_radius(Tpp);
 #define level_count_is_unused8(g, v, l, p)                     level_count(g, v, l, is_unused8, p)
 #define level_count_is_unused9(g, v, l, p)                     level_count(g, v, l, is_unused9, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)           level_count(g, v, l, is_wait_on_dead_anim, p)
-#define level_count_is_walk_through_walls(g, v, l, p)          level_count(g, v, l, is_walk_through_walls, p)
 #define level_count_is_wall(g, v, l, p)                        level_count(g, v, l, is_wall, p)
 #define level_count_is_water(g, v, l, p)                       level_count(g, v, l, is_water, p)
 #define level_count_is_wood(g, v, l, p)                        level_count(g, v, l, is_wood, p)
@@ -1590,6 +1591,7 @@ float tp_collision_radius(Tpp);
 #define level_open_is_able_to_move_through_walls(g, v, l, p)  level_open(g, v, l, is_able_to_move_through_walls, p)
 #define level_open_is_able_to_open(g, v, l, p)                level_open(g, v, l, is_able_to_open, p)
 #define level_open_is_able_to_shove(g, v, l, p)               level_open(g, v, l, is_able_to_shove, p)
+#define level_open_is_able_to_walk_through_walls(g, v, l, p)  level_open(g, v, l, is_able_to_walk_through_walls, p)
 #define level_open_is_animated_can_hflip(g, v, l, p)          level_open(g, v, l, is_animated_can_hflip, p)
 #define level_open_is_animated_no_dir(g, v, l, p)             level_open(g, v, l, is_animated_no_dir, p)
 #define level_open_is_animated_sync_first(g, v, l, p)         level_open(g, v, l, is_animated_sync_first, p)
@@ -1795,7 +1797,6 @@ float tp_collision_radius(Tpp);
 #define level_open_is_unused8(g, v, l, p)                     level_open(g, v, l, is_unused8, p)
 #define level_open_is_unused9(g, v, l, p)                     level_open(g, v, l, is_unused9, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)           level_open(g, v, l, is_wait_on_dead_anim, p)
-#define level_open_is_walk_through_walls(g, v, l, p)          level_open(g, v, l, is_walk_through_walls, p)
 #define level_open_is_wall(g, v, l, p)                        level_open(g, v, l, is_wall, p)
 #define level_open_is_water(g, v, l, p)                       level_open(g, v, l, is_water, p)
 #define level_open_is_wood(g, v, l, p)                        level_open(g, v, l, is_wood, p)

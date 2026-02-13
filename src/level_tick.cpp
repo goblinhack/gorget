@@ -317,7 +317,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     // --------------------------------------------------------
     // speed 400  tick tick tick tick tick tick tick tick
     // speed 200  tick      tick      tick      tick
-    // speed 100  tick           tick
+    // speed 100  tick                tick
     // speed 50   tick
     //
     if (! thing_is_moving(t) && ! thing_is_jumping(t) && ! thing_is_projectile(t)) {

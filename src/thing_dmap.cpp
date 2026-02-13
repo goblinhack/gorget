@@ -11,13 +11,13 @@
 //
 // Get the dmap associated with the thing
 //
-Dmap *thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
+Dmap *thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  auto ext = thing_ext_struct(g, t);
+  auto ext = thing_ext_struct(g, me);
   if (! ext) {
-    THING_ERR(t, "mob has no ext memory");
+    THING_ERR(me, "mob has no ext memory");
     return nullptr;
   }
 
@@ -28,11 +28,11 @@ Dmap *thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
 // Create a dmap for a player, mob, monst etc... with the thing itself being the target.
 // This serves as a way for monsters to reach the player, mob etc...
 //
-void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t, bool reverse)
+void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
 {
   TRACE_AND_INDENT();
 
-  if (! thing_is_dmap(t)) {
+  if (! thing_is_dmap(me)) {
     return;
   }
 
@@ -41,7 +41,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t, bool reverse)
   uint8_t maxx = MAP_WIDTH - 1;
   uint8_t maxy = MAP_HEIGHT - 1;
 
-  auto ext = thing_ext_struct(g, t);
+  auto ext = thing_ext_struct(g, me);
   if (! ext) {
     return;
   }
@@ -51,13 +51,14 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t, bool reverse)
   for (auto y = miny; y < maxy; y++) {
     for (auto x = minx; x < maxx; x++) {
       spoint p(x, y);
-      if (level_is_obs_to_movement(g, v, l, p)) {
+
+      if (! thing_can_move_to_check_only(g, v, l, me, p)) {
         ext->dmap.val[ x ][ y ] = DMAP_IS_WALL;
       }
     }
   }
 
-  auto target = thing_at(t);
+  auto target = thing_at(me);
   if (reverse) {
     ext->dmap.val[ target.x ][ target.y ] = DMAP_IS_GOAL_REVERSE;
   } else {
@@ -78,7 +79,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp t, bool reverse)
   }
 
   if (0) {
-    THING_LOG(t, "thing dmap");
+    THING_LOG(me, "thing dmap");
     dmap_print(&ext->dmap, target, dmap_start, dmap_end);
   }
 }

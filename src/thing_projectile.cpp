@@ -42,7 +42,7 @@ fpoint thing_projectile_get_direction(Gamep g, Levelsp v, Levelp l, Thingp t)
   return unit(thing_projectile_get_delta_from_dt(g, v, l, t, 1.0));
 }
 
-void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
+bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const fpoint target)
 {
   TRACE_NO_INDENT();
 
@@ -70,9 +70,11 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   proj_at.y += s * offset;
 
   auto projectile = thing_spawn(g, v, l, what, proj_at);
-  if (projectile) {
-    projectile->angle = angle;
+  if (! projectile) {
+    return false;
   }
+
+  projectile->angle = angle;
 
   //
   // Set my direction based on where I fire
@@ -88,11 +90,13 @@ void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   if (0) {
     THING_LOG(projectile, "%f,%f", real_at.x, real_at.y);
   }
+
+  return true;
 }
 
-void thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const spoint target)
+bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what, const spoint target)
 {
-  thing_projectile_fire_at(g, v, l, me, what, make_fpoint(target));
+  return thing_projectile_fire_at(g, v, l, me, what, make_fpoint(target));
 }
 
 void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)

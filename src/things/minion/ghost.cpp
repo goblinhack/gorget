@@ -34,16 +34,18 @@ bool tp_load_ghost(void)
   // begin sort marker1 {
   thing_description_set(tp, tp_ghost_description_get);
   thing_detail_set(tp, tp_ghost_detail_get);
-  tp_distance_minion_from_mob_max_set(tp, 10);
-  tp_distance_vision_set(tp, 10);
+  tp_distance_minion_from_mob_max_set(tp, 6);
+  tp_distance_vision_set(tp, 3);
   tp_flag_set(tp, is_able_to_move_diagonally);
   tp_flag_set(tp, is_able_to_move_through_walls);
+  tp_flag_set(tp, is_able_to_walk_through_walls);
   tp_flag_set(tp, is_animated_can_hflip);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collision_circle_large);
   tp_flag_set(tp, is_described_cursor);
+  tp_flag_set(tp, is_floating);
   tp_flag_set(tp, is_ethereal);
   tp_flag_set(tp, is_ghost);
   tp_flag_set(tp, is_health_bar_shown);
@@ -54,7 +56,6 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_monst);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_undead);
-  tp_flag_set(tp, is_walk_through_walls);
   tp_health_set(tp, "1");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
   tp_light_color_set(tp, "cyan");

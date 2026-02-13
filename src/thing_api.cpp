@@ -3275,14 +3275,14 @@ bool thing_is_item_droppable(Thingp t)
   return tp_flag(thing_tp(t), is_item_droppable);
 }
 
-bool thing_is_walk_through_walls(Thingp t)
+bool thing_is_able_to_walk_through_walls(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_walk_through_walls);
+  return tp_flag(thing_tp(t), is_able_to_walk_through_walls);
 }
 
 bool thing_is_wall(Thingp t)
