@@ -469,10 +469,11 @@ typedef struct Thing_ {
 [[nodiscard]] bool        player_mouse_down(Gamep, Levelsp, Levelp, int x, int y, uint32_t button);
 [[nodiscard]] bool        player_move_request(Gamep, bool up, bool down, bool left, bool right, bool fire);
 [[nodiscard]] bool        player_move_to_next(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] bool        thing_can_move_to_ai(Gamep, Levelsp, Levelp, Thingp, spoint);
 [[nodiscard]] bool        thing_can_move_to_attempt_by_opening(Gamep, Levelsp, Levelp, Thingp, spoint);
 [[nodiscard]] bool        thing_can_move_to_attempt_by_shoving(Gamep, Levelsp, Levelp, Thingp, spoint to);
 [[nodiscard]] bool        thing_can_move_to_attempt(Gamep, Levelsp, Levelp, Thingp, spoint to);
-[[nodiscard]] bool        thing_can_move_to_check_only(Gamep, Levelsp, Levelp, Thingp, spoint);
+[[nodiscard]] bool        thing_can_move_to_check_if_is_possible(Gamep, Levelsp, Levelp, Thingp, spoint);
 [[nodiscard]] bool        thing_carry_item(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 [[nodiscard]] bool        thing_close(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);
 [[nodiscard]] bool        thing_collect_key(Gamep, Levelsp, Levelp, Thingp, Thingp player_or_monst);

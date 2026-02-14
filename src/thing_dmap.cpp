@@ -52,7 +52,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
     for (auto x = minx; x < maxx; x++) {
       spoint p(x, y);
 
-      if (! thing_can_move_to_check_only(g, v, l, me, p)) {
+      if (! thing_can_move_to_ai(g, v, l, me, p)) {
         ext->dmap.val[ x ][ y ] = DMAP_IS_WALL;
       }
     }
