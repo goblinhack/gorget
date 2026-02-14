@@ -17,38 +17,38 @@
 //
 // Is this minion attached to a mob?
 //
-Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp t)
+Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  if (! t) {
+  if (! me) {
     return nullptr;
   }
 
-  if (! thing_is_minion(t)) {
+  if (! thing_is_minion(me)) {
     return nullptr;
   }
 
-  if (! t->mob_id) {
+  if (! me->mob_id) {
     return nullptr;
   }
 
-  return thing_find(g, v, t->mob_id);
+  return thing_find(g, v, me->mob_id);
 }
 
 //
 // Get the dmap associated with the mob
 //
-Dmap *thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
+Dmap *thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  auto mob = thing_minion_mob_get(g, v, l, t);
+  auto mob = thing_minion_mob_get(g, v, l, me);
   if (! mob) {
     return nullptr; // can be normal if detached
   }
 
   auto mob_ext = thing_ext_struct(g, mob);
   if (! mob_ext) {
-    THING_ERR(t, "mob has no ext memory");
+    THING_ERR(me, "mob has no ext memory");
     return nullptr;
   }
 
@@ -58,27 +58,27 @@ Dmap *thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Detach a minion from its mob
 //
-bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp t)
+bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  if (! t) {
+  if (! me) {
     return false;
   }
 
-  if (! thing_is_minion(t)) {
-    THING_ERR(t, "non minion trying to detach itself");
+  if (! thing_is_minion(me)) {
+    THING_ERR(me, "non minion trying to detach itself");
     return false;
   }
 
-  auto mob = thing_minion_mob_get(g, v, l, t);
+  auto mob = thing_minion_mob_get(g, v, l, me);
   if (! mob) {
     return false; // can be normal if detached
   }
 
-  THING_LOG(t, "detach me from mob");
+  THING_LOG(me, "detach me from mob");
 
-  return thing_mob_detach_minion(g, v, l, mob, t);
+  return thing_mob_detach_minion(g, v, l, mob, me);
 }
 
 //
@@ -86,7 +86,7 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp t)
 // The points are arranged in a radius around the dmap goal, which was
 // what was presumably used to create the dmap.
 //
-[[nodiscard]] static bool thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp t,
+[[nodiscard]] static bool thing_minion_get_mob_dmap_target_cand(Gamep g, Levelsp v, Levelp l, Thingp me,
                                                                 spoint dmap_goal, Dmap *dmap, int radius,
                                                                 spoint &target)
 {
@@ -102,23 +102,19 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp t)
     return false;
   }
 
-  if (target == thing_at(t)) {
-    return false;
-  }
-
   if (target == dmap_goal) {
     return false;
   }
 
-  if (level_is_obs_to_movement(g, v, l, target)) {
-    return false;
-  }
-
-  if (level_is_monst(g, v, l, target)) {
+  if (target == thing_at(me)) {
     return false;
   }
 
   if (dmap->val[ target.x ][ target.y ] >= radius) {
+    return false;
+  }
+
+  if (! thing_can_move_to_ai(g, v, l, me, target)) {
     return false;
   }
 
@@ -128,30 +124,30 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp t)
 //
 // Given a mob, choose somewhere to wander, near the mob.
 //
-bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &target)
+bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me, spoint &target)
 {
   TRACE_NO_INDENT();
 
-  auto mob = thing_minion_mob_get(g, v, l, t);
+  auto mob = thing_minion_mob_get(g, v, l, me);
   if (! mob) {
     return false; // can be normal if detached
   }
 
-  auto dmap = thing_minion_get_mob_dmap(g, v, l, t);
+  auto dmap = thing_minion_get_mob_dmap(g, v, l, me);
   if (! dmap) {
-    THING_ERR(t, "attached minion has no mob");
+    THING_ERR(me, "attached minion has no mob");
     return false;
   }
 
-  auto minion_at = thing_at(t);
+  auto minion_at = thing_at(me);
   auto mob_at    = thing_at(mob);
 
   //
   // How far to look for a target?
   //
-  auto radius = thing_distance_minion_from_mob_max(t);
+  auto radius = thing_distance_minion_from_mob_max(me);
   if (! radius) {
-    THING_ERR(t, "unexpected value for radius");
+    THING_ERR(me, "unexpected value for radius");
     return false;
   }
 
@@ -160,17 +156,17 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp t,
   //
   int tries = (radius * radius) / 2;
   while (tries-- > 0) {
-    if (! thing_minion_get_mob_dmap_target_cand(g, v, l, t, mob_at, dmap, radius, target)) {
+    if (! thing_minion_get_mob_dmap_target_cand(g, v, l, me, mob_at, dmap, radius, target)) {
       continue;
     }
 
-    auto p = astar_solve(g, v, l, t, minion_at, target);
+    auto p = astar_solve(g, v, l, me, minion_at, target);
     if (! p.size()) {
       continue;
     }
 
-    if (thing_move_path_apply(g, v, l, t, p)) {
-      monst_state_change(g, v, l, t, MONST_STATE_FOLLOWING_PATH);
+    if (thing_move_path_apply(g, v, l, me, p)) {
+      monst_state_change(g, v, l, me, MONST_STATE_FOLLOWING_PATH);
       return true;
     }
   }
