@@ -371,7 +371,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool final)
       thing_interpolate(g, v, l, t, t->thing_dt);
     }
 
-    if (final || (t->thing_dt >= 1.0)) { // dt increments can end up very close to 1
+    if (final || (t->thing_dt >= 1.0)) {
       t->thing_dt = 0.0;
 
       thing_move_or_jump_finish(g, v, l, t);
