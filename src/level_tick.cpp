@@ -13,7 +13,7 @@
 #include "my_wids.hpp"
 
 static void level_tick_begin(Gamep, Levelsp, Levelp);
-static void level_tick_body(Gamep, Levelsp, Levelp, float dt);
+static void level_tick_body(Gamep, Levelsp, Levelp, float dt, bool final = false);
 static void level_tick_end(Gamep, Levelsp, Levelp);
 static void level_tick_idle(Gamep, Levelsp, Levelp);
 static void level_tick_check_running_time(Gamep, Levelsp, Levelp);
@@ -69,7 +69,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     //
     if (thing_is_moving(t)) {
       l->tick_wait_on_things = true;
-      IF_DEBUG2
+      IF_DEBUG
       { // newline
         LEVEL_DBG(g, v, l, "waiting on moving %s", to_string(g, v, l, t).c_str());
       }
@@ -275,15 +275,19 @@ static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l)
     //
     v->time_step = 1.0;
 
+    level_tick_body(g, v, l, 0, true /* final */);
+
     if (! l->tick_end_requested) {
-      LEVEL_DBG(g, v, l, "Tick %u: end requested", v->tick);
+      if (level_is_player_level(g, v, l)) {
+        LEVEL_DBG(g, v, l, "Tick %u: end requested", v->tick);
+      }
     }
 
     l->tick_end_requested = true;
   }
 }
 
-static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
+static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool final)
 {
   TRACE_NO_INDENT();
 
@@ -291,11 +295,15 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
     CROAK("negative dt %f", dt);
   }
 
-  //
-  // During tests, the loop can spin really fast. Pointless doing work at that rate and
-  // projectiles will not move, so wait until time moves on.
-  //
-  if (dt == 0) {
+  if (final) {
+    //
+    // Need to finish all movement
+    //
+  } else if (dt == 0) {
+    //
+    // During tests, the loop can spin really fast. Pointless doing work at that rate and
+    // projectiles will not move, so wait until time moves on.
+    //
     return;
   }
 
@@ -306,7 +314,9 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
   const int player_speed = thing_speed(player);
 
   if (0) {
-    LEVEL_DBG(g, v, l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
+    if (level_is_player_level(g, v, l)) {
+      LEVEL_DBG(g, v, l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
+    }
   }
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
@@ -333,35 +343,35 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       t->thing_dt += dt * (t_speed / (float) player_speed);
     }
 
-    if (t->thing_dt >= 1.0) {
+    if (final || (t->thing_dt >= 1.0)) {
       t->thing_dt = 1.0;
     }
 
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
     if (0) {
-      if (thing_is_projectile(t)) {
-        THING_LOG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
-                  dt,              // newline
-                  old_thing_dt,    // newline
-                  t->thing_dt,     // newline
-                  thing_dt_change, // newline
-                  thing_speed(t),  // newline
-                  player_speed     // newline
-        );
-      }
+      THING_LOG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
+                dt,              // newline
+                old_thing_dt,    // newline
+                t->thing_dt,     // newline
+                thing_dt_change, // newline
+                thing_speed(t),  // newline
+                player_speed     // newline
+      );
     }
 
     if (thing_is_projectile(t)) {
       //
       // Every pixel change, we want to redo collision detection
       //
-      thing_projectile_move(g, v, l, t, dt);
+      if (! final) {
+        thing_projectile_move(g, v, l, t, dt);
+      }
     } else {
       thing_interpolate(g, v, l, t, t->thing_dt);
     }
 
-    if (t->thing_dt >= 0.99) { // dt increments can end up very close to 1
+    if (final || (t->thing_dt >= 1.0)) { // dt increments can end up very close to 1
       t->thing_dt = 0.0;
 
       thing_move_or_jump_finish(g, v, l, t);
@@ -372,6 +382,14 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
       thing_collision_handle(g, v, l, t);
 
       thing_is_spawned_unset(g, v, l, t);
+
+      //
+      // See if this monster can move again this tick
+      //
+      if (! final && (v->time_step < 1.0)) {
+        THING_DBG(t, "additional move possible");
+        thing_monst_tick(g, v, l, t);
+      }
     }
   }
 }
@@ -429,7 +447,9 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  LEVEL_DBG(g, v, l, "Tick %u: ending", v->tick);
+  if (level_is_player_level(g, v, l)) {
+    LEVEL_DBG(g, v, l, "Tick %u: ending", v->tick);
+  }
 
   l->tick_end_requested = false;
   l->tick_in_progress   = false;
@@ -454,7 +474,9 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     }
   }
 
-  LEVEL_DBG(g, v, l, "Tick %u: end", v->tick);
+  if (level_is_player_level(g, v, l)) {
+    LEVEL_DBG(g, v, l, "Tick %u: end", v->tick);
+  }
 }
 
 bool level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l)
@@ -626,7 +648,9 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
 
   IF_DEBUG2
   { // newline
-    LEVEL_DBG(g, v, current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step);
+    if (level_is_player_level(g, v, current_level)) {
+      LEVEL_DBG(g, v, current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step);
+    }
   }
 }
 
@@ -683,8 +707,8 @@ static void level_tick_monitor_progress(Gamep g, Levelsp v, Levelp current_level
   //
   IF_DEBUG2
   {
-    LEVEL_DBG(g, v, current_level, "Tick %u: req %u in-progress %u tick-end %u", v->tick, v->level_tick_request_count,
-              v->level_tick_in_progress_count, v->level_tick_done_count);
+    LEVEL_DBG(g, v, current_level, "Tick %u: req %u in-progress-count %u tick-end-count %u", v->tick,
+              v->level_tick_request_count, v->level_tick_in_progress_count, v->level_tick_done_count);
 
     if (v->level_tick_done_count && (v->level_ticking_count == v->level_tick_done_count)) {
       LEVEL_DBG(g, v, current_level, "Tick %u: all %u levels finished ticking", v->tick, v->level_tick_done_count);

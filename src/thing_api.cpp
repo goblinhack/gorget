@@ -4471,6 +4471,46 @@ int thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_age -= val;
 }
 
+int thing_move_remaining(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+  return t->_move_remaining;
+}
+
+int thing_move_remaining_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+  return t->_move_remaining = val;
+}
+
+int thing_move_remaining_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+  return t->_move_remaining += val;
+}
+
+int thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    ERR("No thing pointer set");
+    return 0;
+  }
+  return t->_move_remaining -= val;
+}
+
 float thing_collision_radius(Thingp t)
 {
   TRACE_NO_INDENT();

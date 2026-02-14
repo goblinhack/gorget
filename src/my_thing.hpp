@@ -325,9 +325,20 @@ typedef struct Thing_ {
   //
   int16_t anim_ms_remaining;
   //
-  // Move speed, with 100 being normal. Updated at start of tick.
+  // Move speed, with 100 being player.
   //
   int16_t _speed;
+  //
+  // This is the amount move moving (the speed above) we can do per tick.
+  //
+  // If we are 200 and the player is 100, then we get 2 moves per tick.
+  //
+  // If we are 50 then we get to move every other tick.
+  //
+  // Each tick, this amount is incremented by the speed value until it
+  // is >= the player's speed. At which point the monst can move.
+  //
+  int16_t _move_remaining;
   //
   // Temperature in celsius.
   //
@@ -792,6 +803,10 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_minion_max(Thingp);
 [[nodiscard]] int         thing_mob_minion_count_get(Gamep, Levelsp, Levelp, Thingp mob);
 [[nodiscard]] int         thing_move_path_size(Gamep, Levelsp, Levelp, Thingp);
+[[nodiscard]] int         thing_move_remaining_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int         thing_move_remaining_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int         thing_move_remaining_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int         thing_move_remaining(Thingp);
 [[nodiscard]] int         thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_speed(Thingp);
 [[nodiscard]] int         thing_submerged_pct_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
@@ -1038,6 +1053,7 @@ void thing_stats_dump(Gamep, Levelsp);
 void thing_temperature_damage_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);
+void thing_monst_tick(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_end(Gamep, Levelsp, Levelp, Thingp);
 void thing_tick_idle(Gamep, Levelsp, Levelp, Thingp);
 void THING_TOPCON(Thingp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);

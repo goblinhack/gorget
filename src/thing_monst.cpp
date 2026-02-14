@@ -270,4 +270,48 @@ void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp t, MonstState new_s
       break;
     case MONST_STATE_ENUM_MAX : break;
   }
+
+  (void) thing_move_remaining_set(g, v, l, t, 0);
+}
+
+//
+// Called at the beginning of each tick and whenever the move_remaining
+// count exceeds the players speed and there is still some level tick to go.
+//
+void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp t)
+{
+  TRACE_NO_INDENT();
+
+  if (thing_is_dead(t)) {
+    return;
+  }
+
+  if (! thing_is_monst(t)) {
+    return;
+  }
+
+  if (! level_is_player_level(g, v, l)) {
+    return;
+  }
+
+  auto player = thing_player(g);
+  if (! player) {
+    return;
+  }
+
+  const int player_speed = thing_speed(player);
+
+  if (0) {
+    THING_LOG(t, "move_rem %d dt %f", thing_move_remaining(t), t->thing_dt);
+  }
+
+  //
+  // Give the thing more ability to move
+  //
+  auto m = thing_move_remaining_incr(g, v, l, t, thing_speed(t));
+  if (m >= player_speed) {
+    (void) thing_move_remaining_decr(g, v, l, t, player_speed);
+
+    thing_monst_event_loop(g, v, l, t);
+  }
 }
