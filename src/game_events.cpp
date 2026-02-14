@@ -18,21 +18,21 @@
 //
 bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
 {
-  LOG("Game mouse down");
+  DBG("Game mouse down");
   TRACE_AND_INDENT();
 
   if (wid_some_recent_event_occurred()) {
-    LOG("Game mouse down, ignore, some event occurred");
+    DBG("Game mouse down, ignore, some event occurred");
     return false;
   }
 
   if (! g) {
-    LOG("Game mouse down, ignore, no game");
+    DBG("Game mouse down, ignore, no game");
     return false;
   }
 
   if (game_state(g) != STATE_PLAYING) {
-    LOG("Game mouse down, ignore, not playing");
+    DBG("Game mouse down, ignore, not playing");
     return false;
   }
 
@@ -41,7 +41,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   auto v = game_levels_get(g);
   if (! v) {
-    LOG("Game mouse down, ignore, no levels");
+    DBG("Game mouse down, ignore, no levels");
     return true;
   }
 
@@ -50,7 +50,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   auto l = game_level_get(g, v);
   if (! l) {
-    LOG("Game mouse down, ignore, no level");
+    DBG("Game mouse down, ignore, no level");
     return false;
   }
 
@@ -58,7 +58,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   // Over the map?
   //
   if (! level_cursor_is_valid(g, v)) {
-    LOG("Game mouse down, ignore, no cursor valid");
+    DBG("Game mouse down, ignore, no cursor valid");
     return false;
   }
 
@@ -88,12 +88,12 @@ bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
   }
 
   if (! g) {
-    LOG("Game motion, ignore, no game");
+    DBG("Game motion, ignore, no game");
     return false;
   }
 
   if (game_state(g) != STATE_PLAYING) {
-    LOG("Game motion, ignore, not playing");
+    DBG("Game motion, ignore, not playing");
     return false;
   }
 
@@ -131,7 +131,7 @@ bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
 
 bool game_event_save(Gamep g)
 {
-  LOG("Saving");
+  DBG("Saving");
   TRACE_AND_INDENT();
 
   auto v = game_levels_get(g);
@@ -176,7 +176,7 @@ bool game_event_save(Gamep g)
 
 bool game_event_load(Gamep g)
 {
-  LOG("Loading");
+  DBG("Loading");
   TRACE_AND_INDENT();
 
   wid_load_select(g);
@@ -186,7 +186,7 @@ bool game_event_load(Gamep g)
 
 bool game_event_wait(Gamep g)
 {
-  LOG("Wait");
+  DBG("Wait");
   TRACE_AND_INDENT();
 
   auto v = game_levels_get(g);
@@ -216,7 +216,7 @@ bool game_event_wait(Gamep g)
 
 bool game_event_inventory(Gamep g)
 {
-  LOG("Inventory");
+  DBG("Inventory");
   TRACE_AND_INDENT();
 
   auto v = game_levels_get(g);
@@ -241,7 +241,7 @@ bool game_event_inventory(Gamep g)
 
 bool game_event_descend(Gamep g)
 {
-  LOG("Descend");
+  DBG("Descend");
   TRACE_AND_INDENT();
 
   auto v = game_levels_get(g);
@@ -276,7 +276,7 @@ bool game_event_descend(Gamep g)
 
 bool game_event_ascend(Gamep g)
 {
-  LOG("Ascend");
+  DBG("Ascend");
   TRACE_AND_INDENT();
 
   auto v = game_levels_get(g);
@@ -311,7 +311,7 @@ bool game_event_ascend(Gamep g)
 
 bool game_event_jump(Gamep g)
 {
-  LOG("Jump");
+  DBG("Jump");
   TRACE_AND_INDENT();
 
   auto v = game_levels_get(g);
@@ -353,7 +353,7 @@ bool game_event_jump(Gamep g)
 
 bool game_event_help(Gamep g)
 {
-  LOG("Help");
+  DBG("Help");
   TRACE_AND_INDENT();
 
   auto player = thing_player(g);
@@ -372,7 +372,7 @@ bool game_event_help(Gamep g)
 
 bool game_event_quit(Gamep g)
 {
-  LOG("Quitting");
+  DBG("Quitting");
   TRACE_AND_INDENT();
 
   if (g_opt_quick_start) {
@@ -390,7 +390,7 @@ bool game_event_quit(Gamep g)
 
 bool game_input(Gamep g, const SDL_Keysym *key)
 {
-  LOG("Pressed a key");
+  DBG("Pressed a key");
   TRACE_AND_INDENT();
 
   if (! g) {
@@ -428,40 +428,40 @@ bool game_input(Gamep g, const SDL_Keysym *key)
   }
 
   if (sdlk_eq(*key, game_key_wait_get(g))) {
-    LOG("Pressed wait key");
+    DBG("Pressed wait key");
     game_event_wait(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_inventory_get(g))) {
-    LOG("Pressed inventory key");
+    DBG("Pressed inventory key");
     game_event_inventory(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_ascend_get(g))) {
-    LOG("Pressed ascend key");
+    DBG("Pressed ascend key");
     sound_play(g, "keypress");
     game_event_ascend(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_descend_get(g))) {
-    LOG("Pressed descend key");
+    DBG("Pressed descend key");
     sound_play(g, "keypress");
     game_event_descend(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_quit_get(g))) {
-    LOG("Pressed quit key");
+    DBG("Pressed quit key");
     sound_play(g, "keypress");
     game_event_quit(g);
     return true;
   }
 
   if (sdlk_eq(*key, game_key_help_get(g))) {
-    LOG("Pressed help key");
+    DBG("Pressed help key");
     TRACE_AND_INDENT();
     sound_play(g, "keypress");
     game_event_help(g);
@@ -469,16 +469,16 @@ bool game_input(Gamep g, const SDL_Keysym *key)
   }
 
   if (sdlk_eq(*key, game_key_load_get(g))) {
-    LOG("Pressed load key");
+    DBG("Pressed load key");
     TRACE_AND_INDENT();
-    LOG("Loading game");
+    DBG("Loading game");
     sound_play(g, "keypress");
     game_event_load(g);
     return true;
   }
 
   if (sdlk_eq(*key, game_key_save_get(g))) {
-    LOG("Pressed save key");
+    DBG("Pressed save key");
     TRACE_AND_INDENT();
     sound_play(g, "keypress");
     game_event_save(g);
@@ -486,7 +486,7 @@ bool game_input(Gamep g, const SDL_Keysym *key)
   }
 
   if (sdlk_eq(*key, game_key_jump_get(g))) {
-    LOG("Pressed jump key");
+    DBG("Pressed jump key");
     TRACE_AND_INDENT();
     game_event_jump(g);
     return true;

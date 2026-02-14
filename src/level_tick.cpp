@@ -71,7 +71,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
       l->tick_wait_on_things = true;
       IF_DEBUG2
       { // newline
-        LEVEL_LOG(g, v, l, "waiting on moving %s", to_string(g, v, l, t).c_str());
+        LEVEL_DBG(g, v, l, "waiting on moving %s", to_string(g, v, l, t).c_str());
       }
     }
 
@@ -79,7 +79,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
       l->tick_wait_on_things = true;
       IF_DEBUG2
       { // newline
-        LEVEL_LOG(g, v, l, "waiting on jumping %s", to_string(g, v, l, t).c_str());
+        LEVEL_DBG(g, v, l, "waiting on jumping %s", to_string(g, v, l, t).c_str());
       }
     }
 
@@ -92,7 +92,7 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
         l->tick_wait_on_things = true;
         IF_DEBUG2
         { // newline
-          LEVEL_LOG(g, v, l, "waiting on falling %s", to_string(g, v, l, t).c_str());
+          LEVEL_DBG(g, v, l, "waiting on falling %s", to_string(g, v, l, t).c_str());
         }
       }
     }
@@ -276,7 +276,7 @@ static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l)
     v->time_step = 1.0;
 
     if (! l->tick_end_requested) {
-      LEVEL_LOG(g, v, l, "Tick %u: end requested", v->tick);
+      LEVEL_DBG(g, v, l, "Tick %u: end requested", v->tick);
     }
 
     l->tick_end_requested = true;
@@ -306,7 +306,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt)
   const int player_speed = thing_speed(player);
 
   if (0) {
-    LEVEL_LOG(g, v, l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
+    LEVEL_DBG(g, v, l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
   }
 
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
@@ -380,7 +380,7 @@ static void level_tick_begin(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  LEVEL_LOG(g, v, l, "Tick %u: begin", v->tick);
+  LEVEL_DBG(g, v, l, "Tick %u: begin", v->tick);
 
   l->tick_begin_requested = false;
   l->tick_in_progress     = true;
@@ -410,7 +410,7 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 {
   TRACE_NO_INDENT();
 
-  LEVEL_LOG(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
+  LEVEL_DBG(g, v, l, "Tick %u: requested new tick: %s", v->tick, why);
 
   FOR_ALL_LEVELS(g, v, iter)
   {
@@ -429,7 +429,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  LEVEL_LOG(g, v, l, "Tick %u: ending", v->tick);
+  LEVEL_DBG(g, v, l, "Tick %u: ending", v->tick);
 
   l->tick_end_requested = false;
   l->tick_in_progress   = false;
@@ -454,8 +454,7 @@ static void level_tick_end(Gamep g, Levelsp v, Levelp l)
     }
   }
 
-  LEVEL_LOG(g, v, l, "Tick %u: end", v->tick);
-  LOG("-");
+  LEVEL_DBG(g, v, l, "Tick %u: end", v->tick);
 }
 
 bool level_tick_is_in_progress(Gamep g, Levelsp v, Levelp l)
@@ -566,7 +565,7 @@ static uint32_t level_tick_process_pending_request(Gamep g, Levelsp v, Levelp cu
     //
     iter->tick_begin_requested = false;
 
-    LEVEL_LOG(g, v, current_level, "Tick %u: requested by level %u", v->tick, iter->level_num);
+    LEVEL_DBG(g, v, current_level, "Tick %u: requested by level %u", v->tick, iter->level_num);
 
     //
     // If this is the first level requesting a tick, reset the fram counters and move the
@@ -627,7 +626,7 @@ static void level_tick_time_step(Gamep g, Levelsp v, Levelp current_level)
 
   IF_DEBUG2
   { // newline
-    LEVEL_LOG(g, v, current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step);
+    LEVEL_DBG(g, v, current_level, "Tick %u: tick-count %u %f", v->tick, v->level_ticking_count, v->time_step);
   }
 }
 
@@ -684,11 +683,11 @@ static void level_tick_monitor_progress(Gamep g, Levelsp v, Levelp current_level
   //
   IF_DEBUG2
   {
-    LEVEL_LOG(g, v, current_level, "Tick %u: req %u in-progress %u tick-end %u", v->tick, v->level_tick_request_count,
+    LEVEL_DBG(g, v, current_level, "Tick %u: req %u in-progress %u tick-end %u", v->tick, v->level_tick_request_count,
               v->level_tick_in_progress_count, v->level_tick_done_count);
 
     if (v->level_tick_done_count && (v->level_ticking_count == v->level_tick_done_count)) {
-      LEVEL_LOG(g, v, current_level, "Tick %u: all %u levels finished ticking", v->tick, v->level_tick_done_count);
+      LEVEL_DBG(g, v, current_level, "Tick %u: all %u levels finished ticking", v->tick, v->level_tick_done_count);
     }
   }
 }

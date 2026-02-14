@@ -665,8 +665,8 @@ int  tp_value19_get(Tpp);
 void tp_value20_set(Tpp, int val);
 int  tp_value20_get(Tpp);
 
-void tp_value21_set(Tpp, int val);
-int  tp_value21_get(Tpp);
+void tp_minion_max_set(Tpp, int val);
+int  tp_minion_max_get(Tpp);
 
 void tp_distance_minion_from_mob_max_set(Tpp, int val);
 int  tp_distance_minion_from_mob_max_get(Tpp);

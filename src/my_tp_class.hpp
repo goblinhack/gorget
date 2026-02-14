@@ -125,7 +125,7 @@ public:
   int value18 {0};
   int value19 {0};
   int value20 {0};
-  int value21 {0};
+  int minion_max {0};
   int distance_minion_from_mob_max {0};
   int distance_vision {0};
 

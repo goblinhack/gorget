@@ -426,7 +426,7 @@ void tp_damage_set(Tpp tp, ThingEventType ev, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
 
@@ -445,7 +445,7 @@ int tp_damage(Tpp tp, ThingEventType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
 
@@ -461,7 +461,7 @@ void tp_chance_set(Tpp tp, ThingChanceType ev, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
 
@@ -480,7 +480,7 @@ int tp_chance(Tpp tp, ThingChanceType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
 
@@ -499,7 +499,7 @@ bool tp_chance_success(Tpp tp, ThingChanceType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return false;
   }
 
@@ -523,7 +523,7 @@ bool tp_chance_fail(Tpp tp, ThingChanceType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return false;
   }
 
@@ -540,7 +540,7 @@ Tilep tp_tiles_get(Tpp tp, ThingAnim val, int index)
   TRACE_NO_INDENT();
 
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return nullptr;
   }
 
@@ -556,7 +556,7 @@ void tp_tiles_push_back(Tpp tp, ThingAnim val, Tilep tile)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
 
@@ -572,7 +572,7 @@ int tp_tiles_size(Tpp tp, ThingAnim val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return (int) tp->tiles[ val ].size();
@@ -582,7 +582,7 @@ std::string tp_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return "<noname>";
   }
   return tp->name.c_str();
@@ -592,7 +592,7 @@ void tp_short_name_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->short_name = std::string(val);
@@ -602,7 +602,7 @@ std::string tp_short_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return "<noshortname>";
   }
   if (tp->short_name.empty()) {
@@ -615,7 +615,7 @@ void tp_long_name_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->long_name = std::string(val);
@@ -625,7 +625,7 @@ std::string tp_long_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return "<nolongname>";
   }
   if (tp->long_name.empty()) {
@@ -638,7 +638,7 @@ void tp_apostrophize_name_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->apostrophize_name = std::string(val);
@@ -648,7 +648,7 @@ std::string tp_apostrophize_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return "<noapostrophizename>";
   }
   if (tp->apostrophize_name.empty()) {
@@ -661,7 +661,7 @@ void tp_pluralize_name_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->pluralize_name = std::string(val);
@@ -671,7 +671,7 @@ std::string tp_pluralize_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return "<nopluralizename>";
   }
   if (tp->pluralize_name.empty()) {
@@ -684,7 +684,7 @@ void tp_real_name_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->real_name = std::string(val);
@@ -694,7 +694,7 @@ std::string tp_real_name(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return "<norealname>";
   }
   if (tp->real_name.empty()) {
@@ -707,7 +707,7 @@ void tp_light_color_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->light_color = color_find(val.c_str());
@@ -717,7 +717,7 @@ void tp_light_color_apply(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   glcolor(tp->light_color);
@@ -728,7 +728,7 @@ color tp_light_color(Tpp tp)
 #ifdef _DEBUG_BUILD_
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return WHITE;
   }
 #endif
@@ -742,7 +742,7 @@ int tp_flag(Tpp tp, ThingFlag f)
 #endif
 
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return false;
   }
   return tp->flag[ f ];
@@ -752,7 +752,7 @@ void tp_flag_set(Tpp tp, ThingFlag f, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->flag[ f ] = val;
@@ -762,7 +762,7 @@ void tp_z_depth_set(Tpp tp, MapZDepth val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->z_depth = val;
@@ -771,7 +771,7 @@ uint8_t tp_z_depth_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->z_depth;
@@ -781,7 +781,7 @@ void tp_speed_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->speed = val;
@@ -791,7 +791,7 @@ int tp_speed_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->speed;
@@ -801,7 +801,7 @@ void tp_weight_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->weight = val;
@@ -811,7 +811,7 @@ int tp_weight_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->weight;
@@ -821,7 +821,7 @@ void tp_monst_group_add(Tpp tp, ThingMonstGroup val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
 
@@ -861,7 +861,7 @@ void tp_is_immunity_add(Tpp tp, ThingEventType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
 
@@ -881,7 +881,7 @@ bool tp_is_immune_to(Tpp tp, ThingEventType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return false;
   }
 
@@ -897,7 +897,7 @@ void tp_health_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->health_initial = Dice(std::string(val));
@@ -907,7 +907,7 @@ int tp_health_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->health_initial.roll();
@@ -917,7 +917,7 @@ int tp_health_max_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->health_initial.max_roll();
@@ -927,7 +927,7 @@ void tp_temperature_initial_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->temperature_initial = val;
@@ -937,7 +937,7 @@ int tp_temperature_initial_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->temperature_initial;
@@ -947,7 +947,7 @@ void tp_temperature_burns_at_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->temperature_burns_at = val;
@@ -957,7 +957,7 @@ int tp_temperature_burns_at_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->temperature_burns_at;
@@ -967,7 +967,7 @@ void tp_temperature_melts_at_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->temperature_melts_at = val;
@@ -977,7 +977,7 @@ int tp_temperature_melts_at_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->temperature_melts_at;
@@ -987,7 +987,7 @@ void tp_temperature_damage_at_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->temperature_damage_at = val;
@@ -997,7 +997,7 @@ int tp_temperature_damage_at_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->temperature_damage_at;
@@ -1007,7 +1007,7 @@ void tp_value1_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value1 = val;
@@ -1017,7 +1017,7 @@ int tp_value1_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value1;
@@ -1027,7 +1027,7 @@ void tp_value2_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value2 = val;
@@ -1037,7 +1037,7 @@ int tp_value2_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value2;
@@ -1047,7 +1047,7 @@ void tp_value3_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value3 = val;
@@ -1057,7 +1057,7 @@ int tp_value3_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value3;
@@ -1067,7 +1067,7 @@ void tp_value4_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value4 = val;
@@ -1077,7 +1077,7 @@ int tp_value4_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value4;
@@ -1087,7 +1087,7 @@ void tp_value5_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value5 = val;
@@ -1097,7 +1097,7 @@ int tp_value5_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value5;
@@ -1107,7 +1107,7 @@ void tp_value6_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value6 = val;
@@ -1117,7 +1117,7 @@ int tp_value6_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value6;
@@ -1127,7 +1127,7 @@ void tp_value7_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value7 = val;
@@ -1137,7 +1137,7 @@ int tp_value7_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value7;
@@ -1147,7 +1147,7 @@ void tp_value8_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value8 = val;
@@ -1157,7 +1157,7 @@ int tp_value8_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value8;
@@ -1167,7 +1167,7 @@ void tp_value9_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value9 = val;
@@ -1177,7 +1177,7 @@ int tp_value9_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value9;
@@ -1187,7 +1187,7 @@ void tp_value10_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value10 = val;
@@ -1197,7 +1197,7 @@ int tp_value10_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value10;
@@ -1207,7 +1207,7 @@ void tp_value11_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value11 = val;
@@ -1217,7 +1217,7 @@ int tp_value11_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value11;
@@ -1227,7 +1227,7 @@ void tp_value12_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value12 = val;
@@ -1237,7 +1237,7 @@ int tp_value12_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value12;
@@ -1247,7 +1247,7 @@ void tp_value13_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value13 = val;
@@ -1257,7 +1257,7 @@ int tp_value13_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value13;
@@ -1267,7 +1267,7 @@ void tp_value14_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value14 = val;
@@ -1277,7 +1277,7 @@ int tp_value14_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value14;
@@ -1287,7 +1287,7 @@ void tp_value15_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value15 = val;
@@ -1297,7 +1297,7 @@ int tp_value15_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value15;
@@ -1307,7 +1307,7 @@ void tp_value16_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value16 = val;
@@ -1317,7 +1317,7 @@ int tp_value16_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value16;
@@ -1327,7 +1327,7 @@ void tp_value17_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value17 = val;
@@ -1337,7 +1337,7 @@ int tp_value17_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value17;
@@ -1347,7 +1347,7 @@ void tp_value18_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value18 = val;
@@ -1357,7 +1357,7 @@ int tp_value18_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value18;
@@ -1367,7 +1367,7 @@ void tp_value19_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value19 = val;
@@ -1377,7 +1377,7 @@ int tp_value19_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value19;
@@ -1387,7 +1387,7 @@ void tp_value20_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->value20 = val;
@@ -1397,37 +1397,42 @@ int tp_value20_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->value20;
 }
 
-void tp_value21_set(Tpp tp, int val)
+void tp_minion_max_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
-  tp->value21 = val;
+  if (val > THING_MINION_MAX) {
+    TP_ERR(tp, "minion max too high: %d", val);
+    return;
+  }
+
+  tp->minion_max = val;
 }
 
-int tp_value21_get(Tpp tp)
+int tp_minion_max_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
-  return tp->value21;
+  return tp->minion_max;
 }
 
 void tp_distance_minion_from_mob_max_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->distance_minion_from_mob_max = val;
@@ -1437,7 +1442,7 @@ int tp_distance_minion_from_mob_max_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->distance_minion_from_mob_max;
@@ -1447,7 +1452,7 @@ void tp_distance_vision_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->distance_vision = val;
@@ -1457,7 +1462,7 @@ int tp_distance_vision_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->distance_vision;
@@ -1467,7 +1472,7 @@ void tp_temperature_thermal_conductivity_set(Tpp tp, float val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->temperature_thermal_conductivity = val;
@@ -1477,7 +1482,7 @@ float tp_temperature_thermal_conductivity_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->temperature_thermal_conductivity;
@@ -1487,7 +1492,7 @@ void tp_temperature_heat_capacity_set(Tpp tp, float val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->temperature_heat_capacity = val;
@@ -1497,7 +1502,7 @@ float tp_temperature_heat_capacity_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->temperature_heat_capacity;
@@ -1507,7 +1512,7 @@ void tp_variant_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->variant = val;
@@ -1517,7 +1522,7 @@ int tp_variant_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->variant;
@@ -1527,7 +1532,7 @@ void tp_priority_set(Tpp tp, ThingPriorityType val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->priority = val;
@@ -1537,7 +1542,7 @@ ThingPriorityType tp_priority_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return THING_PRIORITY_LOW;
   }
   return tp->priority;
@@ -1547,7 +1552,7 @@ void tp_vision_distance_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->vision_distance = val;
@@ -1557,7 +1562,7 @@ int tp_vision_distance_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->vision_distance;
@@ -1566,7 +1571,7 @@ void tp_jump_distance_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->jump_distance = val;
@@ -1576,7 +1581,7 @@ int tp_jump_distance_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->jump_distance;
@@ -1586,7 +1591,7 @@ void tp_lifespan_set(Tpp tp, const std::string &val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return;
   }
   tp->lifespan = Dice(std::string(val));
@@ -1596,7 +1601,7 @@ int tp_lifespan_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->lifespan.roll();
@@ -1606,7 +1611,7 @@ int tp_lifespan_max_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
-    ERR("No thing template pointer set");
+    TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
   return tp->lifespan.max_roll();

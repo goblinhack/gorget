@@ -4085,44 +4085,44 @@ int thing_value20_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
   return t->_value20 -= val;
 }
-int thing_value21(Thingp t)
+int thing_minion_max(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value21;
+  return t->_minion_max;
 }
 
-int thing_value21_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_minion_max_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value21 = val;
+  return t->_minion_max = val;
 }
 
-int thing_value21_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_minion_max_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value21 += val;
+  return t->_minion_max += val;
 }
 
-int thing_value21_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_value21 -= val;
+  return t->_minion_max -= val;
 }
 int thing_distance_minion_from_mob_max(Thingp t)
 {

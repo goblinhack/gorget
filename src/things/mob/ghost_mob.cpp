@@ -93,6 +93,7 @@ bool tp_load_ghost_mob(void)
   tp_health_set(tp, "1d3+2");
   tp_light_color_set(tp, "cyan");
   tp_long_name_set(tp, "ghost mob");
+  tp_minion_max_set(tp, 10);
   tp_pluralize_name_set(tp, "ghostly mobs");
   tp_priority_set(tp, THING_PRIORITY_MOB);
   tp_short_name_set(tp, "pile of bones");

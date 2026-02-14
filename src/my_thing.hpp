@@ -43,7 +43,7 @@ typedef union {
 #define THING_DESCRIBE_MAX  10                       // The number of things we can show in the rightbar
 #define THING_MOVE_PATH_MAX (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
 #define THING_INVENTORY_MAX 26
-#define THING_MINION_MAX    100
+#define THING_MINION_MAX    10
 
 enum {
   TEXT_INCLUDE_OWNER = 1,
@@ -360,7 +360,7 @@ typedef struct Thing_ {
   int16_t _value18;
   int16_t _value19;
   int16_t _value20;
-  int16_t _value21;
+  int16_t _minion_max;
   int16_t _distance_minion_from_mob_max;
   int16_t _distance_vision;
   int16_t _variant;
@@ -786,6 +786,10 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_lifespan_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_lifespan_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_lifespan(Thingp);
+[[nodiscard]] int         thing_minion_max_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int         thing_minion_max_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int         thing_minion_max_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int         thing_minion_max(Thingp);
 [[nodiscard]] int         thing_mob_minion_count_get(Gamep, Levelsp, Levelp, Thingp mob);
 [[nodiscard]] int         thing_move_path_size(Gamep, Levelsp, Levelp, Thingp);
 [[nodiscard]] int         thing_speed_set(Gamep, Levelsp, Levelp, Thingp, int val);
@@ -850,10 +854,6 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_value20_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_value20_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_value20(Thingp);
-[[nodiscard]] int         thing_value21_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_value21_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_value21_set(Gamep, Levelsp, Levelp, Thingp, int val);
-[[nodiscard]] int         thing_value21(Thingp);
 [[nodiscard]] int         thing_value3_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_value3_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_value3_set(Gamep, Levelsp, Levelp, Thingp, int val);

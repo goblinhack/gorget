@@ -89,6 +89,7 @@ bool tp_load_kobalos_mob(void)
   tp_health_set(tp, "1d3+3");
   tp_light_color_set(tp, "green");
   tp_long_name_set(tp, "kobalos mob");
+  tp_minion_max_set(tp, 5);
   tp_pluralize_name_set(tp, "kobalosy mobs");
   tp_priority_set(tp, THING_PRIORITY_MOB);
   tp_short_name_set(tp, "kobalos den");

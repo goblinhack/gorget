@@ -91,7 +91,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
   (void) thing_value18_set(g, v, l, t, tp_value18_get(tp));
   (void) thing_value19_set(g, v, l, t, tp_value19_get(tp));
   (void) thing_value20_set(g, v, l, t, tp_value20_get(tp));
-  (void) thing_value21_set(g, v, l, t, tp_value21_get(tp));
+  (void) thing_minion_max_set(g, v, l, t, tp_minion_max_get(tp));
   (void) thing_distance_minion_from_mob_max_set(g, v, l, t, tp_distance_minion_from_mob_max_get(tp));
   (void) thing_distance_vision_set(g, v, l, t, tp_distance_vision_get(tp));
   (void) thing_variant_set(g, v, l, t, tp_variant_get(tp));

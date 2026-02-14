@@ -17,7 +17,7 @@
 //
 [[nodiscard]] static bool thing_monst_move_try(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool need_path)
 {
-  THING_LOG(t, "move try");
+  THING_DBG(t, "move try");
 
   TRACE_AND_INDENT();
 
@@ -29,7 +29,7 @@
     //
     // Can we shove it out of the way to move?
     //
-    THING_LOG(t, "move try: can move to by shoving");
+    THING_DBG(t, "move try: can move to by shoving");
 
     if (thing_shove_to(g, v, l, t, to)) {
       //
@@ -47,7 +47,7 @@
     //
     // Can we open it allow movement?
     //
-    THING_LOG(t, "move try: can move to by opening");
+    THING_DBG(t, "move try: can move to by opening");
 
     if (thing_move_to(g, v, l, t, to)) {
       return true;
@@ -67,13 +67,13 @@
 {
   TRACE_NO_INDENT();
 
-  THING_LOG(t, "move to next");
+  THING_DBG(t, "move to next");
 
   //
   // If already moving, do not pop the next path tile
   //
   if (thing_is_moving(t)) {
-    THING_LOG(t, "move to next: already moving");
+    THING_DBG(t, "move to next: already moving");
     return false;
   }
 
@@ -85,7 +85,7 @@
     //
     // If could not pop, then no path is left
     //
-    THING_LOG(t, "move to next: no move path to pop");
+    THING_DBG(t, "move to next: no move path to pop");
     return false;
   }
 
@@ -96,7 +96,7 @@
         //
         // If could jump, then abort the path walk
         //
-        THING_LOG(t, "move to next: jump");
+        THING_DBG(t, "move to next: jump");
         return false;
       }
 
@@ -104,7 +104,7 @@
       // Something was in the way of jumping. Best to stop rather than accidentally
       // walk into a chasm.
       //
-      THING_LOG(t, "move to next: something in the way");
+      THING_DBG(t, "move to next: something in the way");
       return false;
     }
   }
@@ -113,7 +113,7 @@
     //
     // If could not move, then abort the path walk
     //
-    THING_LOG(t, "move to next: could not move");
+    THING_DBG(t, "move to next: could not move");
     return false;
   }
 
@@ -127,15 +127,15 @@
   if (thing_is_minion(t)) {
     spoint target;
     if (thing_minion_choose_target_near_mob(g, v, l, t, target)) {
-      THING_LOG(t, "minion chose target");
+      THING_DBG(t, "minion chose target");
       return true;
     }
 
-    THING_LOG(t, "minion has no target");
+    THING_DBG(t, "minion has no target");
     return false;
   }
 
-  THING_LOG(t, "monst has no target");
+  THING_DBG(t, "monst has no target");
   return false;
 }
 
@@ -189,7 +189,7 @@ void thing_monst_event_loop(Gamep g, Levelsp v, Levelp l, Thingp t)
       break;
     case MONST_STATE_FOLLOWING_PATH :
       if (! thing_monst_move_to_next(g, v, l, t)) {
-        THING_LOG(t, "end of move");
+        THING_DBG(t, "end of move");
         monst_state_change(g, v, l, t, MONST_STATE_NORMAL);
       }
       break;
@@ -246,8 +246,11 @@ void monst_state_change(Gamep g, Levelsp v, Levelp l, Thingp t, MonstState new_s
   //
   // Why oh why change state
   //
-  THING_LOG(t, "state change: %s -> %s", monst_state_to_string(old_state).c_str(),
-            monst_state_to_string(new_state).c_str());
+  IF_DEBUG
+  {
+    THING_DBG(t, "state change: %s -> %s", monst_state_to_string(old_state).c_str(),
+              monst_state_to_string(new_state).c_str());
+  }
 
   switch (new_state) {
     case MONST_STATE_INIT :

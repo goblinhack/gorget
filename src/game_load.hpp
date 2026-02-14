@@ -747,8 +747,8 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Thing, _value21)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value21)";
+    if (tmp != offsetof(Thing, _minion_max)) {
+      game_load_error = "Thing strcture changed: offsetof(Thing, _minion_max)";
       return in;
     }
     in >> bits(tmp);

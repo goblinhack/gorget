@@ -70,7 +70,7 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
   //
   // Too many minions
   //
-  if (thing_mob_minion_count_get(g, v, l, mob) >= THING_MINION_MAX - 1) {
+  if (thing_mob_minion_count_get(g, v, l, mob) >= thing_minion_max(mob)) {
     return nullptr;
   }
 
@@ -96,8 +96,8 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
     new_minion->mob_id = mob->id;
     ext_struct->minions.count++;
 
-    THING_LOG(mob, "spawned minion %s", to_string(g, v, l, new_minion).c_str());
-    THING_LOG(new_minion, "new born minion");
+    THING_DBG(mob, "spawned minion %s", to_string(g, v, l, new_minion).c_str());
+    THING_DBG(new_minion, "new born minion");
 
     return new_minion;
   }
@@ -158,10 +158,10 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
     minion->mob_id = 0;
 
     if (e.event_type != THING_EVENT_NONE) {
-      THING_LOG(mob, "kill minion %s", to_string(g, v, l, minion).c_str());
+      THING_DBG(mob, "kill minion %s", to_string(g, v, l, minion).c_str());
       thing_dead(g, v, l, minion, e);
     } else {
-      THING_LOG(mob, "detach minion %s", to_string(g, v, l, minion).c_str());
+      THING_DBG(mob, "detach minion %s", to_string(g, v, l, minion).c_str());
     }
   }
 

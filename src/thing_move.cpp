@@ -277,7 +277,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
   (void) thing_push(g, v, l, me);
 
   thing_is_moving_set(g, v, l, me);
-  THING_LOG(me, "move to");
+  THING_DBG(me, "move to");
 
   return true;
 }
