@@ -432,6 +432,12 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
     case is_obs_to_jumping_onto :
     case is_obs_to_teleporting_onto :
     case is_obs_to_movement :
+      if (thing_is_dead(it)) {
+        if (! thing_is_obs_when_dead(it)) {
+          return true; // filter out
+        }
+      }
+
       if (thing_is_open(it)) {
         return true; // filter out
       }

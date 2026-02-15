@@ -101,9 +101,10 @@ bool thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp
     //
     // Allow walking over the dead
     //
-    if (thing_is_dead(it)) {
-      continue;
-    }
+    if (0)
+      if (thing_is_dead(it)) {
+        continue;
+      }
 
     //
     // Walls are not always obstacles

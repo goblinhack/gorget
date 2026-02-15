@@ -352,7 +352,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
-    if (0) {
+    if (1) {
       THING_LOG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
                 dt,              // newline
                 old_thing_dt,    // newline

@@ -203,7 +203,7 @@
       list_macro(is_unused68, "is_unused68"),                                       /* newline */                    \
       list_macro(is_unused69, "is_unused69"),                                       /* newline */                    \
       list_macro(is_unused70, "is_unused70"),                                       /* newline */                    \
-      list_macro(is_unused71, "is_unused71"),                                       /* newline */                    \
+      list_macro(is_obs_when_dead, "is_obs_when_dead"),                                       /* newline */                    \
       list_macro(is_able_to_fall_repeatedly, "is_able_to_fall_repeatedly"),         /* newline */                    \
       list_macro(is_able_to_move_through_walls, "is_able_to_move_through_walls"),   /* newline */                    \
       list_macro(is_able_to_move_diagonally, "is_able_to_move_diagonally"),         /* newline */                    \
@@ -909,7 +909,7 @@ float tp_collision_radius(Tpp);
 #define tp_is_unused69(tp)                    tp_flag(tp, is_unused69)
 #define tp_is_unused7(tp)                     tp_flag(tp, is_unused7)
 #define tp_is_unused70(tp)                    tp_flag(tp, is_unused70)
-#define tp_is_unused71(tp)                    tp_flag(tp, is_unused71)
+#define tp_is_obs_when_dead(tp)                    tp_flag(tp, is_obs_when_dead)
 #define tp_is_unused8(tp)                     tp_flag(tp, is_unused8)
 #define tp_is_unused9(tp)                     tp_flag(tp, is_unused9)
 #define tp_is_wait_on_dead_anim(tp)           tp_flag(tp, is_wait_on_dead_anim)
@@ -1130,7 +1130,7 @@ float tp_collision_radius(Tpp);
 #define level_is_unused69(g, v, l, p)                    level_flag(g, v, l, is_unused69, p)
 #define level_is_unused7(g, v, l, p)                     level_flag(g, v, l, is_unused7, p)
 #define level_is_unused70(g, v, l, p)                    level_flag(g, v, l, is_unused70, p)
-#define level_is_unused71(g, v, l, p)                    level_flag(g, v, l, is_unused71, p)
+#define level_is_obs_when_dead(g, v, l, p)                    level_flag(g, v, l, is_obs_when_dead, p)
 #define level_is_unused8(g, v, l, p)                     level_flag(g, v, l, is_unused8, p)
 #define level_is_unused9(g, v, l, p)                     level_flag(g, v, l, is_unused9, p)
 #define level_is_wait_on_dead_anim(g, v, l, p)           level_flag(g, v, l, is_wait_on_dead_anim, p)
@@ -1351,7 +1351,7 @@ float tp_collision_radius(Tpp);
 #define level_alive_is_unused69(g, v, l, p)                    level_alive(g, v, l, is_unused69, p)
 #define level_alive_is_unused7(g, v, l, p)                     level_alive(g, v, l, is_unused7, p)
 #define level_alive_is_unused70(g, v, l, p)                    level_alive(g, v, l, is_unused70, p)
-#define level_alive_is_unused71(g, v, l, p)                    level_alive(g, v, l, is_unused71, p)
+#define level_alive_is_obs_when_dead(g, v, l, p)                    level_alive(g, v, l, is_obs_when_dead, p)
 #define level_alive_is_unused8(g, v, l, p)                     level_alive(g, v, l, is_unused8, p)
 #define level_alive_is_unused9(g, v, l, p)                     level_alive(g, v, l, is_unused9, p)
 #define level_alive_is_wait_on_dead_anim(g, v, l, p)           level_alive(g, v, l, is_wait_on_dead_anim, p)
@@ -1572,7 +1572,7 @@ float tp_collision_radius(Tpp);
 #define level_count_is_unused69(g, v, l, p)                    level_count(g, v, l, is_unused69, p)
 #define level_count_is_unused7(g, v, l, p)                     level_count(g, v, l, is_unused7, p)
 #define level_count_is_unused70(g, v, l, p)                    level_count(g, v, l, is_unused70, p)
-#define level_count_is_unused71(g, v, l, p)                    level_count(g, v, l, is_unused71, p)
+#define level_count_is_obs_when_dead(g, v, l, p)                    level_count(g, v, l, is_obs_when_dead, p)
 #define level_count_is_unused8(g, v, l, p)                     level_count(g, v, l, is_unused8, p)
 #define level_count_is_unused9(g, v, l, p)                     level_count(g, v, l, is_unused9, p)
 #define level_count_is_wait_on_dead_anim(g, v, l, p)           level_count(g, v, l, is_wait_on_dead_anim, p)
@@ -1793,7 +1793,7 @@ float tp_collision_radius(Tpp);
 #define level_open_is_unused69(g, v, l, p)                    level_open(g, v, l, is_unused69, p)
 #define level_open_is_unused7(g, v, l, p)                     level_open(g, v, l, is_unused7, p)
 #define level_open_is_unused70(g, v, l, p)                    level_open(g, v, l, is_unused70, p)
-#define level_open_is_unused71(g, v, l, p)                    level_open(g, v, l, is_unused71, p)
+#define level_open_is_obs_when_dead(g, v, l, p)                    level_open(g, v, l, is_obs_when_dead, p)
 #define level_open_is_unused8(g, v, l, p)                     level_open(g, v, l, is_unused8, p)
 #define level_open_is_unused9(g, v, l, p)                     level_open(g, v, l, is_unused9, p)
 #define level_open_is_wait_on_dead_anim(g, v, l, p)           level_open(g, v, l, is_wait_on_dead_anim, p)

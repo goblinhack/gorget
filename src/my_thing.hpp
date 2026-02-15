@@ -724,7 +724,7 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_unused69(Thingp);
 [[nodiscard]] bool        thing_is_unused7(Thingp);
 [[nodiscard]] bool        thing_is_unused70(Thingp);
-[[nodiscard]] bool        thing_is_unused71(Thingp);
+[[nodiscard]] bool        thing_is_obs_when_dead(Thingp);
 [[nodiscard]] bool        thing_is_unused8(Thingp);
 [[nodiscard]] bool        thing_is_unused9(Thingp);
 [[nodiscard]] bool        thing_is_wait_on_dead_anim(Thingp);

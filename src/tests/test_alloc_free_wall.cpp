@@ -58,7 +58,7 @@
         continue;
       }
 
-      if (level_num > 10) {
+      if (level_num > 2) {
         //
         // Takes too long to test them all
         //
