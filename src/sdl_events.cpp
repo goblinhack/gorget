@@ -10,6 +10,7 @@
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_thing_inlines.hpp"
 #include "my_ui.hpp"
 #include "my_wid_class.hpp"
 #include "my_wid_console.hpp"
@@ -620,24 +621,39 @@ void sdl_key_repeat_events(Gamep g)
     last_movement_keypress = time_ms();
   }
 
-  if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_PLAYER, last_movement_keypress)) {
-    if (player_move_request(g, up, down, left, right, fire)) {
-      last_movement_keypress = time_ms();
+  auto player = thing_player(g);
+  if (player) {
+    //
+    // This allows for smoother movement in that we are ready to move as soon as the
+    // player finishes the previous move.
+    //
+    auto fast_repeat_allowed = thing_is_moving(player);
+    if (fire) {
+      //
+      // But firing should not be as quick as moving.
+      //
+      fast_repeat_allowed = false;
+    }
 
-      if (fire_pressed > 0) {
-        fire_pressed--;
-      }
-      if (up_pressed > 0) {
-        up_pressed--;
-      }
-      if (down_pressed > 0) {
-        down_pressed--;
-      }
-      if (left_pressed > 0) {
-        left_pressed--;
-      }
-      if (right_pressed > 0) {
-        right_pressed--;
+    if (fast_repeat_allowed || time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_PLAYER, last_movement_keypress)) {
+      if (player_move_request(g, up, down, left, right, fire)) {
+        last_movement_keypress = time_ms();
+
+        if (fire_pressed > 0) {
+          fire_pressed--;
+        }
+        if (up_pressed > 0) {
+          up_pressed--;
+        }
+        if (down_pressed > 0) {
+          down_pressed--;
+        }
+        if (left_pressed > 0) {
+          left_pressed--;
+        }
+        if (right_pressed > 0) {
+          right_pressed--;
+        }
       }
     }
   }

@@ -439,8 +439,8 @@ void level_tick_begin_requested(Gamep g, Levelsp v, Levelp l, const char *why)
 
   v->requested_fire       = false;
   v->requested_move_up    = false;
+  v->requested_move_down  = false;
   v->requested_move_left  = false;
-  v->requested_move_keft  = false;
   v->requested_move_right = false;
 }
 

@@ -463,8 +463,8 @@ typedef struct Levels_ {
   //
   // Player move request.
   //
+  uint8_t requested_move_down  : 1;
   uint8_t requested_move_left  : 1;
-  uint8_t requested_move_keft  : 1;
   uint8_t requested_move_right : 1;
   uint8_t requested_move_up    : 1;
   uint8_t requested_fire       : 1;

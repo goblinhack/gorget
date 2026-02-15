@@ -673,8 +673,8 @@ void player_move_reset(Gamep g, Levelsp v, Levelp l)
 
   v->requested_fire       = false;
   v->requested_move_up    = false;
+  v->requested_move_down  = false;
   v->requested_move_left  = false;
-  v->requested_move_keft  = false;
   v->requested_move_right = false;
 }
 
@@ -694,11 +694,11 @@ void player_move_accum(Gamep g, Levelsp v, Levelp l, bool up, bool down, bool le
   }
 
   if (down) {
-    v->requested_move_left = down;
+    v->requested_move_down = down;
   }
 
   if (left) {
-    v->requested_move_keft = left;
+    v->requested_move_left = left;
   }
 
   if (right) {
@@ -747,22 +747,22 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
 
   if (v->requested_fire) {
     if (v->requested_move_up) {
-      if (v->requested_move_keft) {
+      if (v->requested_move_left) {
         player_fire(g, v, l, -1, -1, tp_fireball);
       } else if (v->requested_move_right) {
         player_fire(g, v, l, 1, -1, tp_fireball);
       } else {
         player_fire(g, v, l, 0, -1, tp_fireball);
       }
-    } else if (v->requested_move_left) {
-      if (v->requested_move_keft) {
+    } else if (v->requested_move_down) {
+      if (v->requested_move_left) {
         player_fire(g, v, l, -1, 1, tp_fireball);
       } else if (v->requested_move_right) {
         player_fire(g, v, l, 1, 1, tp_fireball);
       } else {
         player_fire(g, v, l, 0, 1, tp_fireball);
       }
-    } else if (v->requested_move_keft) {
+    } else if (v->requested_move_left) {
       player_fire(g, v, l, -1, 0, tp_fireball);
     } else if (v->requested_move_right) {
       player_fire(g, v, l, 1, 0, tp_fireball);
@@ -772,22 +772,22 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
   }
 
   if (v->requested_move_up) {
-    if (v->requested_move_keft) {
+    if (v->requested_move_left) {
       player_move_delta(g, v, l, -1, -1);
     } else if (v->requested_move_right) {
       player_move_delta(g, v, l, 1, -1);
     } else {
       player_move_delta(g, v, l, 0, -1);
     }
-  } else if (v->requested_move_left) {
-    if (v->requested_move_keft) {
+  } else if (v->requested_move_down) {
+    if (v->requested_move_left) {
       player_move_delta(g, v, l, -1, 1);
     } else if (v->requested_move_right) {
       player_move_delta(g, v, l, 1, 1);
     } else {
       player_move_delta(g, v, l, 0, 1);
     }
-  } else if (v->requested_move_keft) {
+  } else if (v->requested_move_left) {
     player_move_delta(g, v, l, -1, 0);
   } else if (v->requested_move_right) {
     player_move_delta(g, v, l, 1, 0);
