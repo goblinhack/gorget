@@ -617,30 +617,28 @@ enum {
   LEVEL_TEST_FLAG = 1,
 };
 
-[[nodiscard]] bool        is_oob(fpoint);
-[[nodiscard]] bool        is_oob(int, int);
-[[nodiscard]] bool        is_oob(spoint);
-[[nodiscard]] bool        level_cursor_describe_add(Gamep, Levelsp, Thingp);
-[[nodiscard]] bool        level_cursor_describe_remove(Gamep, Levelsp, Thingp);
-[[nodiscard]] bool        level_cursor_is_valid(Gamep, Levelsp);
-[[nodiscard]] bool        level_gen_is_room_entrance(Gamep, class LevelGen *, int x, int y);
-[[nodiscard]] bool        level_gen_is_room_entrance(Gamep, class LevelGen *, spoint at);
-[[nodiscard]] bool        level_is_level_select(Gamep, Levelsp, Levelp);
-[[nodiscard]] bool        level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint, Tpp);
-[[nodiscard]] bool        level_match_contents(Gamep, Levelsp, Levelp, Testp, int w, int h, const char *in);
-[[nodiscard]] bool        level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint, int slot, ThingId);
-[[nodiscard]] bool        level_populate(Gamep, Levelsp, Levelp, class LevelGen *, const char *);
-[[nodiscard]] bool        level_populate(Gamep, Levelsp, Levelp, class LevelGen *, int w, int h, const char *);
-[[nodiscard]] bool        level_tick_is_in_progress(Gamep, Levelsp, Levelp);
-[[nodiscard]] int         level_count(Gamep, Levelsp, Levelp, ThingFlag, spoint);
-[[nodiscard]] int         level_count(Gamep, Levelsp, Levelp, ThingFlag, Thingp);
-[[nodiscard]] int         level_cursor_path_size(Gamep);
-[[nodiscard]] int         levels_thing_count(Gamep, Levelsp);
-[[nodiscard]] int         levels_thing_ext_count(Gamep, Levelsp);
-[[nodiscard]] Levelp      level_change(Gamep, Levelsp, LevelNum);
-[[nodiscard]] Levelp      level_select_get_level_at_tile_coords(Gamep, Levelsp, spoint);
-[[nodiscard]] Levelsp     levels_memory_alloc(Gamep);
-[[nodiscard]] std::string level_string(Gamep, Levelsp, Levelp, int w, int h);
+[[nodiscard]] bool                  is_oob(fpoint);
+[[nodiscard]] bool                  is_oob(int, int);
+[[nodiscard]] bool                  is_oob(spoint);
+[[nodiscard]] bool                  level_cursor_describe_add(Gamep, Levelsp, Thingp);
+[[nodiscard]] bool                  level_cursor_describe_remove(Gamep, Levelsp, Thingp);
+[[nodiscard]] bool                  level_cursor_is_valid(Gamep, Levelsp);
+[[nodiscard]] bool                  level_gen_is_room_entrance(Gamep, class LevelGen *, int x, int y);
+[[nodiscard]] bool                  level_gen_is_room_entrance(Gamep, class LevelGen *, spoint at);
+[[nodiscard]] bool                  level_is_level_select(Gamep, Levelsp, Levelp);
+[[nodiscard]] bool                  level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint, Tpp);
+[[nodiscard]] bool                  level_match_contents(Gamep, Levelsp, Levelp, Testp, int w, int h, const char *in);
+[[nodiscard]] bool                  level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint, int slot, ThingId);
+[[nodiscard]] bool                  level_tick_is_in_progress(Gamep, Levelsp, Levelp);
+[[nodiscard]] int                   level_count(Gamep, Levelsp, Levelp, ThingFlag, spoint);
+[[nodiscard]] int                   level_count(Gamep, Levelsp, Levelp, ThingFlag, Thingp);
+[[nodiscard]] int                   level_cursor_path_size(Gamep);
+[[nodiscard]] int                   levels_thing_count(Gamep, Levelsp);
+[[nodiscard]] int                   levels_thing_ext_count(Gamep, Levelsp);
+[[nodiscard]] Levelp                level_change(Gamep, Levelsp, LevelNum);
+[[nodiscard]] Levelp                level_select_get_level_at_tile_coords(Gamep, Levelsp, spoint);
+[[nodiscard]] Levelsp               levels_memory_alloc(Gamep);
+[[nodiscard]] std::string           level_string(Gamep, Levelsp, Levelp, int w, int h);
 [[nodiscard]] std::vector< Thingp > level_find_all(Gamep, Levelsp, Levelp, ThingFlag, spoint);
 [[nodiscard]] std::vector< Thingp > level_find_all(Gamep, Levelsp, Levelp, ThingFlag);
 [[nodiscard]] ThingId               level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);
@@ -733,7 +731,6 @@ typedef enum {
   LEVEL_TYPE_MAX
 } LevelType;
 
-void level_fixed_add(Gamep, int chance, LevelType, const std::string &alias, const char *file, int line, ...);
 void levels_init(Gamep);
 void levels_fini(Gamep);
 void levels_test(Gamep);

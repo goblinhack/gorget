@@ -287,8 +287,6 @@ int game_map_single_pix_size_get(Gamep);
 int game_map_zoom_def_get(Gamep);
 int game_map_zoom_get(Gamep);
 
-Levelsp game_test_init(Gamep, Levelp *, LevelNum, int w, int h, const char *contents);
-
 uint32_t game_tick_get(Gamep, Levelsp);
 
 bool      game_input(Gamep, const SDL_Keysym *key);
@@ -314,8 +312,6 @@ void game_set_currently_saving_snapshot(Gamep);
 void game_start_playing(Gamep);
 void game_state_change(Gamep, GameState state, const char *);
 void game_state_reset(Gamep, const char *);
-void game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, int w, int h, const char *contents);
-void game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, spoint, int w, int h, const char *contents);
 void game_tick(Gamep);
 void game_unset_currently_saving_snapshot(Gamep);
 void game_unset_request_reset_state_change(Gamep);

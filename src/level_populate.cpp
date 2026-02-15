@@ -7,13 +7,15 @@
 #include "my_dice_rolls.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_ext.hpp"
 #include "my_main.hpp"
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
 #include <string.h>
 
-bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in)
+bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in,
+                    Overrides overrides)
 {
   TRACE_NO_INDENT();
 
@@ -70,7 +72,15 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       bool need_foliage  = false;
       bool need_border   = ! is_test_level && ((x == 0) || (x == MAP_WIDTH - 1) || (y == 0) || (y == MAP_HEIGHT - 1));
 
-      if (need_border) {
+      auto o = overrides.find(c);
+      if (o != overrides.end()) {
+        tp = (o->second)(c, at);
+        if (! tp) {
+          ERR("could not find a template for override char %c", c);
+          return false;
+        }
+        need_floor = true;
+      } else if (need_border) {
         tp = tp_border;
       } else {
         switch (c) {
@@ -310,11 +320,11 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
   return true;
 }
 
-bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in)
+bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, const char *in, Overrides overrides)
 {
   TRACE_NO_INDENT();
 
-  if (! level_populate(g, v, l, level_gen, MAP_WIDTH, MAP_HEIGHT, in)) {
+  if (! level_populate(g, v, l, level_gen, MAP_WIDTH, MAP_HEIGHT, in, overrides)) {
     ERR("level populate failed");
     return false;
   }

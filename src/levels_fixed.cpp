@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_level_ext.hpp"
 
 //
 // Create all fixed levels
@@ -12,7 +13,7 @@ void levels_fixed(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_BOSS, "boss1", __FUNCTION__, __LINE__,
+  level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_BOSS, "boss1", __FUNCTION__, __LINE__, no_overrides,
                   /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                   /* line */ (const char *) "x..............................................x",
                   /* line */ (const char *) "x.@.E..........................................x",

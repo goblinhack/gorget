@@ -9,12 +9,14 @@
 #include "my_game.hpp"
 #include "my_globals.hpp"
 #include "my_level.hpp"
+#include "my_level_ext.hpp"
 #include "my_main.hpp"
 #include "my_random.hpp"
 #include "my_sprintf.hpp"
 #include "my_time.hpp"
 
 #include <array>
+#include <functional>
 #include <map>
 #include <thread>
 #include <unordered_map>
@@ -366,6 +368,8 @@ public:
   //
   const char *file = {};
   int         line = {};
+
+  Overrides overrides;
 
   //
   // User alias for level. Must be unique.
@@ -1824,7 +1828,7 @@ void fragments_fini(Gamep g)
 // Add a level
 //
 void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::string &alias, const char *file, int line,
-                     ...)
+                     Overrides overrides, ...)
 {
   TRACE_NO_INDENT();
 
@@ -1842,7 +1846,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
   //
   // First scan, get width and height
   //
-  va_start(ap, line);
+  va_start(ap, overrides);
 
   for (;;) {
     const char *level_line = va_arg(ap, const char *);
@@ -1871,7 +1875,8 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
     // Check the level contents are known characters
     //
     for (auto i = 0; i < level_width; i++) {
-      switch (level_line[ i ]) {
+      auto c = level_line[ i ];
+      switch (c) {
         case CHARMAP_BARREL :        break;
         case CHARMAP_BRAZIER :       break;
         case CHARMAP_BRIDGE :        break;
@@ -1915,7 +1920,11 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
             return;
           }
           break;
-        default : CROAK("level has unknown char [%c] in level @ %s:%d", level_line[ i ], file, line); return;
+        default :
+          if (overrides.find(c) != overrides.end()) {
+            CROAK("level has unknown char [%c] in level @ %s:%d", level_line[ i ], file, line);
+            return;
+          }
       }
     }
 
@@ -1965,6 +1974,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
   l->line       = line;
   l->width      = level_width;
   l->height     = level_height;
+  l->overrides  = overrides;
   l->data       = (char *) myzalloc(MAP_WIDTH * MAP_HEIGHT, "level data");
 
   //
@@ -1976,7 +1986,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
   //
   // Now read the level again
   //
-  va_start(ap, line);
+  va_start(ap, overrides);
 
   for (int y = 0; y < l->height; y++) {
     const char *level_line = va_arg(ap, char *);
@@ -4738,6 +4748,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
   //
   std::string level_string;
   LevelFixed *fixed_level = nullptr;
+  Overrides   overrides   = no_overrides;
 
   if (g_level_opt.level_name != "") {
     //
@@ -4753,6 +4764,8 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
     }
 
     level_string = level_gen_string(g, l, fixed_level);
+    overrides    = fixed_level->overrides;
+
   } else if (l->level_num == s->level_count - 1) {
     //
     // Final boss level
@@ -4764,6 +4777,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
     }
 
     level_string = level_gen_string(g, l, fixed_level);
+    overrides    = fixed_level->overrides;
   } else {
     //
     // Procedurally generated level
@@ -4796,7 +4810,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
   //
   // Create things
   //
-  if (! level_populate(g, v, level, l, level_string.c_str())) {
+  if (! level_populate(g, v, level, l, level_string.c_str(), overrides)) {
     return false;
   }
 

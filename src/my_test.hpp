@@ -8,6 +8,7 @@
 
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_level_ext.hpp"
 #include "my_string.hpp"
 #include "my_types.hpp"
 
@@ -74,5 +75,14 @@ void tests_run(Gamep);
 
 void test_init(void);
 void test_fini(void);
+
+[[nodiscard]] Levelsp game_test_init(Gamep, Levelp *, LevelNum, int w, int h, const char *contents,
+                                     Overrides = no_overrides);
+
+void game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, int w, int h, const char *contents,
+                          Overrides = no_overrides);
+
+void game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, spoint, int w, int h, const char *contents,
+                          Overrides = no_overrides);
 
 #endif // _MY_TEST_H_

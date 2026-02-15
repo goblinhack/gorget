@@ -10,8 +10,10 @@
 #include "my_game_popups.hpp"
 #include "my_hiscore.hpp"
 #include "my_level.hpp"
+#include "my_level_ext.hpp"
 #include "my_random.hpp"
 #include "my_random_name.hpp"
+#include "my_test.hpp"
 #include "my_wid.hpp"
 #include "my_wid_botcon.hpp"
 #include "my_wid_topcon.hpp"
@@ -399,7 +401,8 @@ void game_init(Gamep g) { g->init(); }
 //
 // Create a level with the given contents and start the game into playing state
 //
-Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents)
+Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
+                       Overrides overrides)
 {
   TRACE_NO_INDENT();
   game_cleanup(g);
@@ -420,7 +423,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
   auto v = game_levels_set(g, levels_memory_alloc(g));
 
   TRACE_NO_INDENT();
-  game_test_init_level(g, v, l_out, level_num, w, h, contents);
+  game_test_init_level(g, v, l_out, level_num, w, h, contents, overrides);
 
   TRACE_NO_INDENT();
   game_state_reset(g, "new game");
@@ -438,7 +441,7 @@ Levelsp game_test_init(Gamep g, Levelp *l_out, LevelNum level_num, int w, int h,
 // Create an additional level with the given contents and start the game into playing state
 //
 void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, spoint level_at, int w, int h,
-                          const char *contents)
+                          const char *contents, Overrides overrides)
 {
   TRACE_NO_INDENT();
 
@@ -451,7 +454,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   level_init(g, v, l, level_num);
 
   TRACE_NO_INDENT();
-  if (! level_populate(g, v, l, nullptr, w, h, contents)) {
+  if (! level_populate(g, v, l, nullptr, w, h, contents, overrides)) {
     CROAK("level populate failed");
   }
 
@@ -493,11 +496,12 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   game_tick(g);
 }
 
-void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents)
+void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num, int w, int h, const char *contents,
+                          Overrides overrides)
 {
   TRACE_NO_INDENT();
 
-  game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents);
+  game_test_init_level(g, v, l_out, level_num, spoint(0, level_num), w, h, contents, overrides);
 }
 
 void Game::fini(void)

@@ -13,7 +13,7 @@
 #include "my_wids.hpp"
 
 static void level_tick_begin(Gamep, Levelsp, Levelp);
-static void level_tick_body(Gamep, Levelsp, Levelp, float dt, bool final = false);
+static void level_tick_body(Gamep, Levelsp, Levelp, float dt, bool tick_is_about_to_end = false);
 static void level_tick_end(Gamep, Levelsp, Levelp);
 static void level_tick_idle(Gamep, Levelsp, Levelp);
 static void level_tick_check_running_time(Gamep, Levelsp, Levelp);
@@ -275,7 +275,10 @@ static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l)
     //
     v->time_step = 1.0;
 
-    level_tick_body(g, v, l, 0, true /* final */);
+    //
+    // We need to give things a change to finish moving
+    //
+    level_tick_body(g, v, l, 0, true /* tick_is_about_to_end */);
 
     if (! l->tick_end_requested) {
       if (level_is_player_level(g, v, l)) {
@@ -287,7 +290,7 @@ static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l)
   }
 }
 
-static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool final)
+static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is_about_to_end)
 {
   TRACE_NO_INDENT();
 
@@ -295,7 +298,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool final)
     CROAK("negative dt %f", dt);
   }
 
-  if (final) {
+  if (tick_is_about_to_end) {
     //
     // Need to finish all movement
     //
@@ -343,7 +346,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool final)
       t->thing_dt += dt * (t_speed / (float) player_speed);
     }
 
-    if (final || (t->thing_dt >= 1.0)) {
+    if (tick_is_about_to_end || (t->thing_dt >= 1.0)) {
       t->thing_dt = 1.0;
     }
 
@@ -364,14 +367,14 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool final)
       //
       // Every pixel change, we want to redo collision detection
       //
-      if (! final) {
+      if (dt != 0) {
         thing_projectile_move(g, v, l, t, dt);
       }
     } else {
       thing_interpolate(g, v, l, t, t->thing_dt);
     }
 
-    if (final || (t->thing_dt >= 1.0)) {
+    if (tick_is_about_to_end || (t->thing_dt >= 1.0)) {
       t->thing_dt = 0.0;
 
       thing_move_or_jump_finish(g, v, l, t);
@@ -386,7 +389,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool final)
       //
       // See if this monster can move again this tick
       //
-      if (! final && (v->time_step < 1.0)) {
+      if (! tick_is_about_to_end && (v->time_step < 1.0)) {
         THING_DBG(t, "additional move possible");
         thing_monst_tick(g, v, l, t);
       }
