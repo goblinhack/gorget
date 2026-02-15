@@ -113,7 +113,7 @@ bool tp_load_ghost_mob(void)
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
-  delay = 100;
+  delay = 200;
 
   for (auto frame = 0; frame < 6; frame++) {
     auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
