@@ -426,6 +426,19 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
+  if (thing_is_dead(me)) {
+    THING_LOG(me, "finish moving when dead");
+  }
+
+  //
+  // Need to complete the interpolation or the thing will appear to be on
+  // the previous tile
+  //
+  if (thing_is_moving(me)) {
+    thing_interpolate(g, v, l, me, 1.0);
+  }
+  me->thing_dt = 0.0;
+
   auto at = thing_at(me);
   (void) thing_moving_from_set(me, at);
 
@@ -433,8 +446,6 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
   thing_is_moving_unset(g, v, l, me);
   thing_is_jumping_unset(g, v, l, me);
   thing_dmap(g, v, l, me);
-
-  me->thing_dt = 0.0;
 }
 
 //

@@ -44,6 +44,9 @@ bool thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
     // Allow walking over the dead
     //
     if (thing_is_dead(it)) {
+      if (thing_is_obs_when_dead(it)) {
+        return false;
+      }
       continue;
     }
 
@@ -101,10 +104,12 @@ bool thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp
     //
     // Allow walking over the dead
     //
-    if (0)
-      if (thing_is_dead(it)) {
-        continue;
+    if (thing_is_dead(it)) {
+      if (thing_is_obs_when_dead(it)) {
+        return false;
       }
+      continue;
+    }
 
     //
     // Walls are not always obstacles

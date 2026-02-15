@@ -35,8 +35,6 @@
 
   for (auto X = 0; X < LEVEL_ACROSS; X++) {
     for (auto Y = 0; Y < LEVEL_DOWN; Y++) {
-      // fprintf(stderr, "ZZZ NEIL %s %s %d %d,%d\n", __FILE__, __FUNCTION__, __LINE__, X, Y);
-
       if (level_num++ == 0) {
         //
         // Already inited
