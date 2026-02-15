@@ -5,6 +5,8 @@
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
+#include "my_globals.hpp"
+#include "my_main.hpp"
 #include "my_sprintf.hpp"
 #include "my_string.hpp"
 #include "my_thing_callbacks.hpp"
@@ -131,13 +133,23 @@
   //
   memset(tmp, 0, sizeof(tmp));
   memset(tmp, ' ', sizeof(tmp) - 1);
-  my_strlcpy(tmp + 1, "Health", sizeof("Health "));
+
+  if (thing_is_dead(t)) {
+    my_strlcpy(tmp + 1, "Dead", sizeof("Dead "));
+  } else {
+    my_strlcpy(tmp + 1, "Health", sizeof("Health "));
+  }
 
   //
   // "Health         a/b"
   //
-  auto        health_max = tp_health_max_get(tp);
-  std::string health_str = std::to_string(thing_health(t)) + "/" + std::to_string(health_max);
+  auto health_max = tp_health_max_get(tp);
+  auto h          = thing_health(t);
+  if (h < 0) {
+    h = 0;
+  }
+
+  std::string health_str = std::to_string(h) + "/" + std::to_string(health_max);
   my_strlcpy(tmp + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
   tmp[ strlen(tmp) ] = ' ';
 
@@ -277,11 +289,29 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
     parent->log_empty_line(g);
   }
 
-  (void) wid_thing_info_immunities(g, v, l, t, tp, parent, width);
-  (void) wid_thing_info_special_damage(g, v, l, t, tp, parent, width);
+  if (wid_thing_info_immunities(g, v, l, t, tp, parent, width)) {
+    parent->log_empty_line(g);
+  }
 
-  //
-  // Needed so that subsequent things are not on top of each other
-  //
-  parent->log_empty_line(g);
+  if (wid_thing_info_special_damage(g, v, l, t, tp, parent, width)) {
+    parent->log_empty_line(g);
+  }
+
+  IF_DEBUG
+  {
+    parent->log(g, "Thing:");
+    parent->log(g, to_string(g, v, l, t).c_str(), TEXT_FORMAT_LHS);
+    parent->log_empty_line(g);
+    parent->log(g, "Things:");
+
+    //
+    // Dump the contents at this tile
+    //
+    auto at = thing_at(t);
+    FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
+    {
+      auto s = string_sprintf("- %s", thing_short_name(g, v, l, it).c_str());
+      parent->log(g, s.c_str(), TEXT_FORMAT_LHS);
+    }
+  }
 }

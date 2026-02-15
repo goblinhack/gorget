@@ -46,7 +46,7 @@ void levels_test(Gamep g)
   {
     Overrides overrides;
 
-    overrides[ 'm' ] = [](char c, spoint p) { return tp_find_mand("ghost"); };
+    overrides[ 'm' ] = [](char c, spoint p) { return tp_find_mand("kobalos"); };
 
     level_fixed_add(g, CHANCE_NORMAL, LEVEL_TYPE_TEST, "monst", __FUNCTION__, __LINE__, overrides,
                     /* line */ (const char *) "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -55,11 +55,11 @@ void levels_test(Gamep g)
                     /* line */ (const char *) "x...x..........................................x",
                     /* line */ (const char *) "x...x..........................................x",
                     /* line */ (const char *) "x...x..........................................x",
-                    /* line */ (const char *) "x...x..........................................x",
+                    /* line */ (const char *) "x...x...........m..............................x",
                     /* line */ (const char *) "x...x..........................................x",
                     /* line */ (const char *) "x.......@.......m..............................x",
                     /* line */ (const char *) "x..............................................x",
-                    /* line */ (const char *) "x...............g..............................x",
+                    /* line */ (const char *) "x...............m..............................x",
                     /* line */ (const char *) "x..............................................x",
                     /* line */ (const char *) "x..............................................x",
                     /* line */ (const char *) "x..............................................x",

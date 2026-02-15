@@ -113,7 +113,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           for (auto x = minx; x < maxx; x++) {
             spoint p(x, y);
 
-            if (level_is_obs_to_cursor_path(g, v, l, p)) {
+            if (level_alive_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -129,7 +129,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           for (auto x = minx; x < maxx; x++) {
             spoint p(x, y);
 
-            if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+            if (level_alive_is_obs_to_cursor_path(g, v, l, p) || level_alive_is_cursor_path_hazard(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -150,13 +150,13 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           // Any tile will do as long as not consecutive hazard tiles.
           //
           if (prev_tile_was_hazard) {
-            if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+            if (level_alive_is_obs_to_cursor_path(g, v, l, p) || level_alive_is_cursor_path_hazard(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
             }
           } else {
-            if (level_is_obs_to_cursor_path(g, v, l, p)) {
+            if (level_alive_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -184,7 +184,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
           for (auto x = minx; x < maxx; x++) {
             spoint p(x, y);
 
-            if (level_is_obs_to_cursor_path(g, v, l, p)) {
+            if (level_alive_is_obs_to_cursor_path(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -216,7 +216,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
                 //
                 // But we still can't walk through walls to get to the hazard
                 //
-                if (level_is_obs_to_cursor_path(g, v, l, p)) {
+                if (level_alive_is_obs_to_cursor_path(g, v, l, p)) {
                   dmap.val[ x ][ y ] = DMAP_IS_WALL;
                   continue;
                 }
@@ -245,7 +245,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
             for (auto x = minx; x < maxx; x++) {
               spoint p(x, y);
 
-              if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+              if (level_alive_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
                 dmap.val[ x ][ y ] = DMAP_IS_WALL;
               } else {
                 dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;
@@ -264,7 +264,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
             //
             // Avoid hazards
             //
-            if (level_is_obs_to_cursor_path(g, v, l, p) || level_is_cursor_path_hazard(g, v, l, p)) {
+            if (level_is_obs_to_cursor_path(g, v, l, p) || level_alive_is_cursor_path_hazard(g, v, l, p)) {
               dmap.val[ x ][ y ] = DMAP_IS_WALL;
             } else {
               dmap.val[ x ][ y ] = DMAP_IS_PASSABLE;

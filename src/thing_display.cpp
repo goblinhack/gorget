@@ -455,7 +455,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       light_pixels = nullptr;
     }
 
-    if (thing_is_hot(t_maybe_null)) {
+    //
+    // Pulse when hot. But not when dead. Else a monster killed by a fireball will
+    // pulse!
+    //
+    if (thing_is_hot(t_maybe_null) && ! thing_is_dead(t_maybe_null)) {
       //
       // Preserve original alpha
       //

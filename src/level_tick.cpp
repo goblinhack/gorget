@@ -375,8 +375,6 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     }
 
     if (tick_is_about_to_end || (t->thing_dt >= 1.0)) {
-      t->thing_dt = 0.0;
-
       thing_move_or_jump_finish(g, v, l, t);
 
       //

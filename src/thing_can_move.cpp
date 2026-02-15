@@ -41,6 +41,13 @@ bool thing_can_move_to_ai(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, to)
   {
     //
+    // Allow walking over the dead
+    //
+    if (thing_is_dead(it)) {
+      continue;
+    }
+
+    //
     // Walls are not always obstacles
     //
     if (thing_is_wall(it)) {
@@ -91,6 +98,13 @@ bool thing_can_move_to_check_if_is_possible(Gamep g, Levelsp v, Levelp l, Thingp
 
   FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, to)
   {
+    //
+    // Allow walking over the dead
+    //
+    if (thing_is_dead(it)) {
+      continue;
+    }
+
     //
     // Walls are not always obstacles
     //
