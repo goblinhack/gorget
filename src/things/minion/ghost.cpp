@@ -40,6 +40,7 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_able_to_move_through_walls);
   tp_flag_set(tp, is_able_to_walk_through_walls);
   tp_flag_set(tp, is_animated_can_hflip);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
@@ -74,6 +75,19 @@ bool tp_load_ghost(void)
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
+  }
+
+  delay = 100;
+
+  for (auto frame = 0; frame < 3; frame++) {
+    auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
+    tile_delay_ms_set(tile, delay);
+    tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
+
+    if (frame == 2) {
+      tile_is_cleanup_on_end_of_anim_set(tile);
+    }
   }
 
   return true;

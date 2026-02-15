@@ -2260,6 +2260,9 @@ static void gfx_init_tiles(void)
       // ##############################################################################
       "ghost.idle.0",
       "ghost.idle.1",
+      "ghost.dead.0",
+      "ghost.dead.1",
+      "ghost.dead.2",
       "kobalos.idle.0",
       "kobalos.idle.1",
       "kobalos.dead.0",
@@ -2271,9 +2274,6 @@ static void gfx_init_tiles(void)
       "mantisman.idle.3",
       "mantisman.idle.4",
       "mantisman.idle.5",
-      "",
-      "",
-      "",
       // ##############################################################################
       "explosion.idle.0",
       "explosion.idle.1",
