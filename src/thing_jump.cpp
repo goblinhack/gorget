@@ -114,7 +114,7 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
     return false;
   }
 
-  thing_pop(g, v, t);
+  (void) thing_pop(g, v, t);
 
   spoint pix_at;
   pix_at.x = at.x * TILE_WIDTH;

@@ -39,7 +39,7 @@ bool thing_carry_item(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp player_o
     return false;
   }
 
-  thing_pop(g, v, item);
+  (void) thing_pop(g, v, item);
 
   thing_inventory_dump(g, v, l, player_or_monst);
 

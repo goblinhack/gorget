@@ -36,6 +36,7 @@ bool tp_load_explosion(void)
   tp_flag_set(tp, is_light_source, 5);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tick_end_delay);

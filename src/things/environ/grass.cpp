@@ -44,6 +44,7 @@ bool tp_load_grass(void)
   tp_flag_set(tp, is_physics_explosion);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_plant);
+  tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);
   tp_flag_set(tp, is_tickable);

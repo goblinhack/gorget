@@ -63,6 +63,7 @@ bool tests_init(void)
   if (!test_load_projectile_wall_turns_to_lava()) { return false; }
   if (!test_load_projectile()) { return false; }
   if (!test_load_save_load()) { return false; }
+  if (!test_load_slots()) { return false; }
   if (!test_load_teleport_chasm()) { return false; }
   if (!test_load_teleport_shove_barrel()) { return false; }
   if (!test_load_teleport_shove_brazier()) { return false; }

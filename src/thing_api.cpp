@@ -2328,24 +2328,24 @@ bool thing_is_unused68(Thingp t)
   return tp_flag(thing_tp(t), is_unused68);
 }
 
-bool thing_is_unused69(Thingp t)
+bool thing_is_removable_when_dead_on_err(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused69);
+  return tp_flag(thing_tp(t), is_removable_when_dead_on_err);
 }
 
-bool thing_is_unused70(Thingp t)
+bool thing_is_removable_on_err(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return false;
   }
-  return tp_flag(thing_tp(t), is_unused70);
+  return tp_flag(thing_tp(t), is_removable_on_err);
 }
 
 bool thing_is_obs_when_dead(Thingp t)

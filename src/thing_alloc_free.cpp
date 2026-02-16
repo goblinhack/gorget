@@ -377,7 +377,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
     CROAK("unexpected to be freeing things during creation");
   }
 
-  thing_pop(g, v, t);
+  (void) thing_pop(g, v, t);
 
   thing_ext_free(g, v, l, t);
   thing_fov_free(g, v, l, t);

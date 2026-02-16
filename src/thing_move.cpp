@@ -265,7 +265,7 @@ bool thing_move_to(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
     return false;
   }
 
-  thing_pop(g, v, me);
+  (void) thing_pop(g, v, me);
 
   spoint pix_at;
   pix_at.x = at.x * TILE_WIDTH;
@@ -361,7 +361,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to)
     //
     // Remove from the current level or position
     //
-    thing_pop(g, v, me);
+    (void) thing_pop(g, v, me);
   }
 
   spoint pix_at;

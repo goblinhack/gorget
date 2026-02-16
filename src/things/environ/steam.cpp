@@ -34,6 +34,7 @@ bool tp_load_steam(void)
   tp_flag_set(tp, is_indestructible);
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_temperature);
+  tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_steam);
   tp_flag_set(tp, is_submergible);
   tp_flag_set(tp, is_teleport_blocked);

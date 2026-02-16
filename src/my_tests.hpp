@@ -62,6 +62,7 @@ extern bool test_load_projectile_unlocked_door();
 extern bool test_load_projectile_wall_turns_to_lava();
 extern bool test_load_projectile();
 extern bool test_load_save_load();
+extern bool test_load_slots();
 extern bool test_load_teleport_chasm();
 extern bool test_load_teleport_shove_barrel();
 extern bool test_load_teleport_shove_brazier();

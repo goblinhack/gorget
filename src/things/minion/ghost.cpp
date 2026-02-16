@@ -40,11 +40,11 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_able_to_move_through_walls);
   tp_flag_set(tp, is_able_to_walk_through_walls);
   tp_flag_set(tp, is_animated_can_hflip);
-  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_animated);
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_shown_in_chasms);
   tp_flag_set(tp, is_collision_circle_large);
+  tp_flag_set(tp, is_corpse_on_death);
   tp_flag_set(tp, is_described_cursor);
   tp_flag_set(tp, is_ethereal);
   tp_flag_set(tp, is_floating);
@@ -55,6 +55,7 @@ bool tp_load_ghost(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_minion);
   tp_flag_set(tp, is_monst);
+  tp_flag_set(tp, is_removable_when_dead_on_err);
   tp_flag_set(tp, is_tickable);
   tp_flag_set(tp, is_undead);
   tp_health_set(tp, "1");

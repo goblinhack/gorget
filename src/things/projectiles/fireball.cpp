@@ -74,6 +74,7 @@ bool tp_load_fireball(void)
   tp_flag_set(tp, is_loggable);
   tp_flag_set(tp, is_physics_temperature);
   tp_flag_set(tp, is_projectile);
+  tp_flag_set(tp, is_removable_on_err);
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "1");
   tp_is_immunity_add(tp, THING_EVENT_FIRE_DAMAGE);
