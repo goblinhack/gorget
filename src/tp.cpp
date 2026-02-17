@@ -1548,43 +1548,24 @@ ThingPriorityType tp_priority_get(Tpp tp)
   return tp->priority;
 }
 
-void tp_vision_distance_set(Tpp tp, int val)
+void tp_distance_jump_set(Tpp tp, int val)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     TP_ERR(tp, "No thing template pointer set");
     return;
   }
-  tp->vision_distance = val;
+  tp->distance_jump = val;
 }
 
-int tp_vision_distance_get(Tpp tp)
+int tp_distance_jump_get(Tpp tp)
 {
   TRACE_NO_INDENT();
   if (! tp) {
     TP_ERR(tp, "No thing template pointer set");
     return 0;
   }
-  return tp->vision_distance;
-}
-void tp_jump_distance_set(Tpp tp, int val)
-{
-  TRACE_NO_INDENT();
-  if (! tp) {
-    TP_ERR(tp, "No thing template pointer set");
-    return;
-  }
-  tp->jump_distance = val;
-}
-
-int tp_jump_distance_get(Tpp tp)
-{
-  TRACE_NO_INDENT();
-  if (! tp) {
-    TP_ERR(tp, "No thing template pointer set");
-    return 0;
-  }
-  return tp->jump_distance;
+  return tp->distance_jump;
 }
 
 void tp_lifespan_set(Tpp tp, const std::string &val)

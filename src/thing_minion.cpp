@@ -124,18 +124,19 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
 //
 // Given a mob, choose somewhere to wander, near the mob.
 //
-bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me, spoint &target)
+bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
   auto mob = thing_minion_mob_get(g, v, l, me);
   if (! mob) {
+    THING_DBG(me, "choose target: no mob");
     return false; // can be normal if detached
   }
 
   auto dmap = thing_minion_get_mob_dmap(g, v, l, me);
   if (! dmap) {
-    THING_ERR(me, "attached minion has no mob");
+    THING_DBG(me, "choose target: no mob dmap");
     return false;
   }
 
@@ -154,7 +155,8 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
   //
   // Keep trying to find a target
   //
-  int tries = (radius * radius) / 2;
+  spoint target;
+  int    tries = (radius * radius) / 2;
   while (tries-- > 0) {
     if (! thing_minion_get_mob_dmap_target_cand(g, v, l, me, mob_at, dmap, radius, target)) {
       continue;
@@ -166,7 +168,8 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
     }
 
     if (thing_move_path_apply(g, v, l, me, p)) {
-      monst_state_change(g, v, l, me, MONST_STATE_FOLLOWING_PATH);
+      thing_target_set(g, v, l, me, target);
+      THING_DBG(me, "choose target: wander around mob");
       return true;
     }
   }

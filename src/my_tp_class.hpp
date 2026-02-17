@@ -98,12 +98,17 @@ public:
   //
   // In tiles
   //
-  int vision_distance {0};
+  int distance_vision {0};
 
   //
   // In tiles
   //
-  int jump_distance {0};
+  int distance_jump {0};
+
+  //
+  // Distance from mob in tiles
+  //
+  int distance_minion_from_mob_max {0};
 
   int value1 {0};
   int value2 {0};
@@ -126,8 +131,6 @@ public:
   int value19 {0};
   int value20 {0};
   int minion_max {0};
-  int distance_minion_from_mob_max {0};
-  int distance_vision {0};
 
   //
   // Heat capacity indicates the amount of heat energy required to

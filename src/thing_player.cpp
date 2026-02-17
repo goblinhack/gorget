@@ -956,7 +956,7 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
   }
 
   auto at        = thing_at(me);
-  auto jump_path = draw_line(at, to, thing_jump_distance(me) + 1);
+  auto jump_path = draw_line(at, to, thing_distance_jump(me) + 1);
   bool warn      = true;
 
   for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {

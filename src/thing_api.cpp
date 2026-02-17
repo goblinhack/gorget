@@ -206,6 +206,11 @@ int thing_health_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     return 0;
   }
   game_request_to_remake_ui_set(g);
+
+  if ((int) t->_health - val <= 0) {
+    return t->_health = 0;
+  }
+
   return t->_health -= val;
 }
 
@@ -565,6 +570,11 @@ int thing_keys_carried_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+
+  if ((int) t->_keys_carried - val <= 0) {
+    return t->_keys_carried = 0;
+  }
+
   return t->_keys_carried -= val;
 }
 
@@ -3342,6 +3352,9 @@ int thing_value1_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value1 - val <= 0) {
+    return t->_value1 = 0;
+  }
   return t->_value1 -= val;
 }
 int thing_value2(Thingp t)
@@ -3380,6 +3393,9 @@ int thing_value2_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value2 - val <= 0) {
+    return t->_value2 = 0;
   }
   return t->_value2 -= val;
 }
@@ -3420,6 +3436,9 @@ int thing_value3_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value3 - val <= 0) {
+    return t->_value3 = 0;
+  }
   return t->_value3 -= val;
 }
 int thing_value4(Thingp t)
@@ -3458,6 +3477,9 @@ int thing_value4_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value4 - val <= 0) {
+    return t->_value4 = 0;
   }
   return t->_value4 -= val;
 }
@@ -3498,6 +3520,9 @@ int thing_value5_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value5 - val <= 0) {
+    return t->_value5 = 0;
+  }
   return t->_value5 -= val;
 }
 int thing_value6(Thingp t)
@@ -3536,6 +3561,9 @@ int thing_value6_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value6 - val <= 0) {
+    return t->_value6 = 0;
   }
   return t->_value6 -= val;
 }
@@ -3576,6 +3604,9 @@ int thing_value7_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value7 - val <= 0) {
+    return t->_value7 = 0;
+  }
   return t->_value7 -= val;
 }
 int thing_value8(Thingp t)
@@ -3614,6 +3645,9 @@ int thing_value8_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value8 - val <= 0) {
+    return t->_value8 = 0;
   }
   return t->_value8 -= val;
 }
@@ -3654,6 +3688,9 @@ int thing_value9_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value9 - val <= 0) {
+    return t->_value9 = 0;
+  }
   return t->_value9 -= val;
 }
 int thing_value10(Thingp t)
@@ -3692,6 +3729,9 @@ int thing_value10_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value10 - val <= 0) {
+    return t->_value10 = 0;
   }
   return t->_value10 -= val;
 }
@@ -3732,6 +3772,9 @@ int thing_value11_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value11 - val <= 0) {
+    return t->_value11 = 0;
+  }
   return t->_value11 -= val;
 }
 int thing_value12(Thingp t)
@@ -3770,6 +3813,9 @@ int thing_value12_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value12 - val <= 0) {
+    return t->_value12 = 0;
   }
   return t->_value12 -= val;
 }
@@ -3810,6 +3856,9 @@ int thing_value13_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value13 - val <= 0) {
+    return t->_value13 = 0;
+  }
   return t->_value13 -= val;
 }
 int thing_value14(Thingp t)
@@ -3848,6 +3897,9 @@ int thing_value14_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value14 - val <= 0) {
+    return t->_value14 = 0;
   }
   return t->_value14 -= val;
 }
@@ -3888,6 +3940,9 @@ int thing_value15_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value15 - val <= 0) {
+    return t->_value15 = 0;
+  }
   return t->_value15 -= val;
 }
 int thing_value16(Thingp t)
@@ -3926,6 +3981,9 @@ int thing_value16_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value16 - val <= 0) {
+    return t->_value16 = 0;
   }
   return t->_value16 -= val;
 }
@@ -3966,6 +4024,9 @@ int thing_value17_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value17 - val <= 0) {
+    return t->_value17 = 0;
+  }
   return t->_value17 -= val;
 }
 int thing_value18(Thingp t)
@@ -4004,6 +4065,9 @@ int thing_value18_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value18 - val <= 0) {
+    return t->_value18 = 0;
   }
   return t->_value18 -= val;
 }
@@ -4044,6 +4108,9 @@ int thing_value19_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_value19 - val <= 0) {
+    return t->_value19 = 0;
+  }
   return t->_value19 -= val;
 }
 int thing_value20(Thingp t)
@@ -4082,6 +4149,9 @@ int thing_value20_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_value20 - val <= 0) {
+    return t->_value20 = 0;
   }
   return t->_value20 -= val;
 }
@@ -4122,6 +4192,9 @@ int thing_minion_max_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_minion_max - val <= 0) {
+    return t->_minion_max = 0;
+  }
   return t->_minion_max -= val;
 }
 int thing_distance_minion_from_mob_max(Thingp t)
@@ -4161,8 +4234,12 @@ int thing_distance_minion_from_mob_max_decr(Gamep g, Levelsp v, Levelp l, Thingp
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_distance_minion_from_mob_max - val <= 0) {
+    return t->_distance_minion_from_mob_max = 0;
+  }
   return t->_distance_minion_from_mob_max -= val;
 }
+
 int thing_distance_vision(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -4200,6 +4277,9 @@ int thing_distance_vision_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if ((int) t->_distance_vision - val <= 0) {
+    return t->_distance_vision = 0;
+  }
   return t->_distance_vision -= val;
 }
 
@@ -4223,26 +4303,6 @@ int thing_variant_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   return t->_variant = val;
 }
 
-int thing_variant_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  return t->_variant += val;
-}
-
-int thing_variant_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  return t->_variant -= val;
-}
-
 ThingPriorityType thing_priority(Thingp t)
 {
   TRACE_NO_INDENT();
@@ -4263,84 +4323,47 @@ ThingPriorityType thing_priority_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thi
   return t->_priority = val;
 }
 
-int thing_vision_distance(Thingp t)
+int thing_distance_jump(Thingp t)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_vision_distance;
+  return t->_distance_jump;
 }
 
-int thing_vision_distance_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_distance_jump_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_vision_distance = val;
+  return t->_distance_jump = val;
 }
 
-int thing_vision_distance_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_distance_jump_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_vision_distance += val;
+  return t->_distance_jump += val;
 }
 
-int thing_vision_distance_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
+int thing_distance_jump_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
 {
   TRACE_NO_INDENT();
   if (! t) {
     ERR("No thing pointer set");
     return 0;
   }
-  return t->_vision_distance -= val;
-}
-
-int thing_jump_distance(Thingp t)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
+  if ((int) t->_distance_jump - val <= 0) {
+    return t->_distance_jump = 0;
   }
-  return t->_jump_distance;
-}
-
-int thing_jump_distance_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  return t->_jump_distance = val;
-}
-
-int thing_jump_distance_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  return t->_jump_distance += val;
-}
-
-int thing_jump_distance_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
-{
-  TRACE_NO_INDENT();
-  if (! t) {
-    ERR("No thing pointer set");
-    return 0;
-  }
-  return t->_jump_distance -= val;
+  return t->_distance_jump -= val;
 }
 
 int thing_lifespan(Thingp t)
@@ -4379,6 +4402,9 @@ int thing_lifespan_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if ((int) t->_lifespan - val <= 0) {
+    return t->_lifespan = 0;
   }
   return t->_lifespan -= val;
 }
@@ -4428,6 +4454,9 @@ int thing_submerged_pct_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if (t->_submerged_pct - val <= 0) {
+    return t->_submerged_pct = 0;
+  }
   return t->_submerged_pct -= val;
 }
 
@@ -4467,6 +4496,9 @@ int thing_age_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   if (! t) {
     ERR("No thing pointer set");
     return 0;
+  }
+  if (t->_age - val <= 0) {
+    return t->_age = 0;
   }
   return t->_age -= val;
 }
@@ -4508,6 +4540,9 @@ int thing_move_remaining_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     ERR("No thing pointer set");
     return 0;
   }
+  if (t->_move_remaining - val <= 0) {
+    return t->_move_remaining = 0;
+  }
   return t->_move_remaining -= val;
 }
 
@@ -4517,4 +4552,23 @@ float thing_collision_radius(Thingp t)
 
   return thing_is_collision_circle_small(t) ? THING_COLLISION_CIRCLE_SMALL_RADIUS
                                             : THING_COLLISION_CIRCLE_LARGE_RADIUS;
+}
+
+spoint thing_target(Thingp t)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    CROAK("No thing pointer set");
+  }
+  return make_spoint(t->_target);
+}
+
+void thing_target_set(Gamep g, Levelsp v, Levelp l, Thingp t, const spoint &val)
+{
+  TRACE_NO_INDENT();
+  if (! t) {
+    CROAK("No thing pointer set");
+  }
+
+  t->_target = val;
 }

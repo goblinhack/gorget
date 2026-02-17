@@ -289,11 +289,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
     out << bits(tmp);
     tmp = offsetof(Thing, _priority);
     out << bits(tmp);
-    tmp = offsetof(Thing, count);
-    out << bits(tmp);
-    tmp = offsetof(Thing, _vision_distance);
-    out << bits(tmp);
-    tmp = offsetof(Thing, _jump_distance);
+    tmp = offsetof(Thing, _distance_jump);
     out << bits(tmp);
     tmp = offsetof(Thing, _is_hit);
     out << bits(tmp);

@@ -179,6 +179,8 @@ bool tp_load_player(void)
   thing_on_tick_idle_set(tp, tp_player_tick_idle);
   tp_chance_set(tp, THING_CHANCE_CONTINUE_TO_BURN, "1d6"); // roll max to stop burning
   tp_chance_set(tp, THING_CHANCE_START_BURNING, "1d20");   // roll max to continue burning
+  tp_distance_jump_set(tp, 3);
+  tp_distance_vision_set(tp, MAP_WIDTH / 2); // tiles
   tp_flag_set(tp, is_able_to_collect_items);
   tp_flag_set(tp, is_able_to_collect_keys);
   tp_flag_set(tp, is_able_to_crush_grass);
@@ -211,15 +213,13 @@ bool tp_load_player(void)
   tp_flag_set(tp, is_tickable);
   tp_health_set(tp, "100");
   tp_is_immunity_add(tp, THING_EVENT_WATER_DAMAGE);
-  tp_jump_distance_set(tp, 3);
   tp_light_color_set(tp, "white");
   tp_priority_set(tp, THING_PRIORITY_PLAYER);
   tp_speed_set(tp, 100);
-  tp_temperature_burns_at_set(tp, 50);       // celsius
-  tp_temperature_damage_at_set(tp, 35);      // celsius
-  tp_temperature_initial_set(tp, 20);        // celsius
-  tp_vision_distance_set(tp, MAP_WIDTH / 2); // tiles
-  tp_weight_set(tp, WEIGHT_HUMAN);           // grams
+  tp_temperature_burns_at_set(tp, 50);  // celsius
+  tp_temperature_damage_at_set(tp, 35); // celsius
+  tp_temperature_initial_set(tp, 20);   // celsius
+  tp_weight_set(tp, WEIGHT_HUMAN);      // grams
   tp_z_depth_set(tp, MAP_Z_DEPTH_PLAYER);
   // end sort marker1 }
 

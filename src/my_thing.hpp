@@ -72,12 +72,12 @@ ENUM_DEF_H(PLAYER_STATE_ENUM, PlayerState)
 // Monst state
 //
 #define MONST_STATE_ENUM(list_macro)                                                                                 \
-  clang_format_indent()                                         /* dummy line for clang indentation fixup */         \
-      list_macro(MONST_STATE_INIT, "INIT"),                     /* newline */                                        \
-      list_macro(MONST_STATE_DEAD, "DEAD"),                     /* newline */                                        \
-      list_macro(MONST_STATE_NORMAL, "NORMAL"),                 /* newline */                                        \
-      list_macro(MONST_STATE_PATH_REQUESTED, "PATH-REQUESTED"), /* newline */                                        \
-      list_macro(MONST_STATE_FOLLOWING_PATH, "FOLLOWING-PATH"), /* newline */
+  clang_format_indent()                           /* dummy line for clang indentation fixup */                       \
+      list_macro(MONST_STATE_INIT, "INIT"),       /* newline */                                                      \
+      list_macro(MONST_STATE_DEAD, "DEAD"),       /* newline */                                                      \
+      list_macro(MONST_STATE_NORMAL, "NORMAL"),   /* newline */                                                      \
+      list_macro(MONST_STATE_CHASING, "CHASING"), /* newline */                                                      \
+      list_macro(MONST_STATE_WANDER, "WANDER"),   /* newline */
 
 ENUM_DEF_H(MONST_STATE_ENUM, MonstState)
 
@@ -229,17 +229,17 @@ typedef struct Thing_ {
   //
   ThingPriorityType _priority;
   //
-  // Keeps track of counters in the level this thing has modified.
-  //
-  uint8_t count[ THING_FLAG_ENUM_MAX ];
-  //
   // Vision in tiles.
   //
-  uint8_t _vision_distance;
+  int8_t _distance_vision;
+  //
+  // Distance from mob
+  //
+  int8_t _distance_minion_from_mob_max;
   //
   // Jump distance in tiles.
   //
-  uint8_t _jump_distance;
+  int8_t _distance_jump;
   //
   // Decrements each frame. Increments if hit.
   //
@@ -371,10 +371,14 @@ typedef struct Thing_ {
   int16_t _value18;
   int16_t _value19;
   int16_t _value20;
-  int16_t _minion_max;
-  int16_t _distance_minion_from_mob_max;
-  int16_t _distance_vision;
-  int16_t _variant;
+  //
+  // How many minions this mob can spawn
+  //
+  uint8_t _minion_max;
+  //
+  // The type of wall
+  //
+  uint8_t _variant;
   //
   // Lifespan remaining in ticks
   //
@@ -472,6 +476,10 @@ typedef struct Thing_ {
   // However some things like missiles can be at fractional positions.
   //
   fpoint _at;
+  //
+  // What we're chasing currently. Might be the player or some random tile.
+  //
+  spoint _target;
 } Thing;
 
 // begin sort marker1 {
@@ -732,11 +740,12 @@ typedef struct Thing_ {
 [[nodiscard]] bool        thing_is_water(Thingp);
 [[nodiscard]] bool        thing_is_wood(Thingp);
 [[nodiscard]] bool        thing_jump_to(Gamep, Levelsp, Levelp, Thingp, spoint to, bool warn = true);
-[[nodiscard]] bool        thing_minion_choose_target_near_mob(Gamep, Levelsp, Levelp, Thingp minion, spoint &target);
+[[nodiscard]] bool        thing_minion_choose_target_near_mob(Gamep, Levelsp, Levelp, Thingp minion);
 [[nodiscard]] bool        thing_minion_detach_me_from_mob(Gamep, Levelsp, Levelp, Thingp minion);
 [[nodiscard]] bool        thing_mob_detach_all_minions(Gamep, Levelsp, Levelp, Thingp mob);
 [[nodiscard]] bool        thing_mob_detach_minion(Gamep, Levelsp, Levelp, Thingp mob, Thingp minion);
 [[nodiscard]] bool        thing_mob_kill_all_minions(Gamep, Levelsp, Levelp, Thingp mob, ThingEvent &e);
+[[nodiscard]] bool        thing_monst_choose_target_player(Gamep, Levelsp, Levelp, Thingp minion);
 [[nodiscard]] bool        thing_move_path_apply(Gamep, Levelsp, Levelp, Thingp, std::vector< spoint > &move_path);
 [[nodiscard]] bool        thing_move_path_pop(Gamep, Levelsp, Levelp, Thingp, spoint &out);
 [[nodiscard]] bool        thing_move_path_target(Gamep, Levelsp, Levelp, Thingp, spoint &out);
@@ -769,6 +778,10 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_damage_this_tick_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_damage_this_tick_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_damage_this_tick(Thingp);
+[[nodiscard]] int         thing_distance_jump_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int         thing_distance_jump_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
+[[nodiscard]] int         thing_distance_jump_set(Gamep, Levelsp, Levelp, Thingp, int val);
+[[nodiscard]] int         thing_distance_jump(Thingp);
 [[nodiscard]] int         thing_distance_minion_from_mob_max_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_distance_minion_from_mob_max_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_distance_minion_from_mob_max_set(Gamep, Levelsp, Levelp, Thingp, int val);
@@ -786,10 +799,6 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_is_hit_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_is_hot_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_is_hot_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_jump_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_jump_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_jump_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
-[[nodiscard]] int         thing_jump_distance(Thingp);
 [[nodiscard]] int         thing_keys_carried_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_keys_carried_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_keys_carried_set(Gamep, Levelsp, Levelp, Thingp, int val);
@@ -898,14 +907,8 @@ typedef struct Thing_ {
 [[nodiscard]] int         thing_value9_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_value9_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_value9(Thingp);
-[[nodiscard]] int         thing_variant_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_variant_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
 [[nodiscard]] int         thing_variant_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_variant(Thingp);
-[[nodiscard]] int         thing_vision_distance_decr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_vision_distance_incr(Gamep, Levelsp, Levelp, Thingp, int val = 1);
-[[nodiscard]] int         thing_vision_distance_set(Gamep, Levelsp, Levelp, Thingp, int val);
-[[nodiscard]] int         thing_vision_distance(Thingp);
 [[nodiscard]] int         thing_weight_set(Gamep, Levelsp, Levelp, Thingp, int val);
 [[nodiscard]] int         thing_weight(Thingp);
 [[nodiscard]] Levelp      thing_level(Gamep, Levelsp, Thingp);
@@ -915,6 +918,7 @@ typedef struct Thing_ {
 [[nodiscard]] spoint      thing_moving_from(Thingp);
 [[nodiscard]] spoint      thing_old_at(Thingp);
 [[nodiscard]] spoint      thing_prev_pix_at(Thingp);
+[[nodiscard]] spoint      thing_target(Thingp);
 [[nodiscard]] std::string monst_state_to_string(MonstState state);
 [[nodiscard]] std::string thing_apostrophize_name(Thingp, ThingTextFlags);
 [[nodiscard]] std::string thing_long_name(Gamep, Levelsp, Levelp, Thingp, ThingTextFlags flags = 0);
@@ -1051,6 +1055,7 @@ void thing_projectile_move(Gamep, Levelsp, Levelp, Thingp, float dt);
 void thing_set_dir_from_delta(Thingp, int dx, int dy);
 void thing_sound_play(Gamep, Levelsp, Levelp, Thingp, const std::string &alias);
 void thing_stats_dump(Gamep, Levelsp);
+void thing_target_set(Gamep, Levelsp, Levelp, Thingp, const spoint &);
 void thing_temperature_damage_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void thing_temperature_handle(Gamep, Levelsp, Levelp, Thingp it, Thingp me, int t);
 void thing_tick_begin(Gamep, Levelsp, Levelp, Thingp);

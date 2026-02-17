@@ -680,11 +680,11 @@ int  tp_variant_get(Tpp);
 void              tp_priority_set(Tpp, ThingPriorityType val);
 ThingPriorityType tp_priority_get(Tpp);
 
-void tp_vision_distance_set(Tpp, int val);
-int  tp_vision_distance_get(Tpp);
+void tp_distance_vision_set(Tpp, int val);
+int  tp_distance_vision_get(Tpp);
 
-void tp_jump_distance_set(Tpp, int val);
-int  tp_jump_distance_get(Tpp);
+void tp_distance_jump_set(Tpp, int val);
+int  tp_distance_jump_get(Tpp);
 
 void tp_lifespan_set(Tpp, const std::string &val);
 int  tp_lifespan_get(Tpp);

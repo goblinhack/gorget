@@ -24,7 +24,7 @@
         "xbB=C#x"
         "xW~,+sx"
         "x.@..`x"
-        "x.k.Mmx"
+        "x.k...x"
         "x|.Tt#x"
         "xxxxxxx";
   std::string expect
@@ -32,7 +32,7 @@
         "xbB=C#x"
         "xW~,+sx"
         "x.@..`x"
-        "x.k.Mmx"
+        "x.k...x"
         "x|.Tt#x"
         "xxxxxxx";
 

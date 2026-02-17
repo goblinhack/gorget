@@ -563,322 +563,312 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
     //
     in >> bits(tmp);
     if (tmp != offsetof(Thing, tp_id)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, tp_id)";
+      game_load_error = "Thing structure changed: offsetof(Thing, tp_id)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, dir)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, dir)";
+      game_load_error = "Thing structure changed: offsetof(Thing, dir)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, anim_index)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, anim_index)";
+      game_load_error = "Thing structure changed: offsetof(Thing, anim_index)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _priority)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _priority)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _priority)";
       return in;
     }
     in >> bits(tmp);
-    if (tmp != offsetof(Thing, count)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, count)";
-      return in;
-    }
-    in >> bits(tmp);
-    if (tmp != offsetof(Thing, _vision_distance)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _vision_distance)";
-      return in;
-    }
-    in >> bits(tmp);
-    if (tmp != offsetof(Thing, _jump_distance)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _jump_distance)";
+    if (tmp != offsetof(Thing, _distance_jump)) {
+      game_load_error = "Thing structure changed: offsetof(Thing, _distance_jump)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _is_hit)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _is_hit)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _is_hit)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _is_hot)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _is_hot)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _is_hot)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, anim_type)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, anim_type)";
+      game_load_error = "Thing structure changed: offsetof(Thing, anim_type)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, level_num)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, level_num)";
+      game_load_error = "Thing structure changed: offsetof(Thing, level_num)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, tile_index)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, tile_index)";
+      game_load_error = "Thing structure changed: offsetof(Thing, tile_index)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, anim_ms_remaining)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, anim_ms_remaining)";
+      game_load_error = "Thing structure changed: offsetof(Thing, anim_ms_remaining)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _speed)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _speed)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _speed)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _temperature)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _temperature)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _temperature)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _damage_this_tick)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _damage_this_tick)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _damage_this_tick)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _keys_carried)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _keys_carried)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _keys_carried)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value1)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value1)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value1)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value2)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value2)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value2)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value3)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value3)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value3)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value4)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value4)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value4)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value5)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value5)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value5)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value6)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value6)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value6)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value7)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value7)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value7)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value8)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value8)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value8)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value9)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value9)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value9)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value10)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value10)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value10)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value11)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value11)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value11)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value12)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value12)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value12)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value13)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value13)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value13)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value14)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value14)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value14)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value15)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value15)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value15)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value16)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value16)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value16)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value17)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value17)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value17)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value18)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value18)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value18)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value19)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value19)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value19)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _value20)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _value20)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _value20)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _minion_max)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _minion_max)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _minion_max)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _distance_minion_from_mob_max)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _distance_minion_from_mob_max)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _distance_minion_from_mob_max)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _distance_vision)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _distance_vision)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _distance_vision)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _variant)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _variant)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _variant)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _lifespan)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _lifespan)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _lifespan)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _age)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _age)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _age)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _submerged_pct)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _submerged_pct)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _submerged_pct)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _health)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _health)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _health)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _is_falling_ms)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _is_falling_ms)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _is_falling_ms)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _weight)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _weight)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _weight)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, tick)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, tick)";
+      game_load_error = "Thing structure changed: offsetof(Thing, tick)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, tick_temperature)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, tick_temperature)";
+      game_load_error = "Thing structure changed: offsetof(Thing, tick_temperature)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, tick_temperature_last_change)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, tick_temperature_last_change)";
+      game_load_error = "Thing structure changed: offsetof(Thing, tick_temperature_last_change)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, iter)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, iter)";
+      game_load_error = "Thing structure changed: offsetof(Thing, iter)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, tick_dead)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, tick_dead)";
+      game_load_error = "Thing structure changed: offsetof(Thing, tick_dead)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, tick_teleport)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, tick_teleport)";
+      game_load_error = "Thing structure changed: offsetof(Thing, tick_teleport)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, id)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, id)";
+      game_load_error = "Thing structure changed: offsetof(Thing, id)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, owner_id)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, owner_id)";
+      game_load_error = "Thing structure changed: offsetof(Thing, owner_id)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, ext_id)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, ext_id)";
+      game_load_error = "Thing structure changed: offsetof(Thing, ext_id)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _prev_pix_at)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _prev_pix_at)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _prev_pix_at)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _curr_pix_at)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _curr_pix_at)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _curr_pix_at)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _moving_from)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _moving_from)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _moving_from)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, last_pushed_at)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, last_pushed_at)";
+      game_load_error = "Thing structure changed: offsetof(Thing, last_pushed_at)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, thing_dt)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, thing_dt)";
+      game_load_error = "Thing structure changed: offsetof(Thing, thing_dt)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, angle)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, angle)";
+      game_load_error = "Thing structure changed: offsetof(Thing, angle)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _old_at)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _old_at)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _old_at)";
       return in;
     }
     in >> bits(tmp);
     if (tmp != offsetof(Thing, _at)) {
-      game_load_error = "Thing strcture changed: offsetof(Thing, _at)";
+      game_load_error = "Thing structure changed: offsetof(Thing, _at)";
       return in;
     }
 

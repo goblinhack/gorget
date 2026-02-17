@@ -1,15 +1,13 @@
 bugs
 ----
-corpse pileup
-squeal noises for monsters
-stamina needed to avoid fast jump loops
 monst chasing
 monst wandering
 need mob distance and lunging
 
 basic features
 --------------
-tests for collecting items / potions
+squeal noises for monsters
+stamina needed to avoid fast jump loops
 score is hard coded to 666
 chests need to contain something and those items destroyed when the chest is
 hard coded to fire fireball
