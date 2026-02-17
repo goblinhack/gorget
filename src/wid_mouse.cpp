@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <ranges>
+
 #include "my_game.hpp"
 #include "my_sdl_event.hpp"
 #include "my_sdl_proto.hpp"
@@ -281,7 +283,7 @@ bool wid_scroll_trough_mouse_motion(Gamep g, Widp w, int x, int y, int relx, int
   int dx;
   int dy;
 
-  if ((SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(0, 0)) || wheely || wheelx) {
+  if ((SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr)) || wheely || wheelx) {
 
     dy = rely ? rely : -wheely;
 
@@ -377,10 +379,8 @@ Widp wid_find_under_mouse_when_scrolling(Gamep g)
     if (wid_ignore_scroll_events(w)) {
       // CON("ign2 %s.", wid_name(w).c_str());
       return nullptr;
-    } else {
-      // CON("over2 %s.", wid_name(w).c_str());
-      return w;
-    }
+    } // CON("over2 %s.", wid_name(w).c_str());
+    return w;
   }
   return w;
 }
@@ -631,8 +631,8 @@ static Widp wid_mouse_down_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
@@ -648,8 +648,8 @@ static Widp wid_mouse_down_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
@@ -684,8 +684,8 @@ static Widp wid_mouse_held_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
@@ -701,8 +701,8 @@ static Widp wid_mouse_held_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
@@ -737,8 +737,8 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
@@ -754,8 +754,8 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;

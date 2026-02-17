@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <iostream>
 #include <libgen.h>
+#include <ranges>
 #include <sstream>
 #include <string>
 
@@ -852,16 +853,15 @@ std::vector< std::string > split_tokens(const std::string &s, const char delimit
 // https://www.techiedelight.com/trim-string-cpp-remove-leading-trailing-spaces/
 std::string &ltrim(std::string &s)
 {
-  auto it
-      = std::find_if(s.begin(), s.end(), [](char c) { return ! std::isspace< char >(c, std::locale::classic()); });
+  auto it = std::ranges::find_if(s, [](char c) { return ! std::isspace< char >(c, std::locale::classic()); });
   s.erase(s.begin(), it);
   return s;
 }
 
 std::string &rtrim(std::string &s)
 {
-  auto it
-      = std::find_if(s.rbegin(), s.rend(), [](char c) { return ! std::isspace< char >(c, std::locale::classic()); });
+  auto it = std::ranges::find_if(std::ranges::reverse_view(s),
+                                 [](char c) { return ! std::isspace< char >(c, std::locale::classic()); });
   s.erase(it.base(), s.end());
   return s;
 }

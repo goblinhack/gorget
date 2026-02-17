@@ -24,15 +24,15 @@ unsigned char *ramdisk_load(const char *filename, int *outlen)
 
   auto ramfile = f->second;
 
-  uint8_t *out = (__typeof__(out)) mymalloc(ramfile.len + 1, "ramdisk load");
+  auto *out = mymalloc(ramfile.len + 1, "ramdisk load");
   if (! out) {
     ERR("No memory for loading ramdisk out, %s", filename);
     return nullptr;
   }
 
   memcpy(out, (unsigned char *) ramfile.data, ramfile.len);
-  *(out + ramfile.len) = 0;
-  *outlen              = ramfile.len;
+  *((unsigned char *) out + ramfile.len) = 0;
+  *outlen                                = ramfile.len;
 
-  return out;
+  return (unsigned char *) out;
 }

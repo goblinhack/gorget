@@ -82,10 +82,10 @@ Tilep Font::font_get_tile(int u)
     if (u == '?') {
       CROAK("char 0x%X/%d -> bad index", u, u);
       return font_get_tile('?');
-    } else {
-      CROAK("char 0x%X/%d -> bad index", u, u);
-      return font_get_tile('?');
     }
+    CROAK("char 0x%X/%d -> bad index", u, u);
+    return font_get_tile('?');
+
     return font_get_tile('?');
   }
 
@@ -95,10 +95,10 @@ Tilep Font::font_get_tile(int u)
     if (u == '?') {
       CROAK("char 0x%X/%d -> bad index %d", u, u, index);
       return font_get_tile('?');
-    } else {
-      CROAK("char 0x%X/%d -> bad index %d", u, u, index);
-      return font_get_tile('?');
     }
+    CROAK("char 0x%X/%d -> bad index %d", u, u, index);
+    return font_get_tile('?');
+
     return font_get_tile('?');
   }
 

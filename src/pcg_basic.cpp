@@ -69,7 +69,7 @@ void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq)
 
 void pcg32_srandom(uint64_t seed, uint64_t seq)
 {
-  if (0) {
+  if (false) {
     LOG("seed %d", (int) seed);
   }
   pcg32_srandom_r(&pcg32_global, seed, seq);
@@ -86,7 +86,7 @@ uint32_t pcg32_random(const char *func, int line)
   }
 
   auto out = pcg32_random_r(&pcg32_global);
-  if (0) {
+  if (false) {
     LOG("%s:%u -> %u", func, line, out);
   }
   return out;
@@ -140,7 +140,7 @@ uint32_t pcg32_boundedrand(const char *func, int line, uint32_t bound)
   }
 
   auto out = pcg32_boundedrand_r(&pcg32_global, bound);
-  if (0) {
+  if (false) {
     LOG("%s:%u -> %u", func, line, out);
   }
   return out;

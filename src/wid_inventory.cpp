@@ -32,8 +32,8 @@ static void wid_inventory_mouse_over_begin(Gamep g, Widp w, int relx, int rely, 
 {
   TRACE_NO_INDENT();
 
-  for (auto n = 0; n < THING_INVENTORY_MAX; n++) {
-    w = wid_item[ n ];
+  for (auto &n : wid_item) {
+    w = n;
     if (w != wid_over) {
       wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
       wid_set_color(w, WID_COLOR_BG, GRAY20);
@@ -135,8 +135,8 @@ static void wid_inventory_mouse_over_end(Gamep g, Widp w)
               case 'x' :
               case 'y' :
               case 'z' :
-                for (auto n = 0; n < THING_INVENTORY_MAX; n++) {
-                  w = wid_item[ n ];
+                for (auto &n : wid_item) {
+                  w = n;
                   if (w) {
                     wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
                     wid_set_color(w, WID_COLOR_BG, GRAY20);

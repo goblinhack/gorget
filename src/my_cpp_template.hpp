@@ -46,8 +46,8 @@ void push_back_if_unique(C< T > &c, T d)
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
 T pcg_rand_one_of(C< T > &c)
 {
-  typename C< T >::iterator so = c.begin();
-  typename C< T >::iterator eo = c.end();
+  auto so = c.begin();
+  auto eo = c.end();
 
   size_t sz = eo - so;
   if (! sz) {
@@ -60,8 +60,8 @@ T pcg_rand_one_of(C< T > &c)
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
 T rand_one_of(C< T > &c)
 {
-  typename C< T >::iterator so = c.begin();
-  typename C< T >::iterator eo = c.end();
+  auto so = c.begin();
+  auto eo = c.end();
 
   size_t sz = eo - so;
   if (! sz) {

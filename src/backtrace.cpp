@@ -79,7 +79,7 @@ static std::string demangle(const char *name)
 
   int status = -4; // some arbitrary value to eliminate the compiler warning
 
-  auto p = abi::__cxa_demangle(name, NULL, NULL, &status);
+  auto p = abi::__cxa_demangle(name, nullptr, nullptr, &status);
 
   if (! status) {
     auto ret = std::string(p);

@@ -134,8 +134,8 @@ void thing_stats_dump(Gamep g, Levelsp v)
   int in_use_things = 0;
   int free_things   = 0;
 
-  for (ThingId index = 0; index < (1 << THING_ARR_INDEX_BITS); index++) {
-    auto t = &v->thing_body[ index ];
+  for (auto &index : v->thing_body) {
+    auto t = &index;
 
 #ifdef ENABLE_PER_THING_MEMORY
     if (v->thing_body_debug[ index ]) {

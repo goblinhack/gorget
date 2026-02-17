@@ -58,7 +58,7 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
         t->last_pushed_at                   = at;
         l->thing_id[ at.x ][ at.y ][ slot ] = t->id;
 
-        if (0) {
+        if (false) {
           THING_DBG(t, "pushed to %u,%u slot %u", at.x, at.y, slot);
         }
 
@@ -154,7 +154,7 @@ bool thing_pop(Gamep g, Levelsp v, Thingp t)
 
   spoint at = t->last_pushed_at;
 
-  if (0) {
+  if (false) {
     THING_DBG(t, "is on the map, last pushed %u,%u", at.x, at.y);
   }
 
@@ -166,7 +166,7 @@ bool thing_pop(Gamep g, Levelsp v, Thingp t)
     auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];
     if (o_id == t->id) {
       l->thing_id[ at.x ][ at.y ][ slot ] = 0;
-      if (0) {
+      if (false) {
         THING_DBG(t, "popped from slot %u", slot);
       }
       thing_is_on_map_unset(g, v, l, t);

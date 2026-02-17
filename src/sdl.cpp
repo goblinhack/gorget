@@ -142,7 +142,7 @@ uint8_t sdl_init(void)
   //
   // Unused for now
   //
-  if (0) {
+  if (false) {
     sdl_init_joystick();
     sdl_init_rumble();
   }

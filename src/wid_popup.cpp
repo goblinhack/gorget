@@ -32,10 +32,10 @@ WidPopup::WidPopup(Gamep g, const std::string vname, spoint vtl, spoint vbr, Til
 
   this->name = vname;
 
-  spoint inner_tl = spoint(0, 0);
-  spoint inner_br = spoint(width, height);
-  inner_w         = inner_br.x - inner_tl.x;
-  inner_h         = inner_br.y - inner_tl.y;
+  auto inner_tl = spoint(0, 0);
+  auto inner_br = spoint(width, height);
+  inner_w       = inner_br.x - inner_tl.x;
+  inner_h       = inner_br.y - inner_tl.y;
 
   int tile_size;
   if (title_tile) {

@@ -157,8 +157,8 @@ class Cell
 {
 private:
 public:
-  Cell(void) {}
-  ~Cell(void) {}
+  Cell(void)  = default;
+  ~Cell(void) = default;
 
   //
   // Room char
@@ -176,7 +176,7 @@ class LevelGen
 private:
 public:
   LevelGen(void) { info = {}; }
-  ~LevelGen(void) {}
+  ~LevelGen(void) = default;
 
   //
   // Dump levels as generating them, enable via -debug
@@ -272,7 +272,7 @@ class Room
 {
 private:
 public:
-  Room(void) {}
+  Room(void) = default;
   ~Room(void) { myfree(data); }
 
   //
@@ -334,7 +334,7 @@ class LevelFixed
 {
 private:
 public:
-  LevelFixed(void) {}
+  LevelFixed(void) = default;
   ~LevelFixed(void) { myfree(data); }
 
   //
@@ -385,7 +385,7 @@ class FragmentAlt
 {
 private:
 public:
-  FragmentAlt(void) {}
+  FragmentAlt(void) = default;
   ~FragmentAlt(void) { myfree(data); }
 
   //
@@ -424,7 +424,7 @@ class Fragment
 {
 private:
 public:
-  Fragment(void) {}
+  Fragment(void) = default;
   ~Fragment(void) { myfree(data); }
 
   //
@@ -728,7 +728,7 @@ void room_add(Gamep g, int chance, int room_flags, const char *file, int line, .
   //
   // Allocate space for the room
   //
-  class Room *r = new Room();
+  auto *r = new Room();
   room_all[ room_type ].push_back(r);
 
   r->id        = room_no++;
@@ -1279,7 +1279,7 @@ bool fragment_alt_add(Gamep g, int chance, const char *file, int line, ...)
   //
   // Allocate space for the fragment_alt
   //
-  class FragmentAlt *f = new FragmentAlt();
+  auto *f = new FragmentAlt();
   fragment_alts_all.push_back(f);
 
   fragment_alts_curr.clear();
@@ -1584,7 +1584,7 @@ bool fragment_add(Gamep g, int chance, const char *file, int line, ...)
   //
   // Allocate space for the fragment
   //
-  class Fragment *f = new Fragment();
+  auto *f = new Fragment();
   fragments_all.push_back(f);
 
   fragments_curr.clear();
@@ -1956,7 +1956,7 @@ void level_fixed_add(Gamep g, int chance, LevelType level_type, const std::strin
   //
   // Allocate space for the level
   //
-  class LevelFixed *l = new LevelFixed();
+  auto *l = new LevelFixed();
   level_fixed_all[ level_type ].push_back(l);
 
   if (level_alias_all.find(alias) != level_alias_all.end()) {
@@ -2132,8 +2132,8 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
-    for (int x = 0; x < MAP_WIDTH; x++) {
-      auto c = l->data[ x ][ y ].c;
+    for (auto &x : l->data) {
+      auto c = x[ y ].c;
       tmp += c;
     }
     LOG("[%s]", tmp.c_str());
@@ -2144,7 +2144,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   //
   // Sometimes useful to see walkable paths
   //
-  if (0) {
+  if (false) {
     for (int y = 0; y < MAP_HEIGHT; y++) {
       std::string tmp;
       for (int x = 0; x < MAP_WIDTH; x++) {
@@ -2204,8 +2204,8 @@ static std::string level_gen_string(Gamep g, class LevelGen *l)
   std::string out;
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
-    for (int x = 0; x < MAP_WIDTH; x++) {
-      out += l->data[ x ][ y ].c;
+    for (auto &x : l->data) {
+      out += x[ y ].c;
     }
   }
 
@@ -2639,7 +2639,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
   //
   cave_generation_center_blob(g, &l->cave);
 
-  if (0) {
+  if (false) {
     cave_dump(g, l);
     level_gen_dump(g, l);
   }
@@ -2730,7 +2730,7 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
   //
   cave_create(g, &l->cave, fill_prob, r1, r2, map_generations);
 
-  if (0) {
+  if (false) {
     cave_dump(g, l);
     level_gen_dump(g, l);
   }
@@ -3605,11 +3605,7 @@ bool level_gen_is_room_entrance(Gamep g, class LevelGen *l, int x, int y)
   }
 
   auto r = l->data[ x ][ y ].room;
-  if (r && (l->room_entrance == r)) {
-    return true;
-  }
-
-  return false;
+  return r && (l->room_entrance == r);
 }
 
 //
@@ -5018,7 +5014,7 @@ static class LevelGen *level_gen_create_proc_gen_level(Gamep g, Levelsp v, Level
   //
   // Show walkable areas
   //
-  if (0) {
+  if (false) {
     level_gen_test_flood(g, l);
   }
 

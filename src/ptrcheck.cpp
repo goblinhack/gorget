@@ -46,7 +46,7 @@ public:
     strcpy(ts, other.ts);
     bt = other.bt;
   }
-  ~Ptrcheck_history() {}
+  ~Ptrcheck_history() = default;
 };
 
 //

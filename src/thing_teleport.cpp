@@ -176,7 +176,7 @@ bool thing_teleport_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   v->scroll_speed = MAP_SCROLL_TELEPORT_SPEED;
 
-  thing_is_teleporting_set(g, v, l, t, 0);
+  thing_is_teleporting_set(g, v, l, t, false);
 
   THING_LOG(t, "post teleport");
 

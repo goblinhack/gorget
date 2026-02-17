@@ -17,7 +17,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
 
   Tpp tp = thing_tp(t);
 
-  if (0) {
+  if (false) {
     THING_DBG(t, "thing_anim_init: anim class %s/%d", ThingAnim_to_string(anim_type).c_str(), anim_type);
   }
 
@@ -137,7 +137,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
     return;
   }
 
-  if (0) {
+  if (false) {
     if (thing_is_level_curr(t)) {
       THING_LOG(t, "anim %s index %d [%s]", tile_name(tile).c_str(), t->anim_index,
                 ThingAnim_to_string(t->anim_type).c_str());

@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <ranges>
+
 #include "my_callstack.hpp"
 #include "my_line.hpp"
 #include "my_main.hpp"
@@ -51,9 +53,8 @@ static Thingp thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thin
   auto at        = thing_at(t);
   auto jump_path = draw_line(at, to);
 
-  for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {
-    spoint intermediate = *i;
-    auto   what         = level_is_obs_to_jump_over(g, v, l, intermediate);
+  for (auto intermediate : std::ranges::reverse_view(jump_path)) {
+    auto what = level_is_obs_to_jump_over(g, v, l, intermediate);
     if (what) {
       return what;
     }

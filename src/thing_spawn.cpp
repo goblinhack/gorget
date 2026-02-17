@@ -27,7 +27,7 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
     return nullptr;
   }
 
-  if (1) {
+  if (true) {
     THING_DBG(t, "spawned");
   }
 

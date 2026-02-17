@@ -201,8 +201,8 @@ static void wid_topcon_wid_create(Gamep g)
 
   TRACE_NO_INDENT();
   {
-    spoint tl = spoint(UI_LEFTBAR_WIDTH, 0);
-    spoint br = spoint(UI_LEFTBAR_WIDTH + UI_TOPCON_WIDTH - 1, h - 1);
+    auto tl = spoint(UI_LEFTBAR_WIDTH, 0);
+    auto br = spoint(UI_LEFTBAR_WIDTH + UI_TOPCON_WIDTH - 1, h - 1);
 
     wid_topcon_window = wid_new_window(g, "wid topcon");
     wid_set_name(wid_topcon_window, "wid topcon window");
@@ -212,8 +212,8 @@ static void wid_topcon_wid_create(Gamep g)
 
   TRACE_NO_INDENT();
   {
-    spoint tl = spoint(0, 0);
-    spoint br = spoint(UI_TOPCON_WIDTH - 1, h - 1);
+    auto tl = spoint(0, 0);
+    auto br = spoint(UI_TOPCON_WIDTH - 1, h - 1);
 
     wid_topcon_container = wid_new_container(g, wid_topcon_window, "wid topcon container");
     wid_set_pos(wid_topcon_container, tl, br);
@@ -231,8 +231,8 @@ static void wid_topcon_wid_create(Gamep g)
 
     for (row = 0; row < UI_TOPCON_HEIGHT; row++) {
       row_bottom--;
-      spoint tl = spoint(0, row_bottom);
-      spoint br = spoint(UI_TOPCON_WIDTH - 1, row_bottom);
+      auto tl = spoint(0, row_bottom);
+      auto br = spoint(UI_TOPCON_WIDTH - 1, row_bottom);
 
       TRACE_NO_INDENT();
       child = wid_new_container(g, wid_topcon_container, "");

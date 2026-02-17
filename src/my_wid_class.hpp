@@ -106,16 +106,16 @@ public:
   Wid(void);
   ~Wid(void);
 
-  WidKeyType tree_global_key {};
+  WidKeyType tree_global_key;
 
   //
   // Sorted for display order.
   //
-  tree_wid_key key {};
-  WidKeyType   tree2_key {};
-  WidKeyType   tree4_key {};
-  WidKeyType   tree5_key {};
-  WidKeyType   tree6_key {};
+  tree_wid_key key;
+  WidKeyType   tree2_key;
+  WidKeyType   tree4_key;
+  WidKeyType   tree5_key;
+  WidKeyType   tree6_key;
 
   wid_key_map_location *in_tree_root {};
   wid_key_map_int      *in_tree2_unsorted_root {};
@@ -126,22 +126,22 @@ public:
   //
   // Sorted for display onto the screen.
   //
-  wid_key_map_location children_display_sorted {};
+  wid_key_map_location children_display_sorted;
 
   //
   // No particular sort order.
   //
-  wid_key_map_int tree2_children_unsorted {};
+  wid_key_map_int tree2_children_unsorted;
 
   //
   // A tree for things being destroyed.
   //
-  wid_key_map_int tree4_wids_being_destroyed {};
+  wid_key_map_int tree4_wids_being_destroyed;
 
   //
   // A tree for tick things
   //
-  wid_key_map_int tree5_tick_wids {};
+  wid_key_map_int tree5_tick_wids;
 
   //
   // Tiles widget
@@ -207,9 +207,9 @@ public:
   //
   TileLayers tiles = {};
 
-  fsize texuv {};
-  fsize tex_tl {};
-  fsize tex_br {};
+  fsize texuv;
+  fsize tex_tl;
+  fsize tex_br;
 
   //
   // WID_MODE_NORMAL ...
@@ -267,17 +267,17 @@ public:
   //
   // Widget internal name.
   //
-  std::string name {};
+  std::string name;
 
   //
   // For debugging.
   //
-  std::string to_string {};
+  std::string to_string;
 
   //
   // Text that appears on the wid.
   //
-  std::string text {};
+  std::string text;
   size_t      max_len {};
 
   //

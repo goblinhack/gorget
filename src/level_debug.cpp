@@ -62,8 +62,8 @@ int levels_thing_count(Gamep g, Levelsp v)
   TRACE_NO_INDENT();
 
   int thing_count = 0;
-  for (auto arr_index = 0; arr_index < THING_ID_MAX; arr_index++) {
-    auto t = &v->thing_body[ arr_index ];
+  for (auto &arr_index : v->thing_body) {
+    auto t = &arr_index;
 
 #ifdef ENABLE_PER_THING_MEMORY
     if (v->thing_body_debug[ arr_index ]) {
@@ -123,10 +123,10 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     std::string tmp;
-    for (int x = 0; x < MAP_WIDTH; x++) {
-      auto c = l->debug[ x ][ y ];
+    for (auto &x : l->debug) {
+      auto c = x[ y ];
       if (c) {
-        tmp += l->debug[ x ][ y ];
+        tmp += x[ y ];
       }
     }
 

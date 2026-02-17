@@ -206,7 +206,7 @@ std::string current_date(void)
   //  %%  %   A literal '%' character.
   //
   my_strftime(buffer, SIZEOF(buffer), "%c", timeinfo);
-  if (0) {
+  if (false) {
     strftime(buffer, SIZEOF(buffer), "%X", timeinfo);
   }
   return std::string(buffer);

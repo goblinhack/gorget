@@ -84,7 +84,7 @@ std::initializer_list< std::string > tests = {
 class Test
 {
 public:
-  std::string name {};
+  std::string name;
 
   //
   // Callbacks

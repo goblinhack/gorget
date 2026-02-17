@@ -52,7 +52,7 @@ public:
   Node(void) = default;
 
   class Node *came_from {};
-  Nodecost    cost {};
+  Nodecost    cost;
   spoint      at;
 };
 
@@ -64,7 +64,7 @@ typedef std::map< Nodecost, Node * > Nodemap;
 class Astar
 {
 public:
-  Astar() {}
+  Astar() = default;
 
   Gamep   g = {};
   Levelsp v = {};
@@ -243,7 +243,7 @@ std::vector< spoint > Astar::create_path(const Node *came_from)
     came_from = came_from->came_from;
   }
 
-  std::reverse(out.begin(), out.end());
+  std::ranges::reverse(out);
   return out;
 }
 

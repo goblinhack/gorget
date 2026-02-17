@@ -197,8 +197,8 @@ static void wid_botcon_wid_create(Gamep g)
 
   TRACE_NO_INDENT();
   {
-    spoint tl = spoint(UI_LEFTBAR_WIDTH, TERM_HEIGHT - h);
-    spoint br = spoint(UI_LEFTBAR_WIDTH + UI_BOTCON_WIDTH - 1, TERM_HEIGHT - 1);
+    auto tl = spoint(UI_LEFTBAR_WIDTH, TERM_HEIGHT - h);
+    auto br = spoint(UI_LEFTBAR_WIDTH + UI_BOTCON_WIDTH - 1, TERM_HEIGHT - 1);
 
     wid_botcon_window = wid_new_window(g, "wid botcon");
     wid_set_name(wid_botcon_window, "wid botcon window");
@@ -208,8 +208,8 @@ static void wid_botcon_wid_create(Gamep g)
 
   TRACE_NO_INDENT();
   {
-    spoint tl = spoint(0, 0);
-    spoint br = spoint(UI_BOTCON_WIDTH - 1, h - 1);
+    auto tl = spoint(0, 0);
+    auto br = spoint(UI_BOTCON_WIDTH - 1, h - 1);
 
     wid_botcon_container = wid_new_container(g, wid_botcon_window, "wid botcon container");
     wid_set_pos(wid_botcon_container, tl, br);
@@ -227,8 +227,8 @@ static void wid_botcon_wid_create(Gamep g)
 
     for (row = 0; row < UI_BOTCON_HEIGHT; row++) {
       row_bottom--;
-      spoint tl = spoint(0, row_bottom);
-      spoint br = spoint(UI_BOTCON_WIDTH - 1, row_bottom);
+      auto tl = spoint(0, row_bottom);
+      auto br = spoint(UI_BOTCON_WIDTH - 1, row_bottom);
 
       TRACE_NO_INDENT();
       child = wid_new_container(g, wid_botcon_container, "");

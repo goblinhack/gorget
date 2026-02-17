@@ -316,7 +316,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
   }
   const int player_speed = thing_speed(player);
 
-  if (0) {
+  if (false) {
     if (level_is_player_level(g, v, l)) {
       LEVEL_DBG(g, v, l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
     }
@@ -352,7 +352,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
 
     auto thing_dt_change = t->thing_dt - old_thing_dt;
 
-    if (1) {
+    if (true) {
       THING_LOG(t, "level dt %f old_thing_dt %f thing_dt %f thing_dt_change %f speed %d v %d",
                 dt,              // newline
                 old_thing_dt,    // newline

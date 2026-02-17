@@ -64,7 +64,7 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
     }
   }
 
-  if (0) {
+  if (false) {
     printf("before:\n");
     cave_dump(g, c);
   }
@@ -122,7 +122,7 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
     }
   }
 
-  if (0) {
+  if (false) {
     printf("after:\n");
     cave_dump(g, c);
   }

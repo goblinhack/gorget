@@ -37,7 +37,7 @@ public:
   //
   // Human readable version of the above seed.
   //
-  std::string seed_name {};
+  std::string seed_name;
 
   //
   // All randomness jumps off of this.
@@ -52,7 +52,7 @@ public:
   //
   // Player's name
   //
-  std::string player_name {};
+  std::string player_name;
 
   //
   // Keep flags int size so the header size will change on a new flag.
@@ -229,7 +229,7 @@ public:
   // Player is dead
   //
   bool        request_to_end_game {};
-  std::string request_to_end_game_reason {};
+  std::string request_to_end_game_reason;
 
   //
   // Temporary. Global states
@@ -524,8 +524,8 @@ void game_fini(Gamep g)
   TRACE_NO_INDENT();
   oldptr(MTYPE_GAME, g);
   delete g;
-  g    = NULL;
-  game = NULL;
+  g    = nullptr;
+  game = nullptr;
 }
 
 void Game::cleanup(void)
@@ -591,7 +591,7 @@ void game_popups_set(Gamep g, int x, int y, std::list< GamePopup * > &l)
 bool game_popups_present(Gamep g, int x, int y)
 {
   TRACE_NO_INDENT();
-  return g->popups[ x ][ y ].all.empty() ? false : true;
+  return ! g->popups[ x ][ y ].all.empty();
 }
 
 void Game::seed_clear(void)
@@ -2768,7 +2768,7 @@ bool game_request_to_save_game_get(Gamep g)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
-    return 1;
+    return true;
   }
 
   return g->request_to_save_game;
@@ -2797,7 +2797,7 @@ bool game_request_to_update_cursor_get(Gamep g)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
-    return 1;
+    return true;
   }
 
   return g->request_to_update_cursor;
@@ -2826,7 +2826,7 @@ bool game_request_to_end_game_get(Gamep g)
   TRACE_NO_INDENT();
   if (unlikely(! g)) {
     ERR("No game pointer set");
-    return 1;
+    return true;
   }
 
   return g->request_to_end_game;

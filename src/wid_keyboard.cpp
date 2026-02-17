@@ -147,7 +147,7 @@ static void               wid_keyboard_set_focus(Gamep, wid_keyboard_ctx *ctx, i
 static void wid_keyboard_update_buttons(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
   int width  = 7;
@@ -155,7 +155,7 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
 
   int x, y;
 
-  ctx->b = 0;
+  ctx->b = nullptr;
 
   for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
     for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
@@ -195,12 +195,12 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
 static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SDL_Keysym *key_in)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
   const char *add;
   if ((focusx == -1) && (focusy == -1)) {
-    add = 0;
+    add = nullptr;
   } else {
     add = keys[ focusy ][ focusx ];
   }
@@ -264,7 +264,7 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
 [[nodiscard]] static bool wid_keyboard_mouse_event(Gamep g, Widp w, int focusx, int focusy)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_event(g, w, focusx, focusy, 0 /* key */);
+  wid_keyboard_event(g, w, focusx, focusy, nullptr /* key */);
 
   return true;
 }
@@ -353,7 +353,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static bool wid_keyboard_parent_key_down(Gamep g, Widp w, const SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
   /*
@@ -398,7 +398,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static bool wid_keyboard_parent_joy_button(Gamep g, Widp w, int x, int y)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
   int ret = false;
 
@@ -475,7 +475,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static bool wid_keyboard_button_key_event(Gamep g, Widp w, const SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
   /*
@@ -513,7 +513,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static bool wid_keyboard_button_joy_button_event(Gamep g, Widp w, int x, int y)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
   int ret = false;
 
@@ -592,7 +592,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 [[nodiscard]] static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym *key)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
   //
@@ -627,10 +627,10 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
 static void wid_keyboard_destroy(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
-  wid_set_void_context(w, 0);
+  wid_set_void_context(w, nullptr);
   oldptr(MTYPE_MISC, ctx);
 
   wid_keyboard_visible = false;
@@ -639,7 +639,7 @@ static void wid_keyboard_destroy(Gamep g, Widp w)
 static void wid_keyboard_tick(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_ctx *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
+  auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
 
   static int val;

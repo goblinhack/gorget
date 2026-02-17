@@ -87,7 +87,7 @@ bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
 
   auto real_at = thing_real_at(projectile);
 
-  if (0) {
+  if (false) {
     THING_LOG(projectile, "%f,%f", real_at.x, real_at.y);
   }
 

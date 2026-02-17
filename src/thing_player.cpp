@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <ranges>
+
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
@@ -523,7 +525,8 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       }
     }
     return true;
-  } else if (thing_can_move_to_attempt_by_shoving(g, v, l, me, to)) {
+  }
+  if (thing_can_move_to_attempt_by_shoving(g, v, l, me, to)) {
     //
     // Can we shove it out of the way to move?
     //
@@ -959,8 +962,7 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
   auto jump_path = draw_line(at, to, thing_distance_jump(me) + 1);
   bool warn      = true;
 
-  for (auto i = jump_path.rbegin(); i != jump_path.rend(); i++) {
-    spoint intermediate = *i;
+  for (auto intermediate : std::ranges::reverse_view(jump_path)) {
     if (thing_jump_to(g, v, l, me, intermediate, warn)) {
       level_tick_begin_requested(g, v, l, "me jumped");
       player_state_change(g, v, l, PLAYER_STATE_FOLLOWING_PATH);

@@ -16,7 +16,7 @@ void sdl_screenshot(Gamep g)
   TRACE_AND_INDENT();
 
   if (sdl.window) {
-    g_do_screenshot = 1;
+    g_do_screenshot = true;
   }
 }
 

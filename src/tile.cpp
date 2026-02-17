@@ -731,19 +731,19 @@ void tile_global_index_set(Tilep t, uint32_t val)
 bool tile_is_loggable(Tilep t)
 {
   TRACE_NO_INDENT();
-  return t->is_loggable ? true : false;
+  return t->is_loggable;
 }
 
 bool tile_is_end_of_anim(Tilep t)
 {
   TRACE_NO_INDENT();
-  return t->is_end_of_anim ? true : false;
+  return t->is_end_of_anim;
 }
 
 bool tile_is_cleanup_on_end_of_anim(Tilep t)
 {
   TRACE_NO_INDENT();
-  return t->is_cleanup_on_end_of_anim ? true : false;
+  return t->is_cleanup_on_end_of_anim;
 }
 
 void tile_is_cleanup_on_end_of_anim_set(Tilep t)
@@ -755,7 +755,7 @@ void tile_is_cleanup_on_end_of_anim_set(Tilep t)
 bool tile_is_alive_on_end_of_anim(Tilep t)
 {
   TRACE_NO_INDENT();
-  return t->is_alive_on_end_of_anim ? true : false;
+  return t->is_alive_on_end_of_anim;
 }
 
 void tile_is_alive_on_end_of_anim_set(Tilep t)

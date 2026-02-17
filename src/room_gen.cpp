@@ -33,12 +33,12 @@ public:
   RoomGen(void)
   {
     for (int y = 0; y < MAP_HEIGHT; y++) {
-      for (int x = 0; x < MAP_WIDTH; x++) {
-        data[ x ][ y ] = CHARMAP_EMPTY;
+      for (auto &x : data) {
+        x[ y ] = CHARMAP_EMPTY;
       }
     }
   }
-  ~RoomGen(void) {}
+  ~RoomGen(void) = default;
 
   //
   // Level tiles and room info
@@ -72,8 +72,8 @@ static void room_gen_dump(Gamep g, RoomGen *grid)
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
     fprintf(grid->out, "           /* line */ (const char *) \"");
-    for (int x = 0; x < MAP_WIDTH; x++) {
-      fprintf(grid->out, "%c", grid->data[ x ][ y ]);
+    for (auto &x : grid->data) {
+      fprintf(grid->out, "%c", x[ y ]);
     }
     fprintf(grid->out, "\",\n");
   }
@@ -559,7 +559,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
   if (! room_gen_get_bounds(g, &grid)) {
     return false;
   }
-  if (0) {
+  if (false) {
     room_gen_dump(g, &grid);
   }
 

@@ -89,11 +89,7 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
       //
       // Do not step onto the thing we just shoved.
       //
-      if (level_is_dead_on_shoving(g, v, l, to)) {
-        return false;
-      } else {
-        return true;
-      }
+      return level_is_dead_on_shoving(g, v, l, to) == nullptr;
     }
   }
 
@@ -358,7 +354,7 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   const int player_speed = thing_speed(player);
 
-  if (0) {
+  if (false) {
     THING_LOG(me, "move_rem %d dt %f", thing_move_remaining(me), me->thing_dt);
   }
 

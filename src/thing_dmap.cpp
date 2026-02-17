@@ -68,7 +68,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
   auto dmap_start = spoint(minx, miny);
   auto dmap_end   = spoint(maxx, maxy);
 
-  if (0) {
+  if (false) {
     dmap_print(&ext->dmap, target, dmap_start, dmap_end);
   }
 
@@ -78,7 +78,7 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
     dmap_process(&ext->dmap, dmap_start, dmap_end);
   }
 
-  if (0) {
+  if (false) {
     THING_LOG(me, "thing dmap");
     dmap_print(&ext->dmap, target, dmap_start, dmap_end);
   }

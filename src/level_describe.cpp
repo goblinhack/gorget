@@ -31,8 +31,8 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
 
   v->describe_count = 0;
 
-  for (auto i = 0; i < THING_DESCRIBE_MAX; i++) {
-    if (v->describe[ i ]) {
+  for (unsigned int i : v->describe) {
+    if (i) {
       v->describe_count++;
     }
   }
@@ -60,17 +60,17 @@ bool level_cursor_describe_add(Gamep g, Levelsp v, Thingp t)
     return false;
   }
 
-  for (auto i = 0; i < THING_DESCRIBE_MAX; i++) {
-    auto cand = thing_find_optional(g, v, v->describe[ i ]);
+  for (unsigned int i : v->describe) {
+    auto cand = thing_find_optional(g, v, i);
     if (cand == t) {
       return true;
     }
   }
 
-  for (auto i = 0; i < THING_DESCRIBE_MAX; i++) {
-    auto cand = thing_find_optional(g, v, v->describe[ i ]);
+  for (unsigned int &i : v->describe) {
+    auto cand = thing_find_optional(g, v, i);
     if (! cand) {
-      v->describe[ i ] = t->id;
+      i = t->id;
       game_request_to_remake_ui_set(g);
       level_cursor_describe_update(g, v);
       return true;
@@ -102,10 +102,10 @@ bool level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t)
     return false;
   }
 
-  for (auto i = 0; i < THING_DESCRIBE_MAX; i++) {
+  for (unsigned int &i : v->describe) {
     auto cand = thing_find_optional(g, v, t->id);
     if (cand == t) {
-      v->describe[ i ] = 0;
+      i = 0;
       game_request_to_remake_ui_set(g);
       level_cursor_describe_update(g, v);
       return true;
@@ -180,7 +180,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   if (! thing_vision_can_see_tile(g, v, l, player, at)) {
     BOTCON_NEW_LINE();
     BOTCON_NEW_LINE();
-    if (0) {
+    if (false) {
       BOTCON("Cannot see here.");
     }
     return;
@@ -227,7 +227,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
   BOTCON_NEW_LINE();
 
   if ((int) all_things_description.empty()) {
-    if (0) {
+    if (false) {
       BOTCON("Nothing here.");
     }
     BOTCON_NEW_LINE();

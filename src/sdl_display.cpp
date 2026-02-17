@@ -49,7 +49,7 @@ void sdl_display(Gamep g)
   // Screenshot?
   //
   if (unlikely(g_do_screenshot)) {
-    g_do_screenshot = 0;
+    g_do_screenshot = false;
     sdl_screenshot_do(g);
   }
 
@@ -284,7 +284,7 @@ uint8_t sdl_display_init(Gamep g)
   //
   // Do we really need to do this? it takes a small bit of time.
   //
-  if (0) {
+  if (false) {
     //
     // Clear the screen, both buffers
     //

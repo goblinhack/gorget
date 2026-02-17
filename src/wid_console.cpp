@@ -270,7 +270,7 @@ std::vector< std::string > wid_console_serialize(void)
     }
     tmp = wid_get_next(tmp);
   }
-  std::reverse(r.begin(), r.end());
+  std::ranges::reverse(r);
   return r;
 }
 

@@ -83,8 +83,9 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
       // Allow mouse scrolling always
       //
       return;
-    } else if ((x < MAP_SCROLL_OUTER_EDGE) || (y < MAP_SCROLL_OUTER_EDGE) || (x > 1 - MAP_SCROLL_OUTER_EDGE)
-               || (y > 1 - MAP_SCROLL_OUTER_EDGE)) {
+    }
+    if ((x < MAP_SCROLL_OUTER_EDGE) || (y < MAP_SCROLL_OUTER_EDGE) || (x > 1 - MAP_SCROLL_OUTER_EDGE)
+        || (y > 1 - MAP_SCROLL_OUTER_EDGE)) {
       //
       // Unless the player has wandered off screen
       //
@@ -186,7 +187,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
     v->pixel_map_at.y = 0;
   }
 
-  if (0) {
+  if (false) {
     TOPCON("%u [%d,%d] elapsed %u", v->requested_forced_auto_scroll, dx, dy,
            time_ms() - v->requested_forced_auto_scroll);
   }

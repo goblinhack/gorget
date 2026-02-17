@@ -228,7 +228,7 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
       float dist_in_pixels
           = DISTANCEf(light_pixel_at_x, light_pixel_at_y, (float) thing_at_in_pixels.x, (float) thing_at_in_pixels.y);
 
-      uint8_t light_fade_index = (uint8_t) (int) ((dist_in_pixels / light_strength_in_pixels) * (float) MAP_WIDTH);
+      auto light_fade_index = (uint8_t) (int) ((dist_in_pixels / light_strength_in_pixels) * (float) MAP_WIDTH);
       if (unlikely(light_fade_index >= MAP_WIDTH)) {
         light_fade_index = MAP_WIDTH - 1;
       }
@@ -382,7 +382,7 @@ Thingp level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov)
     }
 
     if (thing_is_obs_to_vision(it)) {
-      if (0) {
+      if (false) {
         THING_LOG(it, "block");
       }
       return it;

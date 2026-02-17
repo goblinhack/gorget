@@ -31,7 +31,7 @@ static void wid_warning_destroy(void)
     return false;
   }
 
-  wid_warning_callback_t callback = (wid_warning_callback_t) wid_get_void_context(w);
+  auto callback = (wid_warning_callback_t) wid_get_void_context(w);
 
   switch (key->mod) {
     case KMOD_LCTRL :
@@ -86,7 +86,7 @@ static void wid_warning_destroy(void)
   DBG("Wid warning: yes");
   TRACE_AND_INDENT();
 
-  wid_warning_callback_t callback = (wid_warning_callback_t) wid_get_void_context(w);
+  auto callback = (wid_warning_callback_t) wid_get_void_context(w);
   if (callback) {
     (callback)(g, true);
   }
@@ -99,7 +99,7 @@ static void wid_warning_destroy(void)
   DBG("Wid warning: no");
   TRACE_AND_INDENT();
 
-  wid_warning_callback_t callback = (wid_warning_callback_t) wid_get_void_context(w);
+  auto callback = (wid_warning_callback_t) wid_get_void_context(w);
   if (callback) {
     (callback)(g, false);
   }

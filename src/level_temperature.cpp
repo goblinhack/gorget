@@ -48,9 +48,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
     //
     // This is emulating returning to ambient temperature
     //
-    for (auto i = 0; i < (int) things.size(); i++) {
-      auto t = things[ i ];
-
+    for (auto t : things) {
       //
       // It could be dead now.
       //
@@ -199,7 +197,7 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
   int Ta = thing_temperature(a);
   int Tb = thing_temperature(b);
 
-  if (0) {
+  if (false) {
     THING_LOG(a, "a Ta %d", Ta);
     THING_LOG(b, "b Tb %d", Tb);
   }
@@ -302,7 +300,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       sorted_pairs.push_back(a_pair);
     }
 
-    if (0) {
+    if (false) {
       for (auto a_pair : sorted_pairs) {
         auto a = a_pair.first;
         auto b = a_pair.second;
@@ -315,16 +313,15 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     //
     // Sort by event priority
     //
-    std::sort(sorted_pairs.begin(), sorted_pairs.end(),
-              [](const std::pair< Thingp, Thingp > &a, const std::pair< Thingp, Thingp > &b) {
-                auto t1 = a.first;
-                auto t2 = a.second;
-                auto t3 = b.first;
-                auto t4 = b.second;
-                return t1->_priority + t2->_priority < t3->_priority + t4->_priority;
-              });
+    std::ranges::sort(sorted_pairs, [](const std::pair< Thingp, Thingp > &a, const std::pair< Thingp, Thingp > &b) {
+      auto t1 = a.first;
+      auto t2 = a.second;
+      auto t3 = b.first;
+      auto t4 = b.second;
+      return t1->_priority + t2->_priority < t3->_priority + t4->_priority;
+    });
 
-    if (0) {
+    if (false) {
       for (auto a_pair : sorted_pairs) {
         auto a = a_pair.first;
         auto b = a_pair.second;
@@ -340,8 +337,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       level_thing_pair_temperature_handle(g, v, l, a, b);
     }
 
-    for (auto i = 0; i < (int) things.size(); i++) {
-      auto t              = things[ i ];
+    for (auto t : things) {
       t->tick_temperature = v->tick;
     }
   }

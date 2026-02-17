@@ -38,11 +38,7 @@ bool thing_on_same_level_as_player(Gamep g, Levelsp v, Thingp t)
   }
 
   auto t_level = game_level_get(g, v, t->level_num);
-  if (t_level != player_level) {
-    return false;
-  }
-
-  return true;
+  return t_level == player_level;
 }
 
 //

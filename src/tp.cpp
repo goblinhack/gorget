@@ -218,12 +218,12 @@ void tp_fini(void)
   tp_vec.clear();
   tp_name_map.clear();
 
-  for (auto c = 0; c < MONST_GROUP_ENUM_MAX; c++) {
-    tp_monst_vec[ c ].clear();
+  for (auto &c : tp_monst_vec) {
+    c.clear();
   }
 
-  for (auto f = 0; f < THING_FLAG_ENUM_MAX; f++) {
-    tp_flag_vec[ f ].clear();
+  for (auto &f : tp_flag_vec) {
+    f.clear();
   }
 }
 
@@ -400,8 +400,7 @@ Tpp tp_variant(ThingFlag f, int variant)
 {
   TRACE_NO_INDENT();
 
-  for (auto i = 0; i < (int) tp_flag_vec[ f ].size(); i++) {
-    auto tp = tp_flag_vec[ f ][ i ];
+  for (auto tp : tp_flag_vec[ f ]) {
     if (tp_variant_get(tp) == variant) {
       return tp;
     }

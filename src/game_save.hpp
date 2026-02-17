@@ -259,7 +259,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
 std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
 {
   TRACE_NO_INDENT();
-  uint32_t serialized_size = (uint32_t) (sizeof(Game));
+  auto serialized_size = (uint32_t) (sizeof(Game));
   out << bits(my.t.version);
   out << bits(serialized_size);
 

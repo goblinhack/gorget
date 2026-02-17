@@ -299,14 +299,14 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       }
 
       if (! g_opt_tests) {
-        if (0) {
+        if (false) {
           if (tp == tp_player) {
-            if (1) {
+            if (true) {
               if (! thing_spawn(g, v, l, tp_random(is_trap), at + spoint(1, 0))) {
                 return false;
               }
             }
-            if (1) {
+            if (true) {
               if (! thing_spawn(g, v, l, tp_random(is_treasure), at + spoint(2, 0))) {
                 return false;
               }

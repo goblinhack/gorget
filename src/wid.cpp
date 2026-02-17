@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <ranges>
+
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_command.hpp"
@@ -136,10 +138,7 @@ Wid::~Wid(void) { oldptr(MTYPE_WID, this); }
 //
 [[nodiscard]] static bool wid_safe(void)
 {
-  if (! wid_init_done || wid_exiting || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
-    return false;
-  }
-  return true;
+  return ! (! wid_init_done || wid_exiting || g_dying || g_quitting || (g_thread_id != MAIN_THREAD));
 }
 
 bool wid_init(void)
@@ -1544,7 +1543,7 @@ color wid_get_color(Widp w, wid_color which)
 {
   TRACE_NO_INDENT();
 
-  uint32_t          mode = (__typeof__(mode)) wid_get_mode(w); // for c++, no enum walk
+  auto              mode = wid_get_mode(w); // for c++, no enum walk
   wid_options_menu *cfg  = &w->cfg[ mode ];
 
   if (cfg->color_set[ which ]) {
@@ -1572,7 +1571,7 @@ int wid_get_style(Widp w)
 {
   TRACE_NO_INDENT();
 
-  uint32_t          mode = (__typeof__(mode)) wid_get_mode(w); // for c++, no enum walk
+  auto              mode = wid_get_mode(w); // for c++, no enum walk
   wid_options_menu *cfg  = &w->cfg[ mode ];
 
   if (cfg->style_set) {
@@ -1765,7 +1764,7 @@ static void wid_tree_attach(Widp w)
   }
 
   auto result = root->insert(std::make_pair(w->key, w));
-  if (result.second == false) {
+  if (! result.second) {
     CROAK("Wid insert name [%s] failed", wid_get_name(w).c_str());
   }
 
@@ -1798,7 +1797,7 @@ static void wid_tree_insert(Widp w)
   }
 
   auto result = root->insert(std::make_pair(w->key, w));
-  if (result.second == false) {
+  if (! result.second) {
     CROAK("Wid insert name [%s] failed", wid_get_name(w).c_str());
   }
 
@@ -1821,7 +1820,7 @@ static void wid_tree_global_unsorted_insert(Widp w)
 
   w->tree_global_key = key;
   auto result        = root->insert(std::make_pair(w->tree_global_key, w));
-  if (result.second == false) {
+  if (! result.second) {
     CROAK("Wid insert name [%s] tree_global failed", wid_get_name(w).c_str());
   }
 
@@ -1846,7 +1845,7 @@ static void wid_tree2_unsorted_insert(Widp w)
 
   w->tree2_key = ++wid_unique_key;
   auto result  = root->insert(std::make_pair(w->tree2_key, w));
-  if (result.second == false) {
+  if (! result.second) {
     CROAK("Wid insert name [%s] tree2 failed", wid_get_name(w).c_str());
   }
 
@@ -1871,7 +1870,7 @@ static void wid_tree4_wids_being_destroyed_insert(Widp w)
 
   w->tree4_key = ++wid_unique_key;
   auto result  = root->insert(std::make_pair(w->tree4_key, w));
-  if (result.second == false) {
+  if (! result.second) {
     CROAK("Wid insert name [%s] tree4 failed", wid_get_name(w).c_str());
   }
 
@@ -1896,7 +1895,7 @@ static void wid_tree5_tick_wids_insert(Widp w)
 
   w->tree5_key = ++wid_unique_key;
   auto result  = root->insert(std::make_pair(w->tree5_key, w));
-  if (result.second == false) {
+  if (! result.second) {
     CROAK("Wid insert name [%s] tree5 failed", wid_get_name(w).c_str());
   }
 
@@ -2010,7 +2009,7 @@ static void wid_tree5_tick_wids_remove(Widp w)
   root->erase(w->tree5_key);
 
   w->in_tree5_tick_wids = nullptr;
-  w->on_tick            = 0;
+  w->on_tick            = nullptr;
 }
 
 //
@@ -2169,7 +2168,7 @@ static void wid_destroy_immediate(Gamep g_maybe_null, Widp w)
   for (auto x = 0; x < TERM_WIDTH; x++) {
     for (auto y = 0; y < TERM_HEIGHT; y++) {
       if (wid_on_screen_at[ x ][ y ] == w) {
-        wid_on_screen_at[ x ][ y ] = static_cast< Widp >(0);
+        wid_on_screen_at[ x ][ y ] = static_cast< Widp >(nullptr);
       }
     }
   }
@@ -2834,8 +2833,8 @@ void wid_set_first_focus(Gamep g)
 
   Widp best {};
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+    auto w = iter.second;
     if (wid_ignore_for_focus(w)) {
       continue;
     }
@@ -2905,8 +2904,8 @@ void wid_set_top_focus(Gamep g)
 
   Widp best {};
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+    auto w = iter.second;
     if (wid_ignore_for_focus(w)) {
       continue;
     }
@@ -2991,8 +2990,8 @@ static void wid_set_last_focus(Gamep g)
 
   Widp best {};
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+    auto w = iter.second;
     if (wid_ignore_for_focus(w)) {
       continue;
     }
@@ -3038,8 +3037,8 @@ static void wid_set_next_focus(Gamep g)
     return;
   }
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+    auto w = iter.second;
 
     if (wid_ignore_for_focus(w)) {
       continue;
@@ -3092,8 +3091,8 @@ static void wid_set_prev_focus(Gamep g)
     return;
   }
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+    auto w = iter.second;
 
     if (wid_ignore_for_focus(w)) {
       continue;
@@ -3660,7 +3659,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
           }
 
           command_handle(g, wid_get_text(w), &updatedtext, false /* show ambiguous */, true /* show complete */,
-                         false /* execute command */, 0 /* context */);
+                         false /* execute command */, nullptr /* context */);
 
           if (! updatedtext.empty()) {
             wid_set_text(w, updatedtext);
@@ -3684,7 +3683,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
             wid_set_text(w->next, entered2);
 
             if (! command_handle(g, entered, &updatedtext, true /* show ambiguous */, false /* show complete */,
-                                 true /* execute command */, 0 /* context */)) {
+                                 true /* execute command */, nullptr /* context */)) {
               return true;
             }
 
@@ -3775,7 +3774,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
               case '?' :
                 if (w == wid_console_input_line) {
                   command_handle(g, wid_get_text(w), &updatedtext, true /* show ambiguous */,
-                                 false /* show complete */, false /* execute command */, 0 /* context */);
+                                 false /* show complete */, false /* execute command */, nullptr /* context */);
 
                   if (! updatedtext.empty()) {
                     wid_set_text(w, updatedtext);
@@ -4353,8 +4352,8 @@ static Widp wid_joy_button_handler(Gamep g, int x, int y)
 {
   TRACE_NO_INDENT();
 
-  for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-    auto w = iter->second;
+  for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+    auto w = iter.second;
 
     if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       continue;
@@ -4509,9 +4508,8 @@ void wid_joy_button(Gamep g, int x, int y)
     }
 
     return;
-  } else {
-    wid_fake_joy_button(g, x, y);
   }
+  wid_fake_joy_button(g, x, y);
 
   if (wid_get_moveable(w)) {
     wid_set_mode(w, WID_MODE_ACTIVE);
@@ -4553,8 +4551,8 @@ static Widp wid_key_down_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         // CON("  focus is locked.");
@@ -4572,8 +4570,8 @@ static Widp wid_key_down_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         // CON("  focus is locked.");
@@ -4620,8 +4618,8 @@ static Widp wid_key_up_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
@@ -4637,8 +4635,8 @@ static Widp wid_key_up_handler(Gamep g, int x, int y)
   }
 
   {
-    for (auto iter = wid_top_level.rbegin(); iter != wid_top_level.rend(); ++iter) {
-      auto c = iter->second;
+    for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
+      auto c = iter.second;
 
       if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
@@ -5056,7 +5054,8 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     // Always render. Not hidden yet.
     //
     return;
-  } else if (hidden) {
+  }
+  if (hidden) {
     //
     // Hidden or parent is hidden.
     //
@@ -5320,9 +5319,9 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     }
   }
 
-  for (auto iter = w->children_display_sorted.begin(); iter != w->children_display_sorted.end(); ++iter) {
+  for (auto &iter : w->children_display_sorted) {
 
-    auto child = iter->second;
+    auto child = iter.second;
 
     uint8_t child_updated_scissors = false;
 
@@ -5364,7 +5363,7 @@ void wid_sanity_check(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (0) {
+  if (false) {
     CON("wid counts");
     CON("----------");
     CON("wid_top_level                %d", (int) wid_top_level.size());
@@ -5461,8 +5460,8 @@ void wid_display_all(Gamep g)
   wid_total_count = 0;
 
   auto wid_top_level_copy = wid_top_level;
-  for (auto iter = wid_top_level_copy.begin(); iter != wid_top_level_copy.end(); ++iter) {
-    auto w = iter->second;
+  for (auto &iter : wid_top_level_copy) {
+    auto w = iter.second;
 
     if (w->parent) {}
 
@@ -5473,7 +5472,7 @@ void wid_display_all(Gamep g)
 #if 0
 auto last = wid_total_count;
 #endif
-    wid_display(g, w, false /* disable_scissors */, 0 /* updated_scissors */, true);
+    wid_display(g, w, false /* disable_scissors */, nullptr /* updated_scissors */, true);
 #if 0
 printf("%s %d\n", wid_name(w).c_str(), wid_total_count - last);
 #endif
@@ -5556,11 +5555,7 @@ bool wid_is_always_hidden(const Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->always_hidden) {
-    return true;
-  }
-
-  return false;
+  return w->always_hidden != 0;
 }
 
 void wid_move_to_pct(Gamep g, Widp w, float x, float y)

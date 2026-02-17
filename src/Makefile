@@ -84,10 +84,34 @@ $(eval $(BUILD_DIR)/$(call obj_name,$x): $x ;\
 $(TARGET_GAME): $(OBJ_FILES)
 	cd $(BUILD_DIR); $(CC) $(OBJECTS) $(LDLIBS) $(LDFLAGS) -o $(TARGET_GAME); $(DSYM)
 
+#####################################################
+# to show options:
+# clang-tidy -checks=* -list-checks
+#####################################################
 tidy:
-	for src in $(CPP_3RD_PARTY_SOURCES) ; do \
+	for src in $(CPP_SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
-		clang-tidy -fix -checks="-*,bugprone-sizeof-expression,cppcoreguidelines-no-malloc,misc-redundant-expression,modernize-loop-convert,modernize-use-auto,modernize-use-nullptr,modernize-use-default-member-init,modernize-use-equals-default,modernize-use-equals-delete,modernize-use-nullptr,readability-else-after-return,readability-else-after-return,readability-redundant-member-init,readability-redundant-member-init,readability-simplify-boolean-expr" -header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
+		clang-tidy -fix -checks="-*,\
+			bugprone-sizeof-expression,\
+			cppcoreguidelines-no-malloc,\
+			misc-redundant-expression,\
+			modernize-loop-convert,\
+			modernize-use-auto,\
+			modernize-avoid-c-arrays,\
+			modernize-use-bool-literals,\
+			modernize-use-nullptr,\
+			modernize-use-default-member-init,\
+			modernize-use-equals-default,\
+			modernize-use-equals-delete,\
+			modernize-use-nullptr,\
+			modernize-use-nullptr,\
+			modernize-use-ranges,\
+			readability-use-std-min-max,\
+			readability-*,\
+			readability-else-after-return,\
+			readability-redundant-member-init,\
+			readability-simplify-boolean-expr" \
+			-header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done
 	@echo "Done"
 

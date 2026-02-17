@@ -211,7 +211,7 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   //
   t->id = id.a.val;
 
-  if (0) {
+  if (false) {
     LOG("Thing alloc %08" PRIX32 //
         " (level: %" PRIu32      //
         " id: %08" PRIX32        //
@@ -369,7 +369,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
     v->level_select_id = 0;
   }
 
-  if (0) {
+  if (false) {
     THING_LOG(t, "free");
   }
 

@@ -96,7 +96,7 @@ void gl_fini_2d_mode(Gamep g)
 
 void gl_enter_2d_mode(Gamep g)
 {
-  if (0) {
+  if (false) {
     LOG("SDL: enter 2d mode");
   }
   TRACE_AND_INDENT();
@@ -151,7 +151,7 @@ void gl_enter_2d_mode(Gamep g)
 
 void gl_enter_2d_mode(Gamep g, int w, int h)
 {
-  if (0) {
+  if (false) {
     LOG("SDL: enter 2d mode %ux%u", w, h);
   }
   TRACE_AND_INDENT();
@@ -207,7 +207,7 @@ void gl_leave_2d_mode(Gamep g)
   if (! in_2d_mode) {
     return;
   }
-  if (0) {
+  if (false) {
     LOG("SDL: leave 2d mode");
   }
   in_2d_mode = false;
@@ -438,8 +438,8 @@ static void gl_fini_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   memset(g_fbo_tex_id, 0, SIZEOF(g_fbo_tex_id));
   memset(g_render_buf_id, 0, SIZEOF(g_render_buf_id));
 
-  for (auto i = 0; i < FBO_ENUM_MAX; i++) {
-    g_fbo_size[ i ] = isize(0, 0);
+  for (auto &i : g_fbo_size) {
+    i = isize(0, 0);
   }
 }
 
@@ -484,7 +484,7 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
     gl_init_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
     g_fbo_size[ i ] = isize(tex_width, tex_height);
 
-    if (0) {
+    if (false) {
       gl_enter_2d_mode(g, tex_width, tex_height);
       blit_fbo_bind(i);
       {
@@ -1484,10 +1484,10 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   //
   for (auto y = 0; y < LIGHT_PIXEL; y++) {
 
-    const float   texMaxY2 = (float) texMaxY + y * texDiffY;
-    const float   texMinY2 = (float) texMaxY + (y + 1) * texDiffY;
-    const GLshort pixMaxY2 = (GLshort) ((float) pixMaxY + (float) y * pixDiffY);
-    const GLshort pixMinY2 = (GLshort) ((float) pixMaxY + (float) (y + 1) * pixDiffY);
+    const float texMaxY2 = (float) texMaxY + y * texDiffY;
+    const float texMinY2 = (float) texMaxY + (y + 1) * texDiffY;
+    const auto  pixMaxY2 = (GLshort) ((float) pixMaxY + (float) y * pixDiffY);
+    const auto  pixMinY2 = (GLshort) ((float) pixMaxY + (float) (y + 1) * pixDiffY);
 
     for (auto x = 0; x < LIGHT_PIXEL; x++) {
 
@@ -1496,10 +1496,10 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
       uint8_t    g     = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
       uint8_t    b     = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
 
-      float   texMinX2 = (float) texMinX + x * texDiffX;
-      float   texMaxX2 = (float) texMinX + (x + 1) * texDiffX;
-      GLshort pixMinX2 = (GLshort) ((float) pixMinX + (float) x * pixDiffX);
-      GLshort pixMaxX2 = (GLshort) ((float) pixMinX + (float) (x + 1) * pixDiffX);
+      float texMinX2 = (float) texMinX + x * texDiffX;
+      float texMaxX2 = (float) texMinX + (x + 1) * texDiffX;
+      auto  pixMinX2 = (GLshort) ((float) pixMinX + (float) x * pixDiffX);
+      auto  pixMaxX2 = (GLshort) ((float) pixMinX + (float) (x + 1) * pixDiffX);
 
       gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2,
               pixMaxY2, r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a);

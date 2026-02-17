@@ -342,13 +342,11 @@ bool game_event_jump(Gamep g)
     player_state_change(g, v, l, PLAYER_STATE_PATH_REQUESTED);
     level_cursor_copy_mouse_path_to_player(g, v, l);
     return player_check_if_target_needs_move_confirm(g, v, l, v->cursor_at);
-  } else {
-    //
-    // Else, just jump, which cannot be done by mouse means unless it is
-    // obvious and the target is a chasm.
-    //
-    return player_jump(g, v, l, player, v->cursor_at);
-  }
+  } //
+  // Else, just jump, which cannot be done by mouse means unless it is
+  // obvious and the target is a chasm.
+  //
+  return player_jump(g, v, l, player, v->cursor_at);
 }
 
 bool game_event_help(Gamep g)

@@ -163,7 +163,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
     }
   }
 
-  if (0) {
+  if (false) {
     CON("-");
     CON("level %d at %u,%u", l->level_num, l->level_select_at.x, l->level_select_at.y);
   }
@@ -181,7 +181,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
       break;
     }
 
-    if (0) {
+    if (false) {
       CON("level %d -> next (look diagonally left at %u,%u)", l->level_num, p.x, p.y);
     }
 
@@ -206,7 +206,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
       break;
     }
 
-    if (0) {
+    if (false) {
       CON("level %d -> next (look diagonally right at %u,%u)", l->level_num, p.x, p.y);
     }
 
@@ -221,8 +221,8 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   // Get the next sequential level, in terms of level number. This is used for tests.
   //
   for (int y = 0; y < LEVEL_DOWN; y++) {
-    for (int x = 0; x < LEVEL_ACROSS; x++) {
-      LevelSelectCell *c = &s->data[ x ][ y ];
+    for (auto &x : s->data) {
+      LevelSelectCell *c = &x[ y ];
       if (! c->is_set) {
         continue;
       }
@@ -232,7 +232,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
         continue;
       }
 
-      if (0) {
+      if (false) {
         CON("level %d -> next %d (sequential)", l->level_num, cand->level_num);
       }
 
@@ -246,7 +246,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   if (l->level_num == v->level_count) {
     auto cand = game_level_get(g, v, 0);
     if (cand) {
-      if (0) {
+      if (false) {
         CON("level %d -> next (first level)", l->level_num);
       }
       level_out = cand;
@@ -259,7 +259,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   //
   tries = 0;
   while (tries++ < LEVEL_DOWN * LEVEL_ACROSS * 2) {
-    if (0) {
+    if (false) {
       CON("level %d -> next (random)", l->level_num);
     }
     spoint random_p(pcg_random_range(0, LEVEL_ACROSS), pcg_random_range(0, LEVEL_DOWN));
@@ -282,7 +282,7 @@ got_level:
   if (level_out) {
     l->level_num_next_set = true;
     l->level_num_next     = level_out->level_num;
-    if (0) {
+    if (false) {
       CON("level %d -> next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x,
           l->level_select_at.y);
     }
@@ -323,8 +323,8 @@ static void level_select_dump(Gamep g, Levelsp v, LevelSelect *s)
 
   for (int y = 0; y < LEVEL_DOWN; y++) {
     std::string out;
-    for (int x = 0; x < LEVEL_ACROSS; x++) {
-      out += s->data[ x ][ y ].is_set ? CHARMAP_FLOOR : CHARMAP_EMPTY;
+    for (auto &x : s->data) {
+      out += x[ y ].is_set ? CHARMAP_FLOOR : CHARMAP_EMPTY;
     }
     LOG("%s", out.c_str());
   }
@@ -399,8 +399,8 @@ static int level_select_count_levels(Gamep g, Levelsp v, LevelSelect *s)
   s->level_count = 0;
 
   for (int y = 0; y < LEVEL_DOWN; y++) {
-    for (int x = 0; x < LEVEL_ACROSS; x++) {
-      if (s->data[ x ][ y ].is_set) {
+    for (auto &x : s->data) {
+      if (x[ y ].is_set) {
         s->level_count++;
       }
     }
