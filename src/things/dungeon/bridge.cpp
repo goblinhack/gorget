@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_callstack.hpp"
 #include "my_level.hpp"
 #include "my_main.hpp"
@@ -43,7 +45,7 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
       chasm_count += level_is_chasm(g, v, l, p) ? 1 : 0;
     }
 
-    auto max_count = std::max(std::max(lava_count, water_count), chasm_count);
+    auto max_count = std::max({lava_count, water_count, chasm_count});
     if (max_count != 0) {
       if (max_count == chasm_count) {
         if (! level_is_chasm(g, v, l, t)) {

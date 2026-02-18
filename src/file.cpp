@@ -13,6 +13,7 @@
 #include <cstdarg>
 #include <cstring>
 #include <ctime>
+#include <print>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -182,7 +183,7 @@ unsigned char *file_io_read(const char *filename, int *out_len)
 
   file = fopen(filename, "rb");
   if (file == nullptr) {
-    fprintf(MY_STDERR, "Failed to open file \"%s\" for reading: %s\n", filename, strerror(errno));
+    std::println(MY_STDERR, "Failed to open file \"{}\" for reading: {}", filename, strerror(errno));
     return nullptr;
   }
 
@@ -190,33 +191,33 @@ unsigned char *file_io_read(const char *filename, int *out_len)
    * Get the file size.
    */
   if (fseek(file, 0, SEEK_END) != 0) {
-    fprintf(MY_STDERR, "Failed to seek end of file \"%s\": %s\n", filename, strerror(errno));
+    std::println(MY_STDERR, "Failed to seek end of file \"{}\": {}", filename, strerror(errno));
     fclose(file);
     return nullptr;
   }
 
   len = (unsigned int) ftell(file);
   if (len == -1) {
-    fprintf(MY_STDERR, "Failed to get size of file \"%s\": %s\n", filename, strerror(errno));
+    std::println(MY_STDERR, "Failed to get size of file \"{}\": {}", filename, strerror(errno));
     fclose(file);
     return nullptr;
   }
 
   if (fseek(file, 0, SEEK_SET) != 0) {
-    fprintf(MY_STDERR, "Failed to seek begin of file \"%s\": %s\n", filename, strerror(errno));
+    std::println(MY_STDERR, "Failed to seek begin of file \"{}\": {}", filename, strerror(errno));
     fclose(file);
     return nullptr;
   }
 
   buffer = (unsigned char *) mymalloc(len + SIZEOF((char) '\0'), "file read");
   if (buffer == nullptr) {
-    fprintf(MY_STDERR, "Failed to alloc mem for file \"%s\": %s\n", filename, strerror(errno));
+    std::println(MY_STDERR, "Failed to alloc mem for file \"{}\": {}", filename, strerror(errno));
     fclose(file);
     return nullptr;
   }
 
   if (! static_cast< bool >(fread(buffer, len, 1, file))) {
-    fprintf(MY_STDERR, "Failed to read file \"%s\": %s\n", filename, strerror(errno));
+    std::println(MY_STDERR, "Failed to read file \"{}\": {}", filename, strerror(errno));
     fclose(file);
     return nullptr;
   }

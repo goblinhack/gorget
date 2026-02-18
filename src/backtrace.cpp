@@ -32,6 +32,7 @@
 #include <iostream>
 #include <memory>
 #include <mutex>
+#include <print>
 
 static std::recursive_mutex backtrace_mutex;
 
@@ -349,7 +350,7 @@ void backtrace_dump(FILE *fp)
 {
   backtrace_mutex.lock();
   auto bt = backtrace_string();
-  fprintf(fp, "%s", bt.c_str());
+  std::print(fp, "{}", bt);
   backtrace_mutex.unlock();
 }
 
@@ -357,7 +358,7 @@ void backtrace_dump(void)
 {
   backtrace_mutex.lock();
   auto bt = backtrace_string();
-  fprintf(MY_STDERR, "%s", bt.c_str());
+  std::print(MY_STDERR, "{}", bt);
   wid_console_log(bt);
   backtrace_mutex.unlock();
 }

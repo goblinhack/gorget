@@ -17,6 +17,7 @@
 
 #include <cstdlib>
 #include <mutex>
+#include <print>
 #include <sys/stat.h>
 
 extern Game *game;
@@ -163,7 +164,7 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
     //
     // Could be a different thread also crashing.
     //
-    fprintf(stderr, "Nested dying loop, exiting\n");
+    std::println(stderr, "Nested dying loop, exiting");
     exit(1);
   }
   g_dying = true;
@@ -189,10 +190,10 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
   vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
 
   if (clean) {
-    fprintf(stderr, "%s\n", buf);
+    std::println(stderr, "{}", buf);
   } else {
     if (MY_STDERR != stderr) {
-      fprintf(MY_STDERR, "%s\n", buf);
+      std::println(MY_STDERR, "{}", buf);
     }
     error_message(g, buf);
   }

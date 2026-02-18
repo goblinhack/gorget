@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <numbers>
 
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
@@ -101,7 +102,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
   }
 
   if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
-    auto jump_height = (int) ((sin(PI * t_maybe_null->thing_dt)) * (float) dh);
+    auto jump_height = (int) ((sin(std::numbers::pi_v< float > * t_maybe_null->thing_dt)) * (float) dh);
     tl->y -= jump_height;
     br->y -= jump_height;
   }
@@ -264,7 +265,7 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   blit_flush();
   glPushMatrix();
   glTranslatef(mid.x, mid.y, 0);
-  float ang = t->angle * (180.0F / RAD_180);
+  float ang = t->angle * (180.0F / std::numbers::pi_v< float >);
   glRotatef(ang, 0.0F, 0.0F, 1.0F);
   glTranslatef(-mid.x, -mid.y, 0);
   thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);

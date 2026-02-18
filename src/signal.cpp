@@ -20,6 +20,7 @@
 #include <unistd.h>
 
 #include <cassert>
+#include <print>
 #ifndef _WIN32
 #include <sys/wait.h>
 #endif
@@ -206,7 +207,7 @@ void crash_handler(int sig)
   static bool crashed;
 
   if (crashed) {
-    fprintf(stderr, "\nNested crash. Signal %d(%s)\n", sig, signal_str(sig));
+    std::println(stderr, "\nNested crash. Signal {}({})", sig, signal_str(sig));
     callstack_dump(stderr);
     backtrace_dump(stderr);
     return;
@@ -214,7 +215,7 @@ void crash_handler(int sig)
 
   crashed = true;
 
-  fprintf(stderr, "\nCrashed. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
+  std::println(stderr, "\nCrashed. Signal {}({}). Disabling signal handlers...", sig, signal_str(sig));
 
 #ifdef SIGSEGV
   signal(SIGSEGV, nullptr);
@@ -247,7 +248,7 @@ void crash_handler(int sig)
 
 void ctrlc_handler(int sig)
 {
-  fprintf(stderr, "\n\nInterrupted. Signal %d(%s). Disabling signal handlers...\n", sig, signal_str(sig));
+  std::println(stderr, "\n\nInterrupted. Signal {}({}). Disabling signal handlers...", sig, signal_str(sig));
   callstack_dump(stderr);
   backtrace_dump(stderr);
 
@@ -273,8 +274,8 @@ void ctrlc_handler(int sig)
   signal(SIGINT, nullptr);
 #endif
 
-  fprintf(stderr, "\nInterrupted. Cleaning up...\n");
-  fprintf(stderr, "---------------------------\n");
+  std::println(stderr, "\nInterrupted. Cleaning up...");
+  std::println(stderr, "---------------------------");
 
   DIE_CLEAN("Interrupted");
 }

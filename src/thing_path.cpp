@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <print>
+
 #include "my_level.hpp"
 
 //
@@ -18,12 +20,12 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
 
   auto at = thing_at(t);
   if (debug) {
-    printf("start (player %d,%d)\n", at.x, at.y);
+    std::println("start (player {},{})", at.x, at.y);
     for (auto p : path) {
-      printf("(%d,%d), ", p.x, p.y);
+      std::print("({},{}), ", p.x, p.y);
     }
-    printf("\n");
-    printf("\n");
+    std::println("");
+    std::println("");
   }
 
   //
@@ -127,9 +129,9 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
 
       if (debug) {
         for (auto p : path) {
-          printf("(%d,%d), ", p.x, p.y);
+          std::print("({},{}), ", p.x, p.y);
         }
-        printf("\n");
+        std::println("");
       }
 
       auto p  = path[ i ];
@@ -215,11 +217,11 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
   }
 
   if (debug) {
-    printf("final (player %d,%d)\n", at.x, at.y);
+    std::println("final (player {},{})", at.x, at.y);
     for (auto p : path) {
-      printf("(%d,%d), ", p.x, p.y);
+      std::print("({},{}), ", p.x, p.y);
     }
-    printf("\n");
-    printf("\n");
+    std::println("");
+    std::println("");
   }
 }

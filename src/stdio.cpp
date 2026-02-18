@@ -9,6 +9,7 @@
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
+#include <print>
 
 //
 // Remap stdout to a file of our choosing.
@@ -61,7 +62,7 @@ FILE *redirect_stdout(void)
     // Last resort
     //
     if (g_log_stdout == nullptr) {
-      fprintf(stderr, "Failed to create stdout log file \"%s\" for thread %d, error: %s\n", out.c_str(), g_thread_id,
+      std::println(stderr, "Failed to create stdout log file \"{}\" for thread {}, error: {}", out, g_thread_id,
               strerror(errno));
       g_log_stdout = stdout;
     }
@@ -121,7 +122,7 @@ FILE *redirect_stderr(void)
     // Last resort
     //
     if (g_log_stderr == nullptr) {
-      fprintf(stderr, "Failed to create stderr log file \"%s\" for thread %d, error: %s\n", out.c_str(), g_thread_id,
+      std::println(stderr, "Failed to create stderr log file \"{}\" for thread {}, error: {}", out, g_thread_id,
               strerror(errno));
       g_log_stderr = stderr;
     }

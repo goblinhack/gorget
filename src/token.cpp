@@ -7,6 +7,7 @@
 #include "my_token.hpp"
 
 #include <cstring>
+#include <print>
 
 static class Tokens *tokens_parse(const char *input, class Tokens *tokens)
 {
@@ -149,15 +150,15 @@ void tokens_print(class Tokens *tokens)
   TRACE_NO_INDENT();
   uint32_t cnt;
 
-  printf("tokens %u: ", tokens->cnt);
+  std::print("tokens {}: ", tokens->cnt);
   cnt = 0;
 
   while (cnt < tokens->cnt) {
-    printf("[%s] ", tokens->args[ cnt ]);
+    std::print("[{}] ", tokens->args[ cnt ]);
     cnt++;
   }
 
-  printf("\n");
+  std::println("");
 }
 
 void tokens_print_to(class Tokens *tokens, char *output, int output_size)

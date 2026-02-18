@@ -9,6 +9,7 @@
 #include <cstring>
 
 #include <algorithm>
+#include <print>
 #include <utility>
 
 static const int MAP_LEVEL_BLOB_CENTERING = MAP_WIDTH / 4;
@@ -18,32 +19,32 @@ void cave_dump(Gamep g, Cave *c)
   uint8_t x;
   uint8_t y;
 
-  printf("+");
+  std::print("+");
   for (x = 0; x < MAP_WIDTH; x++) {
-    printf("-");
+    std::print("-");
   }
-  printf("+");
-  printf("\n");
+  std::print("+");
+  std::println("");
 
   for (y = 0; y < MAP_HEIGHT; y++) {
-    printf("|");
+    std::print("|");
     for (x = 0; x < MAP_WIDTH; x++) {
       if (static_cast< bool >(c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ])) {
-        printf("x");
+        std::print("x");
       } else {
-        printf(" ");
+        std::print(" ");
       }
     }
-    printf("|");
-    printf("\n");
+    std::print("|");
+    std::println("");
   }
 
-  printf("+");
+  std::print("+");
   for (x = 0; x < MAP_WIDTH; x++) {
-    printf("-");
+    std::print("-");
   }
-  printf("+");
-  printf("\n");
+  std::print("+");
+  std::println("");
 }
 
 //

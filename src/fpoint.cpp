@@ -7,6 +7,7 @@
 #include "my_math.hpp"
 
 #include <cmath>
+#include <numbers>
 
 fpoint operator+(fpoint const &a, fpoint const &b) { return fpoint(a.x + b.x, a.y + b.y); }
 fpoint operator-(fpoint const &a, fpoint const &b) { return fpoint(a.x - b.x, a.y - b.y); }
@@ -63,7 +64,7 @@ float angle_radians(const fpoint &p)
     }
     return (float) RAD_360 + theta;
   }
-  return (float) RAD_180 - theta;
+  return std::numbers::pi_v<float> - theta;
 }
 
 fpoint rotate_radians(float angle, const fpoint &p, const fpoint &O)

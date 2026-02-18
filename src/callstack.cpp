@@ -2,6 +2,7 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <print>
 #include <utility>
 
 #include "my_callstack.hpp"
@@ -32,14 +33,14 @@ std::string callstack_string(void)
 void callstack_dump(FILE *fp)
 {
   auto bt = callstack_string();
-  fprintf(fp, "%s", bt.c_str());
-  fprintf(fp, "\n");
+  std::print(fp, "{}", bt);
+  std::println(fp, "");
 }
 
 void callstack_dump(void)
 {
   auto bt = callstack_string();
-  fprintf(MY_STDERR, "%s", bt.c_str());
+  std::print(MY_STDERR, "{}", bt);
   wid_console_log(bt);
-  fprintf(MY_STDERR, "\n");
+  std::println(MY_STDERR, "");
 }

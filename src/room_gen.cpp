@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <print>
 
 #include "my_callstack.hpp"
 #include "my_cave.hpp"
@@ -70,17 +71,17 @@ static void room_gen_dump(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  fprintf(grid->out, "  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,\n");
+  std::println(grid->out, "  room_add(g, CHANCE_NORMAL, ROOM_FLAG_CHECK_EXITS, __FUNCTION__, __LINE__,");
 
   for (int y = 0; y < MAP_HEIGHT; y++) {
-    fprintf(grid->out, "           /* line */ (const char *) \"");
+    std::print(grid->out, "           /* line */ (const char *) \"");
     for (auto &x : grid->data) {
-      fprintf(grid->out, "%c", x[ y ]);
+      std::print(grid->out, "{}", x[ y ]);
     }
-    fprintf(grid->out, "\",\n");
+    std::println(grid->out, "\",");
   }
-  fprintf(grid->out, "           /* end */ nullptr);\n");
-  fprintf(grid->out, "\n");
+  std::println(grid->out, "           /* end */ nullptr);");
+  std::println(grid->out, "");
 }
 
 //
@@ -90,17 +91,17 @@ static void room_gen_room_only_dump(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  fprintf(grid->out, "  room_add(g, CHANCE_NORMAL, NO_FLAGS, __FUNCTION__, __LINE__,\n");
+  std::println(grid->out, "  room_add(g, CHANCE_NORMAL, NO_FLAGS, __FUNCTION__, __LINE__,");
 
   for (int y = grid->tl.y; y <= grid->br.y; y++) {
-    fprintf(grid->out, "           /* line */ (const char *) \"");
+    std::print(grid->out, "           /* line */ (const char *) \"");
     for (int x = grid->tl.x; x <= grid->br.x; x++) {
-      fprintf(grid->out, "%c", grid->data[ x ][ y ]);
+      std::print(grid->out, "{}", grid->data[ x ][ y ]);
     }
-    fprintf(grid->out, "\",\n");
+    std::println(grid->out, "\",");
   }
-  fprintf(grid->out, "           /* end */ nullptr);\n");
-  fprintf(grid->out, "\n");
+  std::println(grid->out, "           /* end */ nullptr);");
+  std::println(grid->out, "");
 }
 
 static void room_gen_clear(Gamep g, RoomGen *grid)
@@ -611,27 +612,27 @@ static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const
     CROAK("could not write to %s", f.c_str());
   }
 
-  fprintf(out, "//\n");
-  fprintf(out, "// Copyright goblinhack@gmail.com\n");
-  fprintf(out, "//\n");
-  fprintf(out, "\n");
-  fprintf(out, "#include \"my_callstack.hpp\"\n");
-  fprintf(out, "#include \"my_charmap.hpp\"\n");
-  fprintf(out, "#include \"my_level.hpp\"\n");
-  fprintf(out, "\n");
-  fprintf(out, "//\n");
-  fprintf(out, "// %d rooms of type '%s' from seed '%s'\n", n, name, game_seed_name_get(g));
-  fprintf(out, "//\n");
-  fprintf(out, "void rooms_%s(Gamep g)\n", name);
-  fprintf(out, "{\n");
-  fprintf(out, "  TRACE_NO_INDENT();\n");
-  fprintf(out, "\n");
+  std::println(out, "//");
+  std::println(out, "// Copyright goblinhack@gmail.com");
+  std::println(out, "//");
+  std::println(out, "");
+  std::println(out, "#include \"my_callstack.hpp\"");
+  std::println(out, "#include \"my_charmap.hpp\"");
+  std::println(out, "#include \"my_level.hpp\"");
+  std::println(out, "");
+  std::println(out, "//");
+  std::println(out, "// {} rooms of type '{}' from seed '{}'", n, name, game_seed_name_get(g));
+  std::println(out, "//");
+  std::println(out, "void rooms_{}(Gamep g)", name);
+  std::println(out, "{{");
+  std::println(out, "  TRACE_NO_INDENT();");
+  std::println(out, "");
 
   for (auto r = 0; r < n; r++) {
     (void) rooms_dump_one(g, out, which);
   }
 
-  fprintf(out, "}\n");
+  std::println(out, "}}");
 
   fclose(out);
 }

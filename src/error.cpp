@@ -19,6 +19,7 @@
 #include <cstring>
 #include <ctime>
 #include <mutex>
+#include <print>
 #include <strings.h>
 #include <unistd.h>
 
@@ -78,13 +79,13 @@ void error_message(Gamep g, const std::string &error_msg)
 {
   if (! g_opt_tests) {
     if (MY_STDOUT != stdout) {
-      fprintf(MY_STDOUT, "%s\n", error_msg.c_str());
+      std::println(MY_STDOUT, "{}", error_msg);
     }
   }
 
-  fprintf(stderr, "%s\n", error_msg.c_str());
+  std::println(stderr, "{}", error_msg);
   if (MY_STDERR != stderr) {
-    fprintf(MY_STDERR, "%s\n", error_msg.c_str());
+    std::println(MY_STDERR, "{}", error_msg);
   }
 
   fflush(stdout);

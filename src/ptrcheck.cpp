@@ -14,6 +14,7 @@
 #include <cstring>
 #include <iostream>
 #include <mutex>
+#include <print>
 #include <vector>
 
 static std::mutex ptrcheck_mutex;
@@ -321,10 +322,10 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
 
     auto *a = pc->allocated_by;
     if (a != nullptr) {
-      fprintf(stderr, "PTRCHECK: Currently allocated at %p \"%s\" (%u bytes) at %s:%s line %u at %s\n", pc->ptr,
+      std::println(stderr, "PTRCHECK: Currently allocated at {} \"{}\" ({} bytes) at {}:{} line {} at {}", pc->ptr,
               pc->what, pc->size, a->file, a->func, a->line, a->ts);
 
-      fprintf(stderr, "%s", a->bt.c_str());
+      std::print(stderr, "{}", a->bt);
     }
 
     //
@@ -358,7 +359,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
 
   ring_ptr_size = ringbuf_current_size[ mtype ];
 
-  fprintf(stderr, "vvvvv Pointer history for %p vvvvv (max %u ptrs saved)", ptr, ring_ptr_size);
+  std::print(stderr, "vvvvv Pointer history for {} vvvvv (max {} ptrs saved)", ptr, ring_ptr_size);
 
   //
   // Walk back through the ring buffer.
@@ -370,14 +371,14 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
     if (pc->ptr == ptr) {
       auto *a = pc->allocated_by;
       if (a != nullptr) {
-        fprintf(stderr, "PTRCHECK: %p allocated at \"%s\" (%u bytes) at %s:%s line %u at %s\n%s\n", ptr, pc->what,
-                pc->size, a->file, a->func, a->line, a->ts, a->bt.c_str());
+        std::println(stderr, "PTRCHECK: {} allocated at \"{}\" ({} bytes) at {}:{} line {} at {}\n{}", ptr, pc->what,
+                pc->size, a->file, a->func, a->line, a->ts, a->bt);
       }
 
       auto *f = pc->freed_by;
       if (f != nullptr) {
-        fprintf(stderr, "PTRCHECK: %p freed at %s:%s line %u at %s\n%s\n", ptr, f->file, f->func, f->line, f->ts,
-                f->bt.c_str());
+        std::println(stderr, "PTRCHECK: {} freed at {}:{} line {} at {}\n{}", ptr, f->file, f->func, f->line, f->ts,
+                f->bt);
       }
 
       //
@@ -415,7 +416,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
     }
   }
 
-  fprintf(stderr, "^^^^^ End of pointer history for %p ^^^^^", ptr);
+  std::print(stderr, "^^^^^ End of pointer history for {} ^^^^^", ptr);
   return nullptr;
 }
 
@@ -490,7 +491,7 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
   //
   // We may be about to crash. Complain!
   //
-  fprintf(stderr, "%s%p %s:%s line %u, see below logs", unknown_ptr_warning, ptr, file, func, line);
+  std::print(stderr, "{}{} {}:{} line {}, see below logs", unknown_ptr_warning, ptr, file, func, line);
   ptrcheck_describe_pointer(mtype, ptr);
   CROAK("%s%p %s:%s line %u, see above logs", unknown_ptr_warning, ptr, file, func, line);
   return nullptr;
@@ -699,10 +700,10 @@ void ptrcheck_leak_print(int mtype)
 
       auto *a = pc->allocated_by;
       if (a != nullptr) {
-        fprintf(stderr, "PTRCHECK: Leak %p \"%s\" (%u bytes) at %s:%s line %u at %s\n%s\n", pc->ptr, pc->what,
-                pc->size, a->file, a->func, a->line, a->ts, a->bt.c_str());
+        std::println(stderr, "PTRCHECK: Leak {} \"{}\" ({} bytes) at {}:{} line {} at {}\n{}", pc->ptr, pc->what,
+                pc->size, a->file, a->func, a->line, a->ts, a->bt);
       } else {
-        fprintf(stderr, "PTRCHECK: Leak \"%s\" (%u bytes)\n", pc->what, pc->size);
+        std::println(stderr, "PTRCHECK: Leak \"{}\" ({} bytes)", pc->what, pc->size);
       }
 
       //

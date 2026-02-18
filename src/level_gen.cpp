@@ -18,6 +18,7 @@
 #include <array>
 #include <functional>
 #include <map>
+#include <print>
 #include <thread>
 #include <unordered_map>
 #include <utility>
@@ -2587,32 +2588,32 @@ static void cave_dump(Gamep g, class LevelGen *l)
   uint8_t x;
   uint8_t y;
 
-  printf("+");
+  std::print("+");
   for (x = 0; x < MAP_WIDTH; x++) {
-    printf("-");
+    std::print("-");
   }
-  printf("+");
-  printf("\n");
+  std::print("+");
+  std::println("");
 
   for (y = 0; y < MAP_HEIGHT; y++) {
-    printf("|");
+    std::print("|");
     for (x = 0; x < MAP_WIDTH; x++) {
       if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0U) {
-        printf("x");
+        std::print("x");
       } else {
-        printf(" ");
+        std::print(" ");
       }
     }
-    printf("|");
-    printf("\n");
+    std::print("|");
+    std::println("");
   }
 
-  printf("+");
+  std::print("+");
   for (x = 0; x < MAP_WIDTH; x++) {
-    printf("-");
+    std::print("-");
   }
-  printf("+");
-  printf("\n");
+  std::print("+");
+  std::println("");
 }
 
 //

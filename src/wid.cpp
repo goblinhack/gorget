@@ -27,6 +27,7 @@
 #endif
 
 #include <algorithm>
+#include <print>
 #include <ranges>
 
 //
@@ -205,8 +206,8 @@ void wid_dump(Widp w, int depth)
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
-  printf("\n          %*s dump: [%s] text [%s] %d,%d to @%d,%d %d children", depth * 2, "", wid_name(w).c_str(),
-         wid_get_text(w).c_str(), tlx, tly, brx, bry, wid_count(w, depth));
+  std::print("\n          {:>{}} dump: [{}] text [{}] {},{} to @{},{} {} children", "", depth * 2, wid_name(w),
+         wid_get_text(w), tlx, tly, brx, bry, wid_count(w, depth));
 
 #if 1
   for (auto &iter : w->children_display_sorted) {
