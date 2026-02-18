@@ -267,7 +267,7 @@ public:
   bool load_snapshot(void);
   bool load(int slot);
   bool load(const std::string & /*file_to_load*/, class Game &target);
-  bool save_config(void) const;
+  bool save_config(void);
   bool save_select(void);
   bool save_snapshot(void);
   bool save(int slot);
@@ -483,7 +483,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   TRACE_NO_INDENT();
   auto *s            = &v->level_select.data[ level_at.x ][ level_at.y ];
   s->level_num       = l->level_num;
-  s->is_set          = 1u;
+  s->is_set          = 1U;
   l->level_select_at = level_at;
 
   //

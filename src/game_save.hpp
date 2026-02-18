@@ -680,7 +680,7 @@ bool Game::save_snapshot(void)
   return ret;
 }
 
-bool Game::save_config(void) const
+bool Game::save_config(void)
 {
   TRACE_NO_INDENT();
   auto          filename = saved_dir + "config";
