@@ -411,11 +411,11 @@ uint8_t file_exists_and_is_newer_than(const char *filename1, const char *filenam
   // fprintf(stdout, "%s/%s\n", filename1, filename2);
 
   if (stat(filename1, &buf1) < 0) {
-    return 0u;
+    return 0U;
   }
 
   if (stat(filename2, &buf2) < 0) {
-    return 0u;
+    return 0U;
   }
 
   delta = difftime(buf1.st_mtime, buf2.st_mtime);

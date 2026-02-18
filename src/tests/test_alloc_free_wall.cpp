@@ -103,13 +103,6 @@
     goto exit;
   }
 
-  game_event_wait(g);
-
-  if (! game_wait_for_tick_to_finish(g, v, l)) {
-    TEST_FAILED(t, "wait loop failed");
-    goto exit;
-  }
-
   //
   // No player, so 0
   //

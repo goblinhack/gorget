@@ -50,7 +50,7 @@
 
   for (auto tries = 0; tries < 20; tries++) {
     player_fire(g, v, l, 1, 0, tp_fireball);
-    game_event_wait(g);
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;
@@ -61,7 +61,7 @@
   for (auto tries = 0; tries < 1; tries++) {
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
-    game_event_wait(g);
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;

@@ -151,7 +151,7 @@ static int level_no_exit_room;
 //
 static std::array< class LevelGen *, LEVEL_MAX > levels_generated = {};
 
-static void level_gen_dump(Gamep, class LevelGen *, const char *msg = nullptr);
+static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg = nullptr);
 
 class Cell
 {
@@ -2177,7 +2177,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
           case CHARMAP_TREASURE :
           case CHARMAP_FOLIAGE :
           case CHARMAP_GRASS :
-            if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0u) {
+            if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0U) {
               c = '_';
             }
             break;
@@ -2596,7 +2596,7 @@ static void cave_dump(Gamep g, class LevelGen *l)
   for (y = 0; y < MAP_HEIGHT; y++) {
     printf("|");
     for (x = 0; x < MAP_WIDTH; x++) {
-      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0u) {
+      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0U) {
         printf("x");
       } else {
         printf(" ");
@@ -2666,7 +2666,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
 
   for (x = 0; x < MAP_WIDTH; x++) {
     for (y = 0; y < MAP_HEIGHT; y++) {
-      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0u) {
+      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0U) {
 
         switch (l->data[ x ][ y ].c) {
           case CHARMAP_BARREL :
@@ -2740,7 +2740,7 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
 
   for (x = 0; x < MAP_WIDTH; x++) {
     for (y = 0; y < MAP_HEIGHT; y++) {
-      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0u) {
+      if (l->cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0U) {
         switch (l->data[ x ][ y ].c) {
           case CHARMAP_BARREL :
           case CHARMAP_BRAZIER :
@@ -4097,7 +4097,7 @@ static void level_gen_add_missing_keys_do(Gamep g, class LevelGen *l)
     for (int x = 1; x < MAP_WIDTH - 1; x++) {
       auto *r = l->data[ x ][ y ].room;
 
-      if ((r != nullptr) && ((r->flags & ROOM_FLAG_LOCKED) != 0u)) {
+      if ((r != nullptr) && ((r->flags & ROOM_FLAG_LOCKED) != 0U)) {
         continue;
       }
       if ((r != nullptr) && (l->room_entrance == r)) {
@@ -4225,7 +4225,7 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
     if ((r != nullptr) && (l->room_exit == r)) {
       continue;
     }
-    if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0u) {
+    if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0U) {
       continue;
     }
 
@@ -4260,7 +4260,7 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
       //
       // Only place telports on tiles between the entrance and exit
       //
-      if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0u) {
+      if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0U) {
         continue;
       }
 
@@ -4298,7 +4298,7 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
         //
         // Only place telports on tiles between the entrance and exit
         //
-        if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0u) {
+        if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0U) {
           continue;
         }
 
@@ -4326,7 +4326,7 @@ static void level_gen_add_missing_teleports(Gamep g, class LevelGen *l)
           //
           // Only place telports on tiles between the entrance and exit
           //
-          if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0u) {
+          if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0U) {
             continue;
           }
 
@@ -4384,7 +4384,7 @@ static void level_gen_add_doors_do(Gamep g, class LevelGen *l)
     if (r == nullptr) {
       continue;
     }
-    if ((r->flags & ROOM_FLAG_LOCKED) != 0u) {
+    if ((r->flags & ROOM_FLAG_LOCKED) != 0U) {
       continue;
     }
     if (l->room_entrance == r) {
@@ -4522,7 +4522,7 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
   // Mark this tile as on the main path
   //
   l->info.on_path_entrance_to_exit[ x ][ y ] = level_gen_tile_is_traversable(g, l, x, y) ? 1 : 0;
-  if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0u) {
+  if (l->info.on_path_entrance_to_exit[ x ][ y ] == 0U) {
     return;
   }
 
@@ -4566,7 +4566,7 @@ static void level_gen_mark_tiles_on_path_entrance_to_exit(Gamep g, class LevelGe
       return false;
     }
 
-    if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0u) {
+    if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0U) {
       return true;
     }
   }
@@ -4596,7 +4596,7 @@ static void level_gen_extend_bridges_do(Gamep g, class LevelGen *l, int x, int y
   //
   // Keep going until we reach a tile on the main path
   //
-  if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0u) {
+  if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0U) {
     return;
   }
 
@@ -4696,7 +4696,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
         continue;
       }
 
-      if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0u) {
+      if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0U) {
         continue;
       }
 
@@ -4855,7 +4855,7 @@ static void level_gen_test_flood(Gamep g, class LevelGen *l)
           //
           // Only place telports on tiles between the entrance and exit
           //
-          if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0u) {
+          if (l->info.on_path_entrance_to_exit[ x ][ y ] != 0U) {
             l->data[ x ][ y ].c = CHARMAP_CORRIDOR;
           }
           break;
@@ -5175,7 +5175,7 @@ void level_gen_test(Gamep g)
     // Allocate space for the levels
     //
     auto *v = levels_memory_alloc(g);
-    game_levels_set(g, v);
+    (void) game_levels_set(g, v);
 
     //
     // Generate the maximum number of levels

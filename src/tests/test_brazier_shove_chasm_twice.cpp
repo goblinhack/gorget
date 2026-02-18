@@ -117,7 +117,7 @@
     goto exit;
   }
 
-  game_wait_for_tick_to_finish(g, v, l1);
+  TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
 
   //
   // Wait for smoke to clear
@@ -127,8 +127,8 @@
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
-    game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l1);
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+    TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
   }
 
   if (! (result = level_match_contents(g, v, l1, t, w, h, expect_1a.c_str()))) {
@@ -155,7 +155,7 @@
     goto exit;
   }
 
-  game_wait_for_tick_to_finish(g, v, l1);
+  TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
 
   if (! (result = level_match_contents(g, v, l1, t, w, h, expect_1b.c_str()))) {
     level_dump(g, v, l1, w, h);

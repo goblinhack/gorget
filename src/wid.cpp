@@ -108,8 +108,8 @@ static void wid_tree_detach(Widp w);
 static void wid_tree_insert(Widp w);
 static void wid_tree_attach(Widp w);
 
-void WID_LOG(Widp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void WID_DBG(Widp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void WID_LOG(Widp w, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void WID_DBG(Widp w, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
 //
 // Child sort priority
@@ -689,13 +689,13 @@ Widp wid_get_scrollbar_horiz(Widp w)
   return w->scrollbar_horiz;
 }
 
-void wid_set_ignore_events(Widp w, uint8_t val)
+void wid_set_ignore_events(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->ignore_events = val;
 }
 
-void wid_set_ignore_scroll_events(Widp w, uint8_t val)
+void wid_set_ignore_scroll_events(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->ignore_scroll_events = val;
@@ -1156,13 +1156,13 @@ void wid_set_name(Widp w, std::string name)
 #endif
 }
 
-void wid_set_ignore_for_mouse_down(Widp w, uint8_t val)
+void wid_set_ignore_for_mouse_down(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->ignore_for_mouse_down = val;
 }
 
-void wid_set_debug(Widp w, uint8_t val)
+void wid_set_debug(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->debug = val;
@@ -1213,7 +1213,7 @@ bool wid_get_received_input(Widp w)
   return static_cast< bool >(w->received_input);
 }
 
-void wid_set_received_input(Widp w, uint8_t val)
+void wid_set_received_input(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->received_input = val;
@@ -1243,7 +1243,7 @@ bool wid_get_focusable(Widp w)
   return static_cast< bool >(w->focus_order);
 }
 
-void wid_set_focusable(Widp w, uint8_t val)
+void wid_set_focusable(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->focus_order = val;
@@ -1255,7 +1255,7 @@ bool wid_get_show_cursor(Widp w)
   return static_cast< bool >(w->show_cursor);
 }
 
-void wid_set_show_cursor(Widp w, uint8_t val)
+void wid_set_show_cursor(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->show_cursor = val;
@@ -1267,7 +1267,7 @@ bool wid_get_do_not_raise(Widp w)
   return static_cast< bool >(w->do_not_raise);
 }
 
-void wid_set_do_not_raise(Widp w, uint8_t val)
+void wid_set_do_not_raise(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->do_not_raise = val;
@@ -1279,7 +1279,7 @@ bool wid_get_do_not_lower(Widp w)
   return static_cast< bool >(w->do_not_lower);
 }
 
-void wid_set_do_not_lower(Widp w, uint8_t val)
+void wid_set_do_not_lower(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->do_not_lower = val;
@@ -1296,7 +1296,7 @@ bool wid_get_moveable(Widp w)
   return false;
 }
 
-void wid_set_moveable(Gamep g, Widp w, uint8_t val)
+void wid_set_moveable(Gamep g, Widp w, bool val)
 {
   TRACE_NO_INDENT();
 
@@ -1309,7 +1309,7 @@ void wid_set_moveable(Gamep g, Widp w, uint8_t val)
   }
 
   w->moveable     = val;
-  w->moveable_set = 1u;
+  w->moveable_set = 1U;
 
   wid_set_moveable_horiz(g, w, val);
   wid_set_moveable_vert(g, w, val);
@@ -1326,7 +1326,7 @@ bool wid_get_moveable_horiz(Widp w)
   return false;
 }
 
-void wid_set_moveable_horiz(Gamep g, Widp w, uint8_t val)
+void wid_set_moveable_horiz(Gamep g, Widp w, bool val)
 {
   TRACE_NO_INDENT();
 
@@ -1335,7 +1335,7 @@ void wid_set_moveable_horiz(Gamep g, Widp w, uint8_t val)
   }
 
   w->moveable_horiz     = val;
-  w->moveable_horiz_set = 1u;
+  w->moveable_horiz_set = 1U;
 }
 
 bool wid_get_moveable_vert(Widp w)
@@ -1349,7 +1349,7 @@ bool wid_get_moveable_vert(Widp w)
   return false;
 }
 
-void wid_set_moveable_vert(Gamep g, Widp w, uint8_t val)
+void wid_set_moveable_vert(Gamep g, Widp w, bool val)
 {
   TRACE_NO_INDENT();
 
@@ -1358,7 +1358,7 @@ void wid_set_moveable_vert(Gamep g, Widp w, uint8_t val)
   }
 
   w->moveable_vert     = val;
-  w->moveable_vert_set = 1u;
+  w->moveable_vert_set = 1U;
 }
 
 bool wid_get_moveable_bounded(Widp w)
@@ -1372,7 +1372,7 @@ bool wid_get_moveable_bounded(Widp w)
   return false;
 }
 
-void wid_set_moveable_bounded(Gamep g, Widp w, uint8_t val)
+void wid_set_moveable_bounded(Gamep g, Widp w, bool val)
 {
   TRACE_NO_INDENT();
 
@@ -1381,7 +1381,7 @@ void wid_set_moveable_bounded(Gamep g, Widp w, uint8_t val)
   }
 
   w->moveable_bounded     = val;
-  w->moveable_bounded_set = 1u;
+  w->moveable_bounded_set = 1U;
 }
 
 bool wid_get_moveable_no_user_scroll(Widp w)
@@ -1395,7 +1395,7 @@ bool wid_get_moveable_no_user_scroll(Widp w)
   return false;
 }
 
-void wid_set_moveable_no_user_scroll(Gamep g, Widp w, uint8_t val)
+void wid_set_moveable_no_user_scroll(Gamep g, Widp w, bool val)
 {
   TRACE_NO_INDENT();
 
@@ -1404,7 +1404,7 @@ void wid_set_moveable_no_user_scroll(Gamep g, Widp w, uint8_t val)
   }
 
   w->moveable_no_user_scroll     = val;
-  w->moveable_no_user_scroll_set = 1u;
+  w->moveable_no_user_scroll_set = 1U;
 }
 
 bool wid_get_text_lhs(Widp w)
@@ -1413,7 +1413,7 @@ bool wid_get_text_lhs(Widp w)
   return static_cast< bool >(w->text_lhs);
 }
 
-void wid_set_text_lhs(Widp w, uint8_t val)
+void wid_set_text_lhs(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->text_lhs = val;
@@ -1425,10 +1425,10 @@ bool wid_get_text_rhs(Widp w)
   return static_cast< bool >(w->text_rhs);
 }
 
-void wid_set_text_rhs(Widp w, uint8_t val)
+void wid_set_text_rhs(Widp w, bool val)
 {
   TRACE_NO_INDENT();
-  w->text_rhs = 1u;
+  w->text_rhs = 1U;
 }
 
 bool wid_get_text_centerx(Widp w)
@@ -1437,7 +1437,7 @@ bool wid_get_text_centerx(Widp w)
   return static_cast< bool >(w->text_centerx);
 }
 
-void wid_set_text_centerx(Widp w, uint8_t val)
+void wid_set_text_centerx(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->text_centerx = val;
@@ -1449,7 +1449,7 @@ bool wid_get_text_top(Widp w)
   return static_cast< bool >(w->text_top);
 }
 
-void wid_set_text_top(Widp w, uint8_t val)
+void wid_set_text_top(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->text_top = val;
@@ -1461,7 +1461,7 @@ bool wid_get_text_bot(Widp w)
   return static_cast< bool >(w->text_bot);
 }
 
-void wid_set_text_bot(Widp w, uint8_t val)
+void wid_set_text_bot(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->text_bot = val;
@@ -1473,7 +1473,7 @@ bool wid_get_text_centery(Widp w)
   return static_cast< bool >(w->text_centery);
 }
 
-void wid_set_text_centery(Widp w, uint8_t val)
+void wid_set_text_centery(Widp w, bool val)
 {
   TRACE_NO_INDENT();
   w->text_centery = val;
@@ -1491,19 +1491,6 @@ bool wid_get_text_pos(Widp w, int *x, int *y)
   }
 
   return false;
-}
-
-void wid_set_text_pos(Gamep g, Widp w, uint8_t val, int x, int y)
-{
-  TRACE_NO_INDENT();
-
-  if (g == nullptr) {
-    return;
-  }
-
-  w->text_pos.x   = x;
-  w->text_pos.y   = y;
-  w->text_pos_set = val;
 }
 
 void wid_set_tile(int depth, Widp w, Tilep tile)
@@ -1594,7 +1581,7 @@ int wid_get_style(Widp w)
 void wid_set_style(Widp w, int style)
 {
   w->cfg[ wid_get_mode(w) ].style     = style;
-  w->cfg[ wid_get_mode(w) ].style_set = 1u;
+  w->cfg[ wid_get_mode(w) ].style_set = 1U;
 }
 
 //
@@ -1605,7 +1592,7 @@ void wid_set_color(Widp w, wid_color col, color val)
   TRACE_NO_INDENT();
 
   w->cfg[ wid_get_mode(w) ].colors[ col ]    = val;
-  w->cfg[ wid_get_mode(w) ].color_set[ col ] = 1u;
+  w->cfg[ wid_get_mode(w) ].color_set[ col ] = 1U;
 }
 
 void wid_set_focus(Gamep g, Widp w)
@@ -1643,13 +1630,13 @@ void wid_unset_focus(Gamep g)
 void wid_set_shape_square(Widp w)
 {
   TRACE_NO_INDENT();
-  w->square = 1u;
+  w->square = 1U;
 }
 
 void wid_set_shape_none(Widp w)
 {
   TRACE_NO_INDENT();
-  w->square = 0u;
+  w->square = 0U;
 }
 
 void wid_set_active(Gamep g, Widp w)
@@ -2034,7 +2021,7 @@ static Widp wid_new(Gamep g, Widp parent)
 
   wid_set_mode(w, WID_MODE_NORMAL);
 
-  w->visible = 1u;
+  w->visible = 1U;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
   WID_DBG(w, "new");
 
@@ -2053,7 +2040,7 @@ static Widp wid_new(Gamep g)
   wid_tree2_unsorted_insert(w);
   wid_tree_global_unsorted_insert(w);
 
-  w->visible = 1u;
+  w->visible = 1U;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
   WID_DBG(w, "new");
 
@@ -2201,7 +2188,7 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
     }
   }
 
-  w->being_destroyed = 1u;
+  w->being_destroyed = 1U;
   wid_tree4_wids_being_destroyed_insert(w);
 
   if (wid_focus == w) {
@@ -2445,7 +2432,7 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
   }
 
   wid_set_on_mouse_down(w, wid_scroll_trough_mouse_down);
-  wid_set_on_mouse_motion(w, wid_scroll_trough_mouse_motion);
+  wid_set_on_mouse_motion(w, wid_scroll_motion);
   wid_set_shape_square(w);
 
   wid_set_mode(w, WID_MODE_OVER);
@@ -2465,7 +2452,7 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
 //
 // Initialize a wid with basic settings
 //
-static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrollbar_owner, uint8_t vertical)
+static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrollbar_owner, bool vertical)
 {
   TRACE_NO_INDENT();
 
@@ -2501,16 +2488,16 @@ static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scro
     wid_set_color(w, WID_COLOR_BG, c);
   }
 
-  wid_set_moveable(g, w, 1u);
-  wid_set_moveable_bounded(g, w, 1u);
+  wid_set_moveable(g, w);
+  wid_set_moveable_bounded(g, w);
 
   if (static_cast< bool >(vertical)) {
-    wid_set_moveable_vert(g, w, 1u);
-    wid_set_moveable_horiz(g, w, 0u);
+    wid_set_moveable_vert(g, w);
+    wid_set_moveable_horiz(g, w, false);
     scrollbar_owner->scrollbar_vert = w;
   } else {
-    wid_set_moveable_horiz(g, w, 1u);
-    wid_set_moveable_vert(g, w, 0u);
+    wid_set_moveable_horiz(g, w);
+    wid_set_moveable_vert(g, w, false);
     scrollbar_owner->scrollbar_horiz = w;
   }
 
@@ -2576,7 +2563,7 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
   {
     fpoint tl(0, 0);
     fpoint br(1, 1);
-    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 1u);
+    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 1U);
     wid_set_pos_pct(scrollbar, tl, br);
 
     wid_update_internal(g, scrollbar);
@@ -2587,8 +2574,8 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
     wid_set_mode(scrollbar, WID_MODE_NORMAL);
     wid_set_style(scrollbar, UI_WID_STYLE_VERT_DARK);
 
-    trough->is_scrollbar_vert_trough = 1u;
-    scrollbar->is_scrollbar_vert     = 1u;
+    trough->is_scrollbar_vert_trough = 1U;
+    scrollbar->is_scrollbar_vert     = 1U;
 
     return scrollbar;
   }
@@ -2638,7 +2625,7 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
   {
     fpoint tl(0, 0);
     fpoint br(1, 1);
-    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 0u);
+    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 0U);
     wid_set_pos_pct(scrollbar, tl, br);
 
     wid_update_internal(g, scrollbar);
@@ -2646,8 +2633,8 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
     wid_visible(g, scrollbar);
     wid_set_style(scrollbar, UI_WID_STYLE_HORIZ_SCROLL_LIGHT);
 
-    trough->is_scrollbar_horiz_trough = 1u;
-    scrollbar->is_scrollbar_horiz     = 1u;
+    trough->is_scrollbar_horiz_trough = 1U;
+    scrollbar->is_scrollbar_horiz     = 1U;
 
     return scrollbar;
   }
@@ -3157,8 +3144,8 @@ void wid_visible(Gamep g, Widp w)
     return;
   }
 
-  w->visible = 1u;
-  w->hidden  = 0u;
+  w->visible = 1U;
+  w->hidden  = 0U;
 
   std::vector< Widp > worklist;
   for (auto &iter : w->children_display_sorted) {
@@ -3192,8 +3179,8 @@ void wid_hide(Gamep g, Widp w)
     return;
   }
 
-  w->hidden  = 1u;
-  w->visible = 0u;
+  w->hidden  = 1U;
+  w->visible = 0U;
 
   if (wid_over == w) {
     wid_mouse_over_end(g);
@@ -3429,7 +3416,7 @@ static void wid_update_internal(Gamep g, Widp w)
   // First time around, initialize the wid.
   //
   if (! static_cast< bool >(w->first_update)) {
-    w->first_update = 1u;
+    w->first_update = 1U;
 
     if (w->parent == nullptr) {
       //
@@ -3584,7 +3571,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
   origlen  = (uint32_t) origtext.length();
 
   if (! static_cast< bool >(w->received_input)) {
-    wid_set_received_input(w, 1u);
+    wid_set_received_input(w);
     w->cursor = (uint32_t) origtext.length();
   }
 
@@ -3644,8 +3631,8 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
             return true;
           }
 
-          command_handle(g, wid_get_text(w), &updatedtext, 0u /* show ambiguous */, 1u /* show complete */,
-                         0u /* execute command */, nullptr /* context */);
+          command_handle(g, wid_get_text(w), &updatedtext, 0U /* show ambiguous */, 1U /* show complete */,
+                         0U /* execute command */, nullptr /* context */);
 
           if (! updatedtext.empty()) {
             wid_set_text(w, updatedtext);
@@ -3668,8 +3655,8 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
             wid_scroll_text(w);
             wid_set_text(w->next, entered2);
 
-            if (command_handle(g, entered, &updatedtext, 1u /* show ambiguous */, 0u /* show complete */,
-                               1u /* execute command */, nullptr /* context */)
+            if (command_handle(g, entered, &updatedtext, 1U /* show ambiguous */, 0U /* show complete */,
+                               1U /* execute command */, nullptr /* context */)
                 == 0) {
               return true;
             }
@@ -3760,8 +3747,8 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
               case SDLK_ESCAPE :
               case '?' :
                 if (w == wid_console_input_line) {
-                  command_handle(g, wid_get_text(w), &updatedtext, 1u /* show ambiguous */, 0u /* show complete */,
-                                 0u /* execute command */, nullptr /* context */);
+                  command_handle(g, wid_get_text(w), &updatedtext, 1U /* show ambiguous */, 0U /* show complete */,
+                                 0U /* execute command */, nullptr /* context */);
 
                   if (! updatedtext.empty()) {
                     wid_set_text(w, updatedtext);
@@ -3949,7 +3936,7 @@ static Widp wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
         continue;
       }
 
-      Widp closer_match = wid_key_down_handler_at(g, child, x, y, 1u /* strict */);
+      Widp closer_match = wid_key_down_handler_at(g, child, x, y, 1U /* strict */);
       if (closer_match != nullptr) {
         return closer_match;
       }
@@ -3964,7 +3951,7 @@ static Widp wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
         continue;
       }
 
-      Widp closer_match = wid_key_down_handler_at(g, child, x, y, 0u /* strict */);
+      Widp closer_match = wid_key_down_handler_at(g, child, x, y, 0U /* strict */);
       if (closer_match != nullptr) {
         return closer_match;
       }
@@ -4029,7 +4016,7 @@ static Widp wid_key_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
       continue;
     }
 
-    Widp closer_match = wid_key_up_handler_at(g, child, x, y, 1u /* strict */);
+    Widp closer_match = wid_key_up_handler_at(g, child, x, y, 1U /* strict */);
     if (closer_match != nullptr) {
       return closer_match;
     }
@@ -4042,7 +4029,7 @@ static Widp wid_key_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
       continue;
     }
 
-    Widp closer_match = wid_key_up_handler_at(g, child, x, y, 0u /* strict */);
+    Widp closer_match = wid_key_up_handler_at(g, child, x, y, 0U /* strict */);
     if (closer_match != nullptr) {
       return closer_match;
     }
@@ -4097,7 +4084,7 @@ static Widp wid_joy_button_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
       continue;
     }
 
-    Widp closer_match = wid_joy_button_handler_at(g, child, x, y, 1u /* strict */);
+    Widp closer_match = wid_joy_button_handler_at(g, child, x, y, 1U /* strict */);
     if (closer_match != nullptr) {
       return closer_match;
     }
@@ -4346,7 +4333,7 @@ static Widp wid_joy_button_handler(Gamep g, int x, int y)
       continue;
     }
 
-    w = wid_joy_button_handler_at(g, w, x, y, 0u /* strict */);
+    w = wid_joy_button_handler_at(g, w, x, y, 0U /* strict */);
     if (unlikely(! w)) {
       continue;
     }
@@ -4513,25 +4500,25 @@ static Widp wid_key_down_handler(Gamep g, int x, int y)
   Widp w {};
 
   // CON("key down.");
-  w = wid_key_down_handler_at(g, wid_focus, x, y, 1u /* strict */);
+  w = wid_key_down_handler_at(g, wid_focus, x, y, 1U /* strict */);
   if (w != nullptr) {
     // CON("%s %d.",to_cstring(w).c_str(),__LINE__);
     return w;
   }
 
-  w = wid_key_down_handler_at(g, wid_get_top_parent(wid_focus), x, y, 0u /* strict */);
+  w = wid_key_down_handler_at(g, wid_get_top_parent(wid_focus), x, y, 0U /* strict */);
   if (w != nullptr) {
     // CON("%s %d.",to_string(w).c_str(),__LINE__);
     return w;
   }
 
-  w = wid_key_down_handler_at(g, wid_over, x, y, 1u /* strict */);
+  w = wid_key_down_handler_at(g, wid_over, x, y, 1U /* strict */);
   if (w != nullptr) {
     // CON("%s %d.",to_string(w).c_str(),__LINE__);
     return w;
   }
 
-  w = wid_key_down_handler_at(g, wid_get_top_parent(wid_over), x, y, 0u /* strict */);
+  w = wid_key_down_handler_at(g, wid_get_top_parent(wid_over), x, y, 0U /* strict */);
   if (w != nullptr) {
     // CON("%s %d.",to_string(w).c_str(),__LINE__);
     return w;
@@ -4546,7 +4533,7 @@ static Widp wid_key_down_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_key_down_handler_at(g, c, x, y, 1u /* strict */);
+      c = wid_key_down_handler_at(g, c, x, y, 1U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -4565,7 +4552,7 @@ static Widp wid_key_down_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_key_down_handler_at(g, c, x, y, 0u /* strict */);
+      c = wid_key_down_handler_at(g, c, x, y, 0U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -4584,22 +4571,22 @@ static Widp wid_key_up_handler(Gamep g, int x, int y)
 
   Widp w {};
 
-  w = wid_key_up_handler_at(g, wid_focus, x, y, 1u /* strict */);
+  w = wid_key_up_handler_at(g, wid_focus, x, y, 1U /* strict */);
   if (w != nullptr) {
     return w;
   }
 
-  w = wid_key_up_handler_at(g, wid_get_top_parent(wid_focus), x, y, 0u /* strict */);
+  w = wid_key_up_handler_at(g, wid_get_top_parent(wid_focus), x, y, 0U /* strict */);
   if (w != nullptr) {
     return w;
   }
 
-  w = wid_key_up_handler_at(g, wid_over, x, y, 1u /* strict */);
+  w = wid_key_up_handler_at(g, wid_over, x, y, 1U /* strict */);
   if (w != nullptr) {
     return w;
   }
 
-  w = wid_key_up_handler_at(g, wid_get_top_parent(wid_over), x, y, 0u /* strict */);
+  w = wid_key_up_handler_at(g, wid_get_top_parent(wid_over), x, y, 0U /* strict */);
   if (w != nullptr) {
     return w;
   }
@@ -4612,7 +4599,7 @@ static Widp wid_key_up_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_key_up_handler_at(g, c, x, y, 1u /* strict */);
+      c = wid_key_up_handler_at(g, c, x, y, 1U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -4629,7 +4616,7 @@ static Widp wid_key_up_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_key_up_handler_at(g, c, x, y, 0u /* strict */);
+      c = wid_key_up_handler_at(g, c, x, y, 0U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -5097,7 +5084,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   }
 
   if (static_cast< bool >(w->disable_scissors)) {
-    disable_scissor = 1u;
+    disable_scissor = 1U;
   }
 
   //
@@ -5116,7 +5103,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     // their own scissors.
     //
     if (updated_scissors != nullptr) {
-      *updated_scissors = 1u;
+      *updated_scissors = 1U;
     }
 #if 0
 
@@ -5306,7 +5293,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
 
     auto *child = iter.second;
 
-    uint8_t child_updated_scissors = 0u;
+    uint8_t child_updated_scissors = 0U;
 
     wid_display(g, child, disable_scissor, &child_updated_scissors, clip);
 
@@ -5444,7 +5431,7 @@ void wid_display_all(Gamep g)
 #if 0
 auto last = wid_total_count;
 #endif
-    wid_display(g, w, 0u /* disable_scissors */, nullptr /* updated_scissors */, 1);
+    wid_display(g, w, 0U /* disable_scissors */, nullptr /* updated_scissors */, 1);
 #if 0
 printf("%s %d\n", wid_name(w).c_str(), wid_total_count - last);
 #endif

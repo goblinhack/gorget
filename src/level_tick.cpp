@@ -12,11 +12,11 @@
 #include "my_thing_inlines.hpp"
 #include "my_wids.hpp"
 
-static void level_tick_begin(Gamep, Levelsp, Levelp);
-static void level_tick_body(Gamep, Levelsp, Levelp, float dt, bool tick_is_about_to_end = false);
-static void level_tick_end(Gamep, Levelsp, Levelp);
-static void level_tick_idle(Gamep, Levelsp, Levelp);
-static void level_tick_check_running_time(Gamep, Levelsp, Levelp);
+static void level_tick_begin(Gamep g, Levelsp v, Levelp l);
+static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is_about_to_end = false);
+static void level_tick_end(Gamep g, Levelsp v, Levelp l);
+static void level_tick_idle(Gamep g, Levelsp v, Levelp l);
+static void level_tick_check_running_time(Gamep g, Levelsp v, Levelp l);
 
 //
 // Called at the end of the tick and then whenever needed, like at the end of an animation.

@@ -53,7 +53,7 @@ public:
   //
   std::vector< HiScore > hiscores;
 
-  void        add_new_hiscore(Gamep, int score, LevelNum level, const std::string &name, const std::string &reason);
+  void        add_new_hiscore(Gamep g, int score, LevelNum level, const std::string &name, const std::string &reason);
   bool        is_new_hiscore(int score);
   bool        is_new_highest_hiscore(int score);
   const char *place_str(int score);

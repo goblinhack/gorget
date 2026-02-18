@@ -120,7 +120,7 @@
       goto exit;
     }
 
-    game_wait_for_tick_to_finish(g, v, l1);
+    TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
   }
 
   TEST_PROGRESS(t);
@@ -128,8 +128,12 @@
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
-    game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l1);
+
+    //
+    // Player could be dead, so cannot wait
+    //
+    (void) game_event_wait(g);
+    TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
   }
 
   //

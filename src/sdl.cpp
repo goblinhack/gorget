@@ -156,7 +156,7 @@ int sdl_get_mouse(void)
 {
   TRACE_NO_INDENT();
 
-  if (wid_mouse_visible == 0) {
+  if (wid_mouse_visible == false) {
     return 0;
   }
 

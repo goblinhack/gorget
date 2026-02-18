@@ -81,7 +81,7 @@
       goto exit;
     }
     // level_dump(g, v, l, w, h);
-    game_event_wait(g);
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
     if (! game_wait_for_tick_to_finish(g, v, l)) {
       TEST_FAILED(t, "wait loop failed");
       goto exit;

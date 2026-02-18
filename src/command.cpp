@@ -343,10 +343,10 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
   /*
    * Check for ambiguous commands.
    */
-  matches = command_matches(g, input, expandedtext, 0u, 0u, execute_command, context);
+  matches = command_matches(g, input, expandedtext, 0U, 0U, execute_command, context);
   if (matches == 0) {
     CON(">" UI_IMPORTANT_FMT_STR "Unknown command: \"%s\"" UI_RESET_FMT "", input);
-    return 0u;
+    return 0U;
   }
 
   if (matches > 1) {
@@ -365,23 +365,23 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
         if (strcasecmp(input, expandedtext) == 0) {
           CON(">" UI_INFO_FMT_STR "Incomplete command, \"%s\"" UI_RESET_FMT ". Try:", input);
 
-          command_matches(g, input, expandedtext, 1u, show_complete, execute_command, context);
+          command_matches(g, input, expandedtext, 1U, show_complete, execute_command, context);
         }
       } else {
-        command_matches(g, input, expandedtext, 1u, show_complete, execute_command, context);
+        command_matches(g, input, expandedtext, 1U, show_complete, execute_command, context);
       }
     }
 
-    return 0u;
+    return 0U;
   }
 
   if ((! static_cast< bool >(execute_command)) && (matches == 1)) {
     CON(">" UI_INFO_FMT_STR "Incomplete command, \"%s\"" UI_RESET_FMT ". Try:", input);
 
-    command_matches(g, input, expandedtext, 1u, show_complete, execute_command, context);
+    command_matches(g, input, expandedtext, 1U, show_complete, execute_command, context);
   }
 
-  return 1u;
+  return 1U;
 }
 
 uint8_t command_handle(Gamep g, std::string input, std::string *expanded_text, uint8_t show_ambiguous,

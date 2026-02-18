@@ -286,8 +286,8 @@ public:
   void seed_clear(void);
   void seed_set(const char *seed = nullptr);
   void start_playing(void);
-  void state_change(GameState state, const std::string & /*why*/);
-  void state_reset(const std::string & /*why*/);
+  void state_change(GameState state, const std::string &why);
+  void state_reset(const std::string &why);
   void tick(void);
   void handle_game_request_to_remake_ui(void);
 

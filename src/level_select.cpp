@@ -800,7 +800,7 @@ void level_select_grid_of_empty_levels(Gamep g)
   TRACE_AND_INDENT();
 
   auto *v = levels_memory_alloc(g);
-  game_levels_set(g, v);
+  (void) game_levels_set(g, v);
   LevelSelect *s = &v->level_select;
 
   level_select_create(g, v, s);
@@ -1020,7 +1020,7 @@ void level_select_test(Gamep g)
   TRACE_NO_INDENT();
 
   auto *v = levels_memory_alloc(g);
-  game_levels_set(g, v);
+  (void) game_levels_set(g, v);
   LevelSelect *s = &v->level_select;
 
   level_select_create(g, v, s);

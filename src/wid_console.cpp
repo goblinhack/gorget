@@ -18,7 +18,7 @@ static int wid_console_inited;
 static int wid_console_commands_inited;
 static int wid_console_exiting;
 
-static void wid_console_wid_create(Gamep);
+static void wid_console_wid_create(Gamep g);
 
 Widp wid_console_container {};
 Widp wid_console_vert_scroll {};
@@ -215,7 +215,7 @@ static void wid_console_wid_create(Gamep g)
 
       wid_set_shape_none(child);
       wid_set_pos(child, tl, br);
-      wid_set_text_lhs(child, 1u);
+      wid_set_text_lhs(child);
 
       wid_set_prev(child, prev);
       prev = child;
@@ -223,7 +223,7 @@ static void wid_console_wid_create(Gamep g)
       if (row == 0) {
         wid_set_on_key_down(child, wid_console_receive_input);
 
-        wid_set_show_cursor(child, 1u);
+        wid_set_show_cursor(child);
         wid_set_name(child, "console input");
         wid_set_focusable(child, 1);
         wid_move_delta(g, child, 1, 0);
@@ -231,7 +231,7 @@ static void wid_console_wid_create(Gamep g)
 
         Widp prefix = wid_new_container(g, wid_console_container, "console final line");
         wid_set_pos(prefix, tl, br);
-        wid_set_text_lhs(prefix, 1u);
+        wid_set_text_lhs(prefix);
         wid_set_shape_none(prefix);
         wid_set_text(prefix, ">");
         wid_set_color(child, WID_COLOR_BG, COLOR_NONE);
@@ -253,7 +253,7 @@ static void wid_console_wid_create(Gamep g)
   wid_hide(g, wid_get_parent(wid_console_horiz_scroll));
   wid_hide(g, wid_console_window);
 
-  wid_set_ignore_scroll_events(wid_console_window, 1u);
+  wid_set_ignore_scroll_events(wid_console_window);
 
   wid_update(g, wid_console_window);
 }

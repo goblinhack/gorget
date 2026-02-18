@@ -30,7 +30,7 @@ static void wid_cfg_sound_destroy(Gamep g)
   CON("Reload config");
   if (local_g_config_changed) {
     local_g_config_changed = false;
-    game_load_config(g);
+    (void) game_load_config(g);
     sdl_config_update_all(g);
   }
   wid_cfg_sound_destroy(g);
@@ -238,7 +238,7 @@ void wid_cfg_sound_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1u);
+    wid_set_text_lhs(w);
     wid_set_text(w, "Effects");
   }
   {
@@ -286,7 +286,7 @@ void wid_cfg_sound_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1u);
+    wid_set_text_lhs(w);
     wid_set_text(w, "Music");
   }
   {

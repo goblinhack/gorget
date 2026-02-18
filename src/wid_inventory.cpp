@@ -225,7 +225,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_set_style(wid_inventory_window, UI_WID_STYLE_NORMAL);
     wid_set_on_key_down(wid_inventory_window, wid_inventory_key_down);
     wid_set_text(wid_inventory_window, "Inventory");
-    wid_set_text_top(wid_inventory_window, true);
+    wid_set_text_top(wid_inventory_window, 1u);
     wid_raise(g, wid_inventory_window);
   }
 
@@ -238,7 +238,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
     wid_set_text(w, UI_FMT_STR "Mouse select an item or press key a-z");
     wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_shape_none(w);
-    wid_set_text_centerx(w, true);
+    wid_set_text_centerx(w, 1u);
     y_at += 2;
   }
 
@@ -289,7 +289,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
       spoint tl(3, y_at);
       spoint br(6, y_at + button_height);
-      wid_set_text_lhs(w, true);
+      wid_set_text_lhs(w, 1u);
 
       wid_set_mode(w, WID_MODE_NORMAL);
       wid_set_color(w, WID_COLOR_TEXT_FG, GRAY50);
@@ -331,7 +331,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
         spoint tl(6, y_at);
         spoint br(button_width, y_at + button_height);
-        wid_set_text_lhs(w, true);
+        wid_set_text_lhs(w, 1u);
         wid_set_pos(w, tl, br);
         wid_set_text(w, s);
 

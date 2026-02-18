@@ -140,9 +140,9 @@ static const char key_char[ WID_KEYBOARD_DOWN ][ WID_KEYBOARD_ACROSS ] = {
 
 int wid_keyboard_visible;
 
-static void               wid_keyboard_destroy(Gamep, Widp w);
-static void               wid_keyboard_set_focus(Gamep, wid_keyboard_ctx *ctx, int focusx, int focusy);
-[[nodiscard]] static bool wid_keyboard_text_input_key_event(Gamep, Widp w, const SDL_Keysym *key);
+static void               wid_keyboard_destroy(Gamep g, Widp w);
+static void               wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, int focusy);
+[[nodiscard]] static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym *key);
 
 static void wid_keyboard_update_buttons(Gamep g, Widp w)
 {
@@ -762,7 +762,7 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, text);
-    wid_set_show_cursor(w, 1u);
+    wid_set_show_cursor(w);
     wid_set_on_key_down(w, wid_keyboard_text_input_key_event);
     wid_set_void_context(w, ctx);
     wid_set_style(w, UI_WID_STYLE_RED);

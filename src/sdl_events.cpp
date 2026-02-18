@@ -197,7 +197,7 @@ static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym 
   DBG2("SDL: Mouse: Moved to @%d,%d (rel %d,%d) state %d (actually at %d,%d)", event->motion.x, event->motion.y,
        event->motion.xrel, event->motion.yrel, sdl.mouse_down, mx, my);
 
-  wid_mouse_visible = 1;
+  wid_mouse_visible = true;
   sdl.mouse_tick++;
   if (! processed_mouse_motion_event) {
     wid_mouse_motion(g, mx, my, event->motion.xrel, event->motion.yrel, 0, 0);
@@ -219,7 +219,7 @@ static void __attribute__((noinline)) sdl_event_mousedown(Gamep g, SDL_Keysym *k
       sdl.mouse_down);
 
   auto now             = time_ms();
-  wid_mouse_visible    = 1;
+  wid_mouse_visible    = true;
   wid_mouse_two_clicks = (now - sdl.mouse_down_when < UI_MOUSE_DOUBLE_CLICK);
 
   wid_mouse_down(g, event->button.button, sdl.mouse_x, sdl.mouse_y);
@@ -330,7 +330,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         sdl.wheel_x = (int) ((float) sdl.wheel_x * accel);
         sdl.wheel_y = (int) ((float) sdl.wheel_y * accel);
 
-        wid_mouse_visible = 1;
+        wid_mouse_visible = true;
         sdl.mouse_tick++;
         if (! processed_mouse_motion_event) {
           wid_mouse_motion(g, sdl.mouse_x, sdl.mouse_y, 0, 0, -sdl.wheel_x, sdl.wheel_y);
@@ -358,17 +358,17 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         if (sdl.joy_axes[ 2 ] > sdl.joy_deadzone) {
           DBG("SDL: left fire");
           sdl.left_fire                               = 1;
-          sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = (uint8_t) 1;
+          sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = 1U;
         } else {
-          sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = (uint8_t) 0;
+          sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = 0U;
         }
 
         if (sdl.joy_axes[ 5 ] > sdl.joy_deadzone) {
           DBG("SDL: right fire");
           sdl.right_fire                               = 1;
-          sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = (uint8_t) 1;
+          sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = 1U;
         } else {
-          sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = (uint8_t) 0;
+          sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = 0U;
         }
 
         if ((sdl.right_fire != 0) || (sdl.left_fire != 0)) {
@@ -452,7 +452,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
       {
         sdl.event_count++;
         DBG("SDL: Joystick %d: Button %d pressed", event->jbutton.which, event->jbutton.button);
-        sdl.joy_buttons[ event->jbutton.button ] = (uint8_t) 1;
+        sdl.joy_buttons[ event->jbutton.button ] = 1U;
         sdl_get_mouse();
         wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
         break;
@@ -461,7 +461,7 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
       {
         sdl.event_count++;
         DBG("SDL: Joystick %d: Button %d released", event->jbutton.which, event->jbutton.button);
-        sdl.joy_buttons[ event->jbutton.button ] = (uint8_t) 0;
+        sdl.joy_buttons[ event->jbutton.button ] = 0U;
         break;
       }
     case SDL_CLIPBOARDUPDATE :

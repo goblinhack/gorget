@@ -30,7 +30,7 @@ MyIter::MyIter(Gamep g, Levelsp _v, int *out_iter, const char *_func, const unsi
     CROAK("%s:%u nested loop for iter %d", func, line, iter);
   }
 
-  v->in_iter[ iter ] = 1u;
+  v->in_iter[ iter ] = 1U;
 
   //
   // This is the iterator value we compare with things to check if they've been walked already.
@@ -58,7 +58,7 @@ MyIter::~MyIter()
   if (! static_cast< bool >(v->in_iter[ iter ])) {
     CROAK("%s:%u bad loop end for iter %d", func, line, iter);
   }
-  v->in_iter[ iter ] = 0u;
+  v->in_iter[ iter ] = 0U;
 
   g_iter--;
 

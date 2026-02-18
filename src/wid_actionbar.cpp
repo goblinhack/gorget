@@ -512,7 +512,7 @@ bool wid_actionbar_create_window(Gamep g)
     auto br = spoint(TERM_WIDTH, TERM_HEIGHT - 2);
 
     wid_actionbar = wid_new_window(g, "wid actionbar");
-    wid_set_ignore_scroll_events(wid_actionbar, 1u);
+    wid_set_ignore_scroll_events(wid_actionbar);
     wid_set_pos(wid_actionbar, tl, br);
     wid_set_style(wid_actionbar, box_highlight_style);
     wid_set_shape_none(wid_actionbar);

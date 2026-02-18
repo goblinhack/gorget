@@ -102,7 +102,7 @@
       goto exit;
     }
 
-    game_wait_for_tick_to_finish(g, v, l1);
+    TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l1), "failed to wait for tick to finish");
   }
 
   //
@@ -127,8 +127,8 @@
     TEST_LOG(t, "try: %d", tries);
     TRACE_NO_INDENT();
     // level_dump(g, v, l, w, h);
-    game_event_wait(g);
-    game_wait_for_tick_to_finish(g, v, l2);
+    TEST_ASSERT(t, game_event_wait(g), "failed to wait");
+    TEST_ASSERT(t, game_wait_for_tick_to_finish(g, v, l2), "failed to wait for tick to finish");
   }
 
   TEST_ASSERT(t, game_tick_get(g, v) == 7, "final tick counter value");

@@ -196,7 +196,7 @@ static void levels_memory_free(Gamep g, Levelsp v)
   myfree(v);
   oldptr(MTYPE_LEVELS, v);
 
-  game_levels_set(g, nullptr);
+  (void) game_levels_set(g, nullptr);
 }
 
 void levels_destroy(Gamep g, Levelsp v)
@@ -310,7 +310,11 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   }
 
   Level *old_level = game_level_get(g, v);
-  game_level_populate(g, v, level_num);
+  if (! game_level_populate(g, v, level_num)) {
+    TOPCON("The dungeon is still under construction and cannot be entered (BUG)");
+    return old_level;
+  }
+
   Level *new_level = game_level_get(g, v);
 
   verify(MTYPE_LEVELS, v);

@@ -32,9 +32,9 @@ public:
 
   void ray_pixel_line_draw(int16_t index, spoint p0, spoint p1);
   void ray_pixel_add(int16_t index, spoint p0, spoint p1);
-  void ray_lengths_precalculate(Gamep, Levelsp, Levelp);
-  void raycast_do(Gamep, Levelsp, Levelp);
-  void raycast_render(Gamep, Levelsp, Levelp);
+  void ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l);
+  void raycast_do(Gamep g, Levelsp v, Levelp l);
+  void raycast_render(Gamep g, Levelsp v, Levelp l);
 
   //
   // This is how far the light rays reach
@@ -356,8 +356,8 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, sp
   // Only apply color to the tile once
   //
   if (! static_cast< bool >(fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ])) {
-    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = 1u;
-    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = 1u;
+    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = 1U;
+    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = 1U;
     level_light_per_pixel_lighting(g, v, l, t, pov, tile);
   }
 }

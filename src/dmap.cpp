@@ -225,7 +225,7 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
   maxy--;
 
   do {
-    changed = 0u;
+    changed = 0U;
 
     for (y = miny; y <= maxy; y++) {
       for (x = minx; x <= maxx; x++) {
@@ -279,7 +279,7 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
 
         if (*e - lowest >= 2) {
           *e      = lowest + 1;
-          changed = 1u;
+          changed = 1U;
         }
       }
     }
@@ -364,7 +364,7 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
   maxy--;
 
   do {
-    changed = 0u;
+    changed = 0U;
 
     for (y = miny; y <= maxy; y++) {
       for (x = minx; x <= maxx; x++) {
@@ -443,7 +443,7 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
 
         if (*e - highest >= 2) {
           *e      = highest - 1;
-          changed = 1u;
+          changed = 1U;
         }
       }
     }

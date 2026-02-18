@@ -187,7 +187,7 @@ Tile::Tile(const class Tile *tile)
   all_tiles_array.push_back(this);
 }
 
-void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t height, uint32_t nargs,
+void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t height, int nargs,
                    const char *arr[])
 {
   TRACE_NO_INDENT();
@@ -206,7 +206,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
   pixel_size.w = width;
   pixel_size.h = height;
 
-  while ((nargs--) != false) {
+  while (nargs-- > 0) {
     std::string name = arr[ idx++ ];
 
     if (! name.empty()) {
@@ -274,7 +274,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
               printf("X");
 #endif
               if ((x1 < TILE_WIDTH_MAX) && (y1 < TILE_HEIGHT_MAX)) {
-                t->pix[ x1 ][ y1 ] = (uint8_t) 1;
+                t->pix[ x1 ][ y1 ] = 1U;
               }
             } else if (p.a > 0) {
 #ifdef ENABLE_DEBUG_TILE
@@ -324,7 +324,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
 }
 
 void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_width, uint32_t tile_height,
-                           uint32_t nargs, const char *arr[], int gl_mode)
+                           int nargs, const char *arr[], int gl_mode)
 {
   TRACE_NO_INDENT();
   Texp tex;
@@ -362,7 +362,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
   pixel_size.w = tile_width;
   pixel_size.h = tile_height;
 
-  while ((nargs--) != false) {
+  while (nargs-- > 0) {
     std::string name = arr[ idx++ ];
 
     if (! name.empty()) {
@@ -447,7 +447,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
               printf("X");
 #endif
               if ((x1 < TILE_WIDTH_MAX) && (y1 < TILE_HEIGHT_MAX)) {
-                t->pix[ x1 ][ y1 ] = (uint8_t) 1;
+                t->pix[ x1 ][ y1 ] = 1U;
               }
             } else if (p.a > 0) {
 #ifdef ENABLE_DEBUG_TILE
@@ -688,7 +688,7 @@ uint32_t tile_delay_ms(Tilep t)
   TRACE_NO_INDENT();
 #endif
 
-  if (t->delay_ms == false) {
+  if (! static_cast< bool >(t->delay_ms)) {
     return 5000;
   }
   return t->delay_ms;

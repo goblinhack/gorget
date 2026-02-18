@@ -21,7 +21,7 @@ Testp       test_load(const char       */*name_in*/);
 
 typedef bool (*test_callback_t)(Gamep, Testp);
 void test_callback_set(Testp /*test*/, test_callback_t /*callback*/);
-void tests_run(Gamep);
+void tests_run(Gamep g);
 
 #define TEST_FAILED(test, why)                                                                                       \
   {                                                                                                                  \
@@ -76,13 +76,13 @@ void tests_run(Gamep);
 void test_init(void);
 void test_fini(void);
 
-[[nodiscard]] Levelsp game_test_init(Gamep, Levelp * /*l_out*/, LevelNum /*level_num*/, int w, int h,
+[[nodiscard]] Levelsp game_test_init(Gamep, Levelp * out, LevelNum level_num, int w, int h,
                                      const char *contents, Overrides /*overrides*/ = no_overrides);
 
-void game_test_init_level(Gamep, Levelsp, Levelp * /*l_out*/, LevelNum /*level_num*/, int w, int h,
+void game_test_init_level(Gamep, Levelsp, Levelp * out, LevelNum level_num, int w, int h,
                           const char *contents, Overrides /*overrides*/ = no_overrides);
 
-void game_test_init_level(Gamep, Levelsp, Levelp * /*l_out*/, LevelNum /*level_num*/, spoint /*level_at*/, int w,
+void game_test_init_level(Gamep, Levelsp, Levelp * out, LevelNum level_num, spoint level_at, int w,
                           int h, const char *contents, Overrides /*overrides*/ = no_overrides);
 
 #endif // _MY_TEST_H_

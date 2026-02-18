@@ -427,34 +427,34 @@ bool game_input(Gamep g, const SDL_Keysym *key)
 
   if (sdlk_eq(*key, game_key_wait_get(g))) {
     DBG("Pressed wait key");
-    game_event_wait(g);
+    (void) game_event_wait(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_inventory_get(g))) {
     DBG("Pressed inventory key");
-    game_event_inventory(g);
+    (void) game_event_inventory(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_ascend_get(g))) {
     DBG("Pressed ascend key");
     sound_play(g, "keypress");
-    game_event_ascend(g);
+    (void) game_event_ascend(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_descend_get(g))) {
     DBG("Pressed descend key");
     sound_play(g, "keypress");
-    game_event_descend(g);
+    (void) game_event_descend(g);
     return false; // To avoid click noise
   }
 
   if (sdlk_eq(*key, game_key_quit_get(g))) {
     DBG("Pressed quit key");
     sound_play(g, "keypress");
-    game_event_quit(g);
+    (void) game_event_quit(g);
     return true;
   }
 
@@ -462,7 +462,7 @@ bool game_input(Gamep g, const SDL_Keysym *key)
     DBG("Pressed help key");
     TRACE_AND_INDENT();
     sound_play(g, "keypress");
-    game_event_help(g);
+    (void) game_event_help(g);
     return true;
   }
 
@@ -471,7 +471,7 @@ bool game_input(Gamep g, const SDL_Keysym *key)
     TRACE_AND_INDENT();
     DBG("Loading game");
     sound_play(g, "keypress");
-    game_event_load(g);
+    (void) game_event_load(g);
     return true;
   }
 
@@ -479,7 +479,7 @@ bool game_input(Gamep g, const SDL_Keysym *key)
     DBG("Pressed save key");
     TRACE_AND_INDENT();
     sound_play(g, "keypress");
-    game_event_save(g);
+    (void) game_event_save(g);
     return true;
   }
 
@@ -554,7 +554,7 @@ bool game_input(Gamep g, const SDL_Keysym *key)
               case '?' :
               case '-' :
               case '+' :
-              case '=' : game_event_help(g);
+              case '=' : (void) game_event_help(g);
             }
           }
       }

@@ -291,8 +291,8 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLshort left, GLshort top,
           GLshort right, GLshort bottom, const color &c, struct LightPixels_ * /*light_pixels*/,
           bool is_blit_flush_per_line);
-void blit_fbo(Gamep, FboEnum fbo);
-void blit_fbo(Gamep, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y);
+void blit_fbo(Gamep g, FboEnum fbo);
+void blit_fbo(Gamep g, FboEnum fbo, int tl_x, int tl_y, int br_x, int br_y);
 void blit_fbo_push(FboEnum fbo);
 void blit_fbo_pop(void);
 void blit_fbo_bind(FboEnum fbo);
@@ -306,7 +306,7 @@ void blit_flush_colored_triangle_fan(void);
 void blit_flush_triangle_fan(float *begin, const float *end);
 void blit_flush_triangle_fan(void);
 void blit_init(void);
-void fbo_get_size(Gamep, FboEnum fbo, int &w, int &h);
+void fbo_get_size(Gamep g, FboEnum fbo, int &w, int &h);
 void fbo_get_curr_size(Gamep g, int &w, int &h);
 
 void gl_blitline(GLshort tlx, GLshort tly, GLshort brx, GLshort bry);
@@ -314,25 +314,16 @@ void gl_blitquad(spoint tl, spoint tr, spoint bl, spoint br);
 void gl_blitquad(GLshort tlx, GLshort tly, GLshort brx, GLshort bry);
 void gl_blitsquare(GLshort tlx, GLshort tly, GLshort brx, GLshort bry);
 void gl_enter_2_5d_mode(Gamep);
-void gl_enter_2d_mode(Gamep, int, int /*h*/);
-void gl_enter_2d_mode(Gamep);
+void gl_enter_2d_mode(Gamep g, int w, int h);
+void gl_enter_2d_mode(Gamep g);
 void gl_error(GLenum err);
 void gl_ext_init(void);
-void gl_fini_2d_mode(Gamep);
-void gl_fini_fbo(Gamep);
-void gl_init_2d_mode(Gamep);
-void gl_init_fbo(Gamep, FboEnum fbo = FBO_NONE);
-void gl_leave_2d_mode(Gamep);
+void gl_fini_2d_mode(Gamep g);
+void gl_fini_fbo(Gamep g);
+void gl_init_2d_mode(Gamep g);
+void gl_init_fbo(Gamep g, FboEnum fbo = FBO_NONE);
+void gl_leave_2d_mode(Gamep g);
 void gl_clear(void);
-
-void gl_push(float **P, float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right, float tex_bottom,
-             GLshort left, GLshort top, GLshort right, GLshort bottom, uint8_t r1, uint8_t g1, uint8_t b1, uint8_t a1,
-             uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3, uint8_t a3,
-             uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4);
-void gl_push(float **P, const float *p_end, uint8_t first, float tex_left, float tex_top, float tex_right,
-             float tex_bottom, spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1,
-             uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
-             uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4);
 
 #define GL_ERROR_CHECK()                                                                                             \
   {                                                                                                                  \

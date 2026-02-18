@@ -96,7 +96,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 
       wid_set_shape_none(child);
       wid_set_pos(child, text_tl, text_br);
-      wid_set_text_centerx(child, 1u);
+      wid_set_text_centerx(child);
 
       wid_set_prev(child, prev);
       prev = child;
@@ -184,9 +184,9 @@ Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
 
   if (text_wid != nullptr) {
     if (format == TEXT_FORMAT_LHS) {
-      wid_set_text_lhs(text_wid, 1u);
+      wid_set_text_lhs(text_wid);
     } else if (format == TEXT_FORMAT_RHS) {
-      wid_set_text_rhs(text_wid, 1u);
+      wid_set_text_rhs(text_wid);
     }
   }
 

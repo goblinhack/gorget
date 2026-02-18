@@ -99,7 +99,7 @@ color ascii_get_color(int x, int y, int z);
 
 int ascii_ok(int x, int y);
 int ascii_ok_for_scissors(int x, int y);
-int ascii_strlen(std::string const & /*text*/);
+int ascii_strlen(std::string const & text);
 int ascii_tp_br1_tile(int x, int y, fpoint *);
 int ascii_tp_tile_mid(int x, int y, fpoint *);
 int ascii_tp_tl1_tile(int x, int y, fpoint *);
@@ -114,7 +114,7 @@ void ascii_blit_layer(int z, int no_color);
 void ascii_clear_display(void);
 void ascii_clear_scissors(void);
 void ascii_dim(int x, int y, int z, float alpha);
-void ascii_display(Gamep);
+void ascii_display(Gamep g);
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, char ch, color c);
 void ascii_draw_line(int x0, int y0, int x1, int y1, const char *tilename, color c);
 void ascii_draw_line(int x0, int y0, int x1, int y1, Tilep what, color c);
@@ -141,7 +141,7 @@ void ascii_set(int depth, int x, int y, Tilep /*tile*/);
 void ascii_set(int depth, int x, int y, Tilep /*tile*/, char /*ch*/);
 void ascii_set(int depth, int x, int y, Tilep /*tile*/, float tx, float ty, float dx, float dy);
 void ascii_set_scissors(spoint tl, spoint br);
-void pixel_to_ascii(Gamep, int *x, int *y);
+void pixel_to_ascii(Gamep g, int *x, int *y);
 
 extern float tile_pix_w;
 extern float tile_pix_h;
