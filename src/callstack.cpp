@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <utility>
+
 #include "my_callstack.hpp"
 #include "my_main.hpp"
 #include "my_sprintf.hpp"
@@ -19,7 +21,7 @@ std::string callstack_string(void)
   sout = "code trace\n";
   sout += "==========\n";
 
-  for (auto depth = 0; depth < g_callframes_depth; depth++) {
+  for (auto depth = 0; std::cmp_less(depth, g_callframes_depth); depth++) {
     auto *iter = &callframes[ depth ];
     sout += string_sprintf("(callstack) %s, line %u\n", iter->func, iter->line);
   }

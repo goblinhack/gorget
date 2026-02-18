@@ -20,6 +20,7 @@
 #include <map>
 #include <thread>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 #include <mutex>
@@ -2448,7 +2449,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
   //
   // Keep placing rooms until we hit the max allowed
   //
-  while ((int) l->rooms_placed.size() < l->max_room_count) {
+  while (std::cmp_less(l->rooms_placed.size(), l->max_room_count)) {
     if (unlikely(l->debug)) {
       LOG("rooms placed %d (max %d) attempts %d doors-tried %d doors-not-tried %d", (int) l->rooms_placed.size(),
           l->max_room_count, attempts, (int) l->doors_walked.size(), (int) l->doors_not_explored.size());
@@ -2501,7 +2502,7 @@ static void level_gen_create_remaining_rooms(Gamep g, LevelGen *l)
     if (! l->has_placed_ROOM_TYPE_EXIT) {
       if (d100() < 50) {
         room_type = ROOM_TYPE_EXIT;
-      } else if ((int) l->rooms_placed.size() > l->min_room_count) {
+      } else if (std::cmp_greater(l->rooms_placed.size(), l->min_room_count)) {
         //
         // If we have the minimum rooms, then likely we're far enough away from
         // the start room now to try placing an exit room.
@@ -2929,7 +2930,7 @@ static class LevelGen *level_proc_gen_create_rooms(Gamep g, Levelsp v, LevelNum 
     //
     // Check we have enough rooms. Add a few more for deeper levels.
     //
-    if ((int) l->rooms_placed.size() < l->min_room_count) {
+    if (std::cmp_less(l->rooms_placed.size(), l->min_room_count)) {
       level_not_enough_rooms++;
       continue;
     }

@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <utility>
+
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_game_popups.hpp"
@@ -105,7 +107,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
     return;
   }
 
-  if (tp_z_depth_get(tp) != depth) {
+  if (std::cmp_not_equal(tp_z_depth_get(tp), depth)) {
     return;
   }
 

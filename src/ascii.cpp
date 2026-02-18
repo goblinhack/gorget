@@ -1027,7 +1027,7 @@ void ascii_clear_display(void)
 }
 
 static void ascii_put_box_(int style, const TileLayers tiles_in, int x1, int y1, int x2, int y2, color col_bg,
-                            color col_fg, void *context)
+                           color col_fg, void *context)
 {
   static bool      init;
   static const int MAX_UI_SIZE    = 16;

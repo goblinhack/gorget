@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <utility>
+
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
@@ -125,7 +127,7 @@ static void wid_rightbar_create_minimap_world(Gamep g)
       wid_rightbar->log(g, s);
     }
 
-    for (auto n = 0; n < v->describe_count; n++) {
+    for (auto n = 0; std::cmp_less(n, v->describe_count); n++) {
       auto *t = thing_find_optional(g, v, v->describe[ n ]);
       if (t == nullptr) {
         continue;

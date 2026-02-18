@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <utility>
+
 #include "my_random_name.hpp"
 
 std::string os_random_name(int len)
@@ -9,7 +11,7 @@ std::string os_random_name(int len)
   for (;;) {
     std::string d1(os_rand_dict1_name());
     std::string d2(os_rand_dict2_name());
-    if ((int) (d1.size() + d2.size()) > len) {
+    if (std::cmp_greater((d1.size() + d2.size()), len)) {
       continue;
     }
 

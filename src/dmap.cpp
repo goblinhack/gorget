@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <array>
+#include <utility>
 
 void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
 {
@@ -521,7 +522,7 @@ static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, cons
       }
 
       int c = D->val[ tx ][ ty ];
-      if (c <= lowest) {
+      if (std::cmp_less_equal(c, lowest)) {
         got    = true;
         best   = t;
         lowest = c;

@@ -10,8 +10,8 @@
 #include "my_random.hpp"
 #include "my_tile.hpp"
 
+#include <cstring>
 #include <map>
-#include <string.h>
 
 /* clang-format off */
 #define IS_JOIN_ENUM(list_macro)                  \
@@ -107,7 +107,8 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, spoint p)
       uint16_t mask;
 
 #define BLOCK(a, b, c, d, e, f, g, h, i, _index_)                                                                    \
-  mask = (i << 8) | (h << 7) | (g << 6) | (f << 5) | (e << 4) | (d << 3) | (c << 2) | (b << 1) | (a << 0);           \
+  mask = ((i) << 8) | ((h) << 7) | ((g) << 6) | ((f) << 5) | ((e) << 4) | ((d) << 3) | ((c) << 2) | ((b) << 1)       \
+       | ((a) << 0);                                                                                                 \
                                                                                                                      \
   if ((mask & omask) == mask) {                                                                                      \
     uint32_t difference = mask ^ omask;                                                                              \

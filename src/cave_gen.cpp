@@ -9,6 +9,7 @@
 #include <cstring>
 
 #include <algorithm>
+#include <utility>
 
 static const int MAP_LEVEL_BLOB_CENTERING = MAP_WIDTH / 4;
 
@@ -48,7 +49,7 @@ void cave_dump(Gamep g, Cave *c)
 //
 // Iterate a single generations for cellular automata
 //
-static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2, int map_generations)
+static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations)
 {
   uint8_t x;
   uint8_t y;
@@ -125,7 +126,7 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
 //
 // Iterate the generations for cellular automata
 //
-void cave_create(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2, int map_generations)
+void cave_create(Gamep g, Cave *c, uint32_t fill_prob, uint8_t r1, uint8_t r2, int map_generations)
 {
   for (auto gen = 0; gen < map_generations; gen++) {
     cave_generation(g, c, fill_prob, r1, r2, gen);

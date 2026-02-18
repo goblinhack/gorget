@@ -29,6 +29,7 @@
 
 #include <array>
 #include <format>
+#include <utility>
 
 static WidPopup *wid_load;
 
@@ -42,7 +43,7 @@ std::array< bool, UI_MAX_SAVE_SLOTS > slot_valid;
   {                                                                                                                  \
     uint32_t magic;                                                                                                  \
     in >> bits(magic);                                                                                               \
-    if (magic != (m)) {                                                                                                \
+    if (magic != (m)) {                                                                                              \
       game_load_error                                                                                                \
           = "bad '" what "' magic expected: " + std::format("0x{:x}", m) + " got " + std::format("0x{:x}", magic);   \
       return in;                                                                                                     \
@@ -524,7 +525,7 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
   in >> bits(my.t.version);
   in >> bits(my.t.serialized_size);
 
-  if (my.t.serialized_size != (uint32_t) sizeof(Game)) {
+  if (std::cmp_not_equal(my.t.serialized_size, sizeof(Game))) {
     if (my.t.version == MYVER) {
       game_load_error = "Incompatible save file for version " + my.t.version;
     } else {

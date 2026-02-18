@@ -13,6 +13,7 @@
 #include "my_thing_inlines.hpp"
 
 #include <cstring>
+#include <utility>
 
 bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in,
                     Overrides overrides)
@@ -21,7 +22,7 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
 
   auto expected_len = w * h;
 
-  if ((int) strlen(in) != expected_len) {
+  if (std::cmp_not_equal(strlen(in), expected_len)) {
     CROAK("bad map size, expected %d chars, got %d chars for map of expected size %dx%d", (int) expected_len,
           (int) strlen(in), w, h);
   }

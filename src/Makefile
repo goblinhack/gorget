@@ -95,20 +95,28 @@ tidy:
 			bugprone-*,\
 			cppcoreguidelines-no-malloc,\
 			misc-redundant-expression,\
-			modernize-pass-by-value,\
+			modernize-avoid-c-arrays,\
 			modernize-deprecated-headers,\
 			modernize-loop-convert,\
 			modernize-macro-to-enum,\
+			modernize-pass-by-value,\
+			modernize-raw-string-literal,\
+			modernize-replace-auto-ptr,\
 			modernize-use-auto,\
-			modernize-avoid-c-arrays,\
 			modernize-use-bool-literals,\
-			modernize-use-nullptr,\
 			modernize-use-default-member-init,\
+			modernize-use-designated-initializers,\
 			modernize-use-equals-default,\
 			modernize-use-equals-delete,\
-			modernize-use-nullptr,\
+			modernize-use-integer-sign-comparison,\
 			modernize-use-nullptr,\
 			modernize-use-ranges,\
+			modernize-use-starts-ends-with,\
+			modernize-unary-static-assert,\
+			modernize-min-max-use-initializer-list,\
+			modernize-use-std-format,\
+			modernize-use-std-numbers,\
+			modernize-use-std-print,\
 			readability-*" \
 			-header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done

@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <utility>
+
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
@@ -134,7 +136,7 @@ void wid_hiscores_show(Gamep g)
     }
 
     std::string when_val = h->when;
-    if ((int) when_val.length() > when_field_len) {
+    if (std::cmp_greater(when_val.length(), when_field_len)) {
       when_val[ when_field_len ] = '\0';
     }
 
@@ -143,7 +145,7 @@ void wid_hiscores_show(Gamep g)
     }
 
     std::string reason_val = capitalize_first(h->reason);
-    if ((int) reason_val.length() > reason_field_len) {
+    if (std::cmp_greater(reason_val.length(), reason_field_len)) {
       reason_val[ reason_field_len ] = '\0';
     }
 

@@ -4,7 +4,6 @@
 
 #include <algorithm>
 #include <ctime>
-#include <ctime>
 
 #include "my_ascii.hpp"
 #include "my_game.hpp"

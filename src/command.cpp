@@ -9,6 +9,7 @@
 #include "my_ui.hpp"
 
 #include <unordered_map>
+#include <utility>
 
 /*
  * Simple console expanding code, takes a command input and expands it as
@@ -179,7 +180,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
   for (auto iter : commands_map) {
     auto *command = iter.second;
 
-    for (t = 0; t < (int) std::min(command->tokens.cnt, input_tokens.cnt); t++) {
+    for (t = 0; std::cmp_less(t, std::min(command->tokens.cnt, input_tokens.cnt)); t++) {
 
       cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
@@ -212,7 +213,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
   for (auto iter : commands_map) {
     auto *command = iter.second;
 
-    for (t = 0; t < (int) std::min(command->tokens.cnt, input_tokens.cnt); t++) {
+    for (t = 0; std::cmp_less(t, std::min(command->tokens.cnt, input_tokens.cnt)); t++) {
 
       cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
@@ -272,7 +273,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
       for (auto iter : commands_map) {
         auto *command = iter.second;
 
-        for (t = 0; t < (int) std::min(command->tokens.cnt, input_tokens.cnt); t++) {
+        for (t = 0; std::cmp_less(t, std::min(command->tokens.cnt, input_tokens.cnt)); t++) {
 
           cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 

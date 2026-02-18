@@ -13,6 +13,7 @@
 #include "my_wid_warning.hpp"
 
 #include <cstring>
+#include <utility>
 
 //
 // Is this minion attached to a mob?
@@ -110,7 +111,7 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  if (dmap->val[ target.x ][ target.y ] >= radius) {
+  if (std::cmp_greater_equal(dmap->val[ target.x ][ target.y ], radius)) {
     return false;
   }
 

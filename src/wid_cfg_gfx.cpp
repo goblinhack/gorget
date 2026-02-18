@@ -14,6 +14,7 @@
 #include "my_wids.hpp"
 
 #include <climits>
+#include <utility>
 
 static WidPopup *wid_cfg_gfx_window;
 
@@ -262,7 +263,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
     push_back_if_unique(cands, cand);
     modes[ cand ] = mode;
   }
-  for (int i = 0; i < (int) cands.size(); ++i) {
+  for (int i = 0; std::cmp_less(i, cands.size()); ++i) {
     auto cand = cands[ i ];
     if (current_res == cand) {
       if (i > 0) {
@@ -318,7 +319,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
     push_back_if_unique(cands, cand);
     modes[ cand ] = mode;
   }
-  for (int i = 0; i < (int) cands.size(); ++i) {
+  for (int i = 0; std::cmp_less(i, cands.size()); ++i) {
     auto cand = cands[ i ];
     if (current_res == cand) {
       if (i < (int) cands.size() - 1) {

@@ -13,6 +13,7 @@
 #include "my_tps.hpp"
 
 #include <map>
+#include <utility>
 #include <vector>
 
 //
@@ -543,7 +544,7 @@ Tilep tp_tiles_get(Tpp tp, ThingAnim val, int index)
     return nullptr;
   }
 
-  if (index >= (int) tp->tiles[ val ].size()) {
+  if (std::cmp_greater_equal(index, tp->tiles[ val ].size())) {
     TP_ERR(tp, "tp_tiles_get: tile overflow tp %s class %s/%d index %d", tp->name.c_str(),
            ThingAnim_to_string(val).c_str(), val, index);
   }
