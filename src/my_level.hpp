@@ -617,28 +617,42 @@ enum {
   LEVEL_TEST_FLAG = 1,
 };
 
-[[nodiscard]] bool        is_oob(fpoint /*p*/);
-[[nodiscard]] bool        is_oob(int /*x*/, int /*y*/);
-[[nodiscard]] bool        is_oob(spoint /*p*/);
-[[nodiscard]] bool        level_cursor_describe_add(Gamep, Levelsp, Thingp /*t*/);
-[[nodiscard]] bool        level_cursor_describe_remove(Gamep, Levelsp, Thingp /*t*/);
-[[nodiscard]] bool        level_cursor_is_valid(Gamep, Levelsp);
-[[nodiscard]] bool        level_gen_is_room_entrance(Gamep, class LevelGen *, int x, int y);
-[[nodiscard]] bool        level_gen_is_room_entrance(Gamep, class LevelGen *, spoint at);
-[[nodiscard]] bool        level_is_level_select(Gamep, Levelsp, Levelp);
-[[nodiscard]] bool        level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint /*p*/, Tpp /*tp*/);
-[[nodiscard]] bool        level_match_contents(Gamep, Levelsp, Levelp, Testp /*t*/, int w, int h, const char *in);
-[[nodiscard]] bool        level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint /*p*/, int slot, ThingId /*id*/);
-[[nodiscard]] bool        level_tick_is_in_progress(Gamep, Levelsp, Levelp);
-[[nodiscard]] int         level_count(Gamep, Levelsp, Levelp, ThingFlag /*f*/, spoint /*p*/);
-[[nodiscard]] int         level_count(Gamep, Levelsp, Levelp, ThingFlag /*f*/, Thingp /*t*/);
-[[nodiscard]] int         level_cursor_path_size(Gamep);
-[[nodiscard]] int         levels_thing_count(Gamep, Levelsp);
-[[nodiscard]] int         levels_thing_ext_count(Gamep, Levelsp);
-[[nodiscard]] Levelp      level_change(Gamep, Levelsp, LevelNum /*level_num*/);
-[[nodiscard]] Levelp      level_select_get_level_at_tile_coords(Gamep, Levelsp, spoint /*p*/);
-[[nodiscard]] Levelsp     levels_memory_alloc(Gamep);
-[[nodiscard]] std::string level_string(Gamep, Levelsp, Levelp, int w, int h);
+// begin sort marker1 {
+[[nodiscard]] bool   fragment_add(Gamep, int chance, const char *file, int line, ...);
+[[nodiscard]] bool   fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
+[[nodiscard]] bool   is_oob(fpoint /*p*/);
+[[nodiscard]] bool   is_oob(int /*x*/, int /*y*/);
+[[nodiscard]] bool   is_oob(spoint /*p*/);
+[[nodiscard]] bool   level_cursor_describe_add(Gamep, Levelsp, Thingp /*t*/);
+[[nodiscard]] bool   level_cursor_describe_remove(Gamep, Levelsp, Thingp /*t*/);
+[[nodiscard]] bool   level_cursor_is_valid(Gamep, Levelsp);
+[[nodiscard]] bool   level_gen_is_room_entrance(Gamep, class LevelGen *, int x, int y);
+[[nodiscard]] bool   level_gen_is_room_entrance(Gamep, class LevelGen *, spoint at);
+[[nodiscard]] bool   level_is_level_select(Gamep, Levelsp, Levelp);
+[[nodiscard]] bool   level_is_player_level(Gamep, Levelsp, Levelp);
+[[nodiscard]] bool   level_is_same_obj_type_at(Gamep, Levelsp, Levelp, spoint /*p*/, Tpp /*tp*/);
+[[nodiscard]] bool   level_match_contents(Gamep, Levelsp, Levelp, Testp /*t*/, int w, int h, const char *in);
+[[nodiscard]] bool   level_populate_thing_id_at(Gamep, Levelsp, Levelp, spoint /*p*/, int slot, ThingId /*id*/);
+[[nodiscard]] bool   level_request_to_cleanup_things(Gamep, Levelsp, Levelp);
+[[nodiscard]] bool   level_select_is_oob(int x, int y);
+[[nodiscard]] bool   level_select_is_oob(spoint /*p*/);
+[[nodiscard]] bool   level_tick_is_in_progress(Gamep, Levelsp, Levelp);
+[[nodiscard]] int    level_count(Gamep, Levelsp, Levelp, ThingFlag /*f*/, spoint /*p*/);
+[[nodiscard]] int    level_count(Gamep, Levelsp, Levelp, ThingFlag /*f*/, Thingp /*t*/);
+[[nodiscard]] int    level_cursor_path_size(Gamep);
+[[nodiscard]] int    levels_thing_count(Gamep, Levelsp);
+[[nodiscard]] int    levels_thing_ext_count(Gamep, Levelsp);
+[[nodiscard]] Levelp level_change(Gamep, Levelsp, LevelNum /*level_num*/);
+[[nodiscard]] Levelp level_select_calculate_next_level_down(Gamep, Levelsp, Levelp, bool redo = false);
+[[nodiscard]] Levelp level_select_get_level_at_tile_coords(Gamep, Levelsp, spoint /*p*/);
+[[nodiscard]] Levelp level_select_get_level(Gamep, Levelsp, Levelp, spoint);
+[[nodiscard]] Levelp level_select_get_next_level_down(Gamep, Levelsp, Levelp);
+[[nodiscard]] LevelSelectCell      *level_select_get(Gamep, Levelsp, spoint /*p*/);
+[[nodiscard]] Levelsp               levels_memory_alloc(Gamep);
+[[nodiscard]] PlayerState           player_state(Gamep, Levelsp);
+[[nodiscard]] std::string           level_string(Gamep, Levelsp, Levelp, int w, int h);
+[[nodiscard]] std::string           player_state_to_string(PlayerState /*state*/);
+[[nodiscard]] std::string           to_string(Gamep, Levelsp, Levelp);
 [[nodiscard]] std::vector< Thingp > level_find_all(Gamep, Levelsp, Levelp, ThingFlag /*f*/, spoint /*p*/);
 [[nodiscard]] std::vector< Thingp > level_find_all(Gamep, Levelsp, Levelp, ThingFlag /*f*/);
 [[nodiscard]] ThingId               level_get_thing_id_at(Gamep, Levelsp, Levelp, spoint p, int slot);
@@ -649,7 +663,14 @@ enum {
 [[nodiscard]] Thingp                level_light_blocker_at(Gamep, Levelsp, Levelp, spoint /*pov*/);
 [[nodiscard]] Thingp                level_open(Gamep, Levelsp, Levelp, ThingFlag /*f*/, spoint /*p*/);
 [[nodiscard]] Thingp                level_open(Gamep, Levelsp, Levelp, ThingFlag /*f*/, Thingp /*at*/);
+[[nodiscard]] Thingp                thing_level_select(Gamep);
+// end sort marker1 }
 
+// begin sort marker2 {
+void fragment_alts_fini(Gamep);
+void fragments_fini(Gamep);
+void fragments_init(Gamep);
+void game_debug_info(Gamep);
 void level_anim(Gamep, Levelsp, Levelp);
 void level_assign_tiles(Gamep, Levelsp, Levelp);
 void level_blit(Gamep);
@@ -663,11 +684,11 @@ void level_cursor_describe(Gamep, Levelsp, Levelp);
 void level_cursor_path_recreate(Gamep, Levelsp, Levelp);
 void level_cursor_path_reset(Gamep, Levelsp, Levelp);
 void level_cursor_set(Gamep, Levelsp, spoint /*p*/);
-void game_debug_info(Gamep);
 void level_debug(Gamep, Levelsp, Levelp);
 void level_destroy(Gamep, Levelsp, Levelp);
 void level_display_obj(Gamep, Levelsp, Levelp, spoint, Tpp, Thingp);
 void level_display(Gamep, Levelsp, Levelp);
+void level_dmap(Gamep, Levelsp, Levelp);
 void level_dump(Gamep, Levelsp, Levelp, int w = MAP_WIDTH, int h = MAP_HEIGHT);
 void level_enter(Gamep, Levelsp, Levelp);
 void level_finalize(Gamep, Levelsp, Levelp);
@@ -678,6 +699,8 @@ void level_gen_test(Gamep);
 void level_init(Gamep, Levelsp, Levelp, LevelNum /*n*/);
 void level_is_completed_by_player_exiting(Gamep, Levelsp, Levelp);
 void level_is_completed_by_player_falling(Gamep, Levelsp, Levelp);
+void level_is_player_level_set(Gamep, Levelsp, Levelp);
+void level_is_player_level_unset(Gamep, Levelsp, Levelp);
 void level_light_calculate_all(Gamep, Levelsp, Levelp);
 void level_light_per_pixel_lighting(Gamep, Levelsp, Levelp, Thingp /*t*/, spoint pov, spoint p);
 void level_light_precalculate(Gamep);
@@ -685,17 +708,25 @@ void level_light_raycast_fini(void);
 void level_light_raycast(Gamep, Levelsp, Levelp, FboEnum fbo);
 void level_minimaps_update(Gamep, Levelsp, Levelp);
 void level_mouse_position_get(Gamep, Levelsp, Levelp);
+void level_request_to_cleanup_things_set(Gamep, Levelsp, Levelp);
+void level_request_to_cleanup_things_unset(Gamep, Levelsp, Levelp);
 void level_scroll_delta(Gamep, Levelsp, Levelp, spoint /*delta*/);
 void level_scroll_to_focus(Gamep, Levelsp, Levelp);
 void level_scroll_warp_to_focus(Gamep, Levelsp, Levelp);
+void level_select_assign_levels_to_grid(Gamep, Levelsp);
+void level_select_destroy(Gamep, Levelsp, Levelp);
+void level_select_grid_of_empty_levels(Gamep);
+void level_select_mouse_down(Gamep, Levelsp, Levelp);
+void level_select_mouse_motion(Gamep, Levelsp, Levelp);
+void level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, WidPopup * /*parent*/);
+void level_select_test(Gamep);
+void level_select_update_grid_tiles(Gamep, Levelsp);
 void level_thing_pair_temperature_handle(Gamep, Levelsp, Levelp, Thingp /*a*/, Thingp /*b*/);
 void level_tick_begin_requested(Gamep, Levelsp, Levelp, const char * /*why*/);
 void level_tick_begin_temperature(Gamep, Levelsp, Levelp);
 void level_tick_chasm(Gamep, Levelsp, Levelp);
 void level_tick_end_temperature(Gamep, Levelsp, Levelp);
 void level_tick_explosion(Gamep, Levelsp, Levelp);
-void level_dmap(Gamep, Levelsp, Levelp);
-void levels_dmap(Gamep, Levelsp);
 void level_tick_teleport(Gamep, Levelsp, Levelp);
 void level_tick_water(Gamep, Levelsp, Levelp);
 void level_update_paths_set(Gamep, Levelsp, Levelp, spoint /*p*/);
@@ -706,18 +737,32 @@ void level_water_display(Gamep, Levelsp, Levelp, spoint, int, int16_t, int16_t, 
 void level_water_tick(Gamep, Levelsp, Levelp);
 void level_water_update(Gamep, Levelsp, Levelp);
 void levels_destroy(Gamep, Levelsp);
+void levels_dmap(Gamep, Levelsp);
 void levels_finalize(Gamep, Levelsp);
+void levels_fini(Gamep);
+void levels_fixed(Gamep);
+void levels_init(Gamep);
+void levels_test(Gamep);
 void levels_tick(Gamep, Levelsp);
-
-[[nodiscard]] std::string to_string(Gamep, Levelsp, Levelp);
-
-[[nodiscard]] bool level_request_to_cleanup_things(Gamep, Levelsp, Levelp);
-void               level_request_to_cleanup_things_set(Gamep, Levelsp, Levelp);
-void               level_request_to_cleanup_things_unset(Gamep, Levelsp, Levelp);
-
-[[nodiscard]] bool level_is_player_level(Gamep, Levelsp, Levelp);
-void               level_is_player_level_set(Gamep, Levelsp, Levelp);
-void               level_is_player_level_unset(Gamep, Levelsp, Levelp);
+void player_state_change(Gamep, Levelsp, Levelp, PlayerState new_state);
+void room_add(Gamep, int chance, int flags, const char *file, int line, ...);
+void rooms_blend1(Gamep);
+void rooms_blend2(Gamep);
+void rooms_chunky(Gamep);
+void rooms_circular(Gamep);
+void rooms_cross_sym(Gamep);
+void rooms_cross(Gamep);
+void rooms_exit(Gamep);
+void rooms_fini(Gamep);
+void rooms_init(Gamep);
+void rooms_key(Gamep);
+void rooms_medium(Gamep);
+void rooms_prefab_secret(Gamep);
+void rooms_prefab(Gamep);
+void rooms_small(Gamep);
+void rooms_start(Gamep);
+void rooms_test(Gamep);
+// end sort marker2 }
 
 typedef void (*level_fov_can_see_callback_t)(Gamep, Levelsp, Levelp, Thingp me, spoint pov, spoint p);
 void level_fov(Gamep, Levelsp, Levelp, Thingp /*me*/, FovMap *curr, FovMap *ever, spoint pov, int max_radius,
@@ -730,55 +775,5 @@ typedef enum {
 #define LEVEL_TYPE_FIRST LEVEL_TYPE_NORMAL
   LEVEL_TYPE_MAX
 } LevelType;
-
-void levels_init(Gamep);
-void levels_fini(Gamep);
-void levels_test(Gamep);
-void levels_fixed(Gamep);
-
-void rooms_test(Gamep);
-void rooms_init(Gamep);
-void rooms_fini(Gamep);
-void room_add(Gamep, int chance, int flags, const char *file, int line, ...);
-void rooms_blend1(Gamep);
-void rooms_blend2(Gamep);
-void rooms_chunky(Gamep);
-void rooms_circular(Gamep);
-void rooms_cross(Gamep);
-void rooms_cross_sym(Gamep);
-void rooms_small(Gamep);
-void rooms_medium(Gamep);
-void rooms_start(Gamep);
-void rooms_exit(Gamep);
-void rooms_key(Gamep);
-void rooms_prefab(Gamep);
-void rooms_prefab_secret(Gamep);
-
-void               fragments_init(Gamep);
-void               fragments_fini(Gamep);
-void               fragment_alts_fini(Gamep);
-[[nodiscard]] bool fragment_add(Gamep, int chance, const char *file, int line, ...);
-[[nodiscard]] bool fragment_alt_add(Gamep, int chance, const char *file, int line, ...);
-
-void level_select_assign_levels_to_grid(Gamep, Levelsp);
-void level_select_destroy(Gamep, Levelsp, Levelp);
-void level_select_grid_of_empty_levels(Gamep);
-void level_select_mouse_motion(Gamep, Levelsp, Levelp);
-void level_select_rightbar_show_contents(Gamep, Levelsp, Levelp, WidPopup * /*parent*/);
-void level_select_test(Gamep);
-void level_select_update_grid_tiles(Gamep, Levelsp);
-void level_select_mouse_down(Gamep, Levelsp, Levelp);
-
-[[nodiscard]] bool             level_select_is_oob(int x, int y);
-[[nodiscard]] bool             level_select_is_oob(spoint /*p*/);
-[[nodiscard]] Levelp           level_select_get_level(Gamep, Levelsp, Levelp, spoint);
-[[nodiscard]] Levelp           level_select_get_next_level_down(Gamep, Levelsp, Levelp);
-[[nodiscard]] Levelp           level_select_calculate_next_level_down(Gamep, Levelsp, Levelp, bool redo = false);
-[[nodiscard]] Thingp           thing_level_select(Gamep);
-[[nodiscard]] LevelSelectCell *level_select_get(Gamep, Levelsp, spoint /*p*/);
-
-[[nodiscard]] std::string player_state_to_string(PlayerState /*state*/);
-[[nodiscard]] PlayerState player_state(Gamep, Levelsp);
-void                      player_state_change(Gamep, Levelsp, Levelp, PlayerState new_state);
 
 #endif // _MY_LEVEL_H_

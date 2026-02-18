@@ -993,10 +993,6 @@ void thing_dir_right_set(Thingp, uint8_t);
 void thing_dir_tl_set(Thingp, uint8_t);
 void thing_dir_tr_set(Thingp, uint8_t);
 void thing_dir_up_set(Thingp, uint8_t);
-void thing_display_get_tile_info(Gamep, Levelsp, Levelp, spoint /*p*/, Tpp /*tp_maybe_null*/, Thingp /*t_maybe_null*/,
-                                 spoint * /*tl*/, spoint * /*br*/, uint16_t * /*tile_index*/);
-void thing_display(Gamep, Levelsp, Levelp, spoint /*p*/, Tpp /*tp*/, Thingp /*t_maybe_null*/, spoint tl, spoint br,
-                   uint16_t tile_index, FboEnum /*fbo*/);
 void thing_dmap(Gamep, Levelsp, Levelp, Thingp /*me*/, bool reverse = false);
 void THING_ERR(Thingp /*t*/, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void thing_explosion_handle(Gamep, Levelsp, Levelp, Thingp /*t*/);
@@ -1074,6 +1070,12 @@ void wid_set_thing_context(Gamep, Levelsp, Widp, Thingp /*t*/);
 void wid_thing_info(Gamep, Levelsp, Levelp, Thingp /*t*/, WidPopup * /*parent*/, int width);
 void wid_unset_thing_context(Gamep, Levelsp, Widp, Thingp /*t*/);
 // end sort marker2 }
+
+void thing_display_get_tile_info(Gamep, Levelsp, Levelp, spoint /*p*/, Tpp /*tp_maybe_null*/, Thingp /*t_maybe_null*/,
+                                 spoint * /*tl*/, spoint * /*br*/, uint16_t * /*tile_index*/);
+
+void thing_display(Gamep, Levelsp, Levelp, spoint /*p*/, Tpp /*tp*/, Thingp /*t_maybe_null*/, spoint tl, spoint br,
+                   uint16_t tile_index, FboEnum /*fbo*/);
 
 std::vector< spoint > astar_solve(Gamep, Levelsp, Levelp, Thingp /*t*/, spoint /*src*/, spoint /*dst*/);
 
