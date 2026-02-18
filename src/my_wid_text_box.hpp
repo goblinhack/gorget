@@ -47,7 +47,7 @@ private:
   Widp log_(Gamep g, const std::string & /*str*/, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
 
 public:
-  Widp log(Gamep g, const std::string & s, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
+  Widp log(Gamep g, const std::string &s, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
   Widp log_empty_line(Gamep g);
 };
 #endif

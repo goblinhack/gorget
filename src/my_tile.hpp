@@ -84,8 +84,8 @@ void        tile_from_fbo(Gamep g, FboEnum fbo);
 void tile_load_arr(const char *file, const char *tex_name, uint32_t w, uint32_t h, int nargs, const char *arr[]);
 void tile_blit_apply_submerge_pct(Gamep g, spoint &tl, spoint &br, float &x1, float &x2, float &y1, float &y2,
                                   float percent);
-void tile_load_arr_sprites(const char *file, const char *tex, uint32_t w, uint32_t h, int nargs,
-                           const char *arr[], int gl_mode = GL_NEAREST);
+void tile_load_arr_sprites(const char *file, const char *tex, uint32_t w, uint32_t h, int nargs, const char *arr[],
+                           int gl_mode = GL_NEAREST);
 
 struct LightPixels_;
 

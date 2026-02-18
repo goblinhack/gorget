@@ -187,8 +187,7 @@ Tile::Tile(const class Tile *tile)
   all_tiles_array.push_back(this);
 }
 
-void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t height, int nargs,
-                   const char *arr[])
+void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t height, int nargs, const char *arr[])
 {
   TRACE_NO_INDENT();
 
@@ -323,8 +322,8 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
   }
 }
 
-void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_width, uint32_t tile_height,
-                           int nargs, const char *arr[], int gl_mode)
+void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_width, uint32_t tile_height, int nargs,
+                           const char *arr[], int gl_mode)
 {
   TRACE_NO_INDENT();
   Texp tex;

@@ -99,7 +99,7 @@ color ascii_get_color(int x, int y, int z);
 
 int ascii_ok(int x, int y);
 int ascii_ok_for_scissors(int x, int y);
-int ascii_strlen(std::string const & text);
+int ascii_strlen(std::string const &text);
 int ascii_tp_br1_tile(int x, int y, fpoint *);
 int ascii_tp_tile_mid(int x, int y, fpoint *);
 int ascii_tp_tl1_tile(int x, int y, fpoint *);

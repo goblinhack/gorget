@@ -76,13 +76,13 @@ void tests_run(Gamep g);
 void test_init(void);
 void test_fini(void);
 
-[[nodiscard]] Levelsp game_test_init(Gamep, Levelp * out, LevelNum level_num, int w, int h,
-                                     const char *contents, Overrides /*overrides*/ = no_overrides);
+[[nodiscard]] Levelsp game_test_init(Gamep, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
+                                     Overrides /*overrides*/ = no_overrides);
 
-void game_test_init_level(Gamep, Levelsp, Levelp * out, LevelNum level_num, int w, int h,
+void game_test_init_level(Gamep, Levelsp, Levelp *out, LevelNum level_num, int w, int h, const char *contents,
+                          Overrides /*overrides*/ = no_overrides);
+
+void game_test_init_level(Gamep, Levelsp, Levelp *out, LevelNum level_num, spoint level_at, int w, int h,
                           const char *contents, Overrides /*overrides*/ = no_overrides);
-
-void game_test_init_level(Gamep, Levelsp, Levelp * out, LevelNum level_num, spoint level_at, int w,
-                          int h, const char *contents, Overrides /*overrides*/ = no_overrides);
 
 #endif // _MY_TEST_H_

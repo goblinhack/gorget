@@ -951,6 +951,7 @@ typedef struct Thing_ {
 [[nodiscard]] ThingPriorityType thing_priority_set(Gamep, Levelsp, Levelp, Thingp t, ThingPriorityType val);
 [[nodiscard]] ThingPriorityType thing_priority(Thingp t);
 ThingPlayerp                    thing_player_struct(Gamep g);
+// end sort marker1 }
 
 // begin sort marker2 {
 void LEVEL_BOTCON(Gamep g, Levelsp v, Levelp l, const char *fmt, ...) CHECK_FORMAT_STR(printf, 4, 5);

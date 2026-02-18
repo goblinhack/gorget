@@ -36,7 +36,7 @@ public:
   std::list< GamePopup * > all;
 };
 
-void game_popup_text_add(Gamep g, int x, int y, const std::string & text, color c = WHITE);
+void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c = WHITE);
 bool game_popups_present(Gamep, int x, int y);
 void game_popups_age(Gamep g);
 void game_popups_clear(Gamep g);

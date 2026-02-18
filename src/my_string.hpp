@@ -26,11 +26,11 @@ char *dynprintf(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 char *strappend(const char *in, const char *append);
 char *strprepend(const char *in, const char *prepend);
 
-int length_without_format(const std::string & text);
+int length_without_format(const std::string &text);
 int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...);
 int strisregexp(const char *in);
 
-std::vector< std::string > split(const std::string & text, int max_line_len);
+std::vector< std::string > split(const std::string &text, int max_line_len);
 
 std::string  capitalize(std::string in);
 std::string  capitalize_first(std::string in);

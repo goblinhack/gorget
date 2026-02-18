@@ -77,7 +77,7 @@ void thing_on_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me);
 
 typedef void (*thing_on_death_t)(Gamep, Levelsp, Levelp, Thingp me, ThingEvent &);
 void thing_on_death_set(Tpp tp, thing_on_death_t /*callback*/);
-void thing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent & e);
+void thing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e);
 
 typedef void (*thing_on_moved_t)(Gamep, Levelsp, Levelp, Thingp me);
 void thing_on_moved_set(Tpp tp, thing_on_moved_t /*callback*/);
