@@ -28,7 +28,7 @@ bool tp_load_wall(void)
 
   for (auto variant = 1; variant <= WALL_VARIANTS; variant++) {
     std::string name = "wall" + std::to_string(variant);
-    auto        tp   = tp_load(name.c_str());
+    auto *        tp   = tp_load(name);
     // begin sort marker1 {
     thing_on_melt_set(tp, tp_wall_melt);
     tp_flag_set(tp, is_blit_centered);
@@ -65,7 +65,7 @@ bool tp_load_wall(void)
     tp_z_depth_set(tp, MAP_Z_DEPTH_WALL);
     // end sort marker1 }
 
-    auto tile = tile_find_mand(name + ".IS_JOIN_BL");
+    auto *tile = tile_find_mand(name + ".IS_JOIN_BL");
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile);
     tile = tile_find_mand(name + ".IS_JOIN_BL2");

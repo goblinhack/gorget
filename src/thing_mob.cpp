@@ -12,7 +12,7 @@
 //
 int thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob)
 {
-  if (! mob) {
+  if (mob == nullptr) {
     return 0;
   }
 
@@ -20,8 +20,8 @@ int thing_mob_minion_count_get(Gamep g, Levelsp v, Levelp l, Thingp mob)
     return 0;
   }
 
-  auto ext_struct = thing_ext_struct(g, mob);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, mob);
+  if (ext_struct == nullptr) {
     return 0;
   }
 
@@ -35,7 +35,7 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
 {
   TRACE_NO_INDENT();
 
-  if (! mob) {
+  if (mob == nullptr) {
     return nullptr;
   }
 
@@ -44,7 +44,7 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
     return nullptr;
   }
 
-  if (! tp_minion) {
+  if (tp_minion == nullptr) {
     THING_ERR(mob, "no minion to spawn");
     return nullptr;
   }
@@ -61,8 +61,8 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
     return nullptr;
   }
 
-  auto ext_struct = thing_ext_struct(g, mob);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, mob);
+  if (ext_struct == nullptr) {
     THING_ERR(mob, "mob is missing ext struct");
     return nullptr;
   }
@@ -77,8 +77,8 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
   //
   // Create the minion. Should be no chance to fail now.
   //
-  auto new_minion = thing_spawn(g, v, l, tp_minion, thing_at(mob));
-  if (! new_minion) {
+  auto *new_minion = thing_spawn(g, v, l, tp_minion, thing_at(mob));
+  if (new_minion == nullptr) {
     return nullptr;
   }
 
@@ -87,7 +87,7 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
   //
   FOR_ALL_MINION_SLOTS(g, v, l, mob, slot, existing_minion)
   {
-    if (existing_minion) {
+    if (existing_minion != nullptr) {
       continue;
     }
 
@@ -117,7 +117,7 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
 {
   TRACE_NO_INDENT();
 
-  if (! mob) {
+  if (mob == nullptr) {
     return false;
   }
 
@@ -126,24 +126,24 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
     return false;
   }
 
-  auto ext_struct = thing_ext_struct(g, mob);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, mob);
+  if (ext_struct == nullptr) {
     return false;
   }
 
   FOR_ALL_MINION_SLOTS(g, v, l, mob, slot, minion)
   {
-    if (! minion) {
+    if (minion == nullptr) {
       continue;
     }
 
-    if (specific_minion) {
+    if (specific_minion != nullptr) {
       if (minion != specific_minion) {
         continue;
       }
     }
 
-    if (! minion->mob_id) {
+    if (minion->mob_id == 0U) {
       THING_ERR(mob, "mob found detached minion: %s", to_string(g, v, l, minion).c_str());
       return false;
     }
@@ -207,7 +207,7 @@ void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
 {
   TRACE_NO_INDENT();
 
-  if (! mob) {
+  if (mob == nullptr) {
     return;
   }
 
@@ -216,14 +216,14 @@ void thing_mob_dump_minions(Gamep g, Levelsp v, Levelp l, Thingp mob)
     return;
   }
 
-  auto ext_struct = thing_ext_struct(g, mob);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, mob);
+  if (ext_struct == nullptr) {
     return;
   }
 
   FOR_ALL_MINION_SLOTS(g, v, l, mob, slot, existing_minion)
   {
-    if (! existing_minion) {
+    if (existing_minion == nullptr) {
       THING_LOG(mob, "slot %d: -", _n_);
       continue;
     }

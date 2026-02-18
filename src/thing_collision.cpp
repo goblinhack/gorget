@@ -87,7 +87,7 @@ static void thing_collision_handle_alive_thing(Gamep g, Levelsp v, Levelp l, Thi
   }
 
   if (thing_is_projectile(me)) {
-    auto source     = me;
+    auto *source     = me;
     auto event_type = THING_EVENT_FIRE_DAMAGE;
     auto damage     = tp_damage(thing_tp(source), event_type);
 
@@ -137,11 +137,11 @@ static void thing_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp obstacle
     //
     // Dead things
     //
-    return thing_collision_handle_dead_thing(g, v, l, obstacle, me, stop);
+    thing_collision_handle_dead_thing(g, v, l, obstacle, me, stop); return;
   } //
   // Alive things
   //
-  return thing_collision_handle_alive_thing(g, v, l, obstacle, me, stop);
+  thing_collision_handle_alive_thing(g, v, l, obstacle, me, stop);
 }
 
 //
@@ -214,8 +214,8 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   // blit point for the tile. The radius then is used from this cental
   // point for collision.s
   //
-  C_at.x += 0.5f;
-  C_at.y += 0.5f;
+  C_at.x += 0.5F;
+  C_at.y += 0.5F;
 
   fpoint tl(B_at.x, B_at.y);
   fpoint br(B_at.x + 1, B_at.y + 1);
@@ -259,25 +259,25 @@ bool thing_collision_check_circle_circle(Gamep g, Levelsp v, Levelp l, Thingp A,
   fpoint *intersect_out = nullptr;
   float   dist;
 
-  if (distance_to_line(C_at, B0, B1, &dist, intersect_out)) {
+  if (distance_to_line(C_at, B0, B1, &dist, intersect_out) != 0) {
     if (dist < radius) {
       return true;
     }
   }
 
-  if (distance_to_line(C_at, B1, B2, &dist, intersect_out)) {
+  if (distance_to_line(C_at, B1, B2, &dist, intersect_out) != 0) {
     if (dist < radius) {
       return true;
     }
   }
 
-  if (distance_to_line(C_at, B2, B3, &dist, intersect_out)) {
+  if (distance_to_line(C_at, B2, B3, &dist, intersect_out) != 0) {
     if (dist < radius) {
       return true;
     }
   }
 
-  if (distance_to_line(C_at, B3, B0, &dist, intersect_out)) {
+  if (distance_to_line(C_at, B3, B0, &dist, intersect_out) != 0) {
     if (dist < radius) {
       return true;
     }
@@ -377,7 +377,7 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
 
   for (auto step = 0; step < steps; step++) {
     std::vector< std::pair< float, Thingp > > pairs;
-    fpoint                                    interp_at(old_at.x + stepx * step, old_at.y + stepy * step);
+    fpoint                                    interp_at(old_at.x + (stepx * step), old_at.y + (stepy * step));
 
     if (__unused__) {
       THING_LOG(me, "interp collision at %f,%f", interp_at.x, interp_at.y);
@@ -405,17 +405,17 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
             if (thing_is_collision_circle_small(o)) {
               collision = thing_collision_check_circle_small_circle_small(g, v, l, me, interp_at, o, o_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else if (thing_is_collision_circle_large(o)) {
               collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at, o, o_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else if (thing_is_collision_square(o)) {
               collision = thing_collision_check_circle_small_square(g, v, l, me, interp_at, o, o_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else {
               continue;
@@ -424,17 +424,17 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
             if (thing_is_collision_circle_small(o)) {
               collision = thing_collision_check_circle_small_circle_large(g, v, l, me, interp_at, o, o_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else if (thing_is_collision_circle_large(o)) {
               collision = thing_collision_check_circle_large_circle_large(g, v, l, me, interp_at, o, o_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else if (thing_is_collision_square(o)) {
               collision = thing_collision_check_circle_large_square(g, v, l, me, interp_at, o, o_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else {
               continue;
@@ -443,17 +443,17 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
             if (thing_is_collision_circle_small(o)) {
               collision = thing_collision_check_circle_small_square(g, v, l, o, o_at, me, interp_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else if (thing_is_collision_circle_large(o)) {
               collision = thing_collision_check_circle_large_square(g, v, l, o, o_at, me, interp_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else if (thing_is_collision_square(o)) {
               collision = thing_collision_check_square_square(g, v, l, o, o_at, me, interp_at);
               if (__unused__) {
-                THING_LOG(o, "cand coll %d collision=%d", __LINE__, collision);
+                THING_LOG(o, "cand coll %d collision=%d", __LINE__, static_cast<int>(collision));
               }
             } else {
               continue;
@@ -478,22 +478,22 @@ void thing_collision_handle_interpolated(Gamep g, Levelsp v, Levelp l, Thingp me
     std::ranges::sort(pairs, [](const std::pair< float, Thingp > &a, const std::pair< float, Thingp > &b) {
       auto d1 = a.first;
       auto d2 = b.first;
-      auto t1 = a.second;
-      auto t2 = b.second;
+      auto *t1 = a.second;
+      auto *t2 = b.second;
       return (d1 < d2) && t1->_priority < t2->_priority;
     });
 
     if (__unused__) {
       for (auto a_pair : pairs) {
         auto o_dist = a_pair.first;
-        auto o      = a_pair.second;
+        auto *o      = a_pair.second;
 
         THING_LOG(o, "distance %f prio %u", o_dist, o->_priority);
       }
     }
 
     for (auto a_pair : pairs) {
-      auto o = a_pair.second;
+      auto *o = a_pair.second;
 
       thing_is_hit_set(g, v, l, o, MAX_HIT_TIME_MS);
 

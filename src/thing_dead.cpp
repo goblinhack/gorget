@@ -17,9 +17,9 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 {
   TRACE_AND_INDENT();
 
-  auto it = e.source;
+  auto *it = e.source;
 
-  if (it) {
+  if (it != nullptr) {
     auto by_the_thing = thing_the_long_name(g, v, l, it);
 
     switch (e.event_type) {
@@ -112,9 +112,9 @@ static void thing_killed_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 static void thing_killed_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_AND_INDENT();
-  auto it = e.source;
+  auto *it = e.source;
 
-  if (it && thing_is_loggable(t)) {
+  if ((it != nullptr) && thing_is_loggable(t)) {
     auto the_thing = capitalize_first(thing_the_long_name(g, v, l, t));
     auto by_player = thing_long_name(g, v, l, it);
 
@@ -170,8 +170,8 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   // Where did the thing die? Might not be on the current level.
   //
-  auto t_level = game_level_get(g, v, t->level_num);
-  if (t_level) {
+  auto *t_level = game_level_get(g, v, t->level_num);
+  if (t_level != nullptr) {
     l = t_level;
   }
 
@@ -187,7 +187,7 @@ void thing_dead(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
   //
   if (thing_is_player(t)) {
     thing_killed_player(g, v, l, t, e);
-  } else if (e.source && thing_is_player(e.source)) {
+  } else if ((e.source != nullptr) && thing_is_player(e.source)) {
     thing_killed_by_player(g, v, l, t, e);
   }
 
@@ -252,7 +252,7 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Update the animation, for example, flattened grass
   //
-  if (thing_is_burning(t) && tp_tiles_size(thing_tp(t), THING_ANIM_BURNT)) {
+  if (thing_is_burning(t) && (tp_tiles_size(thing_tp(t), THING_ANIM_BURNT) != 0)) {
     //
     // If it has burnt anim frames
     //
@@ -261,7 +261,7 @@ void thing_is_dead_handle(Gamep g, Levelsp v, Levelp l, Thingp t)
     // Restart the animation if we have burnt frames
     //
     thing_anim_init(g, v, l, t, THING_ANIM_BURNT);
-  } else if (tp_tiles_size(thing_tp(t), THING_ANIM_DEAD)) {
+  } else if (tp_tiles_size(thing_tp(t), THING_ANIM_DEAD) != 0) {
     //
     // Restart the animation if we have dead frames
     //

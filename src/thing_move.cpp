@@ -322,7 +322,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to)
   THING_LOG(me, "pre teleport");
 
   bool level_changed = false;
-  auto old_level     = thing_level(g, v, me);
+  auto *old_level     = thing_level(g, v, me);
 
   //
   // Need to reset vision when leaving a level
@@ -421,8 +421,8 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto *player_struct = thing_player_struct(g);
+  if (player_struct == nullptr) {
     return;
   }
 
@@ -440,7 +440,7 @@ void thing_move_or_jump_finish(Gamep g, Levelsp v, Levelp l, Thingp me)
   me->thing_dt = 0.0;
 
   auto at = thing_at(me);
-  (void) thing_moving_from_set(me, at);
+  thing_moving_from_set(me, at);
 
   thing_is_teleporting_unset(g, v, l, me);
   thing_is_moving_unset(g, v, l, me);
@@ -459,5 +459,5 @@ void thing_update_pos(Gamep g, Levelsp v, Levelp l, Thingp me)
   spoint pix_at;
   pix_at.x = (int) (real_at.x * (float) TILE_WIDTH);
   pix_at.y = (int) (real_at.y * (float) TILE_HEIGHT);
-  (void) thing_pix_at_set(g, v, l, me, pix_at);
+  thing_pix_at_set(g, v, l, me, pix_at);
 }

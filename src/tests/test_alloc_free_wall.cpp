@@ -20,7 +20,7 @@
   //
   // How the dungeon starts out, and how we expect it to change
   //
-  std::string start  = "";
+  std::string start;
   std::string expect = start;
 
   //
@@ -66,7 +66,7 @@
       for (auto x = 0; x < MAP_WIDTH; x++) {
         for (auto y = 0; y < MAP_HEIGHT; y++) {
           for (auto slot = 0; slot < slot_depth_to_test; slot++) {
-            if (! thing_spawn(g, v, l, tp_random(is_wall), spoint(x, y))) {
+            if (thing_spawn(g, v, l, tp_random(is_wall), spoint(x, y)) == nullptr) {
               break;
             }
 

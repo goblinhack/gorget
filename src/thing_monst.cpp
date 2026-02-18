@@ -19,13 +19,13 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
-  auto player_level = game_level_get(g, v, player->level_num);
-  auto monst_level  = game_level_get(g, v, me->level_num);
+  auto *player_level = game_level_get(g, v, player->level_num);
+  auto *monst_level  = game_level_get(g, v, me->level_num);
   if (player_level != monst_level) {
     THING_DBG(me, "choose target: different level from player");
     return false;
@@ -40,7 +40,7 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
   auto monst_at = thing_at(me);
   auto dist     = distance(monst_at, target);
   auto v_dist   = thing_distance_vision(me);
-  if (! v_dist) {
+  if (v_dist == 0) {
     THING_ERR(me, "choose target: monst has no vision distance");
     return false;
   }
@@ -51,7 +51,7 @@ bool thing_monst_choose_target_player(Gamep g, Levelsp v, Levelp l, Thingp me)
   }
 
   auto p = astar_solve(g, v, l, me, monst_at, target);
-  if (! p.size()) {
+  if (p.empty()) {
     THING_DBG(me, "choose target: no path to player");
     return false;
   }
@@ -347,8 +347,8 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
     return;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 

@@ -531,7 +531,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) "                ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, false /* check */, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, 0 /* check */, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  ^         ",
            /* line */ (const char *) " x.xxxx     ",
            /* line */ (const char *) " x....xx    ",
@@ -545,7 +545,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) "     xxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, false /* check */, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, 0 /* check */, __FUNCTION__, __LINE__,
            /* line */ (const char *) "     ^     ",
            /* line */ (const char *) "  xxx.xxx  ",
            /* line */ (const char *) "  x.....x  ",
@@ -558,7 +558,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) "    xxxxxxx",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, false /* check */, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, 0 /* check */, __FUNCTION__, __LINE__,
            /* line */ (const char *) "        ^      ",
            /* line */ (const char *) "      xx.xxxx  ",
            /* line */ (const char *) "     xx.....xx ",
@@ -571,7 +571,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) "  xxxxxx       ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, false /* check */, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, 0 /* check */, __FUNCTION__, __LINE__,
            /* line */ (const char *) "        ^      ",
            /* line */ (const char *) "      xx.xxxx  ",
            /* line */ (const char *) "      x.....xx ",
@@ -582,7 +582,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) "  xxxxxx       ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, false /* check */, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, 0 /* check */, __FUNCTION__, __LINE__,
            /* line */ (const char *) "  xxxxxx  ",
            /* line */ (const char *) "  x....x  ",
            /* line */ (const char *) " x......x ",
@@ -593,7 +593,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) "  xxxxxxx ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, false /* check */, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, 0 /* check */, __FUNCTION__, __LINE__,
            /* line */ (const char *) "         ^   ",
            /* line */ (const char *) "   xxxxxx.xx ",
            /* line */ (const char *) "  xx.......x ",
@@ -606,7 +606,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) " xxxxxxxxx   ",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, false /* check */, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, 0 /* check */, __FUNCTION__, __LINE__,
            /* line */ (const char *) "         ^ ",
            /* line */ (const char *) "        x.x",
            /* line */ (const char *) "        x.x",
@@ -619,7 +619,7 @@ void rooms_exit(Gamep g)
            /* line */ (const char *) "xxxxxxxxxxx",
            /* end */ nullptr);
 
-  room_add(g, CHANCE_NORMAL, false /* check */, __FUNCTION__, __LINE__,
+  room_add(g, CHANCE_NORMAL, 0 /* check */, __FUNCTION__, __LINE__,
            /* line */ (const char *) "   xxxxx     ",
            /* line */ (const char *) "  xx...x     ",
            /* line */ (const char *) " xx....xxxxx ",

@@ -22,7 +22,7 @@ bool tp_load_smoke(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("smoke"); // keep as string for scripts
+  auto *tp   = tp_load("smoke"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -54,7 +54,7 @@ bool tp_load_smoke(void)
   auto delay = 200;
 
   for (auto frame = 0; frame < 16; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }

@@ -17,7 +17,7 @@ void sdl_display(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (! sdl.window) {
+  if (sdl.window == nullptr) {
     return;
   }
 
@@ -65,7 +65,7 @@ void sdl_flush_display(Gamep g, bool force)
 {
   TRACE_NO_INDENT();
 
-  if (! sdl.window) {
+  if (sdl.window == nullptr) {
     return;
   }
 
@@ -85,7 +85,7 @@ void sdl_display_reset(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (! sdl.window) {
+  if (sdl.window == nullptr) {
     return;
   }
 
@@ -141,7 +141,7 @@ bool sdl_display_init(Gamep g)
   //
   // If we have a saved setting, use that.
   //
-  if (game_config_pix_width_get(g) && game_config_pix_height_get(g)) {
+  if ((game_config_pix_width_get(g) != 0) && (game_config_pix_height_get(g) != 0)) {
     video_width  = game_config_pix_width_get(g);
     video_height = game_config_pix_height_get(g);
     LOG("SDL: Used saved resolution %ux%u", video_width, video_height);
@@ -223,14 +223,15 @@ bool sdl_display_init(Gamep g)
   sdl.window = SDL_CreateWindow("gorget", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_width, video_height,
                                 video_flags);
 
-  if (! sdl.window) {
+  if (sdl.window == nullptr) {
     ERR("SDL_CreateWindow couldn't set windowed display %ux%u: '%s'", video_width, video_height, SDL_GetError());
     game_config_reset(g);
     game_save_config(g);
     return false;
   }
 
-  int w, h;
+  int w;
+  int h;
   SDL_GetWindowSize(sdl.window, &w, &h);
   LOG("SDL: Created window size %ux%u", w, h);
 
@@ -241,7 +242,7 @@ bool sdl_display_init(Gamep g)
 
   LOG("SDL: Call SDL_GL_CreateContext(%dx%d)", game_window_pix_width_get(g), game_window_pix_height_get(g));
   sdl.context = SDL_GL_CreateContext(sdl.window);
-  if (! sdl.context) {
+  if (sdl.context == nullptr) {
     SDL_ClearError();
     ERR("SDL_GL_CreateContext failed %s", SDL_GetError());
     return false;
@@ -269,7 +270,7 @@ bool sdl_display_init(Gamep g)
   //
   // Work around macos focus issue, possibly caused by iTerm
   //
-  while (SDL_PollEvent(&evt)) {}
+  while (SDL_PollEvent(&evt) != 0) {}
 #endif
 
   //
@@ -307,7 +308,7 @@ void sdl_display_fini(Gamep g)
   LOG("SDL: Video fini");
   TRACE_AND_INDENT();
 
-  if (! sdl.init_video) {
+  if (sdl.init_video == 0) {
     return;
   }
   sdl.init_video = 0;

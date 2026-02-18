@@ -26,26 +26,26 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
           (int) strlen(in), w, h);
   }
 
-  auto tp_wall       = tp_random(is_wall);
-  auto tp_border     = tp_first(is_border);
-  auto tp_rock       = tp_random(is_rock);
-  auto tp_water      = tp_random(is_water);
-  auto tp_lava       = tp_random(is_lava);
-  auto tp_bridge     = tp_random(is_bridge);
-  auto tp_chasm      = tp_random(is_chasm);
-  auto tp_deep_water = tp_random(is_deep_water);
-  auto tp_brazier    = tp_random(is_brazier);
-  auto tp_pillar     = tp_random(is_pillar);
-  auto tp_barrel     = tp_random(is_barrel);
-  auto tp_teleport   = tp_random(is_teleport);
-  auto tp_foliage    = tp_random(is_foliage);
-  auto tp_corridor   = tp_random(is_corridor);
-  auto tp_grass      = tp_random(is_grass);
-  auto tp_floor      = tp_random(is_floor);
-  auto tp_dirt       = tp_find_mand("dirt");
-  auto tp_exit       = tp_find_mand("exit");
-  auto tp_player     = tp_find_mand("player");
-  auto tp_entrance   = tp_find_mand("entrance");
+  auto *tp_wall       = tp_random(is_wall);
+  auto *tp_border     = tp_first(is_border);
+  auto *tp_rock       = tp_random(is_rock);
+  auto *tp_water      = tp_random(is_water);
+  auto *tp_lava       = tp_random(is_lava);
+  auto *tp_bridge     = tp_random(is_bridge);
+  auto *tp_chasm      = tp_random(is_chasm);
+  auto *tp_deep_water = tp_random(is_deep_water);
+  auto *tp_brazier    = tp_random(is_brazier);
+  auto *tp_pillar     = tp_random(is_pillar);
+  auto *tp_barrel     = tp_random(is_barrel);
+  auto *tp_teleport   = tp_random(is_teleport);
+  auto *tp_foliage    = tp_random(is_foliage);
+  auto *tp_corridor   = tp_random(is_corridor);
+  auto *tp_grass      = tp_random(is_grass);
+  auto *tp_floor      = tp_random(is_floor);
+  auto *tp_dirt       = tp_find_mand("dirt");
+  auto *tp_exit       = tp_find_mand("exit");
+  auto *tp_player     = tp_find_mand("player");
+  auto *tp_entrance   = tp_find_mand("entrance");
 
   //
   // We need secret doors to match the style of walls
@@ -75,7 +75,7 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       auto o = overrides.find(c);
       if (o != overrides.end()) {
         tp = (o->second)(c, at);
-        if (! tp) {
+        if (tp == nullptr) {
           ERR("could not find a template for override char %c", c);
           return false;
         }
@@ -162,7 +162,7 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
             need_floor = true;
             if (is_test_level) {
               tp = tp_random(is_door_locked);
-            } else if (l->info.key_count) {
+            } else if (l->info.key_count != 0) {
               tp = tp_random(is_door_locked);
             } else {
               tp = tp_variant(is_door_secret, wall_variant);
@@ -249,51 +249,51 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       }
 
       if (need_floor) {
-        auto tp_add = tp_floor;
-        if (! thing_spawn(g, v, l, tp_add, at)) {
+        auto *tp_add = tp_floor;
+        if (thing_spawn(g, v, l, tp_add, at) == nullptr) {
           return false;
         }
       }
 
       if (need_corridor) {
-        auto tp_add = tp_corridor;
-        if (! thing_spawn(g, v, l, tp_add, at)) {
+        auto *tp_add = tp_corridor;
+        if (thing_spawn(g, v, l, tp_add, at) == nullptr) {
           return false;
         }
       }
 
       if (need_dirt) {
-        auto tp_add = tp_dirt;
-        if (! thing_spawn(g, v, l, tp_add, at)) {
+        auto *tp_add = tp_dirt;
+        if (thing_spawn(g, v, l, tp_add, at) == nullptr) {
           return false;
         }
       }
 
       if (need_water) {
-        if (! thing_spawn(g, v, l, tp_water, at)) {
+        if (thing_spawn(g, v, l, tp_water, at) == nullptr) {
           return false;
         }
       }
 
       if (need_foliage) {
         if (! level_gen_is_room_entrance(g, level_gen, at)) {
-          auto tp_add = tp_foliage;
-          if (! thing_spawn(g, v, l, tp_add, at)) {
+          auto *tp_add = tp_foliage;
+          if (thing_spawn(g, v, l, tp_add, at) == nullptr) {
             return false;
           }
         }
       }
 
       if (need_entrance) {
-        auto tp_add = tp_entrance;
-        if (! thing_spawn(g, v, l, tp_add, at)) {
+        auto *tp_add = tp_entrance;
+        if (thing_spawn(g, v, l, tp_add, at) == nullptr) {
           return false;
         }
         l->entrance = at;
       }
 
-      if (tp) {
-        if (! thing_spawn(g, v, l, tp, at)) {
+      if (tp != nullptr) {
+        if (thing_spawn(g, v, l, tp, at) == nullptr) {
           return false;
         }
       }
@@ -301,12 +301,12 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       if (! g_opt_tests) {
         if (__unused__) {
           if (tp == tp_player) {
-            if (true) {
+            {
               if (! thing_spawn(g, v, l, tp_random(is_trap), at + spoint(1, 0))) {
                 return false;
               }
             }
-            if (true) {
+            {
               if (! thing_spawn(g, v, l, tp_random(is_treasure), at + spoint(2, 0))) {
                 return false;
               }

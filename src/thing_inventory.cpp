@@ -56,12 +56,12 @@ bool thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp p
     return false;
   }
 
-  if (! new_item) {
+  if (new_item == nullptr) {
     return false;
   }
 
-  auto ext_struct = thing_ext_struct(g, player_or_monst);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, player_or_monst);
+  if (ext_struct == nullptr) {
     return false;
   }
 
@@ -70,7 +70,7 @@ bool thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp p
   //
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player_or_monst, slot, item)
   {
-    if (! item) {
+    if (item == nullptr) {
       continue;
     }
 
@@ -96,7 +96,7 @@ bool thing_inventory_add(Gamep g, Levelsp v, Levelp l, Thingp new_item, Thingp p
   //
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player_or_monst, slot, item)
   {
-    if (item) {
+    if (item != nullptr) {
       continue;
     }
 
@@ -124,12 +124,12 @@ bool thing_inventory_remove(Gamep g, Levelsp v, Levelp l, Thingp drop_item, Thin
     return false;
   }
 
-  if (! drop_item) {
+  if (drop_item == nullptr) {
     return false;
   }
 
-  auto ext_struct = thing_ext_struct(g, player_or_monst);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, player_or_monst);
+  if (ext_struct == nullptr) {
     return false;
   }
 
@@ -167,20 +167,20 @@ void thing_inventory_dump(Gamep g, Levelsp v, Levelp l, Thingp player_or_monst)
     return;
   }
 
-  auto ext_struct = thing_ext_struct(g, player_or_monst);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, player_or_monst);
+  if (ext_struct == nullptr) {
     return;
   }
 
   FOR_ALL_INVENTORY_SLOTS(g, v, l, player_or_monst, slot, item)
   { //
-    if (! item) {
+    if (item == nullptr) {
       THING_LOG(player_or_monst, "slot %d: -", _n_);
       continue;
     }
 
     auto s = to_string(g, v, l, item);
-    if (slot->count) {
+    if (slot->count != 0) {
       THING_LOG(player_or_monst, "slot %d: %s, count %d", _n_, s.c_str(), slot->count);
     } else {
       THING_LOG(player_or_monst, "slot %d: %s", _n_, s.c_str());

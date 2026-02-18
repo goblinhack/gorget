@@ -21,7 +21,7 @@ Thingp thing_find_non_inline(Gamep g, Levelsp v, ThingId id)
   id_packed.a.val         = id;
   auto arr_index          = id_packed.c.arr_index;
 
-  auto t = &v->thing_body[ arr_index ];
+  auto *t = &v->thing_body[ arr_index ];
   if (unlikely(! t)) {
     CROAK("Thing not found as id 08%" PRIX32 //
           " (level: %" PRIu32                //

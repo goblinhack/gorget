@@ -13,15 +13,15 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
 
   auto at = make_spoint(real_at);
 
-  auto t = thing_alloc(g, v, l, tp, at);
-  if (! t) {
+  auto *t = thing_alloc(g, v, l, tp, at);
+  if (t == nullptr) {
     return nullptr;
   }
 
   //
   // Used so often, we cache it
   //
-  if (tp_flag(thing_tp(t), is_player)) {
+  if (tp_flag(thing_tp(t), is_player) != 0) {
     t->_is_player = true;
   }
 

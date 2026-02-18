@@ -13,8 +13,8 @@ void game_debug_info(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return;
   }
 
@@ -63,7 +63,7 @@ int levels_thing_count(Gamep g, Levelsp v)
 
   int thing_count = 0;
   for (auto &arr_index : v->thing_body) {
-    auto t = &arr_index;
+    auto *t = &arr_index;
 
 #ifdef ENABLE_PER_THING_MEMORY
     if (v->thing_body_debug[ arr_index ]) {
@@ -74,7 +74,7 @@ int levels_thing_count(Gamep g, Levelsp v)
     }
 #endif
 
-    if (t->tp_id) {
+    if (t->tp_id != 0u) {
       thing_count++;
     }
   }
@@ -96,7 +96,7 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
   LOG("Level         : %d", l->level_num);
   LOG("Seed          : %u", l->info.seed_num);
 
-  if (l->info.room_count) {
+  if (l->info.room_count != 0) {
     LOG("Room count        : %d", l->info.room_count);
     LOG("Entrance at       : %d,%d", l->info.entrance_at.x, l->info.entrance_at.y);
     LOG("Exit at           : %d,%d", l->info.exit_at.x, l->info.exit_at.y);
@@ -125,7 +125,7 @@ void level_debug(Gamep g, Levelsp v, Levelp l)
     std::string tmp;
     for (auto &x : l->debug) {
       auto c = x[ y ];
-      if (c) {
+      if (c != 0) {
         tmp += x[ y ];
       }
     }

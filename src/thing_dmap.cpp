@@ -15,8 +15,8 @@ Dmap *thing_get_dmap(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  auto ext = thing_ext_struct(g, me);
-  if (! ext) {
+  auto *ext = thing_ext_struct(g, me);
+  if (ext == nullptr) {
     THING_ERR(me, "mob has no ext memory");
     return nullptr;
   }
@@ -41,8 +41,8 @@ void thing_dmap(Gamep g, Levelsp v, Levelp l, Thingp me, bool reverse)
   uint8_t maxx = MAP_WIDTH - 1;
   uint8_t maxy = MAP_HEIGHT - 1;
 
-  auto ext = thing_ext_struct(g, me);
-  if (! ext) {
+  auto *ext = thing_ext_struct(g, me);
+  if (ext == nullptr) {
     return;
   }
 

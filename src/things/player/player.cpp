@@ -62,7 +62,7 @@ static void tp_player_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     thing_sound_play(g, v, l, t, "splash");
   }
 
-  if (thing_is_falling(t)) {
+  if (thing_is_falling(t) != 0) {
     return;
   }
 
@@ -119,7 +119,7 @@ static void tp_player_level_enter(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Needed to make sure the light resets as it looks for pixel changes.
   //
-  (void) thing_prev_pix_at_set(g, v, l, t, spoint(-1, -1));
+  thing_prev_pix_at_set(g, v, l, t, spoint(-1, -1));
 }
 
 static void tp_player_level_populated(Gamep g, Levelsp v, Levelp l, Thingp t) { TRACE_NO_INDENT(); }
@@ -160,7 +160,7 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 bool tp_load_player(void)
 {
-  auto tp   = tp_load("player"); // keep as string for scripts
+  auto *tp   = tp_load("player"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -226,14 +226,14 @@ bool tp_load_player(void)
   auto delay = 1000;
 
   for (auto frame = 0; frame < 2; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
   for (auto frame = 0; frame < 1; frame++) {
-    auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);

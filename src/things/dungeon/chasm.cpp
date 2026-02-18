@@ -20,7 +20,7 @@ bool tp_load_chasm(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("chasm"); // keep as string for scripts
+  auto *tp   = tp_load("chasm"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_chasm_description_get);
@@ -44,7 +44,7 @@ bool tp_load_chasm(void)
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   // end sort marker1 }
 
-  auto tile = tile_find_mand(name + ".IS_JOIN_BL");
+  auto *tile = tile_find_mand(name + ".IS_JOIN_BL");
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
   tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile);
   tile = tile_find_mand(name + ".IS_JOIN_BL2");

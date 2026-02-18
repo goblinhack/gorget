@@ -23,13 +23,13 @@
     }
   }
 
-  if (! teleports.size()) {
+  if (teleports.empty()) {
     return false;
   }
 
-  auto other = pcg_rand_one_of(teleports);
+  auto *other = pcg_rand_one_of(teleports);
 
-  if (other) {
+  if (other != nullptr) {
     //
     // Sets reference
     //

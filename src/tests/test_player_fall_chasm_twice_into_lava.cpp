@@ -99,7 +99,7 @@
   {
     TRACE_NO_INDENT();
     player = thing_player(g);
-    if (! player) {
+    if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }

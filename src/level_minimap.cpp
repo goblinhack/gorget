@@ -28,12 +28,13 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool 
   // The level passed in here could be the level select level, so always look
   // at the player
   //
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
-  int w, h;
+  int w;
+  int h;
   fbo_get_size(g, fbo, w, h);
   gl_enter_2d_mode(g, w, h);
 
@@ -52,8 +53,8 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool 
         Levelp level_at_coord = nullptr;
 
         spoint p(x, y);
-        auto   s = level_select_get(g, v, p);
-        if (! s->is_set) {
+        auto *   s = level_select_get(g, v, p);
+        if (s->is_set == 0u) {
           //
           // No level here
           //
@@ -61,7 +62,7 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool 
         }
 
         level_at_coord = game_level_get(g, v, s->level_num);
-        if (! level_at_coord) {
+        if (level_at_coord == nullptr) {
           continue;
         }
 
@@ -139,7 +140,8 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
 
   const FboEnum fbo = FBO_MINIMAP_WORLD_ROTATED;
 
-  int w, h;
+  int w;
+  int h;
   fbo_get_size(g, fbo, w, h);
   gl_enter_2d_mode(g, w, h);
 
@@ -160,7 +162,7 @@ static void level_minimap_world_update_rotated(Gamep g, Levelsp v, Levelp l)
       float ox = w / 2;
       float oy = h / 2;
       glTranslatef(ox, oy, 0);
-      glRotatef((float) -135, 0.0f, 0.0f, 1.0f);
+      glRotatef((float) -135, 0.0F, 0.0F, 1.0F);
       glTranslatef(-ox, -oy, 0);
 
       //
@@ -180,8 +182,8 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
@@ -189,7 +191,8 @@ static void level_minimap_levels_update(Gamep g, Levelsp v, Levelp l, const bool
   const auto    dx  = 1;
   const auto    dy  = 1;
 
-  int w, h;
+  int w;
+  int h;
   fbo_get_size(g, fbo, w, h);
   gl_enter_2d_mode(g, w, h);
 
@@ -323,7 +326,7 @@ void level_minimaps_update(Gamep g, Levelsp v, Levelp l)
   //
   bool level_select = level_is_level_select(g, v, game_level_get(g, v));
 
-  if (! solid_tex) {
+  if (solid_tex == nullptr) {
     solid_tex    = tex_load("", "solid", GL_LINEAR);
     solid_tex_id = tex_get_gl_binding(solid_tex);
   }

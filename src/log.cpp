@@ -157,7 +157,7 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
 {
   TRACE_NO_INDENT();
 
-  extern Gamep game;
+  
   auto        *g = game;
 
   if (g_dying) {

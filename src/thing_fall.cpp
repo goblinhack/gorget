@@ -131,8 +131,8 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   THING_LOG(t, "fall end");
 
-  auto next_level = level_select_get_next_level_down(g, v, l);
-  if (! next_level) {
+  auto *next_level = level_select_get_next_level_down(g, v, l);
+  if (next_level == nullptr) {
     if (g_opt_tests) {
       THING_LOG(t, "no level to fall onto");
     } else {
@@ -180,8 +180,8 @@ static void thing_fall_end(Gamep g, Levelsp v, Levelp l, Thingp t)
     player_fell(g, v, l, next_level, t);
   }
 
-  auto t_level = game_level_get(g, v, t->level_num);
-  if (t_level) {
+  auto *t_level = game_level_get(g, v, t->level_num);
+  if (t_level != nullptr) {
     l = t_level;
   } else {
     THING_ERR(t, "fell into nothing");
@@ -234,8 +234,9 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 
   (void) thing_is_falling_incr(g, v, l, t, time_step);
 
-  if (__unused__)
+  if (__unused__) {
     THING_LOG(t, "fall incr %u", thing_is_falling(t));
+}
 }
 
 //
@@ -245,15 +246,16 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (__unused__)
+  if (__unused__) {
     THING_LOG(t, "fall %u", thing_is_falling(t));
+}
 
   if (thing_is_falling(t) >= MAX_FALL_TIME_MS) {
 
     thing_fall_end(g, v, l, t);
 
-    auto t_level = game_level_get(g, v, t->level_num);
-    if (! t_level) {
+    auto *t_level = game_level_get(g, v, t->level_num);
+    if (t_level == nullptr) {
       THING_ERR(t, "fell into nothing");
     }
 

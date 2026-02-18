@@ -12,7 +12,7 @@ bool tp_load_dirt(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("dirt"); // keep as string for scripts
+  auto *tp   = tp_load("dirt"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -24,7 +24,7 @@ bool tp_load_dirt(void)
   tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
   // end sort marker1 }
 
-  auto tile = tile_find_mand("dirt.1");
+  auto *tile = tile_find_mand("dirt.1");
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
   tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   tile = tile_find_mand("dirt.2");

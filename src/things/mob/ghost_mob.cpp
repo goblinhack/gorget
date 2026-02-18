@@ -52,7 +52,7 @@ static void tp_ghost_mob_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
 
 bool tp_load_ghost_mob(void)
 {
-  auto tp   = tp_load("ghost_mob"); // keep as string for scripts
+  auto *tp   = tp_load("ghost_mob"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -108,7 +108,7 @@ bool tp_load_ghost_mob(void)
   auto delay = 1000;
 
   for (auto frame = 0; frame < 2; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
@@ -116,7 +116,7 @@ bool tp_load_ghost_mob(void)
   delay = 200;
 
   for (auto frame = 0; frame < 6; frame++) {
-    auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);
 

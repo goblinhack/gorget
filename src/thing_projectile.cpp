@@ -17,8 +17,8 @@ static fpoint thing_projectile_get_delta_from_dt(Gamep g, Levelsp v, Levelp l, T
   float c;
   sincosf(t->angle, &s, &c);
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     CROAK("No player struct found");
     return fpoint(0, 0);
   }
@@ -69,8 +69,8 @@ bool thing_projectile_fire_at(Gamep g, Levelsp v, Levelp l, Thingp me, Tpp what,
   proj_at.x += c * offset;
   proj_at.y += s * offset;
 
-  auto projectile = thing_spawn(g, v, l, what, proj_at);
-  if (! projectile) {
+  auto *projectile = thing_spawn(g, v, l, what, proj_at);
+  if (projectile == nullptr) {
     return false;
   }
 
@@ -106,8 +106,8 @@ void thing_projectile_move(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   fpoint old_at = thing_real_at(t);
   auto   at     = old_at;
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     ERR("No player struct found");
     return;
   }

@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_command.hpp"
@@ -17,7 +19,7 @@ SDL sdl;
 
 void sdl_fini(Gamep g)
 {
-  if (! sdl.init_video) {
+  if (sdl.init_video == 0) {
     return;
   }
 
@@ -33,7 +35,7 @@ void sdl_fini(Gamep g)
 void sdl_joy_rumble(float strength, uint32_t ms)
 {
   TRACE_NO_INDENT();
-  if (! sdl.haptic) {
+  if (sdl.haptic == nullptr) {
     return;
   }
 
@@ -45,16 +47,16 @@ static void sdl_init_rumble(void)
   LOG("SDL: Init rumble:");
   TRACE_AND_INDENT();
 
-  if (! sdl.haptic) {
+  if (sdl.haptic == nullptr) {
     sdl.haptic = SDL_HapticOpenFromJoystick(sdl.joy);
-    if (! sdl.haptic) {
+    if (sdl.haptic == nullptr) {
       LOG("- Couldn't initialize SDL rumble: %s", SDL_GetError());
       SDL_ClearError();
       return;
     }
   }
 
-  if (! SDL_HapticRumbleSupported(sdl.haptic)) {
+  if (SDL_HapticRumbleSupported(sdl.haptic) == 0) {
     LOG("- No SDL rumble support: %s", SDL_GetError());
     SDL_ClearError();
     return;
@@ -88,9 +90,9 @@ static void sdl_init_joystick(void)
   sdl.joy_index = 0;
   for (sdl.joy_index = 0; sdl.joy_index < SDL_NumJoysticks(); ++sdl.joy_index) {
 
-    if (SDL_IsGameController(sdl.joy_index)) {
+    if (SDL_IsGameController(sdl.joy_index) != 0u) {
       controller = SDL_GameControllerOpen(sdl.joy_index);
-      if (controller) {
+      if (controller != nullptr) {
         LOG("- Found gamecontroller");
         break;
       }
@@ -99,13 +101,13 @@ static void sdl_init_joystick(void)
     }
   }
 
-  if (! controller) {
+  if (controller == nullptr) {
     LOG("- No found gamecontroller");
     return;
   }
 
   sdl.joy = SDL_JoystickOpen(sdl.joy_index);
-  if (sdl.joy) {
+  if (sdl.joy != nullptr) {
     LOG("- Opened Joystick  : %d", sdl.joy_index);
     LOG("- Name             : %s", SDL_JoystickNameForIndex(0));
     LOG("- Number of Axes   : %d", SDL_JoystickNumAxes(sdl.joy));
@@ -154,14 +156,15 @@ int sdl_get_mouse(void)
 {
   TRACE_NO_INDENT();
 
-  if (! wid_mouse_visible) {
+  if (wid_mouse_visible == 0) {
     return 0;
   }
 
-  int x = 0, y = 0;
+  int x = 0;
+  int y = 0;
   int button = SDL_GetMouseState(&x, &y);
 
-  if (! x && ! y) {
+  if ((x == 0) && (y == 0)) {
     return button;
   }
 
@@ -175,7 +178,8 @@ void sdl_mouse_center(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  int x, y;
+  int x;
+  int y;
 
   x = game_window_pix_width_get(g) / 2;
   y = game_window_pix_height_get(g) / 2;
@@ -209,18 +213,18 @@ void sdl_mouse_warp(Gamep g, int x, int y)
 void sdl_tick(Gamep g)
 {
   TRACE_NO_INDENT();
-  sdl.left_fire = false;
-  sdl.left_fire = true;
+  sdl.left_fire = 0;
+  sdl.left_fire = 1;
 
-  sdl.joy1_right = false;
-  sdl.joy1_left  = false;
-  sdl.joy1_down  = false;
-  sdl.joy1_up    = false;
+  sdl.joy1_right = 0;
+  sdl.joy1_left  = 0;
+  sdl.joy1_down  = 0;
+  sdl.joy1_up    = 0;
 
-  sdl.joy2_right = false;
-  sdl.joy2_left  = false;
-  sdl.joy2_down  = false;
-  sdl.joy2_up    = false;
+  sdl.joy2_right = 0;
+  sdl.joy2_left  = 0;
+  sdl.joy2_down  = 0;
+  sdl.joy2_up    = 0;
 
   sdl_get_mouse();
 
@@ -229,7 +233,7 @@ void sdl_tick(Gamep g)
   //
   if (sdl.joy_axes[ 3 ] > sdl.joy_deadzone) {
     DBG2("SDL: right stick, right");
-    sdl.joy1_right = true;
+    sdl.joy1_right = 1;
 
     sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]++;
     wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
@@ -238,7 +242,7 @@ void sdl_tick(Gamep g)
 
   if (sdl.joy_axes[ 3 ] < -sdl.joy_deadzone) {
     DBG2("SDL: right stick, left");
-    sdl.joy1_left = true;
+    sdl.joy1_left = 1;
 
     sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]++;
     wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
@@ -247,7 +251,7 @@ void sdl_tick(Gamep g)
 
   if (sdl.joy_axes[ 4 ] > sdl.joy_deadzone) {
     DBG2("SDL: right stick, down");
-    sdl.joy1_down = true;
+    sdl.joy1_down = 1;
 
     sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]++;
     wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
@@ -256,7 +260,7 @@ void sdl_tick(Gamep g)
 
   if (sdl.joy_axes[ 4 ] < -sdl.joy_deadzone) {
     DBG2("SDL: right stick, up");
-    sdl.joy1_up = true;
+    sdl.joy1_up = 1;
 
     sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]++;
     wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
@@ -271,25 +275,25 @@ void sdl_tick(Gamep g)
 
   if (sdl.joy_axes[ 0 ] > sdl.joy_deadzone) {
     DBG2("SDL: left stick, right");
-    sdl.joy2_right = true;
+    sdl.joy2_right = 1;
     mx             = 1;
   }
 
   if (sdl.joy_axes[ 0 ] < -sdl.joy_deadzone) {
     DBG2("SDL: left stick, left");
-    sdl.joy2_left = true;
+    sdl.joy2_left = 1;
     mx            = -1;
   }
 
   if (sdl.joy_axes[ 1 ] > sdl.joy_deadzone) {
     DBG2("SDL: left stick, down");
-    sdl.joy2_down = true;
+    sdl.joy2_down = 1;
     my            = 1;
   }
 
   if (sdl.joy_axes[ 1 ] < -sdl.joy_deadzone) {
     DBG2("SDL: left stick, up");
-    sdl.joy2_up = true;
+    sdl.joy2_up = 1;
     my          = -1;
   }
 
@@ -305,30 +309,20 @@ void sdl_tick(Gamep g)
 
     accel *= (float) UI_SCROLL_JOY_SCALE;
 
-    if (accel > (float) UI_SCROLL_JOY_SCALE_MAX) {
-      accel = (float) UI_SCROLL_JOY_SCALE_MAX;
-    }
+    accel = std::min(accel, (float) UI_SCROLL_JOY_SCALE_MAX);
 
     int x = (int) (sdl.mouse_x + ((float) mx * accel));
     int y = (int) (sdl.mouse_y + ((float) my * accel));
 
-    if (x < 0) {
-      x = 0;
-    }
+    x = std::max(x, 0);
 
-    if (y < 0) {
-      y = 0;
-    }
+    y = std::max(y, 0);
 
-    if (x > game_window_pix_width_get(g) - 1) {
-      x = game_window_pix_width_get(g) - 1;
-    }
+    x = std::min(x, game_window_pix_width_get(g) - 1);
 
-    if (y > game_window_pix_height_get(g) - 1) {
-      y = game_window_pix_height_get(g) - 1;
-    }
+    y = std::min(y, game_window_pix_height_get(g) - 1);
 
-    if (wid_mouse_visible) {
+    if (wid_mouse_visible != 0) {
       sdl_mouse_warp(g, x, y);
     }
   }
@@ -359,11 +353,11 @@ uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context)
 
   char *s = tokens->args[ 2 ];
 
-  if (! s || (*s == '\0')) {
+  if ((s == nullptr) || (*s == '\0')) {
     game_fps_counter_set(g);
     CON("FPS counter enabled (default).");
   } else {
-    if (strtol(s, nullptr, 10)) {
+    if (strtol(s, nullptr, 10) != 0) {
       game_fps_counter_set(g);
     } else {
       game_fps_counter_unset(g);
@@ -375,7 +369,7 @@ uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context)
     }
   }
 
-  return true;
+  return 1u;
 }
 
 //
@@ -387,13 +381,13 @@ uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context)
 
   char *s = tokens->args[ 2 ];
 
-  if (! s || (*s == '\0')) {
+  if ((s == nullptr) || (*s == '\0')) {
     g_opt_debug1 = false;
     g_opt_debug2 = false;
   } else {
     g_opt_debug1 = false;
     g_opt_debug2 = false;
-    switch (strtol(s, nullptr, 10) ? 1 : 0) {
+    switch ((strtol(s, nullptr, 10) != 0) ? 1 : 0) {
       case 0 :  break;
       default : g_opt_debug1 = true; break;
     }
@@ -405,7 +399,7 @@ uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context)
     CON("Debug: off.");
   }
 
-  return true;
+  return 1u;
 }
 
 //
@@ -417,10 +411,10 @@ uint8_t config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context)
 
   char *s = tokens->args[ 2 ];
 
-  if (! s || (*s == '\0')) {
+  if ((s == nullptr) || (*s == '\0')) {
     game_gfx_vsync_enable_set(g);
   } else {
-    if (strtol(s, nullptr, 10)) {
+    if (strtol(s, nullptr, 10) != 0) {
       game_gfx_vsync_enable_set(g);
     } else {
       game_gfx_vsync_enable_unset(g);
@@ -436,7 +430,7 @@ uint8_t config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context)
   }
   GL_ERROR_CHECK();
 
-  return true;
+  return 1u;
 }
 
 void config_gfx_vsync_update(Gamep g)
@@ -471,7 +465,7 @@ uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
     wid_main_menu_select(g);
   }
 
-  return true;
+  return 1u;
 }
 
 uint8_t show_error(Gamep g, class Tokens *tokens, void *context)
@@ -487,7 +481,7 @@ uint8_t show_error(Gamep g, class Tokens *tokens, void *context)
     CON("No error.");
   }
 
-  return true;
+  return 1u;
 }
 
 void sdl_config_update_all(Gamep g)
@@ -510,7 +504,7 @@ uint8_t sdl_user_exit(Gamep g, class Tokens *tokens, void *context)
   TRACE_NO_INDENT();
   sdl_prepare_to_exit(g);
 
-  return true;
+  return 1u;
 }
 
 void config_game_gfx_update(Gamep g)
@@ -526,11 +520,11 @@ void config_game_gfx_update(Gamep g)
   TERM_WIDTH  = game_ui_term_width_get(g);
   TERM_HEIGHT = game_ui_term_height_get(g);
 
-  if (! TERM_WIDTH) {
+  if (TERM_WIDTH == 0) {
     ERR("TERM_WIDTH is zero");
     return;
   }
-  if (! TERM_HEIGHT) {
+  if (TERM_HEIGHT == 0) {
     ERR("TERM_HEIGHT is zero");
     return;
   }
@@ -718,13 +712,9 @@ void config_game_gfx_update(Gamep g)
   int    fbo_w         = TILE_WIDTH * game_tiles_visible_across_get(g);
   int    fbo_h         = (int) ceil(fbo_w / map_w_h_ratio);
 
-  if (fbo_w > max_fbo_w) {
-    fbo_w = max_fbo_w;
-  }
+  fbo_w = std::min(fbo_w, max_fbo_w);
 
-  if (fbo_h > max_fbo_h) {
-    fbo_h = max_fbo_h;
-  }
+  fbo_h = std::min(fbo_h, max_fbo_h);
 
   game_visible_map_pix_set(g, visible_map_tl_x, visible_map_tl_y, visible_map_br_x, visible_map_br_y);
 
@@ -781,13 +771,14 @@ void config_game_gfx_update(Gamep g)
 
   FOR_ALL_FBO(fbo)
   {
-    int fbo_tmp_w, fbo_tmp_h;
+    int fbo_tmp_w;
+    int fbo_tmp_h;
     fbo_get_size(g, fbo, fbo_tmp_w, fbo_tmp_h);
     LOG("SDL: - %-30s : %ux%u pixels", FboEnum_to_string(fbo).c_str(), fbo_tmp_w, fbo_tmp_h);
   }
 
   LOG("SDL: Map");
   LOG("SDL: - size                    : %dx%d", MAP_WIDTH, MAP_HEIGHT);
-  LOG("SDL: - tiles visible           : %dx%d", (int) tiles_across, (int) tiles_down);
+  LOG("SDL: - tiles visible           : %dx%d", tiles_across, tiles_down);
   LOG("SDL: - tiles zoom              : %d", game_map_zoom_get(g));
 }

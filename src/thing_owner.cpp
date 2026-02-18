@@ -9,12 +9,12 @@ Thingp top_owner(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! t->owner_id) {
+  if (t->owner_id == 0U) {
     return nullptr;
   }
 
-  auto o = thing_find(g, v, t->owner_id);
-  if (! o) {
+  auto *o = thing_find(g, v, t->owner_id);
+  if (o == nullptr) {
     return nullptr;
   }
   return top_owner(g, v, l, o);
@@ -24,7 +24,7 @@ Thingp immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! t->owner_id) {
+  if (t->owner_id == 0U) {
     return nullptr;
   }
 

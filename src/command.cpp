@@ -108,7 +108,7 @@ static bool command_inited;
 void command_fini(void)
 {
   TRACE_NO_INDENT();
-  if (command_inited != 0U) {
+  if (static_cast<unsigned int>(command_inited) != 0U) {
     command_inited = 0U;
     for (auto iter : commands_map) {
       auto *command = iter.second;

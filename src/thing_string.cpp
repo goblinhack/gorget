@@ -13,19 +13,19 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! t) {
+  if (t == nullptr) {
     ERR("No thing pointer set");
     return "<no thing>";
   }
 
-  auto tp = thing_tp(t);
-  if (! t) {
+  auto *tp = thing_tp(t);
+  if (t == nullptr) {
     ERR("No thing template pointer set");
     return "<no tp>";
   }
 
   auto name = tp_name(tp);
-  if (g && thing_is_player(t)) {
+  if ((g != nullptr) && thing_is_player(t)) {
     name = game_player_name_get(g);
   }
 
@@ -53,7 +53,7 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, Thingp t)
                                       /* newline */ thing_is_moving(t) ? "/mv" : "",
                                       /* newline */ thing_is_dead(t) ? "/de" : "",
                                       /* newline */ thing_is_sleeping(t) ? "/sl" : "",
-                                      /* newline */ thing_is_falling(t) ? "/fl" : "",
+                                      /* newline */ (thing_is_falling(t) != 0) ? "/fl" : "",
                                       /* newline */ thing_is_open(t) ? "/op" : "",
                                       /* newline */ thing_is_burning(t) ? "/bn" : "",
                                       /* newline */ thing_is_scheduled_for_cleanup(t) ? "/fre" : ""));
@@ -65,7 +65,7 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 
   std::string s = "ev:";
 
-  if (e.reason != "") {
+  if (!e.reason.empty()) {
     s += " r:'";
     s += e.reason;
     s += "'";
@@ -76,12 +76,12 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
     s += ThingEventType_to_string(e.event_type);
   }
 
-  if (e.damage) {
+  if (e.damage != 0) {
     s += " d:";
     s += std::to_string(e.damage);
   }
 
-  if (e.source) {
+  if (e.source != nullptr) {
     s += " src:(";
     s += to_string(g, v, l, e.source);
     s += ")";
@@ -95,7 +95,7 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   TRACE_NO_INDENT();
 
   std::string s;
-  auto        source = e.source;
+  auto *        source = e.source;
 
   switch (e.event_type) {
     case THING_EVENT_NONE : break;
@@ -145,20 +145,20 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   // Add some more spice to the message
   //
   if (level_is_lava(g, v, l, t)) {
-    if (! (source && thing_is_lava(source))) {
+    if ((source == nullptr) || !thing_is_lava(source)) {
       s += " in lava";
     }
   } else if (level_is_deep_water(g, v, l, t)) {
-    if (! (source && thing_is_water(source))) {
+    if ((source == nullptr) || !thing_is_water(source)) {
       s += " in the depths";
     }
   } else if (level_is_water(g, v, l, t)) {
-    if (! (source && thing_is_water(source))) {
+    if ((source == nullptr) || !thing_is_water(source)) {
       s += " in a puddle";
     }
   }
 
-  if (source) {
+  if (source != nullptr) {
     if (thing_is_lava(source) || thing_is_water(source)) {
       s += " in ";
     } else {
@@ -166,7 +166,7 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
     }
 
     auto name = tp_long_name(thing_tp(source));
-    if (g && thing_is_player(source)) {
+    if ((g != nullptr) && thing_is_player(source)) {
       name = game_player_name_get(g);
     }
 

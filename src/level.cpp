@@ -11,6 +11,7 @@
 #include "my_ui.hpp"
 #include "my_wids.hpp"
 
+#include <algorithm>
 #include <format>
 
 LevelOpt g_level_opt;
@@ -73,7 +74,7 @@ bool level_is_level_select(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (! g || ! v || ! l) {
+  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
     return false;
   }
 
@@ -94,7 +95,7 @@ static void level_dump(Gamep g, Levelsp v, Levelp l, int w, int h, std::string s
     for (int x = 0; x < w; x++) {
       auto offset = (w * y) + x;
       auto c      = s[ offset ];
-      if (c) {
+      if (c != 0) {
         line += c;
       }
     }
@@ -166,8 +167,8 @@ Levelsp levels_memory_alloc(Gamep g)
   LOG("Levels alloc memory");
   TRACE_NO_INDENT();
 
-  auto v = game_levels_get(g);
-  if (v) {
+  auto *v = game_levels_get(g);
+  if (v != nullptr) {
     return v;
   }
 
@@ -178,7 +179,7 @@ Levelsp levels_memory_alloc(Gamep g)
   // DO NOT USE C++ classes or types
   //
   v = (Levelsp) myzalloc(SIZEOF(*v), "v");
-  if (! v) {
+  if (v == nullptr) {
     return nullptr;
   }
   newptr(MTYPE_LEVELS, v, "levels");
@@ -225,11 +226,11 @@ void levels_finalize(Gamep g, Levelsp v)
   LOG("Levels finalize");
   TRACE_AND_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     CROAK("no game pointer");
   }
 
-  if (! v) {
+  if (v == nullptr) {
     CROAK("no levels pointer");
   }
 
@@ -264,8 +265,8 @@ void level_is_completed_by_player_exiting(Gamep g, Levelsp v, Levelp l)
   LEVEL_LOG(g, v, l, "Level completed");
   TRACE_AND_INDENT();
 
-  auto player_struct = thing_player_struct(g);
-  if (player_struct) {
+  auto *player_struct = thing_player_struct(g);
+  if (player_struct != nullptr) {
     player_struct->levels_completed++;
   }
 }
@@ -291,7 +292,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   // Check we're not trying to jump off the end of the levels
   //
   LevelSelect *s = &v->level_select;
-  if (! s) {
+  if (s == nullptr) {
     ERR("No level selection created");
     return nullptr;
   }
@@ -300,7 +301,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
     //
     // Enter level selectionm
     //
-  } else if ((level_num > s->level_count) && s->level_count) {
+  } else if ((level_num > s->level_count) && (s->level_count != 0U)) {
     //
     // Jump tot the last real level
     //
@@ -350,7 +351,7 @@ void level_destroy(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (! l || ! l->is_initialized) {
+  if ((l == nullptr) || ! l->is_initialized) {
     return;
   }
 
@@ -443,7 +444,7 @@ ThingId level_get_thing_id_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
       }
       break;
     case is_able_to_fall :
-      if (thing_is_falling(it)) {
+      if (thing_is_falling(it) != 0) {
         return true; // filter out
       }
       break;
@@ -465,7 +466,7 @@ std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f)
       continue;
     }
 
-    if (tp_flag(thing_tp(it), f)) {
+    if (tp_flag(thing_tp(it), f) != 0) {
       out.push_back(it);
     }
   }
@@ -485,7 +486,7 @@ std::vector< Thingp > level_find_all(Gamep g, Levelsp v, Levelp l, ThingFlag f, 
       continue;
     }
 
-    if (tp_flag(thing_tp(it), f)) {
+    if (tp_flag(thing_tp(it), f) != 0) {
       out.push_back(it);
     }
   }
@@ -503,7 +504,7 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
       continue;
     }
 
-    if (tp_flag(thing_tp(it), f)) {
+    if (tp_flag(thing_tp(it), f) != 0) {
       return it;
     }
   }
@@ -515,7 +516,7 @@ Thingp level_flag(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
 {
   TRACE_NO_INDENT();
 
-  if (! at) {
+  if (at == nullptr) {
     ERR("No thing pointer");
     return nullptr;
   }
@@ -540,7 +541,7 @@ Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
       continue;
     }
 
-    if (tp_flag(thing_tp(it), f)) {
+    if (tp_flag(thing_tp(it), f) != 0) {
       return it;
     }
   }
@@ -552,7 +553,7 @@ Thingp level_alive(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
 {
   TRACE_NO_INDENT();
 
-  if (! at) {
+  if (at == nullptr) {
     ERR("No thing pointer");
     return nullptr;
   }
@@ -577,7 +578,7 @@ Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
       continue;
     }
 
-    if (tp_flag(thing_tp(it), f)) {
+    if (tp_flag(thing_tp(it), f) != 0) {
       return it;
     }
   }
@@ -589,7 +590,7 @@ Thingp level_open(Gamep g, Levelsp v, Levelp l, ThingFlag f, Thingp at)
 {
   TRACE_NO_INDENT();
 
-  if (! at) {
+  if (at == nullptr) {
     ERR("No thing pointer");
     return nullptr;
   }
@@ -616,7 +617,7 @@ int level_count(Gamep g, Levelsp v, Levelp l, ThingFlag f, spoint p)
       continue;
     }
 
-    if (tp_flag(thing_tp(it), f)) {
+    if (tp_flag(thing_tp(it), f) != 0) {
       count++;
     }
   }
@@ -635,7 +636,7 @@ bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)
 {
   TRACE_NO_INDENT();
 
-  if (! l) {
+  if (l == nullptr) {
     return false;
   }
 
@@ -646,7 +647,7 @@ bool level_is_same_obj_type_at(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     Tpp    it_tp;
     Thingp it = thing_and_tp_get_at(g, v, l, p, slot, &it_tp);
-    if (! it) {
+    if (it == nullptr) {
       continue;
     }
 
@@ -682,12 +683,8 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   //
   // Set the scroll bounds
   //
-  if (v->pixel_map_at.x < 0) {
-    v->pixel_map_at.x = 0;
-  }
-  if (v->pixel_map_at.y < 0) {
-    v->pixel_map_at.y = 0;
-  }
+  v->pixel_map_at.x = std::max<short>(v->pixel_map_at.x, 0);
+  v->pixel_map_at.y = std::max<short>(v->pixel_map_at.y, 0);
 
   v->pixel_max.x = (MAP_WIDTH * dw) - game_map_fbo_width_get(g);
   v->pixel_max.y = (MAP_HEIGHT * dh) - game_map_fbo_height_get(g);
@@ -695,13 +692,9 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   //
   // Overflow?
   //
-  if (v->pixel_map_at.x > v->pixel_max.x) {
-    v->pixel_map_at.x = v->pixel_max.x;
-  }
+  v->pixel_map_at.x = std::min(v->pixel_map_at.x, v->pixel_max.x);
 
-  if (v->pixel_map_at.y > v->pixel_max.y) {
-    v->pixel_map_at.y = v->pixel_max.y;
-  }
+  v->pixel_map_at.y = std::min(v->pixel_map_at.y, v->pixel_max.y);
 
   //
   // Set the tile bounds
@@ -711,12 +704,8 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   tmp_minx -= clipping_border;
   tmp_minx -= clipping_border;
 
-  if (tmp_minx < 0) {
-    tmp_minx = 0;
-  }
-  if (tmp_miny < 0) {
-    tmp_miny = 0;
-  }
+  tmp_minx = std::max(tmp_minx, 0);
+  tmp_miny = std::max(tmp_miny, 0);
 
   int tmp_maxx = (v->pixel_map_at.x + game_map_fbo_width_get(g)) / dw;
   int tmp_maxy = (v->pixel_map_at.y + game_map_fbo_height_get(g)) / dh;
@@ -724,12 +713,8 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   tmp_maxx += clipping_border;
   tmp_maxy += clipping_border;
 
-  if (tmp_maxx >= MAP_WIDTH) {
-    tmp_maxx = MAP_WIDTH;
-  }
-  if (tmp_maxy >= MAP_HEIGHT) {
-    tmp_maxy = MAP_HEIGHT;
-  }
+  tmp_maxx = std::min(tmp_maxx, MAP_WIDTH);
+  tmp_maxy = std::min(tmp_maxy, MAP_HEIGHT);
 
   v->minx = tmp_minx;
   v->miny = tmp_miny;

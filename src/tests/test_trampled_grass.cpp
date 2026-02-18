@@ -77,8 +77,8 @@
       goto exit;
     }
 
-    auto player = thing_player(g);
-    if (! player) {
+    auto *player = thing_player(g);
+    if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }

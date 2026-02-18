@@ -15,9 +15,9 @@ static void thing_shoved_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 {
   TRACE_AND_INDENT();
 
-  auto it = e.source;
+  auto *it = e.source;
 
-  if (it) {
+  if (it != nullptr) {
     auto by_the_thing = thing_the_long_name(g, v, l, it);
 
     TOPCON(UI_WARNING_FMT_STR "You are shoved by %s." UI_RESET_FMT, by_the_thing.c_str());
@@ -30,9 +30,9 @@ static void thing_shoved_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
 static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_AND_INDENT();
-  auto it = e.source;
+  auto *it = e.source;
 
-  if (it && thing_is_loggable(t)) {
+  if ((it != nullptr) && thing_is_loggable(t)) {
     auto the_thing = capitalize_first(thing_the_long_name(g, v, l, t));
     auto by_player = thing_long_name(g, v, l, it);
 
@@ -70,7 +70,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 
     if (thing_is_player(t)) {
       thing_shoved_player(g, v, l, t, e);
-    } else if (e.source && thing_is_player(e.source)) {
+    } else if ((e.source != nullptr) && thing_is_player(e.source)) {
       thing_shoved_by_player(g, v, l, t, e);
     }
 
@@ -126,7 +126,7 @@ static void thing_shoved_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 
     if (thing_is_player(t)) {
       thing_shoved_player(g, v, l, t, e);
-    } else if (e.source && thing_is_player(e.source)) {
+    } else if ((e.source != nullptr) && thing_is_player(e.source)) {
       thing_shoved_by_player(g, v, l, t, e);
     }
   }

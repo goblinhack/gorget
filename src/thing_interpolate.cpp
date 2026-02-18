@@ -17,7 +17,7 @@ void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   auto at          = thing_at(t);
   auto moving_from = thing_moving_from(t);
 
-  if (true) {
+  {
     THING_LOG(t, "from %d,%d to %d,%d dt %f", moving_from.x, moving_from.y, at.x, at.y, dt);
   }
 
@@ -38,5 +38,5 @@ void thing_interpolate(Gamep g, Levelsp v, Levelp l, Thingp t, float dt)
   spoint pix_at;
   pix_at.x = (int) (pix_x * TILE_WIDTH);
   pix_at.y = (int) (pix_y * TILE_HEIGHT);
-  (void) thing_pix_at_set(g, v, l, t, pix_at);
+  thing_pix_at_set(g, v, l, t, pix_at);
 }

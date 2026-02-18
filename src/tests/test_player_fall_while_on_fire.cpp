@@ -79,7 +79,7 @@
   {
     TRACE_NO_INDENT();
     player = thing_player(g);
-    if (! player) {
+    if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -90,11 +90,11 @@
   //
   TEST_PROGRESS(t);
   {
-    if (! thing_spawn(g, v, l1, tp_first(is_fire), player)) {
+    if (thing_spawn(g, v, l1, tp_first(is_fire), player) == nullptr) {
       TEST_FAILED(t, "spawn failed");
       goto exit;
     }
-    if (! thing_spawn(g, v, l1, tp_first(is_fire), player)) {
+    if (thing_spawn(g, v, l1, tp_first(is_fire), player) == nullptr) {
       TEST_FAILED(t, "spawn failed");
       goto exit;
     }

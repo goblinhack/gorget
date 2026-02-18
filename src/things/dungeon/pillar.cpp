@@ -20,7 +20,7 @@ bool tp_load_pillar(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("pillar"); // keep as string for scripts
+  auto *tp   = tp_load("pillar"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -56,7 +56,7 @@ bool tp_load_pillar(void)
   // end sort marker1 }
 
   for (auto frame = 0; frame < 16; frame++) {
-    auto tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 

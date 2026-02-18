@@ -17,12 +17,12 @@ Thingp thing_player(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return nullptr;
   }
 
-  if (! v->player_id) {
+  if (v->player_id == 0u) {
     return nullptr;
   }
 
@@ -33,13 +33,13 @@ Levelp thing_player_level(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  auto me = thing_player(g);
-  if (! me) {
+  auto *me = thing_player(g);
+  if (me == nullptr) {
     return nullptr;
   }
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return nullptr;
   }
 
@@ -255,8 +255,8 @@ void player_state_change(Gamep g, Levelsp v, Levelp l, PlayerState new_state)
 {
   TRACE_NO_INDENT();
 
-  auto me = thing_player(g);
-  if (! me) {
+  auto *me = thing_player(g);
+  if (me == nullptr) {
     return;
   }
 
@@ -370,18 +370,18 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
     game_state_change(g, STATE_PLAYING, "callback: got 'No' warning confirmation");
   }
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return;
   }
 
-  auto me = thing_player(g);
-  if (! me) {
+  auto *me = thing_player(g);
+  if (me == nullptr) {
     return;
   }
 
@@ -436,8 +436,8 @@ static void player_check_if_target_needs_move_confirm_callback(Gamep g, bool val
 //
 bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spoint to)
 {
-  auto me = thing_player(g);
-  if (! me) {
+  auto *me = thing_player(g);
+  if (me == nullptr) {
     return false;
   }
 
@@ -555,11 +555,7 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       //
       // Do not step onto the thing we just shoved.
       //
-      if (level_is_dead_on_shoving(g, v, l, to)) {
-        return false;
-      } else {
-        return true;
-      }
+      return level_is_dead_on_shoving(g, v, l, to) == nullptr;
     } else {
       level_tick_begin_requested(g, v, l, "me failed to shove");
     }
@@ -571,9 +567,8 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
     if (thing_move_to(g, v, l, me, to)) {
       level_tick_begin_requested(g, v, l, "me opened a door to move");
       return true;
-    } else {
-      level_tick_begin_requested(g, v, l, "me failed to open something in the way");
-    }
+    }       level_tick_begin_requested(g, v, l, "me failed to open something in the way");
+   
   } else {
     level_tick_begin_requested(g, v, l, "me bumped into obstacle");
   }
@@ -589,8 +584,8 @@ static void player_move_delta(Gamep g, Levelsp v, Levelp l, int dx, int dy)
     return;
   }
 
-  auto me = thing_player(g);
-  if (! me) {
+  auto *me = thing_player(g);
+  if (me == nullptr) {
     return;
   }
 
@@ -618,19 +613,19 @@ void player_fire(Gamep g, Levelsp v, Levelp l, int dx, int dy, Tpp fire_what)
 {
   TRACE_NO_INDENT();
 
-  auto me = thing_player(g);
-  if (! me) {
+  auto *me = thing_player(g);
+  if (me == nullptr) {
     ERR("No me found");
     return;
   }
 
-  auto ext_struct = thing_ext_struct(g, me);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, me);
+  if (ext_struct == nullptr) {
     ERR("No me struct found");
     return;
   }
 
-  if (! fire_what) {
+  if (fire_what == nullptr) {
     ERR("Nothing to fire");
     return;
   }
@@ -716,13 +711,13 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
 {
   TRACE_NO_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
@@ -744,7 +739,7 @@ bool player_move_request(Gamep g, bool up, bool down, bool left, bool right, boo
   // TODO
   //
   static Tpp tp_fireball;
-  if (! tp_fireball) {
+  if (tp_fireball == nullptr) {
     tp_fireball = tp_find_mand("fireball");
   }
 
@@ -822,14 +817,14 @@ void player_warp_to_specific_level(Gamep g, Levelsp v, LevelNum level_num)
 
   player_leave_current_level_and_change_to_level_num(g, v, level_num);
 
-  auto me = thing_player(g);
-  if (! me) {
+  auto *me = thing_player(g);
+  if (me == nullptr) {
     ERR("No me found");
     return;
   }
 
-  auto new_level = level_change(g, v, level_num);
-  if (! new_level) {
+  auto *new_level = level_change(g, v, level_num);
+  if (new_level == nullptr) {
     THING_ERR(me, "failed to move me to level %u", level_num);
     return;
   }
@@ -881,8 +876,8 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  auto ext_struct = thing_ext_struct(g, me);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, me);
+  if (ext_struct == nullptr) {
     return;
   }
 
@@ -903,7 +898,7 @@ void player_collision_handle(Gamep g, Levelsp v, Levelp l, Thingp me)
     //
     // At the end of the popped path or not?
     //
-    if (thing_move_path_size(g, v, l, me)) {
+    if (thing_move_path_size(g, v, l, me) != 0) {
       //
       // If still more tiles to pop, do not descend automatically
       //
@@ -952,8 +947,8 @@ bool player_jump(Gamep g, Levelsp v, Levelp l, Thingp me, spoint to)
 {
   TRACE_NO_INDENT();
 
-  auto player_struct = thing_player_struct(g);
-  if (! player_struct) {
+  auto *player_struct = thing_player_struct(g);
+  if (player_struct == nullptr) {
     ERR("No me struct found");
     return false;
   }

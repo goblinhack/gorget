@@ -49,9 +49,9 @@ static thread_local pcg32_random_t pcg32_global = PCG32_INITIALIZER;
 uint32_t pcg32_random_r(pcg32_random_t *rng)
 {
   uint64_t oldstate   = rng->state;
-  rng->state          = oldstate * 6364136223846793005ULL + rng->inc;
-  uint32_t xorshifted = ((oldstate >> 18u) ^ oldstate) >> 27u;
-  uint32_t rot        = oldstate >> 59u;
+  rng->state          = (oldstate * 6364136223846793005ULL) + rng->inc;
+  uint32_t xorshifted = ((oldstate >> 18U) ^ oldstate) >> 27U;
+  uint32_t rot        = oldstate >> 59U;
   uint32_t r          = (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
   //  LOG("r %d", r);
   return r;
@@ -61,7 +61,7 @@ void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq)
 {
   pcg32_global = PCG32_INITIALIZER;
   rng->state   = 0U;
-  rng->inc     = (initseq << 1u) | 1u;
+  rng->inc     = (initseq << 1U) | 1U;
   pcg32_random_r(rng);
   rng->state += initstate;
   pcg32_random_r(rng);
@@ -98,7 +98,7 @@ uint32_t pcg32_random(const char *func, int line)
 
 uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound)
 {
-  if (! bound) {
+  if (bound == 0u) {
     return 0;
   }
 
@@ -150,7 +150,7 @@ void game_pcg_lock(void) { pcg_lock_count++; }
 
 void game_pcg_unlock(void)
 {
-  if (! pcg_lock_count) {
+  if (pcg_lock_count == 0) {
     CROAK("pcg lock count error");
   }
   pcg_lock_count--;

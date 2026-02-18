@@ -69,7 +69,7 @@
   {
     TRACE_NO_INDENT();
     player = thing_player(g);
-    if (! player) {
+    if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -78,7 +78,7 @@
   //
   // Spawn fire twice. This should be enough to evaporate the water.
   //
-  if (! thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0))) {
+  if (thing_spawn(g, v, l, tp_first(is_fire), thing_at(player) + spoint(2, 0)) == nullptr) {
     TEST_FAILED(t, "spawn failed");
     goto exit;
   }

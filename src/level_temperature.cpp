@@ -19,7 +19,8 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  int x, y;
+  int x;
+  int y;
 
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {
@@ -48,7 +49,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
     //
     // This is emulating returning to ambient temperature
     //
-    for (auto t : things) {
+    for (auto *t : things) {
       //
       // It could be dead now.
       //
@@ -63,12 +64,12 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      auto  tp            = thing_tp(t);
+      auto *  tp            = thing_tp(t);
       float Ta            = thing_temperature(t);
       float To            = tp_temperature_initial_get(thing_tp(t));
       float heat_capacity = tp_temperature_heat_capacity_get(tp);
       float diff          = Ta - To;
-      float ndiff         = diff * (1.0f - ((HEAT_CAPACITY_MAX - heat_capacity) / HEAT_CAPACITY_MAX));
+      float ndiff         = diff * (1.0F - ((HEAT_CAPACITY_MAX - heat_capacity) / HEAT_CAPACITY_MAX));
       int   Tn            = (int) Ta - (int) ndiff;
 
       //
@@ -117,7 +118,7 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
 {
   TRACE_NO_INDENT();
 
-  auto  tpA = thing_tp(a);
+  auto *  tpA = thing_tp(a);
   float Ta  = thing_temperature(a);
   float Tb  = thing_temperature(b);
 
@@ -147,9 +148,9 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
 
   float K  = tp_temperature_thermal_conductivity_get(tpA);
   float c  = tp_temperature_heat_capacity_get(tpA);
-  float A  = 1.0f;
+  float A  = 1.0F;
   float dT = Tb - Ta;
-  float d  = 0.01f;
+  float d  = 0.01F;
   float Q  = (K * A * dT) / d;
   float m  = thing_weight(a);
 
@@ -166,17 +167,17 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
   // Take care not to give too much weight or you end up with steam able to heat up a
   // tile of water, which seems wrong.
   //
-  if (! (int) m) {
+  if (((int) m) == 0) {
     if (thing_is_gaseous(a) || thing_is_projectile(a)) {
       m = 1;
     }
-    if (! (int) m) {
+    if (((int) m) == 0) {
       return;
     }
   }
 
   float final_dT = (Q / (m * c));
-  finalT         = (int) ceilf(((float) Ta) + final_dT);
+  finalT         = (int) ceilf(( Ta) + final_dT);
 
   //  THING_DBG(a, "b");
   // THING_DBG(b, "b");
@@ -244,7 +245,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  int x, y;
+  int x;
+  int y;
 
   if (l->is_handling_temperature_changes) {
     return;
@@ -281,8 +283,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     auto sz = (int) things.size();
     for (auto i = 0; i < sz; i++) {
       for (auto j = 0; j < sz; j++) {
-        auto Ti = things[ i ];
-        auto Tj = things[ j ];
+        auto *Ti = things[ i ];
+        auto *Tj = things[ j ];
         if (Ti == Tj) {
           continue;
         }
@@ -302,8 +304,8 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
 
     if (__unused__) {
       for (auto a_pair : sorted_pairs) {
-        auto a = a_pair.first;
-        auto b = a_pair.second;
+        auto *a = a_pair.first;
+        auto *b = a_pair.second;
 
         THING_LOG(a, "A before prio %d", a->_priority + b->_priority);
         THING_LOG(b, "B before");
@@ -314,17 +316,17 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     // Sort by event priority
     //
     std::ranges::sort(sorted_pairs, [](const std::pair< Thingp, Thingp > &a, const std::pair< Thingp, Thingp > &b) {
-      auto t1 = a.first;
-      auto t2 = a.second;
-      auto t3 = b.first;
-      auto t4 = b.second;
+      auto *t1 = a.first;
+      auto *t2 = a.second;
+      auto *t3 = b.first;
+      auto *t4 = b.second;
       return t1->_priority + t2->_priority < t3->_priority + t4->_priority;
     });
 
     if (__unused__) {
       for (auto a_pair : sorted_pairs) {
-        auto a = a_pair.first;
-        auto b = a_pair.second;
+        auto *a = a_pair.first;
+        auto *b = a_pair.second;
 
         THING_LOG(a, "A after prio %d", a->_priority + b->_priority);
         THING_LOG(b, "B after");
@@ -332,12 +334,12 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
     }
 
     for (auto a_pair : sorted_pairs) {
-      auto a = a_pair.first;
-      auto b = a_pair.second;
+      auto *a = a_pair.first;
+      auto *b = a_pair.second;
       level_thing_pair_temperature_handle(g, v, l, a, b);
     }
 
-    for (auto t : things) {
+    for (auto *t : things) {
       t->tick_temperature = v->tick;
     }
   }

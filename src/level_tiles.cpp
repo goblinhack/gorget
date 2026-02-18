@@ -80,8 +80,8 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, spoint p)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     Tpp tp;
 
-    auto t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
-    if (! t) {
+    auto *t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
+    if (t == nullptr) {
       continue;
     }
 
@@ -178,8 +178,8 @@ static void level_assign_tiles_at(Gamep g, Levelsp v, Levelp l, spoint p)
         which += ".0";
       }
 
-      auto tile = tile_find_mand(which.c_str());
-      if (tile) {
+      auto *tile = tile_find_mand(which);
+      if (tile != nullptr) {
         t->tile_index        = tile_global_index(tile);
         t->anim_type         = (ThingAnim) block_type;
         t->anim_index        = pcg_random_range_inclusive(0, tp_tiles_size(tp, t->anim_type) - 1);
@@ -207,7 +207,7 @@ void level_update_tiles(Gamep g, Levelsp v, Levelp l)
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      if (l->is_modified_tile[ x ][ y ]) {
+      if (l->is_modified_tile[ x ][ y ] != 0U) {
         level_assign_tiles_at(g, v, l, spoint(x, y));
       }
     }

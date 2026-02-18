@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_callstack.hpp"
 #include "my_cave.hpp"
 #include "my_charmap.hpp"
@@ -114,7 +116,8 @@ static void room_gen_clear(Gamep g, RoomGen *grid)
 static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 {
   Cave cave = {};
-  int  x, y;
+  int  x;
+  int  y;
 
   //
   // Populate the cave with the room
@@ -139,7 +142,7 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
-      if (cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
+      if (cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0u) {
         grid->data[ x ][ y ] = CHARMAP_FLOOR;
       }
     }
@@ -151,7 +154,8 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 //
 [[nodiscard]] static bool room_gen_get_bounds(Gamep g, class RoomGen *grid)
 {
-  int x, y;
+  int x;
+  int y;
 
   spoint tl(999, 999);
   spoint br(-1, -1);
@@ -162,18 +166,10 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
       if (grid->data[ x ][ y ] != CHARMAP_EMPTY) {
-        if (x < tl.x) {
-          tl.x = x;
-        }
-        if (y < tl.y) {
-          tl.y = y;
-        }
-        if (x > br.x) {
-          br.x = x;
-        }
-        if (y > br.y) {
-          br.y = y;
-        }
+        tl.x = std::min<int>(x, tl.x);
+        tl.y = std::min<int>(y, tl.y);
+        br.x = std::max<int>(x, br.x);
+        br.y = std::max<int>(y, br.y);
       }
     }
   }
@@ -242,11 +238,12 @@ static void room_gen_draw_circle(Gamep g, RoomGen *grid, int x, int y, int radiu
 {
   TRACE_NO_INDENT();
 
-  int i, j;
+  int i;
+  int j;
 
   for (i = std::max(0, x - radius - 1); i < std::max(MAP_WIDTH, x + radius); i++) {
     for (j = std::max(0, y - radius - 1); j < std::max(MAP_HEIGHT, y + radius); j++) {
-      if ((i - x) * (i - x) + (j - y) * (j - y) < radius * radius + radius) {
+      if (((i - x) * (i - x)) + ((j - y) * (j - y)) < (radius * radius) + radius) {
         spoint p(i, j);
         if (is_oob(p)) {
           continue;
@@ -405,10 +402,10 @@ static void room_gen_design_cross_room(Gamep g, RoomGen *grid)
   roomX2      = (roomX + (room_width / 2) + pcg_random_range(0, 2) + pcg_random_range(0, 2) - 3) - (room_width2 / 2);
 
   room_height = pcg_random_range(3, 7);
-  roomY       = (MAP_HEIGHT / 2 - room_height);
+  roomY       = ((MAP_HEIGHT / 2) - room_height);
 
   room_height2 = pcg_random_range(2, 5);
-  roomY2       = (MAP_HEIGHT / 2 - room_height2 - (pcg_random_range(0, 2) + pcg_random_range(0, 1)));
+  roomY2       = ((MAP_HEIGHT / 2) - room_height2 - (pcg_random_range(0, 2) + pcg_random_range(0, 1)));
 
   room_gen_draw_rectangle(g, grid, roomX - 5, roomY + 5, room_width, room_height, CHARMAP_FLOOR);
   room_gen_draw_rectangle(g, grid, roomX2 - 5, roomY2 + 5, room_width2, room_height2, CHARMAP_FLOOR);
@@ -492,16 +489,21 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
 {
   TRACE_NO_INDENT();
 
-  int i, x, y;
-  int minX, maxX, minY, maxY;
+  int i;
+  int x;
+  int y;
+  int minX;
+  int maxX;
+  int minY;
+  int maxY;
   int chunkCount = pcg_random_range(2, 8);
 
   room_gen_draw_circle(g, grid, MAP_WIDTH / 2, MAP_HEIGHT / 2, 2, CHARMAP_FLOOR);
 
-  minX = MAP_WIDTH / 2 - 3;
-  maxX = MAP_WIDTH / 2 + 3;
-  minY = MAP_HEIGHT / 2 - 3;
-  maxY = MAP_HEIGHT / 2 + 3;
+  minX = (MAP_WIDTH / 2) - 3;
+  maxX = (MAP_WIDTH / 2) + 3;
+  minY = (MAP_HEIGHT / 2) - 3;
+  maxY = (MAP_HEIGHT / 2) + 3;
 
   for (i = 0; i < chunkCount;) {
     x = pcg_random_range(minX, maxX);
@@ -604,7 +606,7 @@ static void rooms_write_source_file_for_n_rooms(Gamep g, int n, int which, const
   CON("Write to %s", f.c_str());
 
   FILE *out = fopen(f.c_str(), "w+");
-  if (! out) {
+  if (out == nullptr) {
     CROAK("could not write to %s", f.c_str());
   }
 

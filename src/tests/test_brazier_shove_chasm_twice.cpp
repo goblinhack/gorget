@@ -166,7 +166,7 @@
   }
 
   player = thing_player(g);
-  if (! player) {
+  if (player == nullptr) {
     level_dump(g, v, l1, w, h);
     level_dump(g, v, l2, w, h);
     level_dump(g, v, l3, w, h);

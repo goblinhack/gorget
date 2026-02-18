@@ -53,7 +53,7 @@ ThingEnviron tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thing
 
 bool tp_load_glorp(void)
 {
-  auto tp   = tp_load("glorp"); // keep as string for scripts
+  auto *tp   = tp_load("glorp"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -105,7 +105,7 @@ bool tp_load_glorp(void)
   auto delay = 1000;
 
   for (auto frame = 0; frame < 2; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);

@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_callstack.hpp"
 #include "my_game_popups.hpp"
 #include "my_globals.hpp"
@@ -16,13 +18,13 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 {
   TRACE_AND_INDENT();
 
-  auto it = e.source;
+  auto *it = e.source;
 
   std::string msg = "-" + std::to_string(e.damage);
   auto        at  = thing_at(t);
   game_popup_text_add(g, at.x, at.y, msg, RED);
 
-  if (it) {
+  if (it != nullptr) {
     auto by_the_thing = thing_the_long_name(g, v, l, it);
 
     switch (e.event_type) {
@@ -112,13 +114,13 @@ static void thing_damage_to_player(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
 static void thing_damage_by_player(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_AND_INDENT();
-  auto the_player = e.source;
+  auto *the_player = e.source;
 
   std::string msg = "-" + std::to_string(e.damage);
   auto        at  = thing_at(t);
   game_popup_text_add(g, at.x, at.y, msg, WHITE);
 
-  if (the_player && thing_is_loggable(t)) {
+  if ((the_player != nullptr) && thing_is_loggable(t)) {
     auto the_thing_long_name  = capitalize_first(thing_the_long_name(g, v, l, t));
     auto the_thing_short_name = capitalize_first(thing_the_short_name(g, v, l, t));
     auto by_player            = thing_long_name(g, v, l, the_player);
@@ -184,16 +186,14 @@ static void thing_damage_cap_for_this_event(Gamep g, Levelsp v, Levelp l, Thingp
 {
   TRACE_NO_INDENT();
 
-  auto       tp = thing_tp(t);
+  auto *       tp = thing_tp(t);
   const auto h  = tp_health_max_get(tp);
 
   //
   // Limit the damage that can occur this event.
   //
   auto max_damage_this_time = h / 4;
-  if (max_damage_this_time < 1) {
-    max_damage_this_time = 1;
-  }
+  max_damage_this_time = std::max(max_damage_this_time, 1);
 
   if (e.damage > max_damage_this_time) {
     auto old_d = e.damage;
@@ -209,16 +209,14 @@ static void thing_damage_cap_for_this_tick(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  auto       tp = thing_tp(t);
+  auto *       tp = thing_tp(t);
   const auto h  = tp_health_max_get(tp);
 
   //
   // Limit the total damage that can occur per tick.
   //
   auto max_damage_per_tick = h / 3;
-  if (max_damage_per_tick < 1) {
-    max_damage_per_tick = 1;
-  }
+  max_damage_per_tick = std::max(max_damage_per_tick, 1);
 
   auto d_total = thing_damage_this_tick_incr(g, v, l, t, e.damage);
   if (d_total > max_damage_per_tick) {
@@ -250,7 +248,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 {
   TRACE_AND_INDENT();
 
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
 
   //
   // Indestructible?
@@ -296,7 +294,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 
   if (thing_is_player(t)) {
     thing_damage_to_player(g, v, l, t, e);
-  } else if (e.source && thing_is_player(e.source)) {
+  } else if ((e.source != nullptr) && thing_is_player(e.source)) {
     thing_damage_by_player(g, v, l, t, e);
   }
 
@@ -323,7 +321,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
       case THING_EVENT_HEAT_DAMAGE : //
         {
           auto temp_burn = tp_temperature_burns_at_get(tp);
-          if (temp_burn && (thing_temperature(t) > temp_burn)) {
+          if ((temp_burn != 0) && (thing_temperature(t) > temp_burn)) {
             if (level_is_water(g, v, l, t)) {
               if (! level_is_steam(g, v, l, t)) {
                 THING_DBG(t, "spawn steam over water due to fire damage");
@@ -335,7 +333,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
 
         {
           auto temp_melt = tp_temperature_melts_at_get(tp);
-          if (temp_melt && (thing_temperature(t) > temp_melt)) {
+          if ((temp_melt != 0) && (thing_temperature(t) > temp_melt)) {
             thing_melt(g, v, l, t);
           }
         }
@@ -395,7 +393,7 @@ void thing_damage(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEvent &e)
         //
         // Needed to allow things like projectiles to heat targets
         //
-        if (e.source) {
+        if (e.source != nullptr) {
           if (! l->is_handling_temperature_changes) {
             l->is_handling_temperature_changes = true;
             level_thing_pair_temperature_handle(g, v, l, t, e.source);

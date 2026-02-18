@@ -12,11 +12,11 @@
 #include "my_thing_inlines.hpp"
 #include "my_wids.hpp"
 
-static void level_tick_begin(Gamep, Levelsp, Levelp);
-static void level_tick_body(Gamep, Levelsp, Levelp, float dt, bool tick_is_about_to_end = false);
-static void level_tick_end(Gamep, Levelsp, Levelp);
-static void level_tick_idle(Gamep, Levelsp, Levelp);
-static void level_tick_check_running_time(Gamep, Levelsp, Levelp);
+static void level_tick_begin(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
+static void level_tick_body(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, float dt, bool tick_is_about_to_end = false);
+static void level_tick_end(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
+static void level_tick_idle(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
+static void level_tick_check_running_time(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
 
 //
 // Called at the end of the tick and then whenever needed, like at the end of an animation.
@@ -86,9 +86,9 @@ static void level_tick_ok_to_end_check(Gamep g, Levelsp v, Levelp l)
     //
     // Falling complete?
     //
-    if (thing_is_falling(t)) {
+    if (thing_is_falling(t) != 0) {
       thing_fall_end_check(g, v, l, t);
-      if (thing_is_falling(t)) {
+      if (thing_is_falling(t) != 0) {
         l->tick_wait_on_things = true;
         IF_DEBUG2
         { // newline
@@ -310,8 +310,8 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
     return;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
   const int player_speed = thing_speed(player);
@@ -514,7 +514,7 @@ static void level_tick_select(Gamep g, Levelsp v, Levelp current_level)
 {
   TRACE_NO_INDENT();
 
-  auto player_level = thing_player_level(g);
+  auto *player_level = thing_player_level(g);
 
   //
   // Reset the levels we need to tick
@@ -537,8 +537,8 @@ static void level_tick_select(Gamep g, Levelsp v, Levelp current_level)
       iter->is_tick_required = true;
       v->level_ticking_count++;
 
-      auto level_below = level_select_get_next_level_down(g, v, iter);
-      if (level_below) {
+      auto *level_below = level_select_get_next_level_down(g, v, iter);
+      if (level_below != nullptr) {
         level_below->is_tick_required = true;
         v->level_ticking_count++;
       }
@@ -573,7 +573,7 @@ static uint32_t level_tick_process_pending_request(Gamep g, Levelsp v, Levelp cu
   //
   v->level_tick_request_count = 0;
 
-  if (v->level_tick_in_progress_count) {
+  if (v->level_tick_in_progress_count != 0u) {
     return 0;
   }
 
@@ -594,7 +594,7 @@ static uint32_t level_tick_process_pending_request(Gamep g, Levelsp v, Levelp cu
     // If this is the first level requesting a tick, reset the fram counters and move the
     // tick along
     //
-    if (! v->level_tick_request_count++) {
+    if ((v->level_tick_request_count++) == 0u) {
       v->tick++;
       v->frame_begin    = v->frame;
       v->time_step      = 0.0;
@@ -711,7 +711,7 @@ static void level_tick_monitor_progress(Gamep g, Levelsp v, Levelp current_level
     LEVEL_DBG(g, v, current_level, "Tick %u: req %u in-progress-count %u tick-end-count %u", v->tick,
               v->level_tick_request_count, v->level_tick_in_progress_count, v->level_tick_done_count);
 
-    if (v->level_tick_done_count && (v->level_ticking_count == v->level_tick_done_count)) {
+    if ((v->level_tick_done_count != 0u) && (v->level_ticking_count == v->level_tick_done_count)) {
       LEVEL_DBG(g, v, current_level, "Tick %u: all %u levels finished ticking", v->tick, v->level_tick_done_count);
     }
   }
@@ -724,8 +724,8 @@ void levels_tick(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
-  auto current_level = game_level_get(g, v);
-  if (! current_level) {
+  auto *current_level = game_level_get(g, v);
+  if (current_level == nullptr) {
     return;
   }
 

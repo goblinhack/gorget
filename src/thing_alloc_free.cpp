@@ -58,7 +58,7 @@ static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   auto ext_id = t->ext_id;
-  if (! ext_id) {
+  if (ext_id == 0u) {
     return;
   }
 
@@ -116,7 +116,7 @@ static void thing_fov_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   auto fov_id = t->fov_id;
-  if (! fov_id) {
+  if (fov_id == 0u) {
     return;
   }
 
@@ -153,7 +153,7 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   // Check if there is anything at this index
   //
   auto arr_index = id.c.arr_index;
-  auto t         = &v->thing_body[ arr_index ];
+  auto *t         = &v->thing_body[ arr_index ];
   if (unlikely(t->tp_id)) {
     //
     // Some other thread grabbed it already?
@@ -201,7 +201,7 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   //
   static uint16_t entropy;
   entropy++;
-  if (! entropy) {
+  if (entropy == 0u) {
     entropy++;
   }
   id.c.entropy = ++entropy;
@@ -270,7 +270,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     }
   }
 
-  auto needs_fov_memory = tp_is_light_source(tp) || tp_is_player(tp) || tp_distance_vision_get(tp);
+  auto needs_fov_memory = tp_is_light_source(tp) || tp_is_player(tp) || (tp_distance_vision_get(tp) != 0);
   if (needs_fov_memory) {
     if (v->thing_fov_count >= THING_FOV_MAX - 1) {
       TP_LOG(tp, "out of fov thing memory");
@@ -305,7 +305,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
   //
   for (uint32_t tries = 0; tries < (1 << THING_PER_LEVEL_THING_ID_BITS); tries++) {
     uint32_t per_level_id = tries + last_per_level_id[ level_num ] + 1;
-    if (! per_level_id) {
+    if (per_level_id == 0u) {
       per_level_id = 1;
     }
 
@@ -313,8 +313,8 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     id.b.level_num    = level_num;
     id.b.per_level_id = per_level_id;
 
-    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, needs_fov_memory, false /* mutex */);
-    if (t) {
+    auto *t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, needs_fov_memory, false /* mutex */);
+    if (t != nullptr) {
       last_per_level_id[ level_num ] = per_level_id;
       return t;
     }
@@ -336,8 +336,8 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
     ThingIdPacked id = {};
     id.c.arr_index   = arr_index;
 
-    auto t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, needs_fov_memory, true /* mutex */);
-    if (t) {
+    auto *t = thing_alloc_do(g, v, l, tp, p, id, needs_ext_memory, needs_fov_memory, true /* mutex */);
+    if (t != nullptr) {
       last_arr_index = arr_index;
       return t;
     }
@@ -351,12 +351,12 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto o = thing_find(g, v, t->id);
+  auto *o = thing_find(g, v, t->id);
   if (t != o) {
     CROAK("Thing mismatch found for id, %p %08" PRIX32 "", (void *) t, t->id);
   }
 
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
 
   //
   // Clean up references

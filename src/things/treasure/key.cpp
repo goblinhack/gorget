@@ -31,7 +31,7 @@ bool tp_load_key(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("key"); // keep as string for scripts
+  auto *tp   = tp_load("key"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -57,7 +57,7 @@ bool tp_load_key(void)
   auto delay = 1000;
 
   for (auto frame = 0; frame < 2; frame++) {
-    auto tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);

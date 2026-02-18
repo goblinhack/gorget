@@ -16,7 +16,7 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   TRACE_NO_INDENT(); // expensive
 #endif
 
-  if (! l) {
+  if (l == nullptr) {
     ERR("trying to get a thing on a null level");
     return nullptr;
   }
@@ -32,12 +32,12 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   }
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
-  if (! id) {
+  if (id == 0u) {
     return nullptr;
   }
 
-  auto t = thing_find(g, v, id);
-  if (! t) {
+  auto *t = thing_find(g, v, id);
+  if (t == nullptr) {
     return nullptr;
   }
 
@@ -52,12 +52,12 @@ Thingp thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
 
-  if (! id) {
+  if (id == 0u) {
     return nullptr;
   }
 
-  auto t = thing_find(g, v, id);
-  if (! t) {
+  auto *t = thing_find(g, v, id);
+  if (t == nullptr) {
     return nullptr;
   }
 
@@ -72,13 +72,13 @@ Thingp thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
 
-  if (! id) {
+  if (id == 0u) {
     *out = nullptr;
     return nullptr;
   }
 
-  auto t = thing_find(g, v, id);
-  if (! t) {
+  auto *t = thing_find(g, v, id);
+  if (t == nullptr) {
     *out = nullptr;
     return nullptr;
   }
@@ -96,7 +96,7 @@ Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp
 
   *out = nullptr;
 
-  if (! l) {
+  if (l == nullptr) {
     ERR("trying to get a thing on a null level");
     return nullptr;
   }
@@ -113,12 +113,12 @@ Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
 
-  if (! id) {
+  if (id == 0u) {
     return nullptr;
   }
 
-  auto t = thing_find(g, v, id);
-  if (! t) {
+  auto *t = thing_find(g, v, id);
+  if (t == nullptr) {
     return nullptr;
   }
 
@@ -135,7 +135,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
   int free_things   = 0;
 
   for (auto &index : v->thing_body) {
-    auto t = &index;
+    auto *t = &index;
 
 #ifdef ENABLE_PER_THING_MEMORY
     if (v->thing_body_debug[ index ]) {
@@ -143,7 +143,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
     }
 #endif
 
-    if (t->id) {
+    if (t->id != 0u) {
       in_use_things++;
     } else {
       free_things++;
@@ -161,13 +161,13 @@ ThingExtp thing_ext_struct(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return nullptr;
   }
 
   auto ext_id = t->ext_id;
-  if (! ext_id) {
+  if (ext_id == 0u) {
     return nullptr;
   }
 
@@ -178,13 +178,13 @@ ThingFovp thing_fov_struct(Gamep g, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return nullptr;
   }
 
   auto fov_id = t->fov_id;
-  if (! fov_id) {
+  if (fov_id == 0u) {
     return nullptr;
   }
 
@@ -195,8 +195,8 @@ ThingPlayerp thing_player_struct(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return nullptr;
   }
 

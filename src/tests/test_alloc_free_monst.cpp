@@ -17,7 +17,7 @@
   auto     w         = 0;
   auto     h         = 0;
 
-  std::string start = "";
+  std::string start;
 
   //
   // Create the level and start playing
@@ -40,7 +40,7 @@
 
       for (auto x = 0; x < MAP_WIDTH; x++) {
         for (auto y = 0; y < MAP_HEIGHT; y++) {
-          if (! thing_spawn(g, v, l, tp_random(is_monst_group_easy), spoint(x, y))) {
+          if (thing_spawn(g, v, l, tp_random(is_monst_group_easy), spoint(x, y)) == nullptr) {
             break;
           }
 

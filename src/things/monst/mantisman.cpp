@@ -54,7 +54,7 @@ ThingEnviron tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, T
 
 bool tp_load_mantisman(void)
 {
-  auto tp   = tp_load("mantisman"); // keep as string for scripts
+  auto *tp   = tp_load("mantisman"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -104,14 +104,14 @@ bool tp_load_mantisman(void)
 
   for (auto loops = 0; loops < 10; loops++) {
     for (auto frame = 0; frame < 4; frame++) {
-      auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+      auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
       tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
       tile_delay_ms_set(tile, delay);
       tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
     }
   }
   for (auto frame = 0; frame < 6; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);

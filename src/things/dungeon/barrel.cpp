@@ -46,8 +46,8 @@ static void tp_barrel_spawn_explosion(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
   }
 
-  auto player = thing_player(g);
-  if (player) {
+  auto *player = thing_player(g);
+  if (player != nullptr) {
     if (thing_on_same_level_as_player(g, v, t)) {
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
         TOPCON("The barrel explodes!");
@@ -89,7 +89,7 @@ bool tp_load_barrel(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("barrel"); // keep as string for scripts
+  auto *tp   = tp_load("barrel"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -138,7 +138,7 @@ bool tp_load_barrel(void)
   auto delay = 200;
 
   for (auto frame = 0; frame < 1; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }

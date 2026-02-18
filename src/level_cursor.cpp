@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_callstack.hpp"
 #include "my_dmap.hpp"
 #include "my_globals.hpp"
@@ -59,7 +61,10 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   spoint dmap_start = start;
   spoint dmap_end   = end;
 
-  int minx, miny, maxx, maxy;
+  int minx;
+  int miny;
+  int maxx;
+  int maxy;
   if (dmap_start.x < dmap_end.x) {
     minx = dmap_start.x;
     maxx = dmap_end.x;
@@ -81,12 +86,8 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   maxx += border;
   maxy += border;
 
-  if (minx < 0) {
-    minx = 0;
-  }
-  if (miny < 0) {
-    miny = 0;
-  }
+  minx = std::max(minx, 0);
+  miny = std::max(miny, 0);
   if (maxx >= MAP_WIDTH) {
     maxx = MAP_WIDTH - 1;
   }
@@ -199,7 +200,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
         std::initializer_list< ThingFlag > init    = {is_lava, is_chasm, is_water};
 
         for (auto i : init) {
-          if (level_flag(g, v, l, i, spoint(v->cursor_at.x, v->cursor_at.y))) {
+          if (level_flag(g, v, l, i, spoint(v->cursor_at.x, v->cursor_at.y)) != nullptr) {
             got_one = true;
 
             //
@@ -222,7 +223,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
                 }
 
                 if (level_is_cursor_path_hazard(g, v, l, p)) {
-                  if (! level_flag(g, v, l, i, p)) {
+                  if (level_flag(g, v, l, i, p) == nullptr) {
                     dmap.val[ x ][ y ] = DMAP_IS_WALL;
                     continue;
                   }
@@ -300,7 +301,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       // Limit to previously walked tiles
       //
       if (attempt == 1) {
-        if (! l->player_has_walked_tile[ x ][ y ]) {
+        if (l->player_has_walked_tile[ x ][ y ] == 0u) {
           dmap.val[ x ][ y ] = DMAP_IS_WALL;
           continue;
         }
@@ -324,7 +325,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
 
   auto p         = dmap_solve(g, v, l, player, &dmap, start);
   auto path_size = p.size();
-  if (! path_size) {
+  if (path_size == 0u) {
     return empty;
   }
 
@@ -355,8 +356,8 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
 {
   static std::vector< spoint > empty;
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return empty;
   }
 
@@ -372,15 +373,15 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
 
   best = attempt1;
 
-  if (! best.size()) {
+  if (best.empty()) {
     best = attempt2;
-  } else if (attempt2.size() && (attempt2.size() < best.size())) {
+  } else if ((!attempt2.empty() != 0u) && (attempt2.size() < best.size())) {
     best = attempt2;
   }
 
-  if (! best.size()) {
+  if (best.empty()) {
     best = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 3);
-    if (! best.size()) {
+    if (best.empty()) {
       best = level_cursor_path_draw_line_attempt(g, v, l, player, start, end, 4);
     }
   }
@@ -393,8 +394,8 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
 //
 void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 {
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     //
     // If no player, clear the cursor
     //
@@ -402,8 +403,8 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto ext_struct = thing_ext_struct(g, player);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, player);
+  if (ext_struct == nullptr) {
     //
     // If no player, clear the cursor
     //
@@ -421,8 +422,8 @@ void level_cursor_path_reset(Gamep g, Levelsp v, Levelp l)
 //
 void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector< spoint > &move_path)
 {
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     //
     // If no player, clear the cursor
     //
@@ -430,8 +431,8 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
     return;
   }
 
-  auto ext_struct = thing_ext_struct(g, player);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, player);
+  if (ext_struct == nullptr) {
     //
     // If no player, clear the cursor
     //
@@ -492,8 +493,8 @@ void level_cursor_copy_path_to_player(Gamep g, Levelsp v, Levelp l, std::vector<
 //
 static void level_cursor_path_create(Gamep g, Levelsp v, Levelp l)
 {
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     //
     // If no player, clear the cursor
     //

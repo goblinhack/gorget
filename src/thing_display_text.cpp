@@ -49,7 +49,7 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
     Tilep tile = nullptr;
 
     c = *text_iter;
-    if (! c) {
+    if (c == 0) {
       break;
     }
 
@@ -98,7 +98,7 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
 
         int         tmp_len = 0;
         const char *tmpc    = tmp.c_str();
-        auto        tp      = string2tp(&tmpc, &tmp_len);
+        auto *        tp      = string2tp(&tmpc, &tmp_len);
         text_iter += tmp_len + 1;
 
         tile                = tp_first_tile(tp, THING_ANIM_IDLE);
@@ -129,9 +129,9 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
 
     text_iter++;
 
-    if (! tile) {
+    if (tile == nullptr) {
       tile = font_ui->font_get_tile(c);
-      if (! tile) {
+      if (tile == nullptr) {
         tile = tile_find_mand(FONT_TILENAME_UNKNOWN_STR);
       }
     }

@@ -24,7 +24,7 @@ void level_update_paths_set(Gamep g, Levelsp v, Levelp l, spoint p)
       auto x = p.x + dx;
       auto y = p.y + dy;
       if (! is_oob(x, y)) {
-        l->is_modified_tile[ x ][ y ] = true;
+        l->is_modified_tile[ x ][ y ] = 1u;
       }
     }
   }

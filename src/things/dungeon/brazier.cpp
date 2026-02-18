@@ -46,7 +46,7 @@ static void tp_brazier_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp 
   //
   // Attempt to spawn fire in the direction of shoving
   //
-  if (shover) {
+  if (shover != nullptr) {
     auto at        = thing_at(t);
     auto direction = at - thing_at(shover);
     auto fire_at   = at + direction;
@@ -94,8 +94,8 @@ static void tp_brazier_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEve
     (void) thing_spawn(g, v, l, tp_first(is_smoke), t);
   }
 
-  auto player = thing_player(g);
-  if (player) {
+  auto *player = thing_player(g);
+  if (player != nullptr) {
     THING_LOG(t, "brazier is dead");
     if (thing_on_same_level_as_player(g, v, t)) {
       auto at = thing_at(t);
@@ -114,7 +114,7 @@ bool tp_load_brazier(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("brazier"); // keep as string for scripts
+  auto *tp   = tp_load("brazier"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -156,14 +156,14 @@ bool tp_load_brazier(void)
   auto delay = 200;
 
   for (auto frame = 0; frame < 31; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
   for (auto frame = 0; frame < 1; frame++) {
-    auto tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".dead.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_DEAD, tile);

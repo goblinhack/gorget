@@ -19,12 +19,12 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     ERR("No game pointer set");
     return;
   }
 
-  if (! v) {
+  if (v == nullptr) {
     ERR("No levels pointer set");
     return;
   }
@@ -32,7 +32,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
   v->describe_count = 0;
 
   for (unsigned int i : v->describe) {
-    if (i) {
+    if (i != 0u) {
       v->describe_count++;
     }
   }
@@ -45,31 +45,31 @@ bool level_cursor_describe_add(Gamep g, Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     ERR("No game pointer set");
     return false;
   }
 
-  if (! v) {
+  if (v == nullptr) {
     ERR("No levels pointer set");
     return false;
   }
 
-  if (! t) {
+  if (t == nullptr) {
     ERR("No thing pointer set");
     return false;
   }
 
   for (unsigned int i : v->describe) {
-    auto cand = thing_find_optional(g, v, i);
+    auto *cand = thing_find_optional(g, v, i);
     if (cand == t) {
       return true;
     }
   }
 
   for (unsigned int &i : v->describe) {
-    auto cand = thing_find_optional(g, v, i);
-    if (! cand) {
+    auto *cand = thing_find_optional(g, v, i);
+    if (cand == nullptr) {
       i = t->id;
       game_request_to_remake_ui_set(g);
       level_cursor_describe_update(g, v);
@@ -87,23 +87,23 @@ bool level_cursor_describe_remove(Gamep g, Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     ERR("No game pointer set");
     return false;
   }
 
-  if (! v) {
+  if (v == nullptr) {
     ERR("No levels pointer set");
     return false;
   }
 
-  if (! t) {
+  if (t == nullptr) {
     ERR("No thing pointer set");
     return false;
   }
 
   for (unsigned int &i : v->describe) {
-    auto cand = thing_find_optional(g, v, t->id);
+    auto *cand = thing_find_optional(g, v, t->id);
     if (cand == t) {
       i = 0;
       game_request_to_remake_ui_set(g);
@@ -121,17 +121,17 @@ void level_cursor_describe_clear(Gamep g, Levelsp v)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     ERR("No game pointer set");
     return;
   }
 
-  if (! v) {
+  if (v == nullptr) {
     ERR("No levels pointer set");
     return;
   }
 
-  if (v->describe_count) {
+  if (v->describe_count != 0u) {
     memset(v->describe, 0, sizeof(v->describe));
     game_request_to_remake_ui_set(g);
     level_cursor_describe_update(g, v);
@@ -145,23 +145,23 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     ERR("No game pointer set");
     return;
   }
 
-  if (! v) {
+  if (v == nullptr) {
     ERR("No levels pointer set");
     return;
   }
 
-  if (! l) {
+  if (l == nullptr) {
     ERR("No level pointer set");
     return;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     ERR("No player pointer set");
     return;
   }
@@ -226,7 +226,7 @@ void level_cursor_describe(Gamep g, Levelsp v, Levelp l)
 
   BOTCON_NEW_LINE();
 
-  if ((int) all_things_description.empty()) {
+  if (((int) all_things_description.empty()) != 0) {
     if (__unused__) {
       BOTCON("Nothing here.");
     }

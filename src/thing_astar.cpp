@@ -109,24 +109,24 @@ public:
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile_set = {};
 
   bool  can_move_to(const spoint &to);
-  Cost  heuristic(const spoint at);
-  Node *node_init(const spoint next_hop, Nodecost cost);
+  Cost  heuristic(spoint at) const;
+  Node *node_init(spoint next_hop, Nodecost cost);
   void  add_to_closed(Node *n);
   void  add_to_open(Node *n);
   void  dump(void);
   void  eval_neighbor(Node *current, const spoint &delta);
-  void  init(void);
+  static void  init(void);
   void  remove_from_open(Node *n);
 
   std::vector< spoint > solve(bool allow_diagonal);
-  std::vector< spoint > create_path(const Node *came_from);
+  static std::vector< spoint > create_path(const Node *came_from);
 };
 
 void Astar::add_to_open(Node *n)
 {
   auto p = n->at;
-  auto o = &open[ p.x ][ p.y ];
-  if (*o) {
+  auto *o = &open[ p.x ][ p.y ];
+  if (*o != nullptr) {
     THING_ERR(t, "Already in open");
     return;
   }
@@ -142,8 +142,8 @@ void Astar::add_to_open(Node *n)
 void Astar::add_to_closed(Node *n)
 {
   auto p = n->at;
-  auto o = &closed[ p.x ][ p.y ];
-  if (*o) {
+  auto *o = &closed[ p.x ][ p.y ];
+  if (*o != nullptr) {
     THING_ERR(t, "Already in closed");
     return;
   }
@@ -159,8 +159,8 @@ void Astar::add_to_closed(Node *n)
 void Astar::remove_from_open(Node *n)
 {
   auto p = n->at;
-  auto o = &open[ p.x ][ p.y ];
-  if (! *o) {
+  auto *o = &open[ p.x ][ p.y ];
+  if (*o == nullptr) {
     THING_ERR(t, "Not in open");
     return;
   }
@@ -169,7 +169,7 @@ void Astar::remove_from_open(Node *n)
   open_nodes.erase(n->cost);
 }
 
-Cost Astar::heuristic(const spoint at)
+Cost Astar::heuristic(const spoint at) const
 {
   //
   // This can create wiggles in the path as we're always looking at the distance
@@ -184,7 +184,7 @@ Cost Astar::heuristic(const spoint at)
 
 Node *Astar::node_init(const spoint next_hop, Nodecost cost)
 {
-  auto n = &nodes[ next_hop.x ][ next_hop.y ];
+  auto *n = &nodes[ next_hop.x ][ next_hop.y ];
 
   n->at   = next_hop;
   n->cost = cost;
@@ -202,7 +202,7 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
   //
   // If in the closed set already, ignore.
   //
-  if (closed[ next_hop.x ][ next_hop.y ]) {
+  if (closed[ next_hop.x ][ next_hop.y ] != nullptr) {
     return;
   }
 
@@ -213,7 +213,7 @@ void Astar::eval_neighbor(Node *current, const spoint &delta)
   Cost cost = current->cost.cost + heuristic(next_hop);
 
   Node *neighbor = open[ next_hop.x ][ next_hop.y ];
-  if (! neighbor) {
+  if (neighbor == nullptr) {
     auto ncost          = Nodecost(cost);
     neighbor            = node_init(next_hop, ncost);
     neighbor->came_from = current;
@@ -236,8 +236,8 @@ std::vector< spoint > Astar::create_path(const Node *came_from)
 
   std::vector< spoint > out;
 
-  while (came_from) {
-    if (came_from->came_from) {
+  while (came_from != nullptr) {
+    if (came_from->came_from != nullptr) {
       out.push_back(came_from->at);
     }
     came_from = came_from->came_from;
@@ -269,7 +269,7 @@ bool Astar::can_move_to(const spoint &to)
 std::vector< spoint > Astar::solve(bool allow_diagonal)
 {
   auto ncost    = Nodecost(heuristic(src));
-  auto neighbor = node_init(src, ncost);
+  auto *neighbor = node_init(src, ncost);
 
   add_to_open(neighbor);
 

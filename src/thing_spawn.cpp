@@ -12,8 +12,8 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
 {
   TRACE_NO_INDENT();
 
-  auto t = thing_init(g, v, l, tp, at);
-  if (! t) {
+  auto *t = thing_init(g, v, l, tp, at);
+  if (t == nullptr) {
     if (g_opt_test_current == "test_alloc_free_monsts") {
       TP_LOG(tp, "failed to init thing");
     } else {
@@ -27,7 +27,7 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &at)
     return nullptr;
   }
 
-  if (true) {
+  {
     THING_DBG(t, "spawned");
   }
 
@@ -50,7 +50,7 @@ Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, const spoint &at)
 
 Thingp thing_spawn(Gamep g, Levelsp v, Levelp l, Tpp tp, Thingp at)
 {
-  if (! at) {
+  if (at == nullptr) {
     ERR("No thing pointer");
     return nullptr;
   }

@@ -50,7 +50,7 @@ bool tp_load_door_secret(void)
 
   for (auto variant = 1; variant <= WALL_VARIANTS; variant++) {
     std::string name = "door_secret" + std::to_string(variant);
-    auto        tp   = tp_load(name.c_str());
+    auto *        tp   = tp_load(name);
     // begin sort marker1 {
     thing_description_set(tp, tp_door_secret_description_get);
     thing_on_open_request_set(tp, tp_door_secret_on_open_request);
@@ -84,7 +84,7 @@ bool tp_load_door_secret(void)
     tp_z_depth_set(tp, MAP_Z_DEPTH_OBJ);
     // end sort marker1 }
 
-    auto tile = tile_find_mand(name + ".idle.0");
+    auto *tile = tile_find_mand(name + ".idle.0");
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
     tile = tile_find_mand(name + ".open.0");

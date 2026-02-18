@@ -24,14 +24,14 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   //
   // If halfway towards burning/melting, make it pulse
   //
-  auto tp          = thing_tp(t);
+  auto *tp          = thing_tp(t);
   auto upper_limit = std::max(tp_temperature_burns_at_get(tp), tp_temperature_melts_at_get(tp));
-  if (! upper_limit) {
+  if (upper_limit == 0) {
     return;
   }
 
   auto lower_limit = tp_temperature_initial_get(tp);
-  if (! lower_limit) {
+  if (lower_limit == 0) {
     return;
   }
 
@@ -46,12 +46,12 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
   //
   auto time_damp = 3;
   auto dt        = time_step / time_damp;
-  if (! dt) {
+  if (dt == 0) {
     dt = time_step;
   }
 
   auto is_hot = thing_is_hot_decr(g, v, l, t, dt);
-  if (! is_hot) {
+  if (is_hot == 0) {
     if (T > threshold) {
       thing_is_hot_set(g, v, l, t, 255);
     }

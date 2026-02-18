@@ -45,7 +45,7 @@
   {
     TRACE_NO_INDENT();
     player = thing_player(g);
-    if (! player) {
+    if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -55,19 +55,19 @@
   // Spawn steam on the player
   //
   TEST_PROGRESS(t);
-  if (! thing_spawn(g, v, l, tp_first(is_steam), player)) {
+  if (thing_spawn(g, v, l, tp_first(is_steam), player) == nullptr) {
     TEST_FAILED(t, "spawn failed");
     goto exit;
   }
-  if (! thing_spawn(g, v, l, tp_first(is_steam), player)) {
+  if (thing_spawn(g, v, l, tp_first(is_steam), player) == nullptr) {
     TEST_FAILED(t, "spawn failed");
     goto exit;
   }
-  if (! thing_spawn(g, v, l, tp_first(is_steam), player)) {
+  if (thing_spawn(g, v, l, tp_first(is_steam), player) == nullptr) {
     TEST_FAILED(t, "spawn failed");
     goto exit;
   }
-  if (! thing_spawn(g, v, l, tp_first(is_steam), player)) {
+  if (thing_spawn(g, v, l, tp_first(is_steam), player) == nullptr) {
     TEST_FAILED(t, "spawn failed");
     goto exit;
   }

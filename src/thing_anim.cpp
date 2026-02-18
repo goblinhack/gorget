@@ -26,10 +26,10 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
   t->anim_type         = anim_type;
 
   auto ntiles = tp_tiles_size(tp, t->anim_type);
-  if (ntiles) {
+  if (ntiles != 0) {
     auto index = os_rand() % ntiles;
-    auto tile  = tp_tiles_get(tp, t->anim_type, index);
-    if (tile) {
+    auto *tile  = tp_tiles_get(tp, t->anim_type, index);
+    if (tile != nullptr) {
       switch (t->anim_type) {
         case THING_ANIM_JOIN_BL :
         case THING_ANIM_JOIN_BL2 :
@@ -111,7 +111,7 @@ void thing_anim_init(Gamep g, Levelsp v, Levelp l, Thingp t, ThingAnim anim_type
       }
 
       tile = tp_tiles_get(tp, t->anim_type, t->anim_index);
-      if (tile) {
+      if (tile != nullptr) {
         t->tile_index = tile_global_index(tile);
       }
     }
@@ -128,12 +128,12 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
 #endif
 
   auto tile_index = t->tile_index;
-  if (! tile_index) {
+  if (tile_index == 0U) {
     return;
   }
 
-  auto tile = tile_index_to_tile(tile_index);
-  if (! tile) {
+  auto *tile = tile_index_to_tile(tile_index);
+  if (tile == nullptr) {
     return;
   }
 
@@ -144,7 +144,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
     }
   }
 
-  if (! tile_delay_ms(tile)) {
+  if (tile_delay_ms(tile) == 0U) {
     return;
   }
 
@@ -175,7 +175,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
   }
 
   tile = tp_tiles_get(tp, t->anim_type, t->anim_index);
-  if (tile) {
+  if (tile != nullptr) {
     t->tile_index = tile_global_index(tile);
 
     t->anim_ms_remaining += tile_delay_ms(tile);

@@ -25,7 +25,7 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
 
   if (! thing_is_burning(t)) {
     return;
@@ -83,8 +83,8 @@ void thing_continue_to_burn_check(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     // Don't let the fire age out.
     //
-    auto f = level_is_fire(g, v, l, t);
-    if (f) {
+    auto *f = level_is_fire(g, v, l, t);
+    if (f != nullptr) {
       THING_DBG(t, "keep the fire burning");
       (void) thing_lifespan_incr(g, v, l, f, 2);
     }

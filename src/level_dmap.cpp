@@ -24,11 +24,11 @@ void levels_dmap(Gamep g, Levelsp v)
   LOG("Levels dmap");
   TRACE_AND_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     CROAK("no game pointer");
   }
 
-  if (! v) {
+  if (v == nullptr) {
     CROAK("no levels pointer");
   }
 

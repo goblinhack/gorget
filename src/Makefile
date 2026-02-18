@@ -106,11 +106,7 @@ tidy:
 			modernize-use-nullptr,\
 			modernize-use-nullptr,\
 			modernize-use-ranges,\
-			readability-use-std-min-max,\
-			readability-*,\
-			readability-else-after-return,\
-			readability-redundant-member-init,\
-			readability-simplify-boolean-expr" \
+			readability-*" \
 			-header-filter=".*" "$(SRC_DIR)/$$src" -- $(CFLAGS); \
 	done
 	@echo "Done"

@@ -143,9 +143,9 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   // Unless the player is on fire. In which case we want the flames to
   // die, else they follow them down and they stay on fire.
   //
-  auto player = thing_player(g);
+  auto *player = thing_player(g);
   auto at     = thing_at(t);
-  if (player && (at == thing_at(player))) {
+  if ((player != nullptr) && (at == thing_at(player))) {
     ThingEvent e {
         .reason     = "by falling",     //
         .event_type = THING_EVENT_FALL, //
@@ -165,7 +165,7 @@ bool tp_load_fire(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("fire"); // keep as string for scripts
+  auto *tp   = tp_load("fire"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -208,7 +208,7 @@ bool tp_load_fire(void)
   auto delay = 200;
 
   for (auto frame = 0; frame < 16; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);

@@ -40,14 +40,14 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   for (auto tries = 0; tries < MAP_SLOTS; tries++) {
     for (auto slot = 0; slot < MAP_SLOTS; slot++) {
       auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];
-      if (! o_id) {
-        auto tp = thing_tp(t);
+      if (o_id == 0u) {
+        auto *tp = thing_tp(t);
 
         //
         // Keep track of tiles the player has been on.
         //
         if (tp_is_player(tp)) {
-          l->player_has_walked_tile[ at.x ][ at.y ] = true;
+          l->player_has_walked_tile[ at.x ][ at.y ] = 1u;
         }
 
         //
@@ -74,9 +74,9 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
 
     for (auto slot = 0; slot < MAP_SLOTS; slot++) {
       auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];
-      if (o_id) {
-        auto it = thing_find(g, v, o_id);
-        if (it && thing_is_removable_on_err(it)) {
+      if (o_id != 0u) {
+        auto *it = thing_find(g, v, o_id);
+        if ((it != nullptr) && thing_is_removable_on_err(it)) {
           if (thing_pop(g, v, it)) {
             THING_DBG(t, "removed from the map due to lack of slots");
             removed_one = true;
@@ -96,9 +96,9 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
     //
     for (auto slot = 0; slot < MAP_SLOTS; slot++) {
       auto o_id = l->thing_id[ at.x ][ at.y ][ slot ];
-      if (o_id) {
-        auto it = thing_find(g, v, o_id);
-        if (it && thing_is_dead(it) && thing_is_removable_when_dead_on_err(it)) {
+      if (o_id != 0u) {
+        auto *it = thing_find(g, v, o_id);
+        if ((it != nullptr) && thing_is_dead(it) && thing_is_removable_when_dead_on_err(it)) {
           if (thing_pop(g, v, it)) {
             THING_DBG(t, "removed from the map due to lack of slots");
             removed_one = true;
@@ -123,8 +123,8 @@ bool thing_push(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
-    if (dump_id) {
-      auto it = thing_find(g, v, dump_id);
+    if (dump_id != 0u) {
+      auto *it = thing_find(g, v, dump_id);
       THING_CON(it, "DUMP: is using slot %u", slot);
     }
   }
@@ -140,8 +140,8 @@ bool thing_pop(Gamep g, Levelsp v, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto l = thing_level(g, v, t);
-  if (! l) {
+  auto *l = thing_level(g, v, t);
+  if (l == nullptr) {
     return false;
   }
 
@@ -179,8 +179,8 @@ bool thing_pop(Gamep g, Levelsp v, Thingp t)
   //
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     auto dump_id = l->thing_id[ at.x ][ at.y ][ slot ];
-    if (dump_id) {
-      auto it = thing_find(g, v, dump_id);
+    if (dump_id != 0u) {
+      auto *it = thing_find(g, v, dump_id);
       THING_CON(it, "DUMP: is using slot %u", slot);
     }
   }

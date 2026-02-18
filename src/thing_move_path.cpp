@@ -15,8 +15,8 @@ void thing_move_path_reset(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto ext_struct = thing_ext_struct(g, t);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, t);
+  if (ext_struct == nullptr) {
     return;
   }
 
@@ -30,8 +30,8 @@ int thing_move_path_size(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  auto ext_struct = thing_ext_struct(g, t);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, t);
+  if (ext_struct == nullptr) {
     return 0;
   }
 
@@ -45,12 +45,12 @@ bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
 {
   TRACE_NO_INDENT();
 
-  auto ext_struct = thing_ext_struct(g, t);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, t);
+  if (ext_struct == nullptr) {
     return false;
   }
 
-  if (! ext_struct->move_path.size) {
+  if (ext_struct->move_path.size == 0) {
     return false;
   }
 
@@ -69,8 +69,8 @@ bool thing_move_path_pop(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
 //
 bool thing_move_path_apply(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spoint > &move_path)
 {
-  auto ext_struct = thing_ext_struct(g, t);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, t);
+  if (ext_struct == nullptr) {
     THING_ERR(t, "no ext struct");
     return false;
   }
@@ -105,12 +105,12 @@ bool thing_move_path_target(Gamep g, Levelsp v, Levelp l, Thingp t, spoint &out)
 {
   TRACE_NO_INDENT();
 
-  auto ext_struct = thing_ext_struct(g, t);
-  if (! ext_struct) {
+  auto *ext_struct = thing_ext_struct(g, t);
+  if (ext_struct == nullptr) {
     return false;
   }
 
-  if (! ext_struct->move_path.size) {
+  if (ext_struct->move_path.size == 0) {
     return false;
   }
 

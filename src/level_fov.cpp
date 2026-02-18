@@ -63,8 +63,8 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
   }
 #endif
 
-  if (m) {
-    m->can_see[ pov.x ][ pov.y ] = val;
+  if (m != nullptr) {
+    m->can_see[ pov.x ][ pov.y ] = static_cast<uint8_t>(val);
   }
 }
 
@@ -76,11 +76,11 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
     return false;
   }
 #endif
-  if (! m) {
+  if (m == nullptr) {
     return false;
   }
 
-  return m->can_see[ pov.x ][ pov.y ];
+  return m->can_see[ pov.x ][ pov.y ] != 0U;
 }
 
 //
@@ -112,16 +112,16 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     return; // Distance is out-of-range.
   }
 
-  if (is_oob(pov.x + distance_from_origin * xy, pov.y + distance_from_origin * yy)) {
+  if (is_oob(pov.x + (distance_from_origin * xy), pov.y + (distance_from_origin * yy))) {
     return; // Distance is out-of-bounds.
   }
 
   bool prev_tile_blocked = false;
 
   for (short angle = distance_from_origin; angle >= 0; --angle) { // Polar angle coordinates from high to low.
-    const float tile_slope_high     = (angle + 0.5f) / (distance_from_origin - 0.5f);
-    const float tile_slope_low      = (angle - 0.5f) / (distance_from_origin + 0.5f);
-    const float prev_tile_slope_low = (angle + 0.5f) / (distance_from_origin + 0.5f);
+    const float tile_slope_high     = (angle + 0.5F) / (distance_from_origin - 0.5F);
+    const float tile_slope_low      = (angle - 0.5F) / (distance_from_origin + 0.5F);
+    const float prev_tile_slope_low = (angle + 0.5F) / (distance_from_origin + 0.5F);
 
     if (tile_slope_low > view_slope_high) {
       continue; // Tile is not in the view yet.
@@ -131,7 +131,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     }
 
     // Current tile is in view.
-    const spoint p(pov.x + angle * xx + distance_from_origin * xy, pov.y + angle * yx + distance_from_origin * yy);
+    const spoint p(pov.x + (angle * xx) + (distance_from_origin * xy), pov.y + (angle * yx) + (distance_from_origin * yy));
 
     if (is_oob(p)) {
       continue; // Angle is out-of-bounds.
@@ -140,12 +140,12 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
     //
     // Treat player and monster blocking differently so the player can use cover
     //
-    auto light_blocker = level_light_blocker_at(g, v, l, p);
+    auto *light_blocker = level_light_blocker_at(g, v, l, p);
 
-    if (angle * angle + distance_from_origin * distance_from_origin <= radius_squared
-        && (light_walls || ! light_blocker)) {
+    if ((angle * angle) + (distance_from_origin * distance_from_origin) <= radius_squared
+        && (light_walls || (light_blocker == nullptr))) {
 
-      if (fov_can_see_tile) {
+      if (fov_can_see_tile != nullptr) {
         //
         // Can see tile. If not seen already, light it
         //
@@ -155,7 +155,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
           //
           // Per tile can see callback check
           //
-          if (can_see_callback) {
+          if (can_see_callback != nullptr) {
             (can_see_callback)(g, v, l, me, pov, p);
           }
         }
@@ -163,12 +163,12 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
         //
         // Can see tile. Could be a repeat of this tile.
         //
-        if (can_see_callback) {
+        if (can_see_callback != nullptr) {
           (can_see_callback)(g, v, l, me, pov, p);
         }
       }
 
-      if (fov_has_seen_tile) {
+      if (fov_has_seen_tile != nullptr) {
         //
         // Has seen this tile
         //
@@ -184,11 +184,11 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
 #endif
     }
 
-    if (prev_tile_blocked && ! light_blocker) { // Wall -> floor.
+    if (prev_tile_blocked && (light_blocker == nullptr)) { // Wall -> floor.
       view_slope_high = prev_tile_slope_low;    // Reduce the view size.
     }
 
-    if (! prev_tile_blocked && light_blocker) { // Floor -> wall.
+    if (! prev_tile_blocked && (light_blocker != nullptr)) { // Floor -> wall.
       //
       // Get the last sequence of floors as a view and recurse into them.
       //
@@ -196,7 +196,7 @@ void level_fov_do(Gamep g, Levelsp v, Levelp l, Thingp me,           //
                    tile_slope_high, max_radius, octant, light_walls, can_see_callback);
     }
 
-    prev_tile_blocked = light_blocker;
+    prev_tile_blocked = (light_blocker != nullptr);
   }
 
   if (! prev_tile_blocked) {
@@ -215,7 +215,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
 
   const bool light_walls = true;
 
-  if (fov_can_see_tile) {
+  if (fov_can_see_tile != nullptr) {
     memset(fov_can_see_tile, 0, sizeof(*fov_can_see_tile));
   }
 
@@ -225,7 +225,7 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
                  can_see_callback);
   }
 
-  if (fov_can_see_tile) {
+  if (fov_can_see_tile != nullptr) {
     //
     // If not seen already, light it
     //
@@ -235,13 +235,13 @@ void level_fov(Gamep g, Levelsp v, Levelp l, Thingp me, FovMap *fov_can_see_tile
       //
       // Per tile can see callback check
       //
-      if (can_see_callback) {
+      if (can_see_callback != nullptr) {
         (can_see_callback)(g, v, l, me, pov, pov);
       }
     }
   }
 
-  if (fov_has_seen_tile) {
+  if (fov_has_seen_tile != nullptr) {
     level_fov_set(fov_has_seen_tile, pov, true);
   }
 

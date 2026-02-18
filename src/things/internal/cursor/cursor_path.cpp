@@ -35,7 +35,7 @@ static Tilep tp_cursor_path_display_get_tile_info(Gamep g, Levelsp v, Levelp l, 
 
 bool tp_load_cursor_path(void)
 {
-  auto tp   = tp_load("cursor_path"); // keep as string for scripts
+  auto *tp   = tp_load("cursor_path"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
   thing_display_get_tile_info_set(tp, tp_cursor_path_display_get_tile_info);
@@ -44,7 +44,7 @@ bool tp_load_cursor_path(void)
   tp_flag_set(tp, is_cursor_path);
   // end sort marker1 }
 
-  auto tile = tile_find_mand("cursor_path.nopath");
+  auto *tile = tile_find_mand("cursor_path.nopath");
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_NOPATH, tile);
   tile = tile_find_mand("cursor_path.normal");
   tp_tiles_push_back(tp, THING_ANIM_CURSOR_NORMAL, tile);

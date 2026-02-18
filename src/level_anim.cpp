@@ -13,7 +13,7 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   l->ts = time_ms();
-  if (! l->last_ts) {
+  if (l->last_ts == 0U) {
     l->last_ts = l->ts;
     return;
   }
@@ -37,11 +37,11 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
       thing_anim_time_step(g, v, l, t, tp, time_step);
     }
 
-    if (thing_is_hit(t)) {
+    if (thing_is_hit(t) != 0) {
       thing_hit_time_step(g, v, l, t, time_step);
     }
 
-    if (thing_is_falling(t)) {
+    if (thing_is_falling(t) != 0) {
       thing_fall_time_step(g, v, l, t, time_step);
     }
   }

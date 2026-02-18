@@ -898,7 +898,7 @@ std::string to_string_ignoring_mods(const SDL_Keysym &k)
     return "z";
   }
 
-  if (! k.sym) {
+  if (k.sym == 0) {
     return "<>";
   }
 
@@ -912,10 +912,10 @@ std::string to_string(const SDL_Keysym &k)
   if (k.mod == KMOD_SHIFT) {
     out += "<Shift> ";
   } else {
-    if (k.mod & KMOD_LSHIFT) {
+    if ((k.mod & KMOD_LSHIFT) != 0) {
       out += "<L-shift> ";
     }
-    if (k.mod & KMOD_RSHIFT) {
+    if ((k.mod & KMOD_RSHIFT) != 0) {
       out += "<R-shift> ";
     }
   }
@@ -923,10 +923,10 @@ std::string to_string(const SDL_Keysym &k)
   if (k.mod == KMOD_CTRL) {
     out += "<Ctrl> ";
   } else {
-    if (k.mod & KMOD_LCTRL) {
+    if ((k.mod & KMOD_LCTRL) != 0) {
       out += "<L-ctrl> ";
     }
-    if (k.mod & KMOD_RCTRL) {
+    if ((k.mod & KMOD_RCTRL) != 0) {
       out += "<R-ctrl> ";
     }
   }
@@ -934,10 +934,10 @@ std::string to_string(const SDL_Keysym &k)
   if (k.mod == KMOD_ALT) {
     out += "<Alt> ";
   } else {
-    if (k.mod & KMOD_LALT) {
+    if ((k.mod & KMOD_LALT) != 0) {
       out += "<L-alt> ";
     }
-    if (k.mod & KMOD_RALT) {
+    if ((k.mod & KMOD_RALT) != 0) {
       out += "<R-alt> ";
     }
   }
@@ -945,10 +945,10 @@ std::string to_string(const SDL_Keysym &k)
   if (k.mod == KMOD_GUI) {
     out += "<Gui> ";
   } else {
-    if (k.mod & KMOD_LGUI) {
+    if ((k.mod & KMOD_LGUI) != 0) {
       out += "<L-gui> ";
     }
-    if (k.mod & KMOD_RGUI) {
+    if ((k.mod & KMOD_RGUI) != 0) {
       out += "<R-gui> ";
     }
   }
@@ -1007,7 +1007,7 @@ SDL_Keysym sdlk_normalize(SDL_Keysym k_in)
 {
   SDL_Keysym k = k_in;
 
-  if ((k.mod & KMOD_LSHIFT) || (k.mod & KMOD_RSHIFT)) {
+  if (((k.mod & KMOD_LSHIFT) != 0) || ((k.mod & KMOD_RSHIFT) != 0)) {
     k.mod &= ~KMOD_SHIFT;
     switch (k.sym) {
       case SDLK_COMMA :
@@ -1110,15 +1110,19 @@ bool sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b)
   //
   // So either shift key works
   //
-  if (k1.mod & KMOD_SHIFT)
+  if ((k1.mod & KMOD_SHIFT) != 0) {
     k1.mod |= KMOD_SHIFT;
-  if (k2.mod & KMOD_SHIFT)
+}
+  if ((k2.mod & KMOD_SHIFT) != 0) {
     k2.mod |= KMOD_SHIFT;
+}
 
-  if (k1.mod & KMOD_CTRL)
+  if ((k1.mod & KMOD_CTRL) != 0) {
     k1.mod |= KMOD_CTRL;
-  if (k2.mod & KMOD_CTRL)
+}
+  if ((k2.mod & KMOD_CTRL) != 0) {
     k2.mod |= KMOD_CTRL;
+}
 
   //
   // The chromebook duet reports all keys as num lock on. I'm not sure

@@ -37,8 +37,8 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum
         // If the player is dead, then don't show the move path, but do allow them to move
         // the cursor around so they can still look at the level/cause of death.
         //
-        auto player = thing_player(g);
-        if (player && thing_is_dead(player)) {
+        auto *player = thing_player(g);
+        if ((player != nullptr) && thing_is_dead(player)) {
           break;
         }
 
@@ -46,7 +46,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum
         // Cursors do not use up slots on the map, to avoid them interacting with anything
         //
         static Tpp tp_once;
-        if (! tp_once) {
+        if (tp_once == nullptr) {
           tp_once = tp_find_mand("cursor_path");
         }
         tp = tp_once;
@@ -58,7 +58,7 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum
         // Cursors do not use up slots on the map, to avoid them interacting with anything
         //
         static Tpp tp_once;
-        if (! tp_once) {
+        if (tp_once == nullptr) {
           tp_once = tp_find_mand("cursor_at");
         }
         tp                = tp_once;
@@ -67,8 +67,9 @@ static void level_display_cursor(Gamep g, Levelsp v, Levelp l, spoint p, FboEnum
       }
   }
 
-  if (tp) {
-    spoint   tl, br;
+  if (tp != nullptr) {
+    spoint   tl;
+    spoint   br;
     uint16_t tile_index;
     thing_display_get_tile_info(g, v, l, p, tp, NULL_THING, &tl, &br, &tile_index);
     thing_display(g, v, l, p, tp, NULL_THING, tl, br, tile_index, fbo);
@@ -99,7 +100,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
   TRACE_NO_INDENT();
 
   Tpp  tp;
-  auto t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
+  auto *t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
   if (unlikely(! tp)) {
     return;
   }
@@ -108,7 +109,8 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
     return;
   }
 
-  spoint   tl, br;
+  spoint   tl;
+  spoint   br;
   uint16_t tile_index;
   thing_display_get_tile_info(g, v, l, p, tp, t, &tl, &br, &tile_index);
   thing_display(g, v, l, p, tp, t, tl, br, tile_index, fbo);
@@ -123,13 +125,13 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
 
   const bool is_level_select = level_is_level_select(g, v, l);
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
-  auto player_level = thing_player_level(g);
-  if (! player_level) {
+  auto *player_level = thing_player_level(g);
+  if (player_level == nullptr) {
     return;
   }
 
@@ -198,7 +200,7 @@ static void level_display_fbo_do(Gamep g, Levelsp v, Levelp l, Levelp level_abov
         }
 
         if (display_tile) {
-          if (level_above) {
+          if (level_above != nullptr) {
             if (level_is_chasm(g, v, level_above, p)) {
               //
               // Only show this tile if the level above is a chasm
@@ -237,8 +239,8 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
   //
   // What level is the player on?
   //
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
@@ -249,7 +251,7 @@ static void level_display_fbo(Gamep g, Levelsp v, Levelp l, Levelp level_below, 
 
     blit_init();
 
-    if (level_below) {
+    if (level_below != nullptr) {
       level_display_fbo_do(g, v, level_below, l, fbo);
     }
 
@@ -283,7 +285,7 @@ void level_display(Gamep g, Levelsp v, Levelp l)
   //
   // Get the next level for falling into and displaying under chasms.
   //
-  auto level_below = level_select_get_next_level_down(g, v, l);
+  auto *level_below = level_select_get_next_level_down(g, v, l);
 
   //
   // Animate both levels
@@ -374,17 +376,17 @@ void level_blit(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return;
   }
 

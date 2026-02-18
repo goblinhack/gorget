@@ -11,7 +11,7 @@
 void thing_description_set(Tpp tp, thing_description_get_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -21,12 +21,12 @@ void thing_description_set(Tpp tp, thing_description_get_t callback)
 std::string thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return "<no description>";
   }
-  if (! tp->description_get) {
+  if (tp->description_get == nullptr) {
     return "";
   }
   return tp->description_get(g, v, l, me);
@@ -35,7 +35,7 @@ std::string thing_description_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 void thing_detail_set(Tpp tp, thing_detail_get_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -45,12 +45,12 @@ void thing_detail_set(Tpp tp, thing_detail_get_t callback)
 std::string thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return "<no detail>";
   }
-  if (! tp->detail_get) {
+  if (tp->detail_get == nullptr) {
     return "";
   }
   return tp->detail_get(g, v, l, me);
@@ -59,7 +59,7 @@ std::string thing_detail_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 void thing_mouse_down_set(Tpp tp, thing_mouse_down_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -69,12 +69,12 @@ void thing_mouse_down_set(Tpp tp, thing_mouse_down_t callback)
 bool thing_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int button)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return false;
   }
-  if (! tp->mouse_down) {
+  if (tp->mouse_down == nullptr) {
     return false;
   }
   return tp->mouse_down(g, v, l, me, x, y, button);
@@ -83,7 +83,7 @@ bool thing_mouse_down(Gamep g, Levelsp v, Levelp l, Thingp me, int x, int y, int
 void thing_on_tick_idle_set(Tpp tp, thing_on_tick_idle_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -93,21 +93,21 @@ void thing_on_tick_idle_set(Tpp tp, thing_on_tick_idle_t callback)
 void thing_on_tick_idle(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->tick_idle) {
+  if (tp->tick_idle == nullptr) {
     return;
   }
-  return tp->tick_idle(g, v, l, me);
+  tp->tick_idle(g, v, l, me);
 }
 
 void thing_on_tick_begin_set(Tpp tp, thing_on_tick_begin_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -117,21 +117,21 @@ void thing_on_tick_begin_set(Tpp tp, thing_on_tick_begin_t callback)
 void thing_on_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->tick_begin) {
+  if (tp->tick_begin == nullptr) {
     return;
   }
-  return tp->tick_begin(g, v, l, me);
+  tp->tick_begin(g, v, l, me);
 }
 
 void thing_on_tick_end_set(Tpp tp, thing_on_tick_end_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -141,21 +141,21 @@ void thing_on_tick_end_set(Tpp tp, thing_on_tick_end_t callback)
 void thing_on_tick_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->tick_end) {
+  if (tp->tick_end == nullptr) {
     return;
   }
-  return tp->tick_end(g, v, l, me);
+  tp->tick_end(g, v, l, me);
 }
 
 void thing_on_spawned_set(Tpp tp, thing_on_spawned_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -165,21 +165,21 @@ void thing_on_spawned_set(Tpp tp, thing_on_spawned_t callback)
 void thing_on_spawned(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_spawned) {
+  if (tp->on_spawned == nullptr) {
     return;
   }
-  return tp->on_spawned(g, v, l, me);
+  tp->on_spawned(g, v, l, me);
 }
 
 void thing_on_level_populated_set(Tpp tp, thing_on_level_populated_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -189,21 +189,21 @@ void thing_on_level_populated_set(Tpp tp, thing_on_level_populated_t callback)
 void thing_on_level_populated(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_level_populated) {
+  if (tp->on_level_populated == nullptr) {
     return;
   }
-  return tp->on_level_populated(g, v, l, me);
+  tp->on_level_populated(g, v, l, me);
 }
 
 void thing_on_level_enter_set(Tpp tp, thing_on_level_enter_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -213,21 +213,21 @@ void thing_on_level_enter_set(Tpp tp, thing_on_level_enter_t callback)
 void thing_on_level_enter(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_level_enter) {
+  if (tp->on_level_enter == nullptr) {
     return;
   }
-  return tp->on_level_enter(g, v, l, me);
+  tp->on_level_enter(g, v, l, me);
 }
 
 void thing_on_level_leave_set(Tpp tp, thing_on_level_leave_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -237,21 +237,21 @@ void thing_on_level_leave_set(Tpp tp, thing_on_level_leave_t callback)
 void thing_on_level_leave(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_level_leave) {
+  if (tp->on_level_leave == nullptr) {
     return;
   }
-  return tp->on_level_leave(g, v, l, me);
+  tp->on_level_leave(g, v, l, me);
 }
 
 void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -261,12 +261,12 @@ void thing_on_open_request_set(Tpp tp, thing_on_open_request_t callback)
 bool thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return false;
   }
-  if (! tp->on_open_request) {
+  if (tp->on_open_request == nullptr) {
     //
     // Assume success
     //
@@ -288,7 +288,7 @@ bool thing_on_open_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp playe
 void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -298,12 +298,12 @@ void thing_on_close_request_set(Tpp tp, thing_on_close_request_t callback)
 bool thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return false;
   }
-  if (! tp->on_close_request) {
+  if (tp->on_close_request == nullptr) {
     //
     // Assume success
     //
@@ -325,7 +325,7 @@ bool thing_on_close_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp play
 void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -335,12 +335,12 @@ void thing_on_carry_request_set(Tpp tp, thing_on_carry_request_t callback)
 bool thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return false;
   }
-  if (! tp->on_carry_request) {
+  if (tp->on_carry_request == nullptr) {
     //
     // Assume success
     //
@@ -356,7 +356,7 @@ bool thing_on_carry_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp play
 void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -366,12 +366,12 @@ void thing_on_drop_request_set(Tpp tp, thing_on_drop_request_t callback)
 bool thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return false;
   }
-  if (! tp->on_drop_request) {
+  if (tp->on_drop_request == nullptr) {
     //
     // Assume success
     //
@@ -387,7 +387,7 @@ bool thing_on_drop_request(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp playe
 void thing_on_death_set(Tpp tp, thing_on_death_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -397,21 +397,21 @@ void thing_on_death_set(Tpp tp, thing_on_death_t callback)
 void thing_on_death(Gamep g, Levelsp v, Levelp l, Thingp me, ThingEvent &e)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_death) {
+  if (tp->on_death == nullptr) {
     return;
   }
-  return tp->on_death(g, v, l, me, e);
+  tp->on_death(g, v, l, me, e);
 }
 
 void thing_on_moved_set(Tpp tp, thing_on_moved_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -421,21 +421,21 @@ void thing_on_moved_set(Tpp tp, thing_on_moved_t callback)
 void thing_on_moved(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_moved) {
+  if (tp->on_moved == nullptr) {
     return;
   }
-  return tp->on_moved(g, v, l, me);
+  tp->on_moved(g, v, l, me);
 }
 
 void thing_on_teleported_set(Tpp tp, thing_on_teleported_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -445,21 +445,21 @@ void thing_on_teleported_set(Tpp tp, thing_on_teleported_t callback)
 void thing_on_teleported(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_teleported) {
+  if (tp->on_teleported == nullptr) {
     return;
   }
-  return tp->on_teleported(g, v, l, me);
+  tp->on_teleported(g, v, l, me);
 }
 
 void thing_on_jump_begin_set(Tpp tp, thing_on_jump_begin_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -469,21 +469,21 @@ void thing_on_jump_begin_set(Tpp tp, thing_on_jump_begin_t callback)
 void thing_on_jump_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_jump_begin) {
+  if (tp->on_jump_begin == nullptr) {
     return;
   }
-  return tp->on_jump_begin(g, v, l, me);
+  tp->on_jump_begin(g, v, l, me);
 }
 
 void thing_on_jump_end_set(Tpp tp, thing_on_jump_end_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -493,21 +493,21 @@ void thing_on_jump_end_set(Tpp tp, thing_on_jump_end_t callback)
 void thing_on_jump_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_jump_end) {
+  if (tp->on_jump_end == nullptr) {
     return;
   }
-  return tp->on_jump_end(g, v, l, me);
+  tp->on_jump_end(g, v, l, me);
 }
 
 void thing_on_shoved_set(Tpp tp, thing_on_shoved_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -517,25 +517,25 @@ void thing_on_shoved_set(Tpp tp, thing_on_shoved_t callback)
 void thing_on_shoved(Gamep g, Levelsp v, Levelp l, Thingp me, Thingp player_or_monst)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_shoved) {
+  if (tp->on_shoved == nullptr) {
     return;
   }
   if (! thing_is_player(player_or_monst) && ! thing_is_monst(player_or_monst)) {
     THING_ERR(player_or_monst, "unexpected thing for %s", __FUNCTION__);
     return;
   }
-  return tp->on_shoved(g, v, l, me, player_or_monst);
+  tp->on_shoved(g, v, l, me, player_or_monst);
 }
 
 void thing_on_fall_begin_set(Tpp tp, thing_on_fall_begin_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -545,21 +545,21 @@ void thing_on_fall_begin_set(Tpp tp, thing_on_fall_begin_t callback)
 void thing_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_fall_begin) {
+  if (tp->on_fall_begin == nullptr) {
     return;
   }
-  return tp->on_fall_begin(g, v, l, me);
+  tp->on_fall_begin(g, v, l, me);
 }
 
 void thing_on_melt_set(Tpp tp, thing_on_melt_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -569,21 +569,21 @@ void thing_on_melt_set(Tpp tp, thing_on_melt_t callback)
 void thing_on_melt(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_melt) {
+  if (tp->on_melt == nullptr) {
     return;
   }
-  return tp->on_melt(g, v, l, me);
+  tp->on_melt(g, v, l, me);
 }
 
 void thing_on_fall_end_set(Tpp tp, thing_on_fall_end_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -593,23 +593,23 @@ void thing_on_fall_end_set(Tpp tp, thing_on_fall_end_t callback)
 void thing_on_fall_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
 
-  if (! tp->on_fall_end) {
+  if (tp->on_fall_end == nullptr) {
     return;
   }
 
-  return tp->on_fall_end(g, v, l, me);
+  tp->on_fall_end(g, v, l, me);
 }
 
 void thing_on_hit_begin_set(Tpp tp, thing_on_hit_begin_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -619,21 +619,21 @@ void thing_on_hit_begin_set(Tpp tp, thing_on_hit_begin_t callback)
 void thing_on_hit_begin(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
-  if (! tp->on_hit_begin) {
+  if (tp->on_hit_begin == nullptr) {
     return;
   }
-  return tp->on_hit_begin(g, v, l, me);
+  tp->on_hit_begin(g, v, l, me);
 }
 
 void thing_on_hit_end_set(Tpp tp, thing_on_hit_end_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -643,23 +643,23 @@ void thing_on_hit_end_set(Tpp tp, thing_on_hit_end_t callback)
 void thing_on_hit_end(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
 
-  if (! tp->on_hit_end) {
+  if (tp->on_hit_end == nullptr) {
     return;
   }
 
-  return tp->on_hit_end(g, v, l, me);
+  tp->on_hit_end(g, v, l, me);
 }
 
 void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -669,10 +669,10 @@ void thing_display_get_tile_info_set(Tpp tp, thing_display_get_tile_info_t callb
 Tilep thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_maybe_null)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     return nullptr;
   }
-  if (! tp->display_get_tile_info) {
+  if (tp->display_get_tile_info == nullptr) {
     return nullptr;
   }
   return tp->display_get_tile_info(g, v, l, p, tp, t_maybe_null);
@@ -681,7 +681,7 @@ Tilep thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
 void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback)
 {
   TRACE_NO_INDENT();
-  if (! tp) {
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return;
   }
@@ -691,12 +691,12 @@ void thing_assess_tile_set(Tpp tp, thing_assess_tile_t callback)
 ThingEnviron thing_assess_tile(Gamep g, Levelsp v, Levelp l, spoint p, Thingp me)
 {
   TRACE_NO_INDENT();
-  auto tp = thing_tp(me);
-  if (! tp) {
+  auto *tp = thing_tp(me);
+  if (tp == nullptr) {
     ERR("No thing template pointer set");
     return THING_ENVIRON_NEUTRAL;
   }
-  if (! tp->assess_tile) {
+  if (tp->assess_tile == nullptr) {
     return THING_ENVIRON_NEUTRAL;
   }
   return tp->assess_tile(g, v, l, p, me);

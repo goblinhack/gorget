@@ -26,7 +26,7 @@ static std::string tp_door_unlocked_description_get(Gamep g, Levelsp v, Levelp l
   if (thing_is_dead(t)) {
     return "broken door";
   }
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
   if (thing_health(t) < tp_health_max_get(tp)) {
     return "damaged unlocked door";
   }
@@ -38,7 +38,7 @@ static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Level
 {
   TRACE_NO_INDENT();
 
-  if (! t_maybe_null) {
+  if (t_maybe_null == nullptr) {
     return nullptr;
   }
 
@@ -61,8 +61,8 @@ static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Level
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -92,7 +92,7 @@ static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Level
 {
   TRACE_NO_INDENT();
 
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
 
   if (thing_health(t) < tp_health_max_get(tp)) {
     if (thing_is_player(opener)) {
@@ -101,7 +101,7 @@ static Tilep tp_door_unlocked_at_display_get_tile_info(Gamep g, Levelsp v, Level
     return false;
   }
 
-  if (thing_is_hot(t)) {
+  if (thing_is_hot(t) != 0) {
     if (thing_is_player(opener)) {
       TOPCON("The door is too hot to touch!");
     }
@@ -136,8 +136,8 @@ static void tp_door_unlocked_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, Th
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (player) {
+  auto *player = thing_player(g);
+  if (player != nullptr) {
     auto at = thing_at(player);
     if (thing_on_same_level_as_player(g, v, t)) {
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
@@ -155,7 +155,7 @@ bool tp_load_door_unlocked(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("door_unlocked"); // keep as string for scripts
+  auto *tp   = tp_load("door_unlocked"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_door_unlocked_description_get);
@@ -205,13 +205,13 @@ bool tp_load_door_unlocked(void)
   auto delay = 500;
 
   for (auto frame = 0; frame < 2; frame++) {
-    auto tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".idle.") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }
 
-  auto tile = tile_find_mand("door_unlocked.open.0");
+  auto *tile = tile_find_mand("door_unlocked.open.0");
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
   tp_tiles_push_back(tp, THING_ANIM_OPEN, tile);
 

@@ -19,7 +19,7 @@
 //
 Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
-  if (! me) {
+  if (me == nullptr) {
     return nullptr;
   }
 
@@ -27,7 +27,7 @@ Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me)
     return nullptr;
   }
 
-  if (! me->mob_id) {
+  if (me->mob_id == 0u) {
     return nullptr;
   }
 
@@ -41,13 +41,13 @@ Dmap *thing_minion_get_mob_dmap(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  auto mob = thing_minion_mob_get(g, v, l, me);
-  if (! mob) {
+  auto *mob = thing_minion_mob_get(g, v, l, me);
+  if (mob == nullptr) {
     return nullptr; // can be normal if detached
   }
 
-  auto mob_ext = thing_ext_struct(g, mob);
-  if (! mob_ext) {
+  auto *mob_ext = thing_ext_struct(g, mob);
+  if (mob_ext == nullptr) {
     THING_ERR(me, "mob has no ext memory");
     return nullptr;
   }
@@ -62,7 +62,7 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
 {
   TRACE_NO_INDENT();
 
-  if (! me) {
+  if (me == nullptr) {
     return false;
   }
 
@@ -71,8 +71,8 @@ bool thing_minion_detach_me_from_mob(Gamep g, Levelsp v, Levelp l, Thingp me)
     return false;
   }
 
-  auto mob = thing_minion_mob_get(g, v, l, me);
-  if (! mob) {
+  auto *mob = thing_minion_mob_get(g, v, l, me);
+  if (mob == nullptr) {
     return false; // can be normal if detached
   }
 
@@ -128,14 +128,14 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
 {
   TRACE_NO_INDENT();
 
-  auto mob = thing_minion_mob_get(g, v, l, me);
-  if (! mob) {
+  auto *mob = thing_minion_mob_get(g, v, l, me);
+  if (mob == nullptr) {
     THING_DBG(me, "choose target: no mob");
     return false; // can be normal if detached
   }
 
-  auto dmap = thing_minion_get_mob_dmap(g, v, l, me);
-  if (! dmap) {
+  auto *dmap = thing_minion_get_mob_dmap(g, v, l, me);
+  if (dmap == nullptr) {
     THING_DBG(me, "choose target: no mob dmap");
     return false;
   }
@@ -147,7 +147,7 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
   // How far to look for a target?
   //
   auto radius = thing_distance_minion_from_mob_max(me);
-  if (! radius) {
+  if (radius == 0) {
     THING_ERR(me, "unexpected value for radius");
     return false;
   }
@@ -163,7 +163,7 @@ bool thing_minion_choose_target_near_mob(Gamep g, Levelsp v, Levelp l, Thingp me
     }
 
     auto p = astar_solve(g, v, l, me, minion_at, target);
-    if (! p.size()) {
+    if (p.empty()) {
       continue;
     }
 

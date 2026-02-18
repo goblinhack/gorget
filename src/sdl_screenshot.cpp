@@ -15,7 +15,7 @@ void sdl_screenshot(Gamep g)
 {
   TRACE_AND_INDENT();
 
-  if (sdl.window) {
+  if (sdl.window != nullptr) {
     g_do_screenshot = true;
   }
 }
@@ -24,7 +24,7 @@ void sdl_screenshot_do(Gamep g)
 {
   TRACE_AND_INDENT();
 
-  if (! sdl.window) {
+  if (sdl.window == nullptr) {
     return;
   }
 

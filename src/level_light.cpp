@@ -30,11 +30,11 @@ public:
   Raycast(void);
   ~Raycast(void);
 
-  void ray_pixel_line_draw(const int16_t index, const spoint p0, const spoint p1);
-  void ray_pixel_add(const int16_t index, const spoint p0, const spoint p1);
-  void ray_lengths_precalculate(Gamep, Levelsp, Levelp);
-  void raycast_do(Gamep, Levelsp, Levelp);
-  void raycast_render(Gamep, Levelsp, Levelp);
+  void ray_pixel_line_draw(int16_t index, spoint p0, spoint p1);
+  void ray_pixel_add(int16_t index, spoint p0, spoint p1);
+  void ray_lengths_precalculate(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
+  void raycast_do(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
+  void raycast_render(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
 
   //
   // This is how far the light rays reach
@@ -174,7 +174,7 @@ void level_light_precalculate(Gamep g)
         auto c = player_light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (player_light_fade[ x ] == 0) {
-            player_light_fade[ x ] = 1.0f - ((float) y / (float) MAP_HEIGHT);
+            player_light_fade[ x ] = 1.0F - ((float) y / (float) MAP_HEIGHT);
           }
         }
       }
@@ -183,7 +183,7 @@ void level_light_precalculate(Gamep g)
         auto c = light_fade_map[ (MAP_WIDTH * y) + x ];
         if (c == 'x') {
           if (light_fade[ x ] == 0) {
-            light_fade[ x ] = 1.0f - ((float) y / (float) MAP_HEIGHT);
+            light_fade[ x ] = 1.0F - ((float) y / (float) MAP_HEIGHT);
           }
         }
       }
@@ -198,11 +198,11 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
 {
   const color  light_color              = tp_light_color(thing_tp(t));
   const float  light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
-  const auto   light_tile               = &v->light_map.tile[ p.x ][ p.y ];
+  auto *const    light_tile               = &v->light_map.tile[ p.x ][ p.y ];
   const float *light_fade_map;
   const spoint thing_at_in_pixels = thing_pix_at(t);
 
-  if (light_strength_in_pixels == 0.0f) {
+  if (light_strength_in_pixels == 0.0F) {
     THING_ERR(t, "thing has no light source");
   }
 
@@ -219,10 +219,10 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
     light_fade_map = light_fade;
   }
 
-  uint16_t light_pixel_at_y = p.y * TILE_WIDTH - TILE_WIDTH / 2;
+  uint16_t light_pixel_at_y = (p.y * TILE_WIDTH) - (TILE_WIDTH / 2);
   for (uint8_t pixy = 0; pixy < LIGHT_PIXEL; pixy++, light_pixel_at_y++) {
 
-    uint16_t light_pixel_at_x = p.x * TILE_WIDTH - TILE_WIDTH / 2;
+    uint16_t light_pixel_at_x = (p.x * TILE_WIDTH) - (TILE_WIDTH / 2);
     for (uint8_t pixx = 0; pixx < LIGHT_PIXEL; pixx++, light_pixel_at_x++) {
 
       float dist_in_pixels
@@ -233,7 +233,7 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
         light_fade_index = MAP_WIDTH - 1;
       }
 
-      auto  light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
+      auto *  light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
       float fade        = light_fade_map[ light_fade_index ];
 
       light_pixel->r += fade * col_r;
@@ -287,10 +287,11 @@ void Raycast::ray_pixel_line_draw(int16_t index, const spoint p0, const spoint p
     yLonger  = true;
   }
   int decInc;
-  if (longLen == 0)
+  if (longLen == 0) {
     decInc = 0;
-  else
+  } else {
     decInc = (shortLen << 16) / longLen;
+}
 
   if (yLonger) {
     if (longLen > 0) {
@@ -333,7 +334,8 @@ void Raycast::ray_lengths_precalculate(Gamep g, Levelsp v, Levelp l)
 
   float dr = (float) RAD_360 / ((float) LIGHT_MAX_RAYS_MAX);
   for (int i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-    float cosr, sinr;
+    float cosr;
+    float sinr;
     sincosf(dr * (float) i, &sinr, &cosr);
     ray_pixel_line_draw(
         i, spoint(0, 0),
@@ -345,7 +347,7 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, sp
 {
   TRACE_NO_INDENT();
 
-  if (! fov) {
+  if (fov == nullptr) {
     CROAK("missing ThingFovp for player");
     return;
   }
@@ -353,9 +355,9 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, sp
   //
   // Only apply color to the tile once
   //
-  if (! fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]) {
-    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = true;
-    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
+  if (fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ] == 0U) {
+    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = 1U;
+    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = 1U;
     level_light_per_pixel_lighting(g, v, l, t, pov, tile);
   }
 }
@@ -412,18 +414,18 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
-  auto ext = thing_ext_struct(g, player);
-  if (! ext) {
+  auto *ext = thing_ext_struct(g, player);
+  if (ext == nullptr) {
     return;
   }
 
-  auto fov = thing_fov_struct(g, player);
-  if (! fov) {
+  auto *fov = thing_fov_struct(g, player);
+  if (fov == nullptr) {
     return;
   }
 
@@ -459,7 +461,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     const int16_t end_of_points = static_cast< uint16_t >(ray_pixels[ i ].size() - 1);
-    auto          ray           = &rays[ i ];
+    auto *          ray           = &rays[ i ];
     auto          ray_pixel     = ray_pixels[ i ].begin();
     int16_t       step          = 0;
     uint8_t       prev_tile_x   = -1;
@@ -530,7 +532,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
       // Did the light ray hit an obstacle?
       //
       obs_to_vision = level_light_blocker_at(g, v, l, tile);
-      if (obs_to_vision) {
+      if (obs_to_vision != nullptr) {
         //
         // What type of obstacle?
         //
@@ -586,7 +588,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
           // If we've left the wall, we're done
           //
           next_obs_to_vision = level_light_blocker_at(g, v, l, tile);
-          if (! next_obs_to_vision) {
+          if (next_obs_to_vision == nullptr) {
             break;
           }
 
@@ -629,8 +631,8 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     return;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
@@ -639,7 +641,8 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
   light_pos.x += TILE_WIDTH / 2;
   light_pos.y += TILE_HEIGHT / 2;
 
-  int w, h;
+  int w;
+  int h;
   fbo_get_size(g, FBO_MAP_LIGHT, w, h);
   gl_enter_2d_mode(g, w, h);
 
@@ -656,7 +659,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     push_point(light_pos.x, light_pos.y);
 
     for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-      auto    ray = &rays[ i ];
+      auto *    ray = &rays[ i ];
       spoint &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
       int16_t p1x = light_pos.x + p.x;
       int16_t p1y = light_pos.y + p.y;
@@ -667,7 +670,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     // Complete the circle with the first point again.
     //
     {
-      auto    ray = &rays[ 0 ];
+      auto *    ray = &rays[ 0 ];
       spoint &p   = ray_pixels[ 0 ][ ray->depth_furthest ].p;
       int16_t p1x = light_pos.x + p.x;
       int16_t p1y = light_pos.y + p.y;
@@ -686,10 +689,10 @@ static Raycast *raycast_new(int ray_max_length_in_pixels, FboEnum fbo)
 {
   TRACE_NO_INDENT();
 
-  auto l = new Raycast();
+  auto *l = new Raycast();
 
   l->ray_max_length_in_pixels = ray_max_length_in_pixels;
-  if (! ray_max_length_in_pixels) {
+  if (ray_max_length_in_pixels == 0) {
     CROAK("No light power");
   }
 
@@ -707,26 +710,26 @@ void level_light_raycast(Gamep g, Levelsp v, Levelp l, FboEnum fbo)
     return;
   }
 
-  if (! g || ! v || ! l) {
+  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
     return;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
   //
   // First time init
   //
-  if (! player_raycast) {
+  if (player_raycast == nullptr) {
     //
     // This is how far the light rays reach
     //
     auto ray_max_length_in_pixels = thing_distance_vision(player) * TILE_WIDTH;
 
     player_raycast = raycast_new(ray_max_length_in_pixels, fbo);
-    if (! player_raycast) {
+    if (player_raycast == nullptr) {
       return;
     }
     player_raycast->ray_lengths_precalculate(g, v, l);
@@ -748,12 +751,12 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
-  if (! g || ! v || ! l) {
+  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
     return;
   }
 
@@ -777,9 +780,9 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
   FOR_ALL_THINGS_ON_LEVEL(g, v, l, t)
   {
     int max_radius = thing_is_light_source(t);
-    if (! max_radius) {
+    if (max_radius == 0) {
       max_radius = thing_distance_vision(t);
-      if (! max_radius) {
+      if (max_radius == 0) {
         continue;
       }
     }
@@ -788,8 +791,8 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
       continue;
     }
 
-    auto ext = thing_ext_struct(g, t);
-    auto fov = thing_fov_struct(g, t);
+    auto *ext = thing_ext_struct(g, t);
+    auto *fov = thing_fov_struct(g, t);
 
     //
     // + here needed for light edges for smoothly moving things
@@ -799,15 +802,15 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
     }
 
     level_fov_can_see_callback_t callback;
-    if (thing_is_light_source(t)) {
+    if (thing_is_light_source(t) != 0) {
       callback = level_light_per_pixel_lighting;
     } else {
       callback = nullptr;
     }
 
     level_fov(g, v, l, t,                              // newline
-              fov ? &fov->fov_can_see_tile : nullptr,  // newline
-              ext ? &ext->fov_has_seen_tile : nullptr, // newline
+              (fov != nullptr) ? &fov->fov_can_see_tile : nullptr,  // newline
+              (ext != nullptr) ? &ext->fov_has_seen_tile : nullptr, // newline
               thing_at(t), max_radius, callback);
   }
 }

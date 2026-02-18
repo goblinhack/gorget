@@ -54,8 +54,8 @@ static Thingp thing_jump_something_in_the_way(Gamep g, Levelsp v, Levelp l, Thin
   auto jump_path = draw_line(at, to);
 
   for (auto intermediate : std::ranges::reverse_view(jump_path)) {
-    auto what = level_is_obs_to_jump_over(g, v, l, intermediate);
-    if (what) {
+    auto *what = level_is_obs_to_jump_over(g, v, l, intermediate);
+    if (what != nullptr) {
       return what;
     }
   }
@@ -92,8 +92,8 @@ bool thing_jump_to(Gamep g, Levelsp v, Levelp l, Thingp t, spoint to, bool warn)
   //
   // Check if jumping over something we cannot
   //
-  auto obs = thing_jump_something_in_the_way(g, v, l, t, to);
-  if (obs) {
+  auto *obs = thing_jump_something_in_the_way(g, v, l, t, to);
+  if (obs != nullptr) {
     if (thing_is_player(t)) {
       if (warn) {
         auto the_thing = thing_the_long_name(g, v, l, obs);

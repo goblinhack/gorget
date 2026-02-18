@@ -22,10 +22,10 @@ Thingp level_scroll_target(Gamep g, Levelsp v)
   //
   // If on the select level, do we have a current level?
   //
-  auto l = game_level_get(g, v);
+  auto *l = game_level_get(g, v);
   if (level_is_level_select(g, v, l)) {
     Thingp target = thing_level_select(g);
-    if (target) {
+    if (target != nullptr) {
       return target;
     }
   }
@@ -45,14 +45,15 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   // Failing that we focus on the player if playing a level.
   //
   Thingp target = level_scroll_target(g, v);
-  if (! target) {
+  if (target == nullptr) {
     return;
   }
 
   //
   // Get the size of the on screen map.
   //
-  int w, h;
+  int w;
+  int h;
   fbo_get_size(g, FBO_MAP_FG, w, h);
 
   //
@@ -65,11 +66,11 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
 
   const auto scroll_border = MAP_SCROLL_EDGE;
 
-  if (! v->scroll_speed) {
+  if (v->scroll_speed == 0u) {
     v->scroll_speed = MAP_SCROLL_SPEED;
   }
 
-  if (v->requested_forced_auto_scroll) {
+  if (v->requested_forced_auto_scroll != 0u) {
     //
     // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
     // centered once more.
@@ -196,13 +197,13 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   // Have we finished scrolling?
   //
   if ((dx == 0) && (dy == 0)) {
-    if (v->requested_forced_auto_scroll) {
+    if (v->requested_forced_auto_scroll != 0u) {
       if (time_have_x_tenths_passed_since(5, v->requested_forced_auto_scroll)) {
         v->requested_forced_auto_scroll = 0;
         v->scroll_speed                 = MAP_SCROLL_SPEED;
       }
     }
-  } else if (v->requested_forced_auto_scroll) {
+  } else if (v->requested_forced_auto_scroll != 0u) {
     if (time_have_x_secs_passed_since(1, v->requested_forced_auto_scroll)) {
       v->requested_forced_auto_scroll = 0;
       v->scroll_speed                 = MAP_SCROLL_SPEED;
@@ -252,7 +253,7 @@ void level_scroll_warp_to_focus(Gamep g, Levelsp v, Levelp l)
   // Failing that we focus on the player if playing a level.
   //
   Thingp target = level_scroll_target(g, v);
-  if (! target) {
+  if (target == nullptr) {
     return;
   }
 

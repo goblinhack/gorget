@@ -44,7 +44,7 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
     }
 
     auto max_count = std::max(std::max(lava_count, water_count), chasm_count);
-    if (max_count) {
+    if (max_count != 0) {
       if (max_count == chasm_count) {
         if (! level_is_chasm(g, v, l, t)) {
           (void) thing_spawn(g, v, l, tp_first(is_chasm), t);
@@ -75,8 +75,8 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
     for (auto delta : points) {
       auto at = thing_at(t);
       auto p  = at + delta;
-      auto b  = level_alive_is_bridge(g, v, l, p);
-      if (b) {
+      auto *b  = level_alive_is_bridge(g, v, l, p);
+      if (b != nullptr) {
         if (level_is_chasm(g, v, l, t)) {
           thing_fall(g, v, l, b);
         }
@@ -91,8 +91,8 @@ static void tp_bridge_on_death(Gamep g, Levelsp v, Levelp l, Thingp t, ThingEven
 
   tp_bridge_destroy_adj(g, v, l, t);
 
-  auto player = thing_player(g);
-  if (player) {
+  auto *player = thing_player(g);
+  if (player != nullptr) {
     auto at = thing_at(player);
     if (thing_on_same_level_as_player(g, v, t)) {
       if (thing_vision_can_see_tile(g, v, l, player, at)) {
@@ -135,7 +135,7 @@ bool tp_load_bridge(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("bridge"); // keep as string for scripts
+  auto *tp   = tp_load("bridge"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_bridge_description_get);
@@ -170,7 +170,7 @@ bool tp_load_bridge(void)
   tp_z_depth_set(tp, MAP_Z_DEPTH_LIQUID);
   // end sort marker1 }
 
-  auto tile = tile_find_mand(name + ".IS_JOIN_BL");
+  auto *tile = tile_find_mand(name + ".IS_JOIN_BL");
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
   tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile);
   tile = tile_find_mand(name + ".IS_JOIN_BL2");

@@ -132,7 +132,7 @@ void sdl_loop(Gamep g)
       // mouse position, to avoid perception of lag. Mouse motion events can be expensive
       // as we redraw the cursor path.
       //
-      if (found) {
+      if (found != 0) {
         if (found > 1) {
           DBG("SDL: Process %u events", found);
         } else {
@@ -155,10 +155,10 @@ void sdl_loop(Gamep g)
       //
       if (unlikely(! found)) {
         auto mouse_down = sdl_get_mouse();
-        if (mouse_down) {
-          if (sdl.last_mouse_held_down_when) {
+        if (mouse_down != 0) {
+          if (sdl.last_mouse_held_down_when != 0U) {
             if (time_have_x_hundredths_passed_since(50, sdl.last_mouse_held_down_when)) {
-              if (sdl.held_mouse_x && sdl.held_mouse_y) {
+              if ((sdl.held_mouse_x != 0) && (sdl.held_mouse_y != 0)) {
                 DBG2("SDL: Mouse DOWN: held: Button %d now at %d,%d initially at %d,%d", mouse_down, sdl.mouse_x,
                      sdl.mouse_y, sdl.held_mouse_x, sdl.held_mouse_y);
                 wid_mouse_held(g, sdl.mouse_down, sdl.held_mouse_x, sdl.held_mouse_y);
@@ -217,7 +217,7 @@ void sdl_loop(Gamep g)
     //
     // Config change?
     //
-    if (unlikely(g_need_restart_with_given_arguments != "")) {
+    if (unlikely(!g_need_restart_with_given_arguments.empty())) {
       LOG("Restart needed");
       break;
     }
@@ -242,7 +242,7 @@ void sdl_loop(Gamep g)
           game_fps_value_set(g, (int) fps);
         } else {
           CON("FPS calculating...");
-          game_fps_value_set(g, (int) 0);
+          game_fps_value_set(g, 0);
         }
         fps_ts_begin = fps_ts_now;
         frames       = 0;

@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
@@ -22,50 +24,50 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
   Tilep tile = nullptr;
 
   tile = thing_display_get_tile_info(g, v, l, p, tp_maybe_null, t_maybe_null);
-  if (tile) {
+  if (tile != nullptr) {
     //
     // Allow override of the tile
     //
-    if (tile_index) {
+    if (tile_index != nullptr) {
       *tile_index = tile_global_index(tile);
     }
-  } else if (t_maybe_null) {
+  } else if (t_maybe_null != nullptr) {
     //
     // Things
     //
-    if (tile_index) {
+    if (tile_index != nullptr) {
       *tile_index = t_maybe_null->tile_index;
     }
-  } else if (tp_maybe_null) {
+  } else if (tp_maybe_null != nullptr) {
     //
     // Cursor usually
     //
     tile = tp_tiles_get(tp_maybe_null, THING_ANIM_IDLE, 0);
 
-    if (tile_index) {
+    if (tile_index != nullptr) {
       *tile_index = tile_global_index(tile);
     }
   } else {
     static Tilep no_tile;
-    if (! no_tile) {
+    if (no_tile == nullptr) {
       no_tile = tile_find_mand("none");
     }
     tile = no_tile;
 
-    if (tile_index) {
+    if (tile_index != nullptr) {
       *tile_index = tile_global_index(tile);
     }
   }
 
-  if (tile_index) {
+  if (tile_index != nullptr) {
     tile = tile_index_to_tile(*tile_index);
   }
 
-  if (! tile) {
+  if (tile == nullptr) {
     tile = tile_find_mand("none");
   }
 
-  if (t_maybe_null) {
+  if (t_maybe_null != nullptr) {
     //
     // All things
     //
@@ -88,17 +90,17 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
   //
   // Centered
   //
-  if (tp_maybe_null && tp_is_blit_centered(tp_maybe_null)) {
+  if ((tp_maybe_null != nullptr) && tp_is_blit_centered(tp_maybe_null)) {
     tl->x -= (pix_width - dw) / 2;
     tl->y -= (pix_height - dh) / 2;
   }
 
-  if (tp_maybe_null && tp_is_blit_on_ground(tp_maybe_null)) {
+  if ((tp_maybe_null != nullptr) && tp_is_blit_on_ground(tp_maybe_null)) {
     tl->x -= (pix_width - dw) / 2;
     tl->y -= (pix_height - dh);
   }
 
-  if (t_maybe_null && thing_is_jumping(t_maybe_null)) {
+  if ((t_maybe_null != nullptr) && thing_is_jumping(t_maybe_null)) {
     auto jump_height = (int) ((sin(PI * t_maybe_null->thing_dt)) * (float) dh);
     tl->y -= jump_height;
     br->y -= jump_height;
@@ -113,7 +115,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
   //
   // Flippable?
   //
-  if (t_maybe_null && tp_is_animated_can_hflip(tp_maybe_null)) {
+  if ((t_maybe_null != nullptr) && tp_is_animated_can_hflip(tp_maybe_null)) {
     if (thing_is_dir_left(t_maybe_null) || thing_is_dir_tl(t_maybe_null) || thing_is_dir_bl(t_maybe_null)) {
       std::swap(tl->x, br->x);
     }
@@ -122,7 +124,7 @@ void thing_display_get_tile_info(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp_
   //
   // Update submerged status
   //
-  if (t_maybe_null && tp_is_submergible(tp_maybe_null)) {
+  if ((t_maybe_null != nullptr) && tp_is_submergible(tp_maybe_null)) {
     (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 0);
     if (level_is_deep_water(g, v, l, p)) {
       (void) thing_submerged_pct_set(g, v, l, t_maybe_null, 80);
@@ -243,7 +245,7 @@ static void thing_display_falling(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   glPushMatrix();
   glTranslatef(mid.x, mid.y, 0);
   float ang = dh * 10;
-  glRotatef(ang, 0.0f, 0.0f, 1.0f);
+  glRotatef(ang, 0.0F, 0.0F, 1.0F);
   glTranslatef(-mid.x, -mid.y, 0);
   thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   blit_flush();
@@ -262,8 +264,8 @@ static void thing_display_rotated(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp
   blit_flush();
   glPushMatrix();
   glTranslatef(mid.x, mid.y, 0);
-  float ang = t->angle * (180.0f / RAD_180);
-  glRotatef(ang, 0.0f, 0.0f, 1.0f);
+  float ang = t->angle * (180.0F / RAD_180);
+  glRotatef(ang, 0.0F, 0.0F, 1.0F);
   glTranslatef(-mid.x, -mid.y, 0);
   thing_display_blit(g, v, l, p, tp, t, tl, br, tile, x1, x2, y1, y2, fbo, fg);
   blit_flush();
@@ -280,7 +282,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
 
   bool is_falling = false;
 
-  auto player = thing_player(g);
+  auto *player = thing_player(g);
   if (unlikely(! player)) {
     return;
   }
@@ -290,7 +292,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
   //
   const auto is_level_select = level_is_level_select(g, v, l);
 
-  if (t_maybe_null) {
+  if (t_maybe_null != nullptr) {
     is_falling = thing_is_falling(t_maybe_null) > 0;
   }
 
@@ -302,7 +304,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
     // What level is the player on?
     //
-    auto player_level = game_level_get(g, v, player->level_num);
+    auto *player_level = game_level_get(g, v, player->level_num);
     if (unlikely(! player_level)) {
       return;
     }
@@ -316,7 +318,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
       }
     }
 
-    if (t_maybe_null && ! thing_vision_can_see_tile(g, v, player_level, player, p)) {
+    if ((t_maybe_null != nullptr) && ! thing_vision_can_see_tile(g, v, player_level, player, p)) {
       //
       // We cannot see this tile currently.
       //
@@ -341,8 +343,8 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
   }
 
-  auto tile = tile_index_to_tile(tile_index);
-  if (! tile) {
+  auto *tile = tile_index_to_tile(tile_index);
+  if (tile == nullptr) {
     return;
   }
 
@@ -365,7 +367,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // Apply lighting to current tiles
     //
     if (fbo == FBO_MAP_FG) {
-      auto pixel = &v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ];
+      auto *pixel = &v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ];
       fg.r       = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
       fg.g       = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
       fg.b       = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
@@ -396,7 +398,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
   }
 
-  if (t_maybe_null) {
+  if (t_maybe_null != nullptr) {
     //
     // Handle various effects
     //
@@ -406,11 +408,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     }
 
     int submerged_pct;
-    if ((submerged_pct = thing_submerged_pct(t_maybe_null))) {
+    if ((submerged_pct = thing_submerged_pct(t_maybe_null)) != 0) {
       //
       // Submerge the tile if it is over some kind of liquid.
       //
-      if (submerged_pct) {
+      if (submerged_pct != 0) {
         tile_blit_apply_submerge_pct(g, tl, br, x1, x2, y1, y2, thing_submerged_pct(t_maybe_null));
         thing_display_blit(g, v, l, p, tp, t_maybe_null, tl, br, tile, x1, x2, y1, y2, fbo, fg);
 
@@ -440,11 +442,11 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     fg.b         = 255;
   }
 
-  if (t_maybe_null) {
+  if (t_maybe_null != nullptr) {
     //
     // Flash if hit
     //
-    if (thing_is_hit(t_maybe_null)) {
+    if (thing_is_hit(t_maybe_null) != 0) {
       //
       // Preserve original alpha
       //
@@ -459,7 +461,7 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     // Pulse when hot. But not when dead. Else a monster killed by a fireball will
     // pulse!
     //
-    if (thing_is_hot(t_maybe_null) && ! thing_is_dead(t_maybe_null)) {
+    if ((thing_is_hot(t_maybe_null) != 0) && ! thing_is_dead(t_maybe_null)) {
       //
       // Preserve original alpha
       //
@@ -494,12 +496,10 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
     // Flash red outline if hit
     //
-    if (thing_is_hit(t_maybe_null)) {
+    if (thing_is_hit(t_maybe_null) != 0) {
       color outline = RED;
       int   a       = (int) (((float) thing_is_hit(t_maybe_null) / (float) MAX_HIT_TIME_MS) * 255.0);
-      if (a > 255) {
-        a = 255;
-      }
+      a = std::min(a, 255);
       outline.a = (uint8_t) a;
       tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
     }

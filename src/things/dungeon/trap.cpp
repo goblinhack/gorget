@@ -26,7 +26,7 @@ bool tp_load_trap(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("trap"); // keep as string for scripts
+  auto *tp   = tp_load("trap"); // keep as string for scripts
   auto name = tp_name(tp);
 
   // begin sort marker1 {
@@ -46,7 +46,7 @@ bool tp_load_trap(void)
   // end sort marker1 }
 
   for (auto frame = 0; frame < 1; frame++) {
-    auto tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
+    auto *tile = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }

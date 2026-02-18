@@ -13,13 +13,13 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
 {
   TRACE_NO_INDENT();
 
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
 
   //
   // If not burnt already, burn it if over the threshold temperature.
   //
   auto Tb = tp_temperature_burns_at_get(tp);
-  if (Tb && (n > Tb)) {
+  if ((Tb != 0) && (n > Tb)) {
     if (thing_is_steam(source) || thing_is_water(source)) {
       //
       // You don't continue to burn with steam
@@ -37,7 +37,7 @@ void thing_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp source, Thing
   // If not meltt already, melt it if over the threshold temperature.
   //
   auto Tm = tp_temperature_melts_at_get(tp);
-  if (Tm && (n > Tm)) {
+  if ((Tm != 0) && (n > Tm)) {
     THING_DBG(t, "melt");
     thing_melt(g, v, l, t);
   }
@@ -49,7 +49,7 @@ static void thing_temperature_damage_apply(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  auto tp        = thing_tp(t);
+  auto *tp        = thing_tp(t);
   int  damage    = d6();
   int  damage_at = tp_temperature_damage_at_get(tp);
 
@@ -95,13 +95,13 @@ void thing_temperature_damage_handle(Gamep g, Levelsp v, Levelp l, Thingp source
 {
   TRACE_NO_INDENT();
 
-  auto tp = thing_tp(t);
+  auto *tp = thing_tp(t);
 
   //
   // Pre burning heat damage
   //
   auto T = tp_temperature_damage_at_get(tp);
-  if (T && (n > T)) {
+  if ((T != 0) && (n > T)) {
     thing_temperature_damage_apply(g, v, l, source, t, n);
     if (thing_is_dead(t)) {
       return;

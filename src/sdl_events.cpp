@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_callstack.hpp"
 #include "my_game.hpp"
 #include "my_globals.hpp"
@@ -84,14 +86,17 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keys
   //
   // Do not use memcmp; SDL_Keysym has an unused field and this will trigger valgrind.
   //
-  if (key->scancode != last_key_pressed.scancode)
+  if (key->scancode != last_key_pressed.scancode) {
     return false;
+}
 
-  if (key->sym != last_key_pressed.sym)
+  if (key->sym != last_key_pressed.sym) {
     return false;
+}
 
-  if (key->mod != last_key_pressed.mod)
+  if (key->mod != last_key_pressed.mod) {
     return false;
+}
 
   return true;
 }
@@ -106,7 +111,7 @@ static void __attribute__((noinline)) sdl_event_keydown_handler(Gamep g, SDL_Key
 
   wid_key_down(g, key, sdl.mouse_x, sdl.mouse_y);
 
-  sdl.shift_held = (key->mod & KMOD_SHIFT) ? 1 : 0;
+  sdl.shift_held = ((key->mod & KMOD_SHIFT) != 0) ? 1 : 0;
 }
 
 static void __attribute__((noinline)) sdl_event_keydown(Gamep g, SDL_Keysym *key, SDL_Event *event)
@@ -144,7 +149,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
 
     g_grab_next_key = false;
     sdl.grabbed_key = sdlk_normalize(event->key.keysym);
-    if (sdl.on_sdl_key_grab) {
+    if (sdl.on_sdl_key_grab != nullptr) {
       sound_play(g, "keypress");
       (*sdl.on_sdl_key_grab)(g, sdl.grabbed_key);
     }
@@ -163,7 +168,7 @@ static void __attribute__((noinline)) sdl_event_keyup(Gamep g, SDL_Keysym *key, 
 
   wid_key_up(g, key, sdl.mouse_x, sdl.mouse_y);
 
-  sdl.shift_held = (key->mod & KMOD_SHIFT) ? 1 : 0;
+  sdl.shift_held = ((key->mod & KMOD_SHIFT) != 0) ? 1 : 0;
 }
 
 static void __attribute__((noinline)) sdl_event_mousemotion(Gamep g, SDL_Keysym *key, SDL_Event *event,
@@ -288,24 +293,20 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
           if (time_have_x_tenths_passed_since(10, ts)) {
             accel = 1.0;
           } else {
-            if (wid_over) {
+            if (wid_over != nullptr) {
               //
               // Slower wheel acceleration when over a wid
               //
               accel *= UI_WID_MOUSE_WHEEL_SCALE;
 
-              if (accel > UI_WID_MOUSE_WHEEL_SCALE_MAX) {
-                accel = UI_WID_MOUSE_WHEEL_SCALE_MAX;
-              }
+              accel = std::min<double>(accel, UI_WID_MOUSE_WHEEL_SCALE_MAX);
             } else {
               //
               // Faster wheel acceleration when over the map
               //
               accel *= UI_GAME_MOUSE_WHEEL_SCALE;
 
-              if (accel > UI_GAME_MOUSE_WHEEL_SCALE_MAX) {
-                accel = UI_GAME_MOUSE_WHEEL_SCALE_MAX;
-              }
+              accel = std::min<double>(accel, UI_GAME_MOUSE_WHEEL_SCALE_MAX);
             }
           }
 
@@ -345,18 +346,18 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
         int axis  = event->jaxis.axis;
         int value = event->jaxis.value;
 
-        if (! sdl.joy_axes) {
+        if (sdl.joy_axes == nullptr) {
           sdl.joy_axes = (int *) myzalloc(SIZEOF(int) * sdl.joy_naxes, "joy axes");
         }
 
         sdl.joy_axes[ axis ] = value;
 
-        sdl.left_fire  = false;
-        sdl.right_fire = false;
+        sdl.left_fire  = 0;
+        sdl.right_fire = 0;
 
         if (sdl.joy_axes[ 2 ] > sdl.joy_deadzone) {
           DBG("SDL: left fire");
-          sdl.left_fire                               = true;
+          sdl.left_fire                               = 1;
           sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = (uint8_t) 1;
         } else {
           sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] = (uint8_t) 0;
@@ -364,13 +365,13 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
 
         if (sdl.joy_axes[ 5 ] > sdl.joy_deadzone) {
           DBG("SDL: right fire");
-          sdl.right_fire                               = true;
+          sdl.right_fire                               = 1;
           sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = (uint8_t) 1;
         } else {
           sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] = (uint8_t) 0;
         }
 
-        if (sdl.right_fire || sdl.left_fire) {
+        if ((sdl.right_fire != 0) || (sdl.left_fire != 0)) {
           sdl_get_mouse();
           wid_joy_button(g, sdl.mouse_x, sdl.mouse_y);
         }
@@ -394,52 +395,52 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
           case SDL_HAT_UP :
             {
               DBG("SDL: UP");
-              sdl.joy2_up = true;
+              sdl.joy2_up = 1;
               break;
             }
           case SDL_HAT_RIGHTUP :
             {
               DBG("SDL: RIGHTUP");
-              sdl.joy2_right = true;
-              sdl.joy2_up    = true;
+              sdl.joy2_right = 1;
+              sdl.joy2_up    = 1;
               break;
             }
           case SDL_HAT_RIGHT :
             {
               DBG("SDL: RIGHT");
-              sdl.joy2_right = true;
+              sdl.joy2_right = 1;
               break;
             }
           case SDL_HAT_RIGHTDOWN :
             {
               DBG("SDL: RIGHTDOWN");
-              sdl.joy2_right = true;
-              sdl.joy2_down  = true;
+              sdl.joy2_right = 1;
+              sdl.joy2_down  = 1;
               break;
             }
           case SDL_HAT_DOWN :
             {
               DBG("SDL: DOWN");
-              sdl.joy2_down = true;
+              sdl.joy2_down = 1;
               break;
             }
           case SDL_HAT_LEFTDOWN :
             {
               DBG("SDL: LEFTDOWN");
-              sdl.joy2_left = true;
-              sdl.joy2_down = true;
+              sdl.joy2_left = 1;
+              sdl.joy2_down = 1;
               break;
             }
           case SDL_HAT_LEFT :
             {
               DBG("SDL: LEFT");
-              sdl.joy2_left = true;
+              sdl.joy2_left = 1;
               break;
             }
           case SDL_HAT_LEFTUP :
             {
-              sdl.joy2_left = true;
-              sdl.joy2_up   = true;
+              sdl.joy2_left = 1;
+              sdl.joy2_up   = 1;
               DBG("SDL: LEFTUP");
               break;
             }
@@ -501,7 +502,7 @@ void sdl_key_repeat_events(Gamep g)
     return;
   }
 
-  if (wid_console_window && wid_console_window->visible) {
+  if ((wid_console_window != nullptr) && (static_cast<unsigned int>(wid_console_window->visible) != 0U)) {
     return;
   }
 
@@ -513,67 +514,67 @@ void sdl_key_repeat_events(Gamep g)
   static bool left_held_prev;
   static bool right_held_prev;
 
-  bool fire_held  = state[ sdlk_to_scancode(game_key_fire_get(g)) ];
-  bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(g)) ];
-  bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(g)) ];
-  bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(g)) ];
-  bool right_held = state[ sdlk_to_scancode(game_key_move_right_get(g)) ];
+  bool fire_held  = state[ sdlk_to_scancode(game_key_fire_get(g)) ] != 0U;
+  bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(g)) ] != 0U;
+  bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(g)) ] != 0U;
+  bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(g)) ] != 0U;
+  bool right_held = state[ sdlk_to_scancode(game_key_move_right_get(g)) ] != 0U;
 
   //
   // Keypad stuff is hardcoded.
   //
-  if (state[ SDL_SCANCODE_KP_5 ] || state[ SDL_SCANCODE_KP_ENTER ]) {
+  if ((state[ SDL_SCANCODE_KP_5 ] != 0U) || (state[ SDL_SCANCODE_KP_ENTER ] != 0U)) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     fire_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_1 ]) {
+  if (state[ SDL_SCANCODE_KP_1 ] != 0U) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
     down_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_2 ]) {
+  if (state[ SDL_SCANCODE_KP_2 ] != 0U) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     down_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_3 ]) {
+  if (state[ SDL_SCANCODE_KP_3 ] != 0U) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     right_held = true;
     down_held  = true;
   }
-  if (state[ SDL_SCANCODE_KP_4 ]) {
+  if (state[ SDL_SCANCODE_KP_4 ] != 0U) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_6 ]) {
+  if (state[ SDL_SCANCODE_KP_6 ] != 0U) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     right_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_7 ]) {
+  if (state[ SDL_SCANCODE_KP_7 ] != 0U) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
     up_held   = true;
   }
-  if (state[ SDL_SCANCODE_KP_8 ]) {
+  if (state[ SDL_SCANCODE_KP_8 ] != 0U) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     up_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_9 ]) {
+  if (state[ SDL_SCANCODE_KP_9 ] != 0U) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
@@ -609,20 +610,20 @@ void sdl_key_repeat_events(Gamep g)
   right_held_prev = right_held;
   left_held_prev  = left_held;
 
-  bool fire  = fire_pressed || fire_held;
-  bool up    = up_pressed || up_held;
-  bool down  = down_pressed || down_held;
-  bool left  = left_pressed || left_held;
-  bool right = right_pressed || right_held;
+  bool fire  = (fire_pressed != 0) || fire_held;
+  bool up    = (up_pressed != 0) || up_held;
+  bool down  = (down_pressed != 0) || down_held;
+  bool left  = (left_pressed != 0) || left_held;
+  bool right = (right_pressed != 0) || right_held;
 
   static ts_t last_movement_keypress = 0;
 
-  if (! last_movement_keypress) {
+  if (last_movement_keypress == 0) {
     last_movement_keypress = time_ms();
   }
 
-  auto player = thing_player(g);
-  if (player) {
+  auto *player = thing_player(g);
+  if (player != nullptr) {
     //
     // This allows for smoother movement in that we are ready to move as soon as the
     // player finishes the previous move.

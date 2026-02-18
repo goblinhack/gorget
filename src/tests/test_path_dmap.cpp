@@ -132,20 +132,20 @@
   bool result = false;
 
   Thingp player = nullptr;
-  for (auto it : level_find_all(g, v, l, is_player)) {
+  for (auto *it : level_find_all(g, v, l, is_player)) {
     player = it;
     break;
   }
 
   Thingp exit_thing = nullptr;
-  for (auto it : level_find_all(g, v, l, is_exit)) {
+  for (auto *it : level_find_all(g, v, l, is_exit)) {
     exit_thing = it;
     break;
   }
 
   {
     thing_dmap(g, v, l, player);
-    auto dmap = thing_get_dmap(g, v, l, player);
+    auto *dmap = thing_get_dmap(g, v, l, player);
 
     for (auto p : dmap_solve(g, v, l, player, dmap, thing_at(exit_thing))) {
       TEST_ASSERT(t, thing_spawn(g, v, l, tp_first(is_corridor), p) != nullptr, "failed to spawn thing");
@@ -154,7 +154,7 @@
 
   for (auto tries = 0; tries < TEST_ITERATIONS; tries++) {
     thing_dmap(g, v, l, player);
-    auto dmap = thing_get_dmap(g, v, l, player);
+    auto *dmap = thing_get_dmap(g, v, l, player);
     (void) dmap_solve(g, v, l, player, dmap, thing_at(exit_thing));
   }
 

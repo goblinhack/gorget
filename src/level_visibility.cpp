@@ -14,12 +14,12 @@ void level_update_visibility(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
-  if (! g || ! v || ! l) {
+  if ((g == nullptr) || (v == nullptr) || (l == nullptr)) {
     return;
   }
 

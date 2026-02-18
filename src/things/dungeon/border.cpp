@@ -13,7 +13,7 @@ bool tp_load_border(void)
   TRACE_NO_INDENT();
 
   std::string name = "border";
-  auto        tp   = tp_load(name.c_str());
+  auto *        tp   = tp_load(name);
   // begin sort marker1 {
   tp_flag_set(tp, is_blit_centered);
   tp_flag_set(tp, is_blit_if_has_seen);
@@ -38,7 +38,7 @@ bool tp_load_border(void)
   tp_z_depth_set(tp, MAP_Z_DEPTH_WALL);
   // end sort marker1 }
 
-  auto tile = tile_find_mand(name + ".IS_JOIN_BL");
+  auto *tile = tile_find_mand(name + ".IS_JOIN_BL");
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
   tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile);
   tile = tile_find_mand(name + ".IS_JOIN_BL2");

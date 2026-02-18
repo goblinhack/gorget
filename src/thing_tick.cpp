@@ -30,8 +30,8 @@ void thing_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   //
   // Lifespan tick
   //
-  if (thing_lifespan(t)) {
-    if (! thing_lifespan_decr(g, v, l, t)) {
+  if (thing_lifespan(t) != 0) {
+    if (thing_lifespan_decr(g, v, l, t) == 0) {
       ThingEvent e {
           .reason     = "ran out of life",            //
           .event_type = THING_EVENT_LIFESPAN_EXPIRED, //

@@ -14,7 +14,7 @@ bool tp_load_floor(void)
 
   for (auto variant = 1; variant <= FLOOR_VARIANTS; variant++) {
     std::string name = "floor" + std::to_string(variant);
-    auto        tp   = tp_load(name.c_str());
+    auto *        tp   = tp_load(name);
     // begin sort marker1 {
     tp_flag_set(tp, is_blit_centered);
     tp_flag_set(tp, is_blit_if_has_seen);
@@ -27,7 +27,7 @@ bool tp_load_floor(void)
     tp_z_depth_set(tp, MAP_Z_DEPTH_FLOOR);
     // end sort marker1 }
 
-    auto tile = tile_find_mand(name + ".1");
+    auto *tile = tile_find_mand(name + ".1");
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
     tile = tile_find_mand(name + ".2");

@@ -132,13 +132,13 @@
   bool result = false;
 
   Thingp player = nullptr;
-  for (auto it : level_find_all(g, v, l, is_player)) {
+  for (auto *it : level_find_all(g, v, l, is_player)) {
     player = it;
     break;
   }
 
   Thingp exit_thing = nullptr;
-  for (auto it : level_find_all(g, v, l, is_exit)) {
+  for (auto *it : level_find_all(g, v, l, is_exit)) {
     exit_thing = it;
     break;
   }

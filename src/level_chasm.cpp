@@ -17,7 +17,8 @@ void level_tick_chasm(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  int x, y;
+  int x;
+  int y;
 
   FOR_ALL_MAP_POINTS(g, v, l, x, y)
   {

@@ -39,11 +39,11 @@
   Levelsp v      = game_test_init(g, &l, level_num, w, h, start.c_str());
   bool    result = true;
 
-  auto tp_fireball = tp_find_mand("fireball");
+  auto *tp_fireball = tp_find_mand("fireball");
   tp_damage_set(tp_fireball, THING_EVENT_FIRE_DAMAGE, "1d4");
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     TEST_FAILED(t, "no player");
     goto exit;
   }

@@ -208,7 +208,7 @@ void thing_path_shorten(Gamep g, Levelsp v, Levelp l, Thingp t, std::vector< spo
     }
   }
 
-  if (path.size()) {
+  if (!path.empty() != 0u) {
     if (path[ 0 ] == at) {
       path.erase(path.begin());
     }

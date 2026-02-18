@@ -121,7 +121,7 @@ void gl_enter_2d_mode(Gamep g)
   //
   // 2D projection
   //
-  if (! game_map_fbo_width_get(g) || ! game_map_fbo_height_get(g)) {
+  if ((game_map_fbo_width_get(g) == 0) || (game_map_fbo_height_get(g) == 0)) {
     LOG("Cannot call glOrtho(%d,%d)", game_map_fbo_width_get(g), game_map_fbo_height_get(g));
     return;
   }
@@ -240,14 +240,14 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   GL_ERROR_CHECK();
 
   DBG2("OpenGl: - glGenTextures");
-  if (*fbo_tex_id) {
+  if (*fbo_tex_id != 0U) {
     DBG2("OpenGl: - glDeleteTextures");
     glDeleteTextures(1, fbo_tex_id);
     GL_ERROR_CHECK();
     *fbo_tex_id = 0;
   }
 
-  if (*fbo_id) {
+  if (*fbo_id != 0U) {
     DBG2("OpenGl: - glDeleteRenderbuffers");
     glDeleteRenderbuffers_EXT(1, fbo_id);
     GL_ERROR_CHECK();
@@ -358,7 +358,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   //
   DBG2("OpenGl: - glCheckFramebufferStatus_EXT");
   auto status = glCheckFramebufferStatus_EXT(GL_FRAMEBUFFER);
-  if (status && (status != GL_FRAMEBUFFER_COMPLETE)) {
+  if ((status != 0U) && (status != GL_FRAMEBUFFER_COMPLETE)) {
     LOG("Failed to create framebuffer, error: %d/0x%x", status, status);
 
 #ifdef GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT
@@ -401,7 +401,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
     }
 #endif
   }
-  if (! status) {
+  if (status == 0U) {
     glGetError();
   }
   GL_ERROR_CHECK();
@@ -420,14 +420,14 @@ static void gl_fini_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   GL_ERROR_CHECK();
 
   DBG2("OpenGl: - glGenTextures");
-  if (*fbo_tex_id) {
+  if (*fbo_tex_id != 0U) {
     DBG2("OpenGl: - glDeleteTextures");
     glDeleteTextures(1, fbo_tex_id);
     GL_ERROR_CHECK();
     *fbo_tex_id = 0;
   }
 
-  if (*fbo_id) {
+  if (*fbo_id != 0U) {
     DBG2("OpenGl: - glDeleteRenderbuffers");
     glDeleteRenderbuffers_EXT(1, fbo_id);
     GL_ERROR_CHECK();
@@ -474,7 +474,7 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
       LOG("No change in size for FBO %u, %ux%u", i, tex_width, tex_height);
       // continue;
     }
-    if (g_fbo_size[ i ].w) {
+    if (g_fbo_size[ i ].w != 0) {
       LOG("Change in size for FBO %u, %ux%u -> %ux%u", i, g_fbo_size[ i ].w, g_fbo_size[ i ].h, tex_width,
           tex_height);
     } else {
@@ -495,7 +495,7 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
 
     if (fbo == FBO_NONE) {
       if (first) {
-        tile_from_fbo(g, (FboEnum) i);
+        tile_from_fbo(g, i);
       }
     }
   }
@@ -633,9 +633,9 @@ void blit_fbo_unbind_locked(void)
 //
 #define NUMBER_COMPONENTS_PER_COLOR 4
 
-uint32_t NUMBER_BYTES_PER_VERTICE_2D = SIZEOF(GLfloat) * NUMBER_DIMENSIONS_PER_COORD_2D
-                                     + SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D
-                                     + SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
+uint32_t NUMBER_BYTES_PER_VERTICE_2D = (SIZEOF(GLfloat) * NUMBER_DIMENSIONS_PER_COORD_2D)
+                                     + (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D)
+                                     + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
 //
 // Two arrays, xy and uv.
 //
@@ -657,7 +657,7 @@ void blit_init(void)
 
   buf_tex = 0;
 
-  if (gl_array_buf) {
+  if (gl_array_buf != nullptr) {
     bufp = gl_array_buf;
     return;
   }
@@ -687,7 +687,7 @@ void blit_init(void)
 void blit_fini(void)
 {
   TRACE_NO_INDENT();
-  if (gl_array_buf) {
+  if (gl_array_buf != nullptr) {
     myfree(gl_array_buf);
     gl_array_buf = nullptr;
   }
@@ -719,16 +719,16 @@ void blit_flush(void)
   glVertexPointer(NUMBER_DIMENSIONS_PER_COORD_2D, // (x,y)
                   GL_SHORT, NUMBER_BYTES_PER_VERTICE_2D,
                   ((char *) gl_array_buf)
-                      + SIZEOF(GLfloat) * // skip (u,v)
-                            NUMBER_DIMENSIONS_PER_COORD_2D);
+                      + (SIZEOF(GLfloat) * // skip (u,v)
+                            NUMBER_DIMENSIONS_PER_COORD_2D));
 
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, NUMBER_BYTES_PER_VERTICE_2D,
                  ((char *) gl_array_buf)
-                     + SIZEOF(GLshort) * // skip (x,y)
-                           NUMBER_DIMENSIONS_PER_COORD_2D
-                     + SIZEOF(GLfloat) * // skip (u,v)
-                           NUMBER_DIMENSIONS_PER_COORD_2D);
+                     + (SIZEOF(GLshort) * // skip (x,y)
+                           NUMBER_DIMENSIONS_PER_COORD_2D)
+                     + (SIZEOF(GLfloat) * // skip (u,v)
+                           NUMBER_DIMENSIONS_PER_COORD_2D));
 
 #ifdef _DEBUG_BUILD_
   GL_ERROR_CHECK();
@@ -752,7 +752,7 @@ void blit_flush_colored_triangle_fan(void)
   blit_flush_colored_triangle_fan(gl_array_buf, bufp);
 }
 
-void blit_flush_colored_triangle_fan(float *b, float *e)
+void blit_flush_colored_triangle_fan(float *b, const float *e)
 {
   TRACE_NO_INDENT();
 
@@ -762,7 +762,7 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
   static long nvertices;
 
   static const GLsizei stride
-      = SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D + SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR;
+      = (SIZEOF(GLshort) * NUMBER_DIMENSIONS_PER_COORD_2D) + (SIZEOF(GLubyte) * NUMBER_COMPONENTS_PER_COLOR);
 
   nvertices = ((char *) e - (char *) b) / stride;
 
@@ -772,8 +772,8 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, stride,
                  ((char *) b)
-                     + SIZEOF(GLshort) * // skip (x,y)
-                           NUMBER_DIMENSIONS_PER_COORD_2D);
+                     + (SIZEOF(GLshort) * // skip (x,y)
+                           NUMBER_DIMENSIONS_PER_COORD_2D));
 
   GL_ERROR_CHECK();
   glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) nvertices);
@@ -784,7 +784,7 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
   blit_init();
 }
 
-void blit_flush_triangle_fan(float *b, float *e)
+void blit_flush_triangle_fan(float *b, const float *e)
 {
   TRACE_NO_INDENT();
 
@@ -1366,7 +1366,7 @@ void gl_error(GLenum errCode)
   }
 }
 
-void gl_push(float **P, float *p_end, uint8_t first_vertex, float tex_left, float tex_top, float tex_right,
+void gl_push(float **P, const float *p_end, uint8_t first_vertex, float tex_left, float tex_top, float tex_right,
              float tex_bottom, spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1,
              uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
              uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)
@@ -1437,12 +1437,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = true;
+    first_vertex = 1U;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = true;
+    first_vertex = 1U;
   } else {
-    first_vertex = false;
+    first_vertex = 0U;
   }
 
   buf_tex = tex;
@@ -1461,20 +1461,20 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = true;
+    first_vertex = 1U;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = true;
+    first_vertex = 1U;
   } else {
-    first_vertex = false;
+    first_vertex = 0U;
   }
 
   buf_tex = tex;
 
-  const float   texDiffX = (float) ((float) texMaxX - (float) texMinX) / (float) LIGHT_PIXEL;
-  const float   texDiffY = (float) ((float) texMinY - (float) texMaxY) / (float) LIGHT_PIXEL;
-  const float   pixDiffX = (float) ((float) pixMaxX - (float) pixMinX) / (float) LIGHT_PIXEL;
-  const float   pixDiffY = (float) ((float) pixMinY - (float) pixMaxY) / (float) LIGHT_PIXEL;
+  const float   texDiffX = ( texMaxX - texMinX) / (float) LIGHT_PIXEL;
+  const float   texDiffY = ( texMinY - texMaxY) / (float) LIGHT_PIXEL;
+  const float   pixDiffX = ((float) pixMaxX - (float) pixMinX) / (float) LIGHT_PIXEL;
+  const float   pixDiffY = ((float) pixMinY - (float) pixMaxY) / (float) LIGHT_PIXEL;
   const uint8_t a        = 255;
 
   //
@@ -1482,22 +1482,22 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
   //
   for (auto y = 0; y < LIGHT_PIXEL; y++) {
 
-    const float texMaxY2 = (float) texMaxY + y * texDiffY;
-    const float texMinY2 = (float) texMaxY + (y + 1) * texDiffY;
-    const auto  pixMaxY2 = (GLshort) ((float) pixMaxY + (float) y * pixDiffY);
-    const auto  pixMinY2 = (GLshort) ((float) pixMaxY + (float) (y + 1) * pixDiffY);
+    const float texMaxY2 = texMaxY + (y * texDiffY);
+    const float texMinY2 = texMaxY + ((y + 1) * texDiffY);
+    const auto  pixMaxY2 = (GLshort) ((float) pixMaxY + ((float) y * pixDiffY));
+    const auto  pixMinY2 = (GLshort) ((float) pixMaxY + ((float) (y + 1) * pixDiffY));
 
     for (auto x = 0; x < LIGHT_PIXEL; x++) {
 
-      const auto pixel = &light_pixels->pixel[ x ][ y ];
+      auto *const pixel = &light_pixels->pixel[ x ][ y ];
       uint8_t    r     = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
       uint8_t    g     = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
       uint8_t    b     = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
 
-      float texMinX2 = (float) texMinX + x * texDiffX;
-      float texMaxX2 = (float) texMinX + (x + 1) * texDiffX;
-      auto  pixMinX2 = (GLshort) ((float) pixMinX + (float) x * pixDiffX);
-      auto  pixMaxX2 = (GLshort) ((float) pixMinX + (float) (x + 1) * pixDiffX);
+      float texMinX2 = texMinX + (x * texDiffX);
+      float texMaxX2 = texMinX + ((x + 1) * texDiffX);
+      auto  pixMinX2 = (GLshort) ((float) pixMinX + ((float) x * pixDiffX));
+      auto  pixMaxX2 = (GLshort) ((float) pixMinX + ((float) (x + 1) * pixDiffX));
 
       gl_push(&bufp, bufp_end, first_vertex, texMinX2, texMinY2, texMaxX2, texMaxY2, pixMinX2, pixMinY2, pixMaxX2,
               pixMaxY2, r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a);
@@ -1520,12 +1520,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = true;
+    first_vertex = 1U;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = true;
+    first_vertex = 1U;
   } else {
-    first_vertex = false;
+    first_vertex = 0U;
   }
 
   buf_tex = tex;
@@ -1537,5 +1537,5 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 
 void blit(int tex, GLshort left, GLshort top, GLshort right, GLshort bottom, const color &c)
 {
-  return blit(tex, 0.0, 1.0, 1.0, 0.0, left, top, right, bottom, c);
+  blit(tex, 0.0, 1.0, 1.0, 0.0, left, top, right, bottom, c);
 }

@@ -30,7 +30,7 @@ bool tp_load_exit(void)
 {
   TRACE_NO_INDENT();
 
-  auto tp   = tp_load("exit"); // keep as string for scripts
+  auto *tp   = tp_load("exit"); // keep as string for scripts
   auto name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_exit_description_get);
@@ -55,7 +55,7 @@ bool tp_load_exit(void)
 
   for (auto frame = 0; frame < 2; frame++) {
     const auto delay = 1000; /* ms */
-    auto       tile  = tile_find_mand("exit." + std::to_string(frame));
+    auto *       tile  = tile_find_mand("exit." + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }

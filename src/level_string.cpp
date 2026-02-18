@@ -14,7 +14,7 @@ std::string to_string(Gamep g, Levelsp v, Levelp l)
 {
   TRACE_NO_INDENT();
 
-  if (! l) {
+  if (l == nullptr) {
     ERR("No level pointer set");
     return "<no level>";
   }

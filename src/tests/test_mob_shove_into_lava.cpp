@@ -72,7 +72,7 @@
   {
     TRACE_NO_INDENT();
     player = thing_player(g);
-    if (! player) {
+    if (player == nullptr) {
       TEST_FAILED(t, "no player");
       goto exit;
     }
@@ -162,7 +162,7 @@
   TEST_PROGRESS(t);
   {
     TRACE_NO_INDENT();
-    if (thing_find_optional(g, v, mob_id)) {
+    if (thing_find_optional(g, v, mob_id) != nullptr) {
       TEST_FAILED(t, "found mob, but it should have been freed");
       goto exit;
     }
