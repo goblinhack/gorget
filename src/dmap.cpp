@@ -7,6 +7,7 @@
 #include "my_sprintf.hpp"
 #include "my_thing.hpp"
 
+#include <algorithm>
 #include <array>
 
 void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
@@ -14,7 +15,10 @@ void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
   int x;
   int y;
 
-  int minx, miny, maxx, maxy;
+  int minx;
+  int miny;
+  int maxx;
+  int maxy;
   if (tl.x < br.x) {
     minx = tl.x;
     maxx = br.x;
@@ -30,12 +34,8 @@ void dmap_print(const Dmap *D, spoint at, spoint tl, spoint br)
     maxy = tl.y;
   }
 
-  if (minx < 0) {
-    minx = 0;
-  }
-  if (miny < 0) {
-    miny = 0;
-  }
+  minx = std::max(minx, 0);
+  miny = std::max(miny, 0);
   if (maxx >= MAP_WIDTH) {
     maxx = MAP_WIDTH - 1;
   }
@@ -183,7 +183,10 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
   uint8_t  i;
   uint8_t  lowest;
   uint8_t  changed;
-  uint8_t  minx, miny, maxx, maxy;
+  uint8_t  minx;
+  uint8_t  miny;
+  uint8_t  maxx;
+  uint8_t  maxy;
   auto     orig = *D;
 
   if (tl.x < br.x) {
@@ -222,7 +225,7 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
   maxy--;
 
   do {
-    changed = false;
+    changed = 0U;
 
     for (y = miny; y <= maxy; y++) {
       for (x = minx; x <= maxx; x++) {
@@ -267,32 +270,20 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
           lowest = b;
         }
 
-        if (c < lowest) {
-          lowest = c;
-        }
-        if (d < lowest) {
-          lowest = d;
-        }
-        if (f < lowest) {
-          lowest = f;
-        }
-        if (g < lowest) {
-          lowest = g;
-        }
-        if (h < lowest) {
-          lowest = h;
-        }
-        if (i < lowest) {
-          lowest = i;
-        }
+        lowest = std::min(c, lowest);
+        lowest = std::min(d, lowest);
+        lowest = std::min(f, lowest);
+        lowest = std::min(g, lowest);
+        lowest = std::min(h, lowest);
+        lowest = std::min(i, lowest);
 
         if (*e - lowest >= 2) {
           *e      = lowest + 1;
-          changed = true;
+          changed = 1U;
         }
       }
     }
-  } while (changed);
+  } while (changed != 0U);
 }
 
 //
@@ -331,7 +322,10 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
   uint8_t  i;
   uint8_t  highest;
   uint8_t  changed;
-  uint8_t  minx, miny, maxx, maxy;
+  uint8_t  minx;
+  uint8_t  miny;
+  uint8_t  maxx;
+  uint8_t  maxy;
   auto     orig = *D;
 
   if (tl.x < br.x) {
@@ -370,7 +364,7 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
   maxy--;
 
   do {
-    changed = false;
+    changed = 0U;
 
     for (y = miny; y <= maxy; y++) {
       for (x = minx; x <= maxx; x++) {
@@ -440,32 +434,20 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
           highest = b;
         }
 
-        if (c > highest) {
-          highest = c;
-        }
-        if (d > highest) {
-          highest = d;
-        }
-        if (f > highest) {
-          highest = f;
-        }
-        if (g > highest) {
-          highest = g;
-        }
-        if (h > highest) {
-          highest = h;
-        }
-        if (i > highest) {
-          highest = i;
-        }
+        highest = std::max(c, highest);
+        highest = std::max(d, highest);
+        highest = std::max(f, highest);
+        highest = std::max(g, highest);
+        highest = std::max(h, highest);
+        highest = std::max(i, highest);
 
         if (*e - highest >= 2) {
           *e      = highest - 1;
-          changed = true;
+          changed = 1U;
         }
       }
     }
-  } while (changed);
+  } while (changed != 0U);
 }
 
 static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas,

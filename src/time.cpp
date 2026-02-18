@@ -54,7 +54,7 @@ const char *time2str(ts_t ms, char *buf, int len)
   log_secs = log_secs % 60;
   log_mins = log_mins % 60;
 
-  if (! buf) {
+  if (buf == nullptr) {
     buf = buf_;
     len = SIZEOF(buf_);
   }
@@ -62,7 +62,7 @@ const char *time2str(ts_t ms, char *buf, int len)
   buf[ 0 ] = '\0';
   snprintf(buf, len, "%02d:%02d:%02d.%03d: ", log_hrs, log_mins, log_secs, log_msec);
 
-  if (buf) {
+  if (buf != nullptr) {
     return buf;
   }
 
@@ -80,7 +80,7 @@ const char *timestamp(char *buf, int len)
   log_secs = log_secs % 60;
   log_mins = log_mins % 60;
 
-  if (! buf) {
+  if (buf == nullptr) {
     buf = buf_;
     len = SIZEOF(buf_);
   }
@@ -88,7 +88,7 @@ const char *timestamp(char *buf, int len)
   buf[ 0 ] = '\0';
   snprintf(buf, len, "%02d:%02d:%02d.%03d: ", log_hrs, log_mins, log_secs, log_msec);
 
-  if (buf) {
+  if (buf != nullptr) {
     return buf;
   }
 
@@ -104,7 +104,7 @@ bool time_have_x_hundredths_passed_since(ts_t val, ts_t since)
   //
   ts_t delay = time_now - since;
 
-  return (ts_t) (delay / 10) > (ts_t) val;
+  return (ts_t) (delay / 10) > val;
 }
 
 bool time_have_x_ms_passed_since(ts_t val, ts_t since)
@@ -116,7 +116,7 @@ bool time_have_x_ms_passed_since(ts_t val, ts_t since)
   //
   ts_t delay = time_now - since;
 
-  return (ts_t) (delay) >= (ts_t) val;
+  return delay >= val;
 }
 
 bool time_have_x_tenths_passed_since(ts_t val, ts_t since)
@@ -128,7 +128,7 @@ bool time_have_x_tenths_passed_since(ts_t val, ts_t since)
   //
   ts_t delay = time_now - since;
 
-  return (ts_t) (delay / 100) >= (ts_t) val;
+  return (ts_t) (delay / 100) >= val;
 }
 
 bool time_have_x_secs_passed_since(ts_t val, ts_t since)
@@ -140,7 +140,7 @@ bool time_have_x_secs_passed_since(ts_t val, ts_t since)
   //
   ts_t delay = time_now - since;
 
-  return (ts_t) (delay / ONESEC) >= (ts_t) val;
+  return (ts_t) (delay / ONESEC) >= val;
 }
 
 void get_timestamp(char *buf, int len)
@@ -206,9 +206,7 @@ std::string current_date(void)
   //  %%  %   A literal '%' character.
   //
   my_strftime(buffer, SIZEOF(buffer), "%c", timeinfo);
-  if (false) {
-    strftime(buffer, SIZEOF(buffer), "%X", timeinfo);
-  }
+  
   return std::string(buffer);
 }
 
@@ -218,7 +216,7 @@ std::string &string_timestamp(void)
   static std::string last_timestamp;
   auto               the_time_now = time_ms();
 
-  if (last_timestamp.length()) {
+  if (static_cast<unsigned int>(!last_timestamp.empty()) != 0U) {
     if (the_time_now - time_last < 1000) {
       return last_timestamp;
     }

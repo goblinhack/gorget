@@ -20,7 +20,7 @@ void level_cursor_set(Gamep g, Levelsp v, spoint p)
   v->cursor_moved  = (v->cursor_at != v->old_cursor_at);
   v->old_cursor_at = v->cursor_at;
 
-  if (false) {
+  if (__unused__) {
     BOTCON("cursor %d,%d", v->cursor_at.x, v->cursor_at.y);
   }
 
@@ -314,11 +314,11 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   dmap.val[ end.x ][ end.y ]     = DMAP_IS_GOAL;
   dmap.val[ start.x ][ start.y ] = DMAP_IS_PASSABLE;
 
-  if (false) {
+  if (__unused__) {
     dmap_print(&dmap, end, dmap_start, dmap_end);
   }
   dmap_process(&dmap, dmap_start, dmap_end);
-  if (false) {
+  if (__unused__) {
     dmap_print(&dmap, end, dmap_start, dmap_end);
   }
 
@@ -333,13 +333,13 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
   // we want.
   //
   if (p[ path_size - 1 ] != end) {
-    if (false) {
+    if (__unused__) {
       LOG("did not reach %d,%d", end.x, end.y);
     }
     return empty;
   }
 
-  if (false) {
+  if (__unused__) {
     TOPCON("attempt %d len %d", attempt, (int) p.size());
   }
 

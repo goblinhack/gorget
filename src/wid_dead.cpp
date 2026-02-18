@@ -100,7 +100,7 @@ void wid_dead_select(Gamep g, std::string reason)
 
   auto grave_text_width = 18;
 
-  wid_set_do_not_lower(wid_dead_window->wid_popup_container, true);
+  wid_set_do_not_lower(wid_dead_window->wid_popup_container, 1U);
 
   wid_dead_window->log_empty_line(g);
   wid_dead_window->log_empty_line(g);
@@ -126,11 +126,11 @@ void wid_dead_select(Gamep g, std::string reason)
     int         rhs_pad = pad - lhs_pad;
 
     std::string grave_name = "|";
-    while (lhs_pad--) {
+    while ((lhs_pad--) != 0) {
       grave_name += " ";
     }
     grave_name += text;
-    while (rhs_pad--) {
+    while ((rhs_pad--) != 0) {
       grave_name += " ";
     }
     grave_name += "|";
@@ -205,11 +205,11 @@ void wid_dead_select(Gamep g, std::string reason)
       int rhs_pad = pad - lhs_pad;
 
       std::string death_reason = " |";
-      while (lhs_pad--) {
+      while ((lhs_pad--) != 0) {
         death_reason += " ";
       }
       death_reason += text;
-      while (rhs_pad--) {
+      while ((rhs_pad--) != 0) {
         death_reason += " ";
       }
       death_reason += "|";
@@ -233,11 +233,11 @@ void wid_dead_select(Gamep g, std::string reason)
       int rhs_pad = pad - lhs_pad;
 
       std::string death_reason = " |";
-      while (lhs_pad--) {
+      while ((lhs_pad--) != 0) {
         death_reason += " ";
       }
       death_reason += text;
-      while (rhs_pad--) {
+      while ((rhs_pad--) != 0) {
         death_reason += " ";
       }
       death_reason += "|";
@@ -256,8 +256,8 @@ void wid_dead_select(Gamep g, std::string reason)
                                            "__|" UI_GREEN_FMT_STR ",,." UI_RESET_FMT);
   wid_dead_window->log_empty_line(g);
 
-  auto p = wid_dead_window->wid_text_area->wid_text_area;
-  auto w = wid_new_menu_button(g, p, "dead");
+  auto *p = wid_dead_window->wid_text_area->wid_text_area;
+  auto *w = wid_new_menu_button(g, p, "dead");
 
   {
     spoint tl2(9, h - 7);

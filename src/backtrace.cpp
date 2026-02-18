@@ -21,7 +21,6 @@
 #endif
 
 #ifdef HAVE_LIBUNWIND
-#include <execinfo.h>
 #include <libunwind.h>
 #endif
 
@@ -46,7 +45,7 @@ static std::recursive_mutex backtrace_mutex;
 
 [[nodiscard]] static bool is_mangle_char_win(char c)
 {
-  return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || strchr("?_@$", c);
+  return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || (strchr("?_@$", c) != nullptr);
 }
 
 [[nodiscard]] static bool is_mangle_char_posix(char c)
@@ -62,7 +61,7 @@ static std::recursive_mutex backtrace_mutex;
   char      prefix[ N + 1 ];
   my_strlcpy(prefix, s, N);
   prefix[ N ] = '\0';
-  return strstr(prefix, "_Z");
+  return strstr(prefix, "_Z") != nullptr;
 }
 
 //
@@ -79,9 +78,9 @@ static std::string demangle(const char *name)
 
   int status = -4; // some arbitrary value to eliminate the compiler warning
 
-  auto p = abi::__cxa_demangle(name, nullptr, nullptr, &status);
+  auto *p = abi::__cxa_demangle(name, nullptr, nullptr, &status);
 
-  if (! status) {
+  if (status == 0) {
     auto ret = std::string(p);
     free(p);
     return ret;
@@ -129,7 +128,7 @@ static std::string demangle_symbol(char *name)
     }
 
     auto was_demangled = demangle(cur);
-    if (was_demangled.size()) {
+    if (static_cast<unsigned int>(!was_demangled.empty()) != 0U) {
       sout += string_sprintf("%s", was_demangled.c_str());
       demangled = true;
       break;
@@ -312,7 +311,7 @@ std::string backtrace_string(void)
   size               = unw_backtrace(&bt[ 0 ], max_backtrace);
   const char *prefix = "(unw_backtrace) ";
 #else
-  size               = backtrace(&bt[ 0 ], max_backtrace);
+  size               = backtrace(bt.data(), max_backtrace);
   const char *prefix = "(backtrace) ";
 #endif
 
@@ -321,7 +320,7 @@ std::string backtrace_string(void)
   const char *prefix = "(backtrace) ";
 #endif
 
-  auto        addrlist = &bt[ 0 ];
+  auto *        addrlist = bt.data();
   std::string sout     = "stack trace\n===========\n";
 
   if (size == 0) {

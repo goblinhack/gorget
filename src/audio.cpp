@@ -8,14 +8,14 @@
 
 #include <SDL_mixer.h>
 
-uint8_t audio_init_done;
+bool audio_init_done;
 
 void audio_fini(void)
 {
   LOG("Audio fini");
   TRACE_AND_INDENT();
   Mix_CloseAudio();
-  audio_init_done = false;
+  audio_init_done = 0u;
 }
 
 bool audio_init(void)
@@ -47,14 +47,14 @@ bool audio_init(void)
   // int chunksize = 4096;
   int chunksize = 1024; // less latency but might be choppy
 
-  if (! audio_init_done) {
+  if (static_cast<unsigned int>(audio_init_done) == 0U) {
     if (Mix_OpenAudio(audio_freq, audio_format, channels, chunksize) != 0) {
       ERR("Mix_OpenAudio fail: %s %s", Mix_GetError(), SDL_GetError());
       SDL_ClearError();
       return false;
     }
 
-    audio_init_done = true;
+    audio_init_done = 1u;
   }
 
   return true;

@@ -15,12 +15,12 @@ WidTextBox::~WidTextBox()
   TRACE_NO_INDENT();
 
   extern Gamep game;
-  auto         g = game;
+  auto *         g = game;
 
-  if (wid_horiz_scroll) {
+  if (wid_horiz_scroll != nullptr) {
     wid_destroy(g, &wid_horiz_scroll);
   }
-  if (wid_vert_scroll) {
+  if (wid_vert_scroll != nullptr) {
     wid_destroy(g, &wid_vert_scroll);
   }
   wid_destroy(g, &wid_text_last);
@@ -48,7 +48,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
   line_count = 0;
 
   {
-    if (vparent) {
+    if (vparent != nullptr) {
       wid_text_box_container = wid_new_square_button(g, vparent, "wid text box");
       wid_set_shape_none(wid_text_box_container);
     } else {
@@ -96,7 +96,7 @@ WidTextBox::WidTextBox(Gamep g, spoint vtl, spoint vbr, Widp vparent, bool horiz
 
       wid_set_shape_none(child);
       wid_set_pos(child, text_tl, text_br);
-      wid_set_text_centerx(child, true);
+      wid_set_text_centerx(child, 1U);
 
       wid_set_prev(child, prev);
       prev = child;
@@ -143,7 +143,7 @@ Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
   Widp tmp {};
   Widp text_wid {};
 
-  if (! wid_vert_scroll) {
+  if (wid_vert_scroll == nullptr) {
     if (line_count < height) {
       text_wid = children[ height - line_count - 1 ];
       wid_set_text(text_wid, str);
@@ -160,33 +160,33 @@ Widp WidTextBox::log_(Gamep g, const std::string &str, wid_text_format format, s
     } else {
       wid_scroll_text(wid_text_last);
       tmp = wid_get_head(wid_text_last);
-      if (tmp) {
+      if (tmp != nullptr) {
         wid_set_text(tmp, str);
       }
       text_wid = tmp;
     }
 
-    if (wid_vert_scroll) {
+    if (wid_vert_scroll != nullptr) {
       wid_move_to_top(g, wid_vert_scroll);
     }
     line_count++;
 
     int show_scrollbars_at = wid_get_height(wid_text_area);
     if (line_count > show_scrollbars_at) {
-      if (wid_horiz_scroll) {
+      if (wid_horiz_scroll != nullptr) {
         wid_visible(g, wid_get_parent(wid_horiz_scroll));
       }
-      if (wid_vert_scroll) {
+      if (wid_vert_scroll != nullptr) {
         wid_visible(g, wid_get_parent(wid_vert_scroll));
       }
     }
   }
 
-  if (text_wid) {
+  if (text_wid != nullptr) {
     if (format == TEXT_FORMAT_LHS) {
-      wid_set_text_lhs(text_wid, true);
+      wid_set_text_lhs(text_wid, 1U);
     } else if (format == TEXT_FORMAT_RHS) {
-      wid_set_text_rhs(text_wid, true);
+      wid_set_text_rhs(text_wid, 1U);
     }
   }
 
@@ -212,7 +212,7 @@ Widp WidTextBox::log(Gamep g, const std::string &s, wid_text_format format, std:
     //
     // Handles %%fg=...$ with no text due to a split
     //
-    if (length_without_format(c)) {
+    if (length_without_format(c) != 0) {
       w = log_(g, c, format, col);
     }
   }

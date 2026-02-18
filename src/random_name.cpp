@@ -23,8 +23,9 @@ static unsigned long hash(const char *s)
   unsigned long hash = 5381;
   char          c;
 
-  while ((c = *s++))
+  while ((c = *s++) != 0) {
     hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+}
 
   return hash;
 }

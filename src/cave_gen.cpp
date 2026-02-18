@@ -8,11 +8,14 @@
 
 #include <string.h>
 
+#include <algorithm>
+
 static const int MAP_LEVEL_BLOB_CENTERING = MAP_WIDTH / 4;
 
 void cave_dump(Gamep g, Cave *c)
 {
-  uint8_t x, y;
+  uint8_t x;
+  uint8_t y;
 
   printf("+");
   for (x = 0; x < MAP_WIDTH; x++) {
@@ -24,7 +27,7 @@ void cave_dump(Gamep g, Cave *c)
   for (y = 0; y < MAP_HEIGHT; y++) {
     printf("|");
     for (x = 0; x < MAP_WIDTH; x++) {
-      if (c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
+      if (c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0U) {
         printf("x");
       } else {
         printf(" ");
@@ -47,12 +50,13 @@ void cave_dump(Gamep g, Cave *c)
 //
 static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2, int map_generations)
 {
-  uint8_t x, y;
+  uint8_t x;
+  uint8_t y;
 
   //
   // Reset the cave map on the first generation
   //
-  if (! map_generations) {
+  if (map_generations == 0) {
     memset(c->curr, 0, SIZEOF(c->curr));
 
     for (x = 1; x < MAP_WIDTH - 1; x++) {
@@ -64,10 +68,7 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
     }
   }
 
-  if (false) {
-    printf("before:\n");
-    cave_dump(g, c);
-  }
+  
 
   for (x = 1; x < MAP_WIDTH - 1; x++) {
     for (y = 1; y < MAP_HEIGHT - 1; y++) {
@@ -122,10 +123,7 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
     }
   }
 
-  if (false) {
-    printf("after:\n");
-    cave_dump(g, c);
-  }
+  
 }
 
 //
@@ -148,7 +146,7 @@ int cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t size
   //
   // Already walked?
   //
-  if (c->blob.id[ x ][ y ]) {
+  if (c->blob.id[ x ][ y ] != 0U) {
     return size;
   }
   c->blob.id[ x ][ y ] = id;
@@ -157,7 +155,7 @@ int cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t size
   // If nothing here, stop the recurse
   //
   auto i = c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ];
-  if (! i) {
+  if (i == 0U) {
     return size;
   }
 
@@ -186,7 +184,8 @@ int cave_generation_fill_blob_cand(Gamep g, Cave *c, int x, int y, uint16_t size
 //
 void cave_generation_keep_largest_blob(Gamep g, Cave *c)
 {
-  uint16_t x, y;
+  uint16_t x;
+  uint16_t y;
   uint16_t id = 1;
 
   //
@@ -204,7 +203,7 @@ void cave_generation_keep_largest_blob(Gamep g, Cave *c)
   //
   for (x = MAP_LEVEL_BLOB_CENTERING; x < MAP_WIDTH - MAP_LEVEL_BLOB_CENTERING; x++) {
     for (y = MAP_LEVEL_BLOB_CENTERING; y < MAP_HEIGHT - MAP_LEVEL_BLOB_CENTERING; y++) {
-      if (c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] && ! c->blob.id[ x ][ y ]) {
+      if ((c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0U) && (c->blob.id[ x ][ y ] == 0U)) {
         //
         // Flood fill and get the size of this blob
         //
@@ -221,7 +220,7 @@ void cave_generation_keep_largest_blob(Gamep g, Cave *c)
   //
   // If we found a large blob, then erase all other tiles
   //
-  if (! c->blob.largest_size) {
+  if (c->blob.largest_size == 0U) {
     return;
   }
 
@@ -246,7 +245,8 @@ void cave_generation_keep_largest_blob(Gamep g, Cave *c)
 //
 void cave_generation_center_blob(Gamep g, Cave *c)
 {
-  int x, y;
+  int x;
+  int y;
 
   spoint tl(999, 999);
   spoint br(-1, -1);
@@ -256,19 +256,11 @@ void cave_generation_center_blob(Gamep g, Cave *c)
   //
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
-      if (c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ]) {
-        if (x < tl.x) {
-          tl.x = x;
-        }
-        if (y < tl.y) {
-          tl.y = y;
-        }
-        if (x > br.x) {
-          br.x = x;
-        }
-        if (y > br.y) {
-          br.y = y;
-        }
+      if (c->curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0U) {
+        tl.x = std::min<int>(x, tl.x);
+        tl.y = std::min<int>(y, tl.y);
+        br.x = std::max<int>(x, br.x);
+        br.y = std::max<int>(y, br.y);
       }
     }
   }
@@ -323,7 +315,7 @@ void cave_generation_center_blob(Gamep g, Cave *c)
         continue;
       }
 
-      if (c->prev[ ox ][ oy ]) {
+      if (c->prev[ ox ][ oy ] != 0U) {
         c->curr[ nx ][ ny ] = 1;
       }
     }

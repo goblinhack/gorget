@@ -12,21 +12,21 @@
 #include <SDL.h>
 #include <string>
 
-int tex_get_gl_binding(Texp);
+int tex_get_gl_binding(Texp /*tex*/);
 
-SDL_Surface *tex_get_surface(Texp);
+SDL_Surface *tex_get_surface(Texp /*tex*/);
 
 Texp string2tex(const char **s);
 Texp string2tex(std::string &s, int *len);
 Texp tex_find(std::string name);
 Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, int mode);
 Texp tex_load(std::string file, std::string name, int mode);
-Texp tex_from_fbo(Gamep, FboEnum fbo);
+Texp tex_from_fbo(Gamep /*g*/, FboEnum fbo);
 
-uint32_t tex_get_height(Texp);
-uint32_t tex_get_width(Texp);
+uint32_t tex_get_height(Texp /*tex*/);
+uint32_t tex_get_width(Texp /*tex*/);
 
-uint8_t tex_init(void);
+bool tex_init(void);
 
 void tex_fini(void);
 void tex_free(Texp tex);

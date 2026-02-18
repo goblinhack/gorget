@@ -21,9 +21,9 @@ typedef std::map< char, Override >         Overrides;
 
 extern Overrides no_overrides;
 
-void level_fixed_add(Gamep, int chance, LevelType, const std::string &alias, const char *, int line, Overrides, ...);
-[[nodiscard]] bool level_populate(Gamep, Levelsp, Levelp, class LevelGen *, const char *, Overrides = no_overrides);
-[[nodiscard]] bool level_populate(Gamep, Levelsp, Levelp, class LevelGen *, int w, int h, const char *,
-                                  Overrides = no_overrides);
+void level_fixed_add(Gamep /*g*/, int chance, LevelType /*level_type*/, const std::string &alias, const char * /*file*/, int line, Overrides /*overrides*/, ...);
+[[nodiscard]] bool level_populate(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, class LevelGen * /*level_gen*/, const char * /*in*/, Overrides  /*overrides*/= no_overrides);
+[[nodiscard]] bool level_populate(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, class LevelGen * /*level_gen*/, int w, int h, const char * /*in*/,
+                                  Overrides  /*overrides*/= no_overrides);
 
 #endif

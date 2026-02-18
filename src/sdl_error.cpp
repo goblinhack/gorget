@@ -31,7 +31,7 @@ static void sdl_msgerr_(const char *fmt, va_list args)
   vsnprintf(buf, MAXLONGSTR, fmt, args);
 
 #if SDL_MAJOR_VERSION >= 2
-  if (false) {
+  if (__unused__) {
     //
     // Not needed
     //

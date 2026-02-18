@@ -10,7 +10,7 @@ void thing_fini(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (false) {
+  if (__unused__) {
     THING_DBG(t, "fini");
   }
 

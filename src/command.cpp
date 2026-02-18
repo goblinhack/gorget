@@ -103,34 +103,34 @@ typedef class command_t                            *commandp;
 typedef std::unordered_map< std::string, commandp > commands;
 static commands                                     commands_map;
 
-static uint8_t command_inited;
+static bool command_inited;
 
 void command_fini(void)
 {
   TRACE_NO_INDENT();
-  if (command_inited) {
-    command_inited = false;
+  if (command_inited != 0U) {
+    command_inited = 0U;
     for (auto iter : commands_map) {
-      auto command = iter.second;
+      auto *command = iter.second;
       delete command;
     }
   }
 }
 
-uint8_t command_init(void)
+bool command_init(void)
 {
   TRACE_NO_INDENT();
-  command_inited = true;
+  command_inited = 1U;
 
-  return true;
+  return 1U;
 }
 
 void command_add(Gamep g, command_fn_t callback, std::string input, std::string readable)
 {
   TRACE_NO_INDENT();
 
-  auto command = new class command_t();
-  auto result  = commands_map.insert(std::make_pair(input, command));
+  auto *command = new class command_t();
+  auto  result  = commands_map.insert(std::make_pair(input, command));
 
   if (! result.second) {
     ERR("Command insert name [%s] failed", input.c_str());
@@ -177,21 +177,22 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
    * Find the command(s) with the most number of matching tokens.
    */
   for (auto iter : commands_map) {
-    auto command = iter.second;
+    auto *command = iter.second;
 
     for (t = 0; t < (int) std::min(command->tokens.cnt, input_tokens.cnt); t++) {
 
       cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
       if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]),
-                     nullptr /* captures */)) {
+                     nullptr /* captures */)
+          != 0) {
         /*
          * Success
          */
         cnt = 0;
       }
 
-      if (cnt) {
+      if (cnt != 0) {
         t = -1;
         break;
       }
@@ -209,21 +210,22 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
    * not complete.
    */
   for (auto iter : commands_map) {
-    auto command = iter.second;
+    auto *command = iter.second;
 
     for (t = 0; t < (int) std::min(command->tokens.cnt, input_tokens.cnt); t++) {
 
       cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
       if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]),
-                     nullptr /* captures */)) {
+                     nullptr /* captures */)
+          != 0) {
         /*
          * Success
          */
         cnt = 0;
       }
 
-      if (cnt) {
+      if (cnt != 0) {
         break;
       }
     }
@@ -235,7 +237,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
 
       matched_command = command;
 
-      if (show_complete) {
+      if (show_complete != 0U) {
         completes_to[ 0 ] = '\0';
 
         for (t = 0; t < longest_match; t++) {
@@ -243,7 +245,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
           my_strlcat(completes_to, " ", SIZEOF(completes_to));
         }
 
-        if (output) {
+        if (output != nullptr) {
           my_strlcpy(output, completes_to, MAXSTR);
         }
       }
@@ -252,7 +254,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
 
       tokens_print_to(&command->readable_tokens, match2, SIZEOF(match2));
 
-      if (show_ambiguous) {
+      if (show_ambiguous != 0U) {
         CON("  %s -- %s", match, match2);
       }
     } else {
@@ -268,21 +270,22 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
 
     {
       for (auto iter : commands_map) {
-        auto command = iter.second;
+        auto *command = iter.second;
 
         for (t = 0; t < (int) std::min(command->tokens.cnt, input_tokens.cnt); t++) {
 
           cnt = strncmp(command->tokens.args[ t ], input_tokens.args[ t ], strlen(input_tokens.args[ t ]));
 
           if (slre_match(&command->tokens.regexp[ t ], input_tokens.args[ t ], (int) strlen(input_tokens.args[ t ]),
-                         nullptr /* captures */)) {
+                         nullptr /* captures */)
+              != 0) {
             /*
              * Success
              */
             cnt = 0;
           }
 
-          if (cnt) {
+          if (cnt != 0) {
             break;
           }
         }
@@ -291,7 +294,7 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
           cand_expand_to[ 0 ] = '\0';
 
           for (t = 0; t < longest_match; t++) {
-            if (strisregexp(command->tokens.args[ t ])) {
+            if (strisregexp(command->tokens.args[ t ]) != 0) {
               my_strlcat(cand_expand_to, input_tokens.args[ t ], SIZEOF(cand_expand_to));
               my_strlcat(cand_expand_to, " ", SIZEOF(cand_expand_to));
               continue;
@@ -314,13 +317,13 @@ static int command_matches(Gamep g, const char *input, char *output, uint8_t sho
       /*
        * Expands to:
        */
-      if (output) {
+      if (output != nullptr) {
         my_strlcpy(output, expands_to, MAXSTR);
       }
     }
   }
 
-  if (execute_command && matched_command && (matches == 1)) {
+  if ((execute_command != 0U) && (matched_command != nullptr) && (matches == 1)) {
     (*matched_command->callback)(g, &input_tokens, context);
   }
 
@@ -333,22 +336,22 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
   TRACE_NO_INDENT();
   int matches;
 
-  if (expandedtext) {
+  if (expandedtext != nullptr) {
     *expandedtext = '\0';
   }
 
   /*
    * Check for ambiguous commands.
    */
-  matches = command_matches(g, input, expandedtext, false, false, execute_command, context);
+  matches = command_matches(g, input, expandedtext, 0U, 0U, execute_command, context);
   if (matches == 0) {
     CON(">" UI_IMPORTANT_FMT_STR "Unknown command: \"%s\"" UI_RESET_FMT "", input);
-    return false;
+    return 0U;
   }
 
   if (matches > 1) {
-    if (show_ambiguous) {
-      if (*input) {
+    if (show_ambiguous != 0U) {
+      if (*input != 0) {
         CON(">" UI_INFO_FMT_STR "Multiple matches, \"%s\"" UI_RESET_FMT ". Try:", input);
       } else {
         CON(">" UI_INFO_FMT_STR "Commands:" UI_RESET_FMT);
@@ -357,28 +360,28 @@ uint8_t command_handle(Gamep g, const char *input, char *expandedtext, uint8_t s
 
     command_matches(g, input, expandedtext, show_ambiguous, show_complete, execute_command, context);
 
-    if (! show_ambiguous) {
-      if (expandedtext) {
-        if (! strcasecmp(input, expandedtext)) {
+    if (show_ambiguous == 0U) {
+      if (expandedtext != nullptr) {
+        if (strcasecmp(input, expandedtext) == 0) {
           CON(">" UI_INFO_FMT_STR "Incomplete command, \"%s\"" UI_RESET_FMT ". Try:", input);
 
-          command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
+          command_matches(g, input, expandedtext, 1U, show_complete, execute_command, context);
         }
       } else {
-        command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
+        command_matches(g, input, expandedtext, 1U, show_complete, execute_command, context);
       }
     }
 
-    return false;
+    return 0U;
   }
 
-  if (! execute_command && (matches == 1)) {
+  if ((execute_command == 0U) && (matches == 1)) {
     CON(">" UI_INFO_FMT_STR "Incomplete command, \"%s\"" UI_RESET_FMT ". Try:", input);
 
-    command_matches(g, input, expandedtext, true, show_complete, execute_command, context);
+    command_matches(g, input, expandedtext, 1U, show_complete, execute_command, context);
   }
 
-  return true;
+  return 1U;
 }
 
 uint8_t command_handle(Gamep g, std::string input, std::string *expanded_text, uint8_t show_ambiguous,
@@ -390,7 +393,7 @@ uint8_t command_handle(Gamep g, std::string input, std::string *expanded_text, u
 
   uint8_t r = command_handle(g, input.c_str(), &buf[ 0 ], show_ambiguous, show_complete, execute_command, context);
 
-  if (expanded_text) {
+  if (expanded_text != nullptr) {
     *expanded_text = std::string(buf);
   }
 

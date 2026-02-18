@@ -163,7 +163,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
     }
   }
 
-  if (false) {
+  if (__unused__) {
     CON("-");
     CON("level %d at %u,%u", l->level_num, l->level_select_at.x, l->level_select_at.y);
   }
@@ -181,7 +181,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
       break;
     }
 
-    if (false) {
+    if (__unused__) {
       CON("level %d -> next (look diagonally left at %u,%u)", l->level_num, p.x, p.y);
     }
 
@@ -206,7 +206,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
       break;
     }
 
-    if (false) {
+    if (__unused__) {
       CON("level %d -> next (look diagonally right at %u,%u)", l->level_num, p.x, p.y);
     }
 
@@ -232,7 +232,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
         continue;
       }
 
-      if (false) {
+      if (__unused__) {
         CON("level %d -> next %d (sequential)", l->level_num, cand->level_num);
       }
 
@@ -246,7 +246,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   if (l->level_num == v->level_count) {
     auto cand = game_level_get(g, v, 0);
     if (cand) {
-      if (false) {
+      if (__unused__) {
         CON("level %d -> next (first level)", l->level_num);
       }
       level_out = cand;
@@ -259,7 +259,7 @@ Levelp level_select_calculate_next_level_down(Gamep g, Levelsp v, Levelp l, bool
   //
   tries = 0;
   while (tries++ < LEVEL_DOWN * LEVEL_ACROSS * 2) {
-    if (false) {
+    if (__unused__) {
       CON("level %d -> next (random)", l->level_num);
     }
     spoint random_p(pcg_random_range(0, LEVEL_ACROSS), pcg_random_range(0, LEVEL_DOWN));
@@ -282,7 +282,7 @@ got_level:
   if (level_out) {
     l->level_num_next_set = true;
     l->level_num_next     = level_out->level_num;
-    if (false) {
+    if (__unused__) {
       CON("level %d -> next %d at %u,%u", l->level_num, l->level_num_next, l->level_select_at.x,
           l->level_select_at.y);
     }

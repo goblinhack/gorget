@@ -32,7 +32,7 @@ FILE *redirect_stdout(void)
 
   const char *appdata;
   appdata = getenv("APPDATA");
-  if (! appdata || ! appdata[ 0 ]) {
+  if ((appdata == nullptr) || (appdata[ 0 ] == 0)) {
     appdata = "appdata";
   }
 
@@ -48,7 +48,7 @@ FILE *redirect_stdout(void)
   //
   // If we failed to create, try a local file
   //
-  if (! g_log_stdout) {
+  if (g_log_stdout == nullptr) {
     if (g_thread_id == MAIN_THREAD) {
       out = "gorget.stdout.txt";
     } else {
@@ -60,7 +60,7 @@ FILE *redirect_stdout(void)
     //
     // Last resort
     //
-    if (! g_log_stdout) {
+    if (g_log_stdout == nullptr) {
       fprintf(stderr, "Failed to create stdout log file \"%s\" for thread %d, error: %s\n", out.c_str(), g_thread_id,
               strerror(errno));
       g_log_stdout = stdout;
@@ -92,7 +92,7 @@ FILE *redirect_stderr(void)
 
   const char *appdata;
   appdata = getenv("APPDATA");
-  if (! appdata || ! appdata[ 0 ]) {
+  if ((appdata == nullptr) || (appdata[ 0 ] == 0)) {
     appdata = "appdata";
   }
 
@@ -108,7 +108,7 @@ FILE *redirect_stderr(void)
   //
   // If we failed to create, try a local file
   //
-  if (! g_log_stderr) {
+  if (g_log_stderr == nullptr) {
     if (g_thread_id == MAIN_THREAD) {
       out = "gorget.stderr.txt";
     } else {
@@ -120,7 +120,7 @@ FILE *redirect_stderr(void)
     //
     // Last resort
     //
-    if (! g_log_stderr) {
+    if (g_log_stderr == nullptr) {
       fprintf(stderr, "Failed to create stderr log file \"%s\" for thread %d, error: %s\n", out.c_str(), g_thread_id,
               strerror(errno));
       g_log_stderr = stderr;
@@ -135,7 +135,7 @@ FILE *redirect_stderr(void)
 //
 void close_stdout(void)
 {
-  if (g_log_stdout && (g_log_stdout != stdout)) {
+  if ((g_log_stdout != nullptr) && (g_log_stdout != stdout)) {
     fclose(g_log_stdout);
     g_log_stdout = nullptr;
   }
@@ -146,7 +146,7 @@ void close_stdout(void)
 //
 void close_stderr(void)
 {
-  if (g_log_stderr && (g_log_stderr != stderr)) {
+  if ((g_log_stderr != nullptr) && (g_log_stderr != stderr)) {
     fclose(g_log_stderr);
     g_log_stderr = nullptr;
   }

@@ -91,7 +91,7 @@ void wid_more_select(Gamep g)
   TRACE_NO_INDENT();
   LOG("More menu");
 
-  if (wid_more_window) {
+  if (wid_more_window != nullptr) {
     wid_more_destroy(g);
   }
 
@@ -100,8 +100,8 @@ void wid_more_select(Gamep g)
 
   int    menu_height = 14;
   int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
-  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_more_window = new WidPopup(g, "More menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -117,8 +117,8 @@ void wid_more_select(Gamep g)
   y_at += box_step;
   {
     TRACE_NO_INDENT();
-    auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Credits");
+    auto *p = wid_more_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Credits");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -129,8 +129,8 @@ void wid_more_select(Gamep g)
   y_at += box_step;
   {
     TRACE_NO_INDENT();
-    auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Hiscores");
+    auto *p = wid_more_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Hiscores");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -141,8 +141,8 @@ void wid_more_select(Gamep g)
   y_at += box_step;
   {
     TRACE_NO_INDENT();
-    auto p = wid_more_window->wid_text_area->wid_text_area;
-    auto w = wid_new_back_button(g, p, "BACK");
+    auto *p = wid_more_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);

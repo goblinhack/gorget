@@ -49,50 +49,50 @@ static void term_puts_fgbg(unsigned char fg, unsigned char bg)
     return;
   }
 
-  fputs((char *) data[ (bg & 7) * 8 + (fg & 7) ], stdout);
+  fputs((char *) data[ ((bg & 7) * 8) + (fg & 7) ], stdout);
 }
 
 static term_color term_color_string_to_index(const char **s)
 {
   TRACE_NO_INDENT();
 
-  if (! strncmp(*s, "black$", SIZEOF("black$") - 1)) {
+  if (strncmp(*s, "black$", SIZEOF("black$") - 1) == 0) {
     *s += SIZEOF("black$") - 1;
     return TERM_COLOR_BLACK;
   }
-  if (! strncmp(*s, "red$", SIZEOF("red$") - 1)) {
+  if (strncmp(*s, "red$", SIZEOF("red$") - 1) == 0) {
     *s += SIZEOF("red$") - 1;
     return TERM_COLOR_RED;
   }
-  if (! strncmp(*s, "green$", SIZEOF("green$") - 1)) {
+  if (strncmp(*s, "green$", SIZEOF("green$") - 1) == 0) {
     *s += SIZEOF("green$") - 1;
     return TERM_COLOR_GREEN;
   }
-  if (! strncmp(*s, "yellow$", SIZEOF("yellow$") - 1)) {
+  if (strncmp(*s, "yellow$", SIZEOF("yellow$") - 1) == 0) {
     *s += SIZEOF("yellow$") - 1;
     return TERM_COLOR_YELLOW;
   }
-  if (! strncmp(*s, "orange$", SIZEOF("orange$") - 1)) {
+  if (strncmp(*s, "orange$", SIZEOF("orange$") - 1) == 0) {
     *s += SIZEOF("orange$") - 1;
     return TERM_COLOR_YELLOW;
   }
-  if (! strncmp(*s, "blue$", SIZEOF("blue$") - 1)) {
+  if (strncmp(*s, "blue$", SIZEOF("blue$") - 1) == 0) {
     *s += SIZEOF("blue$") - 1;
     return TERM_COLOR_BLUE;
   }
-  if (! strncmp(*s, "pink$", SIZEOF("pink$") - 1)) {
+  if (strncmp(*s, "pink$", SIZEOF("pink$") - 1) == 0) {
     *s += SIZEOF("pink$") - 1;
     return TERM_COLOR_PINK;
   }
-  if (! strncmp(*s, "cyan$", SIZEOF("cyan$") - 1)) {
+  if (strncmp(*s, "cyan$", SIZEOF("cyan$") - 1) == 0) {
     *s += SIZEOF("cyan$") - 1;
     return TERM_COLOR_CYAN;
   }
-  if (! strncmp(*s, "white$", SIZEOF("white$") - 1)) {
+  if (strncmp(*s, "white$", SIZEOF("white$") - 1) == 0) {
     *s += SIZEOF("white$") - 1;
     return TERM_COLOR_WHITE;
   }
-  if (! strncmp(*s, "reset$", SIZEOF("reset$") - 1)) {
+  if (strncmp(*s, "reset$", SIZEOF("reset$") - 1) == 0) {
     *s += SIZEOF("reset$") - 1;
     return TERM_COLOR_RESET;
   }
@@ -113,13 +113,13 @@ void term_log(const char *s)
   while ((c = *s++) != '\0') {
 
     if (c == '%') {
-      if (! strncmp(s, "fg=", 3)) {
+      if (strncmp(s, "fg=", 3) == 0) {
         s += 3;
         term_puts_fg(fg = term_color_string_to_index(&s));
         continue;
       }
 
-      if (! strncmp(s, "bg=", 3)) {
+      if (strncmp(s, "bg=", 3) == 0) {
         s += 3;
         bg = term_color_string_to_index(&s);
         term_puts_fgbg(fg, bg);
@@ -134,57 +134,83 @@ void term_log(const char *s)
 
 int term_color_to_console_color(color c)
 {
-  if (color_eq(c, BLACK))
+  if (color_eq(c, BLACK)) {
     return TERM_COLOR_BLACK;
-  if (color_eq(c, BLUE))
+}
+  if (color_eq(c, BLUE)) {
     return TERM_COLOR_BLACK;
-  if (color_eq(c, BROWN))
+}
+  if (color_eq(c, BROWN)) {
     return TERM_COLOR_BLACK;
-  if (color_eq(c, COLOR_NONE))
+}
+  if (color_eq(c, COLOR_NONE)) {
     return TERM_COLOR_RESET;
-  if (color_eq(c, CYAN))
+}
+  if (color_eq(c, CYAN)) {
     return TERM_COLOR_CYAN;
-  if (color_eq(c, GOLD))
+}
+  if (color_eq(c, GOLD)) {
     return TERM_COLOR_YELLOW;
-  if (color_eq(c, GRAY10))
+}
+  if (color_eq(c, GRAY10)) {
     return TERM_COLOR_BLUE;
-  if (color_eq(c, GRAY30))
+}
+  if (color_eq(c, GRAY30)) {
     return TERM_COLOR_BLUE;
-  if (color_eq(c, GRAY40))
+}
+  if (color_eq(c, GRAY40)) {
     return TERM_COLOR_BLUE;
-  if (color_eq(c, GRAY50))
+}
+  if (color_eq(c, GRAY50)) {
     return TERM_COLOR_BLUE;
-  if (color_eq(c, GRAY60))
+}
+  if (color_eq(c, GRAY60)) {
     return TERM_COLOR_WHITE;
-  if (color_eq(c, GRAY70))
+}
+  if (color_eq(c, GRAY70)) {
     return TERM_COLOR_WHITE;
-  if (color_eq(c, GRAY80))
+}
+  if (color_eq(c, GRAY80)) {
     return TERM_COLOR_WHITE;
-  if (color_eq(c, GRAY90))
+}
+  if (color_eq(c, GRAY90)) {
     return TERM_COLOR_WHITE;
-  if (color_eq(c, GRAY))
+}
+  if (color_eq(c, GRAY)) {
     return TERM_COLOR_WHITE;
-  if (color_eq(c, GREEN))
+}
+  if (color_eq(c, GREEN)) {
     return TERM_COLOR_GREEN;
-  if (color_eq(c, LIME))
+}
+  if (color_eq(c, LIME)) {
     return TERM_COLOR_GREEN;
-  if (color_eq(c, MAGENTA))
+}
+  if (color_eq(c, MAGENTA)) {
     return TERM_COLOR_PINK;
-  if (color_eq(c, ORANGE))
+}
+  if (color_eq(c, ORANGE)) {
     return TERM_COLOR_YELLOW;
-  if (color_eq(c, PINK))
+}
+  if (color_eq(c, PINK)) {
     return TERM_COLOR_RED;
-  if (color_eq(c, PURPLE))
+}
+  if (color_eq(c, PURPLE)) {
     return TERM_COLOR_PINK;
-  if (color_eq(c, RED))
+}
+  if (color_eq(c, RED)) {
     return TERM_COLOR_RED;
-  if (color_eq(c, WATER))
+}
+  if (color_eq(c, WATER)) {
     return TERM_COLOR_CYAN;
-  if (color_eq(c, WHITE))
+}
+  if (color_eq(c, WHITE)) {
     return TERM_COLOR_WHITE;
-  if (color_eq(c, YELLOW))
+}
+  if (color_eq(c, YELLOW)) {
     return TERM_COLOR_YELLOW;
-  if (color_eq(c, PURPLE))
+}
+  if (color_eq(c, PURPLE)) {
     return TERM_COLOR_BLUE;
+}
   return TERM_COLOR_BLUE;
 }

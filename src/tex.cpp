@@ -34,14 +34,14 @@ public:
   {
     oldptr(MTYPE_TEX, this);
 
-    if (surface) {
+    if (surface != nullptr) {
       verify(MTYPE_SDL, surface);
       SDL_FreeSurface(surface);
       oldptr(MTYPE_SDL, surface);
       surface = nullptr;
     }
 
-    if (gl_surface_binding) {
+    if (gl_surface_binding != 0) {
       GLuint tmp;
       tmp = gl_surface_binding;
       glDeleteTextures(1, &tmp);
@@ -61,10 +61,10 @@ static std::unordered_map< std::string, Texp > textures_monochrome;
 static std::unordered_map< std::string, Texp > textures_mask;
 static std::unordered_map< std::string, Texp > textures_outline;
 
-uint8_t tex_init(void)
+bool tex_init(void)
 {
   TRACE_NO_INDENT();
-  return true;
+  return 1U;
 }
 
 void tex_fini(void)
@@ -106,12 +106,12 @@ static unsigned char *load_raw_image(std::string filename, int *x, int *y, int *
   int            len;
 
   file_data = file_load(filename.c_str(), &len);
-  if (! file_data) {
+  if (file_data == nullptr) {
     CROAK("Could not read file, '%s'", filename.c_str());
   }
 
   image_data = stbi_load_from_memory(file_data, len, x, y, comp, 0);
-  if (! image_data) {
+  if (image_data == nullptr) {
     CROAK("Could not read memory for file, '%s'", filename.c_str());
   }
 
@@ -131,13 +131,18 @@ static void free_raw_image(unsigned char *image_data)
 static SDL_Surface *load_image(std::string filename)
 {
   TRACE_NO_INDENT();
-  uint32_t       rmask, gmask, bmask, amask;
+  uint32_t       rmask;
+  uint32_t       gmask;
+  uint32_t       bmask;
+  uint32_t       amask;
   unsigned char *image_data;
   SDL_Surface   *surf;
-  int            x, y, comp;
+  int            x;
+  int            y;
+  int            comp;
 
   image_data = load_raw_image(filename, &x, &y, &comp);
-  if (! image_data) {
+  if (image_data == nullptr) {
     ERR("Could not read memory for file, '%s'", filename.c_str());
   }
 
@@ -188,13 +193,18 @@ static SDL_Surface *load_image(std::string filename)
 static void load_images(SDL_Surface **surf1_out, std::string filename)
 {
   TRACE_NO_INDENT();
-  uint32_t       rmask, gmask, bmask, amask;
+  uint32_t       rmask;
+  uint32_t       gmask;
+  uint32_t       bmask;
+  uint32_t       amask;
   unsigned char *image_data;
   SDL_Surface   *surf1 = nullptr;
-  int            x, y, comp;
+  int            x;
+  int            y;
+  int            comp;
 
   image_data = load_raw_image(filename, &x, &y, &comp);
-  if (! image_data) {
+  if (image_data == nullptr) {
     ERR("Could not read memory for file, '%s'", filename.c_str());
   }
 
@@ -212,21 +222,21 @@ static void load_images(SDL_Surface **surf1_out, std::string filename)
 
   if (comp == 4) {
     surf1 = SDL_CreateRGBSurface(0, x, y, 32, rmask, gmask, bmask, amask);
-    if (! surf1) {
+    if (surf1 == nullptr) {
       ERR("Could not create surface");
       return;
     }
     newptr(MTYPE_SDL, surf1, "SDL_CreateRGBSurface5");
   } else if (comp == 3) {
     surf1 = SDL_CreateRGBSurface(0, x, y, 24, rmask, gmask, bmask, 0);
-    if (! surf1) {
+    if (surf1 == nullptr) {
       ERR("Could not create surface");
       return;
     }
     newptr(MTYPE_SDL, surf1, "SDL_CreateRGBSurface6");
   } else if (comp == 2) {
     surf1 = SDL_CreateRGBSurface(0, x, y, 32, 0, 0, 0, 0);
-    if (! surf1) {
+    if (surf1 == nullptr) {
       ERR("Could not create surface");
       return;
     }
@@ -241,7 +251,7 @@ static void load_images(SDL_Surface **surf1_out, std::string filename)
     SDL_Surface *old_surf = surf1;
     DBG2("- SDL_ConvertSurfaceFormat");
     surf1 = SDL_ConvertSurfaceFormat(old_surf, SDL_PIXELFORMAT_RGBA8888, 0);
-    if (! surf1) {
+    if (surf1 == nullptr) {
       ERR("Could not convert surface");
       return;
     }
@@ -264,13 +274,13 @@ Texp tex_load(std::string file, std::string name, int mode)
   TRACE_NO_INDENT();
   Texp t = tex_find(name);
 
-  if (t) {
+  if (t != nullptr) {
     return t;
   }
 
   DBG2("Loading texture '%s', '%s'", file.c_str(), name.c_str());
-  if (file == "") {
-    if (name == "") {
+  if (file.empty()) {
+    if (name.empty()) {
       ERR("No file for tex");
       return nullptr;
     }
@@ -281,7 +291,7 @@ Texp tex_load(std::string file, std::string name, int mode)
   SDL_Surface *surface = nullptr;
   surface              = load_image(file);
 
-  if (! surface) {
+  if (surface == nullptr) {
     ERR("Could not make surface from file '%s'", file.c_str());
   }
 
@@ -430,13 +440,13 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
 {
   TRACE_NO_INDENT();
   Texp t = tex_find(name);
-  if (t) {
+  if (t != nullptr) {
     ERR("Tex name already exists '%s'", name.c_str());
   }
 
   DBG2("Loading texture '%s', '%s'", file.c_str(), name.c_str());
-  if (file == "") {
-    if (name == "") {
+  if (file.empty()) {
+    if (name.empty()) {
       ERR("No file for tex");
     } else {
       ERR("No file for tex loading '%s'", name.c_str());
@@ -448,7 +458,7 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
 
   load_images(&surface, file);
 
-  if (! surface) {
+  if (surface == nullptr) {
     ERR("Could not make surface from file '%s'", file.c_str());
   }
 
@@ -467,7 +477,7 @@ void tex_load_sprites(Texp *tex, Texp *tex_monochrome, Texp *tex_mask, Texp *tex
 Texp tex_find(std::string file)
 {
   TRACE_NO_INDENT();
-  if (file == "") {
+  if (file.empty()) {
     ERR("No filename given for tex find");
   }
 
@@ -486,7 +496,7 @@ Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, 
 {
   TRACE_NO_INDENT();
 
-  if (! surface) {
+  if (surface == nullptr) {
     ERR("Could not make surface from file, '%s'", file.c_str());
   }
 
@@ -615,7 +625,7 @@ int tex_get_gl_binding(Texp tex)
 uint32_t tex_get_width(Texp tex)
 {
   TRACE_NO_INDENT();
-  if (! tex) {
+  if (tex == nullptr) {
     ERR("No texture");
   }
 
@@ -625,7 +635,7 @@ uint32_t tex_get_width(Texp tex)
 uint32_t tex_get_height(Texp tex)
 {
   TRACE_NO_INDENT();
-  if (! tex) {
+  if (tex == nullptr) {
     ERR("No texture");
   }
 
@@ -686,7 +696,7 @@ Texp string2tex(std::string &s, int *len)
     iter++;
   }
 
-  if (len) {
+  if (len != nullptr) {
     *len = iter - s.begin();
   }
 

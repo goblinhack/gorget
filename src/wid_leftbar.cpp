@@ -19,8 +19,8 @@ static WidPopup *wid_leftbar;
 
   wid_leftbar_fini(g);
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
@@ -29,18 +29,18 @@ static WidPopup *wid_leftbar;
   spoint br(width - 1, TERM_HEIGHT - 1);
   wid_leftbar = new WidPopup(g, "left bar", tl, br, nullptr, "", false, false);
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto tp = thing_tp(player);
-  if (! tp) {
+  auto *tp = thing_tp(player);
+  if (tp == nullptr) {
     return false;
   }
 
@@ -67,8 +67,8 @@ bool wid_leftbar_create(Gamep g)
 {
   wid_leftbar_fini(g);
 
-  auto level = game_levels_get(g);
-  if (! level) {
+  auto *level = game_levels_get(g);
+  if (level == nullptr) {
     return false;
   }
 

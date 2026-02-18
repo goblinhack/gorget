@@ -4,6 +4,7 @@
 
 #include "my_callstack.hpp"
 #include "my_level.hpp"
+#include "my_main.hpp"
 #include "my_thing.hpp"
 #include "my_thing_inlines.hpp"
 #include "my_tp.hpp"
@@ -36,7 +37,7 @@ void thing_hot_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 
   auto threshold = ((upper_limit - lower_limit) / 2) + lower_limit;
 
-  if (false) {
+  if (__unused__) {
     THING_LOG(t, "lower_limit %d upper_limit %d threshold %d temp %d", lower_limit, upper_limit, threshold, T);
   }
 

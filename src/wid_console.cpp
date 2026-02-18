@@ -18,7 +18,7 @@ static int wid_console_inited;
 static int wid_console_commands_inited;
 static int wid_console_exiting;
 
-static void wid_console_wid_create(Gamep);
+static void wid_console_wid_create(Gamep /*g*/);
 
 Widp wid_console_container {};
 Widp wid_console_vert_scroll {};
@@ -31,10 +31,10 @@ static std::map< unsigned int, std::string > wid_console_lines;
 void wid_console_fini(Gamep g)
 {
   TRACE_NO_INDENT();
-  wid_console_exiting = true;
+  wid_console_exiting = 1;
 
-  if (wid_console_inited) {
-    wid_console_inited = false;
+  if (wid_console_inited != 0) {
+    wid_console_inited = 0;
   }
 
   wid_destroy(g, &wid_console_container);
@@ -48,23 +48,23 @@ bool wid_console_init(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (! wid_console_commands_inited) {
+  if (wid_console_commands_inited == 0) {
     command_add(g, config_debug_set, "set debug [012]", "set debug level");
     command_add(g, config_fps_counter_set, "set fps [01]", "enable frames per sec counter");
     command_add(g, config_gfx_vsync_enable, "set vsync [01]", "enable vertical sync enable");
     command_add(g, config_errored_clear, "clear errored", "used to clear a previous error");
     command_add(g, show_error, "show error", "show last error");
     command_add(g, sdl_user_exit, "quit", "exit game");
-    wid_console_commands_inited = true;
+    wid_console_commands_inited = 1;
   }
 
-  wid_console_inited = true;
+  wid_console_inited = 1;
 
   wid_console_wid_create(g);
 
   wid_console_lines.clear();
 
-  wid_console_exiting = false;
+  wid_console_exiting = 0;
 
   return true;
 }
@@ -75,7 +75,7 @@ bool wid_console_init(Gamep g)
 static void wid_console_reset_scroll(Gamep g)
 {
   TRACE_NO_INDENT();
-  if (! wid_console_vert_scroll) {
+  if (wid_console_vert_scroll == nullptr) {
     return;
   }
 
@@ -90,7 +90,7 @@ static void wid_console_log_(Gamep g, std::string s)
   TRACE_NO_INDENT();
   static int log_wid_console_buffered_lines;
 
-  if (wid_console_exiting) {
+  if (wid_console_exiting != 0) {
     return;
   }
 
@@ -99,7 +99,7 @@ static void wid_console_log_(Gamep g, std::string s)
   //
   // Before the console is ready, we buffer the logs.
   //
-  if (! wid_console_input_line) {
+  if (wid_console_input_line == nullptr) {
     auto result = wid_console_lines.insert(std::make_pair(log_wid_console_buffered_lines++, s));
 
     if (! result.second) {
@@ -127,14 +127,14 @@ static void wid_console_log_(Gamep g, std::string s)
 //
 void wid_console_log(std::string s)
 {
-  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
+  if ((wid_console_inited == 0) || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return;
   }
 
   TRACE_NO_INDENT();
 
   extern Gamep game;
-  auto         g = game;
+  auto *         g = game;
 
   int chars_per_line = UI_CONSOLE_WIDTH;
   if (chars_per_line <= 0) {
@@ -215,7 +215,7 @@ static void wid_console_wid_create(Gamep g)
 
       wid_set_shape_none(child);
       wid_set_pos(child, tl, br);
-      wid_set_text_lhs(child, true);
+      wid_set_text_lhs(child, 1U);
 
       wid_set_prev(child, prev);
       prev = child;
@@ -223,7 +223,7 @@ static void wid_console_wid_create(Gamep g)
       if (row == 0) {
         wid_set_on_key_down(child, wid_console_receive_input);
 
-        wid_set_show_cursor(child, true);
+        wid_set_show_cursor(child, 1U);
         wid_set_name(child, "console input");
         wid_set_focusable(child, 1);
         wid_move_delta(g, child, 1, 0);
@@ -231,7 +231,7 @@ static void wid_console_wid_create(Gamep g)
 
         Widp prefix = wid_new_container(g, wid_console_container, "console final line");
         wid_set_pos(prefix, tl, br);
-        wid_set_text_lhs(prefix, true);
+        wid_set_text_lhs(prefix, 1U);
         wid_set_shape_none(prefix);
         wid_set_text(prefix, ">");
         wid_set_color(child, WID_COLOR_BG, COLOR_NONE);
@@ -253,7 +253,7 @@ static void wid_console_wid_create(Gamep g)
   wid_hide(g, wid_get_parent(wid_console_horiz_scroll));
   wid_hide(g, wid_console_window);
 
-  wid_set_ignore_scroll_events(wid_console_window, true);
+  wid_set_ignore_scroll_events(wid_console_window, 1U);
 
   wid_update(g, wid_console_window);
 }
@@ -262,10 +262,10 @@ std::vector< std::string > wid_console_serialize(void)
 {
   TRACE_NO_INDENT();
   std::vector< std::string > r;
-  auto                       tmp = wid_get_head(wid_console_input_line);
-  while (tmp) {
+  auto *                       tmp = wid_get_head(wid_console_input_line);
+  while (tmp != nullptr) {
     auto s = wid_get_text(tmp);
-    if (s.size()) {
+    if (static_cast<unsigned int>(!s.empty()) != 0U) {
       r.push_back(wid_get_text(tmp));
     }
     tmp = wid_get_next(tmp);
@@ -280,7 +280,7 @@ void wid_console_deserialize(std::vector< std::string > r)
   DBG2("Start of replaying old logs");
   DBG2("Vvvvvvvvvvvvvvvvvvvvvvvvvvv");
   for (auto s : r) {
-    if (s.size()) {
+    if (static_cast<unsigned int>(!s.empty()) != 0U) {
       wid_console_log(s);
     }
   }
@@ -290,7 +290,7 @@ void wid_console_deserialize(std::vector< std::string > r)
 
 void wid_console_flush(Gamep g)
 {
-  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
+  if ((wid_console_inited == 0) || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return;
   }
 
@@ -307,12 +307,12 @@ void wid_console_flush(Gamep g)
 
 void wid_console_raise(Gamep g)
 {
-  if (! wid_console_inited || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
+  if ((wid_console_inited == 0) || g_dying || g_quitting || (g_thread_id != MAIN_THREAD)) {
     return;
   }
 
   TRACE_NO_INDENT();
-  if (! wid_console_window) {
+  if (wid_console_window == nullptr) {
     return;
   }
 

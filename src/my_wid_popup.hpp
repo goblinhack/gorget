@@ -33,20 +33,20 @@ public:
   int         inner_w {};
   int         inner_h {};
 
-public:
+
   ~WidPopup();
-  WidPopup(Gamep, const std::string name, spoint tl, spoint br, Tilep title_tile = nullptr,
-           const std::string background = "", bool horiz_scroll = true, bool vert_scoll = true,
+  WidPopup(Gamep /*g*/, std::string name, spoint tl, spoint br, Tilep title_tile = nullptr,
+           std::string background = "", bool horiz_scroll = true, bool vert_scoll = true,
            int vert_scroll_size = -1);
 
-public:
-  Widp log(Gamep, std::string s, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
-  Widp log_empty_line(Gamep);
+
+  Widp log(Gamep /*g*/, std::string s, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "") const;
+  Widp log_empty_line(Gamep /*g*/) const;
 
   //
   // Get rid of trailing empty lines
   //
-  void compress(Gamep);
+  void compress(Gamep /*g*/) const;
 };
 
 #endif

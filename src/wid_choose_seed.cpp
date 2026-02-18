@@ -23,7 +23,7 @@ static void selected(Gamep g, Widp w, const std::string &text)
   //
   g_opt_seed_name = "";
 
-  if (text == "") {
+  if (text.empty()) {
     game_seed_clear(g);
   }
 

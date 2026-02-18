@@ -64,7 +64,7 @@ color string2color(const char **s)
   *t++ = '\0';
   *s += (t - tmp);
 
-  if (! strcasecmp(tmp, "reset")) {
+  if (strcasecmp(tmp, "reset") == 0) {
     return UI_TEXT_COLOR;
   }
 
@@ -97,7 +97,7 @@ std::string string2colorname(std::string &s, int *len)
     iter++;
   }
 
-  if (len) {
+  if (len != nullptr) {
     *len = iter - s.begin();
   }
 
@@ -121,7 +121,7 @@ color string2color(std::string &s, int *len)
     iter++;
   }
 
-  if (len) {
+  if (len != nullptr) {
     *len = iter - s.begin();
   }
 
@@ -176,11 +176,11 @@ color string2color(std::string &s)
 color color_find(const char *s)
 {
   TRACE_NO_INDENT();
-  if (! s) {
+  if (s == nullptr) {
     return WHITE;
   }
 
-  if (! strcmp(s, "")) {
+  if (strcmp(s, "") == 0) {
     return WHITE;
   }
 

@@ -206,15 +206,15 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
   pixel_size.w = width;
   pixel_size.h = height;
 
-  while (nargs--) {
+  while ((nargs--) != 0U) {
     std::string name = arr[ idx++ ];
 
-    if (name != "") {
-      if (tile_find(name)) {
+    if (!name.empty()) {
+      if (tile_find(name) != nullptr) {
         CROAK("Tile name [%s] already used", name.c_str());
       }
 
-      auto t      = new Tile(); // std::make_shared< class Tile >();
+      auto *t      = new Tile(); // std::make_shared< class Tile >();
       auto result = all_tiles.insert(std::make_pair(name, t));
       if (! result.second) {
         ERR("Tile insert name [%s] failed", name.c_str());
@@ -314,7 +314,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
     }
 
     if (y * height > tex_get_height(tex)) {
-      if (name != "") {
+      if (!name.empty()) {
         CROAK("Overflow reading tile arr[%s]", name.c_str());
       } else {
         ERR("Overflow reading tile arr at x %d y %d", x, y);
@@ -362,11 +362,11 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
   pixel_size.w = tile_width;
   pixel_size.h = tile_height;
 
-  while (nargs--) {
+  while ((nargs--) != 0U) {
     std::string name = arr[ idx++ ];
 
-    if (name != "") {
-      if (tile_find(name)) {
+    if (!name.empty()) {
+      if (tile_find(name) != nullptr) {
         CROAK("Tile name [%s] already used", name.c_str());
       }
 
@@ -375,7 +375,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
         LOG("Add tile name [%s]", name.c_str());
       }
 
-      auto t      = new Tile(); // std::make_shared< class Tile >();
+      auto *t      = new Tile(); // std::make_shared< class Tile >();
       auto result = all_tiles.insert(std::make_pair(name, t));
       if (! result.second) {
         CROAK("Tile insert name [%s] failed", name.c_str());
@@ -487,7 +487,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
     }
 
     if (y * tile_height > tex_get_height(tex)) {
-      if (name != "") {
+      if (!name.empty()) {
         CROAK("Overflow reading tile arr[%s]", name.c_str());
       } else {
         CROAK("Overflow reading tile arr at x %d y %d", x, y);
@@ -512,16 +512,16 @@ void tile_from_fbo(Gamep g, FboEnum fbo)
   fbo_get_size(g, fbo, w, h);
   auto name = FboEnum_to_string(fbo);
 
-  if (tile_find(name)) {
+  if (tile_find(name) != nullptr) {
     CROAK("Tile name [%s] already used", name.c_str());
   }
 
-  auto tex = tex_from_fbo(g, fbo);
-  if (! tex) {
+  auto *tex = tex_from_fbo(g, fbo);
+  if (tex == nullptr) {
     CROAK("Tile name [%s] failed to create tex", name.c_str());
   }
 
-  auto t      = new Tile(); // std::make_shared< class Tile >();
+  auto *t      = new Tile(); // std::make_shared< class Tile >();
   auto result = all_tiles.insert(std::make_pair(name, t));
   if (! result.second) {
     CROAK("Tile insert name [%s] failed", name.c_str());
@@ -552,7 +552,7 @@ Tilep tile_find(std::string name)
 {
   TRACE_NO_INDENT();
 
-  if (name == "") {
+  if (name.empty()) {
     return nullptr;
   }
 
@@ -568,7 +568,7 @@ Tilep tile_find_mand(std::string name)
 {
   TRACE_NO_INDENT();
 
-  if (name == "") {
+  if (name.empty()) {
     ERR("No tile name given");
     return nullptr;
   }
@@ -621,7 +621,7 @@ Tilep string2tile(const char **s, int *len)
   *t++ = '\0';
   *s += (t - name);
 
-  if (len) {
+  if (len != nullptr) {
     *len = t - name;
   }
 
@@ -655,7 +655,7 @@ Tilep string2tile(std::string &s, int *len)
     ERR("Unknown tile [%s]", name.c_str());
   }
 
-  if (len) {
+  if (len != nullptr) {
     *len = iter - s.begin();
   }
 
@@ -688,7 +688,7 @@ uint32_t tile_delay_ms(Tilep t)
   TRACE_NO_INDENT();
 #endif
 
-  if (! t->delay_ms) {
+  if (t->delay_ms == 0U) {
     return 5000;
   }
   return t->delay_ms;
@@ -823,7 +823,10 @@ void Tile::set_gl_binding_outline(int v)
 
 void tile_blit(const Tilep &tile, const spoint tl, const spoint br, const color &c)
 {
-  float x1, x2, y1, y2;
+  float x1;
+  float x2;
+  float y1;
+  float y2;
 
   x1 = tile->x1;
   x2 = tile->x2;
@@ -843,7 +846,7 @@ void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const 
 void tile_blit(const Tilep &tile, float x1, float x2, float y1, float y2, const spoint tl, const spoint br,
                const color &c, LightPixels *light_pixels, bool is_blit_flush_per_line)
 {
-  if (light_pixels) {
+  if (light_pixels != nullptr) {
     blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c, light_pixels, is_blit_flush_per_line);
   } else {
     blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, c);
@@ -865,14 +868,17 @@ void tile_blit_section(const Tilep &tile, const fpoint &tile_tl, const fpoint &t
                        const spoint br, const color &color_tl, const color &color_tr, const color &color_bl,
                        const color &color_br)
 {
-  float x1, x2, y1, y2;
+  float x1;
+  float x2;
+  float y1;
+  float y2;
   float tw = tile->x2 - tile->x1;
   float th = tile->y2 - tile->y1;
 
-  x1 = tile->x1 + tile_tl.x * tw;
-  x2 = tile->x1 + tile_br.x * tw;
-  y1 = tile->y1 + tile_tl.y * th;
-  y2 = tile->y1 + tile_br.y * th;
+  x1 = tile->x1 + (tile_tl.x * tw);
+  x2 = tile->x1 + (tile_br.x * tw);
+  y1 = tile->y1 + (tile_tl.y * th);
+  y2 = tile->y1 + (tile_br.y * th);
 
   blit(tile->gl_binding(), x1, y2, x2, y1, tl.x, br.y, br.x, tl.y, color_tl, color_tr, color_bl, color_br);
 }
@@ -894,14 +900,14 @@ void tile_blit_outlined(const Tilep &tile, float x1, float x2, float y1, float y
 {
   auto binding = tile->gl_binding_mask();
 
-  if (single_pix_size) {
+  if (single_pix_size != 0) {
     int dx = single_pix_size - 1;
     int dy = single_pix_size - 1;
 
-    if (! dx) {
+    if (dx == 0) {
       dx = 1;
     }
-    if (! dy) {
+    if (dy == 0) {
       dy = 1;
     }
 

@@ -122,14 +122,14 @@ static void wid_cfg_mouse_destroy(Gamep g)
 void wid_cfg_mouse_select(Gamep g)
 {
   TRACE_NO_INDENT();
-  if (wid_cfg_mouse_window) {
+  if (wid_cfg_mouse_window != nullptr) {
     wid_cfg_mouse_destroy(g);
   }
 
   int    menu_height = 20;
   int    menu_width  = UI_WID_POPUP_WIDTH_NORMAL * 2;
-  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_cfg_mouse_window = new WidPopup(g, "Mouse", outer_tl, outer_br, nullptr, "", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -143,8 +143,8 @@ void wid_cfg_mouse_select(Gamep g)
   int y_at = 0;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "configuration");
+    auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "configuration");
 
     spoint tl(1, y_at);
     spoint br(button_width, y_at + 2);
@@ -156,8 +156,8 @@ void wid_cfg_mouse_select(Gamep g)
   y_at = 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_new_back_button(g, p, "BACK");
+    auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(1, y_at);
     spoint br(6, y_at + 2);
@@ -166,8 +166,8 @@ void wid_cfg_mouse_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_new_save_button(g, p, "Save");
+    auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_save_button(g, p, "Save");
 
     spoint tl(button_width - 15, y_at);
     spoint br(button_width - 10, y_at + 2);
@@ -177,8 +177,8 @@ void wid_cfg_mouse_select(Gamep g)
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_new_cancel_button(g, p, "Cancel");
+    auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_cancel_button(g, p, "Cancel");
 
     spoint tl(button_width - 8, y_at);
     spoint br(button_width - 1, y_at + 2);
@@ -195,20 +195,20 @@ void wid_cfg_mouse_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Mouse scroll lr invert lr");
+    auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Mouse scroll lr invert lr");
 
     spoint tl(1, y_at);
     spoint br(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Mouse invert left/right");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Mouse scroll lr invert");
+    auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Mouse scroll lr invert");
 
     spoint tl(28, y_at);
     spoint br(34, y_at + 2);
@@ -228,20 +228,20 @@ void wid_cfg_mouse_select(Gamep g)
   y_at += 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Mouse scroll ud invert");
+    auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Mouse scroll ud invert");
 
     spoint tl(1, y_at);
     spoint br(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Mouse invert up/down");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Mouse scroll ud invert value");
+    auto *p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Mouse scroll ud invert value");
 
     spoint tl(28, y_at);
     spoint br(34, y_at + 2);

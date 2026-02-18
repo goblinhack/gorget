@@ -17,12 +17,12 @@ void        cleanup(void);
 void        CON_NEW_LINE(void);
 void        CON(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        ctrlc_handler(int sig);
-void        error_message(Gamep, const std::string &error);
-void        error_clear(Gamep);
+void        error_message(Gamep /*g*/, const std::string &error);
+void        error_clear(Gamep /*g*/);
 void        find_file_locations(void);
 void        LOG(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        reset_globals(void);
-void        restart(Gamep, const std::string);
+void        restart(Gamep /*g*/, std::string /*restart_arg*/);
 void        sdl_msg_box(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);
 void        crash_handler(int sig);
 void        TOPCON_NEW_LINE(void);
@@ -113,5 +113,10 @@ void  close_stdout(void);
 #define DBG2                                                                                                         \
   if (DEBUG2)                                                                                                        \
   LOG
+
+//
+// Used to stop the compiler removing unused code I want to keep
+//
+extern bool __unused__;
 
 #endif

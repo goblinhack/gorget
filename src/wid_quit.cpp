@@ -16,7 +16,7 @@ void wid_quit_destroy(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (wid_quit_window) {
+  if (wid_quit_window != nullptr) {
     delete wid_quit_window;
     wid_quit_window = nullptr;
     game_state_reset(g, "wid quit destroy");
@@ -28,7 +28,7 @@ void wid_quit_destroy(Gamep g)
   TRACE_NO_INDENT();
   LOG("Quit, yes");
 
-  if (game_levels_get(g)) {
+  if (game_levels_get(g) != nullptr) {
     LOG("Continue game");
 
     game_destroy_levels(g);
@@ -50,7 +50,7 @@ void wid_quit_destroy(Gamep g)
 
   wid_quit_destroy(g);
 
-  if (! game_levels_get(g)) {
+  if (game_levels_get(g) == nullptr) {
     wid_main_menu_select(g);
   }
   return true;
@@ -104,19 +104,19 @@ void wid_quit_select(Gamep g)
   TRACE_NO_INDENT();
   LOG("Quit select");
 
-  if (wid_quit_window) {
+  if (wid_quit_window != nullptr) {
     wid_quit_destroy(g);
   }
 
   auto m = TERM_WIDTH / 2;
   auto n = TERM_HEIGHT / 2;
 
-  if (game_levels_get(g)) {
+  if (game_levels_get(g) != nullptr) {
     n = TERM_HEIGHT / 3;
   }
 
-  spoint outer_tl(m - UI_WID_POPUP_WIDTH_NORMAL / 2, n - 3);
-  spoint outer_br(m + UI_WID_POPUP_WIDTH_NORMAL / 2, n + 3);
+  spoint outer_tl(m - (UI_WID_POPUP_WIDTH_NORMAL / 2), n - 3);
+  spoint outer_br(m + (UI_WID_POPUP_WIDTH_NORMAL / 2), n + 3);
   auto   width = outer_br.x - outer_tl.x;
 
   wid_quit_window = new WidPopup(g, "Game quit", outer_tl, outer_br, nullptr, "", false, false);
@@ -129,8 +129,8 @@ void wid_quit_select(Gamep g)
   int y_at = 0;
   {
     TRACE_NO_INDENT();
-    auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Quit");
+    auto *p = wid_quit_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Quit");
 
     spoint tl(0, y_at);
     spoint br(width, y_at);
@@ -142,11 +142,11 @@ void wid_quit_select(Gamep g)
   y_at = 2;
   {
     TRACE_NO_INDENT();
-    auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_new_red_button(g, p, "Yes");
+    auto *p = wid_quit_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_red_button(g, p, "Yes");
 
     spoint tl(0, y_at);
-    spoint br(width / 2 - 2, y_at + 2);
+    spoint br((width / 2) - 2, y_at + 2);
     wid_set_on_mouse_up(w, wid_quit_yes);
     wid_set_pos(w, tl, br);
     wid_set_text(w, UI_HIGHLIGHT_FMT_STR "Y" UI_RESET_FMT "es");
@@ -154,8 +154,8 @@ void wid_quit_select(Gamep g)
 
   {
     TRACE_NO_INDENT();
-    auto p = wid_quit_window->wid_text_area->wid_text_area;
-    auto w = wid_new_green_button(g, p, "No");
+    auto *p = wid_quit_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_green_button(g, p, "No");
 
     spoint tl(width / 2, y_at);
     spoint br(width - 2, y_at + 2);

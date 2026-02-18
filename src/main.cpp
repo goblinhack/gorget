@@ -27,15 +27,20 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+//
+// Used to stop the compiler removing unused code I want to keep
+//
+bool __unused__;
+
 static void usage(void)
 {
   TRACE_NO_INDENT();
   static int whinged;
 
-  if (whinged) {
+  if (whinged != 0) {
     return;
   }
-  whinged = true;
+  whinged = 1;
 
   CON("Gorget, options:");
   CON(" ");
@@ -90,12 +95,12 @@ static void parse_args(int argc, char *argv[])
     }
   }
 
-  if (argc) {
+  if (argc != 0) {
     g_opt_no_slow_log_flush = true;
   }
 
   for (i = 1; i < argc; i++) {
-    if (! strcasecmp(argv[ i ], "--seed") || ! strcasecmp(argv[ i ], "-seed")) {
+    if ((strcasecmp(argv[ i ], "--seed") == 0) || (strcasecmp(argv[ i ], "-seed") == 0)) {
       if (i == argc - 1) {
         usage();
         CROAK("Missing parameter for argument, %s", argv[ i ]);
@@ -105,31 +110,31 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--debug") || ! strcasecmp(argv[ i ], "-debug") || ! strcasecmp(argv[ i ], "--debug1")
-        || ! strcasecmp(argv[ i ], "-debug1")) {
+    if ((strcasecmp(argv[ i ], "--debug") == 0) || (strcasecmp(argv[ i ], "-debug") == 0)
+        || (strcasecmp(argv[ i ], "--debug1") == 0) || (strcasecmp(argv[ i ], "-debug1") == 0)) {
       g_opt_debug1               = true;
       g_opt_override_debug_level = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--debug2") || ! strcasecmp(argv[ i ], "-debug2")) {
+    if ((strcasecmp(argv[ i ], "--debug2") == 0) || (strcasecmp(argv[ i ], "-debug2") == 0)) {
       g_opt_debug1               = true;
       g_opt_debug2               = true;
       g_opt_override_debug_level = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--quick-start") || ! strcasecmp(argv[ i ], "-quick-start")) {
+    if ((strcasecmp(argv[ i ], "--quick-start") == 0) || (strcasecmp(argv[ i ], "-quick-start") == 0)) {
       g_opt_quick_start = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--level-select") || ! strcasecmp(argv[ i ], "-level-select")) {
+    if ((strcasecmp(argv[ i ], "--level-select") == 0) || (strcasecmp(argv[ i ], "-level-select") == 0)) {
       g_opt_level_select_menu = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--level") || ! strcasecmp(argv[ i ], "-level")) {
+    if ((strcasecmp(argv[ i ], "--level") == 0) || (strcasecmp(argv[ i ], "-level") == 0)) {
       if (i == argc - 1) {
         usage();
         CROAK("Missing parameter for argument, %s", argv[ i ]);
@@ -140,7 +145,7 @@ static void parse_args(int argc, char *argv[])
       //
       char *p;
       auto  num = strtol(argv[ i + 1 ], &p, 10);
-      if (*p) {
+      if (*p != 0) {
         //
         // Level name
         //
@@ -159,7 +164,7 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--test") || ! strcasecmp(argv[ i ], "-test")) {
+    if ((strcasecmp(argv[ i ], "--test") == 0) || (strcasecmp(argv[ i ], "-test") == 0)) {
       if (i == argc - 1) {
         usage();
         CROAK("Missing parameter for argument, %s", argv[ i ]);
@@ -172,37 +177,39 @@ static void parse_args(int argc, char *argv[])
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--tests") || ! strcasecmp(argv[ i ], "-tests")) {
+    if ((strcasecmp(argv[ i ], "--tests") == 0) || (strcasecmp(argv[ i ], "-tests") == 0)) {
       g_opt_tests          = true;
       g_opt_debug1         = true;
       g_skip_audio_and_gfx = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--do-room-gen") || ! strcasecmp(argv[ i ], "-do-room-gen")) {
+    if ((strcasecmp(argv[ i ], "--do-room-gen") == 0) || (strcasecmp(argv[ i ], "-do-room-gen") == 0)) {
       g_opt_do_room_gen    = true;
       g_skip_audio_and_gfx = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--do-level-select-gen") || ! strcasecmp(argv[ i ], "-do-level-select-gen")) {
+    if ((strcasecmp(argv[ i ], "--do-level-select-gen") == 0)
+        || (strcasecmp(argv[ i ], "-do-level-select-gen") == 0)) {
       g_opt_do_level_select_gen = true;
       g_skip_audio_and_gfx      = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--do-level-gen") || ! strcasecmp(argv[ i ], "-do-level-gen")) {
+    if ((strcasecmp(argv[ i ], "--do-level-gen") == 0) || (strcasecmp(argv[ i ], "-do-level-gen") == 0)) {
       g_opt_do_level_gen   = true;
       g_skip_audio_and_gfx = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--restart") || ! strcasecmp(argv[ i ], "-restart")) {
+    if ((strcasecmp(argv[ i ], "--restart") == 0) || (strcasecmp(argv[ i ], "-restart") == 0)) {
       g_opt_restarted = true;
       continue;
     }
 
-    if (! strcasecmp(argv[ i ], "--restart-in-gfx-menu") || ! strcasecmp(argv[ i ], "-restart-in-gfx-menu")) {
+    if ((strcasecmp(argv[ i ], "--restart-in-gfx-menu") == 0)
+        || (strcasecmp(argv[ i ], "-restart-in-gfx-menu") == 0)) {
       g_opt_restarted_in_gfx_menu = true;
       continue;
     }
@@ -357,14 +364,14 @@ int main(int argc, char *argv[])
 
   if (! g_opt_tests) {
     TRACE_NO_INDENT();
-    if (! sdl_init()) {
+    if (sdl_init() == 0U) {
       ERR("SDL: Init");
     }
   }
 
   if (! g_opt_tests) {
     TRACE_NO_INDENT();
-    if (! sdl_display_init(g)) {
+    if (sdl_display_init(g) == 0U) {
       ERR("SDL: Display init");
     }
   }
@@ -387,7 +394,7 @@ int main(int argc, char *argv[])
     LOG("SDL: Pump events done");
   }
 
-  if (g_need_restart_with_given_arguments != "") {
+  if (! g_need_restart_with_given_arguments.empty()) {
     TRACE_NO_INDENT();
     restart(g, g_need_restart_with_given_arguments);
   }
@@ -426,7 +433,7 @@ int main(int argc, char *argv[])
     } else {
       LOG("Load fonts");
     }
-    if (! font_init()) {
+    if (font_init() == 0U) {
       ERR("Font init");
     }
   }
@@ -507,7 +514,7 @@ int main(int argc, char *argv[])
     } else {
       LOG("Load textures");
     }
-    if (! tex_init()) {
+    if (tex_init() == 0U) {
       ERR("Tex init");
     }
     wid_console_flush(g);
@@ -567,7 +574,7 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     LOG("Load commands");
-    if (! command_init()) {
+    if (command_init() == 0U) {
       ERR("Command init");
     }
     LOG("Loaded commands");
@@ -661,7 +668,7 @@ int main(int argc, char *argv[])
   LOG("SDL loop finished");
   wid_console_flush(g);
 
-  if (g_need_restart_with_given_arguments != "") {
+  if (! g_need_restart_with_given_arguments.empty()) {
     TRACE_NO_INDENT();
     restart(g, g_need_restart_with_given_arguments);
   }

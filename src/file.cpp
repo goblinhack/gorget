@@ -31,30 +31,30 @@ unsigned char *file_load(const char *filename, int *outlen)
    * If the file is on disk and is newer than the program, use that in
    * preference.
    */
-  if (file_exists(filename)) {
-    if (strstr(filename, "data/")) {
+  if (file_exists(filename) != 0U) {
+    if (strstr(filename, "data/") != nullptr) {
       TRACE_NO_INDENT();
-      if (file_exists_and_is_newer_than(filename, g_exec_full_path_and_name)) {
+      if (file_exists_and_is_newer_than(filename, g_exec_full_path_and_name) != 0U) {
         out = file_io_read_if_exists(filename, outlen);
-        if (out) {
+        if (out != nullptr) {
           FILE_LOG("Read file %s (newer than exec)", filename);
           return out;
         }
       }
 
       TRACE_NO_INDENT();
-      if (file_exists_and_is_newer_than(filename, ".o/file.o")) {
+      if (file_exists_and_is_newer_than(filename, ".o/file.o") != 0U) {
         out = file_io_read_if_exists(filename, outlen);
-        if (out) {
+        if (out != nullptr) {
           FILE_LOG("Read file %s (newer than build)", filename);
           return out;
         }
       }
 
       TRACE_NO_INDENT();
-      if (file_exists_and_is_newer_than(filename, "src/.o/file.o")) {
+      if (file_exists_and_is_newer_than(filename, "src/.o/file.o") != 0U) {
         out = file_io_read_if_exists(filename, outlen);
-        if (out) {
+        if (out != nullptr) {
           FILE_LOG("Read file %s (newer than src build)", filename);
           return out;
         }
@@ -62,21 +62,21 @@ unsigned char *file_load(const char *filename, int *outlen)
     } else {
       TRACE_NO_INDENT();
       out = file_io_read_if_exists(filename, outlen);
-      if (out) {
+      if (out != nullptr) {
         FILE_LOG("Read file %s (exists locally)", filename);
         return out;
       }
     }
   }
 
-  if (g_exec_dir) {
+  if (g_exec_dir != nullptr) {
     alt_filename = strprepend(filename, g_exec_dir);
 
-    if (file_exists(alt_filename)) {
+    if (file_exists(alt_filename) != 0U) {
       TRACE_NO_INDENT();
-      if (file_exists_and_is_newer_than(alt_filename, g_exec_full_path_and_name)) {
+      if (file_exists_and_is_newer_than(alt_filename, g_exec_full_path_and_name) != 0U) {
         out = file_io_read_if_exists(alt_filename, outlen);
-        if (out) {
+        if (out != nullptr) {
           myfree(alt_filename);
           alt_filename = nullptr;
 
@@ -85,9 +85,9 @@ unsigned char *file_load(const char *filename, int *outlen)
       }
 
       TRACE_NO_INDENT();
-      if (file_exists_and_is_newer_than(alt_filename, ".o/file.o")) {
+      if (file_exists_and_is_newer_than(alt_filename, ".o/file.o") != 0U) {
         out = file_io_read_if_exists(alt_filename, outlen);
-        if (out) {
+        if (out != nullptr) {
           myfree(alt_filename);
           alt_filename = nullptr;
 
@@ -96,9 +96,9 @@ unsigned char *file_load(const char *filename, int *outlen)
       }
 
       TRACE_NO_INDENT();
-      if (file_exists_and_is_newer_than(alt_filename, "src/.o/file.o")) {
+      if (file_exists_and_is_newer_than(alt_filename, "src/.o/file.o") != 0U) {
         out = file_io_read_if_exists(alt_filename, outlen);
-        if (out) {
+        if (out != nullptr) {
           myfree(alt_filename);
           alt_filename = nullptr;
 
@@ -109,11 +109,11 @@ unsigned char *file_load(const char *filename, int *outlen)
   }
 
   TRACE_NO_INDENT();
-  auto r = ramdisk_load(filename, outlen);
-  if (r) {
+  auto *r = ramdisk_load(filename, outlen);
+  if (r != nullptr) {
     FILE_LOG("Read (ramdisk) %s, %dMb, %d bytes", filename, *outlen / (1024 * 1024), *outlen);
 
-    if (alt_filename) {
+    if (alt_filename != nullptr) {
       myfree(alt_filename);
       alt_filename = nullptr;
     }
@@ -126,8 +126,8 @@ unsigned char *file_load(const char *filename, int *outlen)
    */
   TRACE_NO_INDENT();
   out = file_io_read_if_exists(filename, outlen);
-  if (out) {
-    if (alt_filename) {
+  if (out != nullptr) {
+    if (alt_filename != nullptr) {
       myfree(alt_filename);
       alt_filename = nullptr;
     }
@@ -137,8 +137,8 @@ unsigned char *file_load(const char *filename, int *outlen)
 
   TRACE_NO_INDENT();
   out = file_io_read_if_exists(alt_filename, outlen);
-  if (out) {
-    if (alt_filename) {
+  if (out != nullptr) {
+    if (alt_filename != nullptr) {
       myfree(alt_filename);
       alt_filename = nullptr;
     }
@@ -146,7 +146,7 @@ unsigned char *file_load(const char *filename, int *outlen)
     return out;
   }
 
-  if (alt_filename) {
+  if (alt_filename != nullptr) {
     myfree(alt_filename);
     alt_filename = nullptr;
   }
@@ -156,7 +156,7 @@ unsigned char *file_load(const char *filename, int *outlen)
     std::string base_alt_filename = mybasename(filename, "strip dir");
 
     out = file_io_read_if_exists(base_alt_filename.c_str(), outlen);
-    if (out) {
+    if (out != nullptr) {
       return out;
     }
   }
@@ -181,7 +181,7 @@ unsigned char *file_io_read(const char *filename, int *out_len)
   int            len;
 
   file = fopen(filename, "rb");
-  if (! file) {
+  if (file == nullptr) {
     fprintf(MY_STDERR, "Failed to open file \"%s\" for reading: %s\n", filename, strerror(errno));
     return nullptr;
   }
@@ -189,7 +189,7 @@ unsigned char *file_io_read(const char *filename, int *out_len)
   /*
    * Get the file size.
    */
-  if (fseek(file, 0, SEEK_END)) {
+  if (fseek(file, 0, SEEK_END) != 0) {
     fprintf(MY_STDERR, "Failed to seek end of file \"%s\": %s\n", filename, strerror(errno));
     fclose(file);
     return nullptr;
@@ -202,26 +202,26 @@ unsigned char *file_io_read(const char *filename, int *out_len)
     return nullptr;
   }
 
-  if (fseek(file, 0, SEEK_SET)) {
+  if (fseek(file, 0, SEEK_SET) != 0) {
     fprintf(MY_STDERR, "Failed to seek begin of file \"%s\": %s\n", filename, strerror(errno));
     fclose(file);
     return nullptr;
   }
 
   buffer = (unsigned char *) mymalloc(len + SIZEOF((char) '\0'), "file read");
-  if (! buffer) {
+  if (buffer == nullptr) {
     fprintf(MY_STDERR, "Failed to alloc mem for file \"%s\": %s\n", filename, strerror(errno));
     fclose(file);
     return nullptr;
   }
 
-  if (! fread(buffer, len, 1, file)) {
+  if (fread(buffer, len, 1, file) == 0U) {
     fprintf(MY_STDERR, "Failed to read file \"%s\": %s\n", filename, strerror(errno));
     fclose(file);
     return nullptr;
   }
 
-  if (out_len) {
+  if (out_len != nullptr) {
     *out_len = len;
   }
 
@@ -239,7 +239,7 @@ int file_write(const char *filename, unsigned char *buffer, int len)
   uint8_t rc;
 
   file = fopen(filename, "w");
-  if (! file) {
+  if (file == nullptr) {
     ERR("Failed to open file \"%s\" for writing: %s\n", filename, strerror(errno));
     return -1;
   }
@@ -251,13 +251,13 @@ int file_write(const char *filename, unsigned char *buffer, int len)
   /*
    * Check written one object.
    */
-  if (! rc) {
+  if (rc == 0U) {
     ERR("Failed to write file \"%s\": %s\n", filename, strerror(errno));
     fclose(file);
     return -1;
   }
 
-  if (ferror(file)) {
+  if (ferror(file) != 0) {
     ERR("Error writing to write file \"%s\": %s\n", filename, strerror(errno));
     fclose(file);
     return -1;
@@ -275,7 +275,7 @@ uint8_t file_exists(const char *filename)
   TRACE_NO_INDENT();
   struct stat buf;
 
-  if (! filename) {
+  if (filename == nullptr) {
     return 0;
   }
 
@@ -319,7 +319,7 @@ unsigned char *file_io_read_if_exists(const char *filename, int *out_len)
   myfree(mz_filename);
 #endif
 
-  if (file_exists(filename)) {
+  if (file_exists(filename) != 0U) {
     return file_io_read(filename, out_len);
   }
 
@@ -347,11 +347,11 @@ int file_size(const char *filename)
 uint8_t file_non_zero_size_exists(const char *filename)
 {
   TRACE_NO_INDENT();
-  if (! file_exists(filename)) {
+  if (file_exists(filename) == 0U) {
     return 0;
   }
 
-  if (! file_size(filename)) {
+  if (file_size(filename) == 0) {
     return 0;
   }
 
@@ -364,7 +364,7 @@ uint8_t file_non_zero_size_exists(const char *filename)
 uint8_t file_unlink(const char *filename)
 {
   TRACE_NO_INDENT();
-  if (! file_exists(filename)) {
+  if (file_exists(filename) == 0U) {
     return 0;
   }
 
@@ -400,27 +400,27 @@ uint8_t file_exists_and_is_newer_than(const char *filename1, const char *filenam
   struct stat buf2;
   double      delta;
 
-  if (! filename1) {
+  if (filename1 == nullptr) {
     CROAK("expected two filenames");
   }
 
-  if (! filename2) {
+  if (filename2 == nullptr) {
     CROAK("expected two filenames");
   }
 
   // fprintf(stdout, "%s/%s\n", filename1, filename2);
 
   if (stat(filename1, &buf1) < 0) {
-    return false;
+    return 0U;
   }
 
   if (stat(filename2, &buf2) < 0) {
-    return false;
+    return 0U;
   }
 
   delta = difftime(buf1.st_mtime, buf2.st_mtime);
 
-  return delta > 0;
+  return static_cast<uint8_t>(delta > 0);
 }
 
 void FILE_LOG(const char *fmt, ...)

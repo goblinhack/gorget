@@ -10,6 +10,7 @@
 #include "my_sprintf.hpp"
 #include "my_time.hpp"
 
+#include <algorithm>
 #include <iostream>
 #include <mutex>
 #include <string.h>
@@ -220,18 +221,18 @@ static void hash_add(hash_t *hash_table, Ptrcheck *pc)
     g_ptrcheck_inited = true;
   }
 
-  if (! pc) {
+  if (pc == nullptr) {
     return;
   }
 
-  if (! hash_table) {
+  if (hash_table == nullptr) {
     delete pc;
     return;
   }
 
   slot = ptr2hash(hash_table, pc->ptr);
   elem = *slot;
-  while (elem && (elem->pc->ptr != pc->ptr)) {
+  while ((elem != nullptr) && (elem->pc->ptr != pc->ptr)) {
     elem = elem->next;
   }
 
@@ -254,13 +255,13 @@ static hash_elem_t *hash_find(hash_t *hash_table, void *ptr)
   hash_elem_t **slot;
   hash_elem_t  *elem;
 
-  if (! hash_table) {
+  if (hash_table == nullptr) {
     return nullptr;
   }
 
   slot = ptr2hash(hash_table, ptr);
   elem = *slot;
-  while (elem && (elem->pc->ptr != ptr)) {
+  while ((elem != nullptr) && (elem->pc->ptr != ptr)) {
     elem = elem->next;
   }
 
@@ -276,11 +277,11 @@ static void hash_free(hash_t *hash_table, void *ptr)
   hash_elem_t  *prev;
   hash_elem_t  *elem;
 
-  if (! hash_table) {
+  if (hash_table == nullptr) {
     return;
   }
 
-  if (! ptr) {
+  if (ptr == nullptr) {
     return;
   }
 
@@ -288,16 +289,16 @@ static void hash_free(hash_t *hash_table, void *ptr)
   elem = *slot;
   prev = nullptr;
 
-  while (elem && (elem->pc->ptr != ptr)) {
+  while ((elem != nullptr) && (elem->pc->ptr != ptr)) {
     prev = elem;
     elem = elem->next;
   }
 
-  if (! elem) {
+  if (elem == nullptr) {
     return;
   }
 
-  if (prev) {
+  if (prev != nullptr) {
     prev->next = elem->next;
   } else {
     *slot = elem->next;
@@ -314,12 +315,12 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
   //
   // Currently active pointer?
   //
-  auto elem = hash_find(ptrcheck_hash[ mtype ], (void *) ptr);
-  if (elem) {
-    auto pc = elem->pc;
+  auto *elem = hash_find(ptrcheck_hash[ mtype ], (void *) ptr);
+  if (elem != nullptr) {
+    auto *pc = elem->pc;
 
-    auto a = pc->allocated_by;
-    if (a) {
+    auto *a = pc->allocated_by;
+    if (a != nullptr) {
       fprintf(stderr, "PTRCHECK: Currently allocated at %p \"%s\" (%u bytes) at %s:%s line %u at %s\n", pc->ptr,
               pc->what, pc->size, a->file, a->func, a->line, a->ts);
 
@@ -336,8 +337,8 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
         h = ENABLE_PTRCHECK_HISTORY - 1;
       }
 
-      auto H = pc->last_seen[ h ];
-      if (H) {
+      auto *H = pc->last_seen[ h ];
+      if (H != nullptr) {
         fprintf(stderr, "PTRCHECK: Last seen at [%u] at %s:%s line %u at %s\n", j, H->file, H->func, H->line, H->ts);
         fprintf(stderr, "%s", H->bt.c_str());
       }
@@ -348,7 +349,7 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
   //
   // Check the ring buffer to see if we've seen this pointer before.
   //
-  auto pc = &ringbuf_next[ mtype ][ 0 ];
+  auto *pc = &ringbuf_next[ mtype ][ 0 ];
   pc--;
 
   if (pc < ringbuf_base[ mtype ]) {
@@ -362,19 +363,19 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
   //
   // Walk back through the ring buffer.
   //
-  while (ring_ptr_size) {
+  while (ring_ptr_size != 0) {
     //
     // Found a match?
     //
     if (pc->ptr == ptr) {
-      auto a = pc->allocated_by;
-      if (a) {
+      auto *a = pc->allocated_by;
+      if (a != nullptr) {
         fprintf(stderr, "PTRCHECK: %p allocated at \"%s\" (%u bytes) at %s:%s line %u at %s\n%s\n", ptr, pc->what,
                 pc->size, a->file, a->func, a->line, a->ts, a->bt.c_str());
       }
 
-      auto f = pc->freed_by;
-      if (f) {
+      auto *f = pc->freed_by;
+      if (f != nullptr) {
         fprintf(stderr, "PTRCHECK: %p freed at %s:%s line %u at %s\n%s\n", ptr, f->file, f->func, f->line, f->ts,
                 f->bt.c_str());
       }
@@ -389,8 +390,8 @@ static Ptrcheck *ptrcheck_describe_pointer(int mtype, const void *ptr)
           h = ENABLE_PTRCHECK_HISTORY - 1;
         }
 
-        auto H = pc->last_seen[ h ];
-        if (H) {
+        auto *H = pc->last_seen[ h ];
+        if (H != nullptr) {
           fprintf(stderr, "PTRCHECK: %p last seen at [%u] at %s:%s line %u at %s\n%s\n", ptr, i, H->file, H->func,
                   H->line, H->ts, H->bt.c_str());
         }
@@ -433,10 +434,10 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
   // Check the robust handle is valid.
   //
   e = hash_find(ptrcheck_hash[ mtype ], (void *) ptr);
-  if (e) {
+  if (e != nullptr) {
     pc = e->pc;
 
-    if (dont_store) {
+    if (dont_store != 0) {
 #if 0
 #ifdef ENABLE_DEBUG_PTRCHECK
       std::cerr << string_sprintf("PTRCHECK: %p verified at \"%s\" (%u bytes) at %s:%s line %u (do not store)\n", ptr,
@@ -453,8 +454,8 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
 #ifdef ENABLE_PTRCHECK_HISTORY
     IF_DEBUG
     {
-      auto l = pc->last_seen[ pc->last_seen_at ];
-      if (! l) {
+      auto *l = pc->last_seen[ pc->last_seen_at ];
+      if (l == nullptr) {
         l = pc->last_seen[ pc->last_seen_at ] = new Ptrcheck_history();
       }
       l->file = file;
@@ -476,14 +477,12 @@ static Ptrcheck *ptrcheck_verify_pointer(int mtype, const void *ptr, const char 
         pc->last_seen_at = 0;
       }
 
-      if (pc->last_seen_size >= ENABLE_PTRCHECK_HISTORY) {
-        pc->last_seen_size = ENABLE_PTRCHECK_HISTORY;
-      }
+      pc->last_seen_size = std::min(pc->last_seen_size, ENABLE_PTRCHECK_HISTORY);
     }
 #endif
     return pc;
   }
-  if (! ptr) {
+  if (ptr == nullptr) {
     ERR("%s%p NULL pointer %s:%s line %u", null_pointer_warning, ptr, file, func, line);
     return nullptr;
   }
@@ -512,35 +511,35 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
           line);
 #endif
 
-  if (! ptr) {
+  if (ptr == nullptr) {
     ERR("Null pointer");
   }
 
   //
   // Create a hash table to store pointers.
   //
-  if (! ptrcheck_hash[ mtype ]) {
+  if (ptrcheck_hash[ mtype ] == nullptr) {
     //
     // Create enough space for lots of pointers.
     //
     ptrcheck_hash[ mtype ] = hash_init(1046527 /* prime */);
 
-    if (! ptrcheck_hash[ mtype ]) {
+    if (ptrcheck_hash[ mtype ] == nullptr) {
       return (void *) ptr;
     }
 
     //
     // And a ring buffer to store old pointer into.
     //
-    ringbuf_next[ mtype ]         = &ringbuf[ mtype ][ 0 ];
-    ringbuf_base[ mtype ]         = &ringbuf[ mtype ][ 0 ];
+    ringbuf_next[ mtype ]         = ringbuf[ mtype ].data();
+    ringbuf_base[ mtype ]         = ringbuf[ mtype ].data();
     ringbuf_current_size[ mtype ] = 0;
   }
 
   //
   // Missing an earlier free?
   //
-  if (hash_find(ptrcheck_hash[ mtype ], (void *) ptr)) {
+  if (hash_find(ptrcheck_hash[ mtype ], (void *) ptr) != nullptr) {
     ERR("Pointer %p already exists and attempting to add again", ptr);
     ptrcheck_describe_pointer(mtype, ptr);
     return (void *) ptr;
@@ -558,7 +557,7 @@ static void *ptrcheck_alloc_(int mtype, const void *ptr, const char *what, int s
   pc->what = what;
   pc->size = size;
 
-  auto a = pc->allocated_by = new Ptrcheck_history();
+  auto *a = pc->allocated_by = new Ptrcheck_history();
 
   a->func = func;
   a->file = file;
@@ -579,7 +578,7 @@ void *ptrcheck_alloc(int mtype, const void *ptr, const char *what, int size, con
 {
   ptrcheck_mutex.lock();
   TRACE_NO_INDENT();
-  auto ret = ptrcheck_alloc_(mtype, ptr, what, size, func, file, line);
+  auto *ret = ptrcheck_alloc_(mtype, ptr, what, size, func, file, line);
   ptrcheck_mutex.unlock();
 
   return ret;
@@ -600,22 +599,22 @@ static int ptrcheck_free_(int mtype, void *ptr, const char *func, const char *fi
           ringbuf_current_size[ mtype ]);
 #endif
 
-  if (! ptr) {
+  if (ptr == nullptr) {
     ERR("Null pointer");
-    return false;
+    return 0;
   }
 
-  pc = ptrcheck_verify_pointer(mtype, ptr, file, func, line, true /* don't store */);
-  if (! pc) {
+  pc = ptrcheck_verify_pointer(mtype, ptr, file, func, line, 1 /* don't store */);
+  if (pc == nullptr) {
     CROAK("Failed to save pointer history");
-    return false;
+    return 0;
   }
 
   //
   // Add some free information that we know the pointer is safe at this
   // point in time.
   //
-  auto f = pc->freed_by = new Ptrcheck_history();
+  auto *f = pc->freed_by = new Ptrcheck_history();
 
   f->file = file;
   f->func = func;
@@ -645,7 +644,7 @@ static int ptrcheck_free_(int mtype, void *ptr, const char *func, const char *fi
 
   hash_free(ptrcheck_hash[ mtype ], ptr);
 
-  return true;
+  return 1;
 }
 
 int ptrcheck_free(int mtype, void *ptr, const char *func, const char *file, int line)
@@ -670,11 +669,11 @@ int ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *fi
   // Handy if things get too slow, to see what is firing most
   //
   // fprintf(stderr, "PTRCHECK %s %s %d\n", file, func, line);
-  auto ret = ptrcheck_verify_pointer(mtype, ptr, file, func, line, false /* don't store */) != nullptr;
+  auto ret = ptrcheck_verify_pointer(mtype, ptr, file, func, line, 0 /* don't store */) != nullptr;
 
   ptrcheck_mutex.unlock();
 
-  return ret;
+  return static_cast<int>(ret);
 }
 
 //
@@ -687,7 +686,7 @@ void ptrcheck_leak_print(int mtype)
   Ptrcheck     *pc;
   int           i;
 
-  if (! ptrcheck_hash[ mtype ]) {
+  if (ptrcheck_hash[ mtype ] == nullptr) {
     return;
   }
 
@@ -695,11 +694,11 @@ void ptrcheck_leak_print(int mtype)
     slot = &ptrcheck_hash[ mtype ]->elements[ i ];
     elem = *slot;
 
-    while (elem) {
+    while (elem != nullptr) {
       pc = elem->pc;
 
-      auto a = pc->allocated_by;
-      if (a) {
+      auto *a = pc->allocated_by;
+      if (a != nullptr) {
         fprintf(stderr, "PTRCHECK: Leak %p \"%s\" (%u bytes) at %s:%s line %u at %s\n%s\n", pc->ptr, pc->what,
                 pc->size, a->file, a->func, a->line, a->ts, a->bt.c_str());
       } else {
@@ -716,8 +715,8 @@ void ptrcheck_leak_print(int mtype)
           h = ENABLE_PTRCHECK_HISTORY - 1;
         }
 
-        auto H = pc->last_seen[ h ];
-        if (H) {
+        auto *H = pc->last_seen[ h ];
+        if (H != nullptr) {
           fprintf(stderr, "PTRCHECK: Last seen at [%u] at %s:%s line %u at %s\n%s\n", j, H->file, H->func, H->line,
                   H->ts, H->bt.c_str());
         }
@@ -745,11 +744,11 @@ static void ptrcheck_fini(int mtype)
   hash_elem_t  *elem;
   int           i;
 
-  if (! ptrcheck_hash[ mtype ]) {
+  if (ptrcheck_hash[ mtype ] == nullptr) {
     return;
   }
 
-  for (auto p : all_Ptrcheck_history) {
+  for (auto *p : all_Ptrcheck_history) {
     delete p;
   }
   all_Ptrcheck_history.clear();
@@ -758,8 +757,8 @@ static void ptrcheck_fini(int mtype)
     slot = &ptrcheck_hash[ mtype ]->elements[ i ];
     elem = *slot;
 
-    while (elem) {
-      auto next = elem->next;
+    while (elem != nullptr) {
+      auto *next = elem->next;
       delete elem->pc;
       free(elem);
       elem = next;

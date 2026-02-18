@@ -316,7 +316,7 @@ static void level_tick_body(Gamep g, Levelsp v, Levelp l, float dt, bool tick_is
   }
   const int player_speed = thing_speed(player);
 
-  if (false) {
+  if (__unused__) {
     if (level_is_player_level(g, v, l)) {
       LEVEL_DBG(g, v, l, "time_step %f v->last_time_step %f dt %f", v->time_step, v->last_time_step, dt);
     }

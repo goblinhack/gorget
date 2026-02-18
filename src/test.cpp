@@ -102,7 +102,7 @@ using Testidmap = std::vector< class Test * >;
 //
 static std::map< std::string, class Test * > test_name_map;
 
-static uint8_t test_init_done;
+static bool test_init_done;
 
 Test::Test(void) { newptr(MTYPE_TP, this, "Test"); }
 
@@ -126,7 +126,7 @@ void test_init(void)
 {
   TRACE_NO_INDENT();
 
-  test_init_done = true;
+  test_init_done = 1u;
 
   tests_init();
 }
@@ -135,10 +135,10 @@ void test_fini(void)
 {
   TRACE_NO_INDENT();
 
-  if (! test_init_done) {
+  if (static_cast<unsigned int>(test_init_done) == 0U) {
     return;
   }
-  test_init_done = false;
+  test_init_done = 0u;
 
   for (auto &test : test_name_map) {
     delete test.second;
@@ -150,7 +150,7 @@ void test_fini(void)
 void test_callback_set(Testp test, test_callback_t callback)
 {
   TRACE_NO_INDENT();
-  if (! test) {
+  if (test == nullptr) {
     ERR("no test for %s", __FUNCTION__);
     return;
   }
@@ -165,11 +165,11 @@ Testp test_load(const char *name_in)
 
   LOG("Load test '%s'", name_in);
 
-  if (test_find(name_in)) {
+  if (test_find(name_in) != nullptr) {
     CROAK("test_load: test name [%s] already loaded", name_in);
   }
 
-  auto test  = new Test();
+  auto *test = new Test();
   test->name = name;
 
   auto result = test_name_map.insert(std::make_pair(name, test));
@@ -197,10 +197,10 @@ void tests_run(Gamep g)
   //
   // For tests that create a widget, we need some defaults
   //
-  if (! TERM_HEIGHT) {
+  if (TERM_HEIGHT == 0) {
     TERM_HEIGHT = TERM_HEIGHT_DEF;
   }
-  if (! TERM_WIDTH) {
+  if (TERM_WIDTH == 0) {
     TERM_WIDTH = TERM_WIDTH_DEF;
   }
 
@@ -214,14 +214,14 @@ void tests_run(Gamep g)
     //
     // Test name
     //
-    auto name = "test_" + test.first;
-    auto t    = test.second;
-    auto pre  = string_sprintf("Running %-70s", name.c_str());
+    auto  name = "test_" + test.first;
+    auto *t    = test.second;
+    auto  pre  = string_sprintf("Running %-70s", name.c_str());
 
     //
     // Skip the test if needed
     //
-    if (g_opt_test_name_filter != "") {
+    if (! g_opt_test_name_filter.empty()) {
       if (name != g_opt_test_name_filter) {
         skipped = true;
         continue;
@@ -314,7 +314,7 @@ void tests_run(Gamep g)
 
   g_opt_tests = false;
 
-  if (failed) {
+  if (failed != 0) {
     CON("Results: %d passed, %d failed", passed, failed);
     exit(1);
   } else {

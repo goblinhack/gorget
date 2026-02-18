@@ -19,6 +19,8 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
+extern Game *game;
+
 //
 // Where all logs go
 //
@@ -28,7 +30,7 @@ std::string log_dir_create(void)
 
   const char *appdata;
   appdata = getenv("APPDATA");
-  if (! appdata || ! appdata[ 0 ]) {
+  if ((appdata == nullptr) || (appdata[ 0 ] == 0)) {
     appdata = "appdata";
   }
 
@@ -119,7 +121,7 @@ static void con_(const char *fmt, va_list args)
 
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
-  if (fmt) {
+  if (fmt != nullptr) {
     vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   }
 
@@ -156,7 +158,7 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
   TRACE_NO_INDENT();
 
   extern Gamep game;
-  auto         g = game;
+  auto        *g = game;
 
   if (g_dying) {
     //
@@ -174,7 +176,7 @@ static void croak_handle(bool clean, const char *fmt, va_list args)
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
 
-  if (g_opt_test_current != "") {
+  if (! g_opt_test_current.empty()) {
     snprintf(buf + len, MAXLONGSTR - len, "Test %s: ", g_opt_test_current.c_str());
     len = (int) strlen(buf);
   }
@@ -223,7 +225,7 @@ static void err_handle(Gamep g, const char *fmt, va_list args)
   get_timestamp(buf, MAXLONGSTR);
   len = (int) strlen(buf);
 
-  if (g_opt_test_current != "") {
+  if (! g_opt_test_current.empty()) {
     snprintf(buf + len, MAXLONGSTR - len, "Test %s: ", g_opt_test_current.c_str());
     len = (int) strlen(buf);
   }
@@ -244,8 +246,7 @@ void ERR_HANDLE(const char *fmt, ...)
     exit(1);
   }
 
-  extern Gamep game;
-  auto         g      = game;
+  auto *g             = game;
   g_errored_thread_id = g_thread_id;
 
   va_list args;
@@ -256,8 +257,8 @@ void ERR_HANDLE(const char *fmt, ...)
 
 void putf(FILE *fp, const char *s)
 {
-  auto sp = s;
-  while (*sp) {
+  const auto *sp = s;
+  while (*sp != 0) {
     if (*sp == '%') {
       std::string out = ascii_strip(s);
       fputs(out.c_str(), fp);
@@ -283,7 +284,7 @@ static void topcon_(const char *fmt, va_list args)
   get_timestamp(ts, MAXLONGSTR);
   snprintf(buf, SIZEOF(buf) - 1, "%s", ts);
   len = (int) strlen(buf);
-  if (fmt) {
+  if (fmt != nullptr) {
     vsnprintf(buf + len, MAXLONGSTR - len, fmt, args);
   }
 
@@ -324,7 +325,7 @@ static void botcon_(const char *fmt, va_list args)
   char buf[ MAXLONGSTR ];
   buf[ 0 ] = '\0';
 
-  if (fmt) {
+  if (fmt != nullptr) {
     vsnprintf(buf, MAXLONGSTR, fmt, args);
   }
 

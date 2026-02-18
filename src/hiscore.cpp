@@ -55,7 +55,7 @@ bool HiScores::is_new_hiscore(int score)
   TRACE_NO_INDENT();
   auto h = hiscores.begin();
 
-  if (! score) {
+  if (score == 0) {
     //
     // Poor player.
     //
@@ -76,7 +76,7 @@ bool HiScores::is_new_highest_hiscore(int score)
 {
   auto h = hiscores.begin();
 
-  if (! score) {
+  if (score == 0) {
     //
     // Poor player.
     //
@@ -95,7 +95,7 @@ const char *HiScores::place_str(int score)
       "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth",
   };
 
-  if (! score) {
+  if (score == 0) {
     //
     // Poor player.
     //

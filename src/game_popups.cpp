@@ -25,7 +25,7 @@ void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c
     return;
   }
 
-  auto  l        = game_popups_get(g, x, y);
+  auto *  l        = game_popups_get(g, x, y);
   auto *popup    = new GamePopup;
   popup->text    = text;
   popup->created = time_ms_cached();
@@ -52,7 +52,7 @@ void game_popups_age(Gamep g)
       // Age out popups
       //
       std::list< GamePopup * > out;
-      for (auto i : *game_popups_get(g, x, y)) {
+      for (auto *i : *game_popups_get(g, x, y)) {
         if (! time_have_x_ms_passed_since(POPUP_DURATION_MS, i->created)) {
           out.push_back(i);
         } else {
@@ -88,7 +88,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         CON("(%d,%d)", x, y);
       }
 
-      for (auto i : *game_popups_get(g, x, y)) {
+      for (auto *i : *game_popups_get(g, x, y)) {
         uint16_t tile_index;
         spoint   p(x, y);
         spoint   tl = {};
@@ -98,7 +98,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         // Get the coords of the tile on the map this text would be over
         //
         static Tpp tp_once;
-        if (! tp_once) {
+        if (tp_once == nullptr) {
           tp_once = tp_find_mand("cursor_path");
         }
         thing_display_get_tile_info(g, v, l, p, tp_once, NULL_THING, &tl, &br, &tile_index);
@@ -133,7 +133,7 @@ void game_popups_display(Gamep g, Levelsp v, Levelp l)
         tl.y -= i->y_offset;
         br.y -= i->y_offset;
 
-        br.y = tl.y + tile_height / 2;
+        br.y = tl.y + (tile_height / 2);
 
         if (debug) {
           CON("popup: %s %u..%u last %u...%u", i->text.c_str(), tl.y, br.y, last_tl.y, last_br.y);
@@ -191,8 +191,8 @@ void game_popups_clear(Gamep g)
         continue;
       }
 
-      auto l = game_popups_get(g, x, y);
-      for (auto p : *l) {
+      auto *l = game_popups_get(g, x, y);
+      for (auto *p : *l) {
         delete p;
       }
       l->clear();

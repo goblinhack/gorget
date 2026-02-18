@@ -28,9 +28,9 @@ static void error_message_do(Gamep g, std::string &tech_support)
 
   tech_support += "\n";
 
-  if (g) {
-    auto seed_name = game_seed_name_get(g);
-    if (*seed_name) {
+  if (g != nullptr) {
+    const auto *seed_name = game_seed_name_get(g);
+    if (*seed_name != 0) {
       tech_support += "Seed name: " + std::string(seed_name) + "\n";
     }
   }
@@ -50,7 +50,7 @@ static void error_message_do(Gamep g, std::string &tech_support)
 
   CON("%s", tech_support.c_str());
 
-  if (g) {
+  if (g != nullptr) {
     wid_unset_focus(g);
     wid_unset_focus_lock();
     wid_console_raise(g);
@@ -66,7 +66,7 @@ static void error_message_do(Gamep g, std::string &tech_support)
     // A terminal error
     //
     sdl_msg_box("%s", tech_support.c_str());
-  } else if (! sdl.window) {
+  } else if (sdl.window == nullptr) {
     //
     // An early error with no SDL windows yet
     //

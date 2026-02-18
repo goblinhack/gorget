@@ -31,13 +31,13 @@ public:
   int operator()() const;
 };
 
-bool d20_ge(int stat_total, const int dice_roll_to_exceed);
-bool d20_ge(int stat_total, const int dice_roll_to_exceed, bool &fumble, bool &critical);
+bool d20_ge(int stat_total, int dice_roll_to_exceed);
+bool d20_ge(int stat_total, int dice_roll_to_exceed, bool &fumble, bool &critical);
 
 int stat_to_bonus(int stat);
 
-const std::string stat_to_bonus_string(int stat);
-const std::string stat_to_bonus_slash_str(int stat);
-const std::string bonus_to_string(int stat);
+std::string stat_to_bonus_string(int stat);
+std::string stat_to_bonus_slash_str(int stat);
+std::string bonus_to_string(int stat);
 
 #endif

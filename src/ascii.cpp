@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
@@ -52,57 +54,57 @@ static spoint mouse_tile_tl;
 static spoint mouse_tile_br;
 #endif
 
-static int mouse_found = false;
-
 static spoint scissors_tl;
 static spoint scissors_br;
-static bool   scissors_enabled = false;
+
+static bool scissors_enabled = false;
+static bool mouse_found      = 0;
 
 int ascii_ok(int x, int y)
 {
   if (unlikely(x < 0)) {
-    return false;
+    return 0;
   }
 
   if (unlikely(x >= TERM_WIDTH)) {
-    return false;
+    return 0;
   }
 
   if (unlikely(y < 0)) {
-    return false;
+    return 0;
   }
 
   if (unlikely(y >= TERM_HEIGHT)) {
-    return false;
+    return 0;
   }
 
-  return true;
+  return 1;
 }
 
 int ascii_x_ok(int x)
 {
   if (unlikely(x < 0)) {
-    return false;
+    return 0;
   }
 
   if (unlikely(x >= TERM_WIDTH)) {
-    return false;
+    return 0;
   }
 
-  return true;
+  return 1;
 }
 
 int ascii_y_ok(int y)
 {
   if (unlikely(y < 0)) {
-    return false;
+    return 0;
   }
 
   if (unlikely(y >= TERM_HEIGHT)) {
-    return false;
+    return 0;
   }
 
-  return true;
+  return 1;
 }
 
 void ascii_clear_scissors(void) { scissors_enabled = false; }
@@ -122,7 +124,7 @@ void pixel_to_ascii(Gamep g, int *x, int *y)
   auto w = game_ascii_pix_width_get(g);
   auto h = game_ascii_pix_height_get(g);
 
-  if (! w || ! h) {
+  if ((w == 0) || (h == 0)) {
     *x = 0;
     *y = 0;
     return;
@@ -131,13 +133,9 @@ void pixel_to_ascii(Gamep g, int *x, int *y)
   mx /= w;
   my /= h;
 
-  if (mx > TERM_WIDTH - 1) {
-    mx = TERM_WIDTH - 1;
-  }
+  mx = std::min< float >(mx, TERM_WIDTH - 1);
 
-  if (my > TERM_HEIGHT - 1) {
-    my = TERM_HEIGHT - 1;
-  }
+  my = std::min< float >(my, TERM_HEIGHT - 1);
 
   *x = (int) mx;
   *y = (int) my;
@@ -148,16 +146,16 @@ void pixel_to_ascii(Gamep g, int *x, int *y)
 int ascii_ok_for_scissors(int x, int y)
 {
   if ((x < 0) || (y < 0) || (x >= TERM_WIDTH) || (y >= TERM_HEIGHT)) {
-    return false;
+    return 0;
   }
 
   if (scissors_enabled) {
     if ((x < scissors_tl.x) || (x > scissors_br.x)) {
-      return false;
+      return 0;
     }
 
     if ((y < scissors_tl.y) || (y > scissors_br.y)) {
-      return false;
+      return 0;
     }
   }
 
@@ -169,10 +167,10 @@ bool ascii_is_empty(int x, int y)
   AsciiCell *cell = &(*cells)[ x ][ y ];
 
   for (auto depth = 0; depth < TILE_LAYER_ENUM_MAX; depth++) {
-    if (cell->tile[ depth ]) {
+    if (cell->tile[ depth ] != nullptr) {
       return false;
     }
-    if (cell->tex[ depth ]) {
+    if (cell->tex[ depth ] != nullptr) {
       return false;
     }
   }
@@ -195,7 +193,7 @@ void ascii_set(int depth, int x, int y, color col)
 
 void ascii_set_context(int x, int y, void *context)
 {
-  if (! context) {
+  if (context == nullptr) {
     return;
   }
 
@@ -210,7 +208,7 @@ void ascii_set_context(int x, int y, void *context)
 
 void *ascii_get_stat_context(int x, int y)
 {
-  if (! ascii_ok(x, y)) {
+  if (ascii_ok(x, y) == 0) {
     return nullptr;
   }
 
@@ -290,7 +288,7 @@ void ascii_set(int depth, int x, int y, const char ch) { ascii_set(depth, x, y, 
 void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
 {
   Tilep tile;
-  int   bg_set    = false;
+  int   bg_set    = 0;
   auto  text_iter = text.begin();
 
   // printf("ascii_putf__ [%s]/%ld scissors x %d y %d scissors %d %d %d %d %d\n", text.c_str(), text.size(), x, y,
@@ -308,7 +306,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
   }
 
   if (color_eq(bg, COLOR_NONE)) {
-    bg_set = true;
+    bg_set = 1;
   }
 
   tile         = nullptr;
@@ -349,7 +347,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
             bg        = string2color(tmp, &slen);
             text_iter += slen + 1;
 
-            bg_set  = true;
+            bg_set  = 1;
             got_pct = false;
             continue;
           }
@@ -363,7 +361,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
             auto        tmp  = std::string(text_iter, text.end());
             int         slen = 0;
             const char *c    = tmp.c_str();
-            auto        tp   = string2tp(&c, &slen);
+            auto       *tp   = string2tp(&c, &slen);
             text_iter += slen - 1;
 
             tile    = tp_first_tile(tp, THING_ANIM_IDLE);
@@ -395,9 +393,9 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     //
     // If not found print a ? tile
     //
-    if (! tile) {
+    if (tile == nullptr) {
       tile = font_ui->font_get_tile(ch);
-      if (! tile) {
+      if (tile == nullptr) {
         tile = tile_find_mand(FONT_TILENAME_UNKNOWN_STR);
       }
     }
@@ -410,10 +408,10 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     auto is_cursor = (ch == (char) FONT_CHAR_CURSOR);
     if (unlikely(is_cursor)) {
       static uint32_t last;
-      static uint8_t  first = true;
+      static bool     first = 1u;
 
-      if (first) {
-        first = false;
+      if (static_cast<unsigned int>(first) != 0U) {
+        first = 0u;
         last  = time_ms_cached();
       }
 
@@ -442,13 +440,13 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     cell->color_bl[ fg_depth ] = fg;
     cell->color_br[ fg_depth ] = fg;
 
-    if (bg_set) {
+    if (bg_set != 0) {
       //
       // If we are displaying a color in the background then use a solid tile.
       //
       auto bg_depth = TILE_LAYER_BG_0;
 
-      if (bg.r || bg.g || bg.b || bg.a) {
+      if ((bg.r != 0U) || (bg.g != 0U) || (bg.b != 0U) || (bg.a != 0U)) {
         static Tilep block_tile;
         if (unlikely(! block_tile)) {
           block_tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);
@@ -638,7 +636,7 @@ static void ascii_putf_(int x, int y, color fg, color bg, std::string const fmt,
   //
   // Only a single nul is written, but as we read 2 at a time...
   //
-  if (wrote && (wrote < MAXLONGSTR - 1)) {
+  if ((wrote != 0) && (wrote < MAXLONGSTR - 1)) {
     buf[ wrote + 1 ] = '\0';
   }
 
@@ -656,7 +654,7 @@ static void ascii_putf_(int x, int y, color fg, color bg, const char *fmt, va_li
   //
   // Only a single nul is written, but as we read 2 at a time...
   //
-  if (wrote && (wrote < MAXLONGSTR - 1)) {
+  if ((wrote != 0) && (wrote < MAXLONGSTR - 1)) {
     buf[ wrote + 1 ] = '\0';
   }
 
@@ -769,9 +767,12 @@ typedef void (*ascii_draw_col_fn)(int depth, int x, int y, color col);
 
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, Tilep tile, color col)
 {
-  int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-  int dy = -abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-  int err = dx + dy, e2; /* error value e_xy */
+  int dx  = abs(x1 - x0);
+  int sx  = x0 < x1 ? 1 : -1;
+  int dy  = -abs(y1 - y0);
+  int sy  = y0 < y1 ? 1 : -1;
+  int err = dx + dy;
+  int e2; /* error value e_xy */
 
   for (;;) { /* loop */
     ascii_map_thing_replace(depth, x0, y0, tile, col);
@@ -856,12 +857,12 @@ static void ascii_blit(Gamep g)
       // Background
       //
       auto depth = TILE_LAYER_BG_0;
-      if (cell->tex[ depth ]) {
+      if (cell->tex[ depth ] != nullptr) {
         Texp tex = cell->tex[ depth ];
 
         blit(tex_get_gl_binding(tex), cell->tx[ depth ], cell->ty[ depth ], cell->tx[ depth ] + cell->dx[ depth ],
              cell->ty[ depth ] + cell->dy[ depth ], tile_tl.x, tile_tl.y, tile_br.x, tile_br.y, WHITE);
-      } else if (cell->tile[ depth ]) {
+      } else if (cell->tile[ depth ] != nullptr) {
         color bg_color_tl = cell->color_tl[ depth ];
         color bg_color_tr = cell->color_tr[ depth ];
         color bg_color_bl = cell->color_bl[ depth ];
@@ -896,9 +897,9 @@ static void ascii_blit(Gamep g)
       tile_br.y = tile_y + dh;
 
       {
-        auto depth = TILE_LAYER_BG_1;
-        auto tile  = cell->tile[ depth ];
-        if (tile) {
+        auto  depth = TILE_LAYER_BG_1;
+        auto *tile  = cell->tile[ depth ];
+        if (tile != nullptr) {
           color color_tl = cell->color_tl[ depth ];
           color color_tr = cell->color_tr[ depth ];
           color color_bl = cell->color_bl[ depth ];
@@ -911,8 +912,8 @@ static void ascii_blit(Gamep g)
       }
 
       for (int depth = TILE_LAYER_FG_1; depth < TILE_LAYER_ENUM_MAX; depth++) {
-        auto tile = cell->tile[ depth ];
-        if (tile) {
+        auto *tile = cell->tile[ depth ];
+        if (tile != nullptr) {
           color color_tl = cell->color_tl[ depth ];
           color color_tr = cell->color_tr[ depth ];
           color color_bl = cell->color_bl[ depth ];
@@ -951,7 +952,7 @@ static void ascii_blit(Gamep g)
         auto  depth = TILE_LAYER_FG_0;
         Tilep tile  = cell->tile[ depth ];
 
-        if (tile) {
+        if (tile != nullptr) {
           //
           // As the font is not square, if showing a non square tile, then make it so
           //
@@ -983,7 +984,7 @@ static void ascii_blit(Gamep g)
 //
 void ascii_display(Gamep g)
 {
-  mouse_found = false;
+  mouse_found = 0;
 
   gl_enter_2d_mode(g, game_window_pix_width_get(g), game_window_pix_height_get(g));
 
@@ -1007,7 +1008,7 @@ void ascii_display(Gamep g)
 
 void ascii_clear_display(void)
 {
-  if (! cells) {
+  if (cells == nullptr) {
     cells = new std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX >;
   }
 
@@ -1063,7 +1064,7 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
 
         {
           auto depth = TILE_LAYER_BG_0;
-          if (tiles_in[ depth ] || color_neq(col_bg, COLOR_NONE)) {
+          if ((tiles_in[ depth ] != nullptr) || color_neq(col_bg, COLOR_NONE)) {
             ascii_set(depth + 1, x, y, tiles_in[ depth ], tx, ty, dx, dy);
             ascii_set(depth + 1, x, y, col_bg);
           }
@@ -1071,7 +1072,7 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
 
         for (int depth = TILE_LAYER_FG_0; depth < TILE_LAYER_ENUM_MAX - 1; depth++) {
           {
-            if (tiles_in[ depth ] || color_neq(col_fg, COLOR_NONE)) {
+            if ((tiles_in[ depth ] != nullptr) || color_neq(col_fg, COLOR_NONE)) {
               ascii_set(depth + 1, x, y, tiles_in[ depth ], tx, ty, dx, dy);
               ascii_set(depth + 1, x, y, col_fg);
             }
@@ -1190,7 +1191,7 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
 static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int width, int height, color col_bg,
                            color col_text, const char *fmt, va_list args)
 {
-  if (! *fmt) {
+  if (*fmt == 0) {
     ascii_put_box__(style, tiles, x, y, x + width - 1, y + height - 1, col_bg, col_text, nullptr /* context */);
   } else {
     char buf[ MAXLONGSTR ];
@@ -1199,7 +1200,7 @@ static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int 
     //
     // Only a single nul is written, but as we read 2 at a time...
     //
-    if (wrote && (wrote < MAXLONGSTR - 1)) {
+    if ((wrote != 0) && (wrote < MAXLONGSTR - 1)) {
       buf[ wrote + 1 ] = '\0';
     }
 
@@ -1216,7 +1217,7 @@ void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fm
 {
   va_list args;
 
-  if (! b.width || ! b.height) {
+  if ((b.width == 0) || (b.height == 0)) {
     b.x      = 0;
     b.y      = 0;
     b.width  = TERM_WIDTH;
@@ -1240,7 +1241,10 @@ void ascii_put_box(box_args b, int style, const TileLayers tiles, const char *fm
   //
   // Populate the ascii callbacks for this box.
   //
-  int x1, x2, y1, y2;
+  int x1;
+  int x2;
+  int y1;
+  int y2;
 
   x1 = x;
   y1 = y;

@@ -41,7 +41,7 @@ void wid_mouse_focus_end(Gamep g_maybe_null)
     return;
   }
 
-  if (w->on_mouse_focus_end) {
+  if (w->on_mouse_focus_end != nullptr) {
     w->on_mouse_focus_end(g_maybe_null, w);
   }
 }
@@ -75,7 +75,7 @@ void wid_mouse_focus_begin(Gamep g, Widp w)
   wid_focus       = w;
   top->focus_last = w->focus_order;
 
-  if (w->on_mouse_focus_begin) {
+  if (w->on_mouse_focus_begin != nullptr) {
     w->on_mouse_focus_begin(g, w);
   }
 }
@@ -86,12 +86,12 @@ void wid_mouse_over_end(Gamep g)
 
   Widp w {};
 
-  if (! wid_mouse_visible) {
+  if (wid_mouse_visible == 0) {
     return;
   }
 
   w = wid_over;
-  if (wid_over) {
+  if (wid_over != nullptr) {
     if (! wid_ignore_events(wid_over)) {
       wid_last_over_event = time_ms_cached();
     }
@@ -108,7 +108,7 @@ void wid_mouse_over_end(Gamep g)
     return;
   }
 
-  if (w->on_mouse_over_end) {
+  if (w->on_mouse_over_end != nullptr) {
     w->on_mouse_over_end(g, w);
   }
 }
@@ -118,7 +118,7 @@ void wid_mouse_over_end(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (! wid_mouse_visible) {
+  if (wid_mouse_visible == 0) {
     return false;
   }
 
@@ -130,14 +130,15 @@ void wid_mouse_over_end(Gamep g)
     return false;
   }
 
-  if (wheelx || wheely) {
+  if ((wheelx != 0) || (wheely != 0)) {
     if (wid_ignore_scroll_events(w)) {
       return false;
     }
   }
 
-  if (! w->on_mouse_over_begin && ! w->on_mouse_down) {
-    if (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_BG ] || w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_TEXT_FG ]) {
+  if ((w->on_mouse_over_begin == nullptr) && (w->on_mouse_down == nullptr)) {
+    if ((w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_BG ] != 0U)
+        || (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_TEXT_FG ] != 0U)) {
       //
       // Changes appearance on mouse over, so choose this wid even
       // if it has no over callback.
@@ -147,7 +148,7 @@ void wid_mouse_over_end(Gamep g)
       // Can ignore. It doesn't really do anything when the mouse
       // is over.
       //
-      if (! wid_over && wid_on_screen_at[ x ][ y ]) {
+      if ((wid_over == nullptr) && (wid_on_screen_at[ x ][ y ] != nullptr)) {
         //
         // But if we have nothing else, use this
         //
@@ -171,7 +172,7 @@ void wid_mouse_over_end(Gamep g)
 
   wid_set_mode(w, WID_MODE_OVER);
 
-  if (w->on_mouse_over_begin) {
+  if (w->on_mouse_over_begin != nullptr) {
     (w->on_mouse_over_begin)(g, w, relx, rely, wheelx, wheely);
   }
 
@@ -234,7 +235,7 @@ bool wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button
 
   std::vector< Widp > worklist;
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
     worklist.push_back(child);
   }
 
@@ -258,7 +259,7 @@ bool wid_scroll_trough_mouse_down(Gamep g, Widp w, int x, int y, uint32_t button
       dy = 1;
     }
 
-    if (dx || dy) {
+    if ((dx != 0) || (dy != 0)) {
       wid_set_mode(child, WID_MODE_ACTIVE);
     }
 
@@ -283,11 +284,11 @@ bool wid_scroll_trough_mouse_motion(Gamep g, Widp w, int x, int y, int relx, int
   int dx;
   int dy;
 
-  if ((SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr)) || wheely || wheelx) {
+  if (((SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr)) != 0U) || (wheely != 0) || (wheelx != 0)) {
 
-    dy = rely ? rely : -wheely;
+    dy = (rely != 0) ? rely : -wheely;
 
-    dx = relx ? relx : -wheelx;
+    dx = (relx != 0) ? relx : -wheelx;
 
     if (dx < 0) {
       dx = -1;
@@ -307,12 +308,12 @@ bool wid_scroll_trough_mouse_motion(Gamep g, Widp w, int x, int y, int relx, int
 
   std::vector< Widp > worklist;
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
     worklist.push_back(child);
   }
 
   for (auto &child : worklist) {
-    if (dx || dy) {
+    if ((dx != 0) || (dy != 0)) {
       wid_set_mode(child, WID_MODE_ACTIVE);
     }
 
@@ -354,8 +355,8 @@ Widp wid_find_under_mouse(void)
     return nullptr;
   }
 
-  auto w = wid_find_at(ascii_mouse_x, ascii_mouse_y);
-  if (w) {
+  auto *w = wid_find_at(ascii_mouse_x, ascii_mouse_y);
+  if (w != nullptr) {
     w = wid_get_top_parent(w);
     // CON("mouse %d,%d over %s %p", ascii_mouse_x, ascii_mouse_y, w->name.c_str(), w);
     if (wid_ignore_events_only(w)) {
@@ -373,8 +374,8 @@ Widp wid_find_under_mouse_when_scrolling(Gamep g)
   if (ascii_is_empty(ascii_mouse_x, ascii_mouse_y)) {
     return nullptr;
   }
-  auto w = wid_find_at(ascii_mouse_x, ascii_mouse_y);
-  if (w) {
+  auto *w = wid_find_at(ascii_mouse_x, ascii_mouse_y);
+  if (w != nullptr) {
     w = wid_get_top_parent(w);
     if (wid_ignore_scroll_events(w)) {
       // CON("ign2 %s.", wid_name(w).c_str());
@@ -393,11 +394,11 @@ static Widp wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
     return nullptr;
   }
 
-  if (! w->visible) {
+  if (w->visible == 0U) {
     return nullptr;
   }
 
-  if (w->ignore_for_mouse_down) {
+  if (w->ignore_for_mouse_down != 0U) {
     return nullptr;
   }
 
@@ -414,27 +415,27 @@ static Widp wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
     return nullptr;
   }
 
-  if (strict) {
+  if (strict != 0U) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
     }
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
-    if (wid_focus_locked && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
       continue;
     }
 
-    Widp closer_match = wid_mouse_down_handler_at(g, child, x, y, true /* strict */);
-    if (closer_match) {
+    Widp closer_match = wid_mouse_down_handler_at(g, child, x, y, 1U /* strict */);
+    if (closer_match != nullptr) {
       return closer_match;
     }
   }
 
-  if (w->on_mouse_down) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->on_mouse_down != nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -442,7 +443,7 @@ static Widp wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
   }
 
   if (wid_get_moveable(w)) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -453,8 +454,8 @@ static Widp wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
   // Prevent mouse events that occur in the bounds of one window, leaking
   // into lower levels.
   //
-  if (! w->parent) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->parent == nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -472,7 +473,7 @@ static Widp wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
     return nullptr;
   }
 
-  if (! w->visible) {
+  if (w->visible == 0U) {
     return nullptr;
   }
 
@@ -489,27 +490,27 @@ static Widp wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
     return nullptr;
   }
 
-  if (strict) {
+  if (strict != 0U) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
     }
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
-    if (wid_focus_locked && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
       continue;
     }
 
-    Widp closer_match = wid_mouse_held_handler_at(g, child, x, y, true /* strict */);
-    if (closer_match) {
+    Widp closer_match = wid_mouse_held_handler_at(g, child, x, y, 1U /* strict */);
+    if (closer_match != nullptr) {
       return closer_match;
     }
   }
 
-  if (w->on_mouse_held) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->on_mouse_held != nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -517,7 +518,7 @@ static Widp wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
   }
 
   if (wid_get_moveable(w)) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -528,8 +529,8 @@ static Widp wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
   // Prevent mouse events that occur in the bounds of one window, leaking
   // into lower levels.
   //
-  if (! w->parent) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->parent == nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -547,7 +548,7 @@ static Widp wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
     return nullptr;
   }
 
-  if (! w->visible) {
+  if (w->visible == 0U) {
     return nullptr;
   }
 
@@ -564,27 +565,27 @@ static Widp wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
     return nullptr;
   }
 
-  if (strict) {
+  if (strict != 0U) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
     }
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
-    if (wid_focus_locked && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
       continue;
     }
 
-    Widp closer_match = wid_mouse_up_handler_at(g, child, x, y, true /* strict */);
-    if (closer_match) {
+    Widp closer_match = wid_mouse_up_handler_at(g, child, x, y, 1U /* strict */);
+    if (closer_match != nullptr) {
       return closer_match;
     }
   }
 
-  if (w->on_mouse_up) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->on_mouse_up != nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -592,7 +593,7 @@ static Widp wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
   }
 
   if (wid_get_moveable(w)) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -603,8 +604,8 @@ static Widp wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
   // Prevent mouse events that occur in the bounds of one window, leaking
   // into lower levels.
   //
-  if (! w->parent) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->parent == nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -620,25 +621,25 @@ static Widp wid_mouse_down_handler(Gamep g, int x, int y)
 
   Widp w {};
 
-  w = wid_mouse_down_handler_at(g, wid_focus, x, y, true /* strict */);
-  if (w) {
+  w = wid_mouse_down_handler_at(g, wid_focus, x, y, 1U /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
-  w = wid_mouse_down_handler_at(g, wid_over, x, y, true /* strict */);
-  if (w) {
+  w = wid_mouse_down_handler_at(g, wid_over, x, y, 1U /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      c = wid_mouse_down_handler_at(g, c, x, y, true /* strict */);
+      c = wid_mouse_down_handler_at(g, c, x, y, 1U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -649,13 +650,13 @@ static Widp wid_mouse_down_handler(Gamep g, int x, int y)
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      c = wid_mouse_down_handler_at(g, c, x, y, false /* strict */);
+      c = wid_mouse_down_handler_at(g, c, x, y, 0U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -673,25 +674,25 @@ static Widp wid_mouse_held_handler(Gamep g, int x, int y)
 
   Widp w {};
 
-  w = wid_mouse_held_handler_at(g, wid_focus, x, y, true /* strict */);
-  if (w) {
+  w = wid_mouse_held_handler_at(g, wid_focus, x, y, 1U /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
-  w = wid_mouse_held_handler_at(g, wid_over, x, y, true /* strict */);
-  if (w) {
+  w = wid_mouse_held_handler_at(g, wid_over, x, y, 1U /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      c = wid_mouse_held_handler_at(g, c, x, y, true /* strict */);
+      c = wid_mouse_held_handler_at(g, c, x, y, 1U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -702,13 +703,13 @@ static Widp wid_mouse_held_handler(Gamep g, int x, int y)
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      c = wid_mouse_held_handler_at(g, c, x, y, false /* strict */);
+      c = wid_mouse_held_handler_at(g, c, x, y, 0U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -726,25 +727,25 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
 
   Widp w {};
 
-  w = wid_mouse_up_handler_at(g, wid_focus, x, y, true /* strict */);
-  if (w) {
+  w = wid_mouse_up_handler_at(g, wid_focus, x, y, 1U /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
-  w = wid_mouse_up_handler_at(g, wid_over, x, y, true /* strict */);
-  if (w) {
+  w = wid_mouse_up_handler_at(g, wid_over, x, y, 1U /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      c = wid_mouse_up_handler_at(g, c, x, y, true /* strict */);
+      c = wid_mouse_up_handler_at(g, c, x, y, 1U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -755,13 +756,13 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      c = wid_mouse_up_handler_at(g, c, x, y, false /* strict */);
+      c = wid_mouse_up_handler_at(g, c, x, y, 0U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -780,8 +781,8 @@ static Widp wid_mouse_motion_handler(int x, int y, int relx, int rely, int wheel
   Widp w {};
 
   w = wid_on_screen_at[ x ][ y ];
-  if (w) {
-    if (w->hidden) {
+  if (w != nullptr) {
+    if (w->hidden != 0U) {
       return nullptr;
     }
     return w;
@@ -794,7 +795,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
 {
   TRACE_NO_INDENT();
 
-  int got_one = false;
+  int got_one = 0;
 
   //
   // To avoid lag, just grab the current mouse position.
@@ -805,35 +806,35 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
   // Map to ascii
   //
   pixel_to_ascii(g, &x, &y);
-  if (! ascii_ok(x, y)) {
+  if (ascii_ok(x, y) == 0) {
     return;
   }
   ascii_mouse_x = x;
   ascii_mouse_y = y;
 
-  if (relx || rely) {
+  if ((relx != 0) || (rely != 0)) {
     wid_last_mouse_motion = time_ms_cached();
   }
 
-  if (wid_mouse_motion_recursion) {
+  if (wid_mouse_motion_recursion != 0) {
     return;
   }
 
   wid_mouse_motion_recursion = 1;
 
-  uint8_t over = false;
+  uint8_t over = 0U;
 
   for (auto &iter : wid_top_level) {
-    auto w = iter.second;
+    auto *w = iter.second;
 
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       continue;
     }
 
     //
     // Allow wheel events to go everywhere
     //
-    if (! wheelx && ! wheely) {
+    if ((wheelx == 0) && (wheely == 0)) {
       w = wid_find_at(x, y);
       if (unlikely(! w)) {
         continue;
@@ -845,7 +846,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
       // This wid is ignoring events, but what about the parent?
       //
       w = w->parent;
-      while (w) {
+      while (w != nullptr) {
         if (! wid_ignore_events(w)) {
           break;
         }
@@ -861,11 +862,11 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
     // Over a new wid.
     //
 
-    while (w && ! wid_mouse_over_begin(g, w, x, y, relx, rely, wheelx, wheely)) {
+    while ((w != nullptr) && ! wid_mouse_over_begin(g, w, x, y, relx, rely, wheelx, wheely)) {
       w = w->parent;
     }
 
-    uint8_t done = false;
+    bool done = 0u;
 
     if (unlikely(! w)) {
       //
@@ -876,57 +877,57 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
       // This widget reacted somehow when we went over it. i.e. popup ot
       // function.
       //
-      over = true;
+      over = 1U;
       // TOPCON("mouse motion %s mouse %d,%d.", w->name.c_str(), x, y);
     }
 
     w = wid_mouse_motion_handler(x, y, relx, rely, wheelx, wheely);
-    if (w) {
+    if (w != nullptr) {
       if (wid_mouse_over_begin(g, w, x, y, relx, rely, wheelx, wheely)) {
-        over = true;
+        over = 1U;
       }
 
       //
       // If the mouse event is fully processed then do not pass onto
       // scrollbars.
       //
-      if (w->on_mouse_motion) {
+      if (w->on_mouse_motion != nullptr) {
         if ((w->on_mouse_motion)(g, w, x, y, relx, rely, wheelx, wheely)) {
-          got_one = true;
+          got_one = 1;
           break;
         }
       }
 
       if (wid_over == w) {
-        if (! wheelx && ! wheely) {
+        if ((wheelx == 0) && (wheely == 0)) {
           break;
         }
       }
 
-      while (w) {
+      while (w != nullptr) {
         //
         // If there are scrollbars and the wid did not grab the event
         // then scroll for it.
         //
-        if (wheely) {
-          if (w->scrollbar_vert && ! wid_get_moveable_no_user_scroll(w->scrollbar_vert)) {
+        if (wheely != 0) {
+          if ((w->scrollbar_vert != nullptr) && ! wid_get_moveable_no_user_scroll(w->scrollbar_vert)) {
 
-            got_one = true;
+            got_one = 1;
             wid_move_delta(g, w->scrollbar_vert, 0, -wheely);
-            done = true;
+            done = 1u;
           }
         }
 
-        if (wheelx) {
-          if (w->scrollbar_horiz && ! wid_get_moveable_no_user_scroll(w->scrollbar_horiz)) {
+        if (wheelx != 0) {
+          if ((w->scrollbar_horiz != nullptr) && ! wid_get_moveable_no_user_scroll(w->scrollbar_horiz)) {
 
-            got_one = true;
+            got_one = 1;
             wid_move_delta(g, w->scrollbar_horiz, -wheelx, 0);
-            done = true;
+            done = 1u;
           }
         }
 
-        if (done) {
+        if (static_cast<unsigned int>(done) != 0U) {
           break;
         }
 
@@ -937,12 +938,12 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
       }
     }
 
-    if (done) {
+    if (static_cast<unsigned int>(done) != 0U) {
       break;
     }
   }
 
-  if (! over) {
+  if (over == 0U) {
     // DBG("mouse motion not over at %u,%u.", x, y);
     wid_mouse_over_end(g);
   }
@@ -951,17 +952,17 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
   // If nothing then pass the event to the console to allow scrolling
   // of the console.
   //
-  if (! got_one) {
-    if (wid_console_window && wid_console_window->visible) {
-      if (wid_console_container && (wheelx || wheely)) {
+  if (got_one == 0) {
+    if ((wid_console_window != nullptr) && (wid_console_window->visible != 0U)) {
+      if ((wid_console_container != nullptr) && ((wheelx != 0) || (wheely != 0))) {
         Widp w = wid_console_container->scrollbar_vert;
-        if (w) {
+        if (w != nullptr) {
           w = w->parent;
         }
 
-        if (w && w->on_mouse_motion) {
+        if ((w != nullptr) && (w->on_mouse_motion != nullptr)) {
           if ((w->on_mouse_motion)(g, w, x, y, relx, rely, wheelx, wheely)) {
-            got_one = true;
+            got_one = 1;
           }
         }
       }
@@ -970,8 +971,8 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
 
   wid_mouse_motion_recursion = 0;
 
-  if (! got_one) {
-    if (relx || rely || wheelx || wheely) {
+  if (got_one == 0) {
+    if ((relx != 0) || (rely != 0) || (wheelx != 0) || (wheely != 0)) {
       game_mouse_motion(g, x, y, relx, rely, wheelx, wheely);
     }
   }
@@ -985,7 +986,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
   Widp w {};
 
   pixel_to_ascii(g, &x, &y);
-  if (! ascii_ok(x, y)) {
+  if (ascii_ok(x, y) == 0) {
     LOG("Wid mouse down, ignore, no pixel");
     return;
   }
@@ -1001,7 +1002,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
   //
   // Raise on mouse.
   //
-  if ((w->on_mouse_down && (w->on_mouse_down)(g, w, x, y, button)) || wid_get_moveable(w)) {
+  if (((w->on_mouse_down != nullptr) && (w->on_mouse_down)(g, w, x, y, button)) || wid_get_moveable(w)) {
     sound_play(g, "click");
 
     wid_set_focus(g, w);
@@ -1017,7 +1018,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
       return;
     }
 
-    if (g) {
+    if (g != nullptr) {
       game_last_mouse_down_set(g, time_ms_cached());
     }
 
@@ -1036,7 +1037,7 @@ void wid_mouse_down(Gamep g, uint32_t button, int x, int y)
   if (game_mouse_down(g, x, y, button)) {
     sound_play(g, "click");
 
-    if (g) {
+    if (g != nullptr) {
       game_last_mouse_down_set(g, time_ms_cached());
     }
   }
@@ -1049,7 +1050,7 @@ void wid_mouse_held(Gamep g, uint32_t button, int x, int y)
   Widp w {};
 
   pixel_to_ascii(g, &x, &y);
-  if (! ascii_ok(x, y)) {
+  if (ascii_ok(x, y) == 0) {
     return;
   }
   ascii_mouse_x = x;
@@ -1063,7 +1064,7 @@ void wid_mouse_held(Gamep g, uint32_t button, int x, int y)
   //
   // Raise on mouse.
   //
-  if ((w->on_mouse_held && (w->on_mouse_held)(g, w, x, y, button)) || wid_get_moveable(w)) {
+  if (((w->on_mouse_held != nullptr) && (w->on_mouse_held)(g, w, x, y, button)) || wid_get_moveable(w)) {
 
     wid_set_focus(g, w);
     wid_set_mode(w, WID_MODE_ACTIVE);
@@ -1095,7 +1096,7 @@ void wid_mouse_up(Gamep g, uint32_t button, int x, int y)
   Widp w {};
 
   pixel_to_ascii(g, &x, &y);
-  if (! ascii_ok(x, y)) {
+  if (ascii_ok(x, y) == 0) {
     return;
   }
   ascii_mouse_x = x;
@@ -1108,7 +1109,7 @@ void wid_mouse_up(Gamep g, uint32_t button, int x, int y)
     return;
   }
 
-  if ((w->on_mouse_up && (w->on_mouse_up)(g, w, x, y, button)) || wid_get_moveable(w)) {
+  if (((w->on_mouse_up != nullptr) && (w->on_mouse_up)(g, w, x, y, button)) || wid_get_moveable(w)) {
     sound_play(g, "click");
 
     wid_set_mode(w, WID_MODE_ACTIVE);
@@ -1123,11 +1124,11 @@ void wid_mouse_hide(Gamep g, int value)
 {
   TRACE_NO_INDENT();
 
-  int visible = ! value;
+  int visible = static_cast<int>(value == 0);
 
   if (visible != wid_mouse_visible) {
     wid_mouse_visible = visible;
-    if (visible) {
+    if (visible != 0) {
       sdl_mouse_warp(g, saved_mouse_x, saved_mouse_y);
     } else {
       saved_mouse_x = sdl.mouse_x;
@@ -1140,7 +1141,10 @@ void wid_mouse_warp(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  int tlx, tly, brx, bry;
+  int tlx;
+  int tly;
+  int brx;
+  int bry;
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 
@@ -1154,7 +1158,10 @@ void wid_mouse_move(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  int tlx, tly, brx, bry;
+  int tlx;
+  int tly;
+  int brx;
+  int bry;
 
   wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
 

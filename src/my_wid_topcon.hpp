@@ -4,10 +4,10 @@
 
 #pragma once
 
-void    wid_topcon_fini(Gamep g);
-uint8_t wid_topcon_init(Gamep g);
-void    wid_topcon_log(std::string s);
-void    wid_topcon_flush(Gamep g);
+void wid_topcon_fini(Gamep g);
+bool wid_topcon_init(Gamep g);
+void wid_topcon_log(std::string s);
+void wid_topcon_flush(Gamep g);
 
 #include "my_wid.hpp"
 

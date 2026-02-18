@@ -2,6 +2,9 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
+#include "config.hpp"
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
@@ -25,7 +28,7 @@ void wid_main_menu_hide(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (! wid_main_menu_window) {
+  if (wid_main_menu_window == nullptr) {
     return;
   }
 
@@ -134,8 +137,8 @@ static void game_display_title_bg(Gamep g)
 
   std::string t = "title_bg";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
+            WHITE);
   blit_flush();
 }
 
@@ -148,8 +151,8 @@ static void game_display_title_fg1(Gamep g)
 
   std::string t = "title_fg1_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
+            WHITE);
   blit_flush();
 }
 
@@ -180,17 +183,19 @@ static void game_display_title_fg2(Gamep g)
 
   std::string t = "title_fg2_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
+            WHITE);
   blit_flush();
 }
 
 static uint8_t clamp(float v) // define a function to bound and round the input float value to 0-255
 {
-  if (v < 0)
+  if (v < 0) {
     return 0;
-  if (v > 255)
+  }
+  if (v > 255) {
     return 255;
+  }
   return (uint8_t) v;
 }
 
@@ -198,23 +203,23 @@ static uint8_t clamp(float v) // define a function to bound and round the input 
 color color_change_hue(const color &in, const float fHue)
 {
   color       out;
-  const float cosA = cos(fHue * 3.14159265f / 180); // convert degrees to radians
-  const float sinA = sin(fHue * 3.14159265f / 180); // convert degrees to radians
+  const float cosA = cos(fHue * 3.14159265F / 180); // convert degrees to radians
+  const float sinA = sin(fHue * 3.14159265F / 180); // convert degrees to radians
   // calculate the rotation matrix, only depends on Hue
   float matrix[ 3 ][ 3 ]
-      = {{cosA + (1.0f - cosA) / 3.0f, 1.0f / 3.0f * (1.0f - cosA) - sqrtf(1.0f / 3.0f) * sinA,
-          1.0f / 3.0f * (1.0f - cosA) + sqrtf(1.0f / 3.0f) * sinA},
-         {1.0f / 3.0f * (1.0f - cosA) + sqrtf(1.0f / 3.0f) * sinA, cosA + 1.0f / 3.0f * (1.0f - cosA),
-          1.0f / 3.0f * (1.0f - cosA) - sqrtf(1.0f / 3.0f) * sinA},
-         {1.0f / 3.0f * (1.0f - cosA) - sqrtf(1.0f / 3.0f) * sinA,
-          1.0f / 3.0f * (1.0f - cosA) + sqrtf(1.0f / 3.0f) * sinA, cosA + 1.0f / 3.0f * (1.0f - cosA)}};
+      = {{cosA + ((1.0F - cosA) / 3.0F), (1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
+          (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA)},
+         {(1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA)),
+          (1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA)},
+         {(1.0F / 3.0F * (1.0F - cosA)) - (sqrtf(1.0F / 3.0F) * sinA),
+          (1.0F / 3.0F * (1.0F - cosA)) + (sqrtf(1.0F / 3.0F) * sinA), cosA + (1.0F / 3.0F * (1.0F - cosA))}};
   // Use the rotation matrix to convert the RGB directly
-  out.r = clamp(((float) in.r) * matrix[ 0 ][ 0 ] + ((float) in.g) * matrix[ 0 ][ 1 ]
-                + ((float) in.b) * matrix[ 0 ][ 2 ]);
-  out.g = clamp(((float) in.r) * matrix[ 1 ][ 0 ] + ((float) in.g) * matrix[ 1 ][ 1 ]
-                + ((float) in.b) * matrix[ 1 ][ 2 ]);
-  out.b = clamp(((float) in.r) * matrix[ 2 ][ 0 ] + ((float) in.g) * matrix[ 2 ][ 1 ]
-                + ((float) in.b) * matrix[ 2 ][ 2 ]);
+  out.r = clamp((((float) in.r) * matrix[ 0 ][ 0 ]) + (((float) in.g) * matrix[ 0 ][ 1 ])
+                + (((float) in.b) * matrix[ 0 ][ 2 ]));
+  out.g = clamp((((float) in.r) * matrix[ 1 ][ 0 ]) + (((float) in.g) * matrix[ 1 ][ 1 ])
+                + (((float) in.b) * matrix[ 1 ][ 2 ]));
+  out.b = clamp((((float) in.r) * matrix[ 2 ][ 0 ]) + (((float) in.g) * matrix[ 2 ][ 1 ])
+                + (((float) in.b) * matrix[ 2 ][ 2 ]));
   return out;
 }
 
@@ -239,20 +244,14 @@ static void game_display_title_fg3(Gamep g)
 
   auto bright = (float) 1.01;
   int  r      = (int) (((float) fg.r) * bright);
-  if (r > 255) {
-    r = 255;
-  }
-  fg.r      = r;
-  int green = (int) (((float) fg.g) * bright);
-  if (green > 255) {
-    green = 255;
-  }
-  fg.g  = green;
-  int b = (int) (((float) fg.b) * bright);
-  if (b > 255) {
-    b = 255;
-  }
-  fg.b = b;
+  r           = std::min(r, 255);
+  fg.r        = r;
+  int green   = (int) (((float) fg.g) * bright);
+  green       = std::min(green, 255);
+  fg.g        = green;
+  int b       = (int) (((float) fg.b) * bright);
+  b           = std::min(b, 255);
+  fg.b        = b;
 
   glcolor(fg);
 
@@ -260,8 +259,8 @@ static void game_display_title_fg3(Gamep g)
 
   std::string t = "title_fg3_1";
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
+            WHITE);
   blit_flush();
 }
 
@@ -285,8 +284,8 @@ static void game_display_title_fg4(Gamep g)
 
   std::string t = "title_fg4_" + std::to_string(frame);
   blit_init();
-  tile_blit(tile_find_mand(t.c_str()), spoint(0, 0),
-            spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)), WHITE);
+  tile_blit(tile_find_mand(t), spoint(0, 0), spoint(game_window_pix_width_get(g), game_window_pix_height_get(g)),
+            WHITE);
   blit_flush();
 }
 
@@ -294,7 +293,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (false) {
+  if (__unused__) {
     game_display_title_bg(g);
     game_display_title_fg1(g);
     game_display_title_fg2(g);
@@ -302,7 +301,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
     game_display_title_fg4(g);
   }
 
-  if (wid_main_menu_window) {
+  if (wid_main_menu_window != nullptr) {
     ascii_putf(TERM_WIDTH - SIZEOF(MYVER), TERM_HEIGHT - 1, GREEN, BLACK, "v" MYVER);
 
     std::string seed_name(game_seed_name_get(g));
@@ -324,7 +323,7 @@ void wid_main_menu_select(Gamep g)
   LOG("Main menu");
   TRACE_NO_INDENT();
 
-  if (wid_main_menu_window) {
+  if (wid_main_menu_window != nullptr) {
     wid_main_menu_destroy(g);
   }
 
@@ -335,8 +334,8 @@ void wid_main_menu_select(Gamep g)
 
   auto y_at = 0;
 
-  const spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  const spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  const spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  const spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
 
   wid_main_menu_window = new WidPopup(g, "Main menu", outer_tl, outer_br, nullptr, "nothing", false, false);
 
@@ -351,8 +350,8 @@ void wid_main_menu_select(Gamep g)
 
   {
     TRACE_NO_INDENT();
-    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "New Game");
+    auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "New Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
@@ -363,8 +362,8 @@ void wid_main_menu_select(Gamep g)
   y_at += button_step;
   {
     TRACE_NO_INDENT();
-    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Load Game");
+    auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Load Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
@@ -375,8 +374,8 @@ void wid_main_menu_select(Gamep g)
   y_at += button_step;
   {
     TRACE_NO_INDENT();
-    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Options");
+    auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Options");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
@@ -387,8 +386,8 @@ void wid_main_menu_select(Gamep g)
   y_at += button_step;
   {
     TRACE_NO_INDENT();
-    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "More");
+    auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "More");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);
@@ -399,8 +398,8 @@ void wid_main_menu_select(Gamep g)
   y_at += button_step;
   {
     TRACE_NO_INDENT();
-    auto p = wid_main_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_cancel_button(g, p, "Quit Game");
+    auto *p = wid_main_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_cancel_button(g, p, "Quit Game");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + button_height);

@@ -120,7 +120,7 @@ static void sdl_init_joystick(void)
   }
 }
 
-uint8_t sdl_init(void)
+bool sdl_init(void)
 {
   gl_ext_init();
 
@@ -142,7 +142,7 @@ uint8_t sdl_init(void)
   //
   // Unused for now
   //
-  if (false) {
+  if (__unused__) {
     sdl_init_joystick();
     sdl_init_rumble();
   }

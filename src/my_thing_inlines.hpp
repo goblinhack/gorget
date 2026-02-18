@@ -39,7 +39,7 @@ static inline Thingp thing_find(Gamep g, Levelsp v, ThingId id)
   id_packed.a.val         = id;
   auto arr_index          = id_packed.c.arr_index;
 
-  auto t = &v->thing_body[ arr_index ];
+  auto *t = &v->thing_body[ arr_index ];
 
 #ifdef ENABLE_PER_THING_MEMORY
   if (v->thing_body_debug[ arr_index ]) {
@@ -161,7 +161,7 @@ static inline bool thing_is_physics_temperature(Thingp t)
     return false;
   }
 #endif
-  return tp_flag(thing_tp(t), is_physics_temperature);
+  return tp_flag(thing_tp(t), is_physics_temperature) != 0;
 }
 
 static inline bool thing_is_player(const Thingp t)
@@ -185,7 +185,7 @@ static inline bool thing_is_obs_to_vision(Thingp t)
     return false;
   }
 #endif
-  return tp_flag(thing_tp(t), is_obs_to_vision);
+  return tp_flag(thing_tp(t), is_obs_to_vision) != 0;
 }
 
 static inline spoint thing_pix_at(Thingp t)
@@ -217,7 +217,7 @@ static inline Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
   TRACE_NO_INDENT(); // expensive
 #endif
 
-  if (! id) {
+  if (id == 0U) {
     return nullptr;
   }
 
@@ -225,14 +225,14 @@ static inline Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
   id_packed.a.val = id;
   auto arr_index  = id_packed.c.arr_index;
 
-  auto t = &v->thing_body[ arr_index ];
+  auto *t = &v->thing_body[ arr_index ];
 #ifdef ENABLE_PER_THING_MEMORY
   if (v->thing_body_debug[ arr_index ]) {
     t = v->thing_body_debug[ arr_index ];
   }
 #endif
 
-  if (! t) {
+  if (t == nullptr) {
     return nullptr;
   }
 

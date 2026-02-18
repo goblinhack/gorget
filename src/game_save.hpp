@@ -463,7 +463,7 @@ bool Game::save(const std::string &file_to_save)
   bool need_larger_src_buffer = false;
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Serializing...", 0.2f);
+    wid_progress_bar(this, "Serializing...", 0.2F);
   }
 
   std::stringstream s(std::ios::in | std::ios::out | std::ios::binary);
@@ -475,7 +475,7 @@ bool Game::save(const std::string &file_to_save)
   // Get the pre compress buffer
   //
   if (! game_headers_only) {
-    wid_progress_bar(this, "Stringifying...", 0.4f);
+    wid_progress_bar(this, "Stringifying...", 0.4F);
   }
 
   auto data = s.str(); // This is a bit slow, but the buffere may not be contiguous
@@ -486,27 +486,27 @@ bool Game::save(const std::string &file_to_save)
   void *src;
   if (need_larger_src_buffer) {
     if (! game_headers_only) {
-      wid_progress_bar(this, "Allocating src buffer...", 0.5f);
+      wid_progress_bar(this, "Allocating src buffer...", 0.5F);
     }
 
     src = malloc(src_size MALLOC_PAD);
-    if (! src) {
+    if (src == nullptr) {
       CROAK("malloc %d failed", (int) src_size);
     }
   }
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Allocating dst buffer...", 0.6f);
+    wid_progress_bar(this, "Allocating dst buffer...", 0.6F);
   }
 
-  auto dst = malloc(src_size MALLOC_PAD);
-  if (! dst) {
+  auto *dst = malloc(src_size MALLOC_PAD);
+  if (dst == nullptr) {
     CROAK("malloc %d failed", (int) src_size);
   }
 
   if (need_larger_src_buffer) {
     if (! game_headers_only) {
-      wid_progress_bar(this, "Copying data...", 0.7f);
+      wid_progress_bar(this, "Copying data...", 0.7F);
     }
 
     memcpy(src, data.c_str(), src_size);
@@ -529,16 +529,16 @@ bool Game::save(const std::string &file_to_save)
 #endif
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Compressing...", 0.8f);
+    wid_progress_bar(this, "Compressing...", 0.8F);
   }
 
   auto start    = time_ms();
   long dst_size = 0;
 
 #ifdef USE_LZ4
-  auto which = "LZ4";
+  const auto *which = "LZ4";
   dst_size   = LZ4_compress_default((const char *) src, (char *) dst, src_size, src_size);
-  if (dst_size)
+  if (dst_size != 0)
 #else
   auto which  = "LZ0";
   auto wrkmem = malloc(LZO1X_1_MEM_COMPRESS);
@@ -555,9 +555,9 @@ bool Game::save(const std::string &file_to_save)
   {
     LOG("%s compressed %ldMb (%ld bytes) -> %ldMb (%ld bytes) took %u ms",
         which,                           // newline
-        (long) src_size / (1024 * 1024), // newline
+        src_size / (1024 * 1024), // newline
         src_size,                        // newline
-        (long) dst_size / (1024 * 1024), // newline
+        dst_size / (1024 * 1024), // newline
         dst_size,                        // newline
         time_ms() - start);
   } else {
@@ -584,14 +584,14 @@ bool Game::save(const std::string &file_to_save)
 #endif
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Writing...", 0.9f);
+    wid_progress_bar(this, "Writing...", 0.9F);
   }
 
   //
   // Save the post compress buffer
   //
-  auto ofile = fopen(file_to_save.c_str(), "wb");
-  if (! ofile) {
+  auto *ofile = fopen(file_to_save.c_str(), "wb");
+  if (ofile == nullptr) {
     ERR("Failed to open %s for writing: %s", file_to_save.c_str(), strerror(errno));
     wid_progress_bar_destroy(this);
     return false;
@@ -615,7 +615,7 @@ bool Game::save(const std::string &file_to_save)
 #endif
 
   if (! game_headers_only) {
-    wid_progress_bar(this, "Saved", 1.0f);
+    wid_progress_bar(this, "Saved", 1.0F);
   }
 
   wid_progress_bar_destroy(this);
@@ -681,7 +681,7 @@ bool Game::save_snapshot(void)
   return ret;
 }
 
-bool Game::save_config(void)
+bool Game::save_config(void) const
 {
   TRACE_NO_INDENT();
   auto          filename = saved_dir + "config";
@@ -698,7 +698,7 @@ bool Game::save_config(void)
 
 void wid_save_destroy(Gamep g)
 {
-  if (! wid_save) {
+  if (wid_save == nullptr) {
     return;
   }
 
@@ -796,14 +796,14 @@ bool Game::save_select(void)
   LOG("Save menu");
   TRACE_AND_INDENT();
 
-  if (wid_save) {
+  if (wid_save != nullptr) {
     return false;
   }
 
   int    menu_height = UI_MAX_SAVE_SLOTS + 8;
   int    menu_width  = UI_WID_POPUP_WIDTH_WIDE;
-  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_save = new WidPopup(game, "Game save", outer_tl, outer_br, nullptr, "", false, false);
 
   wid_set_on_key_up(wid_save->wid_popup_container, wid_save_key_up);
@@ -811,11 +811,11 @@ bool Game::save_select(void)
 
   {
     TRACE_NO_INDENT();
-    auto p = wid_save->wid_text_area->wid_text_area;
-    auto w = wid_new_back_button(game, p, "back");
+    auto *p = wid_save->wid_text_area->wid_text_area;
+    auto *w = wid_new_back_button(game, p, "back");
 
-    spoint tl(menu_width / 2 - 4, menu_height - 4);
-    spoint br(menu_width / 2 + 3, menu_height - 2);
+    spoint tl((menu_width / 2) - 4, menu_height - 4);
+    spoint br((menu_width / 2) + 3, menu_height - 2);
 
     wid_set_on_mouse_up(w, wid_save_cancel);
     wid_set_pos(w, tl, br);
@@ -835,8 +835,8 @@ bool Game::save_select(void)
       tmp_file = saved_dir + "saved-snapshot";
     }
 
-    auto   p = wid_save->wid_text_area->wid_text_area;
-    auto   w = wid_new_button(game, p, "save slot");
+    auto *   p = wid_save->wid_text_area->wid_text_area;
+    auto *   w = wid_new_button(game, p, "save slot");
     spoint tl(0, y_at);
     spoint br(menu_width - 2, y_at);
 

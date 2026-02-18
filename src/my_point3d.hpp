@@ -15,17 +15,17 @@ public:
   my_apoint3d(void) : x(0), y(0), z(0) {}
   my_apoint3d(T vx, T vy, T vz) : x(vx), y(vy), z(vz) {}
 
-  void operator+=(my_apoint3d< T > const &);
-  void operator-=(my_apoint3d< T > const &);
-  void operator*=(T);
-  void operator/=(T);
+  void operator+=(my_apoint3d< T > const & /*b*/);
+  void operator-=(my_apoint3d< T > const & /*b*/);
+  void operator*=(T /*b*/);
+  void operator/=(T /*b*/);
 };
 
-template < typename T > bool             operator==(my_apoint3d< T > const &, my_apoint3d< T > const &);
-template < typename T > my_apoint3d< T > operator+(my_apoint3d< T > const &, my_apoint3d< T > const &);
-template < typename T > my_apoint3d< T > operator-(my_apoint3d< T > const &, my_apoint3d< T > const &);
-template < typename T > my_apoint3d< T > operator*(my_apoint3d< T > const &, T);
-template < typename T > my_apoint3d< T > operator/(my_apoint3d< T > const &, T);
+template < typename T > bool             operator==(my_apoint3d< T > const & /*a*/, my_apoint3d< T > const & /*b*/);
+template < typename T > my_apoint3d< T > operator+(my_apoint3d< T > const & /*a*/, my_apoint3d< T > const & /*b*/);
+template < typename T > my_apoint3d< T > operator-(my_apoint3d< T > const & /*a*/, my_apoint3d< T > const & /*b*/);
+template < typename T > my_apoint3d< T > operator*(my_apoint3d< T > const & /*a*/, T /*b*/);
+template < typename T > my_apoint3d< T > operator/(my_apoint3d< T > const & /*a*/, T /*b*/);
 
 using point3d = my_apoint3d< short >;
 

@@ -120,7 +120,7 @@
     game_wait_for_tick_to_finish(g, v, l1);
   }
 
-  if (false) {
+  if (__unused__) {
     TEST_PROGRESS(t);
     for (auto tries = 0; tries < 2; tries++) {
       TEST_LOG(t, "try: %d", tries);

@@ -23,9 +23,8 @@
 #ifndef _WIN32
 #include <sys/wait.h>
 #endif
-#include <unistd.h>
 
-#if defined(__linux__)
+#ifdef __linux__
 #include <sys/prctl.h>
 #endif
 
@@ -33,7 +32,7 @@
 #define PATH_MAX 512
 #endif
 
-#if defined __linux__
+#ifdef __linux__
 //
 // I can only really get this working with linux
 //
@@ -239,7 +238,7 @@ void crash_handler(int sig)
   signal(SIGINT, nullptr);
 #endif
 
-#if defined __linux__
+#ifdef __linux__
   debug_crash_handler(sig);
 #endif
 

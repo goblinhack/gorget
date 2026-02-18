@@ -20,7 +20,7 @@ std::string callstack_string(void)
   sout += "==========\n";
 
   for (auto depth = 0; depth < g_callframes_depth; depth++) {
-    auto iter = &callframes[ depth ];
+    auto *iter = &callframes[ depth ];
     sout += string_sprintf("(callstack) %s, line %u\n", iter->func, iter->line);
   }
 

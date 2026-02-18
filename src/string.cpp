@@ -26,8 +26,8 @@ void strrepc(char *s, const char *replace_set, char replace_with)
   TRACE_NO_INDENT();
   char *c;
 
-  for (c = s; *c; c++) {
-    if (strchr(replace_set, *c)) {
+  for (c = s; *c != 0; c++) {
+    if (strchr(replace_set, *c) != nullptr) {
       *c = replace_with;
     }
   }
@@ -100,7 +100,7 @@ char *strsub_(const char *in, const char *look_for, const char *replace_with, co
   int         oldlen;
   int         len;
 
-  if (! in || ! look_for || ! replace_with) {
+  if ((in == nullptr) || (look_for == nullptr) || (replace_with == nullptr)) {
     return nullptr;
   }
 
@@ -108,7 +108,7 @@ char *strsub_(const char *in, const char *look_for, const char *replace_with, co
   // printf("  look for %s\n", look_for);
   // printf("  replace  %s\n", replace_with);
   at = strstr(in, look_for);
-  if (! at) {
+  if (at == nullptr) {
     buf = mydupstr(in, what);
     return buf;
   }
@@ -118,7 +118,7 @@ char *strsub_(const char *in, const char *look_for, const char *replace_with, co
 
   len = (uint32_t) strlen(in) - oldlen + newlen;
   buf = (__typeof__(buf)) myzalloc_(len + SIZEOF((char) '\0'), what, file, func, line);
-  if (! buf) {
+  if (buf == nullptr) {
     return nullptr;
   }
 
@@ -127,11 +127,11 @@ char *strsub_(const char *in, const char *look_for, const char *replace_with, co
   strcat(buf, replace_with);
   strcat(buf, at + oldlen);
 
-  if (! strcmp(buf, in)) {
+  if (strcmp(buf, in) == 0) {
     return buf;
   }
 
-  auto out = strsub_(buf, look_for, replace_with, what, file, func, line);
+  auto *out = strsub_(buf, look_for, replace_with, what, file, func, line);
   myfree(buf);
   return out;
 }
@@ -148,14 +148,14 @@ char *strappend(const char *in, const char *append)
   int   newlen;
   int   len;
 
-  if (! in || ! append) {
+  if ((in == nullptr) || (append == nullptr)) {
     return nullptr;
   }
 
   newlen = (uint32_t) strlen(append);
   len    = (uint32_t) strlen(in) + newlen;
   buf    = (__typeof__(buf)) myzalloc(len + SIZEOF((char) '\0'), "strappend");
-  if (! buf) {
+  if (buf == nullptr) {
     return nullptr;
   }
 
@@ -177,14 +177,14 @@ char *strprepend(const char *in, const char *prepend)
   int   newlen;
   int   len;
 
-  if (! in || ! prepend) {
+  if ((in == nullptr) || (prepend == nullptr)) {
     return nullptr;
   }
 
   newlen = (uint32_t) strlen(prepend);
   len    = (uint32_t) strlen(in) + newlen;
   buf    = (__typeof__(buf)) myzalloc(len + SIZEOF((char) '\0'), "strprepend");
-  if (! buf) {
+  if (buf == nullptr) {
     return nullptr;
   }
 
@@ -204,7 +204,7 @@ uint32_t strcommon(const char *a, const char *b)
 
   o = a;
 
-  while ((*a == *b) && *a) {
+  while ((*a == *b) && (*a != 0)) {
     a++;
     b++;
   }
@@ -222,7 +222,7 @@ void strchop(char *s)
   char    *end;
 
   size = (uint32_t) strlen(s);
-  if (! size) {
+  if (size == 0U) {
     return;
   }
 
@@ -244,7 +244,7 @@ void strchopc(char *s, char c)
   char    *end;
 
   size = (uint32_t) strlen(s);
-  if (! size) {
+  if (size == 0U) {
     return;
   }
 
@@ -262,7 +262,7 @@ int strisregexp(const char *in)
   const char *a = in;
   char        c;
 
-  while ((c = *a++)) {
+  while ((c = *a++) != 0) {
     switch (c) {
       case '[' : return 1;
       case ']' : return 1;
@@ -276,7 +276,7 @@ int strisregexp(const char *in)
     }
   }
 
-  return false;
+  return 0;
 }
 
 size_t my_strlcpy(char *dst, const char *src, size_t max_len)
@@ -312,7 +312,7 @@ void strnoescape(char *uncompressed)
   char *s = uncompressed;
   char  c;
 
-  while ((c = *s++)) {
+  while ((c = *s++) != 0) {
     if (c != '\\') {
       *t++ = c;
       continue;
@@ -331,7 +331,7 @@ void strnoescape(char *uncompressed)
           char *o = s - 1;
           char  orig;
 
-          while (isdigit(*s)) {
+          while (isdigit(*s) != 0) {
             s++;
           }
 
@@ -431,7 +431,8 @@ std::string mybasename(const char *in, const char *who)
 char *my_strcasestr(const char *s, const char *find)
 {
   TRACE_NO_INDENT();
-  char   c, sc;
+  char   c;
+  char   sc;
   size_t len;
 
   if ((c = *find++) != 0) {
@@ -439,8 +440,9 @@ char *my_strcasestr(const char *s, const char *find)
     len = strlen(find);
     do {
       do {
-        if ((sc = *s++) == 0)
+        if ((sc = *s++) == 0) {
           return nullptr;
+}
       } while ((char) tolower((unsigned char) sc) != c);
     } while (strncasecmp(s, find, len) != 0);
     s--;
@@ -473,7 +475,7 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
 
   auto result = std::vector< std::string >();
 
-  if (! text.length()) {
+  if (text.empty()) {
     return result;
   }
 
@@ -560,7 +562,7 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
 
           int         len  = 0;
           const char *tmpc = tmp.c_str();
-          auto        tp   = string2tp(&tmpc, &len);
+          auto *        tp   = string2tp(&tmpc, &len);
           text_iter += len + 1;
 
           (void) tp_first_tile(tp, THING_ANIM_IDLE);
@@ -642,7 +644,7 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
     first_line          = false;
 
     text_iter = line_end;
-    if (! *text_iter) {
+    if (*text_iter == 0) {
       break;
     }
 
@@ -667,7 +669,7 @@ int length_without_format(const std::string &text)
 
   for (;;) {
     c = *text_iter;
-    if (! c) {
+    if (c == 0) {
       break;
     }
     line_len++;
@@ -719,7 +721,7 @@ int length_without_format(const std::string &text)
 
         int         len  = 0;
         const char *tmpc = tmp.c_str();
-        auto        tp   = string2tp(&tmpc, &len);
+        auto *        tp   = string2tp(&tmpc, &len);
         text_iter += len + 1;
 
         (void) tp_first_tile(tp, THING_ANIM_IDLE);
@@ -773,25 +775,25 @@ int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...)
   va_list ap;
   char   *tmp;
 
-  if (! str) {
+  if (str == nullptr) {
     return (-1);
   }
 
-  if (! size) {
+  if (size == nullptr) {
     return (-1);
   }
 
-  if (! *str) {
-    if (! *size) {
+  if (*str == nullptr) {
+    if (*size == 0) {
       *size = 128;
     }
 
-    if (used) {
+    if (used != nullptr) {
       *used = 0;
     }
 
     *str = (char *) mymalloc(*size, "snprintf alloc");
-    if (! *str) {
+    if (*str == nullptr) {
       *size = 0;
       return (-1);
     }
@@ -799,7 +801,7 @@ int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...)
     *str[ 0 ] = '\0';
   }
 
-  if (! used || ! *used) {
+  if ((used == nullptr) || (*used == 0)) {
     usedspace = (uint32_t) strlen(*str);
   } else {
     usedspace = *used;
@@ -817,7 +819,7 @@ int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...)
     freespace = *size - usedspace;
 
     if (needspace < freespace) {
-      if (used) {
+      if (used != nullptr) {
         *used += needspace;
       }
       strcat(*str, add);
@@ -828,7 +830,7 @@ int snprintf_realloc(char **str, int *size, int *used, const char *fmt, ...)
     (*size) *= 2;
 
     tmp = (char *) myrealloc(*str, *size, "snprintf realloc");
-    if (! tmp) {
+    if (tmp == nullptr) {
       free(*str);
       *str  = nullptr;
       *size = 0;
@@ -908,7 +910,7 @@ std::string strerror_to_string(const int err)
   //
   // XSI version returns 0 on success
   //
-  if (! strerror_r(err, err_out, SIZEOF(err_out))) {
+  if (strerror_r(err, err_out, SIZEOF(err_out)) == 0) {
     return std::string(err_out);
   }
 #endif
@@ -929,7 +931,7 @@ std::string capitalize(std::string in)
   bool  word_start = true;
   while (c < e) {
     if (word_start) {
-      if (islower(*c)) {
+      if (islower(*c) != 0) {
         *c = toupper(*c);
       }
       word_start = false;
@@ -957,7 +959,7 @@ std::string capitalize_first(std::string in)
   bool  word_start = true;
   while (c < e) {
     if (word_start) {
-      if (islower(*c)) {
+      if (islower(*c) != 0) {
         *c = toupper(*c);
       }
       word_start = false;
@@ -1009,7 +1011,7 @@ Tpp string2tp(const char **s, int *len)
   *t++ = '\0';
   *s += (t - tmp);
 
-  if (len) {
+  if (len != nullptr) {
     *len = t - tmp;
   }
 

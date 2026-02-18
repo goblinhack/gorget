@@ -23,7 +23,7 @@ static void find_executable(void)
 
   char       *parent_dir         = nullptr;
   char       *curr_dir           = nullptr;
-  std::string exec_name          = "";
+  std::string exec_name;
   char       *exec_expanded_name = nullptr;
   char       *path               = nullptr;
   char       *tmp;
@@ -77,7 +77,7 @@ static void find_executable(void)
   // Look in the simplest case first.
   //
   g_exec_full_path_and_name = dynprintf("%s%s", curr_dir, exec_name.c_str());
-  if (file_exists(g_exec_full_path_and_name)) {
+  if (file_exists(g_exec_full_path_and_name) != 0U) {
     g_exec_dir = mydupstr(curr_dir, "exec dir 1");
     goto cleanup;
   }
@@ -89,7 +89,7 @@ static void find_executable(void)
   // Try the parent dir.
   //
   g_exec_full_path_and_name = dynprintf("%s%s", parent_dir, exec_name.c_str());
-  if (file_exists(g_exec_full_path_and_name)) {
+  if (file_exists(g_exec_full_path_and_name) != 0U) {
     g_exec_dir = mydupstr(parent_dir, "exec dir 2");
     goto cleanup;
   }
@@ -101,14 +101,14 @@ static void find_executable(void)
   // Try the PATH.
   //
   path = getenv("PATH");
-  if (path) {
+  if (path != nullptr) {
     char *dir = nullptr;
 
     path = mydupstr(path, "path");
 
-    for (dir = strtok(path, PATHSEP); dir; dir = strtok(nullptr, PATHSEP)) {
+    for (dir = strtok(path, PATHSEP); dir != nullptr; dir = strtok(nullptr, PATHSEP)) {
       g_exec_full_path_and_name = dynprintf("%s" DIR_SEP "%s", dir, exec_name.c_str());
-      if (file_exists(g_exec_full_path_and_name)) {
+      if (file_exists(g_exec_full_path_and_name) != 0U) {
         g_exec_dir = dynprintf("%s" DIR_SEP, dir);
         goto cleanup;
       }
@@ -125,7 +125,7 @@ static void find_executable(void)
   g_exec_dir                = mydupstr(dirname(exec_expanded_name), "exec dir");
 
 cleanup:
-  auto new_g_exec_dir = strsub(g_exec_dir, "/", DIR_SEP, "g_exec_dir");
+  auto *new_g_exec_dir = strsub(g_exec_dir, "/", DIR_SEP, "g_exec_dir");
   myfree(g_exec_dir);
   g_exec_dir = new_g_exec_dir;
 
@@ -134,19 +134,19 @@ cleanup:
   DBG2("Curr dir    : \"%s\"", curr_dir);
   DBG2("Full name   : \"%s\"", exec_expanded_name);
 
-  if (path) {
+  if (path != nullptr) {
     myfree(path);
   }
 
-  if (exec_expanded_name) {
+  if (exec_expanded_name != nullptr) {
     myfree(exec_expanded_name);
   }
 
-  if (parent_dir) {
+  if (parent_dir != nullptr) {
     myfree(parent_dir);
   }
 
-  if (curr_dir) {
+  if (curr_dir != nullptr) {
     myfree(curr_dir);
   }
 }
@@ -163,16 +163,16 @@ static void find_exec_dir(void)
   //
   // Make sure the exec dir ends in a /
   //
-  auto tmp  = dynprintf("%s" DIR_SEP, g_exec_dir);
-  auto tmp2 = strsub(tmp, "//", DIR_SEP, "g_exec_dir");
-  auto tmp3 = strsub(tmp2, "\\\\", DIR_SEP, "g_exec_dir");
-  auto tmp4 = strsub(tmp3, "/", DIR_SEP, "g_exec_dir");
-  auto tmp5 = strsub(tmp4, "\\", DIR_SEP, "g_exec_dir");
+  auto *tmp  = dynprintf("%s" DIR_SEP, g_exec_dir);
+  auto *tmp2 = strsub(tmp, "//", DIR_SEP, "g_exec_dir");
+  auto *tmp3 = strsub(tmp2, "\\\\", DIR_SEP, "g_exec_dir");
+  auto *tmp4 = strsub(tmp3, "/", DIR_SEP, "g_exec_dir");
+  auto *tmp5 = strsub(tmp4, "\\", DIR_SEP, "g_exec_dir");
   myfree(tmp);
   myfree(tmp2);
   myfree(tmp3);
   myfree(tmp4);
-  if (g_exec_dir) {
+  if (g_exec_dir != nullptr) {
     myfree(g_exec_dir);
   }
   g_exec_dir = tmp5;

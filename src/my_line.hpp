@@ -11,6 +11,6 @@
 
 #include <vector>
 
-std::vector< spoint > draw_line(const spoint s, const spoint e, size_t max_elems = -1);
+std::vector< spoint > draw_line(spoint s, spoint e, size_t max_elems = -1);
 
 #endif

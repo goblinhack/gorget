@@ -18,8 +18,8 @@ public:
   uint32_t    cnt;
 };
 
-class Tokens *tokens_to_string(const char *input, class Tokens *);
-void          tokens_print_to(class Tokens *, char *output, int output_size);
-void          tokens_print(class Tokens *);
+class Tokens *tokens_to_string(const char *input, class Tokens * /*tokens*/);
+void          tokens_print_to(class Tokens * /*tokens*/, char *output, int output_size);
+void          tokens_print(class Tokens * /*tokens*/);
 void          tokens_test(void);
 #endif

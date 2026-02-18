@@ -19,9 +19,9 @@ extern Fontp font_ui;
 #define FONT_TILENAME_BLOCK_STR   "1.97"
 #define FONT_TILENAME_POINTER_STR "1.100"
 
-void    font_fini(void);
-uint8_t font_init(void);
-Fontp   font_find(std::string);
+void  font_fini(void);
+bool  font_init(void);
+Fontp font_find(std::string /*file*/);
 
 class Font
 {

@@ -2,8 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#include <ranges>
-
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_command.hpp"
@@ -27,6 +25,9 @@
 #ifdef ENABLE_DEBUG_GFX_GL_BLEND
 #include <unistd.h>
 #endif
+
+#include <algorithm>
+#include <ranges>
 
 //
 // Unique key for each tree
@@ -107,8 +108,8 @@ static void wid_tree_detach(Widp w);
 static void wid_tree_insert(Widp w);
 static void wid_tree_attach(Widp w);
 
-void WID_LOG(Widp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
-void WID_DBG(Widp, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void WID_LOG(Widp /*w*/, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
+void WID_DBG(Widp /*w*/, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 
 //
 // Child sort priority
@@ -138,7 +139,7 @@ Wid::~Wid(void) { oldptr(MTYPE_WID, this); }
 //
 [[nodiscard]] static bool wid_safe(void)
 {
-  return ! (! wid_init_done || wid_exiting || g_dying || g_quitting || (g_thread_id != MAIN_THREAD));
+  return wid_init_done && ! wid_exiting && ! g_dying && ! g_quitting && (g_thread_id == MAIN_THREAD);
 }
 
 bool wid_init(void)
@@ -162,12 +163,12 @@ void wid_fini(Gamep g_maybe_null)
   wid_gc_all(g_maybe_null);
 
   for (;;) {
-    if (! wid_top_level.size()) {
+    if (wid_top_level.empty()) {
       break;
     }
 
-    auto iter  = wid_top_level.begin();
-    auto child = iter->second;
+    auto  iter  = wid_top_level.begin();
+    auto *child = iter->second;
     wid_destroy_immediate(g_maybe_null, child);
   }
 
@@ -209,7 +210,7 @@ void wid_dump(Widp w, int depth)
 
 #if 1
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     wid_dump(child, depth + 2);
   }
@@ -231,7 +232,7 @@ int wid_count(Widp w, int depth)
   int count = 1;
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     count += wid_count(child, depth + 2);
   }
@@ -279,7 +280,7 @@ void wid_get_tl_x_tl_y_br_x_br_y(Widp w, int *tl_x, int *tl_y, int *br_x, int *b
 {
   TRACE_NO_INDENT();
 
-  if (! w) {
+  if (w == nullptr) {
     *tl_x = 0;
     *tl_y = 0;
     *br_x = 0;
@@ -324,7 +325,7 @@ void wid_set_pos(Widp w, spoint tl, spoint br)
   // Child postion is relative from the parent.
   //
   p = w->parent;
-  if (p) {
+  if (p != nullptr) {
     w->key.tl.x += wid_get_tl_x(p);
     w->key.tl.y += wid_get_tl_y(p);
     w->key.br.x += wid_get_tl_x(p);
@@ -354,7 +355,7 @@ static void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
 
   wid_tree_detach(w);
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     tl.x *= TERM_WIDTH;
     tl.y *= TERM_HEIGHT;
     br.x *= TERM_WIDTH;
@@ -366,12 +367,8 @@ static void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
     br.y *= wid_get_height(w->parent);
   }
 
-  if (tl.x < 0) {
-    tl.x = 0;
-  }
-  if (tl.y < 0) {
-    tl.y = 0;
-  }
+  tl.x = std::max< float >(tl.x, 0);
+  tl.y = std::max< float >(tl.y, 0);
   if (br.x >= wid_get_width(w->parent)) {
     br.x = wid_get_width(w->parent) - 1;
   }
@@ -388,7 +385,7 @@ static void wid_set_pos_pct(Widp w, fpoint tl, fpoint br)
   // Child postion is relative from the parent.
   //
   p = w->parent;
-  if (p) {
+  if (p != nullptr) {
     key_tl_x += wid_get_tl_x(p);
     key_tl_y += wid_get_tl_y(p);
     key_br_x += wid_get_tl_x(p);
@@ -407,7 +404,7 @@ void wid_set_string_context(Widp w, std::string string_context)
 {
   TRACE_NO_INDENT();
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return;
   }
@@ -418,7 +415,7 @@ std::string wid_get_string_context(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return "";
   }
@@ -429,7 +426,7 @@ void wid_set_int_context(Widp w, int int_context)
 {
   TRACE_NO_INDENT();
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return;
   }
@@ -440,7 +437,7 @@ int wid_get_int_context(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return 0;
   }
@@ -451,7 +448,7 @@ void wid_set_void_context(Widp w, void *void_context)
 {
   TRACE_NO_INDENT();
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return;
   }
@@ -462,7 +459,7 @@ void *wid_get_void_context(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return nullptr;
   }
@@ -473,28 +470,28 @@ void wid_set_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     ERR("NULL game pointer");
     return;
   }
 
-  if (! v) {
+  if (v == nullptr) {
     ERR("NULL levels pointer");
     return;
   }
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return;
   }
 
-  if (! t) {
+  if (t == nullptr) {
     ERR("NULL thing pointer");
     return;
   }
 
   for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
-    auto cand = thing_find_optional(g, v, w->thing_id_context[ i ]);
+    auto *cand = thing_find_optional(g, v, w->thing_id_context[ i ]);
     if (cand == t) {
       return;
     }
@@ -502,7 +499,7 @@ void wid_set_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
 
   for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
     auto cand = w->thing_id_context[ i ];
-    if (! cand) {
+    if (cand == 0u) {
       w->thing_id_context[ i ] = t->id;
       return;
     }
@@ -513,28 +510,28 @@ void wid_unset_thing_context(Gamep g, Levelsp v, Widp w, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     ERR("NULL game pointer");
     return;
   }
 
-  if (! v) {
+  if (v == nullptr) {
     ERR("NULL levels pointer");
     return;
   }
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return;
   }
 
-  if (! t) {
+  if (t == nullptr) {
     ERR("NULL thing pointer");
     return;
   }
 
   for (auto i = 0; i < UI_MAX_WID_CONTEXT; i++) {
-    auto cand = thing_find_optional(g, v, w->thing_id_context[ i ]);
+    auto *cand = thing_find_optional(g, v, w->thing_id_context[ i ]);
     if (cand == t) {
       w->thing_id_context[ i ] = 0;
       return;
@@ -546,17 +543,17 @@ Thingp wid_get_thing_context(Gamep g, Levelsp v, Widp w, int which)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     ERR("NULL game pointer");
     return nullptr;
   }
 
-  if (! v) {
+  if (v == nullptr) {
     ERR("NULL levels pointer");
     return nullptr;
   }
 
-  if (! w) {
+  if (w == nullptr) {
     ERR("NULL pointer");
     return nullptr;
   }
@@ -583,7 +580,7 @@ void wid_set_prev(Widp w, Widp prev)
 
   w->prev = prev;
 
-  if (prev) {
+  if (prev != nullptr) {
     prev->next = w;
   }
 }
@@ -624,9 +621,9 @@ Widp wid_get_head(Widp w)
 
   Widp prev {};
 
-  while (w) {
+  while (w != nullptr) {
     prev = wid_get_prev(w);
-    if (! prev) {
+    if (prev == nullptr) {
       break;
     }
 
@@ -642,9 +639,9 @@ Widp wid_get_tail(Widp w)
 
   Widp next {};
 
-  while (w) {
+  while (w != nullptr) {
     next = wid_get_next(w);
-    if (! next) {
+    if (next == nullptr) {
       break;
     }
 
@@ -662,11 +659,11 @@ Widp wid_get_top_parent(Widp w)
     return w;
   }
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     return w;
   }
 
-  while (w->parent) {
+  while (w->parent != nullptr) {
     w = w->parent;
   }
 
@@ -732,14 +729,14 @@ bool wid_ignore_events(Widp w)
     return true;
   }
 
-  if (w->ignore_events || w->hidden || w->being_destroyed) {
+  if ((w->ignore_events != 0u) || (w->hidden != 0u) || (w->being_destroyed != 0u)) {
     return true;
   }
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     top = wid_get_top_parent(w);
 
-    if (top->hidden || top->being_destroyed) {
+    if ((top->hidden != 0u) || (top->being_destroyed != 0u)) {
       return true;
     }
   }
@@ -759,7 +756,7 @@ bool wid_ignore_events_only(Widp w)
     return true;
   }
 
-  if (w->ignore_events) {
+  if (w->ignore_events != 0u) {
     return true;
   }
 
@@ -780,14 +777,14 @@ bool wid_ignore_scroll_events(Widp w)
     return true;
   }
 
-  if (w->ignore_scroll_events || w->hidden || w->being_destroyed) {
+  if ((w->ignore_scroll_events != 0u) || (w->hidden != 0u) || (w->being_destroyed != 0u)) {
     return true;
   }
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     top = wid_get_top_parent(w);
 
-    if (top->hidden || top->being_destroyed) {
+    if ((top->hidden != 0u) || (top->being_destroyed != 0u)) {
       return true;
     }
   }
@@ -805,14 +802,14 @@ bool wid_ignore_for_focus(Widp w)
 
   Widp top {};
 
-  if (w->hidden || w->being_destroyed) {
+  if ((w->hidden != 0u) || (w->being_destroyed != 0u)) {
     return true;
   }
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     top = wid_get_top_parent(w);
 
-    if (top->hidden || top->being_destroyed) {
+    if ((top->hidden != 0u) || (top->being_destroyed != 0u)) {
       return true;
     }
   }
@@ -833,14 +830,14 @@ bool wid_ignore_being_destroyed(Widp w)
 
   Widp top {};
 
-  if (w->being_destroyed) {
+  if (w->being_destroyed != 0u) {
     return true;
   }
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     top = wid_get_top_parent(w);
 
-    if (top->being_destroyed) {
+    if (top->being_destroyed != 0u) {
       return true;
     }
   }
@@ -866,7 +863,7 @@ char wid_event_to_char(const struct SDL_Keysym *evt)
 {
   TRACE_NO_INDENT();
 
-  if ((evt->mod & KMOD_LSHIFT) || (evt->mod & KMOD_RSHIFT)) {
+  if (((evt->mod & KMOD_LSHIFT) != 0) || ((evt->mod & KMOD_RSHIFT) != 0)) {
     switch (evt->sym) {
       case SDLK_a :            return 'A';
       case SDLK_b :            return 'B';
@@ -1118,7 +1115,7 @@ static std::string wid_get_text_with_cursor(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (! w->received_input) {
+  if (w->received_input == 0u) {
     w->cursor = (uint32_t) w->text.length();
   }
 
@@ -1136,7 +1133,7 @@ void wid_set_name(Widp w, std::string name)
     return;
   }
 
-  if (name != "") {
+  if (! name.empty()) {
     oldptr(MTYPE_WID, w);
     w->name = name;
     newptr(MTYPE_WID, w, "wid");
@@ -1183,7 +1180,7 @@ void wid_set_text(Widp w, std::string text)
     return;
   }
 
-  if (text == "") {
+  if (text.empty()) {
     w->text = "";
   } else {
     if (text == w->text) {
@@ -1193,16 +1190,13 @@ void wid_set_text(Widp w, std::string text)
     w->text = text;
   }
 
-  if (w->max_len) {
+  if (w->max_len != 0u) {
     if (w->text.size() > w->max_len) {
       w->text.resize(w->max_len);
     }
   }
 
-  auto len = w->text.size();
-  if (w->cursor > len) {
-    w->cursor = len;
-  }
+  w->cursor = std::min(w->cursor, (uint16_t) w->text.size());
 }
 
 void wid_set_text(Widp w, int v)
@@ -1214,7 +1208,7 @@ void wid_set_text(Widp w, int v)
 bool wid_get_received_input(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->received_input;
+  return w->received_input != 0u;
 }
 
 void wid_set_received_input(Widp w, uint8_t val)
@@ -1244,7 +1238,7 @@ int wid_get_height(Widp w)
 bool wid_get_focusable(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->focus_order;
+  return w->focus_order != 0u;
 }
 
 void wid_set_focusable(Widp w, uint8_t val)
@@ -1256,7 +1250,7 @@ void wid_set_focusable(Widp w, uint8_t val)
 bool wid_get_show_cursor(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->show_cursor;
+  return w->show_cursor != 0u;
 }
 
 void wid_set_show_cursor(Widp w, uint8_t val)
@@ -1268,7 +1262,7 @@ void wid_set_show_cursor(Widp w, uint8_t val)
 bool wid_get_do_not_raise(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->do_not_raise;
+  return w->do_not_raise != 0u;
 }
 
 void wid_set_do_not_raise(Widp w, uint8_t val)
@@ -1280,7 +1274,7 @@ void wid_set_do_not_raise(Widp w, uint8_t val)
 bool wid_get_do_not_lower(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->do_not_lower;
+  return w->do_not_lower != 0u;
 }
 
 void wid_set_do_not_lower(Widp w, uint8_t val)
@@ -1293,8 +1287,8 @@ bool wid_get_moveable(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->moveable_set) {
-    return w->moveable;
+  if (w->moveable_set != 0u) {
+    return w->moveable != 0u;
   }
 
   return false;
@@ -1304,7 +1298,7 @@ void wid_set_moveable(Gamep g, Widp w, uint8_t val)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
@@ -1313,7 +1307,7 @@ void wid_set_moveable(Gamep g, Widp w, uint8_t val)
   }
 
   w->moveable     = val;
-  w->moveable_set = true;
+  w->moveable_set = 1u;
 
   wid_set_moveable_horiz(g, w, val);
   wid_set_moveable_vert(g, w, val);
@@ -1323,8 +1317,8 @@ bool wid_get_moveable_horiz(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->moveable_horiz_set) {
-    return w->moveable_horiz;
+  if (w->moveable_horiz_set != 0u) {
+    return w->moveable_horiz != 0u;
   }
 
   return false;
@@ -1334,20 +1328,20 @@ void wid_set_moveable_horiz(Gamep g, Widp w, uint8_t val)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
   w->moveable_horiz     = val;
-  w->moveable_horiz_set = true;
+  w->moveable_horiz_set = 1u;
 }
 
 bool wid_get_moveable_vert(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->moveable_vert_set) {
-    return w->moveable_vert;
+  if (w->moveable_vert_set != 0u) {
+    return w->moveable_vert != 0u;
   }
 
   return false;
@@ -1357,20 +1351,20 @@ void wid_set_moveable_vert(Gamep g, Widp w, uint8_t val)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
   w->moveable_vert     = val;
-  w->moveable_vert_set = true;
+  w->moveable_vert_set = 1u;
 }
 
 bool wid_get_moveable_bounded(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->moveable_bounded_set) {
-    return w->moveable_bounded;
+  if (w->moveable_bounded_set != 0u) {
+    return w->moveable_bounded != 0u;
   }
 
   return false;
@@ -1380,20 +1374,20 @@ void wid_set_moveable_bounded(Gamep g, Widp w, uint8_t val)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
   w->moveable_bounded     = val;
-  w->moveable_bounded_set = true;
+  w->moveable_bounded_set = 1u;
 }
 
 bool wid_get_moveable_no_user_scroll(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->moveable_no_user_scroll_set) {
-    return w->moveable_no_user_scroll;
+  if (w->moveable_no_user_scroll_set != 0u) {
+    return w->moveable_no_user_scroll != 0u;
   }
 
   return false;
@@ -1403,18 +1397,18 @@ void wid_set_moveable_no_user_scroll(Gamep g, Widp w, uint8_t val)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
   w->moveable_no_user_scroll     = val;
-  w->moveable_no_user_scroll_set = true;
+  w->moveable_no_user_scroll_set = 1u;
 }
 
 bool wid_get_text_lhs(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->text_lhs;
+  return w->text_lhs != 0u;
 }
 
 void wid_set_text_lhs(Widp w, uint8_t val)
@@ -1426,19 +1420,19 @@ void wid_set_text_lhs(Widp w, uint8_t val)
 bool wid_get_text_rhs(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->text_rhs;
+  return w->text_rhs != 0u;
 }
 
 void wid_set_text_rhs(Widp w, uint8_t val)
 {
   TRACE_NO_INDENT();
-  w->text_rhs = true;
+  w->text_rhs = 1u;
 }
 
 bool wid_get_text_centerx(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->text_centerx;
+  return w->text_centerx != 0u;
 }
 
 void wid_set_text_centerx(Widp w, uint8_t val)
@@ -1450,7 +1444,7 @@ void wid_set_text_centerx(Widp w, uint8_t val)
 bool wid_get_text_top(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->text_top;
+  return w->text_top != 0u;
 }
 
 void wid_set_text_top(Widp w, uint8_t val)
@@ -1462,7 +1456,7 @@ void wid_set_text_top(Widp w, uint8_t val)
 bool wid_get_text_bot(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->text_bot;
+  return w->text_bot != 0u;
 }
 
 void wid_set_text_bot(Widp w, uint8_t val)
@@ -1474,7 +1468,7 @@ void wid_set_text_bot(Widp w, uint8_t val)
 bool wid_get_text_centery(Widp w)
 {
   TRACE_NO_INDENT();
-  return w->text_centery;
+  return w->text_centery != 0u;
 }
 
 void wid_set_text_centery(Widp w, uint8_t val)
@@ -1487,7 +1481,7 @@ bool wid_get_text_pos(Widp w, int *x, int *y)
 {
   TRACE_NO_INDENT();
 
-  if (w->text_pos_set) {
+  if (w->text_pos_set != 0u) {
     *x = w->text_pos.x;
     *y = w->text_pos.y;
 
@@ -1501,7 +1495,7 @@ void wid_set_text_pos(Gamep g, Widp w, uint8_t val, int x, int y)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
@@ -1546,21 +1540,21 @@ color wid_get_color(Widp w, wid_color which)
   auto              mode = wid_get_mode(w); // for c++, no enum walk
   wid_options_menu *cfg  = &w->cfg[ mode ];
 
-  if (cfg->color_set[ which ]) {
+  if (cfg->color_set[ which ] != 0u) {
     return cfg->colors[ which ];
   }
 
   if ((wid_focus == w) && (wid_over == w)) {
     mode = WID_MODE_OVER;
     cfg  = &w->cfg[ mode ];
-    if (cfg->color_set[ which ]) {
+    if (cfg->color_set[ which ] != 0u) {
       return cfg->colors[ which ];
     }
   }
 
   mode = WID_MODE_NORMAL;
   cfg  = &w->cfg[ mode ];
-  if (cfg->color_set[ which ]) {
+  if (cfg->color_set[ which ] != 0u) {
     return cfg->colors[ which ];
   }
 
@@ -1574,21 +1568,21 @@ int wid_get_style(Widp w)
   auto              mode = wid_get_mode(w); // for c++, no enum walk
   wid_options_menu *cfg  = &w->cfg[ mode ];
 
-  if (cfg->style_set) {
+  if (cfg->style_set != 0u) {
     return cfg->style;
   }
 
   if ((wid_focus == w) && (wid_over == w)) {
     mode = WID_MODE_OVER;
     cfg  = &w->cfg[ mode ];
-    if (cfg->style_set) {
+    if (cfg->style_set != 0u) {
       return cfg->style;
     }
   }
 
   mode = WID_MODE_NORMAL;
   cfg  = &w->cfg[ mode ];
-  if (cfg->style_set) {
+  if (cfg->style_set != 0u) {
     return cfg->style;
   }
 
@@ -1598,7 +1592,7 @@ int wid_get_style(Widp w)
 void wid_set_style(Widp w, int style)
 {
   w->cfg[ wid_get_mode(w) ].style     = style;
-  w->cfg[ wid_get_mode(w) ].style_set = true;
+  w->cfg[ wid_get_mode(w) ].style_set = 1u;
 }
 
 //
@@ -1609,28 +1603,28 @@ void wid_set_color(Widp w, wid_color col, color val)
   TRACE_NO_INDENT();
 
   w->cfg[ wid_get_mode(w) ].colors[ col ]    = val;
-  w->cfg[ wid_get_mode(w) ].color_set[ col ] = true;
+  w->cfg[ wid_get_mode(w) ].color_set[ col ] = 1u;
 }
 
 void wid_set_focus(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
   //
   // Don't allow focus override if hard focus is set.
   //
-  if (w) {
-    if (wid_focus_locked) {
+  if (w != nullptr) {
+    if (wid_focus_locked != nullptr) {
       if (wid_get_top_parent(w) != wid_focus_locked) {
         return;
       }
     }
 
-    if (! w->focus_order) {
+    if (w->focus_order == 0u) {
       return;
     }
   }
@@ -1647,20 +1641,20 @@ void wid_unset_focus(Gamep g)
 void wid_set_shape_square(Widp w)
 {
   TRACE_NO_INDENT();
-  w->square = true;
+  w->square = 1u;
 }
 
 void wid_set_shape_none(Widp w)
 {
   TRACE_NO_INDENT();
-  w->square = false;
+  w->square = 0u;
 }
 
 void wid_set_active(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
@@ -1671,11 +1665,11 @@ void wid_focus_lock(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     return;
   }
 
-  if (w) {
+  if (w != nullptr) {
     WID_DBG(w, "focus locked");
   }
 
@@ -1749,17 +1743,17 @@ static void wid_tree_attach(Widp w)
 
   wid_key_map_location *root;
 
-  if (w->in_tree_root) {
+  if (w->in_tree_root != nullptr) {
     CROAK("Wid is already attached");
   }
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     root = &wid_top_level;
   } else {
     root = &w->parent->children_display_sorted;
   }
 
-  if (! root) {
+  if (root == nullptr) {
     CROAK("No root");
   }
 
@@ -1775,7 +1769,7 @@ static void wid_tree_insert(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->in_tree_root) {
+  if (w->in_tree_root != nullptr) {
     CROAK("Wid is already inserted");
   }
 
@@ -1786,13 +1780,13 @@ static void wid_tree_insert(Widp w)
   //
   w->key.key = ++wid_unique_key;
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     root = &wid_top_level;
   } else {
     root = &w->parent->children_display_sorted;
   }
 
-  if (! root) {
+  if (root == nullptr) {
     CROAK("No root");
   }
 
@@ -1810,11 +1804,11 @@ static void wid_tree_global_unsorted_insert(Widp w)
 
   static WidKeyType key;
 
-  if (w->in_tree_global_unsorted_root) {
+  if (w->in_tree_global_unsorted_root != nullptr) {
     CROAK("Wid is already in the global tree");
   }
 
-  auto root = &wid_global;
+  auto *root = &wid_global;
 
   key.val++;
 
@@ -1831,13 +1825,13 @@ static void wid_tree2_unsorted_insert(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->in_tree2_unsorted_root) {
+  if (w->in_tree2_unsorted_root != nullptr) {
     CROAK("Wid is already in the in_tree2_unsorted_root");
   }
 
   wid_key_map_int *root;
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     root = &wid_top_level2;
   } else {
     root = &w->parent->tree2_children_unsorted;
@@ -1856,7 +1850,7 @@ static void wid_tree4_wids_being_destroyed_insert(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->in_tree4_wids_being_destroyed) {
+  if (w->in_tree4_wids_being_destroyed != nullptr) {
     return;
   }
 
@@ -1881,7 +1875,7 @@ static void wid_tree5_tick_wids_insert(Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->in_tree5_tick_wids) {
+  if (w->in_tree5_tick_wids != nullptr) {
     return;
   }
 
@@ -1909,7 +1903,7 @@ static void wid_tree_remove(Widp w)
   wid_key_map_location *root;
 
   root = w->in_tree_root;
-  if (! root) {
+  if (root == nullptr) {
     return;
   }
 
@@ -1927,8 +1921,8 @@ static void wid_tree2_unsorted_remove(Widp w)
 {
   TRACE_NO_INDENT();
 
-  auto root = w->in_tree2_unsorted_root;
-  if (! root) {
+  auto *root = w->in_tree2_unsorted_root;
+  if (root == nullptr) {
     return;
   }
 
@@ -1945,8 +1939,8 @@ static void wid_tree_global_unsorted_remove(Widp w)
 {
   TRACE_NO_INDENT();
 
-  auto root = w->in_tree_global_unsorted_root;
-  if (! root) {
+  auto *root = w->in_tree_global_unsorted_root;
+  if (root == nullptr) {
     return;
   }
 
@@ -1963,7 +1957,7 @@ WidKeyType wid_unsorted_get_key(Widp w)
 {
   TRACE_NO_INDENT();
 
-  auto root = &wid_global;
+  auto *root = &wid_global;
 
   auto result = root->find(w->tree_global_key);
   if (result == root->end()) {
@@ -1979,8 +1973,8 @@ static void wid_tree4_wids_being_destroyed_remove(Widp w)
 {
   TRACE_NO_INDENT();
 
-  auto root = w->in_tree4_wids_being_destroyed;
-  if (! root) {
+  auto *root = w->in_tree4_wids_being_destroyed;
+  if (root == nullptr) {
     return;
   }
 
@@ -1997,8 +1991,8 @@ static void wid_tree5_tick_wids_remove(Widp w)
 {
   TRACE_NO_INDENT();
 
-  auto root = w->in_tree5_tick_wids;
-  if (! root) {
+  auto *root = w->in_tree5_tick_wids;
+  if (root == nullptr) {
     return;
   }
 
@@ -2019,7 +2013,7 @@ static Widp wid_new(Gamep g, Widp parent)
 {
   TRACE_NO_INDENT();
 
-  auto w = new Wid();
+  auto *w = new Wid();
 
   w->parent     = parent;
   w->ts_created = wid_time;
@@ -2038,7 +2032,7 @@ static Widp wid_new(Gamep g, Widp parent)
 
   wid_set_mode(w, WID_MODE_NORMAL);
 
-  w->visible = true;
+  w->visible = 1u;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
   WID_DBG(w, "new");
 
@@ -2049,7 +2043,7 @@ static Widp wid_new(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  auto w = new Wid();
+  auto *w = new Wid();
 
   w->ts_created = wid_time;
 
@@ -2057,7 +2051,7 @@ static Widp wid_new(Gamep g)
   wid_tree2_unsorted_insert(w);
   wid_tree_global_unsorted_insert(w);
 
-  w->visible = true;
+  w->visible = 1u;
   wid_set_style(w, UI_WID_STYLE_NORMAL);
   WID_DBG(w, "new");
 
@@ -2071,7 +2065,7 @@ static void wid_destroy_immediate_internal(Gamep g, Widp w)
   wid_tree4_wids_being_destroyed_remove(w);
   wid_tree5_tick_wids_remove(w);
 
-  if (w->on_destroy) {
+  if (w->on_destroy != nullptr) {
     (w->on_destroy)(g, w);
   }
 
@@ -2090,15 +2084,15 @@ static void wid_destroy_immediate_internal(Gamep g, Widp w)
   //     wid_mouse_over_end();
   // }
 
-  if (w->scrollbar_vert) {
+  if (w->scrollbar_vert != nullptr) {
     w->scrollbar_vert->scrollbar_owner = nullptr;
   }
 
-  if (w->scrollbar_horiz) {
+  if (w->scrollbar_horiz != nullptr) {
     w->scrollbar_horiz->scrollbar_owner = nullptr;
   }
 
-  if (w->scrollbar_owner) {
+  if (w->scrollbar_owner != nullptr) {
     if (w->scrollbar_owner->scrollbar_vert == w) {
       w->scrollbar_owner->scrollbar_vert = nullptr;
     }
@@ -2112,7 +2106,7 @@ static void wid_destroy_immediate_internal(Gamep g, Widp w)
     auto iter = w->children_display_sorted.begin();
 
     while (iter != w->children_display_sorted.end()) {
-      auto child = iter->second;
+      auto *child = iter->second;
       wid_destroy_immediate(g, child);
       iter = w->children_display_sorted.begin();
     }
@@ -2122,7 +2116,7 @@ static void wid_destroy_immediate_internal(Gamep g, Widp w)
     auto iter = w->tree2_children_unsorted.begin();
 
     while (iter != w->tree2_children_unsorted.end()) {
-      auto child = iter->second;
+      auto *child = iter->second;
       wid_destroy_immediate(g, child);
       iter = w->tree2_children_unsorted.begin();
     }
@@ -2138,7 +2132,7 @@ static void wid_destroy_immediate(Gamep g_maybe_null, Widp w)
   //
   // If removing a top level widget, choose a new focus.
   //
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     wid_set_top_focus(g_maybe_null);
   }
 
@@ -2185,11 +2179,11 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
   int brx;
   int bry;
 
-  if (! wp) {
+  if (wp == nullptr) {
     return;
   }
 
-  auto w = *wp;
+  auto *w = *wp;
 
   if (unlikely(! w)) {
     return;
@@ -2199,13 +2193,13 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
 
   (*wp) = nullptr;
 
-  if (w->being_destroyed) {
-    if (delay) {
+  if (w->being_destroyed != 0u) {
+    if (delay != 0) {
       return;
     }
   }
 
-  w->being_destroyed = true;
+  w->being_destroyed = 1u;
   wid_tree4_wids_being_destroyed_insert(w);
 
   if (wid_focus == w) {
@@ -2219,15 +2213,15 @@ static void wid_destroy_delay(Gamep g, Widp *wp, int delay)
   //     wid_mouse_over_end();
   // }
   for (auto &iter : w->tree2_children_unsorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
     wid_destroy(g, &child);
   }
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     wid_get_abs_coords(w, &tlx, &tly, &brx, &bry);
   }
 
-  if (w->on_destroy_begin) {
+  if (w->on_destroy_begin != nullptr) {
     (w->on_destroy_begin)(g, w);
   }
 
@@ -2339,7 +2333,7 @@ Widp wid_new_square_button(Gamep g, Widp parent, std::string name)
     return nullptr;
   }
 
-  if (! parent) {
+  if (parent == nullptr) {
     ERR("No parent");
   }
 
@@ -2385,7 +2379,7 @@ Widp wid_new_plain(Gamep g, Widp parent, std::string name)
     return nullptr;
   }
 
-  if (! parent) {
+  if (parent == nullptr) {
     ERR("No parent");
   }
 
@@ -2431,7 +2425,7 @@ static Widp wid_new_scroll_trough(Gamep g, Widp parent)
     return nullptr;
   }
 
-  if (! parent) {
+  if (parent == nullptr) {
     ERR("No parent");
   }
 
@@ -2477,13 +2471,13 @@ static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scro
     return nullptr;
   }
 
-  if (! parent) {
+  if (parent == nullptr) {
     ERR("No parent");
   }
 
   Widp w = wid_new(g, parent);
 
-  if (vertical) {
+  if (vertical != 0u) {
     w->to_string = string_sprintf("%s, %s[%p]", name.c_str(), "vert scroll bar", (void *) w);
   } else {
     w->to_string = string_sprintf("%s, %s[%p]", name.c_str(), "horiz scroll bar", (void *) w);
@@ -2505,16 +2499,16 @@ static Widp wid_new_scroll_bar(Gamep g, Widp parent, std::string name, Widp scro
     wid_set_color(w, WID_COLOR_BG, c);
   }
 
-  wid_set_moveable(g, w, true);
-  wid_set_moveable_bounded(g, w, true);
+  wid_set_moveable(g, w, 1u);
+  wid_set_moveable_bounded(g, w, 1u);
 
-  if (vertical) {
-    wid_set_moveable_vert(g, w, true);
-    wid_set_moveable_horiz(g, w, false);
+  if (vertical != 0u) {
+    wid_set_moveable_vert(g, w, 1u);
+    wid_set_moveable_horiz(g, w, 0u);
     scrollbar_owner->scrollbar_vert = w;
   } else {
-    wid_set_moveable_horiz(g, w, true);
-    wid_set_moveable_vert(g, w, false);
+    wid_set_moveable_horiz(g, w, 1u);
+    wid_set_moveable_vert(g, w, 0u);
     scrollbar_owner->scrollbar_horiz = w;
   }
 
@@ -2544,7 +2538,7 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
     return nullptr;
   }
 
-  if (! parent) {
+  if (parent == nullptr) {
     ERR("No parent");
   }
 
@@ -2580,7 +2574,7 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
   {
     fpoint tl(0, 0);
     fpoint br(1, 1);
-    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, true);
+    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 1u);
     wid_set_pos_pct(scrollbar, tl, br);
 
     wid_update_internal(g, scrollbar);
@@ -2591,8 +2585,8 @@ Widp wid_new_vert_scroll_bar(Gamep g, Widp parent, std::string name, Widp scroll
     wid_set_mode(scrollbar, WID_MODE_NORMAL);
     wid_set_style(scrollbar, UI_WID_STYLE_VERT_DARK);
 
-    trough->is_scrollbar_vert_trough = true;
-    scrollbar->is_scrollbar_vert     = true;
+    trough->is_scrollbar_vert_trough = 1u;
+    scrollbar->is_scrollbar_vert     = 1u;
 
     return scrollbar;
   }
@@ -2606,7 +2600,7 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
     return nullptr;
   }
 
-  if (! parent) {
+  if (parent == nullptr) {
     ERR("No parent");
   }
 
@@ -2642,7 +2636,7 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
   {
     fpoint tl(0, 0);
     fpoint br(1, 1);
-    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, false);
+    Widp   scrollbar = wid_new_scroll_bar(g, trough, name, scrollbar_owner, 0u);
     wid_set_pos_pct(scrollbar, tl, br);
 
     wid_update_internal(g, scrollbar);
@@ -2650,8 +2644,8 @@ Widp wid_new_horiz_scroll_bar(Gamep g, Widp parent, std::string name, Widp scrol
     wid_visible(g, scrollbar);
     wid_set_style(scrollbar, UI_WID_STYLE_HORIZ_SCROLL_LIGHT);
 
-    trough->is_scrollbar_horiz_trough = true;
-    scrollbar->is_scrollbar_horiz     = true;
+    trough->is_scrollbar_horiz_trough = 1u;
+    scrollbar->is_scrollbar_horiz     = 1u;
 
     return scrollbar;
   }
@@ -2665,7 +2659,7 @@ static void wid_raise_internal(Gamep g, Widp w)
     return;
   }
 
-  if (w->do_not_raise) {
+  if (w->do_not_raise != 0u) {
     return;
   }
 
@@ -2685,14 +2679,14 @@ static void wid_raise_override(Gamep g, Widp parent)
   //
   // If some widget wants to be on top, let it.
   //
-  if (parent->do_not_lower) {
+  if (parent->do_not_lower != 0u) {
     wid_raise_internal(g, parent);
   }
 
   for (auto &iter : parent->children_display_sorted) {
-    auto w = iter.second;
+    auto *w = iter.second;
 
-    if (w->do_not_lower) {
+    if (w->do_not_lower != 0u) {
       wid_raise_internal(g, w);
       break;
     }
@@ -2709,7 +2703,7 @@ void wid_raise(Gamep g, Widp w_in)
     return;
   }
 
-  if (! w_in) {
+  if (w_in == nullptr) {
     return;
   }
 
@@ -2720,7 +2714,7 @@ void wid_raise(Gamep g, Widp w_in)
   //
   std::vector< Widp > worklist;
   for (auto &iter : wid_top_level) {
-    auto w = iter.second;
+    auto *w = iter.second;
     worklist.push_back(w);
   }
 
@@ -2734,7 +2728,7 @@ void wid_raise(Gamep g, Widp w_in)
   // If we were hovering over a window and it was replaced, we need to fake
   // a mouse movement so we know we are still over it.
   //
-  if (! w_in->parent) {
+  if (w_in->parent == nullptr) {
     wid_update_mouse(g);
   }
 }
@@ -2747,7 +2741,7 @@ static void wid_lower_internal(Gamep g, Widp w)
     return;
   }
 
-  if (w->do_not_lower) {
+  if (w->do_not_lower != 0u) {
     return;
   }
 
@@ -2764,7 +2758,7 @@ void wid_lower(Gamep g, Widp w_in)
     return;
   }
 
-  if (! w_in) {
+  if (w_in == nullptr) {
     return;
   }
 
@@ -2774,8 +2768,8 @@ void wid_lower(Gamep g, Widp w_in)
   // If some widget wants to be on top, let it.
   //
   for (auto &iter : wid_top_level) {
-    auto w = iter.second;
-    if (w->do_not_raise) {
+    auto *w = iter.second;
+    if (w->do_not_raise != 0u) {
       wid_lower_internal(g, w);
       break;
     }
@@ -2787,7 +2781,7 @@ void wid_lower(Gamep g, Widp w_in)
   // If we were hovering over a window and it was replaced, we need to fake
   // a mouse movement so we know we are still over it.
   //
-  if (! w_in->parent && ! w_in->children_display_sorted.empty()) {
+  if ((w_in->parent == nullptr) && ! w_in->children_display_sorted.empty()) {
     wid_update_mouse(g);
   }
 }
@@ -2800,7 +2794,7 @@ void wid_toggle_hidden(Gamep g, Widp w)
     return;
   }
 
-  if (w->hidden) {
+  if (w->hidden != 0u) {
     wid_visible(g, w);
     wid_raise(g, w);
   } else {
@@ -2812,8 +2806,8 @@ static void wid_find_first_child_focus(Widp w, Widp *best)
 {
   TRACE_NO_INDENT();
 
-  if (w->focus_order) {
-    if (! *best) {
+  if (w->focus_order != 0u) {
+    if (*best == nullptr) {
       *best = w;
     } else if (w->focus_order < (*best)->focus_order) {
       *best = w;
@@ -2821,7 +2815,7 @@ static void wid_find_first_child_focus(Widp w, Widp *best)
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     wid_find_first_child_focus(child, best);
   }
@@ -2834,14 +2828,14 @@ void wid_set_first_focus(Gamep g)
   Widp best {};
 
   for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-    auto w = iter.second;
+    auto *w = iter.second;
     if (wid_ignore_for_focus(w)) {
       continue;
     }
 
     best = nullptr;
     wid_find_first_child_focus(w, &best);
-    if (best) {
+    if (best != nullptr) {
       wid_set_focus(g, best);
       return;
     }
@@ -2852,7 +2846,7 @@ static void wid_find_specific_child_focus(Widp w, Widp *best, uint8_t focus_orde
 {
   TRACE_NO_INDENT();
 
-  if (w->focus_order) {
+  if (w->focus_order != 0u) {
     if (w->focus_order == focus_order) {
       *best = w;
       return;
@@ -2860,7 +2854,7 @@ static void wid_find_specific_child_focus(Widp w, Widp *best, uint8_t focus_orde
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     wid_find_specific_child_focus(child, best, focus_order);
   }
@@ -2879,15 +2873,15 @@ static Widp wid_find_top_wid_focus(Widp w)
   //
   // First time we've looked at this widget, hunt for the first focus.
   //
-  if (! w->focus_last) {
+  if (w->focus_last == 0u) {
     wid_find_first_child_focus(w, &best);
-    if (best) {
+    if (best != nullptr) {
       return best;
     }
   }
 
   wid_find_specific_child_focus(w, &best, w->focus_last);
-  if (best) {
+  if (best != nullptr) {
     return best;
   }
 
@@ -2905,7 +2899,7 @@ void wid_set_top_focus(Gamep g)
   Widp best {};
 
   for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-    auto w = iter.second;
+    auto *w = iter.second;
     if (wid_ignore_for_focus(w)) {
       continue;
     }
@@ -2915,16 +2909,16 @@ void wid_set_top_focus(Gamep g)
     //
     // First time we've looked at this widget, hunt for the first focus.
     //
-    if (! w->focus_last) {
+    if (w->focus_last == 0u) {
       wid_find_first_child_focus(w, &best);
-      if (best) {
+      if (best != nullptr) {
         wid_set_focus(g, best);
         return;
       }
     }
 
     wid_find_specific_child_focus(w, &best, w->focus_last);
-    if (best) {
+    if (best != nullptr) {
       wid_set_focus(g, best);
       return;
     }
@@ -2937,8 +2931,8 @@ static void wid_find_last_child_focus(Widp w, Widp *best)
 {
   TRACE_NO_INDENT();
 
-  if (w->focus_order) {
-    if (! *best) {
+  if (w->focus_order != 0u) {
+    if (*best == nullptr) {
       *best = w;
     } else if (w->focus_order > (*best)->focus_order) {
       *best = w;
@@ -2946,7 +2940,7 @@ static void wid_find_last_child_focus(Widp w, Widp *best)
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     wid_find_last_child_focus(child, best);
   }
@@ -2962,15 +2956,15 @@ Widp wid_get_focus(Widp w)
 
   Widp best {};
 
-  if (wid_focus) {
+  if (wid_focus != nullptr) {
     if (wid_get_top_parent(wid_focus) == wid_get_top_parent(w)) {
       return wid_focus;
     }
   }
 
-  if (! w->focus_last) {
+  if (w->focus_last == 0u) {
     best = wid_find_top_wid_focus(wid_get_top_parent(w));
-    if (best) {
+    if (best != nullptr) {
       return best;
     }
   }
@@ -2991,14 +2985,14 @@ static void wid_set_last_focus(Gamep g)
   Widp best {};
 
   for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-    auto w = iter.second;
+    auto *w = iter.second;
     if (wid_ignore_for_focus(w)) {
       continue;
     }
 
     best = nullptr;
     wid_find_last_child_focus(w, &best);
-    if (best) {
+    if (best != nullptr) {
       wid_set_focus(g, best);
       return;
     }
@@ -3009,8 +3003,8 @@ static void wid_find_next_child_focus(Widp w, Widp *best)
 {
   TRACE_NO_INDENT();
 
-  if (w->focus_order) {
-    if (*best) {
+  if (w->focus_order != 0u) {
+    if (*best != nullptr) {
       if ((w->focus_order < (*best)->focus_order) && (w->focus_order > wid_focus->focus_order)) {
         *best = w;
       }
@@ -3020,7 +3014,7 @@ static void wid_find_next_child_focus(Widp w, Widp *best)
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     wid_find_next_child_focus(child, best);
   }
@@ -3032,24 +3026,24 @@ static void wid_set_next_focus(Gamep g)
 
   Widp best {};
 
-  if (! wid_focus) {
+  if (wid_focus == nullptr) {
     wid_set_first_focus(g);
     return;
   }
 
   for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-    auto w = iter.second;
+    auto *w = iter.second;
 
     if (wid_ignore_for_focus(w)) {
       continue;
     }
 
-    if (! w->focus_last) {
+    if (w->focus_last == 0u) {
       continue;
     }
 
     wid_find_next_child_focus(w, &best);
-    if (best) {
+    if (best != nullptr) {
       wid_set_focus(g, best);
       return;
     }
@@ -3063,8 +3057,8 @@ static void wid_find_prev_child_focus(Widp w, Widp *best)
 {
   TRACE_NO_INDENT();
 
-  if (w->focus_order) {
-    if (*best) {
+  if (w->focus_order != 0u) {
+    if (*best != nullptr) {
       if ((w->focus_order > (*best)->focus_order) && (w->focus_order < wid_focus->focus_order)) {
         *best = w;
       }
@@ -3074,7 +3068,7 @@ static void wid_find_prev_child_focus(Widp w, Widp *best)
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     wid_find_prev_child_focus(child, best);
   }
@@ -3086,24 +3080,24 @@ static void wid_set_prev_focus(Gamep g)
 
   Widp best {};
 
-  if (! wid_focus) {
+  if (wid_focus == nullptr) {
     wid_set_first_focus(g);
     return;
   }
 
   for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-    auto w = iter.second;
+    auto *w = iter.second;
 
     if (wid_ignore_for_focus(w)) {
       continue;
     }
 
-    if (! w->focus_last) {
+    if (w->focus_last == 0u) {
       continue;
     }
 
     wid_find_prev_child_focus(w, &best);
-    if (best) {
+    if (best != nullptr) {
       wid_set_focus(g, best);
       return;
     }
@@ -3117,17 +3111,17 @@ Widp wid_find(Widp w, const std::string &name)
 {
   TRACE_NO_INDENT();
 
-  if (! strcasecmp(w->name.c_str(), name.c_str())) {
+  if (strcasecmp(w->name.c_str(), name.c_str()) == 0) {
     return w;
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     Widp ret {};
 
     ret = wid_find(child, name);
-    if (ret) {
+    if (ret != nullptr) {
       return ret;
     }
   }
@@ -3139,9 +3133,9 @@ Widp wid_find(const std::string &name)
   TRACE_NO_INDENT();
 
   for (auto &iter : wid_top_level) {
-    auto w = iter.second;
-    auto r = wid_find(w, name);
-    if (r) {
+    auto *w = iter.second;
+    auto *r = wid_find(w, name);
+    if (r != nullptr) {
       return r;
     }
   }
@@ -3161,12 +3155,12 @@ void wid_visible(Gamep g, Widp w)
     return;
   }
 
-  w->visible = true;
-  w->hidden  = false;
+  w->visible = 1u;
+  w->hidden  = 0u;
 
   std::vector< Widp > worklist;
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
     wid_visible(g, child);
   }
 
@@ -3181,7 +3175,7 @@ bool wid_is_visible(Widp w)
     return false;
   }
 
-  return w->visible;
+  return w->visible != 0u;
 }
 
 void wid_hide(Gamep g, Widp w)
@@ -3196,8 +3190,8 @@ void wid_hide(Gamep g, Widp w)
     return;
   }
 
-  w->hidden  = true;
-  w->visible = false;
+  w->hidden  = 1u;
+  w->visible = 0u;
 
   if (wid_over == w) {
     wid_mouse_over_end(g);
@@ -3213,7 +3207,7 @@ void wid_hide(Gamep g, Widp w)
 
   std::vector< Widp > worklist;
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
     wid_hide(g, child);
   }
 }
@@ -3222,20 +3216,20 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
 {
   TRACE_NO_INDENT();
 
-  float   height       = wid_get_height(owner);
-  float   width        = wid_get_width(owner);
-  float   child_height = 0;
-  float   child_width  = 0;
-  float   scrollbar_width;
-  float   scrollbar_height;
-  float   trough_height;
-  float   trough_width;
-  float   miny = 0;
-  float   maxy = 0;
-  float   minx = 0;
-  float   maxx = 0;
-  float   pct;
-  uint8_t first = true;
+  float height       = wid_get_height(owner);
+  float width        = wid_get_width(owner);
+  float child_height = 0;
+  float child_width  = 0;
+  float scrollbar_width;
+  float scrollbar_height;
+  float trough_height;
+  float trough_width;
+  float miny = 0;
+  float maxy = 0;
+  float minx = 0;
+  float maxx = 0;
+  float pct;
+  bool  first = 1u;
 
   //
   // Find out the space that the children take up then use this to
@@ -3243,40 +3237,38 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
   //
   {
     for (auto &iter : owner->tree2_children_unsorted) {
-      auto child = iter.second;
+      auto *child = iter.second;
 
-      int tl_x, tl_y, br_x, br_y;
+      int tl_x;
+      int tl_y;
+      int br_x;
+      int br_y;
 
       wid_get_tl_x_tl_y_br_x_br_y(child, &tl_x, &tl_y, &br_x, &br_y);
 
-      if (first) {
+      if (first != 0u) {
         minx  = tl_x;
         miny  = tl_y;
         maxx  = br_x;
         maxy  = br_y;
-        first = false;
+        first = 0u;
         continue;
       }
 
-      if (tl_x < minx) {
-        minx = tl_x;
-      }
+      minx = std::min< float >(tl_x, minx);
 
-      if (tl_y < miny) {
-        miny = tl_y;
-      }
+      miny = std::min< float >(tl_y, miny);
 
-      if (br_x > maxx) {
-        maxx = br_x;
-      }
+      maxx = std::max< float >(br_x, maxx);
 
-      if (br_y > maxy) {
-        maxy = br_y;
-      }
+      maxy = std::max< float >(br_y, maxy);
     }
   }
 
-  int ptl_x, ptl_y, pbr_x, pbr_y;
+  int ptl_x;
+  int ptl_y;
+  int pbr_x;
+  int pbr_y;
   wid_get_tl_x_tl_y_br_x_br_y(owner, &ptl_x, &ptl_y, &pbr_x, &pbr_y);
 
   minx -= ptl_x;
@@ -3297,22 +3289,22 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
     child_height = maxy - miny + 1;
   }
 
-  if (owner->scrollbar_vert) {
+  if (owner->scrollbar_vert != nullptr) {
     if (wid_get_moveable_vert(scrollbar)) {
       trough_height    = wid_get_height(owner->scrollbar_vert->parent);
       scrollbar_height = (int) (trough_height * (height / child_height));
 
-      if (trough_height - scrollbar_height == 0.0f) {
-        pct = 0.0f;
+      if (trough_height - scrollbar_height == 0.0F) {
+        pct = 0.0F;
       } else {
         pct = (((float) wid_get_tl_y(scrollbar)) - ((float) wid_get_tl_y(scrollbar->parent)))
-            / ((float) (trough_height - scrollbar_height));
+            / ((trough_height - scrollbar_height));
       }
 
       owner->offset.y = (int) -miny;
       owner->offset.y -= (int) ((pct * (child_height - height)));
 
-      float n = ((float) wid_get_tl_y(scrollbar->parent)) + pct * ((float) (trough_height - scrollbar_height));
+      float n             = ((float) wid_get_tl_y(scrollbar->parent)) + (pct * ((trough_height - scrollbar_height)));
       scrollbar->key.tl.y = (int) ceil(n);
 
       wid_tree_detach(scrollbar);
@@ -3323,13 +3315,13 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
     }
   }
 
-  if (owner->scrollbar_horiz) {
+  if (owner->scrollbar_horiz != nullptr) {
     if (wid_get_moveable_horiz(scrollbar)) {
       trough_width    = wid_get_width(owner->scrollbar_horiz->parent);
       scrollbar_width = (int) (trough_width * (width / child_width));
 
-      if (trough_width - scrollbar_width == 0.0f) {
-        pct = 0.0f;
+      if (trough_width - scrollbar_width == 0.0F) {
+        pct = 0.0F;
       } else {
         pct = (wid_get_tl_x(scrollbar) - wid_get_tl_x(scrollbar->parent)) / (trough_width - scrollbar_width);
       }
@@ -3337,7 +3329,7 @@ static void wid_adjust_scrollbar(Gamep g, Widp scrollbar, Widp owner)
       owner->offset.x = (int) -minx;
       owner->offset.x -= (int) (pct * (child_width - width));
 
-      float n = ((float) wid_get_tl_x(scrollbar->parent)) + pct * ((float) (trough_width - scrollbar_width));
+      float n             = ((float) wid_get_tl_x(scrollbar->parent)) + (pct * ((trough_width - scrollbar_width)));
       scrollbar->key.tl.x = (int) ceil(n);
 
       wid_tree_detach(scrollbar);
@@ -3353,15 +3345,15 @@ void wid_get_children_size(Widp owner, int *w, int *h)
 {
   TRACE_NO_INDENT();
 
-  float   height       = wid_get_height(owner);
-  float   width        = wid_get_width(owner);
-  float   child_height = 0;
-  float   child_width  = 0;
-  float   miny         = 0;
-  float   maxy         = 0;
-  float   minx         = 0;
-  float   maxx         = 0;
-  uint8_t first        = true;
+  float height       = wid_get_height(owner);
+  float width        = wid_get_width(owner);
+  float child_height = 0;
+  float child_width  = 0;
+  float miny         = 0;
+  float maxy         = 0;
+  float minx         = 0;
+  float maxx         = 0;
+  bool  first        = 1u;
 
   //
   // Find out the space that the children take up then use this to
@@ -3369,37 +3361,29 @@ void wid_get_children_size(Widp owner, int *w, int *h)
   //
   for (auto &iter : owner->children_display_sorted) {
 
-    auto child = iter.second;
+    auto *child = iter.second;
 
     int tminx = wid_get_tl_x(child) - wid_get_tl_x(child->parent);
     int tminy = wid_get_tl_y(child) - wid_get_tl_y(child->parent);
     int tmaxx = wid_get_br_x(child) - wid_get_tl_x(child->parent);
     int tmaxy = wid_get_br_y(child) - wid_get_tl_y(child->parent);
 
-    if (first) {
+    if (first != 0u) {
       minx  = tminx;
       miny  = tminy;
       maxx  = tmaxx;
       maxy  = tmaxy;
-      first = false;
+      first = 0u;
       continue;
     }
 
-    if (tminx < minx) {
-      minx = tminx;
-    }
+    minx = std::min< float >(tminx, minx);
 
-    if (tminy < miny) {
-      miny = tminy;
-    }
+    miny = std::min< float >(tminy, miny);
 
-    if (tmaxx > maxx) {
-      maxx = tmaxx;
-    }
+    maxx = std::max< float >(tmaxx, maxx);
 
-    if (tmaxy > maxy) {
-      maxy = tmaxy;
-    }
+    maxy = std::max< float >(tmaxy, maxy);
   }
 
   child_width  = maxx - minx;
@@ -3415,11 +3399,11 @@ void wid_get_children_size(Widp owner, int *w, int *h)
     child_height = maxy - miny;
   }
 
-  if (w) {
+  if (w != nullptr) {
     *w = (int) child_width;
   }
 
-  if (h) {
+  if (h != nullptr) {
     *h = (int) child_height;
   }
 }
@@ -3433,7 +3417,7 @@ static void wid_update_internal(Gamep g, Widp w)
   int brx;
   int bry;
 
-  if (! w) {
+  if (w == nullptr) {
     return;
   }
 
@@ -3442,10 +3426,10 @@ static void wid_update_internal(Gamep g, Widp w)
   //
   // First time around, initialize the wid.
   //
-  if (! w->first_update) {
-    w->first_update = true;
+  if (w->first_update == 0u) {
+    w->first_update = 1u;
 
-    if (! w->parent) {
+    if (w->parent == nullptr) {
       //
       // Find the focus.
       //
@@ -3467,7 +3451,7 @@ static void wid_update_internal(Gamep g, Widp w)
 
   {
     for (auto &iter : w->tree2_children_unsorted) {
-      auto c = iter.second;
+      auto *c = iter.second;
       worklist.push_back(c);
     }
   }
@@ -3479,18 +3463,18 @@ static void wid_update_internal(Gamep g, Widp w)
   //
   // If the source of the event is the scrollbars themselves...
   //
-  if (w->scrollbar_owner) {
+  if (w->scrollbar_owner != nullptr) {
     wid_adjust_scrollbar(g, w, w->scrollbar_owner);
     wid_update_internal(g, w->scrollbar_owner);
   } else {
     //
     // If the source of the event is the owner of the scrollbars...
     //
-    if (w->scrollbar_vert) {
+    if (w->scrollbar_vert != nullptr) {
       wid_adjust_scrollbar(g, w->scrollbar_vert, w);
     }
 
-    if (w->scrollbar_horiz) {
+    if (w->scrollbar_horiz != nullptr) {
       wid_adjust_scrollbar(g, w->scrollbar_horiz, w);
     }
   }
@@ -3500,7 +3484,7 @@ void wid_update(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (! w) {
+  if (w == nullptr) {
     return;
   }
 
@@ -3510,7 +3494,7 @@ void wid_update(Gamep g, Widp w)
   // If we were hovering over a window and it was replaced, we need to fake
   // a mouse movement so we know we are still over it.
   //
-  if (! w->parent && ! w->children_display_sorted.empty()) {
+  if ((w->parent == nullptr) && ! w->children_display_sorted.empty()) {
     wid_update_mouse(g);
   }
 }
@@ -3531,10 +3515,10 @@ void wid_scroll_text(Widp w)
   //
   // Now copy the text up to the parent widgets.
   //
-  while (tmp) {
+  while (tmp != nullptr) {
     prev = wid_get_prev(tmp);
 
-    if (prev) {
+    if (prev != nullptr) {
       s = wid_get_text(prev);
 
       wid_set_text(tmp, s);
@@ -3565,9 +3549,9 @@ void wid_scroll_with_input(Gamep g, Widp w, std::string str)
   // Now get the 2nd last line. The last line is the input. The 2nd last
   // line is where new output goes.
   //
-  if (tmp) {
+  if (tmp != nullptr) {
     tmp = wid_get_next(tmp);
-    if (tmp) {
+    if (tmp != nullptr) {
       wid_set_text(tmp, str);
     }
   }
@@ -3597,8 +3581,8 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
   origtext = wid_get_text(w);
   origlen  = (uint32_t) origtext.length();
 
-  if (! w->received_input) {
-    wid_set_received_input(w, true);
+  if (w->received_input == 0u) {
+    wid_set_received_input(w, 1u);
     w->cursor = (uint32_t) origtext.length();
   }
 
@@ -3614,7 +3598,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
     case KMOD_RCTRL :
       switch (wid_event_to_char(key)) {
         case 'p' :
-          if (! g_history_walk) {
+          if (g_history_walk == 0u) {
             g_history_walk = HISTORY_MAX - 1;
           } else {
             g_history_walk--;
@@ -3644,7 +3628,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
 
       switch (key->sym) {
         case SDLK_BACKSPACE :
-          if (beforecursor.size()) {
+          if (! beforecursor.empty() != 0u) {
             w->cursor--;
 
             beforecursor.erase(beforecursor.end() - 1);
@@ -3658,8 +3642,8 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
             return true;
           }
 
-          command_handle(g, wid_get_text(w), &updatedtext, false /* show ambiguous */, true /* show complete */,
-                         false /* execute command */, nullptr /* context */);
+          command_handle(g, wid_get_text(w), &updatedtext, 0u /* show ambiguous */, 1u /* show complete */,
+                         0u /* execute command */, nullptr /* context */);
 
           if (! updatedtext.empty()) {
             wid_set_text(w, updatedtext);
@@ -3672,7 +3656,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
             return false;
           }
 
-          if (origlen && (w == wid_console_input_line)) {
+          if ((origlen != 0u) && (w == wid_console_input_line)) {
             static std::string entered;
             static std::string entered2;
 
@@ -3682,8 +3666,9 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
             wid_scroll_text(w);
             wid_set_text(w->next, entered2);
 
-            if (! command_handle(g, entered, &updatedtext, true /* show ambiguous */, false /* show complete */,
-                                 true /* execute command */, nullptr /* context */)) {
+            if (command_handle(g, entered, &updatedtext, 1u /* show ambiguous */, 0u /* show complete */,
+                               1u /* execute command */, nullptr /* context */)
+                == 0u) {
               return true;
             }
 
@@ -3725,14 +3710,14 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
           cnt = 0;
           while (cnt < HISTORY_MAX) {
             cnt++;
-            if (! g_history_walk) {
+            if (g_history_walk == 0u) {
               g_history_walk = HISTORY_MAX - 1;
             } else {
               g_history_walk--;
             }
 
             wid_set_text(w, history[ g_history_walk ]);
-            if (history[ g_history_walk ] == "") {
+            if (history[ g_history_walk ].empty()) {
               continue;
             }
 
@@ -3752,7 +3737,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
             }
 
             wid_set_text(w, history[ g_history_walk ]);
-            if (history[ g_history_walk ] == "") {
+            if (history[ g_history_walk ].empty()) {
               continue;
             }
 
@@ -3773,8 +3758,8 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
               case SDLK_ESCAPE :
               case '?' :
                 if (w == wid_console_input_line) {
-                  command_handle(g, wid_get_text(w), &updatedtext, true /* show ambiguous */,
-                                 false /* show complete */, false /* execute command */, nullptr /* context */);
+                  command_handle(g, wid_get_text(w), &updatedtext, 1u /* show ambiguous */, 0u /* show complete */,
+                                 0u /* execute command */, nullptr /* context */);
 
                   if (! updatedtext.empty()) {
                     wid_set_text(w, updatedtext);
@@ -3840,7 +3825,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
       //
       wid_toggle_hidden(g, wid_console_window);
 
-      if (wid_console_window->visible) {
+      if (wid_console_window->visible != 0u) {
         wid_console_raise(g);
       }
     }
@@ -3848,7 +3833,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
     //
     // Need this so the console gets focus over the menu.
     //
-    if (w && w->visible) {
+    if ((w != nullptr) && (w->visible != 0u)) {
       wid_set_focus(g, w);
       wid_focus_lock(g, w);
     } else {
@@ -3873,14 +3858,14 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
       break;
 
     case SDLK_ESCAPE :
-      if (w && w->visible) {
+      if ((w != nullptr) && (w->visible != 0u)) {
         wid_hide(g, w);
       }
 
       //
       // Need this so the console gets focus over the menu.
       //
-      if (w && w->visible) {
+      if ((w != nullptr) && (w->visible != 0u)) {
         wid_set_focus(g, w);
         wid_focus_lock(g, w);
       } else {
@@ -3898,7 +3883,7 @@ bool wid_receive_input(Gamep g, Widp w, const SDL_Keysym *key)
     case SDLK_LEFT :   wid_set_prev_focus(g); break;
 
     default :
-      if (wid_console_window && wid_console_window->visible) {
+      if ((wid_console_window != nullptr) && (wid_console_window->visible != 0u)) {
         wid_console_receive_input(g, wid_console_input_line, key);
       }
       break;
@@ -3911,7 +3896,7 @@ Widp wid_find_at(int x, int y)
 {
   TRACE_NO_INDENT();
 
-  auto w = wid_on_screen_at[ x ][ y ];
+  auto *w = wid_on_screen_at[ x ][ y ];
   if (unlikely(! w)) {
     return nullptr;
   }
@@ -3931,7 +3916,7 @@ static Widp wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
     return nullptr;
   }
 
-  if (! w->visible) {
+  if (w->visible == 0u) {
     return nullptr;
   }
 
@@ -3948,7 +3933,7 @@ static Widp wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
     return nullptr;
   }
 
-  if (strict) {
+  if (strict != 0u) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
     }
@@ -3956,14 +3941,14 @@ static Widp wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
 
   {
     for (auto &iter : w->children_display_sorted) {
-      auto child = iter.second;
+      auto *child = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      Widp closer_match = wid_key_down_handler_at(g, child, x, y, true /* strict */);
-      if (closer_match) {
+      Widp closer_match = wid_key_down_handler_at(g, child, x, y, 1u /* strict */);
+      if (closer_match != nullptr) {
         return closer_match;
       }
     }
@@ -3971,20 +3956,20 @@ static Widp wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
 
   {
     for (auto &iter : w->children_display_sorted) {
-      auto child = iter.second;
+      auto *child = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      Widp closer_match = wid_key_down_handler_at(g, child, x, y, false /* strict */);
-      if (closer_match) {
+      Widp closer_match = wid_key_down_handler_at(g, child, x, y, 0u /* strict */);
+      if (closer_match != nullptr) {
         return closer_match;
       }
     }
 
-    if (w->on_key_down) {
-      if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+    if (w->on_key_down != nullptr) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
         return nullptr;
       }
 
@@ -3993,8 +3978,8 @@ static Widp wid_key_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
   }
 
   w = wid_get_top_parent(w);
-  if (w->on_key_down) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->on_key_down != nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -4012,7 +3997,7 @@ static Widp wid_key_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
     return nullptr;
   }
 
-  if (! w->visible) {
+  if (w->visible == 0u) {
     return nullptr;
   }
 
@@ -4029,40 +4014,40 @@ static Widp wid_key_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t strict)
     return nullptr;
   }
 
-  if (strict) {
+  if (strict != 0u) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
     }
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
-    if (wid_focus_locked && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
       continue;
     }
 
-    Widp closer_match = wid_key_up_handler_at(g, child, x, y, true /* strict */);
-    if (closer_match) {
+    Widp closer_match = wid_key_up_handler_at(g, child, x, y, 1u /* strict */);
+    if (closer_match != nullptr) {
       return closer_match;
     }
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
-    if (wid_focus_locked && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
       continue;
     }
 
-    Widp closer_match = wid_key_up_handler_at(g, child, x, y, false /* strict */);
-    if (closer_match) {
+    Widp closer_match = wid_key_up_handler_at(g, child, x, y, 0u /* strict */);
+    if (closer_match != nullptr) {
       return closer_match;
     }
   }
 
-  if (w->on_key_up) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->on_key_up != nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -4080,7 +4065,7 @@ static Widp wid_joy_button_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
     return nullptr;
   }
 
-  if (! w->visible) {
+  if (w->visible == 0u) {
     return nullptr;
   }
 
@@ -4097,27 +4082,27 @@ static Widp wid_joy_button_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
     return nullptr;
   }
 
-  if (strict) {
+  if (strict != 0u) {
     if ((x < w->abs_tl.x) || (y < w->abs_tl.y) || (x > w->abs_br.x) || (y > w->abs_br.y)) {
       return nullptr;
     }
   }
 
   for (auto &iter : w->children_display_sorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
-    if (wid_focus_locked && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(child) != wid_get_top_parent(wid_focus_locked))) {
       continue;
     }
 
-    Widp closer_match = wid_joy_button_handler_at(g, child, x, y, true /* strict */);
-    if (closer_match) {
+    Widp closer_match = wid_joy_button_handler_at(g, child, x, y, 1u /* strict */);
+    if (closer_match != nullptr) {
       return closer_match;
     }
   }
 
-  if (w->on_joy_button) {
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+  if (w->on_joy_button != nullptr) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       return nullptr;
     }
 
@@ -4135,7 +4120,7 @@ static void wid_children_move_delta_internal(Gamep g, Widp w, int dx, int dy)
   // Make sure you can't move a wid outside the parents box.
   //
   Widp p = w->parent;
-  if (p) {
+  if (p != nullptr) {
     if (wid_get_moveable_bounded(w)) {
       if (wid_get_tl_x(w) + dx < wid_get_tl_x(p)) {
         dx = wid_get_tl_x(p) - wid_get_tl_x(w);
@@ -4163,7 +4148,7 @@ static void wid_children_move_delta_internal(Gamep g, Widp w, int dx, int dy)
   wid_tree_attach(w);
 
   for (auto &iter : w->tree2_children_unsorted) {
-    auto child = iter.second;
+    auto *child = iter.second;
 
     wid_children_move_delta_internal(g, child, dx, dy);
   }
@@ -4179,7 +4164,7 @@ static void wid_move_delta_internal(Gamep g, Widp w, int dx, int dy)
   // Make sure you can't move a wid outside the parents box.
   //
   Widp p = w->parent;
-  if (p) {
+  if (p != nullptr) {
     if (wid_get_moveable_bounded(w)) {
       if (wid_get_tl_x(w) + dx < wid_get_tl_x(p)) {
         dx = wid_get_tl_x(p) - wid_get_tl_x(w);
@@ -4209,7 +4194,7 @@ static void wid_move_delta_internal(Gamep g, Widp w, int dx, int dy)
 
   {
     for (auto &iter : w->tree2_children_unsorted) {
-      auto c = iter.second;
+      auto *c = iter.second;
       worklist.push_back(c);
     }
   }
@@ -4248,7 +4233,7 @@ void wid_move_delta_pct(Gamep g, Widp w, float dx, float dy)
 {
   TRACE_NO_INDENT();
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     dx *= (float) TERM_WIDTH;
     dy *= (float) TERM_HEIGHT;
   } else {
@@ -4265,7 +4250,7 @@ void wid_move_to(Gamep g, Widp w, int x, int y)
 {
   TRACE_NO_INDENT();
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     wid_move_delta(g, w, x - wid_get_tl_x(w->parent), y - wid_get_tl_y(w->parent));
   } else {
     wid_move_delta(g, w, x - wid_get_tl_x(w), y - wid_get_tl_y(w));
@@ -4276,7 +4261,7 @@ void wid_move_to_bottom(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     wid_move_delta(g, w, 0, wid_get_br_y(w->parent) - wid_get_br_y(w));
   } else {
     wid_move_delta(g, w, 0, TERM_HEIGHT - wid_get_br_y(w));
@@ -4286,7 +4271,7 @@ void wid_move_to_bottom(Gamep g, Widp w)
 void wid_move_to_y_off(Gamep g, Widp w, int off)
 {
   TRACE_NO_INDENT();
-  if (! g) {
+  if (g == nullptr) {
     ERR("no game pointer");
     return;
   }
@@ -4297,7 +4282,7 @@ void wid_move_to_left(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     wid_move_delta(g, w, wid_get_tl_x(w->parent) - wid_get_tl_x(w), 0);
   } else {
     wid_move_delta(g, w, -wid_get_tl_x(w), 0);
@@ -4308,7 +4293,7 @@ void wid_move_to_right(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     wid_move_delta(g, w, wid_get_br_x(w->parent) - wid_get_br_x(w), 0);
   } else {
     wid_move_delta(g, w, TERM_WIDTH - wid_get_br_x(w), 0);
@@ -4341,7 +4326,7 @@ void wid_move_to_top(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (w->parent) {
+  if (w->parent != nullptr) {
     wid_move_delta(g, w, 0, wid_get_tl_y(w->parent) - wid_get_tl_y(w));
   } else {
     wid_move_delta(g, w, 0, -wid_get_tl_y(w));
@@ -4353,13 +4338,13 @@ static Widp wid_joy_button_handler(Gamep g, int x, int y)
   TRACE_NO_INDENT();
 
   for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-    auto w = iter.second;
+    auto *w = iter.second;
 
-    if (wid_focus_locked && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
+    if ((wid_focus_locked != nullptr) && (wid_get_top_parent(w) != wid_get_top_parent(wid_focus_locked))) {
       continue;
     }
 
-    w = wid_joy_button_handler_at(g, w, x, y, false /* strict */);
+    w = wid_joy_button_handler_at(g, w, x, y, 0u /* strict */);
     if (unlikely(! w)) {
       continue;
     }
@@ -4377,59 +4362,59 @@ void wid_fake_joy_button(Gamep g, int x, int y)
 {
   TRACE_NO_INDENT();
 
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ] != 0u) {
     wid_mouse_down(g, 2, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_RIGHT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ] != 0u) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ] != 0u) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ] != 0u) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ] != 0u) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_LEFT, x, y);
     return;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] != 0u) {
     wid_mouse_down(g, SDL_BUTTON_RIGHT, x, y);
     return;
   }
@@ -4440,7 +4425,7 @@ void wid_joy_button(Gamep g, int x, int y)
   TRACE_NO_INDENT();
 
   pixel_to_ascii(g, &x, &y);
-  if (! ascii_ok(x, y)) {
+  if (ascii_ok(x, y) == 0) {
     return;
   }
 
@@ -4451,19 +4436,19 @@ void wid_joy_button(Gamep g, int x, int y)
   // Only if there is a change in status, send an event.
   //
   static std::array< ts_t, SDL_MAX_BUTTONS > ts;
-  int                                        changed = false;
+  int                                        changed = 0;
   int                                        b;
 
   for (b = 0; b < SDL_MAX_BUTTONS; b++) {
-    if (sdl.joy_buttons[ b ]) {
+    if (sdl.joy_buttons[ b ] != 0u) {
       if (time_have_x_tenths_passed_since(2, ts[ b ])) {
-        changed = true;
+        changed = 1;
         ts[ b ] = time_ms_cached();
       }
     }
   }
 
-  if (! changed) {
+  if (changed == 0) {
     return;
   }
 
@@ -4478,14 +4463,14 @@ void wid_joy_button(Gamep g, int x, int y)
   //
   // Raise on mouse.
   //
-  if (w->on_joy_button) {
+  if (w->on_joy_button != nullptr) {
     //
     // If the button doesn't eat the event, try the parent.
     //
     while (! (w->on_joy_button)(g, w, x, y)) {
       w = w->parent;
 
-      while (w && ! w->on_joy_button) {
+      while ((w != nullptr) && (w->on_joy_button == nullptr)) {
         w = w->parent;
       }
 
@@ -4526,40 +4511,40 @@ static Widp wid_key_down_handler(Gamep g, int x, int y)
   Widp w {};
 
   // CON("key down.");
-  w = wid_key_down_handler_at(g, wid_focus, x, y, true /* strict */);
-  if (w) {
+  w = wid_key_down_handler_at(g, wid_focus, x, y, 1u /* strict */);
+  if (w != nullptr) {
     // CON("%s %d.",to_cstring(w).c_str(),__LINE__);
     return w;
   }
 
-  w = wid_key_down_handler_at(g, wid_get_top_parent(wid_focus), x, y, false /* strict */);
-  if (w) {
+  w = wid_key_down_handler_at(g, wid_get_top_parent(wid_focus), x, y, 0u /* strict */);
+  if (w != nullptr) {
     // CON("%s %d.",to_string(w).c_str(),__LINE__);
     return w;
   }
 
-  w = wid_key_down_handler_at(g, wid_over, x, y, true /* strict */);
-  if (w) {
+  w = wid_key_down_handler_at(g, wid_over, x, y, 1u /* strict */);
+  if (w != nullptr) {
     // CON("%s %d.",to_string(w).c_str(),__LINE__);
     return w;
   }
 
-  w = wid_key_down_handler_at(g, wid_get_top_parent(wid_over), x, y, false /* strict */);
-  if (w) {
+  w = wid_key_down_handler_at(g, wid_get_top_parent(wid_over), x, y, 0u /* strict */);
+  if (w != nullptr) {
     // CON("%s %d.",to_string(w).c_str(),__LINE__);
     return w;
   }
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         // CON("  focus is locked.");
         continue;
       }
 
-      c = wid_key_down_handler_at(g, c, x, y, true /* strict */);
+      c = wid_key_down_handler_at(g, c, x, y, 1u /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -4571,14 +4556,14 @@ static Widp wid_key_down_handler(Gamep g, int x, int y)
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         // CON("  focus is locked.");
         continue;
       }
 
-      c = wid_key_down_handler_at(g, c, x, y, false /* strict */);
+      c = wid_key_down_handler_at(g, c, x, y, 0u /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -4597,35 +4582,35 @@ static Widp wid_key_up_handler(Gamep g, int x, int y)
 
   Widp w {};
 
-  w = wid_key_up_handler_at(g, wid_focus, x, y, true /* strict */);
-  if (w) {
+  w = wid_key_up_handler_at(g, wid_focus, x, y, 1u /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
-  w = wid_key_up_handler_at(g, wid_get_top_parent(wid_focus), x, y, false /* strict */);
-  if (w) {
+  w = wid_key_up_handler_at(g, wid_get_top_parent(wid_focus), x, y, 0u /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
-  w = wid_key_up_handler_at(g, wid_over, x, y, true /* strict */);
-  if (w) {
+  w = wid_key_up_handler_at(g, wid_over, x, y, 1u /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
-  w = wid_key_up_handler_at(g, wid_get_top_parent(wid_over), x, y, false /* strict */);
-  if (w) {
+  w = wid_key_up_handler_at(g, wid_get_top_parent(wid_over), x, y, 0u /* strict */);
+  if (w != nullptr) {
     return w;
   }
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      c = wid_key_up_handler_at(g, c, x, y, true /* strict */);
+      c = wid_key_up_handler_at(g, c, x, y, 1u /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -4636,13 +4621,13 @@ static Widp wid_key_up_handler(Gamep g, int x, int y)
 
   {
     for (auto &iter : std::ranges::reverse_view(wid_top_level)) {
-      auto c = iter.second;
+      auto *c = iter.second;
 
-      if (wid_focus_locked && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
+      if ((wid_focus_locked != nullptr) && (wid_get_top_parent(c) != wid_get_top_parent(wid_focus_locked))) {
         continue;
       }
 
-      c = wid_key_up_handler_at(g, c, x, y, false /* strict */);
+      c = wid_key_up_handler_at(g, c, x, y, 0u /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -4718,7 +4703,7 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
   Widp w {};
 
   pixel_to_ascii(g, &x, &y);
-  if (! ascii_ok(x, y)) {
+  if (ascii_ok(x, y) == 0) {
     DBG("SDL: Keyboard: bad coord %d,%d", x, y);
     return;
   }
@@ -4755,9 +4740,9 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
     return;
   }
 #endif
-  if (wid_focus && ! wid_is_hidden(wid_focus) && (wid_focus->on_key_down)) {
+  if ((wid_focus != nullptr) && ! wid_is_hidden(wid_focus) && ((wid_focus->on_key_down) != nullptr)) {
     if ((wid_focus->on_key_down)(g, wid_focus, key)) {
-      if (wid_focus) {
+      if (wid_focus != nullptr) {
         DBG("WID: key grabbed by focused wid: %s at (%d,%d)", wid_focus->name.c_str(), ascii_mouse_x, ascii_mouse_y);
       }
       //
@@ -4794,15 +4779,15 @@ void wid_key_down(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
 try_parent:
-  if (w) {
+  if (w != nullptr) {
     w = w->parent;
 
     //
     // Ripple the key event to the parent so global things like pressing
     // escape can do things.
     //
-    while (w) {
-      if (w->on_key_down) {
+    while (w != nullptr) {
+      if (w->on_key_down != nullptr) {
         if ((w->on_key_down)(g, w, key)) {
           DBG("WID: key grabbed by wid: %s for (%d,%d)", w->name.c_str(), ascii_mouse_x, ascii_mouse_y);
           //
@@ -4833,16 +4818,16 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   Widp w {};
 
   pixel_to_ascii(g, &x, &y);
-  if (! ascii_ok(x, y)) {
+  if (ascii_ok(x, y) == 0) {
     return;
   }
   ascii_mouse_x = x;
   ascii_mouse_y = y;
 
-  if (wid_focus && ! wid_is_hidden(wid_focus) && (wid_focus->on_key_up)) {
+  if ((wid_focus != nullptr) && ! wid_is_hidden(wid_focus) && ((wid_focus->on_key_up) != nullptr)) {
 
     if ((wid_focus->on_key_up)(g, wid_focus, key)) {
-      if (wid_focus) {
+      if (wid_focus != nullptr) {
         wid_set_mode(wid_focus, WID_MODE_ACTIVE);
       }
 
@@ -4876,15 +4861,15 @@ void wid_key_up(Gamep g, const struct SDL_Keysym *key, int x, int y)
   }
 
 try_parent:
-  if (w) {
+  if (w != nullptr) {
     w = w->parent;
 
     //
     // Ripple the key event to the parent so global things like pressing
     // escape can do things.
     //
-    while (w) {
-      if (w->on_key_up) {
+    while (w != nullptr) {
+      if (w->on_key_up != nullptr) {
         if ((w->on_key_up)(g, w, key)) {
           wid_set_mode(w, WID_MODE_ACTIVE);
 
@@ -4916,7 +4901,7 @@ void wid_get_abs_coords(Widp w, int *tlx, int *tly, int *brx, int *bry)
   *bry = wid_get_br_y(w);
 
   p = w->parent;
-  while (p) {
+  while (p != nullptr) {
     *tlx += p->offset.x;
     *tly += p->offset.y;
     *brx += p->offset.x;
@@ -5034,7 +5019,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   // If we're clipped out of existence! then nothing to draw. This can
   // be outside the bounds of a widget or if at the top level, off screeen.
   //
-  if (clip) {
+  if (clip != 0) {
     clip_width = brx - tlx;
     if (clip_width < 0) {
       return;
@@ -5046,16 +5031,16 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     }
   }
 
-  hidden        = wid_is_hidden(w);
-  always_hidden = wid_is_always_hidden(w);
+  hidden        = static_cast< uint8_t >(wid_is_hidden(w));
+  always_hidden = static_cast< uint8_t >(wid_is_always_hidden(w));
 
-  if (always_hidden) {
+  if (always_hidden != 0u) {
     //
     // Always render. Not hidden yet.
     //
     return;
   }
-  if (hidden) {
+  if (hidden != 0u) {
     //
     // Hidden or parent is hidden.
     //
@@ -5109,15 +5094,15 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     text = wid_get_text(w);
   }
 
-  if (w->disable_scissors) {
-    disable_scissor = true;
+  if (w->disable_scissors != 0u) {
+    disable_scissor = 1u;
   }
 
   //
   // Should be no need for scissors if you do not have any children
   // or are not the top level wid.
   //
-  if (! disable_scissor) {
+  if (disable_scissor == 0u) {
 #if 0
   //
   // Why would we not always want scissors on?
@@ -5128,8 +5113,8 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     // Tell the parent we are doing scissors so they can re-do
     // their own scissors.
     //
-    if (updated_scissors) {
-      *updated_scissors = true;
+    if (updated_scissors != nullptr) {
+      *updated_scissors = 1u;
     }
 #if 0
 
@@ -5158,26 +5143,18 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     auto sciss_brx = brx;
     auto sciss_bry = bry;
 
-    auto p = w->parent;
-    while (p) {
+    auto *p = w->parent;
+    while (p != nullptr) {
       int ptlx;
       int ptly;
       int pbrx;
       int pbry;
       wid_get_abs_coords(p, &ptlx, &ptly, &pbrx, &pbry);
 
-      if (ptlx > sciss_tlx) {
-        sciss_tlx = ptlx;
-      }
-      if (pbrx < sciss_brx) {
-        sciss_brx = pbrx;
-      }
-      if (ptly > sciss_tly) {
-        sciss_tly = ptly;
-      }
-      if (pbry < sciss_bry) {
-        sciss_bry = pbry;
-      }
+      sciss_tlx = std::max(ptlx, sciss_tlx);
+      sciss_brx = std::min(pbrx, sciss_brx);
+      sciss_tly = std::max(ptly, sciss_tly);
+      sciss_bry = std::min(pbry, sciss_bry);
 
       p = p->parent;
     }
@@ -5206,15 +5183,15 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
   w_box_args.height   = (br.y - tl.y);
 
   if (w == wid_over) {
-    w_box_args.over = true;
+    w_box_args.over = 1;
 
-    if (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_TEXT_FG ]) {
+    if (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_TEXT_FG ] != 0u) {
       w_box_args.col_text = w->cfg[ WID_MODE_OVER ].colors[ WID_COLOR_TEXT_FG ];
     } else {
       w_box_args.col_text = w->cfg[ WID_MODE_NORMAL ].colors[ WID_COLOR_TEXT_FG ];
     }
 
-    if (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_BG ]) {
+    if (w->cfg[ WID_MODE_OVER ].color_set[ WID_COLOR_BG ] != 0u) {
       w_box_args.col_bg = w->cfg[ WID_MODE_OVER ].colors[ WID_COLOR_BG ];
     } else {
       w_box_args.col_bg = w->cfg[ WID_MODE_NORMAL ].colors[ WID_COLOR_BG ];
@@ -5224,7 +5201,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     w_box_args.col_bg   = w->cfg[ WID_MODE_NORMAL ].colors[ WID_COLOR_BG ];
   }
 
-  if (w->square) {
+  if (w->square != 0u) {
     ascii_put_box(w_box_args, wid_get_style(w), w->tiles, "");
   } else {
     // shape none
@@ -5245,21 +5222,24 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
           continue;
         }
 
-        if (ascii_ok_for_scissors(x, y)) {
+        if (ascii_ok_for_scissors(x, y) != 0) {
           wid_on_screen_at[ x ][ y ] = w;
         }
       }
     }
   }
 
-  if (w->on_display) {
+  if (w->on_display != nullptr) {
     (w->on_display)(g, w, tl, br);
   }
 
   if (! text.empty()) {
-    int x, y;
-    int xpc, ypc;
-    int width, height;
+    int x;
+    int y;
+    int xpc;
+    int ypc;
+    int width;
+    int height;
 
     //
     // Manually specified text position.
@@ -5268,17 +5248,17 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     height = 0;
 
     if (wid_get_text_pos(w, &xpc, &ypc)) {
-      x = (owidth * xpc) - ((int) width / 2) + otlx;
-      y = (oheight * ypc) - ((int) height / 2) + otly;
+      x = (owidth * xpc) - (width / 2) + otlx;
+      y = (oheight * ypc) - (height / 2) + otly;
     } else {
       //
       // Position the text
       //
-      if (((int) width > owidth) && w->show_cursor) {
+      if ((width > owidth) && (w->show_cursor != 0u)) {
         //
         // If the text is too big, center it on the cursor.
         //
-        x = ((owidth - (int) width) / 2) + otlx;
+        x = ((owidth - width) / 2) + otlx;
 
         uint32_t c_width = (int) (width / (float) text.length());
 
@@ -5286,29 +5266,30 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
       } else if (wid_get_text_lhs(w)) {
         x = otlx;
       } else if (wid_get_text_centerx(w)) {
-        x = ((owidth - (int) width) / 2) + otlx;
+        x = ((owidth - width) / 2) + otlx;
       } else if (wid_get_text_rhs(w)) {
-        x = obrx - (int) width + 1;
+        x = obrx - width + 1;
       } else {
-        x = ((owidth - (int) width) / 2) + otlx;
+        x = ((owidth - width) / 2) + otlx;
       }
 
       if (wid_get_text_top(w)) {
         y = otly;
       } else if (wid_get_text_centery(w)) {
-        y = ((oheight - (int) height) / 2) + otly;
+        y = ((oheight - height) / 2) + otly;
       } else if (wid_get_text_bot(w)) {
-        y = obry - (int) height + 1;
+        y = obry - height + 1;
       } else {
-        y = ((oheight - (int) height) / 2) + otly;
+        y = ((oheight - height) / 2) + otly;
       }
     }
 
-    if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_FG ] && w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ]) {
+    if ((w->cfg[ mode ].color_set[ WID_COLOR_TEXT_FG ] != 0u)
+        && (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ] != 0u)) {
       ascii_putf__(x, y, w_box_args.col_text, w_box_args.col_bg, text);
-    } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_FG ]) {
+    } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_FG ] != 0u) {
       ascii_putf__(x, y, w_box_args.col_text, WHITE, text);
-    } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ]) {
+    } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ] != 0u) {
       ascii_putf__(x, y, WHITE, w_box_args.col_bg, text);
     } else {
       //
@@ -5321,9 +5302,9 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
 
   for (auto &iter : w->children_display_sorted) {
 
-    auto child = iter.second;
+    auto *child = iter.second;
 
-    uint8_t child_updated_scissors = false;
+    uint8_t child_updated_scissors = 0u;
 
     wid_display(g, child, disable_scissor, &child_updated_scissors, clip);
 
@@ -5331,7 +5312,7 @@ static void wid_display(Gamep g, Widp w, uint8_t disable_scissor, uint8_t *updat
     // Need to re-enforce the parent's scissors if the child did
     // their own bit of scissoring?
     //
-    if (! disable_scissor && child_updated_scissors) {
+    if ((disable_scissor == 0u) && (child_updated_scissors != 0u)) {
       wid_set_scissors(tlx, tly, brx, bry);
     }
   }
@@ -5346,12 +5327,12 @@ static void wid_gc(Gamep g, Widp w)
 
   WID_DBG(w, "gc");
 
-  if (w->being_destroyed) {
+  if (w->being_destroyed != 0u) {
     wid_destroy_immediate(g, w);
     return;
   }
 
-  if (w->destroy_when && (wid_time >= w->destroy_when)) {
+  if ((w->destroy_when != 0) && (wid_time >= w->destroy_when)) {
     wid_destroy(g, &w);
   }
 }
@@ -5362,17 +5343,6 @@ static void wid_gc(Gamep g, Widp w)
 void wid_sanity_check(Gamep g)
 {
   TRACE_NO_INDENT();
-
-  if (false) {
-    CON("wid counts");
-    CON("----------");
-    CON("wid_top_level                %d", (int) wid_top_level.size());
-    CON("wid_global                   %d", (int) wid_global.size());
-    CON("wid_top_level2               %d", (int) wid_top_level2.size());
-    CON("wid_top_level3               %d", (int) wid_top_level3.size());
-    CON("wid_top_level4               %d", (int) wid_top_level4.size());
-    CON("wid_tick_top_level           %d", (int) wid_tick_top_level.size());
-  }
 
   //
   // Sanity check widgets lists are not getting large
@@ -5408,11 +5378,11 @@ void wid_gc_all(Gamep g)
   TRACE_NO_INDENT();
 
   for (;;) {
-    if (! wid_top_level4.size()) {
+    if (wid_top_level4.empty()) {
       return;
     }
-    auto i = wid_top_level4.begin();
-    auto w = i->second;
+    auto  i = wid_top_level4.begin();
+    auto *w = i->second;
 
     wid_gc(g, w);
   }
@@ -5429,12 +5399,12 @@ static void wid_tick_all(Gamep g)
 
   std::vector< Widp > work;
   for (auto &iter : wid_tick_top_level) {
-    auto w = iter.second;
+    auto *w = iter.second;
     work.push_back(w);
   }
 
   for (auto &w : work) {
-    if (! w->on_tick) {
+    if (w->on_tick == nullptr) {
       ERR("Wid on ticker tree, but no callback set");
     }
 
@@ -5461,9 +5431,9 @@ void wid_display_all(Gamep g)
 
   auto wid_top_level_copy = wid_top_level;
   for (auto &iter : wid_top_level_copy) {
-    auto w = iter.second;
+    auto *w = iter.second;
 
-    if (w->parent) {}
+    if (w->parent != nullptr) {}
 
     if (wid_is_hidden(w)) {
       continue;
@@ -5472,7 +5442,7 @@ void wid_display_all(Gamep g)
 #if 0
 auto last = wid_total_count;
 #endif
-    wid_display(g, w, false /* disable_scissors */, nullptr /* updated_scissors */, true);
+    wid_display(g, w, 0u /* disable_scissors */, nullptr /* updated_scissors */, 1);
 #if 0
 printf("%s %d\n", wid_name(w).c_str(), wid_total_count - last);
 #endif
@@ -5536,14 +5506,14 @@ bool wid_is_hidden(Widp w)
     return false;
   }
 
-  if (w->hidden) {
+  if (w->hidden != 0u) {
     return true;
   }
 
-  while (w->parent) {
+  while (w->parent != nullptr) {
     w = w->parent;
 
-    if (w->hidden) {
+    if (w->hidden != 0u) {
       return true;
     }
   }
@@ -5562,7 +5532,7 @@ void wid_move_to_pct(Gamep g, Widp w, float x, float y)
 {
   TRACE_NO_INDENT();
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     x *= (float) TERM_WIDTH;
     y *= (float) TERM_HEIGHT;
   } else {
@@ -5602,7 +5572,7 @@ void wid_move_to_pct_centered(Gamep g, Widp w, float ox, float oy)
   int pbrx;
   int pbry;
 
-  if (! w->parent) {
+  if (w->parent == nullptr) {
     ptlx = 0;
     ptly = 0;
     pbrx = TERM_WIDTH - 1;

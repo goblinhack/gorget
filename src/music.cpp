@@ -80,7 +80,7 @@ void music_fini(void)
 bool music_load(uint32_t rate, const char *file, const char *name_alias)
 {
   TRACE_NO_INDENT();
-  if (name_alias && *name_alias) {
+  if ((name_alias != nullptr) && (*name_alias != 0)) {
     auto m = music_find(name_alias);
     if (m) {
       return true;
@@ -91,7 +91,7 @@ bool music_load(uint32_t rate, const char *file, const char *name_alias)
 
   m->rate = rate;
   m->data = file_load(file, &m->len);
-  if (! m->data) {
+  if (m->data == nullptr) {
     CROAK("Cannot load music [%s]", file);
     return false;
   }
@@ -99,14 +99,14 @@ bool music_load(uint32_t rate, const char *file, const char *name_alias)
   SDL_RWops *rw;
 
   rw = SDL_RWFromMem(m->data, m->len);
-  if (! rw) {
+  if (rw == nullptr) {
     ERR("SDL_RWFromMem fail [%s]: %s %s", file, Mix_GetError(), SDL_GetError());
     SDL_ClearError();
     return false;
   }
 
-  m->m = Mix_LoadMUS_RW(rw, false);
-  if (! m->m) {
+  m->m = Mix_LoadMUS_RW(rw, 0);
+  if (m->m == nullptr) {
     ERR("Mix_LoadMUS_RW fail [%s]: %s %s", file, Mix_GetError(), SDL_GetError());
     SDL_ClearError();
     SDL_RWclose(rw);

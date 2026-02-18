@@ -38,11 +38,11 @@ void fpoint::operator/=(float b)
   y /= b;
 }
 
-float fpoint::length(void) const { return (sqrt(x * x + y * y)); }
+float fpoint::length(void) const { return (sqrt((x * x) + (y * y))); }
 
 void fpoint::unit(void)
 {
-  float len = sqrt(x * x + y * y);
+  float len = sqrt((x * x) + (y * y));
   x /= len;
   y /= len;
 }
@@ -77,8 +77,8 @@ fpoint rotate_radians(float angle, const fpoint &p, const fpoint &O)
   float Y = p.y - O.y;
 
   // rotate point
-  float xnew = X * c - Y * s;
-  float ynew = X * s + Y * c;
+  float xnew = (X * c) - (Y * s);
+  float ynew = (X * s) + (Y * c);
 
   // translate point back:
   return fpoint(xnew + O.x, ynew + O.y);
@@ -94,8 +94,8 @@ fpoint rotate_radians(const fpoint &p, float angle)
   float Y = p.y;
 
   // rotate point
-  float xnew = X * c - Y * s;
-  float ynew = X * s + Y * c;
+  float xnew = (X * c) - (Y * s);
+  float ynew = (X * s) + (Y * c);
 
   return fpoint(xnew, ynew);
 }
@@ -108,7 +108,7 @@ fpoint normal(const fpoint &p)
 
 fpoint unit(const fpoint &p)
 {
-  float length = sqrt(p.x * p.x + p.y * p.y);
+  float length = sqrt((p.x * p.x) + (p.y * p.y));
   return fpoint(p.x / length, p.y / length);
 }
 
@@ -218,30 +218,26 @@ int distance_to_line(fpoint P0, fpoint L0, fpoint L1, float *dist, fpoint *inter
   //
   U = (((P0.x - L0.x) * (L1.x - L0.x)) + ((P0.y - L0.y) * (L1.y - L0.y))) / (mag * mag);
 
-  if (U < 0.0f) {
+  if (U < 0.0F) {
     intersect = L0;
-  } else if (U > 1.0f) {
+  } else if (U > 1.0F) {
     intersect = L1;
   } else {
-    intersect.x = L0.x + U * (L1.x - L0.x);
-    intersect.y = L0.y + U * (L1.y - L0.y);
+    intersect.x = L0.x + (U * (L1.x - L0.x));
+    intersect.y = L0.y + (U * (L1.y - L0.y));
   }
 
   *dist = distance(P0, intersect);
 
-  if (intersect_out) {
+  if (intersect_out != nullptr) {
     *intersect_out = intersect;
   }
 
-  if ((U < 0.0f) || (U > 1.0f)) {
-    if (false) {
-      LOG("%f  miss", *dist);
-    }
+  if ((U < 0.0F) || (U > 1.0F)) {
+    
     return 0; // closest P0 does not fall within the line segment
   }
 
-  if (false) {
-    LOG("%f  intersect %f,%f", *dist, intersect.x, intersect.y);
-  }
+  
   return 1;
 }

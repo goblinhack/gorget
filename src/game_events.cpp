@@ -26,7 +26,7 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
     return false;
   }
 
-  if (! g) {
+  if (g == nullptr) {
     DBG("Game mouse down, ignore, no game");
     return false;
   }
@@ -39,8 +39,8 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   // Follow the mouse path?
   //
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     DBG("Game mouse down, ignore, no levels");
     return true;
   }
@@ -48,8 +48,8 @@ bool game_mouse_down(Gamep g, int x, int y, uint32_t button)
   //
   // Have a level?
   //
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     DBG("Game mouse down, ignore, no level");
     return false;
   }
@@ -87,7 +87,7 @@ bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
     return false;
   }
 
-  if (! g) {
+  if (g == nullptr) {
     DBG("Game motion, ignore, no game");
     return false;
   }
@@ -97,16 +97,16 @@ bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
     return false;
   }
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
   //
   // Have a level?
   //
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
@@ -120,7 +120,7 @@ bool game_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, in
   //
   // Update the cursor path
   //
-  if (! wheelx && ! wheely) {
+  if ((wheelx == 0) && (wheely == 0)) {
     game_request_to_update_cursor_set(g);
   }
 
@@ -134,18 +134,18 @@ bool game_event_save(Gamep g)
   DBG("Saving");
   TRACE_AND_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -189,18 +189,18 @@ bool game_event_wait(Gamep g)
   DBG("Wait");
   TRACE_AND_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -219,18 +219,18 @@ bool game_event_inventory(Gamep g)
   DBG("Inventory");
   TRACE_AND_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -244,18 +244,18 @@ bool game_event_descend(Gamep g)
   DBG("Descend");
   TRACE_AND_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -279,18 +279,18 @@ bool game_event_ascend(Gamep g)
   DBG("Ascend");
   TRACE_AND_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -314,18 +314,18 @@ bool game_event_jump(Gamep g)
   DBG("Jump");
   TRACE_AND_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -354,8 +354,8 @@ bool game_event_help(Gamep g)
   DBG("Help");
   TRACE_AND_INDENT();
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -391,7 +391,7 @@ bool game_input(Gamep g, const SDL_Keysym *key)
   DBG("Pressed a key");
   TRACE_AND_INDENT();
 
-  if (! g) {
+  if (g == nullptr) {
     DBG("Pressed a key; no game");
     return false;
   }
@@ -400,14 +400,14 @@ bool game_input(Gamep g, const SDL_Keysym *key)
     return false;
   }
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     DBG("Pressed a key; no levels");
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     DBG("Pressed a key; no player");
     return false;
   }

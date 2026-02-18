@@ -212,7 +212,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
     }
   }
 
-  if (best_cand != "") {
+  if (!best_cand.empty()) {
     LOG(" - best %s", best_cand.c_str());
     return best_cand;
   }
@@ -220,7 +220,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
   //
   // Failsafe, just choose a matching mode
   //
-  if (best_cand == "") {
+  if (best_cand.empty()) {
     for (int i = 0; i < n; ++i) {
       SDL_DisplayMode mode;
       SDL_GetDisplayMode(0, i, &mode);
@@ -275,7 +275,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
       LOG(" - candidate: %s", cand.c_str());
     }
   }
-  if (chosen != "") {
+  if (!chosen.empty()) {
     SDL_DisplayMode mode = modes[ chosen ];
     LOG(" - chosen: %s", chosen.c_str());
     pending_mode_set = true;
@@ -331,7 +331,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
       LOG(" - candidate: %s", cand.c_str());
     }
   }
-  if (chosen != "") {
+  if (!chosen.empty()) {
     SDL_DisplayMode mode = modes[ chosen ];
     LOG(" - chosen: %s", chosen.c_str());
     pending_mode_set = true;
@@ -392,14 +392,14 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
 void wid_cfg_gfx_select(Gamep g)
 {
   TRACE_NO_INDENT();
-  if (wid_cfg_gfx_window) {
+  if (wid_cfg_gfx_window != nullptr) {
     wid_cfg_gfx_destroy(g);
   }
 
   auto m = TERM_WIDTH / 2;
 
-  spoint outer_tl(m - 20, TERM_HEIGHT / 2 - 15);
-  spoint outer_br(m + 20, TERM_HEIGHT / 2 + 15);
+  spoint outer_tl(m - 20, (TERM_HEIGHT / 2) - 15);
+  spoint outer_br(m + 20, (TERM_HEIGHT / 2) + 15);
 
   auto width = outer_br.x - outer_tl.x - 2;
 
@@ -413,8 +413,8 @@ void wid_cfg_gfx_select(Gamep g)
   int y_at = 0;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "configuration");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "configuration");
 
     spoint tl(1, y_at);
     spoint br(width, y_at + 2);
@@ -426,8 +426,8 @@ void wid_cfg_gfx_select(Gamep g)
   y_at = 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_back_button(g, p, "BACK");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(1, y_at);
     spoint br(6, y_at + 2);
@@ -437,8 +437,8 @@ void wid_cfg_gfx_select(Gamep g)
 
   if (pending_mode_set) {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Apply");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Apply");
 
     spoint tl(10, y_at);
     spoint br(16, y_at + 2);
@@ -453,23 +453,23 @@ void wid_cfg_gfx_select(Gamep g)
   y_at += 4;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Resolution");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Resolution");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Resolution");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Resolution value");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Resolution value");
 
     spoint tl(width / 2, y_at);
-    spoint br(width / 2 + 10, y_at + 2);
+    spoint br((width / 2) + 10, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
@@ -479,28 +479,28 @@ void wid_cfg_gfx_select(Gamep g)
     }
 
     wid_set_text(w, res);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
   }
 
   if (! game_gfx_fullscreen_desktop_get(g)) {
     {
       TRACE_NO_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_menu_button(g, p, "Resolution value +");
+      auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto *w = wid_new_menu_button(g, p, "Resolution value +");
 
-      spoint tl(width / 2 + 12, y_at);
-      spoint br(width / 2 + 14, y_at + 2);
+      spoint tl((width / 2) + 12, y_at);
+      spoint br((width / 2) + 14, y_at + 2);
       wid_set_pos(w, tl, br);
       wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_incr);
       wid_set_text(w, "+");
     }
     {
       TRACE_NO_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_menu_button(g, p, "Resolution value -");
+      auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto *w = wid_new_menu_button(g, p, "Resolution value -");
 
-      spoint tl(width / 2 + 16, y_at);
-      spoint br(width / 2 + 18, y_at + 2);
+      spoint tl((width / 2) + 16, y_at);
+      spoint br((width / 2) + 18, y_at + 2);
       wid_set_pos(w, tl, br);
       wid_set_on_mouse_up(w, wid_cfg_gfx_resolution_decr);
       wid_set_text(w, "-");
@@ -513,29 +513,29 @@ void wid_cfg_gfx_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Terminal");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Terminal");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Terminal");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Terminal value");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Terminal value");
 
     spoint tl(width / 2, y_at);
-    spoint br(width / 2 + 12, y_at + 2);
+    spoint br((width / 2) + 12, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
     auto res = std::to_string(TERM_WIDTH) + "x" + std::to_string(TERM_HEIGHT);
     wid_set_text(w, res);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
   }
   y_at += 1;
 
@@ -544,23 +544,23 @@ void wid_cfg_gfx_select(Gamep g)
   /////////////////////////////////////////////////////////////////////////
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Font size");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Font size");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Font size");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Font size value");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Font size value");
 
     spoint tl(width / 2, y_at);
-    spoint br(width / 2 + 12, y_at + 2);
+    spoint br((width / 2) + 12, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
 
@@ -568,7 +568,7 @@ void wid_cfg_gfx_select(Gamep g)
     auto fh  = game_ascii_pix_height_get(g);
     auto res = std::to_string(fw) + "x" + std::to_string(fh);
     wid_set_text(w, res);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
   }
   y_at += 2;
 
@@ -578,20 +578,20 @@ void wid_cfg_gfx_select(Gamep g)
   y_at++;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Full desktop");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Full desktop");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Full desktop");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Fullscreen value");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Fullscreen value");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
@@ -609,15 +609,15 @@ void wid_cfg_gfx_select(Gamep g)
     y_at += 4;
     {
       TRACE_NO_INDENT();
-      auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-      auto w = wid_new_square_button(g, p, "Notice");
+      auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+      auto *w = wid_new_square_button(g, p, "Notice");
 
       spoint tl(1, y_at);
       spoint br(width - 2, y_at);
       wid_set_shape_none(w);
       wid_set_pos(w, tl, br);
       wid_set_text(w, "^^ Disable to change resolution ^^");
-      wid_set_text_lhs(w, true);
+      wid_set_text_lhs(w, 1U);
     }
   }
 
@@ -627,20 +627,20 @@ void wid_cfg_gfx_select(Gamep g)
   y_at += 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Fullscreen");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Fullscreen");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Fullscreen");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Fullscreen value");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Fullscreen value");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
@@ -660,20 +660,20 @@ void wid_cfg_gfx_select(Gamep g)
   y_at += 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Borderless");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Borderless");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Borderless window");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Borderless");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Borderless");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
@@ -693,20 +693,20 @@ void wid_cfg_gfx_select(Gamep g)
   y_at += 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Vertical sync");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Vertical sync");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "Vertical sync");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Vertical sync value");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Vertical sync value");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);
@@ -726,20 +726,20 @@ void wid_cfg_gfx_select(Gamep g)
   y_at += 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "FPS counter");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "FPS counter");
 
     spoint tl(1, y_at);
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
     wid_set_text(w, "FPS counter");
   }
   {
     TRACE_NO_INDENT();
-    auto p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "FPS counter value");
+    auto *p = wid_cfg_gfx_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "FPS counter value");
 
     spoint tl(23, y_at);
     spoint br(37, y_at + 2);

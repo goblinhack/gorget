@@ -34,9 +34,9 @@ void wid_notice(std::string s)
   TRACE_NO_INDENT();
 
   extern Gamep game;
-  auto         g = game;
+  auto *         g = game;
 
-  if (wid_notice_window) {
+  if (wid_notice_window != nullptr) {
     wid_notice_destroy();
   }
 
@@ -61,8 +61,8 @@ void wid_notice(std::string s)
   int y_at = 0;
   {
     TRACE_NO_INDENT();
-    auto p = wid_notice_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "notice");
+    auto *p = wid_notice_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "notice");
 
     spoint tl1(0, y_at);
     spoint br1(width - 1, y_at + 1);
@@ -76,11 +76,11 @@ void wid_notice(std::string s)
   y_at = 3;
   {
     TRACE_NO_INDENT();
-    auto p = wid_notice_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "ok");
+    auto *p = wid_notice_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "ok");
 
-    spoint tl2(width / 2 - 4, y_at);
-    spoint br2(width / 2 + 4, y_at + 2);
+    spoint tl2((width / 2) - 4, y_at);
+    spoint br2((width / 2) + 4, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_notice_ok);
     wid_set_pos(w, tl2, br2);

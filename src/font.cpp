@@ -19,13 +19,13 @@ void font_fini(void) { TRACE_NO_INDENT(); }
 static Fontp font_load(std::string name)
 {
   TRACE_NO_INDENT();
-  auto f = font_find(name);
+  auto *f = font_find(name);
 
-  if (f) {
+  if (f != nullptr) {
     return f;
   }
 
-  if (name == "") {
+  if (name.empty()) {
     ERR("No name for font %s", __FUNCTION__);
     return nullptr;
   }
@@ -58,7 +58,7 @@ static Fontp font_load(std::string name)
 Fontp font_find(std::string file)
 {
   TRACE_NO_INDENT();
-  if (file == "") {
+  if (file.empty()) {
     ERR("No filename given for font find %s", __FUNCTION__);
     return nullptr;
   }
@@ -102,8 +102,8 @@ Tilep Font::font_get_tile(int u)
     return font_get_tile('?');
   }
 
-  auto tile = this->cache[ index ];
-  if (tile) {
+  auto *tile = this->cache[ index ];
+  if (tile != nullptr) {
     return tile;
   }
 
@@ -125,12 +125,12 @@ Tilep Font::font_get_tile(int u)
   return tile;
 }
 
-uint8_t font_init(void)
+bool font_init(void)
 {
   TRACE_NO_INDENT();
 
   font_ui             = font_load("font");
   font_ui->tile_index = 1;
 
-  return true;
+  return 1U;
 }

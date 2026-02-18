@@ -382,7 +382,7 @@ Thingp level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov)
     }
 
     if (thing_is_obs_to_vision(it)) {
-      if (false) {
+      if (__unused__) {
         THING_LOG(it, "block");
       }
       return it;

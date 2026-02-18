@@ -23,7 +23,7 @@
 //
 void hexdump(const unsigned char *addr, size_t len)
 {
-  int           skipping_blanks         = false;
+  int           skipping_blanks         = 0;
   unsigned char empty[ HEX_DUMP_WIDTH ] = {0};
   unsigned char buf[ HEX_DUMP_WIDTH + 1 ];
   auto         *pc = (unsigned char *) addr;
@@ -32,13 +32,13 @@ void hexdump(const unsigned char *addr, size_t len)
 
   std::cout << std::dec << len << " bytes:" << std::endl;
 
-  if (! len) {
+  if (len == 0U) {
     return;
   }
 
   for (i = 0, x = 0; i < len; i++, x++) {
     if ((i % HEX_DUMP_WIDTH) == 0) {
-      if (! skipping_blanks) {
+      if (skipping_blanks == 0) {
         if (i != 0) {
           std::cout << " |" << std::setw(HEX_DUMP_WIDTH) << buf << "|" << std::endl;
         }
@@ -47,9 +47,9 @@ void hexdump(const unsigned char *addr, size_t len)
       /*
        * Skip blank blocks.
        */
-      if (! memcmp(pc + i, empty, SIZEOF(empty))) {
+      if (memcmp(pc + i, empty, SIZEOF(empty)) == 0) {
         i += HEX_DUMP_WIDTH - 1;
-        skipping_blanks = true;
+        skipping_blanks = 1;
         buf[ 0 ]        = '\0';
         continue;
       }
@@ -59,11 +59,11 @@ void hexdump(const unsigned char *addr, size_t len)
       x = 0;
     }
 
-    if (x && (((i % (HEX_DUMP_WIDTH / 2))) == 0)) {
+    if ((x != 0U) && (((i % (HEX_DUMP_WIDTH / 2))) == 0)) {
       std::cout << " ";
     }
 
-    skipping_blanks = false;
+    skipping_blanks = 0;
 
     std::cout << " " << std::setfill('0') << std::setw(2) << std::hex << (int) pc[ i ];
 
@@ -76,8 +76,8 @@ void hexdump(const unsigned char *addr, size_t len)
     buf[ (i % HEX_DUMP_WIDTH) + 1 ] = '\0';
   }
 
-  if (! buf[ 0 ]) {
-    if (skipping_blanks) {
+  if (buf[ 0 ] == 0U) {
+    if (skipping_blanks != 0) {
       std::cout << "  *\n";
     }
 
@@ -86,7 +86,7 @@ void hexdump(const unsigned char *addr, size_t len)
 
   while ((i % HEX_DUMP_WIDTH) != 0) {
     std::cout << "   ";
-    if (i && (((i % (HEX_DUMP_WIDTH / 2))) == 0)) {
+    if ((i != 0U) && (((i % (HEX_DUMP_WIDTH / 2))) == 0)) {
       std::cout << " ";
     }
 

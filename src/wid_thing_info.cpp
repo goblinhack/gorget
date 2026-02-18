@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_game.hpp"
@@ -21,15 +23,15 @@
 {
   TRACE_NO_INDENT();
 
-  auto text = parent->wid_text_area;
-  auto b    = parent->wid_text_area->wid_text_area;
+  auto *text = parent->wid_text_area;
+  auto *b    = parent->wid_text_area->wid_text_area;
 
   Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
-  if (! tile) {
+  if (tile == nullptr) {
     return false;
   }
 
-  auto   w = wid_new_square_button(g, b, "Icon");
+  auto *   w = wid_new_square_button(g, b, "Icon");
   spoint tl(0, text->line_count);
   spoint br(3, text->line_count + 2);
   wid_set_tile(TILE_LAYER_BG_0, w, tile);
@@ -44,17 +46,17 @@
 {
   TRACE_NO_INDENT();
 
-  auto text = parent->wid_text_area;
-  auto b    = parent->wid_text_area->wid_text_area;
+  auto *text = parent->wid_text_area;
+  auto *b    = parent->wid_text_area->wid_text_area;
 
   auto key_count = thing_keys_carried(t);
-  if (! key_count) {
+  if (key_count == 0) {
     return false;
   }
 
   {
-    auto   tile = tile_find_mand("key.0");
-    auto   w    = wid_new_square_button(g, b, "Keys");
+    auto *   tile = tile_find_mand("key.0");
+    auto *   w    = wid_new_square_button(g, b, "Keys");
     spoint tl(UI_LEFTBAR_WIDTH - 8, text->line_count);
     spoint br(UI_LEFTBAR_WIDTH - 5, text->line_count + 2);
     wid_set_tile(TILE_LAYER_BG_0, w, tile);
@@ -63,7 +65,7 @@
   }
 
   {
-    auto        w = wid_new_square_button(g, b, "Key count");
+    auto *        w = wid_new_square_button(g, b, "Key count");
     spoint      tl(UI_LEFTBAR_WIDTH - 4, text->line_count);
     spoint      br(UI_LEFTBAR_WIDTH - 2, text->line_count + 2);
     std::string how_many_keys = "x" + std::to_string(key_count);
@@ -72,7 +74,7 @@
       how_many_keys = std::to_string(key_count);
     }
 
-    wid_set_text(w, how_many_keys.c_str());
+    wid_set_text(w, how_many_keys);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
   }
@@ -145,9 +147,7 @@
   //
   auto health_max = tp_health_max_get(tp);
   auto h          = thing_health(t);
-  if (h < 0) {
-    h = 0;
-  }
+  h = std::max(h, 0);
 
   std::string health_str = std::to_string(h) + "/" + std::to_string(health_max);
   my_strlcpy(tmp + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());
@@ -157,8 +157,8 @@
   // "Health         a/b"
   // "xxxxxxxxxxxxxxxxxx"
   //
-  auto w = parent->log(g, std::string(tmp));
-  if (w) {
+  auto *w = parent->log(g, std::string(tmp));
+  if (w != nullptr) {
     int health_how_much = (int) (((float) thing_health(t) / (float) health_max) * ((float) UI_HEALTH_BAR_STEPS - 1));
     health_how_much     = std::min(health_how_much, UI_HEALTH_BAR_STEPS - 1);
     health_how_much     = std::max(health_how_much, 0);
@@ -168,7 +168,7 @@
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
     wid_set_tilename(TILE_LAYER_BG_0, w, icon);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1U);
   }
 
   return true;
@@ -262,12 +262,12 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
 
   TRACE_NO_INDENT();
 
-  if (! t) {
+  if (t == nullptr) {
     return;
   }
 
-  auto tp = thing_tp(t);
-  if (! tp) {
+  auto *tp = thing_tp(t);
+  if (tp == nullptr) {
     return;
   }
 
@@ -300,7 +300,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
   IF_DEBUG
   {
     parent->log(g, "Thing:");
-    parent->log(g, to_string(g, v, l, t).c_str(), TEXT_FORMAT_LHS);
+    parent->log(g, to_string(g, v, l, t), TEXT_FORMAT_LHS);
     parent->log_empty_line(g);
     parent->log(g, "Things:");
 
@@ -311,7 +311,7 @@ void wid_thing_info(Gamep g, Levelsp v, Levelp l, Thingp t, WidPopup *parent, in
     FOR_ALL_THINGS_AT_UNSAFE(g, v, l, it, at)
     {
       auto s = string_sprintf("- %s", thing_short_name(g, v, l, it).c_str());
-      parent->log(g, s.c_str(), TEXT_FORMAT_LHS);
+      parent->log(g, s, TEXT_FORMAT_LHS);
     }
   }
 }

@@ -25,18 +25,18 @@ static Thingp g_item;
   delete wid_item_menu_window;
   wid_item_menu_window = nullptr;
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
@@ -59,23 +59,23 @@ static Thingp g_item;
 {
   TRACE_NO_INDENT();
 
-  auto v = game_levels_get(g);
-  if (! v) {
+  auto *v = game_levels_get(g);
+  if (v == nullptr) {
     return false;
   }
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return false;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return false;
   }
 
-  auto item = g_item;
-  if (! item) {
+  auto *item = g_item;
+  if (item == nullptr) {
     return false;
   }
 
@@ -154,19 +154,19 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   TRACE_NO_INDENT();
   LOG("Item menu");
 
-  auto l = game_level_get(g, v);
-  if (! l) {
+  auto *l = game_level_get(g, v);
+  if (l == nullptr) {
     return;
   }
 
-  auto player = thing_player(g);
-  if (! player) {
+  auto *player = thing_player(g);
+  if (player == nullptr) {
     return;
   }
 
   g_item = item;
 
-  if (wid_item_menu_window) {
+  if (wid_item_menu_window != nullptr) {
     (void) wid_item_menu_destroy(g);
   }
 
@@ -188,8 +188,8 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
   menu_height += box_step;
 
   int    menu_width = UI_WID_POPUP_WIDTH_NORMAL;
-  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2) - 1);
+  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2) - 1);
   wid_item_menu_window = new WidPopup(g, "Item menu", outer_tl, outer_br, nullptr, "", false, false);
 
   auto button_width = outer_br.x - outer_tl.x - 2;
@@ -204,8 +204,8 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 
   if (thing_is_item_droppable(item)) {
     TRACE_NO_INDENT();
-    auto p = wid_item_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Drop");
+    auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Drop");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -222,8 +222,8 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 
   if (thing_is_item_equipable(item)) {
     TRACE_NO_INDENT();
-    auto p = wid_item_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_menu_button(g, p, "Equip");
+    auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_menu_button(g, p, "Equip");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);
@@ -235,8 +235,8 @@ void wid_item_menu_select(Gamep g, Levelsp v, Thingp item)
 
   {
     TRACE_NO_INDENT();
-    auto p = wid_item_menu_window->wid_text_area->wid_text_area;
-    auto w = wid_new_back_button(g, p, "BACK");
+    auto *p = wid_item_menu_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_back_button(g, p, "BACK");
 
     spoint tl(0, y_at);
     spoint br(button_width, y_at + box_height);

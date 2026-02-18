@@ -48,7 +48,7 @@ void cleanup(void)
   g_quitting = true;
 
   extern Gamep game;
-  auto         g = game;
+  auto *         g = game;
 
 #ifdef ENABLE_CRASH_HANDLER
 #ifdef SIGSEGV
@@ -108,27 +108,27 @@ void cleanup(void)
 
   test_fini();
 
-  if (g_exec_full_path_and_name) {
+  if (g_exec_full_path_and_name != nullptr) {
     myfree(g_exec_full_path_and_name);
     g_exec_full_path_and_name = nullptr;
   }
 
-  if (g_data_path) {
+  if (g_data_path != nullptr) {
     myfree(g_data_path);
     g_data_path = nullptr;
   }
 
-  if (g_ttf_path) {
+  if (g_ttf_path != nullptr) {
     myfree(g_ttf_path);
     g_ttf_path = nullptr;
   }
 
-  if (g_gfx_path) {
+  if (g_gfx_path != nullptr) {
     myfree(g_gfx_path);
     g_gfx_path = nullptr;
   }
 
-  if (g_exec_dir) {
+  if (g_exec_dir != nullptr) {
     myfree(g_exec_dir);
     g_exec_dir = nullptr;
   }

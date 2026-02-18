@@ -36,7 +36,7 @@ bool dir_exists(const char *indir)
 
   myfree(dir);
 
-  return rc;
+  return rc != 0U;
 }
 
 /*
@@ -88,7 +88,7 @@ char *dospath2unix(char *in)
   TRACE_NO_INDENT();
   char *s = in;
 
-  while (*s) {
+  while (*s != 0) {
     if (*s == '\\') {
       *s = '/';
     }

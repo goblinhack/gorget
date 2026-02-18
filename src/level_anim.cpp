@@ -25,7 +25,7 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
   {
     Tpp tp = thing_tp(t);
 
-    if (false) {
+    if (__unused__) {
       if (thing_is_level_curr(t)) {
         THING_LOG(t, "anim");
       }

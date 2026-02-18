@@ -140,9 +140,9 @@ static const char key_char[ WID_KEYBOARD_DOWN ][ WID_KEYBOARD_ACROSS ] = {
 
 int wid_keyboard_visible;
 
-static void               wid_keyboard_destroy(Gamep, Widp w);
-static void               wid_keyboard_set_focus(Gamep, wid_keyboard_ctx *ctx, int focusx, int focusy);
-[[nodiscard]] static bool wid_keyboard_text_input_key_event(Gamep, Widp w, const SDL_Keysym *key);
+static void               wid_keyboard_destroy(Gamep /*g*/, Widp w);
+static void               wid_keyboard_set_focus(Gamep /*g*/, wid_keyboard_ctx *ctx, int focusx, int focusy);
+[[nodiscard]] static bool wid_keyboard_text_input_key_event(Gamep /*g*/, Widp w, const SDL_Keysym *key);
 
 static void wid_keyboard_update_buttons(Gamep g, Widp w)
 {
@@ -153,7 +153,8 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
   int width  = 7;
   int height = 5;
 
-  int x, y;
+  int x;
+  int y;
 
   ctx->b = nullptr;
 
@@ -184,7 +185,7 @@ static void wid_keyboard_update_buttons(Gamep g, Widp w)
         c = GRAY70;
       }
 
-      if (ctx->is_new) {
+      if (ctx->is_new != 0) {
         wid_set_pos(b, tl, br);
       }
     }
@@ -205,13 +206,13 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
     add = keys[ focusy ][ focusx ];
   }
 
-  if (key_in) {
+  if (key_in != nullptr) {
     (void) wid_receive_input(g, ctx->input, key_in);
-  } else if (! strcasecmp(add, "OK")) {
+  } else if (strcasecmp(add, "OK") == 0) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-  } else if (! strcasecmp(add, "CANCL")) {
+  } else if (strcasecmp(add, "CANCL") == 0) {
     (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input));
-  } else if (! strcasecmp(add, "CLEAR")) {
+  } else if (strcasecmp(add, "CLEAR") == 0) {
     for (;;) {
       SDL_Keysym key = {};
       key.sym        = SDLK_BACKSPACE;
@@ -223,11 +224,11 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
       (void) wid_receive_input(g, ctx->input, &key);
     }
 
-  } else if (! strcasecmp(add, "DEL")) {
+  } else if (strcasecmp(add, "DEL") == 0) {
     SDL_Keysym key = {};
     key.sym        = SDLK_BACKSPACE;
     (void) wid_receive_input(g, ctx->input, &key);
-  } else if (! strcasecmp(add, "SPACE")) {
+  } else if (strcasecmp(add, "SPACE") == 0) {
     SDL_Keysym key = {};
     key.sym        = ' ';
     (void) wid_receive_input(g, ctx->input, &key);
@@ -237,8 +238,9 @@ static void wid_keyboard_event(Gamep g, Widp w, int focusx, int focusy, const SD
     (void) wid_receive_input(g, ctx->input, &key);
   }
 
-  if (key_in && (focusx == -1) && (focusy == -1)) {
-    int x, y;
+  if ((key_in != nullptr) && (focusx == -1) && (focusy == -1)) {
+    int x;
+    int y;
 
     for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
       for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
@@ -400,7 +402,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
-  int ret = false;
+  int ret = 0;
 
   /*
    * Don't process events too soon. Else the menu might not even have
@@ -410,66 +412,66 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
     return false;
   }
 
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ] != 0U) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ] != 0U) {
     (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ] != 0U) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ] != 0U) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ] != 0U) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ] != 0U) {
     (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ] != 0U) {
     wid_keyboard_focus_up(g, ctx);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ] != 0U) {
     wid_keyboard_focus_down(g, ctx);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ] != 0U) {
     wid_keyboard_focus_left(g, ctx);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ] != 0U) {
     wid_keyboard_focus_right(g, ctx);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] != 0U) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] != 0U) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
 
   wid_keyboard_update_buttons(g, ctx->w);
-  if (ctx->b) {
+  if (ctx->b != nullptr) {
     wid_mouse_warp(g, ctx->b);
   }
 
-  return ret;
+  return ret != 0;
 }
 
 [[nodiscard]] static bool wid_keyboard_button_key_event(Gamep g, Widp w, const SDL_Keysym *key)
@@ -515,7 +517,7 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
   TRACE_NO_INDENT();
   auto *ctx = (wid_keyboard_ctx *) wid_get_void_context(w);
   verify(MTYPE_MISC, ctx);
-  int ret = false;
+  int ret = 0;
 
   /*
    * Don't process events too soon. Else the menu might not even have
@@ -525,68 +527,68 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
     return false;
   }
 
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ]) {
-    ret = wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy);
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ] != 0U) {
+    ret = static_cast<int>(wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy));
   }
 
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ] != 0U) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ] != 0U) {
     SDL_Keysym key = {};
     key.sym        = SDLK_BACKSPACE;
     (void) wid_keyboard_text_input_key_event(g, ctx->input, &key);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ] != 0U) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ] != 0U) {
     SDL_Keysym key = {};
     key.sym        = SDLK_LEFT;
     (void) wid_keyboard_text_input_key_event(g, ctx->input, &key);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ] != 0U) {
     SDL_Keysym key = {};
     key.sym        = SDLK_RIGHT;
     (void) wid_keyboard_text_input_key_event(g, ctx->input, &key);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ] != 0U) {
     (void) wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ] != 0U) {
     (void) wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ]) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ] != 0U) {}
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] != 0U) {
     SDL_Keysym key = {};
     key.sym        = SDLK_BACKSPACE;
     (void) wid_receive_input(g, ctx->input, &key);
-    ret = true;
+    ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ]) {
+  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] != 0U) {
     (void) wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy);
-    ret = true;
+    ret = 1;
   }
 
   wid_keyboard_update_buttons(g, ctx->w);
-  if (ctx->b) {
+  if (ctx->b != nullptr) {
     wid_mouse_warp(g, ctx->b);
   }
 
-  return ret;
+  return ret != 0;
 }
 
 [[nodiscard]] static bool wid_keyboard_text_input_key_event(Gamep g, Widp w, const SDL_Keysym *key)
@@ -633,7 +635,7 @@ static void wid_keyboard_destroy(Gamep g, Widp w)
   wid_set_void_context(w, nullptr);
   oldptr(MTYPE_MISC, ctx);
 
-  wid_keyboard_visible = false;
+  wid_keyboard_visible = 0;
 }
 
 static void wid_keyboard_tick(Gamep g, Widp w)
@@ -658,7 +660,8 @@ static void wid_keyboard_tick(Gamep g, Widp w)
     delta = 1;
   }
 
-  int x, y;
+  int x;
+  int y;
 
   for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
     for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
@@ -691,7 +694,7 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
                   wid_keyboard_event_t cancelled, size_t max_len)
 {
   TRACE_NO_INDENT();
-  wid_keyboard_visible = true;
+  wid_keyboard_visible = 1;
 
   /*
    * Create a context to hold button info so we can update it when the focus
@@ -705,14 +708,14 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
   Widp window  = wid_new_window(g, "wid keyboard");
   ctx->w       = window;
-  ctx->is_new  = true;
+  ctx->is_new  = 1;
   ctx->max_len = max_len;
 
   /*
    * Main window
    */
-  const auto width  = WID_KEYBOARD_ACROSS * 7 + 1;
-  const auto height = WID_KEYBOARD_DOWN * 5 + 8;
+  const auto width  = (WID_KEYBOARD_ACROSS * 7) + 1;
+  const auto height = (WID_KEYBOARD_DOWN * 5) + 8;
 
   int left_half  = width / 2;
   int right_half = width - left_half;
@@ -720,8 +723,8 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
   int bot_half   = height - top_half;
 
   {
-    spoint tl(TERM_WIDTH / 2 - left_half, TERM_HEIGHT / 2 - top_half);
-    spoint br(TERM_WIDTH / 2 + right_half, TERM_HEIGHT / 2 + bot_half);
+    spoint tl((TERM_WIDTH / 2) - left_half, (TERM_HEIGHT / 2) - top_half);
+    spoint br((TERM_WIDTH / 2) + right_half, (TERM_HEIGHT / 2) + bot_half);
 
     wid_set_pos(window, tl, br);
     wid_set_style(window, UI_WID_STYLE_NORMAL);
@@ -759,12 +762,12 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, text);
-    wid_set_show_cursor(w, true);
+    wid_set_show_cursor(w, 1U);
     wid_set_on_key_down(w, wid_keyboard_text_input_key_event);
     wid_set_void_context(w, ctx);
     wid_set_style(w, UI_WID_STYLE_RED);
 
-    if (max_len) {
+    if (max_len != 0U) {
       wid_set_text_max_len(w, max_len);
     }
 
@@ -796,17 +799,18 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
     /*
      * Create the buttons
      */
-    int x, y;
+    int x;
+    int y;
 
     for (x = 0; x < WID_KEYBOARD_ACROSS; x++) {
       for (y = 0; y < WID_KEYBOARD_DOWN; y++) {
         Widp b;
 
-        if (! strcasecmp(keys[ y ][ x ], "CLEAR")) {
+        if (strcasecmp(keys[ y ][ x ], "CLEAR") == 0) {
           b = wid_new_cancel_button(g, button_container, "wid keyboard button");
-        } else if (! strcasecmp(keys[ y ][ x ], "CANCL")) {
+        } else if (strcasecmp(keys[ y ][ x ], "CANCL") == 0) {
           b = wid_new_cancel_button(g, button_container, "wid keyboard button");
-        } else if (! strcasecmp(keys[ y ][ x ], "OK")) {
+        } else if (strcasecmp(keys[ y ][ x ], "OK") == 0) {
           b = wid_new_green_button(g, button_container, "wid keyboard button");
         } else {
           b = wid_new_menu_button(g, button_container, "wid keyboard button");

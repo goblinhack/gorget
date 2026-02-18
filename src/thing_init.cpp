@@ -117,7 +117,7 @@ Thingp thing_init(Gamep g, Levelsp v, Levelp l, Tpp tp, const fpoint &real_at)
     level_update_paths_set(g, v, l, at);
   }
 
-  if (false) {
+  if (__unused__) {
     THING_DBG(t, "init");
   }
 

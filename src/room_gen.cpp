@@ -559,7 +559,7 @@ static void room_gen_design_chunky_room(Gamep g, RoomGen *grid)
   if (! room_gen_get_bounds(g, &grid)) {
     return false;
   }
-  if (false) {
+  if (__unused__) {
     room_gen_dump(g, &grid);
   }
 

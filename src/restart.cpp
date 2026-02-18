@@ -43,7 +43,7 @@ void restart(Gamep g, std::string restart_arg)
   // Copy arguments and append any we need
   //
   for (i = 1; i < g_argc; i++) {
-    if (strstr(g_argv[ i ], "-restart")) {
+    if (strstr(g_argv[ i ], "-restart") != nullptr) {
       continue;
     }
     argv[ argc++ ] = g_argv[ i ];

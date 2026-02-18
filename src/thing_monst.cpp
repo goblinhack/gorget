@@ -354,7 +354,7 @@ void thing_monst_tick(Gamep g, Levelsp v, Levelp l, Thingp me)
 
   const int player_speed = thing_speed(player);
 
-  if (false) {
+  if (__unused__) {
     THING_LOG(me, "move_rem %d dt %f", thing_move_remaining(me), me->thing_dt);
   }
 

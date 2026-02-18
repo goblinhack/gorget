@@ -129,7 +129,7 @@ static inline void sdl_list_video_size(void)
   }
 }
 
-uint8_t sdl_display_init(Gamep g)
+bool sdl_display_init(Gamep g)
 {
   int video_width;
   int video_height;
@@ -284,7 +284,7 @@ uint8_t sdl_display_init(Gamep g)
   //
   // Do we really need to do this? it takes a small bit of time.
   //
-  if (false) {
+  if (__unused__) {
     //
     // Clear the screen, both buffers
     //

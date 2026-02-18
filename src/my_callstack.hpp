@@ -41,7 +41,7 @@ extern thread_local unsigned char    g_callframes_depth;
 extern thread_local unsigned char    g_callframes_indent;
 
 struct tracer_t {
-  inline tracer_t(const char *func, const unsigned short line)
+  tracer_t(const char *func, const unsigned short line)
   {
 // useful for code tracing in real time
 // fprintf(stderr, "%s %s() line %d\n", file, func, line);
@@ -53,7 +53,7 @@ struct tracer_t {
 #endif
   }
 
-  inline ~tracer_t()
+  ~tracer_t()
   {
 #ifdef ENABLE_DEBUG_TRACE
     g_callframes_indent--;
@@ -63,7 +63,7 @@ struct tracer_t {
 };
 
 struct tracer_no_indent_t {
-  inline tracer_no_indent_t(const char *func, const unsigned short line)
+  tracer_no_indent_t(const char *func, const unsigned short line)
   {
 // useful for code tracing in real time
 // fprintf(stderr, "%s %s() line %d\n", file, func, line);
@@ -74,7 +74,7 @@ struct tracer_no_indent_t {
 #endif
   }
 
-  inline ~tracer_no_indent_t()
+  ~tracer_no_indent_t()
   {
 #ifdef ENABLE_DEBUG_TRACE
     g_callframes_depth--;
@@ -82,7 +82,7 @@ struct tracer_no_indent_t {
   }
 };
 
-extern void        callstack_dump(FILE *);
+extern void        callstack_dump(FILE * /*fp*/);
 extern void        callstack_dump(void);
 extern std::string callstack_string(void);
 

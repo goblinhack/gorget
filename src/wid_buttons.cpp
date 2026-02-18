@@ -23,7 +23,7 @@ Widp wid_new_back_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
-  auto w = wid_new_square_button(g, parent, name);
+  auto *w = wid_new_square_button(g, parent, name);
   wid_set_text(w, "BACK");
   wid_set_mode(w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
@@ -37,7 +37,7 @@ Widp wid_new_menu_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
-  auto w = wid_new_square_button(g, parent, name);
+  auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GREEN);
@@ -50,7 +50,7 @@ Widp wid_new_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
-  auto w = wid_new_square_button(g, parent, name);
+  auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GREEN);
@@ -65,7 +65,7 @@ Widp wid_new_green_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
-  auto w = wid_new_square_button(g, parent, name);
+  auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, GREEN);
@@ -79,7 +79,7 @@ Widp wid_new_red_button(Gamep g, Widp parent, const std::string name)
 {
   TRACE_NO_INDENT();
 
-  auto w = wid_new_square_button(g, parent, name);
+  auto *w = wid_new_square_button(g, parent, name);
   wid_set_mode(w, WID_MODE_OVER);
   wid_set_style(w, UI_WID_STYLE_SOLID_GRAY);
   wid_set_color(w, WID_COLOR_BG, RED);

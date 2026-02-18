@@ -96,7 +96,7 @@ void gl_fini_2d_mode(Gamep g)
 
 void gl_enter_2d_mode(Gamep g)
 {
-  if (false) {
+  if (__unused__) {
     LOG("SDL: enter 2d mode");
   }
   TRACE_AND_INDENT();
@@ -151,7 +151,7 @@ void gl_enter_2d_mode(Gamep g)
 
 void gl_enter_2d_mode(Gamep g, int w, int h)
 {
-  if (false) {
+  if (__unused__) {
     LOG("SDL: enter 2d mode %ux%u", w, h);
   }
   TRACE_AND_INDENT();
@@ -207,7 +207,7 @@ void gl_leave_2d_mode(Gamep g)
   if (! in_2d_mode) {
     return;
   }
-  if (false) {
+  if (__unused__) {
     LOG("SDL: leave 2d mode");
   }
   in_2d_mode = false;
@@ -484,7 +484,7 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
     gl_init_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
     g_fbo_size[ i ] = isize(tex_width, tex_height);
 
-    if (false) {
+    if (__unused__) {
       gl_enter_2d_mode(g, tex_width, tex_height);
       blit_fbo_bind(i);
       {
@@ -744,11 +744,7 @@ void blit_flush(void)
   blit_init();
 }
 
-void blit_flush_triangle_fan(void)
-{
-  TRACE_NO_INDENT();
-  blit_flush_triangle_fan(gl_array_buf, bufp);
-}
+void blit_flush_triangle_fan(void) { blit_flush_triangle_fan(gl_array_buf, bufp); }
 
 void blit_flush_colored_triangle_fan(void)
 {
@@ -759,6 +755,7 @@ void blit_flush_colored_triangle_fan(void)
 void blit_flush_colored_triangle_fan(float *b, float *e)
 {
   TRACE_NO_INDENT();
+
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
 
@@ -790,6 +787,7 @@ void blit_flush_colored_triangle_fan(float *b, float *e)
 void blit_flush_triangle_fan(float *b, float *e)
 {
   TRACE_NO_INDENT();
+
   glEnableClientState(GL_VERTEX_ARRAY);
 
   static long nvertices;

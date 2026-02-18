@@ -16,12 +16,12 @@
 
 class Test;
 
-const char *test_name(Testp);
-Testp       test_load(const char *);
+const char *test_name(Testp /*test*/);
+Testp       test_load(const char * /*name_in*/);
 
 typedef bool (*test_callback_t)(Gamep, Testp);
-void test_callback_set(Testp, test_callback_t);
-void tests_run(Gamep);
+void test_callback_set(Testp /*test*/, test_callback_t /*callback*/);
+void tests_run(Gamep /*g*/);
 
 #define TEST_FAILED(test, why)                                                                                       \
   {                                                                                                                  \
@@ -46,7 +46,7 @@ void tests_run(Gamep);
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wvariadic-macros"
 
-#if defined(__clang__)
+#ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #endif
@@ -65,7 +65,7 @@ void tests_run(Gamep);
     CON("Test %s: %s:%u: %s", test_name(test), __FUNCTION__, __LINE__, tmp);                                         \
   }
 
-#if defined(__clang__)
+#ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
@@ -76,13 +76,13 @@ void tests_run(Gamep);
 void test_init(void);
 void test_fini(void);
 
-[[nodiscard]] Levelsp game_test_init(Gamep, Levelp *, LevelNum, int w, int h, const char *contents,
-                                     Overrides = no_overrides);
+[[nodiscard]] Levelsp game_test_init(Gamep /*g*/, Levelp * /*l_out*/, LevelNum /*level_num*/, int w, int h, const char *contents,
+                                     Overrides  /*overrides*/= no_overrides);
 
-void game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, int w, int h, const char *contents,
-                          Overrides = no_overrides);
+void game_test_init_level(Gamep /*g*/, Levelsp /*v*/, Levelp * /*l_out*/, LevelNum /*level_num*/, int w, int h, const char *contents,
+                          Overrides  /*overrides*/= no_overrides);
 
-void game_test_init_level(Gamep, Levelsp, Levelp *, LevelNum, spoint, int w, int h, const char *contents,
-                          Overrides = no_overrides);
+void game_test_init_level(Gamep /*g*/, Levelsp /*v*/, Levelp * /*l_out*/, LevelNum /*level_num*/, spoint /*level_at*/, int w, int h, const char *contents,
+                          Overrides  /*overrides*/= no_overrides);
 
 #endif // _MY_TEST_H_

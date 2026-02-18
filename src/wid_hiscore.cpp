@@ -72,27 +72,27 @@ void wid_hiscores_show(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (wid_hiscore_window) {
+  if (wid_hiscore_window != nullptr) {
     wid_hiscore_destroy(g);
   }
 
   int menu_height = 26;
   int menu_width  = 100;
 
-  auto name           = "Name";
+  const auto *name           = "Name";
   int  name_field_len = UI_MAX_PLAYER_NAME_LEN + 1;
 
-  auto when           = "Date of Demise";
+  const auto *when           = "Date of Demise";
   int  when_field_len = 25;
 
-  auto completed           = "Completed";
+  const auto *completed           = "Completed";
   int  completed_field_len = 9;
 
-  auto reason           = "Reason of Unfair Demise";
+  const auto *reason           = "Reason of Unfair Demise";
   int  reason_field_len = 28;
 
-  spoint outer_tl(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  spoint outer_br(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
+  spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
   wid_hiscore_window = new WidPopup(g, "hiscores", outer_tl, outer_br, nullptr, "", false, false);
 
   {
@@ -101,7 +101,7 @@ void wid_hiscores_show(Gamep g)
     wid_set_on_key_down(w, wid_hiscore_key_down);
   }
 
-  auto hiscores = game_hiscores_get(g);
+  auto *hiscores = game_hiscores_get(g);
   auto h        = hiscores->hiscores.begin();
   bool first    = true;
   auto index    = 0;
@@ -121,7 +121,7 @@ void wid_hiscores_show(Gamep g)
     if (first) {
       first = false;
 
-      auto col = "red";
+      const auto *col = "red";
 
       snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%7s %-*s %-*s %-*s %*s", //
                col, "Score",                                             //
@@ -133,25 +133,25 @@ void wid_hiscores_show(Gamep g)
       wid_hiscore_window->log(g, tmp);
     }
 
-    std::string when_val = h->when.c_str();
+    std::string when_val = h->when;
     if ((int) when_val.length() > when_field_len) {
       when_val[ when_field_len ] = '\0';
     }
 
-    if (when_val == "") {
+    if (when_val.empty()) {
       when_val = "-";
     }
 
-    std::string reason_val = capitalize_first(h->reason).c_str();
+    std::string reason_val = capitalize_first(h->reason);
     if ((int) reason_val.length() > reason_field_len) {
       reason_val[ reason_field_len ] = '\0';
     }
 
-    if (reason_val == "") {
+    if (reason_val.empty()) {
       reason_val = "-";
     }
 
-    auto col = colors[ index++ ];
+    const auto *col = colors[ index++ ];
     snprintf(tmp, SIZEOF(tmp) - 1, "%%%%fg=%s$%07u %-*s %-*s %-*u %*s", //
              col, h->score,                                             //
              name_field_len, h->name.c_str(),                           //
@@ -166,11 +166,11 @@ void wid_hiscores_show(Gamep g)
 
   {
     TRACE_NO_INDENT();
-    auto p = wid_hiscore_window->wid_text_area->wid_text_area;
-    auto w = wid_new_back_button(g, p, "hiscore");
+    auto *p = wid_hiscore_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_back_button(g, p, "hiscore");
 
-    spoint tl(menu_width / 2 - 4, menu_height - 4);
-    spoint br(menu_width / 2 + 3, menu_height - 2);
+    spoint tl((menu_width / 2) - 4, menu_height - 4);
+    spoint br((menu_width / 2) + 3, menu_height - 2);
 
     wid_set_on_mouse_up(w, wid_hiscore_mouse_up);
     wid_set_pos(w, tl, br);

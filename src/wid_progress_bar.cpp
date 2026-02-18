@@ -2,6 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
+#include <algorithm>
+
 #include "my_ascii.hpp"
 #include "my_callstack.hpp"
 #include "my_color_defs.hpp"
@@ -28,32 +30,28 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
   LOG("Progress bar: %s, %.2f pct", title.c_str(), pct);
   TRACE_NO_INDENT();
 
-  if (wid_progress_bar_window) {
+  if (wid_progress_bar_window != nullptr) {
     wid_progress_bar_destroy(g);
   }
 
   int tile_num = (int) ((float) progress_steps * pct);
-  if (tile_num > progress_steps) {
-    tile_num = progress_steps;
-  }
-  if (tile_num < 1) {
-    tile_num = 1;
-  }
+  tile_num = std::min(tile_num, progress_steps);
+  tile_num = std::max(tile_num, 1);
 
   std::string tilename = "progress_bar." + std::to_string(tile_num);
 
   auto m  = TERM_WIDTH / 2;
   auto n  = TERM_HEIGHT / 2;
-  auto tl = spoint(m - UI_WID_POPUP_WIDTH_WIDE / 2, n - 3);
-  auto br = spoint(m + UI_WID_POPUP_WIDTH_WIDE / 2, n + 4);
+  auto tl = spoint(m - (UI_WID_POPUP_WIDTH_WIDE / 2), n - 3);
+  auto br = spoint(m + (UI_WID_POPUP_WIDTH_WIDE / 2), n + 4);
 
   wid_progress_bar_window = new WidPopup(g, "Progress bar", tl, br, nullptr, "", false, false);
 
   int y_at = 0;
   {
     TRACE_NO_INDENT();
-    auto p = wid_progress_bar_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Title");
+    auto *p = wid_progress_bar_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Title");
 
     auto tl2 = spoint(0, y_at);
     auto br2 = spoint(UI_WID_POPUP_WIDTH_WIDE, y_at);
@@ -65,8 +63,8 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
   y_at = 2;
   {
     TRACE_NO_INDENT();
-    auto p = wid_progress_bar_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(g, p, "Progress");
+    auto *p = wid_progress_bar_window->wid_text_area->wid_text_area;
+    auto *w = wid_new_square_button(g, p, "Progress");
 
     int x_at = UI_WID_POPUP_WIDTH_WIDE - progress_steps;
     x_at /= 2;

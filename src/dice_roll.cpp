@@ -96,7 +96,7 @@ int stat_to_bonus(int stat)
   return bonus;
 }
 
-const std::string bonus_to_string(int stat)
+std::string bonus_to_string(int stat)
 {
   switch (stat) {
     case -20 : return "-20";
@@ -144,9 +144,9 @@ const std::string bonus_to_string(int stat)
   }
 }
 
-const std::string stat_to_bonus_string(int stat) { return bonus_to_string(stat_to_bonus(stat)); }
+std::string stat_to_bonus_string(int stat) { return bonus_to_string(stat_to_bonus(stat)); }
 
-const std::string stat_to_bonus_slash_str(int stat)
+std::string stat_to_bonus_slash_str(int stat)
 {
   switch (stat_to_bonus(stat)) {
     case -20 : return "/-20";
@@ -248,7 +248,7 @@ std::string Dice::to_string(void) const { return hitdice; }
 
 Dice::Dice(std::string s)
 {
-  if (s == "") {
+  if (s.empty()) {
     return;
   }
 
@@ -303,7 +303,7 @@ int Dice::max_roll(void) const
     return 0;
   }
 
-  return ndice * sides + modifier;
+  return (ndice * sides) + modifier;
 }
 
 int Dice::min_roll(void) const
@@ -312,5 +312,5 @@ int Dice::min_roll(void) const
     return 0;
   }
 
-  return ndice * 1 + modifier;
+  return (ndice * 1) + modifier;
 }

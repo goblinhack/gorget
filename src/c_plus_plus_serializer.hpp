@@ -53,7 +53,7 @@ static inline std::istream &operator>>(std::istream &in, Bits< std::string & > v
 {
   my_size_t sz = 0;
   in >> bits(sz);
-  if (in && sz) {
+  if (in && (sz != 0)) {
     std::vector< char > tmp(sz);
     in.read(tmp.data(), sz);
     v.t.assign(tmp.data(), sz);
@@ -89,7 +89,10 @@ static inline std::ostream &operator<<(std::ostream &out, Bits< std::string & > 
 static inline std::istream &operator>>(std::istream &in, Bits< char & > v)
 {
   if (sizeof(char) == 4) {
-    unsigned char _a, _b, _c, _d;
+    unsigned char _a;
+    unsigned char _b;
+    unsigned char _c;
+    unsigned char _d;
     in >> bits(_a);
     in >> bits(_b);
     in >> bits(_c);
@@ -102,7 +105,8 @@ static inline std::istream &operator>>(std::istream &in, Bits< char & > v)
     std::cout << "read '" << _d << "'" << std::endl;
 #endif
   } else if (sizeof(char) == 2) {
-    unsigned char _a, _b;
+    unsigned char _a;
+    unsigned char _b;
     in >> bits(_a);
     in >> bits(_b);
     v.t = (_a << 8) | _b;
@@ -123,7 +127,10 @@ static inline std::ostream &operator<<(std::ostream &out, Bits< const char & > c
   std::cout << "write const '" << v.t << "'" << std::endl;
 #endif
   if (sizeof(char) == 4) {
-    unsigned char _a, _b, _c, _d;
+    unsigned char _a;
+    unsigned char _b;
+    unsigned char _c;
+    unsigned char _d;
     _a = (v.t & (0xff000000)) >> 24;
     out << bits(_a);
     _b = (v.t & (0x00ff0000)) >> 16;
@@ -139,7 +146,8 @@ static inline std::ostream &operator<<(std::ostream &out, Bits< const char & > c
     std::cout << "write '" << _d << "'" << std::endl;
 #endif
   } else if (sizeof(char) == 2) {
-    unsigned char _a, _b;
+    unsigned char _a;
+    unsigned char _b;
     _a = (v.t & (0xff00)) >> 8;
     out << bits(_a);
     _b = (v.t & (0x00ff)) >> 0;
@@ -160,7 +168,10 @@ static inline std::ostream &operator<<(std::ostream &out, Bits< char & > const v
   std::cout << "write const '" << v.t << "'" << std::endl;
 #endif
   if (sizeof(char) == 4) {
-    unsigned char _a, _b, _c, _d;
+    unsigned char _a;
+    unsigned char _b;
+    unsigned char _c;
+    unsigned char _d;
     _a = (v.t & (0xff000000)) >> 24;
     out << bits(_a);
     _b = (v.t & (0x00ff0000)) >> 16;
@@ -176,7 +187,8 @@ static inline std::ostream &operator<<(std::ostream &out, Bits< char & > const v
     std::cout << "write '" << _d << "'" << std::endl;
 #endif
   } else if (sizeof(char) == 2) {
-    unsigned char _a, _b;
+    unsigned char _a;
+    unsigned char _b;
     _a = (v.t & (0xff00)) >> 8;
     out << bits(_a);
     _b = (v.t & (0x00ff)) >> 0;

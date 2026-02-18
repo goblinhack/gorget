@@ -12,7 +12,7 @@ WidPopup::~WidPopup()
   TRACE_NO_INDENT();
 
   extern Gamep game;
-  auto         g = game;
+  auto *         g = game;
 
   wid_destroy(g, &wid_popup_container);
   delete wid_text_area;
@@ -38,13 +38,13 @@ WidPopup::WidPopup(Gamep g, const std::string vname, spoint vtl, spoint vbr, Til
   inner_h       = inner_br.y - inner_tl.y;
 
   int tile_size;
-  if (title_tile) {
+  if (title_tile != nullptr) {
     tile_size = 4;
   } else {
     tile_size = 0;
   }
 
-  if (title_tile) {
+  if (title_tile != nullptr) {
     inner_h -= tile_size;
     inner_tl.y += tile_size;
   }
@@ -53,15 +53,15 @@ WidPopup::WidPopup(Gamep g, const std::string vname, spoint vtl, spoint vbr, Til
     wid_popup_container = wid_new_window(g, "wid_popup " + this->name);
     wid_set_pos(wid_popup_container, tl, br);
     wid_set_style(wid_popup_container, UI_WID_STYLE_SPARSE_NONE);
-    if (background != "") {
+    if (!background.empty()) {
       wid_set_tile(TILE_LAYER_BG_0, wid_popup_container, tile_find_mand(background));
     } else {
       wid_set_style(wid_popup_container, UI_WID_STYLE_NORMAL);
     }
   }
 
-  if (title_tile) {
-    auto w       = wid_new_square_button(g, wid_popup_container, "wid title " + this->name);
+  if (title_tile != nullptr) {
+    auto *w       = wid_new_square_button(g, wid_popup_container, "wid title " + this->name);
     wid_title    = w;
     auto title_x = (outer_w - tile_size) / 2;
     wid_set_pos(w, spoint(title_x + 0, 1), spoint(title_x + tile_size - 1, tile_size));
@@ -82,7 +82,7 @@ WidPopup::WidPopup(Gamep g, const std::string vname, spoint vtl, spoint vbr, Til
 //
 // Log a message to the popup
 //
-Widp WidPopup::log(Gamep g, std::string s, wid_text_format format, std::string col)
+Widp WidPopup::log(Gamep g, std::string s, wid_text_format format, std::string col) const
 {
   TRACE_NO_INDENT();
 
@@ -92,7 +92,7 @@ Widp WidPopup::log(Gamep g, std::string s, wid_text_format format, std::string c
 //
 // Log a blank line to the popup
 //
-Widp WidPopup::log_empty_line(Gamep g)
+Widp WidPopup::log_empty_line(Gamep g) const
 {
   TRACE_NO_INDENT();
 
@@ -102,7 +102,7 @@ Widp WidPopup::log_empty_line(Gamep g)
 //
 // Get rid of trailing empty lines
 //
-void WidPopup::compress(Gamep g)
+void WidPopup::compress(Gamep g) const
 {
   TRACE_NO_INDENT();
 
@@ -116,7 +116,7 @@ void WidPopup::compress(Gamep g)
   // We don't need a scrollbar if we've not exceeded size limits
   //
   if (utilized < inner_h) {
-    if (wid_text_area->wid_vert_scroll) {
+    if (wid_text_area->wid_vert_scroll != nullptr) {
       wid_hide(g, wid_text_area->wid_vert_scroll);
       wid_hide(g, wid_get_parent(wid_text_area->wid_vert_scroll));
     }

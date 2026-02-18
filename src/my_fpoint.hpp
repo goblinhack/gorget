@@ -15,19 +15,19 @@ public:
   float x;
   float y;
 
-  void  operator+=(my_fpoint const &);
-  void  operator-=(my_fpoint const &);
-  void  operator*=(float);
-  void  operator/=(float);
+  void  operator+=(my_fpoint const & /*b*/);
+  void  operator-=(my_fpoint const & /*b*/);
+  void  operator*=(float /*b*/);
+  void  operator/=(float /*b*/);
   float length(void) const;
   void  unit(void);
 } fpoint;
 
-bool   operator==(fpoint const &, fpoint const &);
-fpoint operator+(fpoint const &, fpoint const &);
-fpoint operator-(fpoint const &, fpoint const &);
-fpoint operator*(fpoint const &, float);
-fpoint operator/(fpoint const &, float);
+bool   operator==(fpoint const & /*a*/, fpoint const & /*b*/);
+fpoint operator+(fpoint const & /*a*/, fpoint const & /*b*/);
+fpoint operator-(fpoint const & /*a*/, fpoint const & /*b*/);
+fpoint operator*(fpoint const & /*a*/, float /*b*/);
+fpoint operator/(fpoint const & /*a*/, float /*b*/);
 
 fpoint rotate_radians(float angle, const fpoint &p, const fpoint &origin);
 fpoint rotate_radians(const fpoint &p, float angle);

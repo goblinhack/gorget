@@ -12,7 +12,7 @@
 
 #include <map>
 
-static void wid_topcon_wid_create(Gamep);
+static void wid_topcon_wid_create(Gamep /*g*/);
 
 Widp wid_topcon_container {};
 Widp wid_topcon_vert_scroll {};
@@ -33,7 +33,7 @@ void wid_topcon_fini(Gamep g)
   wid_destroy(g, &wid_topcon_window);
 }
 
-uint8_t wid_topcon_init(Gamep g)
+bool wid_topcon_init(Gamep g)
 {
   TRACE_NO_INDENT();
   wid_topcon_wid_create(g);
@@ -41,7 +41,7 @@ uint8_t wid_topcon_init(Gamep g)
   last_msg       = "";
   last_msg_count = 0;
 
-  return true;
+  return 1U;
 }
 
 //
@@ -51,7 +51,7 @@ static void wid_topcon_reset_scroll(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (! wid_topcon_vert_scroll) {
+  if (wid_topcon_vert_scroll == nullptr) {
     return;
   }
 
@@ -69,7 +69,7 @@ static void wid_topcon_scroll(Widp w, std::string str)
   // Get the wid on the bottom of the list/screen.
   //
   tmp = wid_get_head(w);
-  if (tmp) {
+  if (tmp != nullptr) {
     wid_set_text(tmp, str);
   }
 }
@@ -83,7 +83,7 @@ static void wid_topcon_replace(Gamep g, Widp w, std::string str)
   // Get the wid on the bottom of the list/screen.
   //
   tmp = wid_get_head(w);
-  if (tmp) {
+  if (tmp != nullptr) {
     wid_set_text(tmp, str);
   }
 }
@@ -96,19 +96,19 @@ static void wid_topcon_log_(std::string s)
   TRACE_NO_INDENT();
   static int log_wid_topcon_buffered_lines;
 
-  if (! s.size()) {
+  if (s.empty()) {
     return;
   }
 
   extern Gamep game;
-  auto         g = game;
+  auto        *g = game;
 
   wid_topcon_reset_scroll(g);
 
   //
   // Before the topcon is ready, we buffer the logs.
   //
-  if (! wid_topcon_input_line) {
+  if (wid_topcon_input_line == nullptr) {
     auto result = wid_topcon_lines.insert(std::make_pair(log_wid_topcon_buffered_lines++, s));
 
     if (! result.second) {
@@ -171,7 +171,7 @@ void wid_topcon_log(std::string s)
 
   int chars_per_line = UI_TOPCON_WIDTH;
 
-  if (! TERM_WIDTH) {
+  if (TERM_WIDTH == 0) {
     CROAK("No TERM_WIDTH set");
   }
 
@@ -195,7 +195,7 @@ static void wid_topcon_wid_create(Gamep g)
   TRACE_NO_INDENT();
   int h = UI_TOPCON_HEIGHT;
 
-  if (wid_topcon_window) {
+  if (wid_topcon_window != nullptr) {
     wid_topcon_fini(g);
   }
 
@@ -239,7 +239,7 @@ static void wid_topcon_wid_create(Gamep g)
 
       wid_set_shape_none(child);
       wid_set_pos(child, tl, br);
-      wid_set_text_lhs(child, true);
+      wid_set_text_lhs(child, 1U);
 
       wid_set_prev(child, prev);
       prev = child;

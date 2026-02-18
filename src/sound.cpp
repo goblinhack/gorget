@@ -104,7 +104,7 @@ bool sound_load(float volume, const char *file_in, const char *alias_in)
 bool sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max)
 {
   TRACE_NO_INDENT();
-  if (alias == "") {
+  if (alias.empty()) {
     auto s = sound_find(alias);
     if (s) {
       return true;
@@ -116,7 +116,7 @@ bool sound_load(float volume, const std::string &file, const std::string &alias,
   s->volume         = volume;
   s->concurrent_max = concurrent_max;
   s->data           = file_load(file.c_str(), &s->len);
-  if (! s->data) {
+  if (s->data == nullptr) {
     ERR("Cannot load sound [%s]", file.c_str());
     delete s;
     return false;
@@ -125,15 +125,15 @@ bool sound_load(float volume, const std::string &file, const std::string &alias,
   SDL_RWops *rw;
 
   rw = SDL_RWFromMem(s->data, s->len);
-  if (! rw) {
+  if (rw == nullptr) {
     ERR("SDL_RWFromMem fail [%s]: %s %s", file.c_str(), Mix_GetError(), SDL_GetError());
     SDL_ClearError();
     delete s;
     return false;
   }
 
-  s->chunk = Mix_LoadWAV_RW(rw, false /* A non-zero value mean is will automatically close/free the src for you. */);
-  if (! s->chunk) {
+  s->chunk = Mix_LoadWAV_RW(rw, 0 /* A non-zero value mean is will automatically close/free the src for you. */);
+  if (s->chunk == nullptr) {
     ERR("Mix_LoadWAV_RW fail [%s]: %s %s", file.c_str(), Mix_GetError(), SDL_GetError());
     SDL_ClearError();
     SDL_RWclose(rw);
@@ -170,7 +170,7 @@ bool sound_find(const std::string &alias)
 {
   TRACE_NO_INDENT();
 
-  if (! s->chunk) {
+  if (s->chunk == nullptr) {
     ERR("Cannot find sound chunk %s", s->alias.c_str());
     return false;
   }
@@ -230,7 +230,7 @@ bool sound_play(Gamep g, const std::string &alias, float scale)
     return false;
   }
 
-  if (! sound->second) {
+  if (sound->second == nullptr) {
     ERR("Cannot find sound data %s", alias.c_str());
     return false;
   }

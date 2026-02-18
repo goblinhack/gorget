@@ -20,7 +20,7 @@ typedef struct {
   unsigned char a;
 } color;
 
-color       color_change_hue(const color &in, const float fHue);
+color       color_change_hue(const color &in, float fHue);
 color       color_find(const char *s);
 color       string2color(const char **s);
 color       string2color(std::string &s);

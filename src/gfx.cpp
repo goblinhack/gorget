@@ -3842,7 +3842,7 @@ static void gfx_init_tiles(void)
   tile_load_arr_sprites("data/gfx/tiles.tga", "tiles", OUTLINE_TILE_WIDTH, OUTLINE_TILE_HEIGHT, ARRAY_SIZE(tiles),
                         tiles);
 
-  auto tile = tile_find_mand("none");
+  auto *tile = tile_find_mand("none");
   tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
 }
 
