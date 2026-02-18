@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
-#ifndef _MY_ENUM_HPP__
-#define MY_ENUM_HPP_
+#ifndef _MY_ENUM_HPP_
+#define _MY_ENUM_HPP_
 
 #include "my_types.hpp"
 

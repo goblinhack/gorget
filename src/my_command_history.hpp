@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_COMMAND_HISTORY_HPP_
 #define _MY_COMMAND_HISTORY_HPP_
 

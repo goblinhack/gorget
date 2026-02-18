@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_TILE_HPP_
-#define MY_TILE_HPP_
+#define _MY_TILE_HPP_
 
 #include "my_color.hpp"
 #include "my_enum.hpp"

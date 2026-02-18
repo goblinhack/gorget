@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_LEVEL_EXT_HPP
-#define MY_LEVEL_EXT_HPP
+#define _MY_LEVEL_EXT_HPP
 
 #include "my_level.hpp"
 #include "my_spoint.hpp"
@@ -16,7 +15,7 @@
 //
 // Overriding specific characters
 //
-using Override = std::function< Tpp(char, spoint) >;
+using Override  = std::function< Tpp(char, spoint) >;
 using Overrides = std::map< char, Override >;
 
 extern Overrides no_overrides;

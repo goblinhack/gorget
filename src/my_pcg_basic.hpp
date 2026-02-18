@@ -28,7 +28,6 @@
 // your project.
 //
 
-#pragma once
 #ifndef _MY_PCG_BASIC_HPP_INCLUDED
 #define MY_PCG_BASIC_HPP_INCLUDED 1
 

@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 
 void wid_topcon_fini(Gamep g);
 bool wid_topcon_init(Gamep g);

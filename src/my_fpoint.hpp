@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_FPOINT_HPP_
-#define MY_FPOINT_HPP_
+#define _MY_FPOINT_HPP_
 
 #include "my_spoint.hpp"
 
@@ -15,12 +14,12 @@ public:
   float x;
   float y;
 
-  void  operator+=(my_fpoint const  &/*b*/);
-  void  operator-=(my_fpoint const  &/*b*/);
-  void  operator*=(float /*b*/);
-  void  operator/=(float /*b*/);
+  void                operator+=(my_fpoint const                &/*b*/);
+  void                operator-=(my_fpoint const                &/*b*/);
+  void                operator*=(float /*b*/);
+  void                operator/=(float /*b*/);
   [[nodiscard]] float length() const;
-  void  unit();
+  void                unit();
 };
 
 bool   operator==(fpoint const   &/*a*/, fpoint const   &/*b*/);

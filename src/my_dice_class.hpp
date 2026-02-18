@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_DICE_CLASS_HPP_
-#define MY_DICE_CLASS_HPP_
+#define _MY_DICE_CLASS_HPP_
 
 #include <string>
 

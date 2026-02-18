@@ -1,13 +1,9 @@
-/*
- * Copyright (C) 2011-2020 goblinhack@gmail.com
- *
- * See the README file for license info.
- */
-
-#pragma once
+//
+// Copyright goblinhack@gmail.com
+//
 
 #ifndef _MY_MUSIC_HPP_
-#define MY_MUSIC_HPP_
+#define _MY_MUSIC_HPP_
 
 bool music_init();
 void music_fini();

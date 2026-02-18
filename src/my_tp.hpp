@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_THING_TEMPLATE_H_
-#define MY_THING_TEMPLATE_H_
+#define _MY_THING_TEMPLATE_H_
 
 #include "my_color.hpp"
 #include "my_enum.hpp"

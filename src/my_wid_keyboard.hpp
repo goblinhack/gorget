@@ -2,7 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
+#ifndef _MY_WID_KEYBOARD_HPP_
+#define _MY_WID_KEYBOARD_HPP_
 
 using wid_keyboard_event_t = void (*)(Gamep, Widp, const std::string &text);
 
@@ -58,10 +59,11 @@ using wid_keyboard_ctx = struct {
   int is_new;
 
   size_t max_len;
-
 };
 
 Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wid_keyboard_event_t selected,
                   wid_keyboard_event_t cancelled, size_t max_len);
 
 extern int wid_keyboard_visible;
+
+#endif

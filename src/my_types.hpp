@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_TYPES_HPP_
-#define MY_TYPES_HPP_
+#define _MY_TYPES_HPP_
 
 ////////////////////////////////////////////////////////////////////////
 // Bare minimal includes. Do not add any c++ includes here for speed.

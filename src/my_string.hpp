@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_STRING_UTIL_HPP_
-#define MY_STRING_UTIL_HPP_
+#define _MY_STRING_UTIL_HPP_
 
 #include "my_types.hpp"
 

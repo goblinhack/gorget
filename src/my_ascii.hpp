@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_ASCII_HPP_
-#define MY_ASCII_HPP_
+#define _MY_ASCII_HPP_
 
 #include "my_fpoint.hpp"
 #include "my_tex.hpp"

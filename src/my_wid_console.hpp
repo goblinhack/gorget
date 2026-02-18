@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 
 void wid_console_fini(Gamep g);
 bool wid_console_init(Gamep g);

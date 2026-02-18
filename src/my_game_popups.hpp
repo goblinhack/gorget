@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_GAME_POPUP_HPP_
-#define MY_GAME_POPUP_HPP_
+#define _MY_GAME_POPUP_HPP_
 
 #include "my_color.hpp"
 #include "my_color_defs.hpp"

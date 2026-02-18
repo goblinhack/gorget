@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 
 #include "my_wid_popup.hpp"
 

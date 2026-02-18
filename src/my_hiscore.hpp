@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_HISCORE_HPP_
-#define MY_HISCORE_HPP_
+#define _MY_HISCORE_HPP_
 
 #include <string>
 #include <vector>

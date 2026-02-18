@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_CAVE_H_
-#define MY_CAVE_H_
+#define _MY_CAVE_H_
 
 #include "my_game_defs.hpp"
 #include "my_types.hpp"

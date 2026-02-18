@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_THING_INLINES_H_
-#define MY_THING_INLINES_H_
+#define _MY_THING_INLINES_H_
 
 #ifdef _DEBUG_BUILD_
 #include "my_callstack.hpp"

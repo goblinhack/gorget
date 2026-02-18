@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_POINT3D_HPP_
-#define MY_POINT3D_HPP_
+#define _MY_POINT3D_HPP_
 
 template < typename T > struct my_apoint3d {
 public:

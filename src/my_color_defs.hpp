@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_COLOR_DEFS_HPP_
-#define MY_COLOR_DEFS_HPP_
+#define _MY_COLOR_DEFS_HPP_
 
 #include "my_color.hpp"
 

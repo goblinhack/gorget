@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_WID_HPP_
-#define MY_WID_HPP_
+#define _MY_WID_HPP_
 
 #include "my_color.hpp"
 #include "my_spoint.hpp"
@@ -30,22 +29,22 @@ using wid_mode = enum {
 
 char wid_event_to_char(const struct SDL_Keysym *evt);
 
-using on_joy_button_t = bool (*)(Gamep, Widp, int x, int y);
-using on_key_down_t = bool (*)(Gamep, Widp, const struct SDL_Keysym *);
-using on_key_up_t = bool (*)(Gamep, Widp, const struct SDL_Keysym *);
-using on_mouse_down_t = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
-using on_mouse_held_t = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
+using on_joy_button_t   = bool (*)(Gamep, Widp, int x, int y);
+using on_key_down_t     = bool (*)(Gamep, Widp, const struct SDL_Keysym *);
+using on_key_up_t       = bool (*)(Gamep, Widp, const struct SDL_Keysym *);
+using on_mouse_down_t   = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
+using on_mouse_held_t   = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
 using on_mouse_motion_t = bool (*)(Gamep, Widp, int x, int y, int relx, int rely, int wx, int wy);
-using on_mouse_up_t = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
+using on_mouse_up_t     = bool (*)(Gamep, Widp, int x, int y, uint32_t button);
 
-using on_destroy_begin_t = void (*)(Gamep, Widp);
-using on_destroy_t = void (*)(Gamep, Widp);
+using on_destroy_begin_t     = void (*)(Gamep, Widp);
+using on_destroy_t           = void (*)(Gamep, Widp);
 using on_mouse_focus_begin_t = void (*)(Gamep, Widp);
-using on_mouse_focus_end_t = void (*)(Gamep, Widp);
-using on_mouse_over_begin_t = void (*)(Gamep, Widp, int relx, int rely, int wheelx, int wheely);
-using on_mouse_over_end_t = void (*)(Gamep, Widp);
-using on_tick_t = void (*)(Gamep, Widp);
-using on_display_t = void (*)(Gamep, Widp, spoint tl, spoint br);
+using on_mouse_focus_end_t   = void (*)(Gamep, Widp);
+using on_mouse_over_begin_t  = void (*)(Gamep, Widp, int relx, int rely, int wheelx, int wheely);
+using on_mouse_over_end_t    = void (*)(Gamep, Widp);
+using on_tick_t              = void (*)(Gamep, Widp);
+using on_display_t           = void (*)(Gamep, Widp, spoint tl, spoint br);
 
 [[nodiscard]] void *wid_get_void_context(Widp w);
 [[nodiscard]] color wid_get_color(Widp w, wid_color which);

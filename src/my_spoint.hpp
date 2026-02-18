@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_SPOINT_HPP_
-#define MY_SPOINT_HPP_
+#define _MY_SPOINT_HPP_
 
 using spoint = struct my_spoint {
 public:
@@ -16,12 +15,12 @@ public:
   my_spoint(short _x, short _y) : x(_x), y(_y) {}
   my_spoint(void) : x(0), y(0) {}
 #endif
-  void  operator+=(my_spoint const  &/*b*/);
-  void  operator-=(my_spoint const  &/*b*/);
-  void  operator*=(short /*b*/);
-  void  operator/=(short /*b*/);
+  void                operator+=(my_spoint const                &/*b*/);
+  void                operator-=(my_spoint const                &/*b*/);
+  void                operator*=(short /*b*/);
+  void                operator/=(short /*b*/);
   [[nodiscard]] float length() const;
-  void  unit();
+  void                unit();
 };
 
 bool   operator<(spoint const &a, spoint const &b); // Needed for std::map

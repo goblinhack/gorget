@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_GLAPI_HPP_
-#define MY_GLAPI_HPP_
+#define _MY_GLAPI_HPP_
 
 #define GL_GLEXT_PROTOTYPES
 

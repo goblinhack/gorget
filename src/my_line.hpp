@@ -2,10 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
-
 #ifndef _MY_LINE_HPP_
-#define MY_LINE_HPP_
+#define _MY_LINE_HPP_
 
 #include "my_spoint.hpp"
 

@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_SDL_EVENT_HPP_
-#define MY_SDL_EVENT_HPP_
+#define _MY_SDL_EVENT_HPP_
 
 #include <SDL.h>
 #include <array>

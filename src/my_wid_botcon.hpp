@@ -2,7 +2,6 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 
 void wid_botcon_fini(Gamep g);
 bool wid_botcon_init(Gamep g);

@@ -2,7 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
+#ifndef _MY_RAMDISK_HPP_
+#define _MY_RAMDISK_HPP_
 
 #include <string>
 #include <unordered_map>
@@ -16,3 +17,5 @@ extern std::unordered_map< std::string, ramdisk_t_ > ramdisk_data;
 
 extern unsigned char *ramdisk_load(const char *filename, int *outlen);
 extern void           ramdisk_init();
+
+#endif

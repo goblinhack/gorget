@@ -1,6 +1,5 @@
-#pragma once
 #ifndef _MY_RANDOM_HPP_
-#define MY_RANDOM_HPP_
+#define _MY_RANDOM_HPP_
 
 ////////////////////////////////////////////////////////////////////////////
 // Random numbers

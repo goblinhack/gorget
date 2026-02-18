@@ -1,4 +1,3 @@
-#pragma once
 
 #ifndef C_PLUS_PLUS_SERIALIZER
 #define C_PLUS_PLUS_SERIALIZER

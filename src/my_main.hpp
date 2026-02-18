@@ -2,9 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
 #ifndef _MY_MAIN_HPP_
-#define MY_MAIN_HPP_
+#define _MY_MAIN_HPP_
 
 #include "my_types.hpp"
 

@@ -2,7 +2,8 @@
 // Copyright goblinhack@gmail.com
 //
 
-#pragma once
+#ifndef _MY_WID_WARNING_HPP_
+#define _MY_WID_WARNING_HPP_
 
 #include "my_wid_popup.hpp"
 
@@ -12,3 +13,5 @@
 using wid_warning_callback_t = void (*)(Gamep, bool);
 extern void      wid_warning(Gamep g, std::string error, wid_warning_callback_t callback = nullptr);
 extern WidPopup *wid_warning_window;
+
+#endif
