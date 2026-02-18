@@ -194,7 +194,7 @@ bool tp_init(void)
 {
   TRACE_NO_INDENT();
 
-  tp_init_done = 1u;
+  tp_init_done = true;
 
   templates_init();
   tp_fixup();
@@ -206,10 +206,10 @@ void tp_fini(void)
 {
   TRACE_NO_INDENT();
 
-  if (static_cast<unsigned int>(tp_init_done) == 0U) {
+  if (! tp_init_done) {
     return;
   }
-  tp_init_done = 0u;
+  tp_init_done = false;
 
   for (auto &tp : tp_name_map) {
     delete tp.second;

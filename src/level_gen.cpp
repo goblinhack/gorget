@@ -1794,7 +1794,7 @@ static void level_gen_add_fragments(Gamep g, class LevelGen *l)
       continue;
     }
 
-    auto cand = cands[ pcg_rand() % cands.size() ];
+    auto  cand = cands[ pcg_rand() % cands.size() ];
     auto *alt  = fragment_put(g, l, f, cand);
     if (alt == nullptr) {
       continue;
@@ -2832,7 +2832,7 @@ static class LevelGen *level_gen_new_class(Gamep g, LevelNum level_num)
 {
   TRACE_NO_INDENT();
 
-  if (!g_level_opt.level_name.empty()) {
+  if (! g_level_opt.level_name.empty()) {
     //
     // Test level
     //
@@ -3224,7 +3224,7 @@ static void level_gen_connect_adjacent_rooms_with_distance_and_chance(Gamep g, c
               //
               // If the rooms are not connected, then join them via a corridor
               //
-              if (!l->rooms_connected.contains(conn)) {
+              if (! l->rooms_connected.contains(conn)) {
                 l->rooms_adj_connected++;
                 l->rooms_connected[ conn ] = true;
 
@@ -3925,13 +3925,13 @@ static void level_gen_remove_conflicting_tiles(Gamep g, class LevelGen *l)
 
   while (level_gen_remove_water_conflicts(g, l)) {
     ;
-}
+  }
   while (level_gen_remove_lava_conflicts(g, l)) {
     ;
-}
+  }
   while (level_gen_remove_chasm_conflicts(g, l)) {
     ;
-}
+  }
 }
 
 //
@@ -4214,9 +4214,9 @@ static void level_gen_add_missing_monsts_and_treasure(Gamep g, class LevelGen *l
   //
   auto tries = MAX_LEVEL_GEN_PLACE_ADDITIONAL_TELEPORT_TRIES;
   while (tries-- > 0) {
-    auto cand = cands[ pcg_rand() % cands.size() ];
-    auto x    = cand.x;
-    auto y    = cand.y;
+    auto  cand = cands[ pcg_rand() % cands.size() ];
+    auto  x    = cand.x;
+    auto  y    = cand.y;
     auto *r    = l->data[ x ][ y ].room;
 
     if ((r != nullptr) && (l->room_entrance == r)) {
@@ -4752,7 +4752,7 @@ static void level_gen_extend_bridges(Gamep g, class LevelGen *l)
   LevelFixed *fixed_level = nullptr;
   Overrides   overrides   = no_overrides;
 
-  if (!g_level_opt.level_name.empty()) {
+  if (! g_level_opt.level_name.empty()) {
     //
     // Test level
     //
@@ -5053,7 +5053,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
   do {
     auto *v = game_levels_get(g);
     if (v == nullptr) {
-      if (!g_level_opt.level_name.empty()) {
+      if (! g_level_opt.level_name.empty()) {
         ERR("No levels generate for level %s", g_level_opt.level_name.c_str());
       } else {
         ERR("No levels generate for level num %u", level_num);
@@ -5079,7 +5079,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
     // Check it was created
     //
     if (l == nullptr) {
-      if (!g_level_opt.level_name.empty()) {
+      if (! g_level_opt.level_name.empty()) {
         ERR("No level generated for level %s", g_level_opt.level_name.c_str());
       } else {
         ERR("No level generated for level num %u", level_num);
@@ -5092,7 +5092,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
     //
     TRACE_NO_INDENT();
     if (! level_gen_populate_for_fixed_or_proc_gen_level(g, l)) {
-      if (!g_level_opt.level_name.empty()) {
+      if (! g_level_opt.level_name.empty()) {
         ERR("No level created for level %s", g_level_opt.level_name.c_str());
       } else {
         ERR("No level created for level num %u", level_num);
@@ -5108,7 +5108,7 @@ static void level_gen_create_fixed_or_proc_gen_level(Gamep g, LevelNum level_num
     TRACE_NO_INDENT();
     auto *level = game_level_get(g, v, level_num);
     if (level == nullptr) {
-      if (!g_level_opt.level_name.empty()) {
+      if (! g_level_opt.level_name.empty()) {
         ERR("No level populated for level %s", g_level_opt.level_name.c_str());
       } else {
         ERR("No level populated for level num %u", level_num);

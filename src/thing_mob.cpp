@@ -143,7 +143,7 @@ Thingp thing_mob_spawn_a_minion(Gamep g, Levelsp v, Levelp l, Thingp mob, Tpp tp
       }
     }
 
-    if (minion->mob_id == 0U) {
+    if (minion->mob_id == false) {
       THING_ERR(mob, "mob found detached minion: %s", to_string(g, v, l, minion).c_str());
       return false;
     }

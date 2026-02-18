@@ -483,7 +483,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   TRACE_NO_INDENT();
   auto *s             = &v->level_select.data[ level_at.x ][ level_at.y ];
   s->level_num       = l->level_num;
-  s->is_set          = 1U;
+  s->is_set          = true;
   l->level_select_at = level_at;
 
   //
@@ -1268,7 +1268,7 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
     }
 
     TRACE_NO_INDENT();
-    if ((v->level_tick_in_progress_count == 0U) && (v->level_tick_request_count == 0U)) {
+    if ((v->level_tick_in_progress_count == false) && (v->level_tick_request_count == false)) {
       LEVEL_LOG(g, v, l, "Test: tick %u finished, stop waiting", v->tick);
       return true;
     }

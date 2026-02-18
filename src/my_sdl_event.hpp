@@ -13,21 +13,21 @@
 #include "my_types.hpp"
 
 enum {
-  SDL_JOY_BUTTON_A = 0,                // 0
-  SDL_JOY_BUTTON_B = 1,                // 1
-  SDL_JOY_BUTTON_X = 2,                // 2
-  SDL_JOY_BUTTON_Y = 3,                // 3
-  SDL_JOY_BUTTON_TOP_LEFT = 4,         // 4
-  SDL_JOY_BUTTON_TOP_RIGHT = 5,        // 5
-  SDL_JOY_BUTTON_LEFT_STICK_DOWN = 6,  // 6
-  SDL_JOY_BUTTON_RIGHT_STICK_DOWN = 7, // 7
-  SDL_JOY_BUTTON_START = 8,            // 8
-  SDL_JOY_BUTTON_XBOX = 9,             // 9
-  SDL_JOY_BUTTON_BACK = 10,             // 10
-  SDL_JOY_BUTTON_UP = 11,               // 11
-  SDL_JOY_BUTTON_DOWN = 12,             // 12
-  SDL_JOY_BUTTON_LEFT = 13,             // 13
-  SDL_JOY_BUTTON_RIGHT = 14,            // 14
+  SDL_JOY_BUTTON_A                = 0,  // 0
+  SDL_JOY_BUTTON_B                = 1,  // 1
+  SDL_JOY_BUTTON_X                = 2,  // 2
+  SDL_JOY_BUTTON_Y                = 3,  // 3
+  SDL_JOY_BUTTON_TOP_LEFT         = 4,  // 4
+  SDL_JOY_BUTTON_TOP_RIGHT        = 5,  // 5
+  SDL_JOY_BUTTON_LEFT_STICK_DOWN  = 6,  // 6
+  SDL_JOY_BUTTON_RIGHT_STICK_DOWN = 7,  // 7
+  SDL_JOY_BUTTON_START            = 8,  // 8
+  SDL_JOY_BUTTON_XBOX             = 9,  // 9
+  SDL_JOY_BUTTON_BACK             = 10, // 10
+  SDL_JOY_BUTTON_UP               = 11, // 11
+  SDL_JOY_BUTTON_DOWN             = 12, // 12
+  SDL_JOY_BUTTON_LEFT             = 13, // 13
+  SDL_JOY_BUTTON_RIGHT            = 14, // 14
   //
   // Not real buttons, faking the left and right fire to be buttons.
   //
@@ -78,10 +78,10 @@ public:
   //
   // Joystick support
   //
-  SDL_Haptic                            *haptic {};
-  SDL_Joystick                          *joy {};
-  int                                   *joy_axes {};
-  std::array< uint8_t, SDL_MAX_BUTTONS > joy_buttons {};
+  SDL_Haptic                        *haptic {};
+  SDL_Joystick                      *joy {};
+  int                               *joy_axes {};
+  std::array< int, SDL_MAX_BUTTONS > joy_buttons {};
 
   //
   // Key grabbing for customization of keys

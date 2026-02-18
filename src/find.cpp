@@ -77,7 +77,7 @@ static void find_executable(void)
   // Look in the simplest case first.
   //
   g_exec_full_path_and_name = dynprintf("%s%s", curr_dir, exec_name.c_str());
-  if (file_exists(g_exec_full_path_and_name) != 0U) {
+  if (file_exists(g_exec_full_path_and_name) != false) {
     g_exec_dir = mydupstr(curr_dir, "exec dir 1");
     goto cleanup;
   }
@@ -89,7 +89,7 @@ static void find_executable(void)
   // Try the parent dir.
   //
   g_exec_full_path_and_name = dynprintf("%s%s", parent_dir, exec_name.c_str());
-  if (file_exists(g_exec_full_path_and_name) != 0U) {
+  if (file_exists(g_exec_full_path_and_name) != false) {
     g_exec_dir = mydupstr(parent_dir, "exec dir 2");
     goto cleanup;
   }
@@ -108,7 +108,7 @@ static void find_executable(void)
 
     for (dir = strtok(path, PATHSEP); dir != nullptr; dir = strtok(nullptr, PATHSEP)) {
       g_exec_full_path_and_name = dynprintf("%s" DIR_SEP "%s", dir, exec_name.c_str());
-      if (file_exists(g_exec_full_path_and_name) != 0U) {
+      if (file_exists(g_exec_full_path_and_name) != false) {
         g_exec_dir = dynprintf("%s" DIR_SEP, dir);
         goto cleanup;
       }

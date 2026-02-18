@@ -64,7 +64,7 @@ static std::unordered_map< std::string, Texp > textures_outline;
 bool tex_init(void)
 {
   TRACE_NO_INDENT();
-  return 1U;
+  return true;
 }
 
 void tex_fini(void)

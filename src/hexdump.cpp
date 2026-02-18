@@ -32,7 +32,7 @@ void hexdump(const unsigned char *addr, size_t len)
 
   std::cout << std::dec << len << " bytes:" << std::endl;
 
-  if (len == 0U) {
+  if (len == false) {
     return;
   }
 
@@ -59,7 +59,7 @@ void hexdump(const unsigned char *addr, size_t len)
       x = 0;
     }
 
-    if ((x != 0U) && (((i % (HEX_DUMP_WIDTH / 2))) == 0)) {
+    if ((x != false) && (((i % (HEX_DUMP_WIDTH / 2))) == 0)) {
       std::cout << " ";
     }
 
@@ -76,7 +76,7 @@ void hexdump(const unsigned char *addr, size_t len)
     buf[ (i % HEX_DUMP_WIDTH) + 1 ] = '\0';
   }
 
-  if (buf[ 0 ] == 0U) {
+  if (buf[ 0 ] == false) {
     if (skipping_blanks != 0) {
       std::cout << "  *\n";
     }
@@ -86,7 +86,7 @@ void hexdump(const unsigned char *addr, size_t len)
 
   while ((i % HEX_DUMP_WIDTH) != 0) {
     std::cout << "   ";
-    if ((i != 0U) && (((i % (HEX_DUMP_WIDTH / 2))) == 0)) {
+    if ((i != false) && (((i % (HEX_DUMP_WIDTH / 2))) == 0)) {
       std::cout << " ";
     }
 

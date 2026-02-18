@@ -132,5 +132,5 @@ bool font_init(void)
   font_ui             = font_load("font");
   font_ui->tile_index = 1;
 
-  return 1U;
+  return true;
 }

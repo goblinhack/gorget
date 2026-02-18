@@ -215,7 +215,7 @@ static void wid_console_wid_create(Gamep g)
 
       wid_set_shape_none(child);
       wid_set_pos(child, tl, br);
-      wid_set_text_lhs(child, 1U);
+      wid_set_text_lhs(child, true);
 
       wid_set_prev(child, prev);
       prev = child;
@@ -223,7 +223,7 @@ static void wid_console_wid_create(Gamep g)
       if (row == 0) {
         wid_set_on_key_down(child, wid_console_receive_input);
 
-        wid_set_show_cursor(child, 1U);
+        wid_set_show_cursor(child, true);
         wid_set_name(child, "console input");
         wid_set_focusable(child, 1);
         wid_move_delta(g, child, 1, 0);
@@ -231,7 +231,7 @@ static void wid_console_wid_create(Gamep g)
 
         Widp prefix = wid_new_container(g, wid_console_container, "console final line");
         wid_set_pos(prefix, tl, br);
-        wid_set_text_lhs(prefix, 1U);
+        wid_set_text_lhs(prefix, true);
         wid_set_shape_none(prefix);
         wid_set_text(prefix, ">");
         wid_set_color(child, WID_COLOR_BG, COLOR_NONE);
@@ -253,7 +253,7 @@ static void wid_console_wid_create(Gamep g)
   wid_hide(g, wid_get_parent(wid_console_horiz_scroll));
   wid_hide(g, wid_console_window);
 
-  wid_set_ignore_scroll_events(wid_console_window, 1U);
+  wid_set_ignore_scroll_events(wid_console_window, true);
 
   wid_update(g, wid_console_window);
 }
@@ -265,7 +265,7 @@ std::vector< std::string > wid_console_serialize(void)
   auto *                       tmp = wid_get_head(wid_console_input_line);
   while (tmp != nullptr) {
     auto s = wid_get_text(tmp);
-    if (static_cast<unsigned int>(!s.empty()) != 0U) {
+    if (static_cast<unsigned int>(!s.empty()) != false) {
       r.push_back(wid_get_text(tmp));
     }
     tmp = wid_get_next(tmp);
@@ -280,7 +280,7 @@ void wid_console_deserialize(std::vector< std::string > r)
   DBG2("Start of replaying old logs");
   DBG2("Vvvvvvvvvvvvvvvvvvvvvvvvvvv");
   for (auto s : r) {
-    if (static_cast<unsigned int>(!s.empty()) != 0U) {
+    if (static_cast<unsigned int>(!s.empty()) != false) {
       wid_console_log(s);
     }
   }

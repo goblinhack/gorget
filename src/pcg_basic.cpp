@@ -60,8 +60,8 @@ uint32_t pcg32_random_r(pcg32_random_t *rng)
 void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq)
 {
   pcg32_global = PCG32_INITIALIZER;
-  rng->state   = 0U;
-  rng->inc     = (initseq << 1U) | 1U;
+  rng->state   = false;
+  rng->inc     = (initseq << true) | true;
   pcg32_random_r(rng);
   rng->state += initstate;
   pcg32_random_r(rng);

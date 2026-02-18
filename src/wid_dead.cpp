@@ -100,7 +100,7 @@ void wid_dead_select(Gamep g, std::string reason)
 
   auto grave_text_width = 18;
 
-  wid_set_do_not_lower(wid_dead_window->wid_popup_container, 1U);
+  wid_set_do_not_lower(wid_dead_window->wid_popup_container, true);
 
   wid_dead_window->log_empty_line(g);
   wid_dead_window->log_empty_line(g);

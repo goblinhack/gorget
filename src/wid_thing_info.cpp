@@ -168,7 +168,7 @@
     wid_set_style(w, UI_WID_STYLE_SPARSE_NONE);
     wid_set_color(w, WID_COLOR_TEXT_FG, UI_HIGHLIGHT_COLOR);
     wid_set_tilename(TILE_LAYER_BG_0, w, icon);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
   }
 
   return true;

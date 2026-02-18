@@ -80,7 +80,7 @@ static void level_fov_set(FovMap *m, spoint pov, bool val)
     return false;
   }
 
-  return m->can_see[ pov.x ][ pov.y ] != 0U;
+  return m->can_see[ pov.x ][ pov.y ] != false;
 }
 
 //

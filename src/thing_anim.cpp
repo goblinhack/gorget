@@ -128,7 +128,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
 #endif
 
   auto tile_index = t->tile_index;
-  if (tile_index == 0U) {
+  if (tile_index == false) {
     return;
   }
 
@@ -144,7 +144,7 @@ void thing_anim_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, Tpp tp, int ti
     }
   }
 
-  if (tile_delay_ms(tile) == 0U) {
+  if (tile_delay_ms(tile) == false) {
     return;
   }
 

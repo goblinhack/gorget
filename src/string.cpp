@@ -222,7 +222,7 @@ void strchop(char *s)
   char    *end;
 
   size = (uint32_t) strlen(s);
-  if (size == 0U) {
+  if (size == false) {
     return;
   }
 
@@ -244,7 +244,7 @@ void strchopc(char *s, char c)
   char    *end;
 
   size = (uint32_t) strlen(s);
-  if (size == 0U) {
+  if (size == false) {
     return;
   }
 

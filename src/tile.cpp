@@ -206,7 +206,7 @@ void tile_load_arr(const char *file, const char *alias, uint32_t width, uint32_t
   pixel_size.w = width;
   pixel_size.h = height;
 
-  while ((nargs--) != 0U) {
+  while ((nargs--) != false) {
     std::string name = arr[ idx++ ];
 
     if (!name.empty()) {
@@ -362,7 +362,7 @@ void tile_load_arr_sprites(const char *file, const char *alias, uint32_t tile_wi
   pixel_size.w = tile_width;
   pixel_size.h = tile_height;
 
-  while ((nargs--) != 0U) {
+  while ((nargs--) != false) {
     std::string name = arr[ idx++ ];
 
     if (!name.empty()) {
@@ -688,7 +688,7 @@ uint32_t tile_delay_ms(Tilep t)
   TRACE_NO_INDENT();
 #endif
 
-  if (t->delay_ms == 0U) {
+  if (t->delay_ms == false) {
     return 5000;
   }
   return t->delay_ms;

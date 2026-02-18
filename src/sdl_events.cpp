@@ -502,7 +502,7 @@ void sdl_key_repeat_events(Gamep g)
     return;
   }
 
-  if ((wid_console_window != nullptr) && (static_cast<unsigned int>(wid_console_window->visible) != 0U)) {
+  if ((wid_console_window != nullptr) && (static_cast<unsigned int>(wid_console_window->visible) != false)) {
     return;
   }
 
@@ -514,67 +514,67 @@ void sdl_key_repeat_events(Gamep g)
   static bool left_held_prev;
   static bool right_held_prev;
 
-  bool fire_held  = state[ sdlk_to_scancode(game_key_fire_get(g)) ] != 0U;
-  bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(g)) ] != 0U;
-  bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(g)) ] != 0U;
-  bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(g)) ] != 0U;
-  bool right_held = state[ sdlk_to_scancode(game_key_move_right_get(g)) ] != 0U;
+  bool fire_held  = state[ sdlk_to_scancode(game_key_fire_get(g)) ] != false;
+  bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(g)) ] != false;
+  bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(g)) ] != false;
+  bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(g)) ] != false;
+  bool right_held = state[ sdlk_to_scancode(game_key_move_right_get(g)) ] != false;
 
   //
   // Keypad stuff is hardcoded.
   //
-  if ((state[ SDL_SCANCODE_KP_5 ] != 0U) || (state[ SDL_SCANCODE_KP_ENTER ] != 0U)) {
+  if ((state[ SDL_SCANCODE_KP_5 ] != false) || (state[ SDL_SCANCODE_KP_ENTER ] != false)) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     fire_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_1 ] != 0U) {
+  if (state[ SDL_SCANCODE_KP_1 ] != false) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
     down_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_2 ] != 0U) {
+  if (state[ SDL_SCANCODE_KP_2 ] != false) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     down_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_3 ] != 0U) {
+  if (state[ SDL_SCANCODE_KP_3 ] != false) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     right_held = true;
     down_held  = true;
   }
-  if (state[ SDL_SCANCODE_KP_4 ] != 0U) {
+  if (state[ SDL_SCANCODE_KP_4 ] != false) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_6 ] != 0U) {
+  if (state[ SDL_SCANCODE_KP_6 ] != false) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     right_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_7 ] != 0U) {
+  if (state[ SDL_SCANCODE_KP_7 ] != false) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
     up_held   = true;
   }
-  if (state[ SDL_SCANCODE_KP_8 ] != 0U) {
+  if (state[ SDL_SCANCODE_KP_8 ] != false) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     up_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_9 ] != 0U) {
+  if (state[ SDL_SCANCODE_KP_9 ] != false) {
     // 7 8 9
     // 4 5 6
     // 1 2 3

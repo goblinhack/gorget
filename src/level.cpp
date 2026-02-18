@@ -301,7 +301,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
     //
     // Enter level selectionm
     //
-  } else if ((level_num > s->level_count) && (s->level_count != 0U)) {
+  } else if ((level_num > s->level_count) && (s->level_count != false)) {
     //
     // Jump tot the last real level
     //

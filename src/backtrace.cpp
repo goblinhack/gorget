@@ -128,7 +128,7 @@ static std::string demangle_symbol(char *name)
     }
 
     auto was_demangled = demangle(cur);
-    if (static_cast<unsigned int>(!was_demangled.empty()) != 0U) {
+    if (static_cast<unsigned int>(!was_demangled.empty()) != false) {
       sout += string_sprintf("%s", was_demangled.c_str());
       demangled = true;
       break;

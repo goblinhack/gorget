@@ -229,14 +229,14 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     //
     // Start falling if not doing do
     //
-    if (t->_is_falling_ms != 0U) {
+    if (t->_is_falling_ms != false) {
       return;
     }
   } else {
     //
     // Stop falling
     //
-    if (t->_is_falling_ms == 0U) {
+    if (t->_is_falling_ms == false) {
       return;
     }
   }
@@ -316,14 +316,14 @@ void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     //
     // Start the hit counter if not doing do
     //
-    if (t->_is_hit != 0U) {
+    if (t->_is_hit != false) {
       return;
     }
   } else {
     //
     // Stop hit
     //
-    if (t->_is_hit == 0U) {
+    if (t->_is_hit == false) {
       return;
     }
   }
@@ -345,7 +345,7 @@ int thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     return 0;
   }
 
-  if ((t->_is_hit == 0U) && (val != 0)) {
+  if ((t->_is_hit == false) && (val != 0)) {
     thing_on_hit_begin(g, v, l, t);
   }
 
@@ -365,7 +365,7 @@ int thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
 
   if ((int) t->_is_hit - val <= 0) {
-    if (t->_is_hit != 0U) {
+    if (t->_is_hit != false) {
       thing_on_hit_end(g, v, l, t);
     }
     return t->_is_hit = 0;
@@ -389,14 +389,14 @@ void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     //
     // Start the hot counter if not doing do
     //
-    if (t->_is_hot != 0U) {
+    if (t->_is_hot != false) {
       return;
     }
   } else {
     //
     // Stop hot
     //
-    if (t->_is_hot == 0U) {
+    if (t->_is_hot == false) {
       return;
     }
   }

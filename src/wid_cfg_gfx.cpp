@@ -460,7 +460,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Resolution");
   }
   {
@@ -479,7 +479,7 @@ void wid_cfg_gfx_select(Gamep g)
     }
 
     wid_set_text(w, res);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
   }
 
   if (! game_gfx_fullscreen_desktop_get(g)) {
@@ -520,7 +520,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Terminal");
   }
   {
@@ -535,7 +535,7 @@ void wid_cfg_gfx_select(Gamep g)
 
     auto res = std::to_string(TERM_WIDTH) + "x" + std::to_string(TERM_HEIGHT);
     wid_set_text(w, res);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
   }
   y_at += 1;
 
@@ -551,7 +551,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Font size");
   }
   {
@@ -568,7 +568,7 @@ void wid_cfg_gfx_select(Gamep g)
     auto fh  = game_ascii_pix_height_get(g);
     auto res = std::to_string(fw) + "x" + std::to_string(fh);
     wid_set_text(w, res);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
   }
   y_at += 2;
 
@@ -585,7 +585,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Full desktop");
   }
   {
@@ -617,7 +617,7 @@ void wid_cfg_gfx_select(Gamep g)
       wid_set_shape_none(w);
       wid_set_pos(w, tl, br);
       wid_set_text(w, "^^ Disable to change resolution ^^");
-      wid_set_text_lhs(w, 1U);
+      wid_set_text_lhs(w, true);
     }
   }
 
@@ -634,7 +634,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Fullscreen");
   }
   {
@@ -667,7 +667,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Borderless window");
   }
   {
@@ -700,7 +700,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Vertical sync");
   }
   {
@@ -733,7 +733,7 @@ void wid_cfg_gfx_select(Gamep g)
     spoint br(width / 2, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "FPS counter");
   }
   {

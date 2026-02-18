@@ -202,7 +202,7 @@ void wid_cfg_mouse_select(Gamep g)
     spoint br(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Mouse invert left/right");
   }
   {
@@ -235,7 +235,7 @@ void wid_cfg_mouse_select(Gamep g)
     spoint br(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, 1U);
+    wid_set_text_lhs(w, true);
     wid_set_text(w, "Mouse invert up/down");
   }
   {

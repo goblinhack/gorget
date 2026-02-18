@@ -75,7 +75,7 @@ void wid_error(Gamep g, std::string error)
   wid_error_window = new WidPopup(g, "Game error", tl, br, nullptr, "");
   wid_set_on_key_down(wid_error_window->wid_popup_container, wid_error_key_down);
 
-  wid_set_do_not_lower(wid_error_window->wid_popup_container, 1U);
+  wid_set_do_not_lower(wid_error_window->wid_popup_container, true);
 
   wid_error_window->log(g, "ERROR: " UI_IMPORTANT_FMT_STR "" + error);
   wid_error_window->log(g, "Press ESCAPE to dismiss this window");

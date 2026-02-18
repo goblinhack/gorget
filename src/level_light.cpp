@@ -355,9 +355,9 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, sp
   //
   // Only apply color to the tile once
   //
-  if (fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ] == 0U) {
-    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = 1U;
-    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = 1U;
+  if (fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ] == false) {
+    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = true;
+    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
     level_light_per_pixel_lighting(g, v, l, t, pov, tile);
   }
 }

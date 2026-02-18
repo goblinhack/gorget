@@ -240,14 +240,14 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   GL_ERROR_CHECK();
 
   DBG2("OpenGl: - glGenTextures");
-  if (*fbo_tex_id != 0U) {
+  if (*fbo_tex_id != false) {
     DBG2("OpenGl: - glDeleteTextures");
     glDeleteTextures(1, fbo_tex_id);
     GL_ERROR_CHECK();
     *fbo_tex_id = 0;
   }
 
-  if (*fbo_id != 0U) {
+  if (*fbo_id != false) {
     DBG2("OpenGl: - glDeleteRenderbuffers");
     glDeleteRenderbuffers_EXT(1, fbo_id);
     GL_ERROR_CHECK();
@@ -358,7 +358,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   //
   DBG2("OpenGl: - glCheckFramebufferStatus_EXT");
   auto status = glCheckFramebufferStatus_EXT(GL_FRAMEBUFFER);
-  if ((status != 0U) && (status != GL_FRAMEBUFFER_COMPLETE)) {
+  if ((status != false) && (status != GL_FRAMEBUFFER_COMPLETE)) {
     LOG("Failed to create framebuffer, error: %d/0x%x", status, status);
 
 #ifdef GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT
@@ -401,7 +401,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
     }
 #endif
   }
-  if (status == 0U) {
+  if (status == false) {
     glGetError();
   }
   GL_ERROR_CHECK();
@@ -420,14 +420,14 @@ static void gl_fini_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   GL_ERROR_CHECK();
 
   DBG2("OpenGl: - glGenTextures");
-  if (*fbo_tex_id != 0U) {
+  if (*fbo_tex_id != false) {
     DBG2("OpenGl: - glDeleteTextures");
     glDeleteTextures(1, fbo_tex_id);
     GL_ERROR_CHECK();
     *fbo_tex_id = 0;
   }
 
-  if (*fbo_id != 0U) {
+  if (*fbo_id != false) {
     DBG2("OpenGl: - glDeleteRenderbuffers");
     glDeleteRenderbuffers_EXT(1, fbo_id);
     GL_ERROR_CHECK();
@@ -1437,12 +1437,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = 1U;
+    first_vertex = true;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = 1U;
+    first_vertex = true;
   } else {
-    first_vertex = 0U;
+    first_vertex = false;
   }
 
   buf_tex = tex;
@@ -1461,12 +1461,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = 1U;
+    first_vertex = true;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = 1U;
+    first_vertex = true;
   } else {
-    first_vertex = 0U;
+    first_vertex = false;
   }
 
   buf_tex = tex;
@@ -1520,12 +1520,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = 1U;
+    first_vertex = true;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = 1U;
+    first_vertex = true;
   } else {
-    first_vertex = 0U;
+    first_vertex = false;
   }
 
   buf_tex = tex;

@@ -123,7 +123,7 @@ void wid_warning(Gamep g, std::string warning, wid_warning_callback_t callback)
 
   wid_warning_window = new WidPopup(g, "Game warning", tl, br, nullptr, "", false, false);
   wid_set_on_key_down(wid_warning_window->wid_popup_container, wid_warning_key_down);
-  wid_set_do_not_lower(wid_warning_window->wid_popup_container, 1U);
+  wid_set_do_not_lower(wid_warning_window->wid_popup_container, true);
   wid_set_void_context(wid_warning_window->wid_popup_container, (void *) callback);
 
   wid_warning_window->log_empty_line(g);
