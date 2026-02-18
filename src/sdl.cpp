@@ -156,7 +156,7 @@ int sdl_get_mouse(void)
 {
   TRACE_NO_INDENT();
 
-  if (wid_mouse_visible == false) {
+  if (!wid_mouse_visible) {
     return 0;
   }
 
@@ -322,7 +322,7 @@ void sdl_tick(Gamep g)
 
     y = std::min(y, game_window_pix_height_get(g) - 1);
 
-    if (wid_mouse_visible != 0) {
+    if (static_cast<int>(wid_mouse_visible) != 0) {
       sdl_mouse_warp(g, x, y);
     }
   }

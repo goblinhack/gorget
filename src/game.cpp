@@ -267,7 +267,7 @@ public:
   bool load_snapshot(void);
   bool load(int slot);
   bool load(const std::string & /*file_to_load*/, class Game &target);
-  bool save_config(void);
+  bool save_config(void) const;
   bool save_select(void);
   bool save_snapshot(void);
   bool save(int slot);
@@ -294,7 +294,7 @@ public:
   std::string load_config(void) const;
 };
 
-static void game_map_zoom_update(Gamep);
+static void game_map_zoom_update(Gamep /*g*/);
 
 class Game *game;
 
@@ -483,7 +483,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   TRACE_NO_INDENT();
   auto *s            = &v->level_select.data[ level_at.x ][ level_at.y ];
   s->level_num       = l->level_num;
-  s->is_set          = true;
+  s->is_set          = 1u;
   l->level_select_at = level_at;
 
   //
@@ -1268,7 +1268,7 @@ bool game_wait_for_tick_to_finish(Gamep g, Levelsp v, Levelp l)
     }
 
     TRACE_NO_INDENT();
-    if ((v->level_tick_in_progress_count == false) && (v->level_tick_request_count == false)) {
+    if ((!static_cast<bool>(v->level_tick_in_progress_count)) && (!static_cast<bool>(v->level_tick_request_count))) {
       LEVEL_LOG(g, v, l, "Test: tick %u finished, stop waiting", v->tick);
       return true;
     }

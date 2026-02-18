@@ -32,7 +32,7 @@ void level_cursor_describe_update(Gamep g, Levelsp v)
   v->describe_count = 0;
 
   for (unsigned int i : v->describe) {
-    if (i != 0u) {
+    if (i != 0U) {
       v->describe_count++;
     }
   }
@@ -131,7 +131,7 @@ void level_cursor_describe_clear(Gamep g, Levelsp v)
     return;
   }
 
-  if (v->describe_count != 0u) {
+  if (v->describe_count != 0U) {
     memset(v->describe, 0, sizeof(v->describe));
     game_request_to_remake_ui_set(g);
     level_cursor_describe_update(g, v);

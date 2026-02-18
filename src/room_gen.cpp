@@ -142,7 +142,7 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
 
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
-      if (cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0u) {
+      if (cave.curr[ x + MAP_LEVEL_CELLULAR_BORDER ][ y + MAP_LEVEL_CELLULAR_BORDER ] != 0U) {
         grid->data[ x ][ y ] = CHARMAP_FLOOR;
       }
     }

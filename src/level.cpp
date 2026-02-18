@@ -310,7 +310,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
   }
 
   Level *old_level = game_level_get(g, v);
-  if (! game_level_populate(g, v, level_num)) {
+  if (game_level_populate(g, v, level_num) == nullptr) {
     TOPCON("The dungeon is still under construction and cannot be entered (BUG)");
     return old_level;
   }

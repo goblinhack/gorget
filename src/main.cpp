@@ -364,14 +364,14 @@ int main(int argc, char *argv[])
 
   if (! g_opt_tests) {
     TRACE_NO_INDENT();
-    if (sdl_init() == false) {
+    if (!sdl_init()) {
       ERR("SDL: Init");
     }
   }
 
   if (! g_opt_tests) {
     TRACE_NO_INDENT();
-    if (static_cast< unsigned int >(sdl_display_init(g)) == false) {
+    if (!sdl_display_init(g)) {
       ERR("SDL: Display init");
     }
   }
@@ -433,7 +433,7 @@ int main(int argc, char *argv[])
     } else {
       LOG("Load fonts");
     }
-    if (font_init() == false) {
+    if (!font_init()) {
       ERR("Font init");
     }
   }
@@ -514,7 +514,7 @@ int main(int argc, char *argv[])
     } else {
       LOG("Load textures");
     }
-    if (tex_init() == false) {
+    if (!tex_init()) {
       ERR("Tex init");
     }
     wid_console_flush(g);
@@ -574,7 +574,7 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     LOG("Load commands");
-    if (command_init() == false) {
+    if (!command_init()) {
       ERR("Command init");
     }
     LOG("Loaded commands");

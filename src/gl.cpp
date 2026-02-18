@@ -1366,7 +1366,7 @@ void gl_error(GLenum errCode)
   }
 }
 
-static void gl_push(float **P, float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right,
+static void gl_push(float **P, const float *p_end, bool first_vertex, float tex_left, float tex_top, float tex_right,
                     float tex_bottom, spoint tl, spoint tr, spoint bl, spoint br, uint8_t r1, uint8_t g1, uint8_t b1,
                     uint8_t a1, uint8_t r2, uint8_t g2, uint8_t b2, uint8_t a2, uint8_t r3, uint8_t g3, uint8_t b3,
                     uint8_t a3, uint8_t r4, uint8_t g4, uint8_t b4, uint8_t a4)

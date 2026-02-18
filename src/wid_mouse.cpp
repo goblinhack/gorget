@@ -86,7 +86,7 @@ void wid_mouse_over_end(Gamep g)
 
   Widp w {};
 
-  if (wid_mouse_visible == 0) {
+  if (static_cast<int>(wid_mouse_visible) == 0) {
     return;
   }
 
@@ -118,7 +118,7 @@ void wid_mouse_over_end(Gamep g)
 {
   TRACE_NO_INDENT();
 
-  if (wid_mouse_visible == 0) {
+  if (static_cast<int>(wid_mouse_visible) == 0) {
     return false;
   }
 
@@ -284,8 +284,8 @@ bool wid_scroll_motion(Gamep g, Widp w, int x, int y, int relx, int rely, int wh
   int dx;
   int dy;
 
-  bool left = SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(0, 0);
-  if (left || wheely || wheelx) {
+  bool left = SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr);
+  if (left || (wheely != 0) || (wheelx != 0)) {
     dy = (rely != 0) ? rely : -wheely;
     dx = (relx != 0) ? relx : -wheelx;
 
@@ -427,7 +427,7 @@ static Widp wid_mouse_down_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
       continue;
     }
 
-    Widp closer_match = wid_mouse_down_handler_at(g, child, x, y, 1u /* strict */);
+    Widp closer_match = wid_mouse_down_handler_at(g, child, x, y, 1U /* strict */);
     if (closer_match != nullptr) {
       return closer_match;
     }
@@ -502,7 +502,7 @@ static Widp wid_mouse_held_handler_at(Gamep g, Widp w, int x, int y, uint8_t str
       continue;
     }
 
-    Widp closer_match = wid_mouse_held_handler_at(g, child, x, y, 1u /* strict */);
+    Widp closer_match = wid_mouse_held_handler_at(g, child, x, y, 1U /* strict */);
     if (closer_match != nullptr) {
       return closer_match;
     }
@@ -577,7 +577,7 @@ static Widp wid_mouse_up_handler_at(Gamep g, Widp w, int x, int y, uint8_t stric
       continue;
     }
 
-    Widp closer_match = wid_mouse_up_handler_at(g, child, x, y, 1u /* strict */);
+    Widp closer_match = wid_mouse_up_handler_at(g, child, x, y, 1U /* strict */);
     if (closer_match != nullptr) {
       return closer_match;
     }
@@ -620,12 +620,12 @@ static Widp wid_mouse_down_handler(Gamep g, int x, int y)
 
   Widp w {};
 
-  w = wid_mouse_down_handler_at(g, wid_focus, x, y, 1u /* strict */);
+  w = wid_mouse_down_handler_at(g, wid_focus, x, y, 1U /* strict */);
   if (w != nullptr) {
     return w;
   }
 
-  w = wid_mouse_down_handler_at(g, wid_over, x, y, 1u /* strict */);
+  w = wid_mouse_down_handler_at(g, wid_over, x, y, 1U /* strict */);
   if (w != nullptr) {
     return w;
   }
@@ -638,7 +638,7 @@ static Widp wid_mouse_down_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_mouse_down_handler_at(g, c, x, y, 1u /* strict */);
+      c = wid_mouse_down_handler_at(g, c, x, y, 1U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -655,7 +655,7 @@ static Widp wid_mouse_down_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_mouse_down_handler_at(g, c, x, y, 0u /* strict */);
+      c = wid_mouse_down_handler_at(g, c, x, y, 0U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -673,12 +673,12 @@ static Widp wid_mouse_held_handler(Gamep g, int x, int y)
 
   Widp w {};
 
-  w = wid_mouse_held_handler_at(g, wid_focus, x, y, 1u /* strict */);
+  w = wid_mouse_held_handler_at(g, wid_focus, x, y, 1U /* strict */);
   if (w != nullptr) {
     return w;
   }
 
-  w = wid_mouse_held_handler_at(g, wid_over, x, y, 1u /* strict */);
+  w = wid_mouse_held_handler_at(g, wid_over, x, y, 1U /* strict */);
   if (w != nullptr) {
     return w;
   }
@@ -691,7 +691,7 @@ static Widp wid_mouse_held_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_mouse_held_handler_at(g, c, x, y, 1u /* strict */);
+      c = wid_mouse_held_handler_at(g, c, x, y, 1U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -708,7 +708,7 @@ static Widp wid_mouse_held_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_mouse_held_handler_at(g, c, x, y, 0u /* strict */);
+      c = wid_mouse_held_handler_at(g, c, x, y, 0U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -726,12 +726,12 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
 
   Widp w {};
 
-  w = wid_mouse_up_handler_at(g, wid_focus, x, y, 1u /* strict */);
+  w = wid_mouse_up_handler_at(g, wid_focus, x, y, 1U /* strict */);
   if (w != nullptr) {
     return w;
   }
 
-  w = wid_mouse_up_handler_at(g, wid_over, x, y, 1u /* strict */);
+  w = wid_mouse_up_handler_at(g, wid_over, x, y, 1U /* strict */);
   if (w != nullptr) {
     return w;
   }
@@ -744,7 +744,7 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_mouse_up_handler_at(g, c, x, y, 1u /* strict */);
+      c = wid_mouse_up_handler_at(g, c, x, y, 1U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -761,7 +761,7 @@ static Widp wid_mouse_up_handler(Gamep g, int x, int y)
         continue;
       }
 
-      c = wid_mouse_up_handler_at(g, c, x, y, 0u /* strict */);
+      c = wid_mouse_up_handler_at(g, c, x, y, 0U /* strict */);
       if (unlikely(! c)) {
         continue;
       }
@@ -821,7 +821,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
 
   wid_mouse_motion_recursion = 1;
 
-  uint8_t over = 0u;
+  uint8_t over = 0U;
 
   for (auto &iter : wid_top_level) {
     auto *w = iter.second;
@@ -876,14 +876,14 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
       // This widget reacted somehow when we went over it. i.e. popup ot
       // function.
       //
-      over = 1u;
+      over = 1U;
       // TOPCON("mouse motion %s mouse %d,%d.", w->name.c_str(), x, y);
     }
 
     w = wid_mouse_motion_handler(x, y, relx, rely, wheelx, wheely);
     if (w != nullptr) {
       if (wid_mouse_over_begin(g, w, x, y, relx, rely, wheelx, wheely)) {
-        over = 1u;
+        over = 1U;
       }
 
       //
@@ -1123,11 +1123,11 @@ void wid_mouse_hide(Gamep g, bool value)
 {
   TRACE_NO_INDENT();
 
-  bool visible = value == false;
+  bool visible = !value;
 
   if (visible != wid_mouse_visible) {
     wid_mouse_visible = visible;
-    if (visible != 0) {
+    if (static_cast<int>(visible) != 0) {
       sdl_mouse_warp(g, saved_mouse_x, saved_mouse_y);
     } else {
       saved_mouse_x = sdl.mouse_x;

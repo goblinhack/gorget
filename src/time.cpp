@@ -216,7 +216,7 @@ std::string &string_timestamp(void)
   static std::string last_timestamp;
   auto               the_time_now = time_ms();
 
-  if (static_cast< unsigned int >(! last_timestamp.empty()) != false) {
+  if (! last_timestamp.empty()) {
     if (the_time_now - time_last < 1000) {
       return last_timestamp;
     }
