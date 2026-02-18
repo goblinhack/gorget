@@ -683,6 +683,12 @@ bool Game::save_snapshot(void)
 bool Game::save_config(void)
 {
   TRACE_NO_INDENT();
+
+  //
+  // Stops clang tidy adding const for this function
+  //
+  this->compiler_non_const_hack = true;
+
   auto          filename = saved_dir + "config";
   std::ofstream out(filename, std::ios::binary);
   if (! out) {

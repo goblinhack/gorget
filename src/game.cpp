@@ -255,6 +255,11 @@ public:
   //
   std::array< std::array< GamePopups, MAP_HEIGHT >, MAP_WIDTH > popups;
 
+  //
+  // Stops clang tidy adding const for this function
+  //
+  bool compiler_non_const_hack {};
+
   /////////////////////////////////////////////////////////////////////////
   // not worth saving
   // ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
@@ -265,19 +270,20 @@ public:
   Game(void) = default;
 
   bool load_snapshot(void);
-  bool load(int slot);
   bool load(const std::string & /*file_to_load*/, class Game &target);
+  bool load(int slot);
   bool save_config(void);
   bool save_select(void);
   bool save_snapshot(void);
-  bool save(int slot);
   bool save(const std::string & /*file_to_save*/);
+  bool save(int slot);
 
   void cleanup(void);
   void create_levels(void);
   void destroy_levels(void);
   void display(void);
   void fini(void);
+  void handle_game_request_to_remake_ui(void);
   void init(void);
   void load_select(void);
   void player_name_set(const char *player_name);
@@ -289,7 +295,6 @@ public:
   void state_change(GameState state, const std::string &why);
   void state_reset(const std::string &why);
   void tick(void);
-  void handle_game_request_to_remake_ui(void);
 
   std::string load_config(void) const;
 };
