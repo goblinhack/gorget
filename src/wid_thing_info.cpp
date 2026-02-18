@@ -31,7 +31,7 @@
     return false;
   }
 
-  auto *   w = wid_new_square_button(g, b, "Icon");
+  auto  *w = wid_new_square_button(g, b, "Icon");
   spoint tl(0, text->line_count);
   spoint br(3, text->line_count + 2);
   wid_set_tile(TILE_LAYER_BG_0, w, tile);
@@ -55,8 +55,8 @@
   }
 
   {
-    auto *   tile = tile_find_mand("key.0");
-    auto *   w    = wid_new_square_button(g, b, "Keys");
+    auto  *tile = tile_find_mand("key.0");
+    auto  *w    = wid_new_square_button(g, b, "Keys");
     spoint tl(UI_LEFTBAR_WIDTH - 8, text->line_count);
     spoint br(UI_LEFTBAR_WIDTH - 5, text->line_count + 2);
     wid_set_tile(TILE_LAYER_BG_0, w, tile);
@@ -65,7 +65,7 @@
   }
 
   {
-    auto *        w = wid_new_square_button(g, b, "Key count");
+    auto       *w = wid_new_square_button(g, b, "Key count");
     spoint      tl(UI_LEFTBAR_WIDTH - 4, text->line_count);
     spoint      br(UI_LEFTBAR_WIDTH - 2, text->line_count + 2);
     std::string how_many_keys = "x" + std::to_string(key_count);
@@ -147,7 +147,7 @@
   //
   auto health_max = tp_health_max_get(tp);
   auto h          = thing_health(t);
-  h = std::max(h, 0);
+  h               = std::max(h, 0);
 
   std::string health_str = std::to_string(h) + "/" + std::to_string(health_max);
   my_strlcpy(tmp + width - health_str.size() - 3, health_str.c_str(), width - health_str.size());

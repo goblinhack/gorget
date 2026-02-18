@@ -108,23 +108,23 @@ public:
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile     = {};
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > can_move_to_tile_set = {};
 
-  bool  can_move_to(const spoint &to);
-  Cost  heuristic(spoint at) const;
-  Node *node_init(spoint next_hop, Nodecost cost);
-  void  add_to_closed(Node *n);
-  void  add_to_open(Node *n);
-  void  dump(void);
-  void  eval_neighbor(Node *current, const spoint &delta);
-  static void  init(void);
-  void  remove_from_open(Node *n);
+  bool        can_move_to(const spoint &to);
+  Cost        heuristic(spoint at) const;
+  Node       *node_init(spoint next_hop, Nodecost cost);
+  void        add_to_closed(Node *n);
+  void        add_to_open(Node *n);
+  void        dump(void);
+  void        eval_neighbor(Node *current, const spoint &delta);
+  static void init(void);
+  void        remove_from_open(Node *n);
 
-  std::vector< spoint > solve(bool allow_diagonal);
+  std::vector< spoint >        solve(bool allow_diagonal);
   static std::vector< spoint > create_path(const Node *came_from);
 };
 
 void Astar::add_to_open(Node *n)
 {
-  auto p = n->at;
+  auto  p = n->at;
   auto *o = &open[ p.x ][ p.y ];
   if (*o != nullptr) {
     THING_ERR(t, "Already in open");
@@ -141,7 +141,7 @@ void Astar::add_to_open(Node *n)
 
 void Astar::add_to_closed(Node *n)
 {
-  auto p = n->at;
+  auto  p = n->at;
   auto *o = &closed[ p.x ][ p.y ];
   if (*o != nullptr) {
     THING_ERR(t, "Already in closed");
@@ -158,7 +158,7 @@ void Astar::add_to_closed(Node *n)
 
 void Astar::remove_from_open(Node *n)
 {
-  auto p = n->at;
+  auto  p = n->at;
   auto *o = &open[ p.x ][ p.y ];
   if (*o == nullptr) {
     THING_ERR(t, "Not in open");
@@ -268,7 +268,7 @@ bool Astar::can_move_to(const spoint &to)
 
 std::vector< spoint > Astar::solve(bool allow_diagonal)
 {
-  auto ncost    = Nodecost(heuristic(src));
+  auto  ncost    = Nodecost(heuristic(src));
   auto *neighbor = node_init(src, ncost);
 
   add_to_open(neighbor);

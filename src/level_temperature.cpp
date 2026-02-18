@@ -64,7 +64,7 @@ void level_tick_begin_temperature(Gamep g, Levelsp v, Levelp l)
         continue;
       }
 
-      auto *  tp            = thing_tp(t);
+      auto *tp            = thing_tp(t);
       float Ta            = thing_temperature(t);
       float To            = tp_temperature_initial_get(thing_tp(t));
       float heat_capacity = tp_temperature_heat_capacity_get(tp);
@@ -118,7 +118,7 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
 {
   TRACE_NO_INDENT();
 
-  auto *  tpA = thing_tp(a);
+  auto *tpA = thing_tp(a);
   float Ta  = thing_temperature(a);
   float Tb  = thing_temperature(b);
 
@@ -177,7 +177,7 @@ static void thing_heat_exchange(Gamep g, Levelsp v, Levelp l, Thingp a, Thingp b
   }
 
   float final_dT = (Q / (m * c));
-  finalT         = (int) ceilf(( Ta) + final_dT);
+  finalT         = (int) ceilf((Ta) + final_dT);
 
   //  THING_DBG(a, "b");
   // THING_DBG(b, "b");

@@ -301,7 +301,7 @@ Levelp level_change(Gamep g, Levelsp v, LevelNum level_num)
     //
     // Enter level selectionm
     //
-  } else if ((level_num > s->level_count) && (s->level_count != false)) {
+  } else if ((level_num > s->level_count) && (static_cast< bool >(s->level_count))) {
     //
     // Jump tot the last real level
     //
@@ -683,8 +683,8 @@ void level_bounds_set(Gamep g, Levelsp v, Levelp l)
   //
   // Set the scroll bounds
   //
-  v->pixel_map_at.x = std::max<short>(v->pixel_map_at.x, 0);
-  v->pixel_map_at.y = std::max<short>(v->pixel_map_at.y, 0);
+  v->pixel_map_at.x = std::max< short >(v->pixel_map_at.x, 0);
+  v->pixel_map_at.y = std::max< short >(v->pixel_map_at.y, 0);
 
   v->pixel_max.x = (MAP_WIDTH * dw) - game_map_fbo_width_get(g);
   v->pixel_max.y = (MAP_HEIGHT * dh) - game_map_fbo_height_get(g);

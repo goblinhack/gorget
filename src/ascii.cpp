@@ -410,7 +410,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
       static uint32_t last;
       static bool     first = 1u;
 
-      if (static_cast<unsigned int>(first) != false) {
+      if (first) {
         first = 0u;
         last  = time_ms_cached();
       }
@@ -446,7 +446,8 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
       //
       auto bg_depth = TILE_LAYER_BG_0;
 
-      if ((bg.r != false) || (bg.g != false) || (bg.b != false) || (bg.a != false)) {
+      if ((static_cast< bool >(bg.r)) || (static_cast< bool >(bg.g)) || (static_cast< bool >(bg.b))
+          || (static_cast< bool >(bg.a))) {
         static Tilep block_tile;
         if (unlikely(! block_tile)) {
           block_tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);

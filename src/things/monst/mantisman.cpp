@@ -55,7 +55,7 @@ ThingEnviron tp_mantisman_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, T
 bool tp_load_mantisman(void)
 {
   auto *tp   = tp_load("mantisman"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_mantisman_assess_tile);

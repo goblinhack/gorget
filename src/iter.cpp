@@ -26,11 +26,11 @@ MyIter::MyIter(Gamep g, Levelsp _v, int *out_iter, const char *_func, const unsi
     CROAK("%s:%u exceeded number of iterators", func, line);
   }
 
-  if (v->in_iter[ iter ] != false) {
+  if (static_cast< bool >(v->in_iter[ iter ])) {
     CROAK("%s:%u nested loop for iter %d", func, line, iter);
   }
 
-  v->in_iter[ iter ] = true;
+  v->in_iter[ iter ] = 1u;
 
   //
   // This is the iterator value we compare with things to check if they've been walked already.
@@ -40,7 +40,7 @@ MyIter::MyIter(Gamep g, Levelsp _v, int *out_iter, const char *_func, const unsi
   //
   // Handle wraparound
   //
-  if (v->iter[ iter ] == false) {
+  if (! static_cast< bool >(v->iter[ iter ])) {
     v->iter[ iter ]++;
   }
 
@@ -55,10 +55,10 @@ MyIter::~MyIter()
     CROAK("%s:%u using iterator, but not on main thread, thread=%d", func, line, g_thread_id);
   }
 
-  if (v->in_iter[ iter ] == false) {
+  if (! static_cast< bool >(v->in_iter[ iter ])) {
     CROAK("%s:%u bad loop end for iter %d", func, line, iter);
   }
-  v->in_iter[ iter ] = false;
+  v->in_iter[ iter ] = 0u;
 
   g_iter--;
 

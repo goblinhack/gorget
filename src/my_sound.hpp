@@ -20,7 +20,7 @@ bool sound_init(void);
 void sound_fini(void);
 bool sound_load(float volume, const std::string &file, const std::string &alias, int concurrent_max = 1);
 bool sound_find(const std::string &alias);
-bool sound_play(Gamep /*g*/, const std::string &alias, float scale = 1.0);
+bool sound_play(Gamep, const std::string &alias, float scale = 1.0);
 void sound_halt(void);
 void sounds_init(void);
 

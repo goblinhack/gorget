@@ -222,7 +222,7 @@ void strchop(char *s)
   char    *end;
 
   size = (uint32_t) strlen(s);
-  if (size == false) {
+  if (! static_cast< bool >(size)) {
     return;
   }
 
@@ -244,7 +244,7 @@ void strchopc(char *s, char c)
   char    *end;
 
   size = (uint32_t) strlen(s);
-  if (size == false) {
+  if (! static_cast< bool >(size)) {
     return;
   }
 
@@ -442,7 +442,7 @@ char *my_strcasestr(const char *s, const char *find)
       do {
         if ((sc = *s++) == 0) {
           return nullptr;
-}
+        }
       } while ((char) tolower((unsigned char) sc) != c);
     } while (strncasecmp(s, find, len) != 0);
     s--;
@@ -562,7 +562,7 @@ std::vector< std::string > split(const std::string &text, int max_line_len)
 
           int         len  = 0;
           const char *tmpc = tmp.c_str();
-          auto *        tp   = string2tp(&tmpc, &len);
+          auto       *tp   = string2tp(&tmpc, &len);
           text_iter += len + 1;
 
           (void) tp_first_tile(tp, THING_ANIM_IDLE);
@@ -721,7 +721,7 @@ int length_without_format(const std::string &text)
 
         int         len  = 0;
         const char *tmpc = tmp.c_str();
-        auto *        tp   = string2tp(&tmpc, &len);
+        auto       *tp   = string2tp(&tmpc, &len);
         text_iter += len + 1;
 
         (void) tp_first_tile(tp, THING_ANIM_IDLE);

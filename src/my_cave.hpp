@@ -41,10 +41,10 @@ typedef struct {
   Blob blob;
 } Cave;
 
-void cave_dump(Gamep /*g*/, Cave * /*c*/);
-void cave_create(Gamep /*g*/, Cave * /*c*/, uint32_t fill_prob, int r1, int r2, int map_generations);
-int  cave_generation_fill_blob_cand(Gamep /*g*/, Cave *c, int x, int y, uint16_t size, uint16_t id);
-void cave_generation_keep_largest_blob(Gamep /*g*/, Cave *c);
-void cave_generation_center_blob(Gamep /*g*/, Cave *c);
+void cave_dump(Gamep, Cave * /*c*/);
+void cave_create(Gamep, Cave * /*c*/, uint32_t fill_prob, int r1, int r2, int map_generations);
+int  cave_generation_fill_blob_cand(Gamep, Cave *c, int x, int y, uint16_t size, uint16_t id);
+void cave_generation_keep_largest_blob(Gamep, Cave *c);
+void cave_generation_center_blob(Gamep, Cave *c);
 
 #endif // _MY_LEVEL_H_

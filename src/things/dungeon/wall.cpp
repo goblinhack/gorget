@@ -28,7 +28,7 @@ bool tp_load_wall(void)
 
   for (auto variant = 1; variant <= WALL_VARIANTS; variant++) {
     std::string name = "wall" + std::to_string(variant);
-    auto *        tp   = tp_load(name);
+    auto       *tp   = tp_load(name);
     // begin sort marker1 {
     thing_on_melt_set(tp, tp_wall_melt);
     tp_flag_set(tp, is_blit_centered);

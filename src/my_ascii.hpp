@@ -114,7 +114,7 @@ void ascii_blit_layer(int z, int no_color);
 void ascii_clear_display(void);
 void ascii_clear_scissors(void);
 void ascii_dim(int x, int y, int z, float alpha);
-void ascii_display(Gamep /*g*/);
+void ascii_display(Gamep);
 void ascii_draw_line(int depth, int x0, int y0, int x1, int y1, char ch, color c);
 void ascii_draw_line(int x0, int y0, int x1, int y1, const char *tilename, color c);
 void ascii_draw_line(int x0, int y0, int x1, int y1, Tilep what, color c);
@@ -141,7 +141,7 @@ void ascii_set(int depth, int x, int y, Tilep /*tile*/);
 void ascii_set(int depth, int x, int y, Tilep /*tile*/, char /*ch*/);
 void ascii_set(int depth, int x, int y, Tilep /*tile*/, float tx, float ty, float dx, float dy);
 void ascii_set_scissors(spoint tl, spoint br);
-void pixel_to_ascii(Gamep /*g*/, int *x, int *y);
+void pixel_to_ascii(Gamep, int *x, int *y);
 
 extern float tile_pix_w;
 extern float tile_pix_h;

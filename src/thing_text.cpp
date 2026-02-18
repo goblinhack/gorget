@@ -11,7 +11,7 @@ std::string thing_pluralize_name(Thingp t)
   TRACE_NO_INDENT();
 
   auto *tp  = thing_tp(t);
-  auto out = tp_pluralize_name(tp);
+  auto  out = tp_pluralize_name(tp);
 
   if (out.empty()) {
     return tp_long_name(tp) + "s";
@@ -25,7 +25,7 @@ std::string thing_apostrophize_name(Thingp t)
   TRACE_NO_INDENT();
 
   auto *tp  = thing_tp(t);
-  auto out = tp_apostrophize_name(tp);
+  auto  out = tp_apostrophize_name(tp);
 
   if (out.empty()) {
     return tp_long_name(tp) + "'s";

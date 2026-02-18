@@ -240,14 +240,14 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   GL_ERROR_CHECK();
 
   DBG2("OpenGl: - glGenTextures");
-  if (*fbo_tex_id != false) {
+  if (static_cast< bool >(*fbo_tex_id)) {
     DBG2("OpenGl: - glDeleteTextures");
     glDeleteTextures(1, fbo_tex_id);
     GL_ERROR_CHECK();
     *fbo_tex_id = 0;
   }
 
-  if (*fbo_id != false) {
+  if (static_cast< bool >(*fbo_id)) {
     DBG2("OpenGl: - glDeleteRenderbuffers");
     glDeleteRenderbuffers_EXT(1, fbo_id);
     GL_ERROR_CHECK();
@@ -358,7 +358,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   //
   DBG2("OpenGl: - glCheckFramebufferStatus_EXT");
   auto status = glCheckFramebufferStatus_EXT(GL_FRAMEBUFFER);
-  if ((status != false) && (status != GL_FRAMEBUFFER_COMPLETE)) {
+  if ((static_cast< bool >(status)) && (status != GL_FRAMEBUFFER_COMPLETE)) {
     LOG("Failed to create framebuffer, error: %d/0x%x", status, status);
 
 #ifdef GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT
@@ -401,7 +401,7 @@ static void gl_init_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
     }
 #endif
   }
-  if (status == false) {
+  if (! static_cast< bool >(status)) {
     glGetError();
   }
   GL_ERROR_CHECK();
@@ -420,14 +420,14 @@ static void gl_fini_fbo_(FboEnum fbo, GLuint *render_buf_id, GLuint *fbo_id, GLu
   GL_ERROR_CHECK();
 
   DBG2("OpenGl: - glGenTextures");
-  if (*fbo_tex_id != false) {
+  if (static_cast< bool >(*fbo_tex_id)) {
     DBG2("OpenGl: - glDeleteTextures");
     glDeleteTextures(1, fbo_tex_id);
     GL_ERROR_CHECK();
     *fbo_tex_id = 0;
   }
 
-  if (*fbo_id != false) {
+  if (static_cast< bool >(*fbo_id)) {
     DBG2("OpenGl: - glDeleteRenderbuffers");
     glDeleteRenderbuffers_EXT(1, fbo_id);
     GL_ERROR_CHECK();
@@ -720,15 +720,15 @@ void blit_flush(void)
                   GL_SHORT, NUMBER_BYTES_PER_VERTICE_2D,
                   ((char *) gl_array_buf)
                       + (SIZEOF(GLfloat) * // skip (u,v)
-                            NUMBER_DIMENSIONS_PER_COORD_2D));
+                         NUMBER_DIMENSIONS_PER_COORD_2D));
 
   glColorPointer(NUMBER_COMPONENTS_PER_COLOR, // (r,g,b,a)
                  GL_UNSIGNED_BYTE, NUMBER_BYTES_PER_VERTICE_2D,
                  ((char *) gl_array_buf)
                      + (SIZEOF(GLshort) * // skip (x,y)
-                           NUMBER_DIMENSIONS_PER_COORD_2D)
+                        NUMBER_DIMENSIONS_PER_COORD_2D)
                      + (SIZEOF(GLfloat) * // skip (u,v)
-                           NUMBER_DIMENSIONS_PER_COORD_2D));
+                        NUMBER_DIMENSIONS_PER_COORD_2D));
 
 #ifdef _DEBUG_BUILD_
   GL_ERROR_CHECK();
@@ -773,7 +773,7 @@ void blit_flush_colored_triangle_fan(float *b, const float *e)
                  GL_UNSIGNED_BYTE, stride,
                  ((char *) b)
                      + (SIZEOF(GLshort) * // skip (x,y)
-                           NUMBER_DIMENSIONS_PER_COORD_2D));
+                        NUMBER_DIMENSIONS_PER_COORD_2D));
 
   GL_ERROR_CHECK();
   glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) nvertices);
@@ -1437,12 +1437,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = true;
+    first_vertex = 1u;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = true;
+    first_vertex = 1u;
   } else {
-    first_vertex = false;
+    first_vertex = 0u;
   }
 
   buf_tex = tex;
@@ -1461,18 +1461,18 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = true;
+    first_vertex = 1u;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = true;
+    first_vertex = 1u;
   } else {
-    first_vertex = false;
+    first_vertex = 0u;
   }
 
   buf_tex = tex;
 
-  const float   texDiffX = ( texMaxX - texMinX) / (float) LIGHT_PIXEL;
-  const float   texDiffY = ( texMinY - texMaxY) / (float) LIGHT_PIXEL;
+  const float   texDiffX = (texMaxX - texMinX) / (float) LIGHT_PIXEL;
+  const float   texDiffY = (texMinY - texMaxY) / (float) LIGHT_PIXEL;
   const float   pixDiffX = ((float) pixMaxX - (float) pixMinX) / (float) LIGHT_PIXEL;
   const float   pixDiffY = ((float) pixMinY - (float) pixMaxY) / (float) LIGHT_PIXEL;
   const uint8_t a        = 255;
@@ -1490,9 +1490,9 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
     for (auto x = 0; x < LIGHT_PIXEL; x++) {
 
       auto *const pixel = &light_pixels->pixel[ x ][ y ];
-      uint8_t    r     = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
-      uint8_t    g     = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
-      uint8_t    b     = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
+      uint8_t     r     = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
+      uint8_t     g     = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
+      uint8_t     b     = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
 
       float texMinX2 = texMinX + (x * texDiffX);
       float texMaxX2 = texMinX + ((x + 1) * texDiffX);
@@ -1520,12 +1520,12 @@ void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, G
 {
   if (unlikely(! buf_tex)) {
     blit_init();
-    first_vertex = true;
+    first_vertex = 1u;
   } else if (unlikely(buf_tex != tex)) {
     blit_flush();
-    first_vertex = true;
+    first_vertex = 1u;
   } else {
-    first_vertex = false;
+    first_vertex = 0u;
   }
 
   buf_tex = tex;

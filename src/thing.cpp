@@ -32,7 +32,7 @@ Thingp thing_get(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
   }
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
-  if (id == 0u) {
+  if (id == 0U) {
     return nullptr;
   }
 
@@ -52,7 +52,7 @@ Thingp thing_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot)
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
 
-  if (id == 0u) {
+  if (id == 0U) {
     return nullptr;
   }
 
@@ -72,7 +72,7 @@ Thingp thing_and_tp_get_at_safe(Gamep g, Levelsp v, Levelp l, spoint p, int slot
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
 
-  if (id == 0u) {
+  if (id == 0U) {
     *out = nullptr;
     return nullptr;
   }
@@ -113,7 +113,7 @@ Thingp thing_and_tp_get_at(Gamep g, Levelsp v, Levelp l, spoint p, int slot, Tpp
 
   ThingId id = l->thing_id[ p.x ][ p.y ][ slot ];
 
-  if (id == 0u) {
+  if (id == 0U) {
     return nullptr;
   }
 
@@ -143,7 +143,7 @@ void thing_stats_dump(Gamep g, Levelsp v)
     }
 #endif
 
-    if (t->id != 0u) {
+    if (t->id != 0U) {
       in_use_things++;
     } else {
       free_things++;
@@ -167,7 +167,7 @@ ThingExtp thing_ext_struct(Gamep g, Thingp t)
   }
 
   auto ext_id = t->ext_id;
-  if (ext_id == 0u) {
+  if (ext_id == 0U) {
     return nullptr;
   }
 
@@ -184,7 +184,7 @@ ThingFovp thing_fov_struct(Gamep g, Thingp t)
   }
 
   auto fov_id = t->fov_id;
-  if (fov_id == 0u) {
+  if (fov_id == 0U) {
     return nullptr;
   }
 

@@ -200,7 +200,7 @@ bool tp_load_door_locked(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("door_locked"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_door_locked_description_get);
   thing_display_get_tile_info_set(tp, tp_door_locked_at_display_get_tile_info);

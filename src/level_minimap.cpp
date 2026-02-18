@@ -53,8 +53,8 @@ static void level_minimap_world_update(Gamep g, Levelsp v, Levelp l, const bool 
         Levelp level_at_coord = nullptr;
 
         spoint p(x, y);
-        auto *   s = level_select_get(g, v, p);
-        if (s->is_set == 0u) {
+        auto  *s = level_select_get(g, v, p);
+        if (s->is_set == 0U) {
           //
           // No level here
           //

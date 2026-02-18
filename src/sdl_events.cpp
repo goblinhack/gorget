@@ -88,15 +88,15 @@ static void __attribute__((noinline)) sdl_event_keydown_repeat(Gamep g, SDL_Keys
   //
   if (key->scancode != last_key_pressed.scancode) {
     return false;
-}
+  }
 
   if (key->sym != last_key_pressed.sym) {
     return false;
-}
+  }
 
   if (key->mod != last_key_pressed.mod) {
     return false;
-}
+  }
 
   return true;
 }
@@ -299,14 +299,14 @@ void sdl_event(Gamep g, SDL_Event *event, bool &processed_mouse_motion_event)
               //
               accel *= UI_WID_MOUSE_WHEEL_SCALE;
 
-              accel = std::min<double>(accel, UI_WID_MOUSE_WHEEL_SCALE_MAX);
+              accel = std::min< double >(accel, UI_WID_MOUSE_WHEEL_SCALE_MAX);
             } else {
               //
               // Faster wheel acceleration when over the map
               //
               accel *= UI_GAME_MOUSE_WHEEL_SCALE;
 
-              accel = std::min<double>(accel, UI_GAME_MOUSE_WHEEL_SCALE_MAX);
+              accel = std::min< double >(accel, UI_GAME_MOUSE_WHEEL_SCALE_MAX);
             }
           }
 
@@ -502,7 +502,7 @@ void sdl_key_repeat_events(Gamep g)
     return;
   }
 
-  if ((wid_console_window != nullptr) && (static_cast<unsigned int>(wid_console_window->visible) != false)) {
+  if ((wid_console_window != nullptr) && (static_cast< bool >(wid_console_window->visible))) {
     return;
   }
 
@@ -514,67 +514,67 @@ void sdl_key_repeat_events(Gamep g)
   static bool left_held_prev;
   static bool right_held_prev;
 
-  bool fire_held  = state[ sdlk_to_scancode(game_key_fire_get(g)) ] != false;
-  bool up_held    = state[ sdlk_to_scancode(game_key_move_up_get(g)) ] != false;
-  bool down_held  = state[ sdlk_to_scancode(game_key_move_down_get(g)) ] != false;
-  bool left_held  = state[ sdlk_to_scancode(game_key_move_left_get(g)) ] != false;
-  bool right_held = state[ sdlk_to_scancode(game_key_move_right_get(g)) ] != false;
+  bool fire_held  = static_cast< bool >(state[ sdlk_to_scancode(game_key_fire_get(g)) ]);
+  bool up_held    = static_cast< bool >(state[ sdlk_to_scancode(game_key_move_up_get(g)) ]);
+  bool down_held  = static_cast< bool >(state[ sdlk_to_scancode(game_key_move_down_get(g)) ]);
+  bool left_held  = static_cast< bool >(state[ sdlk_to_scancode(game_key_move_left_get(g)) ]);
+  bool right_held = static_cast< bool >(state[ sdlk_to_scancode(game_key_move_right_get(g)) ]);
 
   //
   // Keypad stuff is hardcoded.
   //
-  if ((state[ SDL_SCANCODE_KP_5 ] != false) || (state[ SDL_SCANCODE_KP_ENTER ] != false)) {
+  if ((static_cast< bool >(state[ SDL_SCANCODE_KP_5 ])) || (static_cast< bool >(state[ SDL_SCANCODE_KP_ENTER ]))) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     fire_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_1 ] != false) {
+  if (static_cast< bool >(state[ SDL_SCANCODE_KP_1 ])) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
     down_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_2 ] != false) {
+  if (static_cast< bool >(state[ SDL_SCANCODE_KP_2 ])) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     down_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_3 ] != false) {
+  if (static_cast< bool >(state[ SDL_SCANCODE_KP_3 ])) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     right_held = true;
     down_held  = true;
   }
-  if (state[ SDL_SCANCODE_KP_4 ] != false) {
+  if (static_cast< bool >(state[ SDL_SCANCODE_KP_4 ])) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_6 ] != false) {
+  if (static_cast< bool >(state[ SDL_SCANCODE_KP_6 ])) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     right_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_7 ] != false) {
+  if (static_cast< bool >(state[ SDL_SCANCODE_KP_7 ])) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     left_held = true;
     up_held   = true;
   }
-  if (state[ SDL_SCANCODE_KP_8 ] != false) {
+  if (static_cast< bool >(state[ SDL_SCANCODE_KP_8 ])) {
     // 7 8 9
     // 4 5 6
     // 1 2 3
     up_held = true;
   }
-  if (state[ SDL_SCANCODE_KP_9 ] != false) {
+  if (static_cast< bool >(state[ SDL_SCANCODE_KP_9 ])) {
     // 7 8 9
     // 4 5 6
     // 1 2 3

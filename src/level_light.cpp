@@ -32,9 +32,9 @@ public:
 
   void ray_pixel_line_draw(int16_t index, spoint p0, spoint p1);
   void ray_pixel_add(int16_t index, spoint p0, spoint p1);
-  void ray_lengths_precalculate(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
-  void raycast_do(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
-  void raycast_render(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
+  void ray_lengths_precalculate(Gamep, Levelsp, Levelp);
+  void raycast_do(Gamep, Levelsp, Levelp);
+  void raycast_render(Gamep, Levelsp, Levelp);
 
   //
   // This is how far the light rays reach
@@ -198,7 +198,7 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
 {
   const color  light_color              = tp_light_color(thing_tp(t));
   const float  light_strength_in_pixels = thing_is_light_source(t) * TILE_WIDTH;
-  auto *const    light_tile               = &v->light_map.tile[ p.x ][ p.y ];
+  auto *const  light_tile               = &v->light_map.tile[ p.x ][ p.y ];
   const float *light_fade_map;
   const spoint thing_at_in_pixels = thing_pix_at(t);
 
@@ -233,7 +233,7 @@ void level_light_per_pixel_lighting(Gamep g, Levelsp v, Levelp l, Thingp t, spoi
         light_fade_index = MAP_WIDTH - 1;
       }
 
-      auto *  light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
+      auto *light_pixel = &light_tile->pixels.pixel[ pixx ][ pixy ];
       float fade        = light_fade_map[ light_fade_index ];
 
       light_pixel->r += fade * col_r;
@@ -291,7 +291,7 @@ void Raycast::ray_pixel_line_draw(int16_t index, const spoint p0, const spoint p
     decInc = 0;
   } else {
     decInc = (shortLen << 16) / longLen;
-}
+  }
 
   if (yLonger) {
     if (longLen > 0) {
@@ -355,9 +355,9 @@ static void light_tile(Gamep g, Levelsp v, Levelp l, Thingp t, ThingFovp fov, sp
   //
   // Only apply color to the tile once
   //
-  if (fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ] == false) {
-    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = true;
-    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = true;
+  if (! static_cast< bool >(fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ])) {
+    fov->fov_can_see_tile.can_see[ tile.x ][ tile.y ]       = 1u;
+    l->player_fov_has_seen_tile.can_see[ tile.x ][ tile.y ] = 1u;
     level_light_per_pixel_lighting(g, v, l, t, pov, tile);
   }
 }
@@ -461,7 +461,7 @@ void Raycast::raycast_do(Gamep g, Levelsp v, Levelp l)
   //
   for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
     const int16_t end_of_points = static_cast< uint16_t >(ray_pixels[ i ].size() - 1);
-    auto *          ray           = &rays[ i ];
+    auto         *ray           = &rays[ i ];
     auto          ray_pixel     = ray_pixels[ i ].begin();
     int16_t       step          = 0;
     uint8_t       prev_tile_x   = -1;
@@ -659,7 +659,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     push_point(light_pos.x, light_pos.y);
 
     for (auto i = 0; i < LIGHT_MAX_RAYS_MAX; i++) {
-      auto *    ray = &rays[ i ];
+      auto   *ray = &rays[ i ];
       spoint &p   = ray_pixels[ i ][ ray->depth_furthest ].p;
       int16_t p1x = light_pos.x + p.x;
       int16_t p1y = light_pos.y + p.y;
@@ -670,7 +670,7 @@ void Raycast::raycast_render(Gamep g, Levelsp v, Levelp l)
     // Complete the circle with the first point again.
     //
     {
-      auto *    ray = &rays[ 0 ];
+      auto   *ray = &rays[ 0 ];
       spoint &p   = ray_pixels[ 0 ][ ray->depth_furthest ].p;
       int16_t p1x = light_pos.x + p.x;
       int16_t p1y = light_pos.y + p.y;
@@ -808,7 +808,7 @@ void level_light_calculate_all(Gamep g, Levelsp v, Levelp l)
       callback = nullptr;
     }
 
-    level_fov(g, v, l, t,                              // newline
+    level_fov(g, v, l, t,                                           // newline
               (fov != nullptr) ? &fov->fov_can_see_tile : nullptr,  // newline
               (ext != nullptr) ? &ext->fov_has_seen_tile : nullptr, // newline
               thing_at(t), max_radius, callback);

@@ -139,7 +139,7 @@ public:
   HiScores hiscores;
 
   static void fini(void);
-  void reset(void);
+  void        reset(void);
 };
 
 class Game
@@ -267,7 +267,7 @@ public:
   bool load_snapshot(void);
   bool load(int slot);
   bool load(const std::string & /*file_to_load*/, class Game &target);
-  bool save_config(void) const;
+  bool save_config(void);
   bool save_select(void);
   bool save_snapshot(void);
   bool save(int slot);
@@ -294,7 +294,7 @@ public:
   std::string load_config(void) const;
 };
 
-static void game_map_zoom_update(Gamep /*g*/);
+static void game_map_zoom_update(Gamep);
 
 class Game *game;
 
@@ -373,7 +373,7 @@ Game::Game(std::string vappdata)
   saved_dir = appdata + DIR_SEP + "gorget" + DIR_SEP;
   save_slot = 1;
 
-  if (!config.seed_name.empty()) {
+  if (! config.seed_name.empty()) {
     save_meta = "seed " + config.seed_name + ", ";
   }
   save_meta += string_timestamp();
@@ -481,7 +481,7 @@ void game_test_init_level(Gamep g, Levelsp v, Levelp *l_out, LevelNum level_num,
   l->level_select_at = level_at;
 
   TRACE_NO_INDENT();
-  auto *s             = &v->level_select.data[ level_at.x ][ level_at.y ];
+  auto *s            = &v->level_select.data[ level_at.x ][ level_at.y ];
   s->level_num       = l->level_num;
   s->is_set          = true;
   l->level_select_at = level_at;
@@ -605,7 +605,7 @@ void Game::seed_set(const char *maybe_seed)
 {
   TRACE_NO_INDENT();
 
-  if (!g_level_opt.level_name.empty()) {
+  if (! g_level_opt.level_name.empty()) {
     config.seed_name   = TEST_SEED;
     config.seed_source = SEED_SOURCE_TEST;
   } else if ((maybe_seed != nullptr) && (*maybe_seed != 0)) {
@@ -614,7 +614,7 @@ void Game::seed_set(const char *maybe_seed)
     if (! g_opt_tests && ! g_opt_do_level_gen) {
       CON("Set fixed seed '%s' from ui", config.seed_name.c_str());
     }
-  } else if (!g_opt_seed_name.empty()) {
+  } else if (! g_opt_seed_name.empty()) {
     config.seed_name   = g_opt_seed_name;
     config.seed_source = SEED_SOURCE_COMMAND_LINE;
     CON("Set fixed seed '%s' from command line", config.seed_name.c_str());
@@ -744,7 +744,7 @@ void Game::player_name_set(const char *maybe_player_name)
     if (! g_opt_tests && ! g_opt_do_level_gen) {
       CON("Set player name '%s' from ui", config.player_name.c_str());
     }
-  } else if (!config.player_name.empty()) {
+  } else if (! config.player_name.empty()) {
     CON("Set player name '%s' from previous load", config.player_name.c_str());
   } else {
     config.player_name = "Ser Deadalot";
@@ -2062,7 +2062,7 @@ SDL_Keysym game_key_wait_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_wait;
 }
 void game_key_wait_set(Gamep g, SDL_Keysym key)
@@ -2070,7 +2070,7 @@ void game_key_wait_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_wait = key;
 }
 
@@ -2079,7 +2079,7 @@ SDL_Keysym game_key_console_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_console;
 }
 void game_key_console_set(Gamep g, SDL_Keysym key)
@@ -2087,7 +2087,7 @@ void game_key_console_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_console = key;
 }
 
@@ -2096,7 +2096,7 @@ SDL_Keysym game_key_help_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_help;
 }
 void game_key_help_set(Gamep g, SDL_Keysym key)
@@ -2104,7 +2104,7 @@ void game_key_help_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_help = key;
 }
 
@@ -2113,7 +2113,7 @@ SDL_Keysym game_key_load_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_load;
 }
 void game_key_load_set(Gamep g, SDL_Keysym key)
@@ -2121,7 +2121,7 @@ void game_key_load_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_load = key;
 }
 
@@ -2130,7 +2130,7 @@ SDL_Keysym game_key_move_down_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_move_down;
 }
 void game_key_move_down_set(Gamep g, SDL_Keysym key)
@@ -2138,7 +2138,7 @@ void game_key_move_down_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_move_down = key;
 }
 
@@ -2147,7 +2147,7 @@ SDL_Keysym game_key_move_left_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_move_left;
 }
 void game_key_move_left_set(Gamep g, SDL_Keysym key)
@@ -2155,7 +2155,7 @@ void game_key_move_left_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_move_left = key;
 }
 
@@ -2164,7 +2164,7 @@ SDL_Keysym game_key_move_right_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_move_right;
 }
 void game_key_move_right_set(Gamep g, SDL_Keysym key)
@@ -2172,7 +2172,7 @@ void game_key_move_right_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_move_right = key;
 }
 
@@ -2181,7 +2181,7 @@ SDL_Keysym game_key_move_up_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_move_up;
 }
 void game_key_move_up_set(Gamep g, SDL_Keysym key)
@@ -2189,7 +2189,7 @@ void game_key_move_up_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_move_up = key;
 }
 
@@ -2198,7 +2198,7 @@ SDL_Keysym game_key_quit_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_quit;
 }
 void game_key_quit_set(Gamep g, SDL_Keysym key)
@@ -2206,7 +2206,7 @@ void game_key_quit_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_quit = key;
 }
 
@@ -2215,7 +2215,7 @@ SDL_Keysym game_key_save_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_save;
 }
 void game_key_save_set(Gamep g, SDL_Keysym key)
@@ -2223,7 +2223,7 @@ void game_key_save_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_save = key;
 }
 
@@ -2232,7 +2232,7 @@ SDL_Keysym game_key_screenshot_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_screenshot;
 }
 void game_key_screenshot_set(Gamep g, SDL_Keysym key)
@@ -2240,7 +2240,7 @@ void game_key_screenshot_set(Gamep g, SDL_Keysym key)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return;
-}
+  }
   g->config.key_screenshot = key;
 }
 
@@ -2249,7 +2249,7 @@ SDL_Keysym game_key_unused1_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused1;
 }
 void game_key_unused1_set(Gamep g, SDL_Keysym key)
@@ -2267,7 +2267,7 @@ SDL_Keysym game_key_unused2_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused2;
 }
 void game_key_unused2_set(Gamep g, SDL_Keysym key)
@@ -2285,7 +2285,7 @@ SDL_Keysym game_key_unused3_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused3;
 }
 void game_key_unused3_set(Gamep g, SDL_Keysym key)
@@ -2303,7 +2303,7 @@ SDL_Keysym game_key_unused4_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused4;
 }
 void game_key_unused4_set(Gamep g, SDL_Keysym key)
@@ -2321,7 +2321,7 @@ SDL_Keysym game_key_unused5_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused5;
 }
 void game_key_unused5_set(Gamep g, SDL_Keysym key)
@@ -2339,7 +2339,7 @@ SDL_Keysym game_key_unused6_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused6;
 }
 void game_key_unused6_set(Gamep g, SDL_Keysym key)
@@ -2357,7 +2357,7 @@ SDL_Keysym game_key_unused7_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused7;
 }
 void game_key_unused7_set(Gamep g, SDL_Keysym key)
@@ -2375,7 +2375,7 @@ SDL_Keysym game_key_unused8_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused8;
 }
 void game_key_unused8_set(Gamep g, SDL_Keysym key)
@@ -2393,7 +2393,7 @@ SDL_Keysym game_key_unused9_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused9;
 }
 void game_key_unused9_set(Gamep g, SDL_Keysym key)
@@ -2411,7 +2411,7 @@ SDL_Keysym game_key_unused10_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused10;
 }
 void game_key_unused10_set(Gamep g, SDL_Keysym key)
@@ -2429,7 +2429,7 @@ SDL_Keysym game_key_unused11_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused11;
 }
 void game_key_unused11_set(Gamep g, SDL_Keysym key)
@@ -2447,7 +2447,7 @@ SDL_Keysym game_key_unused12_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused12;
 }
 void game_key_unused12_set(Gamep g, SDL_Keysym key)
@@ -2465,7 +2465,7 @@ SDL_Keysym game_key_unused13_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused13;
 }
 void game_key_unused13_set(Gamep g, SDL_Keysym key)
@@ -2483,7 +2483,7 @@ SDL_Keysym game_key_unused14_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_unused14;
 }
 void game_key_unused14_set(Gamep g, SDL_Keysym key)
@@ -2501,7 +2501,7 @@ SDL_Keysym game_key_fire_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_fire;
 }
 void game_key_fire_set(Gamep g, SDL_Keysym key)
@@ -2519,7 +2519,7 @@ SDL_Keysym game_key_inventory_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_inventory;
 }
 void game_key_inventory_set(Gamep g, SDL_Keysym key)
@@ -2537,7 +2537,7 @@ SDL_Keysym game_key_jump_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_jump;
 }
 void game_key_jump_set(Gamep g, SDL_Keysym key)
@@ -2555,7 +2555,7 @@ SDL_Keysym game_key_ascend_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_ascend;
 }
 void game_key_ascend_set(Gamep g, SDL_Keysym key)
@@ -2573,7 +2573,7 @@ SDL_Keysym game_key_descend_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_descend;
 }
 void game_key_descend_set(Gamep g, SDL_Keysym key)
@@ -2591,7 +2591,7 @@ SDL_Keysym game_key_zoom_get(Gamep g)
   TRACE_NO_INDENT();
   if (g == nullptr) {
     return no_key;
-}
+  }
   return g->config.key_zoom;
 }
 void game_key_zoom_set(Gamep g, SDL_Keysym key)
@@ -2653,7 +2653,7 @@ int game_map_zoom_def_get(Gamep g)
 
   float zoom = map_pix_width / TILE_WIDTH / MAP_TILES_ACROSS_DEF;
 
-  zoom = std::max<float>(zoom, 2);
+  zoom = std::max< float >(zoom, 2);
 
   if (zoom >= MAP_ZOOM_MAX) {
     zoom = MAP_ZOOM_MAX - 1;

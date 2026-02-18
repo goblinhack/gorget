@@ -229,18 +229,18 @@ void thing_is_falling_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     //
     // Start falling if not doing do
     //
-    if (t->_is_falling_ms != false) {
+    if (static_cast< bool >(t->_is_falling_ms)) {
       return;
     }
   } else {
     //
     // Stop falling
     //
-    if (t->_is_falling_ms == false) {
+    if (! static_cast< bool >(t->_is_falling_ms)) {
       return;
     }
   }
-  t->_is_falling_ms = static_cast<uint16_t>(val);
+  t->_is_falling_ms = static_cast< uint16_t >(val);
 
   if (val) {
     thing_on_fall_begin(g, v, l, t);
@@ -283,7 +283,7 @@ void thing_is_falling_continues_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool
     return;
   }
 
-  if (t->_is_falling_continues == static_cast<int>(val)) {
+  if (t->_is_falling_continues == static_cast< int >(val)) {
     return;
   }
   t->_is_falling_continues = val;
@@ -316,14 +316,14 @@ void thing_is_hit_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     //
     // Start the hit counter if not doing do
     //
-    if (t->_is_hit != false) {
+    if (static_cast< bool >(t->_is_hit)) {
       return;
     }
   } else {
     //
     // Stop hit
     //
-    if (t->_is_hit == false) {
+    if (! static_cast< bool >(t->_is_hit)) {
       return;
     }
   }
@@ -345,7 +345,7 @@ int thing_is_hit_incr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     return 0;
   }
 
-  if ((t->_is_hit == false) && (val != 0)) {
+  if ((! static_cast< bool >(t->_is_hit)) && (val != 0)) {
     thing_on_hit_begin(g, v, l, t);
   }
 
@@ -365,7 +365,7 @@ int thing_is_hit_decr(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   }
 
   if ((int) t->_is_hit - val <= 0) {
-    if (t->_is_hit != false) {
+    if (static_cast< bool >(t->_is_hit)) {
       thing_on_hit_end(g, v, l, t);
     }
     return t->_is_hit = 0;
@@ -389,14 +389,14 @@ void thing_is_hot_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
     //
     // Start the hot counter if not doing do
     //
-    if (t->_is_hot != false) {
+    if (static_cast< bool >(t->_is_hot)) {
       return;
     }
   } else {
     //
     // Stop hot
     //
-    if (t->_is_hot == false) {
+    if (! static_cast< bool >(t->_is_hot)) {
       return;
     }
   }
@@ -460,7 +460,7 @@ int thing_temperature_set(Gamep g, Levelsp v, Levelp l, Thingp t, int val)
   // Don't keep on heating up forever!
   //
   auto *tp    = thing_tp(t);
-  auto limit = std::max(tp_temperature_burns_at_get(tp), tp_temperature_melts_at_get(tp));
+  auto  limit = std::max(tp_temperature_burns_at_get(tp), tp_temperature_melts_at_get(tp));
   if ((limit != 0) && (val > limit)) {
     val = limit;
   }
@@ -586,7 +586,7 @@ void thing_is_dead_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
 
-  if (t->_is_dead == static_cast<int>(val)) {
+  if (t->_is_dead == static_cast< int >(val)) {
     return;
   }
   t->_is_dead = val;
@@ -622,7 +622,7 @@ void thing_is_burning_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
 
-  if (t->_is_burning == static_cast<int>(val)) {
+  if (t->_is_burning == static_cast< int >(val)) {
     return;
   }
   t->_is_burning = val;
@@ -666,7 +666,7 @@ void thing_is_corpse_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
 
-  if (t->_is_corpse == static_cast<int>(val)) {
+  if (t->_is_corpse == static_cast< int >(val)) {
     return;
   }
   t->_is_corpse = val;
@@ -701,7 +701,7 @@ void thing_is_scheduled_for_cleanup_set(Gamep g, Levelsp v, Levelp l, Thingp t, 
     return;
   }
 
-  if (t->_is_scheduled_for_cleanup == static_cast<int>(val)) {
+  if (t->_is_scheduled_for_cleanup == static_cast< int >(val)) {
     return;
   }
   t->_is_scheduled_for_cleanup = val;
@@ -805,7 +805,7 @@ void thing_is_moving_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
 
-  if (t->_is_moving == static_cast<int>(val)) {
+  if (t->_is_moving == static_cast< int >(val)) {
     return;
   }
   t->_is_moving = val;
@@ -829,7 +829,7 @@ void thing_is_spawned_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
 
-  if (t->_is_spawned == static_cast<int>(val)) {
+  if (t->_is_spawned == static_cast< int >(val)) {
     return;
   }
   t->_is_spawned = val;
@@ -866,7 +866,7 @@ void thing_is_teleporting_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
 
-  if (t->_is_teleporting == static_cast<int>(val)) {
+  if (t->_is_teleporting == static_cast< int >(val)) {
     return;
   }
   t->_is_teleporting = val;
@@ -890,7 +890,7 @@ void thing_is_jumping_set(Gamep g, Levelsp v, Levelp l, Thingp t, bool val)
     return;
   }
 
-  if (t->_is_jumping == static_cast<int>(val)) {
+  if (t->_is_jumping == static_cast< int >(val)) {
     return;
   }
   t->_is_jumping = val;
@@ -919,7 +919,7 @@ bool thing_is_open_try_set(Gamep g, Levelsp v, Levelp l, Thingp t, Thingp opener
     return false;
   }
 
-  if (t->_is_open == static_cast<int>(val)) {
+  if (t->_is_open == static_cast< int >(val)) {
     return true;
   }
   t->_is_open = val;
@@ -997,7 +997,7 @@ bool thing_is_carried_try_set(Gamep g, Levelsp v, Levelp l, Thingp item, Thingp 
     return false;
   }
 
-  if (item->_is_carried == static_cast<int>(val)) {
+  if (item->_is_carried == static_cast< int >(val)) {
     auto s = to_string(g, v, l, item);
     THING_LOG(player_or_monst, "carry-try: %s (failed, already carried)", s.c_str());
     return true;

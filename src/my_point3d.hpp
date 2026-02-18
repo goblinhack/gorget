@@ -21,7 +21,7 @@ public:
   void operator/=(T /*b*/);
 };
 
-template < typename T > bool             operator==(my_apoint3d< T > const & /*a*/, my_apoint3d< T > const & /*b*/);
+template < typename T > bool             operator==(my_apoint3d< T > const             &/*a*/, my_apoint3d< T > const             &/*b*/);
 template < typename T > my_apoint3d< T > operator+(my_apoint3d< T > const & /*a*/, my_apoint3d< T > const & /*b*/);
 template < typename T > my_apoint3d< T > operator-(my_apoint3d< T > const & /*a*/, my_apoint3d< T > const & /*b*/);
 template < typename T > my_apoint3d< T > operator*(my_apoint3d< T > const & /*a*/, T /*b*/);

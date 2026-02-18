@@ -22,7 +22,7 @@ Thingp thing_player(Gamep g)
     return nullptr;
   }
 
-  if (v->player_id == 0u) {
+  if (v->player_id == 0U) {
     return nullptr;
   }
 
@@ -556,9 +556,9 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
       // Do not step onto the thing we just shoved.
       //
       return level_is_dead_on_shoving(g, v, l, to) == nullptr;
-    } else {
-      level_tick_begin_requested(g, v, l, "me failed to shove");
     }
+    level_tick_begin_requested(g, v, l, "me failed to shove");
+
   } else if (thing_can_move_to_attempt_by_opening(g, v, l, me, to)) {
     //
     // Can we open it allow movement?
@@ -567,8 +567,9 @@ bool player_check_if_target_needs_move_confirm(Gamep g, Levelsp v, Levelp l, spo
     if (thing_move_to(g, v, l, me, to)) {
       level_tick_begin_requested(g, v, l, "me opened a door to move");
       return true;
-    }       level_tick_begin_requested(g, v, l, "me failed to open something in the way");
-   
+    }
+    level_tick_begin_requested(g, v, l, "me failed to open something in the way");
+
   } else {
     level_tick_begin_requested(g, v, l, "me bumped into obstacle");
   }

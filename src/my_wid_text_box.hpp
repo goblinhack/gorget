@@ -40,14 +40,14 @@ public:
   Widp   wid_vert_scroll {};
 
   ~WidTextBox();
-  WidTextBox(Gamep /*g*/, spoint tl, spoint br, Widp /*vparent*/, bool horiz_scroll = true, bool vert_scoll = true,
+  WidTextBox(Gamep, spoint tl, spoint br, Widp /*vparent*/, bool horiz_scroll = true, bool vert_scoll = true,
              int scroll_height = -1);
 
 private:
-  Widp log_(Gamep /*g*/, const std::string & /*str*/, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
+  Widp log_(Gamep, const std::string & /*str*/, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
 
 public:
-  Widp log(Gamep /*g*/, const std::string & /*s*/, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
-  Widp log_empty_line(Gamep /*g*/);
+  Widp log(Gamep, const std::string & /*s*/, wid_text_format format = TEXT_FORMAT_NONE, std::string c = "");
+  Widp log_empty_line(Gamep);
 };
 #endif

@@ -144,7 +144,7 @@ static void tp_fire_on_fall_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
   // die, else they follow them down and they stay on fire.
   //
   auto *player = thing_player(g);
-  auto at     = thing_at(t);
+  auto  at     = thing_at(t);
   if ((player != nullptr) && (at == thing_at(player))) {
     ThingEvent e {
         .reason     = "by falling",     //
@@ -166,7 +166,7 @@ bool tp_load_fire(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("fire"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   thing_description_set(tp, tp_fire_description_get);

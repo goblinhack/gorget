@@ -32,7 +32,7 @@ bool tp_load_key(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("key"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   thing_description_set(tp, tp_key_description_get);

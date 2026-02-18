@@ -16,8 +16,8 @@ public:
   my_spoint(short _x, short _y) : x(_x), y(_y) {}
   my_spoint(void) : x(0), y(0) {}
 #endif
-  void  operator+=(my_spoint const & /*b*/);
-  void  operator-=(my_spoint const & /*b*/);
+  void  operator+=(my_spoint const  &/*b*/);
+  void  operator-=(my_spoint const  &/*b*/);
   void  operator*=(short /*b*/);
   void  operator/=(short /*b*/);
   float length(void) const;
@@ -25,7 +25,7 @@ public:
 } spoint;
 
 bool   operator<(spoint const &a, spoint const &b); // Needed for std::map
-bool   operator==(spoint const & /*a*/, spoint const & /*b*/);
+bool   operator==(spoint const   &/*a*/, spoint const   &/*b*/);
 spoint operator+(spoint const & /*a*/, spoint const & /*b*/);
 spoint operator-(spoint const & /*a*/, spoint const & /*b*/);
 spoint operator*(spoint const & /*a*/, short /*b*/);

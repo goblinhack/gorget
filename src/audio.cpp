@@ -47,7 +47,7 @@ bool audio_init(void)
   // int chunksize = 4096;
   int chunksize = 1024; // less latency but might be choppy
 
-  if (static_cast<unsigned int>(audio_init_done) == false) {
+  if (! audio_init_done) {
     if (Mix_OpenAudio(audio_freq, audio_format, channels, chunksize) != 0) {
       ERR("Mix_OpenAudio fail: %s %s", Mix_GetError(), SDL_GetError());
       SDL_ClearError();

@@ -212,7 +212,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
     }
   }
 
-  if (!best_cand.empty()) {
+  if (! best_cand.empty()) {
     LOG(" - best %s", best_cand.c_str());
     return best_cand;
   }
@@ -275,7 +275,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
       LOG(" - candidate: %s", cand.c_str());
     }
   }
-  if (!chosen.empty()) {
+  if (! chosen.empty()) {
     SDL_DisplayMode mode = modes[ chosen ];
     LOG(" - chosen: %s", chosen.c_str());
     pending_mode_set = true;
@@ -331,7 +331,7 @@ static std::string wid_cfg_gfx_find_closest_resolution(Gamep g)
       LOG(" - candidate: %s", cand.c_str());
     }
   }
-  if (!chosen.empty()) {
+  if (! chosen.empty()) {
     SDL_DisplayMode mode = modes[ chosen ];
     LOG(" - chosen: %s", chosen.c_str());
     pending_mode_set = true;

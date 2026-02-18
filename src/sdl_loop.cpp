@@ -156,7 +156,7 @@ void sdl_loop(Gamep g)
       if (unlikely(! found)) {
         auto mouse_down = sdl_get_mouse();
         if (mouse_down != 0) {
-          if (sdl.last_mouse_held_down_when != false) {
+          if (static_cast< bool >(sdl.last_mouse_held_down_when)) {
             if (time_have_x_hundredths_passed_since(50, sdl.last_mouse_held_down_when)) {
               if ((sdl.held_mouse_x != 0) && (sdl.held_mouse_y != 0)) {
                 DBG2("SDL: Mouse DOWN: held: Button %d now at %d,%d initially at %d,%d", mouse_down, sdl.mouse_x,
@@ -217,7 +217,7 @@ void sdl_loop(Gamep g)
     //
     // Config change?
     //
-    if (unlikely(!g_need_restart_with_given_arguments.empty())) {
+    if (unlikely(! g_need_restart_with_given_arguments.empty())) {
       LOG("Restart needed");
       break;
     }

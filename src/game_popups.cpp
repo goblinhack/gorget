@@ -25,7 +25,7 @@ void game_popup_text_add(Gamep g, int x, int y, const std::string &text, color c
     return;
   }
 
-  auto *  l        = game_popups_get(g, x, y);
+  auto *l        = game_popups_get(g, x, y);
   auto *popup    = new GamePopup;
   popup->text    = text;
   popup->created = time_ms_cached();

@@ -161,7 +161,7 @@ static void tp_player_tick_end(Gamep g, Levelsp v, Levelp l, Thingp t)
 bool tp_load_player(void)
 {
   auto *tp   = tp_load("player"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   thing_description_set(tp, tp_player_description_get);

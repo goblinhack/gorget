@@ -236,7 +236,7 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 
   if (__unused__) {
     THING_LOG(t, "fall incr %u", thing_is_falling(t));
-}
+  }
 }
 
 //
@@ -248,7 +248,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
 
   if (__unused__) {
     THING_LOG(t, "fall %u", thing_is_falling(t));
-}
+  }
 
   if (thing_is_falling(t) >= MAX_FALL_TIME_MS) {
 

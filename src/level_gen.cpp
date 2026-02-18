@@ -151,7 +151,7 @@ static int level_no_exit_room;
 //
 static std::array< class LevelGen *, LEVEL_MAX > levels_generated = {};
 
-static void level_gen_dump(Gamep /*g*/, class LevelGen * /*l*/, const char *msg = nullptr);
+static void level_gen_dump(Gamep, class LevelGen *, const char *msg = nullptr);
 
 class Cell
 {

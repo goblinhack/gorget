@@ -48,7 +48,7 @@ void cleanup(void)
   g_quitting = true;
 
   extern Gamep game;
-  auto *         g = game;
+  auto        *g = game;
 
 #ifdef ENABLE_CRASH_HANDLER
 #ifdef SIGSEGV

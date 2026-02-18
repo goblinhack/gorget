@@ -1112,17 +1112,17 @@ bool sdlk_eq(const SDL_Keysym &a, const SDL_Keysym &b)
   //
   if ((k1.mod & KMOD_SHIFT) != 0) {
     k1.mod |= KMOD_SHIFT;
-}
+  }
   if ((k2.mod & KMOD_SHIFT) != 0) {
     k2.mod |= KMOD_SHIFT;
-}
+  }
 
   if ((k1.mod & KMOD_CTRL) != 0) {
     k1.mod |= KMOD_CTRL;
-}
+  }
   if ((k2.mod & KMOD_CTRL) != 0) {
     k2.mod |= KMOD_CTRL;
-}
+  }
 
   //
   // The chromebook duet reports all keys as num lock on. I'm not sure

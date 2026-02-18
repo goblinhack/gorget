@@ -15,7 +15,7 @@ static void selected(Gamep g, Widp w, const std::string &text)
 {
   TRACE_NO_INDENT();
 
-  if (!text.empty()) {
+  if (! text.empty()) {
     game_player_name_set(g, text.c_str());
     CON("Save config for player name");
     game_save_config(g);

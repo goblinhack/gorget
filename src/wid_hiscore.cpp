@@ -80,16 +80,16 @@ void wid_hiscores_show(Gamep g)
   int menu_width  = 100;
 
   const auto *name           = "Name";
-  int  name_field_len = UI_MAX_PLAYER_NAME_LEN + 1;
+  int         name_field_len = UI_MAX_PLAYER_NAME_LEN + 1;
 
   const auto *when           = "Date of Demise";
-  int  when_field_len = 25;
+  int         when_field_len = 25;
 
   const auto *completed           = "Completed";
-  int  completed_field_len = 9;
+  int         completed_field_len = 9;
 
   const auto *reason           = "Reason of Unfair Demise";
-  int  reason_field_len = 28;
+  int         reason_field_len = 28;
 
   spoint outer_tl((TERM_WIDTH / 2) - (menu_width / 2), (TERM_HEIGHT / 2) - (menu_height / 2));
   spoint outer_br((TERM_WIDTH / 2) + (menu_width / 2), (TERM_HEIGHT / 2) + (menu_height / 2));
@@ -102,9 +102,9 @@ void wid_hiscores_show(Gamep g)
   }
 
   auto *hiscores = game_hiscores_get(g);
-  auto h        = hiscores->hiscores.begin();
-  bool first    = true;
-  auto index    = 0;
+  auto  h        = hiscores->hiscores.begin();
+  bool  first    = true;
+  auto  index    = 0;
 
   const char *colors[ HiScore::max_displayed ] = {
       "green", "yellow", "yellow", "yellow", "gray50", "gray50", "gray60", "gray60", "gray70", "gray70",

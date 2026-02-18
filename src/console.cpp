@@ -136,81 +136,81 @@ int term_color_to_console_color(color c)
 {
   if (color_eq(c, BLACK)) {
     return TERM_COLOR_BLACK;
-}
+  }
   if (color_eq(c, BLUE)) {
     return TERM_COLOR_BLACK;
-}
+  }
   if (color_eq(c, BROWN)) {
     return TERM_COLOR_BLACK;
-}
+  }
   if (color_eq(c, COLOR_NONE)) {
     return TERM_COLOR_RESET;
-}
+  }
   if (color_eq(c, CYAN)) {
     return TERM_COLOR_CYAN;
-}
+  }
   if (color_eq(c, GOLD)) {
     return TERM_COLOR_YELLOW;
-}
+  }
   if (color_eq(c, GRAY10)) {
     return TERM_COLOR_BLUE;
-}
+  }
   if (color_eq(c, GRAY30)) {
     return TERM_COLOR_BLUE;
-}
+  }
   if (color_eq(c, GRAY40)) {
     return TERM_COLOR_BLUE;
-}
+  }
   if (color_eq(c, GRAY50)) {
     return TERM_COLOR_BLUE;
-}
+  }
   if (color_eq(c, GRAY60)) {
     return TERM_COLOR_WHITE;
-}
+  }
   if (color_eq(c, GRAY70)) {
     return TERM_COLOR_WHITE;
-}
+  }
   if (color_eq(c, GRAY80)) {
     return TERM_COLOR_WHITE;
-}
+  }
   if (color_eq(c, GRAY90)) {
     return TERM_COLOR_WHITE;
-}
+  }
   if (color_eq(c, GRAY)) {
     return TERM_COLOR_WHITE;
-}
+  }
   if (color_eq(c, GREEN)) {
     return TERM_COLOR_GREEN;
-}
+  }
   if (color_eq(c, LIME)) {
     return TERM_COLOR_GREEN;
-}
+  }
   if (color_eq(c, MAGENTA)) {
     return TERM_COLOR_PINK;
-}
+  }
   if (color_eq(c, ORANGE)) {
     return TERM_COLOR_YELLOW;
-}
+  }
   if (color_eq(c, PINK)) {
     return TERM_COLOR_RED;
-}
+  }
   if (color_eq(c, PURPLE)) {
     return TERM_COLOR_PINK;
-}
+  }
   if (color_eq(c, RED)) {
     return TERM_COLOR_RED;
-}
+  }
   if (color_eq(c, WATER)) {
     return TERM_COLOR_CYAN;
-}
+  }
   if (color_eq(c, WHITE)) {
     return TERM_COLOR_WHITE;
-}
+  }
   if (color_eq(c, YELLOW)) {
     return TERM_COLOR_YELLOW;
-}
+  }
   if (color_eq(c, PURPLE)) {
     return TERM_COLOR_BLUE;
-}
+  }
   return TERM_COLOR_BLUE;
 }

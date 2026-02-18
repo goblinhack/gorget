@@ -207,7 +207,7 @@ void level_update_tiles(Gamep g, Levelsp v, Levelp l)
 
   for (auto y = 0; y < MAP_HEIGHT; y++) {
     for (auto x = 0; x < MAP_WIDTH; x++) {
-      if (l->is_modified_tile[ x ][ y ] != false) {
+      if (static_cast< bool >(l->is_modified_tile[ x ][ y ])) {
         level_assign_tiles_at(g, v, l, spoint(x, y));
       }
     }

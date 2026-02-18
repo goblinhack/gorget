@@ -186,14 +186,14 @@ static void thing_damage_cap_for_this_event(Gamep g, Levelsp v, Levelp l, Thingp
 {
   TRACE_NO_INDENT();
 
-  auto *       tp = thing_tp(t);
+  auto      *tp = thing_tp(t);
   const auto h  = tp_health_max_get(tp);
 
   //
   // Limit the damage that can occur this event.
   //
   auto max_damage_this_time = h / 4;
-  max_damage_this_time = std::max(max_damage_this_time, 1);
+  max_damage_this_time      = std::max(max_damage_this_time, 1);
 
   if (e.damage > max_damage_this_time) {
     auto old_d = e.damage;
@@ -209,14 +209,14 @@ static void thing_damage_cap_for_this_tick(Gamep g, Levelsp v, Levelp l, Thingp 
 {
   TRACE_NO_INDENT();
 
-  auto *       tp = thing_tp(t);
+  auto      *tp = thing_tp(t);
   const auto h  = tp_health_max_get(tp);
 
   //
   // Limit the total damage that can occur per tick.
   //
   auto max_damage_per_tick = h / 3;
-  max_damage_per_tick = std::max(max_damage_per_tick, 1);
+  max_damage_per_tick      = std::max(max_damage_per_tick, 1);
 
   auto d_total = thing_damage_this_tick_incr(g, v, l, t, e.damage);
   if (d_total > max_damage_per_tick) {

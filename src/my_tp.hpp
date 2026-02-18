@@ -455,21 +455,21 @@ bool tp_init(void);
 std::string tp_name(Tpp /*tp*/);
 
 std::string tp_short_name(Tpp /*tp*/);
-void        tp_short_name_set(Tpp /*tp*/, const std::string & /*val*/);
+void        tp_short_name_set(Tpp /*tp*/, const std::string        &/*val*/);
 
 std::string tp_long_name(Tpp /*tp*/);
-void        tp_long_name_set(Tpp /*tp*/, const std::string & /*val*/);
+void        tp_long_name_set(Tpp /*tp*/, const std::string        &/*val*/);
 
 std::string tp_pluralize_name(Tpp /*tp*/);
-void        tp_pluralize_name_set(Tpp /*tp*/, const std::string & /*val*/);
+void        tp_pluralize_name_set(Tpp /*tp*/, const std::string        &/*val*/);
 
 std::string tp_apostrophize_name(Tpp /*tp*/);
-void        tp_apostrophize_name_set(Tpp /*tp*/, const std::string & /*val*/);
+void        tp_apostrophize_name_set(Tpp /*tp*/, const std::string        &/*val*/);
 
 std::string tp_real_name(Tpp /*tp*/);
-void        tp_real_name_set(Tpp /*tp*/, const std::string & /*val*/);
+void        tp_real_name_set(Tpp /*tp*/, const std::string        &/*val*/);
 
-void  tp_light_color_set(Tpp /*tp*/, const std::string & /*val*/);
+void  tp_light_color_set(Tpp /*tp*/, const std::string  &/*val*/);
 void  tp_light_color_apply(Tpp /*tp*/);
 color tp_light_color(Tpp /*tp*/);
 
@@ -488,8 +488,8 @@ bool tp_chance_fail(Tpp /*tp*/, ThingChanceType /*val*/);
 
 TpId tp_id_get(Tpp /*tp*/);
 Tpp  tp_find(TpId id);
-Tpp  tp_find_mand(const std::string & /*val*/);
-Tpp  tp_find_opt(const std::string & /*val*/);
+Tpp  tp_find_mand(const std::string  &/*val*/);
+Tpp  tp_find_opt(const std::string  &/*val*/);
 
 Tpp string2tp(const char **s, int *len = nullptr);
 Tpp tp_load(const std::string & /*val*/);
@@ -512,7 +512,7 @@ void TP_ERR(Tpp /*tp*/, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void TP_ERR_(Tpp /*tp*/, const char *fmt, va_list args); // compile error without
 void TP_LOG(Tpp /*tp*/, const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
 void TP_LOG_(Tpp /*tp*/, const char *fmt, va_list args); // compile error without
-                                                  //
+                                                         //
 void tp_fini(void);
 void tp_get_id(const char *, int *id);
 
@@ -679,9 +679,6 @@ int  tp_variant_get(Tpp /*tp*/);
 
 void              tp_priority_set(Tpp /*tp*/, ThingPriorityType val);
 ThingPriorityType tp_priority_get(Tpp /*tp*/);
-
-
-
 
 void tp_distance_jump_set(Tpp /*tp*/, int val);
 int  tp_distance_jump_get(Tpp /*tp*/);

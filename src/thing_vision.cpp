@@ -43,7 +43,7 @@ bool thing_vision_can_see_tile(Gamep g, Levelsp v, Levelp l, Thingp t, spoint p)
     return false;
   }
 
-  return fov->fov_can_see_tile.can_see[ p.x ][ p.y ] != 0u;
+  return fov->fov_can_see_tile.can_see[ p.x ][ p.y ] != 0U;
 }
 
 bool thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p)
@@ -54,5 +54,5 @@ bool thing_vision_player_has_seen_tile(Gamep g, Levelsp v, Levelp l, spoint p)
     return false;
   }
 
-  return l->player_fov_has_seen_tile.can_see[ p.x ][ p.y ] != 0u;
+  return l->player_fov_has_seen_tile.can_see[ p.x ][ p.y ] != 0U;
 }

@@ -231,7 +231,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
 
   {
     TRACE_NO_INDENT();
-    auto *   w = wid_new_square_button(g, wid_inventory_window, "text");
+    auto  *w = wid_new_square_button(g, wid_inventory_window, "text");
     spoint tl(0, y_at);
     spoint br(inventory_width, y_at);
     wid_set_pos(w, tl, br);
@@ -257,7 +257,7 @@ void wid_inventory_show(Gamep g, Levelsp v, Levelp l, Thingp player)
       Tilep tile = tp_tiles_get(tp, THING_ANIM_IDLE, 0);
       if (tile != nullptr) {
         TRACE_NO_INDENT();
-        auto *   w = wid_new_square_button(g, wid_inventory_window, "Icon");
+        auto  *w = wid_new_square_button(g, wid_inventory_window, "Icon");
         spoint tl(1, y_at);
         spoint br(2, y_at + button_height);
         wid_set_tile(TILE_LAYER_BG_0, w, tile);

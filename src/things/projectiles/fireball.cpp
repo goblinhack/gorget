@@ -52,7 +52,7 @@ static void tp_fireball_on_moved(Gamep g, Levelsp v, Levelp l, Thingp t)
 bool tp_load_fireball(void)
 {
   auto *tp   = tp_load("fireball"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   thing_description_set(tp, tp_fireball_description_get);

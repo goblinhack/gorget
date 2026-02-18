@@ -22,7 +22,7 @@ bool tp_load_explosion(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("explosion"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   thing_on_spawned_set(tp, tp_explosion_spawned);

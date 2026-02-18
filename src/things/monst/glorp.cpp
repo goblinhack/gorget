@@ -54,7 +54,7 @@ ThingEnviron tp_glorp_assess_tile(Gamep g, Levelsp v, Levelp l, spoint at, Thing
 bool tp_load_glorp(void)
 {
   auto *tp   = tp_load("glorp"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   thing_assess_tile_set(tp, tp_glorp_assess_tile);

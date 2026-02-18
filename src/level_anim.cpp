@@ -13,7 +13,7 @@ void level_anim(Gamep g, Levelsp v, Levelp l)
   TRACE_NO_INDENT();
 
   l->ts = time_ms();
-  if (l->last_ts == false) {
+  if (! static_cast< bool >(l->last_ts)) {
     l->last_ts = l->ts;
     return;
   }

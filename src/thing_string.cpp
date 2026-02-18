@@ -65,7 +65,7 @@ std::string to_string(Gamep g, Levelsp v, Levelp l, ThingEvent &e)
 
   std::string s = "ev:";
 
-  if (!e.reason.empty()) {
+  if (! e.reason.empty()) {
     s += " r:'";
     s += e.reason;
     s += "'";
@@ -95,7 +95,7 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   TRACE_NO_INDENT();
 
   std::string s;
-  auto *        source = e.source;
+  auto       *source = e.source;
 
   switch (e.event_type) {
     case THING_EVENT_NONE : break;
@@ -145,15 +145,15 @@ std::string to_death_reason_string(Gamep g, Levelsp v, Levelp l, Thingp t, Thing
   // Add some more spice to the message
   //
   if (level_is_lava(g, v, l, t)) {
-    if ((source == nullptr) || !thing_is_lava(source)) {
+    if ((source == nullptr) || ! thing_is_lava(source)) {
       s += " in lava";
     }
   } else if (level_is_deep_water(g, v, l, t)) {
-    if ((source == nullptr) || !thing_is_water(source)) {
+    if ((source == nullptr) || ! thing_is_water(source)) {
       s += " in the depths";
     }
   } else if (level_is_water(g, v, l, t)) {
-    if ((source == nullptr) || !thing_is_water(source)) {
+    if ((source == nullptr) || ! thing_is_water(source)) {
       s += " in a puddle";
     }
   }

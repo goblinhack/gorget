@@ -12,11 +12,11 @@
 #include "my_thing_inlines.hpp"
 #include "my_wids.hpp"
 
-static void level_tick_begin(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
-static void level_tick_body(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/, float dt, bool tick_is_about_to_end = false);
-static void level_tick_end(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
-static void level_tick_idle(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
-static void level_tick_check_running_time(Gamep /*g*/, Levelsp /*v*/, Levelp /*l*/);
+static void level_tick_begin(Gamep, Levelsp, Levelp);
+static void level_tick_body(Gamep, Levelsp, Levelp, float dt, bool tick_is_about_to_end = false);
+static void level_tick_end(Gamep, Levelsp, Levelp);
+static void level_tick_idle(Gamep, Levelsp, Levelp);
+static void level_tick_check_running_time(Gamep, Levelsp, Levelp);
 
 //
 // Called at the end of the tick and then whenever needed, like at the end of an animation.
@@ -573,7 +573,7 @@ static uint32_t level_tick_process_pending_request(Gamep g, Levelsp v, Levelp cu
   //
   v->level_tick_request_count = 0;
 
-  if (v->level_tick_in_progress_count != 0u) {
+  if (v->level_tick_in_progress_count != 0U) {
     return 0;
   }
 
@@ -594,7 +594,7 @@ static uint32_t level_tick_process_pending_request(Gamep g, Levelsp v, Levelp cu
     // If this is the first level requesting a tick, reset the fram counters and move the
     // tick along
     //
-    if ((v->level_tick_request_count++) == 0u) {
+    if ((v->level_tick_request_count++) == 0U) {
       v->tick++;
       v->frame_begin    = v->frame;
       v->time_step      = 0.0;
@@ -711,7 +711,7 @@ static void level_tick_monitor_progress(Gamep g, Levelsp v, Levelp current_level
     LEVEL_DBG(g, v, current_level, "Tick %u: req %u in-progress-count %u tick-end-count %u", v->tick,
               v->level_tick_request_count, v->level_tick_in_progress_count, v->level_tick_done_count);
 
-    if ((v->level_tick_done_count != 0u) && (v->level_ticking_count == v->level_tick_done_count)) {
+    if ((v->level_tick_done_count != 0U) && (v->level_ticking_count == v->level_tick_done_count)) {
       LEVEL_DBG(g, v, current_level, "Tick %u: all %u levels finished ticking", v->tick, v->level_tick_done_count);
     }
   }

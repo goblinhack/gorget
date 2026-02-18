@@ -9,7 +9,7 @@ Thingp top_owner(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (t->owner_id == false) {
+  if (! static_cast< bool >(t->owner_id)) {
     return nullptr;
   }
 
@@ -24,7 +24,7 @@ Thingp immediate_owner(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (t->owner_id == false) {
+  if (! static_cast< bool >(t->owner_id)) {
     return nullptr;
   }
 

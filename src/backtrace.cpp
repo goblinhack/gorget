@@ -128,7 +128,7 @@ static std::string demangle_symbol(char *name)
     }
 
     auto was_demangled = demangle(cur);
-    if (static_cast<unsigned int>(!was_demangled.empty()) != false) {
+    if (static_cast< unsigned int >(! was_demangled.empty()) != false) {
       sout += string_sprintf("%s", was_demangled.c_str());
       demangled = true;
       break;
@@ -320,7 +320,7 @@ std::string backtrace_string(void)
   const char *prefix = "(backtrace) ";
 #endif
 
-  auto *        addrlist = bt.data();
+  auto       *addrlist = bt.data();
   std::string sout     = "stack trace\n===========\n";
 
   if (size == 0) {

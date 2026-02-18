@@ -451,14 +451,14 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
 
   LOG("Read config: config_pix_height      = %d", my.t.config_pix_height);
   LOG("Read config: config_pix_width       = %d", my.t.config_pix_width);
-  LOG("Read config: debug_mode             = %d", static_cast<int>(my.t.debug_mode));
-  LOG("Read config: fps_counter            = %d", static_cast<int>(my.t.fps_counter));
-  LOG("Read config: gfx_borderless         = %d", static_cast<int>(my.t.gfx_borderless));
-  LOG("Read config: gfx_fullscreen         = %d", static_cast<int>(my.t.gfx_fullscreen));
-  LOG("Read config: gfx_fullscreen_desktop = %d", static_cast<int>(my.t.gfx_fullscreen_desktop));
-  LOG("Read config: gfx_vsync_enable       = %d", static_cast<int>(my.t.gfx_vsync_enable));
-  LOG("Read config: mouse_wheel_lr_negated = %d", static_cast<int>(my.t.mouse_wheel_lr_negated));
-  LOG("Read config: mouse_wheel_ud_negated = %d", static_cast<int>(my.t.mouse_wheel_ud_negated));
+  LOG("Read config: debug_mode             = %d", static_cast< int >(my.t.debug_mode));
+  LOG("Read config: fps_counter            = %d", static_cast< int >(my.t.fps_counter));
+  LOG("Read config: gfx_borderless         = %d", static_cast< int >(my.t.gfx_borderless));
+  LOG("Read config: gfx_fullscreen         = %d", static_cast< int >(my.t.gfx_fullscreen));
+  LOG("Read config: gfx_fullscreen_desktop = %d", static_cast< int >(my.t.gfx_fullscreen_desktop));
+  LOG("Read config: gfx_vsync_enable       = %d", static_cast< int >(my.t.gfx_vsync_enable));
+  LOG("Read config: mouse_wheel_lr_negated = %d", static_cast< int >(my.t.mouse_wheel_lr_negated));
+  LOG("Read config: mouse_wheel_ud_negated = %d", static_cast< int >(my.t.mouse_wheel_ud_negated));
   LOG("Read config: music_volume           = %d", my.t.music_volume);
   LOG("Read config: sdl_delay              = %d", my.t.sdl_delay);
   LOG("Read config: sound_volume           = %d", my.t.sound_volume);
@@ -1043,7 +1043,7 @@ bool Game::load(const std::string &file_to_load, class Game &target)
 
   TRACE_NO_INDENT();
   auto *data     = vec.data();
-  long src_size = vec.size();
+  long  src_size = vec.size();
 
   auto *src = malloc(src_size MALLOC_PAD);
   if (src == nullptr) {
@@ -1072,7 +1072,7 @@ bool Game::load(const std::string &file_to_load, class Game &target)
 
 #ifdef USE_LZ4
   const auto *which = "LZ4";
-  long new_len;
+  long        new_len;
   new_len = LZ4_decompress_safe((const char *) src, (char *) dst, src_size, dst_size);
   if (new_len >= 0)
 #else
@@ -1084,12 +1084,12 @@ bool Game::load(const std::string &file_to_load, class Game &target)
 
   {
     LOG("%s decompress %ldMb (%ld bytes) -> %ldMb (%ld bytes) took %u ms (%s)",
-        which,                           // newline
+        which,                    // newline
         src_size / (1024 * 1024), // newline
         src_size,                 // newline
         dst_size / (1024 * 1024), // newline
         dst_size,                 // newline
-        time_ms() - start,               // newline
+        time_ms() - start,        // newline
         file_to_load.c_str());
   } else {
     ERR("%s decompress %ldMb (%ld bytes) -> %ldMb (%ld error code) took %u ms (%s)",
@@ -1206,7 +1206,7 @@ bool Game::load(int slot)
   state_change(STATE_LOADED, "reset");
   state_change(STATE_PLAYING, "loaded game");
 
-  if (!game_load_error.empty()) {
+  if (! game_load_error.empty()) {
     sound_play(this, "error");
     TOPCON("Failed to load the game from %s", this_save_file.c_str());
   } else {
@@ -1398,8 +1398,8 @@ void Game::load_select(void)
       tmp_file = saved_dir + "saved-snapshot-info";
     }
 
-    auto *   p = wid_load->wid_text_area->wid_text_area;
-    auto *   w = wid_new_button(game, p, "load slot");
+    auto  *p = wid_load->wid_text_area->wid_text_area;
+    auto  *w = wid_new_button(game, p, "load slot");
     spoint tl(0, y_at);
     spoint br(menu_width - 2, y_at);
 

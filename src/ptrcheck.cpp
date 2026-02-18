@@ -673,7 +673,7 @@ int ptrcheck_verify(int mtype, const void *ptr, const char *func, const char *fi
 
   ptrcheck_mutex.unlock();
 
-  return static_cast<int>(ret);
+  return static_cast< int >(ret);
 }
 
 //

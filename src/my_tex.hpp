@@ -21,7 +21,7 @@ Texp string2tex(std::string &s, int *len);
 Texp tex_find(std::string name);
 Texp tex_from_surface(SDL_Surface *surface, std::string file, std::string name, int mode);
 Texp tex_load(std::string file, std::string name, int mode);
-Texp tex_from_fbo(Gamep /*g*/, FboEnum fbo);
+Texp tex_from_fbo(Gamep, FboEnum fbo);
 
 uint32_t tex_get_height(Texp /*tex*/);
 uint32_t tex_get_width(Texp /*tex*/);

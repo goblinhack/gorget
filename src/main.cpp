@@ -364,14 +364,14 @@ int main(int argc, char *argv[])
 
   if (! g_opt_tests) {
     TRACE_NO_INDENT();
-    if (static_cast<unsigned int>(sdl_init()) == false) {
+    if (static_cast< unsigned int >(sdl_init()) == false) {
       ERR("SDL: Init");
     }
   }
 
   if (! g_opt_tests) {
     TRACE_NO_INDENT();
-    if (static_cast<unsigned int>(sdl_display_init(g)) == false) {
+    if (static_cast< unsigned int >(sdl_display_init(g)) == false) {
       ERR("SDL: Display init");
     }
   }
@@ -433,7 +433,7 @@ int main(int argc, char *argv[])
     } else {
       LOG("Load fonts");
     }
-    if (static_cast<unsigned int>(font_init()) == false) {
+    if (static_cast< unsigned int >(font_init()) == false) {
       ERR("Font init");
     }
   }
@@ -514,7 +514,7 @@ int main(int argc, char *argv[])
     } else {
       LOG("Load textures");
     }
-    if (static_cast<unsigned int>(tex_init()) == false) {
+    if (static_cast< unsigned int >(tex_init()) == false) {
       ERR("Tex init");
     }
     wid_console_flush(g);
@@ -574,7 +574,7 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     LOG("Load commands");
-    if (static_cast<unsigned int>(command_init()) == false) {
+    if (static_cast< unsigned int >(command_init()) == false) {
       ERR("Command init");
     }
     LOG("Loaded commands");

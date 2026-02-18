@@ -15,15 +15,15 @@ public:
   float x;
   float y;
 
-  void  operator+=(my_fpoint const & /*b*/);
-  void  operator-=(my_fpoint const & /*b*/);
+  void  operator+=(my_fpoint const  &/*b*/);
+  void  operator-=(my_fpoint const  &/*b*/);
   void  operator*=(float /*b*/);
   void  operator/=(float /*b*/);
   float length(void) const;
   void  unit(void);
 } fpoint;
 
-bool   operator==(fpoint const & /*a*/, fpoint const & /*b*/);
+bool   operator==(fpoint const   &/*a*/, fpoint const   &/*b*/);
 fpoint operator+(fpoint const & /*a*/, fpoint const & /*b*/);
 fpoint operator-(fpoint const & /*a*/, fpoint const & /*b*/);
 fpoint operator*(fpoint const & /*a*/, float /*b*/);

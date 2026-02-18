@@ -238,7 +238,7 @@ void wid_cfg_sound_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Effects");
   }
   {
@@ -286,7 +286,7 @@ void wid_cfg_sound_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Music");
   }
   {

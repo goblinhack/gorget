@@ -12,7 +12,7 @@
 
 #include <map>
 
-static void wid_topcon_wid_create(Gamep /*g*/);
+static void wid_topcon_wid_create(Gamep);
 
 Widp wid_topcon_container {};
 Widp wid_topcon_vert_scroll {};
@@ -239,7 +239,7 @@ static void wid_topcon_wid_create(Gamep g)
 
       wid_set_shape_none(child);
       wid_set_pos(child, tl, br);
-      wid_set_text_lhs(child, true);
+      wid_set_text_lhs(child, 1u);
 
       wid_set_prev(child, prev);
       prev = child;

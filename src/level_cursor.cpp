@@ -301,7 +301,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
       // Limit to previously walked tiles
       //
       if (attempt == 1) {
-        if (l->player_has_walked_tile[ x ][ y ] == 0u) {
+        if (l->player_has_walked_tile[ x ][ y ] == 0U) {
           dmap.val[ x ][ y ] = DMAP_IS_WALL;
           continue;
         }
@@ -325,7 +325,7 @@ static std::vector< spoint > level_cursor_path_draw_line_attempt(Gamep g, Levels
 
   auto p         = dmap_solve(g, v, l, player, &dmap, start);
   auto path_size = p.size();
-  if (path_size == 0u) {
+  if (path_size == 0U) {
     return empty;
   }
 
@@ -375,7 +375,7 @@ static std::vector< spoint > level_cursor_path_draw_line(Gamep g, Levelsp v, Lev
 
   if (best.empty()) {
     best = attempt2;
-  } else if ((!attempt2.empty() != 0u) && (attempt2.size() < best.size())) {
+  } else if ((static_cast< unsigned int >(! attempt2.empty()) != 0U) && (attempt2.size() < best.size())) {
     best = attempt2;
   }
 

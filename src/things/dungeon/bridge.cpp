@@ -73,8 +73,8 @@ static void tp_bridge_destroy_adj(Gamep g, Levelsp v, Levelp l, Thingp t)
     };
 
     for (auto delta : points) {
-      auto at = thing_at(t);
-      auto p  = at + delta;
+      auto  at = thing_at(t);
+      auto  p  = at + delta;
       auto *b  = level_alive_is_bridge(g, v, l, p);
       if (b != nullptr) {
         if (level_is_chasm(g, v, l, t)) {
@@ -136,7 +136,7 @@ bool tp_load_bridge(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("bridge"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_bridge_description_get);
   thing_on_death_set(tp, tp_bridge_on_death);

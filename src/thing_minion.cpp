@@ -27,7 +27,7 @@ Thingp thing_minion_mob_get(Gamep g, Levelsp v, Levelp l, Thingp me)
     return nullptr;
   }
 
-  if (me->mob_id == 0u) {
+  if (me->mob_id == 0U) {
     return nullptr;
   }
 

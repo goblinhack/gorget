@@ -135,7 +135,7 @@ void test_fini(void)
 {
   TRACE_NO_INDENT();
 
-  if (static_cast<unsigned int>(test_init_done) == false) {
+  if (! test_init_done) {
     return;
   }
   test_init_done = 0u;

@@ -66,11 +66,11 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
 
   const auto scroll_border = MAP_SCROLL_EDGE;
 
-  if (v->scroll_speed == 0u) {
+  if (v->scroll_speed == 0U) {
     v->scroll_speed = MAP_SCROLL_SPEED;
   }
 
-  if (v->requested_forced_auto_scroll != 0u) {
+  if (v->requested_forced_auto_scroll != 0U) {
     //
     // For a time period e.g. post teleport, we want to ignore mouse moves until the player is
     // centered once more.
@@ -197,13 +197,13 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
   // Have we finished scrolling?
   //
   if ((dx == 0) && (dy == 0)) {
-    if (v->requested_forced_auto_scroll != 0u) {
+    if (v->requested_forced_auto_scroll != 0U) {
       if (time_have_x_tenths_passed_since(5, v->requested_forced_auto_scroll)) {
         v->requested_forced_auto_scroll = 0;
         v->scroll_speed                 = MAP_SCROLL_SPEED;
       }
     }
-  } else if (v->requested_forced_auto_scroll != 0u) {
+  } else if (v->requested_forced_auto_scroll != 0U) {
     if (time_have_x_secs_passed_since(1, v->requested_forced_auto_scroll)) {
       v->requested_forced_auto_scroll = 0;
       v->scroll_speed                 = MAP_SCROLL_SPEED;

@@ -31,7 +31,7 @@ bool tp_load_entrance(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("entrance"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_entrance_description_get);
   thing_detail_set(tp, tp_entrance_detail_get);
@@ -56,7 +56,7 @@ bool tp_load_entrance(void)
 
   for (auto frame = 0; frame < 2; frame++) {
     const auto delay = 1000; /* ms */
-    auto *       tile  = tile_find_mand("entrance." + std::to_string(frame));
+    auto      *tile  = tile_find_mand("entrance." + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }

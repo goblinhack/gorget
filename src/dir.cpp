@@ -36,7 +36,7 @@ bool dir_exists(const char *indir)
 
   myfree(dir);
 
-  return rc != false;
+  return static_cast< bool >(rc);
 }
 
 /*

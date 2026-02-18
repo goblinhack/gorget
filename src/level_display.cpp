@@ -99,7 +99,7 @@ static void level_display_slot(Gamep g, Levelsp v, Levelp l, spoint p, int slot,
 {
   TRACE_NO_INDENT();
 
-  Tpp  tp;
+  Tpp   tp;
   auto *t = thing_and_tp_get_at(g, v, l, p, slot, &tp);
   if (unlikely(! tp)) {
     return;

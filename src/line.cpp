@@ -16,10 +16,10 @@ std::vector< spoint > draw_line(const spoint s, const spoint e, size_t max_elems
   int x1 = e.x;
   int y1 = e.y;
 
-  int dx = abs(x1 - x0);
-  int sx = x0 < x1 ? 1 : -1;
-  int dy = -abs(y1 - y0);
-  int sy = y0 < y1 ? 1 : -1;
+  int dx  = abs(x1 - x0);
+  int sx  = x0 < x1 ? 1 : -1;
+  int dy  = -abs(y1 - y0);
+  int sy  = y0 < y1 ? 1 : -1;
   int err = dx + dy;
   int e2; /* error value e_xy */
 

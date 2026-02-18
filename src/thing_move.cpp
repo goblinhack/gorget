@@ -321,7 +321,7 @@ bool thing_warp_to(Gamep g, Levelsp v, Levelp new_level, Thingp me, spoint to)
 
   THING_LOG(me, "pre teleport");
 
-  bool level_changed = false;
+  bool  level_changed = false;
   auto *old_level     = thing_level(g, v, me);
 
   //

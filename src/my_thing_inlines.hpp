@@ -217,7 +217,7 @@ static inline Thingp thing_find_optional(Gamep g, Levelsp v, ThingId id)
   TRACE_NO_INDENT(); // expensive
 #endif
 
-  if (!static_cast<bool>(id)) {
+  if (! static_cast< bool >(id)) {
     return nullptr;
   }
 

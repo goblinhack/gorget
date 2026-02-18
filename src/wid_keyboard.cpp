@@ -140,9 +140,9 @@ static const char key_char[ WID_KEYBOARD_DOWN ][ WID_KEYBOARD_ACROSS ] = {
 
 int wid_keyboard_visible;
 
-static void               wid_keyboard_destroy(Gamep /*g*/, Widp w);
-static void               wid_keyboard_set_focus(Gamep /*g*/, wid_keyboard_ctx *ctx, int focusx, int focusy);
-[[nodiscard]] static bool wid_keyboard_text_input_key_event(Gamep /*g*/, Widp w, const SDL_Keysym *key);
+static void               wid_keyboard_destroy(Gamep, Widp w);
+static void               wid_keyboard_set_focus(Gamep, wid_keyboard_ctx *ctx, int focusx, int focusy);
+[[nodiscard]] static bool wid_keyboard_text_input_key_event(Gamep, Widp w, const SDL_Keysym *key);
 
 static void wid_keyboard_update_buttons(Gamep g, Widp w)
 {
@@ -412,56 +412,56 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
     return false;
   }
 
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_A ])) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_B ])) {
     (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_X ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_Y ])) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ])) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ])) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_START ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ])) {
     (ctx->cancelled)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_UP ])) {
     wid_keyboard_focus_up(g, ctx);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ])) {
     wid_keyboard_focus_down(g, ctx);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ])) {
     wid_keyboard_focus_left(g, ctx);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ])) {
     wid_keyboard_focus_right(g, ctx);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ])) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ])) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
@@ -527,58 +527,58 @@ static void wid_keyboard_set_focus(Gamep g, wid_keyboard_ctx *ctx, int focusx, i
     return false;
   }
 
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_A ] != false) {
-    ret = static_cast<int>(wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy));
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_A ])) {
+    ret = static_cast< int >(wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy));
   }
 
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_B ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_B ])) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_X ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_X ])) {
     SDL_Keysym key = {};
     key.sym        = SDLK_BACKSPACE;
     (void) wid_keyboard_text_input_key_event(g, ctx->input, &key);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_Y ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_Y ])) {
     (ctx->selected)(g, ctx->w, wid_get_text(ctx->input));
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_LEFT ])) {
     SDL_Keysym key = {};
     key.sym        = SDLK_LEFT;
     (void) wid_keyboard_text_input_key_event(g, ctx->input, &key);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_TOP_RIGHT ])) {
     SDL_Keysym key = {};
     key.sym        = SDLK_RIGHT;
     (void) wid_keyboard_text_input_key_event(g, ctx->input, &key);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_STICK_DOWN ])) {
     (void) wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_STICK_DOWN ])) {
     (void) wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_START ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_UP ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ] != false) {}
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_START ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_XBOX ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_BACK ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_UP ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_DOWN ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT ])) {}
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_LEFT_FIRE ])) {
     SDL_Keysym key = {};
     key.sym        = SDLK_BACKSPACE;
     (void) wid_receive_input(g, ctx->input, &key);
     ret = 1;
   }
-  if (sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ] != false) {
+  if (static_cast< bool >(sdl.joy_buttons[ SDL_JOY_BUTTON_RIGHT_FIRE ])) {
     (void) wid_keyboard_mouse_event(g, w, ctx->focusx, ctx->focusy);
     ret = 1;
   }
@@ -762,12 +762,12 @@ Widp wid_keyboard(Gamep g, const std::string &text, const std::string &title, wi
 
     wid_set_pos(w, tl, br);
     wid_set_text(w, text);
-    wid_set_show_cursor(w, true);
+    wid_set_show_cursor(w, 1u);
     wid_set_on_key_down(w, wid_keyboard_text_input_key_event);
     wid_set_void_context(w, ctx);
     wid_set_style(w, UI_WID_STYLE_RED);
 
-    if (max_len != false) {
+    if (static_cast< bool >(max_len)) {
       wid_set_text_max_len(w, max_len);
     }
 

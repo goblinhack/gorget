@@ -153,7 +153,7 @@ void wid_cfg_help_destroy(Gamep g)
     return;
   }
 
-  auto *w                  = wid_cfg_help_window->wid_text_area->wid_vert_scroll;
+  auto *w                 = wid_cfg_help_window->wid_text_area->wid_vert_scroll;
   last_vert_scroll_offset = wid_get_tl_y(w) - wid_get_tl_y(wid_get_parent(w));
 
   delete wid_cfg_help_window;
@@ -1032,7 +1032,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Save game");
   }
   {
@@ -1059,7 +1059,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Load game");
   }
   {
@@ -1087,7 +1087,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Move up");
   }
   {
@@ -1115,7 +1115,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Move left");
   }
   {
@@ -1143,7 +1143,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Move down");
   }
   {
@@ -1171,7 +1171,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Move right");
   }
   {
@@ -1199,7 +1199,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "fire");
   }
   {
@@ -1227,7 +1227,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Jump");
   }
   {
@@ -1259,7 +1259,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Wait");
   }
   {
@@ -1287,7 +1287,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Inventory");
   }
   {
@@ -1315,7 +1315,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Ascend");
   }
   {
@@ -1343,7 +1343,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Descend");
   }
   {
@@ -1375,7 +1375,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Change zoom");
   }
   {
@@ -1403,7 +1403,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Take a screenshot");
   }
   {
@@ -1435,7 +1435,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Quit");
   }
   {
@@ -1462,7 +1462,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "Debug console");
   }
   {
@@ -1489,7 +1489,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "This useless help");
   }
   {
@@ -1518,7 +1518,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused1");
   }
   {
@@ -1545,7 +1545,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused2");
   }
   {
@@ -1572,7 +1572,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused3");
   }
   {
@@ -1599,7 +1599,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused4");
   }
   {
@@ -1626,7 +1626,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused5");
   }
   {
@@ -1653,7 +1653,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused6");
   }
   {
@@ -1680,7 +1680,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused7");
   }
   {
@@ -1707,7 +1707,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused8");
   }
   {
@@ -1734,7 +1734,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused9");
   }
   {
@@ -1761,7 +1761,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused10");
   }
   {
@@ -1788,7 +1788,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused11");
   }
   {
@@ -1815,7 +1815,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused12");
   }
   {
@@ -1842,7 +1842,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused13");
   }
   {
@@ -1869,7 +1869,7 @@ void wid_cfg_help_select(Gamep g)
     spoint br(width / 2, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text_lhs(w, true);
+    wid_set_text_lhs(w, 1u);
     wid_set_text(w, "key_unused14");
   }
   {

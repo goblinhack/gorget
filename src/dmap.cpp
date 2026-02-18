@@ -225,7 +225,7 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
   maxy--;
 
   do {
-    changed = false;
+    changed = 0u;
 
     for (y = miny; y <= maxy; y++) {
       for (x = minx; x <= maxx; x++) {
@@ -279,11 +279,11 @@ void dmap_process(Dmap *D, spoint tl, spoint br)
 
         if (*e - lowest >= 2) {
           *e      = lowest + 1;
-          changed = true;
+          changed = 1u;
         }
       }
     }
-  } while (changed != false);
+  } while (static_cast< bool >(changed));
 }
 
 //
@@ -364,7 +364,7 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
   maxy--;
 
   do {
-    changed = false;
+    changed = 0u;
 
     for (y = miny; y <= maxy; y++) {
       for (x = minx; x <= maxx; x++) {
@@ -443,11 +443,11 @@ void dmap_process_reverse(Dmap *D, spoint tl, spoint br)
 
         if (*e - highest >= 2) {
           *e      = highest - 1;
-          changed = true;
+          changed = 1u;
         }
       }
     }
-  } while (changed != false);
+  } while (static_cast< bool >(changed));
 }
 
 static std::vector< spoint > dmap_solve_(const Dmap *D, const spoint start, const std::vector< spoint > &all_deltas,

@@ -34,7 +34,7 @@ void wid_notice(std::string s)
   TRACE_NO_INDENT();
 
   extern Gamep game;
-  auto *         g = game;
+  auto        *g = game;
 
   if (wid_notice_window != nullptr) {
     wid_notice_destroy();

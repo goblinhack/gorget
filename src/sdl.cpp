@@ -90,7 +90,7 @@ static void sdl_init_joystick(void)
   sdl.joy_index = 0;
   for (sdl.joy_index = 0; sdl.joy_index < SDL_NumJoysticks(); ++sdl.joy_index) {
 
-    if (SDL_IsGameController(sdl.joy_index) != 0u) {
+    if (SDL_IsGameController(sdl.joy_index) != 0U) {
       controller = SDL_GameControllerOpen(sdl.joy_index);
       if (controller != nullptr) {
         LOG("- Found gamecontroller");
@@ -160,8 +160,8 @@ int sdl_get_mouse(void)
     return 0;
   }
 
-  int x = 0;
-  int y = 0;
+  int x      = 0;
+  int y      = 0;
   int button = SDL_GetMouseState(&x, &y);
 
   if ((x == 0) && (y == 0)) {
@@ -369,7 +369,7 @@ uint8_t config_fps_counter_set(Gamep g, class Tokens *tokens, void *context)
     }
   }
 
-  return 1u;
+  return 1U;
 }
 
 //
@@ -399,7 +399,7 @@ uint8_t config_debug_set(Gamep g, class Tokens *tokens, void *context)
     CON("Debug: off.");
   }
 
-  return 1u;
+  return 1U;
 }
 
 //
@@ -430,7 +430,7 @@ uint8_t config_gfx_vsync_enable(Gamep g, class Tokens *tokens, void *context)
   }
   GL_ERROR_CHECK();
 
-  return 1u;
+  return 1U;
 }
 
 void config_gfx_vsync_update(Gamep g)
@@ -465,7 +465,7 @@ uint8_t config_errored_clear(Gamep g, class Tokens *tokens, void *context)
     wid_main_menu_select(g);
   }
 
-  return 1u;
+  return 1U;
 }
 
 uint8_t show_error(Gamep g, class Tokens *tokens, void *context)
@@ -481,7 +481,7 @@ uint8_t show_error(Gamep g, class Tokens *tokens, void *context)
     CON("No error.");
   }
 
-  return 1u;
+  return 1U;
 }
 
 void sdl_config_update_all(Gamep g)
@@ -504,7 +504,7 @@ uint8_t sdl_user_exit(Gamep g, class Tokens *tokens, void *context)
   TRACE_NO_INDENT();
   sdl_prepare_to_exit(g);
 
-  return 1u;
+  return 1U;
 }
 
 void config_game_gfx_update(Gamep g)

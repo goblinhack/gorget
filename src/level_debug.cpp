@@ -74,7 +74,7 @@ int levels_thing_count(Gamep g, Levelsp v)
     }
 #endif
 
-    if (t->tp_id != 0u) {
+    if (t->tp_id != 0U) {
       thing_count++;
     }
   }

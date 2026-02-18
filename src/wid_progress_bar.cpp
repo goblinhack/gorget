@@ -35,8 +35,8 @@ void wid_progress_bar(Gamep g, const std::string &title, float pct)
   }
 
   int tile_num = (int) ((float) progress_steps * pct);
-  tile_num = std::min(tile_num, progress_steps);
-  tile_num = std::max(tile_num, 1);
+  tile_num     = std::min(tile_num, progress_steps);
+  tile_num     = std::max(tile_num, 1);
 
   std::string tilename = "progress_bar." + std::to_string(tile_num);
 

@@ -23,7 +23,7 @@ bool tp_load_smoke(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("smoke"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   thing_description_set(tp, tp_smoke_description_get);

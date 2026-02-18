@@ -368,9 +368,9 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     //
     if (fbo == FBO_MAP_FG) {
       auto *pixel = &v->light_map.tile[ p.x ][ p.y ].pixels.pixel[ 0 ][ 0 ];
-      fg.r       = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
-      fg.g       = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
-      fg.b       = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
+      fg.r        = pixel->r > 255 ? 255 : (uint8_t) (int) pixel->r;
+      fg.g        = pixel->g > 255 ? 255 : (uint8_t) (int) pixel->g;
+      fg.b        = pixel->b > 255 ? 255 : (uint8_t) (int) pixel->b;
 
       //
       // Too many tiny tiles
@@ -499,8 +499,8 @@ void thing_display(Gamep g, Levelsp v, Levelp l, spoint p, Tpp tp, Thingp t_mayb
     if (thing_is_hit(t_maybe_null) != 0) {
       color outline = RED;
       int   a       = (int) (((float) thing_is_hit(t_maybe_null) / (float) MAX_HIT_TIME_MS) * 255.0);
-      a = std::min(a, 255);
-      outline.a = (uint8_t) a;
+      a             = std::min(a, 255);
+      outline.a     = (uint8_t) a;
       tile_blit_outline(tile, x1, x2, y1, y2, tl, br, outline);
     }
   } else {

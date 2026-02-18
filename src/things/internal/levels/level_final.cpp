@@ -13,7 +13,7 @@ bool tp_load_level_final(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("level_final"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
 
   // begin sort marker1 {
   tp_flag_set(tp, is_animated_sync_first);
@@ -25,7 +25,7 @@ bool tp_load_level_final(void)
 
   for (auto frame = 0; frame < 2; frame++) {
     const auto delay = 500; /* ms */
-    auto *       tile  = tile_find_mand(name + std::string(".") + std::to_string(frame));
+    auto      *tile  = tile_find_mand(name + std::string(".") + std::to_string(frame));
     tile_delay_ms_set(tile, delay);
     tp_tiles_push_back(tp, THING_ANIM_IDLE, tile);
   }

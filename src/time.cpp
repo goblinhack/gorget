@@ -206,7 +206,7 @@ std::string current_date(void)
   //  %%  %   A literal '%' character.
   //
   my_strftime(buffer, SIZEOF(buffer), "%c", timeinfo);
-  
+
   return std::string(buffer);
 }
 
@@ -216,7 +216,7 @@ std::string &string_timestamp(void)
   static std::string last_timestamp;
   auto               the_time_now = time_ms();
 
-  if (static_cast<unsigned int>(!last_timestamp.empty()) != false) {
+  if (static_cast< unsigned int >(! last_timestamp.empty()) != false) {
     if (the_time_now - time_last < 1000) {
       return last_timestamp;
     }

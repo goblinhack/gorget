@@ -166,10 +166,10 @@ static void room_gen_keep_largest_chunk(Gamep g, class RoomGen *grid)
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
       if (grid->data[ x ][ y ] != CHARMAP_EMPTY) {
-        tl.x = std::min<int>(x, tl.x);
-        tl.y = std::min<int>(y, tl.y);
-        br.x = std::max<int>(x, br.x);
-        br.y = std::max<int>(y, br.y);
+        tl.x = std::min< int >(x, tl.x);
+        tl.y = std::min< int >(y, tl.y);
+        br.x = std::max< int >(x, br.x);
+        br.y = std::max< int >(y, br.y);
       }
     }
   }

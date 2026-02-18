@@ -98,7 +98,7 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
 
         int         tmp_len = 0;
         const char *tmpc    = tmp.c_str();
-        auto *        tp      = string2tp(&tmpc, &tmp_len);
+        auto       *tp      = string2tp(&tmpc, &tmp_len);
         text_iter += tmp_len + 1;
 
         tile                = tp_first_tile(tp, THING_ANIM_IDLE);

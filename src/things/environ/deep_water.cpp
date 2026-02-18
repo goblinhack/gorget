@@ -21,7 +21,7 @@ bool tp_load_deep_water(void)
   TRACE_NO_INDENT();
 
   auto *tp   = tp_load("deep_water"); // keep as string for scripts
-  auto name = tp_name(tp);
+  auto  name = tp_name(tp);
   // begin sort marker1 {
   thing_description_set(tp, tp_deep_water_description_get);
   tp_damage_set(tp, THING_EVENT_WATER_DAMAGE, "1d6");
@@ -51,7 +51,7 @@ bool tp_load_deep_water(void)
   // end sort marker1 }
 
   for (auto frame = 0; frame < 2; frame++) {
-    auto frame_string = std::to_string(frame);
+    auto  frame_string = std::to_string(frame);
     auto *tile         = tile_find_mand(name + ".IS_JOIN_BL." + frame_string);
     tile_size_set(tile, TILE_WIDTH, TILE_HEIGHT);
     tp_tiles_push_back(tp, THING_ANIM_JOIN_BL, tile);

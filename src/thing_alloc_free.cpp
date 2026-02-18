@@ -58,7 +58,7 @@ static void thing_ext_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   auto ext_id = t->ext_id;
-  if (ext_id == 0u) {
+  if (ext_id == 0U) {
     return;
   }
 
@@ -116,7 +116,7 @@ static void thing_fov_free(Gamep g, Levelsp v, Levelp l, Thingp t)
   TRACE_NO_INDENT();
 
   auto fov_id = t->fov_id;
-  if (fov_id == 0u) {
+  if (fov_id == 0U) {
     return;
   }
 
@@ -152,7 +152,7 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   //
   // Check if there is anything at this index
   //
-  auto arr_index = id.c.arr_index;
+  auto  arr_index = id.c.arr_index;
   auto *t         = &v->thing_body[ arr_index ];
   if (unlikely(t->tp_id)) {
     //
@@ -201,7 +201,7 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   //
   static uint16_t entropy;
   entropy++;
-  if (entropy == 0u) {
+  if (entropy == 0U) {
     entropy++;
   }
   id.c.entropy = ++entropy;
@@ -305,7 +305,7 @@ Thingp thing_alloc(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p)
   //
   for (uint32_t tries = 0; tries < (1 << THING_PER_LEVEL_THING_ID_BITS); tries++) {
     uint32_t per_level_id = tries + last_per_level_id[ level_num ] + 1;
-    if (per_level_id == 0u) {
+    if (per_level_id == 0U) {
       per_level_id = 1;
     }
 

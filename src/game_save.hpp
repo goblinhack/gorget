@@ -1,7 +1,6 @@
 //
 // Copyright goblinhack@gmail.com
 //
-//
 #ifdef USE_LZ4
 #define MALLOC_PAD
 #else
@@ -537,7 +536,7 @@ bool Game::save(const std::string &file_to_save)
 
 #ifdef USE_LZ4
   const auto *which = "LZ4";
-  dst_size   = LZ4_compress_default((const char *) src, (char *) dst, src_size, src_size);
+  dst_size          = LZ4_compress_default((const char *) src, (char *) dst, src_size, src_size);
   if (dst_size != 0)
 #else
   auto which  = "LZ0";
@@ -554,11 +553,11 @@ bool Game::save(const std::string &file_to_save)
 
   {
     LOG("%s compressed %ldMb (%ld bytes) -> %ldMb (%ld bytes) took %u ms",
-        which,                           // newline
+        which,                    // newline
         src_size / (1024 * 1024), // newline
-        src_size,                        // newline
+        src_size,                 // newline
         dst_size / (1024 * 1024), // newline
-        dst_size,                        // newline
+        dst_size,                 // newline
         time_ms() - start);
   } else {
     ERR("%s compressed failed %ldMb (%ld bytes) -> %ldMb (%ld error code) took %u ms",
@@ -681,7 +680,7 @@ bool Game::save_snapshot(void)
   return ret;
 }
 
-bool Game::save_config(void) const
+bool Game::save_config(void)
 {
   TRACE_NO_INDENT();
   auto          filename = saved_dir + "config";
@@ -835,8 +834,8 @@ bool Game::save_select(void)
       tmp_file = saved_dir + "saved-snapshot";
     }
 
-    auto *   p = wid_save->wid_text_area->wid_text_area;
-    auto *   w = wid_new_button(game, p, "save slot");
+    auto  *p = wid_save->wid_text_area->wid_text_area;
+    auto  *w = wid_new_button(game, p, "save slot");
     spoint tl(0, y_at);
     spoint br(menu_width - 2, y_at);
 

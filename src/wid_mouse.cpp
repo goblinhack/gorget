@@ -284,7 +284,8 @@ bool wid_scroll_trough_mouse_motion(Gamep g, Widp w, int x, int y, int relx, int
   int dx;
   int dy;
 
-  if (((SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr)) != false) || (wheely != 0) || (wheelx != 0)) {
+  if (((SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(nullptr, nullptr)) != false) || (wheely != 0)
+      || (wheelx != 0)) {
 
     dy = (rely != 0) ? rely : -wheely;
 
@@ -927,7 +928,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
           }
         }
 
-        if (static_cast<unsigned int>(done) != false) {
+        if (static_cast< unsigned int >(done) != false) {
           break;
         }
 
@@ -938,7 +939,7 @@ void wid_mouse_motion(Gamep g, int x, int y, int relx, int rely, int wheelx, int
       }
     }
 
-    if (static_cast<unsigned int>(done) != false) {
+    if (static_cast< unsigned int >(done) != false) {
       break;
     }
   }
@@ -1124,7 +1125,7 @@ void wid_mouse_hide(Gamep g, int value)
 {
   TRACE_NO_INDENT();
 
-  int visible = static_cast<int>(value == 0);
+  int visible = static_cast< int >(value == 0);
 
   if (visible != wid_mouse_visible) {
     wid_mouse_visible = visible;
