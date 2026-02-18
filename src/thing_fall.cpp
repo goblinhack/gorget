@@ -234,7 +234,7 @@ void thing_fall_time_step(Gamep g, Levelsp v, Levelp l, Thingp t, int time_step)
 
   (void) thing_is_falling_incr(g, v, l, t, time_step);
 
-  if (__unused__) {
+  if (compiler_unused) {
     THING_LOG(t, "fall incr %u", thing_is_falling(t));
   }
 }
@@ -246,7 +246,7 @@ void thing_fall_end_check(Gamep g, Levelsp v, Levelp l, Thingp t)
 {
   TRACE_NO_INDENT();
 
-  if (__unused__) {
+  if (compiler_unused) {
     THING_LOG(t, "fall %u", thing_is_falling(t));
   }
 

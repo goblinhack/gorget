@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_ENUM_HPP__
-#define _MY_ENUM_HPP__
+#define MY_ENUM_HPP_
 
 #include <unordered_map>
 
@@ -15,7 +15,7 @@
 
 #define ENUM_DEF_H(ENUM_NAME, enum_name)                                                                             \
                                                                                                                      \
-  typedef enum { ENUM_NAME(ENUM_LIST_MACRO_VALUE) ENUM_NAME##_MAX } __attribute__((__packed__)) enum_name;           \
+  typedef enum { ENUM_NAME(ENUM_LIST_MACRO_VALUE) ENUM_NAME##_MAX } __attribute__((__packed__)) (enum_name);         \
                                                                                                                      \
   extern std::string enum_name##_to_string(enum_name val);                                                           \
   extern const char *enum_name##_to_c_str(enum_name val);                                                            \
@@ -78,12 +78,13 @@
       /*                                                                                                             \
        * Populate the tree with enum values.                                                                         \
        */                                                                                                            \
-      FOR_ALL_IN_ARRAY(iter, arr)                                                                                    \
+      FOR_ALL_IN_ARRAY(enum_iter, arr)                                                                               \
       {                                                                                                              \
-        auto result = enum_name##_tree.insert(std::make_pair(std::string(*iter), (uint32_t) (iter - arr)));          \
+        auto result                                                                                                  \
+            = enum_name##_tree.insert(std::make_pair(std::string(*enum_iter), (uint32_t) (enum_iter - arr)));        \
                                                                                                                      \
         if (result.second == false) {                                                                                \
-          ERR("enum insert name [%s] failed", *iter);                                                                \
+          ERR("enum insert name [%s] failed", *enum_iter);                                                           \
         }                                                                                                            \
       }                                                                                                              \
     }                                                                                                                \
@@ -102,7 +103,7 @@
                                                                                                                      \
   void enum_name##_destroy(void) {}
 
-#define _EXAMPLE(list_macro) list_macro(_RED = 0, "red"), list_macro(_GREEN, "green"),
+#define EXAMPLE(list_macro) list_macro(_RED = 0, "red"), list_macro(_GREEN, "green"),
 
 #define clang_format_indent()
 

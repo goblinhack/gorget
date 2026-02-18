@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_STRING_UTIL_HPP_
-#define _MY_STRING_UTIL_HPP_
+#define MY_STRING_UTIL_HPP_
 
 #include "my_types.hpp"
 
@@ -19,9 +19,9 @@ extern char  *my_strcasestr(const char *s, const char *find);
 // Max long string size
 //
 enum {
-MAXLONGSTR =  (1024 * 16), // Needs to be big for long tracebacks
-MAXSTR =      1024,
-MAXSHORTSTR = 128
+  MAXLONGSTR  = (1024 * 16), // Needs to be big for long tracebacks
+  MAXSTR      = 1024,
+  MAXSHORTSTR = 128
 };
 
 char *dynprintf(const char *fmt, ...) CHECK_FORMAT_STR(printf, 1, 2);

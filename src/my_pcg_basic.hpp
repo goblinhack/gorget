@@ -30,7 +30,7 @@
 
 #pragma once
 #ifndef _MY_PCG_BASIC_HPP_INCLUDED
-#define _MY_PCG_BASIC_HPP_INCLUDED 1
+#define MY_PCG_BASIC_HPP_INCLUDED 1
 
 #include "my_globals.hpp"
 #include "my_main.hpp"

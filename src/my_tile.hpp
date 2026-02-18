@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_TILE_HPP_
-#define _MY_TILE_HPP_
+#define MY_TILE_HPP_
 
 #include "my_color.hpp"
 #include "my_enum.hpp"
@@ -18,10 +18,7 @@ class Tile;
 //
 // This is the actual tile sizw
 //
-enum {
-TILE_HEIGHT = 12,
-TILE_WIDTH =  12
-};
+enum { TILE_HEIGHT = 12, TILE_WIDTH = 12 };
 
 //
 // This is the tile size with outline padding. Only the actual tile size is used in game.

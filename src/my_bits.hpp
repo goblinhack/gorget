@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_BITS_HPP_
-#define _MY_BITS_HPP_
+#define MY_BITS_HPP_
 
 //
 // Bit routines
@@ -18,7 +18,7 @@
 
 #define MULTIPLE_BITS(bitmask) ((bitmask) & ((bitmask) - 1))
 
-#define BITS_PER_SLOT(_array_) (sizeof(_array_[ 0 ]) * 8)
+#define BITS_PER_SLOT(_array_) (sizeof((_array_)[ 0 ]) * 8)
 
 #define BIT_SET(bit, _array_)                                                                                        \
   ((_array_)[ (bit) / BITS_PER_SLOT(_array_) ] |= ((unsigned) 1 << ((bit) % BITS_PER_SLOT(_array_))))
@@ -43,7 +43,7 @@
        : 16)
 
 #define FIRST_BIT_IN_32BIT(_bitarr_)                                                                                 \
-  ((_bitarr_ & 0xFFFFFFFF)                                                                                           \
+  (((_bitarr_) & 0xFFFFFFFF)                                                                                         \
        ? (((_bitarr_) & 0x0000FFFF) ? FIRST_BIT_IN_16BIT(_bitarr_) : FIRST_BIT_IN_16BIT((_bitarr_) >> 16) + 16)      \
        : 32)
 
@@ -66,11 +66,11 @@
 // bitcount
 //
 #define BITCOUNT(w)                                                                                                  \
-  w = (0x55555555LU & w) + (0x55555555LU & (w >> 1));                                                                \
-  w = (0x33333333LU & w) + (0x33333333LU & (w >> 2));                                                                \
-  w = (0x0f0f0f0fLU & w) + (0x0f0f0f0fLU & (w >> 4));                                                                \
-  w = (0x00ff00ffLU & w) + (0x00ff00ffLU & (w >> 8));                                                                \
-  w = (0x0000ffffLU & w) + (0x0000ffffLU & (w >> 16));
+  w   = (0x55555555LU & (w)) + (0x55555555LU & ((w) >> 1));                                                          \
+  (w) = (0x33333333LU & (w)) + (0x33333333LU & ((w) >> 2));                                                          \
+  (w) = (0x0f0f0f0fLU & (w)) + (0x0f0f0f0fLU & ((w) >> 4));                                                          \
+  (w) = (0x00ff00ffLU & (w)) + (0x00ff00ffLU & ((w) >> 8));                                                          \
+  (w) = (0x0000ffffLU & (w)) + (0x0000ffffLU & ((w) >> 16));
 
 static inline int bitcount(int w)
 {

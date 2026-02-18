@@ -12,8 +12,8 @@
 
 #include <cstdarg>
 #include <cstring>
-#include <sys/stat.h>
 #include <ctime>
+#include <sys/stat.h>
 #include <unistd.h>
 
 static unsigned char *file_io_read_if_exists(const char *filename, int *out_len);

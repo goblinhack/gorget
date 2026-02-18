@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_MAIN_HPP_
-#define _MY_MAIN_HPP_
+#define MY_MAIN_HPP_
 
 #include "my_types.hpp"
 
@@ -117,6 +117,6 @@ void  close_stdout(void);
 //
 // Used to stop the compiler removing unused code I want to keep
 //
-extern bool __unused__;
+extern bool compiler_unused;
 
 #endif

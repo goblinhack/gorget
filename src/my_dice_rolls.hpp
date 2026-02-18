@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_DICE_ROLLS_HPP_
-#define _MY_DICE_ROLLS_HPP_
+#define MY_DICE_ROLLS_HPP_
 
 int d10000(void);
 int d1000(void);

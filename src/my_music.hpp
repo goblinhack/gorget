@@ -7,7 +7,7 @@
 #pragma once
 
 #ifndef _MY_MUSIC_HPP_
-#define _MY_MUSIC_HPP_
+#define MY_MUSIC_HPP_
 
 bool music_init(void);
 void music_fini(void);

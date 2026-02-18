@@ -92,7 +92,7 @@ tidy:
 	for src in $(CPP_SOURCES) ; do \
 		echo "Running tidy on $$src..." ; \
 		clang-tidy -fix -checks="-*,\
-			bugprone-sizeof-expression,\
+			bugprone-*,\
 			cppcoreguidelines-no-malloc,\
 			misc-redundant-expression,\
 			modernize-pass-by-value,\

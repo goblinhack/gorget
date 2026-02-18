@@ -198,7 +198,7 @@ void level_thing_pair_temperature_handle(Gamep g, Levelsp v, Levelp l, Thingp a,
   int Ta = thing_temperature(a);
   int Tb = thing_temperature(b);
 
-  if (__unused__) {
+  if (compiler_unused) {
     THING_LOG(a, "a Ta %d", Ta);
     THING_LOG(b, "b Tb %d", Tb);
   }
@@ -302,7 +302,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       sorted_pairs.push_back(a_pair);
     }
 
-    if (__unused__) {
+    if (compiler_unused) {
       for (auto a_pair : sorted_pairs) {
         auto *a = a_pair.first;
         auto *b = a_pair.second;
@@ -323,7 +323,7 @@ void level_tick_end_temperature(Gamep g, Levelsp v, Levelp l)
       return t1->_priority + t2->_priority < t3->_priority + t4->_priority;
     });
 
-    if (__unused__) {
+    if (compiler_unused) {
       for (auto a_pair : sorted_pairs) {
         auto *a = a_pair.first;
         auto *b = a_pair.second;

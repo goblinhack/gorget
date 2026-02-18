@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_FILE_HPP_
-#define _MY_FILE_HPP_
+#define MY_FILE_HPP_
 
 int            file_write(const char *filename, unsigned char *buffer, int len);
 uint8_t        file_exists(const char *filename);

@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_FPOINT_HPP_
-#define _MY_FPOINT_HPP_
+#define MY_FPOINT_HPP_
 
 #include "my_spoint.hpp"
 

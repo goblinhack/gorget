@@ -80,16 +80,16 @@
 //
 // Simple array routines
 //
-#define ARRAY_SIZE(_array_) ((int) (sizeof(_array_) / sizeof(_array_[ 0 ])))
+#define ARRAY_SIZE(my_array) ((int) (sizeof(my_array) / sizeof(my_array[ 0 ])))
 
 //
 // Tired of compiler warnings on assuming int.
 //
-#define SIZEOF(_array_) ((int) sizeof(_array_))
+#define SIZEOF(my_array) ((int) sizeof(my_array))
 
-#define FOR_ALL_IN_ARRAY(iterator, _array_)                                                                          \
-  __typeof__(&_array_[ 0 ]) iterator;                                                                                \
-  for ((iterator) = (_array_); (iterator) < ((_array_) + ARRAY_SIZE(_array_)); (iterator)++)
+#define FOR_ALL_IN_ARRAY(my_iterator, my_array)                                                                      \
+  __typeof__(&my_array[ 0 ]) my_iterator;                                                                            \
+  for ((my_iterator) = (my_array); (my_iterator) < ((my_array) + ARRAY_SIZE(my_array)); (my_iterator)++)
 
 //
 // GCC extensions

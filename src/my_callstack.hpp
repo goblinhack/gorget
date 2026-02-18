@@ -3,7 +3,7 @@
 //
 #pragma once
 #ifndef _MY_CALLSTACK_HPP_
-#define _MY_CALLSTACK_HPP_
+#define MY_CALLSTACK_HPP_
 
 #include "my_source_loc.hpp"
 #include "my_types.hpp"
@@ -32,9 +32,7 @@ struct callframe {
 // No needs for bounds checking if we use unsigned char as the size, as
 // the index will wrap around to 0 if we hit some endless recursion.
 //
-enum {
-MAXCALLFRAME = 256
-};
+enum { MAXCALLFRAME = 256 };
 
 #define USE_THREADS
 

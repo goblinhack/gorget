@@ -73,7 +73,7 @@ static void cave_generation(Gamep g, Cave *c, uint32_t fill_prob, int r1, int r2
 
       uint8_t adjcount = 0;
 
-#define ADJ(i, j) adjcount += c->curr[ x + i + MAP_LEVEL_CELLULAR_BORDER ][ y + j + MAP_LEVEL_CELLULAR_BORDER ];
+#define ADJ(i, j) adjcount += c->curr[ x + (i) + MAP_LEVEL_CELLULAR_BORDER ][ y + (j) + MAP_LEVEL_CELLULAR_BORDER ];
 
       ADJ(-1, -1);
       ADJ(-1, 0);

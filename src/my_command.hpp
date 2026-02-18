@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_COMMAND_HPP_
-#define _MY_COMMAND_HPP_
+#define MY_COMMAND_HPP_
 
 #include "my_token.hpp"
 #include "my_types.hpp"

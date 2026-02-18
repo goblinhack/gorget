@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_COLOR_HPP_
-#define _MY_COLOR_HPP_
+#define MY_COLOR_HPP_
 
 #include "my_types.hpp"
 
@@ -36,6 +36,6 @@ void        color_set(std::string name, color *c, uint8_t r, uint8_t g, uint8_t 
 bool        color_eq(const color &a, const color &b);
 bool        color_neq(const color &a, const color &b);
 
-#define glcolor(_c_) glColor4ub(_c_.r, _c_.g, _c_.b, _c_.a)
+#define glcolor(_c_) glColor4ub((_c_).r, (_c_).g, (_c_).b, (_c_).a)
 
 #endif // _MY_COLOR_HPP_

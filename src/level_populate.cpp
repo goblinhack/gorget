@@ -12,7 +12,7 @@
 #include "my_thing_callbacks.hpp"
 #include "my_thing_inlines.hpp"
 
-#include <string.h>
+#include <cstring>
 
 bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int w, int h, const char *in,
                     Overrides overrides)
@@ -299,7 +299,7 @@ bool level_populate(Gamep g, Levelsp v, Levelp l, class LevelGen *level_gen, int
       }
 
       if (! g_opt_tests) {
-        if (__unused__) {
+        if (compiler_unused) {
           if (tp == tp_player) {
             {
               if (thing_spawn(g, v, l, tp_random(is_trap), at + spoint(1, 0)) == nullptr) {

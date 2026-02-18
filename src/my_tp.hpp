@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_THING_TEMPLATE_H_
-#define _MY_THING_TEMPLATE_H_
+#define MY_THING_TEMPLATE_H_
 
 #include "my_color.hpp"
 #include "my_enum.hpp"
@@ -261,8 +261,8 @@ ENUM_DEF_H(MAP_Z_DEPTH_ENUM, MapZDepth)
 
 #define FOR_ALL_MAP_Z_DEPTH(_iter_)                                                                                  \
   for (MapZDepth _iter_ = MAP_Z_DEPTH_ENUM_FIRST; /* newline */                                                      \
-       _iter_ < MAP_Z_DEPTH_ENUM_MAX;             /* newline */                                                      \
-       _iter_ = static_cast< MapZDepth >(static_cast< int >(_iter_) + 1))
+       (_iter_) < MAP_Z_DEPTH_ENUM_MAX;           /* newline */                                                      \
+       (_iter_) = static_cast< MapZDepth >(static_cast< int >(_iter_) + 1))
 
 //
 // Monst challenge level
@@ -366,8 +366,8 @@ ENUM_DEF_H(THING_EVENT_ENUM, ThingEventType)
 
 #define FOR_ALL_THING_EVENT(_iter_)                                                                                  \
   for (ThingEventType _iter_ = THING_EVENT_ENUM_FIRST; /* newline */                                                 \
-       _iter_ < THING_EVENT_ENUM_MAX;                  /* newline */                                                 \
-       _iter_ = static_cast< ThingEventType >(static_cast< int >(_iter_) + 1))
+       (_iter_) < THING_EVENT_ENUM_MAX;                /* newline */                                                 \
+       (_iter_) = static_cast< ThingEventType >(static_cast< int >(_iter_) + 1))
 
 //
 // Thing environ enum
@@ -385,8 +385,8 @@ ENUM_DEF_H(THING_ENVIRON_ENUM, ThingEnviron)
 
 #define FOR_ALL_THING_ENVIRON(_iter_)                                                                                \
   for (ThingEnviron _iter_ = THING_ENVIRON_ENUM_FIRST; /* newline */                                                 \
-       _iter_ < THING_ENVIRON_ENUM_MAX;                /* newline */                                                 \
-       _iter_ = static_cast< ThingEnviron >(static_cast< int >(_iter_) + 1))
+       (_iter_) < THING_ENVIRON_ENUM_MAX;              /* newline */                                                 \
+       (_iter_) = static_cast< ThingEnviron >(static_cast< int >(_iter_) + 1))
 
 //
 // Thing priority enum

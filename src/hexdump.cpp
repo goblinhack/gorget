@@ -4,13 +4,11 @@
 
 #include "my_string.hpp"
 
+#include <cstring>
 #include <iomanip>
 #include <iostream>
-#include <cstring>
 
-enum {
-HEX_DUMP_WIDTH = (16)
-};
+enum { HEX_DUMP_WIDTH = (16) };
 
 //
 // e.g.

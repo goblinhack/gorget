@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_SDL_EVENT_HPP_
-#define _MY_SDL_EVENT_HPP_
+#define MY_SDL_EVENT_HPP_
 
 #include <SDL.h>
 #include <array>
@@ -106,11 +106,7 @@ public:
   SDL_Window *window {};
 };
 
-enum {
-SDL_KEY_REPEAT_PLAYER =           15,
-SDL_KEY_REPEAT_HUNDREDTHS_FIRST = 25,
-SDL_KEY_REPEAT_HUNDREDTHS_NEXT =  25
-};
+enum { SDL_KEY_REPEAT_PLAYER = 15, SDL_KEY_REPEAT_HUNDREDTHS_FIRST = 25, SDL_KEY_REPEAT_HUNDREDTHS_NEXT = 25 };
 
 extern SDL sdl;
 

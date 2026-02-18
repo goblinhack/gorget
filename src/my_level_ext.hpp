@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_LEVEL_EXT_HPP
-#define _MY_LEVEL_EXT_HPP
+#define MY_LEVEL_EXT_HPP
 
 #include "my_level.hpp"
 #include "my_spoint.hpp"

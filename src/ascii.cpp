@@ -285,13 +285,14 @@ void ascii_set(int depth, int x, int y, const char *tilename) { ascii_set(depth,
 
 void ascii_set(int depth, int x, int y, const char ch) { ascii_set(depth, x, y, font_ui->font_get_tile(ch), ch); }
 
-void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
+void ascii_putf_internal2(int x, int y, color fg, color bg, const std::string text)
 {
   Tilep tile;
   int   bg_set    = 0;
   auto  text_iter = text.begin();
 
-  // printf("ascii_putf__ [%s]/%ld scissors x %d y %d scissors %d %d %d %d %d\n", text.c_str(), text.size(), x, y,
+  // printf("ascii_putf_internal2 [%s]/%ld scissors x %d y %d scissors %d %d %d %d %d\n", text.c_str(), text.size(),
+  // x, y,
   //        scissors_tl.x, scissors_tl.y, scissors_br.x, scissors_br.y, scissors_enabled);
 
   //
@@ -628,7 +629,7 @@ std::string ascii_strip(std::string const &text)
   return out;
 }
 
-static void ascii_putf_(int x, int y, color fg, color bg, std::string const fmt, va_list args)
+static void ascii_putf_internal(int x, int y, color fg, color bg, std::string const fmt, va_list args)
 {
   char buf[ MAXLONGSTR ];
 
@@ -643,10 +644,10 @@ static void ascii_putf_(int x, int y, color fg, color bg, std::string const fmt,
 
   auto b = std::string(buf);
 
-  ascii_putf__(x, y, fg, bg, b);
+  ascii_putf_internal2(x, y, fg, bg, b);
 }
 
-static void ascii_putf_(int x, int y, color fg, color bg, const char *fmt, va_list args)
+static void ascii_putf_internal(int x, int y, color fg, color bg, const char *fmt, va_list args)
 {
   char buf[ MAXLONGSTR ];
 
@@ -661,7 +662,7 @@ static void ascii_putf_(int x, int y, color fg, color bg, const char *fmt, va_li
 
   auto b = std::string(buf);
 
-  ascii_putf__(x, y, fg, bg, b);
+  ascii_putf_internal2(x, y, fg, bg, b);
 }
 
 void ascii_putf(int x, int y, const char *fmt, ...)
@@ -669,7 +670,7 @@ void ascii_putf(int x, int y, const char *fmt, ...)
   va_list args;
 
   va_start(args, fmt);
-  ascii_putf_(x, y, WHITE, COLOR_NONE, fmt, args);
+  ascii_putf_internal(x, y, WHITE, COLOR_NONE, fmt, args);
   va_end(args);
 }
 
@@ -678,7 +679,7 @@ void ascii_putf(int x, int y, color fg, const char *fmt, ...)
   va_list args;
 
   va_start(args, fmt);
-  ascii_putf_(x, y, fg, COLOR_NONE, fmt, args);
+  ascii_putf_internal(x, y, fg, COLOR_NONE, fmt, args);
   va_end(args);
 }
 
@@ -687,7 +688,7 @@ void ascii_putf(int x, int y, color fg, color bg, const char *fmt, ...)
   va_list args;
 
   va_start(args, fmt);
-  ascii_putf_(x, y, fg, bg, fmt, args);
+  ascii_putf_internal(x, y, fg, bg, fmt, args);
   va_end(args);
 }
 
@@ -696,7 +697,7 @@ void ascii_putf(int x, int y, const std::string fmt, ...)
   va_list args;
 
   va_start(args, fmt);
-  ascii_putf_(x, y, WHITE, COLOR_NONE, fmt, args);
+  ascii_putf_internal(x, y, WHITE, COLOR_NONE, fmt, args);
   va_end(args);
 }
 
@@ -705,7 +706,7 @@ void ascii_putf(int x, int y, color fg, const std::string fmt, ...)
   va_list args;
 
   va_start(args, fmt);
-  ascii_putf_(x, y, fg, COLOR_NONE, fmt, args);
+  ascii_putf_internal(x, y, fg, COLOR_NONE, fmt, args);
   va_end(args);
 }
 
@@ -714,7 +715,7 @@ void ascii_putf(int x, int y, color fg, color bg, const std::string fmt, ...)
   va_list args;
 
   va_start(args, fmt);
-  ascii_putf_(x, y, fg, bg, fmt, args);
+  ascii_putf_internal(x, y, fg, bg, fmt, args);
   va_end(args);
 }
 
@@ -1210,7 +1211,7 @@ static void ascii_put_box_(int style, const TileLayers tiles, int x, int y, int 
 
     ascii_put_box__(style, tiles, x, y, x + width - 1, y + height - 1, col_bg, col_text, nullptr /* context */);
 
-    ascii_putf__(x + ((width - len) / 2), y + 1, col_text, COLOR_NONE, b);
+    ascii_putf_internal2(x + ((width - len) / 2), y + 1, col_text, COLOR_NONE, b);
   }
 }
 

@@ -285,7 +285,7 @@ bool sdl_display_init(Gamep g)
   //
   // Do we really need to do this? it takes a small bit of time.
   //
-  if (__unused__) {
+  if (compiler_unused) {
     //
     // Clear the screen, both buffers
     //

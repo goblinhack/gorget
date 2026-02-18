@@ -20,9 +20,9 @@
 #include "my_wid_tiles.hpp"
 #include "my_wids.hpp"
 
-#include <iostream>
 #include <csignal>
 #include <cstring>
+#include <iostream>
 #include <strings.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -30,7 +30,7 @@
 //
 // Used to stop the compiler removing unused code I want to keep
 //
-bool __unused__;
+bool compiler_unused;
 
 static void usage(void)
 {

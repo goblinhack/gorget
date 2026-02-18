@@ -44,8 +44,8 @@
 #include "my_main.hpp"
 
 #include <algorithm>
-#include <math.h>
-#include <string.h>
+#include <cmath>
+#include <cstring>
 
 // Octant transformation matrixes.
 // {xx, xy, yx, yy}

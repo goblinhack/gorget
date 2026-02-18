@@ -293,7 +293,7 @@ static void wid_main_menu_tick(Gamep g, Widp w)
 {
   TRACE_NO_INDENT();
 
-  if (__unused__) {
+  if (compiler_unused) {
     game_display_title_bg(g);
     game_display_title_fg1(g);
     game_display_title_fg2(g);

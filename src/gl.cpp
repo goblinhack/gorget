@@ -96,7 +96,7 @@ void gl_fini_2d_mode(Gamep g)
 
 void gl_enter_2d_mode(Gamep g)
 {
-  if (__unused__) {
+  if (compiler_unused) {
     LOG("SDL: enter 2d mode");
   }
   TRACE_AND_INDENT();
@@ -151,7 +151,7 @@ void gl_enter_2d_mode(Gamep g)
 
 void gl_enter_2d_mode(Gamep g, int w, int h)
 {
-  if (__unused__) {
+  if (compiler_unused) {
     LOG("SDL: enter 2d mode %ux%u", w, h);
   }
   TRACE_AND_INDENT();
@@ -207,7 +207,7 @@ void gl_leave_2d_mode(Gamep g)
   if (! in_2d_mode) {
     return;
   }
-  if (__unused__) {
+  if (compiler_unused) {
     LOG("SDL: leave 2d mode");
   }
   in_2d_mode = false;
@@ -484,7 +484,7 @@ void gl_init_fbo(Gamep g, FboEnum fbo)
     gl_init_fbo_(i, &g_render_buf_id[ i ], &g_fbo_id[ i ], &g_fbo_tex_id[ i ], tex_width, tex_height);
     g_fbo_size[ i ] = isize(tex_width, tex_height);
 
-    if (__unused__) {
+    if (compiler_unused) {
       gl_enter_2d_mode(g, tex_width, tex_height);
       blit_fbo_bind(i);
       {

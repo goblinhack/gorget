@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_GLAPI_HPP_
-#define _MY_GLAPI_HPP_
+#define MY_GLAPI_HPP_
 
 #define GL_GLEXT_PROTOTYPES
 
@@ -59,8 +59,8 @@
 //
 #define gl_push_texcoord(p, x, y)                                                                                    \
   {                                                                                                                  \
-    *p++ = x;                                                                                                        \
-    *p++ = y;                                                                                                        \
+    *(p)++ = x;                                                                                                      \
+    *(p)++ = y;                                                                                                      \
   }
 
 //
@@ -68,10 +68,10 @@
 //
 #define gl_push_vertex(p, x, y)                                                                                      \
   {                                                                                                                  \
-    auto c = (GLshort *) p;                                                                                          \
+    auto c = (GLshort *) (p);                                                                                        \
     *c++   = x;                                                                                                      \
     *c++   = y;                                                                                                      \
-    p      = (GLfloat *) c;                                                                                          \
+    (p)    = (GLfloat *) c;                                                                                          \
   }
 
 //
@@ -79,12 +79,12 @@
 //
 #define gl_push_rgba(p, r, g, b, a)                                                                                  \
   {                                                                                                                  \
-    auto c = (GLubyte *) p;                                                                                          \
+    auto c = (GLubyte *) (p);                                                                                        \
     *c++   = r;                                                                                                      \
     *c++   = g;                                                                                                      \
     *c++   = b;                                                                                                      \
     *c++   = a;                                                                                                      \
-    p      = (GLfloat *) c;                                                                                          \
+    (p)    = (GLfloat *) c;                                                                                          \
   }
 
 #define Vertex2(x, y)                                                                                                \
@@ -259,8 +259,8 @@ ENUM_DEF_H(FBO_ENUM, FboEnum);
 
 #define FOR_ALL_FBO(_iter_)                                                                                          \
   for (FboEnum _iter_ = FBO_ENUM_FIRST; /* newline */                                                                \
-       _iter_ < FBO_ENUM_MAX;           /* newline */                                                                \
-       _iter_ = static_cast< FboEnum >(static_cast< int >(_iter_) + 1))
+       (_iter_) < FBO_ENUM_MAX;         /* newline */                                                                \
+       (_iter_) = static_cast< FboEnum >(static_cast< int >(_iter_) + 1))
 
 extern uint32_t NUMBER_BYTES_PER_VERTICE_2D;
 

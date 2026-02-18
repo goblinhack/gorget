@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_WID_TILES_HPP_
-#define _MY_WID_TILES_HPP_
+#define MY_WID_TILES_HPP_
 
 #include "my_types.hpp"
 

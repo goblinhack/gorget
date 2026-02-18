@@ -13,13 +13,13 @@
 #include "my_wid_console.hpp"
 
 #include <cerrno>
-#include <mutex>
 #include <csignal>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <strings.h>
 #include <ctime>
+#include <mutex>
+#include <strings.h>
 #include <unistd.h>
 
 static void error_message_do(Gamep g, std::string &tech_support)

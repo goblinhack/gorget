@@ -144,7 +144,7 @@ bool sdl_init(void)
   //
   // Unused for now
   //
-  if (__unused__) {
+  if (compiler_unused) {
     sdl_init_joystick();
     sdl_init_rumble();
   }
@@ -667,12 +667,12 @@ void config_game_gfx_update(Gamep g)
   //
   // Work out the size of the game map
   //
-  if (! TILE_WIDTH) {
+  if (TILE_WIDTH == 0u) {
     ERR("TILE_WIDTH zero");
     return;
   }
 
-  if (! TILE_HEIGHT) {
+  if (TILE_HEIGHT == 0u) {
     ERR("TILE_HEIGHT zero");
     return;
   }

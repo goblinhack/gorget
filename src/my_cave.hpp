@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_CAVE_H_
-#define _MY_CAVE_H_
+#define MY_CAVE_H_
 
 #include "my_game_defs.hpp"
 #include "my_types.hpp"
@@ -26,9 +26,7 @@ typedef struct {
   uint16_t id[ MAP_WIDTH ][ MAP_HEIGHT ];
 } Blob;
 
-enum {
-MAP_LEVEL_CELLULAR_BORDER = 2
-};
+enum { MAP_LEVEL_CELLULAR_BORDER = 2 };
 
 typedef struct {
   //

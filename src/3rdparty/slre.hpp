@@ -48,7 +48,7 @@
 //
 
 #ifndef _MY_SLRE_HEADER_DEFINED
-#define _MY_SLRE_HEADER_DEFINED
+#define MY_SLRE_HEADER_DEFINED
 
 //
 // Compiled regular expression

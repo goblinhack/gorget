@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_LOG_HPP_
-#define _MY_LOG_HPP_
+#define MY_LOG_HPP_
 
 #include <stdio.h>
 

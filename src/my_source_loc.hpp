@@ -3,7 +3,7 @@
 //
 #pragma once
 #ifndef _MY_SOURCE_LOC_HPP_
-#define _MY_SOURCE_LOC_HPP_
+#define MY_SOURCE_LOC_HPP_
 
 #if defined(__cpp_lib_source_location) && (__cpp_lib_source_location >= 201907L)
 // Feature test macros https://en.cppreference.com/w/cpp/feature_test

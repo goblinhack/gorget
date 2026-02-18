@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_GLOBALS_HPP_
-#define _MY_GLOBALS_HPP_
+#define MY_GLOBALS_HPP_
 
 #include <string>
 
@@ -55,9 +55,7 @@ extern thread_local FILE       *g_log_stdout;
 // Main thread is 0
 // Game threads > 0
 //
-enum {
-MAIN_THREAD = 0
-};
+enum { MAIN_THREAD = 0 };
 extern thread_local int g_thread_id;
 
 static inline bool AN_ERROR_OCCURRED(void) { return g_errored_thread_id != -1; }

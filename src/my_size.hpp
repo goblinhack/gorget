@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_SIZE_HPP_
-#define _MY_SIZE_HPP_
+#define MY_SIZE_HPP_
 
 template < class T > class my_asize
 {

@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_GAME_HPP_
-#define _MY_GAME_HPP_
+#define MY_GAME_HPP_
 
 #include "my_enum.hpp"
 #include "my_spoint.hpp"
@@ -41,12 +41,12 @@ typedef enum {
 } SeedSource;
 
 enum {
-CONFIG_MAGIC_1 = 0xaabbccdd,
-CONFIG_MAGIC_2 = 0xddccbbaa,
-CONFIG_MAGIC_3 = 0x11223344,
-CONFIG_MAGIC_4 = 0x44332211,
-CONFIG_MAGIC_5 = 0xcafecafe,
-CONFIG_MAGIC_6 = 0xfeedface
+  CONFIG_MAGIC_1 = 0xaabbccdd,
+  CONFIG_MAGIC_2 = 0xddccbbaa,
+  CONFIG_MAGIC_3 = 0x11223344,
+  CONFIG_MAGIC_4 = 0x44332211,
+  CONFIG_MAGIC_5 = 0xcafecafe,
+  CONFIG_MAGIC_6 = 0xfeedface
 };
 
 class HiScores *game_hiscores_get(Gamep g);

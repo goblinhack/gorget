@@ -10,8 +10,8 @@
 #include "my_random.hpp"
 #include "my_tile.hpp"
 
+#include <cstring>
 #include <map>
-#include <string.h>
 
 void level_update_paths_set(Gamep g, Levelsp v, Levelp l, spoint p)
 {

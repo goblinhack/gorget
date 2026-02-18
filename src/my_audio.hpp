@@ -7,7 +7,7 @@
 #pragma once
 
 #ifndef _MY_AUDIO_HPP_
-#define _MY_AUDIO__HPP_
+#define MY_AUDIO_HPP_
 
 bool audio_init(void);
 void audio_fini(void);

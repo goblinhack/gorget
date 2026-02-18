@@ -12,8 +12,8 @@
 #include "my_ui.hpp"
 
 #include <array>
-#include <math.h>
-#include <string.h>
+#include <cmath>
+#include <cstring>
 
 typedef struct {
   int16_t depth_furthest;
@@ -384,7 +384,7 @@ Thingp level_light_blocker_at(Gamep g, Levelsp v, Levelp l, spoint pov)
     }
 
     if (thing_is_obs_to_vision(it)) {
-      if (__unused__) {
+      if (compiler_unused) {
         THING_LOG(it, "block");
       }
       return it;

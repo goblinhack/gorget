@@ -2144,7 +2144,7 @@ static void level_gen_dump(Gamep g, class LevelGen *l, const char *msg)
   //
   // Sometimes useful to see walkable paths
   //
-  if (__unused__) {
+  if (compiler_unused) {
     for (int y = 0; y < MAP_HEIGHT; y++) {
       std::string tmp;
       for (int x = 0; x < MAP_WIDTH; x++) {
@@ -2641,7 +2641,7 @@ static void level_gen_single_large_blob_in_center(Gamep g, class LevelGen *l, ch
   //
   cave_generation_center_blob(g, &l->cave);
 
-  if (__unused__) {
+  if (compiler_unused) {
     cave_dump(g, l);
     level_gen_dump(g, l);
   }
@@ -2733,7 +2733,7 @@ static void level_gen_blob(Gamep g, class LevelGen *l, char c)
   //
   cave_create(g, &l->cave, fill_prob, r1, r2, map_generations);
 
-  if (__unused__) {
+  if (compiler_unused) {
     cave_dump(g, l);
     level_gen_dump(g, l);
   }
@@ -5020,7 +5020,7 @@ static class LevelGen *level_gen_create_proc_gen_level(Gamep g, Levelsp v, Level
   //
   // Show walkable areas
   //
-  if (__unused__) {
+  if (compiler_unused) {
     level_gen_test_flood(g, l);
   }
 

@@ -5,7 +5,7 @@
 #include "my_callstack.hpp"
 #include "my_thing_inlines.hpp"
 
-#include <string.h>
+#include <cstring>
 
 //
 // Anything in the inventory

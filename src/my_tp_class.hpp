@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_TP_CLASS_H_
-#define _MY_TP_CLASS_H_
+#define MY_TP_CLASS_H_
 
 #include "my_color_defs.hpp"
 #include "my_dice_class.hpp"

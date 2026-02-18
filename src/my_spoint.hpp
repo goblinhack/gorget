@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_SPOINT_HPP_
-#define _MY_SPOINT_HPP_
+#define MY_SPOINT_HPP_
 
 typedef struct my_spoint {
 public:

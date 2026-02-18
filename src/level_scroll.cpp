@@ -188,7 +188,7 @@ void level_scroll_to_focus(Gamep g, Levelsp v, Levelp l)
     v->pixel_map_at.y = 0;
   }
 
-  if (__unused__) {
+  if (compiler_unused) {
     TOPCON("%u [%d,%d] elapsed %u", v->requested_forced_auto_scroll, dx, dy,
            time_ms() - v->requested_forced_auto_scroll);
   }

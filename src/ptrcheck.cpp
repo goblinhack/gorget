@@ -11,9 +11,9 @@
 #include "my_time.hpp"
 
 #include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <mutex>
-#include <cstring>
 #include <vector>
 
 static std::mutex ptrcheck_mutex;

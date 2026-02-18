@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_TIME_UTIL_HPP_
-#define _MY_TIME_UTIL_HPP_
+#define MY_TIME_UTIL_HPP_
 
 #undef ONESEC
 #define ONESEC 1000

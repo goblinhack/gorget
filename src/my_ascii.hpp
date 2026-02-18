@@ -11,15 +11,9 @@
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-enum {
-TERM_WIDTH_DEF =  240,
-TERM_HEIGHT_DEF = 120
-};
+enum { TERM_WIDTH_DEF = 240, TERM_HEIGHT_DEF = 120 };
 
-enum {
-TERM_WIDTH_MIN =  120,
-TERM_HEIGHT_MIN = 60
-};
+enum { TERM_WIDTH_MIN = 120, TERM_HEIGHT_MIN = 60 };
 
 #define TERM_WIDTH_MAX  TERM_WIDTH_DEF
 #define TERM_HEIGHT_MAX TERM_HEIGHT_DEF
@@ -130,7 +124,7 @@ void ascii_put_bg_square(int tlx, int tly, int brx, int bry, Tilep what, color c
 void ascii_put_bg_square(int tlx, int tly, int brx, int bry, char what, color c);
 void ascii_put_box(box_args b, int style, TileLayers /*tiles*/, const char *fmt, ...);
 void ascii_putf(int x, int y, color fg, color bg, std::string fmt, ...);
-void ascii_putf__(int x, int y, color fg, color bg, std::string text);
+void ascii_putf_internal2(int x, int y, color fg, color bg, std::string text);
 void ascii_putf(int x, int y, color fg, color bg, const char *fmt, ...);
 void ascii_putf(int x, int y, color fg, std::string fmt, ...);
 void ascii_putf(int x, int y, color fg, const char *fmt, ...);

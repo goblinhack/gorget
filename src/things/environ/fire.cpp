@@ -76,14 +76,14 @@ static void tp_fire_tick_begin(Gamep g, Levelsp v, Levelp l, Thingp t)
       //
       // The older the fire gets, the more chance of spreading
       //
-      if (__unused__) {
+      if (compiler_unused) {
         LOG("fire spread check: ok");
       }
     } else {
       //
       // Too young to spread fire.
       //
-      if (__unused__) {
+      if (compiler_unused) {
         LOG("fire spread check; too young");
       }
       continue;

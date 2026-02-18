@@ -15,8 +15,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <strings.h>
 #include <ctime>
+#include <strings.h>
 #include <unistd.h>
 
 #include <cassert>

@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef _MY__PTRCHECK_HPP__
-#define _MY__PTRCHECK_HPP__
+#define MY_PTRCHECK_HPP_
 
 #include "my_source_loc.hpp"
 

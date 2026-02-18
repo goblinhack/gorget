@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_THING_HPP_
-#define _MY_THING_HPP_
+#define MY_THING_HPP_
 
 #include "my_color.hpp"
 #include "my_dmap.hpp"
@@ -18,9 +18,7 @@
 #include <string>
 #include <vector>
 
-enum {
-MY_ITERS_MAX = 4
-};
+enum { MY_ITERS_MAX = 4 };
 
 typedef union {
   struct {
@@ -40,10 +38,10 @@ typedef union {
 //
 // Essentially equates to the max number of monsters+light sources per level
 //
-#define THING_EXT_MAX       (LEVEL_MAX * 500)        // The size of thing_ext
-#define THING_FOV_MAX       (LEVEL_MAX * 500)        // The size of thing_ext
+#define THING_EXT_MAX (LEVEL_MAX * 500) // The size of thing_ext
+#define THING_FOV_MAX (LEVEL_MAX * 500) // The size of thing_ext
 enum {
-THING_DESCRIBE_MAX =  10                       // The number of things we can show in the rightbar
+  THING_DESCRIBE_MAX = 10 // The number of things we can show in the rightbar
 };
 #define THING_MOVE_PATH_MAX (MAP_WIDTH + MAP_HEIGHT) // Player/monster move paths (max size uint8_t)
 #define THING_INVENTORY_MAX 26
@@ -1086,33 +1084,33 @@ void thing_blit_text(Gamep g, Levelsp v, Levelp l, spoint tl, spoint br, std::st
 std::vector< spoint > astar_solve(Gamep g, Levelsp v, Levelp l, Thingp t, spoint src, spoint dst);
 
 #define FOR_ALL_MINION_SLOTS(_g_, _v_, _l_, _mob_, _slot_, _minion_)                                                 \
-  if (_g_ && _v_ && _l_)                                                                                             \
+  if ((_g_) && (_v_) && (_l_))                                                                                       \
     for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
-        for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
-          for (auto _minion_ = thing_find_optional(g, v, _slot_->minion_id), loop2 = (Thingp) 1;                     \
+        for (auto(_slot_) = &_ext_->minions.minion[ _n_ ]; _slot_; (_slot_) = nullptr)                               \
+          for (auto(_minion_) = thing_find_optional(g, v, (_slot_)->minion_id), loop2 = (Thingp) 1;                  \
                loop2 == (Thingp) 1; loop2 = (Thingp) 0)
 
 #define FOR_ALL_MINIONS(_g_, _v_, _l_, _mob_, _minion_)                                                              \
-  if (_g_ && _v_ && _l_)                                                                                             \
+  if ((_g_) && (_v_) && (_l_))                                                                                       \
     for (auto _ext_ = thing_ext_struct(_g_, _mob_); _ext_; _ext_ = nullptr)                                          \
       for (auto _n_ = 0; _n_ < THING_MINION_MAX; _n_++)                                                              \
         for (auto _slot_ = &_ext_->minions.minion[ _n_ ]; _slot_; _slot_ = nullptr)                                  \
-          for (Thingp _minion_ = thing_find_optional(g, v, _slot_->minion_id); _minion_; _minion_ = nullptr)
+          for (Thingp _minion_ = thing_find_optional(g, v, _slot_->minion_id); _minion_; (_minion_) = nullptr)
 
 #define FOR_ALL_INVENTORY_SLOTS(_g_, _v_, _l_, _owner_, _slot_, _item_)                                              \
-  if (_g_ && _v_ && _l_)                                                                                             \
+  if ((_g_) && (_v_) && (_l_))                                                                                       \
     for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
-        for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
-          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1;    \
+        for (auto(_slot_) = &_ext_->inventory.slots[ _n_ ]; _slot_; (_slot_) = nullptr)                              \
+          for (auto(_item_) = thing_find_optional(g, v, (_slot_)->item_id), loop2 = (Thingp) 1; loop2 == (Thingp) 1; \
                loop2 = (Thingp) 0)
 
 #define FOR_ALL_INVENTORY_ITEMS(_g_, _v_, _l_, _owner_, _item_)                                                      \
-  if (_g_ && _v_ && _l_)                                                                                             \
+  if ((_g_) && (_v_) && (_l_))                                                                                       \
     for (auto _ext_ = thing_player_struct(_g_); _ext_; _ext_ = nullptr)                                              \
       for (auto _n_ = 0; _n_ < THING_INVENTORY_MAX; _n_++)                                                           \
         for (auto _slot_ = &_ext_->inventory.slots[ _n_ ]; _slot_; _slot_ = nullptr)                                 \
-          for (auto _item_ = thing_find_optional(g, v, _slot_->item_id); _item_; _item_ = nullptr)
+          for (auto(_item_) = thing_find_optional(g, v, _slot_->item_id); _item_; (_item_) = nullptr)
 
 #endif

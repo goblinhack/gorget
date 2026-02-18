@@ -7,9 +7,9 @@
 #include "my_random.hpp"
 #include "my_thing_inlines.hpp"
 
+#include <cstring>
 #include <iostream>
 #include <mutex>
-#include <string.h>
 
 static std::mutex thing_mutex;
 
@@ -211,7 +211,7 @@ static Thingp thing_alloc_do(Gamep g, Levelsp v, Levelp l, Tpp tp, spoint p, Thi
   //
   t->id = id.a.val;
 
-  if (__unused__) {
+  if (compiler_unused) {
     LOG("Thing alloc %08" PRIX32 //
         " (level: %" PRIu32      //
         " id: %08" PRIX32        //
@@ -369,7 +369,7 @@ void thing_free(Gamep g, Levelsp v, Levelp l, Thingp t)
     v->level_select_id = 0;
   }
 
-  if (__unused__) {
+  if (compiler_unused) {
     THING_LOG(t, "free");
   }
 

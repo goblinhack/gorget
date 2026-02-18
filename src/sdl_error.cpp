@@ -17,8 +17,8 @@
 #include "my_wid_console.hpp"
 #include "my_wid_topcon.hpp"
 
-#include <mutex>
 #include <cstdlib>
+#include <mutex>
 #include <sys/stat.h>
 
 static void sdl_msgerr_(const char *fmt, va_list args)
@@ -31,7 +31,7 @@ static void sdl_msgerr_(const char *fmt, va_list args)
   vsnprintf(buf, MAXLONGSTR, fmt, args);
 
 #if SDL_MAJOR_VERSION >= 2
-  if (__unused__) {
+  if (compiler_unused) {
     //
     // Not needed
     //

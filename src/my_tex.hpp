@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_TEX_HPP_
-#define _MY_TEX_HPP_
+#define MY_TEX_HPP_
 
 #include "my_gl.hpp"
 #include "my_types.hpp"

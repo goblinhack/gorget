@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_WID_HPP_
-#define _MY_WID_HPP_
+#define MY_WID_HPP_
 
 #include "my_color.hpp"
 #include "my_spoint.hpp"

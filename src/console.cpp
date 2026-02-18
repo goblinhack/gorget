@@ -8,8 +8,8 @@
 #include "my_globals.hpp"
 #include "my_main.hpp"
 
-#include <cstring>
 #include <cstdlib>
+#include <cstring>
 
 static inline void term_puts_fg(unsigned char a)
 {

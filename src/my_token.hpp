@@ -4,7 +4,7 @@
 
 #pragma once
 #ifndef _MY_TOKEN_HPP_
-#define _MY_TOKEN_HPP_
+#define MY_TOKEN_HPP_
 
 #include "3rdparty/slre.hpp"
 #include "my_string.hpp"

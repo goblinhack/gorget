@@ -7,9 +7,9 @@
 #include "my_test.hpp"
 #include "my_wid_console.hpp"
 
+#include <csignal>
+#include <cstring>
 #include <iostream>
-#include <signal.h>
-#include <string.h>
 #include <strings.h>
 #include <sys/stat.h>
 #include <unistd.h>
